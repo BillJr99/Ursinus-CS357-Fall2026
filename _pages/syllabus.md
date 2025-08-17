@@ -6,7 +6,6 @@ title: "CS357: Foundations of Artificial Intelligence"
     
 info:
   course_number: CS357
-  course_number: CS357
   course_sections: 
   - section: "A"
   course_title: "Foundations of Artificial Intelligence"
