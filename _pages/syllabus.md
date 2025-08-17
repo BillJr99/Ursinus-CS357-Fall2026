@@ -169,7 +169,7 @@ schedule:
   - week: "0"
     date: "0"
     title: "Course Overview"
-    link: "link: "../Ursinus-CS357-Overview""
+    link: "../Ursinus-CS357-Overview"
     deliverables:
       - dtitle: "Written Assignment: Warmup Handed Out"
         dlink: "Assignments/Warmup"
