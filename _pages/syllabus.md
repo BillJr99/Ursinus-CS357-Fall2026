@@ -21,7 +21,11 @@ info:
   questions: |
     Specifically, we will collectively consider questions like:
     <ul>
-    <li>xx</li>
+    <li>What does it mean for a machine to think, and how does this compare with human intelligence, creativity, and reasoning?</li>
+    <li>In what ways have historical developments in AI research shaped the current capabilities of large language models, and what limitations remain?</li>
+    <li>How do the assumptions embedded in training datasets (e.g., cultural, social, or political biases) influence the behavior of AI systems, and what responsibilities do creators and users have in mitigating these effects?</li>
+    <li>What kinds of collaboration between disciplines (computer science, philosophy, art, social science, law) are needed to build AI responsibly?</li>
+    <li>How can prompt engineering and system design be used not just to optimize AI performance, but also to align outcomes with ethical principles?</li>
     </ul>    
   welcome_message: "Welcome to CS357!"
   class_meets_days:
@@ -60,13 +64,14 @@ info:
     <div style="width: 100%; display: table; border-collapse:separate; border-spacing:5px;">
     <div style="width: 100%; display: table-row;">
         <div style="display: table-cell; padding:5px; width:33%;">
-             
+            <a title="Lwneal, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Discriminative_vs_Generative_Neural_Networks.png"><img width="512" alt="Above: Schematic example of a discriminative neural network performing image recognition. Below: Example of a generative neural network performing text-to-image generation" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Discriminative_vs_Generative_Neural_Networks.png/512px-Discriminative_vs_Generative_Neural_Networks.png?20241005205230"></a>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
- 
+            <img src="https://encompass.mathematicalthinking.org/assets/images/workspaces_feedback-27ffa61b958051049ac3a8493c09c849.png" alt="An AI assisted feedback generator web frontend"></img>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
- 
+            <a title="Midjourney
+            , Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png"><img width="512" alt="&#039;&#039;Théâtre D&#039;opéra Spatial&#039;&#039;, an image made using generative artificial intelligence" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png/512px-Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png?20250701122121"></a>
         </div>
     </div>
     </div>
@@ -91,32 +96,47 @@ instructors:
     location: "Pfahler Hall 101L"           
     
 textbooks:
-- title: "The Big Book of Computing Pedagogy"
-  link: https://helloworld.raspberrypi.org/books/big_book_of_pedagogy
-  isrequired: true 
-  freelyavailable: https://helloworld.raspberrypi.org/books/big_book_of_pedagogy/pdf
-- title: "The Big Book of Computing Content"
-  link: https://helloworld.raspberrypi.org/books/big_book_of_computing_content
-  isrequired: true 
-  freelyavailable: https://helloworld.raspberrypi.org/books/big_book_of_computing_content/pdf
-- title: "Computer Science Education: Perspectives on Teaching and Learning in School"
-  authors: "Sue Sentance (Editor), Erik Barendsen (Editor), Nicol R. Howard (Editor), Carsten Schulte (Editor)"
-  edition: "2nd Edition"
-  isbn: "978-1350296909"
+- title: "Artificial Intelligence: A Guide for Thinking Humans"
+  authors: "Melanie Mitchell"
+  isbn: "978-1-250-75804-0"
   link: false
   isrequired: true 
   freelyavailable: false
-
+- title: "The Philosophy of Artificial Intelligence"
+  authors: "Margaret A. Boden, editor"
+  isbn: "978-0198248545"
+  link: false
+  isrequired: true 
+  freelyavailable: false
+  
 objectives:
-- objective: "xx"
+- objective: "Analyze the ethical implications of AI applications in non-pedagogical campus operations, research, and classroom instruction, using case studies and design justice principles."
+- objective: "Design tailored AI-driven tools and prompt-engineering strategies that augment human capabilities while adhering to ethical guidelines."
+- objective: "Evaluate the effectiveness of AI systems across different disciplines, identifying best practices and potential risks associated with their use."
+- objective: "Create documentation and strategic plans for the responsible deployment of AI technologies in campus operations, ensuring that these plans are both practical and ethically sound."
 
 goals:
-- goal: "xx"
+- goal: "Describe the transformative potential of AI in augmenting human creativity, critical thinking, and decision-making processes across various fields."
+- goal: "Apply ethical considerations in AI development and deployment, particularly in preventing biases and ensuring equitable outcomes."
+- goal: "Articulate the limitations of AI when used "out of the box" and the need for careful customization and prompt engineering to achieve desired results."
+- goal: "Engage meaningfully in cross-disciplinary collaboration in AI research and application, understanding how insights from different fields can lead to more robust and responsible AI systems."
 
 grade_breakdown:
-- category: "xx"
-  weight: "100%"
-
+- category: "Introductory Essay"
+  weight: "10%"
+- category: "Prompt Engineering Experiment"
+  weight: "10%"
+- category: "Bias and Fairness Exploration"
+  weight: "10%"
+- category: "Creative Project"
+  weight: "20%"
+- category: "Explainable AI Project"
+  weight: "20%"  
+- category: "Policy and Ethics Brief"
+  weight: "10%"    
+- category: "Final Project and Presentation"
+  weight: "20%" 
+  
 letter_grades:
 - letter: "A+"
   range: "96.9-100"
@@ -149,12 +169,144 @@ schedule:
   - week: "0"
     date: "0"
     title: "Course Overview"
-    link: ""
+    link: "link: "../Ursinus-CS357-Overview""
     deliverables:
       - dtitle: "Written Assignment: Warmup Handed Out"
         dlink: "Assignments/Warmup"
         points: 15
         submission_types: "onpaper"
+  - week: "0"
+    date: "1"
+    title: "Introduction: What is AI?"
+    readings:
+      - rtitle: "Mitchell Chapter 1"
+        rlink: false 
+      - rtitle: "Boden Chapter 1, 2"
+        rlink: false         
+  - week: "1"
+    date: "0"
+    title: "Introduction: What is AI?"
+    deliverables:
+      - dtitle: "Written Assignment: Warmup Due"
+        dlink: "Assignments/Warmup"
+        points: 15
+        submission_types: "onpaper"    
+  - week: "1"
+    date: "1"
+    title: "How do Computers Learn?"   
+  - week: "2"
+    date: "0"
+    title: "How do Computers Learn?"
+    readings:
+      - rtitle: "Mitchell Chapter 2, 6"
+        rlink: false 
+      - rtitle: "Boden Chapter 11, 12"
+        rlink: false      
+  - week: "2"
+    date: "1"
+    title: "What are the Risks? The Human in the Loop" 
+  - week: "3"
+    date: "0"
+    title: "What are the Risks? The Human in the Loop"
+  - week: "3"
+    date: "1"
+    title: "Human in the Loop Continued: What can AI do well?  What are its Limitations?"
+    readings:
+      - rtitle: "Mitchell Chapter 16"
+        rlink: false
+      - rtitle: "Boden Chapter 3, 4"
+        rlink: false  
+  - week: "4"
+    date: "0"
+    title: "Human in the Loop Continued: What can AI do well?  What are its Limitations?"
+  - week: "4"
+    date: "1"
+    title: "Prompting"
+    readings:
+      - rtitle: "Mitchell Chapter 11, 12"
+        rlink: false
+      - rtitle: "Boden Chapter 15"
+        rlink: false  
+  - week: "5"
+    date: "0"
+    title: "Prompting"
+  - week: "5"
+    date: "1"
+    title: "Personas"
+  - week: "6"
+    date: "0"
+    title: "Personas"
+  - week: "6"
+    date: "1"
+    title: "Document Retrieval"
+    readings:
+      - rtitle: "Mitchell Chapter 7"
+        rlink: false
+      - rtitle: "Boden Chapter 10"
+        rlink: false  
+  - week: "7"
+    date: "1"
+    title: "Bias"
+  - week: "8"
+    date: "0"
+    title: "Bias"
+  - week: "8"
+    date: "1"
+    title: "Agentic Systems"
+    readings:
+      - rtitle: "Mitchell Chapter 5, 8"
+        rlink: false
+      - rtitle: "Boden Chapter 8, 9"
+        rlink: false  
+  - week: "9"
+    date: "0"
+    title: "Agentic Systems"
+  - week: "9"
+    date: "1"
+    title: "Multimodal AI"
+  - week: "10"
+    date: "0"
+    title: "AI Search"
+    readings:
+      - rtitle: "Mitchell Chapter 3"
+        rlink: false
+      - rtitle: "Boden Chapter 5"
+        rlink: false      
+  - week: "10"
+    date: "1"
+    title: "AI Search"
+    readings:
+      - rtitle: "xx"
+        rlink: false  
+  - week: "11"
+    date: "0"
+    title: "Explainable AI"
+    readings:
+      - rtitle: "Mitchell Chapter 9, 10"
+        rlink: false
+      - rtitle: "Boden Chapter 6"
+        rlink: false      
+  - week: "11"
+    date: "1"
+    title: "Explainable AI"
+    readings:
+      - rtitle: "xx"
+        rlink: false  
+  - week: "12"
+    date: "0"
+    title: "Intellectual Property"
+  - week: "12"
+    date: "1"
+    title: "AI for Operations"
+  - week: "13"
+    date: "0"
+    title: "AI Strategy and Policy"
+  - week: "14"
+    date: "0"
+    title: "AI Strategy and Policy"
+  - week: "14"
+    date: "1"
+    title: "Review"        
           
 university:
   semester: "Fall"
@@ -225,4 +377,4 @@ university:
 
 ## Overview 
 
-Welcome to CS357!
+Welcome to CS357!  Are you curious about the technology that powers your favorite apps, that helps to make decisions that influence everyday life, and that generates content seemingly out of thin air?  Join us for a discussion about how generative AI came about, how it works, how we can leverage it to augment our human creative capabilities, and what care needs to be taken to ensure it is used in a responsible, safe, and equitable way.  
