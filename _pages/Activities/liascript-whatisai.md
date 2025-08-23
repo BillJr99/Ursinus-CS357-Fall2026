@@ -112,6 +112,8 @@ Once Upon a ~~time~~, there lived a ~~______~~
 **Debrief (Round 2):**  
 What changed with more context?  
 
+Try it online at <https://www.crowd-gpt.com/>.
+
 ---
 
 ## What is AI?
