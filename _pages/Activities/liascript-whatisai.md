@@ -8,7 +8,7 @@ narrator: US English Male
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/_pages/Activities/liascript-whatisai.md
 
 link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap  
-        https://github.com/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/files/liascript-custom.css
+        https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-CS357-Fall2025@gh-pages/files/liascript-custom.css
         
 -->
 
