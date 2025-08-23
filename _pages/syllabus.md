@@ -10,8 +10,9 @@ info:
   - section: "A"
   course_title: "Foundations of Artificial Intelligence"
   credit_hours: "4 Semester Hours"
-  course_homepage: "https://www.billmongan.com/Ursinus-CSPedagogy/"
+  course_homepage: "https://www.billmongan.com/Ursinus-CS352/"
   class_notebook: https://ursinuscollege365-my.sharepoint.com/personal/wmongan_ursinus_edu/Documents/Class%20Notebooks/CS357%20Fall%202025
+  teamshelproom: https://teams.microsoft.com/l/team/19%3A2OzNB1pQ3u8Va2fyG6Pspn8rzi3uP7ckzhwaLq6hpRM1%40thread.tacv2/conversations?groupId=04887b5d-b146-468c-9fb9-51755090b18d&tenantId=921f1c03-8689-4e60-a722-f5ea581e00fe
   ical: files/CS357.ics
   course_prerequisites: "Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor."
   course_start_date: "2025/08/25"
