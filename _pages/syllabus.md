@@ -108,6 +108,11 @@ textbooks:
   link: false
   isrequired: true 
   freelyavailable: false
+- title: "AI by Hand"
+  author: "Tom Yeh"
+  link: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
+  isrequired: true
+  freelyavailable: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
   
 objectives:
 - objective: "Analyze the ethical implications of AI applications in non-pedagogical campus operations, research, and classroom instruction, using case studies and design justice principles."
@@ -121,21 +126,15 @@ goals:
 - goal: "Articulate the limitations of AI when used out-of-the-box and the need for careful customization and prompt engineering to achieve desired results."
 - goal: "Engage meaningfully in cross-disciplinary collaboration in AI research and application, understanding how insights from different fields can lead to more robust and responsible AI systems."
 
-grade_breakdown:
-- category: "Introductory Essay"
-  weight: "10%"
-- category: "Prompt Engineering Experiment"
-  weight: "10%"
-- category: "Bias and Fairness Exploration"
-  weight: "10%"
-- category: "Creative Project"
-  weight: "20%"
-- category: "Explainable AI Project"
-  weight: "20%"  
-- category: "Policy and Ethics Brief"
-  weight: "10%"    
-- category: "Final Project and Presentation"
+grade_breakdown:  
+- category: "Project and Presentation"
   weight: "20%" 
+- category: "Written Assignments"
+  weight: "30%"   
+- category: "Labs"
+  weight: "30%"
+- category: "Reading and Discussion"
+  weight: "20%"  
   
 letter_grades:
 - letter: "A+"
@@ -175,14 +174,18 @@ schedule:
         dlink: "Assignments/Warmup"
         points: 15
         submission_types: "onpaper"
+    readings:
+      - rtitle: "As We May Think - Vannevar Bush"
+        rlink: "https://web.mit.edu/STS.035/www/PDFs/think.pdf"
   - week: "0"
     date: "1"
     title: "Introduction: What is AI?"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-whatisai.md"
     readings:
       - rtitle: "Mitchell Chapter 1"
-        rlink: false 
+        rlink: false
       - rtitle: "Boden Chapter 1, 2"
-        rlink: false         
+        rlink: false
   - week: "1"
     date: "0"
     title: "Introduction: What is AI?"
@@ -190,182 +193,369 @@ schedule:
       - dtitle: "Written Assignment: Warmup Due"
         dlink: "Assignments/Warmup"
         points: 15
-        submission_types: "onpaper"    
+        submission_types: "onpaper"
+    readings:
+      - rtitle: "A Student Guide to AI"
+        rlink: "https://studentguidetoai.org/wp-content/uploads/2025/03/Student-Guide-to-AI-2025.pdf"
   - week: "1"
     date: "1"
-    title: "How do Computers Learn?"   
+    title: "Introduction: What is AI?"
+    readings:
+      - rtitle: "Embodiment and Intelligence, a Levinasian Perspective - James Mensch"
+        rlink: "https://www.researchgate.net/publication/378312334_Embodiment_and_intelligence_a_levinasian_perspective"
   - week: "2"
     date: "0"
-    title: "How do Computers Learn?"
+    title: "Neural Networks"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-neuralnets.md"
+    readings:
+      - rtitle: "Understanding the Math behind Neural Networks - Madhav Bhaskar"
+        rlink: "https://zoxoc.medium.com/understanding-the-math-behind-neural-networks-beginner-friendly-guide-c85427127f6c"
+      - rtitle: "Understanding the Math behind Neural Networks by Building one from Scratch - Samson Zhang"
+        rlink: "https://web.archive.org/web/20210113042222/https://www.samsonzhang.com/2020/11/24/understanding-the-math-behind-neural-networks-by-building-one-from-scratch-no-tf-keras-just-numpy.html"
+  - week: "2"
+    date: "1"
+    title: "Neural Networks"
+    deliverables:
+      - dtitle: "Written Assignment: AI by Hand Part 1 Handed Out"
+        dlink: "Assignments/AIByHand1"
+        points: 100
+        submission_types: "written"
     readings:
       - rtitle: "Mitchell Chapter 2, 6"
-        rlink: false 
+        rlink: false
       - rtitle: "Boden Chapter 11, 12"
-        rlink: false      
-  - week: "2"
-    date: "1"
-    title: "What are the Risks? The Human in the Loop" 
+        rlink: false
   - week: "3"
     date: "0"
-    title: "What are the Risks? The Human in the Loop"
+    title: "Lab: Creating a Simple Neural Network"
+    deliverables:
+      - dtitle: "Lab: Creating a Simple Neural Network Handed Out"
+        dlink: "Labs/SimpleNeuralNet"
+        points: 100
+        rubricpath: "_pages/Labs/lab-simpleneuralnet.md"
   - week: "3"
     date: "1"
-    title: "Human in the Loop Continued: What can AI do well?  What are its Limitations?"
+    title: "Transformers and Attention"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-transformersattention.md"
     readings:
       - rtitle: "Mitchell Chapter 16"
         rlink: false
       - rtitle: "Boden Chapter 3, 4"
-        rlink: false  
+        rlink: false
   - week: "4"
     date: "0"
-    title: "Human in the Loop Continued: What can AI do well?  What are its Limitations?"
+    title: "Representation Learning"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-representationlearning.md"
+    deliverables:
+      - dtitle: "Lab: Creating a Simple Neural Network Due"
+        dlink: "Labs/SimpleNeuralNet"
+        points: 100
+        rubricpath: "_pages/Labs/lab-simpleneuralnet.md"
   - week: "4"
     date: "1"
-    title: "Prompting"
+    title: "Lab: Embeddings and Prediction"
+    deliverables:
+      - dtitle: "Lab: Embeddings and Prediction Handed Out"
+        dlink: "Labs/EmbeddingsPrediction"
+        points: 100
+        rubricpath: "_pages/Labs/lab-embeddingsprediction.md"
+      - dtitle: "Written Assignment: AI by Hand Part 1 Due"
+        dlink: "Assignments/AIByHand1"
+        points: 100
+        submission_types: "written"
     readings:
       - rtitle: "Mitchell Chapter 11, 12"
         rlink: false
       - rtitle: "Boden Chapter 15"
-        rlink: false  
+        rlink: false
   - week: "5"
     date: "0"
-    title: "Prompting"
+    title: "Generative Models"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-generativemodels.md"
   - week: "5"
     date: "1"
-    title: "Personas"
+    title: "Variational Autoencoders"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-variationalautoencoders.md"
+    deliverables:
+      - dtitle: "Lab: Embeddings and Prediction Due"
+        dlink: "Labs/EmbeddingsPrediction"
+        points: 100
+        rubricpath: "_pages/Labs/lab-embeddingsprediction.md"
+      - dtitle: "Lab: XOR Formula Estimator Handed Out"
+        dlink: "Labs/XOREstimator"
+        points: 100
+        rubricpath: "_pages/Labs/lab-xorestimator.md"
+    readings:
+      - rtitle: "The Emerging Problem of AI Psychosis"
+        rlink: "https://www.psychologytoday.com/us/blog/urban-survival/202507/the-emerging-problem-of-ai-psychosis"
   - week: "6"
     date: "0"
-    title: "Personas"
+    title: "Diffusion and Multimodal AI"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-diffusionmultimodal.md"
+    deliverables:
+      - dtitle: "Reading and Discussion: Report and Presentation Handed Out"
+        dlink: "Reading/PresentationReport"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Reading/reading-presentationreport.md"
   - week: "6"
     date: "1"
-    title: "Document Retrieval"
+    title: "Prompting and Context Engineering"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-promptengineering.md"
+    deliverables:
+      - dtitle: "Lab: XOR Formula Estimator Due"
+        dlink: "Labs/XOREstimator"
+        points: 100
+        rubricpath: "_pages/Labs/lab-xorestimator.md"
     readings:
       - rtitle: "Mitchell Chapter 7"
         rlink: false
       - rtitle: "Boden Chapter 10"
-        rlink: false  
+        rlink: false
   - week: "7"
     date: "1"
-    title: "Bias"
+    title: "Prompting and Context Engineering"
+    deliverables:
+      - dtitle: "Written Assignment: AI by Hand Part 2 Handed Out"
+        dlink: "Assignments/AIByHand2"
+        points: 100
+        submission_types: "written"
+    readings:
+      - rtitle: "You are a helpful mail assistant, and other Apple Intelligence instructions - the Verge"
+        rlink: "https://www.theverge.com/2024/8/5/24213861/apple-intelligence-instructions-macos-15-1-sequoia-beta"
   - week: "8"
     date: "0"
-    title: "Bias"
+    title: "Personas and Configurations"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-personas.md"
+    deliverables:
+      - dtitle: "Lab: Custom Chatbot Handed Out"
+        dlink: "Labs/CustomChatbot"
+        points: 100
+        rubricpath: "_pages/Labs/lab-customchatbot.md"
   - week: "8"
     date: "1"
-    title: "Agentic Systems"
+    title: "Document Retrieval and Retrieval-Augmented Generation"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-rag.md"
+    deliverables:
+      - dtitle: "Project and Presentation: Final Project Handed Out"
+        dlink: "Projects/Project"
+        points: 100
+        rubricpath: "_pages/Projects/proj-project.md"
     readings:
       - rtitle: "Mitchell Chapter 5, 8"
         rlink: false
       - rtitle: "Boden Chapter 8, 9"
-        rlink: false  
+        rlink: false
   - week: "9"
     date: "0"
-    title: "Agentic Systems"
+    title: "Lab: Retrieval Augmented Generation"
+    deliverables:
+      - dtitle: "Lab: Custom Chatbot Due"
+        dlink: "Labs/CustomChatbot"
+        points: 100
+        rubricpath: "_pages/Labs/lab-customchatbot.md"
+      - dtitle: "Lab: Retrieval Augmented Generation Handed Out"
+        dlink: "Labs/RAG"
+        points: 100
+        rubricpath: "_pages/Labs/lab-rag.md"
   - week: "9"
     date: "1"
-    title: "Multimodal AI"
+    title: "Agentic Systems"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-agentic.md"
+    deliverables:
+      - dtitle: "Written Assignment: AI by Hand Part 2 Due"
+        dlink: "Assignments/AIByHand2"
+        points: 100
+        submission_types: "written"
+      - dtitle: "Written Assignment: Custom Agent System Handed Out"
+        dlink: "Assignments/CustomAgentSystem"
+        points: 100
+        rubricpath: "_pages/Assignments/asmt-customagentsystem.md"
   - week: "10"
     date: "0"
-    title: "AI Search"
+    title: "Agentic Systems"
+    deliverables:
+      - dtitle: "Reading and Discussion: Report and Presentation First Draft Due"
+        dlink: "Reading/PresentationReport"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Reading/reading-presentationreport.md"
     readings:
       - rtitle: "Mitchell Chapter 3"
         rlink: false
       - rtitle: "Boden Chapter 5"
-        rlink: false      
+        rlink: false
   - week: "10"
     date: "1"
-    title: "AI Search"
+    title: "Bias"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-bias.md"
+    deliverables:
+      - dtitle: "Lab: Retrieval Augmented Generation Due"
+        dlink: "Labs/RAG"
+        points: 100
+        rubricpath: "_pages/Labs/lab-rag.md"
+    readings:
+      - rtitle: "Addressing Equity and Ethics in Artificial Intelligence - APA"
+        rlink: "https://www.apa.org/monitor/2024/04/addressing-equity-ethics-artificial-intelligence"
+      - rtitle: "Avoiding the Discriminatory Use of Artificial Intelligence - US Department of Education"
+        rlink: "https://files.eric.ed.gov/fulltext/ED661946.pdf"
+      - rtitle: "Coded Bias"
+        rlink: "https://ursinuscollege.on.worldcat.org/oclc/1200171382"
+      - rtitle: "Are We Automating Racism?"
+        rlink: "https://www.youtube.com/watch?v=Ok5sKLXqynQ&list=PLJ8cMiYb3G5cOFj1VQf8ykNOI0ptuHybc&index=4"
   - week: "11"
     date: "0"
-    title: "Explainable AI"
+    title: "Bias"
+    deliverables:
+      - dtitle: "Written Assignment: Custom Agent System Due"
+        dlink: "Assignments/CustomAgentSystem"
+        points: 100
+        rubricpath: "_pages/Assignments/asmt-customagentsystem.md"
     readings:
       - rtitle: "Mitchell Chapter 9, 10"
         rlink: false
       - rtitle: "Boden Chapter 6"
-        rlink: false      
+        rlink: false
   - week: "11"
     date: "1"
-    title: "Explainable AI"
+    title: "Hallucinations"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-hallucinations.md"
+    deliverables:
+      - dtitle: "Project and Presentation: Final Project First Draft Due"
+        dlink: "Projects/Project"
+        points: 100
+        rubricpath: "_pages/Projects/proj-project.md"
+    readings:
+      - rtitle: "Can LLMs Generate Novel Research Ideas?"
+        rlink: "https://arxiv.org/pdf/2409.04109v1"
   - week: "12"
     date: "0"
-    title: "Intellectual Property"
+    title: "Intellectual Property - Data Provenance and Copyright"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-ip.md"
+    deliverables:
+      - dtitle: "Reading and Discussion: Report and Presentation Final Draft Due"
+        dlink: "Reading/PresentationReport"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Reading/reading-presentationreport.md"
   - week: "12"
     date: "1"
-    title: "AI for Operations"
+    title: "AI Governance and Policy"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-governance.md"
+    deliverables:
+      - dtitle: "Written Assignment: Governance Policy Handed Out"
+        dlink: "Assignments/Governance"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Assignments/asmt-governance.md"
   - week: "13"
     date: "0"
-    title: "AI Strategy and Policy"
+    title: "Explainable AI"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-explainable.md"
   - week: "14"
     date: "0"
-    title: "AI Strategy and Policy"
+    title: "Explainable AI"
+    deliverables:
+      - dtitle: "Project and Presentation: Final Project Final Draft Due"
+        dlink: "Projects/Project"
+        points: 100
+        rubricpath: "_pages/Projects/proj-project.md"
+    readings:
+      - rtitle: "Llama Guard - LLM-based Input-Output Safeguard for Human-AI Conversations - Inan et al"
+        rlink: "https://arxiv.org/pdf/2312.06674"
+      - rtitle: "More Questions than Answers - Ethical Considerations at the Intersection of Psychology and Generative Artificial Intelligence - Chenneville et al"
+        rlink: "https://psycnet.apa.org/doiLanding?doi=10.1037%2Ftps0000400"
   - week: "14"
     date: "1"
-    title: "Review"        
+    title: "Review"
+    deliverables:
+      - dtitle: "Written Assignment: Governance Policy Due"
+        dlink: "Assignments/Governance"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Assignments/asmt-governance.md"     
           
 university:
   semester: "Fall"
-  academicyear: "2023-24"
+  academicyear: "2025-26"
   fall:
-  - kname: "Add Deadline"
-    kdate: "2023/09/8"
+  - kname: "Add Deadline; Last Day for S/S-/U Choice"
+    kdate: "2025/09/5"
     kdisplay: true
   - kname: "Mid Semester Grades Posted"
-    kdate: "2023/10/13"
-    kdisplay: false    
+    kdate: "2025/10/10"
+    kdisplay: true    
   - kname: "Drop with a W Deadline"
-    kdate: "2023/10/25"
+    kdate: "2025/11/25"
     kdisplay: true  
-  - kname: "Reading Day"
-    kdate: "2023/12/9"
-    kdisplay: true     
-  - kname: "Finals Week Begins"
-    kdate: "2023/12/11"
-    kdisplay: false
-  - kname: "Finals Week Ends"
-    kdate: "2023/12/16"
-    kdisplay: false
-  spring:
-  - kname: "Add Deadline"
-    kdate: "2024/01/30"
-    kdisplay: true
-  - kname: "Mid Semester Grades Posted"
-    kdate: "2024/03/1"
-    kdisplay: false    
-  - kname: "Drop with a W Deadline"
-    kdate: "2024/03/20"
+  - kname: "Designated Wednesday Schedule"
+    kdate: "2025/12/8"
     kdisplay: true    
   - kname: "Reading Day"
-    kdate: "2024/05/2"
-    kdisplay: false    
+    kdate: "2025/12/9"
+    kdisplay: true     
   - kname: "Finals Week Begins"
-    kdate: "2024/05/03"
-    kdisplay: false
+    kdate: "2025/12/10"
+    kdisplay: true
   - kname: "Finals Week Ends"
-    kdate: "2024/05/09"
-    kdisplay: false       
-  - kname: "Baccalaureate"
-    kdate: "2024/05/10"
-    kdisplay: false
+    kdate: "2025/12/16"
+    kdisplay: true
+  spring:
+  - kname: "Experiential Learning Week Begins"
+    kdate: "2026/01/20"
+    kdisplay: true  
+  - kname: "Experiential Learning Week Ends"
+    kdate: "2026/01/23"
+    kdisplay: true      
+  - kname: "Add Deadline"
+    kdate: "2026/02/6; Last Day for S/S-/U Choice"
+    kdisplay: true
+  - kname: "Mid Semester Grades Posted"
+    kdate: "2026/03/13"
+    kdisplay: true    
+  - kname: "Drop with a W Deadline"
+    kdate: "2026/04/21"
+    kdisplay: true   
+  - kname: "CoSA"
+    kdate: "2026/04/22"
+    kdisplay: true    
+  - kname: "Experiential Learning Day"
+    kdate: "2026/04/23"
+    kdisplay: true
+  - kname: "Designated Thursday Schedule"
+    kdate: "2026/05/12"
+    kdisplay: true  
+  - kname: "Reading Day"
+    kdate: "2026/05/13"
+    kdisplay: true    
+  - kname: "Finals Week Begins"
+    kdate: "2026/05/14"
+    kdisplay: true
+  - kname: "Finals Week Ends"
+    kdate: "2026/05/20"
+    kdisplay: true       
+  - kname: "Senior Programming"
+    kdate: "2026/05/20"
+    kdisplay: true
+  - kname: "Senior Programming"
+    kdate: "2026/05/21"
+    kdisplay: true    
   - kname: "Commencement"
-    kdate: "2024/05/11"
-    kdisplay: false 
+    kdate: "2026/05/22"
+    kdisplay: true 
   fallholidays:
-  - date: "2023/10/14"
-  - date: "2023/10/15"
-  - date: "2023/10/16"
-  - date: "2023/10/17"
-  - date: "2023/11/22"
-  - date: "2023/11/23"
-  - date: "2023/11/24"
-  - date: "2023/11/25"
-  - date: "2023/11/26"
+  - date: "2025/10/13"
+  - date: "2025/10/14"
+  - date: "2025/10/15"
+  - date: "2025/11/27"
+  - date: "2025/11/28"
   springholidays:
-  - date: "2024/01/15"  
-  - date: "2024/03/4"  
-  - date: "2024/03/5"  
-  - date: "2024/03/6"  
-  - date: "2024/03/7"  
-  - date: "2024/03/8"     
+  - date: "2026/01/19"  
+  - date: "2026/03/16"  
+  - date: "2026/03/17"  
+  - date: "2026/03/18"  
+  - date: "2026/03/19"  
+  - date: "2026/03/20"       
   
 ---
 

@@ -179,6 +179,8 @@ The system learns features that separate them.
 
 - Novel variations outside of the training set may not be classified correctly.  For example, what if someone writes a 1 the way that it sees the number 7?
 
+[Tensorflow Playground](https://playground.tensorflow.org/)
+
 ---
 
 ## Features and Context
