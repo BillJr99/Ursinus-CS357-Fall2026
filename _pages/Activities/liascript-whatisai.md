@@ -162,7 +162,7 @@ The system learns features that separate them.
 
 ## Inside a Neural Network
 
-![Kids plyaing Guess Who](https://d2cto119c3bgok.cloudfront.net/thumbs/photos/1407/1443853/1000w_q95.jpg) ![Scikit Filters](https://scikit-learn.org/stable/_images/sphx_glr_plot_mnist_filters_001.png)
+![Kids plyaing Guess Who](https://d2cto119c3bgok.cloudfront.net/thumbs/photos/1407/1443853/1000w_q95.jpg) ![Scikit Filters](https://scikit-learn.org/stable/_images/sphx_glr_plot_mnist_filters_001.png) 
 
 ![MNIST Activation Maps](https://user-images.githubusercontent.com/25433159/133066880-1c06fb0f-4b96-4945-9f6f-b3cc48412917.png)
 
