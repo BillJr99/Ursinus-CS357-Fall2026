@@ -164,13 +164,15 @@ The system learns features that separate them.
 
 ![Kids plyaing Guess Who](https://d2cto119c3bgok.cloudfront.net/thumbs/photos/1407/1443853/1000w_q95.jpg) ![Scikit Filters](https://scikit-learn.org/stable/_images/sphx_glr_plot_mnist_filters_001.png) 
 
-![MNIST Activation Maps](https://user-images.githubusercontent.com/25433159/133066880-1c06fb0f-4b96-4945-9f6f-b3cc48412917.png)
-
 - Left - one layer (each feeds the next in a sort of game of "guess who" in which some neurons are activated while others are not until the prediction layer is reached).  During training, this result is compared to the known answer, and the weights of the neurons are adjusted so that this answer is correct without overcorrecting prior predictions.
 
-- Right - the number 2 - notice that the tail of the 2 is considered more heavily than the bottom left where there might sometimes be a "curly Q" - calculus slowly de-emphasizes that area as variability in the training examples are introduced, leading to incorrect predictions and tweaking of the weights of the regions
+- Right - what the neural net "sees" when extracting features to evaluate a 2 at several layers
 
-- Center - what the neural net "sees" when extracting features to evaluate a 2 at several layers
+![MNIST Activation Maps](https://user-images.githubusercontent.com/25433159/133066880-1c06fb0f-4b96-4945-9f6f-b3cc48412917.png)
+
+- Notice that the tails and corners of the digits are considered more heavily than in other areas of the digit where there could be some variation in the way people write them (like a line through a 7, or a "curly Q" through a 2, or connecting the top line of the number 4. Calculus slowly de-emphasizes that area as variability in the training examples are introduced, leading to incorrect predictions and tweaking of the weights of the regions until the classifer gets most of them right.
+
+- Novel variations outside of the training set may not be classified correctly.  For example, what if someone writes a 1 the way that it sees the number 7?
 
 ---
 
