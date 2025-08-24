@@ -355,6 +355,10 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 - What does *good* mean?
 - What could help us perform better?
 
+**Q:** Why might inserting a period after the `<mask>` improve generation?
+
+**Q:** Why might inserting a period after the `<mask>` improve generation?
+
 ---
 
 ## Challenge: Amplifying Bias
