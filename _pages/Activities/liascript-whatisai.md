@@ -7,7 +7,7 @@ comment: Render with https://liascript.github.io/course/?https://github.com/Bill
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-2
+link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-3
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 -->
 
