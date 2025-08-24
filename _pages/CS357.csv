@@ -1,6 +1,6 @@
 Week,Day,Title,Link,dtitle1,dlink1,dpoints1,drubric1,dtype1,dtitle2,dlink2,dpoints2,drubric2,dtype2,dtitle3,dlink3,dpoints3,drubric3,dtype3,rtitle1,rlink1,rtitle2,rlink2,rtitle3,rlink3,rtitle4,rlink4,rtitle5,rlink5
 0,0,Course Overview,../Ursinus-CS357-Overview,Written Assignment: Warmup Handed Out,Assignments/Warmup,15,,onpaper,,,,,,,,,,,,,,,,,,,,
-0,1,Introduction: What is AI?,https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/_pages/Activities/liascript-whatisai.md,,,,,,,,,,,,,,,,Mitchell Chapter 1,,"Boden Chapter 1, 2",,,,,,,
+0,1,Introduction: What is AI?,https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-whatisai.md#4,,,,,,,,,,,,,,,,Mitchell Chapter 1,,"Boden Chapter 1, 2",,,,,,,
 1,0,Introduction: What is AI?,,Written Assignment: Warmup Due,Assignments/Warmup,15,,onpaper,,,,,,,,,,,A Student Guide to AI,https://studentguidetoai.org/wp-content/uploads/2025/03/Student-Guide-to-AI-2025.pdf,,,,,,,,
 1,1,How do Computers Learn?,,,,,,,,,,,,,,,,,,,,,,,,,,
 2,0,How do Computers Learn?,,,,,,,,,,,,,,,,,"Mitchell Chapter 2, 6",,"Boden Chapter 11, 12",,,,,,,
