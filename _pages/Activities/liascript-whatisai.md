@@ -357,7 +357,11 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 
 **Q:** Why might inserting a period after the `<mask>` improve generation?
 
-**Q:** Why might inserting a period after the `<mask>` improve generation?
+**Q:** Try generating some sentences where the context matters, and see if you get confusion in the probability matrix that results for the word(s) that can fit there.
+
+**Q:** Modify this to allow the user to type in `<mask>` themselves, to identify words in the middle of a sentence.
+
+**Q:** How could you introduce a bit more randomness into the system for the word chosen for `<mask>`, besides just picking the most likely one?  Why might you ever want to do this?
 
 ---
 
