@@ -598,8 +598,7 @@ By varying some of the input values, we can observe the change in the prediction
   - ... but not replacing either
 
    {{2}}
-- What are some “productive” (augmentative) use cases for 
-generative AI?
+- What are some “productive” (augmentative) use cases for generative AI?
 
 ---
 
