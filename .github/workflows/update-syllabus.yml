@@ -24,10 +24,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
       - name: Install dependencies
-        run: pip install --upgrade uuid python-frontmatter python-dateutil
-      - name: Build updated research output file
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-frontmatter python-dateutil
+      - name: Build updated ical output file
         run: curl -k https://raw.githubusercontent.com/BillJr99/Ursinus-Boilerplate-Code/main/course/syllabus2ical.py | python
       - name: Commit new ical file
         uses: stefanzweifel/git-auto-commit-action@v4
