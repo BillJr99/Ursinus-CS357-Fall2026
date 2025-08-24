@@ -345,6 +345,8 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 
 ## Challenges & Opportunities
 
+- A baseline: text prediction from sequential token analysis using Bidirectional Encoder Representations from Transformers (BERT)
+
 [View this project on Replit](https://replit.com/@BillJr99/TextPredictionNLPExample#main.py)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/files/notebooks/Sentence_Prediction_with_BERT.ipynb)
