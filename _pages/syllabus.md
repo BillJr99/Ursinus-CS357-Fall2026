@@ -132,9 +132,9 @@ grade_breakdown:
 - category: "Written Assignments"
   weight: "30%"   
 - category: "Labs"
-  weight: "30%"
+  weight: "35%"
 - category: "Reading and Discussion"
-  weight: "20%"  
+  weight: "15%"  
   
 letter_grades:
 - letter: "A+"
@@ -181,6 +181,12 @@ schedule:
     date: "1"
     title: "Introduction: What is AI?"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-whatisai.md"
+    deliverables:
+      - dtitle: "Written Assignment: Exploring Generative AI Handed Out"
+        dlink: "Assignments/ExploringAI"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Assignments/asmt-exploringai.md"    
     readings:
       - rtitle: "Mitchell Chapter 1"
         rlink: false
@@ -200,6 +206,12 @@ schedule:
   - week: "1"
     date: "1"
     title: "Introduction: What is AI?"
+    deliverables:
+      - dtitle: "Written Assignment: Exploring Generative AI Due"
+        dlink: "Assignments/ExploringAI"
+        points: 100
+        submission_types: "written"
+        rubricpath: "_pages/Assignments/asmt-exploringai.md"    
     readings:
       - rtitle: "Embodiment and Intelligence, a Levinasian Perspective - James Mensch"
         rlink: "https://www.researchgate.net/publication/378312334_Embodiment_and_intelligence_a_levinasian_perspective"
@@ -297,7 +309,7 @@ schedule:
         dlink: "Reading/PresentationReport"
         points: 100
         submission_types: "written"
-        rubricpath: "_pages/Reading/reading-presentationreport.md"
+        rubricpath: "_pages/Readings/reading-presentationreport.md"
   - week: "6"
     date: "1"
     title: "Prompting and Context Engineering"
@@ -379,7 +391,7 @@ schedule:
         dlink: "Reading/PresentationReport"
         points: 100
         submission_types: "written"
-        rubricpath: "_pages/Reading/reading-presentationreport.md"
+        rubricpath: "_pages/Readings/reading-presentationreport.md"
     readings:
       - rtitle: "Mitchell Chapter 3"
         rlink: false
@@ -437,7 +449,7 @@ schedule:
         dlink: "Reading/PresentationReport"
         points: 100
         submission_types: "written"
-        rubricpath: "_pages/Reading/reading-presentationreport.md"
+        rubricpath: "_pages/Readings/reading-presentationreport.md"
   - week: "12"
     date: "1"
     title: "AI Governance and Policy"
