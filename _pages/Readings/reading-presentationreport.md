@@ -10,25 +10,25 @@ info:
     - Placeholder goal 2
     - Placeholder goal 3
   rubric:
-  - weight: 25
-    description: Analysis of Reading and Discussion: Report and Presentation Final Draft
-    preemerging: Outlines key ideas about Reading and Discussion: Report and Presentation Final Draft with concise summaries.
-    beginning: Explains core ideas about Reading and Discussion: Report and Presentation Final Draft with relevant detail and early examples.
-    progressing: Develops a clear, accurate analysis of Reading and Discussion: Report and Presentation Final Draft supported by well-chosen examples.
-    proficient: Provides a comprehensive, insightful analysis of Reading and Discussion: Report and Presentation Final Draft that connects ideas to broader implications.
-  - weight: 25
+    - weight: 25
+    description: Analysis 
+    preemerging: Outlines key ideas with concise summaries.
+    beginning: Explains core ideas with relevant detail and early examples.
+    progressing: Develops a clear, accurate analysis supported by well-chosen examples.
+    proficient: Provides a comprehensive, insightful analysis that connects ideas to broader implications.
+    - weight: 25
     description: Integration of External Sources
     preemerging: References a small set of relevant sources to ground claims.
     beginning: Uses multiple credible sources and connects them to the argument in most places.
     progressing: Integrates a range of authoritative sources to strengthen claims throughout.
     proficient: Synthesizes diverse, authoritative sources seamlessly to build a compelling argument.
-  - weight: 25
+    - weight: 25
     description: Synthesis and Original Insight
     preemerging: Combines ideas at a basic level with some personal perspective.
     beginning: Connects ideas with emerging original perspective and interpretation.
     progressing: Synthesizes perspectives with clear original contributions and implications.
     proficient: Offers sophisticated synthesis and original, thought-provoking insights with practical implications.
-  - weight: 25
+    - weight: 25
     description: Organization and Writing Quality
     preemerging: Presents a basic structure that communicates central ideas.
     beginning: Organizes content logically with generally clear prose and citation.
