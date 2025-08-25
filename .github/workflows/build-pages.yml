@@ -3,8 +3,7 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-      - gh-pages
-  workflow_dispatch:
+      - main  # Replace with your default branch
 
 jobs:
   build:
@@ -13,18 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1 
+
+      - name: Install Bundler
+        run: gem install bundler
+
       - name: Install dependencies
-        run: bundle install        
+        run: bundle install
 
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+        run: bundle exec jekyll build --destination ./_site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
