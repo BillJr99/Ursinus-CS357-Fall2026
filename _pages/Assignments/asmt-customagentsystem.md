@@ -11,11 +11,11 @@ info:
     - Placeholder goal 3
   rubric:
   - weight: 25
-    description: Analysis of Written Assignment: Custom Agent System
-    preemerging: Outlines key ideas about Written Assignment: Custom Agent System with concise summaries.
-    beginning: Explains core ideas about Written Assignment: Custom Agent System with relevant detail and early examples.
-    progressing: Develops a clear, accurate analysis of Written Assignment: Custom Agent System supported by well-chosen examples.
-    proficient: Provides a comprehensive, insightful analysis of Written Assignment: Custom Agent System that connects ideas to broader implications.
+    description: Analysis
+    preemerging: Outlines key ideas with concise summaries.
+    beginning: Explains core ideas with relevant detail and early examples.
+    progressing: Develops a clear, accurate analysis supported by well-chosen examples.
+    proficient: Provides a comprehensive, insightful analysis of that connects ideas to broader implications.
   - weight: 25
     description: Integration of External Sources
     preemerging: References a small set of relevant sources to ground claims.
