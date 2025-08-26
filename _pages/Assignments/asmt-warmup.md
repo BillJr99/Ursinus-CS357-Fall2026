@@ -16,7 +16,9 @@ info:
   
 tags:
   - introduction
-  
+
+---
+
 The purpose of this assignment is to get us set up for the course, both by getting to know each other better, and by setting up the software environment.
 
 ## Personal Survey (5 Pts)
