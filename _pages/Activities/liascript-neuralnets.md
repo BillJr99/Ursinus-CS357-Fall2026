@@ -9,10 +9,6 @@ import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
-        https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css
-        
-script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js
-script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js
 
 -->
 
@@ -20,37 +16,6 @@ script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.
 
 William M. Mongan  
 Department of Mathematics, Computer Science, and Statistics
-
-<script>
-  (function startKaTeX() {
-    function go() {
-      if (typeof renderMathInElement !== "function") return false;
-      renderMathInElement(document.body, {
-        delimiters: [
-          {left: "\\(", right: "\\)", display: false},  // inline (KaTeX default)
-          {left: "$",   right: "$",   display: false},  // optional inline with $...$
-          {left: "\\[", right: "\\]", display: true},   // display (KaTeX default)
-          {left: "$$",  right: "$$",  display: true}    // display with $$
-        ],
-        throwOnError: false
-      });
-      return true;
-    }
-
-    // Try after initial load…
-    if (!go()) {
-      // …and retry a few times in case LiaScript finishes injecting content after scripts load.
-      let tries = 0;
-      const t = setInterval(() => {
-        tries += 1;
-        if (go() || tries > 20) clearInterval(t);
-      }, 150);
-    }
-
-    // Also re-render if LiaScript signals readiness (some templates emit this event)
-    window.addEventListener("LIA:ready", go);
-  })();
-</script>
 
 ---
 
@@ -61,7 +26,7 @@ Department of Mathematics, Computer Science, and Statistics
 - Explain the computational model of an artificial neuron and the role of activation functions.
 - Derive gradient-based learning rules and implement a minibatch training loop.
 - Distinguish between under/over-parameterization and diagnose bias/variance.
-- Apply regularization (\(\ell_2\), dropout, early stopping) and normalization (batch/layer norm).
+- Apply regularization ($\ell_2$, dropout, early stopping) and normalization (batch/layer norm).
 - Evaluate models using accuracy, precision/recall, ROC-AUC, calibration, and confusion matrices.
 - Reflect on ethical considerations: dataset bias, fairness, interpretability, and reproducibility.
 - Work through a full backpropagation derivation (single hidden layer) and reason about convergence.
@@ -70,29 +35,29 @@ Department of Mathematics, Computer Science, and Statistics
 
 ## What Is a Neural Network?
 
-A **neural network (NN)** is a parameterized function \( f_\theta: \mathbb{R}^d \to \mathbb{R}^k \) composed of affine maps and nonlinearities. In its simplest form:
+A **neural network (NN)** is a parameterized function $ f_\theta: \mathbb{R}^d \to \mathbb{R}^k $ composed of affine maps and nonlinearities. In its simplest form:
 
-\[
+$$
 \hat{y} = f_\theta(x) = W_2\,\sigma(W_1 x + b_1) + b_2
-\]
+$$
 
-where \(\sigma\) is an activation function applied elementwise. Key ideas:
+where $\sigma$ is an activation function applied elementwise. Key ideas:
 
 - **Representation**: Depth and width govern function expressivity.
-- **Learning**: Parameters \(\theta=(W,b)\) are learned by minimizing an empirical risk via gradient descent.
+- **Learning**: Parameters $\theta=(W,b)$ are learned by minimizing an empirical risk via gradient descent.
 - **Generalization**: Performance on unseen data depends on hypothesis class, regularization, and data distribution.
 
 ---
 
 ## The Artificial Neuron & Activation Functions
 
-**Neuron**: \(z = w^\top x + b\), \(a = \sigma(z)\)
+**Neuron**: $z = w^\top x + b$, $a = \sigma(z)$
 
-- **Sigmoid**: \(\sigma(z)=1/(1+e^{-z})\). Pros: smooth probability-like output. Cons: saturation, vanishing gradients.
+- **Sigmoid**: $\sigma(z)=1/(1+e^{-z})$. Pros: smooth probability-like output. Cons: saturation, vanishing gradients.
 - **Tanh**: zero-centered; also saturates.
-- **ReLU**: \(\max(0,z)\); sparse activations; can "die".
+- **ReLU**: $\max(0,z)$; sparse activations; can "die".
 - **Leaky/Parametric ReLU, GELU**: mitigate dead ReLUs and improve gradient flow.
-- **Softmax** for multiclass probabilities: \(p_i = \frac{e^{z_i}}{\sum_j e^{z_j}}\).
+- **Softmax** for multiclass probabilities: $p_i = \frac{e^{z_i}}{\sum_j e^{z_j}}$.
 
 **Universal Approximation**: A single hidden layer with a non-polynomial activation can approximate continuous functions on compact sets to arbitrary precision (Cybenko, 1989; Hornik, 1991).
 
@@ -102,28 +67,28 @@ where \(\sigma\) is an activation function applied elementwise. Key ideas:
 
 We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes to many):
 
-- Net input to hidden: \( z = w\,x + b \)
-- Hidden activation: \( h = f(z) \) (e.g., ReLU, tanh, sigmoid)
-- Output: \( \hat{y} = v\,h + c \)
-- Loss (per-example MSE): \( L = \tfrac{1}{2}(y - \hat{y})^2 \)
+- Net input to hidden: $ z = w\,x + b $
+- Hidden activation: $ h = f(z) $ (e.g., ReLU, tanh, sigmoid)
+- Output: $ \hat{y} = v\,h + c $
+- Loss (per-example MSE): $ L = \tfrac{1}{2}(y - \hat{y})^2 $
 
 **Gradients**
 
-\[
+$$
 \frac{\partial L}{\partial \hat{y}} = \hat{y}-y,\quad
 \frac{\partial L}{\partial v} = (\hat{y}-y)h,\quad
 \frac{\partial L}{\partial c} = (\hat{y}-y)
-\]
+$$
 
-\[
+$$
 \frac{\partial L}{\partial h} = (\hat{y}-y)v,\quad
 \frac{\partial L}{\partial z} = (\hat{y}-y)v\,f'(z)
-\]
+$$
 
-\[
+$$
 \boxed{\frac{\partial L}{\partial w} = (\hat{y}-y)v\,f'(z)\,x},\qquad
 \boxed{\frac{\partial L}{\partial b} = (\hat{y}-y)v\,f'(z)}
-\]
+$$
 
 ---
 
@@ -139,25 +104,25 @@ We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes t
 
 **What the code does**
 
-- Generates synthetic linear data \(y = a^\star x + b^\star + \epsilon\).
-- Defines a single-layer linear model \(\hat{y} = w x + b\) (no hidden layer).
-- Uses MSE loss and gradient descent/Adam to recover \(w,b\).
+- Generates synthetic linear data $y = a^\star x + b^\star + \epsilon$.
+- Defines a single-layer linear model $\hat{y} = w x + b$ (no hidden layer).
+- Uses MSE loss and gradient descent/Adam to recover $w,b$.
 - Plots training loss and compares learned vs. true line.
 
 **Math performed**
 
-- Forward: \(\hat{y}_i = w x_i + b\)  
-- Loss: \( \mathcal{L} = \frac{1}{n}\sum_i (y_i - \hat{y}_i)^2 \)  
+- Forward: $\hat{y}_i = w x_i + b$  
+- Loss: $ \mathcal{L} = \frac{1}{n}\sum_i (y_i - \hat{y}_i)^2 $  
 - Gradients:
-  \[
+  $$
   \frac{\partial \mathcal{L}}{\partial w} = -\frac{2}{n}\sum_i x_i(y_i-\hat{y}_i),\qquad
   \frac{\partial \mathcal{L}}{\partial b} = -\frac{2}{n}\sum_i (y_i-\hat{y}_i)
-  \]
+  $$
 
 **Key takeaways**
 
 - Closed-form solution exists (OLS), but gradient descent sets up for neural nets.
-- Visualizes convex loss surface and stable convergence with proper \(\eta\).
+- Visualizes convex loss surface and stable convergence with proper $\eta$.
 
 ---
 
@@ -171,20 +136,20 @@ We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes t
 
 **What the code does**
 
-- Extends to a small MLP: \( \hat{y} = W_2\,\sigma(W_1 x + b_1) + b_2 \).
-- Still fits (possibly) linear or piecewise-linear mappings depending on \(\sigma\).
+- Extends to a small MLP: $ \hat{y} = W_2\,\sigma(W_1 x + b_1) + b_2 $.
+- Still fits (possibly) linear or piecewise-linear mappings depending on $\sigma$.
 - Compares optimizers (SGD vs. Adam) and capacity (hidden width).
 
 **Math performed**
 
 - Forward pass as above; MSE loss.  
 - Backprop (vectorized):
-  \[
+  $$
   \delta^{(2)} = \hat{y}-y,\quad
   \frac{\partial \mathcal{L}}{\partial W^{(2)}}=\delta^{(2)}h^\top,\quad
   \delta^{(1)}=(W^{(2)})^\top\delta^{(2)}\odot \sigma'(z^{(1)}),\quad
   \frac{\partial \mathcal{L}}{\partial W^{(1)}}=\delta^{(1)}x^\top
-  \]
+  $$
 
 **Key takeaways**
 
@@ -203,15 +168,15 @@ We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes t
 
 **What the code does**
 
-- Samples from a nonlinear target (e.g., \(y=\sin(2\pi x)+\epsilon\)).
-- Trains an MLP with hidden width \(m\) and activation \(\sigma\) to approximate it.
-- Compares bias/variance by sweeping \(m\) and plotting validation error.
+- Samples from a nonlinear target (e.g., $y=\sin(2\pi x)+\epsilon$).
+- Trains an MLP with hidden width $m$ and activation $\sigma$ to approximate it.
+- Compares bias/variance by sweeping $m$ and plotting validation error.
 
 **Math performed**
 
-- Forward: \( h=\sigma(W^{(1)}x+b^{(1)}),\ \hat{y}=W^{(2)}h+b^{(2)} \).  
-- Regularization: weight decay adds \(\lambda\lVert W\rVert_2^2\) to the loss.  
-- Early stopping monitors validation loss \( \mathcal{L}_{val} \).
+- Forward: $ h=\sigma(W^{(1)}x+b^{(1)}),\ \hat{y}=W^{(2)}h+b^{(2)} $.  
+- Regularization: weight decay adds $\lambda\lVert W\rVert_2^2$ to the loss.  
+- Early stopping monitors validation loss $ \mathcal{L}_{val} $.
 
 **Key takeaways**
 
@@ -237,10 +202,10 @@ We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes t
 **Math performed**
 
 - Cross-entropy with softmax:
-  \[
+  $$
   p=\mathrm{softmax}(z),\quad \mathcal{L} = -\sum_{c} y_c\log p_c
-  \]
-- Gradient for logits \(z\): \(\frac{\partial \mathcal{L}}{\partial z}=p-y\).  
+  $$
+- Gradient for logits $z$: $\frac{\partial \mathcal{L}}{\partial z}=p-y$.  
 - Backprop through layers as in vectorized derivation.
 
 **Key takeaways**
@@ -266,9 +231,9 @@ We analyze a scalar-in, scalar-out network with one hidden neuron (generalizes t
 
 **Math performed**
 
-- Logistic regression: \( p(y=1\mid x)=\sigma(w^\top x + b) \), BCE loss.  
-- Calibration: compares predicted \(p\) to empirical frequency; ECE bins probabilities.  
-- Fairness metrics: disparate impact \(=\frac{\Pr[\hat{y}=1\,|\,A=1]}{\Pr[\hat{y}=1\,|\,A=0]}\), etc.
+- Logistic regression: $ p(y=1\mid x)=\sigma(w^\top x + b) $, BCE loss.  
+- Calibration: compares predicted $p$ to empirical frequency; ECE bins probabilities.  
+- Fairness metrics: disparate impact $=\frac{\Pr[\hat{y}=1\,|\,A=1]}{\Pr[\hat{y}=1\,|\,A=0]}$, etc.
 
 **Key takeaways**
 
