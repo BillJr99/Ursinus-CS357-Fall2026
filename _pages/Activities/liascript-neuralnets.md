@@ -11,10 +11,24 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
         
 script: |
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
-      onload="renderMathInElement(document.body);"></script>        
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        // Keep the defaults AND add $...$ for inline
+        delimiters: [
+          {left: "\\(", right: "\\)",  display: false},  // default inline
+          {left: "$",   right: "$",    display: false},  // added inline
+          {left: "\\[", right: "\\]",  display: true},   // default display
+          {left: "$$",  right: "$$",   display: true}    // default display
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+      
 -->
 
 # Foundations of AI: Neural Networks
