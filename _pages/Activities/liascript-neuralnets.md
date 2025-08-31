@@ -16,26 +16,41 @@ script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.
 
 -->
 
+# Foundations of AI: Neural Networks
+
+William M. Mongan  
+Department of Mathematics, Computer Science, and Statistics
+
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    if (typeof renderMathInElement === "function") {
+  (function startKaTeX() {
+    function go() {
+      if (typeof renderMathInElement !== "function") return false;
       renderMathInElement(document.body, {
         delimiters: [
           {left: "\\(", right: "\\)", display: false},  // inline (KaTeX default)
-          {left: "$",   right: "$",   display: false},  // optional inline with $
+          {left: "$",   right: "$",   display: false},  // optional inline with $...$
           {left: "\\[", right: "\\]", display: true},   // display (KaTeX default)
           {left: "$$",  right: "$$",  display: true}    // display with $$
         ],
         throwOnError: false
       });
+      return true;
     }
-  });
+
+    // Try after initial load…
+    if (!go()) {
+      // …and retry a few times in case LiaScript finishes injecting content after scripts load.
+      let tries = 0;
+      const t = setInterval(() => {
+        tries += 1;
+        if (go() || tries > 20) clearInterval(t);
+      }, 150);
+    }
+
+    // Also re-render if LiaScript signals readiness (some templates emit this event)
+    window.addEventListener("LIA:ready", go);
+  })();
 </script>
-
-# Foundations of AI: Neural Networks
-
-William M. Mongan  
-Department of Mathematics, Computer Science, and Statistics
 
 ---
 
