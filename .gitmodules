@@ -10,3 +10,6 @@
 [submodule "_pages/Exercises"]
 	path = _pages/Exercises
 	url = https://github.com/BillJr99/Ursinus-Exercises.git
+[submodule "files/ml-course-master"]
+	path = files/ml-course-master
+	url = https://github.com/ML-course/master.git
