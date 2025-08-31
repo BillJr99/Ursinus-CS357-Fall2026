@@ -9,27 +9,28 @@ import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+        https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css
         
-script: |
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
+script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js
+script: https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js
+
+-->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof renderMathInElement === "function") {
       renderMathInElement(document.body, {
-        // Keep the defaults AND add $...$ for inline
         delimiters: [
-          {left: "\\(", right: "\\)",  display: false},  // default inline
-          {left: "$",   right: "$",    display: false},  // added inline
-          {left: "\\[", right: "\\]",  display: true},   // default display
-          {left: "$$",  right: "$$",   display: true}    // default display
+          {left: "\\(", right: "\\)", display: false},  // inline (KaTeX default)
+          {left: "$",   right: "$",   display: false},  // optional inline with $
+          {left: "\\[", right: "\\]", display: true},   // display (KaTeX default)
+          {left: "$$",  right: "$$",  display: true}    // display with $$
         ],
         throwOnError: false
       });
-    });
-  </script>
-      
--->
+    }
+  });
+</script>
 
 # Foundations of AI: Neural Networks
 
