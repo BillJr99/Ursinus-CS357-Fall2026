@@ -5,6 +5,7 @@ title: "Written Assignment: Exploring Generative AI"
 
 info:
   points: 100
+  submission: "Please submit all files as a ZIP file on the Course Learning Management System."
   goals:
     - Implement an AI technique such as prompt engineering, chaining, API integration
     - Demonstrate an AI technique through a working reproduction
