@@ -22,12 +22,13 @@ Department of Mathematics, Computer Science, and Statistics
 
 **Goals:**
 
-- Define **AI governance** and explain its role in ensuring responsible AI development and deployment.  
-- Understand key **policy frameworks**: transparency, accountability, safety, and oversight.  
-- Examine case studies of **AI regulation** (EU AI Act, U.S. Executive Orders, industry standards).  
-- Discuss **global perspectives**: international governance and cultural differences.  
-- Explore how to design **institutional policies** for AI use in education and research.  
-- Critically assess ethical, legal, and societal implications of AI policy.  
+- Define **AI governance** and its relationship to law, policy, and ethics.  
+- Explore existing and emerging **AI policy frameworks** (EU, US, global).  
+- Analyze the **tensions between innovation, regulation, and accountability**.  
+- Understand mechanisms for **transparency, auditing, and oversight**.  
+- Discuss AI governance in the context of **education and research**.  
+- Reflect on future directions and **ethical implications**.  
+- Explore methods of **explainable AI**, focusing on Shapley value–based analysis, and connect governance and transparency concepts to practical model interpretation using [nviz](https://kodianb.github.io/nviz).
 
 ---
 
@@ -39,7 +40,16 @@ Department of Mathematics, Computer Science, and Statistics
 
 ---
 
-## 2) Key Dimensions of Governance
+## 2) Governance vs. Regulation
+
+- **Governance**: broader set of principles, norms, and institutions guiding AI design and use.  
+- **Regulation**: binding legal rules, e.g., privacy law, safety standards.  
+
+**Key question:** How do we design rules that encourage innovation but protect society?  
+
+---
+
+## 3) Key Dimensions of Governance
 
 1. **Transparency & Explainability**  
    - Models should provide interpretable reasoning where possible.  
@@ -56,16 +66,37 @@ Department of Mathematics, Computer Science, and Statistics
 
 ---
 
-## 3) Global AI Policy Landscape
+## 4) The Policy Landscape
 
-- **EU AI Act (2024)**: Risk-based regulation — strictest requirements for high-risk AI (e.g., healthcare, hiring, law enforcement).  
-- **U.S. Executive Orders (2023–2025)**: Focus on transparency, safety standards, and responsible innovation.  
-- **China’s AI Regulation**: Strong state oversight, emphasis on alignment with social values and content control.  
-- **OECD AI Principles**: International guidelines on fairness, transparency, accountability.  
+- **EU AI Act (2024)**
+  - Risk-based classification (unacceptable, high-risk, limited, minimal risk).  
+  - Strict documentation, testing, and transparency for high-risk systems.  
+
+- **U.S. Executive Orders (2023–2025)**
+  - Emphasis on safety, trust, and equity.  
+  - Public–private partnerships.  
+  - AI Bill of Rights proposals.  
+
+- **OECD Principles (2019)**
+  - Human-centered values.  
+  - Transparency, robustness, accountability.  
+
+- **China & Global South Perspectives**
+  - Tighter state oversight.  
+  - Balancing innovation with social control or developmental priorities.  
 
 ---
 
-## 4) Governance in Practice: AI in Education
+## 5) Mechanisms of AI Governance
+
+- **Transparency requirements**: model cards, data statements, audit logs.  
+- **Accountability frameworks**: liability for harms, corporate responsibility.  
+- **Safety measures**: red-teaming, adversarial testing, continuous monitoring.  
+- **International collaboration**: treaties, standards, and coordination (e.g., UN, G7, OECD).  
+
+---
+
+## 6) Governance in Practice: AI in Education
 
 - **Uses in universities**: grading assistance, tutoring, admissions, research support.  
 - **Policy challenges**:  
@@ -79,7 +110,7 @@ Department of Mathematics, Computer Science, and Statistics
 
 ---
 
-## 5) Activity: Drafting an AI Policy
+## 7) Activity: Drafting an AI Policy
 
 - In small groups, draft a **1–2 page AI governance policy** for a university.  
 - Consider:
@@ -94,17 +125,48 @@ Department of Mathematics, Computer Science, and Statistics
 
 ---
 
-## 6) Ethical & Societal Questions
+## 8) Case Study: AI in Education
 
-- How do we balance innovation with regulation?  
-- Should AI be regulated like other critical technologies (aviation, pharmaceuticals)?  
-- Who should make decisions about acceptable AI uses: governments, companies, or communities?  
-- How can universities lead by example in developing responsible AI policies?  
+- Use cases: grading, tutoring, personalized learning.  
+- Risks:  
+  - Reinforcing bias in admissions/testing.  
+  - Transparency: should students know when feedback is AI-generated?  
+  - Privacy: how should student data be collected and protected?  
 
-**Discussion Prompt:**  
-If you were tasked with writing a national AI policy, what are the first three principles you would include, and why?  
+**Activity:** Draft a section of an AI policy for a university that covers:  
+- Disclosure of AI use in grading.  
+- Student rights in relation to AI tutors.  
+- Limits on data collection.  
 
 {{2}}
+
+---
+
+## 9) The Challenge of Enforcement
+
+- Policy is only effective if enforceable.  
+- Requires **auditing mechanisms**: independent oversight, red-teaming, transparency reports.  
+- Tension between open innovation vs. risk control.  
+- Possible technical supports: logging APIs, watermarking AI outputs, audit trails.  
+
+---
+
+## 10) Ethical and Societal Implications
+
+- **Democracy & misinformation**: AI can generate persuasive disinformation at scale.  
+- **Equity**: access to AI benefits vs. concentration of power in few companies.  
+- **Labor impacts**: job displacement, creative labor value.  
+- **AI personhood?** Should agents ever have legal standing?  
+
+**Discussion Prompt 1:**  
+If your institution adopts AI tutoring systems, what policies are necessary to ensure they are used **fairly, responsibly, and transparently**?  
+
+{{3}}
+
+**Discussion Prompt 2:**  
+If you were tasked with writing a national AI policy, what are the first three principles you would include, and why?  
+
+{{4}}
 
 ---
 
@@ -114,6 +176,7 @@ If you were tasked with writing a national AI policy, what are the first three p
 - U.S. Executive Office of the President (2023). *Executive Order on the Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence*.  
 - Floridi & Cowls (2019). *A Unified Framework of Five Principles for AI in Society*.  
 - Jobin, Ienca, & Vayena (2019). *The global landscape of AI ethics guidelines*. *Nature Machine Intelligence*.  
+- Crawford, K. (2021). *Atlas of AI*.  
 - Mitchell, *Artificial Intelligence: A Guide for Thinking Humans* (Ch. 16).  
 
 ---

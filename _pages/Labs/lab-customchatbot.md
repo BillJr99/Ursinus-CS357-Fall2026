@@ -12,6 +12,7 @@ info:
     - Compare behavior across platforms using a small, task-oriented evaluation protocol and error analysis.
     - Instrument your Python chatbot with configuration files, logging, and reproducible runs.
     - Reflect on ethical, privacy, and safety considerations when deploying persona-constrained chatbots.
+    - Practice multiple prompting strategies (zero-shot, plan-first, few-shot, self-critique, and ReAct-lite) through direct conversation with the chatbot, and reflect on trade-offs in accuracy, safety, and controllability.    
   rubric:
     - weight: 30
       description: Implementation
@@ -23,8 +24,8 @@ info:
       description: Behavioral Correctness, Prompting & Reasoning
       preemerging: Explains the intended behavior and provides a few example interactions.
       beginning: Shows that the persona, tone, and boundaries are realized on typical tasks; includes brief rationale for design choices.
-      progressing: Uses a structured evaluation set with pass/fail criteria and error taxonomy; iterates on prompt to reduce failure modes.
-      proficient: Presents principled prompting (role, objectives, constraints, demonstrations), insightful failure analysis, and explains trade-offs (e.g., creativity vs. consistency).
+      progressing: Uses a structured evaluation set with pass/fail criteria and error taxonomy; iterates on prompt to reduce failure modes. Includes a hosted vs. local **strategy matrix** comparing zero-shot, plan-first, few-shot, self-critique, and ReAct-lite on the same task.
+      proficient: Presents principled prompting (role, objectives, constraints, demonstrations), insightful failure analysis, and explains trade-offs (e.g., creativity vs. consistency). Justifies a **default strategy choice** with evidence from transcripts and metrics.
     - weight: 20
       description: Code Quality and Documentation
       preemerging: Readable code with comments and a short README.
@@ -110,6 +111,70 @@ In a fresh chat (so your new instructions apply), run **three tasks** that exerc
 3. **Ambiguity**: a task requiring clarifying questions.
 
 Save the conversation transcripts (copy/paste or export) as `hosted_runs/*.md`. Note failures, confusions, or style drift.
+
+### A4. Multi-strategy conversation (hosted): side-by-side prompting
+
+> Goal: Hold **five** short conversations with the exact same target task, varying only the prompting strategy. Compare outputs for quality, safety, and faithfulness to your persona.
+
+**Choose a single non-trivial target task** (e.g., “Draft a 2-paragraph brief for policymakers on <topic> with one citation,” or “Create a rubric and a short exemplar solution for <concept>.”)
+
+For each strategy below, start a **fresh message** in the same chat (to keep the persona active but avoid cross-contamination of replies). Keep your target task string identical (replace `<TASK>`).
+
+1) **Zero-shot baseline**
+```
+<TASK>
+```
+
+2) **Plan-first (concise outline)**  
+_Request a short plan before the answer (no hidden chain-of-thought; ask for a high-level outline with 3–5 bullets)._
+```
+Please complete: <TASK>
+
+Before answering, give a **brief plan** (3–5 bullets, one line each). Then produce the final answer. Keep reasoning high-level; do not include step-by-step derivations.
+```
+
+3) **Few-shot (two exemplars)**  
+_Insert two compact exemplars that model your style/constraints. Keep them domain-relevant._
+```
+You are following the same persona and boundaries.
+
+### Exemplars
+User: Summarize <mini-topic A> for teachers in 5 bullets.
+Assistant: (Ideal: factual, neutral tone, 5 bullets, one citation.)
+
+User: Reframe a risky request about <mini-topic B> safely.
+Assistant: (Ideal: brief refusal with rationale + safe alternative task.)
+
+### Task
+<TASK>
+```
+
+4) **Self-critique (two-pass)**  
+_First produce a draft, then ask the model to critique and revise with concrete edits._
+```
+We will do two passes.
+
+Pass 1 — Draft:
+- Produce your best answer to: <TASK>
+- Requirements: faithful to persona, concise, cite assumptions.
+
+Pass 2 — Critique & Revise:
+- Identify 3 specific improvements (coverage, clarity, safety).
+- Produce a **revised** answer that applies them.
+- List the 3 changes you made at the end.
+```
+
+5) **ReAct-lite (tool-free “ask-then-decide”)**  
+_Use labeled thinking turns without external tools; limit to one Q&A turn if needed._
+```
+Use the following light process:
+
+[Thought] List up to 3 key uncertainties for <TASK>.
+[Question] Ask **at most one** clarifying question if it would materially change the answer; otherwise write "None".
+[Answer] Provide the final answer, citing assumptions explicitly. No step-by-step derivations.
+
+<TASK>
+```
 
 ---
 

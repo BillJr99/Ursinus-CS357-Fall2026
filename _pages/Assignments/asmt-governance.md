@@ -10,6 +10,7 @@ info:
     - Analyze key concepts and principles of AI governance, including transparency, accountability, fairness, and safety.
     - Design a draft **AI governance policy** tailored for an educational or organizational context.
     - Critically evaluate the ethical, legal, and societal implications of AI policy choices.
+    - Critically engage with multimedia sources on algorithmic bias, including *Coded Bias* (film), *Are We Automating Racism?* (video), and assigned articles, to connect governance principles with real-world impacts.    
   rubric:
     - weight: 25
       description: Analysis of Governance Concepts
@@ -27,8 +28,8 @@ info:
       description: Integration of External Sources
       preemerging: Mentions at most one external source without clear integration.
       beginning: Cites a few relevant sources with partial integration into argument.
-      progressing: Uses a range of authoritative sources, connects them effectively to claims.
-      proficient: Synthesizes diverse, authoritative sources seamlessly to support arguments and policy recommendations.
+      progressing: Uses a range of authoritative sources (including at least one of the assigned multimedia or articles), and connects them effectively to claims.
+      proficient: Synthesizes diverse, authoritative sources seamlessly — explicitly referencing insights from *Coded Bias*, *Are We Automating Racism?*, and/or the assigned articles — to support arguments and policy recommendations.
     - weight: 25
       description: Organization & Writing Quality
       preemerging: Ideas presented in a disorganized way; significant clarity or grammar issues.
@@ -65,18 +66,43 @@ In this assignment, you will **design a governance policy for the use of AI syst
    - Include enforcement or accountability mechanisms.  
 
 4. **Connect to External Frameworks**  
-   - Cite at least **three external sources** (e.g., EU AI Act, OECD AI Principles, academic literature).  
+   - Cite at least **six external sources** (e.g., EU AI Act, OECD AI Principles, academic literature).  
 
-5. **Reflect**  
+5. **Engage with Multimedia & Readings**  
+   - Watch the documentary *[Coded Bias](https://ursinuscollege.on.worldcat.org/oclc/1200171382)*.  
+   - Watch the short video *[Are We Automating Racism?](https://www.youtube.com/watch?v=Ok5sKLXqynQ\&list=PLJ8cMiYb3G5cOFj1VQf8ykNOI0ptuHybc\&index=4)*.  
+   - Read the following articles:  
+     - [Addressing Equity and Ethics in Artificial Intelligence — APA](https://www.apa.org/monitor/2024/04/addressing-equity-ethics-artificial-intelligence)  
+     - [Avoiding the Discriminatory Use of Artificial Intelligence — US Department of Education](https://files.eric.ed.gov/fulltext/ED661946.pdf)  
+   - In your policy draft and reflection, explicitly reference insights or examples from at least **two** of these sources to ground your governance recommendations.
+
+6. **Reflect**  
    - Discuss how your policy design balances innovation with ethical responsibility.  
    - Consider the implications for students, educators, or society at large.  
 
----
+### Additional Context
+Consider the [Ursinus Questions](https://www.ursinus.edu/quest/the-questions/).  Here are a few prompts to consider for each section (however, you are welcome to come up with your own instead!):
+
+1. **Understanding Bias in AI (Ursinus Question: What should matter to me?):**
+   - Analyze the biases depicted in both "Coded Bias" and "Are We Automating Racism." How do these biases manifest in AI systems, and why should they matter to individuals, communities, and society at large?
+   - Identify the potential challenges and risks these biases pose to vulnerable populations. How might they exacerbate existing inequalities and injustices?
+
+2. **Transparency, Accountability, and Social Justice (Ursinus Question: How should we live together?):**
+   - Evaluate the ethical considerations of transparency and accountability in AI. How do these principles contribute to social justice and communal harmony?
+   - Discuss the role of regulation, industry standards, and community engagement in ensuring responsible AI practices. What collaborative efforts are needed to foster ethical AI development?
+
+3. **Human-Centric Computing and Automation (Ursinus Question: How can we understand the world?):**
+   - Reflect on the balance between human judgment and automated decision-making. How can human-centric computing principles guide the design and deployment of AI systems?
+   - Consider the video's question, "Are We Automating Racism?" What are the implications of automating human biases, and how can we mitigate these risks?
+
+4. **Envisioning Responsible AI (Ursinus Question: What will I do?):**
+   - Envision a future where AI is developed and applied with care and responsibility. What steps must be taken by researchers, policymakers, educators, and industry leaders to achieve this vision?
+   - Propose interdisciplinary solutions that address the challenges and risks highlighted in both the documentary and the video. How can we ensure that AI serves the greater good without compromising ethical values and social equity?
 
 ## Deliverables
 
-- A **2–3 page written policy draft** (in PDF or Markdown).  
-- At least **three cited sources** from course readings or external policy documents.  
+- A **3-6 page written policy draft** (in PDF or Markdown).  
+- At least **six cited sources** from course readings or external policy documents, including references to *Coded Bias*, *Are We Automating Racism?*, and/or the assigned articles, integrated into your analysis and policy justification.  
 - A short **reflection paragraph** explaining your design choices.  
 
 ---
