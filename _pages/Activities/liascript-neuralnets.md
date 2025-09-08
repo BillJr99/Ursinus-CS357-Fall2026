@@ -77,22 +77,21 @@ Note that the W1 weights are two-fold because there are two input features to W1
 
 **Key point:** Each connector (edge) computes an **affine** function of its inputs.  An **affine** function is a function that is linear plus a constant shift (bias).
 
-- For a layer with weights \(W\) and bias \(b\):
-  \[
+- For a layer with weights $W$ and bias $b$:
+  $$
   z = W x + b \quad\text{(affine map)}
-  \]
+  $$
 - Stacking only affine maps **collapses to a single affine map**:
-  \[
+  $$
   z_2 = W_2 (W_1 x + b_1) + b_2 = (W_2 W_1) x + (W_2 b_1 + b_2)
-  \]
+  $$
   By induction, any composition of affine maps is affine.
 
 **Implication:** Without nonlinear activations, a “deep” network is just a linear (or affine) model—no matter how many layers you stack.
 
-???  
-**Instructor notes:**  
-State explicitly: “Depth without nonlinearity does not add representational power.”  
-If helpful, connect to linear algebra: compositions of linear maps are linear; adding the bias keeps it affine.
+**Notes:**  
+- Depth without nonlinearity does not add representational power.
+- Compositions of linear maps are still linear; adding the bias keeps it affine.  So, we can still use linear algebra techniques and algorithms, which are well known!
 
 ---
 
@@ -100,28 +99,33 @@ If helpful, connect to linear algebra: compositions of linear maps are linear; a
 
 **Nonlinear activations** allow networks to represent curved decision boundaries and complex functions.
 
-- **ReLU:** \(\operatorname{ReLU}(z)=\max(0,z)\)  
-  Pros: sparse activations, efficient; Cons: “dead” units if gradients vanish for \(z<0\).
-  
+- **ReLU:** $\operatorname{ReLU}(z)=\max(0,z)$  
+  Pros: sparse activations, efficient; Cons: “dead” units if gradients vanish for $z<0$.
+
+<br>  
 <a title="Ringdongdang, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:ReLU_and_GELU.svg"><img width="256" alt="A depiction of the Rectified Linear Unit and the Gaussian Error Linear Unit" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/ReLU_and_GELU.svg/256px-ReLU_and_GELU.svg.png?20201109014124"></a>
+<br>
   
-- **\(\tanh\):** \(\tanh(z)\in(-1,1)\)  
-  Pros: zero-centered, smooth; Cons: saturation at \(\pm1\) → small gradients.
-  
+- **$\tanh$:** $\tanh(z)\in(-1,1)$  
+  Pros: zero-centered, smooth; Cons: saturation at $\pm1$ → small gradients.
+
+<br>  
 <a title="Fylwind at English Wikipedia, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Sinh_cosh_tanh.svg"><img width="256" alt="Sinh cosh tanh" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Sinh_cosh_tanh.svg/256px-Sinh_cosh_tanh.svg.png?20160310232738"></a>
-  
-- **Sigmoid:** \(\sigma(z)=\frac{1}{1+e^{-z}}\)  
+<br>
+
+- **Sigmoid:** $\sigma(z)=\frac{1}{1+e^{-z}}$  
   Pros: probabilistic interpretation; Cons: saturation, not zero-centered.
 - (Modern variants) **Leaky-ReLU/Parametric-ReLU, GELU**: mitigate dead ReLUs, smoother gradient flow.
 
+<br>
 <a title="Qef, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Logistic-curve.svg"><img width="512" alt="Sigmoid Function Plot / Logistic Curve" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/512px-Logistic-curve.svg.png?20140704193223"></a>
+<br>
 
-**Universal Approximation (intuition):** With a non-polynomial activation (e.g., ReLU, \(\tanh\)), a single hidden layer can approximate any continuous function on a compact set to arbitrary accuracy.
-
-???  
-**Instructor notes:**  
-Invite students to name a function a linear model cannot fit (e.g., \(y=x^2\), \(\sin\), XOR).  
-Connect to later slides on gradient flow and saturation.
+**Universal Approximation (intuition):** With a non-polynomial activation (e.g., ReLU, $\tanh$), a single hidden layer can approximate any continuous function on a compact set to arbitrary accuracy.
+ 
+**Reflection:**  
+- Name a function a linear model cannot fit (e.g., $y=x^2$, $\sin$, XOR).  
+- We will overcome this later.
 
 ---
 
@@ -132,54 +136,52 @@ In a neural network, **ReLU is applied to the pre-activation values** (the affin
 **Forward pass for one layer:**
 
 1. Compute the affine map:
-   \[
+   $$
    z = W x + b
-   \]
+   $$
 
 2. Apply ReLU elementwise:
-   \[
+   $$
    a = \operatorname{ReLU}(z) = \max(0, z)
-   \]
+   $$
 
-3. Pass activations \(a\) to the next layer.
+3. Pass activations $a$ to the next layer.
 
 **Example (one-hidden-layer network):**
 
-\[
+$$
 h = \operatorname{ReLU}(W^{(1)}x + b^{(1)}), \quad
 \hat{y} = W^{(2)} h + b^{(2)}
-\]
+$$
 
-- ReLU is applied to \(z^{(1)}\) (the hidden layer pre-activation).  
+- ReLU is applied to $z^{(1)}$ (the hidden layer pre-activation).  
 - Output layer often uses a different activation (identity for regression, softmax for classification).
 
-???  
-**Instructor notes:**  
-Emphasize that activation functions always follow the affine transformation.  
-Without ReLU (or another nonlinearity), the whole network collapses to a single affine map.
+**Key Takeaways:**  
+- The activation functions always follow the affine transformation.  
+- Without ReLU (or another nonlinearity), the whole network collapses to a single affine map.
 
 ---
 
 ## Linear vs. Nonlinear in Practice
 
 - **Linear-only network:**  
-  Can fit \(y = a^\top x + b\); fails on XOR or \(y=\sin(2\pi x)\).
+  Can fit $y = a^\top x + b$; fails on XOR or $y=\sin(2\pi x)$.
 - **With nonlinearity:**  
   Each layer builds features that “unbend” the space so classes become separable.
 
 **Takeaway:** Nonlinearity is the “secret sauce” that makes depth useful.
 
 **Mini-proof of collapse (one line):**  
-\[
+$$
 (W_k (\cdots (W_2(W_1 x + b_1)+b_2)\cdots ) + b_k)
 = \underbrace{(W_k \cdots W_2 W_1)}_{\tilde{W}} x
 + \underbrace{(W_k \cdots W_3 W_2 b_1 + \cdots + W_k b_{k-1} + b_k)}_{\tilde{b}}
 \Rightarrow \tilde{W}x+\tilde{b}
-\]
+$$
 
-???  
-**Instructor notes:**  
-If time permits, sketch XOR: plot the two classes and show no single line separates them; add a two-ReLU hidden feature construction that makes them linearly separable.
+**Reflection:**  
+Sketch XOR: plot the two classes and show no single line separates them; add a two-ReLU hidden feature construction that makes them linearly separable.
 
 ---
 
@@ -219,9 +221,8 @@ plt.legend(); plt.xlabel("h1"); plt.ylabel("h2")
 plt.show()
 ```
 
-???
-**Instructor notes:**  
-If you prefer not to compute a separator, simply highlight that the two classes are now linearly separable in (h1, h2) space; tie back to "affine + nonlinearity" layers.
+**Notes:**  
+The two classes are now linearly separable in (h1, h2) space.  Notice how these tie back to "affine + nonlinearity" layers.
 
 ---
 
@@ -342,9 +343,7 @@ $\displaystyle \mathcal{L} = \frac{1}{B}\sum_{i=1}^B \tfrac{1}{2}(\hat{y}_i - y_
 
 **Key idea:** “Error” is a *numerical discrepancy* ($\hat{y}-y$); the *loss* is a scalar objective that aggregates those discrepancies and is differentiable.
 
-???
-
-**Instructor notes:**  
+**Notes:**  
 Emphasize that we only need $\frac{\partial \mathcal{L}}{\partial \hat{y}}$ to start backprop; everything else follows from the chain rule.
 
 ---
@@ -370,10 +369,8 @@ Emphasize that we only need $\frac{\partial \mathcal{L}}{\partial \hat{y}}$ to s
 
 **Batch dimension:** replace outer products by batch sums/means.
 
-???
-
-**Instructor notes:**  
-Match this slide to the students’ `Linear.backward` and `MLP.backward` implementations. Highlight how caches (`z`, `h`) make these Jacobians cheap.
+**Implementation:**  
+You will implement this math in `Linear.backward` and `MLP.backward` function implementations. Notice how caches (`z`, `h`) make these Jacobians cheap.
 
 ---
 
@@ -386,7 +383,7 @@ Let
 - $L = \tfrac{1}{2}(\hat{y} - y)^2$
 
 **Derivative wrt prediction (why the $\tfrac{1}{2}$ “disappears”):**
-\[
+$$
 \begin{aligned}
 \frac{\partial L}{\partial \hat{y}}
   &= \frac{\partial}{\partial \hat{y}} \left[\tfrac{1}{2}(\hat{y} - y)^2\right] \\
@@ -395,7 +392,7 @@ Let
   &= (\hat{y} - y)\cdot 1 \\
   &= \boxed{\hat{y} - y}
 \end{aligned}
-\]
+$$
 **Cancellation:** the factor $2$ from the square cancels the leading $\tfrac{1}{2}$.
 
 ```python
@@ -405,9 +402,7 @@ err = yhat - y                 # residuals
 dYhat = (1.0 / B) * err        # ∂L/∂ŷ = (1/B)(ŷ - y) for MSE with 1/2
 ```
 
-???
-
-**Instructor notes:**  
+**Implementation:**  
 Make the sign flip explicit if you differentiate $(y-\hat{y})^2$ directly:
 $\frac{\partial}{\partial \hat{y}}\tfrac{1}{2}(y-\hat{y})^2
 = \tfrac{1}{2}\cdot 2(y-\hat{y})\cdot(-1)=\hat{y}-y$.
@@ -417,12 +412,12 @@ $\frac{\partial}{\partial \hat{y}}\tfrac{1}{2}(y-\hat{y})^2
 ## Vectorized Mini-Batch MSE (Shapes & Scaling)
 
 For a batch of size $B$ with $\hat{Y},Y\in\mathbb{R}^{B\times k}$:
-\[
+$$
 \mathcal{L}=\frac{1}{B}\sum_{i=1}^B \tfrac{1}{2}\|\hat{y}_i - y_i\|_2^2
 \quad\Rightarrow\quad
 \frac{\partial \mathcal{L}}{\partial \hat{Y}}
 = \frac{1}{B}(\hat{Y}-Y)
-\]
+$$
 - **Residuals:** $E=\hat{Y}-Y$  
 - **Gradient wrt predictions:** $G_{\hat{Y}}=\frac{1}{B}E$ has the **same shape** as $\hat{Y}$.
 
@@ -443,15 +438,15 @@ Let $z^{(2)}=W^{(2)}h+b^{(2)}$ and $\hat{Y}=z^{(2)}$ (identity). With $G_{\hat{Y
 
 - Since $\hat{Y}=z^{(2)}$, $\dfrac{\partial \mathcal{L}}{\partial z^{(2)}} = G_{\hat{Y}}$
 - Parameter gradients (using batch matrix calculus):
-\[
+$$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial W^{(2)}} = \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)^\top h \;}
 \qquad
 \boxed{\; \frac{\partial \mathcal{L}}{\partial b^{(2)}} = \sum_{i=1}^B \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)_i \;}
-\]
+$$
 - Downstream to hidden activations:
-\[
+$$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial h} = \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)\, (W^{(2)}) \;}
-\]
+$$
 *(Check shapes: if $W^{(2)}\in\mathbb{R}^{k\times m}$, then $h\in\mathbb{R}^{B\times m}$ and $z^{(2)}\in\mathbb{R}^{B\times k}$.)*
 
 ```python
@@ -479,9 +474,7 @@ class Linear:
         return dx
 ```
 
-???
-
-**Instructor notes:**  
+**Implementation:**  
 If you store $h$ row-wise, the compact vectorized forms are
 $\,\partial \mathcal{L}/\partial W^{(2)} = (G_{\hat{Y}})^\top h$ and
 $\,\partial \mathcal{L}/\partial b^{(2)} = \text{row-sum}(G_{\hat{Y}})$.
@@ -493,19 +486,19 @@ $\,\partial \mathcal{L}/\partial b^{(2)} = \text{row-sum}(G_{\hat{Y}})$.
 With $z^{(1)}=W^{(1)}x+b^{(1)}$, $h=\sigma(z^{(1)})$:
 
 1) **Through activation (elementwise):**
-\[
+$$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial z^{(1)}} =
 \left(\frac{\partial \mathcal{L}}{\partial h}\right)\odot \sigma'\!\left(z^{(1)}\right) \;}
-\]
+$$
 
 2) **First affine parameters:**
-\[
+$$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial W^{(1)}} =
 \left(\frac{\partial \mathcal{L}}{\partial z^{(1)}}\right)^\top x \;}
 \qquad
 \boxed{\; \frac{\partial \mathcal{L}}{\partial b^{(1)}} =
 \sum_{i=1}^B \left(\frac{\partial \mathcal{L}}{\partial z^{(1)}}\right)_i \;}
-\]
+$$
 (Optionally, propagate to inputs: $\frac{\partial \mathcal{L}}{\partial x} =
 \left(\frac{\partial \mathcal{L}}{\partial z^{(1)}}\right) W^{(1)}$.)
 
@@ -550,10 +543,8 @@ Pick $(x,y)=(2,5)$, $(w,b,v,c)=(1,0,1,0)$, $\sigma(z)=\tanh z$.
 Compute forward → loss; then verify each gradient by finite differences ($\epsilon=10^{-5}$):  
 $\displaystyle \frac{\partial L}{\partial \theta}\approx \frac{L(\theta+\epsilon)-L(\theta-\epsilon)}{2\epsilon}$
 
-???
-
-**Instructor notes:**  
-Encourage students to implement a 3–5 line finite-difference test around their backward functions, as in the lab.
+**Reflection:**  
+How would you implement a 3–5 line finite-difference test around their backward functions, as in the lab.
 
 ---
 
@@ -565,19 +556,19 @@ Then:
 - **Loss:** $L=\tfrac{1}{2}(\hat{y}-5)^2$
 
 **Backward (per sample):**
-\[
+$$
 \frac{\partial L}{\partial \hat{y}} = \hat{y}-5,\quad
 \frac{\partial L}{\partial v} = (\hat{y}-5)\,h,\quad
 \frac{\partial L}{\partial c} = (\hat{y}-5)
-\]
-\[
+$$
+$$
 \frac{\partial L}{\partial h} = (\hat{y}-5)\,v,\quad
 \frac{\partial L}{\partial z^{(1)}} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)
-\]
-\[
+$$
+$$
 \boxed{\frac{\partial L}{\partial w} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)\,x},\qquad
 \boxed{\frac{\partial L}{\partial b} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)}
-\]
+$$
 Compute numbers to see the **$\tfrac{1}{2}$ cancellation** realized as the simple $(\hat{y}-y)$ factor.
 
 ```python
@@ -616,11 +607,11 @@ print("Finite diff   :", fd)
 ## Classification Parallel (Softmax + Cross-Entropy)
 
 For logits $z\in\mathbb{R}^{B\times C}$, $p=\mathrm{softmax}(z)$, one-hot $Y$,
-\[
+$$
 \mathcal{L}=\frac{1}{B}\sum_{i=1}^B \big(-\sum_{c} Y_{ic}\log p_{ic}\big)
 \quad\Rightarrow\quad
 \boxed{\; \frac{\partial \mathcal{L}}{\partial z} = p - Y \;}
-\]
+$$
 This is a *fused* result; the softmax Jacobian and the CE derivative **cancel** neatly to yield $p-Y$ (analogous simplicity to the MSE’s $\hat{Y}-Y$).
 
 ```python
@@ -631,10 +622,8 @@ def softmax_cross_entropy_backward(probs, Y_onehot):
     return (probs - Y_onehot) / probs.shape[0]
 ```
 
-???
-
-**Instructor notes:**  
-Invite students to derive $p-Y$ using $\partial\,\log\mathrm{softmax}$ identities or consult a short handout.
+**Reflection:**  
+Derive $p-Y$ using $\partial\,\log\mathrm{softmax}$ identities or consult a short handout.
 
 ---
 
@@ -698,10 +687,8 @@ for layer in (l1, l2):
     layer.b -= lr * layer.db
 ```
 
-???
-
-Instructor notes:
-Recommend plotting loss and (for classification) accuracy each epoch; ask students to compare ReLU vs. tanh and relate to gradient flow.
+**Reflection:**
+Compare ReLU vs. tanh and relate to gradient flow.
 
 ---
 
@@ -774,9 +761,7 @@ $\displaystyle \frac{\partial \mathcal{L}}{\partial z} = p - y$  *(already avera
 
 **Takeaway:** For CE with softmax, you don’t need to code a separate softmax Jacobian; the fused derivative is numerically stable and simple.
 
-???
-
-**Instructor notes:**  
+**Implementation:**  
 Derive $ \partial \mathcal{L}/\partial z = p - y$ from $\partial \log \mathrm{softmax} = I - \mathbf{1}p^\top$. Connect to lab code where students fill `softmax_cross_entropy_backward`.
 
 ---
@@ -795,10 +780,8 @@ $\displaystyle \frac{\partial \mathcal{L}_{\text{total}}}{\partial W^{(\ell)}} =
 **Dropout:** modifies training dynamics (stochastic subnets) rather than adding a deterministic penalty.  
 **Early stopping:** acts like implicit regularization by halting before overfit.
 
-???
-
-**Instructor notes:**  
-Map directly to the lab section where students add `lin.dW += 2*lam*lin.W` or its averaged variant, and discuss scaling conventions (with/without $\tfrac{1}{2}$).
+**Implementation:**
+`lin.dW += 2*lam*lin.W` or its averaged variant, and discuss scaling conventions (with/without $\tfrac{1}{2}$).
 
 ---
 
