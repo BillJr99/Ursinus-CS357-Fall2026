@@ -13,3 +13,6 @@
 [submodule "files/ml-course-master"]
 	path = files/ml-course-master
 	url = https://github.com/ML-course/master.git
+[submodule "files/ml_animated"]
+	path = files/ml_animated
+	url = https://github.com/markhliu/ml_animated.git
