@@ -515,3 +515,185 @@ if __name__ == "__main__":
 - Using https://aipedagogy.org/assignments/, develop an activity that asks students to meaningfully explore a topic in your course.  Scaffold their prompting structure, critique of AI, and customization of inputs.  Try it out yourself and report out on the chat you had.
 
 ---
+
+## Activity: Personal Finance Monte Carlo (30 Years)
+
+**Objective.** Guide a multimodal ChatGPT to:
+1) Generate **synthetic personal finance data** (income, expenses, savings rate).  
+2) Run a **30-year Monte Carlo retirement simulation** with tunable hyperparameters.  
+3) Produce **visualizations**, an **animated figure**, an **Excel spreadsheet**, and a **written executive summary**.  
+4) Iterate by **prompting** (not coding locally).
+
+**Why “multimodal”?** The assistant will create **text + tables + images/plots + animation + spreadsheets** in response to your prompts.
+
+**What to Request / Produce**
+- PNG (percentile fan chart) and **animated GIF** (e.g., rolling path reveal).  
+- **.xlsx** workbook with inputs, paths, and percentiles.  
+- A 150–250 word executive brief interpreting results.
+
+---
+
+### Step 1: Setup & Role Prompt
+
+> Copy and paste the prompt below *as your first message* to ChatGPT.
+
+```text
+System role:
+You are a meticulous financial simulation assistant. You can generate data, code, visualizations, animations, and spreadsheets. You will:
+(1) Create plausible synthetic personal-finance data.
+(2) Run a 30-year Monte Carlo retirement simulation with parameterized scenarios.
+(3) Return visualizations (PNG), an animated GIF, and an Excel workbook.
+(4) Provide a concise executive summary.
+
+Please use a clear, reproducible workflow with numbered steps. Label all outputs and provide download links.
+```
+
+**Tip:** Ask ChatGPT to **summarize back your task** to ensure alignment before proceeding.
+
+---
+
+### Step 2: Generate Synthetic Baseline Data
+
+> Paste the following *user* prompt. Replace the bracketed fields as desired.
+
+```text
+Task 1 — Create synthetic baseline data.
+
+Context:
+- Current age: [35]
+- Retirement age: [67]
+- Horizon: 30 years
+- Gross annual income (year 1): [$120,000]
+- Expected income growth: [2.0%] nominal per year
+- Expense categories: housing, food, healthcare, transport, education, leisure, misc
+- Baseline savings policy: allocate [20%] of gross income to investment contributions until retirement
+
+Instructions:
+1) Generate a YEAR-BY-YEAR table for 30 years with columns:
+   year, age, income, total_expenses, savings_contribution, leftover_cash
+   Also include a separate breakdown table by expense category as shares and $ amounts.
+2) Ensure values are realistic and internally consistent (income growth, stable % allocations with mild noise).
+3) Output as both a Markdown table AND a downloadable CSV named baseline_cashflows.csv.
+```
+
+---
+
+### Step 3: Define Monte Carlo Hyperparameters (Scenarios)
+
+> Paste and run:
+
+```text
+Task 2 — Define Monte Carlo retirement scenarios.
+
+Please define parameters for a two-asset portfolio (stocks/bonds) with:
+- Conservative: stock_mean=5.0%, stock_vol=12%, bond_mean=2.5%, bond_vol=5%, corr=0.10
+- Balanced:     stock_mean=7.5%, stock_vol=18%, bond_mean=3.5%, bond_vol=7%, corr=0.10
+- Aggressive:   stock_mean=9.0%, stock_vol=24%, bond_mean=3.5%, bond_vol=8%, corr=0.15
+
+Inflation:
+- mean=2.5%, vol=1.0% (clip at -1% floor)
+
+Fees:
+- expense_ratio=0.20% per year
+
+Shocks (major disasters):
+- With probability 15% per decade, impose a 2-year shock with stock returns: [-30%, -15%],
+  bonds: [+2%, +1%] (flight-to-quality), then mean revert to scenario parameters.
+- Ensure shocks are randomly located (but non-overlapping) and independent across paths.
+
+Policies:
+- Contributions from baseline_cashflows.csv added each pre-retirement year.
+- Withdrawals in retirement start at $[80,000] (year 1 of retirement) and then increase by simulated inflation.
+
+Simulation:
+- n_paths=5,000, years=30, start balance=$[150,000], stock_weight=[70%], bond_weight=[30%].
+
+Please present all parameters in a single summary table and confirm they will be used in the next step.
+```
+
+---
+
+### Step 4: Run the Simulation and Return Visualizations
+
+> Paste and run. This requests **static and animated** outputs.
+
+```text
+Task 3 — Run the 30-year Monte Carlo simulation across (Conservative, Balanced, Aggressive).
+
+Requirements:
+1) Use the baseline_cashflows.csv for pre-retirement contributions.
+2) Apply the shock process described earlier (15% per decade, two-year blocks).
+3) Produce, for each scenario:
+   - A PNG plot with 5th/25th/50th/75th/95th percentiles of portfolio value by year.
+   - A single animated GIF that gradually reveals 100 randomly selected paths (faint lines) under the median curve.
+   - Compute the success rate (no ruin through year 30).
+
+4) Provide downloadable files:
+   - scenario_balanced.png, scenario_conservative.png, scenario_aggressive.png
+   - paths_animated.gif
+   - A CSV named percentiles_[scenario].csv with columns: year, p05, p25, p50, p75, p95, mean_balance.
+
+5) Use a single axes per figure and default colors (no custom styles).
+6) Include a clear vertical marker at the retirement year.
+7) Briefly explain any assumptions made.
+```
+
+---
+
+### Step 5: Create an Excel Workbook
+
+> Paste and run. You will get a downloadable `.xlsx`.
+
+```text
+Task 4 — Build an Excel workbook named retirement_sim_outputs.xlsx with:
+- Sheet "Inputs": all scenario parameters and shock rules.
+- Sheet "BaselineCashflows": the baseline_cashflows.csv data.
+- Sheet "Percentiles_[Scenario]": the corresponding percentile tables for each scenario.
+- Sheet "SuccessRates": a summary table with success rates (rows=scenarios).
+- Sheet "Notes": short text documenting data sources, version, and generation date.
+
+Please include table formatting and freeze the header rows.
+Return a downloadable link to retirement_sim_outputs.xlsx.
+```
+
+---
+
+### Step 6: Executive Summary (Multimodal Brief)
+
+> Paste and run.
+
+```text
+Task 5 — Executive summary (150–250 words).
+Audience: Non-technical stakeholders.
+Include:
+- Which scenario(s) best balance success probability and volatility.
+- Interpretation of the percentile fan charts.
+- One concrete recommendation for contributions or spending policy.
+- One caveat or risk (e.g., inflation regime shifts, clustered shocks).
+
+Please embed the three PNGs inline if possible and link to the animated GIF and Excel workbook.
+```
+
+---
+
+### Step 7: Quality Checklist & Troubleshooting
+
+**Ensure:**
+- Files present: 3 PNGs, 1 GIF, 1 XLSX, 3 percentile CSVs, success-rate table.  
+- Plots: single axes, default colors, retirement marker visible, y-axis labeled.  
+- Shock logic: described and reflected in code/results.  
+- Spreadsheet tabs: Inputs, BaselineCashflows, Percentiles_*, SuccessRates, Notes.  
+- Summary: plain language, specific recommendation, one risk.
+
+**If something looks off:**
+- Ask ChatGPT to **echo first 5 rows** of each percentile file.  
+- Request **seed control** to reproduce figures.  
+- Clarify that **contributions** come *only* pre-retirement; **withdrawals** post-retirement and inflation-indexed.  
+- If animations are large, ask for **reduced frame count** or **lower DPI**.
+
+**Note:**
+
+- These are **synthetic** finances—do not upload personal identifiers.  
+- Be transparent: label synthetic data and assumptions in outputs.  
+- Discuss **limitations**: model risk, parameter uncertainty, and non-stationarity (e.g., regime shifts, clustered volatility).  
+- Cite sources if you import external assumptions or datasets.
