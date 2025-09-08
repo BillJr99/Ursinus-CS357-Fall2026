@@ -322,7 +322,7 @@ schedule:
       - dtitle: "Lab: Small GPT Handed Out"
         dlink: "Labs/SmallGPT"
         points: 100
-        rubricpath: "_pages/Labs/asmt-smallgpt.md"        
+        rubricpath: "_pages/Labs/lab-smallgpt.md"        
     readings:
       - rtitle: "Mitchell Chapter 7"
         rlink: false
@@ -347,7 +347,7 @@ schedule:
       - dtitle: "Lab: Small GPT Due"
         dlink: "Labs/SmallGPT"
         points: 100
-        rubricpath: "_pages/Labs/asmt-smallgpt.md"     
+        rubricpath: "_pages/Labs/lab-smallgpt.md"     
       - dtitle: "Lab: Custom Chatbot Handed Out"
         dlink: "Labs/CustomChatbot"
         points: 100
