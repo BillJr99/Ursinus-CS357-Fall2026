@@ -3,7 +3,7 @@ author:   William M. Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/_pages/Activities/liascript-whatisai.md or locally if deployed via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-whatisai.md (liascript renderer is required to share classroom backend)
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-whatisai.md or locally if deployed via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-whatisai.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -295,7 +295,7 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 
 [View this project on Replit](https://replit.com/@BillJr99/BigramWordGenerator#main.py)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/files/notebooks/Bigram_Word_Generator.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/Bigram_Word_Generator.ipynb)
 
 ---
 
@@ -361,7 +361,7 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 
 [View this project on Replit](https://replit.com/@BillJr99/AttentionExample#main.py)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/files/notebooks/Attention.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/Attention.ipynb)
 
 ---
 
@@ -371,7 +371,7 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 
 [View this project on Replit](https://replit.com/@BillJr99/TextPredictionNLPExample#main.py)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357-Fall2025/blob/gh-pages/files/notebooks/Sentence_Prediction_with_BERT.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/Sentence_Prediction_with_BERT.ipynb)
 
 **Q:** Did it do a "good" job?  
 - What does *good* mean?
