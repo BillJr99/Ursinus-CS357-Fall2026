@@ -811,6 +811,14 @@ $\displaystyle \frac{\partial \mathcal{L}_{\text{total}}}{\partial W^{(\ell)}} =
 
 ---
 
+## Open Colab: Introduction to Neural networks
+
+By [markhliu](https://github.com/markhliu)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/ml_animated/Ch03IntroNN.ipynb)
+
+---
+
 ## Open Colab: Linear Function Estimator (Single-Layer)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/LinearFunctionEstimatorNN.ipynb)
