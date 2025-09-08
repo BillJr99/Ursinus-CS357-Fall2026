@@ -3,7 +3,6 @@ layout: syllabus
 permalink: /
 title: "CS357: Foundations of Artificial Intelligence"
 
-    
 info:
   course_number: CS357
   course_sections: 
@@ -217,16 +216,17 @@ schedule:
         rlink: "https://www.researchgate.net/publication/378312334_Embodiment_and_intelligence_a_levinasian_perspective"
   - week: "2"
     date: "0"
+    title: "Introduction: Tools"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-tools.md"
+  - week: "2"
+    date: "1"
     title: "Neural Networks"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-neuralnets.md"
     readings:
       - rtitle: "Understanding the Math behind Neural Networks - Madhav Bhaskar"
         rlink: "https://zoxoc.medium.com/understanding-the-math-behind-neural-networks-beginner-friendly-guide-c85427127f6c"
       - rtitle: "Understanding the Math behind Neural Networks by Building one from Scratch - Samson Zhang"
-        rlink: "https://web.archive.org/web/20210113042222/https://www.samsonzhang.com/2020/11/24/understanding-the-math-behind-neural-networks-by-building-one-from-scratch-no-tf-keras-just-numpy.html"
-  - week: "2"
-    date: "1"
-    title: "Neural Networks"
+        rlink: "https://web.archive.org/web/20210113042222/https://www.samsonzhang.com/2020/11/24/understanding-the-math-behind-neural-networks-by-building-one-from-scratch-no-tf-keras-just-numpy.html"    
     deliverables:
       - dtitle: "Written Assignment: AI by Hand Part 1 Handed Out"
         dlink: "Assignments/AIByHand1"
@@ -319,6 +319,10 @@ schedule:
         dlink: "Labs/XOREstimator"
         points: 100
         rubricpath: "_pages/Labs/lab-xorestimator.md"
+      - dtitle: "Lab: Small GPT Handed Out"
+        dlink: "Labs/SmallGPT"
+        points: 100
+        rubricpath: "_pages/Labs/asmt-smallgpt.md"        
     readings:
       - rtitle: "Mitchell Chapter 7"
         rlink: false
@@ -327,7 +331,7 @@ schedule:
   - week: "7"
     date: "1"
     title: "Prompting and Context Engineering"
-    deliverables:
+    deliverables:   
       - dtitle: "Written Assignment: AI by Hand Part 2 Handed Out"
         dlink: "Assignments/AIByHand2"
         points: 100
@@ -340,6 +344,10 @@ schedule:
     title: "Personas and Configurations"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-personas.md"
     deliverables:
+      - dtitle: "Lab: Small GPT Due"
+        dlink: "Labs/SmallGPT"
+        points: 100
+        rubricpath: "_pages/Labs/asmt-smallgpt.md"     
       - dtitle: "Lab: Custom Chatbot Handed Out"
         dlink: "Labs/CustomChatbot"
         points: 100
