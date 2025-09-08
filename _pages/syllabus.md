@@ -458,6 +458,9 @@ schedule:
         points: 100
         submission_types: "written"
         rubricpath: "_pages/Readings/reading-presentationreport.md"
+    readings:
+      - rtitle: "Article about Using Getty Images Scraped Data for AI Training"
+        rlink: "https://news.artnet.com/art-world/getty-images-suing-stability-ai-stable-diffusion-illegally-scraped-images-copyright-infringement-2243631"
   - week: "12"
     date: "1"
     title: "AI Governance and Policy"

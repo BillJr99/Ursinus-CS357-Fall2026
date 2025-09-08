@@ -129,6 +129,229 @@ print(resp.choices[0].message.content)
 
 ---
 
+## 5b) Creating a Vector Database in Python
+
+- **Step 1:** Choose a DB (FAISS, Chroma, Weaviate, Pinecone).
+- **Step 2:** Embed documents into vectors.
+- **Step 3:** Store embeddings + metadata in the vectordb.
+
+```python
+# Example using ChromaDB
+import chromadb
+from openai import OpenAI
+
+client = OpenAI()
+chroma = chromadb.Client()
+
+# Create / connect to a collection
+collection = chroma.create_collection("my_docs")
+
+# Add some documents with IDs
+docs = [
+    "Deep learning models use backpropagation.",
+    "Vector databases store embeddings for fast search.",
+    "Ursinus College is in Collegeville, PA."
+]
+
+embs = [
+    client.embeddings.create(model="text-embedding-3-small", input=doc).data[0].embedding
+    for doc in docs
+]
+
+collection.add(documents=docs, embeddings=embs, ids=[f"doc{i}" for i in range(len(docs))])
+
+print("VectorDB created with 3 documents.")
+```
+
+---
+
+## 5c) Querying / Prompting the Vector Database
+
+- Query workflow: embed → nearest neighbor search → retrieve top-k.
+- Retrieved passages are injected into the LLM prompt to ground its answer.
+
+```python
+query = "Where is Ursinus College?"
+q_emb = client.embeddings.create(model="text-embedding-3-small", input=query).data[0].embedding
+
+# Retrieve top-2 similar docs
+results = collection.query(query_embeddings=[q_emb], n_results=2)
+retrieved = results["documents"][0]
+
+print("Retrieved:", retrieved)
+
+# Feed into LLM with retrieved context
+messages = [
+  {"role": "system", "content": "Answer using the retrieved docs."},
+  {"role": "user", "content": f"Docs: {retrieved}\nQuestion: {query}"}
+]
+
+resp = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+print(resp.choices[0].message.content)
+```
+
+---
+
+## 5d) Bulk Ingestion: Add a Directory of Documents to a Vector DB
+
+**Goal:** Walk a directory tree, load files, chunk text, embed, and store with metadata.
+
+**Assumptions**
+- You have an OpenAI API key set (e.g., `OPENAI_API_KEY`).
+- Install deps (choose one DB backend):
+  - `pip install chromadb pypdf openai`  *(Chroma)*
+  - `pip install faiss-cpu pypdf openai` *(FAISS)*
+
+```python
+# Bulk ingestion with CHROMA (local, simple)
+import os, glob, re
+from typing import List, Dict
+import chromadb
+from pypdf import PdfReader
+from openai import OpenAI
+
+# ---------- Configuration ----------
+DATA_DIR = "./docs"        # directory containing .txt, .md, .pdf
+COLLECTION_NAME = "course_corpus"
+MODEL_EMB = "text-embedding-3-small"
+CHUNK_SIZE = 800           # ~800 characters per chunk
+CHUNK_OVERLAP = 120        # overlap to preserve context between chunks
+# -----------------------------------
+
+client = OpenAI()
+chroma = chromadb.Client()
+collection = chroma.get_or_create_collection(COLLECTION_NAME)
+
+def read_text_file(path: str) -> str:
+    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+        return f.read()
+
+def read_pdf_file(path: str) -> str:
+    reader = PdfReader(path)
+    pages = []
+    for p in reader.pages:
+        pages.append(p.extract_text() or "")
+    return "\n".join(pages)
+
+def load_document(path: str) -> str:
+    ext = os.path.splitext(path)[1].lower()
+    if ext in [".txt", ".md", ".markdown"]:
+        return read_text_file(path)
+    elif ext == ".pdf":
+        return read_pdf_file(path)
+    else:
+        return ""  # unsupported type (you can extend for .docx, .html, etc.)
+
+def chunk_text(text: str, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP) -> List[str]:
+    text = re.sub(r"\s+\n", "\n", text)           # normalize whitespace
+    text = re.sub(r"\n{3,}", "\n\n", text)        # collapse excessive blank lines
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = min(len(text), start + chunk_size)
+        chunks.append(text[start:end])
+        start = end - overlap
+        if start < 0: start = 0
+        if start >= len(text): break
+    return [c.strip() for c in chunks if c.strip()]
+
+def embed_texts(texts: List[str]) -> List[List[float]]:
+    # Batch in small groups to be gentle on rate limits
+    embeddings = []
+    BATCH = 64
+    for i in range(0, len(texts), BATCH):
+        batch = texts[i:i+BATCH]
+        resp = client.embeddings.create(model=MODEL_EMB, input=batch)
+        embeddings.extend([d.embedding for d in resp.data])
+    return embeddings
+
+# Attach metadata to each document, like the original file path for provenance
+def path_to_meta(path: str) -> Dict:
+    return {
+        "path": os.path.abspath(path),
+        "filename": os.path.basename(path),
+        "ext": os.path.splitext(path)[1].lower(),
+    }
+
+# Walk directory, load, chunk, embed, and add to Chroma
+paths = []
+for ext in ("**/*.txt", "**/*.md", "**/*.markdown", "**/*.pdf"):
+    paths += glob.glob(os.path.join(DATA_DIR, ext), recursive=True)
+
+doc_texts, doc_ids, metadatas = [], [], []
+for p in paths:
+    raw = load_document(p)
+    if not raw.strip():
+        continue
+    chunks = chunk_text(raw)
+    for j, ch in enumerate(chunks):
+        doc_texts.append(ch)
+        doc_ids.append(f"{p}::chunk{j}")
+        metadatas.append(path_to_meta(p))
+
+# Embed and store
+if doc_texts:
+    embs = embed_texts(doc_texts)
+    collection.add(documents=doc_texts, embeddings=embs, metadatas=metadatas, ids=doc_ids)
+    print(f"Ingested {len(doc_texts)} chunks from {len(paths)} files into Chroma collection '{COLLECTION_NAME}'.")
+else:
+    print("No documents found to ingest.")
+```
+
+---
+
+## 5e) Querying the Ingested Vector DB
+
+- **top-k retrieval:** trade-off between coverage (higher k) and noise/latency.
+- **temperature:** keep low (e.g., 0.0–0.3) for grounded answers that hew closely to retrieved evidence.
+- **Citations:** include file paths/IDs from metadata for transparency.
+
+```python
+from openai import OpenAI
+client = OpenAI()
+
+QUESTION = "Summarize what our corpus says about Ursinus College."
+
+# 1) Embed query
+q_emb = client.embeddings.create(model="text-embedding-3-small", input=QUESTION).data[0].embedding
+
+# 2) Retrieve top-k
+TOP_K = 4
+res = collection.query(query_embeddings=[q_emb], n_results=TOP_K)
+
+retrieved_docs = res["documents"][0]
+retrieved_meta = res["metadatas"][0]
+
+for i, (doc, meta) in enumerate(zip(retrieved_docs, retrieved_meta), start=1):
+    print(f"\n--- Hit {i} ---")
+    print(meta.get("path", meta))
+    print(doc[:500] + ("..." if len(doc) > 500 else ""))
+
+# 3) Compose grounded prompt for the LLM
+context_block = "\n\n".join(retrieved_docs)
+messages = [
+    {"role": "system", "content": "Answer concisely and cite file paths when relevant."},
+    {"role": "user", "content": f"Context:\n{context_block}\n\nQuestion: {QUESTION}\nIf you cite, reference the file paths shown above."},
+]
+
+resp = client.chat.completions.create(model="gpt-4o-mini", messages=messages, temperature=0.2)
+print("\n\n=== MODEL ANSWER ===\n", resp.choices[0].message.content)
+```
+
+---
+
+## 5f) Practical Tips
+
+- **Pre-processing:** normalize whitespace; strip boilerplate/headers; consider language detection if your corpus is multilingual.
+- **Chunk size:** 600–1200 characters (or ~200–400 tokens) often works well; tune for your domain and model.
+- **Overlap:** 10–20% overlap preserves context at chunk boundaries.
+- **Deduplication:** hash chunks (minhash/shingling) to avoid redundant storage.
+- **Metadata:** include source path, title, section headings, dates; this enables filtered retrieval (e.g., only ext=".pdf").
+- **Refreshing the DB:** re-embed/re-index when documents change; consider background jobs and versioning.
+- **Security:** never index secrets; respect file permissions; beware prompt-injection in retrieved content—sanitize or constrain model behavior.
+
+---
+
 ## 6) Evaluation of RAG
 
 - **Accuracy:** grounded vs. hallucinated answers.  
