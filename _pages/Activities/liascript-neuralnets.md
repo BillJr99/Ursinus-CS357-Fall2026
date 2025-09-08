@@ -944,17 +944,6 @@ $\displaystyle \frac{\partial \mathcal{L}_{\text{total}}}{\partial W^{(\ell)}} =
 
 ---
 
-## Studio: Guided Exercises
-
-1. **Fit & Diagnose** (Linear vs. Nonlinear): Train both linear and 2-layer MLPs on the same dataset; compare bias/variance.  
-2. **Regularize**: Add dropout and weight decay; plot validation curves across hyperparameters.  
-3. **Fairness Lens**: Using the credit dataset, compute metrics by subgroup; discuss tradeoffs among fairness criteria.  
-4. **Interpret**: Apply gradient-based saliency or SHAP to your MNIST model; report insights and limitations.
-
-**Deliverable**: A short report (2–3 pages) with methods, results, and ethical analysis.
-
----
-
 ## References & Further Reading
 
 - Goodfellow, Bengio, Courville. *Deep Learning*. MIT Press.  

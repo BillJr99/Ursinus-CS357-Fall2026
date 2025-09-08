@@ -49,11 +49,11 @@ tags:
 
 In this lab, we will walk through building neural networks from scratch. You will:
 
-1) **Run** a fully‑worked linear estimator (no missing code).
-2) **Fill in** carefully isolated pieces for a multilayer linear network.
-3) **Extend** to a nonlinear MLP by implementing activations and their derivatives.
-4) **Interpret** weights on a **Credit Score** toy dataset (regularization + feature effects).
-5) **Train** a tiny NN on **MNIST**, implementing softmax, cross‑entropy, and minibatching.
+1. **Run** a fully‑worked linear estimator (no missing code).
+2. **Fill in** carefully isolated pieces for a multilayer linear network.
+3. **Extend** to a nonlinear MLP by implementing activations and their derivatives.
+4. **Interpret** weights on a **Credit Score** toy dataset (regularization + feature effects).
+5. **Train** a tiny NN on **MNIST**, implementing softmax, cross‑entropy, and minibatching.
 
 Each major section explains *why* and *what to change*, with **TODO** comments throughout.  
 
@@ -635,9 +635,20 @@ Y_true[i] * logp[i] = [0, -0.1, 0]
 - If we summed raw log-probabilities, we would be maximizing a negative number, which doesn’t fit the idea of a "loss".
 - By taking the **negative log**, we turn the objective into a positive quantity that can be minimized with gradient descent.
 - Mathematically:
-  - Likelihood:  L(θ) = ∏ pθ(yᵢ | xᵢ)
-  - Log-likelihood: log L(θ) = Σ log pθ(yᵢ | xᵢ)  (to maximize)
-  - Negative log-likelihood (NLL):  –Σ log pθ(yᵢ | xᵢ)  (to minimize)
+  - **Likelihood**:  
+    $$
+    L(\theta) = \prod_i p_\theta(y_i \mid x_i)
+    $$
+
+  - **Log-likelihood** (to maximize):  
+    $$
+    \log L(\theta) = \sum_i \log p_\theta(y_i \mid x_i)
+    $$
+
+  - **Negative log-likelihood (NLL)** (to minimize):  
+    $$
+    - \sum_i \log p_\theta(y_i \mid x_i)
+    $$
 - Intuition:  
   - If the model assigns high probability to the correct class (e.g. 0.99), log(prob) ≈ –0.01 → NLL ≈ 0.01 (good, small loss).  
   - If the model assigns low probability (e.g. 0.01), log(prob) ≈ –4.6 → NLL ≈ 4.6 (large penalty).
