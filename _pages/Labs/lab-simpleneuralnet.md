@@ -647,7 +647,7 @@ Y_true[i] * logp[i] = [0, -0.1, 0]
 
   - **Negative log-likelihood (NLL)** (to minimize):  
     $$
-    - \sum_i \log p_\theta(y_i \mid x_i)
+    \sum_i \log p_\theta(y_i \mid x_i)
     $$
 - Intuition:  
   - If the model assigns high probability to the correct class (e.g. 0.99), log(prob) ≈ –0.01 → NLL ≈ 0.01 (good, small loss).  
