@@ -212,7 +212,7 @@ You can write Python code to work with Ollama, as well as with Open-WebUI.  You 
 
 To use Ollama and Open-WebUI programmatically:
 
-### Ollama
+**Ollama**:
 ```python
 #!/usr/bin/env python3
 """
@@ -266,7 +266,7 @@ if __name__ == "__main__":
     main()
 ```
 
-### Open-WebUI
+**Open-WebUI**:
 ```python
 #!/usr/bin/env python3
 """
