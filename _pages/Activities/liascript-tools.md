@@ -350,7 +350,7 @@ if __name__ == "__main__":
 
 ---
 
-# The System Prompt
+## The System Prompt
 
 - **What it is**: Hidden or user-defined instruction that sets global behavior.
 - **Role**:
@@ -458,7 +458,7 @@ if __name__ == "__main__":
 
 ---
 
-# Top-k in RAG
+## Top-k in RAG
 
 - **Context**: In Retrieval-Augmented Generation (RAG), we fetch external documents.
 - **Top-k (retrieval)**:
@@ -679,6 +679,7 @@ Please embed the three PNGs inline if possible and link to the animated GIF and 
 ### Step 7: Quality Checklist & Troubleshooting
 
 **Ensure:**
+
 - Files present: 3 PNGs, 1 GIF, 1 XLSX, 3 percentile CSVs, success-rate table.  
 - Plots: single axes, default colors, retirement marker visible, y-axis labeled.  
 - Shock logic: described and reflected in code/results.  
@@ -686,6 +687,7 @@ Please embed the three PNGs inline if possible and link to the animated GIF and 
 - Summary: plain language, specific recommendation, one risk.
 
 **If something looks off:**
+
 - Ask ChatGPT to **echo first 5 rows** of each percentile file.  
 - Request **seed control** to reproduce figures.  
 - Clarify that **contributions** come *only* pre-retirement; **withdrawals** post-retirement and inflation-indexed.  
