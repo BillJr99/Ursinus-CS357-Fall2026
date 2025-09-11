@@ -351,20 +351,27 @@ Emphasize that we only need $\frac{\partial \mathcal{L}}{\partial \hat{y}}$ to s
 ## Calculus of Error: The Chain Rule as a Computation Graph
 
 **One-hidden-layer MLP (vectorized):**  
+
 - $z^{(1)} = W^{(1)} x + b^{(1)}$  
 - $h = \sigma\!\left(z^{(1)}\right)$  
 - $z^{(2)} = W^{(2)} h + b^{(2)}$  
 - $\hat{y} = z^{(2)}$  (regression) or logits for classification
 
 **Chain rule structure (backward):**  
+
 - Start with $\displaystyle \frac{\partial \mathcal{L}}{\partial \hat{y}}$  
 - Propagate to each parent using Jacobians:  
   $\displaystyle \frac{\partial \mathcal{L}}{\partial z^{(2)}} = \frac{\partial \mathcal{L}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z^{(2)}}$  
+
   $\displaystyle \frac{\partial \mathcal{L}}{\partial W^{(2)}} = \frac{\partial \mathcal{L}}{\partial z^{(2)}} \, h^\top$  
+
   $\displaystyle \frac{\partial \mathcal{L}}{\partial b^{(2)}} = \frac{\partial \mathcal{L}}{\partial z^{(2)}}$  
+
   $\displaystyle \frac{\partial \mathcal{L}}{\partial h} = (W^{(2)})^\top \frac{\partial \mathcal{L}}{\partial z^{(2)}}$  
   $\displaystyle \frac{\partial \mathcal{L}}{\partial z^{(1)}} = \left(\frac{\partial \mathcal{L}}{\partial h}\right)\odot \sigma'\!\left(z^{(1)}\right)$  
+
   $\displaystyle \frac{\partial \mathcal{L}}{\partial W^{(1)}} = \frac{\partial \mathcal{L}}{\partial z^{(1)}} \, x^\top$  
+
   $\displaystyle \frac{\partial \mathcal{L}}{\partial b^{(1)}} = \frac{\partial \mathcal{L}}{\partial z^{(1)}}$
 
 **Batch dimension:** replace outer products by batch sums/means.
@@ -377,12 +384,14 @@ You will implement this math in `Linear.backward` and `MLP.backward` function im
 ## Calculus of Error — The Cancellation, Step by Step
 
 **Setup (per sample):**  
+
 Let
 - $z^{(1)} = W^{(1)} x + b^{(1)}$, $h = \sigma(z^{(1)})$  
 - $z^{(2)} = W^{(2)} h + b^{(2)}$, $\hat{y} = z^{(2)}$  (regression)  
 - $L = \tfrac{1}{2}(\hat{y} - y)^2$
 
 **Derivative wrt prediction (why the $\tfrac{1}{2}$ “disappears”):**
+
 $$
 \begin{aligned}
 \frac{\partial L}{\partial \hat{y}}
@@ -393,6 +402,7 @@ $$
   &= \boxed{\hat{y} - y}
 \end{aligned}
 $$
+
 **Cancellation:** the factor $2$ from the square cancels the leading $\tfrac{1}{2}$.
 
 ```python
@@ -438,15 +448,19 @@ Let $z^{(2)}=W^{(2)}h+b^{(2)}$ and $\hat{Y}=z^{(2)}$ (identity). With $G_{\hat{Y
 
 - Since $\hat{Y}=z^{(2)}$, $\dfrac{\partial \mathcal{L}}{\partial z^{(2)}} = G_{\hat{Y}}$
 - Parameter gradients (using batch matrix calculus):
+
 $$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial W^{(2)}} = \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)^\top h \;}
 \qquad
 \boxed{\; \frac{\partial \mathcal{L}}{\partial b^{(2)}} = \sum_{i=1}^B \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)_i \;}
 $$
+
 - Downstream to hidden activations:
+
 $$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial h} = \left(\frac{\partial \mathcal{L}}{\partial z^{(2)}}\right)\, (W^{(2)}) \;}
 $$
+
 *(Check shapes: if $W^{(2)}\in\mathbb{R}^{k\times m}$, then $h\in\mathbb{R}^{B\times m}$ and $z^{(2)}\in\mathbb{R}^{B\times k}$.)*
 
 ```python
@@ -476,7 +490,9 @@ class Linear:
 
 **Implementation:**  
 If you store $h$ row-wise, the compact vectorized forms are
+
 $\,\partial \mathcal{L}/\partial W^{(2)} = (G_{\hat{Y}})^\top h$ and
+
 $\,\partial \mathcal{L}/\partial b^{(2)} = \text{row-sum}(G_{\hat{Y}})$.
 
 ---
@@ -486,12 +502,14 @@ $\,\partial \mathcal{L}/\partial b^{(2)} = \text{row-sum}(G_{\hat{Y}})$.
 With $z^{(1)}=W^{(1)}x+b^{(1)}$, $h=\sigma(z^{(1)})$:
 
 1) **Through activation (elementwise):**
+
 $$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial z^{(1)}} =
 \left(\frac{\partial \mathcal{L}}{\partial h}\right)\odot \sigma'\!\left(z^{(1)}\right) \;}
 $$
 
 2) **First affine parameters:**
+
 $$
 \boxed{\; \frac{\partial \mathcal{L}}{\partial W^{(1)}} =
 \left(\frac{\partial \mathcal{L}}{\partial z^{(1)}}\right)^\top x \;}
@@ -503,6 +521,7 @@ $$
 \left(\frac{\partial \mathcal{L}}{\partial z^{(1)}}\right) W^{(1)}$.)
 
 **Activation derivatives (per element):**
+
 - ReLU: $\sigma'(z)=\mathbf{1}_{\{z>0\}}$
 - $\tanh$: $\sigma'(z)=1-\tanh^2(z)$
 
@@ -529,21 +548,31 @@ def tanh_backward(z, dout):
 ## Calculus of Error: Example
 
 **Setup (one hidden unit):**  
+
 $z = w x + b,\quad h = \sigma(z),\quad \hat{y} = v h + c,\quad L = \tfrac{1}{2}(\hat{y}-y)^2$
 
 **Gradients (for any smooth $\sigma$):**  
+
 $\displaystyle \frac{\partial L}{\partial \hat{y}} = \hat{y} - y$  
+
 $\displaystyle \frac{\partial L}{\partial v} = (\hat{y}-y)\,h,\quad \frac{\partial L}{\partial c} = (\hat{y}-y)$  
+
 $\displaystyle \frac{\partial L}{\partial h} = (\hat{y}-y)\,v$  
+
 $\displaystyle \frac{\partial L}{\partial z} = (\hat{y}-y)\,v\,\sigma'(z)$  
+
 $\displaystyle \frac{\partial L}{\partial w} = (\hat{y}-y)\,v\,\sigma'(z)\,x,\quad \frac{\partial L}{\partial b} = (\hat{y}-y)\,v\,\sigma'(z)$
 
 **Numerical check:**  
+
 Pick $(x,y)=(2,5)$, $(w,b,v,c)=(1,0,1,0)$, $\sigma(z)=\tanh z$.  
+
 Compute forward → loss; then verify each gradient by finite differences ($\epsilon=10^{-5}$):  
+
 $\displaystyle \frac{\partial L}{\partial \theta}\approx \frac{L(\theta+\epsilon)-L(\theta-\epsilon)}{2\epsilon}$
 
 **Reflection:**  
+
 How would you implement a 3–5 line finite-difference test around their backward functions, as in the lab.
 
 ---
@@ -551,24 +580,30 @@ How would you implement a 3–5 line finite-difference test around their backwar
 ## Calculus of Error: Worked Example
 
 Take $x=2$, $y=5$, $w=1$, $b=0$, $v=1$, $c=0$, and $\sigma(z)=\tanh z$.  
+
 Then:
+
 - **Forward:** $z^{(1)}=1\cdot 2+0=2,\; h=\tanh(2),\; z^{(2)}=1\cdot h+0=h,\; \hat{y}=h$  
 - **Loss:** $L=\tfrac{1}{2}(\hat{y}-5)^2$
 
 **Backward (per sample):**
+
 $$
 \frac{\partial L}{\partial \hat{y}} = \hat{y}-5,\quad
 \frac{\partial L}{\partial v} = (\hat{y}-5)\,h,\quad
 \frac{\partial L}{\partial c} = (\hat{y}-5)
 $$
+
 $$
 \frac{\partial L}{\partial h} = (\hat{y}-5)\,v,\quad
 \frac{\partial L}{\partial z^{(1)}} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)
 $$
+
 $$
 \boxed{\frac{\partial L}{\partial w} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)\,x},\qquad
 \boxed{\frac{\partial L}{\partial b} = (\hat{y}-5)\,v\,\bigl(1-\tanh^2(z^{(1)})\bigr)}
 $$
+
 Compute numbers to see the **$\tfrac{1}{2}$ cancellation** realized as the simple $(\hat{y}-y)$ factor.
 
 ```python
@@ -607,11 +642,13 @@ print("Finite diff   :", fd)
 ## Classification Parallel (Softmax + Cross-Entropy)
 
 For logits $z\in\mathbb{R}^{B\times C}$, $p=\mathrm{softmax}(z)$, one-hot $Y$,
+
 $$
 \mathcal{L}=\frac{1}{B}\sum_{i=1}^B \big(-\sum_{c} Y_{ic}\log p_{ic}\big)
 \quad\Rightarrow\quad
 \boxed{\; \frac{\partial \mathcal{L}}{\partial z} = p - Y \;}
 $$
+
 This is a *fused* result; the softmax Jacobian and the CE derivative **cancel** neatly to yield $p-Y$ (analogous simplicity to the MSE’s $\hat{Y}-Y$).
 
 ```python
@@ -749,6 +786,7 @@ $$
 ## Calculus of Error: Regression vs. Classification
 
 **Regression (MSE):**  
+
 $\displaystyle \frac{\partial \mathcal{L}}{\partial \hat{y}} = \hat{y} - y$
 
 **Classification (Softmax + Cross-Entropy):**  
@@ -757,6 +795,7 @@ $\displaystyle \frac{\partial \mathcal{L}}{\partial \hat{y}} = \hat{y} - y$
 - CE loss: $\displaystyle \mathcal{L} = -\sum_{c=1}^C y_c \log p_c$
 
 **Fused gradient (key identity):**  
+
 $\displaystyle \frac{\partial \mathcal{L}}{\partial z} = p - y$  *(already averaged over batch when you divide by $B$)*
 
 **Takeaway:** For CE with softmax, you don’t need to code a separate softmax Jacobian; the fused derivative is numerically stable and simple.
@@ -771,6 +810,7 @@ Derive $ \partial \mathcal{L}/\partial z = p - y$ from $\partial \log \mathrm{so
 **$\ell_2$ (weight decay):** $\displaystyle \mathcal{L}_{\text{total}} = \mathcal{L}_{\text{data}} + \frac{\lambda}{2}\sum_\ell \|W^{(\ell)}\|_2^2$
 
 **Gradients:**  
+
 $\displaystyle \frac{\partial \mathcal{L}_{\text{total}}}{\partial W^{(\ell)}} = \frac{\partial \mathcal{L}_{\text{data}}}{\partial W^{(\ell)}} + \lambda\,W^{(\ell)}$
 
 **Interpretation:**  
@@ -837,6 +877,7 @@ By [markhliu](https://github.com/markhliu)
 
 - Forward pass as above; MSE loss.  
 - Backprop (vectorized):
+
   $$
   \delta^{(2)} = \hat{y}-y,\quad
   \frac{\partial \mathcal{L}}{\partial W^{(2)}}=\delta^{(2)}h^\top,\quad
