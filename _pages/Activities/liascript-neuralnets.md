@@ -185,12 +185,11 @@ Sketch XOR: plot the two classes and show no single line separates them; add a t
 
 ---
 
-## Quick XOR Visual — CodeRunner
+## Example Neural Network Classifier: XOR
 
 You can run this to visualize linear inseparability and a neural net with a sigmoid activation function that fixes it.
 
 ```python
-# CodeRunner-Python
 # XOR neural network demo (manual 2-layer NN + decision boundary plot)
 
 import numpy as np
@@ -322,6 +321,180 @@ for x in test_inputs:
 
 **Notes:**  
 The two classes are now linearly separable in (h1, h2) space.  Notice how these tie back to "affine + nonlinearity" layers.
+
+### Setup
+
+#### Dimensions
+- Batch size: $N$
+- Input dimension: $d$
+- Hidden dimension: $h$
+- Output dimension: $o$
+
+#### Parameters
+- $W_1 \in \mathbb{R}^{d \times h}, \; b_1 \in \mathbb{R}^{1 \times h}$
+- $W_2 \in \mathbb{R}^{h \times o}, \; b_2 \in \mathbb{R}^{1 \times o}$
+
+#### Data
+- $X \in \mathbb{R}^{N \times d}$ — inputs
+- $Y \in \mathbb{R}^{N \times o}$ — targets
+
+#### Forward Pass
+$$
+\begin{aligned}
+Z_1 &= X W_1 + \mathbf{1} b_1 &&\in \mathbb{R}^{N \times h} \\
+A_1 &= \sigma(Z_1) &&\in \mathbb{R}^{N \times h} \\
+Z_2 &= A_1 W_2 + \mathbf{1} b_2 &&\in \mathbb{R}^{N \times o} \\
+A_2 &= \sigma(Z_2) &&\in \mathbb{R}^{N \times o}
+\end{aligned}
+$$
+
+Here, $\sigma(t) = \frac{1}{1+e^{-t}}$ is the sigmoid, applied elementwise.
+
+---
+
+### Loss and Gradient w.r.t. $A_2$
+
+Define the MSE loss averaged over the batch:
+$$
+L = \frac{1}{N} \sum_{i=1}^N \sum_{k=1}^o \bigl(A_{2,ik} - Y_{ik}\bigr)^2.
+$$
+
+Componentwise derivative:
+$$
+\frac{\partial L}{\partial A_{2,ik}}
+= \frac{2}{N}\,(A_{2,ik} - Y_{ik}).
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial A_2} = \frac{2}{N}(A_2 - Y).
+$$
+
+---
+
+### Backprop through Output Sigmoid ($A_2 = \sigma(Z_2)$)
+
+Sigmoid derivative:
+$$
+\sigma'(t) = \sigma(t)(1 - \sigma(t)).
+$$
+
+Componentwise chain rule:
+$$
+\frac{\partial L}{\partial Z_{2,ik}}
+= \frac{\partial L}{\partial A_{2,ik}} \cdot \sigma'(Z_{2,ik}).
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial Z_2}
+= \frac{\partial L}{\partial A_2} \odot \sigma'(Z_2).
+$$
+
+---
+
+### Gradients w.r.t. $W_2$ and $b_2$
+
+#### Gradient w.r.t. $W_2$
+$$
+\frac{\partial L}{\partial W_{2,jk}}
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}} \, A_{1,ij}.
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial W_2} = A_1^\top \frac{\partial L}{\partial Z_2}.
+$$
+
+#### Gradient w.r.t. $b_2$
+$$
+\frac{\partial L}{\partial b_{2,k}}
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}}.
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial b_2}
+= \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_2}\right)_{i,:}.
+$$
+
+---
+
+### Gradient w.r.t. Hidden Activations ($A_1$)
+
+Since $Z_2 = A_1 W_2 + b_2$,
+$$
+\frac{\partial L}{\partial A_{1,ij}}
+= \sum_{k=1}^o \frac{\partial L}{\partial Z_{2,ik}} W_{2,jk}.
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^\top.
+$$
+
+---
+
+### Backprop through Hidden Sigmoid ($A_1 = \sigma(Z_1)$)
+
+$$
+\frac{\partial L}{\partial Z_{1,ij}}
+= \frac{\partial L}{\partial A_{1,ij}} \cdot \sigma'(Z_{1,ij}).
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial Z_1}
+= \frac{\partial L}{\partial A_1} \odot \sigma'(Z_1).
+$$
+
+---
+
+### Gradients w.r.t. $W_1$ and $b_1$
+
+#### Gradient w.r.t. $W_1$
+$$
+\frac{\partial L}{\partial W_{1,pj}}
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}} X_{ip}.
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial W_1} = X^\top \frac{\partial L}{\partial Z_1}.
+$$
+
+#### Gradient w.r.t. $b_1$
+$$
+\frac{\partial L}{\partial b_{1,j}}
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}}.
+$$
+
+Matrix form:
+$$
+\frac{\partial L}{\partial b_1}
+= \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}\right)_{i,:}.
+$$
+
+---
+
+### Full Correspondence to Vectorized Code
+
+```python
+# loss
+loss = np.mean((a2 - y)**2)              # (batch mean MSE)
+
+# output layer
+dloss_da2 = 2 * (a2 - y) / y.shape[0]
+dloss_dz2 = dloss_da2 * sigmoid_deriv(z2)
+dloss_dW2 = a1.T @ dloss_dz2
+dloss_db2 = np.sum(dloss_dz2, axis=0, keepdims=True)
+
+# hidden layer
+dloss_da1 = dloss_dz2 @ W2.T
+dloss_dz1 = dloss_da1 * sigmoid_deriv(z1)
+dloss_dW1 = X.T @ dloss_dz1
+dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
+```
 
 ---
 
