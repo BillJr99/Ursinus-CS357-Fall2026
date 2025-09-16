@@ -324,21 +324,21 @@ The two classes are now linearly separable in (h1, h2) space.  Notice how these 
 
 ### Setup
 
-#### Dimensions
+**Dimensions:**
 - Batch size: $N$
 - Input dimension: $d$
 - Hidden dimension: $h$
 - Output dimension: $o$
 
-#### Parameters
+**Parameters:**
 - $W_1 \in \mathbb{R}^{d \times h}, \; b_1 \in \mathbb{R}^{1 \times h}$
 - $W_2 \in \mathbb{R}^{h \times o}, \; b_2 \in \mathbb{R}^{1 \times o}$
 
-#### Data
+**Data:**
 - $X \in \mathbb{R}^{N \times d}$ — inputs
 - $Y \in \mathbb{R}^{N \times o}$ — targets
 
-#### Forward Pass
+**Forward Pass:**
 $$
 \begin{aligned}
 Z_1 &= X W_1 + \mathbf{1} b_1 &&\in \mathbb{R}^{N \times h} \\
@@ -354,30 +354,29 @@ Here, $\sigma(t) = \frac{1}{1+e^{-t}}$ is the sigmoid, applied elementwise.
 
 ### Loss and Gradient w.r.t. $A_2$
 
-Define the MSE loss averaged over the batch:
+Define the MSE loss averaged over the batch and outputs:
 $$
-L = \frac{1}{N} \sum_{i=1}^N \sum_{k=1}^o \bigl(A_{2,ik} - Y_{ik}\bigr)^2.
+L = \frac{1}{o} \frac{1}{N} \sum_{i=1}^N \sum_{k=1}^o \bigl(A_{2,ik} - Y_{ik}\bigr)^2.
 $$
+
+Since the derivative of $(a-y)^2$ with respect to $a$ is $2(a-y)$ and we divide by both $N$ and $o$, we get:
 
 Componentwise derivative:
 $$
 \frac{\partial L}{\partial A_{2,ik}}
-= \frac{2}{N}\,(A_{2,ik} - Y_{ik}).
+= \frac{2}{No}\,(A_{2,ik} - Y_{ik}).
 $$
 
 Matrix form:
 $$
-\frac{\partial L}{\partial A_2} = \frac{2}{N}(A_2 - Y).
+\frac{\partial L}{\partial A_2} = \frac{2}{No}(A_2 - Y).
 $$
 
 ---
 
 ### Backprop through Output Sigmoid ($A_2 = \sigma(Z_2)$)
 
-Sigmoid derivative:
-$$
-\sigma'(t) = \sigma(t)(1 - \sigma(t)).
-$$
+Since $A_2 = \sigma(Z_2)$ elementwise and $\sigma'(t)=\sigma(t)(1-\sigma(t))$:
 
 Componentwise chain rule:
 $$
@@ -393,108 +392,87 @@ $$
 
 ---
 
-### Gradients w.r.t. $W_2$ and $b_2$
+### Gradients for $W_2, b_2$
 
-#### Gradient w.r.t. $W_2$
+Since $Z_2 = A_1 W_2 + b_2$, each entry is $Z_{2,ik} = \sum_{j=1}^h A_{1,ij} W_{2,jk} + b_{2,k}$.
+Thus, differentiating with respect to $W_{2,jk}$ and $b_{2,k}$ gives:
+
 $$
 \frac{\partial L}{\partial W_{2,jk}}
-= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}} \, A_{1,ij}.
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}} \, A_{1,ij}
 $$
 
-Matrix form:
-$$
-\frac{\partial L}{\partial W_2} = A_1^\top \frac{\partial L}{\partial Z_2}.
-$$
-
-#### Gradient w.r.t. $b_2$
 $$
 \frac{\partial L}{\partial b_{2,k}}
-= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}}.
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{2,ik}}
 $$
 
-Matrix form:
+Matrix forms:
 $$
-\frac{\partial L}{\partial b_2}
-= \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_2}\right)_{i,:}.
+\frac{\partial L}{\partial W_2} = A_1^\top \frac{\partial L}{\partial Z_2}
+$$
+
+$$
+\frac{\partial L}{\partial b_2} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_2}\right)_{i,:}
 $$
 
 ---
 
-### Gradient w.r.t. Hidden Activations ($A_1$)
+### Backprop to Hidden Activations
 
-Since $Z_2 = A_1 W_2 + b_2$,
+Since $Z_2 = A_1 W_2 + b_2$, each $A_{1,ij}$ influences all $Z_{2,ik}$ through $W_{2,jk}$. Thus:
+
 $$
 \frac{\partial L}{\partial A_{1,ij}}
-= \sum_{k=1}^o \frac{\partial L}{\partial Z_{2,ik}} W_{2,jk}.
+= \sum_{k=1}^o \frac{\partial L}{\partial Z_{2,ik}} \, W_{2,jk}
 $$
 
 Matrix form:
 $$
-\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^\top.
+\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^\top
 $$
 
 ---
 
-### Backprop through Hidden Sigmoid ($A_1 = \sigma(Z_1)$)
+### Hidden Sigmoid Chain Rule
+
+Since $A_1 = \sigma(Z_1)$ elementwise:
 
 $$
 \frac{\partial L}{\partial Z_{1,ij}}
-= \frac{\partial L}{\partial A_{1,ij}} \cdot \sigma'(Z_{1,ij}).
+= \frac{\partial L}{\partial A_{1,ij}} \cdot \sigma'(Z_{1,ij})
 $$
 
 Matrix form:
 $$
 \frac{\partial L}{\partial Z_1}
-= \frac{\partial L}{\partial A_1} \odot \sigma'(Z_1).
+= \frac{\partial L}{\partial A_1} \odot \sigma'(Z_1)
 $$
 
 ---
 
-### Gradients w.r.t. $W_1$ and $b_1$
+### Gradients for $W_1, b_1$
 
-#### Gradient w.r.t. $W_1$
+Since $Z_1 = X W_1 + b_1$, each entry is $Z_{1,ij} = \sum_{p=1}^d X_{ip} W_{1,pj} + b_{1,j}$. Differentiating gives:
+
 $$
 \frac{\partial L}{\partial W_{1,pj}}
-= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}} X_{ip}.
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}} X_{ip}
 $$
 
-Matrix form:
-$$
-\frac{\partial L}{\partial W_1} = X^\top \frac{\partial L}{\partial Z_1}.
-$$
-
-#### Gradient w.r.t. $b_1$
 $$
 \frac{\partial L}{\partial b_{1,j}}
-= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}}.
+= \sum_{i=1}^N \frac{\partial L}{\partial Z_{1,ij}}
 $$
 
-Matrix form:
+Matrix forms:
 $$
-\frac{\partial L}{\partial b_1}
-= \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}\right)_{i,:}.
+\frac{\partial L}{\partial W_1} = X^\top \frac{\partial L}{\partial Z_1}
 $$
 
----
-
-### Full Correspondence to Vectorized Code
-
-```python
-# loss
-loss = np.mean((a2 - y)**2)              # (batch mean MSE)
-
-# output layer
-dloss_da2 = 2 * (a2 - y) / y.shape[0]
-dloss_dz2 = dloss_da2 * sigmoid_deriv(z2)
-dloss_dW2 = a1.T @ dloss_dz2
-dloss_db2 = np.sum(dloss_dz2, axis=0, keepdims=True)
-
-# hidden layer
-dloss_da1 = dloss_dz2 @ W2.T
-dloss_dz1 = dloss_da1 * sigmoid_deriv(z1)
-dloss_dW1 = X.T @ dloss_dz1
-dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
-```
+$$
+\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}\right)_{i,:}
+$$
 
 ---
 
