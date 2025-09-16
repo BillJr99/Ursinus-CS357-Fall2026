@@ -294,6 +294,30 @@ plt.scatter(X[y.flatten()==1,0], X[y.flatten()==1,1], label="class 1", marker="x
 plt.legend()
 plt.title("XOR with learned decision boundary")
 plt.show()
+
+# ------------------------
+# 6. Test some values
+# ------------------------
+def predict(Xtest):
+    z1t = Xtest @ W1 + b1
+    a1t = sigmoid(z1t)
+    z2t = a1t @ W2 + b2
+    a2t = sigmoid(z2t)
+    return a2t
+
+test_inputs = np.array([
+    [0,0],
+    [0,1],
+    [1,0],
+    [1,1],
+    [0.2,0.8],
+    [0.9,0.9]
+])
+
+print("\nTesting some inputs:")
+for x in test_inputs:
+    pred = predict(x.reshape(1,-1))
+    print(f"Input {x} -> Predicted {pred[0,0]:.3f}")
 ```
 
 **Notes:**  
