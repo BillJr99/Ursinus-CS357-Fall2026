@@ -489,8 +489,11 @@ dYhat = (1.0 / B) * err        # ∂L/∂ŷ = (1/B)(ŷ - y) for MSE with 1/2
 
 **Implementation:**  
 Make the sign flip explicit if you differentiate $(y-\hat{y})^2$ directly:
-$\frac{\partial}{\partial \hat{y}}\tfrac{1}{2}(y-\hat{y})^2
-= \tfrac{1}{2}\cdot 2(y-\hat{y})\cdot(-1)=\hat{y}-y$.
+
+$$
+\frac{\partial}{\partial \hat{y}}\tfrac{1}{2}(y-\hat{y})^2
+= \tfrac{1}{2}\cdot 2(y-\hat{y})\cdot(-1)=\hat{y}-y
+$$
 
 ---
 
