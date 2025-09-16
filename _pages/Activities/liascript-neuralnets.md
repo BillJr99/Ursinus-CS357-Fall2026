@@ -635,9 +635,11 @@ $$
 ### Code and Backpropagation Side-by-Side
 
 **Forward pass:**
+
 ```python
 z1 = X @ W1 + b1   # Z1 = XW1 + b1
 ```
+
 $$
 Z_1 = X W_1 + b_1
 $$
@@ -645,6 +647,7 @@ $$
 ```python
 a1 = sigmoid(z1)   # A1 = σ(Z1)
 ```
+
 $$
 A_1 = \sigma(Z_1)
 $$
@@ -652,6 +655,7 @@ $$
 ```python
 z2 = a1 @ W2 + b2  # Z2 = A1W2 + b2
 ```
+
 $$
 Z_2 = A_1 W_2 + b_2
 $$
@@ -659,22 +663,27 @@ $$
 ```python
 a2 = sigmoid(z2)   # A2 = σ(Z2)
 ```
+
 $$
 A_2 = \sigma(Z_2)
 $$
 
 **Loss:**
+
 ```python
 loss = np.mean((a2 - y)**2)
 ```
+
 $$
 L = 	frac{1}{No} \sum_{i=1}^N \sum_{k=1}^o (A_{2,ik} - Y_{ik})^2
 $$
 
 **Backward pass (output layer):**
+
 ```python
 dloss_da2 = 2 * (a2 - y) / y.shape[0]
 ```
+
 $$
 \frac{\partial L}{\partial A_2} = 	frac{2}{No}(A_2 - Y)
 $$
@@ -682,14 +691,17 @@ $$
 ```python
 dloss_dz2 = dloss_da2 * sigmoid_deriv(z2)
 ```
+
 $$
 \frac{\partial L}{\partial Z_2} = \frac{\partial L}{\partial A_2} \odot \sigma'(Z_2)
 $$
 
 **Gradients for $W_2, b_2$:**
+
 ```python
 dloss_dW2 = a1.T @ dloss_dz2
 ```
+
 $$
 \frac{\partial L}{\partial W_2} = A_1^	op \frac{\partial L}{\partial Z_2}
 $$
@@ -697,14 +709,17 @@ $$
 ```python
 dloss_db2 = np.sum(dloss_dz2, axis=0, keepdims=True)
 ```
+
 $$
 \frac{\partial L}{\partial b_2} = \sum_{i=1}^N \left( \frac{\partial L}{\partial Z_2} \right)_{i,:}
 $$
 
 **Backprop to hidden layer:**
+
 ```python
 dloss_da1 = dloss_dz2 @ W2.T
 ```
+
 $$
 \frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^	op
 $$
@@ -712,14 +727,17 @@ $$
 ```python
 dloss_dz1 = dloss_da1 * sigmoid_deriv(z1)
 ```
+
 $$
 \frac{\partial L}{\partial Z_1} = \frac{\partial L}{\partial A_1} \odot \sigma'(Z_1)
 $$
 
 **Gradients for $W_1, b_1$:**
+
 ```python
 dloss_dW1 = X.T @ dloss_dz1
 ```
+
 $$
 \frac{\partial L}{\partial W_1} = X^	op \frac{\partial L}{\partial Z_1}
 $$
@@ -727,6 +745,7 @@ $$
 ```python
 dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
 ```
+
 $$
 \frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}
 ight)_{i,:}
