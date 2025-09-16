@@ -675,7 +675,7 @@ loss = np.mean((a2 - y)**2)
 ```
 
 $$
-L = 	frac{1}{No} \sum_{i=1}^N \sum_{k=1}^o (A_{2,ik} - Y_{ik})^2
+L = 	\frac{1}{No} \sum_{i=1}^N \sum_{k=1}^o (A_{2,ik} - Y_{ik})^2
 $$
 
 **Backward pass (output layer):**
@@ -703,7 +703,7 @@ dloss_dW2 = a1.T @ dloss_dz2
 ```
 
 $$
-\frac{\partial L}{\partial W_2} = A_1^	op \frac{\partial L}{\partial Z_2}
+\frac{\partial L}{\partial W_2} = A_1^op \frac{\partial L}{\partial Z_2}
 $$
 
 ```python
@@ -721,7 +721,7 @@ dloss_da1 = dloss_dz2 @ W2.T
 ```
 
 $$
-\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^	op
+\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^op
 $$
 
 ```python
