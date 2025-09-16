@@ -747,7 +747,11 @@ dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
 ```
 
 $$
-\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1} \right)_{i,:}
+\left(\frac{\partial L}{\partial b_1}\right)_j
+\;=\;
+\sum_{i=1}^N
+\left(\frac{\partial L}{\partial Z_1}\right)_{ij},
+\qquad j=1,\dots,h.
 $$
 
 **Key idea:**
