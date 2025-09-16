@@ -191,33 +191,108 @@ You can run this to visualize linear inseparability and a simple two-ReLU featur
 
 ```python
 # CodeRunner-Python
-# XOR scatter + a simple hand-crafted 2-ReLU feature map that makes classes separable.
+# XOR neural network demo (manual 2-layer NN + decision boundary plot)
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-# XOR data
+# ------------------------
+# 1. Data
+# ------------------------
 X = np.array([[0,0],[0,1],[1,0],[1,1]], dtype=float)
-y = np.array([0,1,1,0])
+y = np.array([[0],[1],[1],[0]])  # column vector
 
-# Plot raw XOR (not linearly separable)
+# ------------------------
+# 2. Plot raw XOR points
+# ------------------------
 plt.figure()
 plt.title("XOR in input space (not linearly separable)")
-plt.scatter(X[y==0,0], X[y==0,1], label="class 0", marker="o")
-plt.scatter(X[y==1,0], X[y==1,1], label="class 1", marker="x")
+plt.scatter(X[y.flatten()==0,0], X[y.flatten()==0,1], label="class 0", marker="o")
+plt.scatter(X[y.flatten()==1,0], X[y.flatten()==1,1], label="class 1", marker="x")
 plt.legend()
-plt.xlabel("x1"); plt.ylabel("x2")
-plt.show()
+plt.xlabel("x1")
+plt.ylabel("x2")
 
-# Two ReLU features: h1 = ReLU(x1 - x2), h2 = ReLU(x2 - x1)
-def relu(z): return np.maximum(0,z)
-H = np.column_stack([relu(X[:,0]-X[:,1]), relu(X[:,1]-X[:,0])])
+# ------------------------
+# 3. Define NN (2-2-1 architecture)
+# ------------------------
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
 
-plt.figure()
-plt.title("After a simple 2-ReLU feature map")
-plt.scatter(H[y==0,0], H[y==0,1], label="class 0", marker="o")
-plt.scatter(H[y==1,0], H[y==1,1], label="class 1", marker="x")
-# A linear separator exists in this feature space.
-plt.legend(); plt.xlabel("h1"); plt.ylabel("h2")
+def sigmoid_deriv(z):
+    s = sigmoid(z)
+    return s * (1 - s)
+
+rng = np.random.default_rng(0)
+W1 = rng.normal(0, 1, (2, 2))   # 2 inputs -> 2 hidden
+b1 = np.zeros((1, 2))
+W2 = rng.normal(0, 1, (2, 1))   # 2 hidden -> 1 output
+b2 = np.zeros((1, 1))
+
+# ------------------------
+# 4. Train with gradient descent
+# ------------------------
+lr = 0.5
+epochs = 10000
+
+for epoch in range(epochs):
+    # forward
+    z1 = X @ W1 + b1
+    a1 = sigmoid(z1)
+    z2 = a1 @ W2 + b2
+    a2 = sigmoid(z2)
+
+    # loss (MSE)
+    loss = np.mean((a2 - y)**2)
+
+    # backward
+    dloss_da2 = 2 * (a2 - y) / y.shape[0]
+    dloss_dz2 = dloss_da2 * sigmoid_deriv(z2)
+
+    dloss_dW2 = a1.T @ dloss_dz2
+    dloss_db2 = np.sum(dloss_dz2, axis=0, keepdims=True)
+
+    dloss_da1 = dloss_dz2 @ W2.T
+    dloss_dz1 = dloss_da1 * sigmoid_deriv(z1)
+
+    dloss_dW1 = X.T @ dloss_dz1
+    dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
+
+    # update
+    W2 -= lr * dloss_dW2
+    b2 -= lr * dloss_db2
+    W1 -= lr * dloss_dW1
+    b1 -= lr * dloss_db1
+
+    if epoch % 2000 == 0:
+        print(f"Epoch {epoch}, loss={loss:.4f}")
+
+print("\nFinal predictions on training data:")
+print(a2.round(3))
+
+# ------------------------
+# 5. Plot decision boundary (classification map)
+# ------------------------
+xx, yy = np.meshgrid(np.linspace(-0.5, 1.5, 200),
+                     np.linspace(-0.5, 1.5, 200))
+grid = np.c_[xx.ravel(), yy.ravel()]
+
+# forward pass on grid
+z1g = grid @ W1 + b1
+a1g = sigmoid(z1g)
+z2g = a1g @ W2 + b2
+a2g = sigmoid(z2g)
+Z = a2g.reshape(xx.shape)
+
+# plot filled contour
+plt.contourf(xx, yy, Z, levels=[0,0.5,1], alpha=0.3, colors=["lightblue","lightcoral"])
+plt.colorbar(label="Predicted probability (class 1)")
+
+# re-plot training points on top
+plt.scatter(X[y.flatten()==0,0], X[y.flatten()==0,1], label="class 0", marker="o", edgecolor="k")
+plt.scatter(X[y.flatten()==1,0], X[y.flatten()==1,1], label="class 1", marker="x", c="k")
+plt.legend()
+plt.title("XOR with learned decision boundary")
 plt.show()
 ```
 
