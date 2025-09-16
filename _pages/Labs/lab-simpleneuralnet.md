@@ -94,7 +94,7 @@ def assert_close(name, got, want, atol=1e-7, rtol=1e-5):
 
 ## Stage 1 — **Linear Function Estimator (complete; just run it)**
 
-**Goal.** Fit a line $\hat{y} = wx + b$ to noisy data. You will **not** implement anything—just run, read, and interpret it.
+**Goal.** Fit a line <span>\\(\hat{y} = wx + b\\)</span> to noisy data. You will **not** implement anything—just run, read, and interpret it.
 
 **Concepts:** forward pass, mean squared error (MSE), gradients, update rule.
 
@@ -269,7 +269,7 @@ Here, we **chain two `Linear` layers together** to see how forward and backward 
 
 ## Stage 3 — **Nonlinear MLP (implement activations + their grads)**
 
-Introduce $\sigma$ to gain expressivity. We will add **ReLU** by default and let you try **tanh**.
+Introduce <span>\\(\sigma\\)</span> to gain expressivity. We will add **ReLU** by default and let you try **tanh**.
 
 ### 3.1 Activation Modules
 
@@ -636,19 +636,13 @@ Y_true[i] * logp[i] = [0, -0.1, 0]
 - By taking the **negative log**, we turn the objective into a positive quantity that can be minimized with gradient descent.
 - Mathematically:
   - **Likelihood**:  
-    $$
-    L(\theta) = \prod_i p_\theta(y_i \mid x_i)
-    $$
+    <span>\\(L(\theta) = \prod_i p_\theta(y_i \mid x_i)\\)</span>
 
   - **Log-likelihood** (to maximize):  
-    $$
-    \log L(\theta) = \sum_i \log p_\theta(y_i \mid x_i)
-    $$
+    <span>\\(\log L(\theta) = \sum_i \log p_\theta(y_i \mid x_i)\\)</span>
 
   - **Negative log-likelihood (NLL)** (to minimize):  
-    $$
-    \sum_i \log p_\theta(y_i \mid x_i)
-    $$
+    <span>\\(\sum_i \log p_\theta(y_i \mid x_i)\\)</span>
 - Intuition:  
   - If the model assigns high probability to the correct class (e.g. 0.99), log(prob) ≈ –0.01 → NLL ≈ 0.01 (good, small loss).  
   - If the model assigns low probability (e.g. 0.01), log(prob) ≈ –4.6 → NLL ≈ 4.6 (large penalty).
