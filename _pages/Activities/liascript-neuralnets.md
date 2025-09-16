@@ -739,7 +739,7 @@ dloss_dW1 = X.T @ dloss_dz1
 ```
 
 $$
-\frac{\partial L}{\partial W_1} = X^	op \frac{\partial L}{\partial Z_1}
+\frac{\partial L}{\partial W_1} = X^op \frac{\partial L}{\partial Z_1}
 $$
 
 ```python
@@ -747,8 +747,7 @@ dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
 ```
 
 $$
-\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}
-ight)_{i,:}
+\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1} \right)_{i,:}
 $$
 
 **Key idea:**
