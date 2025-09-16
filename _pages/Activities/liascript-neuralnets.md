@@ -187,7 +187,7 @@ Sketch XOR: plot the two classes and show no single line separates them; add a t
 
 ## Quick XOR Visual — CodeRunner
 
-You can run this to visualize linear inseparability and a simple two-ReLU feature that fixes it.
+You can run this to visualize linear inseparability and a neural net with a sigmoid activation function that fixes it.
 
 ```python
 # CodeRunner-Python
