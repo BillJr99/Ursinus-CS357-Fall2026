@@ -577,6 +577,167 @@ These match the expected shapes: $W_1$ is $d \times h$, $b_1$ is $1 \times h$.
 
 ---
 
+### Backprop Equations Collected (Back Substitution)
+
+We can now substitute each derivative into the next step, eliminating all partial derivative symbols. This produces a single sequence of explicit update rules.
+
+**Step 1: Loss gradient w.r.t. output activations**
+
+$$
+\frac{\partial L}{\partial A_2} = \frac{2}{No}(A_2 - Y)
+$$
+
+**Step 2: Backprop through output sigmoid**
+
+$$
+\frac{\partial L}{\partial Z_2} = \Big(\tfrac{2}{No}(A_2 - Y)\Big) \odot \big(A_2 (1 - A_2)\big)
+$$
+
+**Step 3: Gradients for $W_2, b_2$**
+
+$$
+\frac{\partial L}{\partial W_2} = A_1^\top \Big( \Big(\tfrac{2}{No}(A_2 - Y)\Big) \odot (A_2(1-A_2)) \Big)
+$$
+
+$$
+\frac{\partial L}{\partial b_2} = \sum_{i=1}^N \Big( \Big(\tfrac{2}{No}(A_{2,i:} - Y_{i:})\Big) \odot (A_{2,i:}(1-A_{2,i:})) \Big)
+$$
+
+**Step 4: Backprop to hidden activations**
+
+$$
+\frac{\partial L}{\partial A_1} = \Big( \Big(\tfrac{2}{No}(A_2 - Y)\Big) \odot (A_2(1-A_2)) \Big) W_2^\top
+$$
+
+**Step 5: Hidden sigmoid**
+
+$$
+\frac{\partial L}{\partial Z_1} = \Big( \Big( \Big(\tfrac{2}{No}(A_2 - Y)\Big) \odot (A_2(1-A_2)) \Big) W_2^\top \Big) \odot (A_1(1-A_1))
+$$
+
+**Step 6: Gradients for $W_1, b_1$**
+
+$$
+\frac{\partial L}{\partial W_1} = X^\top \Big( \Big( \Big(\tfrac{2}{No}(A_2 - Y)\Big) \odot (A_2(1-A_2)) \Big) W_2^\top \odot (A_1(1-A_1)) \Big)
+$$
+
+$$
+\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \Big( \Big( \Big(\tfrac{2}{No}(A_{2,i:} - Y_{i:})\Big) \odot (A_{2,i:}(1-A_{2,i:})) \Big) W_2^\top \odot (A_{1,i:}(1-A_{1,i:})) \Big)
+$$
+
+**Key Idea:**
+
+- This substitution eliminates intermediate symbols like $\tfrac{\partial L}{\partial A}$ and $\tfrac{\partial L}{\partial Z}$.
+- It reveals the full dependency of the parameter gradients on inputs $X$, hidden activations $A_1$, outputs $A_2$, and the targets $Y$.
+
+---
+
+### Code and Backpropagation Side-by-Side
+
+**Forward pass:**
+```python
+z1 = X @ W1 + b1   # Z1 = XW1 + b1
+```
+$$
+Z_1 = X W_1 + b_1
+$$
+
+```python
+a1 = sigmoid(z1)   # A1 = σ(Z1)
+```
+$$
+A_1 = \sigma(Z_1)
+$$
+
+```python
+z2 = a1 @ W2 + b2  # Z2 = A1W2 + b2
+```
+$$
+Z_2 = A_1 W_2 + b_2
+$$
+
+```python
+a2 = sigmoid(z2)   # A2 = σ(Z2)
+```
+$$
+A_2 = \sigma(Z_2)
+$$
+
+**Loss:**
+```python
+loss = np.mean((a2 - y)**2)
+```
+$$
+L = 	frac{1}{No} \sum_{i=1}^N \sum_{k=1}^o (A_{2,ik} - Y_{ik})^2
+$$
+
+**Backward pass (output layer):**
+```python
+dloss_da2 = 2 * (a2 - y) / y.shape[0]
+```
+$$
+\frac{\partial L}{\partial A_2} = 	frac{2}{No}(A_2 - Y)
+$$
+
+```python
+dloss_dz2 = dloss_da2 * sigmoid_deriv(z2)
+```
+$$
+\frac{\partial L}{\partial Z_2} = \frac{\partial L}{\partial A_2} \odot \sigma'(Z_2)
+$$
+
+**Gradients for $W_2, b_2$:**
+```python
+dloss_dW2 = a1.T @ dloss_dz2
+```
+$$
+\frac{\partial L}{\partial W_2} = A_1^	op \frac{\partial L}{\partial Z_2}
+$$
+
+```python
+dloss_db2 = np.sum(dloss_dz2, axis=0, keepdims=True)
+```
+$$
+\frac{\partial L}{\partial b_2} = \sum_{i=1}^N \left( \frac{\partial L}{\partial Z_2} \right)_{i,:}
+$$
+
+**Backprop to hidden layer:**
+```python
+dloss_da1 = dloss_dz2 @ W2.T
+```
+$$
+\frac{\partial L}{\partial A_1} = \frac{\partial L}{\partial Z_2} W_2^	op
+$$
+
+```python
+dloss_dz1 = dloss_da1 * sigmoid_deriv(z1)
+```
+$$
+\frac{\partial L}{\partial Z_1} = \frac{\partial L}{\partial A_1} \odot \sigma'(Z_1)
+$$
+
+**Gradients for $W_1, b_1$:**
+```python
+dloss_dW1 = X.T @ dloss_dz1
+```
+$$
+\frac{\partial L}{\partial W_1} = X^	op \frac{\partial L}{\partial Z_1}
+$$
+
+```python
+dloss_db1 = np.sum(dloss_dz1, axis=0, keepdims=True)
+```
+$$
+\frac{\partial L}{\partial b_1} = \sum_{i=1}^N \left(\frac{\partial L}{\partial Z_1}
+ight)_{i,:}
+$$
+
+**Key idea:**
+- Each Python line directly corresponds to one of the derived mathematical gradient formulas.
+- Placing code beside math makes explicit how theory maps to implementation.
+
+---
+
 ## The Artificial Neuron & Activation Functions
 
 **Neuron**: $z = w^\top x + b$, $a = \sigma(z)$
