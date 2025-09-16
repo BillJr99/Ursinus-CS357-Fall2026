@@ -685,7 +685,7 @@ dloss_da2 = 2 * (a2 - y) / y.shape[0]
 ```
 
 $$
-\frac{\partial L}{\partial A_2} = 	frac{2}{No}(A_2 - Y)
+\frac{\partial L}{\partial A_2} = 	\frac{2}{No}(A_2 - Y)
 $$
 
 ```python
