@@ -600,17 +600,17 @@ Y = one_hot(y, num_classes)
 
 When training neural networks for **classification tasks** such as MNIST digit recognition, a common combination is the **softmax activation** in the output layer with a **cross-entropy loss** function. 
 
-The network outputs raw **logits** <span>\(z\)</span>, which can be any real numbers. To interpret them as probabilities over classes (that add up to `100%` probability, or `1.0`), we apply the softmax function:
+The network outputs raw **logits** <span>\\(z\\)</span>, which can be any real numbers. To interpret them as probabilities over classes (that add up to `100%` probability, or `1.0`), we apply the softmax function:
 
 $$
 \hat{y}_i = \frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}
 $$
 
-- Each output <span>\(\hat{y}_i\)</span> is in <span>\([0,1]\)</span>.  
+- Each output <span>\\(\hat{y}_i\\)</span> is in <span>\\([0,1]\\)</span>.  
 - The probabilities sum to 1, making them interpretable as class likelihoods.
 
 **Cross-Entropy Loss: Comparing Probabilities to Labels:**
-For a one-hot label vector <span>\(y\)</span>, the cross-entropy loss is:
+For a one-hot label vector <span>\\(y\\)</span>, the cross-entropy loss is:
 
 <span>
 \\(
@@ -618,7 +618,7 @@ L = -\sum_{i=1}^C y_i \log(\hat{y}_i)
 \\)
 </span>
 
-- If the correct class is <span>\(k\)</span>, this reduces to <span>\(L = -\log(\hat{y}_k)\)</span>.  
+- If the correct class is <span>\\(k\\)</span>, this reduces to <span>\\(L = -\log(\hat{y}_k)\\)</span>.  
 - Intuitively, this penalizes the model heavily if it assigns low probability to the correct class.
 
 **Derivative of the Cross-Entropy Loss Function:**
