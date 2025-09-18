@@ -598,6 +598,42 @@ Y = one_hot(y, num_classes)
 
 ### 5.2 Softmax + Cross‑Entropy (fill in)
 
+When training neural networks for **classification tasks** such as MNIST digit recognition, a common combination is the **softmax activation** in the output layer with a **cross-entropy loss** function. 
+
+The network outputs raw **logits** <span>\(z\)</span>, which can be any real numbers. To interpret them as probabilities over classes (that add up to `100%` probability, or `1.0`), we apply the softmax function:
+
+<span>
+\[
+\hat{y}_i = \frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}
+\]
+</span>
+
+- Each output <span>\(\hat{y}_i\)</span> is in <span>\([0,1]\)</span>.  
+- The probabilities sum to 1, making them interpretable as class likelihoods.
+
+**Cross-Entropy Loss: Comparing Probabilities to Labels:**
+For a one-hot label vector <span>\(y\)</span>, the cross-entropy loss is:
+
+<span>
+\[
+L = -\sum_{i=1}^C y_i \log(\hat{y}_i)
+\]
+</span>
+
+- If the correct class is <span>\(k\)</span>, this reduces to <span>\(L = -\log(\hat{y}_k)\)</span>.  
+- Intuitively, this penalizes the model heavily if it assigns low probability to the correct class.
+
+**Derivative of the Cross-Entropy Loss Function:**
+The derivative of the cross-entropy loss with respect to the logits (after softmax) simplifies dramatically:
+
+<span>
+\[
+\nabla_z L = \hat{y} - y
+\]
+</span>
+
+This is the difference between the predicted probabilities and the true labels, without computing the derivatives of the softmax function.
+
 ```python
 def softmax(logits):
     # logits: (batch, C)
@@ -666,53 +702,52 @@ print("CE 50/50:", cross_entropy(probs, Y0))           # ~ 0.693 (ln 2)
 This code is complete and runs our code above.
 
 ```python
-D = X.shape[1]
-H = 64
-C = num_classes
+D = X.shape[1]     # e.g. 784 for MNIST
+H = 64             # you can try other sizes: 32,128 etc.
+C = num_classes    # 10 usually for the number of digits being classified
+EPOCHS = 500
 
-fc1 = Linear(D, H)
-fc2 = Linear(H, C)
-
-def forward_classifier(Xb):
-    z1 = fc1.forward(Xb)
-    h1 = relu(z1)                 # reuse from Stage 3
-    logits = fc2.forward(h1)
-    probs = softmax(logits)
-    return probs, (z1, h1, logits)
+model = MLP(in_dim=D, hidden_dim=H, out_dim=C, nonlin="relu")
 
 lr = 0.1
 batch = 128
-losses = []
-accs = []
+losses_mlp = []
+accs_mlp = []
 
-for epoch in range(8):
-    # minibatch SGD
-    perm = np.random.permutation(X.shape[0])
+for epoch in range(EPOCHS):
+    perm = np.random.permutation(X.shape[0]) # shuffle the data
     X_shuf, Y_shuf = X[perm], Y[perm]
     for i in range(0, X.shape[0], batch):
         Xb = X_shuf[i:i+batch]
         Yb = Y_shuf[i:i+batch]
-        probs, cache = forward_classifier(Xb)
-        loss = cross_entropy(probs, Yb)   # TODO
-        losses.append(loss)
-        # backward
-        dlogits = softmax_cross_entropy_backward(probs, Yb)
-        dh1 = fc2.backward(dlogits)
-        dz1 = relu_backward(cache[0], dh1)
-        _ = fc1.backward(dz1)
-        # update
-        for layer in (fc1, fc2):
+
+        # Forward through model
+        logits, h = model.forward(Xb)   # logits shape: (batch, C)
+        probs = softmax(logits)
+
+        # Loss
+        loss = cross_entropy(probs, Yb)
+        losses_mlp.append(loss)
+
+        # Backward
+        dyhat = softmax_cross_entropy_backward(probs, Yb)
+        _ = model.backward(dyhat, h)
+
+        # Update parameters
+        for layer in (model.l1, model.l2):
             layer.W -= lr * layer.dW
             layer.b -= lr * layer.db
-    # quick accuracy check on small subset
-    probs_all, _ = forward_classifier(X[:2000])
+
+    # Optional: evaluate accuracy on a validation / subset
+    probs_all, _ = model.forward(X[:2000])
     pred = probs_all.argmax(axis=1)
     acc = (pred == y[:2000]).mean()
-    accs.append(acc)
-    print(f"epoch {epoch} acc~{acc:.3f}")
+    accs_mlp.append(acc)
+    print(f"(MLP) epoch {epoch} acc ~ {acc:.3f}")
 
-plot_series(range(len(losses)), losses, title="MNIST minibatch CE")
-plot_series(range(len(accs)), accs, title="MNIST running accuracy (subset)")
+# Plotting
+plot_series(range(len(losses_mlp)), losses_mlp, title="MNIST MLP: loss over steps")
+plot_series(range(len(accs_mlp)), accs_mlp, title="MNIST MLP: running accuracy (subset)")
 ```
 
 **Why:**
