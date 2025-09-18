@@ -603,9 +603,9 @@ When training neural networks for **classification tasks** such as MNIST digit r
 The network outputs raw **logits** <span>\(z\)</span>, which can be any real numbers. To interpret them as probabilities over classes (that add up to `100%` probability, or `1.0`), we apply the softmax function:
 
 <span>
-\[
+\\(
 \hat{y}_i = \frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}
-\]
+\\)
 </span>
 
 - Each output <span>\(\hat{y}_i\)</span> is in <span>\([0,1]\)</span>.  
@@ -615,9 +615,9 @@ The network outputs raw **logits** <span>\(z\)</span>, which can be any real num
 For a one-hot label vector <span>\(y\)</span>, the cross-entropy loss is:
 
 <span>
-\[
+\\(
 L = -\sum_{i=1}^C y_i \log(\hat{y}_i)
-\]
+\\)
 </span>
 
 - If the correct class is <span>\(k\)</span>, this reduces to <span>\(L = -\log(\hat{y}_k)\)</span>.  
@@ -627,9 +627,7 @@ L = -\sum_{i=1}^C y_i \log(\hat{y}_i)
 The derivative of the cross-entropy loss with respect to the logits (after softmax) simplifies dramatically:
 
 <span>
-\[
-\nabla_z L = \hat{y} - y
-\]
+\\(\nabla_z L = \hat{y} - y\\)
 </span>
 
 This is the difference between the predicted probabilities and the true labels, without computing the derivatives of the softmax function.
