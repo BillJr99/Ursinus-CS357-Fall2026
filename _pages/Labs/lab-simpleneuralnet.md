@@ -602,11 +602,9 @@ When training neural networks for **classification tasks** such as MNIST digit r
 
 The network outputs raw **logits** <span>\(z\)</span>, which can be any real numbers. To interpret them as probabilities over classes (that add up to `100%` probability, or `1.0`), we apply the softmax function:
 
-<span>
-\\(
+$$
 \hat{y}_i = \frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}
-\\)
-</span>
+$$
 
 - Each output <span>\(\hat{y}_i\)</span> is in <span>\([0,1]\)</span>.  
 - The probabilities sum to 1, making them interpretable as class likelihoods.
