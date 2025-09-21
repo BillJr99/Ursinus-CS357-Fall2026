@@ -258,15 +258,14 @@ schedule:
     date: "0"
     title: "Representation Learning"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-representationlearning.md"
-    deliverables:
-      - dtitle: "Lab: Creating a Simple Neural Network Due"
-        dlink: "Labs/SimpleNeuralNet"
-        points: 100
-        rubricpath: "_pages/Labs/lab-simpleneuralnet.md"
   - week: "4"
     date: "1"
     title: "Lab: Embeddings and Prediction"
     deliverables:
+      - dtitle: "Lab: Creating a Simple Neural Network Due"
+        dlink: "Labs/SimpleNeuralNet"
+        points: 100
+        rubricpath: "_pages/Labs/lab-simpleneuralnet.md"    
       - dtitle: "Lab: Embeddings and Prediction Handed Out"
         dlink: "Labs/EmbeddingsPrediction"
         points: 100
