@@ -1,13 +1,13 @@
 ---
 layout: assignment
 permalink: Labs/SimpleNeuralNet
-title: "Lab: Creating a Simple Neural Network (Step‑by‑Step Tutorial)"
+title: "Lab: Creating a Simple Neural Network"
 
 info:
   points: 100
   goals:
     - Build intuition for forward pass, loss, gradients, and backpropagation by implementing tiny networks from scratch.
-    - Progress from a fully‑worked linear estimator to partially scaffolded implementations (multilayer, nonlinear, credit score weights, MNIST).
+    - Progress from a fully-worked linear estimator to partially scaffolded implementations (multilayer, nonlinear, credit score weights, MNIST).
     - Explain each coding step in your own words and validate results with small tests/plots.
   rubric:
     - weight: 30
@@ -15,7 +15,7 @@ info:
       preemerging: Provides a working implementation aligned to the assignment specification with simple tests.
       beginning: Implements core functionality and demonstrates usage on representative inputs.
       progressing: Implements full specification with clear structure, tests, and discussion of edge cases.
-      proficient: Delivers a robust, well‑structured implementation with comprehensive tests and justified design choices.
+      proficient: Delivers a robust, well-structured implementation with comprehensive tests and justified design choices.
     - weight: 30
       description: Algorithmic Correctness and Reasoning
       preemerging: Explains the algorithmic approach and verifies outputs on basic cases.
@@ -26,14 +26,14 @@ info:
       description: Code Quality and Documentation
       preemerging: Organizes code into readable units with brief inline comments.
       beginning: Uses functions/modules and docstrings to clarify behavior and interfaces.
-      progressing: Maintains consistent style, meaningful names, and explanatory docs where non‑trivial.
+      progressing: Maintains consistent style, meaningful names, and explanatory docs where non-trivial.
       proficient: Exhibits clean architecture, thoughtful abstractions, and thorough documentation throughout.
     - weight: 10
       description: Design Report
       preemerging: Summarizes goals, approach, and evaluation setup.
-      beginning: Explains design decisions and trade‑offs with small‑scale results.
+      beginning: Explains design decisions and trade-offs with small-scale results.
       progressing: Details design rationale, experiments, and limitations with supporting figures/tables.
-      proficient: Delivers a concise, well‑structured report with justified choices and actionable future work.
+      proficient: Delivers a concise, well-structured report with justified choices and actionable future work.
     - weight: 10
       description: Submission Completeness
       preemerging: Provides required artifacts and basic run instructions.
@@ -49,11 +49,11 @@ tags:
 
 In this lab, we will walk through building neural networks from scratch. You will:
 
-1. **Run** a fully‑worked linear estimator (no missing code).
+1. **Run** a fully-worked linear estimator (no missing code).
 2. **Fill in** carefully isolated pieces for a multilayer linear network.
 3. **Extend** to a nonlinear MLP by implementing activations and their derivatives.
 4. **Interpret** weights on a **Credit Score** toy dataset (regularization + feature effects).
-5. **Train** a tiny NN on **MNIST**, implementing softmax, cross‑entropy, and minibatching.
+5. **Train** a tiny NN on **MNIST**, implementing softmax, cross-entropy, and minibatching.
 
 Each major section explains *why* and *what to change*, with **TODO** comments throughout.  
 
@@ -135,9 +135,9 @@ plot_series(range(len(losses)), losses, title="MSE over steps")
 
 ---
 
-## Stage 2 — **Linear, Multi‑Layer (fill in targeted pieces)**
+## Stage 2 — **Linear, Multi-Layer (fill in targeted pieces)**
 
-We now stack **linear layers** without nonlinearities. A depth‑2 linear network is still linear end‑to‑end—but this is great practice for shapes and chaining.
+We now stack **linear layers** without nonlinearities. A depth-2 linear network is still linear end-to-end—but this is great practice for shapes and chaining.
 
 **You will implement:**
 - A reusable `Linear` layer’s forward and backward.
@@ -197,7 +197,7 @@ This computes gradients for weights and bias, and the gradient to pass downstrea
 
 ### 2.2 Compose Two Linear Layers
 
-We will create a two‑layer linear model: `x -> Linear1 -> Linear2 -> yhat`. No activation yet.  Just run this code.
+We will create a two-layer linear model: `x -> Linear1 -> Linear2 -> yhat`. No activation yet.  Just run this code.
 
 ```python
 lin1 = Linear(in_dim=1, out_dim=4)
@@ -228,7 +228,7 @@ for epoch in range(200):
         layer.W -= lr * layer.dW
         layer.b -= lr * layer.db
 
-plot_series(range(len(losses)), losses, title="Two‑layer linear: MSE")
+plot_series(range(len(losses)), losses, title="Two-layer linear: MSE")
 ```
 
 **Why:**
@@ -296,7 +296,7 @@ def tanh_backward(x, dout):
 2. In the `relu_backward` function, we want to pass through the values corresponding to `z` elements that were not trimmed by the ReLU function.  In other words, those values of `dout` that correspond to positive values of `z`.  For each element of `x`, append an element to `result` (initially an empty array): that value should be `0` if the current element of `x` is less than `0`, and should be the current element of `dout` (the gradient value for that element) otherwise.  This is our ReLU gradient, and you should return that `result` array.
 3. Fill in the formula for `tanh_backward` and return that function.
 
-**Mini‑check:**
+**Mini-check:**
 
 ```python
 z = np.array([[-2., 0., 3.]])
@@ -320,7 +320,7 @@ class MLP:
         self.l1 = Linear(in_dim, hidden_dim)
         self.l2 = Linear(hidden_dim, out_dim)
         self.nonlin = nonlin
-        self.h_pre = None  # pre‑activation cache
+        self.h_pre = None  # pre-activation cache
 
     def forward(self, x):
         z1 = self.l1.forward(x)
@@ -535,7 +535,7 @@ print("bias:", lin.b)
   * Larger `lam` increases the penalty (more bias, less variance).  
 - Note: only the weights (W) are regularized, not the biases (b).
 
-**Mini‑check:** Compare gradients with and without regularization on the same batch.
+**Mini-check:** Compare gradients with and without regularization on the same batch.
 
 ```python
 np.random.seed(3)
@@ -571,7 +571,7 @@ assert_close("L2 grad delta", dW_with_reg - dW_no_reg, 2*lam*lin.W)
 
 ## Stage 5 — **MNIST: Tiny Neural Net (classification)**
 
-Implement a minimal **two‑layer** classifier with **softmax + cross‑entropy**, minibatching, and accuracy. We provide most code; you fill in the key formulas.
+Implement a minimal **two-layer** classifier with **softmax + cross-entropy**, minibatching, and accuracy. We provide most code; you fill in the key formulas.
 
 ### 5.1 Data Loading (you may replace with your notebook’s loader)
 
@@ -596,7 +596,7 @@ def one_hot(y, C):
 Y = one_hot(y, num_classes)
 ```
 
-### 5.2 Softmax + Cross‑Entropy (fill in)
+### 5.2 Softmax + Cross-Entropy (fill in)
 
 When training neural networks for **classification tasks** such as MNIST digit recognition, a common combination is the **softmax activation** in the output layer with a **cross-entropy loss** function. 
 
@@ -650,7 +650,7 @@ def softmax_cross_entropy_backward(probs, Y_true):
 
 **What to do:** 
 
-Implement the mean negative log‑likelihood (use a tiny epsilon value `eps` to avoid accidentally computing `log(0)`).
+Implement the mean negative log-likelihood (use a tiny epsilon value `eps` to avoid accidentally computing `log(0)`).
 
 1. Compute the log (use `np.log`) of the probability vector `probs`.  You can add `eps` to this to add the epsilon value to all elements in one line of code, just as if `probs` was a scalar value.  Similarly, you can pass that whole result to `np.log` which will calculate on all elements of the vector.
 2. Calculate the log-likelihood of each element being the correct class by calculating the product of `Y_true` by the log probability vector you just computed.  Since the log of a probability should always be negative (since it is the log of a value between `0` and `1`), multiply this result by `-1` to make it a negative log likelihood.  Then, call `.sum(axis=1)` on that vector.  You will end up with a vector that is `0` in all positions except the one-hot position, since we multiplied it by the one-hot vector `Y_true` earlier.  The one-hot position will have a likelihood corresponding to that correct classification.  To spread this likelihood out over the remaining positions, return the mean of the negative log likelihood vector, which corresponds to a measure of how "surprised" the model is by this classification.  For example:
@@ -662,7 +662,7 @@ Y_true[i] * logp[i] = [0, -0.1, 0]
 ```
 
 **Why:**  
-- Cross‑entropy for one-hot `Y_true` is the negative log‑probability assigned to the true class, averaged over the batch.
+- Cross-entropy for one-hot `Y_true` is the negative log-probability assigned to the true class, averaged over the batch.
 - Probabilities are between 0 and 1, so their logarithms are ≤ 0.
 - If we summed raw log-probabilities, we would be maximizing a negative number, which doesn’t fit the idea of a "loss".
 - By taking the **negative log**, we turn the objective into a positive quantity that can be minimized with gradient descent.
@@ -679,7 +679,7 @@ Y_true[i] * logp[i] = [0, -0.1, 0]
   - If the model assigns high probability to the correct class (e.g. 0.99), log(prob) ≈ –0.01 → NLL ≈ 0.01 (good, small loss).  
   - If the model assigns low probability (e.g. 0.01), log(prob) ≈ –4.6 → NLL ≈ 4.6 (large penalty).
   
-**Mini‑check:** If the model predicts the true class with probability 1, the loss is ~0.
+**Mini-check:** If the model predicts the true class with probability 1, the loss is ~0.
 
 ```python
 probs = np.array([[0.0, 1.0, 0.0]], dtype=np.float32)  # 100% on class 1
@@ -693,7 +693,7 @@ print("CE 50/50:", cross_entropy(probs, Y0))           # ~ 0.693 (ln 2)
 
 *(Backward is already given to you — `(probs - Y_true)/batch` — so no TODO here.)*
 
-### 5.3 Two‑Layer Classifier
+### 5.3 Two-Layer Classifier
 
 This code is complete and runs our code above.
 
@@ -762,6 +762,174 @@ plot_series(range(len(accs_mlp)), accs_mlp, title="MNIST MLP: running accuracy (
 
 ---
 
+# Optional: Try it with TensorFlow
+
+```
+import math
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+
+# Reproducibility
+np.random.seed(42)
+random.seed(42)
+tf.random.set_seed(42)
+
+def plot_series(xs, ys, title=""):
+    plt.figure()
+    plt.plot(xs, ys)
+    plt.xlabel("epoch")
+    plt.ylabel("loss")
+    if title:
+        plt.title(title)
+    plt.show()
+
+def standardize_features(X):
+    """
+    Standardize columns to zero mean / unit variance.
+    Returns X_std, mu, sigma
+    """
+    mu = X.mean(axis=0, keepdims=True)
+    sigma = X.std(axis=0, keepdims=True) + 1e-8
+    Xn = (X - mu) / sigma
+    return Xn, mu, sigma
+
+def unstandardize_linear_weights(W_std, b_std, mu, sigma):
+    """
+    Convert weights learned on standardized features back to original feature units.
+
+    Model on standardized inputs:
+        y = b_std + sum_j W_std[j] * (x_j - mu_j) / sigma_j
+
+    Rearranged into original feature units:
+        y = b_orig + sum_j W_orig[j] * x_j
+    where:
+        W_orig[j] = W_std[j] / sigma_j
+        b_orig    = b_std - sum_j W_std[j] * mu_j / sigma_j
+    """
+    W_orig = W_std / sigma.ravel()
+    b_orig = b_std - np.sum(W_std * (mu.ravel() / sigma.ravel()))
+    return W_orig, b_orig
+
+def main():
+    # -----------------------------
+    # 1) Toy "credit-like" dataset
+    # Features: [utilization (0-1), age (years), late_payments (count)]
+    # Target: FICO-like credit score (higher is better)
+    # -----------------------------
+    feature_names = ["utilization", "age", "late_payments"]
+    X = np.array([
+        [0.10, 45, 0],
+        [0.90, 22, 3],
+        [0.40, 31, 1],
+        [0.20, 52, 0],
+        [0.70, 28, 2],
+    ], dtype=float)
+
+    y = np.array([720, 580, 660, 740, 610], dtype=float).reshape(-1, 1)
+
+    # Standardize inputs (the lab does this before linear regression)
+    Xn, mu, sigma = standardize_features(X)
+
+    # -----------------------------
+    # 2) TensorFlow/Keras linear model with L2 regularization
+    # -----------------------------
+    lam = 1e-2  # try 0, 1e-2, 1e-1 to see the effect of regularization strength
+    model = tf.keras.Sequential([
+        tf.keras.layers.Input(shape=(Xn.shape[1],)),
+        tf.keras.layers.Dense(
+            units=1,
+            activation=None,               # linear regression
+            use_bias=True,
+            kernel_regularizer=tf.keras.regularizers.L2(lam)  # adds λ * sum(W^2) to the loss
+        )
+    ])
+
+    model.compile(
+        optimizer=tf.keras.optimizers.SGD(learning_rate=0.1),
+        loss="mse"  # base data loss; regularization term is added automatically to total loss
+    )
+
+    # Custom callback to capture total loss each epoch
+    class LossHistory(tf.keras.callbacks.Callback):
+        def __init__(self):
+            super().__init__()
+            self.losses = []
+        def on_epoch_end(self, epoch, logs=None):
+            # logs["loss"] includes data loss + regularization penalties
+            self.losses.append(float(logs["loss"]))
+
+    history_cb = LossHistory()
+
+    # Train
+    EPOCHS = 1000
+    model.fit(Xn, y, epochs=EPOCHS, verbose=0, callbacks=[history_cb])
+
+    # Plot training curve (total loss: data + L2)
+    plot_series(range(1, EPOCHS + 1), history_cb.losses, title=f"Credit score with L2 (λ={lam})")
+
+    # -----------------------------
+    # 3) Inspect learned parameters
+    # -----------------------------
+    W_std_tf, b_std_tf = model.layers[0].get_weights()  # W shape (in_dim, 1), b shape (1,)
+    W_std = W_std_tf[:, 0].copy()           # (3,)
+    b_std = float(b_std_tf[0])
+
+    print("\n=== Weights on STANDARDIZED features (interpret magnitudes; sign shows direction) ===")
+    for name, w in zip(feature_names, W_std):
+        print(f"  {name:>14s}: {w:+.6f}")
+    print(f"  {'bias':>14s}: {b_std:+.6f}")
+
+    # Convert to original units for practitioner-friendly interpretation
+    W_orig, b_orig = unstandardize_linear_weights(W_std, b_std, mu, sigma)
+
+    print("\n=== Weights in ORIGINAL feature units (per unit change in raw feature) ===")
+    for name, w in zip(feature_names, W_orig):
+        print(f"  {name:>14s}: {w:+.6f} points per unit of {name}")
+    print(f"  {'bias':>14s}: {b_orig:+.6f} (score when all features are zero)")
+
+    # Rank features by absolute weight on standardized scale (safest for comparison)
+    order = np.argsort(-np.abs(W_std))
+    print("\nFeature influence ranking (by |weight| on standardized features):")
+    for k in order:
+        direction = "↑ (positive)" if W_std[k] >= 0 else "↓ (negative)"
+        print(f"  {feature_names[k]:>14s}: |w|={abs(W_std[k]):.6f}  direction={direction}")
+
+    # -----------------------------
+    # 4) Example predictions
+    # -----------------------------
+    def predict_raw(features_row):
+        x_row = np.array(features_row, dtype=float).reshape(1, -1)
+        x_row_std = (x_row - mu) / sigma
+        y_hat = model.predict(x_row_std, verbose=0)[0, 0]
+        return y_hat
+
+    p1 = [0.30, 21, 0]  # utilization 30%, age 21, no late payments
+    p2 = [0.30, 65, 0]  # same utilization, older age, no late payments
+
+    y1 = predict_raw(p1)
+    y2 = predict_raw(p2)
+
+    print("\n=== Example predictions (higher ≈ better) ===")
+    print(f"  Person A {p1}: predicted score ≈ {y1:.2f}")
+    print(f"  Person B {p2}: predicted score ≈ {y2:.2f}")
+
+    # If desired, also compute using original-unit weights analytically:
+    def predict_with_unstandardized(W_orig, b_orig, x_row):
+        return float(np.dot(W_orig, np.array(x_row)) + b_orig)
+
+    y1_alt = predict_with_unstandardized(W_orig, b_orig, p1)
+    y2_alt = predict_with_unstandardized(W_orig, b_orig, p2)
+    print("\nCheck (closed-form using original-unit weights):")
+    print(f"  Person A: {y1_alt:.2f} | Person B: {y2_alt:.2f}")
+
+if __name__ == "__main__":
+    main()
+```	
+
+---
+
 # What to Submit
 
 1) **Code** for all stages (you may continue using/augmenting the provided notebooks).  
@@ -772,13 +940,13 @@ plot_series(range(len(accs_mlp)), accs_mlp, title="MNIST MLP: running accuracy (
 
 - Start small: run on tiny slices and verify shapes.
 - If loss is `nan` or diverges, reduce learning rate and check gradients.
-- Use finite‑difference checks on tiny networks to validate your backward code.
-- Normalize inputs (zero‑mean/unit‑var) for stability when appropriate.
+- Use finite-difference checks on tiny networks to validate your backward code.
+- Normalize inputs (zero-mean/unit-var) for stability when appropriate.
 - Seed randomness for repeatability when comparing trials.
 
 ## Common Fixes When You’re Stuck
 
 - **Shape mismatch?** Print shapes right before a failing line. For matrix multiplies: `(A @ B)` needs inner dimensions equal.  
-- **Loss not decreasing?** Try a smaller learning rate; check ReLU backward mask uses the **pre‑activation** (z1), not the post‑activation (h).  
+- **Loss not decreasing?** Try a smaller learning rate; check ReLU backward mask uses the **pre-activation** (z1), not the post-activation (h).  
 - **Getting `nan`?** Reduce learning rate; for CE, make sure you’re using `np.log(probs + 1e-9)` (never log(0)).  
 - **Randomness?** Set `np.random.seed(42)` at the top for repeatable runs.

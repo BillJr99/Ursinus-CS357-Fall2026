@@ -494,6 +494,201 @@ class TinyGPT(nn.Module):
 
 ---
 
+## A Worked Example
+- Understand next-token prediction as probabilistic inference.
+- Connect embeddings, attention, and feed-forward networks to the final hidden state **h**.
+- See how **h** is projected into vocabulary space to yield logits and probabilities.
+- Work through concrete, step-by-step numerical examples.
+
+> Source of raw material for these slides: adapted from course notes/transcript 【8†source】.
+
+---
+
+### 1. The Big Picture: Next-Token Prediction
+- LLMs model a conditional distribution over tokens:
+  
+  $$ P(w_t \mid w_1,\dots,w_{t-1}) $$
+  
+- Pipeline (at a high-level):
+  1. Tokenize \(w_1,\dots,w_{t-1}\)
+  2. Embed tokens + add positional information
+  3. Pass through stacked Transformer layers (self-attention + FFN)
+  4. Extract final hidden state \(h\) for position \(t\)
+  5. Project \(h\) onto vocabulary → logits → softmax → probabilities
+
+---
+
+### 2. Embeddings & Contextualization
+- Each token \(w_i\) maps to an embedding \(x_i = E[w_i]\).
+- Positional signal \(p_i\) is added: \(z_i = x_i + p_i\).
+- Through layers, each \(z_i\) becomes **contextualized**, ultimately yielding a final vector \(h\) at the prediction position.
+
+---
+
+### 3. Scoring Candidates: Linear Projection + Softmax
+- Each vocabulary token \(j\) has an output embedding \(v_j\).
+- Score (logit) for token \(j\):
+  
+  $$ \ell_j = h^\top v_j + b_j \quad (\text{often } b_j=0) $$
+  
+- Convert to probabilities with softmax:
+  
+  $$ P(j \mid \text{context}) = \frac{e^{\ell_j}}{\sum_k e^{\ell_k}} $$
+
+- Dot-product is the standard score; cosine similarity is a normalized variant and gives similar rankings when norms are comparable.
+
+---
+
+### 4. Toy Example A: Dot-Product Softmax (Vocabulary of 3)
+**Context:** “The cat chased the” → final hidden state (toy 3D):
+  
+\( h = [0.9,\; 0.1,\; 0.2] \)
+
+**Output embeddings:**
+- \( v_{\text{dog}} = [0.8, 0.1, 0.3] \)
+- \( v_{\text{car}} = [0.1, 0.9, 0.1] \)
+- \( v_{\text{banana}} = [0.0, 0.2, 0.9] \)
+
+**Logits (dot products):**
+- \( \ell_{\text{dog}} = 0.79 \)
+- \( \ell_{\text{car}} = 0.20 \)
+- \( \ell_{\text{banana}} = 0.20 \)
+
+**Softmax (shift by max = 0.79):**
+- \( P(\text{dog}) \approx 0.474 \)
+- \( P(\text{car}) \approx 0.263 \)
+- \( P(\text{banana}) \approx 0.263 \)
+
+**Takeaway:** “dog” is most probable continuation given the context.
+
+---
+
+### 5. Toy Example B: Cosine Similarity View
+- Cosine similarity:
+  
+  $$ \cos(h, v) = \frac{h^\top v}{\|h\|\,\|v\|} $$
+  
+- With the same vectors as in Example A, cosines rank **dog** highest.
+- In practice, logit = dot-product; with L2-normalized rows and \(h\), this becomes cosine-scoring.
+
+---
+
+### 6. How the Model Computes \(h\): Self-Attention
+**Per layer, per token \(i\):**
+- Queries/Keys/Values:
+  
+  \( Q_i = W_Q z_i,\;\; K_i = W_K z_i,\;\; V_i = W_V z_i \)
+
+- Attention weights for token \(i\) attending to token \(j\):
+  
+  $$ \alpha_{ij} = \text{softmax}_j \!\left(\frac{Q_i \cdot K_j}{\sqrt{d_k}}\right) $$
+
+- Context update:
+  
+  $$ \tilde{z}_i = \sum_j \alpha_{ij} V_j $$
+
+- Then residual + layer norm; then an FFN (e.g., GELU MLP); repeat across many layers.
+- At the last layer, take the representation at position \(t\) as \(h\).
+
+---
+
+### 7. Numerical Attention Walkthrough (Toy 2D)
+**Embeddings (2D):**
+- \( \text{The}_1 : [0.1, 0.2] \)
+- \( \text{cat} : [0.9, 0.1] \)
+- \( \text{chased} : [0.8, 0.7] \)
+- \( \text{the}_2 : [0.2, 0.1] \)
+
+Assume \(Q=K=V=I\) (identity) to keep numbers simple.
+Compute attention for **the\_2** over all tokens (including itself):
+
+- Raw scores (scaled dot products, \(d_k=2\)):
+  - to **The\_1**: ≈ 0.028
+  - to **cat**: ≈ 0.135
+  - to **chased**: ≈ 0.163
+  - to **the\_2** (self): ≈ 0.035
+
+- Softmax weights:
+  - **The\_1**: ≈ 0.23
+  - **cat**: ≈ 0.26
+  - **chased**: ≈ 0.27
+  - **the\_2**: ≈ 0.24
+
+- Weighted sum (context vector for **the\_2**):
+  \( \tilde{z}_{\text{the}_2} \approx [0.521,\; 0.285] \)
+
+**Interpretation:** attention emphasized **cat** and **chased**, pulling in animal/action context.
+
+---
+
+### 8. From \(\tilde{z}\) to \(h\): FFN & Residuals
+- Residual connection + LayerNorm:
+  
+  \( z' = \text{LayerNorm}(z + \tilde{z}) \)
+- Feed-Forward Network (per token):
+  
+  \( \text{FFN}(z') = W_2\,\sigma(W_1 z' + b_1) + b_2 \)
+- After multiple layers, the final vector at the prediction position becomes \(h\).
+
+**Intuition:** attention mixes relevant tokens; FFN builds higher-order features; residual/normalization stabilize and preserve signal.
+
+---
+
+### 9. Step 4 in Detail: Projecting \(h\) to Vocabulary
+- Let \(V \in \mathbb{R}^{d \times |\mathcal{V}|}\) be the (possibly weight-tied) output matrix whose columns are \(v_j\).
+- The model computes a vector of logits:
+  
+  $$ \ell = V^\top h \quad (\text{plus optional bias } b) $$
+
+- Softmax converts \(\ell\) to a probability distribution over the vocabulary.
+- **Why this works:** tokens whose embeddings align with \(h\) (large dot product) receive high probability.
+
+---
+
+### 10. End-to-End Mini Example (2D)
+Assume after FFN/LayerNorm, the final hidden state is \( h \approx [0.6, 0.3] \).  
+Use tiny vocab embeddings:
+
+- \( v_{\text{dog}} = [0.8, 0.3] \Rightarrow \ell_{\text{dog}} = 0.57 \)
+- \( v_{\text{car}} = [0.1, 0.9] \Rightarrow \ell_{\text{car}} = 0.33 \)
+- \( v_{\text{banana}} = [0.0, 0.8] \Rightarrow \ell_{\text{banana}} = 0.24 \)
+
+Softmax (shift by max \(=0.57\)):
+- \( P(\text{dog}) \approx 0.40 \)
+- \( P(\text{car}) \approx 0.31 \)
+- \( P(\text{banana}) \approx 0.29 \)
+
+**Result:** model most likely continues with **dog**.
+
+---
+
+### 11. Decoding & Temperature
+- **Greedy (argmax):** pick \(\arg\max_j P(j)\).
+- **Sampling:** draw from the distribution to encourage diversity.
+- **Top-\(k\):** sample only from the \(k\) highest-probability tokens.
+- **Top-\(p\) (nucleus):** sample from the smallest set whose cumulative mass ≥ \(p\).
+- **Temperature \(\tau\):** scale logits by \(1/\tau\) before softmax.
+  - \(\tau < 1\): sharper distribution (more deterministic).
+  - \(\tau > 1\): flatter distribution (more diverse).
+
+---
+
+### 12. Practical Notes & Perspectives
+- **Weight tying:** input and output embeddings are often shared → parameter efficiency and improved consistency.
+- **Multi-head attention:** different heads specialize (syntax, semantics, dependencies).
+- **Normalization choices:** LayerNorm variants and placement (pre/post) affect training stability.
+- **Calibration:** output biases and temperature control can calibrate probabilities in deployment.
+- **Limitations:** vocabulary granularity (subwords), exposure bias under teacher forcing, long-context challenges.
+
+---
+
+### 13. Quick Exercises (Optional)
+1. Recompute Example A with a new hidden state \(h' = [0.7, 0.2, 0.1]\). How do the probabilities change?
+2. In the 2D attention example, change \(Q=K=V\) from identity to a nontrivial matrix and verify how the weights shift.
+3. Experiment with \(\tau = 0.7\) vs. \(\tau = 2.0\) on Example A logits and compare \(P(\text{dog})\).
+
+---
+
 ## Societal & Ethical Implications
 
 
