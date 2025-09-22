@@ -1388,6 +1388,422 @@ $\displaystyle \frac{\partial \mathcal{L}_{\text{total}}}{\partial W^{(\ell)}} =
 
 ---
 
+## Chain Rule Derivative in Machine Learning — Summary
+
+### Introduction
+- Machine learning models are composed of layers.
+- Each layer transforms the output of the previous one.
+- To optimize parameters, we need gradients of composite functions.
+- The **chain rule** states:
+  $$
+  \frac{dy}{dx} = \frac{df}{dg} \cdot \frac{dg}{dx}
+  $$
+
+---
+
+### Step 1: Forward Pass
+For a 2-input, 1-hidden-layer, 1-output network:
+
+$$
+a_1 = \sigma(W_1 x + b_1), \quad z = \sigma(W_2 a_1 + b_2)
+$$
+
+- $a_1$: hidden layer activations  
+- $z$: final output  
+- $\sigma$: sigmoid activation  
+
+---
+
+### Step 2: Loss Function
+Using mean squared error (MSE):
+
+$$
+L = \tfrac{1}{2}(z - y)^2
+$$
+
+where $y$ is the true label.
+
+---
+
+### Step 3: Chain Rule for Gradients (Backpropagation)
+
+#### (a) Loss w.r.t output
+$$
+\frac{\partial L}{\partial z} = z - y
+$$
+
+#### (b) Output w.r.t parameters
+- With sigmoid derivative $\frac{dz}{du} = z(1-z)$:
+
+$$
+\frac{\partial z}{\partial W_2} = z(1-z) a_1^T
+$$
+$$
+\frac{\partial z}{\partial b_2} = z(1-z)
+$$
+
+#### (c) Gradients of loss w.r.t parameters
+By the chain rule:
+
+$$
+\frac{\partial L}{\partial W_2} = \frac{\partial L}{\partial z} \cdot \frac{\partial z}{\partial W_2}
+$$
+$$
+\frac{\partial L}{\partial b_2} = \frac{\partial L}{\partial z} \cdot \frac{\partial z}{\partial b_2}
+$$
+
+---
+
+### Step 4: Parameter Update
+Gradient descent update rule:
+
+$$
+W_1 \leftarrow W_1 - \alpha \frac{\partial L}{\partial W_1}
+$$
+$$
+b_1 \leftarrow b_1 - \alpha \frac{\partial L}{\partial b_1}
+$$
+$$
+W_2 \leftarrow W_2 - \alpha \frac{\partial L}{\partial W_2}
+$$
+$$
+b_2 \leftarrow b_2 - \alpha \frac{\partial L}{\partial b_2}
+$$
+
+---
+
+### Applications of Chain Rule
+- **Backpropagation**: Efficient error propagation layer by layer.
+- **Gradient descent**: Computing gradients for parameter updates.
+- **Automatic differentiation**: Used in TensorFlow, PyTorch.
+- **RNNs**: Gradients propagated through time.
+- **CNNs**: Gradients computed for convolutional filters.
+
+---
+
+### Example: PyTorch Implementation
+
+```python
+import torch
+import torch.nn as nn
+
+class SimpleNet(nn.Module):
+    def __init__(self):
+        super(SimpleNet, self).__init__()
+        self.hidden = nn.Linear(2, 2)
+        self.output = nn.Linear(2, 1)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        a1 = self.sigmoid(self.hidden(x))
+        z = self.sigmoid(self.output(a1))
+        return z
+```
+		
+---	
+
+## By-Hand Training of a 1-Hidden-Layer ReLU Network
+
+** Fit $y = x^2 + 2x$ with Full-Batch Gradient Descent**
+
+**Learning rate:** $\alpha = 0.05$ · **Training inputs:** $x \in \{-2,-1,0,1,2\}$
+
+> This slide deck contains the **student worksheet** and a **fully worked answer key** (rounded to 2 decimals, with arithmetic shown).
+
+---
+
+### Learning Goals
+
+- Translate a tiny neural network into explicit algebraic computations (forward and backward).
+- Compute ReLU activations and use the subgradient convention $\mathrm{ReLU}'(0)=0$.
+- Derive full-batch gradients from per-sample contributions.
+- Apply parameter updates with a fixed learning rate $\alpha$.
+
+---
+
+### Problem Setup (Shared)
+
+We fit a single-hidden-layer network with 2 hidden units and ReLU activation to the target $y = x^2 + 2x$ using full-batch gradient descent.
+
+- **Hidden (2 units):** $ z_1 = W_1 x + b_1,\quad h = \mathrm{ReLU}(z_1) $
+- **Output (scalar):** $ \hat{y} = W_2 h + b_2 $
+- **Parameters:**  
+  $ W_1=\begin{bmatrix} w_{11}\\ w_{21}\end{bmatrix},\; b_1=\begin{bmatrix} b_{11}\\ b_{21}\end{bmatrix},\; W_2=\begin{bmatrix} w_{2,1} & w_{2,2}\end{bmatrix},\; b_2\in\mathbb{R} $
+- **Loss:** $ L = \tfrac{1}{2} \sum_s (y_s - \hat{y}_s)^2 $ with $\mathrm{ReLU}'(0)=0$.
+
+**Suggested initialization (Iteration 0):**  
+$W_1 = \begin{bmatrix}1\\-1\end{bmatrix},\; b_1 = \begin{bmatrix}0\\0\end{bmatrix},\; W_2 = [1,-1],\; b_2 = 0.$
+
+---
+
+### Part A — Student Worksheet (Parameters)
+
+Fill in values after each update.
+
+| Iter | $W_1$ | $b_1$ | $W_2$, $b_2$ |
+|:---:|:--|:--|:--|
+| 0 | $\begin{bmatrix}1\\-1\end{bmatrix}$ | $\begin{bmatrix}0\\0\end{bmatrix}$ | $[1,-1],\; 0$ |
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+| 5 |  |  |  |
+
+---
+
+### Part A — Student Worksheet (Forward Pass)
+
+For each $x \in \{-2,-1,0,1,2\}$, compute and record:
+
+| x | $y=x^2+2x$ | $z_1=W_1x+b_1$ | $h=\mathrm{ReLU}(z_1)$ | $\hat{y}=W_2 h + b_2$ | $e=\hat{y}-y$ |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 |  |  |  |  |  |
+| -1 |  |  |  |  |  |
+| 0  |  |  |  |  |  |
+| 1  |  |  |  |  |  |
+| 2  |  |  |  |  |  |
+
+---
+
+### Part A — Student Worksheet (Gradients)
+
+For each sample, compute step by step (use $\mathbf{1}_{z_1>0}$ for ReLU mask):
+
+- $\partial W_2\big\rvert_s = e\, h^\top$  
+- $\partial b_2\big\rvert_s = e$  
+- compute $e W_2$, then $\delta(h) = (e W_2) \odot \mathbf{1}_{z_1>0}$  
+- $\partial W_1\big\rvert_s = \delta(h)\, x$, $\partial b_1\big\rvert_s = \delta(h)$
+
+Sum across samples to form the batch gradients, then update $\theta \leftarrow \theta - \alpha\, \nabla L$.
+
+---
+
+## Fully Worked Example
+
+> Numbers are rounded to two decimals at the time they are shown, and those rounded values are propagated to subsequent steps.
+
+
+---
+
+### Iteration 0 → 1
+
+**Forward pass (start of Iteration 0). Loss:** $L=22.00$.
+
+| x | y | z1 | h | $\hat{y}$ | e |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 | 0.00 | [-2.00, 2.00] | [0.00, 2.00] | -2.00 | -2.00 |
+| -1 | -1.00 | [-1.00, 1.00] | [0.00, 1.00] | -1.00 | 0.00 |
+| 0 | 0.00 | [0.00, 0.00] | [0.00, 0.00] | 0.00 | 0.00 |
+| 1 | 3.00 | [1.00, -1.00] | [1.00, 0.00] | 1.00 | -2.00 |
+| 2 | 8.00 | [2.00, -2.00] | [2.00, 0.00] | 2.00 | -6.00 |
+
+**Per-sample gradients (2-dec rounding at each product):**
+
+- *x = −2:* $e=-2.00$, $h=[0.00,2.00]$, $\mathbf{1}_{z>0}=[0,1]$  
+  $\partial W_2|_s = e h = [−2.00\cdot 0.00, −2.00\cdot 2.00] = [0.00, −4.00]$  
+  $\partial b_2|_s = e = −2.00$  
+  $eW_2 = −2.00[1.00, −1.00] = [−2.00, 2.00]$  
+  $\delta(h) = eW_2 \odot \mathbf{1}_{z>0} = [0.00, 2.00]$  
+  $\partial W_1|_s = \delta(h) x = [0.00\cdot (−2), 2.00\cdot (−2)] = [0.00, −4.00]$  
+  $\partial b_1|_s = [0.00, 2.00]$
+
+- *x = −1:* $e=0.00$, $h=[0.00,1.00]$, $\mathbf{1}_{z>0}=[0,1]$  
+  $\partial W_2|_s=[0.00,0.00],\; \partial b_2|_s=0.00$  
+  $eW_2=[0.00,0.00],\; \delta(h)=[0.00,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[0.00,0.00]$
+
+- *x = 0:* $e=0.00$, $h=[0.00,0.00]$, $\mathbf{1}_{z>0}=[0,0]$  
+  $\partial W_2|_s=[0.00,0.00],\; \partial b_2|_s=0.00$  
+  $eW_2=[0.00,0.00],\; \delta(h)=[0.00,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[0.00,0.00]$
+
+- *x = 1:* $e=-2.00$, $h=[1.00,0.00]$, $\mathbf{1}_{z>0}=[1,0]$  
+  $\partial W_2|_s=[−2.00,0.00],\; \partial b_2|_s=−2.00$  
+  $eW_2=[−2.00,2.00],\; \delta(h)=[−2.00,0.00]$  
+  $\partial W_1|_s=[−2.00,0.00],\; \partial b_1|_s=[−2.00,0.00]$
+
+- *x = 2:* $e=-6.00$, $h=[2.00,0.00]$, $\mathbf{1}_{z>0}=[1,0]$  
+  $\partial W_2|_s=[−12.00,0.00],\; \partial b_2|_s=−6.00$  
+  $eW_2=[−6.00,6.00],\; \delta(h)=[−6.00,0.00]$  
+  $\partial W_1|_s=[−12.00,0.00],\; \partial b_1|_s=[−6.00,0.00]$
+
+**Batch sums:** $\partial W_2=[−14.00,−4.00],\; \partial b_2=−10.00,\; \partial W_1=[−14.00,−4.00],\; \partial b_1=[−8.00,2.00]$
+
+**Update ($\alpha=0.05$):**  
+$W_2^+=[1.00,−1.00]−0.05[−14.00,−4.00]=[1.70,−0.80]$,  
+$b_2^+=0.00−0.05(−10.00)=0.50$  
+$W_1^+=\begin{bmatrix}1\\−1\end{bmatrix}−0.05\begin{bmatrix}−14.00\\−4.00\end{bmatrix}=\begin{bmatrix}1.70\\−0.80\end{bmatrix}$,  
+$b_1^+=\begin{bmatrix}0\\0\end{bmatrix}−0.05\begin{bmatrix}−8.00\\2.00\end{bmatrix}=\begin{bmatrix}0.40\\−0.10\end{bmatrix}$.
+
+---
+
+### Iteration 1 → 2
+
+**Forward pass (start of Iteration 1). Loss:** $L=2.50$.
+
+| x | y | z1 | h | $\hat{y}$ | e |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 | 0.00 | [-3.00, 1.50] | [0.00, 1.50] | -0.70 | -0.70 |
+| -1 | -1.00 | [-1.30, 0.70] | [0.00, 0.70] | -0.06 | 0.94 |
+| 0 | 0.00 | [0.40, -0.10] | [0.40, 0.00] | 1.18 | 1.18 |
+| 1 | 3.00 | [2.10, -0.90] | [2.10, 0.00] | 4.07 | 1.07 |
+| 2 | 8.00 | [3.80, -1.70] | [3.80, 0.00] | 6.96 | -1.04 |
+
+**Per-sample gradients:**
+
+- *x=−2:* $e=−0.70$, $h=[0.00,1.50]$ → $\partial W_2|_s=[0.00,−1.05],\; \partial b_2|_s=−0.70$  
+  $eW_2=−0.70[1.70,−0.80]=[−1.19,0.56]$ → $\delta(h)=[0.00,0.56]$  
+  $\partial W_1|_s=[0.00,−1.12],\; \partial b_1|_s=[0.00,0.56]$
+
+- *x=−1:* $e=0.94$, $h=[0.00,0.70]$ → $\partial W_2|_s=[0.00,0.66],\; \partial b_2|_s=0.94$  
+  $eW_2=0.94[1.70,−0.80]=[1.60,−0.75]$ → $\delta(h)=[0.00,−0.75]$  
+  $\partial W_1|_s=[0.00,0.75],\; \partial b_1|_s=[0.00,−0.75]$
+
+- *x=0:* $e=1.18$, $h=[0.40,0.00]$ → $\partial W_2|_s=[0.47,0.00],\; \partial b_2|_s=1.18$  
+  $eW_2=1.18[1.70,−0.80]=[2.01,−0.94]$ → $\delta(h)=[2.01,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[2.01,0.00]$
+
+- *x=1:* $e=1.07$, $h=[2.10,0.00]$ → $\partial W_2|_s=[2.25,0.00],\; \partial b_2|_s=1.07$  
+  $eW_2=1.07[1.70,−0.80]=[1.82,−0.86]$ → $\delta(h)=[1.82,0.00]$  
+  $\partial W_1|_s=[1.82,0.00],\; \partial b_1|_s=[1.82,0.00]$
+
+- *x=2:* $e=−1.04$, $h=[3.80,0.00]$ → $\partial W_2|_s=[−3.95,0.00],\; \partial b_2|_s=−1.04$  
+  $eW_2=−1.04[1.70,−0.80]=[−1.77,0.83]$ → $\delta(h)=[−1.77,0.00]$  
+  $\partial W_1|_s=[−3.54,0.00],\; \partial b_1|_s=[−1.77,0.00]$
+
+**Batch sums:** $\partial W_2=[−1.23,−0.39],\; \partial b_2=1.45,\; \partial W_1=[−1.72,−0.37],\; \partial b_1=[2.06,−0.19]$
+
+**Update ($\alpha=0.05$):**  
+$W_2^+=[1.76,−0.78],\; b_2^+=0.43,\; W_1^+=\begin{bmatrix}1.79\\−0.78\end{bmatrix},\; b_1^+=\begin{bmatrix}0.30\\−0.09\end{bmatrix}.$
+
+---
+
+### Iteration 2 → 3
+
+**Forward pass (start of Iteration 2). Loss:** $L=2.01$.
+
+| x | y | z1 | h | $\hat{y}$ | e |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 | 0.00 | [-3.28, 1.47] | [0.00, 1.47] | -0.72 | -0.72 |
+| -1 | -1.00 | [-1.49, 0.69] | [0.00, 0.69] | -0.11 | 0.89 |
+| 0 | 0.00 | [0.30, -0.09] | [0.30, 0.00] | 0.96 | 0.96 |
+| 1 | 3.00 | [2.09, -0.87] | [2.09, 0.00] | 4.11 | 1.11 |
+| 2 | 8.00 | [3.88, -1.65] | [3.88, 0.00] | 7.26 | -0.74 |
+
+**Per-sample gradients:**
+
+- *x=−2:* $e=−0.72$, $h=[0.00,1.47]$ → $\partial W_2|_s=[0.00,−1.06],\; \partial b_2|_s=−0.72$  
+  $eW_2=−0.72[1.76,−0.78]=[−1.27,0.56]$ → $\delta(h)=[0.00,0.56]$  
+  $\partial W_1|_s=[0.00,−1.12],\; \partial b_1|_s=[0.00,0.56]$
+
+- *x=−1:* $e=0.89$, $h=[0.00,0.69]$ → $\partial W_2|_s=[0.00,0.61],\; \partial b_2|_s=0.89$  
+  $eW_2=0.89[1.76,−0.78]=[1.57,−0.69]$ → $\delta(h)=[0.00,−0.69]$  
+  $\partial W_1|_s=[0.00,0.69],\; \partial b_1|_s=[0.00,−0.69]$
+
+- *x=0:* $e=0.96$, $h=[0.30,0.00]$ → $\partial W_2|_s=[0.29,0.00],\; \partial b_2|_s=0.96$  
+  $eW_2=0.96[1.76,−0.78]=[1.69,−0.75]$ → $\delta(h)=[1.69,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[1.69,0.00]$
+
+- *x=1:* $e=1.11$, $h=[2.09,0.00]$ → $\partial W_2|_s=[2.32,0.00],\; \partial b_2|_s=1.11$  
+  $eW_2=1.11[1.76,−0.78]=[1.95,−0.87]$ → $\delta(h)=[1.95,0.00]$  
+  $\partial W_1|_s=[1.95,0.00],\; \partial b_1|_s=[1.95,0.00]$
+
+- *x=2:* $e=−0.74$, $h=[3.88,0.00]$ → $\partial W_2|_s=[−2.87,0.00],\; \partial b_2|_s=−0.74$  
+  $eW_2=−0.74[1.76,−0.78]=[−1.30,0.58]$ → $\delta(h)=[−1.30,0.00]$  
+  $\partial W_1|_s=[−2.60,0.00],\; \partial b_1|_s=[−1.30,0.00]$
+
+**Batch sums:** $\partial W_2=[−0.26,−0.45],\; \partial b_2=1.50,\; \partial W_1=[−0.65,−0.43],\; \partial b_1=[2.34,−0.13]$
+
+**Update ($\alpha=0.05$):**  
+$W_2^+=[1.77,−0.76],\; b_2^+=0.35,\; W_1^+=\begin{bmatrix}1.82\\−0.76\end{bmatrix},\; b_1^+=\begin{bmatrix}0.18\\−0.08\end{bmatrix}.$
+
+---
+
+### Iteration 3 → 4
+
+**Forward pass (start of Iteration 3). Loss:** $L=1.63$.
+
+| x | y | z1 | h | $\hat{y}$ | e |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 | 0.00 | [-3.46, 1.44] | [0.00, 1.44] | -0.74 | -0.74 |
+| -1 | -1.00 | [-1.64, 0.68] | [0.00, 0.68] | -0.17 | 0.83 |
+| 0 | 0.00 | [0.18, -0.08] | [0.18, 0.00] | 0.67 | 0.67 |
+| 1 | 3.00 | [2.00, -0.84] | [2.00, 0.00] | 3.89 | 0.89 |
+| 2 | 8.00 | [3.82, -1.60] | [3.82, 0.00] | 7.11 | -0.89 |
+
+**Per-sample gradients:**
+
+- *x=−2:* $e=−0.74$, $h=[0.00,1.44]$ → $\partial W_2|_s=[0.00,−1.07],\; \partial b_2|_s=−0.74$  
+  $eW_2=−0.74[1.77,−0.76]=[−1.31,0.56]$ → $\delta(h)=[0.00,0.56]$  
+  $\partial W_1|_s=[0.00,−1.12],\; \partial b_1|_s=[0.00,0.56]$
+
+- *x=−1:* $e=0.83$, $h=[0.00,0.68]$ → $\partial W_2|_s=[0.00,0.56],\; \partial b_2|_s=0.83$  
+  $eW_2=0.83[1.77,−0.76]=[1.47,−0.63]$ → $\delta(h)=[0.00,−0.63]$  
+  $\partial W_1|_s=[0.00,0.63],\; \partial b_1|_s=[0.00,−0.63]$
+
+- *x=0:* $e=0.67$, $h=[0.18,0.00]$ → $\partial W_2|_s=[0.12,0.00],\; \partial b_2|_s=0.67$  
+  $eW_2=0.67[1.77,−0.76]=[1.19,−0.51]$ → $\delta(h)=[1.19,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[1.19,0.00]$
+
+- *x=1:* $e=0.89$, $h=[2.00,0.00]$ → $\partial W_2|_s=[1.78,0.00],\; \partial b_2|_s=0.89$  
+  $eW_2=0.89[1.77,−0.76]=[1.58,−0.68]$ → $\delta(h)=[1.58,0.00]$  
+  $\partial W_1|_s=[1.58,0.00],\; \partial b_1|_s=[1.58,0.00]$
+
+- *x=2:* $e=−0.89$, $h=[3.82,0.00]$ → $\partial W_2|_s=[−3.40,0.00],\; \partial b_2|_s=−0.89$  
+  $eW_2=−0.89[1.77,−0.76]=[−1.58,0.68]$ → $\delta(h)=[−1.58,0.00]$  
+  $\partial W_1|_s=[−3.16,0.00],\; \partial b_1|_s=[−1.58,0.00]$
+
+**Batch sums:** $\partial W_2=[−1.50,−0.51],\; \partial b_2=0.76,\; \partial W_1=[−1.58,−0.49],\; \partial b_1=[1.19,−0.07]$
+
+**Update ($\alpha=0.05$):**  
+$W_2^+=[1.84,−0.73],\; b_2^+=0.31,\; W_1^+=\begin{bmatrix}1.90\\−0.74\end{bmatrix},\; b_1^+=\begin{bmatrix}0.12\\−0.08\end{bmatrix}.$
+
+---
+
+### Iteration 4 → 5
+
+**Forward pass (start of Iteration 4). Loss:** $L=1.38$.
+
+| x | y | z1 | h | $\hat{y}$ | e |
+|:--:|:--:|:--|:--|:--:|:--:|
+| -2 | 0.00 | [-3.68, 1.40] | [0.00, 1.40] | -0.71 | -0.71 |
+| -1 | -1.00 | [-1.78, 0.66] | [0.00, 0.66] | -0.17 | 0.83 |
+| 0 | 0.00 | [0.12, -0.08] | [0.12, 0.00] | 0.53 | 0.53 |
+| 1 | 3.00 | [2.02, -0.82] | [2.02, 0.00] | 4.03 | 1.03 |
+| 2 | 8.00 | [3.92, -1.56] | [3.92, 0.00] | 7.52 | -0.48 |
+
+**Per-sample gradients:**
+
+- *x=−2:* $e=−0.71$, $h=[0.00,1.40]$ → $\partial W_2|_s=[0.00,−0.99],\; \partial b_2|_s=−0.71$  
+  $eW_2=−0.71[1.84,−0.73]=[−1.31,0.52]$ → $\delta(h)=[0.00,0.52]$  
+  $\partial W_1|_s=[0.00,−1.04],\; \partial b_1|_s=[0.00,0.52]$
+
+- *x=−1:* $e=0.83$, $h=[0.00,0.66]$ → $\partial W_2|_s=[0.00,0.55],\; \partial b_2|_s=0.83$  
+  $eW_2=0.83[1.84,−0.73]=[1.53,−0.61]$ → $\delta(h)=[0.00,−0.61]$  
+  $\partial W_1|_s=[0.00,0.61],\; \partial b_1|_s=[0.00,−0.61]$
+
+- *x=0:* $e=0.53$, $h=[0.12,0.00]$ → $\partial W_2|_s=[0.06,0.00],\; \partial b_2|_s=0.53$  
+  $eW_2=0.53[1.84,−0.73]=[0.98,−0.39]$ → $\delta(h)=[0.98,0.00]$  
+  $\partial W_1|_s=[0.00,0.00],\; \partial b_1|_s=[0.98,0.00]$
+
+- *x=1:* $e=1.03$, $h=[2.02,0.00]$ → $\partial W_2|_s=[2.08,0.00],\; \partial b_2|_s=1.03$  
+  $eW_2=1.03[1.84,−0.73]=[1.90,−0.75]$ → $\delta(h)=[1.90,0.00]$  
+  $\partial W_1|_s=[1.90,0.00],\; \partial b_1|_s=[1.90,0.00]$
+
+- *x=2:* $e=−0.48$, $h=[3.92,0.00]$ → $\partial W_2|_s=[−1.88,0.00],\; \partial b_2|_s=−0.48$  
+  $eW_2=−0.48[1.84,−0.73]=[−0.88,0.35]$ → $\delta(h)=[−0.88,0.00]$  
+  $\partial W_1|_s=[−1.76,0.00],\; \partial b_1|_s=[−0.88,0.00]$
+
+**Batch sums:** $\partial W_2=[0.26,−0.44],\; \partial b_2=1.20,\; \partial W_1=[0.14,−0.43],\; \partial b_1=[2.00,−0.09]$
+
+**Update ($\alpha=0.05$)** (applied to start-of-iteration-4 parameters $W_2=[1.84,−0.73],\, b_2=0.31,\, W_1=\begin{bmatrix}1.90\\-0.74\end{bmatrix},\, b_1=\begin{bmatrix}0.12\\-0.08\end{bmatrix}$):  
+$W_2^+ = [1.84,−0.73] − 0.05[0.26,−0.44] = [1.83,−0.71]$  
+$b_2^+ = 0.31 − 0.05(1.20) = 0.25$  
+$W_1^+ = \begin{bmatrix}1.90\\-0.74\end{bmatrix} − 0.05\begin{bmatrix}0.14\\-0.43\end{bmatrix} = \begin{bmatrix}1.90\\-0.72\end{bmatrix}$  
+$b_1^+ = \begin{bmatrix}0.12\\-0.08\end{bmatrix} − 0.05\begin{bmatrix}2.00\\-0.09\end{bmatrix} = \begin{bmatrix}0.02\\-0.07\end{bmatrix}$
+
+---	
+
 ## Open Colab: Introduction to Neural networks
 
 By [markhliu](https://github.com/markhliu)
