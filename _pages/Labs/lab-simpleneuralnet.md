@@ -207,6 +207,14 @@ lr = 0.05
 losses = []
 
 # Reuse data from Stage 1
+# Generate data from y = a*x + b + noise
+n = 200
+true_a, true_b = 2.5, -0.7
+x = np.linspace(-2, 2, n)
+noise = 0.25 * np.random.randn(n)
+y = true_a * x + true_b + noise
+
+# Format x and y into matrices to be used by the layer objects
 X = x.reshape(-1, 1)  # (n,1)
 Y = y.reshape(-1, 1)  # (n,1)
 
