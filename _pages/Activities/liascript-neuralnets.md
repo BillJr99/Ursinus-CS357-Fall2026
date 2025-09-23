@@ -1804,6 +1804,132 @@ $b_1^+ = \begin{bmatrix}0.12\\-0.08\end{bmatrix} − 0.05\begin{bmatrix}2.00\\-0
 
 ---	
 
+## Simple Neural Networks: Theory Walkthrough
+
+---
+
+### Stage 1: A Single Linear Layer
+
+We begin with the simplest possible neural network:  
+a single **linear function** of the form:
+
+$$ y = Wx + b $$
+
+- **W**: weights (slope parameters)  
+- **b**: bias (intercept term)  
+- **x**: input  
+- **y**: output  
+
+---
+
+#### Stage 1 (continued)
+
+The forward pass is straightforward:
+
+```python
+y = x @ W + b
+```
+
+During training, we compute gradients with respect to **W** and **b**.  
+These are updated by gradient descent to minimize a loss function.
+
+---
+
+### Reflective Question
+
+?[](https://via.placeholder.com/15/000000/000000?text=+) **What if we added a second layer?**  
+
+- How many sets of **W** and **b** would we now have?  
+- How would the forward computation change?  
+- How would the backward pass (gradients) change?  
+
+---
+
+### Stage 2: Encapsulation into Objects
+
+Instead of keeping track of separate **W** and **b**,  
+we wrap them into a **Layer class**:
+
+```python
+class Layer:
+    def __init__(self, in_dim, out_dim):
+        self.W = ...
+        self.b = ...
+```
+
+- Each instantiation of `Layer` has its own parameters.  
+- This allows us to build multiple layers, each with its own weights and biases.
+
+---
+
+#### Forward and Backward in Stage 2
+
+- **Forward pass**:  
+  Each layer takes an input and returns an output:  
+  `output = layer.forward(input)`
+
+- **Backward pass**:  
+  Each layer receives a gradient from the next layer,  
+  computes local gradients, and passes the gradient back:  
+  `grad_input = layer.backward(grad_output)`
+
+---
+
+### Reflective Question
+
+If you had multiple layers, what would you pass:
+
+- from **forward** of one layer to the next?  
+- from **backward** of one layer to the next?  
+
+---
+
+### Stage 3: Sequential Composition
+
+We can now compose multiple layers:
+
+```python
+model = [
+    Layer(2, 4),
+    Layer(4, 1)
+]
+```
+
+- Forward pass: apply each layer in sequence.  
+- Backward pass: propagate gradients in reverse order.  
+
+---
+
+### Stage 4: Loss Functions
+
+To train our network, we add a **loss function**:
+
+- **Mean Squared Error (MSE)** for regression.  
+- **Cross-Entropy Loss** for classification.  
+
+The loss computes the difference between predictions and labels,  
+and its gradient initiates the backward pass.
+
+---
+
+### Stage 5: Training Loop
+
+The full training process:
+
+1. Forward pass through all layers.  
+2. Compute loss.  
+3. Backward pass through all layers.  
+4. Update each layer’s parameters with gradient descent.  
+
+---
+
+### Reflective Question
+
+- How does encapsulation into objects make it easier to build deeper networks?  
+- What patterns from this example are mirrored in large frameworks like **PyTorch** or **TensorFlow**?  
+
+---
+
 ## Open Colab: Introduction to Neural networks
 
 By [markhliu](https://github.com/markhliu)
