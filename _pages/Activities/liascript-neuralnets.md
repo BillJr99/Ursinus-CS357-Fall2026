@@ -1837,7 +1837,7 @@ These are updated by gradient descent to minimize a loss function.
 
 ### Reflective Question
 
-?[](https://via.placeholder.com/15/000000/000000?text=+) **What if we added a second layer?**  
+**What if we added a second layer?**  
 
 - How many sets of **W** and **b** would we now have?  
 - How would the forward computation change?  
