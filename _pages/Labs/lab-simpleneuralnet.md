@@ -178,7 +178,7 @@ class Linear:
 #### `forward` Function
 
 **Why:**  
-- `x @ self.W.T` multiplies each input row by the columns of `W` (so the output has one column per output unit).  The `@` operator performs matrix multiplication in Python.
+- `x @ self.W.T` multiplies each input row by the columns of `W` (so the output has one column per output unit).  The `@` operator performs matrix multiplication in Python.  If your version of Python does not support the `@` operator, you can substitute it with `np.matmul` like this: `np.matmul(x, self.W.T)`.
 - `+ self.b` adds the bias to every row.
 
 #### `backward` Function
