@@ -1859,28 +1859,7 @@ class Layer:
 
 - Each instantiation of `Layer` has its own parameters.  
 - This allows us to build multiple layers, each with its own weights and biases.
-
----
-
-#### Forward and Backward in Stage 2
-
-- **Forward pass**:  
-  Each layer takes an input and returns an output:  
-  `output = layer.forward(input)`
-
-- **Backward pass**:  
-  Each layer receives a gradient from the next layer,  
-  computes local gradients, and passes the gradient back:  
-  `grad_input = layer.backward(grad_output)`
-
----
-
-### Reflective Question
-
-If you had multiple layers, what would you pass:
-
-- from **forward** of one layer to the next?  
-- from **backward** of one layer to the next?  
+- The `Layer` class will hvave `forward` and `backward` functions.
 
 ---
 
@@ -1897,6 +1876,115 @@ model = [
 
 - Forward pass: apply each layer in sequence.  
 - Backward pass: propagate gradients in reverse order.  
+
+---
+
+#### Forward and Backward in Stage 3
+
+- **Forward pass**:  
+  Each layer takes the output of the previous layer as its input.  
+  We can loop through all layers in order:  
+
+  ```python
+  # Forward pass
+  input_data = x
+  for layer in model:           # e.g., [Layer1, Layer2, OutputLayer]
+      output_data = layer.forward(input_data) # including the nonlinear activation function
+      input_data = output_data   # pass result to next layer
+
+  y_hat = output_data            # final network output
+```
+
+- **Backward pass:**
+  Each layer receives a gradient from the next layer, computes its local gradient, and passes the gradient further back.
+  This requires looping in reverse order:
+
+```python
+# Backward pass
+grad_output = dL_dyhat         # gradient of loss wrt final output
+for layer in reversed(model): # process layers in reverse
+    grad_input = layer.backward(grad_output)
+    grad_output = grad_input   # pass gradient to previous layer
+```
+
+- **Key idea:**
+  In forward prop, information flows forward: inputs → hidden layers → output.
+  In backprop, error signals flow backward: output gradient → hidden layers → input.
+  This mirrors the chain rule: each gradient depends on the derivative of the current layer and the gradient coming from the layer after it.
+
+- **Forward loop** = *nested substitution* → function composition  
+- **Backward loop** = *nested multiplication* → chain rule of derivatives
+
+---
+
+#### Forward Pass = Function Composition
+
+At step k:
+
+$$
+a^{(k)} = f^{(k)}(a^{(k-1)}) \quad \Rightarrow \quad 
+a^{(k)} = f^{(k)}( f^{(k-1)}( \cdots f^{(1)}(x) \cdots ) )
+$$
+
+```python
+# k-th iteration (forward)
+output_data = layer.forward(input_data)  
+# a^(k) = f^(k)(a^(k-1))
+input_data = output_data
+```
+
+Each iteration substitutes the previous output → building the composition.
+
+**Two-layer example:**
+
+$$
+a^{(1)} = f^{(1)}(x), \quad
+a^{(2)} = f^{(2)}(a^{(1)}) = f^{(2)}(f^{(1)}(x))
+$$
+
+Final output:  
+$$
+\hat{y} = a^{(2)} = (f^{(2)} \circ f^{(1)})(x)
+$$
+
+---
+
+#### Backward Pass = Chain Rule
+
+At step k:
+
+$$
+\frac{\partial L}{\partial a^{(k-1)}} 
+= \Big(J f^{(k)}(a^{(k-1)})\Big)^\top 
+\frac{\partial L}{\partial a^{(k)}}
+$$
+
+```python
+# k-th reverse iteration (backward)
+grad_input = layer.backward(grad_output)
+# ∂L/∂a^(k-1) = (J f^(k)(a^(k-1)))^T ⋅ ∂L/∂a^(k)
+grad_output = grad_input
+```
+
+Each iteration applies the chain rule → passing gradients backward.
+
+**Two-layer example:**
+
+1. Final layer:
+$$
+\delta^{(2)} = \frac{\partial L}{\partial a^{(2)}} \odot \phi'^{(2)}(z^{(2)})
+$$
+
+2. Previous layer:
+$$
+\delta^{(1)} = (W^{(2)})^\top \delta^{(2)} \odot \phi'^{(1)}(z^{(1)})
+$$
+
+3. Gradients:
+$$
+\frac{\partial L}{\partial W^{(2)}} = \delta^{(2)} (a^{(1)})^\top, \quad
+\frac{\partial L}{\partial W^{(1)}} = \delta^{(1)} x^\top
+$$
 
 ---
 
@@ -1927,6 +2015,289 @@ The full training process:
 
 - How does encapsulation into objects make it easier to build deeper networks?  
 - What patterns from this example are mirrored in large frameworks like **PyTorch** or **TensorFlow**?  
+
+---
+
+## Two-Hidden-Layer Neural Networks: Forward Pass & Backpropagation
+
+---
+
+### Overview & Placement in the Module
+
+These slides extend the single-layer backpropagation you already developed to **two hidden layers**.  
+We will (i) define the **forward propagation** with clear shapes and activations, and (ii) **derive backpropagation** using the chain rule, step by step and in both **component** and **matrix** forms.  
+We also include intuition about why backprop runs in reverse and what each gradient represents.
+
+---
+
+### Forward Propagation: Notation & Shapes (Single Example)
+
+- Input: $x\in\mathbb{R}^{d}$  
+- Hidden layer widths: $h_1, h_2$  
+- Output dimension: $m$  
+- Parameters:  
+  - $W^{(1)}\in\mathbb{R}^{h_1\times d},\quad b^{(1)}\in\mathbb{R}^{h_1}$  
+  - $W^{(2)}\in\mathbb{R}^{h_2\times h_1},\quad b^{(2)}\in\mathbb{R}^{h_2}$  
+  - $W^{(3)}\in\mathbb{R}^{m\times h_2},\quad b^{(3)}\in\mathbb{R}^{m}$  
+- Activations (elementwise): $\phi_1,\ \phi_2$ (e.g., ReLU, tanh, sigmoid)  
+- Output nonlinearity $g$ (identity or softmax, depending on task)
+
+**Forward equations**
+$$
+\begin{aligned}
+z^{(1)} &= W^{(1)}x + b^{(1)}, & a^{(1)} &= \phi_1\!\big(z^{(1)}\big), \\
+z^{(2)} &= W^{(2)}a^{(1)} + b^{(2)}, & a^{(2)} &= \phi_2\!\big(z^{(2)}\big), \\
+z^{(3)} &= W^{(3)}a^{(2)} + b^{(3)}, & \hat y = a^{(3)} &= g\!\big(z^{(3)}\big).
+\end{aligned}
+$$
+
+**Loss (per example)**: $\ \mathcal{L}=\mathcal{L}(\hat y,y)$ is scalar.
+
+---
+
+### Forward Propagation: What Is Happening Conceptually?
+
+1. **Layer 1 linear pre-activation**: compute a weighted sum of inputs + bias  
+   $\displaystyle z^{(1)}=W^{(1)}x+b^{(1)}$.
+2. **Layer 1 activation**: introduce nonlinearity  
+   $\displaystyle a^{(1)}=\phi_1(z^{(1)})$ (e.g., ReLU turns negative values to $0$).
+3. **Layer 2 linear pre-activation**: re-combine features from layer 1  
+   $\displaystyle z^{(2)}=W^{(2)}a^{(1)}+b^{(2)}$.
+4. **Layer 2 activation**: another nonlinearity  
+   $\displaystyle a^{(2)}=\phi_2(z^{(2)})$.
+5. **Output linear pre-activation**: map to output space  
+   $\displaystyle z^{(3)}=W^{(3)}a^{(2)}+b^{(3)}$.
+6. **Output nonlinearity**: task-specific transformation  
+   - Regression: $g=\mathrm{id}\Rightarrow \hat y=z^{(3)}$  
+   - Classification: $g=\mathrm{softmax}\Rightarrow \hat y=\mathrm{softmax}(z^{(3)})$.
+
+---
+
+### ReLU (Common Choice) and Its Derivative
+
+- $\mathrm{ReLU}(z)=\max(0,z)$ (applied elementwise).  
+- Derivative (for backprop):
+$$
+\mathrm{ReLU}'(z)=\begin{cases}
+1, & z>0,\\
+0, & z<0,\\
+\text{(subgradient in }[0,1]\text{) at } z=0.
+\end{cases}
+$$
+- With ReLU, the forward pass is **piecewise linear** and the derivative is an **indicator** of whether a unit is “active.”
+
+---
+
+### Backpropagation: High-Level Intuition
+
+- **Goal**: compute $\nabla_{W^{(\ell)}}, \nabla_{b^{(\ell)}}$ for all layers.  
+- **Why reverse order?** The loss $\mathcal{L}$ depends on lower layers **only through** higher layers.  
+  By the **chain rule**, the gradient at layer $\ell$ is the product of the **upstream gradient** (from layer $\ell\!+\!1$) and the **local derivative** at $\ell$.  
+- Backprop is simply **reusing intermediate chain-rule factors** so we do not repeatedly recompute Jacobians.
+
+---
+
+### Backpropagation: Define Error Signals (Single Example)
+
+Let the **pre-activation gradients** (“deltas”) be
+$$
+\delta^{(3)} \stackrel{\mathrm{def}}{=} \frac{\partial \mathcal{L}}{\partial z^{(3)}},\qquad
+\delta^{(2)} \stackrel{\mathrm{def}}{=} \frac{\partial \mathcal{L}}{\partial z^{(2)}},\qquad
+\delta^{(1)} \stackrel{\mathrm{def}}{=} \frac{\partial \mathcal{L}}{\partial z^{(1)}}.
+$$
+
+We also use elementwise derivatives $\phi_1'(z^{(1)}), \phi_2'(z^{(2)})$, and $g'(z^{(3)})$.
+
+---
+
+### Output Layer Gradients
+
+**Error signal**
+$$
+\delta^{(3)} = \nabla_{z^{(3)}}\mathcal{L} = \big(\nabla_{a^{(3)}}\mathcal{L}\big)\odot g'\!\big(z^{(3)}\big).
+$$
+
+**Parameter gradients**
+$$
+\boxed{\ \frac{\partial \mathcal{L}}{\partial W^{(3)}}=\delta^{(3)}(a^{(2)})^\top,\qquad
+\frac{\partial \mathcal{L}}{\partial b^{(3)}}=\delta^{(3)}\ }.
+$$
+
+**Common simplifications**
+- Regression (identity + MSE): $\delta^{(3)}=\hat y - y$.
+- Multiclass (softmax + cross-entropy): $\delta^{(3)}=\hat y - y$.
+
+---
+
+### Backprop to Hidden Layer 2 (Between Output and Hidden 1)
+
+**Propagate error to $z^{(2)}$**
+$$
+\delta^{(2)} = (W^{(3)})^\top \delta^{(3)} \;\odot\; \phi_2'\!\big(z^{(2)}\big).
+$$
+
+**Parameter gradients**
+$$
+\boxed{\ \frac{\partial \mathcal{L}}{\partial W^{(2)}}=\delta^{(2)}(a^{(1)})^\top,\qquad
+\frac{\partial \mathcal{L}}{\partial b^{(2)}}=\delta^{(2)}\ }.
+$$
+
+**What is happening?**  
+The upstream signal $\delta^{(3)}$ tells us **how sensitive the loss is to the output pre-activations**. Multiplying by $(W^{(3)})^\top$ routes this sensitivity back to each hidden-2 unit, and $\phi_2'$ scales by whether that unit was active and how steep its nonlinearity is there.
+
+---
+
+### Backprop to Hidden Layer 1 (Closest to Input)
+
+**Propagate error to $z^{(1)}$**
+$$
+\delta^{(1)} = (W^{(2)})^\top \delta^{(2)} \;\odot\; \phi_1'\!\big(z^{(1)}\big).
+$$
+
+**Parameter gradients**
+$$
+\boxed{\ \frac{\partial \mathcal{L}}{\partial W^{(1)}}=\delta^{(1)}x^\top,\qquad
+\frac{\partial \mathcal{L}}{\partial b^{(1)}}=\delta^{(1)}\ }.
+$$
+
+**What is happening?**  
+We continue distributing sensitivity backward: which input features (via $x$) and which first-layer units contributed to the eventual error, as filtered through the second layer and its activation.
+
+---
+
+### Component-Wise Chain Rule (One Unit at a Time)
+
+Index outputs by $k$, hidden-2 by $j$, hidden-1 by $i$, and input by $r$.
+
+$$
+\begin{aligned}
+z^{(3)}_k &= \sum_{j} W^{(3)}_{kj} a^{(2)}_j + b^{(3)}_k,\quad & a^{(2)}_j &= \phi_2(z^{(2)}_j),\\
+z^{(2)}_j &= \sum_{i} W^{(2)}_{ji} a^{(1)}_i + b^{(2)}_j,\quad & a^{(1)}_i &= \phi_1(z^{(1)}_i),\\
+z^{(1)}_i &= \sum_{r} W^{(1)}_{ir} x_r + b^{(1)}_i. &&
+\end{aligned}
+$$
+
+Then
+$$
+\frac{\partial \mathcal{L}}{\partial W^{(3)}_{kj}}=\delta^{(3)}_k\,a^{(2)}_j,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(3)}_k}=\delta^{(3)}_k,\quad
+\delta^{(2)}_j=\Big(\sum_k \delta^{(3)}_k W^{(3)}_{kj}\Big)\phi_2'(z^{(2)}_j),
+$$
+$$
+\frac{\partial \mathcal{L}}{\partial W^{(2)}_{ji}}=\delta^{(2)}_j\,a^{(1)}_i,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(2)}_j}=\delta^{(2)}_j,\quad
+\delta^{(1)}_i=\Big(\sum_j \delta^{(2)}_j W^{(2)}_{ji}\Big)\phi_1'(z^{(1)}_i),
+$$
+$$
+\frac{\partial \mathcal{L}}{\partial W^{(1)}_{ir}}=\delta^{(1)}_i\,x_r,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(1)}_i}=\delta^{(1)}_i.
+$$
+
+This is **exactly the chain rule** applied systematically.
+
+---
+
+### Mini-Batch Vectorization
+
+For a batch of $B$ examples, stack columnwise:
+- $X\in\mathbb{R}^{d\times B}$, $A^{(1)}\in\mathbb{R}^{h_1\times B}$, $A^{(2)}\in\mathbb{R}^{h_2\times B}$, $Z^{(\ell)}$ likewise.
+- $\Delta^{(\ell)}$ stacks the $\delta^{(\ell)}$ columns.
+
+**Backward (broadcast elementwise)**
+$$
+\begin{aligned}
+\Delta^{(3)} &= \nabla_{A^{(3)}}\mathcal{L}\ \odot\ G'(Z^{(3)}),\\
+\Delta^{(2)} &= (W^{(3)})^\top \Delta^{(3)}\ \odot\ \Phi_2'(Z^{(2)}),\\
+\Delta^{(1)} &= (W^{(2)})^\top \Delta^{(2)}\ \odot\ \Phi_1'(Z^{(1)}).
+\end{aligned}
+$$
+
+**Parameter gradients (sum/mean over batch)**
+$$
+\begin{aligned}
+\frac{\partial \mathcal{L}}{\partial W^{(3)}} &= \Delta^{(3)}(A^{(2)})^\top,\quad &
+\frac{\partial \mathcal{L}}{\partial b^{(3)}} &= \Delta^{(3)}\mathbf{1}_B,\\
+\frac{\partial \mathcal{L}}{\partial W^{(2)}} &= \Delta^{(2)}(A^{(1)})^\top,\quad &
+\frac{\partial \mathcal{L}}{\partial b^{(2)}} &= \Delta^{(2)}\mathbf{1}_B,\\
+\frac{\partial \mathcal{L}}{\partial W^{(1)}} &= \Delta^{(1)}X^\top,\quad &
+\frac{\partial \mathcal{L}}{\partial b^{(1)}} &= \Delta^{(1)}\mathbf{1}_B,
+\end{aligned}
+$$
+where $\mathbf{1}_B$ is a length-$B$ all-ones vector. (Divide by $B$ if your loss averages over the batch.)
+
+---
+
+### Why This Matches the Chain Rule (Conceptual Slide)
+
+- Each layer computes $z^{(\ell)}=W^{(\ell)}a^{(\ell-1)}+b^{(\ell)}$ and $a^{(\ell)}=\phi_\ell(z^{(\ell)})$.  
+- The derivative $\frac{\partial \mathcal{L}}{\partial z^{(\ell)}}$ equals the upstream sensitivity from the next layer times the **local derivative**:  
+  $\displaystyle \delta^{(\ell)} = \big((W^{(\ell+1)})^\top \delta^{(\ell+1)}\big)\odot \phi_\ell'(z^{(\ell)})$.  
+- Parameter gradients are **outer products** of “error” $\delta^{(\ell)}$ with the **inputs to that layer** $a^{(\ell-1)}$:  
+  $\displaystyle \frac{\partial \mathcal{L}}{\partial W^{(\ell)}}=\delta^{(\ell)}(a^{(\ell-1)})^\top$.  
+- Backprop thus **accumulates** how a small change at a lower layer would ripple to the loss via all paths through higher layers.
+
+---
+
+### Two Common Output-Layer Choices
+
+- **Regression (MSE, identity)**: $\ \hat y=z^{(3)},\ \ \delta^{(3)}=\hat y-y.$
+- **Multiclass (softmax + cross-entropy)**: $\ \hat y=\mathrm{softmax}(z^{(3)}),\ \ \delta^{(3)}=\hat y-y.$
+
+These remove the need to form the full softmax Jacobian explicitly.
+
+---
+
+### Sanity Checks & Debugging Tips
+
+- **Numerical gradient check** (finite differences) on small models.  
+- Watch **activation sparsity** with ReLU; “dead” units imply zero gradients.  
+- Monitor **gradient norms** across layers to detect vanishing/exploding issues.  
+- Use appropriate **initialization** (He/Glorot) and **learning rates**.
+
+---
+
+### Summary (Single Example)
+
+$$
+\begin{aligned}
+z^{(1)} &= W^{(1)}x + b^{(1)}, & a^{(1)} &= \phi_1(z^{(1)}),\\
+z^{(2)} &= W^{(2)}a^{(1)} + b^{(2)}, & a^{(2)} &= \phi_2(z^{(2)}),\\
+z^{(3)} &= W^{(3)}a^{(2)} + b^{(3)}, & \hat y &= g(z^{(3)}),
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\delta^{(3)} &= \nabla_{a^{(3)}}\mathcal{L}\ \odot\ g'(z^{(3)})\quad (\text{often } \hat y-y),\\
+\delta^{(2)} &= (W^{(3)})^\top \delta^{(3)} \ \odot\ \phi_2'(z^{(2)}),\\
+\delta^{(1)} &= (W^{(2)})^\top \delta^{(2)} \ \odot\ \phi_1'(z^{(1)}),
+\end{aligned}
+$$
+
+$$
+\frac{\partial \mathcal{L}}{\partial W^{(3)}}=\delta^{(3)}(a^{(2)})^\top,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(3)}}=\delta^{(3)},\quad
+\frac{\partial \mathcal{L}}{\partial W^{(2)}}=\delta^{(2)}(a^{(1)})^\top,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(2)}}=\delta^{(2)},\quad
+\frac{\partial \mathcal{L}}{\partial W^{(1)}}=\delta^{(1)}x^\top,\quad
+\frac{\partial \mathcal{L}}{\partial b^{(1)}}=\delta^{(1)}.
+$$
+
+This is backpropagation for **two hidden layers**, derived directly from the **chain rule**.
+
+---
+
+### Jacobian View
+
+Let $\mathrm{Diag}(v)$ be a diagonal matrix with vector $v$ on the diagonal. Then
+$$
+\nabla_{z^{(2)}}\mathcal{L}=\Big(\frac{\partial z^{(3)}}{\partial a^{(2)}}\Big)^\top 
+\Big(\frac{\partial a^{(2)}}{\partial z^{(2)}}\Big)^\top \nabla_{z^{(3)}}\mathcal{L}
+= (W^{(3)})^\top \mathrm{Diag}\!\big(\phi_2'(z^{(2)})\big)\,\delta^{(3)},
+$$
+and similarly for layer 1. Parameter gradients follow since
+$\ \partial z^{(\ell)}/\partial W^{(\ell)} = I \otimes (a^{(\ell-1)})^\top$,
+which reduces to the outer products shown above.
 
 ---
 
