@@ -498,7 +498,7 @@ lin = Linear(in_dim=Xn.shape[1], out_dim=1)
 
 ```python
 lam = 1e-2  # try 0, 1e-2, 1e-1
-lr = 0.1
+lr = 0.01
 losses = []
 for epoch in range(1000):
     yhat = lin.forward(Xn)
@@ -564,7 +564,7 @@ _ = lin.backward(dy)
 dW_no_reg = lin.dW.copy()
 
 # grads with reg
-lam = 0.1
+lam = 0.01
 _ = lin.backward(dy)            # recompute base grads
 lin.dW += 2*lam*lin.W
 dW_with_reg = lin.dW
@@ -715,7 +715,7 @@ EPOCHS = 500
 
 model = MLP(in_dim=D, hidden_dim=H, out_dim=C, nonlin="relu")
 
-lr = 0.1
+lr = 0.01
 batch = 128
 losses_mlp = []
 accs_mlp = []
