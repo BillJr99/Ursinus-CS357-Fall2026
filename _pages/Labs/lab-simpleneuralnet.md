@@ -170,6 +170,8 @@ class Linear:
     def backward(self, dout):
         """dout: (batch, out_dim) -> returns dx: (batch, in_dim)
         Fills self.dW, self.db."""
+        dout = np.atleast_2d(np.asarray(dout))   # ensure the shape of dout is (B, out_dim)
+        x = np.atleast_2d(np.asarray(self.x)) # ensure the shape of x is (B, in_dim)
         # TODO: compute grads wrt W, b, and return dx
         dx = None  # TODO
         return dx
@@ -434,7 +436,7 @@ X2 = x2.reshape(-1,1)
 Y2 = y2.reshape(-1,1)
 
 model = MLP(in_dim=1, hidden_dim=32, out_dim=1, nonlin="relu")
-lr = 0.05
+lr = 0.005 # a smaller learning rate here
 losses = []
 
 for epoch in range(1500):
