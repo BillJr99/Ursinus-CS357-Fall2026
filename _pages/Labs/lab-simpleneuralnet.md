@@ -307,10 +307,10 @@ def tanh_backward(x, dout):
 **Mini-check:**
 
 ```python
-z = np.array([[-2., 0., 3.]])
-print("relu(z):", relu(z))              # expect [[0., 0., 3.]]
-dout = np.array([[10., 10., 10.]])
-print("relu_backward:", relu_backward(z, dout))  # expect [[0., 0., 10.]]
+z = np.array([-2., 0., 3.])
+print("relu(z):", relu(z))              # expect [0., 0., 3.]
+dout = np.array([10., 10., 10.])
+print("relu_backward:", relu_backward(z, dout))  # expect [0., 0., 10.]
 ```
 
 **Key Takeaways:**
