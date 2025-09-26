@@ -19,7 +19,7 @@ info:
     - Activation functions (ReLU, tanh) and their derivatives
     - Xavier/Glorot initialization intuition
     - Gradient checking by finite differences (sanity checks)
-    - Model architecture: Linear layer abstraction (W, b; dW, db)
+    - "Model architecture: Linear layer abstraction (W, b; dW, db)"
     - Training loop structure (loss, backward, parameter update)
     - Softmax and cross-entropy for classification
     - Minibatching and basic learning-curve plotting
