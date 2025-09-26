@@ -6,9 +6,35 @@ title: "Lab: Creating a Simple Neural Network"
 info:
   points: 100
   goals:
-    - Build intuition for forward pass, loss, gradients, and backpropagation by implementing tiny networks from scratch.
+    - Build intuition for forward pass, loss, gradients, and backpropagation by implementing networks from scratch.
     - Progress from a fully-worked linear estimator to partially scaffolded implementations (multilayer, nonlinear, credit score weights, MNIST).
     - Explain each coding step in your own words and validate results with small tests/plots.
+  purpose: "This lab is designed to build practical intuition for how neural networks work by implementing each piece from first principles. You will (i) replicate the full learning loop—forward pass, loss, gradients, and parameter updates, (ii) practice chaining layers and applying the chain rule via backpropagation, and (iii) extend from linear models to nonlinear MLPs that use ReLU or tanh. Along the way, you will validate your implementations with small tests/plots, interpret model parameters on a toy credit-scoring dataset, and train a small classifier on MNIST using softmax, cross-entropy, and minibatching. The purpose is to explain each step in your own words and connect the code you write to the underlying mathematical ideas."    
+  concepts:
+    - Forward pass for linear and multilayer models
+    - Mean Squared Error (MSE) and residuals
+    - Parameter gradients and update rules (SGD)
+    - Backpropagation and the chain rule
+    - Composition of linear layers (and why a composition of linear layers is still linear)
+    - Activation functions (ReLU, tanh) and their derivatives
+    - Xavier/Glorot initialization intuition
+    - Gradient checking by finite differences (sanity checks)
+    - Model architecture: Linear layer abstraction (W, b; dW, db)
+    - Training loop structure (loss, backward, parameter update)
+    - Softmax and cross-entropy for classification
+    - Minibatching and basic learning-curve plotting
+    - Interpreting learned weights on a toy credit-score dataset
+    - Small-scale MNIST experiment flow
+  tasks:
+    - Run the fully-worked linear estimator and interpret its behavior.
+    - Implement the Linear layer's forward and backward methods.
+    - Build and train a two-layer linear network; verify loss decreases.
+    - Implement ReLU (and optionally tanh) and their backward passes.
+    - Construct a one-hidden-layer MLP using your modules; train and explain.
+    - Perform gradient-sanity checks (e.g., tiny batch finite-difference check).
+    - Interpret weights on the credit-score toy dataset (regularization, effects).
+    - Train a tiny MNIST model with softmax and cross-entropy using minibatches.
+    - Document design choices, checks, and results with brief plots/tables.    
   rubric:
     - weight: 30
       description: Implementation
@@ -245,29 +271,29 @@ plot_series(range(len(losses)), losses, title="Two-layer linear: MSE")
 
 Here, we **chain two `Linear` layers together** to see how forward and backward passes compose.
 
-1. **Define two layers.**  
+1. **Define two layers**  
    - `lin1 = Linear(in_dim=1, out_dim=4)` expands a single input feature into a 4-dimensional hidden representation.  
    - `lin2 = Linear(in_dim=4, out_dim=1)` collapses that hidden vector back to a single prediction.
 
-2. **Forward pass.**  
+2. **Forward pass**  
    - First call `h = lin1.forward(X)` to compute hidden features.  
    - Then `yhat = lin2.forward(h)` to produce predictions.  
    This illustrates how modules are chained together to form deeper networks.
 
-3. **Loss calculation.**  
+3. **Loss calculation**  
    - Compute residuals `err = yhat - Y` and the mean squared error (MSE).  
    - This is the same loss as Stage 1, but now passed through two layers.
 
-4. **Backward pass.**  
+4. **Backward pass**  
    - Start with gradient of MSE wrt predictions: `dyhat = (2.0/bs) * err`.  
    - Push it through `lin2.backward(dyhat)` and then `lin1.backward(dh)`.  
    This shows how the **chain rule** is implemented in code: each layer returns gradients for the one before it.
 
-5. **Parameter update.**  
+5. **Parameter update**  
    - After gradients are computed, each layer’s weights and biases are updated with SGD:  
      `layer.W -= lr * layer.dW`, `layer.b -= lr * layer.db`.
 
-6. **Key lesson.**  
+6. **Summary**  
    Even with two layers, the composition is **still just a single linear function overall** (because no nonlinearity is added yet). This stage is practice for chaining layers and verifying backprop mechanics before introducing nonlinear activations in Stage 3.
 
 **Checkpoints:**
