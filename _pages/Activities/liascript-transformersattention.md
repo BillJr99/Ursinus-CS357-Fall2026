@@ -65,7 +65,8 @@ Natural language and many real-world datasets are **sequential**:
 ## The Transformer Breakthrough
 
 
-- *Attention Is All You Need* (Vaswani et al., 2017):
+*Attention Is All You Need* (Vaswani et al., 2017):
+  
 - Remove recurrence entirely.
 - Use **attention** for all-to-all dependency capture.
 - Fully parallelizable over sequence length.
