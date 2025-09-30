@@ -481,8 +481,9 @@ for epoch in range(1500):
 plot_series(range(len(losses)), losses, title="Nonlinear MLP: MSE")
 ```
 
-**Checkpoints:**
+**Questions:**
 - Swap `nonlin="tanh"`. Which fits better here and why? Reference bias/variance.
+- Try increasing the number of epochs from `1500` to `15000`.  What happens, and why?
 - Plot predictions versus ground truth to visually confirm fit.
 
 ---
@@ -553,9 +554,9 @@ print("bias:", lin.b)
 
 **What to do:**
 
-1. Inside your training loop, compute the MSE loss and add the L2 penalty term.  The error vector is `yhat - yc`.  Compute this, square it (you can square an entire vector just like you would square a single scalar value), and compute the mean with `np.mean`.  This is the Mean Squared Error (MSE).  We square the values so that they are always positive, so that direction doesn't offset the error artificially.
-2. Next, compute the L2 penalty.  This is the sum of the squares of all elements of `lin.W`.  Multiply that sum by the regularization strength multiplier `lam`.  This is referred to as lambda, and is a hyperparameter we use to tune training.  A lambda value of `0` disables regularlization and just uses MSE to calculate loss, while larger values of lambda penalize large weights and incentivize smaller weight values.
-3. The total loss is the MSE loss plus the L2 regularlization loss that you just computed in the prior two steps.  Add these two terms together.  Call this `loss` so that it appends to the `losses` array in the template above.
+1. Inside your training loop, compute the MSE loss (as a scalar from the error vector) so that we can plot it.  The error vector is `yhat - yc`.  Compute this, square it (you can square an entire vector just like you would square a single scalar value), and compute the mean with `np.mean`.  This is the Mean Squared Error (MSE).  We square the values so that they are always positive, so that direction doesn't offset the error artificially.
+2. Next, compute the L2 penalty.  This is the sum of the squares of all elements of `lin.W`.  Multiply that sum by the regularization strength multiplier `lam`.  This is referred to as lambda, and is a hyperparameter we use to tune training.  A lambda value of `0` disables regularlization and just uses MSE to calculate loss, while larger values of lambda penalize large weights and incentivize smaller weight values.  
+3. The total loss is the MSE loss plus the L2 regularlization loss that you just computed in the prior two steps.  Add these two terms together.  Call this `loss` so that it appends to the `losses` array in the template above.  By adding this to the loss, we consider a result with large weights as more lossy than a result with smaller weights, with the hope that this will allow our model to better generalize to new data.
 4. Later, keep the running total of `lin.dW`, right before you reference it in the template.  It is computed with the formula given in the TODO comment.  At each step, you will add to the existing value of `lin.dW` using that formula.
 
 **Why:**
