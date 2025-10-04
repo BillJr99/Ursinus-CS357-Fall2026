@@ -189,17 +189,24 @@ class Linear:
     def forward(self, x):
         """x: (batch, in_dim) -> out: (batch, out_dim)"""
         self.x = x
+        
         # TODO: return x @ W^T + b 
         out = None  # TODO
+        
         return out
 
     def backward(self, dout):
         """dout: (batch, out_dim) -> returns dx: (batch, in_dim)
         Fills self.dW, self.db."""
+        
+        # In case a simple list [...] is passed here, make it a matrix [[...]], 
+        # since in general it could be a matrix of arbitrary dimension
         dout = np.atleast_2d(np.asarray(dout))   # ensure the shape of dout is (B, out_dim)
         x = np.atleast_2d(np.asarray(self.x)) # ensure the shape of x is (B, in_dim)
+        
         # TODO: compute grads wrt W, b, and return dx
         dx = None  # TODO
+        
         return dx
 ```
 
@@ -311,12 +318,17 @@ Introduce <span>\\(\sigma\\)</span> to gain expressivity. We will add **ReLU** b
 
 ```python
 def relu(x):
-    # TODO: return elementwise max(0, x)
+    # TODO: return elementwise max(0, x) using np.maximum()
     return None
 
-def relu_backward(x, dout):
-    # TODO: pass gradient through where x>0, else 0
-    return None
+def relu_backward(x, dout):   
+    dx = np.empty_like(x) # make dx an array shaped like the input x so we can loop over it
+    
+    # TODO: 
+    # if an element of x (a 2D matrix) is > 0, set the corresponding element of dx to the corresponding element of dout
+    # otherwise, set the cprresponding element of dx to 0
+    
+    return dx
 
 def tanh(x):
     return np.tanh(x)
@@ -329,8 +341,8 @@ def tanh_backward(x, dout):
 **What to do:**
 
 1. In the `relu` function, use the `np.maximum(0, x)` function to which returns `max(a, b)` for every element of `x`.
-2. In the `relu_backward` function, we want to pass through the values corresponding to `z` elements that were not trimmed by the ReLU function.  In other words, those values of `dout` that correspond to positive values of `z`.  For each element of `x`, append an element to `result` (initially an empty array): that value should be `0` if the current element of `x` is less than `0`, and should be the current element of `dout` (the gradient value for that element) otherwise.  This is our ReLU gradient, and you should return that `result` array.
-3. Fill in the formula for `tanh_backward` and return that function.
+2. In the `relu_backward` function, we want to pass through the values corresponding to `z` elements that were not trimmed by the ReLU function.  In other words, those values of `dout` that correspond to positive values of `z`.  For each element of `x` passed to the function, append an element to `dx` (initially an empty array): that value should be `0` if the current element of `x` is less than `0`, and should be the current element of `dout` (the gradient value for that element) otherwise.  This is our ReLU gradient, and you should return that `dx` array.  Note that this can be done in two lines of code rather than with a loop (although a nested loop will work!), using `(x > 0).astype(dout.dtype)`, which returns a matrix of `1` in all places where `x > 0` and `0` in all other locations.  That's not quite the right answer, but you could use that to set all the elements of `dx` that are equal to `1` to their corresponding element of `dout` via a multiplication operation.
+3. Fill in the formula for `tanh_backward` and return that result from the function.
 
 **Mini-check:**
 
@@ -555,9 +567,9 @@ print("bias:", lin.b)
 **What to do:**
 
 1. Inside your training loop, compute the MSE loss (as a scalar from the error vector) so that we can plot it.  The error vector is `yhat - yc`.  Compute this, square it (you can square an entire vector just like you would square a single scalar value), and compute the mean with `np.mean`.  This is the Mean Squared Error (MSE).  We square the values so that they are always positive, so that direction doesn't offset the error artificially.
-2. Next, compute the L2 penalty.  This is the sum of the squares of all elements of `lin.W`.  Multiply that sum by the regularization strength multiplier `lam`.  This is referred to as lambda, and is a hyperparameter we use to tune training.  A lambda value of `0` disables regularlization and just uses MSE to calculate loss, while larger values of lambda penalize large weights and incentivize smaller weight values.  
-3. The total loss is the MSE loss plus the L2 regularlization loss that you just computed in the prior two steps.  Add these two terms together.  Call this `loss` so that it appends to the `losses` array in the template above.  By adding this to the loss, we consider a result with large weights as more lossy than a result with smaller weights, with the hope that this will allow our model to better generalize to new data.
-4. Later, keep the running total of `lin.dW`, right before you reference it in the template.  It is computed with the formula given in the TODO comment.  At each step, you will add to the existing value of `lin.dW` using that formula.
+2. Next, compute the L2 penalty.  This is the sum of the squares of all elements of `lin.W` (use `np.sum` to compute the sum).  Multiply that sum by the regularization strength multiplier `lam`.  This is referred to as lambda, and is a hyperparameter we use to tune training.  A lambda value of `0` disables regularlization and just uses MSE to calculate loss, while larger values of lambda penalize large weights and incentivize smaller weight values.  
+3. The total loss is the MSE loss plus this L2 regularlization penalty.  Add these two terms together.  Call this `loss` so that it appends to the `losses` array in the template above.  By adding this to the loss, we consider a result with large weights as more lossy than a result with smaller weights, with the hope that this will allow our model to better generalize to new data.
+4. Later, add the gradient of the L2 regularization penalty to `lin.dW`, right before the template code adds `lin.dW` to `lin.W`.  It is computed with the formula given in the `TODO` comment, and is the derivative of `lam*(lin.W**2)`, which is `2*lam*lin.W`.  This applies the L2 regularization penalty to the weight adjustments.
 
 **Why:**
 
@@ -615,10 +627,9 @@ Implement a minimal **two-layer** classifier with **softmax + cross-entropy**, m
 This code is complete.  It imports the MNIST dataset, and creates a function `one_hot` which creates an array of all `0` values except for the one target element whose value is `1`.
 
 ```python
-from sklearn.datasets import fetch_openml
-mnist = fetch_openml('mnist_784', version=1, as_frame=False)
-X = mnist['data'].astype(np.float32) / 255.0
-y = mnist['target'].astype(np.int64)
+from sklearn.datasets import load_digits
+digits = load_digits()
+X, y = digits.data, digits.target
 
 # train/val split (small subset to speed up)
 N = 20000

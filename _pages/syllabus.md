@@ -267,6 +267,9 @@ schedule:
     date: "0"
     title: "Transformers and Attention"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-transformersattention.md"
+    readings:
+    - rtitle: "Attention is All You Need by Vaswani et al"
+      rlink: "https://arxiv.org/pdf/1706.03762"
   - week: "5"
     date: "1"
     title: "Representation Learning"
