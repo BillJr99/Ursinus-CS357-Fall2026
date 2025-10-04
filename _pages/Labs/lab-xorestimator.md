@@ -233,6 +233,8 @@ In other words, the **linear separator in augmented space corresponds to a nonli
 **What to do:** Add the interaction feature <span>\\(A_1\cdot A_2\\)</span> (or a nonlinear basis) so that a linear model in the **augmented** space can fit XOR.
 
 ```python
+# Concatenate (np.c_) a column to the end of the X_tt truth table
+# This will be a new data feature: the product of X_tt[0] and X_tt[1]
 X_aug = np.c_[X_tt, (X_tt[:,0]*X_tt[:,1])]
 
 # Re‑fit linear model on augmented features
@@ -250,6 +252,8 @@ pred = (X_aug @ w + b >= 0.5).astype(float)
 print("Augmented‑linear accuracy on XOR truth table:", (pred == Z_tt).mean())
 print(f"Augmented formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {w[2]:.3f}*(A1*A2) + {b:.3f}")
 ```
+
+**Question:** how might this new feature influence your ability to classify the XOR truth table using a linear function?  What might that formula be?  It will be of the form `b + w1 * x1 + w2 * x2 + w3 * x3` where `x3 = x1 * x2`.  What might `b` and the `wi` weight values be?
 
 ### Representation vs. Learning
 
