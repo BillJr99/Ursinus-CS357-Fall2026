@@ -9,6 +9,16 @@ info:
     - Understand why XOR is not linearly separable and how a small neural net solves it.
     - Read weights/biases from an interactive model (TensorFlow Playground) to derive an explicit formula.
     - Fit a linear estimator to XOR, evaluate failure modes, and reason about feature engineering.
+  purpose: "You will explore the limitations of applying linear estimators to non-linear functions, but instead of overcoming this by adding a nonlinear activation function to the neural net, you will add a nonlinear feature that enables one to classify the output linearly."    
+  concepts:
+    - "Neural networks work by applying linear perceptrons in series, with a nonlinear activation function."
+    - "Nonlinear relationships cannot be modeled by linear perceptrons alone."
+    - "One can create nonlinear features as inputs to a neural network that map linearly to the outputs for linear classifications.  This feature engineering enables one to have better control over the input features to a neural network, and to better understand the underlying model."
+  tasks:  
+    - "Run a neural network on the XOR truth table using TensorFlow playground to observe the model formula weights."
+    - "Interpret the neural network weights as a closed-form equation relating the inputs to the outputs via the computed weights and biases."
+    - "Attempt to train a linear classifier on the XOR dataset (which is not possible), and add a nonlinear activation function to improve classification."
+    - "Create a higher-dimension feature and use that to classify the data using linear classifiers only."
   rubric:
     - weight: 30
       description: Implementation
