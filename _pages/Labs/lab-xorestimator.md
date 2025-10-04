@@ -167,7 +167,11 @@ print({"w": w, "b": b, "loss": loss})
 print(f"Linear formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {b:.3f}")
 ```
 
-**Checkpoint:** Does the **linear** model achieve zero error on the four truth‑table points? Why/why not? (Recall: XOR is **not** linearly separable.)
+**Checkpoint:** Does the **linear** model achieve zero error on the four truth‑table points? Why/why not? (Recall: XOR is **not** linearly separable).  How can you modify this code to perform better?
+
+#### Revising the Linear classifier
+
+Modify this code to use two layers, and to use a ReLU activation function.  What happens?
 
 ### 3.3 Evaluate Two Accuracies 
 
@@ -211,7 +215,7 @@ for a1, a2, z in zip(X_tt[:,0], X_tt[:,1], Z_tt):
 
 ---
 
-## (Optional) Stage 4 — Make Linear Work via Feature Engineering
+## Stage 4 — Make Linear Work via Feature Engineering
 
 The XOR function is **not linearly separable** in the original input space defined by the two binary features <span>\\(A_1\\)</span> and <span>\\(A_2\\)</span>. No straight line in the <span>\\((A_1,A_2)\\)</span> plane can cleanly divide the points labeled “1” (the off-diagonal) from those labeled “0” (the diagonal). This is why a simple linear model fails, even if it is trained optimally.
 
@@ -261,5 +265,5 @@ print(f"Augmented formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {w[2]:.3f}*(A
 # What to Submit
 
 1. **Notes** with your recorded Playground weights, explicit formula, and truth‑table evaluation.  
-2. **Code** for Stage 3 (and Stage 4 if you attempt it).  
+2. **Code** for Stage 3 and Stage 4.  
 3. A **short report** (1–2 pages) answering the Checkpoint questions and discussing accuracy differences and their meaning.
