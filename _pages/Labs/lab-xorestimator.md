@@ -171,7 +171,7 @@ print(f"Linear formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {b:.3f}")
 
 ### 3.3 Evaluate Two Accuracies 
 
-1. **Generalization accuracy** on *new random test points* sampled from <span>\\(\{0,1\}^2\\)</span>.
+1. **Generalization accuracy** on *new random test points* sampled from <span>\\(\(0,1\)^2\\)</span>.
 2. **Self‑consistency accuracy**: Feed the **original truth‑table inputs** through your **trained Playground neural net** *without labels* and compare its predictions with the ground truth.
 
 ```python
