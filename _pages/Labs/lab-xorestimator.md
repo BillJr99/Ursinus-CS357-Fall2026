@@ -13,31 +13,31 @@ info:
     - weight: 30
       description: Implementation
       preemerging: Provides a working implementation aligned to the assignment specification with simple tests.
-      begineural neting: Implements the core functionality accurately and demonstrates usage on representative inputs.
+      beginning: Implements the core functionality accurately and demonstrates usage on representative inputs.
       progressing: Implements the full specification with clear structure, tests, and discussion of edge cases.
       proficient: Delivers a robust, well‑structured implementation with comprehensive tests and justified design choices.
     - weight: 30
       description: Algorithmic Correctness and Reasoning
       preemerging: Explains the algorithmic approach and verifies outputs on basic cases.
-      begineural neting: Explains design decisions and validates outputs on typical cases with reasoning.
+      beginning: Explains design decisions and validates outputs on typical cases with reasoning.
       progressing: Provides correctness arguments and empirical checks across varied cases.
       proficient: Presents clear correctness reasoning and evidence of generalization with insightful error analysis.
     - weight: 20
       description: Code Quality and Documentation
       preemerging: Organizes code into readable units with brief inline comments.
-      begineural neting: Uses functions/modules and docstrings to clarify behavior and interfaces.
+      beginning: Uses functions/modules and docstrings to clarify behavior and interfaces.
       progressing: Maintains consistent style, meaningful names, and explanatory docs where non‑trivial.
       proficient: Exhibits clean architecture, thoughtful abstractions, and thorough documentation throughout.
     - weight: 10
       description: Design Report
       preemerging: Summarizes goals, approach, and evaluation setup.
-      begineural neting: Explains design decisions and trade‑offs with small‑scale results.
+      beginning: Explains design decisions and trade‑offs with small‑scale results.
       progressing: Details design rationale, experiments, and limitations with supporting figures/tables.
       proficient: Delivers a concise, well‑structured report with justified choices and actionable future work.
     - weight: 10
       description: Submission Completeness
       preemerging: Provides required artifacts and basic run instructions.
-      begineural neting: Includes all artifacts with clear run instructions and parameters.
+      beginning: Includes all artifacts with clear run instructions and parameters.
       progressing: Includes scripts, configs, and reproducible steps with sample data.
       proficient: Provides a fully reproducible package with results, seeds, and validation notes.
 
@@ -72,7 +72,7 @@ XOR is fundamental in AI and machine learning because it is **not linearly separ
 
 ### Key Observations
 - XOR outputs **1** when inputs differ, **0** when they are the same.
-- A single linear classifier caneural netot solve XOR.
+- A single linear classifier cannot solve XOR.
 - Adding nonlinear transformations or hidden units allows a neural network to represent XOR correctly.
 
 ---
