@@ -89,7 +89,7 @@ Open this preset link to the XOR dataset:
 2. **Pause** training. Click on each hidden neuron to view its **incoming weights** (from <span>\\(A_1\\)</span> and <span>\\(A_2\\)</span>) and its **bias**. Record these in your notes:  
    <span>\\(h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)\\)</span>.
 3. Click the output neuron to view **outgoing weights** <span>\\(v_j\\)</span> from hidden neurons and output bias <span>\\(c\\)</span>. Record:  
-   <span>\\(\hat{Z} = \sigma\!\big(\sum_j v_j h_j + c\big)\\)</span>.
+   <span>\\(\hat{Z} = \sigma\big(\sum_j v_j h_j + c\big)\\)</span>.
 4. Sketch the **decision regions** you see. Which hidden neurons carve out which quadrants? How does the output combine them to realize XOR?
 
 **Checkpoint (report briefly):**
@@ -105,7 +105,7 @@ We now turn the Playground parameters into an explicit function that maps <span>
 **Given** your recorded parameters:
 
 - Hidden units: <span>\\(h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)\\)</span>.
-- Output: <span>\\(\hat{Z} = \sigma\!\Big(\sum_j v_j h_j + c\Big)\\)</span>.
+- Output: <span>\\(\hat{Z} = \sigma\Big(\sum_j v_j h_j + c\Big)\\)</span>.
 
 **Tasks**
 
