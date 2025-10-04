@@ -93,8 +93,8 @@ Open this preset link to the XOR dataset:
 4. Sketch the **decision regions** you see. Which hidden neurons carve out which quadrants? How does the output combine them to realize XOR?
 
 **Checkpoint (report briefly):**
-- Write the specific numeric formula you \\)</span> (fill in your <span>\\(w_{j1}, w_{j2}, b_j, v_j, c\\)<\span>).
-- Explain (in words) how two perpendicular hidden hyperplanes make XOR possible.
+- Write the specific numeric formula you see (fill in your <span>\\(w_{j1}, w_{j2}, b_j, v_j, c\\)<\span>).
+- Explain (in your own words) how two perpendicular hidden hyperplanes make XOR possible.
 
 ---
 
