@@ -50,7 +50,7 @@ tags:
 In this lab we will walk through training a neural network to learn the bitwise XOR function using three stages:
 
 1. **Playground Walkthrough (no coding):** Train a tiny NN on XOR in TensorFlow Playground and **read off** the weights.
-2. **From Weights → Formula:** Use those weights to write an explicit formula for $Z = \operatorname{XOR}(A_1, A_2)$ via hidden neurons.
+2. **From Weights → Formula:** Use those weights to write an explicit formula for <span>\\(Z = \operatorname{XOR}(A_1, A_2)<span>\\( via hidden neurons.
 3. **Linear Estimator (coding):** Fit a **linear** model to the XOR truth table; evaluate performance vs. the NN, and discuss why checking **two accuracies** is useful.
 
 ---
@@ -59,17 +59,17 @@ In this lab we will walk through training a neural network to learn the bitwise 
 
 The **exclusive OR (XOR)** is a classic logical function that outputs **true (1)** when exactly one of its two inputs is true, and **false (0)** otherwise. It is often denoted as:
 
-$$
+<span>\\[
 Z = A_1 \oplus A_2
-$$
+<span>\\]
 
-where $A_1, A_2 \in \{0,1\}$.
+where <span>\\(A_1, A_2 \in \{0,1\}<span>\\).
 
 XOR is fundamental in AI and machine learning because it is **not linearly separable**: no single straight line (or hyperplane) can perfectly classify XOR in the input space. This property makes it a canonical example for demonstrating the need for **nonlinear models** and **hidden layers** in neural networks.
 
 ### XOR Truth Table
 
-| $A_1$   |   $A_2$ |   $Z = A_1 \oplus A_2$  |
+| <span>\\(A_1<span>\\)   |   <span>\\(A_2<span>\\) |   <span>\\(Z = A_1 \oplus A_2<span>\\)  |
 |---------|---------|-------------------------|
 |    0    |    0    |            0            |
 |    0    |    1    |            1            |
@@ -91,34 +91,34 @@ Open this preset link to the XOR dataset:
 
 **Instructions**
 
-1. Click **Play** and let it train until training loss stabilizes (or accuracy $> 0.95$).  
-2. **Pause** training. Click on each hidden neuron to view its **incoming weights** (from $A_1$ and $A_2$) and its **bias**. Record these in your notes:  
-   $h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)$.
-3. Click the output neuron to view **outgoing weights** $v_j$ from hidden neurons and output bias $c$. Record:  
-   $\hat{Z} = \sigma\!\big(\sum_j v_j h_j + c\big)$.
+1. Click **Play** and let it train until training loss stabilizes (or accuracy <span>\\(> 0.95<span>\\)).  
+2. **Pause** training. Click on each hidden neuron to view its **incoming weights** (from <span>\\(A_1<span>\\) and <span>\\(A_2<span>\\)) and its **bias**. Record these in your notes:  
+   <span>\\(h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)<span>\\).
+3. Click the output neuron to view **outgoing weights** <span>\\(v_j<span>\\) from hidden neurons and output bias <span>\\(c<span>\\). Record:  
+   <span>\\(\hat{Z} = \sigma\!\big(\sum_j v_j h_j + c\big)<span>\\).
 4. Sketch the **decision regions** you see. Which hidden neurons carve out which quadrants? How does the output combine them to realize XOR?
 
 **Checkpoint (report briefly):**
-- Write the specific numeric formula you observed (fill in your $w_{j1}, w_{j2}, b_j, v_j, c$).
+- Write the specific numeric formula you observed (fill in your <span>\\(w_{j1}, w_{j2}, b_j, v_j, c<span>\\)).
 - Explain (in words) how two perpendicular hidden hyperplanes make XOR possible.
 
 ---
 
 ## Stage 2 — From Weights to an Explicit XOR Formula (derivation, light algebra)
 
-We now turn the Playground parameters into an explicit function that maps $(A_1, A_2) \in \{0,1\}^2$ to $Z\in\{0,1\}$.
+We now turn the Playground parameters into an explicit function that maps <span>\\((A_1, A_2) \in \{0,1\}^2<span>\\) to <span>\\(Z\in\{0,1\}<span>\\(0).
 
 **Given** your recorded parameters:
 
-- Hidden units: $h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)$.
-- Output: $\hat{Z} = \sigma\!\Big(\sum_j v_j h_j + c\Big)$.
+- Hidden units: <span>\\(h_j = \tanh(w_{j1} A_1 + w_{j2} A_2 + b_j)<span>\\).
+- Output: <span>\\(\hat{Z} = \sigma\!\Big(\sum_j v_j h_j + c\Big)<span>\\).
 
 **Tasks**
 
-1. Substitute $A_1, A_2\in\{0,1\}$ and compute $h_j$ for the **four truth‑table inputs**:  
-   $(0,0), (0,1), (1,0), (1,1)$.
-2. Evaluate $\hat{Z}$ for all four inputs and threshold at 0.5 to obtain predicted bits. Confirm XOR is realized.
-3. (Optional) Use the **sign approximation** for $\tanh$ to reason geometrically: the hidden neurons implement two half‑planes that, when linearly combined, produce XOR.
+1. Substitute <span>\\(A_1, A_2\in\{0,1\}<span>\\) and compute <span>\\(h_j<span>\\) for the **four truth‑table inputs**:  
+   <span>\\((0,0), (0,1), (1,0), (1,1)<span>\\).
+2. Evaluate <span>\\(\hat{Z}<span>\\) for all four inputs and threshold at 0.5 to obtain predicted bits. Confirm XOR is realized.
+3. (Optional) Use the **sign approximation** for <span>\\(\tanh<span>\\) to reason geometrically: the hidden neurons implement two half‑planes that, when linearly combined, produce XOR.
 
 **Deliverable:** A concise **formula** filled with your numeric weights, plus a **table** of the four evaluations.
 
@@ -126,7 +126,7 @@ We now turn the Playground parameters into an explicit function that maps $(A_1,
 
 ## Stage 3 — Linear Function Estimator on XOR (coding)
 
-In this part you will train a **linear model** $\hat{Z} = w_1 A_1 + w_2 A_2 + b$ on the XOR truth table and evaluate it. You may refer back to the earlier **Linear Function Estimator** lab for gradient descent patterns.
+In this part you will train a **linear model** <span>\\(\hat{Z} = w_1 A_1 + w_2 A_2 + b<span>\\) on the XOR truth table and evaluate it. You may refer back to the earlier **Linear Function Estimator** lab for gradient descent patterns.
 
 ### 3.1 Data: XOR Truth Table
 
@@ -177,7 +177,7 @@ print(f"Linear formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {b:.3f}")
 
 ### 3.3 Evaluate Two Accuracies (why this matters)
 
-1. **Generalization accuracy** on *new random test points* sampled from $\{0,1\}^2$.
+1. **Generalization accuracy** on *new random test points* sampled from <span>\\(\{0,1\}^2<span>\\).
 2. **Self‑consistency accuracy**: Feed the **original truth‑table inputs** through your **trained Playground NN** *without labels* and compare its predictions with the ground truth.
 
 ```python
@@ -219,7 +219,7 @@ for a1, a2, z in zip(X_tt[:,0], X_tt[:,1], Z_tt):
 
 ## (Optional) Stage 4 — Make Linear Work via Feature Engineering
 
-Add the interaction feature $A_1\cdot A_2$ (or a nonlinear basis) so that a linear model in the **augmented** space can fit XOR.
+Add the interaction feature <span>\\(A_1\cdot A_2<span>\\) (or a nonlinear basis) so that a linear model in the **augmented** space can fit XOR.
 
 ```python
 X_aug = np.c_[X_tt, (X_tt[:,0]*X_tt[:,1])]
