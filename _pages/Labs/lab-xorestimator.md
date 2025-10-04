@@ -126,7 +126,7 @@ We now turn the Playground parameters into an explicit function that maps <span>
 
 ## Stage 3 — Linear Function Estimator on XOR (coding)
 
-In this part you will train a **linear model** <span>\\(\hat{Z} = w_1 A_1 + w_2 A_2 + b<span>\\) on the XOR truth table and evaluate it. You may refer back to the earlier **Linear Function Estimator** lab for gradient descent patterns.
+In this part you will train a **linear model** <span>\\(\hat{Z} = w_1 A_1 + w_2 A_2 + b<span>\\) on the XOR truth table and evaluate it. 
 
 ### 3.1 Data: XOR Truth Table
 
