@@ -57,7 +57,7 @@ In this lab we will walk through training a neural network to learn the bitwise 
 
 ## The XOR Function
 
-The **exclusive OR (XOR)** is a classic logical function that outputs **true (1)** when exactly one of its two inputs is true, and **false (0)** otherwise. It is often denoted as: <span>\\(Z = A_1 \oplus A_2\\)</span>, where <span>\\(A_1, A_2 \in \{0,1\}\\)</span>.
+The **exclusive OR (XOR)** is a classic logical function that outputs **true (1)** when exactly one of its two inputs is true, and **false (0)** otherwise. It is often denoted as: <span>\\(Z = A_1 \oplus A_2\\)</span>, where <span>\\(A_1, A_2 \in \(0,1\)\\)</span>.
 
 XOR is fundamental in AI and machine learning because it is **not linearly separable**: no single straight line (or hyperplane) can perfectly classify XOR in the input space. This property makes it a canonical example for demonstrating the need for **nonlinear models** and **hidden layers** in neural networks.
 
@@ -100,7 +100,7 @@ Open this preset link to the XOR dataset:
 
 ## Stage 2 — From Weights to an Explicit XOR Formula 
 
-We now turn the Playground parameters into an explicit function that maps <span>\\((A_1, A_2) \in \{0,1\}^2\\)</span> to <span>\\(Z\in\{0,1\}\\)</span>.
+We now turn the Playground parameters into an explicit function that maps <span>\\((A_1, A_2) \in \(0,1\)^2\\)</span> to <span>\\(Z\in\(0,1\)\\)</span>.
 
 **Given** your recorded parameters:
 
@@ -109,7 +109,7 @@ We now turn the Playground parameters into an explicit function that maps <span>
 
 **Tasks**
 
-1. Substitute <span>\\(A_1, A_2\in\{0,1\}\\)</span> and compute <span>\\(h_j\\)</span> for the **four truth‑table inputs**:  
+1. Substitute <span>\\(A_1, A_2\in\(0,1\)\\)</span> and compute <span>\\(h_j\\)</span> for the **four truth‑table inputs**:  
    <span>\\((0,0), (0,1), (1,0), (1,1)\\)</span>.
 2. Evaluate <span>\\(\hat{Z}\\)</span> for all four inputs and threshold at 0.5 to obtain predicted bits. Confirm XOR is realized.
 3. (Optional) Use the **sign approximation** for <span>\\(\tanh\\)</span> to reason geometrically: the hidden neurons implement two half‑planes that, when linearly combined, produce XOR.
