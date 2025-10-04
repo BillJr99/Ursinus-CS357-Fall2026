@@ -1885,7 +1885,7 @@ model = [
   Each layer takes the output of the previous layer as its input.  
   We can loop through all layers in order:  
 
-  ```python
+```python
   # Forward pass
   input_data = x
   for layer in model:           # e.g., [Layer1, Layer2, OutputLayer]
@@ -1898,7 +1898,7 @@ model = [
 - **Backward pass:**
   Each layer receives a gradient from the next layer, computes its local gradient, and passes the gradient further back.
   This requires looping in reverse order:
-
+  
 ```python
 # Backward pass
 grad_output = dL_dyhat         # gradient of loss wrt final output
