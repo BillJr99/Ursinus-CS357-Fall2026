@@ -57,13 +57,7 @@ In this lab we will walk through training a neural network to learn the bitwise 
 
 ## The XOR Function
 
-The **exclusive OR (XOR)** is a classic logical function that outputs **true (1)** when exactly one of its two inputs is true, and **false (0)** otherwise. It is often denoted as:
-
-<span>\\[
-Z = A_1 \oplus A_2
-<span>\\]
-
-where <span>\\(A_1, A_2 \in \{0,1\}\\)</span>.
+The **exclusive OR (XOR)** is a classic logical function that outputs **true (1)** when exactly one of its two inputs is true, and **false (0)** otherwise. It is often denoted as: <span>\\(Z = A_1 \oplus A_2\\)</span>, where <span>\\(A_1, A_2 \in \{0,1\}\\)</span>.
 
 XOR is fundamental in AI and machine learning because it is **not linearly separable**: no single straight line (or hyperplane) can perfectly classify XOR in the input space. This property makes it a canonical example for demonstrating the need for **nonlinear models** and **hidden layers** in neural networks.
 
@@ -83,7 +77,7 @@ XOR is fundamental in AI and machine learning because it is **not linearly separ
 
 ---
 
-## Stage 1 — TensorFlow Playground: Solve XOR and Read the Weights (no coding)
+## Stage 1 — TensorFlow Playground: Solve XOR and Read the Weights 
 
 Open this preset link to the XOR dataset:
 
@@ -104,7 +98,7 @@ Open this preset link to the XOR dataset:
 
 ---
 
-## Stage 2 — From Weights to an Explicit XOR Formula (derivation, light algebra)
+## Stage 2 — From Weights to an Explicit XOR Formula 
 
 We now turn the Playground parameters into an explicit function that maps <span>\\((A_1, A_2) \in \{0,1\}^2\\)</span> to <span>\\(Z\in\{0,1\}\\)</span>.
 
@@ -124,7 +118,7 @@ We now turn the Playground parameters into an explicit function that maps <span>
 
 ---
 
-## Stage 3 — Linear Function Estimator on XOR (coding)
+## Stage 3 — Linear Function Estimator on XOR 
 
 In this part you will train a **linear model** <span>\\(\hat{Z} = w_1 A_1 + w_2 A_2 + b\\)</span> on the XOR truth table and evaluate it. 
 
@@ -223,11 +217,7 @@ The XOR function is **not linearly separable** in the original input space defin
 
 ### Adding Interaction Features
 
-By introducing the **interaction feature** <span>\\(A_1 \cdot A_2\\)</span>, we are effectively **lifting the data into a higher-dimensional space**:
-
-<span>\\[
-X_{\text{aug}} = \big(A_1,\; A_2,\; A_1\cdot A_2\big).
-\\]</span>
+By introducing the **interaction feature** <span>\\(A_1 \cdot A_2\\)</span>, we are effectively **lifting the data into a higher-dimensional space**: <span>\\(X_{\text{aug}} = \big(A_1,\; A_2,\; A_1\cdot A_2\big)\\)</span>.
 
 In this augmented feature space, a linear model is no longer constrained to operate only on the raw inputs. The product term captures the logical “AND” relationship between the two inputs, which is precisely the nonlinearity needed to represent XOR.  
 
