@@ -253,7 +253,7 @@ print("Augmented‑linear accuracy on XOR truth table:", (pred == Z_tt).mean())
 print(f"Augmented formula: Z_hat = {w[0]:.3f}*A1 + {w[1]:.3f}*A2 + {w[2]:.3f}*(A1*A2) + {b:.3f}")
 ```
 
-**Question:** how might this new feature influence your ability to classify the XOR truth table using a linear function?  What might that formula be?  It will be of the form `b + w1 * x1 + w2 * x2 + w3 * x3` where `x3 = x1 * x2`.  What might `b` and the `wi` weight values be?
+**Question:** how might this new feature influence your ability to classify the XOR truth table using a linear function?  What might that formula be?  It will be of the form `b + w1 * x1 + w2 * x2 + w3 * x3` where `x3 = x1 * x2`.  What might `b` and the `wi` weight values be?  Note that you can allow rounding to the nearest integer, so if you obtain a value of `0.5` or above, you can round that to `1`, and round smaller values to `0`.
 
 ### Representation vs. Learning
 
