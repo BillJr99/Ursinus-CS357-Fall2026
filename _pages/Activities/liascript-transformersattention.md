@@ -213,7 +213,7 @@ $$ Z' = Z/\sqrt{2} $$
 Take row 1: $[1,0,1]/\sqrt{2} = [0.707, 0, 0.707]$.
 Exponentiate and normalize:
 $$ e^{0.707}=2.028, \ e^0=1.0. $$
-So row 1 weights = $[2.028, 1.0, 2.028]/(2.028+1+2.028) \approx [0.37, 0.18, 0.45]$.
+So row 1 weights = $[2.028, 1.0, 2.028]/(2.028+1+2.028) \approx [0.40, 0.20, 0.40]$.
 
 
 Do the same for rows 2 and 3.
