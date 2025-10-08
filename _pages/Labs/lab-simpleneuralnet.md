@@ -326,7 +326,7 @@ def relu_backward(x, dout):
     
     # TODO: 
     # if an element of x (a 2D matrix) is > 0, set the corresponding element of dx to the corresponding element of dout
-    # otherwise, set the cprresponding element of dx to 0
+    # otherwise, set the corresponding element of dx to 0
     
     return dx
 
