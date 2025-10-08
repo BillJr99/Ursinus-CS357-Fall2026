@@ -190,7 +190,7 @@ class Linear:
         """x: (batch, in_dim) -> out: (batch, out_dim)"""
         self.x = x
         
-        # TODO: return x @ W^T + b 
+        # TODO: return x @ self.W.T + b 
         out = None  # TODO
         
         return out
