@@ -179,7 +179,7 @@ schedule:
   - week: "0"
     date: "1"
     title: "Introduction: What is AI?"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-whatisai.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-whatisai.md"
     readings:
     - rtitle: "Mitchell Chapter 1"
       rlink: false
@@ -217,11 +217,11 @@ schedule:
   - week: "2"
     date: "0"
     title: "Introduction: Tools"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-tools.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tools.md"
   - week: "2"
     date: "1"
     title: "Neural Networks"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-neuralnets.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-neuralnets.md"
     readings:
     - rtitle: "Mitchell Chapter 2, 6"
       rlink: false
@@ -266,14 +266,14 @@ schedule:
   - week: "5"
     date: "0"
     title: "Transformers and Attention"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-transformersattention.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-transformersattention.md"
     readings:
     - rtitle: "Attention is All You Need by Vaswani et al"
       rlink: "https://arxiv.org/pdf/1706.03762"
   - week: "5"
     date: "1"
     title: "Representation Learning"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-representationlearning.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-representationlearning.md"
     readings:
     - rtitle: "The Emerging Problem of AI Psychosis"
       rlink: "https://www.psychologytoday.com/us/blog/urban-survival/202507/the-emerging-problem-of-ai-psychosis"
@@ -289,7 +289,7 @@ schedule:
   - week: "6"
     date: "0"
     title: "Generative Models"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-generativemodels.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-generativemodels.md"
     deliverables:
     - dtitle: "Reading and Discussion: Report and Presentation Handed Out"
       dlink: "Reading/PresentationReport"
@@ -299,7 +299,7 @@ schedule:
   - week: "6"
     date: "1"
     title: "Prompting and Context Engineering"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-promptengineering.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md"
     readings:
     - rtitle: "Mitchell Chapter 7"
       rlink: false
@@ -308,7 +308,7 @@ schedule:
   - week: "7"
     date: "1"
     title: "Diffusion and Multimodal AI"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-diffusionmultimodal.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-diffusionmultimodal.md"
     readings:
     - rtitle: "You are a helpful mail assistant, and other Apple Intelligence instructions - the Verge"
       rlink: "https://www.theverge.com/2024/8/5/24213861/apple-intelligence-instructions-macos-15-1-sequoia-beta"
@@ -324,7 +324,7 @@ schedule:
   - week: "8"
     date: "0"
     title: "Variational Autoencoders"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-variationalautoencoders.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-variationalautoencoders.md"
     deliverables:
     - dtitle: "Written Assignment: AI by Hand Part 2 Handed Out"
       dlink: "Assignments/AIByHand2"
@@ -333,7 +333,7 @@ schedule:
   - week: "8"
     date: "1"
     title: "Document Retrieval and Retrieval-Augmented Generation"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-rag.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md"
     readings:
     - rtitle: "Mitchell Chapter 5, 8"
       rlink: false
@@ -351,7 +351,7 @@ schedule:
   - week: "9"
     date: "0"
     title: "Personas and Configurations"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-personas.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-personas.md"
     deliverables:
     - dtitle: "Project and Presentation: Final Project Handed Out"
       dlink: "Projects/Project"
@@ -360,7 +360,7 @@ schedule:
   - week: "9"
     date: "1"
     title: "Agentic Systems"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-agentic.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentic.md"
     deliverables:
     - dtitle: "Lab: Small GPT Due"
       dlink: "Labs/SmallGPT"
@@ -390,7 +390,7 @@ schedule:
   - week: "10"
     date: "1"
     title: "Bias"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-bias.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-bias.md"
     deliverables:
     - dtitle: "Reading and Discussion: Report and Presentation First Draft Due"
       dlink: "Reading/PresentationReport"
@@ -430,7 +430,7 @@ schedule:
   - week: "11"
     date: "1"
     title: "Hallucinations"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-hallucinations.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-hallucinations.md"
     readings:
     - rtitle: "Can LLMs Generate Novel Research Ideas?"
       rlink: "https://arxiv.org/pdf/2409.04109v1"
@@ -442,7 +442,7 @@ schedule:
   - week: "12"
     date: "0"
     title: "Intellectual Property - Data Provenance and Copyright"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-ip.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ip.md"
     readings:
     - rtitle: "Article about Using Getty Images Scraped Data for AI Training"
       rlink: "https://news.artnet.com/art-world/getty-images-suing-stability-ai-stable-diffusion-illegally-scraped-images-copyright-infringement-2243631"
@@ -454,7 +454,7 @@ schedule:
   - week: "12"
     date: "1"
     title: "AI Governance and Policy"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-governance.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
     deliverables:
     - dtitle: "Reading and Discussion: Report and Presentation Final Draft Due"
       dlink: "Reading/PresentationReport"
@@ -469,7 +469,7 @@ schedule:
   - week: "13"
     date: "0"
     title: "Explainable AI"
-    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2025/gh-pages/_pages/Activities/liascript-explainable.md"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainable.md"
   - week: "14"
     date: "0"
     title: "Explainable AI"
