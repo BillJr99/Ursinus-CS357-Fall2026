@@ -209,13 +209,13 @@ def neural_net_playground_predict(A1, A2):
 
 # Evaluate on the four truth-table points
 from math import isclose
-sig_neural net = []
+sig_neural_net = []
 for a1, a2, z in zip(X_tt[:,0], X_tt[:,1], Z_tt):
     # TODO: zhat = neural_net_playground_predict(a1, a2)
-    # TODO: sig_neural net.append( (zhat >= 0.5) == (z == 1.0) )
+    # TODO: sig_neural_net.append( (zhat >= 0.5) == (z == 1.0) )
     pass
 
-# TODO: acc_neural net_truth = np.mean(sig_neural net)
+# TODO: acc_neural net_truth = np.mean(sig_neural_net)
 # print("neural net accuracy on original truth-table inputs:", acc_neural net_truth)
 ```
 
