@@ -7,7 +7,7 @@ info:
   points: 100
   goals:
     - Explain how embeddings encode semantic meaning for predictive and retrieval tasks.
-    - Implement an end-to-end pipeline: upload data, compute embeddings, train a classifier, and retrieve neighbors.
+    - "Implement an end-to-end pipeline: upload data, compute embeddings, train a classifier, and retrieve neighbors."
     - Demonstrate cosine similarity as a measure of closeness between texts, with examples.
     - Visualize embedding spaces and interpret clusters relative to labels.
     - Understand algorithms used (Logistic Regression, PCA, k-NN) and their role in the pipeline.
@@ -254,7 +254,7 @@ plt.show()
 
 ---
 
-### Step 9: Ablation Study
+### Step 9: Comparing the Effect of Normalized Features
 
 ```python
 for normalize in [True, False]:
@@ -273,7 +273,7 @@ for normalize in [True, False]:
 ## Experiments to Try (Step by Step)
 
 These experiments extend the core lab. For each, you will:  
-1. Write some code (guided, but not fully given).  
+1. Add some code to experiment with additional features
 2. Run it and observe the output.  
 3. Reflect on what the result means.  
 
@@ -349,20 +349,7 @@ for idx in top_indices:
 
 ---
 
-### 5. Visualization
-
-**Goal:** Compare two dimensionality reduction methods.
-
-**Steps:**
-1. Use your PCA plot from earlier.  
-2. Install and import UMAP (`pip install umap-learn`).  
-3. Project embeddings into 2D with UMAP (`fit_transform`) and plot them by label.  
-
-**Reflection:** Which visualization made the clusters clearer? Why might nonlinear methods like UMAP show more separation?
-
----
-
-### 6. Classifier Alternatives
+### 5. Classifier Alternatives
 
 **Goal:** Try different models on embeddings.
 
@@ -375,7 +362,7 @@ for idx in top_indices:
 
 ---
 
-### 7. Retrieval Variants
+### 6. Retrieval Variants
 
 **Goal:** See how changing distance metrics and k affects results.
 
@@ -388,7 +375,7 @@ for idx in top_indices:
 
 ---
 
-### 8. Error Analysis
+### 9. Error Analysis
 
 **Goal:** Look at mistakes and think critically about them.
 
@@ -417,9 +404,7 @@ After completing the experiments, write a **short report (2–4 pages)** that ex
    - Summarize your key results:  
      - Classifier accuracy and F1 score.  
      - Examples of similarity scores (high vs. low).  
-     - Visualizations (PCA/UMAP).  
-     - Ablation results (e.g., with/without normalization).  
-   - Highlight what surprised you or matched your expectations.
+     - How your results changed with/without normalization.  
 
 3. **Error Analysis**  
    - Show examples of misclassified texts.  
@@ -441,4 +426,4 @@ After completing the experiments, write a **short report (2–4 pages)** that ex
 
 ---
 
-**Deliverable:** Upload your report (PDF or Markdown) along with your code, saved artifacts, and figures.  
+**Deliverable:** Upload your report (PDF or Markdown) along with your code and figures.  
