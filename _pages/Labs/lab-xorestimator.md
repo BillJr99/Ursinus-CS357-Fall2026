@@ -200,7 +200,7 @@ print("Linear accuracy on random XOR test points:", acc_lin_random)
 # 2) Accuracy of the trained neural net on the original truth table
 # (You will manually enter the neural net’s formula from Stage 2 into a function.)
 
-def neural net_playground_predict(A1, A2):
+def neural_net_playground_predict(A1, A2):
     # TODO: Replace the placeholders with your recorded weights from Stage 1.
     # Example with H hidden units, tanh in hidden, sigmoid at output.
     # h_j = tanh(wj1*A1 + wj2*A2 + bj); Z_hat = sigmoid(sum_j vj*h_j + c)
@@ -211,7 +211,7 @@ def neural net_playground_predict(A1, A2):
 from math import isclose
 sig_neural net = []
 for a1, a2, z in zip(X_tt[:,0], X_tt[:,1], Z_tt):
-    # TODO: zhat = neural net_playground_predict(a1, a2)
+    # TODO: zhat = neural_net_playground_predict(a1, a2)
     # TODO: sig_neural net.append( (zhat >= 0.5) == (z == 1.0) )
     pass
 
