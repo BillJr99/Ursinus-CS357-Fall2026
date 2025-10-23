@@ -238,9 +238,9 @@ print(decode(sample))
 # Part 2 — From Weighted Averages to Self-Attention
 
 **Goal:** understand how **self-attention** computes a contextualized representation at each position. For token features $x_t \in \mathbb{R}^d$, define:
-- **Queries** $Q = X W_Q$,
-- **Keys** $K = X W_K$,
-- **Values** $V = X W_V$.
+- **Queries** <span>\\(Q = X W_Q\\)</span>,
+- **Keys** <span>\\(K = X W_K\\)</span>,
+- **Values** <span>\\(V = X W_V\\)</span>.
 
 The (causal) attention weights from position <span>\\(t\\)</span> to <span>\\(s \le t\\)</span> are:
 $$
@@ -313,7 +313,7 @@ class CausalSelfAttentionHead(nn.Module):
 
 # Part 4 — Multi-Head + FeedForward + Residual + LayerNorm
 
-**Multi-head**: concatenate $h$ heads along the channel dimension, then project back to <span>\\(n_{\text{emb}}\\)</span>.  
+**Multi-head**: concatenate <span>\\(h\\)</span> heads along the channel dimension, then project back to <span>\\(n_{\text{emb}}\\)</span>.  
 **FeedForward (MLP)**: position-wise MLP, typically <span>\\(4\times\\)</span> expansion with nonlinearity.  
 **Pre-LN Residual Block**: use LayerNorm before each sub-layer; residual connections stabilize deep stacks.
 
