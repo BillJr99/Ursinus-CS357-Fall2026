@@ -65,7 +65,7 @@ This lab is heavily derived from Andrej Karpathy's tutorial and materials
 
 1. Formalize the **autoregressive language modeling** objective and **cross-entropy** loss.
 2. Implement and understand **causal masking** for next-token prediction.
-3. Build **self-attention** (Q, K, V, Softmax) with the **scale** factor $1/\sqrt{d_k}$.
+3. Build **self-attention** (Q, K, V, Softmax) with a **scale** factor.
 4. Compose multi-head attention, feedforward MLP, residual connections, and LayerNorm into a **Transformer block**.
 5. Train a small GPT on Tiny Shakespeare and analyze samples, losses, and overfitting behavior.
 
@@ -81,7 +81,7 @@ This lab is heavily derived from Andrej Karpathy's tutorial and materials
 
 # Part 0 — Setup, Data, and Notation
 
-We model a character sequence $x_1, x_2, \dots, x_T$ and train to maximize the **autoregressive** likelihood
+We model a character sequence <span>\\(x_1, x_2, \dots, x_T\\)</span> and train to maximize the **autoregressive** likelihood
 $$
 p_\theta(x_1,\dots,x_T)=\prod_{t=1}^{T} p_\theta(x_t \mid x_{<t}).
 $$
@@ -90,7 +90,7 @@ $$
 \mathcal{L}(\theta) = - \sum_{t=1}^{T} \log p_\theta(x_t \mid x_{<t}).
 $$
 
-We use Tiny Shakespeare (∼1 MB). We’ll work at **character level** for simplicity. (See the Colab for this exact dataset and a reference implementation.)【8†source】
+We use Tiny Shakespeare (∼1 MB). We’ll work at **character level** for simplicity. (See the Colab for this exact dataset and a reference implementation.)
 
 ```python
 # ===== Part 0: Setup and Data =====
@@ -143,7 +143,7 @@ val_data   = data[n:]
 print("Vocab size:", vocab_size)
 ```
 
-**Batching with context windows:** We train with **fixed context length** $T$ (aka `block_size`). For each batch, we sample start indices and slice sequences $x_{t:t+T}$ and targets $x_{t+1:t+T+1}$.
+**Batching with context windows:** We train with **fixed context length** <span>\\(T\\)</span> (aka `block_size`). For each batch, we sample start indices and slice sequences <span>\\(x_{t:t+T}\\)</span> and targets <span>\\(x_{t+1:t+T+1}\\)</span>.
 
 ```python
 # Data loader for fixed-length contexts
@@ -160,13 +160,13 @@ def get_batch(split: str):
     return x.to(device), y.to(device)
 ```
 
-> **Why fixed-length context?** GPT attends over a sliding window of the past $T$ tokens. Computationally, self-attention scales as $O(T^2)$ in both memory and compute due to the attention matrix.
+> **Why fixed-length context?** GPT attends over a sliding window of the past <span>\\(T\\)</span> tokens. Computationally, self-attention scales as <span>\\(O(T^2)\\)</span> in both memory and compute due to the attention matrix.
 
 ---
 
 # Part 1 — Bigram Baseline (Sanity Check)
 
-**Idea:** predict $x_{t+1}$ directly from $x_t$. This is crude but gives a runnable baseline. Implementation: an **embedding lookup** into a table of **logits** over the vocabulary. This matches the companion notebook’s first stage.【8†source】
+**Idea:** predict <span>\\(x_{t+1}\\)</span> directly from <span>\\(x_t\\)</span>. This is crude but gives a runnable baseline. Implementation: an **embedding lookup** into a table of **logits** over the vocabulary. This matches the companion notebook’s first stage.
 
 Mathematically, logits for the next token are:
 $$
@@ -231,7 +231,7 @@ sample = bigram.generate(ctx, max_new_tokens=300)[0].tolist()
 print(decode(sample))
 ```
 
-> Expect gibberish. This stage validates your data pipeline and objective before building attention (cf. the Colab’s baseline stage)【8†source】.
+> Expect gibberish. This stage validates your data pipeline and objective before building attention (cf. the Colab’s baseline stage).
 
 ---
 
@@ -242,16 +242,16 @@ print(decode(sample))
 - **Keys** $K = X W_K$,
 - **Values** $V = X W_V$.
 
-The (causal) attention weights from position $t$ to $s \le t$ are:
+The (causal) attention weights from position <span>\\(t\\)</span> to <span>\\(s \le t\\)</span> are:
 $$
 \alpha_{t,s} = \mathrm{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}} + M\right)_{t,s},
 $$
-where $M$ applies **$-\infty$** above the diagonal to enforce causality (no peeking ahead). The output is
+where <span>\\(M\\)</span> applies <span>\\(-\infty\\)</span> above the diagonal to enforce causality (no peeking ahead). The output is
 $$
 \mathrm{Attn}(X) = \alpha V.
 $$
 
-**Why the scale $1/\sqrt{d_k}$?** Keeps dot-product variance near 1 so Softmax doesn’t saturate when $d_k$ grows, stabilizing training (as explained in the lecture and syllabus).
+Why the scale <span>\\(1/\sqrt{d_k}\\)</span>?  This keeps dot-product variance near 1 so Softmax doesn’t saturate when <span>\\(d_k\\)</span> grows, stabilizing training (as explained in the lecture and syllabus).
 
 **Toy matrix view (one head):**
 
@@ -274,7 +274,7 @@ out = wei @ x[0]              # (T, C) -- for a single batch element
 print("Causal average at each position:\n", out)
 ```
 
-> This mirrors the companion notebook’s pedagogical build-up from averaging to softmax attention【8†source】.
+> This mirrors the companion notebook’s pedagogical build-up from averaging to softmax attention.
 
 ---
 
@@ -313,8 +313,8 @@ class CausalSelfAttentionHead(nn.Module):
 
 # Part 4 — Multi-Head + FeedForward + Residual + LayerNorm
 
-**Multi-head**: concatenate $h$ heads along the channel dimension, then project back to $n_{\text{emb}}$.  
-**FeedForward (MLP)**: position-wise MLP, typically $4\times$ expansion with nonlinearity.  
+**Multi-head**: concatenate $h$ heads along the channel dimension, then project back to <span>\\(n_{\text{emb}}\\)</span>.  
+**FeedForward (MLP)**: position-wise MLP, typically <span>\\(4\times\\)</span> expansion with nonlinearity.  
 **Pre-LN Residual Block**: use LayerNorm before each sub-layer; residual connections stabilize deep stacks.
 
 ```python
@@ -368,7 +368,7 @@ class Block(nn.Module):
 
 # Part 5 — Positional Embeddings and the GPT Shell
 
-Self-attention is permutation-invariant, so we inject order via **positional embeddings** $\pi_t\in\mathbb{R}^{n_{\text{emb}}}$ and add them to token embeddings.
+Self-attention is permutation-invariant, so we inject order via **positional embeddings** <span>\\(\pi_t\in\mathbb{R}^{n_{\text{emb}}}\\)</span> and add them to token embeddings.
 
 ```python
 # ===== Part 5: GPT (decoder-only) =====
@@ -426,7 +426,7 @@ class SmallGPT(nn.Module):
 
 # Part 6 — Training Loop, Evaluation, and Sampling
 
-We use **AdamW** and periodically estimate the train/val loss. This mirrors the training skeleton in the companion notebook【8†source】.
+We use **AdamW** and periodically estimate the train/val loss. This mirrors the training skeleton in the companion notebook.
 
 ```python
 # ===== Part 6: Training utilities =====
@@ -478,14 +478,14 @@ with torch.no_grad():
 print(decode(out))
 ```
 
-> As you scale $n_{\text{emb}}$, heads, layers, and training steps, quality improves—but watch validation loss to avoid overfitting on Tiny Shakespeare.
+> As you scale <span>\\(n_{\text{emb}}\\)</span>, heads, layers, and training steps, quality improves—but watch validation loss to avoid overfitting on Tiny Shakespeare.
 
 ---
 
 # Part 7 — Sanity Checks & Ablations
 
-1. **Ablate**: Reduce $n_{\text{emb}}$, $n_{\text{head}}$, or $n_{\text{layer}}$. Observe loss and sample quality.
-2. **Context length**: Try `block_size = 64` or `128`. Expect better long-range coherence at higher compute cost $O(T^2)$.
+1. **Ablate**: Reduce <span>\\(n_{\text{emb}}\\)</span>, <span>\\(n_{\text{head}}\\)</span>, or <span>\\(n_{\text{layer}}\\)</span>. Observe loss and sample quality.
+2. **Context length**: Try `block_size = 64` or `128`. Expect better long-range coherence at higher compute cost <span>\\(O(T^2)\\)</span>.
 3. **Dropout**: Increase to regularize.
 4. **Learning rate**: Too high → divergence; too low → slow learning.
 
