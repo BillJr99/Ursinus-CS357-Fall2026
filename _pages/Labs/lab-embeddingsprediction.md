@@ -97,6 +97,7 @@ Overpriced for what it offers; would not recommend.,0
 Install the required libraries:
 
 ```python
+!apt-get install swig
 !pip install sentence-transformers scikit-learn pandas numpy matplotlib tqdm umap-learn faiss-cpu
 ```
 
