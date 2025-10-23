@@ -82,7 +82,7 @@ Love the battery life and the keyboard feel.,1
 The screen is bright and colors are accurate.,1
 Excellent build quality; runs fast and cool.,1
 Setup was straightforward; documentation is clear.,1
-Great value for the price, would recommend.,1
+Great value for the price would recommend.,1
 Battery drains quickly and the fan is noisy.,0
 Screen flickers under load; colors look washed out.,0
 Feels cheap; performance is sluggish and hot.,0
