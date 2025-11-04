@@ -812,7 +812,7 @@ plot_series(range(len(accs_mlp)), accs_mlp, title="MNIST MLP: running accuracy (
 
 # Optional: Try it with TensorFlow
 
-```
+```python
 import math
 import random
 import numpy as np
