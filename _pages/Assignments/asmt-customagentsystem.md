@@ -1,6 +1,6 @@
 ---
 layout: assignment
-permalink: Labs/CustomAgents
+permalink: Labs/CustomAgentSystem
 title: "Lab: Custom Agent Systems — AutoGen (Part 1) + Platform‑Agnostic Multi‑Agent (Part 2)"
 
 info:
