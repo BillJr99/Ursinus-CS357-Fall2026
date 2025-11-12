@@ -10,7 +10,7 @@ info:
     - Configure a Custom GPT in ChatGPT to perform file-based retrieval and produce transparent, source-grounded responses.
     - Implement a local, reproducible RAG pipeline in Python using Ollama or Open‑WebUI with embeddings, a vector index, and a generator model.
     - Ingest a personal corpus; perform text chunking; create embeddings; build a FAISS (or fallback) index; and implement top‑k retrieval.
-    - Empirically demonstrate tradeoffs: (a) sampling many documents vs. too few (vary top‑k and chunk size) and (b) context‑window limits with large documents.
+    - "Empirically demonstrate tradeoffs: (a) sampling many documents vs. too few (vary top‑k and chunk size) and (b) context‑window limits with large documents."
     - Evaluate answer quality, faithfulness, and usability; document failure modes and mitigations.
     - Produce a reflective report comparing Hosted (Custom GPT) vs. Local (Ollama/Open‑WebUI) RAG from technical, ethical, and human‑centered perspectives.
   rubric:
