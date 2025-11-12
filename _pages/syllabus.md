@@ -378,11 +378,6 @@ schedule:
     date: "1"
     title: "Bias"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-bias.md"
-    deliverables:
-    - dtitle: "Lab: Retrieval Augmented Generation Handed Out"
-      dlink: "Labs/RAG"
-      points: "100"
-      rubricpath: "_pages/Labs/lab-rag.md"    
     readings:
     - rtitle: "Addressing Equity and Ethics in Artificial Intelligence - APA"
       rlink: "https://www.apa.org/monitor/2024/04/addressing-equity-ethics-artificial-intelligence"
@@ -407,6 +402,11 @@ schedule:
     readings:
     - rtitle: "Can LLMs Generate Novel Research Ideas?"
       rlink: "https://arxiv.org/pdf/2409.04109v1"
+    deliverables:
+    - dtitle: "Written Assignment: Custom Agent Systems Handed Out"
+      dlink: "Assignments/CustomAgentSystem"
+      points: "100"
+      rubricpath: "_pages/Assignments/asmt-customagentsystem.md"          
   - week: "12"
     date: "0"
     title: "Intellectual Property - Data Provenance and Copyright"
@@ -442,10 +442,10 @@ schedule:
     title: "Explainable AI"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainable.md"
     deliverables:
-    - dtitle: "Lab: Retrieval Augmented Generation Due"
-      dlink: "Labs/RAG"
+    - dtitle: "Written Assignment: Custom Agent Systems Due"
+      dlink: "Assignments/CustomAgentSystem"
       points: "100"
-      rubricpath: "_pages/Labs/lab-rag.md"      
+      rubricpath: "_pages/Assignments/asmt-customagentsystem.md"     
   - week: "14"
     date: "0"
     title: "Explainable AI"
