@@ -1,4 +1,3 @@
-
 ---
 layout: assignment
 permalink: Assignments/CustomAgentSystem
