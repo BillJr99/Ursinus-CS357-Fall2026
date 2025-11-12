@@ -407,11 +407,6 @@ schedule:
     readings:
     - rtitle: "Can LLMs Generate Novel Research Ideas?"
       rlink: "https://arxiv.org/pdf/2409.04109v1"
-    deliverables:
-    - dtitle: "Lab: Retrieval Augmented Generation Due"
-      dlink: "Labs/RAG"
-      points: "100"
-      rubricpath: "_pages/Labs/lab-rag.md"    
   - week: "12"
     date: "0"
     title: "Intellectual Property - Data Provenance and Copyright"
@@ -446,6 +441,11 @@ schedule:
     date: "0"
     title: "Explainable AI"
     link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainable.md"
+    deliverables:
+    - dtitle: "Lab: Retrieval Augmented Generation Due"
+      dlink: "Labs/RAG"
+      points: "100"
+      rubricpath: "_pages/Labs/lab-rag.md"      
   - week: "14"
     date: "0"
     title: "Explainable AI"
