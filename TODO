@@ -1,0 +1,28 @@
+Incorporate research howto i.e. Mathforum AI
+Policywriting as an exercise
+Incorporate nviz and shapley
+Develop around assignments - have course notes support
+Integrate OpenWebUI and Ollama for local AI
+Give them a problem to solve using multimodal AI like a financial simulation that returns a visualization; perhaps a monte carlo retirement simulation
+AI for all tools slides (https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit?slide=id.g37566d3c2b1_0_103#slide=id.g37566d3c2b1_0_103)
+Governance should use Coded Bias, see https://www.billmongan.com/Ursinus-CIE100-Fall2023/Assignments/Essay3
+Use Python notebooks and Colab
+Get into the tools - multimodal, temperature, top_k, top k rag, system prompt
+Break up the intro slides into multiple days
+Relate to text generation with a workflow diagram, how does this become a neutral net?
+Also why do we get random output from a deterministic function?
+More clarity in jupyter notebooks, explanations, ask them to fill in or interact
+Reflection about competing texts
+Combining ReLU to get more non-linearity.  How layers integrate
+Shakespeare GPT example
+More integration of Langflow and Langchain
+Break apart existing labs - give them more to do with things like the custom GPT
+Use Josh's AI reflections (see AI Assisted Learning Template at https://drive.google.com/drive/u/0/folders/1WCD_KNtAJZv3btX2viDS5IEBUvN9CeZd) as part of the assignment template
+Combine representation and embedding
+Incorporate nn forward numbers worksheet
+See workbooks
+Langchain with openwebui/ollama and local chroma db?
+* https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s
+* https://www.youtube.com/watch?v=E4l91XKQSgw
+* https://www.youtube.com/watch?v=QmUsG_3wHPg
+More on policy
