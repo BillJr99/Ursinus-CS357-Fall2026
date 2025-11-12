@@ -209,9 +209,9 @@ PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f413
-DTSTAMP:20251106T000000Z
-DTSTART;VALUE=DATE:20251106
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Retrieval Augmented Generation Handed Out
+DTSTAMP:20251113T000000Z
+DTSTART;VALUE=DATE:20251113
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Custom Agent Systems Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -256,7 +256,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f418
 DTSTAMP:20251125T000000Z
 DTSTART;VALUE=DATE:20251125
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Retrieval Augmented Generation Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Custom Agent Systems Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
