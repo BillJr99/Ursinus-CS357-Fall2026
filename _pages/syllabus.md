@@ -368,7 +368,8 @@ schedule:
       rubricpath: "_pages/Labs/lab-smallgpt.md"  
   - week: "10"
     date: "0"
-    title: "Agentic Systems"
+    title: "Agent Systems with Langchain and Langflow"
+    link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-langchain-ollama.md"
     readings:
     - rtitle: "Mitchell Chapter 3"
       rlink: false
