@@ -73,10 +73,11 @@ tags:
 
 In recent years, AI has evolved from single‑turn chat to *agentic systems* capable of planning, invoking tools, retrieving knowledge, and orchestrating multi‑step workflows. This lab guides you through building parallel implementations of a custom agent system using **LangFlow** (a visual, no‑code canvas) and **LangChain** (a Python framework).
 
-> **Source tutorials used to structure this lab (watch first):**
-> 1. *Build a RAG Based LLM App in 20 Minutes! | Full LangFlow Tutorial* [(YouTube, LangFlow RAG walk‑through)](https://www.youtube.com/watch?v=rz40ukZ3krQ)
-> 2. *ADVANCED Python AI Agent Tutorial - Using RAG, LangFlow* [(YouTube, multi‑agent & advanced LangFlow concepts)](https://www.youtube.com/watch?v=QmUsG_3wHPg)
-> 3. *How to Build a Local AI Agent with Python (Ollama, LangChain & RAG)* [(YouTube, local agents with LangChain + Ollama)](https://www.youtube.com/watch?v=E4l91XKQSgw)
+**Source tutorials used to structure this lab:**
+
+1. *Build a RAG Based LLM App in 20 Minutes! | Full LangFlow Tutorial* [(YouTube, LangFlow RAG walk‑through)](https://www.youtube.com/watch?v=rz40ukZ3krQ)
+2. *ADVANCED Python AI Agent Tutorial - Using RAG, LangFlow* [(YouTube, multi‑agent & advanced LangFlow concepts)](https://www.youtube.com/watch?v=QmUsG_3wHPg)
+3. *How to Build a Local AI Agent with Python (Ollama, LangChain & RAG)* [(YouTube, local agents with LangChain + Ollama)](https://www.youtube.com/watch?v=E4l91XKQSgw)
 
 ---
 
@@ -94,7 +95,7 @@ In recent years, AI has evolved from single‑turn chat to *agentic systems* cap
   - Pick an LLM provider (e.g., OpenAI, OpenRouter, or local via Ollama). Configure in **Settings → Environment**.
   - Prepare a small document corpus (e.g., PDFs or Markdown) for RAG testing. Place files under a `data/` folder.
 
-### 1.2  Core Building Blocks (from the RAG video structure)【rz40ukZ3krQ】
+### 1.2  Core Building Blocks (from the RAG video structure)
 - **Inputs/Outputs:** `ChatInput` → `ChatOutput`.
 - **LLM:** Connect a `ChatModel` node (e.g., GPT‑4‑o, Llama‑3 via Ollama).
 - **Text Preprocessing:** `TextLoader` → `TextSplitter` (e.g., RecursiveCharacterSplitter).
@@ -104,7 +105,7 @@ In recent years, AI has evolved from single‑turn chat to *agentic systems* cap
 
 **Checklist:** Load documents → split → embed → index → retrieve top‑k → compose prompt → generate.
 
-### 1.3  Adding Tools & Multi‑Agent Concepts (advanced video)【QmUsG_3wHPg】
+### 1.3  Adding Tools & Multi‑Agent Concepts (advanced video)
 - **Tools:** Use LangFlow’s *Tool* components (e.g., Python function, web search, HTTP) and connect to the agent/LLM via a `ToolNode`.
 - **Agents:** Add an `Agent` node (ReAct/Tool‑Calling style). Provide it a toolset. Configure stop conditions and observation formatting.
 - **Memory:** Add a `ChatHistory`/`Memory` component for longer sessions.
