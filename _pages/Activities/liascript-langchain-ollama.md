@@ -59,6 +59,12 @@ User → PromptTemplate → ChatOllama → (tool calls / RAG) → Output
 
 ---
 
+## Open Colab: Langchain Tutorial
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb)
+
+---
+
 ## 2) Raw Chat Chain: Minimal Pipeline
 
 A runnable chain:
@@ -137,7 +143,10 @@ Context:
 Pipeline:
 
 $$
-Q ightarrow C ightarrow M ightarrow \hat{A}
+Q 
+ightarrow C 
+ightarrow M 
+ightarrow \hat{A}
 $$
 
 ---
