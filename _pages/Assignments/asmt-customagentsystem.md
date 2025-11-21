@@ -87,7 +87,8 @@ In recent years, AI has evolved from single‑turn chat to *agentic systems* cap
 - Install and run LangFlow (latest stable):
   ```bash
   pip install langflow
-  langflow run
+  export LANGFLOW_HOST=0.0.0.0
+  langflow run --host 0.0.0.0
   ```
   LangFlow launches a local web UI (default: `http://127.0.0.1:7860`). Create a new **Project** and **Flow**.
 
