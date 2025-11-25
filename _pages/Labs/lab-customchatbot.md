@@ -269,7 +269,7 @@ if __name__ == "__main__":
 
 1. **Warm-up**:  
    ```bash
-   ollama run llama3.1:8b -p "Say hello."
+   ollama run llama3.1:8b "Say hello."
    ```
 2. **Run your bot**:  
    ```bash
