@@ -6,7 +6,7 @@ title: "Assignment: Custom Agent Systems - LangFlow (Part 1) + LangChain (Part 2
 info:
   points: 100
   goals:
-    - "Develop a working understanding of agentic systems using both a no‑code canvas (LangFlow) and a programmatic library (LangChain)."
+    - "Develop a working understanding of agentic systems using both a no‑code canvas (such as LangFlow) and/or a programmatic library (such as LangChain)."
     - "Construct Retrieval‑Augmented Generation (RAG) pipelines and/or tool‑enabled agents in LangFlow."
     - "Design and implement a custom agent using LangFlow with either external tools (APIs/functions) or a document corpus."
     - "Build an equivalent or complementary custom agent in LangChain (Python), using tools and/or RAG."
@@ -14,7 +14,7 @@ info:
 
   rubric:
     - weight: 15
-      description: Implementation and Functionality of Solutions (LangFlow + LangChain)
+      description: Implementation and Functionality of Solutions
       preemerging: Solutions fail to run end‑to‑end or exhibit major errors.
       beginning: Solutions run with limited capability; minimal customization.
       progressing: Solutions are functional with moderate customization and sound architecture.
@@ -61,6 +61,8 @@ info:
       rlink: "https://docs.langchain.com/oss/python/integrations/providers/ollama"
     - rtitle: "JSON‑Based Agents with LangChain (blog)"
       rlink: "https://blog.langchain.com/json-based-agents-with-ollama-and-langchain/"
+    - rtitle: "Opal by Google"
+      rlink: "http://opal.google/?mode=app"
 
 tags:
   - ai
@@ -71,7 +73,7 @@ tags:
 
 ---
 
-In recent years, AI has evolved from single‑turn chat to *agentic systems* capable of planning, invoking tools, retrieving knowledge, and orchestrating multi‑step workflows. This lab guides you through building parallel implementations of a custom agent system using **LangFlow** (a visual, no‑code canvas) and **LangChain** (a Python framework).
+In recent years, AI has evolved from single‑turn chat to *agentic systems* capable of planning, invoking tools, retrieving knowledge, and orchestrating multi‑step workflows. This lab guides you through building parallel implementations of a custom agent system using **LangFlow** or **Opal** (a visual, no‑code canvas) and **LangChain** (a Python framework).
 
 **Source tutorials used to structure this lab:**
 
@@ -82,6 +84,8 @@ In recent years, AI has evolved from single‑turn chat to *agentic systems* cap
 ---
 
 ## Part 1 - LangFlow Tutorial (Canvas‑First)
+
+You may also use alternative no-code canvas systems such as [Opal](http://opal.google/?mode=app).  This tutorial will set up a local installation of LangFlow that you can use offline.
 
 ### 1.1  Installation & Project Setup
 - Install and run LangFlow (latest stable):
@@ -245,7 +249,7 @@ Include a combined **Design Report** (4–6 pages) covering:
 
 ## Grading & Submission
 
-- Submit: LangFlow export, Python code, screenshots, report PDF, and a short demo video (≤5 minutes).
+- Submit: LangFlow export or Opal file, Python code, screenshots, report PDF, and a short demo video (≤5 minutes).
 - Academic integrity: If you use external flows or code, cite them.
 - Reproducibility: Provide seed config, model versions, and exact dependency list.
 
