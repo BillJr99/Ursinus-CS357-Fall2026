@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: Assignments/CustomAgentSystem
-title: "Assignment: Custom Agent Systems - LangFlow (Part 1) + LangChain (Part 2)"
+title: "Assignment: Custom Agent Systems"
 
 info:
   points: 100
