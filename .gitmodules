@@ -16,3 +16,12 @@
 [submodule "files/ml_animated"]
 	path = files/ml_animated
 	url = https://github.com/markhliu/ml_animated.git
+[submodule "files/rag-from-scratch"]
+	path = files/rag-from-scratch
+	url = https://github.com/pguso/rag-from-scratch.git
+[submodule "files/langchain-rag-from-scratch"]
+	path = files/langchain-rag-from-scratch
+	url = https://github.com/langchain-ai/rag-from-scratch.git
+[submodule "files/ai-agents-from-scratch"]
+	path = files/ai-agents-from-scratch
+	url = https://github.com/pguso/ai-agents-from-scratch.git
