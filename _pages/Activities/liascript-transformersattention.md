@@ -73,7 +73,7 @@ Natural language and many real-world datasets are **sequential**:
 - Scales with data and compute.
 
 
-<a title="dvgodoy, CC BY 4.0 &lt;https://creativecommons.org/licenses/by/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Transformer,_full_architecture.png"><img width="512" alt="Illustrations for the Transformer, and attention mechanism. Transformer, full architecture." src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Transformer%2C_full_architecture.png/512px-Transformer%2C_full_architecture.png?20240806034211"></a>
+<a title="dvgodoy, CC BY 4.0 &lt;https://creativecommons.org/licenses/by/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Transformer,_full_architecture.png"><img width="512" alt="Illustrations for the Transformer, and attention mechanism. Transformer, full architecture." src="https://upload.wikimedia.org/wikipedia/commons/3/34/Transformer%2C_full_architecture.png"></a>
 
 ---
 
