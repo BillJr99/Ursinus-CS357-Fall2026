@@ -7,8 +7,7 @@ comment: Render with https://liascript.github.io/course/?https://github.com/Bill
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://cdn.jsdelivr.net/gh/liascript/CodeRunner/master/style.css
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 -->
 
 # Foundations of AI: Agentic Systems

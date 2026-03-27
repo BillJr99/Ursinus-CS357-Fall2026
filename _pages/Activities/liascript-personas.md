@@ -7,8 +7,7 @@ comment: Render with https://liascript.github.io/course/?https://github.com/Bill
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://cdn.jsdelivr.net/gh/liascript/CodeRunner/master/style.css
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 -->
 
 # Foundations of AI: Personas and Configurations
@@ -63,9 +62,6 @@ Personas can:
 
 - **Top-k Sampling:** restricts sampling to the top-k most likely tokens.  
 - **Top-p (nucleus) Sampling:** restricts to smallest set of tokens whose cumulative probability ≥ p.  
-
-**Visual:**
-!?[Sampling effect on outputs](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/transformers/output_variability.png)
 
 ---
 

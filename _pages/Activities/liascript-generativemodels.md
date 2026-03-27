@@ -281,7 +281,7 @@ for real,_ in dataloader:
 ## Studio: Hands-On Generative Modeling
 
 1. **N-gram Text Generation**  
-   - Try the [Bigram Word Generator](https://replit.com/@BillJr99/BigramWordGenerator#main.py).  
+   - Try the [Bigram Word Generator](https://colab.research.google.com/github/BillJr99/Ursinus-CS357/blob/gh-pages/files/notebooks/Bigram_Word_Generator.ipynb).  
    - What kinds of outputs does it produce?   
 
 2. **Image Generation Demo**  

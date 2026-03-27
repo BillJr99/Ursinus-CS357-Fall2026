@@ -202,8 +202,6 @@ for epoch in range(1, 6):
 - Plot embeddings colored by digit label.  
 - Interpolate between latent vectors → smooth morphing of digits.  
 
-!?[VAE Latent Space Interpolation Example](https://upload.wikimedia.org/wikipedia/commons/3/3a/VAE_example.png)
-
 ---
 
 ## Comparing Generative Models

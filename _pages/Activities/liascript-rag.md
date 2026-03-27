@@ -7,8 +7,7 @@ comment: Render with https://liascript.github.io/course/?https://github.com/Bill
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://cdn.jsdelivr.net/gh/liascript/CodeRunner/master/style.css
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 -->
 
 # Foundations of AI: Document Retrieval and Retrieval-Augmented Generation (RAG)
@@ -56,8 +55,6 @@ Steps:
 3. Retrieve top-k passages.  
 4. Concatenate retrieved text into LLM context window.  
 5. Generate grounded answer.  
-
-!?[RAG pipeline workflow diagram](https://raw.githubusercontent.com/BillJr99/Ursinus-Boilerplate-Assets/main/img/rag_pipeline.png)
 
 ---
 
