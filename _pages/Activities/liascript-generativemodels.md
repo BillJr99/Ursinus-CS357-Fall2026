@@ -52,7 +52,7 @@ Department of Mathematics, Computer Science, and Statistics
 - **Generative model**: learns $p(x)$ or $p(x,y)$  
   Examples: language models that generate text, VAEs & GANs that synthesize images.
 
-![Discriminative vs. Generative](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Discriminative_vs_Generative_Neural_Networks.png/512px-Discriminative_vs_Generative_Neural_Networks.png)
+![Discriminative vs. Generative](https://upload.wikimedia.org/wikipedia/commons/9/9c/Discriminative_vs_Generative_Neural_Networks.png
 
 **Think–Pair–Share:**  
 Why might learning $p(x)$ be *harder* than learning $p(y\mid x)$?  
