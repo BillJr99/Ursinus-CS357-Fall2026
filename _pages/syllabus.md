@@ -70,7 +70,7 @@ info:
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
             <a title="Midjourney
-            , Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png"><img width="100%" alt="&#039;&#039;Théâtre D&#039;opéra Spatial&#039;&#039;, an image made using generative artificial intelligence" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png"></a>
+            , Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png"><img width="100%" alt="&#039;&#039;Théâtre D&#039;opéra Spatial&#039;&#039;, an image made using generative artificial intelligence" src="https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Th%C3%A9%C3%A2tre_D%E2%80%99op%C3%A9ra_Spatial.png"></a>
         </div>
     </div>
     </div>
