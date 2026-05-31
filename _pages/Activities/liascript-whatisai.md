@@ -236,7 +236,7 @@ Try it: at [QuickDraw with Google](https://quickdraw.withgoogle.com/)
 
 Classic flower classification by RA Fisher.  
 
-![Iris Flowers](https://upload.wikimedia.org/wikipedia/commons/4/41/Iris_versicolor_3.jpg)  
+![Iris Flowers](https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Iris_versicolor_3.jpg)  
 
 ![k-Means Clustering](https://scikit-learn.org/1.5/_images/sphx_glr_plot_cluster_iris_001.png)  
 
@@ -263,7 +263,7 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 - In 1945, Vannevar Bush discussed the possibility of archiving and retrieving the world's knowledge on microfiche.
 - The computational capability to use patterns to predict new outcomes and has evolved since the 1970's.  
 
-![Vannevar Bush Memex](https://upload.wikimedia.org/wikipedia/commons/e/e4/Turing_Test_version_3.png?20080326133753)  
+![Vannevar Bush Memex](https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Turing_Test_version_3.png  
 
 ---
 
@@ -273,7 +273,7 @@ Try it at the [Interactive Flower Species Classifier](https://www.billmongan.com
 - Still, computers could make impressive predictions and reveal subtle insights about patterns in data by generating rules that correctly classified as many of the examples as possible.
 - For example, adjust the cutoffs on the right until the best accuracy is achieved.  We have the benefit of knowing all the answers up front.
 
-![A Decision Tree of Survivors of the Titanic](https://upload.wikimedia.org/wikipedia/commons/e/eb/Decision_Tree.jpg?20200518075939)  
+![A Decision Tree of Survivors of the Titanic](https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Decision_Tree.jpg  
 
 ---
 
@@ -490,7 +490,7 @@ By varying some of the input values, we can observe the change in the prediction
 
 ![Engelbart Demo](https://opb-opb-prod.cdn.arcpublishing.com/resizer/v2/5O77QRQWKJE63NE2DKDMKTUIOI.jpg?auth=c00811729c26839e985765a9d33273bda8c8c692e252c876c269f894dc847307&width=767)  
 
-![Mother of All Demos](https://upload.wikimedia.org/wikipedia/commons/c/cc/SRI_Computer_Mouse.jpg)
+![Mother of All Demos](https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/SRI_Computer_Mouse.jpg)
 
 - Doug Engelbart - “getting better at getting better”
 - Dealing with the exponential expansion of human knowledge
