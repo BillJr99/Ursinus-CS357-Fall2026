@@ -13,7 +13,7 @@ info:
   ical: files/CS357.ics
   course_prerequisites: "Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor."
   course_start_date: "2026/08/24"
-  course_end_date: "2026/12/07"
+  course_end_date: "2026/12/08"
   course_description: "A technical introduction to the tools and practices that have evolved from artificial intelligence (AI) and large language models that considers the role of technology through the lens of the Ursinus Questions. This course prepares students to create and interact with conversational virtual assistants and multi-agent systems that achieve goal-oriented outcomes. Students will explore the foundations and history of artificial intelligence that enabled the technical underpinnings of generative AI, with a particular emphasis on the ethical, social, and intellectual property implications of the nature of the training data sets used to form large language models. The course includes a practical discussion of responsible AI from the perspective of creators and of consumers and stakeholders. Students will apply current design patterns in AI with respect to large language models to create and present a technical project using generative AI, and will lead a discussion focused on practices for responsible AI within the context of their chosen project. Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor. Four hours per week. Four semester hours."
   questions: |
     This semester, we organize the course around a single guiding idea: an agent is a system that perceives, plans, and acts toward a goal. We will collectively consider questions like:
@@ -45,7 +45,7 @@ info:
       endtime: "1:15 PM"
       place: "Pfahler 107"
   midtermexam: 
-    - mdate: "N/A"
+    - mdate: "TBD"
       mstarttime: "N/A"
       mendtime: "N/A"
       mroom: "N/A"       
@@ -73,6 +73,39 @@ info:
     </div>
     </div>
     
+university:
+  semester: "Fall"
+  academicyear: "2026-27"
+  fall:
+  - kname: "Add Deadline"
+    kdate: "2026/09/02"
+    kdisplay: true
+  - kname: "Mid Semester Grades Posted"
+    kdate: "2026/10/09"
+    kdisplay: false
+  - kname: "Drop with a W Deadline"
+    kdate: "2026/11/17"
+    kdisplay: true
+  - kname: "Reading Day"
+    kdate: "2026/12/09"
+    kdisplay: true
+  - kname: "Finals Week Begins"
+    kdate: "2026/12/10"
+    kdisplay: false
+  - kname: "Finals Week Ends"
+    kdate: "2026/12/16"
+    kdisplay: false
+  spring: []
+  fallholidays:
+  - date: "2026/09/07"
+  - date: "2026/10/08"
+  - date: "2026/10/12"
+  - date: "2026/10/13"
+  - date: "2026/11/25"
+  - date: "2026/11/26"
+  - date: "2026/11/27"
+  springholidays: []
+
 instructors:
 - name: William Mongan
   title: Professor
@@ -234,10 +267,14 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
 - week: "4"
   date: "1"
-  title: "Attention and Transformers, Conceptually and by Hand"
-  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
+  title: "Hands-On: The Local Agent Stack (Tiers, Ports, and Compose)"
+  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
   readings:
-  - rtitle: "AI by Hand, Attention worksheets"
+  - rtitle: "Optional Theory Deep Dive: Attention and Transformers, Conceptually and by Hand"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
+  - rtitle: "AI by Hand, Attention worksheets (optional)"
+  - rtitle: "Optional Lab: Compose and Verify a Local Agent Stack"
+    rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/AgentStack"
 - week: "5"
   date: "0"
   title: "Retrieval-Augmented Generation with Chroma"
@@ -278,11 +315,6 @@ schedule:
     dlink: "Assignments/RAGKnowledgeBase"
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
-  readings:
-  - rtitle: "Supplemental Tutorial: The Local Agent Stack (Tiers, Ports, and Compose)"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
-  - rtitle: "Optional Lab: Compose and Verify a Local Agent Stack"
-    rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/AgentStack"
 - week: "7"
   date: "1"
   title: "No Class: APEX Experiential Learning Day"
@@ -408,7 +440,11 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-governance.md"
 - week: "15"
   date: "1"
-  title: "Final Project Presentations"
+  title: "Project Studio: Final Integration and Demo Rehearsal"
+  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
+- week: "16"
+  date: "0"
+  title: "Demo Day: Final Project Presentations (Class Switch Day: follows a Thursday schedule)"
   deliverables:
   - dtitle: "Final Project: Custom Agent Team Due"
     dlink: "Projects/AgentTeam"
