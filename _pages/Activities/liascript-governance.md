@@ -1,181 +1,108 @@
+# Governance and Policy Writing
 <!--
-author:   William M. Mongan
+author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/liascript-governance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/liascript-governance.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-governance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
+        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+
 -->
 
-# Foundations of AI: Governance and Policy
+# Governance and Policy Writing
 
-William M. Mongan  
-Department of Mathematics, Computer Science, and Statistics
-
----
-
-## Agenda & Learning Objectives
-
-**Goals:**
-
-- Define **AI governance** and its relationship to law, policy, and ethics.  
-- Explore existing and emerging **AI policy frameworks** (EU, US, global).  
-- Analyze the **tensions between innovation, regulation, and accountability**.  
-- Understand mechanisms for **transparency, auditing, and oversight**.  
-- Discuss AI governance in the context of **education and research**.  
-- Reflect on future directions and **ethical implications**.  
-- Explore methods of **explainable AI**, focusing on Shapley value–based analysis, and connect governance and transparency concepts to practical model interpretation using [nviz](https://kodianb.github.io/nviz).
+You have built agents that retrieve, decide, judge, and act; **governance** is the discipline of deciding, in advance and in writing, what they may do, who is accountable when they err, and how anyone would know. Today you learn to *write* policy, a genre with teeth, because your final project requires a governance document and your careers will require many more. The arc: **what governance is $\rightarrow$ frameworks in the wild $\rightarrow$ the anatomy of an enforceable policy $\rightarrow$ drafting workshop**.
 
 ---
 
-## 1) What is AI Governance?
+## Directions and Group Roles
 
-- **AI Governance**: The set of policies, norms, and oversight mechanisms that guide how AI is developed and used responsibly.  
-- Encompasses both **technical safeguards** (robustness, reliability, auditability) and **societal safeguards** (fairness, accountability, human oversight).  
-- Aligns with broader frameworks in law, ethics, and social responsibility.  
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Today culminates in a drafting workshop with structured peer review; bring your project's pre-mortem and data-flow audit, which become raw material. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
-## 2) Governance vs. Regulation
+# Part I: From Values to Mechanisms
 
-- **Governance**: broader set of principles, norms, and institutions guiding AI design and use.  
-- **Regulation**: binding legal rules, e.g., privacy law, safety standards.  
+## 1. Governance Is Engineering with Words
 
-**Key question:** How do we design rules that encourage innovation but protect society?  
+**A value is not a policy.** "Our agent is fair and transparent" commits no one to anything; a policy converts values into *mechanisms*: scopes, prohibitions, gates, logs, owners, and remedies. The test of a policy clause is operational: could a third party determine, from evidence, whether it was followed? Every clause failing that test is decoration.
 
----
+**The risk-tiered pattern.** Mature frameworks classify uses by risk and scale obligations accordingly. The **EU AI Act** bans a small set of practices, imposes heavy obligations (documentation, human oversight, accuracy reporting) on "high-risk" systems such as those used in education admissions and grading, and lighter transparency duties elsewhere. The **NIST AI Risk Management Framework** organizes the work as four functions: *Govern* (assign accountability), *Map* (know your system and context), *Measure* (evaluate, disaggregate, monitor), and *Manage* (mitigate, respond, document). Notice how much of NIST's *Measure* you can already execute: harnesses, disaggregated metrics, judge audits, citation checks.
 
-## 3) Key Dimensions of Governance
-
-1. **Transparency & Explainability**  
-   - Models should provide interpretable reasoning where possible.  
-   - Example: Requiring LLMs to cite sources.  
-
-2. **Accountability**  
-   - Who is responsible when AI outputs cause harm? Developer, deployer, or user?  
-
-3. **Fairness & Non-discrimination**  
-   - AI should not replicate or amplify harmful biases.  
-
-4. **Safety & Reliability**  
-   - Systems must be tested for robustness under adversarial conditions.  
+**Accountability has names in it.** Policies designate an owner per system, an escalation path, and an incident process. "The team is responsible" means no one is.
 
 ---
 
-## 4) The Policy Landscape
+## Model 1: Toothless Versus Enforceable
 
-- **EU AI Act (2024)**
-  - Risk-based classification (unacceptable, high-risk, limited, minimal risk).  
-  - Strict documentation, testing, and transparency for high-risk systems.  
+Clause A: "The advising agent should be used responsibly and its suggestions taken with appropriate caution."
+Clause B: "The advising agent may draft degree-plan suggestions but may not submit registrations. Every suggestion shown to a student must display the data sources used. The CS department chair owns this system; suspected errors are reported via the form at [link] and acknowledged within 5 business days. Logs of all suggestions are retained for one semester and audited each January against the disaggregation protocol in Appendix B."
 
-- **U.S. Executive Orders (2023–2025)**
-  - Emphasis on safety, trust, and equity.  
-  - Public–private partnerships.  
-  - AI Bill of Rights proposals.  
+### Critical Thinking Questions
 
-- **OECD Principles (2019)**
-  - Human-centered values.  
-  - Transparency, robustness, accountability.  
-
-- **China & Global South Perspectives**
-  - Tighter state oversight.  
-  - Balancing innovation with social control or developmental priorities.  
+1. Apply the third-party test to each sentence of both clauses: which are checkable from evidence?
+2. Identify in Clause B the scope, the prohibition, the transparency duty, the owner, the remedy, and the audit. Which single element, if deleted, most weakens the rest?
+3. Under the EU AI Act's logic, why would an advising agent that *recommends* differ in risk tier from one that *registers*? Connect to the irreversible-action taxonomy you built in the tool-use module.
 
 ---
 
-## 5) Mechanisms of AI Governance
+# Part II: The Anatomy of Your Policy
 
-- **Transparency requirements**: model cards, data statements, audit logs.  
-- **Accountability frameworks**: liability for harms, corporate responsibility.  
-- **Safety measures**: red-teaming, adversarial testing, continuous monitoring.  
-- **International collaboration**: treaties, standards, and coordination (e.g., UN, G7, OECD).  
+## 2. The Eight Sections
 
----
+Your governance document (for the written assignment and your project) uses this skeleton, each section earning its place by the third-party test:
 
-## 6) Governance in Practice: AI in Education
+1. **Purpose and scope**: what the system does, for whom, and explicitly what is out of scope.
+2. **System description**: agents, models, tools, data flows (your design table and audit, imported).
+3. **Permitted and prohibited uses**: concrete, with the prohibition list as specific as the permission list.
+4. **Human oversight**: which actions require confirmation, who confirms, and what the human sees.
+5. **Data handling**: what is collected, where it lives, retention, and the regulated categories touched (FERPA, IRB).
+6. **Evaluation and monitoring**: metrics, disaggregation, audit schedule, and the harness that produces them.
+7. **Accountability and incident response**: the owner by name or role, the reporting path, response timelines.
+8. **Review and sunset**: when the policy is re-examined and the conditions under which the system is retired.
 
-- **Uses in universities**: grading assistance, tutoring, admissions, research support.  
-- **Policy challenges**:  
-  - Academic integrity (AI-assisted plagiarism).  
-  - Privacy of student data.  
-  - Ensuring equitable access across socioeconomic backgrounds.  
-- **Possible policies**:  
-  - Clear disclosure requirements for AI use in coursework.  
-  - Guidelines for faculty integrating AI into pedagogy.  
-  - Institutional AI ethics review boards.  
-
----
-
-## 7) Activity: Drafting an AI Policy
-
-- In small groups, draft a **1–2 page AI governance policy** for a university.  
-- Consider:
-  - Acceptable vs. unacceptable uses.  
-  - Requirements for transparency and attribution.  
-  - Addressing bias and accessibility.  
-  - Enforcement mechanisms.  
-
-**Deliverable:** A draft AI governance policy to share in class.  
-
-{{1}}
+[[MC]]
+A team writes: "Section 6: We will continuously evaluate the system for quality and bias." The revision that survives the third-party test is:
+- ( ) "We will evaluate rigorously and transparently."
+- ( ) "Evaluation is a core value of our team."
+- (x) "Each Friday the harness in /eval runs the 40-item task set; per-group accuracy and judge-human agreement are posted to the repository; any group gap exceeding 5 points opens an incident."
+- ( ) "Users are encouraged to report problems."
 
 ---
 
-## 8) Case Study: AI in Education
+## Model 2: Frameworks Meet Your Project
 
-- Use cases: grading, tutoring, personalized learning.  
-- Risks:  
-  - Reinforcing bias in admissions/testing.  
-  - Transparency: should students know when feedback is AI-generated?  
-  - Privacy: how should student data be collected and protected?  
+### Critical Thinking Questions
 
-**Activity:** Draft a section of an AI policy for a university that covers:  
-- Disclosure of AI use in grading.  
-- Student rights in relation to AI tutors.  
-- Limits on data collection.  
-
-{{2}}
+4. Map your project onto NIST's four functions: for each of Govern, Map, Measure, and Manage, name the artifact you have already produced this semester that does that work, and the one artifact still missing.
+5. Would your project be "high-risk" under the EU AI Act's education provisions if deployed for real students rather than a class demo? What single design change most reduces its tier?
+6. Your pre-mortem predicted a specification gap, an irreversible action, and a global invariant. Write the policy clause (one sentence each) that addresses each prediction.
 
 ---
 
-## 9) The Challenge of Enforcement
+# Part III: Drafting Workshop
 
-- Policy is only effective if enforceable.  
-- Requires **auditing mechanisms**: independent oversight, red-teaming, transparency reports.  
-- Tension between open innovation vs. risk control.  
-- Possible technical supports: logging APIs, watermarking AI outputs, audit trails.  
+## 3. Exercises
 
----
-
-## 10) Ethical and Societal Implications
-
-- **Democracy & misinformation**: AI can generate persuasive disinformation at scale.  
-- **Equity**: access to AI benefits vs. concentration of power in few companies.  
-- **Labor impacts**: job displacement, creative labor value.  
-- **AI personhood?** Should agents ever have legal standing?  
-
-**Discussion Prompt 1:**  
-If your institution adopts AI tutoring systems, what policies are necessary to ensure they are used **fairly, responsibly, and transparently**?  
-
-{{3}}
-
-**Discussion Prompt 2:**  
-If you were tasked with writing a national AI policy, what are the first three principles you would include, and why?  
-
-{{4}}
+1. *Draft sections 3 and 4.* In class, write your project's permitted/prohibited uses and human-oversight sections in full, enforceable prose. The Recorder types; everyone argues.
+2. *Structured peer review.* Exchange drafts with another team. Reviewers apply exactly two tests to every sentence: the third-party test, and the "who, specifically" test. Return the draft with each failing sentence flagged. (This is the gallery-walk protocol applied to prose.)
+3. *Red-team the prohibition list.* For the other team's section 3, devise one use that violates the policy's *intent* while complying with its *letter*. The drafting team must then close the gap. Reward hacking, you will notice, is not only for models.
+4. *Incident drill.* Write the first three steps your team executes when a user reports your agent gave a harmful answer, with owners and timestamps. If you cannot name the owner, your section 7 is not done.
 
 ---
 
-## References & Further Reading
+## Reflection Prompt
 
-- European Commission (2024). *EU Artificial Intelligence Act*.  
-- U.S. Executive Office of the President (2023). *Executive Order on the Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence*.  
-- Floridi & Cowls (2019). *A Unified Framework of Five Principles for AI in Society*.  
-- Jobin, Ienca, & Vayena (2019). *The global landscape of AI ethics guidelines*. *Nature Machine Intelligence*.  
-- Crawford, K. (2021). *Atlas of AI*.  
-- Mitchell, *Artificial Intelligence: A Guide for Thinking Humans* (Ch. 16).  
+In your notebook: you have now been a builder, an evaluator, an auditor, and a policy author for the same class of systems. Which role felt most natural, which most uncomfortable, and which do you believe the world is shortest of right now? Defend the last answer in two sentences.
 
 ---
+
+## 4. Further Reading
+
+- NIST. *AI Risk Management Framework 1.0* (2023, online), especially the Govern function.
+- European Union. *AI Act* (2024), Annex III on high-risk systems, including education uses.
+- Your institution's acceptable-use and responsible-AI policies, read now with an author's eye.
