@@ -33,11 +33,11 @@ info:
       progressing: The system surfaces traces, citations, or confidence to its user, a human gate guards consequential actions, and the governance document matches the system with minor gaps
       proficient: The system surfaces evidence following the honest hierarchy, a confirmation gate shows evidence at the moment of decision, an abstention behavior is demonstrated, the governance document matches the deployed behavior, and the team leads a substantive class discussion of responsible use grounded in their own measurements
     - weight: 13
-      description: Implementation Quality
-      preemerging: The system fails to run from a fresh start
-      beginning: The system runs but configuration is hard coded, exceptions are silent, or setup is undocumented
-      progressing: The system runs from documented setup with externalized configuration and located exception handling, with minor gaps
-      proficient: The system runs from a fresh start in under three minutes following the readme, configuration is externalized, exceptions are handled with located messages and tracebacks, seeds and model versions are pinned, and the repository is organized for a stranger to navigate
+      description: Implementation Quality and Artifact Packaging
+      preemerging: The system fails to run from a fresh start, and no tests or CI are present
+      beginning: The system runs but configuration is hard coded, exceptions are silent, setup is undocumented, and no tests exist
+      progressing: The system runs from documented setup with externalized configuration and located exception handling; at least one automated test exists but CI is absent or fails intermittently
+      proficient: The system runs from a fresh start in under three minutes following the readme, configuration is externalized, exceptions are handled with located messages and tracebacks, seeds and model versions are pinned, a test suite with at least one end-to-end test passes in CI on every push, the submission tag triggers a publish step that pushes the artifact to GHCR, Docker Hub, or npm, and the repository is organized for a stranger to navigate
     - weight: 12
       description: Presentation and Report
       preemerging: The presentation or report is missing
@@ -100,10 +100,10 @@ Your team leads a 10-minute class discussion on the responsible use of *your* sy
 ## Stage 4: Submission and Presentation (final class meeting and exam slot)
 
 **Deliverables:**
-1. **The system**: a repository that runs from a fresh start following the readme in under three minutes, with externalized JSON configuration, pinned model versions, fixed seeds, and located exception handling throughout. Ensure reproducibility by fixing random seeds and listing software version information.
+1. **The system**: a repository that runs from a fresh start following the readme in under three minutes, with externalized JSON configuration, pinned model versions, fixed seeds, and located exception handling throughout. The repository must include a test suite with at least one end-to-end test, a GitHub Actions CI workflow that runs the suite on every push, and a publish step (triggered by the submission tag) that pushes the container image or package to GHCR, Docker Hub, or npm. See the [ShipIt guide](https://www.billmongan.com/Ursinus-CS357/Assignments/ShipIt) for the expected packaging checklist.
 2. **The report** (approximately six to eight pages): design rationale tied to course patterns, evaluation results including the monolith baseline comparison and failure analysis, explainability design, limitations (your "disclose" bucket, verbatim), the governance summary, and individual contribution statements covering the role rotation.
 3. **The presentation** (12 minutes plus questions): a live demonstration including the happy path and one rehearsed failure disclosure, the evaluation table, and the 90-second explainability story, with every teammate speaking.
-4. **The artifacts folder**: design table, pre-mortem, sprint notes, gallery walk cards received and your triage, and the release readiness checklist signed by your Evaluator.
+4. **The artifacts folder**: design table, pre-mortem, sprint notes, gallery walk cards received and your triage, and the release readiness checklist signed by your Evaluator (must include confirmation that CI passes on the submission SHA and the artifact is live at its published URL).
 
 ---
 

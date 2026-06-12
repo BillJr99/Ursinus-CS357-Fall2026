@@ -368,7 +368,7 @@ schedule:
   readings:
   - rtitle: "Supplemental Tutorial: Publishing Artifacts (GHCR, Docker Hub, and npm)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
-  - rtitle: "Optional Capstone: ShipIt (Build, Test, CI, and Publish an Artifact)"
+  - rtitle: "ShipIt Guide: Build, Test, CI, and Publish (required for Final Project)"
     rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/ShipIt"
 - week: "10"
   date: "0"
