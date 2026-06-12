@@ -1,5 +1,6 @@
+# Retrieval-Augmented Generation with Chroma
 <!--
-author:   William M. Mongan
+author:   William Mongan
 language: en
 narrator: US English Male
 
@@ -7,396 +8,156 @@ comment: Render with https://liascript.github.io/course/?https://github.com/Bill
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
-link:   https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
+        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+
 -->
 
-# Foundations of AI: Document Retrieval and Retrieval-Augmented Generation (RAG)
+# Retrieval-Augmented Generation with Chroma
 
-William M. Mongan  
-Department of Mathematics, Computer Science, and Statistics
-
----
-
-## Agenda & Learning Objectives
-
-**Goals:**
-
-- Define **document retrieval** and contrast with pure prompting.  
-- Explain the pipeline of **retrieval-augmented generation (RAG)**.  
-- Derive the **vector embedding search** process mathematically.  
-- Explain the meaning of **top-k retrieval** and how it impacts answer quality.  
-- Show how retrieved docs are inserted into the **context window** of an LLM.  
-- Implement a **toy RAG pipeline** in Python with FAISS/Chroma.  
-- Evaluate RAG: accuracy, latency, hallucination reduction.  
-- Discuss **limitations and risks**: stale corpora, biased data, prompt injection.  
+Our evaluation harness showed that local models hallucinate where their training data is thin; **retrieval-augmented generation (RAG)** attacks that problem by handing the model the right evidence at the right moment. We move from **the open-book insight $\rightarrow$ the RAG pipeline $\rightarrow$ a working pipeline with Chroma and Ollama $\rightarrow$ grounded answers with citations**.
 
 ---
 
-## 1) Why Retrieval?
+## Directions and Group Roles
 
-- Pure LLM prompting: relies only on pretrained knowledge.  
-- Problem: **staleness** (cutoff date), **hallucinations**.  
-- Retrieval: **ground model outputs** in external sources.  
-- Combines **semantic search** + **generation**.  
-
-**Key Idea:** Instead of asking an LLM to recall facts, *retrieve them from a curated knowledge base* and insert into the LLM’s **context window** so the answer is **grounded**.  
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
-## 2) The RAG Pipeline
+# Part I: The Open-Book Exam Insight
 
-```
-User Query → Embed → Vector Search → Retrieved Docs (top-k) → Prompt Augmentation → LLM Generation → Answer
-```
+## 1. Parameters Versus Context
 
-Steps:
-1. Encode query $q$ into vector $v_q$.  
-2. Search nearest neighbors in embedding DB.  
-3. Retrieve top-k passages.  
-4. Concatenate retrieved text into LLM context window.  
-5. Generate grounded answer.  
-
----
-
-## 3) Embedding Search Mathematics
-
-- Embedding function: $f: \mathcal{X}\to\mathbb{R}^d$.  
-- For query $q$ and doc $d_i$:
+**A model has two memories.** *Parametric memory* is whatever was baked into the weights during training: vast, fuzzy, frozen in time. *Contextual memory* is whatever sits in the prompt right now: small, precise, current. Hallucination is what happens when we ask parametric memory for precision it does not have. RAG converts the question from a closed-book exam into an open-book one:
 
 $$
-sim(q,d_i) = \frac{f(q)\cdot f(d_i)}{\|f(q)\|\,\|f(d_i)\|} \quad (\text{cosine similarity}).
+\text{answer} = \text{LLM}(\text{query} + \text{retrieve}(\text{query}, \mathcal{D}))
 $$
 
-- Retrieval = find **top-k** docs with maximum similarity.  
-- Top-k = return the k highest scoring docs; larger k → more coverage, but risks adding irrelevant/noisy context.  
+where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks by embedding similarity, exactly the cosine machinery from week 4.
+
+**The pipeline has two phases.** *Indexing* (once): split documents into chunks, embed each chunk, store vectors in a vector database. *Query* (every question): embed the question, find nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
 
 ---
 
-## 4) Incorporation into Context Window
+## Model 1: Pipeline Tracing
 
-- Once docs are retrieved, they are **prepended or appended** into the LLM input.  
-- Example augmented prompt:
+A student asks a campus RAG system, "Can first-year students bring cars?" The system retrieves a parking policy chunk and a housing FAQ chunk, then answers with a citation.
 
-```
-System: You are a helpful assistant.
-User: Question: Where is Ursinus College located?
-Retrieved Documents: [“Ursinus College is in Collegeville, PA.”]
-```
+### Critical Thinking Questions
 
-- The LLM sees both the **question** and the **retrieved documents** in its context window.  
-- Limitations: if too many documents are inserted, the model may exceed token limits or truncate older context.  
+1. Walk the question through both phases: which steps happened months ago at indexing, and which happen at query time?
+2. The model answers correctly, citing the parking chunk. Is this *parametric* or *contextual* memory at work? How can you tell from the citation?
+3. Suppose the policy changed last week and the index is stale. Where exactly does the wrong answer enter the pipeline, and which component is at fault: the model, the retriever, or the index?
 
 ---
 
-## 5) Example: Minimal RAG in Python
+# Part II: Building It
+
+## 2. A Complete Local RAG System
+
+Chroma is an embeddable vector database: a library that stores embeddings and performs nearest-neighbor search. Install with `pip install chromadb`. Everything below runs on your laptop; no data leaves the room.
+
+---
+
+## Code Cell
 
 ```python
-from openai import OpenAI
-import faiss, numpy as np
-
-client = OpenAI()
-
-# Toy corpus
-corpus = [
-    "The capital of France is Paris.",
-    "The Pythagorean theorem states a^2 + b^2 = c^2.",
-    "Ursinus College is in Collegeville, PA."
-]
-
-# Embed
-embs = [client.embeddings.create(model="text-embedding-3-small", input=doc).data[0].embedding for doc in corpus]
-
-index = faiss.IndexFlatL2(len(embs[0]))
-index.add(np.array(embs, dtype=np.float32))
-
-query = "Where is Ursinus College located?"
-q_emb = client.embeddings.create(model="text-embedding-3-small", input=query).data[0].embedding
-D,I = index.search(np.array([q_emb], dtype=np.float32), k=2)
-retrieved = [corpus[i] for i in I[0]]
-
-# Augment prompt with retrieved context
-messages = [
-    {"role": "system", "content": "Answer using the retrieved documents."},
-    {"role": "user", "content": f"Docs: {retrieved}\nQuestion: {query}"}
-]
-
-resp = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
-print(resp.choices[0].message.content)
-```
-
----
-
-## 5b) Creating a Vector Database in Python
-
-- **Step 1:** Choose a DB (FAISS, Chroma, Weaviate, Pinecone).
-- **Step 2:** Embed documents into vectors.
-- **Step 3:** Store embeddings + metadata in the vectordb.
-
-```python
-# Example using ChromaDB
+import requests
 import chromadb
-from openai import OpenAI
 
-client = OpenAI()
-chroma = chromadb.Client()
+def embed(text):
+    try:
+        r = requests.post("http://localhost:11434/api/embeddings",
+                          json={"model": "nomic-embed-text", "prompt": text}, timeout=120)
+        return r.json()["embedding"]
+    except Exception as e:
+        print(f"[rag:embed] {e}")
+        import traceback; traceback.print_exc()
+        return []
 
-# Create / connect to a collection
-collection = chroma.create_collection("my_docs")
+def chat(prompt):
+    try:
+        r = requests.post("http://localhost:11434/api/chat", json={
+            "model": "llama3.2", "stream": False,
+            "options": {"temperature": 0.0, "seed": 42},
+            "messages": [{"role": "user", "content": prompt}]}, timeout=120)
+        return r.json()["message"]["content"]
+    except Exception as e:
+        print(f"[rag:chat] {e}")
+        import traceback; traceback.print_exc()
+        return ""
 
-# Add some documents with IDs
+# --- Indexing phase (run once) ---
 docs = [
-    "Deep learning models use backpropagation.",
-    "Vector databases store embeddings for fast search.",
-    "Ursinus College is in Collegeville, PA."
+    "Parking: First-year resident students may not bring vehicles to campus without a hardship waiver.",
+    "Library: The Myrin Library is open 8am to midnight Monday through Thursday during the semester.",
+    "Dining: Wismer Center serves continuous dining from 7am to 8pm on weekdays.",
+    "Advising: Each student is assigned a faculty advisor; registration requires advisor approval.",
+    "Athletics: The Floy Lewis Bakes Center is open to all students with a valid ID.",
 ]
 
-embs = [
-    client.embeddings.create(model="text-embedding-3-small", input=doc).data[0].embedding
-    for doc in docs
-]
+client = chromadb.Client()
+col = client.create_collection("campus")
+col.add(documents=docs,
+        embeddings=[embed(d) for d in docs],
+        ids=[f"doc{i}" for i in range(len(docs))])
 
-collection.add(documents=docs, embeddings=embs, ids=[f"doc{i}" for i in range(len(docs))])
+# --- Query phase (run per question) ---
+def rag_answer(question, k=2):
+    hits = col.query(query_embeddings=[embed(question)], n_results=k)
+    context = "\n".join(f"[{i}] {d}" for i, d in enumerate(hits["documents"][0]))
+    prompt = (f"Answer using ONLY the context below. Cite the bracketed source number. "
+              f"If the context does not contain the answer, say 'not in my documents'.\n\n"
+              f"Context:\n{context}\n\nQuestion: {question}")
+    return chat(prompt), context
 
-print("VectorDB created with 3 documents.")
+answer, ctx = rag_answer("Can a first-year student keep a car on campus?")
+print("RETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
+
+answer, ctx = rag_answer("What time does the bookstore close?")
+print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 ```
 
 ---
 
-## 5c) Querying / Prompting the Vector Database
+## Model 2: Grounding in Action
 
-- Query workflow: embed → nearest neighbor search → retrieve top-k.
-- Retrieved passages are injected into the LLM prompt to ground its answer.
+### Critical Thinking Questions
 
-```python
-query = "Where is Ursinus College?"
-q_emb = client.embeddings.create(model="text-embedding-3-small", input=query).data[0].embedding
+4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it!). Which hallucination category from week 3 did the RAG instructions just convert into honest abstention?
+5. Identify the precise line of the prompt that creates that abstention behavior. What happens if you delete it? Test and report.
+6. Set `k=1` and ask a question whose answer spans two documents. What failure occurs, and what does it suggest about choosing $k$?
 
-# Retrieve top-2 similar docs
-results = collection.query(query_embeddings=[q_emb], n_results=2)
-retrieved = results["documents"][0]
-
-print("Retrieved:", retrieved)
-
-# Feed into LLM with retrieved context
-messages = [
-  {"role": "system", "content": "Answer using the retrieved docs."},
-  {"role": "user", "content": f"Docs: {retrieved}\nQuestion: {query}"}
-]
-
-resp = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
-print(resp.choices[0].message.content)
-```
+[[MC]]
+The single most important reason RAG reduces factual hallucination is that it:
+- ( ) Increases the model's parameter count at query time
+- (x) Moves the burden of factual precision from parametric memory to text supplied in the context
+- ( ) Lowers the sampling temperature automatically
+- ( ) Fine-tunes the model on your documents
 
 ---
 
-## 5d) Bulk Ingestion: Add a Directory of Documents to a Vector DB
+# Part III: Synthesis and Practice
 
-**Goal:** Walk a directory tree, load files, chunk text, embed, and store with metadata.
+## 3. Exercises
 
-**Assumptions**
-- You have an OpenAI API key set (e.g., `OPENAI_API_KEY`).
-- Install deps (choose one DB backend):
-  - `pip install chromadb pypdf openai`  *(Chroma)*
-  - `pip install faiss-cpu pypdf openai` *(FAISS)*
-
-```python
-# Bulk ingestion with CHROMA (local, simple)
-import os, glob, re
-from typing import List, Dict
-import chromadb
-from pypdf import PdfReader
-from openai import OpenAI
-
-# ---------- Configuration ----------
-DATA_DIR = "./docs"        # directory containing .txt, .md, .pdf
-COLLECTION_NAME = "course_corpus"
-MODEL_EMB = "text-embedding-3-small"
-CHUNK_SIZE = 800           # ~800 characters per chunk
-CHUNK_OVERLAP = 120        # overlap to preserve context between chunks
-# -----------------------------------
-
-client = OpenAI()
-chroma = chromadb.Client()
-collection = chroma.get_or_create_collection(COLLECTION_NAME)
-
-def read_text_file(path: str) -> str:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
-        return f.read()
-
-def read_pdf_file(path: str) -> str:
-    reader = PdfReader(path)
-    pages = []
-    for p in reader.pages:
-        pages.append(p.extract_text() or "")
-    return "\n".join(pages)
-
-def load_document(path: str) -> str:
-    ext = os.path.splitext(path)[1].lower()
-    if ext in [".txt", ".md", ".markdown"]:
-        return read_text_file(path)
-    elif ext == ".pdf":
-        return read_pdf_file(path)
-    else:
-        return ""  # unsupported type (you can extend for .docx, .html, etc.)
-
-def chunk_text(text: str, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP) -> List[str]:
-    text = re.sub(r"\s+\n", "\n", text)           # normalize whitespace
-    text = re.sub(r"\n{3,}", "\n\n", text)        # collapse excessive blank lines
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = min(len(text), start + chunk_size)
-        chunks.append(text[start:end])
-        start = end - overlap
-        if start < 0: start = 0
-        if start >= len(text): break
-    return [c.strip() for c in chunks if c.strip()]
-
-def embed_texts(texts: List[str]) -> List[List[float]]:
-    # Batch in small groups to be gentle on rate limits
-    embeddings = []
-    BATCH = 64
-    for i in range(0, len(texts), BATCH):
-        batch = texts[i:i+BATCH]
-        resp = client.embeddings.create(model=MODEL_EMB, input=batch)
-        embeddings.extend([d.embedding for d in resp.data])
-    return embeddings
-
-# Attach metadata to each document, like the original file path for provenance
-def path_to_meta(path: str) -> Dict:
-    return {
-        "path": os.path.abspath(path),
-        "filename": os.path.basename(path),
-        "ext": os.path.splitext(path)[1].lower(),
-    }
-
-# Walk directory, load, chunk, embed, and add to Chroma
-paths = []
-for ext in ("**/*.txt", "**/*.md", "**/*.markdown", "**/*.pdf"):
-    paths += glob.glob(os.path.join(DATA_DIR, ext), recursive=True)
-
-doc_texts, doc_ids, metadatas = [], [], []
-for p in paths:
-    raw = load_document(p)
-    if not raw.strip():
-        continue
-    chunks = chunk_text(raw)
-    for j, ch in enumerate(chunks):
-        doc_texts.append(ch)
-        doc_ids.append(f"{p}::chunk{j}")
-        metadatas.append(path_to_meta(p))
-
-# Embed and store
-if doc_texts:
-    embs = embed_texts(doc_texts)
-    collection.add(documents=doc_texts, embeddings=embs, metadatas=metadatas, ids=doc_ids)
-    print(f"Ingested {len(doc_texts)} chunks from {len(paths)} files into Chroma collection '{COLLECTION_NAME}'.")
-else:
-    print("No documents found to ingest.")
-```
+1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one honest abstention.
+2. *Eval rematch.* Rerun your week 3 evaluation harness, now routed through `rag_answer`, after adding documents containing the answers. Report accuracy before and after; quantify the lift.
+3. *Citation audit.* Ask five questions and verify each citation by hand: does the cited chunk actually support the claim? Compute a faithfulness rate. (This metric returns in the LLM-as-judge module.)
+4. *Failure taxonomy.* Find one *retrieval* failure (right answer exists, wrong chunk fetched) and one *generation* failure (right chunk fetched, wrong answer produced). Label which component owns each bug.
 
 ---
 
-## 5e) Querying the Ingested Vector DB
+## Reflection Prompt
 
-- **top-k retrieval:** trade-off between coverage (higher k) and noise/latency.
-- **temperature:** keep low (e.g., 0.0–0.3) for grounded answers that hew closely to retrieved evidence.
-- **Citations:** include file paths/IDs from metadata for transparency.
-
-```python
-from openai import OpenAI
-client = OpenAI()
-
-QUESTION = "Summarize what our corpus says about Ursinus College."
-
-# 1) Embed query
-q_emb = client.embeddings.create(model="text-embedding-3-small", input=QUESTION).data[0].embedding
-
-# 2) Retrieve top-k
-TOP_K = 4
-res = collection.query(query_embeddings=[q_emb], n_results=TOP_K)
-
-retrieved_docs = res["documents"][0]
-retrieved_meta = res["metadatas"][0]
-
-for i, (doc, meta) in enumerate(zip(retrieved_docs, retrieved_meta), start=1):
-    print(f"\n--- Hit {i} ---")
-    print(meta.get("path", meta))
-    print(doc[:500] + ("..." if len(doc) > 500 else ""))
-
-# 3) Compose grounded prompt for the LLM
-context_block = "\n\n".join(retrieved_docs)
-messages = [
-    {"role": "system", "content": "Answer concisely and cite file paths when relevant."},
-    {"role": "user", "content": f"Context:\n{context_block}\n\nQuestion: {QUESTION}\nIf you cite, reference the file paths shown above."},
-]
-
-resp = client.chat.completions.create(model="gpt-4o-mini", messages=messages, temperature=0.2)
-print("\n\n=== MODEL ANSWER ===\n", resp.choices[0].message.content)
-```
+In your notebook: RAG lets a small private model answer questions about *your* documents without those documents ever leaving your machine. Identify one collection of documents in your life (notes, club records, family archive) you would index, and one you would refuse to index even locally. What distinguishes them?
 
 ---
 
-## 5f) Practical Tips
+## 4. Further Reading
 
-- **Pre-processing:** normalize whitespace; strip boilerplate/headers; consider language detection if your corpus is multilingual.
-- **Chunk size:** 600–1200 characters (or ~200–400 tokens) often works well; tune for your domain and model.
-- **Overlap:** 10–20% overlap preserves context at chunk boundaries.
-- **Deduplication:** hash chunks (minhash/shingling) to avoid redundant storage.
-- **Metadata:** include source path, title, section headings, dates; this enables filtered retrieval (e.g., only ext=".pdf").
-- **Refreshing the DB:** re-embed/re-index when documents change; consider background jobs and versioning.
-- **Security:** never index secrets; respect file permissions; beware prompt-injection in retrieved content—sanitize or constrain model behavior.
-
----
-
-## 6) Evaluation of RAG
-
-- **Accuracy:** grounded vs. hallucinated answers.  
-- **Coverage:** recall of relevant docs.  
-- **Latency:** retrieval + generation overhead.  
-- **Faithfulness metrics:** e.g., citation precision/recall.  
-
----
-
-## 7) Limitations & Risks
-
-- **Stale corpora:** outdated indexes yield obsolete answers.  
-- **Biases:** retrieval amplifies training corpus biases.  
-- **Prompt injection:** malicious docs may poison LLM output.  
-- **Context window limits:** too many docs = truncation.  
-
----
-
-## 8) Variants & Extensions
-
-- **HyDE (Hypothetical Document Embeddings):** generate hypothetical doc before retrieval.  
-- **Memory-Augmented RAG:** maintain personalized corpora.  
-- **Structured RAG:** retrieval from knowledge graphs/databases.  
-- **Agentic RAG:** multi-step querying + tool use.  
-
----
-
-## 9) Ethical & Governance Issues
-
-- Who curates the document corpus?  
-- Should users be told when an answer is retrieved vs. generated?  
-- Risks of misinformation if retrieved docs are low quality.  
-- Governance: licensing, attributions, transparency.  
-
-**Discussion Prompt:**
-- If you deploy RAG in education, what safeguards are needed to ensure students receive accurate, fair, and up-to-date info?  
-
-{{1}}
-
----
-
-## References & Further Reading
-
-- Lewis et al. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP*.  
-- Izacard & Grave (2020). *Leveraging Passage Retrieval with Generative Models*.  
-- Karpukhin et al. (2020). *Dense Passage Retrieval for Open-Domain QA*.  
-- Gao et al. (2022). *Retrieval-Augmented Language Model Pre-Training*.  
-- Mitchell, *Artificial Intelligence: A Guide for Thinking Humans* (Ch. 14).  
-- Boden, *Philosophy of Artificial Intelligence* (Ch. 13).  
-
----
+- Patrick Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." *NeurIPS* (2020). The original RAG paper.
+- Chroma documentation: https://docs.trychroma.com
+- Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 4.

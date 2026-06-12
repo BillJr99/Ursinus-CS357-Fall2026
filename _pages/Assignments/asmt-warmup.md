@@ -1,64 +1,77 @@
 ---
 layout: assignment
 permalink: /Assignments/Warmup
-title: "CS357: Foundations of AI - Warmup"
-
+title: "CS357: Foundations of Artificial Intelligence - Warmup"
 
 info:
-  coursenum: CS352
-  officehourspoll: "https://www.when2meet.com/?31831358-PMSVe"
-  class_notebook: "https://ursinuscollege365-my.sharepoint.com/personal/wmongan_ursinus_edu/Documents/Class%20Notebooks/CS357%20Fall%202025"
-  class_notebook_name: "OneNote"
-  chatname: "Microsoft Teams"
-  submission: "We will complete this assignment using Teams, so there is no need to write up any documentation (as we will in future programming assignments) nor is it necessary to submit anything to Canvas.  It is fine to just follow the directions in each part and send me messages as appropriate!"
-  vpn: false
-  points: 10
-  
+  coursenum: CS357
+  points: 25
+  goals:
+    - To set up the course toolchain and verify a working local AI environment
+    - To establish a baseline reflection on your prior experiences and beliefs about AI agents
+    - To form and charter your semester team
+  rubric:
+    - weight: 40
+      description: Environment Setup and Verification
+      preemerging: Little or no evidence that the environment was attempted
+      beginning: Some components installed, but the verification transcript is missing or incomplete
+      progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information
+      proficient: Ollama installed and verified with a complete transcript including model listing, version information, and a successful Python API call
+    - weight: 40
+      description: Reflection Essay
+      preemerging: The reflection is missing or does not address the prompts
+      beginning: The reflection addresses some prompts superficially
+      progressing: The reflection addresses all prompts with specific examples, with limited connection to the course themes
+      proficient: The reflection addresses all prompts with specific personal examples and makes a thoughtful connection to agency, trust, or responsibility
+    - weight: 20
+      description: Team Charter and Submission
+      preemerging: An incomplete submission is provided
+      beginning: The submission is provided but the team charter is missing or does not address role rotation
+      progressing: The submission is complete with a charter that addresses roles and communication, with a minor omission
+      proficient: The submission is complete, including a team charter covering role rotation, communication norms, and disagreement resolution
+  readings:
+    - rtitle: "Welcome Activity"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-welcomeagents.md"
+    - rtitle: "Mitchell, Prologue and Chapter 1"
+
 tags:
-  - introduction
+  - intro
+  - ai
+  - agents
 
 ---
 
-The purpose of this assignment is to get us set up for the course, both by getting to know each other better, and by setting up the software environment.
+The purpose of this warmup is to make sure your tools work before the labs depend on them, to capture a snapshot of your current thinking about AI that we will revisit at the end of the semester, and to launch your team.
 
-## Personal Survey (5 Pts)
+## Part 1: Tool Setup
 
-I gave a couple of fun facts about myself in the class, but I want to get to know you all better. So please submit answers to the following questions as a private message to me on {{ page.info.chatname }}.
+Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; see me if you are unsure). Then:
 
-1.  Your Name, Your Nickname (if applicable) / Preferred Pronouns
-2.  What is your reason for taking the course? (Blunt honesty is perfectly fine here, if applicable)
-3.  What are you majoring in / interested in majoring in?
-4.  What do you think you might want to do after Ursinus?
-5.  Have you had any experience with computer science / programming? 
-6.  What are you most excited about in this course?
-7.  What are you the most worried about in this course?
-8.  A fun fact about yourself
-9.  Anything else you think I should know?
-10.  Please attach **a headshot** picture to your message. I will use this to help get to know your name, but we will also use this in class to arrange groups.
-11. Please post a short introduction and a hello to the class on the Canvas Introductions discussion forum.  There is also a Water Cooler discussion group that you can use for social discussions as well!
-12.  Finally, we will be sharing work with each other through electronic means.  To protect your privacy, you are welcome to use a pseudonym on your work in lieu of your name.  Let me know if you'd like to use a pseudonym on your assignments, and what name you'll use.
+1. Pull a small model: `ollama pull llama3.2`
+2. Run a CLI sanity check: `ollama run llama3.2 "Say hello in five words."`
+3. Verify the REST API responds: `curl http://localhost:11434/api/tags`
+4. From Python, send one chat request using the `requests` library, as we did in class, and print the response.
 
-## Web Poll for Office Hours
+Capture a transcript (copy-paste or screenshots) of all four steps, including the output of `ollama --version` and your operating system. **If any step fails, document the error verbatim, your hypothesis about the cause, and what you tried**; a well-documented failure with a follow-up plan earns full credit for that step.
 
-You will not be graded on this, but I want to setup my office hours so that everyone can make at least one of them. Please [click here]({{ page.info.officehourspoll }}) and select every block in which you can attend at least 30 minutes in your schedule. You may use a pseudonym or post anonymously if you wish.
+## Part 2: Baseline Reflection
 
-## Class Notebook
+In approximately one page, address the following. There are no wrong answers; this is a baseline, not a quiz.
 
-We will use an electronic shared notebook throughout the class.  You'll be able to take notes there, see the whiteboard notes that I create, and respond to some reflective journal prompts throughout the course.  We'll use [{{page.info.class_notebook_name}}]({{ page.info.class_notebook }}), which you can access through this link.
+1. Describe your experiences with AI tools to date: which you use, for what, and one moment when an AI output surprised you (pleasantly or otherwise).
+2. Define, in your own words as of today, what makes a system an "agent."
+3. Name one task you would happily delegate to an AI agent and one you would not, and articulate the difference.
+4. What is one thing you hope to be able to build by December?
 
-## Syllabus (5pts)
+## Part 3: Team Charter
 
-Please take a moment to familiarize yourself with [the course syllabus]({{ site.baseurl }}). Then, **please send me an additional message on {{ page.info.chatname }} with the answers to the following questions**
+With your assigned team, draft a one-page charter covering: how you will rotate the four POGIL roles, how you will communicate outside class, your norms for preparing before meetings, and how you will resolve technical and interpersonal disagreements. All members sign (typed names suffice).
 
-1.  True/False: If you choose to work with a buddy, you are allowed to look at your buddy's code and show them your code during labs
-2.  True/False: If you choose to work with a buddy, you are allowed to look at your buddy's code and show them your code for regular assignments.
-3.  True/False: You may look at a classmate's code during a regular assignment.
-4.  True/False: Although I can work with my buddy on labs, we cannot email or copy each other's code directly, and our submissions should be substantially unique.
-5.  True/False: I can request an incomplete if I am failing the class in order to submit assignments from earlier in the semester.
-6.  Where is the help room located?
-7.  When and where are my office hours?
-8.  What is the link to sign up for one-on-one tutoring with the Institute for Student Success?
-9.  What is the grade reduction per day for late work?
-10.  How does the flexible submission policy work?
-<!--11.  What happens if you show up after the lecture has already started?-->
-<!--12.  Extra credit (+2) Send me a selfie of yourself inside of the help room.-->
+## Deliverables
+
+Submit a single PDF or markdown file containing your setup transcript, reflection, and team charter (one charter per team is fine; submit it with each member's individual work).
+
+Please also answer the following questions in your submission:
+
+- If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
+- Approximately how many hours it took you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
