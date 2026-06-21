@@ -46,7 +46,7 @@ In this part, you will work out by hand how a language model converts raw scores
 
 Before we look at the math, consider how autocomplete on your phone works: it suggests the next word based on what you have typed. A language model does exactly the same thing, but instead of a fixed list of three suggestions, it assigns a probability to every word in its entire vocabulary (often 50,000 or more), then picks one — and repeats this process for every single word in its response. That is why a single early "wrong pick" can send the whole response in a surprising direction, and why the same prompt can produce different responses on different runs.
 
-**A language model is a next-token predictor.** Given the tokens so far, it outputs a score (called a *logit*) $z_i$ for every token $i$ in its vocabulary, then converts scores to probabilities with the **softmax** function:
+**A language model is a next-token predictor.** Given the tokens so far, it outputs a raw score (called a *logit* — pronounced "low-jit," short for log-odds unit — just a number with no fixed range) $z_i$ for every token $i$ in its vocabulary, then converts scores to probabilities with the **softmax** function (a formula that squashes any set of numbers into values that sum to 1.0):
 
 $$
 P(i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}

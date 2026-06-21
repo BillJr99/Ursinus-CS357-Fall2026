@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Models Hallucinate
 
+In this part, you will learn why hallucination (a model producing confident but false output) is not a bug that can be patched, but a predictable consequence of how language models are trained — and you will build a taxonomy of three hallucination types that each call for a different fix.
+
 ## 1. Fluency Is the Objective, Truth Is Not
 
 Before we look at the mechanism, consider a thought experiment. Imagine training a student to pass a writing class by rewarding them whenever their essays *sounded* like expert writing — correct grammar, confident tone, appropriate vocabulary. That student would quickly learn to produce convincing prose even on topics they know nothing about, because the reward never checked whether the facts were true. Language models face the same dynamic at a massive scale: they are trained to predict what text tends to follow other text, not to verify whether the claims in that text match reality.
@@ -93,11 +95,15 @@ A team reports that their agent "seems pretty accurate" after trying a few quest
 
 # Part II: Building a Tiny Evaluation Harness
 
+In this part, you will write a minimal evaluation harness (a program that runs a model on a fixed set of questions with known answers and reports a score) — because "it seems pretty good" is not an engineering standard. By the end, you will have a reusable scaffold for evaluating any agent you build this semester.
+
 ## 3. Measure Before You Trust
 
 Before we can trust an agent in a real application, we need to know where it succeeds and where it fails — not a general impression, but a number. The code below is a minimal version of the evaluation infrastructure that underlies every published benchmark in AI research. It is small enough to read in five minutes and powerful enough to reveal real patterns.
 
 ---
+
+The code below runs a fixed list of five questions through the model (at temperature 0.0 and a fixed random seed so results are reproducible), checks whether the correct answer appears anywhere in the model's response, and prints a PASS or FAIL for each. Read it carefully before running: you will be asked to critique both the scoring rule and the task set.
 
 ## Code Cell
 
@@ -161,6 +167,8 @@ Examine the PASS/FAIL output line by line. Before discussing with your group, fo
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will build your own benchmark — a domain-specific task set your team designs, verifies, and will reuse throughout the semester. Getting this right now pays dividends in every future module that compares techniques.
 
 ## 4. Exercises
 
