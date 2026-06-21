@@ -135,10 +135,10 @@ These coordination problems are not hypothetical — they motivated the developm
 
 Three agents are collaborating on a report. Agent A finishes writing its section and writes the string `"DONE"` to a shared status file to signal completion. Agent B reads the status file before Agent A writes, sees nothing (or sees the old status), concludes the file is empty, and begins writing its own content — overwriting Agent A's completed section. This scenario is best described as:
 
-- ( ) A deadlock, because both agents are waiting for each other
+- ( ) A deadlock, because both agents are waiting for each other — a deadlock requires both agents to be *blocked waiting*, but here Agent B proceeds immediately; neither agent is stuck waiting for the other
 - (x) A race condition caused by missing synchronization between the read and write operations
-- ( ) A consensus failure, because the agents disagree on the content of the report
-- ( ) An example of priority inversion, because Agent B executed before Agent A's higher-priority write completed
+- ( ) A consensus failure, because the agents disagree on the content of the report — consensus failure requires multiple agents to have produced conflicting outputs and be unable to choose; here Agent B simply overwrote Agent A without negotiation
+- ( ) An example of priority inversion, because Agent B executed before Agent A's higher-priority write completed — priority inversion requires a low-priority agent to *hold a resource* that a high-priority agent is waiting for; here no priority ordering or blocking is involved
 
 ---
 
@@ -193,7 +193,7 @@ As multi-agent systems move from research prototypes to production, the field ha
 
 *What to do:* Draft a JSON object that all three agents would share. Every agent reads the whole document and writes only to its own designated fields. Include at least one field that a downstream agent uses to know whether an upstream agent has finished.
 
-*Starter hint:*
+*Starter hint:* The JSON schema below shows a complete example — notice how the `version` field enables optimistic concurrency (an agent can detect a conflict by checking whether the version changed since it last read), and how the `lock_holder` field provides mutual exclusion for writes:
 
 ```json
 {
@@ -227,7 +227,7 @@ As multi-agent systems move from research prototypes to production, the field ha
 
 *What to do:* Write pseudocode — plain English structured like code — that an individual agent would follow before and after every write operation. Think about the crash case carefully: what is the mechanism that prevents the lock from being held forever?
 
-*Starter hint:*
+*Starter hint:* The pseudocode below implements a mutex using atomic compare-and-set — read the crash-handling comment at the bottom carefully, because it addresses the most dangerous failure mode (an agent dies while holding the lock and blocks everyone else forever):
 
 ```
 function write_to_blackboard(agent_id, field, value):
