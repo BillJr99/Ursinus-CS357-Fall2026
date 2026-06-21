@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Spectrum of AI Assistance
 
+In this part, you will map the range of ways AI can assist with coding — from autocomplete you review line by line, to autonomous agents that open PRs while you sleep — and practice choosing the right supervision level for a given risk profile.
+
 ## 1. Three Supervision Levels
 
 **Why this matters:** Handing an agent a task without thinking about supervision level is like handing a contractor your house keys and leaving for a month — maybe fine, maybe catastrophic, depending on how well you specified the job and how much you trust the contractor. The key insight Karpathy articulated is that humans are better at writing specs than at reviewing arbitrary code, while models are better at writing code than at writing specs. This suggests a division of labor: you own the specification, the agent owns the implementation, and the diff is the handoff artifact.
@@ -84,6 +86,8 @@ At which supervision level is the diff the primary artifact you review before ac
 ---
 
 # Part II: Specification-First Development
+
+In this part, you will practice the spec-first workflow: writing a clear function contract before touching any code, then using that spec to drive AI generation and verify correctness — the discipline that separates supervised AI development from "vibe coding."
 
 ## 2. Writing the Spec Before the Code
 
@@ -177,6 +181,8 @@ In the TDD cycle, what does "red" mean?
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will read a realistic AI-generated diff with a planted bug, practice the diff-review discipline that catches subtle errors, and apply the full spec → generate → review → test loop on a problem of your own.
 
 ## 3. Reviewing AI-Generated Diffs
 

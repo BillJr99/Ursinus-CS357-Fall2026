@@ -69,6 +69,8 @@ check_ollama()
 
 # Part I: REST Fundamentals for LLMs
 
+In this part, you will map the REST paradigm onto LLM APIs — learning the specific endpoints, headers, and JSON fields that every OpenAI-compatible server (including Ollama) shares. This gives you a transferable mental model that works across providers.
+
 ## 1. What REST Means in Practice
 
 You have used websites and mobile apps your whole life without knowing they communicate over REST. When your browser loads a page or an app fetches your feed, it sends an HTTP request to a URL, the server processes it and sends back structured data, and the client displays the result. Language model inference works exactly the same way — the "page" being returned is the model's response, encoded as JSON.
@@ -112,6 +114,8 @@ In a response from `POST /v1/chat/completions`, which JSON path contains the mod
 ---
 
 # Part II: Raw HTTP vs. SDK
+
+In this part, you will send the same chat request three ways — raw `curl`, the `requests` library, and the OpenAI Python SDK — so you understand exactly what the SDK is doing for you and when going lower-level is worth it.
 
 ## 3. Three Ways to Write the Same Request
 
@@ -211,6 +215,8 @@ What does setting `"stream": false` in the request body change at the HTTP proto
 ---
 
 # Part III: Request Construction Deep Dive
+
+In this part, you will dissect the full `/v1/chat/completions` payload field by field and trace a complete tool-calling round-trip — the skill needed to integrate any LLM into a real application.
 
 ## 4. Anatomy of a Chat Completions Payload
 
@@ -353,6 +359,8 @@ Examine the printed trace from the tool loop above, or walk through it with your
 
 # Part IV: Provider Portability
 
+In this part, you will use LiteLLM as a universal proxy so that the same code can target Ollama, any OpenAI-compatible server, or a cloud provider by changing one environment variable — the key to building provider-agnostic agents.
+
 ## 6. LiteLLM as a Universal Proxy
 
 Once you understand the `/v1/chat/completions` protocol, you can write agent code that works against any compliant server by changing two variables: `base_url` and `model`. LiteLLM formalizes this pattern into a library and proxy server that accepts OpenAI-format requests and translates them internally to whatever format the target provider requires — whether that is Ollama locally, a cloud inference API, or a self-hosted vLLM cluster.
@@ -449,7 +457,9 @@ What is the minimum change needed to point an OpenAI Python SDK call at a local 
 
 ---
 
-# Part III: Synthesis and Practice
+# Part V: Synthesis and Practice
+
+In this part, you will apply everything from Parts I–IV in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
 
 ## 7. Exercises
 
