@@ -46,6 +46,8 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ---
 
+In this first model, you will identify why AI agent bugs are qualitatively harder to debug than conventional software bugs — and why strategies that work for Python programs often fail for agents. This matters because you cannot fix what you cannot reproduce, and agents have five specific properties that make reproduction difficult.
+
 ## Model 1: Why Agent Debugging Is Hard
 
 Debugging a non-deterministic system is like diagnosing a car that only breaks down on Tuesdays — by the time you get it to the mechanic, it's running fine, and reproducing the problem requires recreating an exact combination of conditions you may not fully know. AI agents are harder to debug than traditional software for five distinct and compounding reasons. Understanding these reasons is the first step to building agents that are debuggable in the first place.
@@ -98,13 +100,15 @@ Debugging a non-deterministic system is like diagnosing a car that only breaks d
 
 ---
 
+*Model 1 showed why agent bugs are hard to find. Model 2 gives you a structured five-stage process for finding them systematically — the equivalent of a debugger and stack trace for a system that has neither.*
+
 ## Model 2: A Systematic Debugging Process for Agents
 
-Agent debugging benefits enormously from a structured approach. Without structure, debugging a non-deterministic, multi-step system becomes an unguided search through an enormous space of possible causes. The following five-stage process adapts classic software debugging methodology to the agent context.
+Agent debugging benefits enormously from a structured approach. Without structure, debugging a non-deterministic, multi-step system becomes an unguided search through an enormous space of possible causes. The following five-stage process adapts classic software debugging methodology to the agent context. Think of it as the agent equivalent of the scientific method: observe, isolate, hypothesize, test, fix.
 
 **Stage 1 — Reproduce.** Capture the complete execution context so you can run the exact same scenario again. This means logging: the system prompt text and a version hash of it; the model name and exact version string; the temperature and all other sampling parameters; the full conversation history including every user message, assistant message, tool call, and tool result; and timestamps for each turn. "It worked on my machine" is especially dangerous with agents because any difference in model version, system prompt, or tool response can cause completely different behavior.
 
-**Stage 2 — Isolate.** Use **prompt bisection** to find the turn where behavior first diverged from correct. Binary-search through the conversation history: does the bug appear if you replay only the first half of the conversation? If not, the bug is in the second half. If yes, the bug is in the first half. Repeat until you identify the minimal context that reliably produces the failure. For a 64-turn conversation, this takes at most log₂(64) = 6 bisection steps in the worst case.
+**Stage 2 — Isolate.** Use **prompt bisection** (a binary-search technique applied to conversation history) to find the turn where behavior first diverged from correct. Binary-search through the conversation history: does the bug appear if you replay only the first half of the conversation? If not, the bug is in the second half. If yes, the bug is in the first half. Repeat until you identify the minimal context that reliably produces the failure. For a 64-turn conversation, this takes at most log₂(64) = 6 bisection steps in the worst case — the same efficiency as binary search in a sorted list.
 
 **Stage 3 — Hypothesize.** Generate a specific, testable hypothesis. Common failure mode categories to consider first:
 
@@ -150,13 +154,15 @@ Agent debugging benefits enormously from a structured approach. Without structur
 An agent produces correct answers for 100 random test prompts but fails on one specific user's session that you cannot currently reproduce. The most productive next step is:
 
 [[ ]] Declare it an anomaly and move on — single-case failures are not statistically significant enough to investigate
-[[ ]] Roll back to the previous model version immediately without investigating
+[[ ]] Roll back to the previous model version immediately without investigating — you do not yet know whether the old version had the same bug
 [[x]] Add logging to capture the full conversation context (system prompt version, conversation history, tool outputs, model version, and sampling parameters) so the next occurrence of the failure can be reproduced and investigated
-[[ ]] Increase the model's temperature setting to introduce more variety and hope the failure disappears on its own
+[[ ]] Increase the model's temperature setting to introduce more variety and hope the failure disappears on its own — temperature controls randomness, not the source of this specific failure
 
 > **Why this answer?** A single unreproducible failure is the hardest category of agent bug to address — but the correct response is to instrument the system so the *next* occurrence can be reproduced. Rolling back without understanding the cause leaves you unable to know whether the previous version also had the bug or a different one. Adjusting temperature does not address any root cause and may introduce new non-deterministic failures. Declaring it an anomaly is risky because a failure in an agent could affect safety, correctness, or user trust if it recurs at a higher rate than one observed case suggests.
 
 ---
+
+*Models 1 and 2 gave you the conceptual framework for agent debugging. Model 3 introduces the concrete tools that make that framework practical: observability platforms that capture traces, and logging schemas that make failures reproducible without storing sensitive user data.*
 
 ## Model 3: Tools and Techniques for Agent Debugging
 
@@ -183,7 +189,7 @@ An agent produces correct answers for 100 random test prompts but fails on one s
 
 ### Regression Testing for Agents
 
-Once you fix a bug, codify it as a test case so the same bug cannot be reintroduced silently. Agent regression test suites typically include three layers:
+A **regression test** (a test that verifies a previously fixed bug has not come back) is especially valuable for agents because model updates can silently reintroduce behavior that was previously patched by a prompt change. Agent regression test suites typically include three layers:
 
 - **Golden output tests:** For deterministic behaviors (those that don't depend on model generation), assert that the output matches a known-good response exactly. Example: assert that a tool routing decision correctly selects the weather tool for "what's the weather in Philadelphia?"
 - **Output range tests:** For non-deterministic generated text, assert that the output contains required elements or avoids prohibited elements. Example: "the response must include the word 'unavailable' when the tool returns a 503 error" or "the response must not include a specific temperature value when no weather data was retrieved."
@@ -216,6 +222,8 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 > *Hint:* Step 1: Check the model version and prompt hash for the failing session against the baseline from the same time period — rules out "something changed in the infrastructure" vs. "this is an edge case in normal operation." Step 2: Check the token counts for each turn — rules out context overflow as a cause if all turns are well below the context limit. Step 3: Check tool call status codes and response sizes — rules out tool failure if all tools returned 200 with non-trivial response sizes. Step 4: Check the conversation turn count — rules out early-turn bugs if the failure occurred after many turns. Step 5: Check whether the prompt hash matches known-bad prompt versions flagged in the incident log — rules out prompt regression. After all five steps, what categories of failure remain uninvestigated, and what additional (non-PII) information could you request to narrow further?
 
 ---
+
+*Models 1–3 gave you the framework, the process, and the tools. The exercises below ask you to use all three on real agents — first by introducing and finding a bug yourself, then by designing the logging and testing infrastructure that would prevent the same bug from hiding in the future.*
 
 ## Exercises
 

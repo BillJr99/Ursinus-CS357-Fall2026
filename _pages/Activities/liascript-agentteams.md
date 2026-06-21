@@ -80,6 +80,8 @@ A student org wants an agent system that turns raw meeting notes into (a) a poli
 
    > *Hint: Work backwards from the output. The summary is produced by the Writer. But the Writer depends on the Extractor's action list. If the action list is wrong, the Writer cannot fix it.*
 
+With the roles defined, Part II shows how to organize those roles into a running system — choosing a team topology and managing shared state so every agent knows where the task currently stands.
+
 ---
 
 # Part II: Topology and State
@@ -196,9 +198,13 @@ print("\nSUMMARY:\n", state["summary"])
 
 > **⚠️ Common Misconception:** Students often assume that giving every agent access to the *full* state object is safer — "the more context, the better." In practice, the opposite is often true. An agent given irrelevant context is more likely to be distracted by it, to over-fit its output to previous stages, or to reproduce upstream errors with false confidence. The discipline of passing only what each role needs is not a technical limitation — it is a deliberate design choice that makes each agent's behavior more predictable and more testable in isolation.
 
+With the pattern fully understood, Part III applies it directly to your final project — this is where the activity becomes a design session for the work you will submit.
+
 ---
 
 # Part III: Design Your Project Team
+
+In this section you will design the agent team for your final project, choose a topology, identify your riskiest seam, and build a monolith baseline to compare against. The artifacts you produce here are required components of your project proposal.
 
 ## Exercises
 
