@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Three Frameworks, One Scenario
 
+In this part, you will apply three classical ethical frameworks — utilitarianism, deontological ethics, and virtue ethics — to the same concrete scenario, learning to use each as a lens that reveals a different dimension of the design decision.
+
 ## 1. From "Move Fast" to Irreversibility
 
 The "move fast and break things" ethos works in a narrow domain: software contexts where the cost of a mistake is quickly reversible and the dominant risk is shipping too slowly. That calculation changes fundamentally when the agent's actions persist in the world after the agent has moved on. An email sent, a loan denied, a file deleted, a medication prescribed — these cannot be un-done with a patch. Learning to apply ethical frameworks before deployment is how you catch the irreversible harms before they happen.
@@ -89,9 +91,13 @@ An AI agent is instructed to write a maximally persuasive essay arguing for a co
 
    *Hint: When you do not know the probability distribution of outcomes, you must reason about the shape of the uncertainty. If the harm distribution has a heavy tail — meaning rare but catastrophic outcomes are possible — the expected-value calculation changes even if the median outcome seems acceptable. What is the worst plausible outcome of AI-generated persuasion at scale, and how much does it weigh in the calculation?*
 
+With the three frameworks applied to one scenario, Part II zooms in on the ACM Code of Ethics — a professional standard that turns the same ethical intuitions into checkable design requirements.
+
 ---
 
 # Part II: The ACM Code of Ethics as Design Specification
+
+In this part, you will translate abstract professional ethics clauses into concrete engineering requirements — discovering that the ACM Code, when read against a real system, generates specific testable design constraints.
 
 ## 2. From Principles to Mechanisms
 
@@ -139,14 +145,18 @@ Selected clauses with agentic implications:
 
 [[MC]]
 An agent is designed to help users write performance reviews for their employees. Which design choice best satisfies both ACM clause 1.2 (avoid harm) and clause 2.5 (thorough evaluations)?
-- ( ) Deploy immediately and collect feedback from dissatisfied employees after the fact
-- ( ) Add a disclaimer stating that the agent's output is not the company's official position
+- ( ) Deploy immediately and collect feedback from dissatisfied employees after the fact — real-world feedback is more reliable than pre-deployment testing because it reflects actual use patterns
+- ( ) Add a disclaimer stating that the agent's output is not the company's official position — this satisfies 2.5 by documenting a limitation, and 1.2 by making clear the agent is not the decision-maker
 - (x) Before deployment, test the agent's outputs across a diverse set of simulated employees and managers, specifically checking for disparate treatment by demographic group, and document results in a pre-deployment report
-- ( ) Limit the agent to suggesting language from a pre-approved phrase library
+- ( ) Limit the agent to suggesting language from a pre-approved phrase library — this eliminates the need for thorough evaluation because the phrase library has already been reviewed for bias
+
+The Code clauses pointed to specific engineering choices; Part III takes that idea further and shows how the minimal footprint principle operationalizes those choices as a design constraint for autonomous agents.
 
 ---
 
 # Part III: Minimal Footprint, Alignment, and Corrigibility
+
+In this part, you will compare two agent design philosophies — minimal footprint versus maximum capability — and see how corrigibility (the property of being correctable by humans) is an engineering constraint, not just an aspiration.
 
 ## 3. The Architecture of a Well-Behaved Agent
 
@@ -191,9 +201,13 @@ Two agents are given the same task: "Help a user manage their email inbox." Cons
 
 > **Common Misconception:** "Ethics review is something you do at the end, before shipping." This belief produces a specific failure mode: the ethics review occurs when it is too late to change the architecture, the training data, the objective function, or the permission model. Changes at that stage cost too much or break the system, so the review becomes perfunctory. Ethics review that happens at design time — when the agent's scope, permissions, and objective are being specified — can actually change outcomes. The frameworks in this activity are meant to be applied at the moment when a blank design document is on the table, not at the moment when the ship date is tomorrow.
 
+Having applied frameworks, codes, and design principles to constructed scenarios, Part IV asks you to bring the same rigor to your own project — where the design decisions are real and the stakes belong to you.
+
 ---
 
 # Part IV: Synthesis
+
+In this final part, you will apply the frameworks and principles from Parts I through III to your own course project, conducting the kind of pre-deployment ethics review that distinguishes thoughtful from reckless AI development.
 
 ## Exercises
 

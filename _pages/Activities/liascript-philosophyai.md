@@ -171,7 +171,11 @@ Autonomous AI agents introduce a novel version: the agent has no interests in th
 
 ---
 
+Having examined how responsibility distributes across the principal-agent chain, you are ready to apply these frameworks directly to the system you have been building in this course.
+
 # Part IV: Synthesis
+
+In this final part, you will apply the philosophical tools from Parts I–III to your own course project, producing a concrete responsibility map and design audit that you can use for real professional decisions.
 
 ## Exercises
 
