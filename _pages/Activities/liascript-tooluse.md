@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Tool Use and Function Calling
 
-Our week 1 agent parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling**: the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
+Our week 1 agent parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
 
 ---
 
@@ -25,34 +25,61 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| **Tool (Function)** | A typed, named function that an agent can request the runtime to execute on its behalf. The model never runs code itself — it asks your program to run the function and report back the result. | `get_today()` returns today's date; `days_until("2026-12-07")` returns the number of days |
+| **Tool Schema** | A structured description of a tool: its name, a natural-language description (the only thing the model knows about what the tool does), and a list of typed parameters. Written in JSON Schema format. | `{"name": "days_until", "description": "Returns days from today to the given ISO date", "parameters": {"target_iso": {"type": "string"}}}` |
+| **`tool_calls` Field** | The structured field the model returns (instead of prose) when it decides to use a tool. Contains the tool name and the argument values, parsed as a JSON object — not free text. | `{"function": {"name": "days_until", "arguments": {"target_iso": "2026-12-07"}}}` |
+| **Tool Registry** | A dictionary in your code that maps tool names to actual Python functions, used to look up and execute the function the model requested. Acts as a security boundary. | `REGISTRY = {"get_today": get_today, "days_until": days_until}` |
+| **Perceive-Plan-Act Loop** | The cycle an agent runs: receive input (perceive), decide what to do including which tool to call (plan), execute the tool and observe the result (act), then loop. Tool calling formalizes the "act" step. | The `agent()` function loops up to `max_steps=4` times through this cycle |
+| **Read-Only vs. Irreversible-Write** | A classification of tools by the consequences of their actions. Read-only tools (look up a date, search the web) are safe to call without confirmation. Irreversible-write tools (send an email, delete a file, post to social media) require human approval before execution. | `get_today()` is read-only; a hypothetical `send_email()` is irreversible-write |
+
+---
+
 # Part I: From Parsing to Protocol
 
 ## 1. The Contract
 
-**A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about the tool*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:
+**Why this matters:** In week 1 our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
+
+**A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about what the tool does*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:
 
 ```
 request:  messages + tools=[{name, description, parameters}]
 response: message.tool_calls = [{function: {name: "get_weather", arguments: {"city": "Collegeville"}}}]
 ```
 
-The runtime executes the function, appends the result as a `tool` role message, and calls the model again, which is precisely our perceive-plan-act loop with the parsing risk engineered away. The model never executes anything; it only *asks*. Authority lives in our code, which is where governance will attach.
+The runtime executes the function, appends the result as a `tool` role message, and calls the model again — which is precisely our perceive-plan-act loop with the parsing risk engineered away. The model never executes anything; it only *asks*. Authority lives in our code, which is where governance will attach.
 
 ---
 
 ## Model 1: Schema as Interface
 
-Two teams expose the same function with different descriptions:
+Two teams expose the same function with different schemas:
 
-| Team A | Team B |
-|--------|--------|
-| `lookup(s)`: "looks stuff up" | `course_lookup(course_code)`: "Given an Ursinus course code like CS357, returns title, meeting times, and prerequisites from the live catalog." |
+| | Team A | Team B |
+|-|--------|--------|
+| **Tool name** | `lookup` | `course_lookup` |
+| **Description** | "looks stuff up" | "Given an Ursinus course code like CS357, returns the course title, meeting times, and prerequisites from the live catalog." |
+| **Parameter name** | `s` | `course_code` |
+| **Parameter description** | (none) | "An Ursinus course code in the format DEPT followed by a 3-digit number, e.g., CS357 or MATH375." |
+| **Example / In Our Course** | Model sees only: name="lookup", description="looks stuff up" | Model sees: name="course_lookup", description tells it what format to pass and what it will receive back |
 
 ### Critical Thinking Questions
 
 1. For the user question "When does the AI class meet?", which schema gives the model enough signal to (a) choose the tool and (b) construct correct arguments? Identify the failure mode Team A invites.
-2. The model passes `course_code="the AI class"`. Whose bug is this, the model's or the schema's, and what one schema change reduces it?
-3. List the three places natural language appears in this protocol, and rank them by how much care they deserve.
+
+   > *Hint: The model must decide: should I use `lookup`? What do I pass to it? Team A's description gives no signal about what this tool does or what it expects. The model might guess, pass the wrong thing, or not call the tool at all. For Team B: the description says "course code like CS357" — does the user's question contain a course code?*
+
+2. The model passes `course_code="the AI class"`. Whose bug is this — the model's or the schema's — and what one schema change reduces it?
+
+   > *Hint: The model is trying to be helpful by passing what the user said. But the schema's parameter description should have told the model what *format* is expected. Adding an example ("e.g., CS357 or BIO110") and a constraint ("must be a valid department abbreviation followed by a 3-digit number") gives the model the signal it needs to recognize that "the AI class" is not a valid argument.*
+
+3. List the three places natural language appears in this protocol, and rank them by how much care they deserve. (The Recorder writes a priority order with justification.)
+
+   > *Hint: Natural language appears in (a) the tool's description field, (b) the parameter description fields, and (c) the user's message. Rank them: which one is written by you and read by the model at every call, making it the most consequential to get right? Which one is written by a user and may be ambiguous?*
 
 ---
 
@@ -84,14 +111,14 @@ def days_until(target_iso):
 TOOLS = [
   {"type": "function", "function": {
      "name": "get_today",
-     "description": "Returns today's date in ISO format (YYYY-MM-DD).",
+     "description": "Returns today's date in ISO format (YYYY-MM-DD). Call this whenever you need to know the current date before computing a duration or deadline.",
      "parameters": {"type": "object", "properties": {}, "required": []}}},
   {"type": "function", "function": {
      "name": "days_until",
-     "description": "Returns the number of days from today until the given ISO date.",
+     "description": "Returns the number of days from today until the given ISO date. The result is positive if the date is in the future and negative if it has passed.",
      "parameters": {"type": "object",
                     "properties": {"target_iso": {"type": "string",
-                                                  "description": "Date in YYYY-MM-DD form"}},
+                                                  "description": "The target date in YYYY-MM-DD format, e.g., 2026-12-07"}},
                     "required": ["target_iso"]}}},
 ]
 REGISTRY = {"get_today": get_today, "days_until": days_until}
@@ -127,11 +154,23 @@ print(agent("How many days until the last day of classes, December 7, 2026?"))
 
 ## Model 2: Trace the Protocol
 
+**Why this matters:** The message sequence in tool calling is the core of how structured AI agents work. If you can trace exactly what each message contains and who authored it — human, model, or your Python code — you understand the full control flow and know where to add governance at every step. This trace is also your debugging tool when agents misbehave: find which message in the sequence contains the wrong information, and you know which component to fix.
+
 ### Critical Thinking Questions
 
-4. List the exact sequence of messages (roles and contents) exchanged for the question above. Which message was authored by our Python code rather than by a human or the model?
-5. The registry lookup `REGISTRY[name]` is a security boundary. What does it prevent that a Python `eval` of the model's text would not?
+4. List the exact sequence of messages exchanged for the question above (roles and brief content descriptions). Which message was authored by our Python code rather than by a human or the model?
+
+   > *Hint: The sequence is: (1) user message with the question, (2) model response with a tool_call request, (3) ??? authored by Python code, (4) model response with the final answer. What does message 3 contain? Look at the line `msgs.append({"role": "tool", "content": result})` — who wrote that line of the conversation?*
+
+5. The registry lookup `REGISTRY[name]` is a security boundary. What does it prevent that a Python `eval` of the model's text output would not?
+
+   > *Hint: If the model could request execution of arbitrary Python code strings (like `eval("import os; os.system('rm -rf /')")`), what would happen? The registry only allows functions that you explicitly added to it. What is the maximum damage a malicious or confused model can do through the registry?*
+
 6. Add (on paper) a `send_email(to, body)` tool. Which single line of today's code would you wrap with a human-confirmation gate, and why there rather than in the prompt?
+
+   > *Hint: Find the line `result = REGISTRY[name](**args)`. What happens immediately before this line? What happens immediately after? Where in this sequence would a confirmation dialog ("Are you sure you want to send this email to X?") fit? Why is it more reliable to enforce this in code rather than by adding "always ask for confirmation before sending email" to the prompt?*
+
+> **⚠️ Common Misconception:** Many beginners assume the language model "executes" the tool itself — that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource — all of that access is mediated by your code. This is where governance lives.
 
 [[MC]]
 In native function calling, the component that actually executes the function is:
@@ -147,15 +186,44 @@ In native function calling, the component that actually executes the function is
 ## 3. Exercises
 
 1. *Third tool.* Implement `course_lookup(course_code)` backed by a small dictionary of five courses. Demonstrate a question that requires chaining it with `days_until`.
+
+   - *What to do:* Add a Python dictionary like `COURSES = {"CS357": {"title": "Foundations of AI", "meets": "MWF 10am", "prereqs": "CS174"}, ...}`. Write the function `course_lookup(course_code)` that returns the entry as a string, add it to TOOLS and REGISTRY, and ask a question like "How many days until the final exam for the AI course?" that requires the agent to first look up when CS357's final is, then compute days remaining.
+   - *Starter hint:* `def course_lookup(course_code): return str(COURSES.get(course_code, "Course not found"))`. The key to chaining is that the agent must call `course_lookup` first to get the final exam date, then call `days_until` with that date. Observe whether the model chains the calls automatically.
+   - *You've succeeded when:* The agent calls both tools in sequence without you explicitly telling it to, and produces a correct final answer with the tool call trace visible in the `[tool]` print output.
+
 2. *Schema ablation.* Replace both tool descriptions with the single word "tool" and rerun your test questions. Report the tool-selection accuracy before and after; connect the result to Model 1.
-3. *Read-write taxonomy.* Classify ten plausible tools (search, calendar read, calendar write, file delete, grade lookup, post to social media, and so on) as read-only, reversible-write, or irreversible-write. Propose a default policy for each class. Keep this taxonomy: it becomes part of your project governance document.
+
+   - *What to do:* Change both description fields in TOOLS to `"tool"`. Re-run three questions: one that should use `get_today`, one that should use `days_until`, and one that should use both. Compare how often the correct tool is selected and with correct arguments, versus with full descriptions.
+   - *Starter hint:* Tool selection accuracy = (correct tool choices) / (total tool decision points). A "correct tool choice" means the model chose the right tool AND passed valid arguments. Count each step's tool call as one decision point.
+   - *You've succeeded when:* You have accuracy numbers for both conditions (full descriptions vs. "tool"), and you can connect the drop in accuracy to the specific insight from Model 1 about what the description field communicates to the model.
+
+3. *Read-write taxonomy.* Classify ten plausible tools as read-only, reversible-write, or irreversible-write. Propose a default policy for each class. Keep this taxonomy: it becomes part of your project governance document.
+
+   - *What to do:* Choose 10 tools from this list (or substitute your own): web search, calendar read, calendar write, file read, file delete, grade lookup, post to social media, send email, order pizza, book a flight reservation. Classify each by the worst-case consequence of an unintended call.
+   - *Starter hint:* Read-only: no state changes; safe to call without confirmation. Reversible-write: changes state but can be undone (calendar event can be deleted, file can be restored from backup). Irreversible-write: cannot be easily undone (sent email, deleted account, posted public message). Your policy for each class should specify: who must confirm before execution, and what log must be kept.
+   - *You've succeeded when:* You have a table of 10 tools with their class and your proposed policy, and you can articulate why the irreversible-write class requires the strongest governance even when the agent's instructions are correct.
+
 4. *Refusal behavior.* Ask the agent a question no tool can answer. Does it improvise a tool call, hallucinate an answer, or say it cannot help? Report and explain which behavior you want and how to prompt for it.
+
+   - *What to do:* Ask a question entirely outside the tools' scope, such as "What is the capital of France?" or "Write me a poem." Observe which of three behaviors occurs: (a) the model invents a tool call to a non-existent function, (b) the model answers from parametric memory without any tool call, or (c) the model says it cannot help with this. Run at least 3 different out-of-scope questions.
+   - *Starter hint:* Add to the user message: "You have access to tools. Use them when applicable. If no tool can answer the question, say 'I cannot help with that using my available tools.'" Does that system instruction reliably produce behavior (c)?
+   - *You've succeeded when:* You can report which behavior you observed for 3 out-of-scope questions, which behavior is most desirable and why, and what prompt change (if any) you found that produces that behavior.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: with tools, an agent's words become actions. Recall a moment when you gave an instruction (to a person or a system) that was carried out too literally. What would "asking a clarifying question first" look like as an agent design feature, and when should an agent be required to do it?
+*Personal:* In your notebook: with tools, an agent's words become actions. Recall a moment when you gave an instruction — to a person or a system — that was carried out too literally and produced an unintended result. What would "asking a clarifying question first" look like as an agent design feature, and when should an agent be required to use it?
+
+*Technical:* The registry is a security boundary, but it is not the only one needed. For a `send_email(to, body)` tool, list three additional safeguards you would implement at the code level (not the prompt level), and explain what attack or mistake each one prevents.
+
+*Societal:* Tool-calling agents can take actions at machine speed — sending thousands of emails, making purchases, or modifying files in seconds. Name one professional domain (medicine, law, finance, education) where this speed is a benefit, and one where it is a serious risk. What institution or regulatory body should set the rules for how fast AI agents are allowed to act?
+
+---
+
+## → Coming Up Next
+
+Our agents can now call tools, but each agent works alone. The next major topic in the course introduces **multi-agent systems**: teams of specialized agents that collaborate, delegate, and check each other's work — and the governance challenges that arise when agents are supervising other agents.
 
 ---
 
