@@ -89,6 +89,8 @@ Examine these three systems and decide which, if any, is an agent.
 
 ## 2. A Working Definition
 
+In this section, you will lock down the formal definition of an agent and place it on a spectrum from simple reflex to fully autonomous — so that every system you encounter this semester has a precise vocabulary to describe it.
+
 **An agent is anything that perceives its environment through sensors and acts upon it through actuators in pursuit of a goal** (Russell and Norvig). For the software agents in this course:
 
 $$
@@ -97,7 +99,9 @@ $$
 
 where $\pi$ is the agent's **policy**: the rule, program, or model that maps what the agent knows to what it does next. In the agents we build, $\pi$ is implemented by a **large language model** plus the scaffolding we write around it.
 
-**Agency is a spectrum, not a switch.** A system is *more agentic* when it takes more steps autonomously, uses more tools, and recovers from more errors without a human in the loop. Greater agency brings greater usefulness, and greater responsibility, which is why governance occupies the final unit of this course.
+**Agency is a spectrum, not a switch.** A system is *more agentic* when it takes more steps autonomously, uses more tools, and recovers from more errors without a human in the loop. Greater agency brings greater usefulness, and greater responsibility — which is why governance occupies the final unit of this course.
+
+Now that you have a working definition of agency, the next section previews the arc of the entire semester so you can see where each future topic fits.
 
 [[MC]]
 A spam filter classifies each incoming email as spam or not, one message at a time, and takes no further action. According to our working definition, the *most* accurate description is:
@@ -118,7 +122,9 @@ The semester unfolds in four units, each building on the last. In Unit 1, *Anato
 
 ## Model 2: Your First Conversation with a Local Model
 
-Your instructor will demonstrate a model running entirely on a laptop using Ollama, with no internet connection. We will pose the same prompt three times.
+In this model, you will observe a language model (a large neural network trained to predict text) running entirely on a laptop — no cloud, no internet — and you will form hypotheses about why its answers vary. These hypotheses will be tested rigorously in week 3.
+
+Your instructor will demonstrate a model running entirely on a laptop using Ollama (a free tool for downloading and running AI models locally), with no internet connection. We will pose the same prompt three times.
 
 ### Critical Thinking Questions
 

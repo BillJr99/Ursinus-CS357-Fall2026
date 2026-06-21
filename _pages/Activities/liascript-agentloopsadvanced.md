@@ -108,9 +108,13 @@ Observe that at step 1 the agent decides it needs two separate API calls rather 
 
 > **⚠️ Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought" — that the `Thought:` entries are genuine inner reasoning. They are not. The `Thought:` entries are generated text, just like the `Action:` entries. The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process. This means a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step. ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable* — but visibility does not guarantee correctness. Always verify key claims in the thought entries against the observations they are based on.
 
+Now that you have seen what a ReAct loop looks like step by step, the next model examines what can go wrong when such a loop runs unsupervised — and the engineering controls that prevent those failures.
+
 ---
 
 ## Model 3: Loop Safety Controls
+
+In this section you will examine six concrete engineering controls that keep agent loops safe in production. Understanding these controls matters because even a loop that works perfectly in testing can spin out of control when deployed on real, messy inputs.
 
 **Why this matters:** Even a well-designed ReAct loop can fail in ways that are expensive, embarrassing, or harmful. Safety controls are the engineering equivalent of a circuit breaker in an electrical system: they do not prevent all failures, but they prevent a small failure from cascading into a catastrophic one. Just as circuit breakers are not optional in buildings, these controls are not optional in production agent systems. Every agent that runs unsupervised in the real world needs at least a step limit and a human escalation gate.
 
@@ -146,6 +150,8 @@ Even a well-architected loop can fail. These controls are not optional — they 
 ---
 
 ## Model 4: Termination — How Does an Agent Know It Is Done?
+
+In this section you will compare three ways of defining "done" for an agent, and you will practice revising task specifications to make termination more reliable. This connects directly back to the loop safety controls in Model 3: a clear stopping rule is what makes the max-iterations control meaningful.
 
 **Why this matters:** "Being done" sounds obvious, but for an AI agent it is surprisingly hard to define. Unlike a traditional program that returns when a function exits, an agent is generating text in a loop and must decide for itself when to stop. Get this wrong in one direction and the agent quits too early with incomplete work; get it wrong in the other direction and you get the "perfectionism spiral" — an agent that keeps polishing indefinitely. Understanding the three approaches to termination lets you choose the right one for your task.
 

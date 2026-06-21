@@ -80,7 +80,11 @@ A student asks a campus RAG system, "Can first-year students bring cars?" The sy
 
 ## 2. A Complete Local RAG System
 
+In this Part you will implement the two-phase RAG pipeline in Python using Chroma as the vector database and Ollama as the language model. You will see exactly how the indexing phase and query phase from Part I map onto real function calls — and you will test what happens when the answer is not in the index.
+
 Chroma is an embeddable vector database (a library that stores embeddings and performs nearest-neighbor search, installable as a Python package). Install with `pip install chromadb`. Everything below runs on your laptop; no data leaves the room.
+
+The code below is split into two phases. The **indexing phase** (run once) creates the collection and stores embeddings for each document. The **query phase** (run per question) embeds the user's question, finds the closest document chunks, and asks the model to answer using only those chunks.
 
 ---
 
@@ -177,6 +181,8 @@ The single most important reason RAG reduces factual hallucination is that it:
 # Part III: Synthesis and Practice
 
 ## 3. Exercises
+
+In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from week 3. These exercises build directly toward Lab 2.
 
 1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one honest abstention.
 

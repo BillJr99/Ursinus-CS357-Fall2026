@@ -42,6 +42,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Goldilocks Problem
 
+In this Part you will explore why the size of text chunks matters enormously for retrieval quality, examine three splitting strategies, and develop a principled hybrid policy you can apply to your own documents in Lab 2.
+
 **Why this matters:** Imagine searching a book using only its table of contents (chapters as chunks) versus searching it word by word (sentences as chunks). The table of contents gives you chapters that might be 50 pages long — your embedding has to summarize 50 pages into one vector, which blurs the meaning across dozens of topics. Individual sentences are precise but often meaningless in isolation: "He approved the request" tells you nothing about *who*, *what*, or *why*. Good chunking finds the passage-length sweet spot that is semantically self-contained and focused enough to embed meaningfully. It is the most impactful tuning knob in any real RAG system.
 
 **Chunks too large** dilute the embedding (one vector must summarize many topics) and waste precious context window space. **Chunks too small** orphan their meaning ("He approved the request" retrieves nothing useful without knowing who *he* is). Practical systems balance three strategies:
@@ -80,6 +82,8 @@ Consider a 12-page student handbook with sections on housing, dining, conduct, a
 
 ## 2. Retrieval Metrics
 
+In this Part you will learn how to measure whether your retrieval system is actually working, understand the recall@k metric (the fraction of questions for which the right chunk appears in the top-k results), and see how a reranker can raise precision without sacrificing recall.
+
 **Why this matters:** You cannot improve what you cannot measure. Before tuning chunk size, overlap, or any other parameter, you need a metric that tells you whether retrieval is actually working. Recall@k is that metric: for a set of test questions where you know the right answer, does the right chunk appear in the top k results? If recall@3 is 0.50, half your questions will get the wrong chunk and therefore a potentially hallucinated answer — regardless of how good your language model is. Generation quality has a ceiling imposed by retrieval quality, and this section gives you the tools to find and raise that ceiling.
 
 For a question set with labeled relevant chunks, **recall@k** asks how often the right chunk appears in the top $k$ results:
@@ -108,6 +112,8 @@ A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 
 Embeddings let us *map* a document collection before querying it. Clustering chunk vectors (k-means on normalized embeddings approximates clustering by cosine similarity) reveals the topics your corpus actually contains, exposes duplicates, and flags off-topic contamination.
 
 ---
+
+The code below embeds eight campus-policy chunks using a local model, then runs k-means clustering (a method that groups items into k groups by finding the assignments that minimize total distance to each group's center) on the normalized embedding vectors. After running it, you will read the cluster output and judge whether the algorithm found the same topic structure a human would draw.
 
 ## Code Cell
 
