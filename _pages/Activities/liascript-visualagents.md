@@ -97,7 +97,9 @@ Note that "ingest" and "query" are the same Chroma node set to different modes �
 
 ## Model 4: Build 3 — Export and Reenter Code
 
-Every flow exports as JSON, and Langflow can serve any flow as a REST API (Application Programming Interface) endpoint. Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used. Then call the flow endpoint from three lines of Python `requests`:
+Visual flows don't have to stay visual — you can export them and call them from regular Python code, which means your existing test harnesses from earlier labs still work. The snippet below shows exactly how: Langflow runs your flow as a local web service (a **REST API**, meaning a program you talk to over HTTP, just like your Ollama calls), and you send it a question and receive the answer.
+
+Every flow exports as JSON (a text-based data format), and Langflow can serve any flow as a REST API endpoint. Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used. Then call the flow endpoint from three lines of Python `requests`:
 
 ```python
 import requests
@@ -124,14 +126,16 @@ The visual artifact and your code-world tooling (harnesses, batch evaluation) co
 
 [[MC]]
 The most defensible claim about visual builders versus code for agent systems is:
-- ( ) Visual builders are for beginners and code is for professionals
-- ( ) Visual flows cannot implement RAG or tool use
+- ( ) Visual builders are for beginners only; code is for professionals who need full capability
+- ( ) Visual flows cannot implement RAG or tool use because they hide too much from the developer
 - (x) Both express the same underlying patterns; visual excels at communication and rapid wiring, code at version control, testing, and arbitrary logic
-- ( ) Flows run faster because they skip Python
+- ( ) Flows run faster because they skip the overhead of Python interpretation
 
 > **⚠️ Common Misconception:** It is tempting to conclude that visual builders are "easier" and therefore produce systems that are less capable or less rigorous than hand-written code. This is wrong in two directions. First, Langflow can express any pattern that Python can (with the exception of certain dynamic structures like runtime loops). Second, "easier to build" does not mean "easier to audit" — a visually assembled system can be harder to review for security, bias, or correctness than well-structured Python code, because the implementation details are hidden inside opaque node icons. Ease of construction and rigor of understanding are independent dimensions.
 
 ---
+
+Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
 
 # Part III: Synthesis and Practice
 

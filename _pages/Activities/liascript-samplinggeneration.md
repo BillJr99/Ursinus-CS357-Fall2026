@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Generation as Repeated Prediction
 
+In this part, you will work out by hand how a language model converts raw scores into a probability distribution and then samples from it — resolving the mystery from week 1 of why identical prompts produce different outputs. The math here (softmax and temperature) will recur every time you tune an agent's behavior for the rest of the semester.
+
 ## 1. One Token at a Time
 
 Before we look at the math, consider how autocomplete on your phone works: it suggests the next word based on what you have typed. A language model does exactly the same thing, but instead of a fixed list of three suggestions, it assigns a probability to every word in its entire vocabulary (often 50,000 or more), then picks one — and repeats this process for every single word in its response. That is why a single early "wrong pick" can send the whole response in a surprising direction, and why the same prompt can produce different responses on different runs.
@@ -99,11 +101,15 @@ A distribution assigns probabilities: Paris 0.90, Lyon 0.06, Marseille 0.03, ban
 
 # Part II: Experiments on Your Stack
 
+In this part, you will run a controlled experiment that makes the theory from Part I visible: you will sample the same prompt eight times at three different temperatures and count how often the answers diverge. This turns an intuitive observation into a measurable, reproducible result.
+
 ## 3. Measuring Variability
 
 We quantify "how different are the answers" by sampling the same prompt multiple times and counting how many distinct outputs appear. This turns an intuitive observation ("it seems to vary a lot at high temperature") into a measurable result.
 
 ---
+
+The code below asks the model to name a single animal eight times at each of three temperature settings and uses a `Counter` (a Python dictionary that counts occurrences) to tally how many distinct answers appear. A temperature of 0.0 should produce the same answer every time; higher temperatures should spread answers across more options.
 
 ## Code Cell
 
@@ -152,6 +158,8 @@ Examine the counter output for each temperature. Notice which temperatures produ
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will apply the sampling vocabulary to real design decisions — choosing temperature and top-p settings for different agent roles — and close the loop on the hypotheses your team formed in week 1.
 
 ## 4. Exercises
 

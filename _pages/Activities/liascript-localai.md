@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Run Models Locally?
 
+In this part, you will understand the privacy, cost, and capability tradeoffs that motivate running AI models on your own hardware — so that when you choose between local and cloud inference for the rest of the semester, you can justify that choice with specific reasons.
+
 ## 1. The Case for Local
 
 Before we get to installation, consider why running AI locally matters. Imagine a doctor who needs to draft a clinical summary using patient records, or a researcher analyzing confidential survey responses. Sending those prompts to a cloud service means the data leaves the institution — potentially violating privacy law. A local model solves this by never letting the data leave the machine at all. At the same time, local models have real limitations: a model that fits on a laptop is far smaller than a frontier cloud model, and knowing which tasks each handles well is a core practitioner skill.
@@ -54,7 +56,7 @@ Before we get to installation, consider why running AI locally matters. Imagine 
 
 ## 2. What a Model File Is
 
-A model you download is a tensor (a large multi-dimensional array) of learned numerical weights plus metadata that tells Ollama how to run it. Its size is governed by two numbers: the parameter count $N$ and the **quantization level**, which is the number of bits used to store each weight:
+A model you download is a tensor (a large multi-dimensional array — think of it as a very large spreadsheet of numbers) of learned numerical weights plus metadata that tells Ollama how to run it. Its size is governed by two numbers: the parameter count $N$ (how many individual weights the model has) and the **quantization level** (the number of bits — the units of computer storage — used to store each weight):
 
 $$
 \text{size} \approx N_{\text{params}} \times \frac{\text{bits}}{8} \text{ bytes}
@@ -75,6 +77,8 @@ A team wants to run a 70B-parameter model quantized to 4 bits on a laptop with 1
 
 # Part II: The Build
 
+In this part, you will install and configure your own local AI stack — Ollama to serve models and optionally OpenWebUI for a chat interface — and verify that your Python code can talk to it over a local network connection. Every step is hands-on: the goal by the end of class is a working system you can call from your own scripts.
+
 ## 3. Install Checklist
 
 Follow this sequence as a team; the Recorder logs each step's outcome, including the exact error message if a step fails. A failed step is not a problem — it is data. Record the error verbatim, write down your hypothesis for the cause, and test the hypothesis before asking for help. This troubleshooting protocol is itself a course outcome.
@@ -91,6 +95,8 @@ Follow this sequence as a team; the Recorder logs each step's outcome, including
 ```
 
 ---
+
+The code cell below sends a single message to your locally running Ollama server using Python's `requests` library (a standard tool for making web requests). If Ollama is running correctly, it will respond with a confirmation message. The second block lists every model currently downloaded on your machine.
 
 ## Code Cell
 
@@ -148,6 +154,8 @@ While a long generation runs, open your system monitor (Activity Monitor on macO
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will probe your local model across five different task types to build a concrete capability map — a table showing where it succeeds and where it fails. This map will serve as your baseline for the rest of the semester as you add tools, retrieval, and multi-agent techniques.
 
 ## 4. Exercises
 

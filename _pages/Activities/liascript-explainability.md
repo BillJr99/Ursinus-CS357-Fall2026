@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: What Counts as an Explanation
 
+In this Part, you will examine what kinds of evidence an AI system can honestly offer to support its outputs — and learn why some evidence is stronger than others. This matters because your demo audience will need a real reason to trust your system, and "it sounds right" is not one.
+
 ## 1. Three Honest Artifacts and One Caution
 
 Think about the last time you trusted a recommendation — from a friend, a review site, or a search engine. What made you trust it? Probably: you could see *why* the recommendation was made (evidence), you could verify it yourself (citations), and you had a sense of how reliable the source usually is (calibration). AI explainability engineering is about building exactly those three properties into your systems, so users have a real basis for trust — not just a confident-sounding answer.
@@ -48,13 +50,13 @@ Think about the last time you trusted a recommendation — from a friend, a revi
 
 **Citations.** A RAG answer that quotes its retrieved chunk lets a human verify the claim against the source *without trusting the model at all*. Verifiability is stronger than persuasiveness, which is why your Lab 2 grounding instructions matter more than eloquence.
 
-**Uncertainty.** A system that says "low confidence" when it is more often wrong is *calibrated*. Calibration is measurable: bucket outputs by stated confidence and compare each bucket's claimed probability with its observed accuracy; the gap is the **calibration error**:
+**Uncertainty.** A system that says "low confidence" when it is more often wrong is *calibrated* (meaning its stated confidence matches its real accuracy). Calibration is measurable: bucket outputs by stated confidence and compare each bucket's claimed probability with its observed accuracy; the gap is the **calibration error** (ECE — Expected Calibration Error):
 
 $$
 \text{ECE} = \sum_b \frac{n_b}{N} \, \bigl| \text{acc}(b) - \text{conf}(b) \bigr|
 $$
 
-**The caution.** A model's *prose self-explanation* ("I concluded X because Y") is generated text, not a readout of computation; it can be a plausible story rather than the actual cause. Treat narrated reasoning as a claim to verify (against the trace, the citation, the tool log), not as ground truth. The honest hierarchy: tool logs > citations > traces > narrated rationale.
+**The caution.** A model's *prose self-explanation* ("I concluded X because Y") is generated text, not a readout of computation — think of it like a student who writes a confident essay about a process they do not fully understand. It can be a plausible story rather than the actual cause. Treat narrated reasoning as a claim to verify (against the trace, the citation, the tool log), not as ground truth. The honest hierarchy: tool logs > citations > traces > narrated rationale.
 
 ---
 
@@ -80,7 +82,11 @@ Each team examines one real transcript from its project system.
 
 ---
 
+*With your team's transcript analyzed, you now know what your system currently shows users. In Part II you will apply that knowledge to design the human-facing side: when should a user see evidence, when should they confirm an action, and how do you avoid training them to click through without reading?*
+
 # Part II: Designing the Human In
+
+In this Part, you will move from analyzing what your system *can* show to deciding what it *should* show — and designing the moment when a human is asked to intervene. The goal is not maximum transparency but appropriate transparency: enough for users to trust the right things and question the right things.
 
 ## 2. Heuristics for Human-Centric Agents
 
@@ -90,16 +96,16 @@ The goal is not to make users trust your system more — it is to make them trus
 
 **Design for appropriate reliance, not maximal trust.** The failure modes are symmetric: over-reliance (rubber-stamping the agent) and under-reliance (ignoring a good tool). Friction is a design material: a confirmation that *shows the evidence* recruits the human's judgment; a bare "OK?" dialog trains them to click through.
 
-**Disclose the system's nature.** Users deserve to know they are interacting with an AI system, what data it uses, and where its competence ends, which your governance document already commits you to; the design task is making the disclosure *legible*, not buried.
+**Disclose the system's nature.** Users deserve to know they are interacting with an AI system, what data it uses, and where its competence ends. Your governance document already commits you to this; the design task is making the disclosure *legible* — prominent, plain-language, not buried in a footer.
 
 **Fail loudly and usefully.** "Not in my documents" (your Lab 2 abstention) beats a fluent guess; a good failure message names what was attempted and what the human can do next.
 
 [[MC]]
-An agent drafts emails and a human clicks approve. Over months, approvals become automatic and an erroneous email ships. The design lever that most directly targets this failure is:
-- ( ) A larger model so errors stop occurring
-- ( ) Removing the human gate since it added no value
+An agent drafts emails and a human clicks "approve" before each one is sent. Over months, approvals become automatic (the human stops reading them) and an erroneous email ships. The design lever that most directly targets this failure is:
+- ( ) A larger model so errors stop occurring — the problem is human attention, not model quality
+- ( ) Removing the human gate since it added no value — this eliminates oversight entirely
 - (x) Redesigning the confirmation to surface the evidence and anomalies that warrant attention, restoring active judgment
-- ( ) Logging the human's click for accountability
+- ( ) Logging the human's click for accountability — logging records what happened but does not prevent the next error
 
 ---
 
@@ -124,6 +130,8 @@ Sketch (on paper) the confirmation screen your project shows a human before its 
 > **Common Misconception:** "A more detailed explanation always means a more trustworthy system." More words do not mean more transparency. A long, fluent paragraph explaining an AI's reasoning can be entirely confabulated — generated to sound plausible rather than to accurately describe the computation. The honest hierarchy (tool logs > citations > traces > narrated rationale) matters precisely because length and fluency are not measures of accuracy. A single cited source the user can verify is worth more than three paragraphs of confident prose.
 
 ---
+
+*You have now designed your confirmation screen and stress-tested your system's calibration. In Part III you will build real artifacts: a trace viewer, an abstention audit, and a demo dry-run. These convert today's analysis into deployable components.*
 
 # Part III: Synthesis and Practice
 

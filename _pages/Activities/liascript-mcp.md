@@ -42,6 +42,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. APIs, Then the N-by-M Problem
 
+In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol — a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
+
 **Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client — any agent application anywhere — can use it. Integration cost drops from multiplicative to additive.
 
 **An API is a published contract for calling someone else's functions over the network.** REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request. Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
@@ -78,7 +80,9 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 **Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable. The server below is not production MCP — it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name. Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
 
-Full MCP runs over JSON-RPC with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask. We build the essence.
+In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints — URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name. You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
+
+Full MCP runs over JSON-RPC (a protocol for making remote function calls by sending JSON messages) with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask. We build the essence.
 
 You can run the server with:
 
@@ -154,6 +158,8 @@ if __name__ == "__main__":
 
 ---
 
+The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools. Notice that the client never imports or defines `room_lookup` or `hours` — it learns they exist at runtime from the server's response.
+
 ## Code Cell
 
 ```python
@@ -214,6 +220,8 @@ The primary value MCP adds over each team writing custom tool integrations is:
 # Part III: Synthesis and Practice
 
 ## 3. Exercises
+
+In this Part you extend the server with a new tool to confirm that discovery is truly automatic, connect the server to a real-world API, and write the trust checklist your final project will use before connecting any third-party MCP server.
 
 1. **Extend the server with a new tool.**
 

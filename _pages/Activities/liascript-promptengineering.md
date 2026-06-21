@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Anatomy of a Prompt
 
+In this part, you will learn that a prompt is not just a question but a structured program in natural language — and that small changes to its wording produce large changes in the agent's behavior. By the end, you will be able to identify every behavioral commitment embedded in a prompt before you even run it.
+
 ## 1. Three Channels of Instruction
 
 Think of sending a message to an agent like addressing a letter: the **system prompt** is the standing policy manual the agent always carries with it, the **user message** is the specific letter you wrote today, and the **conversation history** is the file of everything said before. The model reads all three, but treats the system prompt as the rules that cannot be overridden by any single letter.
@@ -111,6 +113,8 @@ An agent must return JSON so that downstream code can parse its decision. The mo
 
 # Part II: Personas in Practice
 
+In this part, you will assign three different persona instructions (identities given to the model via the system prompt) to the same underlying model and observe how each shifts the style and format of the output — without changing the model's weights at all. This matters because understanding personas helps you design agents that behave consistently and avoids the trap of thinking a more authoritative persona produces more accurate answers.
+
 ## 3. Personas Shape Distributions, Not Souls
 
 Before we run the code, try this thought experiment: if you ask a knowledgeable friend the same question while they are in "professor mode" versus "texting a friend mode," you get different vocabularies, different structures, maybe different levels of hedging — but the same underlying facts. A model persona works similarly. It shifts the *style* of the output by making certain patterns more likely, not by granting the model new knowledge.
@@ -118,6 +122,8 @@ Before we run the code, try this thought experiment: if you ask a knowledgeable 
 **A persona does not create knowledge; it reweights it.** Telling a model it is a cautious pharmacist shifts the distribution of its outputs toward hedged, safety-conscious language present in its training data. This is powerful and potentially misleading: a persona can also reweight toward confident-sounding error. Personas should therefore be paired with *epistemic instructions* such as "say so when you are unsure," and we will measure whether models obey them.
 
 ---
+
+The code cell below runs the same question ("Why is the sky blue?") through three different system prompts (persona instructions) and prints each response side by side. Notice that only the system prompt changes — the model, the question, and all other settings stay identical.
 
 ## Code Cell
 
@@ -174,6 +180,8 @@ Run the cell (or examine projected outputs) and compare the three responses to t
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will write and red-team real system prompts — first designing one for a course-scheduling agent, then stress-testing a teammate's design. This is the closest thing to real prompt engineering work: the goal is to discover where a prompt breaks before a real user does.
 
 ## 4. Exercises
 

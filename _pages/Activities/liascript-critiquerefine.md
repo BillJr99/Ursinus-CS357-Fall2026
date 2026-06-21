@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why a Separate Critic?
 
+In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both. You will analyze two real critique transcripts and practice writing structured, actionable feedback — skills you will need when designing your own critic agents in Lab 3.
+
 ## 1. Generation and Evaluation Are Different Jobs
 
 **Why this matters:** Think about the best feedback you have ever received on a piece of writing. It probably did not come from the person who wrote it — it came from someone reading it fresh, applying standards you had already agreed on. When the same person both writes and evaluates in the same sitting, they tend to approve their own work because they remember what they meant to say. The same problem applies to LLMs: a model asked to "write it and make sure it's good" conflates two tasks that need different mental stances. Separating the generator and the critic — giving them different system prompts and different information — forces genuinely independent evaluation.
@@ -54,7 +56,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **Stopping rules prevent infinite polishing.** Loop until `verdict == "accept"`, with a maximum of $R$ rounds. On budget exhaustion, return the best draft *with the outstanding critique attached* — honest disclosure of known defects rather than silent confidence.
 
-The formal update rule for the loop is:
+The following equation summarizes this loop compactly: at each round $t$, the critic $C$ evaluates the current draft against the rubric and returns a list of issues, and the generator $G$ produces an improved draft using those issues. The loop runs until the critic accepts or round $R-1$ is reached.
 
 $$
 d_{t+1} = G(d_t, C(d_t, \text{rubric})), \quad t = 0, 1, \dots, R-1
@@ -84,9 +86,13 @@ Where $d_t$ is the draft at round $t$, $G$ is the generator, and $C$ is the crit
 
    > *Hint: If the critic suggests specific wording, is it acting as a generator now? What happens to the separation of roles? On the other hand, if the critic only says "sentence 2 is unclear," can the generator always figure out how to fix it?*
 
+With the design principles from Part I in hand, Part II shows the complete implementation of the critique-refine loop so you can see exactly how those principles translate to code.
+
 ---
 
 # Part II: Implementation
+
+In this section you will read the full working implementation of the critique-refine loop and answer questions that connect the code back to the design principles from Part I. Pay close attention to the temperature settings and the separation of what the generator and critic each receive.
 
 ## 2. The Loop in Forty Lines
 
@@ -204,6 +210,8 @@ if verdict["verdict"] != "accept":
 
 > **⚠️ Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement — run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
 
+Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Lab 3 implementation.
+
 [[MC]]
 The principal reason the critic receives a rubric while the generator does not is:
 - ( ) Rubrics are too long for the generator's context
@@ -214,6 +222,8 @@ The principal reason the critic receives a rubric while the generator does not i
 ---
 
 # Part III: When Refinement Fails
+
+In this section you will study three failure modes that can make the critique-refine loop produce worse results than a single-shot approach. Knowing these failure signatures — and how to measure them — is what separates a loop that works in a demo from one that works reliably in production.
 
 ## 3. Failure Modes to Hunt in Lab 3
 

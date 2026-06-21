@@ -44,6 +44,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## Model 1: The Agent Table
 
+In this model you will read a completed agent table for a three-agent research pipeline, then fill in a fourth row from scratch — the fastest way to internalize what information the table is designed to capture before you need it for your own project.
+
 **Why this matters:** "Measure twice, cut once" is the carpenter's version of design-first. In carpentry, cutting a board too short means buying new wood. In agentic AI, deploying an agent with a poorly defined role can mean sending incorrect information to thousands of users, corrupting a database, or spending hundreds of dollars on API calls that accomplished nothing useful. The agent table forces you to articulate every important decision about each agent in writing, before any of those decisions have real consequences. Empty cells in the table are not gaps in the document — they are unresolved risks in your system.
 
 The **agent table** is the core design artifact for a multi-agent system. One row per agent. Before you write a single line of code, you should be able to fill in every cell. Empty cells are design gaps - risks waiting to become bugs.
@@ -74,7 +76,11 @@ The **agent table** is the core design artifact for a multi-agent system. One ro
 
 ---
 
+With your agent table complete, the next model turns to the question of how those agents can fail — and specifically how to predict failures before they happen, while the cost of changing the design is still low.
+
 ## Model 2: The Pre-Mortem
+
+In this model you will work through a six-row pre-mortem table covering every component of the research pipeline, identify one failure mode the table does not yet cover, and add it with all four columns filled in.
 
 **Why this matters:** Most teams think about how their system could fail after it fails. The pre-mortem technique inverts this: you deliberately imagine failure before it happens, when you still have time to prevent it. For agentic systems, this is especially important because agents can fail in ways that are hard to detect from the outside — the system appears to run successfully while quietly producing wrong outputs. A pre-mortem forces you to ask not just "what could go wrong?" but "how would we even know if it went wrong?"
 

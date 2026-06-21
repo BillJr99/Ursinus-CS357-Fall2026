@@ -354,6 +354,167 @@ docker pull ghcr.io/yourusername/hello-cs357:v0.2.0
 
 ---
 
+# Part V: Python Package Publishing with pip
+
+## Python Package Publishing with pip
+
+Container images and npm packages are not the only way to ship Python software. The Python ecosystem has its own artifact format — the **wheel** — and its own registry — **PyPI** — that lets anyone install your code with a single `pip install`. This section walks through the full pip publishing pipeline from a `pyproject.toml` file to a live package on TestPyPI, with specific attention to the versioning tradeoffs that matter for rapidly-changing agent tooling.
+
+---
+
+### The pyproject.toml Structure
+
+A modern Python package is defined by a single `pyproject.toml` file. The file has three sections you need to understand before publishing anything.
+
+**`[build-system]`** tells pip which backend to use to turn your source code into a wheel:
+
+```toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+```
+
+`hatchling` is the build backend. It reads the rest of `pyproject.toml` and knows how to produce a `.whl` file without any additional configuration. Other popular backends include `setuptools` and `flit`; the syntax is identical, only the backend name changes.
+
+**`[project]`** is the package metadata that appears on PyPI and that `pip install` reads to resolve dependencies:
+
+```toml
+[project]
+name = "my-agent"
+version = "0.1.0"
+description = "A local LLM research agent for CS357."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31.0",
+]
+```
+
+Every field here is a promise to your users. `name` must be globally unique on PyPI. `dependencies` are installed automatically when a user runs `pip install my-agent`, so list exactly what your code imports — no more, no less.
+
+**`[project.scripts]`** creates command-line entry points that are installed into the user's PATH:
+
+```toml
+[project.scripts]
+ask = "my_agent:main"
+```
+
+After `pip install my-agent`, a user can type `ask "What is photosynthesis?"` in any terminal and Python will call the `main()` function in the `my_agent` module. This is the same mechanism that makes `pytest`, `black`, and `ruff` available as terminal commands after you `pip install` them.
+
+---
+
+### The Build Pipeline
+
+```bash
+# Install the build frontend (one-time setup)
+pip install build
+
+# Produce both a wheel and a source distribution
+python -m build
+```
+
+This command creates two files in a `dist/` directory:
+
+```
+dist/
+  my_agent-0.1.0-py3-none-any.whl     # the wheel
+  my_agent-0.1.0.tar.gz               # the source distribution (sdist)
+```
+
+A **wheel** (`.whl`) is a pre-built binary archive. `pip install` unpacks it directly with no compilation step, which makes installs fast and reproducible. A **source distribution** (`.tar.gz`) contains the raw source code and the build configuration; pip must run the build backend to install it, which requires the build tools to be available on the target machine. Wheels are preferred for distribution; sdists are the fallback for platforms where a pre-built wheel does not exist.
+
+---
+
+### TestPyPI vs. PyPI: Always Test First
+
+PyPI is permanent. A version you publish cannot be unpublished after 72 hours, and mirrors cache everything immediately. **TestPyPI** (`test.pypi.org`) is a separate, identical registry used exclusively for testing the upload pipeline. Publishing to TestPyPI first lets you catch metadata errors, dependency conflicts, and `pyproject.toml` mistakes without polluting the real index.
+
+```bash
+# Upload to TestPyPI (safe; does not affect the real PyPI)
+pip install twine
+twine upload --repository testpypi dist/*
+```
+
+Twine will prompt for your TestPyPI username and password, or you can use an API token (recommended — generate one at https://test.pypi.org/manage/account/token/).
+
+Installing from TestPyPI requires telling pip where to look, because TestPyPI is not in pip's default search path:
+
+```bash
+pip install --index-url https://test.pypi.org/simple/ my-agent
+```
+
+Note: if your package has dependencies from the real PyPI (like `requests`), add `--extra-index-url https://pypi.org/simple/` so pip can find them:
+
+```bash
+pip install \
+  --index-url https://test.pypi.org/simple/ \
+  --extra-index-url https://pypi.org/simple/ \
+  my-agent
+```
+
+---
+
+### Versioning: SemVer vs. Date-Based
+
+The choice of versioning scheme communicates promises to your users.
+
+**Semantic versioning (SemVer)** uses `MAJOR.MINOR.PATCH` and encodes a compatibility promise: patch bumps (`0.1.0` → `0.1.1`) fix bugs without changing the public API; minor bumps (`0.1.0` → `0.2.0`) add features while staying backward-compatible; major bumps (`0.1.0` → `1.0.0`) may break consumers who depend on the previous behavior. SemVer is the right choice for a stable library used by other code.
+
+**Date-based versioning** (e.g., `2026.06.1`) encodes the release date rather than a compatibility promise. It is common for agent tooling that iterates rapidly and does not yet have a stable API — it tells users "this was released on this date" without implying backward compatibility. The tradeoff is that users cannot tell from the version number alone whether a new release will break their code.
+
+For course labs, start with SemVer at `0.1.0` (the `0.x` range signals that the API is not yet stable), and bump to `1.0.0` only when you are ready to commit to a stable interface.
+
+---
+
+### Runnable Example: A Minimal pyproject.toml
+
+```toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "my-agent"
+version = "0.1.0"
+description = "A local LLM agent for CS357 with a CLI entry point."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31.0",
+]
+
+[project.scripts]
+# After pip install, users can run: ask "What is photosynthesis?"
+ask = "my_agent:main"
+```
+
+After saving this file and running `python -m build`, verify the wheel exists:
+
+```bash
+ls dist/
+# my_agent-0.1.0-py3-none-any.whl
+# my_agent-0.1.0.tar.gz
+```
+
+---
+
+### Critical Thinking Questions
+
+**Question A.** What is the semantic difference between a wheel (`.whl`) and a source distribution (`.tar.gz`)? Describe a situation where a user's machine would receive the sdist instead of the wheel, and what additional tools must be present on that machine for the install to succeed.
+
+[[___ Your answer here ___]]
+
+*Hint: A wheel is pre-built and unpacked directly. A source distribution must be built on the target machine. What does "building" require that "unpacking" does not?*
+
+[[MC]]
+A project's API changes in a way that breaks all existing callers — for example, a function that previously returned a string now returns a list. Which version bump is appropriate under SemVer?
+- ( ) Patch: `0.1.0` → `0.1.1`
+- ( ) Minor: `0.1.0` → `0.2.0`
+- (x) Major: `0.1.0` → `1.0.0`
+- ( ) Date-based: `0.1.0` → `2026.06.1`
+
+---
+
 ## Reflection Prompt
 
 Publishing converts your work from something you control into something the world caches forever, in exchange for the chance that it helps someone.

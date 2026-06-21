@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Logic of Productive Disagreement
 
+In this section you will examine when multi-agent debate adds value and when it does not. You will analyze a table of question types and practice identifying which situations benefit from structured disagreement versus which are better handled by a single tool call or a single model call.
+
 ## 1. Independent Errors and Structured Conflict
 
 **Why this matters:** When you are unsure of an answer, it helps to get a second opinion — especially from someone who reasoned about the problem independently. If your friend arrived at the same answer by a different route, you are more confident. If they arrived at a different answer, that disagreement is valuable information. Multi-agent debate formalizes this intuition: by forcing agents to independently generate answers and then critique each other's reasoning, the debate exposes flaws that no single agent would catch on its own. The key word is "independently" — if all agents read each other's answers before forming their own, the diversity that makes debate valuable disappears.
@@ -75,9 +77,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
    > *Hint: Think about what all LLMs trained on similar internet text might systematically misrepresent or underrepresent. A question whose correct answer contradicts common misconceptions in that training data is a candidate for a correlated error. Can you name one?*
 
+With the theory of when debate works (and fails) established, Part II shows the protocol running on a real problem so you can observe these dynamics directly in the output.
+
 ---
 
 # Part II: Implementation
+
+In this section you will read the complete debate implementation and run it on a classic algebra problem where the intuitive answer is wrong. Your goal is to observe whether the debate protocol surfaces and corrects errors, and to connect the temperature scheduling choices directly to the theory from Part I.
 
 ## 2. Three Agents, Two Rounds, One Vote
 
@@ -201,6 +207,8 @@ Multi-agent debate most reliably improves accuracy when:
 ---
 
 # Part III: Measure It
+
+In this section you will run controlled experiments to quantify exactly when debate earns its extra cost. The goal is to replace the intuition "more agents = better" with actual numbers showing where debate helps and where it does not.
 
 ## 3. Exercises
 

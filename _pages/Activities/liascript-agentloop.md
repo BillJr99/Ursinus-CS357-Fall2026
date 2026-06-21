@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 0. Environment and Utilities
 
+This section sets up the Python helper function that all later code cells will reuse. It sends a list of messages (the conversation history so far) to a locally running Ollama server and returns the model's reply as a plain string. You don't need to understand every line yet — just run it and confirm the "Environment ready." message appears before moving on.
+
 This section assumes Ollama is running locally (we install it together next class; today your instructor's machine serves the room). The only dependency is `requests`.
 
 ---
@@ -74,11 +76,13 @@ print("Environment ready.")
 
 # Part I: The Sense-Think-Act Cycle
 
+In this part, you will build a mental model of how agents perceive their environment, reason about it, and act — and why this cycle repeats rather than stopping after one exchange. Understanding this cycle is what separates a bare chatbot from a true agent.
+
 ## 1. From Reaction to Agency
 
 Before we look at the code, consider a search-and-rescue dog. The dog perceives the environment (smells, sounds), plans where to move next, acts by running toward a scent, then perceives again based on what it finds. It does not stop after one sniff — it loops until it either finds the target or its handler calls it back. AI agents work the same way, but instead of a physical environment they navigate text, tool outputs, and their own prior reasoning.
 
-**A bare language model call is a pure function of its prompt.** It has no goal that persists beyond one response and no way to affect the world. The agent loop adds three things: **state** (memory of what has happened), a **goal** (a condition for being done), and **actions** (things the agent can do besides talk).
+**A bare language model call is a pure function of its prompt.** It has no goal that persists beyond one response and no way to affect the world. The agent loop adds three things: **state** (memory — a running record of everything the agent has seen and said so far), a **goal** (a condition for being done), and **actions** (things the agent can do besides talk).
 
 $$
 \text{while not done: } o_t \leftarrow \text{perceive}(); \quad a_t \leftarrow \pi(o_t, m_t); \quad m_{t+1} \leftarrow \text{update}(m_t, o_t, a_t)
@@ -131,6 +135,8 @@ In the ReAct pattern, the *Observation* lines are produced by:
 ---
 
 # Part II: Building the Loop
+
+In this part, you will read and run a real agent loop in Python — about 20 lines that implement the perceive-plan-act cycle from Part I. Pay attention to where each piece of the loop lives in the code: you will be asked to identify them by name.
 
 ## 3. A Minimal Tool-Using Agent
 
@@ -199,6 +205,8 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will extend and stress-test the agent you just built — changing its budget, designing new tools, and deliberately breaking it — so that you understand not just how it works when it succeeds, but why it fails when it does.
 
 ## 4. Exercises
 

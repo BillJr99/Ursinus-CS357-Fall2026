@@ -98,6 +98,8 @@ python orchestration.py
 
 ## Code Cell
 
+The code below implements both a three-stage pipeline (extract → draft → polish) and a two-stage router (classify → dispatch) using a local language model. Read through the comments before running it — each comment explains a design choice you will be asked about in the questions that follow.
+
 ```python
 import requests
 
@@ -215,6 +217,8 @@ According to the design heuristic developed today, a team should reach for a pla
 
 # Part III: Synthesis and Practice
 
+In this section you will extend and evaluate the pipeline and router you built in Part II, and you will design the message format for a planner. These exercises connect directly to Lab work, so the design decisions you make here carry forward.
+
 ## 3. Exercises
 
 1. **Add a fact-check stage to the pipeline.**
@@ -265,6 +269,8 @@ According to the design heuristic developed today, a team should reach for a pla
    *You've succeeded when:* You have a before-and-after accuracy number for both the constrained and unconstrained router, and you can explain in one sentence why adding the closed-set instruction (or the code-level guard) improved accuracy.
 
 3. **Design a planner message format.**
+
+   > *Hint: Think about what the planner needs to know when a worker fails. The planner must decide whether to retry the task, skip it, adjust the timeline, or ask the user for help — and it must make that decision based solely on what the failure report contains. What fields would you need in the failure report to support all four of those decisions?*
 
    *What to do:* On paper, design the JSON message format for the planner-worker interaction in the study-schedule task from Model 1. Your design must specify: (a) what the planner sends to a worker as a task assignment, (b) what a worker sends back to report success, and (c) what a worker sends back to report failure and what information the planner needs to revise the plan. Write out three example messages in full.
 

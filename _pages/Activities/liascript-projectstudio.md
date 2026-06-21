@@ -38,6 +38,8 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 
 ---
 
+In this first section, each team answers four fixed questions in two minutes — no more. You will use the stand-up to surface the honest current state of your project: real metrics, real blockers, and the single riskiest unfinished piece. Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
+
 ## Model 1: Stand-Up and Readiness Assessment
 
 Stand-ups exist to surface the truth quickly. The instinct to say "it's going pretty well" instead of "the evaluation harness reports 41%" is understandable but counterproductive — the whole point of a stand-up is to get the real number into the room so the team and instructor can help. Think of it as a 120-second system health check: inputs (what you did), outputs (what the numbers say), and blockers (what is in the way).
@@ -61,6 +63,8 @@ Each team answers, in two minutes at the board, exactly four questions: What wor
 *Hint:* Think about risks that are not visible until something goes wrong: latency (the system is slow on long documents), edge cases (what happens when the user asks a question the system was not designed for), and dependency risks (what if the external API the system relies on changes its pricing or rate limits before demo day)?
 
 ---
+
+*You have surfaced your team's blockers and metrics in the stand-up. Now it is time to leave your station and critically evaluate other teams' work — and to host visitors to your own. The gallery walk format gives everyone structured roles and a specific three-field card to fill out, so no feedback is wasted on vague praise.*
 
 ## Model 2: Gallery Walk Protocol
 

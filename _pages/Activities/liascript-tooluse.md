@@ -87,6 +87,10 @@ Two teams expose the same function with different schemas:
 
 ## 2. A Two-Tool Agent
 
+In this Part you will run a working two-tool agent that knows today's date and can calculate deadlines. Watch the `[tool]` print lines as it runs — each one shows a moment where your Python program, not the model, executed a function and handed the result back to the model for the next step.
+
+The code below defines two tools (`get_today` and `days_until`), describes them in JSON Schema format so the model knows what each tool does and what arguments it expects, and runs a perceive-plan-act loop (the repeating cycle where an agent receives input, decides what to do, executes a tool or answers, then loops) that automatically calls whichever tool the model requests.
+
 ---
 
 ## Code Cell
@@ -211,9 +215,11 @@ In native function calling, the component that actually executes the function is
 
 ---
 
+With the protocol understood from Part I and II, this Hands-On section has you build three distinct tools — a safe arithmetic evaluator, a clock, and a word counter — and observe exactly how the model decides which one to call based solely on the tool's description field.
+
 ## Hands-On: Build and Call a Tool (30 minutes)
 
-In this section you define three tools using the OpenAI function-calling JSON schema format and call them from your local model via Ollama's `/api/chat` endpoint. Run all code locally — no external API keys or cloud services needed.
+In this section you define three tools using the OpenAI function-calling JSON schema format (the standard way to describe a tool's name, purpose, and parameters as a JSON object) and call them from your local model via Ollama's `/api/chat` endpoint. Run all code locally — no external API keys or cloud services needed.
 
 ---
 
@@ -289,7 +295,7 @@ TOOLS = [
 
 ### Tool Implementations and the Executor Pattern
 
-The executor pattern keeps a **registry** — a plain Python dictionary mapping tool names to their implementations. Your agent loop never calls a tool directly from the model's request; it looks up the name in the registry first. This is the security boundary: only tools you explicitly register can ever run.
+The executor pattern keeps a **registry** (a plain Python dictionary mapping tool names to their implementations). Your agent loop never calls a tool directly from the model's request; it looks up the name in the registry first. This is the security boundary: only tools you explicitly register can ever run. Notice that the `calculator` function uses Python's `ast` module (a library for safely parsing code into a tree of operations) rather than `eval()` — see the note after the code block for why this matters.
 
 ```python
 import ast
