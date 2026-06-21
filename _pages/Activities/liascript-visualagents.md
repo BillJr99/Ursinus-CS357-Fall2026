@@ -157,6 +157,106 @@ The most defensible claim about visual builders versus code for agent systems is
 
 ---
 
+## Part IV: Hands-On Langflow Build (30 minutes)
+
+> **Before starting**: Make sure Langflow is running at `http://localhost:7860`. If not installed, run `pip install langflow && langflow run` in your terminal.
+
+One team member opens `http://localhost:7860` while the Recorder keeps notes on what each component represents and how it maps to Python code from previous labs.
+
+---
+
+### Step 1: Simple Chat (5 minutes)
+
+1. Click **New Flow** → **Blank Canvas**
+2. From the left sidebar, drag onto the canvas:
+   - **Chat Input** (under Helpers)
+   - **Ollama** (under Models) — set Model Name to `llama3.2`, Base URL to `http://localhost:11434`
+   - **Chat Output** (under Helpers)
+3. Connect: **Chat Input → Ollama → Chat Output** (click the output port of Chat Input, drag to input port of Ollama; repeat for Ollama → Chat Output)
+4. Click **Run** (play button at top right)
+5. Type a question in the Chat Input field. You should see a response in Chat Output.
+
+**Critical Thinking**: What Python code (from Lab 1 or Lab 2) does this three-node flow replace? Write out the equivalent Python in your notes.
+
+> *Hint: The Ollama node calls the same `/api/chat` endpoint you wrote `requests.post(...)` to in Lab 1. The Chat Input is your `input()` call. The Chat Output is your `print()` call.*
+
+---
+
+### Step 2: Add a System Prompt (5 minutes)
+
+1. Drag a **Prompt** component onto the canvas (under Prompts)
+2. In the Prompt's template field, write a system prompt of your choice (use the ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS framework from the Prompt Engineering activity)
+3. Connect: **Chat Input → Prompt → Ollama → Chat Output** (remove the direct Chat Input → Ollama connection)
+4. Re-run with a question and observe the difference
+
+[[MC]]
+The Prompt node in Langflow corresponds to which part of your Python agent code?
+- ( ) The `requests.post()` call to Ollama
+- (x) The system message in the `messages` list (the dict with `"role": "system"`)
+- ( ) The `parse_response()` function
+- ( ) The `print()` at the end
+
+> **⚠️ Common Misconception:** Students often assume adding a Prompt node changes what the model "knows." It does not — it changes what *instructions* the model receives at the start of each conversation. The model's weights (its actual knowledge) are fixed; only the prompt changes.
+
+---
+
+### Step 3: Add RAG (15 minutes)
+
+This replicates your Lab 2 RAG pipeline visually.
+
+1. Drag onto the canvas:
+   - **File** component (under Data) — click "Upload File" and upload any short text document (or create a 3-paragraph `.txt` file about any topic)
+   - **RecursiveCharacterTextSplitter** (under Processing) — set `chunk_size=500`, `chunk_overlap=50`
+   - **Chroma** (under Vector Stores)
+   - **OllamaEmbeddings** (under Embeddings) — set Model to `nomic-embed-text`
+   - **Retriever** (connected to Chroma)
+
+2. Connect the indexing path: **File → TextSplitter → Chroma**
+3. Connect embeddings: **OllamaEmbeddings → Chroma** (for storing) and **OllamaEmbeddings → Retriever** (for querying)
+4. Update your Prompt template to include a `{context}` variable:
+
+```text
+You are a helpful assistant. Answer questions using ONLY the provided context.
+If the answer is not in the context, say "I don't have that information."
+
+Context: {context}
+```
+
+5. Connect: **Chat Input → Retriever** (the query path) and **Retriever output → Prompt {context} input**
+6. Test with 3 questions: one answerable from the document, one not in the document, and one where the answer is split across two chunks
+
+**Critical Thinking**:
+
+1. In Lab 2, you chose a chunk size and justified it. In Langflow, you see the same parameter in a GUI field. Did you use the same chunk size? What would you need to know to change it?
+
+2. Your Lab 2 RAG pipeline had explicit code to handle "no relevant chunks found" and return an abstention message. Where in the Langflow flow would you implement this?
+
+   > *Hint: You could add a **Conditional Router** node that checks whether the retriever returned any results before passing context to the Prompt. Or you could handle it in the Prompt template itself with a fallback instruction.*
+
+---
+
+### Step 4: Export and Inspect the JSON (5 minutes)
+
+1. Click the three-dot menu (⋯) at top right → **Export Flow** → save as `rag_flow.json`
+2. Open the file and find:
+   - The Ollama model configuration (model name, base URL, temperature)
+   - The `chunk_size` value you set
+   - How edges (connections) are represented in the JSON
+
+**Critical Thinking**: The JSON export is the "source code" for your visual pipeline. Compare it to your Lab 2 Python code. Which is easier to read? Which is easier to version-control and diff in a tool like `git`?
+
+---
+
+### In-Activity Closing Reflection
+
+Answer these in your Recorder's notes before moving on:
+
+1. List three things Langflow made easier than writing Python code directly.
+2. List two things Langflow hides or obscures that a developer should understand.
+3. A teammate who does not code says "I can build any AI system now without programming." What would you tell them?
+
+---
+
 ## Reflection Prompt
 
 *Personal:* Today you wired at least one component (a Text Splitter, a Chroma node, an Embeddings node) without fully reading its source code. Identify that component and describe what you know about what it does, what you are uncertain about, and how you would find out.

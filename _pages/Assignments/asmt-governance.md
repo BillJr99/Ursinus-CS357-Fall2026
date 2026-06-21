@@ -213,6 +213,35 @@ Submit the PDF (or a repository link plus PDF export) along with the peer review
 
 ---
 
+## Part 0 (Warm-Up, Ungraded): Policy Clause Workshop
+
+Before writing your full governance document, this warm-up develops your policy writing muscle with a focused 30-minute exercise.
+
+**The Hospital Sepsis AI Scenario**
+
+Read this abbreviated incident report:
+
+> A regional hospital deployed an AI clinical decision support tool to flag patients at high risk for sepsis. It was validated at 87% accuracy on a 2019 pilot. In production, nurses began treating the AI's "low risk" flag as authoritative, skipping their own assessments. Eighteen months later, an internal audit found the tool performed at 62% accuracy for patients over 75 and for non-English-speaking patients. Two sentinel events (serious patient harm) occurred.
+
+**Your Task (30 minutes):**
+
+1. **Identify two NIST AI RMF gaps** in the hospital's approach. Map each to one of the four NIST functions (Map, Measure, Manage, Govern) and write one sentence explaining what that function would have caught.
+
+2. **Write one policy clause** (≤100 words) that would have prevented the primary failure. Your clause must specify:
+   - **Scope**: who and what it applies to
+   - **Requirement**: what must happen (be specific)
+   - **Enforcement**: what happens if it is violated
+   - **Exception**: one valid exception to prevent over-application
+
+   **Example format** (for a different domain — write your own):
+   > *"Automated resume-screening tools shall flag all candidates rejected by the AI for human review before any rejection letter is sent. Reviews shall be logged with the reviewer's name and reasoning. Violations by hiring managers shall be escalated to the Chief People Officer within 48 hours. Exception: internal transfer applications are exempt from this requirement."*
+
+3. **Stress-test your clause**: identify one way it could be gamed (met in letter but not spirit) and write a one-sentence amendment to close the gap.
+
+This warm-up is not graded but must be completed and submitted with your main assignment; your instructor will provide brief written feedback before your full governance document is due.
+
+---
+
 ## Reflection Prompts
 
 - Which clause was hardest to make enforceable, and what does that difficulty reveal about the underlying value?
