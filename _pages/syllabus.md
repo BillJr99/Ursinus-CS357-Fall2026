@@ -267,6 +267,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
   - rtitle: "Supplemental Tutorial: Terminal and Filesystem Isolation for Agent Safety"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-terminalfilesystem.md"
+  - rtitle: "Supplemental Reference: The Local Model Landscape — Llama, Mistral, Phi, Gemma, and Friends"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localmodels.md"
 - week: "2"
   date: "0"
   title: "Why Different Answers Every Time? Sampling, Temperature, and Generation"
@@ -311,10 +313,16 @@ schedule:
   date: "0"
   title: "Retrieval-Augmented Generation with Chroma"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Vector Databases — How Agents Search for Meaning"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-vectordatabases.md"
 - week: "4"
   date: "1"
   title: "RAG Quality: Chunking, Clustering, and Reranking"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Fine-Tuning, RAG, and Prompting — Choosing the Right Approach"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
   deliverables:
   - dtitle: "Written Assignment: Prompt Patterns and AI by Hand Due"
     dlink: "Assignments/PromptPatterns"
@@ -343,6 +351,9 @@ schedule:
   date: "1"
   title: "Tool Use and Function Calling"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Structured Outputs — JSON Mode, Tool Schemas, and Output Validation"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md"
 - week: "6"
   date: "0"
   title: "Connecting Agents to the World: MCP and APIs"
@@ -398,6 +409,9 @@ schedule:
   date: "0"
   title: "The Critique and Refine Pattern"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Human-in-the-Loop — Oversight, Escalation, and Appropriate Autonomy"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
 - week: "8"
   date: "1"
   title: "Multi-Agent Debate"
@@ -444,6 +458,8 @@ schedule:
   readings:
   - rtitle: "Supplemental Tutorial: Cloudflare Workers and Pages with Wrangler"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md"
+  - rtitle: "Supplemental Tutorial: Multimodal Agents — Vision, Documents, and Code as First-Class Inputs"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md"
 - week: "10"
   date: "1"
   title: "Evaluating Agents: LLM-as-Judge and Rubric Pipelines"
@@ -466,6 +482,13 @@ schedule:
     dlink: "Projects/AgentTeam"
     points: "100"
     rubricpath: "_pages/Projects/proj-agentteam.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Agent Security — Threat Modeling and the OWASP LLM Top 10"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentsecurity.md"
+  - rtitle: "Supplemental Tutorial: Prompt Injection — Attacks and Defenses"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md"
+  - rtitle: "Optional Lab: Finding and Defending Against Prompt Injection"
+    rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/PromptInjection"
 - week: "11"
   date: "1"
   title: "Training Data and Bias"
