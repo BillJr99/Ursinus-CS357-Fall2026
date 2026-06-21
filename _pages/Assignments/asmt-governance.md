@@ -7,35 +7,35 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To author a complete, enforceable governance document for an agentic system of your own design
-    - To convert values into mechanisms with scopes, prohibitions, gates, logs, owners, and remedies
-    - To situate a system within external frameworks including the NIST AI Risk Management Framework and the EU AI Act risk tiers
-    - To withstand and incorporate adversarial peer review
+    - To author a complete, enforceable governance document for an agentic system of your own design covering all eight required sections
+    - To convert values into mechanisms by writing clauses that pass the third-party test and the "who specifically" test
+    - To situate a system within the NIST AI Risk Management Framework and the EU AI Act risk tiers with named artifacts and argued classifications
+    - To incorporate adversarial peer review by closing at least one identified loophole and documenting the revision
   rubric:
     - weight: 35
       description: Enforceability and Mechanism Design
-      preemerging: The document states values without mechanisms
-      beginning: Some sections contain mechanisms, but most clauses fail the third party test
-      progressing: Most clauses are checkable from evidence, with named owners and concrete gates, with some decorative language remaining
-      proficient: Substantially every clause passes the third party test, with specific scopes, prohibitions, human oversight gates tied to the irreversible action taxonomy, logging, named ownership, timelines, and remedies
+      preemerging: The document states values without mechanisms — for example, "the system will be monitored to ensure responsible use" with no logging specification or named reviewer
+      beginning: Some sections contain mechanisms, but most clauses fail the third-party test — an outsider cannot determine from evidence whether the clause was followed
+      progressing: Most clauses are checkable from evidence, with named roles and concrete gates, but some sections use diffuse ownership ("the team will...") or omit timelines and remedies
+      proficient: Substantially every clause passes the third-party test — stating what is logged, where, how long it is retained, and who reviews it — and the "who specifically" test — naming a role (Coordinator, Evaluator, or Scribe) rather than "the team" for every responsibility; human oversight gates name the irreversible actions from the class taxonomy, the information the human sees at the moment of decision, and the role responsible for the confirmation; prohibited uses each state an enforcement mechanism (not just a label); incident response states at least two severity levels with distinct response timelines and a named role for each step
     - weight: 25
       description: Framework Integration
       preemerging: External frameworks are not referenced
-      beginning: Frameworks are name checked without substantive mapping
-      progressing: The system is mapped onto the NIST functions or an EU AI Act risk tier with reasonable justification
-      proficient: The system is mapped onto all four NIST functions with named artifacts for each, its plausible EU AI Act tier is argued with reference to the education provisions, and the document identifies which obligation would bind first if deployed beyond the classroom
+      beginning: Frameworks are name-checked without substantive mapping — for example, "we GOVERN by having good norms" without naming a concrete artifact
+      progressing: The system is mapped onto the NIST functions or an EU AI Act risk tier with reasonable justification, but the NIST mapping omits one or more functions or the EU Act tier argument does not cite specific Annex III language
+      proficient: The NIST AI RMF table names a specific artifact or activity for each of the four functions (GOVERN, MAP, MEASURE, MANAGE); the EU AI Act argument names the specific tier, cites the relevant Annex III category (or argues why no category applies) with reference to the education provisions, and names the specific obligation that would bind first if the system were deployed beyond the classroom; both mappings reference real artifacts from the document rather than aspirational statements
     - weight: 25
       description: Completeness and Technical Grounding
       preemerging: Multiple required sections are missing
-      beginning: All eight sections are present but several are generic rather than specific to the system
-      progressing: All eight sections are present and specific, importing the design table, data flow audit, and evaluation harness with minor gaps
-      proficient: All eight sections are present, specific, and technically grounded, the data handling section addresses regulated categories accurately, the evaluation section names the actual harness, metrics, disaggregation, and schedule, and the pre mortem predictions each receive a binding clause
+      beginning: All eight sections are present but several are generic rather than specific to this system — the same document could describe any student project
+      progressing: All eight sections are present and specific to the system, with the agent design table, data flow audit, and evaluation harness referenced or included, but one or two sections have minor gaps (e.g., the data handling section omits a deletion timeline, or the evaluation section does not state the re-evaluation threshold)
+      proficient: All eight sections are present, specific to this system, and technically grounded — Section 2 references or includes the agent design table with topology and model versions; Section 5 explicitly addresses each regulated data category (health, financial, biometric, minors' data) with either "this system does not process X" or the specific controls that apply, and states a retention period and deletion procedure; Section 6 names the actual evaluation metrics, the disaggregation protocol, the re-evaluation frequency, and the threshold that triggers review; Section 7 contains a binding governance clause for each failure mode predicted in the pre-mortem
     - weight: 15
       description: Peer Review Response and Submission
       preemerging: An incomplete submission is provided
       beginning: The document is submitted without evidence of peer review or revision
-      progressing: Peer review feedback is included and at least one identified loophole is closed
-      proficient: The structured peer review is included verbatim, every flagged sentence is addressed, the red team loophole is documented and closed, and a one paragraph revision memo summarizes what changed and why
+      progressing: The peer review received is included and at least one flagged sentence is addressed, but the loophole patch does not show the original clause alongside the revised clause
+      proficient: The peer review received is included verbatim as Appendix C; every sentence flagged as failing the third-party test is addressed in the revision memo or in tracked changes; the loophole found by the peer reviewer is quoted from their review, the original clause is shown alongside the patched clause, and the one-paragraph revision memo explains specifically what loophole was closed, what the original clause permitted that it should not have, and how the patch closes it
   readings:
     - rtitle: "Governance Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"

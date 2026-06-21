@@ -7,35 +7,37 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To apply SHAP (SHapley Additive exPlanations) to explain a trained classifier globally and locally
-    - To apply LIME to explain individual predictions
-    - To compare SHAP and LIME for the same prediction and understand where they agree and disagree
-    - To evaluate whether explanations are sufficient for high-stakes AI deployment
+    - To generate SHAP global explanations (beeswarm and bar plots) that rank feature importance across the full test set and identify counterintuitive directions of influence
+    - To generate SHAP local explanations (waterfall and force plots) that trace how individual features pushed a single prediction away from the base rate
+    - To generate a LIME local explanation for the same prediction and compare it to SHAP, identifying at least one feature where the two methods disagree on direction or magnitude and explaining why mechanistically
+    - To classify each model feature as a legitimate predictor, a proxy variable for a protected characteristic, or both, using SHAP importance as supporting evidence
+    - To write a jargon-free denial explanation statement of approximately 150 words grounded in SHAP waterfall output, meeting the meaningful information requirement of EU AI Act Article 13 for high-risk AI systems
+    - To evaluate whether post-hoc explanations from SHAP and LIME are sufficient to justify high-stakes credit decisions, citing specific limitations of each method
   rubric:
     - weight: 30
       description: SHAP Implementation
       preemerging: SHAP not computed or code errors prevent any output
-      beginning: SHAP values computed but no visualization produced
-      progressing: SHAP summary plot generated; at least one local explanation produced
-      proficient: Global summary plot, beeswarm plot, and local force plot all generated and saved; each visualization captioned in the writeup with the student's own interpretation; at least one "counterintuitive" feature identified with a plausible mechanistic explanation
+      beginning: SHAP values computed but only one visualization type produced (e.g., bar plot only), with no distinction made between global and local explanations
+      progressing: Global beeswarm or bar plot generated and at least one local waterfall or force plot generated for the high-income denial case; visualizations saved to disk but not captioned or interpreted in the writeup
+      proficient: All four visualizations saved (shap_beeswarm.png, shap_bar.png, shap_waterfall_NNN.png, shap_force_NNN.html); writeup captions each with the student's own interpretation distinguishing what the global plots show across the full test set from what the local plots show for a single prediction; at least one feature identified where the direction of influence (beeswarm color and position) is counterintuitive, with a mechanistic explanation grounded in the training data
     - weight: 30
       description: LIME Implementation
-      preemerging: LIME not run
-      beginning: LIME run for one prediction but not compared to SHAP
-      progressing: LIME explanation generated for the same prediction as SHAP local explanation
-      proficient: LIME and SHAP local explanations compared side by side for the same prediction; differences identified with mechanistic explanations; student selects which they would present to a loan applicant and justifies the choice
+      preemerging: LIME not run or lime_explanation_NNN.html not produced
+      beginning: LIME run for a prediction but not the same case used for SHAP local explanations, preventing side-by-side comparison
+      progressing: LIME explanation generated for the same high-income denial case as the SHAP local explanation; comparison table in writeup lists direction labels for at least 3 features but does not identify any disagreement or explain it mechanistically
+      proficient: LIME explanation generated for the same case as the SHAP waterfall; comparison table covers at least 5 features with direction labels for both methods; at least one feature where SHAP and LIME disagree on direction or magnitude is identified with a mechanistic explanation (e.g., LIME approximates locally while SHAP decomposes the true model output); student states which method they would use to explain the denial to the applicant and justifies the choice with specific reference to each method's properties
     - weight: 25
       description: Ethical and Regulatory Analysis
-      preemerging: No ethical analysis
-      beginning: Bias mentioned generically
-      progressing: One feature flagged as potentially biased with reasoning
-      proficient: Three features analyzed for regulatory concern (legitimate predictor, proxy variable, or both); one feature produces an unexpected direction of influence explained; student writes a 150-word explanation statement for a denied applicant using the SHAP output, as required by the EU AI Act for high-risk systems
+      preemerging: No ethical analysis attempted
+      beginning: One or more features described as "biased" without distinguishing whether the feature is a legitimate predictor, a proxy variable, or both
+      progressing: At least two of the three flagged features (zip_code_income_percentile, age, num_late_payments) analyzed with a statement about legitimate predictor status and proxy risk, but without citing SHAP importance values or addressing what additional investigation would be needed to confirm disparate impact
+      proficient: All three flagged features analyzed with (a) a classification as legitimate predictor, proxy variable, or both, (b) the feature's mean absolute SHAP value cited as evidence of its influence, and (c) a statement of what additional analysis (e.g., disparate impact testing across demographic groups) would be required; student writes an approximately 150-word denial explanation statement grounded in the SHAP waterfall for the high-income denial case that contains no technical jargon (no mention of SHAP, model, algorithm, or numerical SHAP values), names the top three denial factors in plain language, and includes one actionable suggestion for the applicant — meeting the meaningful information standard of EU AI Act Article 13 for high-risk AI systems
     - weight: 15
       description: Writeup and Reflection
       preemerging: No writeup
-      beginning: Writeup describes results without interpretation
-      progressing: Writeup interprets results and notes one limitation
-      proficient: Writeup interprets all three visualization types, compares SHAP vs. LIME strengths and limitations, and addresses what additional evidence would be required for a court-facing explanation
+      beginning: Writeup describes what outputs were produced without interpreting what they mean about the model's behavior
+      progressing: Writeup interprets at least two visualization types and notes one limitation of either SHAP or LIME
+      proficient: Writeup interprets all four SHAP visualization types (global beeswarm, global bar, local waterfall, local force plot) with explicit distinctions between global and local scope; compares SHAP and LIME on at least two dimensions (e.g., model-specificity, feature representation as conditions vs. contributions, stability across runs); and addresses what additional documentation beyond a SHAP waterfall plot would be required for a court-facing credit denial explanation
   readings:
     - rtitle: "Explainability Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"

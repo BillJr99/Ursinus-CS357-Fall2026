@@ -11,7 +11,7 @@ info:
     - To design a system prompt that establishes a persona, tools, output format, and guardrails
     - To add a tool to an agent and parse structured actions safely
     - To evaluate agent behavior empirically, including failure modes and step budgets
-    - To practice pair programming with driver and navigator roles
+    - To apply pair programming practices by alternating driver and navigator roles and recording swap times
   rubric:
     - weight: 35
       description: Agent Loop Implementation
@@ -42,7 +42,7 @@ info:
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions, including a readme writeup describing the solution, the pair programming log, and thoughtful answers to the reflection prompts
+      proficient: The program is submitted according to the directions, including a readme writeup describing the solution, a pair programming log with at least two timestamped role swaps and names recorded, and reflection answers that each cite a specific observation from the lab transcript rather than restating the prompt
   readings:
     - rtitle: "Agent Loop Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md"

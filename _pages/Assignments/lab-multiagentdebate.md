@@ -7,10 +7,10 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To implement multi-agent debate with independent first rounds and peer-informed revision rounds
-    - To implement stochastic consensus with embedding clustering and a synthesis agent
-    - To compare debate, consensus, and single-shot baselines at matched call budgets
-    - To identify correlated failure modes that aggregation cannot repair
+    - To implement multi-agent debate with independent first rounds and peer-informed revision rounds using configurable agents, rounds, and temperature schedules
+    - To implement stochastic consensus with normalized-embedding clustering and a synthesis agent that receives cluster summaries
+    - To compare debate, consensus, and single-shot baselines at matched call budgets on a labeled task set
+    - To identify and explain correlated failure modes that aggregation cannot repair and propose a non-LLM remedy
   rubric:
     - weight: 30
       description: Debate Implementation
@@ -35,13 +35,13 @@ info:
       preemerging: Code commenting and structure are absent, or code structure departs significantly from best practice
       beginning: Code commenting and structure is limited in ways that reduce the readability of the program
       progressing: Code documentation is present that re-states the explicit code definitions
-      proficient: Code is documented at non-trivial points in a manner that enhances the readability of the program, with externalized configuration and located exception handling with tracebacks
+      proficient: Every non-trivial function has a docstring; all model calls and embedding operations are wrapped in exception handlers that print a located message (e.g., [lab4:debate_round]) followed by a traceback; number of agents, rounds, temperature schedule, and distance threshold are read from a JSON config file rather than hardcoded
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions, including a readme writeup, the pair log, and thoughtful answers to the reflection prompts
+      proficient: The program is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific accuracy figure, transcript excerpt, or named failure mode from the lab rather than restating the prompt
   readings:
     - rtitle: "Multi-Agent Debate Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md"

@@ -7,28 +7,28 @@ info:
   coursenum: CS357
   points: 25
   goals:
-    - To set up the course toolchain and verify a working local AI environment
-    - To establish a baseline reflection on your prior experiences and beliefs about AI agents
-    - To form and charter your semester team
+    - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
+    - To articulate personal baseline beliefs about AI agency, trust, and delegation with specific examples
+    - To co-author a team charter with concrete role rotation, communication, and conflict-resolution procedures
   rubric:
     - weight: 40
       description: Environment Setup and Verification
       preemerging: Little or no evidence that the environment was attempted
       beginning: Some components installed, but the verification transcript is missing or incomplete
       progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information
-      proficient: Ollama installed and verified with a complete transcript including model listing, version information, and a successful Python API call
+      proficient: The transcript shows all four steps completed with verbatim terminal output — the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field — plus the operating system name and version; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
     - weight: 40
       description: Reflection Essay
       preemerging: The reflection is missing or does not address the prompts
-      beginning: The reflection addresses some prompts superficially
-      progressing: The reflection addresses all prompts with specific examples, with limited connection to the course themes
-      proficient: The reflection addresses all prompts with specific personal examples and makes a thoughtful connection to agency, trust, or responsibility
+      beginning: The reflection addresses some prompts superficially without naming specific tools or moments
+      progressing: The reflection addresses all four sections with specific examples, but the connection between the two delegation examples is not analyzed or the "What I Want to Build" section is vague
+      proficient: All four sections are present and addressed with concrete specifics — a named AI tool and a described moment of surprise in "My AI Experience," a personal definition of agency distinct from any course reading in "What Agent Means to Me," a pair of delegation examples where the contrast between the two is explicitly analyzed, and a "What I Want to Build" description naming what the system would do, who would use it, and what working would look like
     - weight: 20
       description: Team Charter and Submission
       preemerging: An incomplete submission is provided
       beginning: The submission is provided but the team charter is missing or does not address role rotation
-      progressing: The submission is complete with a charter that addresses roles and communication, with a minor omission
-      proficient: The submission is complete, including a team charter covering role rotation, communication norms, and disagreement resolution
+      progressing: The submission is complete with a charter that addresses roles and communication, with a minor omission such as a missing disagreement procedure or undefined response time expectation
+      proficient: The charter addresses all six rows of the Charter Template — role rotation schedule with named roles and rotation timing, a primary communication channel with a specific response-time expectation, a meeting cadence with a named day and time, a disagreement procedure naming who has the deciding vote or how consensus is reached, a missed-deadline procedure with a stated timeline, and a definition of done naming who checks it — and all team members' typed names appear at the bottom
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-welcomeagents.md"

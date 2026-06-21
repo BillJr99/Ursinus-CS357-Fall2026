@@ -7,10 +7,10 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To build a batch pipeline that scores a folder of submissions against a JSON rubric using a local model and emits a CSV report
-    - To require and verify quoted evidence for every awarded score
-    - To validate the judge against human scores on a calibration set
-    - To measure at least one judge bias empirically and propose a countermeasure
+    - To build a batch pipeline that scores a folder of submissions against a JSON rubric using a local model and emits a CSV report with per-criterion evidence and a weighted total
+    - To verify quoted evidence programmatically against source artifacts and report a hallucinated-evidence rate
+    - To validate the judge against blind human scores on a calibration set using percent agreement or Cohen's kappa
+    - To measure at least one judge bias empirically with a controlled experiment and propose a concrete countermeasure
   rubric:
     - weight: 30
       description: Pipeline Implementation
@@ -41,7 +41,7 @@ info:
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions, including a readme writeup, the pair log, and thoughtful answers to the reflection prompts
+      proficient: The program is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, all human score sheets, and reflection answers that each cite a specific kappa value, bias effect size, or hallucinated-evidence rate from the lab rather than restating the prompt
   readings:
     - rtitle: "LLM-as-Judge Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
