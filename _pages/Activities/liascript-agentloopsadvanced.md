@@ -106,6 +106,8 @@ Observe that at step 1 the agent decides it needs two separate API calls rather 
 
    > *Hint: What machine-checkable criterion could be added to the task? For example, instead of "find three papers," what if the task specified a verifiable property each paper must have?*
 
+> **⚠️ Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought" — that the `Thought:` entries are genuine inner reasoning. They are not. The `Thought:` entries are generated text, just like the `Action:` entries. The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process. This means a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step. ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable* — but visibility does not guarantee correctness. Always verify key claims in the thought entries against the observations they are based on.
+
 ---
 
 ## Model 3: Loop Safety Controls
