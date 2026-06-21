@@ -87,7 +87,7 @@ In this section you will read the complete debate implementation and run it on a
 
 ## 2. Three Agents, Two Rounds, One Vote
 
-**Why this matters:** The code below implements the full Du et al. (2023) protocol in about 30 lines. The most important design choice is the temperature schedule: round 1 uses temperature 0.9 (high diversity — we want agents to explore different reasoning paths) and round 2 uses temperature 0.5 (lower — agents are now refining rather than exploring, anchored by the debate). The seed is intentionally absent in round 1 so that each agent's run is genuinely random and independent. This is the opposite of our usual practice of seeding for reproducibility, and it is intentional: without diversity in round 1, there is nothing useful to debate in round 2.
+**Why this matters:** The code below implements the full Du et al. (2023) protocol (a published research recipe for multi-agent debate: independent answers, then peer review, then a vote) in about 30 lines. The most important design choice is the temperature schedule: round 1 uses temperature 0.9 (high diversity — we want agents to explore different reasoning paths) and round 2 uses temperature 0.5 (lower — agents are now refining rather than exploring, anchored by the debate). The seed is intentionally absent in round 1 so that each agent's run is genuinely random and independent. This is the opposite of our usual practice of seeding for reproducibility, and it is intentional: without diversity in round 1, there is nothing useful to debate in round 2.
 
 Run this locally with:
 
@@ -196,6 +196,8 @@ Run the debate on this question. The correct answer is **10 dollars** (if the wa
    > *Hint: The judge reads everyone's reasoning, not just their final answers. A judge that can explain why it chose one answer over another is more useful than a vote counter. Which agent role from the critique-and-refine activity does this most closely resemble?*
 
 > **⚠️ Common Misconception:** Many students assume that more agents and more rounds always produce more accurate results. This is only true if (a) the agents' errors are independent and (b) the question has a verifiable ground truth that correct reasoning can converge toward. For questions with correlated errors (all agents have the same bias) or no ground truth (matters of opinion), more debate may only produce more confident wrong answers. The research paper that introduced this protocol (Du et al., 2023) reports accuracy gains on specific benchmark tasks — those gains do not automatically transfer to every question type. Always measure, do not assume.
+
+Part III gives you the structured experiments to generate those measurements yourself, replacing claims about debate with data.
 
 [[MC]]
 Multi-agent debate most reliably improves accuracy when:
