@@ -7,35 +7,35 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To apply the Datasheet for Datasets framework (Gebru et al.) to a real dataset
-    - To write a model card (Mitchell et al.) for a model used in the course
-    - To identify and document bias risks with evidence-based reasoning
-    - To analyze realistic misuse scenarios and propose technical and policy controls
+    - To apply the Datasheet for Datasets framework (Gebru et al.) to a real dataset with section-by-section specificity sufficient for an informed deployment decision
+    - To write a model card (Mitchell et al.) for a model used in the course that clearly distinguishes in-scope from out-of-scope uses and identifies bias risks with named populations and mechanisms
+    - To identify and document bias risks with evidence-based reasoning naming the affected population, the specific output that exhibits the bias, and the likely training-data mechanism
+    - To analyze realistic misuse scenarios and propose specific, implementable technical and policy controls traceable to the documentation
   rubric:
     - weight: 25
       description: Datasheet Completeness
       preemerging: Fewer than 3 sections addressed
-      beginning: 6 sections present but answers are one-line
-      progressing: 6 sections with substantive answers, some key questions from the framework answered
-      proficient: All 7 sections answered with specific details, at least 2 genuinely unknown items flagged and explained, minimum 500 words
+      beginning: At least 6 sections present but answers are one-line bullet points that would not give a deployer enough information to assess risk
+      progressing: At least 6 sections with substantive answers of 2-4 sentences each addressing the key Gebru et al. questions, with at least one unknown item noted but not explained
+      proficient: At least 6 of the 7 sections are answered with enough specificity that a deployer could make an informed decision without additional research — naming who created the dataset, on whose behalf, under what license, what the instances represent, how data was collected, what preprocessing was applied, and whether any regulated categories are present; at least 2 genuinely unknown items are flagged with an explanation of what harm could result from deploying without that information; total word count is at least 500 words across all sections
     - weight: 25
       description: Model Card Quality
-      preemerging: Fewer than 4 sections
-      beginning: All sections present but Ethical Considerations is a single sentence
-      progressing: All sections with substantive content
-      proficient: All sections complete, Ethical Considerations identifies 2 specific bias risks with supporting reasoning, Intended Use section clearly distinguishes in-scope from out-of-scope uses, minimum 400 words
+      preemerging: Fewer than 4 sections present
+      beginning: All required sections present but Ethical Considerations is a single sentence and the Intended Use section does not distinguish in-scope from out-of-scope uses
+      progressing: All sections present with substantive content; Ethical Considerations identifies bias risks but does not name the affected population or the specific output behavior; Intended Use lists use cases but out-of-scope uses are vague
+      proficient: All required sections are complete; the Intended Use section names at least two specific out-of-scope uses concrete enough that a deployer could recognize them (e.g., "not intended for medical diagnosis" rather than "not for high-stakes decisions"); Ethical Considerations contains the same two bias risks addressed in the Bias and Limitations criterion with the same depth — named group, named output behavior, named mechanism; the Training Data section explicitly references the datasheet from Part 2 and notes at least one known gap identified there; total word count is at least 400 words
     - weight: 25
       description: Bias and Limitations
       preemerging: No bias discussion
-      beginning: Bias mentioned generically without specifics
-      progressing: Two bias risks identified with plausible reasoning
-      proficient: Two bias risks are specific (which population, which output, what mechanism), at least one is supported by a citation or empirical reference, and the risk's severity is calibrated
+      beginning: Bias mentioned generically without naming an affected population, specific output behavior, or mechanism — for example, "the model may exhibit gender bias"
+      progressing: Two bias risks identified with a named affected population and plausible reasoning, but the specific output behavior or mechanism for at least one is not specified
+      proficient: Two bias risks are fully specified — each names the affected group, describes the specific model output that exhibits the bias (e.g., "disproportionate use of masculine pronouns when completing sentences about surgeons regardless of context"), and explains the likely mechanism in terms of training data distribution; at least one risk is supported by a published citation or by empirical testing the student conducted with results described; the severity of each risk is calibrated by describing the real-world context in which it would cause harm
     - weight: 25
       description: Unintended Use Analysis
-      preemerging: No misuse scenarios
-      beginning: One scenario with no controls
-      progressing: Three scenarios with partial controls
-      proficient: Three distinct misuse scenarios, each with what in the card would alert a deployer, and a specific technical or policy control that is implementable
+      preemerging: No misuse scenarios provided
+      beginning: One scenario provided with no controls, or scenarios are theatrical rather than realistic
+      progressing: Three scenarios provided with partial controls — at least one names what in the documentation would alert a deployer, but the proposed controls are generic rather than specific to the system
+      proficient: Three distinct, realistic misuse scenarios are provided — each names a plausible bad actor with a realistic goal, points to the specific section and language in the model card or datasheet that would alert a careful deployer, and proposes a specific implementable control that is either (a) a technical control naming the mechanism (e.g., input filtering against a regex for HIPAA-regulated terms, rate limiting to N requests per user per hour) or (b) a policy control naming the enforcement mechanism (e.g., a terms-of-service clause requiring human clinical review before acting on any output, with a named audit role)
   readings:
     - rtitle: "Data Cards Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
