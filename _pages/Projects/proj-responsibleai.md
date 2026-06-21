@@ -7,41 +7,41 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To apply a structured framework such as the NIST AI Risk Management Framework, EU AI Act risk categories, or the Montreal Declaration to a real AI system
-    - To identify concrete risks and failure modes in a deployed AI system through systematic analysis
-    - To propose governance measures, monitoring systems, and accountability structures appropriate to the system's risk level
-    - To communicate findings to a non-technical stakeholder audience in language they can act on
+    - To select a specific, named, deployed AI system with identifiable affected populations and apply a structured framework (NIST AI RMF, EU AI Act, or Montreal Declaration) to it completely and systematically
+    - To identify at least three concrete failure modes with named mechanisms in a deployed AI system, distinguishing risks that have materialized from risks that are foreseeable
+    - To produce a governance document with a monitoring plan containing specific metrics and thresholds, an incident response procedure with named roles and timelines, a stakeholder communication plan, and an appeal process navigable without a lawyer
+    - To communicate findings and recommendations to a non-technical stakeholder audience in plain English in a fifteen-minute board presentation that moves from evidence to action
   rubric:
     - weight: 20
       description: System Selection and Scoping
-      preemerging: The selected system is too generic to analyze meaningfully, or no proposal is submitted
-      beginning: A specific system is selected but the proposal does not identify who is affected, what the system decides, or why the framework chosen is appropriate
-      progressing: The proposal identifies a specific system, its affected populations, and a rationale for the chosen framework; the scope is mostly well-defined though some key decisions or data flows are left unspecified
-      proficient: The proposal identifies a specific, non-generic AI system with named affected populations, a clearly bounded scope of analysis, a well-reasoned choice of framework with justification for why it fits this system better than the alternatives, and at least one preliminary hypothesis about where the highest risks lie
+      preemerging: The selected system is too generic to analyze meaningfully (e.g., "AI in hiring" rather than a named product), or no proposal is submitted
+      beginning: A specific system is selected but the proposal does not identify the affected populations, what the system decides or outputs, or why the chosen framework fits better than the alternatives
+      progressing: The proposal identifies a specific system with named affected populations and a rationale for the chosen framework; the scope is mostly well-defined but key decisions or data flows are left unspecified, or the preliminary hypothesis is absent
+      proficient: The proposal names the specific system and its operator, identifies the affected populations and how the system's decisions reach them, argues in three sentences why the chosen framework fits this system better than the two alternatives, states at least one preliminary hypothesis about where the highest risks lie, and demonstrates that enough public information exists to support the analysis (citing at least two independent sources found in the initial 30-minute search)
     - weight: 25
       description: Risk Analysis and Framework Application
-      preemerging: The chosen framework is not applied, or application is superficial name-checking without substantive mapping
-      beginning: The framework is applied to some parts of the system, but major steps or categories are skipped and findings are not grounded in evidence about the actual system
-      progressing: The framework is applied systematically with most steps completed; risks are specific to the system, though some findings lack evidentiary grounding or the framework mapping contains gaps
-      proficient: The framework is applied completely and systematically; every major framework step or category produces a specific, evidenced finding about this system; data sources, affected populations, and accountability gaps are documented; at least three distinct failure modes are identified with plausible mechanisms, not just abstract risks; and the analysis distinguishes between risks that have materialized and risks that are foreseeable
+      preemerging: The chosen framework is not applied, or application is superficial name-checking — for example, "the system GOVERNS by having terms of service" without naming a responsible role or artifact
+      beginning: The framework is applied to some parts of the system but major steps or categories are skipped; findings are stated without citing a source for the claim
+      progressing: The framework is applied systematically with most steps completed and findings grounded in cited sources; at least two failure modes are identified with mechanisms, but one or more findings describe abstract risks ("the system may exhibit bias") rather than specific, mechanistic failure modes
+      proficient: Every major framework step or category produces a specific, evidenced finding with a citation; at least three distinct failure modes are documented — each names the affected group or input type, the specific erroneous output, and the mechanism by which the failure occurs; the analysis explicitly distinguishes between risks that have materialized (with evidence) and risks that are foreseeable; accountability gaps are named — not just "accountability is unclear" but specifically what role is absent and what decision it cannot be made without
     - weight: 25
       description: Governance Recommendations
-      preemerging: No governance recommendations are provided, or recommendations are aspirational values without mechanisms
-      beginning: Recommendations are present but are generic best practices not tailored to this system, or lack owners, timelines, or detection mechanisms
-      progressing: Recommendations are specific to the system, with named owners and at least some monitoring mechanisms; the incident response and appeal process are present but underdeveloped
-      proficient: The governance document provides a monitoring plan with specific metrics and thresholds, an incident response procedure with named roles and decision points, a stakeholder communication plan that distinguishes between affected parties and what each needs to know, and an appeal process that an affected party could actually navigate; every recommendation passes the third-party test and is traceable to a specific risk finding
+      preemerging: No governance recommendations are provided, or recommendations are aspirational values without mechanisms — for example, "increase transparency" without a named artifact or process
+      beginning: Recommendations are present but are generic best practices not tailored to this system, or lack owners, timelines, or the threshold that triggers review
+      progressing: Recommendations are specific to the system with named roles; the monitoring plan names metrics but omits thresholds or measurement frequency; the incident response procedure and appeal process are present but incompletely specified
+      proficient: The monitoring plan names each metric, its data source, its measurement frequency, the specific threshold that triggers review, and the named role responsible — for example, "demographic parity ratio measured monthly on a random 50-essay sample, review triggered if ratio falls below 0.9, owned by the District AI Coordinator"; the incident response procedure defines what constitutes an incident with a specific trigger (not "unexpectedly low scores"), names who is notified in what order within what timeframe, and names who has authority to suspend the system; the stakeholder communication table distinguishes what each stakeholder group needs to know and who delivers it; the appeal process names how to initiate, who reviews, what evidence the reviewer receives, what remedies are available, and the timeline from initiation to resolution; every recommendation is traceable to a specific risk finding from Stage 2
     - weight: 15
       description: Stakeholder Communication
-      preemerging: The stakeholder presentation is missing or is addressed to a technical audience
-      beginning: A presentation is provided but uses technical language that a non-specialist board could not act on, or fails to convey the key risks and recommendations
-      progressing: The presentation is largely accessible to a non-technical audience; the key risks and top recommendations are communicated clearly, though some passages lapse into jargon or the narrative logic is unclear
-      proficient: The presentation is fully accessible to a non-technical stakeholder audience, conveys what the system does, who is at risk, what was found, and what is recommended in a logical sequence that moves from evidence to action, anticipates and addresses likely board objections, and is completable in fifteen minutes
+      preemerging: The stakeholder presentation is missing or is addressed to a technical audience using unexplained framework terminology
+      beginning: A presentation is provided but uses technical language a non-specialist board could not act on, or omits the key risks or recommendations
+      progressing: The presentation is largely accessible to a non-technical audience with key risks and top recommendations communicated clearly, but at least one section lapses into jargon or the sequence from evidence to recommendation is unclear
+      proficient: The presentation is fully accessible to a non-technical stakeholder audience — no unexplained acronyms or framework terms; it covers what the system does, who is at risk, what was found (organized by severity and leading with the most serious finding), and what is recommended (each recommendation with an estimated effort level and timeline); it includes at least one concrete, realistic example of an individual person who could be harmed; it anticipates and has specific evidence-based responses to the three likely board objections listed in the project instructions; it is completable in fifteen minutes
     - weight: 15
       description: Presentation and Artifacts
       preemerging: The presentation and artifact package are missing or substantially incomplete
-      beginning: A presentation is delivered but without a rehearsed structure; the artifact package is incomplete
-      progressing: The presentation is organized and delivered within the time limit; the artifact package contains most required documents though some are incomplete
-      proficient: The presentation is delivered within the time limit with a clear narrative arc, a visual aid that a board member could refer to afterward, and at least one concrete example of a real person who could be harmed by the system; the artifact package is complete, organized, and could be handed to a regulator or compliance officer without modification
+      beginning: A presentation is delivered but without a rehearsed structure or timing; the artifact package is incomplete — one or more required documents are missing
+      progressing: The presentation is organized and delivered within the time limit; the artifact package contains most required documents but at least one is incomplete (e.g., risk analysis cites fewer than eight sources, or governance document is missing the appeal process)
+      proficient: The presentation is delivered within fifteen minutes with a clear narrative arc following the required section structure; visual aids are specific enough that a board member could refer to them afterward without the presenter present; the artifact package contains all five required documents — approved proposal, 4-to-6-page risk analysis report with at least 8 citations and 3 documented failure modes, 3-to-5-page governance document with all four required sections, presentation materials, and individual contribution statement if a pair — organized and complete enough to hand to a regulator without modification
 
 tags:
   - final-project
