@@ -125,6 +125,8 @@ Below are four `docker run` configurations ranging from dangerous to production-
 
 Reading the hardened configuration flag by flag:
 
+The annotated command below walks through every flag in the hardened configuration — read each comment carefully, because each flag corresponds to a specific threat in the Model 2 threat table.
+
 ```bash
 docker run \
   --read-only \              # The container's root filesystem is immutable; writes fail immediately
@@ -138,6 +140,8 @@ docker run \
 ```
 
 **Before/After comparison for the `--read-only` and `--tmpfs /tmp` flags:**
+
+These before/after examples let you see the concrete difference in filesystem behavior — run each mentally and predict whether the command will succeed or fail before reading the comment.
 
 ```bash
 # Without --read-only: agent can write anywhere in the container filesystem
@@ -175,6 +179,8 @@ docker run --read-only --tmpfs /tmp my-agent-image bash -c "echo 'scratch' > /tm
 ## Model 4: Safety Patterns Inside the Agent Loop
 
 Containerization is the outer shell. Inside it, the agent code itself needs safety rails. The two most common failure modes for LLM agents are **unbounded loops** (the agent never stops) and **unchecked execution** (the agent runs code it should not). These code-level patterns work alongside container-level isolation — neither alone is sufficient.
+
+The agent loop below implements three safety gates in order — a human checkpoint for irreversible actions, a static analysis check for generated code, and a hard tool-call budget — so you can see how each gate corresponds to a distinct failure mode.
 
 ```python
 # Constants defined at the top — easy to adjust per deployment
@@ -236,10 +242,10 @@ for iteration in range(MAX_ITERATIONS):
 
 [[MC]]
 A development team deploys a code-generation agent with `docker run --privileged -v /:/host`. A red team finds a prompt injection vulnerability. What is the worst-case outcome compared to a hardened deployment?
-- ( ) The agent generates incorrect code, which is the same in both cases
-- ( ) The attacker can read files in /tmp, which the hardened deployment also allows
+- ( ) The agent generates incorrect code — the quality of generated code is determined by the model, not by Docker flags, so both deployments are equally at risk for correctness
+- ( ) The attacker can read files in /tmp, which the hardened deployment also allows via the --tmpfs flag
 - (x) The attacker gains read/write access to the entire host filesystem and can escalate to full host compromise
-- ( ) The privileged flag only affects network access, so the impact is limited
+- ( ) The --privileged flag primarily affects network capabilities, so the main additional risk compared to a hardened deployment is unrestricted outbound traffic
 
 ---
 
@@ -248,6 +254,8 @@ A development team deploys a code-generation agent with `docker run --privileged
 **Exercise A — Dockerfile Hardening:**
 
 *What to do:* The following Dockerfile runs an agent as root with no resource limits. Rewrite it to use a non-root user, a read-only filesystem with a `/tmp` tmpfs, and to drop all Linux capabilities except `NET_BIND_SERVICE`.
+
+Compare the before and after Dockerfiles below — identify exactly which lines in the hardened version address the threats from Model 2, and why each change matters.
 
 ```dockerfile
 # BEFORE: dangerous defaults — runs as root, no restrictions

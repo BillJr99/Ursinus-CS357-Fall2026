@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Agent Security Is Different
 
+In this part, you will see why agent security requires a fundamentally different mental model than traditional web security — a shift from "separate code and data" to understanding how natural language can itself be executable.
+
 ## Model 1: The Collapsed Security Boundary
 
 Traditional web applications have a clear boundary between logic and data. The application code runs on a server; user input is data that flows into it. An attacker who controls your input does not control your code.
@@ -78,9 +80,13 @@ Additionally, agents operate with **persistent state** (memory), **external tool
 
    *Hint:* If Agent A is compromised by an injection, and its output goes directly into Agent B's prompt without sanitization, Agent B may inherit the injected instructions. How many agents would need to be compromised for an attacker to reach a privileged final action?
 
+With the conceptual gap between traditional and agent security established, Part II gives you the industry-standard vocabulary for naming the specific threats that gap creates.
+
 ---
 
 # Part II: The OWASP LLM Top 10
+
+In this part, you will map ten named threat categories to the specific attack patterns your agents could face — giving you a vocabulary and checklist that transfers to any agentic project you build.
 
 ## 2. The Threat Taxonomy
 
@@ -103,9 +109,13 @@ The Open Web Application Security Project (OWASP) publishes an annually updated 
 
 > **⚠️ Common Misconception:** Many developers focus almost exclusively on LLM01 (Prompt Injection) and treat the other nine risks as secondary. In practice, **LLM08 (Excessive Agency) is responsible for some of the most severe real-world incidents** because it multiplies the impact of every other attack. A prompt injection into an agent with read-only access causes information disclosure; the same injection into an agent with delete access causes data loss. Defense starts with LLM08.
 
+The OWASP taxonomy names the broad categories; Part III drills into the patterns specific to multi-agent and memory-enabled systems that the Top 10 does not fully capture.
+
 ---
 
 # Part III: Agent-Specific Threats Beyond the Top 10
+
+In this part, you will examine emerging attack patterns that exploit the unique properties of multi-session, tool-using agents — threats the OWASP Top 10 categories describe broadly but that deserve concrete illustration.
 
 ## 3. Emerging Attack Patterns
 
@@ -139,9 +149,13 @@ The OWASP list captures broad categories, but agent architectures introduce addi
 
    *Hint:* The malicious document could (Integrity) redirect the agent to perform unauthorized refunds, (Confidentiality) instruct the agent to reveal other users' order information, and (Availability) cause the agent to enter an infinite retry loop by instructing it to "try the refund 100 times until it succeeds."
 
+Knowing what can go wrong is only half the picture — Part IV shows how to stack defenses so that your system fails safely when one layer is bypassed.
+
 ---
 
 # Part IV: Defense-in-Depth
+
+In this part, you will see how independent layers of security controls stack together, so that an attacker who defeats one layer still faces others — the same principle used in physical security and network security.
 
 ## 4. Layered Controls
 
@@ -161,9 +175,13 @@ No single control is sufficient. Effective agent security layers multiple indepe
 | Rate Limiting | Per-user and per-session caps on request count, token consumption, and tool invocations per minute | Model DoS via token exhaustion, scraping-style model theft via bulk querying, runaway agent loops | Does not stop a low-and-slow attacker who stays within rate limits; does not prevent a single high-damage action within the limits | `if session_tokens > 50000: suspend_session(reason="token_limit_exceeded")` |
 | Human-in-the-Loop Gates | Require explicit human approval before the agent executes high-stakes actions: sending emails, deleting records, issuing refunds, executing code | Catastrophic irreversible actions by a compromised agent — a human reviewer catches the anomaly before it executes | Low-stakes harm that accumulates below the approval threshold; approval fatigue causes reviewers to approve without reading carefully over time | Gate: any refund > $50, any file deletion, any outbound email to an address not in a verified allowlist |
 
+With the defense layers mapped, Part V puts them to work in a live incident where you must detect, contain, investigate, and remediate a real attack scenario.
+
 ---
 
 # Part V: Incident Simulation
+
+In this part, you will work through a realistic security incident from detection to post-mortem, applying the threat vocabulary and defense layers from Parts I through IV to a concrete scenario.
 
 ## 5. The Misbehaving Customer Service Agent
 
@@ -235,14 +253,18 @@ A good post-mortem documents what happened without blame and focuses on systemic
 
 [[MC]]
 Which of the following best illustrates the "Excessive Agency" risk from the OWASP LLM Top 10?
-- ( ) An attacker injects malicious instructions into a document that the agent reads.
+- ( ) An attacker injects malicious instructions into a document that the agent reads — this is a classic example of Excessive Agency because documents are an external trust boundary.
 - (x) An agent is granted file-deletion permissions even though its stated task only requires reading files, and a manipulated prompt causes it to delete critical data.
-- ( ) The agent returns sensitive PII that was present in its training data.
-- ( ) A third-party plugin used by the agent contains a backdoor.
+- ( ) The agent returns sensitive PII that was present in its training data — this illustrates Excessive Agency because the model has retained information it should not have.
+- ( ) A third-party plugin used by the agent contains a backdoor — since plugins extend what the agent can do, a malicious plugin is the primary example of Excessive Agency.
+
+The incident simulation illustrated how threat models translate to real response decisions — Part VI asks you to apply that same thinking to your own projects.
 
 ---
 
 # Part VI: Synthesis and Practice
+
+In this final part, you will apply everything from Parts I through V to your own project — building the threat model and sanitization skills that belong in every agent you ship.
 
 ## Exercises
 
@@ -251,6 +273,9 @@ Which of the following best illustrates the "Excessive Agency" risk from the OWA
    *What to do:* Map your pipeline's components (user input, retrieval, tools, output) to the OWASP threat categories. At minimum, address LLM01, LLM07, and LLM08.
 
    *Starter hint:*
+
+   The template below shows the row format — copy it and fill in one row for each of the OWASP Top 10, using your own project's components as the context for each scenario.
+
    ```
    | OWASP Risk     | Applies? | Attack Scenario                          | Defense Layer Applied         |
    |----------------|----------|------------------------------------------|-------------------------------|
@@ -266,6 +291,9 @@ Which of the following best illustrates the "Excessive Agency" risk from the OWA
    *What to do:* Write the function, write unit tests with at least five clean inputs and five malicious inputs, and confirm the function blocks the malicious inputs and passes the clean ones.
 
    *Starter hint:*
+
+   The starter code below defines the function signature and two of the three required checks — your task is to understand how each regex pattern catches the corresponding attack type, then add test cases that cover both clean and malicious inputs.
+
    ```python
    import re
 

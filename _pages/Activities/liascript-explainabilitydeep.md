@@ -86,6 +86,8 @@ A critical distinction: **"explanation" does not equal "understanding."** Post-h
 
 *Hint:* Consider scale. The chart shows that "fever" contributed +0.12 and "fatigue" contributed +0.08. These numbers are accurate but what do they mean to a patient? Is +0.12 large or small? What is the baseline? What additional information would a patient need to judge whether the diagnosis is reliable?
 
+Now that we understand what explanations are supposed to do and where they fall short conceptually, we can examine the three most widely-used techniques in detail and evaluate each one's specific strengths and failure modes.
+
 ---
 
 ## Model 2: SHAP, LIME, and Attention Weights
@@ -163,6 +165,8 @@ Critical finding: **Jain & Wallace (2019), "Attention is not Explanation"** show
 
 *Hint:* Jain & Wallace showed you can sometimes swap in completely different attention distributions and get the same model output. So high attention on "not" does not prove "not" caused the prediction. What would you do to directly test whether "not" matters? Consider: what happens to the prediction if you replace "not guilty" with just "guilty"? What if you replace "not" with a synonym like "absolutely not"?
 
+The limitations of SHAP, LIME, and attention weights become even more pronounced when the model being explained is itself generating language — as LLMs do — rather than simply classifying an input.
+
 ---
 
 > **⚠️ Common Misconception:** Students often assume that because attention weights are produced by the model itself — not by an external approximation method like LIME — they must be more faithful to the model's true reasoning than SHAP or LIME. This is backwards. SHAP and LIME, despite being external approximations, are specifically designed and evaluated for faithfulness. Attention weights were designed for the model to function correctly, not to explain itself to humans. The fact that a mechanism is internal to the model does not make it a reliable explanation of the model's decisions.
@@ -171,10 +175,12 @@ Critical finding: **Jain & Wallace (2019), "Attention is not Explanation"** show
 
 A medical AI system explains its recommendation for a cancer screening referral by highlighting which regions of a patient's medical scan were most important, using LIME to generate the highlighted regions. A radiologist reviewing the recommendation should treat this explanation as:
 
-- ( ) Definitive evidence identifying which anatomical features caused the AI's diagnosis
-- ( ) A complete substitute for their own clinical analysis, since the AI has quantified the evidence
+- ( ) Definitive evidence identifying which anatomical features caused the AI's diagnosis — LIME explanations point to what the model attended to, which is not the same as what anatomically caused the finding
+- ( ) A complete substitute for their own clinical analysis, since the AI has quantified the evidence — quantification creates an appearance of precision that the underlying LIME instability does not support
 - (x) A plausible but potentially unstable local approximation that should complement — and may usefully direct — their clinical judgment, but cannot replace it
-- ( ) Proof that the model is unbiased and has no spurious correlations in its training data
+- ( ) Proof that the model is unbiased and has no spurious correlations in its training data — explanation methods describe behavior on individual inputs; they do not audit whether training data contained biased patterns
+
+> *Hint:* Recall that LIME generates a local approximation by perturbing the input — running it on a different random seed would produce a different highlighted region. "Definitive evidence" requires a level of stability and causal connection that LIME does not provide. The last option conflates explanation (what the model attended to) with fairness (whether the model learned spurious patterns) — these are separate questions.
 
 ---
 
@@ -235,7 +241,7 @@ When an *agent* — not just a classifier — is making decisions, explanation r
 
 *What to do:* Install `transformers` and `shap` (or use a free Colab notebook). Run a sentiment model on your five sentences. Use `shap.Explainer` on the model, or if SHAP is not available, compare model outputs after manually replacing words to estimate importance.
 
-*Starter hint:*
+*Starter hint:* The code below loads a pre-trained sentiment model and runs SHAP to produce token-level attributions — look for which words receive negative SHAP values (pushing toward "negative") versus positive ones, and notice whether the attributions match your intuition about why the sentence has that sentiment:
 
 ```python
 # Install: pip install transformers shap

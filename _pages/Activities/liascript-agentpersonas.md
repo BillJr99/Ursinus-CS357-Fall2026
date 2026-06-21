@@ -78,6 +78,8 @@ Think of a system prompt like a job description combined with a company handbook
 
 *Hint:* Think about what happens if the persona is instructed to "always be encouraging and positive" and a student asks for feedback on a security vulnerability in their code. What does "positive" mean when the technically correct answer is "this is dangerous"? No one intended harm — but the persona's design created a conflict.
 
+Understanding how carefully-designed personas can still break down leads naturally to the next question: what are the systematic ways persona design fails in practice?
+
 ## Model 2: Persona Consistency and Failure Modes
 
 Even a carefully designed persona can degrade mid-conversation. Imagine hiring a new employee, briefing them thoroughly on their first day — then watching them slowly forget the rules over the course of a long, exhausting shift. That is essentially what happens to an AI agent during a long conversation: the original instructions become proportionally less influential as more context accumulates. Understanding these failure modes helps you design more resilient systems.
@@ -119,10 +121,12 @@ The user explicitly instructs the agent to "forget" its persona or "pretend to b
 A course assistant persona is designed to be "always positive and encouraging" to help anxious students. A student pastes code and asks "Is this correct?" The code has a critical bug that would fail all test cases. The most responsible design choice is:
 
 [[MC]]
-- ( ) Have the agent say the code looks great to stay on-brand and protect student confidence
+- ( ) Have the agent say the code looks great — a well-designed "positive" persona should prioritize student emotional wellbeing over factual accuracy
 - (x) Build a truthfulness constraint that overrides tone guidelines when the accuracy of technical feedback is at stake
-- ( ) Have the agent refuse to evaluate code at all to avoid the conflict
-- ( ) Add a disclaimer that the persona always gives encouraging feedback regardless of accuracy
+- ( ) Have the agent refuse to evaluate code at all — topic boundaries should prevent it from engaging with potentially discouraging content
+- ( ) Add a disclaimer that the persona always gives encouraging feedback regardless of accuracy, so students know not to rely on it for correctness
+
+With these failure modes in mind, we can now look at the positive principles that make system prompts resilient from the start.
 
 ## Model 3: Six Principles for Effective System Prompts
 

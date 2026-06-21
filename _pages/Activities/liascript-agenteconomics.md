@@ -103,6 +103,8 @@ The same application costs $2/month on a small model or $360/month on a frontier
 
 ---
 
+With a firm grasp of how token pricing and total costs shape what you build, you are ready to examine why even well-priced AI products may still optimize for the wrong goals.
+
 ## Model 2: Incentive Misalignment in AI Markets
 
 Markets create incentives that may not align with users' actual needs. Think of how social media platforms optimize for engagement (time-on-app) rather than wellbeing (what's actually good for users). The two are correlated but not identical — and the gap between them causes real harm. AI has analogous incentive misalignments, and understanding them makes you a more skeptical consumer of model claims and a more thoughtful builder.
@@ -166,9 +168,11 @@ A startup claims their new model beats GPT-4 on every published benchmark. The s
 - ( ) What GPU cluster did they use to train it?
 - ( ) Are the model weights available as open-source?
 - (x) Were the benchmark test sets included in the model's training or fine-tuning data, making benchmark scores potentially inflated beyond genuine capability?
-- ( ) Is the CEO a graduate of a prestigious technical university?
+- ( ) Did the model achieve these scores on a single benchmark run, or were the results averaged across multiple evaluation runs?
 
 ---
+
+Understanding these market-level misalignments prepares you to make more deliberate design and business-model choices as you architect and commercialize your own AI agents.
 
 ## Model 3: Agent Economics for Builders
 

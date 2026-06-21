@@ -93,6 +93,8 @@ Ask someone whether an AI can be creative and you will get a confident "yes" or 
 
 ---
 
+With Boden's framework in hand for evaluating creative claims, you are ready to examine the legal and ethical landscape that forms the context in which AI creativity is currently being deployed and contested.
+
 ## Model 2: Copyright, Attribution, and the Artist's Dilemma
 
 The rise of generative AI has created a legal and ethical crisis in creative fields. Three separate issues are often conflated in public debate, but they must be kept distinct because they have different legal frameworks, different affected parties, and different potential remedies.
@@ -159,6 +161,8 @@ An artist claims that an AI system was trained on their publicly posted portfoli
 > **Why this answer?** As of 2025, no US court has issued a final ruling on whether training generative AI models on copyrighted works constitutes infringement. The cases are ongoing. Style — as distinct from specific original expression — has historically not been protectable under US copyright law: you cannot copyright "impressionism" or "a distinctive color palette." But whether training on copyrighted work constitutes fair use is an open question, and the answer may differ depending on the scale of copying, the commercial purpose, and the market impact on the original creator. "Publicly posted" does not mean "in the public domain" — copyright attaches automatically to original creative work at the moment of creation, not upon registration or upon certain types of publication.
 
 ---
+
+The legal debates around training data and style mimicry set the stage for understanding the full spectrum of ways humans and AI systems can work together creatively — which is where you have the most direct agency as a builder.
 
 ## Model 3: Human-AI Creative Collaboration
 

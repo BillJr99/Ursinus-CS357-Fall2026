@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Does Processing Symbols Constitute Understanding?
 
+In this part, you will examine four philosophical positions on machine understanding — from Turing's behavioral criterion to Searle's Chinese Room — which will help you reason more clearly about what it means to claim that an AI "understands" something and what engineering obligations follow from that claim.
+
 ## 1. Four Positions on Machine Minds
 
 These questions might seem purely academic, but they have direct engineering consequences. If you believe a system understands its outputs, you design it differently than if you believe it is a very sophisticated autocomplete. If you believe users might attribute feelings to your system, you design its interface differently. And if you believe no system can ever be responsible for harm, you assign responsibility to humans differently. The four positions below are not historical curiosities — they are live options that practicing AI engineers implicitly adopt.
@@ -81,7 +83,11 @@ The debate over whether machines can understand — and what understanding even 
 
 ---
 
+The philosophical debate over symbol manipulation versus genuine understanding becomes urgent when you see it play out in real users — which the ELIZA effect illustrates with striking clarity.
+
 # Part II: The ELIZA Effect and Psychological Projection
+
+In this part, you will analyze the ELIZA effect and the frame problem through a concrete case study — which will help you design AI systems with informed awareness of the psychological dynamics they inevitably create in users.
 
 ## 2. What People Do With Systems That Talk
 
@@ -124,7 +130,11 @@ Which of the following most accurately describes the frame problem as it applies
 
 ---
 
+Once you see how readily users project understanding and care onto AI systems, the question of who is responsible when those systems cause harm becomes both more complex and more pressing.
+
 # Part III: Responsibility and the Principal-Agent Problem
+
+In this part, you will map how responsibility for AI harm is distributed across developers, deployers, users, and affected third parties — which is essential preparation for making defensible engineering choices in your own projects.
 
 ## 3. When an Agent Causes Harm, Who Answers?
 

@@ -42,6 +42,8 @@ Before diving in, keep this reference table handy. Every term below appears in t
 
 # Part I: The Trust Gap
 
+In this part, you will examine the gap between a working demo and a trustworthy artifact — the central challenge of AI-assisted making. Understanding this gap is what separates someone who ran a demo from someone who built something worth trusting.
+
 ## 1. Generation Is Cheap; Verification Is the Product
 
 Think of the difference between a draft email and a sent email. Your email client lets you draft anything in seconds, but the moment you click Send, you are responsible for every word. An agentic tool puts you in the same position, but the "Send" button is "Approve," and the email goes to your entire filesystem. The economics of making changed: an agent produces a plausible artifact in minutes, so plausible artifacts are no longer scarce, and the scarce thing is *justified confidence* that an artifact does what it claims under conditions its maker did not happen to try. Every pathology this course has named (specification gaps, reward hacking, the happy-path demo, confident hallucination) reappears here as a making problem: the agent satisfied your words, not your intent, and only verification reveals the difference. So the maker's identity shifts. You are less the producer of the artifact and more its **specifier, verifier, and accountable owner**: you decide what "correct" means, you arrange for that meaning to be checked mechanically and repeatedly, and your name absorbs the consequences either way. Both tracks below are that identity, practiced at different altitudes.
@@ -68,15 +70,21 @@ A student asks an agent for a unit-converter web page; it works beautifully in t
 
    > *Hint: The maker identity from Section 1 assigns three responsibilities: specifying what "correct" means, verifying that the artifact meets that specification, and owning the consequences. Map each failure to one of these responsibilities. The agent produced what you asked for — the question is whether you asked for the right thing and checked that you got it. If you did not specify negative-number handling, whose job was it to know that a unit converter might receive negative temperatures?*
 
+The trust gap is the same regardless of your background — the next two tracks show what closing it looks like in practice, from two different starting points.
+
 ---
 
 # Part II: Track A, for Software Engineers
+
+In this part, you will apply software-engineering discipline — tests, small diffs, and CI — to agent-generated code. These habits are what prevent the "it worked in the demo" failure from reaching real users.
 
 ## 2. The Agent as a Junior Colleague with Infinite Stamina
 
 **Why this matters:** Imagine hiring someone who can write code faster than you can read it, never gets tired, and has read every Stack Overflow answer ever posted — but has never shipped anything to real users and does not know your codebase's conventions. That is the agent. The question is not whether to use it; the question is what review discipline you apply to its output. The same discipline you would apply to a junior colleague's pull request applies here, and skipping it because "the agent is smart" is the same mistake as merging without reviewing because "the contributor is experienced." Speed of generation does not substitute for correctness of review.
 
 Treat agent output exactly as you would a pull request from a bright, fast, context-poor new hire, which yields the working rules. **Small diffs only**: ask for one function, one fix, one test at a time, because review quality collapses with diff size, and your review *is* the safety system. **Tests precede or accompany every change**: the strongest pattern is writing (or having the agent write, then you verifying) the failing test first, so the specification exists in executable form before the implementation does; an agent aimed at a failing test cannot reward-hack you nearly as easily as an agent aimed at prose. **Read every line before it merges**: the permission gate taught you to read commands; this is the same discipline for diffs, and "it passed the tests" does not excuse you, because the tests are also under review. **Pin everything**: dependency versions, model versions, seeds; an unpinned project is an unreproducible one, and you have a lab rubric line that already says so.
+
+The code below illustrates the "test first" pattern: notice that the tests exist before any implementation does, and each test case is a precise contract the agent must satisfy — look for how the `test_rejects_nonnumeric` test pre-decides the comma-bug behavior that would otherwise be a specification gap.
 
 ```python
 # The pattern in miniature: the spec exists as a failing test first.
@@ -104,9 +112,13 @@ Hand the agent *this file* and the request "make these pass without modifying th
 
 Steer the horsepower toward its best uses: generating test cases you would not have bothered writing (edge cases, property-based sketches, regression tests from bug reports); mechanical refactors under test protection; reading unfamiliar codebases and drafting the documentation nobody wrote; and first drafts of CI configuration, which Part IV shows. The common thread is work where verification is cheap relative to generation, which is precisely where the new economics pay you instead of ambushing you.
 
+The same rigor applies when you are not writing tests at all — Part III shows the equivalent discipline for makers who work without code.
+
 ---
 
 # Part III: Track B, for Makers Who Do Not Code
+
+In this part, you will practice the two core non-coder skills — writing concrete specifications and systematically verifying the result — that turn AI generation from guesswork into a reliable process. These same skills underpin professional product development at every level.
 
 ## 4. You Are Not "Using AI Instead of Coding"; You Are Specifying and Verifying
 
@@ -115,6 +127,8 @@ Steer the horsepower toward its best uses: generating test cases you would not h
 The non-coder's track is not a lesser version of Track A; it is the same two skills with different instruments. **Specification** for you means writing what you want with the concreteness of a recipe: who the user is, what they see first, what every button does, what happens when input is empty or wrong or hostile, and what "done" looks like as a checklist you could hand a stranger. The single most powerful sentence available to you is: *"Before writing anything, ask me five questions about what I have not specified."* It converts the agent from a guesser into an interviewer and surfaces the gaps while they are still free to fix.
 
 **Verification** for you means systematic trying, not coding: maintain a checklist of behaviors (drawn from your spec) and walk it after every change; deliberately misuse your artifact (empty inputs, absurd inputs, the back button, a phone screen); and recruit one person who was not in the room to attempt the main task while you watch silently, which will teach you more in five minutes than an afternoon of self-testing. When something breaks, your bug report is itself a specification act: *what I did, what I expected, what happened instead*, pasted verbatim to the agent, which fixes from that triplet far better than from "it's broken."
+
+The checklist below is a real engineering artifact — notice that every item is binary (pass/fail), concrete enough for a stranger to test, and grounded in the actual user experience rather than the developer's intent:
 
 ```markdown
 ## Acceptance checklist: tip calculator (v0.2)     <- this artifact IS engineering
@@ -134,15 +148,19 @@ A non-coding maker's strongest defense against an agent's specification gaps is:
 - (x) Writing concrete acceptance criteria first and instructing the agent to ask clarifying questions before generating, then verifying against the criteria after every change
 - ( ) Regenerating until the output looks right
 
+Both tracks now converge on the same institutional mechanism: a system that runs every check automatically, every time, so that verification does not depend on anyone remembering to do it.
+
 ---
 
 # Part IV: The Shared Discipline of CI
+
+In this part, you will set up Continuous Integration — the mechanism that runs your checks automatically on every change so that verification never depends on human memory or goodwill. CI is the honest referee that no agent can charm.
 
 ## 5. Continuous Integration: Your Standards, Running While You Sleep
 
 **Why this matters:** Imagine if every time you pushed a change to a shared project, a robot immediately ran every check you had ever written and emailed you the results before anyone else saw the change. That is CI, and it means the question "did I break anything?" has an answer in two minutes rather than two days. For agent-assisted projects specifically, CI is the honest referee that the agent cannot charm: a persuasive agent can convince you its change is correct, but a failing CI run simply reports the test result, with no negotiation.
 
-CI is the mechanization of everything above: a service (GitHub Actions, in our course) that runs your checks automatically on every push, so the question "did anything break?" gets answered by a machine, every time, before a human ever trusts the change. A complete, real workflow:
+CI is the mechanization of everything above: a service (GitHub Actions, in our course) that runs your checks automatically on every push, so the question "did anything break?" gets answered by a machine, every time, before a human ever trusts the change. A complete, real workflow — read the `on: [push, pull_request]` trigger and the `run: python -m pytest tests/ -v` step carefully, because those two lines are where your automated checks attach to the development process:
 
 ```yaml
 # .github/workflows/ci.yml
@@ -165,6 +183,8 @@ Commit that file and the green check or red X appears on every push and pull req
 ---
 
 # Part V: Human-Centric Design
+
+In this part, you will shift from technical verification to user-centered thinking — designing for the person who will actually use your artifact under real conditions, not the ideal conditions of your demo. This is the last mile most projects never finish.
 
 ## 6. The Artifact Meets a Person
 

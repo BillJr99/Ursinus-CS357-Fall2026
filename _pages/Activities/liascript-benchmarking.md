@@ -150,10 +150,10 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 
 A benchmark is released publicly with all test examples included in the paper and available for download. After one year, state-of-the-art models score 97% on it. The most important caveat when interpreting this result is:
 
-[[ ]] The benchmark must have been too easy from the very beginning and was therefore poorly designed
-[[ ]] All AI problems in this domain are now completely solved and no further research is needed
+[[ ]] Benchmark difficulty is fixed at design time — a 97% score proves the benchmark was always trivially easy, not that models improved through contamination or genuine capability gains
+[[ ]] A state-of-the-art score on a benchmark means the underlying real-world capability has been fully solved — leaderboard performance directly predicts deployment quality in production
 [[x]] Models may have been trained on or fine-tuned using the published test examples, artificially inflating scores beyond what genuine capability would achieve
-[[ ]] A 97% score means the remaining 3% of failures are unimportant and can be safely ignored
+[[ ]] The 3% failure rate is evenly distributed across all input categories — a 97% average accuracy implies the system is reliably correct for every subgroup and edge case
 
 > **Why this answer?** When a benchmark is published with all test examples publicly available, those examples can appear in the training data of future models — either in the original pretraining corpus if the paper predates the training cutoff, or through deliberate fine-tuning on benchmark items. A 97% score on a contaminated benchmark tells you the model is good at answering those specific questions, not that it has genuinely mastered the underlying capability. The benchmark has become a memorization test rather than a capability test.
 
@@ -186,7 +186,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 ### Live / Production Evaluation
 
-- **Canary queries:** Fixed test prompts inserted into real production traffic anonymously and regularly. The agent's response to each canary is automatically scored. Catches quality regressions before they affect large numbers of real users.
+- **Canary queries** (hidden "decoy" test prompts inserted silently into live production traffic to catch quality regressions before users notice them): Fixed test prompts inserted into real production traffic anonymously and regularly. The agent's response to each canary is automatically scored. Catches quality regressions before they affect large numbers of real users.
 - **A/B testing:** Route a fraction of real users (say, 5%) to a new model version and the rest to the current version; compare outcome metrics such as task completion rate, escalation rate (how often users give up and contact a human), and explicit feedback (thumbs up/down).
 
 ### Critical Thinking Questions

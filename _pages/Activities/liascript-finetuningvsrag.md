@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Ladder
 
+In this part, you will learn the three fundamental ways to specialize a language model — prompting, RAG, and fine-tuning — and build a diagnostic framework for choosing among them. Understanding which lever to reach for first will save your team weeks of unnecessary work.
+
 ## 1. Three Ways to Specialize a Model
 
 This is the "hire an expert vs. give your generalist a textbook" decision — and just like in real life, hiring a full specialist is expensive, slow, and permanent. Sometimes the right answer is to give your generalist a great textbook (RAG), or better instructions (prompting), and only bring in the specialist when those genuinely cannot work.
@@ -86,6 +88,8 @@ Use this table as a diagnostic. Each row is a question to ask before choosing an
 ---
 
 # Part II: Cost and the LoRA Shortcut
+
+In this part, you will compare the true costs of prompting, RAG, and fine-tuning — and learn how LoRA dramatically reduces the GPU memory and compute needed for fine-tuning, making it accessible for small teams and individuals.
 
 ## 2. The Cost Reality
 
@@ -140,6 +144,8 @@ Full fine-tuning updates every parameter in the model — for a 7B-parameter mod
 
 ## Model 3: LoRA Illustrated
 
+The diagram below shows how LoRA adds two tiny matrices (A and B) alongside the frozen original weight matrix W. Look for how small r is compared to d and k — that small rank is what makes LoRA's memory savings so dramatic.
+
 ```
 Original Layer (frozen):          LoRA Correction (trained):
 ┌─────────────────────┐           ┌───┐   ┌─────────────────────┐
@@ -157,14 +163,18 @@ At rank $r = 8$ for a 7B model, LoRA trains roughly 4–8 million parameters ins
 
 [[MC]]
 A team wants to fine-tune a 7B model to always respond in a structured JSON format for a data extraction task. They have 800 labeled examples and a single A100 GPU (40 GB). Which approach is most appropriate?
-- ( ) Full fine-tuning — update all 7B parameters — because the format change requires deep behavioral modification
+- ( ) Full fine-tuning — update all 7B parameters — because format changes require updating every layer of the model to take effect consistently
 - (x) LoRA or QLoRA — freeze the base weights, train small adapter matrices — sufficient for format adaptation at a fraction of the compute cost
-- ( ) RAG — retrieve the format specification from a vector database on each call
-- ( ) Pre-training from scratch on JSON-formatted text corpora
+- ( ) RAG — retrieve the JSON schema from a vector database at each call so the model always sees the expected format
+- ( ) Pre-training from scratch on JSON-formatted text corpora, since the base model has no concept of structured output
 
 ---
 
+> Now that you understand both the decision logic and the cost structure, Part III gives you hands-on practice applying these ideas to real products and calculating concrete break-even points.
+
 # Part III: Synthesis and Practice
+
+In this part, you will apply the decision framework and cost model to real AI products you already use, calculate when self-hosted fine-tuning beats API calls on price, and practice constructing training datasets for a fine-tuning pipeline.
 
 ## Exercises
 
