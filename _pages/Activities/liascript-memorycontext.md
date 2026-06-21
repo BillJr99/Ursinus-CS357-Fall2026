@@ -42,6 +42,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. Three Forces Against Long Contexts
 
+In this Part you will learn why giving an agent unlimited memory actively hurts performance in three distinct ways — compute cost, attention quality, and distraction — and derive the guiding principle that shapes the rest of this module.
+
 **Why this matters:** Your instinct might be "give the agent the longest possible memory — more context, smarter agent." This turns out to be wrong in three separate ways. Think of it like a student trying to take an exam while holding open every textbook, notebook, and handout they have ever used: the relevant information is there, but buried under everything else, and the act of searching through it all takes so long that the exam ends. Focused, selective memory outperforms total recall.
 
 **Compute.** Attention — the core mechanism that lets a transformer model (the architecture behind GPT, Llama, and every model in this course) relate any word to any other word in context — costs $O(n^2)$ in context length: an agent that appends every thought and observation pays quadratically for its own history. In concrete terms: if step 1 processes 340 tokens and step 31 processes 4,840 tokens, step 31's attention cost is $(4840/340)^2 \approx 202$ times higher. On a laptop, you feel this in seconds per token.

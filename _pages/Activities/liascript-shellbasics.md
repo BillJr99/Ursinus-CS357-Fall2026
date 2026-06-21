@@ -49,6 +49,8 @@ The following terms appear throughout today's activity. Read through them as a t
 
 # Part I: Orientation
 
+In this Part, you will learn what a shell is, how to navigate the filesystem, and how to read and decode a compound shell command before running it. By the end, you will be able to look at any agent-proposed command and explain what it does — the first requirement for safe agent supervision.
+
 ## 1. What a Shell Actually Is
 
 Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. A finished building (a GUI application) hides all the structural decisions; blueprints (shell commands) expose every beam, pipe, and wire. When you can read blueprints, you can verify that what your agent proposed is safe before any concrete is poured. This section teaches you to read the blueprints.
@@ -61,7 +63,7 @@ Think of the terminal as your agent's native language — like learning to read 
 
 ## 2. Moving Around
 
-Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. Navigation commands are your way of orienting yourself on the blueprint: knowing which room you are in before you start moving walls.
+Before you can read or modify files, you need to know where you are and how to move around. The following six commands cover almost all navigation you will ever do in the shell.
 
 Three commands carry most navigation:
 
@@ -115,9 +117,11 @@ Breaking it down piece by piece:
 
 # Part II: Files, Pipes, and Plumbing
 
+In this Part, you will learn the commands for creating, reading, moving, and deleting files — and the critical pipe (`|`) and redirection operators that connect commands into powerful one-liners. You will also encounter the two shell commands that deserve the most caution: `rm` and `rm -rf`.
+
 ## 3. Working with Files
 
-Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. File commands are the building trades: creating rooms (`mkdir`), reading the blueprints already on file (`cat`, `less`), and, critically, demolishing structures that cannot be un-demolished (`rm`). Knowing which tool does which irreversible thing is what separates a careful contractor from an expensive mistake.
+The table below covers the ten commands you will use most often when working with files in the shell. Pay special attention to `rm` and `rm -r` — unlike most commands, they are permanent and irreversible.
 
 | Command | What It Does | Example Command |
 |---|---|---|
