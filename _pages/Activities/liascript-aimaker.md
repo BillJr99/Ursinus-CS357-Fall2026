@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The AI Maker: Agents, Engineering Discipline, and Human-Centric Design
 
-Agentic tools have collapsed the distance between an idea and a working artifact, for professional engineers and for people who have never written a line of code. What they have *not* collapsed is the distance between "it ran once" and "it deserves someone's trust," and that distance is crossed by the same three disciplines in both cases: **testing**, **continuous integration**, and **human-centric design**. This module runs in two parallel tracks (choose yours by background, and read both: the other track is your future collaborator). The arc: **the trust gap $\rightarrow$ Track A for software engineers $\rightarrow$ Track B for non-coders $\rightarrow$ the shared discipline of CI $\rightarrow$ designing for the humans on the other end**.
+Agentic tools have collapsed the distance between an idea and a working artifact, for professional engineers and for people who have never written a line of code. What they have *not* collapsed is the distance between "it ran once" and "it deserves someone's trust," and that distance is crossed by the same three disciplines in both cases: **testing**, **continuous integration**, and **human-centric design**. This module runs in two parallel tracks (choose yours by background, and read both: the other track is your future collaborator). The arc: **the trust gap → Track A for software engineers → Track B for non-coders → the shared discipline of CI → designing for the humans on the other end**.
 
 ---
 
@@ -136,10 +136,6 @@ A non-coding maker's strongest defense against an agent's specification gaps is:
 
 ---
 
-> **⚠️ Common Misconception:** A complex multi-tool agent is more impressive than a simple one that works reliably — so building something with many moving parts signals more skill. In practice, the opposite is true in deployment. Complexity is where failures hide: every additional tool is an additional failure mode, every additional API call is an additional network dependency, and every additional model invocation is an additional opportunity for hallucination to compound. The most trusted production AI systems are often the simplest ones that do one thing well with measurable reliability. Scope creep — adding features because the agent can generate them in seconds — is one of the most common ways student projects fail at the verification stage. Build the Minimum Viable Agent first, verify it thoroughly, and only then add complexity if the problem genuinely requires it.
-
----
-
 # Part IV: The Shared Discipline of CI
 
 ## 5. Continuous Integration: Your Standards, Running While You Sleep
@@ -197,6 +193,10 @@ Pair across tracks: each Track A member brings a tested change with its CI run; 
 6. As a team, write the one-sentence answer: what did the other track see that yours was structurally blind to?
 
    > *Hint: "Structurally blind" means not just "missed by accident" but "could not have seen, given how our track trained us to look." Track A is trained to ask "does this pass a test?" — a question that can miss failures that don't throw exceptions. Track B is trained to ask "does this feel right to a user?" — a question that can miss failures that are invisible to casual use but catastrophic at scale. Your one sentence should name the structural blind spot, not just a specific thing that was missed.*
+
+---
+
+> **⚠️ Common Misconception:** A complex multi-tool agent is more impressive than a simple one that works reliably — so building something with many moving parts signals more skill. In practice, the opposite is true in deployment. Complexity is where failures hide: every additional tool is an additional failure mode, every additional API call is an additional network dependency, and every additional model invocation is an additional opportunity for hallucination to compound. The most trusted production AI systems are often the simplest ones that do one thing well with measurable reliability. Scope creep — adding features because the agent can generate them in seconds — is one of the most common ways student projects fail at the verification stage. Build the Minimum Viable Agent first, verify it thoroughly, and only then add complexity if the problem genuinely requires it.
 
 ---
 
