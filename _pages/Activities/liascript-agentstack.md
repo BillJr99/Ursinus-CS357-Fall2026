@@ -225,6 +225,8 @@ When a cell of the matrix fails, the Docker module's diagnostic ladder applies: 
 
 # Part III: Practice
 
+In this part, you will build and verify a working minimal stack, extend it with a tool and an agent, and deliberately break and fix a common networking issue — so that when something goes wrong in your project work, you have already seen and diagnosed it.
+
 ## 8. Exercises
 
 1. *Minimal viable stack.* Deploy Ollama, llmproxy, and Open WebUI; complete a chat in the browser that round-trips through all three; submit your port table and the end-to-end curl output.
