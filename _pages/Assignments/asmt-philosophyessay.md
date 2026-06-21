@@ -7,35 +7,35 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To engage with foundational philosophical arguments about machine understanding and intelligence
-    - To connect philosophical positions to practical implications for AI system design and deployment
-    - To argue for a position with evidence from both philosophy and observed AI behavior
-    - To examine the ethical implications of the position you take
+    - To engage with foundational philosophical arguments about machine understanding and intelligence by accurately characterizing and critically analyzing at least two named positions
+    - To argue for a specific position using evidence from both philosophy and observed AI behavior, addressing the strongest counterargument rather than dismissing it
+    - To connect the philosophical position to a concrete AI deployment scenario with a specific, non-obvious implication for design or practice
+    - To close with one actionable guidance statement for CS357 students that follows from the argued position and would not follow from the opposing position
   rubric:
     - weight: 25
       description: Philosophical Engagement
-      preemerging: Named philosophical positions are absent or mischaracterized
-      beginning: At least one named position is cited but engagement is superficial, restating the argument without analyzing it
-      progressing: At least two named philosophical positions are cited and analyzed with reasonable accuracy; the essay shows awareness of objections to at least one position
-      proficient: At least two named philosophical positions are cited, accurately characterized, and critically analyzed; the essay engages with a substantive objection to each and explains why the objection does or does not succeed, demonstrating genuine understanding rather than summary
+      preemerging: Named philosophical positions are absent or mischaracterized — for example, describing the Chinese Room as an argument about consciousness rather than intentionality
+      beginning: At least one named position is cited but engagement is superficial — the essay restates what the philosopher argued without raising or evaluating any objection
+      progressing: At least two named philosophical positions are cited and analyzed with reasonable accuracy; the essay raises at least one objection to one position but does not explain whether the objection succeeds and why
+      proficient: At least two named philosophical positions are accurately characterized and critically analyzed — for each, the essay raises the strongest objection (for example, the Systems Reply or the Robot Reply for Searle) and explains specifically why the objection does or does not succeed in the student's view, with the student's reasoning, not a summary of secondary sources
     - weight: 25
       description: Argument Quality and Evidence
       preemerging: The essay does not arrive at a position, or the position is contradicted by the evidence presented
-      beginning: A position is stated but the supporting argument is a string of assertions without evidence or logical structure
-      progressing: The essay arrives at a clear position with a coherent argument; evidence is drawn from the readings but not always deployed precisely to support the specific claim being made
-      proficient: The essay arrives at a clear, specific position defended by a logically structured argument; evidence from at least two readings is deployed precisely to support specific claims; the strongest counterargument is identified and addressed directly rather than dismissed
+      beginning: A position is stated but the supporting argument is a string of assertions — claims are made without citations or logical connectives between them
+      progressing: The essay arrives at a clear position with a coherent argument; at least one passage from a required reading is cited, but it is used decoratively (quoted in the introduction or conclusion) rather than deployed to support a specific claim in the body
+      proficient: The essay arrives at a clear, specific position defended by a logically structured argument; at least two specific passages from the required readings are cited at the point in the argument where they are needed (not decoratively); the strongest counterargument to the student's position is identified, stated fairly, and addressed — not dismissed with a single sentence
     - weight: 25
       description: Practical Implications
       preemerging: No connection is made between the philosophical argument and AI deployment or design
-      beginning: A connection to a deployment scenario is mentioned but not developed
-      progressing: The philosophical position is connected to a concrete AI deployment scenario with a plausible implication for design or practice
-      proficient: The philosophical position is connected to a concrete AI deployment scenario with a specific, non-obvious implication for design or practice; the implication is one that would lead to different decisions than the opposing position would recommend, and the essay closes with one actionable guidance statement for CS357 students
+      beginning: A connection to a deployment scenario is mentioned in passing but not developed — for example, "this has implications for how we build AI" without specifying what those implications are
+      progressing: The philosophical position is connected to a named, concrete AI deployment scenario (a real system or a realistic hypothetical) with a plausible implication for design or practice, but the implication would follow from almost any philosophical position rather than specifically from the one argued
+      proficient: The philosophical position is connected to a named, concrete AI deployment scenario with a specific, non-obvious implication — one that would lead to a different design or deployment decision than the opposing position would recommend; for example, if the essay argues Searle is right that LLMs do not understand, the implication might be a specific requirement for human interpretive oversight that a Turing-compatible view would not require; the essay closes with one actionable guidance statement addressed to CS357 students that a student could act on in their next project
     - weight: 25
       description: Writing Quality and Originality
-      preemerging: The essay is largely a paraphrase of the readings without original analysis
-      beginning: The essay contains original sentences but the argument structure is borrowed from a single source
-      progressing: The essay is largely original with clear organization; prose is readable though some passages are imprecise or overlong
-      proficient: The essay is original in argument and expression, precisely written at the right level of technicality for a CS audience without philosophy background, well-organized with a clear thesis in the introduction and a payoff in the conclusion, and between 1000 and 1500 words excluding references
+      preemerging: The essay is largely a paraphrase of the readings or of AI-generated summary, with no original analytical moves
+      beginning: The essay contains original sentences but the argument structure mirrors a single source — the essay essentially reports one philosopher's position and slightly agrees or disagrees at the end
+      progressing: The essay is largely original with a discernible thesis, organized body, and conclusion; prose is readable though some passages are imprecise or the thesis is not stated until the second or third paragraph
+      proficient: The essay states a specific, arguable thesis in the first paragraph; every subsequent paragraph advances the argument rather than summarizing; the conclusion arrives somewhere the introduction pointed toward but did not fully reveal; prose is precisely written at the right level of technicality for a CS audience without a philosophy background; the word count is between 1000 and 1500 words excluding references, and the count appears at the top of the first page
   readings:
     - rtitle: "Turing, Computing Machinery and Intelligence (1950)"
       rlink: "https://doi.org/10.1093/mind/LIX.236.433"

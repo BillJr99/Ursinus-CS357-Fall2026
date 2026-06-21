@@ -7,43 +7,43 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To design and implement a team of specialized agents that accomplishes a goal oriented task end to end on local infrastructure
-    - To justify every architectural decision with the patterns and principles of the course, including the small context window principle
-    - To evaluate the system rigorously against a monolithic baseline with a fixed task set, metrics, and protocol
-    - To make the system explainable through traces, citations, or calibrated confidence, with a human oversight gate on any consequential action
-    - To lead a class discussion on the responsible use and governance of the system
-    - To work in sustained team sprints with rotating roles and structured peer review
+    - To design and implement a team of at least three specialized agents that accomplishes a goal-oriented task end to end on local infrastructure
+    - To justify every major architectural decision by naming the course pattern or principle that motivated it
+    - To evaluate the multi-agent system against a monolithic baseline using a fixed ten-task set, defined metrics, and a reproducible protocol, and to document at least three failure modes with transcripts
+    - To make the system explainable through the honest evidence hierarchy with a human confirmation gate on consequential actions and a demonstrated abstention behavior
+    - To commit a governance document that matches the deployed system's behavior and to lead a class discussion grounded in the team's own measurements
+    - To complete four sprints with rotating POGIL roles, producing a runnable increment and a numeric evaluation update at each sprint boundary
   rubric:
     - weight: 30
       description: System Design and Rationale
       preemerging: The system is a single undifferentiated prompt, or the design is undocumented
       beginning: Multiple agents exist but roles overlap, contexts are bloated, and design choices are unjustified
-      progressing: The team decomposes the task into focused roles with a documented design table and topology, with some choices justified by course patterns
-      proficient: The team decomposes the task into focused roles with small contexts, a complete design table, an explicit topology defense, deliberate state and handoff design, and every major choice justified by a named course pattern or principle
+      progressing: The team decomposes the task into focused roles with a documented design table and topology statement; some choices reference a course pattern but others are left as defaults
+      proficient: The team decomposes the task into at least three agents with meaningfully distinct roles and small contexts; the design table is complete with one row per agent covering role, prompt summary, inputs, outputs, temperature with justification, and tools; the report names the topology (pipeline, router, planner, blackboard, or hybrid) and defends the choice in 3 sentences; every major choice — including state design, handoff format, and temperature settings — is justified by a named course pattern or principle
     - weight: 25
       description: Evaluation and Analysis
       preemerging: No systematic evaluation is provided
-      beginning: Informal trials are described without a protocol, metric, or baseline
-      progressing: A fixed task set with defined metrics is evaluated against the monolith baseline, with limited failure analysis
-      proficient: A fixed task set with defined metrics and a reproducible protocol is evaluated against the monolith baseline, results are disaggregated where applicable, at least three failure modes are documented with transcripts, and one mitigation is implemented and re-measured
+      beginning: Informal trials are described without a protocol, metric, or baseline comparison
+      progressing: A fixed task set with defined metrics is evaluated against the monolith baseline with numeric results; failure analysis is present but fewer than three failure modes are documented with transcripts
+      proficient: A fixed ten-task evaluation set (finalized no later than Sprint 1) is evaluated against the monolith baseline with a stated protocol that a stranger could reproduce; metrics are numeric (e.g., precision, recall, parse success rate, latency); results are disaggregated where applicable; at least three failure modes are documented with agent transcripts showing the actual inputs and outputs; at least one mitigation is implemented and re-measured with before-and-after numbers
     - weight: 20
       description: Explainability and Governance
       preemerging: The system offers no insight into its behavior and no governance document accompanies it
-      beginning: Traces exist but are not surfaced, and the governance document is generic
-      progressing: The system surfaces traces, citations, or confidence to its user, a human gate guards consequential actions, and the governance document matches the system with minor gaps
-      proficient: The system surfaces evidence following the honest hierarchy, a confirmation gate shows evidence at the moment of decision, an abstention behavior is demonstrated, the governance document matches the deployed behavior, and the team leads a substantive class discussion of responsible use grounded in their own measurements
+      beginning: Traces exist but are not surfaced to the user; the governance document is present but generic — it does not match the specific system's agents, data flows, or risks
+      progressing: The system surfaces traces, citations, or confidence scores to the user; a human gate guards at least one consequential action; the governance document matches the system with minor gaps such as a missing data retention period or an unaddressed pre-mortem risk
+      proficient: The system surfaces evidence following the honest hierarchy (direct retrieval citation preferred over generated summary); a confirmation gate shows the user the evidence at the moment of decision for every consequential action; an abstention behavior is demonstrated in the presentation (the system declines rather than hallucinating when evidence is absent); the committed GOVERNANCE.md matches the deployed behavior including data handling, human gates, and incident response; the team leads a 10-minute class discussion grounded in their own measurements — at least one claim is supported by a number from the evaluation table
     - weight: 13
       description: Implementation Quality and Artifact Packaging
       preemerging: The system fails to run from a fresh start, and no tests or CI are present
-      beginning: The system runs but configuration is hard coded, exceptions are silent, setup is undocumented, and no tests exist
-      progressing: The system runs from documented setup with externalized configuration and located exception handling; at least one automated test exists but CI is absent or fails intermittently
-      proficient: The system runs from a fresh start in under three minutes following the readme, configuration is externalized, exceptions are handled with located messages and tracebacks, seeds and model versions are pinned, a test suite with at least one end-to-end test passes in CI on every push, the submission tag triggers a publish step that pushes the artifact to GHCR, Docker Hub, or npm, and the repository is organized for a stranger to navigate
+      beginning: The system runs but configuration is hard-coded, exceptions produce silent failures, setup is undocumented, and no tests exist
+      progressing: The system runs from documented setup with externalized configuration and located exception handling (error messages name the file and line); at least one automated test exists but CI is absent or fails intermittently
+      proficient: The system runs from a fresh start in under three minutes following the README on a machine the team has not configured; all configuration (model names, paths, seeds) is externalized to config.json with no hard-coded values in any committed file; exceptions are handled with located messages and tracebacks; model versions and random seeds are pinned; a test suite with at least one end-to-end test passes in CI on every push; the submission tag triggers a publish step that pushes the artifact to GHCR, Docker Hub, or npm; the repository is organized so a stranger can navigate it in under 5 minutes
     - weight: 12
       description: Presentation and Report
       preemerging: The presentation or report is missing
-      beginning: The presentation demonstrates the happy path only, and the report restates the code
-      progressing: The presentation demonstrates the system including one known failure case, and the report covers design, evaluation, and limitations
-      proficient: The presentation demonstrates the system including a rehearsed failure disclosure, every teammate delivers part of the explainability story, and the report covers design rationale, evaluation with the baseline comparison, limitations, the governance summary, and individual contribution statements
+      beginning: The presentation demonstrates only the happy path; the report restates the code without design rationale or evaluation results
+      progressing: The presentation demonstrates the system including one known failure case; the report covers design, evaluation results, and limitations but the baseline comparison table is absent or the contribution statements do not document role rotation
+      proficient: The presentation demonstrates the happy path live (not screenshots), includes a rehearsed failure disclosure showing a case where the system fails and explaining why, shows the evaluation table with the baseline comparison side by side, delivers the 90-second explainability story, and has every teammate speaking for a substantive portion; the report covers design rationale tied to named course patterns, the evaluation results with baseline comparison and failure analysis with transcripts, the explainability design, the "disclose" bucket from the gallery walk verbatim, a governance summary referencing the committed GOVERNANCE.md, and individual contribution statements documenting which role each member held in each sprint
   readings:
     - rtitle: "Agent Teams Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"

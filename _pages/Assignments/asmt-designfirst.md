@@ -7,35 +7,42 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To articulate the goals, constraints, and evaluation criteria for an agentic system before implementation
-    - To produce an agent design table mapping each agent's role, prompt skeleton, inputs, outputs, tools, and failure modes
-    - To conduct a pre-mortem identifying likely failure modes and mitigations
-    - To define explicit success criteria that could be evaluated by a third party
+    - To articulate the goals, constraints, and evaluation criteria for an agentic system before implementation, with every constraint specific enough that a third party could determine whether it was satisfied
+    - To produce an agent design table mapping each agent's role, a three-sentence prompt skeleton, inputs, outputs, temperature with justification, tools, and a concrete failure mode with detection signal
+    - To trace data flow through the system showing every handoff, branch, and external tool call
+    - To conduct a pre-mortem identifying at least six specific failure modes including a cross-agent coordination failure and a data or privacy concern, each with detection and mitigation
+    - To define three to five measurable success criteria evaluable from outputs alone by a third party, covering functional correctness and at least one safety or quality dimension
   rubric:
-    - weight: 25
+    - weight: 20
       description: Problem Statement and Constraints
       preemerging: The problem statement is missing or describes a feature list rather than a problem
       beginning: A problem statement is present but omits who the system serves, the context of use, or the key constraints
-      progressing: The problem statement identifies the system's purpose, users, and context with most constraints named, though some remain vague or unmeasurable
-      proficient: The problem statement precisely identifies what the system does, for whom, in what context, and under what constraints, and every constraint is specific enough that a third party could determine whether it was satisfied
+      progressing: The problem statement identifies the system's purpose, users, and context with most constraints named, though some remain vague or unmeasurable — for example, "the system should be fast" without a time threshold
+      proficient: The one-paragraph problem statement answers all four questions (what, for whom, in what context, under what constraints); every constraint names a specific measurable boundary such that a stranger could determine whether it was satisfied — for example, "must respond in under 5 seconds on commodity hardware" rather than "should be fast"; at least two constraints limit the system's behavior or data access rather than describing desired qualities
     - weight: 25
       description: Agent Design Table
       preemerging: No agent design table is provided, or a single undifferentiated agent is described
-      beginning: A table is present but is missing required columns or contains identical roles that are not meaningfully distinct
-      progressing: The table covers most required columns with reasonably distinct roles, though the prompt skeletons are generic and failure modes are cursory
-      proficient: Every row contains a distinct role, a system prompt skeleton whose first three sentences establish persona, scope, and refusal boundary, clearly specified inputs and outputs, a justified temperature setting, named tools, and at least one concrete failure mode with a detection signal
-    - weight: 25
+      beginning: A table is present but is missing required columns or contains roles that are not meaningfully distinct from one another
+      progressing: The table covers all required columns with reasonably distinct roles; prompt skeletons are present but are generic enough that they could apply to a different system; failure modes name the abstract risk rather than a specific observable signal
+      proficient: Every row contains a distinct role; the three-sentence system prompt skeleton names the agent's persona and scope in sentence 1, states the primary task in sentence 2, and states an explicit refusal or abstention condition in sentence 3; inputs and outputs are clearly specified; the temperature value is a decimal with a one-sentence justification; tools are named; and the failure mode names a specific observable signal that would indicate failure (e.g., "the agent returns a citation whose author name does not appear in any uploaded document, detectable by string-matching cited names against the document index") rather than an abstract risk
+    - weight: 20
+      description: Data Flow Diagram
+      preemerging: No data flow diagram is provided
+      beginning: A diagram is provided but omits major agents, handoffs, or the format of data passed between agents
+      progressing: The diagram shows all agents and primary handoffs with data formats noted, but branches such as refusals, escalations, or short-circuit paths are missing or unlabeled
+      proficient: The diagram shows every agent, every handoff with the data format passed (e.g., plain text, JSON with named fields), every external tool or retrieval call, the final output destination, and every branch — including refusal, escalation, and short-circuit paths — with each branch labeled with the condition that triggers it
+    - weight: 20
       description: Pre-mortem and Risk Analysis
       preemerging: No pre-mortem is provided
       beginning: Fewer than six risks are identified, or risks are vague and detection or mitigation strategies are absent
-      progressing: At least six risks are present with detection and mitigation strategies, though some mitigations are generic rather than specific to the system
-      proficient: At least six concrete, system-specific risks are identified with a plausible detection mechanism and an actionable mitigation for each; at least one risk addresses a cross-agent coordination failure and one addresses a data or privacy concern
-    - weight: 25
+      progressing: At least six risks are present with detection and mitigation strategies; some mitigations are generic ("be more careful") rather than naming a specific system action or check
+      proficient: At least six concrete, system-specific risks are identified; the "What Could Go Wrong" column names the specific agent, input type, and output fault; the "How We Would Detect It" column names a specific observable signal (not "we would notice"); the "How We Would Mitigate It" column names an action the system or team could actually take; at least one row addresses a failure that occurs when two agents produce contradictory or incompatible outputs, and at least one row addresses a risk involving user data or privacy
+    - weight: 15
       description: Evaluation Criteria and Testability
       preemerging: No success criteria are provided, or criteria are purely subjective
       beginning: Criteria are stated but cannot be measured without access to the system's internals or its authors
-      progressing: Most criteria are measurable by a third party, though at least one requires clarification or is redundant with another
-      proficient: Three to five criteria are stated, each is measurable from outputs alone by a third party who does not know the system, criteria cover both functional correctness and at least one safety or quality dimension, and the reflection addresses how you would verify each
+      progressing: Most criteria are measurable by a third party from outputs alone, though at least one criterion requires clarification or is redundant with another
+      proficient: Three to five criteria are stated in the Success Criteria table with all four columns completed — criterion name, what success looks like, measurement method (e.g., human rating with a rubric, automated string match, latency timer, precision on a test set), and passing threshold (a specific value or rating); criteria cover both functional correctness and at least one safety or quality dimension; the reflection paragraph addresses how the team would collect the data needed to measure each criterion one week after deployment, who would collect it, and what action would follow if a criterion was not met
   readings:
     - rtitle: "Agent Design Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentdesign.md"
