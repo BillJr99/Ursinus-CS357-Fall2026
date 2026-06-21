@@ -32,6 +32,19 @@ Consider each model below and answer the questions provided. First reflect on th
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| Agent | A system that senses its surroundings, decides what to do, and takes action toward a goal — all on its own | The campsite-finder in Model 1 that browses a website and returns links without being told each click to make |
+| Perception | The step where an agent gathers information from its environment, such as reading a sensor, receiving a message, or seeing a web page | A thermostat reading the room temperature before deciding whether to turn the heat on |
+| Policy (pi) | The rule or model that converts what the agent currently knows into the action it will take next | The language model inside an agent that reads your goal and chooses a response or tool call |
+| Agency spectrum | A scale from "responds once and stops" to "pursues goals over many steps with many tools" — most systems fall somewhere in between | A spam filter sits near the reactive end; the campsite-finder sits near the autonomous end |
+| AI effect | The tendency to stop calling something "intelligence" once a computer can reliably do it, moving the goalposts for what counts as AI | Chess was once seen as the pinnacle of machine thinking; today it is considered a solved, routine program |
+| Large language model (LLM) | A neural network trained on vast amounts of text that can generate fluent language, answer questions, and follow instructions | The local model you will talk to in Model 2 today, running entirely on a laptop |
+
+---
+
 ## 1. A Very Short History of a Very Big Question
 
 **Artificial intelligence is older than the computer science department.** In 1950, Alan Turing asked whether machines can think, and proposed his famous imitation game as a substitute for that question. The 1956 Dartmouth workshop named the field. Since then, AI has cycled through eras: symbolic reasoning and search, expert systems, statistical machine learning, deep learning, and now generative models and agents.
@@ -44,20 +57,33 @@ Consider each model below and answer the questions provided. First reflect on th
 
 ## Model 1: Three Systems
 
+Before we look at the data, consider this: every time you ask a navigation app for directions, it perceives your location, plans a route, and acts by showing you the map — and if you miss a turn, it recalculates and tries again. AI agents work the same way, but instead of roads they navigate information and decisions. The three systems below span a wide range of that idea.
+
 Examine these three systems and decide which, if any, is an agent.
 
-| System | Behavior |
-|--------|----------|
-| A | A thermostat turns the heat on when the room drops below 68 degrees, and off above 70. |
-| B | A chatbot answers each question you type, with no memory of the conversation once the window closes. |
-| C | A program is given the goal "find me three campsites available the weekend of October 10," browses a reservation website, filters results, and reports back with links. |
+| System | Behavior | What It Does When Something Goes Wrong |
+|--------|----------|----------------------------------------|
+| A | A thermostat turns the heat on when the room drops below 68 degrees, and off above 70 degrees. | It applies the same fixed rule again — it cannot diagnose a broken furnace or call a repairperson. |
+| B | A chatbot answers each question you type, with no memory of the conversation once the window closes. | It has no awareness that it gave a bad answer, and takes no follow-up action unless you send another message. |
+| C | A program is given the goal "find me three campsites available the weekend of October 10," browses a reservation website, filters results, and reports back with links. | It can retry failed page loads, try alternative search terms, and check availability across multiple sites before reporting. |
 
 ### Critical Thinking Questions
 
 1. For each system, identify what it *perceives*, what it *decides*, and what *actions* it takes.
+
+   > *Hint: Use the three-column breakdown — perception, decision, action — for each row. For System A, for example, perception is the temperature reading.*
+
 2. Which systems pursue a **goal** over multiple steps? Which respond once and stop?
+
+   > *Hint: Ask yourself whether the system would do anything differently if its first response turned out to be wrong or incomplete.*
+
 3. System A contains no machine learning at all. Can something be an agent without being "AI"? Defend your answer.
+
+   > *Hint: Look back at the definition in section 2 below. Does it say anything about learning, or only about perceiving, deciding, and acting?*
+
 4. What would System B need in order to behave like System C?
+
+   > *Hint: Think about what System C has that System B lacks — memory, tools, a goal that persists across steps. List at least two additions.*
 
 ---
 
@@ -80,6 +106,8 @@ A spam filter classifies each incoming email as spam or not, one message at a ti
 - ( ) It is not an agent because it uses machine learning
 - ( ) It is not an agent because it has no body
 
+> **⚠️ Common Misconception:** Many people assume that "AI" and "agent" mean the same thing, and that any system using machine learning is therefore an agent. In fact, a spam filter is an AI system (it learned from data) but barely qualifies as an agent, because it reacts to one email at a time with no goal that spans multiple steps. Conversely, the thermostat in System A is agent-like — it pursues a temperature goal continuously — but uses no AI at all. Agency and machine learning are separate ideas that often appear together but do not require each other.
+
 ---
 
 ## 3. Where We Are Going
@@ -95,24 +123,52 @@ Your instructor will demonstrate a model running entirely on a laptop using Olla
 ### Critical Thinking Questions
 
 5. The model produced three different answers to the identical prompt. Brainstorm with your group: how can a deterministic computer program produce different outputs from the same input? List at least two hypotheses. (We will test them in week 3.)
+
+   > *Hint: Think about randomness. Is a coin flip "deterministic"? Where in a process that assigns probabilities to words might randomness enter?*
+
 6. The laptop's network connection is off. What does that imply about where the model's "knowledge" lives?
+
+   > *Hint: If no data came in over the network, everything the model "knows" must have arrived at some earlier time. When and how?*
+
 7. Name one task you would trust this offline model with, and one you would not. What distinguishes them?
+
+   > *Hint: Think about tasks that require up-to-date information versus tasks that rely on stable, long-established knowledge.*
 
 ---
 
 ## 4. Exercises
 
-1. *Agent inventory.* As a team, list five systems you interacted with this week. Place each on an agency spectrum from "tool" to "autonomous agent," and justify the placement of the most contested one.
-2. *Goalpost archaeology.* Find one news headline from before 2020 declaring that some capability "is not really AI." Bring it to the next class.
-3. *Team charter.* Draft your team's working agreement: how you will rotate roles, communicate, and resolve disagreement. The Recorder posts it to the discussion board.
+1. *Agent inventory.*
+
+   - *What to do*: As a team, list five systems you interacted with this week. Place each on an agency spectrum from "tool" to "autonomous agent," and justify the placement of the most contested one.
+   - *Starter hint*: Start with a simple axis drawn on paper: label the left end "one-shot tool" and the right end "fully autonomous agent." Place each system and then argue about the two most controversial placements.
+   - *You've succeeded when*: Your team can articulate, in one sentence per system, *why* it sits where it does on the spectrum using the perceive-decide-act vocabulary from today.
+
+2. *Goalpost archaeology.*
+
+   - *What to do*: Find one news headline from before 2020 declaring that some capability "is not really AI." Bring it to the next class.
+   - *Starter hint*: Search for phrases like "that's not real AI" or "just a program" alongside the name of a system (chess engine, recommendation algorithm, autocorrect) that we now take for granted.
+   - *You've succeeded when*: You can name the capability, the year it was dismissed, and explain using the AI effect why the dismissal was predictable in hindsight.
+
+3. *Team charter.*
+
+   - *What to do*: Draft your team's working agreement: how you will rotate roles, communicate, and resolve disagreement. The Recorder posts it to the discussion board.
+   - *Starter hint*: Address at least three things: role rotation schedule, how you handle absences, and one norm about disagreement (for example, "we must hear every voice before voting").
+   - *You've succeeded when*: Every team member has read the charter and the Recorder has posted it with everyone's name attached.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: before today, what did the word "agent" mean to you, and what does it mean now? Identify one task in your own life that you would delegate to an agent, and one you never would. What is the difference between them?
+*Personal*: Before today, what did the word "agent" mean to you — perhaps a travel agent, a secret agent, or something else entirely? How has today's definition changed or complicated that intuition? Identify one moment during the activity where your thinking shifted.
+
+*Technical*: You now have a formal definition of agency: perceive, decide, act, toward a goal, over multiple steps. If you were designing System B to become more agentic, which capability would you add first and why? Sketch what the new system would look like after that one addition.
+
+*Societal*: Identify one task in your own life that you would delegate to an autonomous agent, and one you never would. What is the difference between them? Now extend that reasoning: if millions of people made the same choices you did, what kinds of decisions would agents be making at scale — and what kinds would remain with humans?
 
 ---
+
+→ Coming Up Next: In the next activity, we zoom inside the agent loop itself — the repeating cycle of perceive, plan, and act — and we write our first working agent in Python that calls a tool and loops until it finds an answer.
 
 ## 5. Further Reading
 

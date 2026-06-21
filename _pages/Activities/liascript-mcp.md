@@ -25,9 +25,24 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| **API (Application Programming Interface)** | A published contract that lets one program call functions in another program over the network, without knowing how the other program works internally. | Calling `GET /weather?city=Philadelphia` to get current weather data from a weather service. |
+| **REST API** | A style of web API where you send requests to URLs (called endpoints) and receive data back as JSON text. REST stands for Representational State Transfer. | `GET https://api.weather.gov/points/40.19,-75.46` returns campus weather as JSON. |
+| **MCP (Model Context Protocol)** | A standard protocol that allows any AI agent to discover and call tools from any compliant tool server, without custom integration code for each pair. Think of it as USB for AI tools. | Your agent calls `GET /tools/list` to discover what a server can do, then calls `POST /tools/call` to use a tool. |
+| **N-by-M Problem** | If you have N agent applications and M services, bespoke (custom, one-off) integration requires up to N × M separate adapters. MCP reduces this to N + M by providing one standard both sides follow. | 4 agents × 6 services = 24 adapters without MCP; 4 + 6 = 10 with MCP. |
+| **Tool Discovery** | The ability of an agent to ask a server at runtime "what can you do?" rather than having the tool list hard-coded in the agent's source code. | `requests.get("http://localhost:8765/tools/list")` returns the current tool menu dynamically. |
+| **JSON-RPC** | A protocol for making remote function calls by sending JSON messages. MCP's full specification is built on top of JSON-RPC. | `{"method": "tools/call", "params": {"name": "hours", "arguments": {"facility": "library"}}}` |
+
+---
+
 # Part I: The Integration Problem
 
 ## 1. APIs, Then the N-by-M Problem
+
+**Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client — any agent application anywhere — can use it. Integration cost drops from multiplicative to additive.
 
 **An API is a published contract for calling someone else's functions over the network.** REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request. Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
 
@@ -44,8 +59,16 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 ### Critical Thinking Questions
 
 1. Compute the worst-case adapter count without a protocol, and the count with MCP. Show the arithmetic.
-2. The library upgrades its catalog API. In each world, who must change code, and how many codebases are touched?
+
+   > *Hint: Multiply for bespoke; add for MCP. Then ask: what happens if the campus adds a 5th service?*
+
+2. The library upgrades its catalog API. In each world (bespoke vs. MCP), who must change code, and how many codebases are touched?
+
+   > *Hint: In the bespoke world, draw arrows from "catalog" to every agent that uses it. Each arrow is a codebase change.*
+
 3. Yesterday you wrote tool schemas by hand. Which MCP method replaces that step, and what new *trust* question does runtime discovery create? (Hold this thought for the governance unit.)
+
+   > *Hint: If you receive a tool schema from a stranger's server, what are you agreeing to when you call it?*
 
 ---
 
@@ -53,7 +76,20 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 ## 2. Speaking the Pattern in Code
 
+**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable. The server below is not production MCP — it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name. Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
+
 Full MCP runs over JSON-RPC with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask. We build the essence.
+
+You can run the server with:
+
+```bash
+# In a terminal: start the server
+pip install flask requests
+python server.py
+
+# In a second terminal: test that it's alive
+curl http://localhost:8765/tools/list
+```
 
 ---
 
@@ -65,14 +101,21 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# --- Tool implementations (the actual functions the server knows how to run) ---
+
 def room_lookup(building: str):
+    # A simple dictionary lookup: building name -> list of room numbers
     rooms = {"pfahler": ["007", "012", "108"], "iddc": ["116", "214"]}
     return rooms.get(building.lower(), [])
 
 def hours(facility: str):
+    # Another dictionary lookup: facility name -> hours string
     table = {"library": "8am-midnight M-R", "gym": "6am-10pm daily"}
     return table.get(facility.lower(), "unknown facility")
 
+# --- TOOLS registry: maps each tool name to its function AND its schema ---
+# The schema is what the client receives when it calls /tools/list.
+# This is the key MCP insight: the server describes its own capabilities.
 TOOLS = {
   "room_lookup": {"fn": room_lookup,
     "schema": {"name": "room_lookup",
@@ -84,8 +127,11 @@ TOOLS = {
                "parameters": {"facility": "string"}}},
 }
 
+# --- MCP-style endpoints ---
+
 @app.get("/tools/list")
 def tools_list():
+    # Returns only the schemas (not the functions) — clients learn what exists here
     return jsonify([t["schema"] for t in TOOLS.values()])
 
 @app.post("/tools/call")
@@ -95,6 +141,7 @@ def tools_call():
         name, args = body["name"], body.get("arguments", {})
         if name not in TOOLS:
             return jsonify({"error": "unknown tool"}), 404
+        # Look up the function by name and call it with the provided arguments
         return jsonify({"result": TOOLS[name]["fn"](**args)})
     except Exception as e:
         print(f"[mcpserver:tools_call] {e}")
@@ -111,20 +158,28 @@ if __name__ == "__main__":
 
 ```python
 # client side: discover the server's tools, hand them to the model, dispatch calls.
+# This is a simplified MCP client: it asks "what can you do?" then does it.
 import requests
 
 SERVER = "http://localhost:8765"
 
+# Step 1: Discover what tools exist — no hard-coding required
 discovered = requests.get(f"{SERVER}/tools/list", timeout=10).json()
 print("discovered tools:", [t["name"] for t in discovered])
+# Output: discovered tools: ['room_lookup', 'hours']
 
+# Step 2: Define a reusable call function
 def call_remote(name, arguments):
     r = requests.post(f"{SERVER}/tools/call",
                       json={"name": name, "arguments": arguments}, timeout=10)
     return r.json()
 
+# Step 3: Use the tools — the client never needed to know these existed at startup
 print(call_remote("hours", {"facility": "library"}))
+# Output: {'result': '8am-midnight M-R'}
+
 print(call_remote("room_lookup", {"building": "Pfahler"}))
+# Output: {'result': ['007', '012', '108']}
 ```
 
 ---
@@ -134,8 +189,18 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 ### Critical Thinking Questions
 
 4. Your client knew nothing about rooms or hours at startup, yet ended up calling both. Trace exactly where the knowledge entered the program. How does this differ from yesterday's hard-coded `TOOLS` list?
+
+   > *Hint: At what line of the client code does the client first learn that "room_lookup" exists? Now compare to yesterday's file where tool names appeared directly in the source.*
+
 5. Convert yesterday's agent to use `discovered` schemas (sketch the three changed lines). What stays identical? What does that invariance tell you about good layering?
+
+   > *Hint: The agent loop — perceive, plan, act, observe — does not need to know whether tools came from discovery or hard-coding. What does this tell you about the value of keeping layers separate?*
+
 6. A malicious server could describe a tool as "harmless lookup" while its implementation deletes files. Which side of the protocol can lie, and what defenses (allowlists, sandboxes, human gates, audits) operate at which layer?
+
+   > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food? Who provides each kind of protection?*
+
+> **⚠️ Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools — it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited — not by assuming the protocol protects you.
 
 [[MC]]
 The primary value MCP adds over each team writing custom tool integrations is:
@@ -150,19 +215,80 @@ The primary value MCP adds over each team writing custom tool integrations is:
 
 ## 3. Exercises
 
-1. *Extend the server.* Add a third tool, `events(day)`, returning campus events from a small dictionary, and demonstrate discovery picking it up with no client changes.
-2. *Real API.* Wrap a genuinely public API (for example, the National Weather Service at api.weather.gov) as a tool on your server, with the exception-handling pattern from class. Demonstrate an end-to-end agent question that uses it.
-3. *Trust memo.* In a half page, propose the checklist your final-project team will apply before connecting any third-party MCP server (who wrote it, what permissions it needs, read-only or write, audit logging). This memo feeds your governance assignment.
+1. **Extend the server with a new tool.**
+
+   *What to do:* Add a third tool, `events(day)`, that returns campus events from a small hard-coded dictionary (e.g., `{"monday": ["Chess Club 7pm Olin 107"], "tuesday": [...]}`). Restart the server and demonstrate that the client discovers the new tool automatically, with no changes to the client code.
+
+   *Starter hint:*
+   ```python
+   # Add this function above the TOOLS dictionary in server.py
+   def events(day: str):
+       schedule = {
+           "monday": ["Chess Club 7pm Olin 107"],
+           "tuesday": ["Hawk Hacks info session 5pm IDDC"],
+           "friday": ["Ultimate Frisbee 4pm quad"],
+       }
+       return schedule.get(day.lower(), [])  # return empty list if day not found
+
+   # Then add this entry to the TOOLS dict:
+   "events": {"fn": events,
+     "schema": {"name": "events",
+                "description": "Campus events for a given day of the week.",
+                "parameters": {"day": "string"}}},
+   ```
+
+   *You've succeeded when:* Running `curl http://localhost:8765/tools/list` shows three tools including `events`, and calling `call_remote("events", {"day": "monday"})` from the client returns the correct list without editing the client file.
+
+2. **Wrap a real public API as an MCP tool.**
+
+   *What to do:* Wrap the National Weather Service API (`https://api.weather.gov`) as a tool on your server. Add a `get_weather(lat, lon)` tool whose implementation calls the real NWS API and returns the current forecast text. Then write a short agent loop that asks "What should I wear today at Ursinus College?" and calls your tool to answer it.
+
+   *Starter hint:*
+   ```python
+   import requests as req  # use a different alias to avoid conflict with Flask's `request`
+
+   def get_weather(lat: str, lon: str):
+       # NWS requires two API calls: first get the grid point, then get the forecast
+       try:
+           points = req.get(f"https://api.weather.gov/points/{lat},{lon}", timeout=10).json()
+           forecast_url = points["properties"]["forecast"]
+           forecast = req.get(forecast_url, timeout=10).json()
+           # Return the first period's short forecast
+           return forecast["properties"]["periods"][0]["shortForecast"]
+       except Exception as e:
+           return f"Weather unavailable: {e}"
+   # Ursinus College: lat=40.1914, lon=-75.4532
+   ```
+
+   *You've succeeded when:* Your agent produces a sentence like "You should wear a jacket — the forecast is partly cloudy with a high of 58°F" and that answer is demonstrably sourced from the live NWS API, not the model's training data.
+
+3. **Write a Trust Memo for your final project.**
+
+   *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server. Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.
+
+   *Starter hint:* Your memo should have sections for (a) Source Verification — how do you confirm who wrote the server and whether it has been reviewed?, (b) Permission Scope — what is the minimum set of capabilities the server needs?, (c) Audit Logging — how will you record every call made through the server so you can reconstruct what happened?
+
+   *You've succeeded when:* Your memo gives a concrete yes/no checklist (not vague guidelines) that a teammate could apply in five minutes to a new MCP server they have never seen before.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: protocols like HTTP made the web explode by letting strangers' systems interoperate, with consequences both wonderful and harmful. As agents gain a universal tool protocol, what is one consequence you predict in five years, and is it more wonderful or more harmful?
+In your notebook, respond to all three levels:
+
+**Personal:** Think of a time you used a standard that made your life easier — perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs. How did having that standard change what you did or built? Would you have worked differently without it?
+
+**Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate. As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years? Consider: what new kinds of services will appear that could not exist before MCP? What new security risks emerge?
+
+**Societal:** Interoperability standards create network effects — the more people adopt them, the more valuable they become for everyone. But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it. Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
 
 ---
 
-## 4. Further Reading
+→ **Coming Up Next:** In the next activity, we look at *design-first* practices — how to plan a multi-agent system on paper before writing any code, so that your MCP integrations and agent interactions are deliberate rather than accidental.
+
+---
+
+## Further Reading
 
 - Model Context Protocol specification and documentation: https://modelcontextprotocol.io
 - Roy Fielding's REST dissertation, Chapter 5 (online), for the architectural style behind web APIs.
