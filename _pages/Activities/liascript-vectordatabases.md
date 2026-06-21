@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Brute Force Fails
 
+In this part, you will see why checking every vector in a million-document database is computationally infeasible and how two approximate nearest-neighbor algorithms — HNSW and IVF — solve the problem through clever indexing.
+
 ## 1. The Scale Problem
 
 Searching a vector database is like finding the most similar song in a music library — not by song title, but by how it *sounds*. If you had 1 million songs and had to listen to each one to decide which is most similar to your query, it would take forever. ANN indexes are the equivalent of organizing songs by genre, tempo, and key so you can jump straight to the right neighborhood.
@@ -48,7 +50,7 @@ An embedding vector for a single sentence is a point in $\mathbb{R}^{1536}$. At 
 
 **Approximate nearest-neighbor (ANN) search** accepts a small chance of missing the true nearest neighbor in exchange for a 100x to 1000x speedup. Two algorithms dominate production systems:
 
-- **HNSW (Hierarchical Navigable Small World):** builds a multi-layer graph where each node connects to its approximate nearest neighbors. Search navigates from a coarse top layer downward, greedily jumping toward the query. Think of it as a subway map where express lines get you close quickly, then local stops get you to the exact station.
+- **HNSW (Hierarchical Navigable Small World — an approximate nearest-neighbor index that organizes vectors into a multi-layer graph so search can navigate quickly from coarse to fine-grained neighborhoods):** builds a multi-layer graph where each node connects to its approximate nearest neighbors. Search navigates from a coarse top layer downward, greedily jumping toward the query. Think of it as a subway map where express lines get you close quickly, then local stops get you to the exact station.
 - **IVF (Inverted File Index):** partitions the vector space into $n$ clusters (Voronoi cells) at index time. At query time only the nearest few cluster centroids are searched. Think of it as dividing a library into sections: you check the "Science" section, not every shelf.
 
 ---
@@ -80,7 +82,11 @@ Not all distance functions measure the same thing. Choose the wrong one and sema
 
 ---
 
+> With the distance metrics and indexing algorithms understood, Part II traces a complete RAG query from the user's question all the way to the LLM's answer — step by step, showing where each type of failure can occur.
+
 # Part II: The Retrieval Pipeline
+
+In this part, you will trace a complete RAG query through six pipeline steps — embedding, ANN search, metadata filtering, and LLM generation — and learn to diagnose which step is responsible when the answer comes out wrong.
 
 ## 2. From Query to Answer
 
@@ -115,7 +121,11 @@ Every RAG query traverses a fixed sequence of steps — like an assembly line wh
 
 ---
 
+> Having traced every step of the retrieval pipeline, Part III surveys the major vector database options and catalogs the four failure modes you will encounter most often in production — so you can recognize and fix them quickly.
+
 # Part III: The Ecosystem and Failure Modes
+
+In this part, you will compare six production vector databases by architecture and operational profile, and study the four most common retrieval failure signatures — semantic mismatch, hallucination, stale index, and "lost in the middle" — so you can diagnose them from their symptoms.
 
 ## 3. Choosing a Vector Database
 
@@ -145,14 +155,18 @@ Vector search fails in predictable ways. Knowing the failure signature helps you
 
 [[MC]]
 You are choosing between cosine similarity and L2 distance for a text retrieval system. Your embedding model outputs unit-normalized vectors. Which statement is correct?
-- ( ) L2 distance should be preferred because it accounts for vector magnitude
+- ( ) L2 distance should be preferred because it accounts for vector magnitude — magnitude carries additional signal about document importance that cosine similarity discards
 - (x) Cosine similarity and L2 distance produce identical rankings when vectors are unit-normalized, so either works; cosine is typically the default for text
-- ( ) L2 distance is always faster to compute than cosine similarity
-- ( ) Cosine similarity cannot be used with approximate nearest-neighbor indexes
+- ( ) L2 distance is always faster to compute than cosine similarity because it avoids the normalization step in the cosine formula
+- ( ) Cosine similarity cannot be used with approximate nearest-neighbor indexes because ANN algorithms like HNSW require a Euclidean distance metric
 
 ---
 
+> With the ecosystem surveyed and failure modes cataloged, Part IV gives you hands-on practice with the tools — computing distances, filtering metadata, comparing search strategies, and deliberately injecting failures so you can practice fixing them.
+
 # Part IV: Synthesis and Practice
+
+In this part, you will apply everything from the previous parts through four hands-on exercises: computing distance metrics by hand, designing metadata filters, comparing hybrid search to dense-only retrieval, and deliberately breaking then fixing a stale index.
 
 ## Exercises
 
@@ -160,7 +174,7 @@ You are choosing between cosine similarity and L2 distance for a text retrieval 
 
    *What to do:* Install Chroma (`pip install chromadb`) and retrieve embeddings for a query and its top-3 results. Compute both metrics in Python: `cosine = dot(q, d) / (norm(q) * norm(d))` and `l2 = sqrt(sum((q - d)**2))`.
 
-   *Starter hint:*
+   *Starter hint:* The code below retrieves the embeddings for a query and its top-3 results, then computes both cosine similarity and L2 distance for each pair. Watch the numerical relationship at the end: for unit-normalized vectors, `L2² = 2(1 - cosine)` should hold for every pair.
    ```python
    import chromadb
    import numpy as np

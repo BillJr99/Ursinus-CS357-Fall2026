@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: What Multimodal Means for Agents
 
+In this part, you will learn how different input types — images, PDFs, audio, video, code — are all converted to the same token format that LLMs process. Understanding this conversion pipeline is essential because every failure mode in multimodal agents originates at a conversion step.
+
 ## Model 1: How Modalities Become Tokens
 
 Early language models accepted only text. Modern agents increasingly accept — and reason over — a much broader set of inputs: images, PDFs, audio recordings, video clips, and structured code files. This is what it means for an agent to be **multimodal**: its input space is not confined to a single modality.
@@ -73,6 +75,8 @@ Multimodality is not magic — it is an extension of the fundamental token-proce
 ---
 
 # Part II: Vision Language Models
+
+In this part, you will survey the landscape of Vision Language Models (VLMs) and learn the document processing pipeline that real agents use for PDFs. The goal is to know which tool to reach for and when — and to understand why the "obvious" choice (just send the image to the model) often fails on structured data like tables.
 
 ## 2. Notable VLMs
 
@@ -123,6 +127,8 @@ In practice, robust document processing pipelines combine all three: extract tex
 ---
 
 # Part III: The Modality Bottleneck and Grounding
+
+In this part, you will examine the fundamental limitation of multimodal systems — lossy conversion — and the concept of grounding, which connects a model's claims back to specific locations in its input. Grounding is what makes multimodal agent outputs verifiable rather than just plausible.
 
 ## 3. The Modality Bottleneck
 
@@ -191,6 +197,8 @@ A VLM is processing a screenshot of a spreadsheet to extract all cell values. Th
 
 # Part IV: Agent Pipeline Deep Dive
 
+In this part, you will trace a complete, real-world multimodal pipeline step by step — from receiving a raw image to writing validated data to a database. Each step in the table reveals a different failure mode and its mitigation, illustrating why production pipelines require multiple stages rather than a single model call.
+
 ## Model 4: Extracting Data from a Hospital Intake Form
 
 Consider an agent tasked with digitizing handwritten hospital intake forms. Each step uses different tools and introduces different failure modes.
@@ -208,6 +216,8 @@ Note that Steps 4 and 5 are critical controls: flagging low-confidence fields pr
 ---
 
 # Part V: Synthesis and Practice
+
+In this part, you will build and evaluate real multimodal pipelines using the tools covered in earlier parts. The exercises are designed to surface failure modes you can only discover by running the system on real data — accuracy numbers that surprise you are the most valuable result.
 
 ## Exercises
 

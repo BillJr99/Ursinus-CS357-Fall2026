@@ -40,11 +40,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Cost of a Token
 
+In this part, you will build a mental model of how LLM API costs accumulate — including why output tokens cost more than input tokens and why long conversations have disproportionately high costs — so that every architectural decision you make later has a price tag attached.
+
 ## Model 1: Token Cost Breakdown
 
 Every hosted LLM API charges by the token. The pricing structure has two parts: **input tokens** (everything in the prompt, including system prompt and context) and **output tokens** (every token the model generates). The asymmetry is important: **output tokens typically cost two to four times more than input tokens** at the same provider.
 
-The reason is computational: reading a token into the attention mechanism is a forward-pass matrix multiply; generating a token requires sampling from a probability distribution and feeding the result back as the next input — a sequential process that cannot be parallelized across tokens and must allocate KV-cache memory per token for the entire context length.
+The reason is computational: reading a token into the attention mechanism is a forward-pass matrix multiply; generating a token requires sampling from a probability distribution and feeding the result back as the next input — a sequential process that cannot be parallelized across tokens and must allocate KV-cache memory (the stored key-value pairs from prior tokens that the attention mechanism needs to re-use) per token for the entire context length.
 
 Context length also affects cost: a model processing a 128K-token context pays the full attention computation across all positions for every generated token, which scales as $O(n^2)$ with naive attention. Even the best implementations charge per input token, so a long context multiplies your bill proportionally.
 
@@ -74,9 +76,13 @@ The table below uses approximate 2025 prices for reference. Actual prices vary b
 
    *Hint:* Multiply each component: (system prompt tokens) × (number of turns) + (tool context tokens) × (number of tool calls). Which term is largest?
 
+With the cost anatomy understood, Part II introduces the two main techniques for paying less per request: caching static prompt prefixes at the provider level, and recognizing semantically duplicate queries before they ever reach the model.
+
 ---
 
 # Part II: Caching Strategies
+
+In this part, you will learn how prompt caching and semantic caching work, when each applies, and how to structure your prompts so the provider's cache actually gets used — because a cache-busting prefix in the wrong place can eliminate your entire caching benefit.
 
 ## Model 2: Prompt Caching and Semantic Caching
 

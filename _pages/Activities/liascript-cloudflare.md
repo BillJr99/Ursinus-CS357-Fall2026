@@ -152,6 +152,8 @@ Note the `env` parameter: this is where secrets and configuration variables arri
 
 ## 5. Deploy, Then Secrets
 
+The following commands deploy your Worker to Cloudflare's global network and immediately test all three routes. The first `wrangler deploy` command may prompt you to confirm — this is the human gate before publishing to a public URL.
+
 ```bash
 # Deploy to Cloudflare's network (prompts to confirm, then shows the live URL)
 npx wrangler deploy
@@ -203,14 +205,18 @@ npx wrangler tail    # streams live log output from your deployed Worker
 
 [[MC]]
 A teammate puts an API key in the [vars] section of wrangler.toml "because env reads both the same way." The flaw is:
-- ( ) Workers cannot read vars at runtime
+- ( ) Workers cannot read vars at runtime — only secrets injected at deploy time are accessible via the `env` object
 - (x) wrangler.toml is committed to the repository, so the key becomes part of the project's public record; secrets must go through wrangler secret put, which stores them server-side only
-- ( ) vars are limited to 32 characters
-- ( ) Secrets are faster to read than vars
+- ( ) vars and secrets are both stored server-side by Cloudflare, so committing the key to `wrangler.toml` has no security implication
+- ( ) Secrets are faster to read than vars because they are stored in Cloudflare's KV store with lower latency
+
+With a live Worker API deployed and secrets stored correctly, Part III shows how to host your static frontend on Pages and — most importantly — draw the line between what belongs at the edge and what must stay on localhost.
 
 ---
 
 # Part III: Pages, and Drawing the Line
+
+In this part, you will deploy a static site to Pages and apply the governance principle that has run throughout this course: every component should live where its data handling and sensitivity requirements dictate, not where it is most convenient to put it.
 
 ## 6. A Pages Site in Two Commands
 
