@@ -78,6 +78,8 @@ The table below summarizes four historical automation eras:
 
 ---
 
+With the historical context of automation waves in hand, you are ready to examine which specific occupations face the highest AI displacement risk today — and why the pattern differs from previous technological transitions.
+
 ## Model 2: Who Gets Displaced and Who Benefits?
 
 The standard economic story of automation — **skill-biased technical change** — holds that technology tends to automate *routine* tasks (assembly line work, data entry) while *complementing* non-routine cognitive tasks (creative work, management, judgment). This explains why, from 1980 to 2010, demand for college-educated workers rose sharply.
@@ -116,10 +118,12 @@ Which of the following best explains the labor-economics effect of AI coding ass
 [[MC]]
 - ( ) Immediate mass unemployment of software developers, since fewer are needed to produce the same amount of code
 - (x) Increased demand for developers, because software becomes cheaper to produce and therefore more of it gets built — the same productivity-paradox mechanism as the ATM example
-- ( ) No meaningful change in developer employment, since the productivity gain is offset by quality degradation
+- ( ) Decreased demand for junior developers specifically, since AI handles entry-level tasks, while senior developer roles remain unchanged and grow in number
 - ( ) Developers being fully replaced by the tools within two years as capability continues to scale
 
 ---
+
+Having analyzed who is displaced and who benefits, you are now ready to evaluate the policy tools that could buffer displacement and shape how you, as a future AI builder, navigate these dynamics.
 
 ## Model 3: Policy Responses and Student Agency
 

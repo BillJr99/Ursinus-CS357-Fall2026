@@ -94,6 +94,8 @@ The three MCP primitives are distinct in *who initiates* and *what is returned*:
 
    *Hint: For the advantage, think about what happens when 10 agents all need the same tool — do they each need their own server process? For the risk, think about what happens if one agent's requests contain malicious input that affects the server's shared state.*
 
+MCP gives agents a standard way to call tools, but it does not address a harder question: when those tools access a user's personal data on an external service, how do we prove the user actually authorized it?
+
 ---
 
 ## Model 2: OAuth 2.0 Flows for Agents
@@ -216,7 +218,7 @@ if __name__ == "__main__":
     asyncio.run(stdio_server(server))
 ```
 
-Test it from the command line before connecting an agent. This shows exactly what an agent sees when it calls these methods:
+Test it from the command line before connecting an agent. The output below shows exactly what an agent sees when it calls these methods — pay attention to how the `id` field in the request (e.g., `"id":1`) matches the `id` in the response, which is how the client knows which reply belongs to which request:
 
 ```bash
 # Terminal 1: Start the server (it waits for input from stdin)

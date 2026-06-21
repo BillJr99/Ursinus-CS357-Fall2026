@@ -115,6 +115,8 @@ These terms are frequently conflated:
 
 ---
 
+Now that you understand how and why private information leaks from AI systems, you are ready to study the technical defenses — and their specific limitations — that engineers use to reduce those risks.
+
 ## Model 2: Privacy-Preserving Techniques
 
 If Model 1 was about understanding the threat, Model 2 is about the defenses. None of these techniques is a silver bullet: differential privacy reduces statistical leakage but costs model accuracy; federated learning keeps raw data local but is vulnerable to gradient inversion; PII scrubbing catches obvious identifiers but misses contextual ones. Real privacy protection requires combining all three layers, just as a bank uses locked vaults, security cameras, and access logs together rather than relying on any one alone.
@@ -210,6 +212,8 @@ A hospital wants to fine-tune a large language model on patient clinical notes t
 > **Why this answer?** Federated learning keeps raw patient data on-premises, which is the core requirement when data cannot leave the institution. Anonymization is insufficient because clinical notes often contain re-identifiable combinations of rare diagnoses, facility names, and dates — removing names alone does not prevent re-identification. Passing Protected Health Information (PHI) through a vendor's API in system prompts almost certainly violates the HIPAA Business Associate Agreement requirements that govern how vendors may use that data. Inference-time DP adds noise to outputs but does not address training data exposure at all — the model was already trained on private data before any DP is applied.
 
 ---
+
+With the theoretical defenses in hand, you are ready to apply them in the concrete operational context of a real AI agent system — where PII enters through user inputs, can be echoed back in outputs, and must be managed through a layered logging and deletion policy.
 
 ## Model 3: Practical PII Handling for Agents
 
