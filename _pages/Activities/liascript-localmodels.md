@@ -168,6 +168,8 @@ The table below maps task categories to recommended models. Use it as a starting
 
 The difference between a generic model and a function-calling-optimized model is not just output quality — it is structural reliability. Agentic pipelines that call tools depend on the model producing parseable JSON, not prose. Think of it like the difference between someone who can describe how to fill out a form vs. someone who actually fills it out correctly.
 
+The two outputs below come from the same user query sent to two different models. Read them carefully — the difference is not intelligence or fluency, it is whether the output is machine-parseable or just prose that describes what a machine call would look like.
+
 **Scenario:** A weather agent exposes this tool:
 
 ```python
@@ -217,9 +219,9 @@ This is valid JSON conforming to the tool schema. The agent framework can parse,
 [[MC]]
 Q4 quantization of a 7B language model means:
 - (x) Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4–8x with modest quality loss on complex tasks
-- ( ) The model has been trained on four quantiles of the training data distribution
-- ( ) The model runs exactly 4 times faster with no quality loss whatsoever
-- ( ) Only the 4 outermost layers of the model are quantized; the rest remain at full precision
+- ( ) The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included — "Q4" refers to a training data selection strategy
+- ( ) The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
+- ( ) Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
 
 ---
 
