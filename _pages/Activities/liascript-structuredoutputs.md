@@ -306,6 +306,8 @@ Key properties of this pipeline:
 - **Bounded retries**: The loop has a hard limit. Without it, an unfixable validation error (like a model that consistently outputs the wrong type) becomes an infinite loop and unbounded API cost.
 - **Fail loudly**: When repair is exhausted, the exception propagates to the caller. Silent failures — returning `None` or default values — hide the problem and allow bad data to flow downstream.
 
+> **⚠️ Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema. It does not. JSON mode is a *suggestion* — the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals). The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level. The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
+
 ### Critical Thinking Questions
 
 7. The repair prompt says "Do not change any values that were already valid." Why is this specific constraint important? Describe a concrete scenario where a repair prompt that just said "output the correct JSON" could accidentally make the response worse, not better.
