@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand (pipelines, RAG, routers, agents with tools) exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a lingua franca for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern we have coded by hand (pipelines, RAG, routers, agents with tools) exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 
@@ -25,53 +25,96 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|---|---|---|
+| **Langflow** | A visual, drag-and-drop tool for building AI pipelines where components appear as boxes on a canvas and data flows along drawn connections between them. | You will drag an "Ollama" box onto the canvas and connect it to a "Chat Output" box instead of writing `requests.post(...)` in Python. |
+| **Dataflow graph** | A diagram where nodes represent processing steps and edges (arrows) represent data traveling from one step to the next; every flow you build today is a dataflow graph. | Your RAG pipeline becomes a graph: File Loader → Text Splitter → Embedder → Chroma → Prompt → Ollama → Output. |
+| **RAG (Retrieval-Augmented Generation)** | A technique where the AI looks up relevant documents from a database before answering, so its answers are grounded in real source material rather than just training data. | Your Lab 2 bot that searches your uploaded corpus before answering questions. |
+| **REST API (Representational State Transfer Application Programming Interface)** | A standard way for programs to communicate over the internet by sending and receiving structured data; Langflow can turn any flow into a REST API endpoint that your Python code can call. | After building your RAG flow visually, you export it and call it from three lines of Python using the `requests` library. |
+| **Low-code** | A style of software development where most logic is assembled visually with minimal hand-written code, making it accessible to people without programming backgrounds. | Wiring a complete RAG pipeline in Langflow by dragging boxes — no Python required — so a club officer could set it up themselves. |
+| **Chunk size** | The number of characters or words each piece of a document is split into before being stored in the vector database; larger chunks preserve more context but cost more to embed and retrieve. | In Lab 2 you chose a chunk size (e.g., 500 characters); today you enter the same number in Langflow's Text Splitter component. |
+
+---
+
 # Part I: The Medium and the Message
 
-## 1. What a Flow Is
+## Model 1: Translation Table
 
-**A flow is a dataflow graph.** Nodes are components (prompt templates, model calls, retrievers, parsers); edges carry typed data between them. Langflow renders the graph on a canvas, executes it on demand, and exposes every intermediate value for inspection, which makes it, among other things, a *teaching and debugging instrument*: the architecture diagram and the running system are the same object.
+Think of architectural blueprints versus a physical building. Both represent the same structure, but blueprints are easier to share with a client who has never swung a hammer, while the physical building is what actually runs. Langflow is the blueprint tool: it makes the architecture of your AI system visible and explainable to non-programmers, while the code you have been writing is the building. Today you will discover that the blueprint and the building encode exactly the same ideas — and that choosing between them depends on your audience, not on what is technically possible. Visual builders have democratized who can *assemble* AI systems; your job today is to understand what that means for who can *audit* them.
+
+**A flow is a dataflow graph.** Nodes are components (prompt templates, model calls, retrievers, parsers); edges carry typed data between them. Langflow renders the graph on a canvas, executes it on demand, and exposes every intermediate value for inspection — which makes it, among other things, a *teaching and debugging instrument*: the architecture diagram and the running system are the same object.
 
 **You already know every component.** A Prompt node is your system-prompt string; an Ollama node is your `chat()` function; a Chroma node is your vector store; a chain of nodes is your pipeline. The conceptual work of weeks 1 through 10 transfers intact; only the syntax changes from Python to wiring.
 
 **Setup (one per team).** Install with `pip install langflow`, launch with `langflow run`, and browse to `http://localhost:7860`. Point model components at your local Ollama (base URL `http://localhost:11434`), keeping today fully private and free, consistent with our local-first stance.
 
----
-
-## Model 1: Translation Table
+| Python code artifact | Langflow component or pattern | What stays the same | What changes |
+|---|---|---|---|
+| System-prompt string in `llm()` | **Prompt** node with a text field for your instructions | The instructions themselves are identical | You type them into a GUI box instead of a Python string variable |
+| `chat()` wrapper function calling Ollama | **Ollama** node with base URL and model name fields | The model name, temperature, and base URL are the same settings | You set them in dropdown menus rather than in a `json=` dict |
+| Text chunker (e.g., `chunk_text(text, 500)`) | **Text Splitter** node with chunk size and overlap fields | The chunk size and overlap you chose in Lab 2 apply directly | The splitting algorithm is a node you wire rather than a function you call |
+| `embed(text)` function | **Ollama Embeddings** node | Same embedding model (e.g., `nomic-embed-text`) | Wired visually rather than called explicitly |
+| ChromaDB vector store | **Chroma** node with collection name and persist directory | The collection name and directory path are the same | Ingest and query are two separate wired paths on the canvas |
+| Critique-refine loop | A cycle in the graph from checker node back to writer node | The same critique prompt logic | Loops in Langflow require special handling; some loops must stay in code |
 
 ### Critical Thinking Questions
 
-1. Complete the translation table as a team: for each artifact from our codebase (system prompt, `chat()` wrapper, chunker, embedder, vector query, critique loop), name the Langflow component or wiring pattern that plays its role.
-2. Which of our patterns has *no* single-component equivalent and must be expressed as graph structure? What does that tell you about what is essential (the pattern) versus incidental (the medium)?
-3. Predict one class of bug that becomes *easier* to find on a canvas than in code, and one that becomes *harder*.
+1. Complete the translation table as a team. For each artifact from our codebase (system prompt, `chat()` wrapper, chunker, embedder, vector query, critique loop), name the Langflow component or wiring pattern that plays its role.
+
+   *Hint:* Use the table above as a starting point. Open Langflow's component sidebar and look for components whose names match the artifacts. Some artifacts (like the critique loop) will not map to a single component.
+
+2. Which of our patterns has *no* single-component equivalent and must be expressed as graph structure? What does that tell you about what is essential (the underlying pattern) versus incidental (the medium in which it is expressed)?
+
+   *Hint:* A RAG query path requires multiple nodes connected in sequence. A critique-refine loop requires a cycle. Is the difficulty with Langflow about the concept being hard, or about the visual medium not supporting cycles natively?
+
+3. Predict one class of bug that becomes *easier* to find on a canvas than in code, and one that becomes *harder*. Justify both predictions before you test them in the builds below.
+
+   *Hint:* Think about what you can *see* on a canvas that is implicit in code (data flow direction, which nodes are connected). Then think about what you can *inspect* in code that is hidden behind a node's icon (exact prompt text, exception tracebacks).
 
 ---
 
 # Part II: Build Sessions
 
-## 2. Build 1: Chat with a Persona
+## Model 2: Build 1 — Chat with a Persona
 
-Construct the minimal flow: **Chat Input $\rightarrow$ Prompt (with your Lab 1 persona pasted in) $\rightarrow$ Ollama $\rightarrow$ Chat Output**. Run it in the playground and confirm the persona holds.
+Construct the minimal flow: **Chat Input → Prompt (with your Lab 1 persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
 
-## 3. Build 2: RAG over Your Lab 2 Corpus
+This is the visual equivalent of the four-line `llm()` call you have been writing since Week 1. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
 
-Recreate your Lab 2 pipeline visually: **File loader $\rightarrow$ Text splitter $\rightarrow$ Ollama Embeddings $\rightarrow$ Chroma (ingest)**, then a query path **Chat Input $\rightarrow$ Chroma retriever $\rightarrow$ Prompt (with your grounding-and-citation instructions) $\rightarrow$ Ollama $\rightarrow$ Chat Output**. Use the same chunk size you shipped in Lab 2.
+## Model 3: Build 2 — RAG over Your Lab 2 Corpus
 
-## 4. Build 3: Export and Reenter Code
+Recreate your Lab 2 pipeline visually. The ingest path is: **File Loader → Text Splitter → Ollama Embeddings → Chroma (ingest mode)**. The query path is: **Chat Input → Chroma (query mode) → Prompt (with your grounding-and-citation instructions) → Ollama → Chat Output**. Use the same chunk size you shipped in Lab 2 so you can make a fair comparison.
 
-Every flow exports as JSON, and Langflow can serve any flow as a REST API endpoint. Export your RAG flow, skim the JSON to find your prompt text and chunk size, then call the flow from three lines of Python `requests`. The visual artifact and your code-world tooling (harnesses, batch evaluation) compose.
+Note that "ingest" and "query" are the same Chroma node set to different modes — a design detail that is invisible in Python (you call different methods) but explicit on the canvas (you use different Chroma nodes or toggle a mode field).
 
----
+## Model 4: Build 3 — Export and Reenter Code
 
-## Model 2: The Same System, Twice
+Every flow exports as JSON, and Langflow can serve any flow as a REST API (Application Programming Interface) endpoint. Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used. Then call the flow endpoint from three lines of Python `requests`:
 
-You now possess the same RAG system in Python (Lab 2) and on a canvas (Build 2).
+```python
+import requests
+response = requests.post("http://localhost:7860/api/v1/run/<your-flow-id>",
+                         json={"input_value": "What is the main argument in chapter 3?"})
+print(response.json()["outputs"][0]["outputs"][0]["results"]["message"]["text"])
+```
+
+The visual artifact and your code-world tooling (harnesses, batch evaluation) compose. The endpoint you built with drag-and-drop is callable by your programmatic test harness.
 
 ### Critical Thinking Questions
 
-4. Run your Lab 2 evaluation question set through the Langflow endpoint with your week 3 harness. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, k, prompt wording) silently differs?
-5. Time both versions on ten queries. Attribute any overhead, and decide whether it matters for an interactive bot versus a batch pipeline.
-6. Hand your canvas to a teammate who did not build it, with no narration allowed. How far can they explain the system? Try the same with your Python file. Record the asymmetry honestly: it cuts both ways.
+4. Run your Lab 2 evaluation question set through the Langflow endpoint with your week 3 harness. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
+
+   *Hint:* Export the Langflow flow JSON and search for your chunk size value. Is it exactly the same number as in your Python Lab 2 code? Check the retriever's $k$ parameter (number of documents retrieved) in the Chroma node settings.
+
+5. Time both versions on ten queries. Attribute any latency overhead to a specific cause, and decide whether the difference matters for an interactive chatbot versus a batch processing pipeline.
+
+   *Hint:* Use Python's `time.time()` before and after each query. If Langflow is slower, consider: is it doing the same computation, or is there HTTP overhead from the local API call? Does that matter if a user is waiting 2 seconds versus 0.5 seconds?
+
+6. Hand your canvas to a teammate who did not build it, with no narration allowed. Ask them to explain the system. Try the same with your Python Lab 2 file. Record the asymmetry honestly: which medium was clearer to a newcomer, and which medium revealed more detail to an expert?
+
+   *Hint:* The Reflector should record specific moments of confusion or clarity. Which medium let the newcomer correctly predict what would happen if you changed the chunk size? Which let the expert find the exact temperature setting used?
 
 [[MC]]
 The most defensible claim about visual builders versus code for agent systems is:
@@ -80,26 +123,54 @@ The most defensible claim about visual builders versus code for agent systems is
 - (x) Both express the same underlying patterns; visual excels at communication and rapid wiring, code at version control, testing, and arbitrary logic
 - ( ) Flows run faster because they skip Python
 
+> **⚠️ Common Misconception:** It is tempting to conclude that visual builders are "easier" and therefore produce systems that are less capable or less rigorous than hand-written code. This is wrong in two directions. First, Langflow can express any pattern that Python can (with the exception of certain dynamic structures like runtime loops). Second, "easier to build" does not mean "easier to audit" — a visually assembled system can be harder to review for security, bias, or correctness than well-structured Python code, because the implementation details are hidden inside opaque node icons. Ease of construction and rigor of understanding are independent dimensions.
+
 ---
 
 # Part III: Synthesis and Practice
 
-## 5. Exercises
+## Exercises
 
-1. *Pattern rebuild.* Choose one Unit 3 pattern (router, critique-refine, or a two-stage pipeline) and realize it on the canvas. Screenshot the working flow with one playground transcript.
-2. *Limit hunt.* Attempt to express your Lab 4 debate (n agents, two rounds, majority vote) visually. Document precisely where the canvas resists (loops, dynamic fan-out), and state the general principle about what dataflow graphs express awkwardly.
-3. *Stakeholder demo.* Prepare a 90-second explanation of your Build 2 flow for a non-programmer (an RA, a club officer, a professor in another department). Deliver it to another team's Reflector and collect one comprehension question you failed to anticipate. This rehearses your final presentation.
+1. *Pattern rebuild.*
+
+   *What to do:* Choose one Unit 3 pattern (router, critique-refine, or a two-stage pipeline) and realize it on the Langflow canvas. Capture a screenshot of the working flow with at least one playground transcript showing the expected behavior.
+
+   *Starter hint:* A two-stage pipeline is the simplest: one Prompt+Ollama node for the first stage, whose output feeds a second Prompt+Ollama node. The "router" pattern requires a conditional — look for a "Conditional Router" component in Langflow's sidebar.
+
+   *You've succeeded when:* You can show the screenshot to a teammate who did not build it, and they correctly explain what the flow does without your help.
+
+2. *Limit hunt.*
+
+   *What to do:* Attempt to express your Lab 4 debate (n agents, two rounds, majority vote) visually on the canvas. Document precisely where the canvas resists (loops, dynamic fan-out, variable number of agents), and state the general principle about what dataflow graphs express awkwardly.
+
+   *Starter hint:* Dynamic fan-out means "create $n$ parallel paths where $n$ is determined at runtime." Can you wire $n$ Ollama nodes when you do not know $n$ at flow-design time? What does this tell you about the difference between *static* and *dynamic* computation graphs?
+
+   *You've succeeded when:* You can write one precise sentence stating the structural limitation (e.g., "Langflow flows are static graphs; they cannot spawn a variable number of parallel nodes at runtime") and give a concrete example from the debate pipeline that hits this limit.
+
+3. *Stakeholder demo.*
+
+   *What to do:* Prepare a 90-second explanation of your Build 2 RAG flow for a non-programmer (an RA, a club officer, a professor in another department). Deliver it to another team's Reflector and collect one comprehension question you failed to anticipate.
+
+   *Starter hint:* Your explanation should answer: "What does it do? Where does the knowledge come from? What does it NOT know?" Avoid the words "embedding," "vector," and "Chroma." Use analogies: "It's like a search engine that reads your documents before answering."
+
+   *You've succeeded when:* The other team's Reflector asks a question you had not prepared for, you can record that question, and you can improve your explanation to preemptively answer it next time.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: low-code tools widen who can build AI systems, including people who cannot audit the components they wire together. Is that democratization, risk, or both? Anchor your answer in one specific thing you wired today without fully understanding it.
+*Personal:* Today you wired at least one component (a Text Splitter, a Chroma node, an Embeddings node) without fully reading its source code. Identify that component and describe what you know about what it does, what you are uncertain about, and how you would find out.
+
+*Technical:* Low-code tools reduce the barrier to assembling AI systems. Describe a specific security or correctness risk that is harder to catch in a visually assembled system than in equivalent Python code, and propose a concrete mitigation (a documentation requirement, a code review step, an automated test).
+
+*Societal:* Low-code tools widen who can build AI systems, including people who cannot audit the components they wire together. Is that democratization, risk, or both? Anchor your answer in one specific thing you wired today that you did not fully understand, and describe what harm could result if someone deployed that component in a high-stakes setting without understanding it.
 
 ---
 
-## 6. Further Reading
+→ Coming Up Next: Now that we can build and evaluate agent systems, we need to measure their output quality at scale — which requires recruiting an AI model to act as the judge of other AI outputs.
+
+## Further Reading
 
 - Langflow documentation: https://docs.langflow.org
 - Ollama integration guide within the Langflow docs (component reference).
-- Victor, Bret. "Learnable Programming" (2012, online essay), on representations that make systems visible.
+- Victor, Bret. "Learnable Programming" (2012, online essay), on representations that make systems visible and understandable.
