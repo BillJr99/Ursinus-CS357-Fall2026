@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: From Voting to Synthesis
 
+In this section you will move from the simple majority vote from the debate activity to a more powerful idea: clustering answers by meaning and synthesizing a merged result. The tomatillo salsa example makes this concrete — you will see why exact-match voting fails on paragraph answers and how embedding similarity solves that problem.
+
 ## Model 1: The Tomatillo Question
 
 Think of a jury deliberation. Twelve jurors each hear the same evidence and independently form an opinion; the jury room is where they find the shared view. Today's agents play the same role: each starts from the same question, produces a different answer because of temperature-driven randomness, and then a synthesizer finds the shared position — except our "jury room" is an algorithm, not a room. This matters because the same technique can be applied to any question where multiple independent drafts are better than one: code review, medical triage summaries, or research literature.
@@ -68,19 +70,23 @@ Five agents at temperature 1.0 propose tomatillo salsa recipes. Three roast the 
 
 1. Group the five recipes into clusters by their *load-bearing* choice (the one that fundamentally changes the dish). Which choice is load-bearing and which is garnish-level, and how would embeddings see the difference — or fail to?
 
-   *Hint:* Ask yourself: if you swapped jalapeño for serrano, would the dish taste radically different? What if you swapped raw for roasted? The answer tells you which dimension is load-bearing.
+   > *Hint: Ask yourself: if you swapped jalapeño for serrano, would the dish taste radically different? What if you swapped raw for roasted? The answer tells you which dimension is load-bearing.*
 
 2. Write, in two sentences, the synthesis you would want: it should commit where the majority is strong and disclose where it is split.
 
-   *Hint:* The majority (3 of 5) agrees on roasting. The chile choice is evenly split. Your synthesis should say something definite about cooking method and something honest about the chile.
+   > *Hint: The majority (3 of 5) agrees on roasting. The chile choice is evenly split. Your synthesis should say something definite about cooking method and something honest about the chile.*
 
 3. Exact-match voting on full recipe texts would yield five singleton "answers." State precisely why, in terms of the difference between *string* identity and *semantic* identity.
 
-   *Hint:* "Roast under the broiler" and "char over an open flame" are different strings but close meanings. Exact-match treats them as completely different answers even though they express the same culinary decision.
+   > *Hint: "Roast under the broiler" and "char over an open flame" are different strings but close meanings. Exact-match treats them as completely different answers even though they express the same culinary decision.*
+
+With the conceptual case for clustering established, Part II shows the implementation so you can see exactly how embeddings and agglomerative clustering (grouping by similarity without knowing the number of groups in advance) make this work in code.
 
 ---
 
 # Part II: Implementation
+
+In this section you will read the full sample-cluster-synthesize pipeline and run it on the tomatillo question. The questions that follow ask you to connect the code's design choices — especially the temperature settings and the distance threshold — back to the theory from Part I.
 
 ## Model 2: Sample, Cluster, Synthesize
 
@@ -89,6 +95,8 @@ In a courtroom, the bailiff does not ask jurors to write identical sentences —
 ---
 
 ## Code Cell
+
+The code below runs in three stages: (1) it samples six diverse recipe drafts at high temperature, (2) it converts each draft to an embedding vector and groups similar drafts into clusters using agglomerative clustering (which builds groups bottom-up by merging the most similar pairs first), and (3) it passes the cluster summaries to a synthesizer that writes a single merged recipe. Notice that the synthesizer's context is small — it never sees all six original drafts, only the cluster representatives.
 
 ```python
 import numpy as np
@@ -151,15 +159,15 @@ print("=== CONSENSUS ===\n", consensus)
 
 4. How many clusters formed, and does the largest correspond to a recognizable culinary position (for example, roasted versus boiled)? Quote the phrase that anchored the biggest cluster.
 
-   *Hint:* Run the code and inspect the printed cluster labels. Look at the first 100 characters of each cluster's representative draft to identify its culinary stance.
+   > *Hint: Run the code and inspect the printed cluster labels. Look at the first 100 characters of each cluster's representative draft to identify its culinary stance.*
 
 5. The synthesizer runs at temperature 0.2 while the drafters ran at 1.0. Map this onto the explore-exploit schedule from the debate module, and explain why the synthesis step must not be creative.
 
-   *Hint:* High temperature = exploration (new ideas). Low temperature = exploitation (committing to the best known answer). At which stage do you want new ideas, and at which stage do you want reliability?
+   > *Hint: High temperature = exploration (new ideas). Low temperature = exploitation (committing to the best known answer). At which stage do you want new ideas, and at which stage do you want reliability?*
 
 6. The `distance_threshold=0.45` silently decides what counts as "the same opinion." Lower it to 0.25 and raise it to 0.7; report how the cluster structure, and therefore the consensus, changes. Who, in a deployed system, should own that number?
 
-   *Hint:* A lower threshold is stricter — only very similar texts merge. A higher threshold is looser — nearly anything merges. Think about who is harmed if the threshold is set wrong: whose minority opinion gets absorbed into the majority?
+   > *Hint: A lower threshold is stricter — only very similar texts merge. A higher threshold is looser — nearly anything merges. Think about who is harmed if the threshold is set wrong: whose minority opinion gets absorbed into the majority?*
 
 [[MC]]
 Compared with simple majority voting, embedding-clustered consensus is principally designed to handle:
@@ -170,9 +178,13 @@ Compared with simple majority voting, embedding-clustered consensus is principal
 
 > **⚠️ Common Misconception:** Many students assume that more agents always means better answers. In reality, consensus amplifies whatever the model already believes most often. If the underlying model has a systematic bias — for example, always preferring certain cooking techniques that are over-represented in its training data — running more agents just makes that bias louder, not quieter. Consensus is a tool for aggregating diverse *reasoning paths* toward a correct answer, not for discovering truths the model does not already know.
 
+Part III builds on this misconception warning by examining the conditions under which consensus actively misleads, and what to do about it in your own systems.
+
 ---
 
 # Part III: Limits and Synthesis
+
+In this section you will examine the situations where consensus makes results worse rather than better, and you will connect those limits to the bias module coming up next week. This is also where you will bridge today's work directly into your Lab 4 design.
 
 ## Model 3: When Consensus Misleads
 

@@ -184,6 +184,8 @@ for label in sorted(set(km.labels_)):
 
 ## 4. Exercises
 
+In this Part you apply everything from Parts I and II to real documents: run a chunking shootout on a campus policy page, build and test a reranker using your local model, plot a recall curve, and choose a retrieval configuration you can defend with numbers.
+
 1. *Chunking shootout.* Take one real page of a campus document. Index it three ways (fixed 100 tokens no overlap, fixed 300 tokens with 75-token overlap, paragraph-structural). For five questions with known answers, report which indexing strategy wins recall@2, and explain the winner.
 
    - *What to do:* Choose a real campus policy page (parking, dining, honor code, etc.). Implement three versions of the chunker and create three separate Chroma collections. For 5 questions where you know which paragraph contains the answer, run all three and check whether the answer paragraph appears in the top 2 results.

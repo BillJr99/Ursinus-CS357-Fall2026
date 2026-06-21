@@ -82,7 +82,7 @@ $$
 \text{accuracy} = \frac{1}{N}\sum_{i=1}^{N} \mathbb{1}[\hat{y}_i = y_i]
 $$
 
-where $\hat{y}_i$ is the model's answer and $y_i$ is the known correct answer. The indicator function $\mathbb{1}[\cdot]$ equals 1 if the condition is true and 0 otherwise. Exact match is intentionally harsh — a correct answer phrased differently scores zero — which previews why we will later recruit *another model* as a judge (an LLM-as-evaluator), and why we must then evaluate the judge itself.
+where $\hat{y}_i$ is the model's predicted answer and $y_i$ is the known correct answer. The indicator function $\mathbb{1}[\cdot]$ (read as "1 if the condition is true, 0 otherwise" — equivalent to Python's `int(condition)`) counts correct answers. Exact match is intentionally harsh — a correct answer phrased differently scores zero — which previews why we will later recruit *another model* as a judge (an LLM-as-evaluator), and why we must then evaluate the judge itself.
 
 [[MC]]
 A team reports that their agent "seems pretty accurate" after trying a few questions. The most important missing element of a real evaluation is:

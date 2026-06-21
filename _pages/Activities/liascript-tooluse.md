@@ -42,6 +42,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Contract
 
+In this Part you will see why the regex-based tool-calling approach from week 1 breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
+
 **Why this matters:** In week 1 our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
 
 **A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about what the tool does*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:

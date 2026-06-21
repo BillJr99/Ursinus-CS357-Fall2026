@@ -140,7 +140,7 @@ The table below covers the ten commands you will use most often when working wit
 
 ## 4. Pipes and Redirection: The Unix Superpower
 
-Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. Pipes and redirection are how blueprints connect to each other — output from one specification flows directly into the next, without paper copies piling up in between. This section shows you how to compose small, focused tools into powerful pipelines, which is exactly the same composition idea behind our agent pipelines.
+Pipes and redirection let you compose simple commands into powerful one-liners without ever saving intermediate results to a file. This is the same composition idea that underlies agent pipelines — small, focused tools chained together to produce complex results.
 
 **A pipe `|` sends one command's output into the next command's input**, composing small tools into pipelines:
 
@@ -204,9 +204,11 @@ A teammate runs `python eval.py > results.txt` twice in a row with different set
 
 ---
 
+*You now know how to navigate and compose file operations. Before launching any agent tool, you need to understand environment variables — the mechanism that supplies configuration and API keys to those tools — and PATH, which controls whether the shell can find them at all.*
+
 ## 5. Environment Variables and PATH
 
-**Environment variables are named values the shell passes to every program it starts**, and they are how this course's tools receive configuration and credentials:
+**Environment variables** are named values the shell passes to every program it starts — think of them as the shell's global settings. They are how this course's tools receive configuration and credentials without you having to hardcode those values into your code:
 
 ```bash
 echo $HOME
@@ -238,9 +240,11 @@ Variables set with `export` last only until the terminal closes; to make them pe
 
    *Hint:* The PATH is searched left to right and stops at the first match. If one teammate has `/home/alice/.local/bin` earlier in their PATH than `/usr/bin`, and that directory contains a different `python3`, that version wins. Run `echo $PATH` on both machines and compare the order.
 
+*With environment variables and PATH understood, you can launch agent tools and know they will find their configuration. The final piece is managing the programs themselves — how to run them in the background, check on them, and stop them when needed.*
+
 ## 6. Processes
 
-Every running program is a **process**. The controls you need:
+Every running program is a **process** (a running instance of a program, assigned a unique ID number by the operating system). The controls you need:
 
 ```bash
 some_long_command
@@ -280,11 +284,13 @@ When a port is "already in use" (a constant companion in the Docker module), `ls
 
 ---
 
+*You can now navigate, manage files, compose pipelines, set environment variables, and control processes. Part III brings all of this together in the tool you will use every day: VS Code's integrated terminal, where your agent runs in one pane while you review its changes in another.*
+
 # Part III: The Terminal in VS Code, and Practice
 
 ## 7. VS Code Is a Terminal with an Editor Attached
 
-Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. VS Code's integrated terminal is the drafting table where blueprints and the building site exist side by side: you can read the agent's proposed edits in the editor pane and watch it execute commands in the terminal pane simultaneously, without switching windows.
+VS Code's integrated terminal puts your agent's command output and its file edits side by side in one window, so you never need to switch between the terminal and the editor to see what an agent proposal actually changes.
 
 Open VS Code's integrated terminal with **Ctrl+`** (backtick). It is a full shell, opened in your project's folder automatically, which is exactly where agent CLIs want to be launched: `claude`, `codex`, `gemini`, `opencode`, and `pi` all start in the current directory and treat it as their workspace. The split is natural: the agent runs in the terminal pane while you read its edits in the editor pane above, with VS Code's diff coloring showing every change the agent makes the moment it makes it. The agent CLI module builds on this layout; today, just confirm you can open the panel, run `pwd`, and see your project path.
 
