@@ -81,6 +81,8 @@ Three fundamental communication primitives appear across multi-agent frameworks:
 
 *Hint:* Think about what happens when you want to add a fourth agent (e.g., a fact-checker) to the pipeline. With message passing, who needs to be updated? With event streaming, who needs to be updated? Then think about a situation where the writer must not start until the analyst has fully finished — which primitive enforces that guarantee more naturally?
 
+Choosing the right communication primitive avoids some failures — but once agents share any state at all, a new class of coordination problems emerges that no communication style alone can prevent.
+
 ---
 
 ## Model 2: Coordination Problems
@@ -122,6 +124,8 @@ Classic distributed systems solutions — developed over decades for databases a
 [[___ Your answer here ___]]
 
 *Hint:* Phase 1 is the "can you do this?" round — the coordinator asks each agent to prepare and confirm readiness. Phase 2 is the "commit or abort" round — only if all agents say yes does the coordinator tell everyone to execute. What should the coordinator do if even one agent says it cannot proceed?
+
+These coordination problems are not hypothetical — they motivated the development of industry standards that allow real multi-agent systems to interoperate safely across team and organizational boundaries.
 
 ---
 

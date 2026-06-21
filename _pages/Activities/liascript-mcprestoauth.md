@@ -137,6 +137,8 @@ The **Implicit flow** was deprecated because tokens in URL fragments appear in b
 
    *Hint: GitHub's API documentation lists scopes at https://docs.github.com/en/developers/apps/scopes-for-oauth-apps. For public repositories, you may need no special scope at all — unauthenticated requests can read public data. What is the blast radius if a `repo`-scoped token is stolen versus a no-scope token?*
 
+Obtaining the right token with the right scopes is only half the problem — how that token is stored, logged, and handled determines whether authorization remains secure after it is granted.
+
 ---
 
 ## Model 3: Token Security — Bad vs. Good
@@ -160,6 +162,8 @@ The last row is AI-specific and critical. Tokens placed in the LLM's context win
 8. Why is **token rotation** — generating a new token and revoking the old one on a regular schedule — valuable even when there is no known breach or leaked token? Describe two specific threat scenarios that rotation defeats even if you never know the threat occurred.
 
    *Hint: Scenario 1: an attacker copied your token three months ago without you knowing. Scenario 2: an old token was accidentally logged to a low-visibility log file that nobody checks. What does rotation do in each case?*
+
+With security principles established, we can now see how they apply concretely by building the simplest possible MCP server — the kind of artifact that a real agent would call.
 
 ---
 
@@ -267,10 +271,10 @@ echo '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_kno
 
 [[MC]]
 An agent has a refresh token that was issued alongside an access token. The access token expires after 60 minutes. What is the correct behavior when the agent receives an HTTP 401 Unauthorized response?
-- ( ) Immediately ask the user to log in again
-- ( ) Discard the refresh token and request new scopes
+- ( ) Immediately ask the user to log in again — the refresh token exists precisely to avoid this interruption; discarding it wastes the user's original consent grant
+- ( ) Discard the refresh token and request new scopes — a 401 means the access token expired, not that the scopes were wrong; requesting new scopes would start a new authorization flow unnecessarily
 - (x) Exchange the refresh token for a new access token, then retry the original request
-- ( ) Cache the 401 response and skip the failed API call
+- ( ) Cache the 401 response and skip the failed API call — silently skipping a failed call hides the authentication failure from operators and allows the agent to proceed with incomplete results
 
 ---
 

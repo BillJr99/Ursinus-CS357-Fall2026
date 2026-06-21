@@ -71,6 +71,8 @@ Cognitive scientists describe human memory in multiple systems (working, episodi
 
    *Hint:* The three obvious options are: (a) stop accepting new messages (return an error), (b) drop the oldest turns silently and continue, (c) compress old turns into a summary and continue. Are there other options? For each, ask: what does the user see? What information is lost? What is the cost in latency or accuracy?
 
+Understanding the types of memory is only the starting point — the harder constraint is that working memory has a hard numerical limit that shapes every other architectural decision.
+
 ---
 
 ## Model 2: Context Window as Working Memory
@@ -79,7 +81,7 @@ Cognitive scientists describe human memory in multiple systems (working, episodi
 
 The context window is the agent's "desk": everything on the desk is immediately usable; anything not on the desk must be fetched. Modern LLMs offer context windows from 4K to 1M+ tokens, but larger windows do not eliminate the problem — they change its scale and add cost.
 
-**Token budget breakdown for an 8K context window example:**
+**Token budget breakdown for an 8K context window example:** The budget breakdown below shows how quickly the usable space for conversation history fills up — notice that the combined overhead of system prompt, tool definitions, and response space leaves fewer turns than you might expect:
 
 ```
 Total budget: 8,192 tokens
@@ -100,10 +102,10 @@ When does the context fill up?
 [[MC]]
 A user has a 40-turn conversation with an agent. On turn 41, the agent addresses the user as "there" instead of by name, even though the user introduced themselves on turn 1. The most likely cause is:
 
-- ( ) The model was retrained overnight and lost the conversation
+- ( ) The model was retrained overnight and lost the conversation — model retraining is a deployment event that takes days, not something that happens between conversational turns
 - (x) The context window was truncated and the early turns containing the introduction were dropped
-- ( ) The agent has no semantic memory module configured
-- ( ) The system prompt is too long and overwrote the user's name
+- ( ) The agent has no semantic memory module configured — semantic memory stores general world knowledge, not user-specific introductions from this session
+- ( ) The system prompt is too long and overwrote the user's name — the system prompt cannot overwrite conversation history; it occupies a separate region of the context budget
 
 > **Common Misconception:** Students often assume that a larger context window eliminates the need to think carefully about memory architecture. In reality, larger context windows introduce new problems: they cost more per token (inference cost scales with context length), they are slower (attention is quadratic in sequence length for most architectures), and the "Lost in the Middle" effect becomes more pronounced as context grows. A 100K-token context window does not mean you can dump 100K tokens of information into it and trust the model to find what it needs — it means the layout and relevance of what you put in matters even more.
 
@@ -120,6 +122,8 @@ A user has a 40-turn conversation with an agent. On turn 41, the agent addresses
 6. Given the "Lost in the Middle" effect, where in the context window would you place each of the following: (a) the most important safety constraints the agent must always follow, (b) background reference documents retrieved from a knowledge base, (c) the most recent user message? Explain each placement decision and how it relates to the empirical finding.
 
    *Hint:* The LiM finding says beginning and end are most reliably attended to. The most recent user message logically belongs at the end (it is the current task). Safety constraints that must never be ignored should therefore go at the beginning. What about the background documents? Placing them in the middle means they may be less reliably used — is there a better placement? What are the trade-offs?
+
+Since no context window can hold everything forever, the next question is how to selectively preserve information across sessions — and each strategy involves a different set of tradeoffs between cost, fidelity, and failure risk.
 
 ---
 
