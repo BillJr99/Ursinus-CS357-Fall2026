@@ -185,7 +185,7 @@ grade_breakdown:
   weight: "35%"
 - category: "Written Assignments (choose 3 from 6 available)"
   weight: "20%"
-- category: "Final Project (choose track: Custom Agent Team or Responsible AI Audit)"
+- category: "Final Project (choose one: Custom Agent Team, Responsible AI Audit, or Open-Source Agent)"
   weight: "25%"
 - category: "Class Activities and Participation"
   weight: "10%"
@@ -396,6 +396,11 @@ schedule:
   date: "1"
   title: "Orchestration Patterns: Pipelines, Routers, and Planners"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Agent Frameworks — LangChain, CrewAI, AutoGen, and Agno"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md"
+  - rtitle: "Supplemental Tutorial: Cost Optimization — Token Budgets, Caching, and Model Routing"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md"
   deliverables:
   - dtitle: "Lab 3: Critique and Refine Handed Out"
     dlink: "Assignments/CritiqueRefine"
@@ -442,6 +447,10 @@ schedule:
     dlink: "Projects/ResponsibleAI"
     points: "100"
     rubricpath: "_pages/Projects/proj-responsibleai.md"
+  - dtitle: "Final Project: Build and Publish an Open-Source Agent Handed Out (alternative track)"
+    dlink: "Projects/OpenSourceAgent"
+    points: "100"
+    rubricpath: "_pages/Projects/proj-opensourceagent.md"
   - dtitle: "Lab: Coding Agents in Practice Due (optional lab)"
     dlink: "Assignments/CodingAgents"
     points: "100"
@@ -464,6 +473,9 @@ schedule:
   date: "1"
   title: "Evaluating Agents: LLM-as-Judge and Rubric Pipelines"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
   deliverables:
   - dtitle: "Lab 4: Multi-Agent Debate and Consensus Due"
     dlink: "Assignments/MultiAgentDebate"
@@ -518,6 +530,11 @@ schedule:
   date: "1"
   title: "Governance and Policy Writing"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
+  readings:
+  - rtitle: "Supplemental Activity: AI for Accessibility — Opportunity, Obligation, and Risk"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-accessibilityai.md"
+  - rtitle: "Supplemental Activity: Neuro-AI Ethics — Brain-Inspired AI, Cognitive Science, and the Study of Mind"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-neuroaiethics.md"
   deliverables:
   - dtitle: "Written Assignment: Governance and Policy Handed Out"
     dlink: "Assignments/Governance"
@@ -574,4 +591,8 @@ schedule:
     dlink: "Projects/ResponsibleAI"
     points: "100"
     rubricpath: "_pages/Projects/proj-responsibleai.md"
+  - dtitle: "Final Project: Build and Publish an Open-Source Agent Due (alternative track)"
+    dlink: "Projects/OpenSourceAgent"
+    points: "100"
+    rubricpath: "_pages/Projects/proj-opensourceagent.md"
 ---
