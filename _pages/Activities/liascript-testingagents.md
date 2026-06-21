@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Agent Testing Is Hard
 
+In this part, you will learn why agents are fundamentally harder to test than ordinary software — because they are non-deterministic and have no single "right" answer — and explore six categories of tests that together provide meaningful coverage despite that uncertainty.
+
 ## Model 1: Test Type Taxonomy
 
 You wouldn't ship a bridge without load-testing it first. Why ship an AI agent without testing its reasoning? The challenge is that an agent isn't a simple function — it makes decisions, calls tools, and produces open-ended text. The same agent system requires several qualitatively different kinds of tests, and confusing them leads to both false confidence and wasted effort.
@@ -73,7 +75,11 @@ You wouldn't ship a bridge without load-testing it first. Why ship an AI agent w
 
 ---
 
+> With the taxonomy of test types established, Part II puts them into practice: you will design a concrete test suite for a real agent, confronting the "oracle problem" for every test case you write.
+
 # Part II: Building a Test Suite
+
+In this part, you will analyze a representative test suite for a syllabus-answering agent — including happy-path cases, adversarial inputs, and hallucination probes — and understand how to write assertions for outputs that can never be exactly predicted.
 
 ## Model 2: Test Cases for a Syllabus Agent
 
@@ -115,7 +121,11 @@ Your agent's output is non-deterministic: the same question produces a different
 
 ---
 
+> Now that you have a test suite, Part III shows how to automate it into an eval harness and plug it into CI so that every prompt change is automatically checked for regressions before it reaches users.
+
 # Part III: The Eval Harness and Prompt Regression
+
+In this part, you will learn the prompt regression workflow — how to capture a baseline, detect when a prompt change breaks passing tests, and integrate quality gates into CI so regressions are caught automatically.
 
 ## Model 3: The Prompt Regression Workflow
 
@@ -160,7 +170,7 @@ Think of it like editing a recipe: you adjusted the salt because last week's sou
 
    *What to do:* For your final project agent, write a Python test file that implements at least five property-based assertions. Each assertion should be a standalone function that takes an agent output string and returns `True` if the property holds or `False` if it fails. Run your suite against ten sampled outputs and report the overall pass rate. If a property fails, diagnose whether the root cause is a test design problem or an agent quality problem.
 
-   *Starter hint:*
+   *Starter hint:* The code below shows the pattern for all property functions: each one takes a string (the agent's output) and returns True or False. Notice that `has_citation` uses a regex rather than exact matching — this makes the test robust to different citation formats.
    ```python
    # Each property is a function: output (str) -> bool
    def has_citation(output: str) -> bool:

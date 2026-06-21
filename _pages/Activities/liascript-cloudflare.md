@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Platform and the Tool
 
+In this part, you will map the three nouns that make up Cloudflare's developer platform and install Wrangler, the CLI that drives all of them — because understanding what each service does and does not do is the prerequisite for placing the right thing in the right place.
+
 ## 1. The Map
 
 Workers are like serverless microwave ovens — they heat your code on demand, you do not manage the kitchen. When a request comes in, Cloudflare runs your function on the nearest server, returns the result, and the function stops running. You pay nothing for idle time, you never SSH into a machine, and Cloudflare handles TLS certificates, load balancing, and global distribution automatically. The free tier handles enough requests per day to cover any course project comfortably.
@@ -55,6 +57,8 @@ Around them sit storage primitives you may eventually want, of which **KV** (a k
 **Wrangler** is the command-line interface to all of it: it scaffolds projects, runs them locally, deploys them, and manages secrets, which makes it the `docker` of this module. The honest framing for our course: the local stack is where private things live; Cloudflare is where *shareable, non-sensitive* things go, and deciding which is which is a governance exercise you have already trained for.
 
 ## 2. Wrangler from Zero
+
+The following commands install Wrangler, connect it to your Cloudflare account, and confirm the connection. Run them in order — `wrangler login` will open a browser tab to complete authorization.
 
 ```bash
 # Install Wrangler globally (or use npx wrangler to run without installing)
@@ -72,11 +76,17 @@ wrangler whoami
 
 `wrangler login` stores an OAuth credential on your machine, scoped to your Cloudflare account. On shared machines (like a lab computer), run `wrangler logout` when you are finished — the same hygiene rule as any other credential.
 
+With the platform map clear and Wrangler installed, Part II walks you from zero to a deployed Worker — a complete round trip from laptop to public URL in under ten minutes.
+
 ---
 
 # Part II: Your First Worker
 
+In this part, you will scaffold, run locally, and deploy a JSON API Worker, then add secrets using the pattern that keeps keys out of your repository — so you understand both what a Worker is and how to keep it secure before you build anything real.
+
 ## 3. Scaffold, Run Locally, Read the Config
+
+These commands scaffold a new Worker project from the official template and start the local development server. The local server hot-reloads on every save, so you can edit and test without redeploying.
 
 ```bash
 # Create a new Worker project from the official template
@@ -104,6 +114,8 @@ That `compatibility_date` line deserves a pause: it is the platform's version-pi
 ## 4. The Code Shape, and a Real Example
 
 A Worker exports a `fetch` handler: an HTTP request comes in, your function runs, an HTTP response goes out. Everything else is your logic. Here is a complete, production-quality example with routing and error handling:
+
+The following Worker exports a `fetch` handler with three routes and honest error handling. Read the comments inside the code — they explain what each piece does and why it is structured this way.
 
 ```javascript
 // src/index.js: a tiny JSON API with three routes and honest error handling
