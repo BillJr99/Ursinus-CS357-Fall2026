@@ -78,6 +78,8 @@ An agent has run 30 steps. Its prompt now contains: the system prompt (300 token
 
 ## 2. A Vocabulary of Memories
 
+In this Part you will see how professional agent systems layer three types of memory — working memory, episodic summary, and long-term retrieval — then run a Python class that automatically compresses old conversation turns into a summary, so you can observe exactly what information survives compression and what is lost.
+
 **Why this matters:** Human memory is not a single thing — we distinguish between what you are thinking about right now (working memory), your episodic memories of specific past events, and procedural knowledge like how to ride a bike. Effective agent architectures mirror this layering, assigning each type of information to the storage tier that fits its access pattern. The key insight is that an agent should never carry information it is not likely to need in its next decision.
 
 Practical agents layer several memory types. **Working memory**: the last few turns, kept verbatim — the model needs exact wording for what was just said. **Episodic summary**: a running compressed narrative of the session (e.g., "user wants X; we tried Y, it failed because Z"), rewritten by the model itself every few turns. **Long-term memory**: facts persisted *outside* the context in files or a vector store, retrieved by similarity when relevant — this is exactly the RAG machinery repurposed as memory. The agent's prompt is assembled fresh each turn:
@@ -102,6 +104,8 @@ An agent must recall a user preference stated 200 turns ago in a months-long rel
 ---
 
 ## 3. A Summarizing-Memory Agent
+
+The `SummarizingMemory` class below has three moving parts: `add()` appends a turn to the verbatim window and triggers compression when the window is full; `prompt()` assembles the full message list for each model call, placing the compressed summary before the recent verbatim turns; and the main loop at the bottom drives a five-turn study-planning conversation so you can watch the summary evolve in real time.
 
 ---
 
@@ -180,6 +184,8 @@ for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
 # Part III: Synthesis and Practice
 
 ## 4. Exercises
+
+In this Part you quantify the memory savings from summarization, stress-test the approach with a conflicting update, and draft the memory architecture specification your final project will use. Keep your work here — you will paste it directly into your project proposal.
 
 1. *Token budget ledger.* For the final exchange above, count (or estimate at four characters per token) the tokens in the assembled prompt with summarization versus without. Report the compression ratio.
 

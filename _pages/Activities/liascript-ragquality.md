@@ -204,9 +204,11 @@ for label in sorted(set(km.labels_)):
 
 ---
 
+With the theory of recall and reranking established, the next Part puts chunking strategies head-to-head on a real document so you can see the performance differences numerically rather than hypothetically.
+
 ## Hands-On: Chunking Strategy Comparison (30 minutes)
 
-In this section your team implements three chunking strategies, runs the same five test questions through all three, and fills in a results table. No external libraries are needed — the retrieval function uses a simple word-frequency cosine similarity so the comparison is purely about chunking.
+In this section your team implements three chunking strategies, runs the same five test questions through all three, and fills in a results table. No external libraries are needed — the retrieval function uses a simple word-frequency cosine similarity (a score between 0 and 1 measuring how much vocabulary two texts share) so the comparison is purely about chunking.
 
 ---
 
@@ -256,6 +258,8 @@ in the deep learning revolution of the 2010s.
 ---
 
 ### Three Chunking Functions
+
+Each function below implements one splitting strategy and returns a list of strings (the chunks). You will pass these chunk lists to the retrieval function in the next section.
 
 ```python
 def chunk_fixed_size(text: str, chunk_size: int = 300, overlap: int = 50) -> list[str]:

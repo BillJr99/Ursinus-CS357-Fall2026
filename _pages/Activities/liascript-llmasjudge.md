@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Judgment at Scale
 
+In this part, you will examine what a rubric actually is, why vague rubrics produce unreliable scores, and how the same design mistakes show up whether the grader is human or AI. This foundation determines whether the judge you build in Part II is trustworthy.
+
 ## Model 1: Rubric Autopsy
 
 Think of academic peer review. A journal sends a submitted paper to three expert reviewers, each of whom independently evaluates the work against a list of criteria (originality, methodology rigor, clarity of writing, significance of results) and assigns scores with written justifications. The editors synthesize the reviews. LLM-as-judge is the same process, automated: the rubric is the reviewer's checklist, the judge's prompt is the call to review, and the JSON output is the review report. The crucial insight from peer review carries over: a vague criterion ("is this paper good?") produces unreliable reviews, while a precise criterion ("does the methodology section specify sample size, exclusion criteria, and statistical tests?") produces reviews that different reviewers agree on. Today we apply that lesson to AI-generated rubrics.
@@ -54,7 +56,9 @@ $$
 
 where $w_c$ is criterion $c$'s weight, $\ell_c$ the awarded level, and $L$ the top level. Observable descriptors ("cites a source for each claim") judge reliably; aesthetic ones ("is insightful") do not — the same lesson the critique-refine module taught about actionable feedback.
 
-**Known judge pathologies (systematic errors the judge makes).** *Position bias*: in A/B comparisons, judges favor the first-presented response. *Verbosity bias*: longer answers score higher at equal quality. *Self-preference*: models rate their own outputs more generously than outputs from other models. *Leniency drift*: scores compress toward the top of the scale over many judgments, making it hard to distinguish good from excellent. Every pipeline we build must include countermeasures: randomized order, length-blind criteria, a different judge model than the generator, and anchor examples showing what each level actually looks like.
+**Known judge pathologies (systematic errors the judge makes consistently, not randomly).** *Position bias*: in A/B comparisons, judges favor the first-presented response. *Verbosity bias*: longer answers score higher at equal quality. *Self-preference*: models rate their own outputs more generously than outputs from other models. *Leniency drift*: scores compress toward the top of the scale over many judgments, making it hard to distinguish good from excellent.
+
+Every pipeline we build must include countermeasures: randomized order, length-blind criteria, a different judge model than the generator, and anchor examples showing what each level actually looks like.
 
 A draft rubric for short essays: (1) "Well written, 40 percent"; (2) "Good use of evidence, 40 percent"; (3) "Proper length, 20 percent."
 
@@ -82,7 +86,11 @@ A draft rubric for short essays: (1) "Well written, 40 percent"; (2) "Good use o
 
 # Part II: The Pipeline
 
+In this part, you will turn the rubric you analyzed in Part I into working code — a `judge()` function that sends an essay and the rubric to your local model and gets back a structured score with quoted evidence. Run the code yourself, then answer the questions to understand what the judge is doing and where it can go wrong.
+
 ## Model 2: Rubric In, JSON Out, CSV Forever
+
+The function below sends an essay to your local Ollama model along with a rubric and receives a JSON-formatted score (a structured text format using `{key: value}` pairs) with one entry per criterion. Setting `temperature=0.0` and `seed=42` makes the judge give the same score every time for the same input — important for fairness, as you'll explore in Question 5.
 
 ---
 
@@ -155,14 +163,16 @@ print(json.dumps(detail, indent=1))
 
 [[MC]]
 The most important safeguard before trusting an LLM judge's scores on real student work is:
-- ( ) Using the largest available model as the judge
-- ( ) Setting temperature to 0
-- (x) Validating the judge's scores against human scores on a labeled calibration set
-- ( ) Asking the judge to be fair in the system prompt
+- ( ) Using the largest available model as the judge, because bigger models are inherently fairer
+- ( ) Setting temperature to 0, because that eliminates bias by making the model deterministic
+- (x) Validating the judge's scores against human scores on a labeled calibration set before using it on new work
+- ( ) Asking the judge to be fair in the system prompt, so it knows to ignore its biases
 
 > **⚠️ Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* — it will give the same score every time for the same input — but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
 
 ---
+
+Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for Lab 5.
 
 # Part III: Auditing the Judge
 

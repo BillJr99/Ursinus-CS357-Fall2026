@@ -40,13 +40,15 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Mechanism
 
+In this part, you will trace exactly how bias enters an AI system — not as a one-time mistake, but at multiple stages from data collection through deployment. The goal is to shift from thinking "this model is biased" (vague) to "bias entered at this specific stage for this specific reason" (actionable).
+
 ## Model 1: Bias Is a Property of the Pipeline, Not a Bug in the Weights
 
 Think of a newspaper that has been published for 100 years. If you trained a language model on every issue, the model would learn associations that reflect 100 years of editorial decisions: which occupations were described as prestigious, whose names appeared in which sections, whose voices were quoted as experts. None of this is a "bug" in the newspaper's printing press — it is a property of the cultural context in which the newspaper was written. An AI model trained on that newspaper inherits those associations. Today's code probe will show you exactly this: not a flaw in the model's reasoning, but the statistical echo of who wrote the text it was trained on.
 
-**Models learn the distribution they are fed.** A language model's probabilities estimate $P(\text{text})$ over its training corpus; whatever that corpus over- or under-represents, the model reproduces — and our *consensus* machinery amplifies, since the mode of a skewed distribution is its skew. *Coded Bias* documents the input side: benchmark face datasets that were overwhelmingly light-skinned and male, making error rates invisible until someone disaggregated them.
+**Models learn the distribution they are fed.** A language model's probabilities estimate $P(\text{text})$ over its training corpus; whatever that corpus over- or under-represents, the model reproduces — and our *consensus* machinery amplifies, since the mode (most common value) of a skewed distribution is its skew. *Coded Bias* documents the input side: benchmark face datasets that were overwhelmingly light-skinned and male, making error rates invisible until someone disaggregated them (broke results apart by demographic group).
 
-**Bias enters at every stage.** *Collection*: who is in the data (whose web pages, whose dialect, whose images). *Labeling*: whose judgments define ground truth. *Objective*: what the loss function rewards (fluency, not fairness). *Deployment*: on whom the system is used versus on whom it was validated — which is the gap Buolamwini fell into, literally, when a system failed to see her face until she wore a white mask.
+**Bias enters at every stage.** *Collection*: who is in the data (whose web pages, whose dialect, whose images). *Labeling*: whose judgments define ground truth. *Objective*: what the loss function (the mathematical measure the model is trained to minimize) rewards — typically fluency, not fairness. *Deployment*: on whom the system is used versus on whom it was validated — which is the gap Buolamwini fell into, literally, when a system failed to see her face until she wore a white mask.
 
 **A concrete worked example of training-data bias.** Suppose a model is trained on a corpus that includes many sentences like these:
 

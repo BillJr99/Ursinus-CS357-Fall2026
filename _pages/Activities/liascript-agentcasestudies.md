@@ -56,13 +56,15 @@ The discipline of asking *the same* five questions is what turns anecdotes into 
 
 # Part I: The Cases
 
+In this part, you will apply the autopsy protocol to three real deployments — one case per team — and then share your findings across groups. As you read your case, fill in the five autopsy questions before looking at the table; the tables show what actually happened, which is most useful *after* you've made your own predictions.
+
 ## Model 1: Case A — Migrating a Course Website
 
 Think of delegating the relocation of an office to a moving company. You tell them "move everything from room 101 to room 205." They execute perfectly — every box is moved — but your filing system relied on a drawer-numbering convention you never wrote down, the movers used a different system, and now you cannot find anything. The agent is not at fault; the specification is. Case A is exactly this scenario, scaled to dozens of markdown files and an implicit naming convention no one thought to document.
 
 **The engagement.** An instructor delegates to an agentic desktop coworker: migrate an introductory course's site (dozens of markdown activity files, a syllabus with structured frontmatter, image assets) from one repository format to a new one, preserving meaning while transforming structure. The agent can read files, write files, and run commands, with the human reviewing diffs before anything is committed.
 
-**What happened at the seams.** The bulk transformations went fast; the instructive frictions were that (1) implicit conventions — an unstated frontmatter field order, naming idioms like `liascript-` prefixes — were nowhere written down, so the agent inferred them, sometimes wrongly, from examples; (2) long-running work hit context limits, so the agent had to summarize its own progress and re-derive state, occasionally redoing or skipping a file; and (3) verification was the bottleneck: every file *looked* plausible, and only systematic checks (does every page render, does every internal link resolve) separated done from done-looking.
+**What happened at the seams.** The bulk transformations went fast; the instructive frictions were that (1) implicit conventions — an unstated frontmatter field order (the metadata block at the top of each markdown file), naming idioms like `liascript-` prefixes — were nowhere written down, so the agent inferred them, sometimes wrongly, from examples; (2) long-running work hit **context limits** (the maximum amount of text a model can hold in memory at once), so the agent had to summarize its own progress and re-derive state, occasionally redoing or skipping a file; and (3) verification was the bottleneck: every file *looked* plausible, and only systematic checks (does every page render, does every internal link resolve) separated done from done-looking.
 
 | Autopsy question | Answer for Case A |
 |---|---|
@@ -124,6 +126,8 @@ Think of hiring a personal assistant to book a campsite for you. You give them d
 
 ---
 
+After reading Case B, notice how the action-reversibility taxonomy you built earlier in the semester reappears here as safety infrastructure — not abstract theory, but a concrete design requirement.
+
 ## Model 3: Case C — Pagination and the Proceedings
 
 Think of editing a printed book where every chapter references page numbers in the table of contents. You add one paragraph to chapter 3, pushing every subsequent chapter back by a page. Now the entire table of contents is wrong. You could fix each entry manually — but fixing entry 5 does not know that you already "fixed" entry 4, and your fixes might cascade into new errors. The only robust solution is to freeze the content first, then compute all page numbers in one deterministic pass, then generate the table of contents from that computed result. Case C shows why some problems require restructuring the *order of operations*, not improving the *quality of operations*.
@@ -141,7 +145,7 @@ Think of editing a printed book where every chapter references page numbers in t
 
 ### Critical Thinking Questions
 
-8. State the global invariant of the proceedings document as a formal sentence with a universal quantifier (a statement that begins with "for every" or "for all").
+8. State the global invariant of the proceedings document as a formal sentence with a universal quantifier (a statement that begins with "for every" or "for all"). A global invariant is a condition that must be true across the entire document simultaneously — not just for one paper at a time.
 
    *Hint:* A universal quantifier means the statement must be true for every paper in the proceedings, without exception. "For every paper P in the proceedings, the page number listed in the table of contents for P equals the actual page on which P begins in the assembled document."
 
@@ -159,10 +163,10 @@ Think of editing a printed book where every chapter references page numbers in t
 
 [[MC]]
 Across all three cases, the single most recurrent engineering lesson is:
-- ( ) Larger models would have prevented every friction
+- ( ) Larger models would have prevented every friction, since capability failures caused each problem
 - (x) Agent reliability comes from the surrounding structure: explicit specifications, externalized state, deterministic verification, and gates on irreversible actions
-- ( ) Browsing agents should never be used
-- ( ) Humans should review every individual model call
+- ( ) Browsing agents should never be used because the web is too unpredictable for automation
+- ( ) Humans should review every individual model call to prevent any errors from reaching users
 
 > **⚠️ Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model → better output quality; better surrounding structure → better reliability. Both matter, but only one of them is under your control as a system designer.
 
