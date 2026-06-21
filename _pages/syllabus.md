@@ -24,6 +24,10 @@ info:
     <li>When should an agent run locally and privately, and when is it appropriate to rely on hosted services?</li>
     <li>How can multi-agent designs (debate, critique and refine, consensus) improve reliability, and what new failure modes do they introduce?</li>
     <li>How can system design align agent outcomes with ethical principles, and who is accountable when an autonomous system errs?</li>
+    <li>How do coding agents like OpenCode, Plandex, and Hermes reshape software development, and what review discipline do their generated diffs demand?</li>
+    <li>What is the carbon and water cost of AI computation, and how should environmental impact influence our design choices for agents?</li>
+    <li>Does it matter whether an AI system genuinely understands, or only whether it behaves as if it does — and what are the ethical implications of our answer?</li>
+    <li>How do containers, filesystems, network policies, and OAuth scopes create the safety boundaries that allow us to deploy autonomous agents responsibly?</li>
     </ul>
   welcome_message: "Welcome to CS357!"
   class_meets_days:
@@ -161,6 +165,8 @@ objectives:
 - objective: "Design agentic AI systems, including prompts, retrieval pipelines, tools, and multi-agent orchestrations, that augment human capabilities while adhering to ethical guidelines."
 - objective: "Evaluate the reliability of AI agents across tasks and disciplines, identifying best practices, failure modes, and risks associated with their use."
 - objective: "Create documentation, evaluations, and governance plans for the responsible deployment of agentic AI technologies."
+- objective: "Evaluate the environmental impact of AI deployments and propose design choices that reduce energy and carbon costs without sacrificing core capability."
+- objective: "Engage with the philosophical and psychological dimensions of artificial intelligence, analyzing questions of understanding, responsibility, anthropomorphism, and the ethics of machine agency."
 
 goals:
 - goal: "Implement the perceive, plan, act loop of an agent using a locally hosted language model."
@@ -169,13 +175,17 @@ goals:
 - goal: "Compose multi-agent systems using orchestration patterns including pipelines, critique and refine, debate, and stochastic consensus, while keeping each agent's context window small and focused."
 - goal: "Evaluate agent outputs using human rubrics and LLM-as-judge pipelines, and articulate the limits of each."
 - goal: "Author a governance and responsible-use analysis for an agentic system of your own design, and present it to a public audience."
+- goal: "Apply containerization and filesystem isolation principles to deploy AI agents with defined trust boundaries, non-root execution, read-only mounts, and minimal blast radius."
+- goal: "Design, implement, and secure a working MCP server with OAuth 2.0 client credentials flow, and connect it to a local agent to demonstrate tool discovery, invocation, and token lifecycle management."
+- goal: "Analyze the carbon and water footprint of an AI deployment and propose concrete efficiency improvements grounded in right-sizing, caching, and local-first inference choices."
+- goal: "Use a coding agent (OpenCode, Plandex, or Claude Code) to implement a feature from a written spec, then critique the generated diff for correctness, security, and test coverage."
 
 grade_breakdown:
-- category: "Labs (5)"
+- category: "Labs (choose 5 from 8 available)"
   weight: "35%"
-- category: "Written Assignments (3)"
+- category: "Written Assignments (choose 3 from 6 available)"
   weight: "20%"
-- category: "Final Project: Custom Agent Team"
+- category: "Final Project (choose track: Custom Agent Team or Responsible AI Audit)"
   weight: "25%"
 - category: "Class Activities and Participation"
   weight: "10%"
@@ -237,6 +247,8 @@ schedule:
   readings:
   - rtitle: "Supplemental Tutorial: Agentic CLI Tools (Claude Code, Codex, Gemini CLI, and Friends)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentclis.md"
+  - rtitle: "Supplemental Tutorial: Coding Agents — OpenCode, Plandex, and Hermes"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
 - week: "1"
   date: "1"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -253,6 +265,8 @@ schedule:
   readings:
   - rtitle: "Supplemental Tutorial: Docker from First Principles"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
+  - rtitle: "Supplemental Tutorial: Terminal and Filesystem Isolation for Agent Safety"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-terminalfilesystem.md"
 - week: "2"
   date: "0"
   title: "Why Different Answers Every Time? Sampling, Temperature, and Generation"
@@ -280,12 +294,19 @@ schedule:
   date: "1"
   title: "Hands-On: The Local Agent Stack (Tiers, Ports, and Compose)"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
+  deliverables:
+  - dtitle: "Lab: Containerizing an AI System Safely Handed Out (optional lab)"
+    dlink: "Assignments/Containerization"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-containerization.md"
   readings:
   - rtitle: "Optional Theory Deep Dive: Attention and Transformers, Conceptually and by Hand"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
   - rtitle: "AI by Hand, Attention worksheets (optional)"
   - rtitle: "Optional Lab: Compose and Verify a Local Agent Stack"
     rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/AgentStack"
+  - rtitle: "Supplemental Tutorial: Containerizing AI Systems — Safety, Isolation, and Trust Boundaries"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md"
 - week: "4"
   date: "0"
   title: "Retrieval-Augmented Generation with Chroma"
@@ -310,6 +331,11 @@ schedule:
   date: "0"
   title: "Memory and the Small Context Window Principle"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorycontext.md"
+  deliverables:
+  - dtitle: "Lab: Containerizing an AI System Safely Due (optional lab)"
+    dlink: "Assignments/Containerization"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-containerization.md"
   readings:
   - rtitle: "Supplemental Tutorial: An Obsidian Second Brain with Agent Sync"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-secondbrain.md"
@@ -326,6 +352,35 @@ schedule:
     dlink: "Assignments/RAGKnowledgeBase"
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
+  - dtitle: "Lab: Build and Deploy an MCP Server with OAuth 2.0 Handed Out (optional lab)"
+    dlink: "Assignments/MCPServer"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-mcpserver.md"
+  readings:
+  - rtitle: "Supplemental Tutorial: MCP Deep Dive — REST APIs, OAuth 2.0 Flows, and Secure Tool Invocation"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md"
+- week: "6"
+  date: "1"
+  title: "Design First: Plan Your Agent System Before You Build It"
+  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-designfirst.md"
+  deliverables:
+  - dtitle: "Written Assignment: Design Before You Build Handed Out (optional assignment)"
+    dlink: "Assignments/DesignFirst"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-designfirst.md"
+- week: "7"
+  date: "0"
+  title: "Advanced Agent Loops: Reflection, Recovery, and Control Flow"
+  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md"
+  deliverables:
+  - dtitle: "Written Assignment: Design Before You Build Due (optional assignment)"
+    dlink: "Assignments/DesignFirst"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-designfirst.md"
+  - dtitle: "Lab: Build and Deploy an MCP Server with OAuth 2.0 Due (optional lab)"
+    dlink: "Assignments/MCPServer"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-mcpserver.md"
 - week: "7"
   date: "1"
   title: "Orchestration Patterns: Pipelines, Routers, and Planners"
@@ -335,6 +390,10 @@ schedule:
     dlink: "Assignments/CritiqueRefine"
     points: "100"
     rubricpath: "_pages/Assignments/lab-critiquerefine.md"
+  - dtitle: "Lab: Coding Agents in Practice Handed Out (optional lab)"
+    dlink: "Assignments/CodingAgents"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-codingagents.md"
 - week: "8"
   date: "0"
   title: "The Critique and Refine Pattern"
@@ -365,6 +424,14 @@ schedule:
     dlink: "Projects/AgentTeam"
     points: "100"
     rubricpath: "_pages/Projects/proj-agentteam.md"
+  - dtitle: "Final Project: Responsible AI Audit Handed Out (alternative track)"
+    dlink: "Projects/ResponsibleAI"
+    points: "100"
+    rubricpath: "_pages/Projects/proj-responsibleai.md"
+  - dtitle: "Lab: Coding Agents in Practice Due (optional lab)"
+    dlink: "Assignments/CodingAgents"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-codingagents.md"
   readings:
   - rtitle: "Supplemental Tutorial: Publishing Artifacts (GHCR, Docker Hub, and npm)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
@@ -403,9 +470,18 @@ schedule:
   date: "1"
   title: "Training Data and Bias"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
+  deliverables:
+  - dtitle: "Written Assignment: Does It Matter If Machines Understand? Handed Out (optional assignment)"
+    dlink: "Assignments/PhilosophyEssay"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-philosophyessay.md"
   readings:
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
+  - rtitle: "Supplemental Activity: The Philosophy and Psychology of Artificial Intelligence"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-philosophyai.md"
+  - rtitle: "Supplemental Activity: Ethical Frameworks for Agentic AI Systems"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
 - week: "12"
   date: "0"
   title: "Intellectual Property, Privacy, and the Case for Local AI"
@@ -428,9 +504,23 @@ schedule:
   date: "0"
   title: "Explainability and Human-Centric Design"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
+  deliverables:
+  - dtitle: "Written Assignment: Does It Matter If Machines Understand? Due (optional assignment)"
+    dlink: "Assignments/PhilosophyEssay"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-philosophyessay.md"
   readings:
   - rtitle: "Supplemental Tutorial: The AI Maker Module (Testing, CI, and Human-Centric Design)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aimaker.md"
+- week: "13"
+  date: "1"
+  title: "Environmental Impact and the Carbon Cost of Intelligence"
+  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md"
+  deliverables:
+  - dtitle: "Written Assignment: The Carbon Cost of Intelligence Handed Out (optional assignment)"
+    dlink: "Assignments/EnvironmentalImpact"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-environmentalimpact.md"
 - week: "14"
   date: "0"
   title: "Project Studio and Gallery Walk"
@@ -444,6 +534,11 @@ schedule:
   date: "1"
   title: "Project Studio: Final Integration and Demo Rehearsal"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
+  deliverables:
+  - dtitle: "Written Assignment: The Carbon Cost of Intelligence Due (optional assignment)"
+    dlink: "Assignments/EnvironmentalImpact"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-environmentalimpact.md"
 - week: "15"
   date: "0"
   title: "Demo Day: Final Project Presentations (Class Switch Day: follows a Thursday schedule)"
@@ -452,4 +547,8 @@ schedule:
     dlink: "Projects/AgentTeam"
     points: "100"
     rubricpath: "_pages/Projects/proj-agentteam.md"
+  - dtitle: "Final Project: Responsible AI Audit Due (alternative track)"
+    dlink: "Projects/ResponsibleAI"
+    points: "100"
+    rubricpath: "_pages/Projects/proj-responsibleai.md"
 ---
