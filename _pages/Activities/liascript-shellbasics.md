@@ -32,9 +32,26 @@ Today is hands-on: every member opens a terminal and types every command persona
 
 ---
 
+## Key Concepts
+
+The following terms appear throughout today's activity. Read through them as a team before diving into the models — they are the vocabulary you need to decode everything else.
+
+| Term | Plain-English Definition | Example You'll See Today |
+|---|---|---|
+| **Shell** | A program that reads a line of text you type, runs the named command, and prints the result back to you — think of it as a conversation between you and the operating system. | `bash` or `zsh` running inside your terminal window |
+| **Terminal** | The window or application that hosts the shell and displays its text — the shell is the engine, the terminal is the dashboard. | Terminal.app on macOS; Windows Terminal on Windows; any terminal emulator on Linux |
+| **Working Directory** | The folder the shell considers your current location; every relative file path is measured from here. | Shown in the prompt as `~/projects`; confirmed by running `pwd` |
+| **PATH** | An ordered list of directories the shell searches, left to right, whenever you type a command name — if a program is not in any of those directories, the shell says "command not found." | `echo $PATH` reveals something like `/usr/local/bin:/usr/bin:/bin` |
+| **Pipe** | The `|` character that connects two commands by routing the first command's output directly into the second command's input, without saving anything to a file in between. | `grep "ERROR" agent.log \| wc -l` counts error lines |
+| **Environment Variable** | A named value stored in the shell's memory and passed automatically to every program the shell launches — the standard way to supply configuration and secrets without hardcoding them. | `ANTHROPIC_API_KEY=sk-litellm-local` tells Claude Code which key to use |
+
+---
+
 # Part I: Orientation
 
 ## 1. What a Shell Actually Is
+
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. A finished building (a GUI application) hides all the structural decisions; blueprints (shell commands) expose every beam, pipe, and wire. When you can read blueprints, you can verify that what your agent proposed is safe before any concrete is poured. This section teaches you to read the blueprints.
 
 **A shell is a program that reads a line of text, runs the command it names, and shows you the result.** The window the shell lives in is the **terminal** (on macOS, Terminal.app or iTerm2; on Windows, Windows Terminal running PowerShell or, better for this course, WSL with Ubuntu; on Linux, any terminal emulator). The shell we assume is **bash** or its close cousin **zsh** (the macOS default); their everyday commands are identical.
 
@@ -44,23 +61,27 @@ Today is hands-on: every member opens a terminal and types every command persona
 
 ## 2. Moving Around
 
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. Navigation commands are your way of orienting yourself on the blueprint: knowing which room you are in before you start moving walls.
+
 Three commands carry most navigation:
 
 ```bash
-pwd                  # print working directory: where am I?
-ls                   # list what is here
-ls -la               # list everything, with details (and hidden dotfiles)
-cd projects          # change directory into projects
-cd ..                # go up one level
-cd ~                 # jump home
-cd -                 # jump back to wherever you just were
+pwd                  # print working directory: where am I right now?
+ls                   # list all files and folders here
+ls -la               # list everything including hidden files, with full details (size, owner, date)
+cd projects          # change directory INTO the folder named "projects"
+cd ..                # go UP one level to the parent folder
+cd ~                 # jump directly to your home directory, no matter where you are
+cd -                 # jump back to wherever you just were (like a browser Back button)
 ```
 
-**The filesystem is a tree.** Paths beginning with `/` are **absolute** (from the root); paths without are **relative** (from where you stand). `.` means here; `..` means the parent. Press **Tab** to autocomplete names (the single biggest speed upgrade available), and the up arrow to recall previous commands. `history` shows everything you have typed, which is also how you will audit what an agent typed.
+**The filesystem is a tree.** Paths beginning with `/` are **absolute** (measured from the root of the entire tree); paths without a leading `/` are **relative** (measured from where you stand right now). `.` means "the current directory"; `..` means "the parent directory." Press **Tab** to autocomplete names (the single biggest speed upgrade available), and the up arrow to recall previous commands. `history` shows everything you have typed, which is also how you will audit what an agent typed.
 
 ---
 
 ## Model 1: Read Before You Run
+
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. This model asks you to study one compound command the way an architect reads a blueprint — word by word, symbol by symbol — before allowing any construction to begin. Your agent will propose lines like this one routinely; the skill of parsing them before approving them is the core competency of this course.
 
 Your teammate's agent proposes this sequence. Decode it as a team before anyone executes anything:
 
@@ -68,11 +89,27 @@ Your teammate's agent proposes this sequence. Decode it as a team before anyone 
 cd ~/projects/demo && ls -la && cat config.json | head -20
 ```
 
+Breaking it down piece by piece:
+
+- `cd ~/projects/demo` — change into the folder `demo` inside your home directory's `projects` subfolder
+- `&&` — only run the next command if the previous one succeeded (exit code 0)
+- `ls -la` — list all files in the new directory, with details and hidden files shown
+- `cat config.json` — print the entire contents of `config.json` to the screen
+- `| head -20` — pass that output through a pipe and show only the first 20 lines (`head` takes `-N` where N is the number of lines)
+
 ### Critical Thinking Questions
 
-1. Translate the line into one English sentence. What does `&&` appear to do, and what would you predict happens to the later commands if `cd` fails because the directory does not exist?
-2. The agent could have proposed three separate commands. Name one advantage and one risk of chaining with `&&` from a supervision standpoint.
-3. Find the part of the line you could not fully explain, and resolve it with `man head` or `head --help` (the manual is the ground truth, and reading it is a professional skill, not an admission of weakness).
+1. Translate the entire line into one plain English sentence. What does `&&` appear to do, and what would you predict happens to `ls -la` and `cat config.json | head -20` if `cd ~/projects/demo` fails because the directory does not exist?
+
+   *Hint:* Run `cd /this-does-not-exist && echo "I ran!"` in your terminal and observe whether `echo` executes. The exit code of `cd` controls whether `&&` continues.
+
+2. The agent could have proposed three separate commands on three separate lines. Name one concrete advantage and one concrete risk of chaining all three with `&&` from a supervision standpoint — think about what you see in the approval dialog versus what you can catch line by line.
+
+   *Hint:* Consider how many approval prompts you receive for one chained line versus three separate lines, and whether a fast-scrolling terminal makes the middle command easier or harder to spot.
+
+3. Find the part of the line you could not fully explain after reading the breakdown above, and resolve it by running `man head` or `head --help` in your terminal. Write down the flag or concept you looked up and what you learned. The manual is the ground truth, and reading it is a professional skill, not an admission of weakness.
+
+   *Hint:* Type `man head` and press `q` to quit when done. If `man` is unavailable (some Windows setups), try `head --help` instead.
 
 ---
 
@@ -80,40 +117,59 @@ cd ~/projects/demo && ls -la && cat config.json | head -20
 
 ## 3. Working with Files
 
-```bash
-mkdir lab1                   # make a directory
-touch notes.md               # create an empty file (or update its timestamp)
-cp notes.md backup.md        # copy
-mv backup.md old/            # move (also how you rename)
-cat notes.md                 # print a whole file
-less big.log                 # page through a big file (q to quit, / to search)
-head -5 data.csv             # first five lines
-tail -f agent.log            # follow a growing log LIVE (Ctrl+C to stop)
-rm scratch.txt               # delete a file (NO undo, NO trash can)
-rm -r scratch_dir/           # delete a directory and contents (be afraid)
-```
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. File commands are the building trades: creating rooms (`mkdir`), reading the blueprints already on file (`cat`, `less`), and, critically, demolishing structures that cannot be un-demolished (`rm`). Knowing which tool does which irreversible thing is what separates a careful contractor from an expensive mistake.
 
-**The two commands that deserve fear.** `rm` is permanent, and `rm -rf` (force, recursive) is the chainsaw of the shell. Our course governance principle applies to you exactly as it applies to your agents: destructive actions get a pause, a re-read, and ideally a backup. `tail -f` is the opposite: a gift, and the standard way to watch a container or agent log scroll by in real time.
+| Command | What It Does | Example Command |
+|---|---|---|
+| `mkdir lab1` | Creates a new empty directory named `lab1` in the current location | `mkdir lab1` creates `./lab1/` |
+| `touch notes.md` | Creates an empty file if it does not exist; updates its modification timestamp if it does | `touch notes.md` — safe to run on an existing file |
+| `cp notes.md backup.md` | Copies `notes.md` to a new file named `backup.md`; both files exist afterward | `cp notes.md backup.md` |
+| `mv backup.md old/` | Moves `backup.md` into the `old/` directory; also used to rename: `mv old.txt new.txt` | `mv backup.md old/` |
+| `cat notes.md` | Prints the entire contents of `notes.md` to the screen at once | `cat notes.md` |
+| `less big.log` | Pages through a large file one screen at a time — press `q` to quit, `/keyword` to search forward | `less big.log` |
+| `head -5 data.csv` | Prints only the first 5 lines of `data.csv`; change `5` to any number | `head -20 data.csv` shows the first 20 lines |
+| `tail -f agent.log` | Follows a file as it grows, printing new lines as they arrive — essential for watching live logs; press `Ctrl+C` to stop | `tail -f agent.log` |
+| `rm scratch.txt` | Permanently deletes `scratch.txt` — there is NO undo and NO trash can | `rm scratch.txt` |
+| `rm -r scratch_dir/` | Recursively deletes `scratch_dir/` and everything inside it — treat this like a chainsaw | `rm -r scratch_dir/` |
+
+**The two commands that deserve fear.** `rm` is permanent, and `rm -rf` (force + recursive, often combined) is the chainsaw of the shell. The `-f` flag suppresses all confirmation prompts. Our course governance principle applies to you exactly as it applies to your agents: destructive actions get a pause, a re-read, and ideally a backup first. `tail -f` is the opposite: a gift, and the standard way to watch a container or agent log scroll by in real time.
 
 ## 4. Pipes and Redirection: The Unix Superpower
 
-**A pipe `|` sends one command's output into the next command's input**, composing small tools into pipelines, the same composition idea as our agent pipelines:
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. Pipes and redirection are how blueprints connect to each other — output from one specification flows directly into the next, without paper copies piling up in between. This section shows you how to compose small, focused tools into powerful pipelines, which is exactly the same composition idea behind our agent pipelines.
+
+**A pipe `|` sends one command's output into the next command's input**, composing small tools into pipelines:
 
 ```bash
-grep "ERROR" agent.log | wc -l            # count error lines
-ls -la | sort -k5 -n | tail -3            # the three biggest files here
-cat results.csv | grep "fail" | head -10  # first ten failures
+grep "ERROR" agent.log | wc -l
+# grep searches agent.log for lines containing "ERROR" and passes them to wc
+# wc -l counts the number of lines received — result is the total error count
+
+ls -la | sort -k5 -n | tail -3
+# ls -la lists files with details; sort -k5 -n sorts by the 5th column (file size) numerically
+# tail -3 keeps only the last 3 lines — result is the three largest files
+
+cat results.csv | grep "fail" | head -10
+# cat prints results.csv; grep keeps only lines containing "fail"
+# head -10 keeps only the first 10 of those — result is the first ten failures
 ```
 
-**Redirection sends output to files instead of the screen**: `>` overwrites, `>>` appends, `2>` captures errors:
+**Redirection sends output to files instead of the screen.** Use `>` to overwrite, `>>` to append, and `2>` to capture error messages separately:
 
 ```bash
-python run_eval.py > results.txt          # save output (OVERWRITES results.txt)
-python run_eval.py >> results.txt         # append instead
-python run_eval.py > out.txt 2> err.txt   # separate normal output from errors
+python run_eval.py > results.txt
+# Runs run_eval.py and saves ALL standard output to results.txt
+# WARNING: this OVERWRITES results.txt entirely if it already exists
+
+python run_eval.py >> results.txt
+# Same, but APPENDS to results.txt instead of overwriting — safe for accumulating runs
+
+python run_eval.py > out.txt 2> err.txt
+# Saves normal output to out.txt AND saves error messages to err.txt separately
+# The "2>" targets file descriptor 2, which is the error stream
 ```
 
-`grep` (search text), `wc` (count), `sort`, and `find` (search for files: `find . -name "*.json"`) are the four workhorses worth memorizing; everything else can be looked up.
+The four workhorses worth memorizing by name are `grep` (search text for a pattern), `wc` (count lines, words, or characters), `sort` (sort lines), and `find` (search for files by name or type: `find . -name "*.json"` finds all JSON files under the current directory). Everything else can be looked up as needed.
 
 [[MC]]
 A teammate runs `python eval.py > results.txt` twice in a row with different settings, intending to compare the two runs. What happened to the first run's results?
@@ -124,35 +180,99 @@ A teammate runs `python eval.py > results.txt` twice in a row with different set
 
 ---
 
+> **Common Misconception:** Many beginners read `>` as "send output to" and assume it accumulates — the way a chat window adds new messages. It does not. The `>` operator truncates (erases) the destination file to zero bytes before writing the first byte of new output. If you run `python eval.py > results.txt` a second time, the first run's data is gone before the second run even finishes. Always use `>>` when you intend to keep previous results, and consider naming output files by run number or timestamp (e.g., `results_run1.txt`, `results_run2.txt`) when you need to compare them later.
+
+---
+
+### Critical Thinking Questions
+
+4. Write a single pipeline that searches `agent.log` for lines containing the word `WARN`, counts them, and also saves just those `WARN` lines to a file called `warnings.txt` — all in one command. (Hint: `tee` is a command that sends output to both a file and to standard output simultaneously. Try `grep "WARN" agent.log | tee warnings.txt | wc -l`.)
+
+   *Hint:* The exact command syntax is `grep "WARN" agent.log | tee warnings.txt | wc -l`. Run it and confirm that `warnings.txt` exists and contains the expected lines.
+
+5. Explain in one sentence why `python run_eval.py > out.txt 2> err.txt` is more useful for debugging an agent script than `python run_eval.py > out.txt` alone.
+
+   *Hint:* Ask yourself: when a Python script crashes, where does the traceback go — to standard output or to the error stream? Run `python -c "raise ValueError('test')" > out.txt` and check whether anything appears in `out.txt`.
+
+6. A teammate proposes `rm -rf logs/ 2> /dev/null` to silently delete the logs directory and suppress any error messages. Before approving this in an agent permission dialog, what two things would you want to verify?
+
+   *Hint:* Consider (a) whether `logs/` might contain files that cannot be recreated, and (b) what `/dev/null` does to error messages that would otherwise warn you the deletion failed.
+
+---
+
 ## 5. Environment Variables and PATH
 
 **Environment variables are named values the shell passes to every program it starts**, and they are how this course's tools receive configuration and credentials:
 
 ```bash
-echo $HOME                                  # read a variable
-export ANTHROPIC_BASE_URL=http://localhost:4000   # set one for this session
+echo $HOME
+# Prints the value of the HOME variable — your home directory path
+
+export ANTHROPIC_BASE_URL=http://localhost:4000
+# Creates (or overwrites) the variable ANTHROPIC_BASE_URL and marks it for export
+# "export" means child processes (like Claude Code) will inherit this value
+
 export ANTHROPIC_API_KEY=sk-litellm-local
-env | grep ANTHROPIC                        # see what is set
+# Sets the API key that Claude Code reads on startup
+
+env | grep ANTHROPIC
+# env lists ALL current environment variables; grep filters to only ANTHROPIC ones
+# Use this to confirm your variables are set correctly before launching a tool
 ```
 
-Variables set with `export` last only until the terminal closes; to make them permanent, append the export lines to `~/.bashrc` (or `~/.zshrc` on macOS) and run `source ~/.bashrc`. **Never paste a real secret into a file that might be committed to git**; we return to secret handling in the publishing module.
+Variables set with `export` last only until the terminal closes; to make them permanent, append the export lines to `~/.bashrc` (or `~/.zshrc` on macOS) and run `source ~/.bashrc` to reload the file in the current session. **Never paste a real secret into a file that might be committed to git**; we return to secret handling in the publishing module.
 
 **PATH is the list of directories the shell searches to find commands.** When you type `claude` and the shell says `command not found`, the diagnosis is almost always one of two things: the tool is not installed, or it is installed somewhere not on your PATH. `which python3` shows where a command resolves; `echo $PATH` shows the search list. This single concept explains most installation frustration you will ever feel.
+
+### Critical Thinking Questions
+
+7. Run `echo $PATH` in your terminal and count how many directories are listed (they are separated by `:`). Now run `which python3`. Which directory in your PATH contains `python3`?
+
+   *Hint:* The exact command is `echo $PATH | tr ':' '\n'` — the `tr ':' '\n'` part replaces each `:` separator with a newline so you can read one directory per line. Then compare each directory to the output of `which python3`.
+
+8. Explain why two teammates might type `python3 --version` and see different version numbers, even though they are on the same course server.
+
+   *Hint:* The PATH is searched left to right and stops at the first match. If one teammate has `/home/alice/.local/bin` earlier in their PATH than `/usr/bin`, and that directory contains a different `python3`, that version wins. Run `echo $PATH` on both machines and compare the order.
 
 ## 6. Processes
 
 Every running program is a **process**. The controls you need:
 
 ```bash
-some_long_command            # runs in the foreground; the prompt waits
-Ctrl+C                       # politely kill the foreground process
-some_server &                # & runs it in the background
-ps aux | grep ollama         # find a process and its PID
-kill 12345                   # ask process 12345 to exit
-kill -9 12345                # force it (last resort)
+some_long_command
+# Runs in the foreground; your prompt disappears and waits until the command finishes
+
+Ctrl+C
+# Sends an interrupt signal to the foreground process — politely asks it to stop immediately
+
+some_server &
+# The & at the end runs the command in the background — your prompt returns immediately
+# The shell prints the background job's PID (process ID number) so you can track it
+
+ps aux | grep ollama
+# ps aux lists every running process on the system with details
+# grep ollama filters to only lines mentioning "ollama" — shows PID, CPU, memory
+
+kill 12345
+# Sends a polite termination signal (SIGTERM) to process number 12345
+# Replace 12345 with the actual PID from ps aux
+
+kill -9 12345
+# Sends an immediate, uncatchable kill signal (SIGKILL) — use only if kill 12345 fails
+# The process cannot clean up after itself, so use this as a last resort
 ```
 
 When a port is "already in use" (a constant companion in the Docker module), `lsof -i :3000` names the process holding port 3000, and now you know how to evict it.
+
+### Critical Thinking Questions
+
+9. A teammate's agent started a local model server in the background with `ollama serve &`. Ten minutes later they close the terminal — is the server still running? How would you check, and how would you stop it?
+
+   *Hint:* Closing a terminal does not automatically kill background processes. Run `ps aux | grep ollama` in a new terminal to check. If it is running, copy the PID from the second column and run `kill <PID>`.
+
+10. Explain in one sentence why `kill -9` is described as a "last resort" rather than the default way to stop a process.
+
+    *Hint:* Think about what a server process might need to do before it exits — closing database connections, flushing write buffers, saving state. A SIGKILL prevents all of that. Try looking up "SIGTERM vs SIGKILL" if you want the full picture.
 
 ---
 
@@ -160,21 +280,77 @@ When a port is "already in use" (a constant companion in the Docker module), `ls
 
 ## 7. VS Code Is a Terminal with an Editor Attached
 
+Think of the terminal as your agent's native language — like learning to read blueprints instead of just looking at buildings. VS Code's integrated terminal is the drafting table where blueprints and the building site exist side by side: you can read the agent's proposed edits in the editor pane and watch it execute commands in the terminal pane simultaneously, without switching windows.
+
 Open VS Code's integrated terminal with **Ctrl+`** (backtick). It is a full shell, opened in your project's folder automatically, which is exactly where agent CLIs want to be launched: `claude`, `codex`, `gemini`, `opencode`, and `pi` all start in the current directory and treat it as their workspace. The split is natural: the agent runs in the terminal pane while you read its edits in the editor pane above, with VS Code's diff coloring showing every change the agent makes the moment it makes it. The agent CLI module builds on this layout; today, just confirm you can open the panel, run `pwd`, and see your project path.
+
+### Critical Thinking Questions
+
+11. Open the VS Code integrated terminal and run `pwd`. Does the path it prints match the folder you have open in the VS Code Explorer sidebar? If not, what command would bring the terminal to the same location?
+
+    *Hint:* The terminal opens in VS Code's "workspace root" — the top-level folder you opened with `File > Open Folder`. If they differ, `cd` to the correct path, or close and reopen the terminal after opening the right folder.
+
+---
 
 ## 8. Exercises
 
-1. *Treasure hunt.* In your terminal: create a directory tree `lab/{data,logs,out}` (three subdirectories), create three files in `data/`, then in one pipeline count how many `.md` files exist anywhere under `lab/`. Record the pipeline.
-2. *Log triage.* Download the provided `sample-agent.log` from the course site. Using only `grep`, `wc`, `head`, `tail`, and pipes: count the ERROR lines, show the last five WARN lines, and save all ERROR lines to `errors.txt`. Three commands or fewer.
-3. *PATH forensics.* Run `echo $PATH`, identify every directory in it, and find which one contains `python3` using `which`. One sentence: why might two teammates type the same command and get different versions?
-4. *Permission rehearsal.* Each teammate writes one shell line that looks innocent but is destructive or surprising; the team takes turns reading them aloud and ruling approve or deny with a one-sentence reason. (This is the exact skill the agent permission gate requires.)
-5. *Dotfile setup.* Add one quality-of-life line to your `~/.bashrc` or `~/.zshrc` (an alias like `alias ll='ls -la'`, or a PATH addition), `source` it, and verify it works in a new terminal.
+1. **Treasure hunt.**
+
+   *What to do:* In your terminal, create a directory tree `lab/{data,logs,out}` (three subdirectories inside `lab/` all at once), create three `.md` files inside `data/`, then write a single pipeline that counts how many `.md` files exist anywhere under `lab/`. Record the pipeline and the count.
+
+   *Starter hint:* Begin with `mkdir -p lab/{data,logs,out}` (the `-p` flag creates parent directories as needed and does not error if they already exist). Then `touch lab/data/a.md lab/data/b.md lab/data/c.md`. For the count pipeline, start from `find lab/ -name "*.md" | wc -l`.
+
+   *You have succeeded when:* `find lab/ -name "*.md" | wc -l` prints `3` and you can explain each piece of the pipeline to a teammate.
+
+2. **Log triage.**
+
+   *What to do:* Download the provided `sample-agent.log` from the course site. Using only `grep`, `wc`, `head`, `tail`, and pipes: (a) count the total number of ERROR lines, (b) show the last five WARN lines, and (c) save all ERROR lines to a file called `errors.txt`. Use three commands or fewer.
+
+   *Starter hint:* For (a): `grep "ERROR" sample-agent.log | wc -l`. For (b): `grep "WARN" sample-agent.log | tail -5`. For (c): `grep "ERROR" sample-agent.log > errors.txt`. If you want to do (a) and (c) in one command, try `grep "ERROR" sample-agent.log | tee errors.txt | wc -l`.
+
+   *You have succeeded when:* `errors.txt` exists and contains only ERROR lines, the WARN count you report matches what a teammate independently counted, and you used no more than three commands total.
+
+3. **PATH forensics.**
+
+   *What to do:* Run `echo $PATH | tr ':' '\n'` to list every directory in your PATH one per line. Then run `which python3` to find where `python3` lives. Write one sentence explaining why two teammates on different machines might type `python3 --version` and see different version numbers.
+
+   *Starter hint:* The key command is `echo $PATH | tr ':' '\n'` to list directories clearly, then `which python3` to see which one wins. If you want to see every `python3` on your system (not just the first), try `type -a python3`.
+
+   *You have succeeded when:* You can point to the specific directory in your PATH output that contains `python3`, and your one-sentence explanation mentions that PATH is searched left to right and stops at the first match.
+
+4. **Permission rehearsal.**
+
+   *What to do:* Each teammate writes one shell line that looks innocent on a quick glance but is actually destructive or has a surprising side effect. Take turns reading each line aloud as a team and giving a verdict: "approve" or "deny," with one sentence of reasoning. This is the exact skill the agent permission gate requires of you every time an agent proposes a command.
+
+   *Starter hint:* Examples of deceptive-looking lines include: `cat file.txt > important.txt` (silently overwrites `important.txt`), `find . -name "*.log" -delete` (deletes files without showing them first), or `mv * /tmp/` (moves everything in the current directory to `/tmp/`). Try to write one that would fool a teammate reading quickly.
+
+   *You have succeeded when:* Every teammate can articulate the exact danger in each line and would not need to look it up — meaning the pattern is memorized, not just recognized.
+
+5. **Dotfile setup.**
+
+   *What to do:* Add one quality-of-life improvement to your `~/.bashrc` (Linux) or `~/.zshrc` (macOS). Good options: an alias like `alias ll='ls -la'` so `ll` gives you a detailed listing, or an alias like `alias gs='git status'`, or a PATH addition for a tool you installed that keeps saying "command not found." Run `source ~/.bashrc` (or `~/.zshrc`) to load the change, verify it works in the current terminal, then open a brand-new terminal and verify it persists.
+
+   *Starter hint:* Open the file with `nano ~/.bashrc`, scroll to the bottom, add your alias on a new line, press `Ctrl+X` then `Y` then `Enter` to save. Then run `source ~/.bashrc` and type your new alias to confirm it works.
+
+   *You have succeeded when:* Your alias or PATH change works in a freshly opened terminal (not just the one where you ran `source`), proving the file was saved correctly and not just applied to the current session.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: the shell gives no warnings, no confirmations, and no undo, yet professionals trust it for the most critical work precisely because it does exactly what is typed. Compare this contract with the permission-gated contract our agent tools offer. Which would you rather supervise, and what does your answer imply about the interfaces you will build?
+In your notebook, respond at three levels:
+
+**Personal level:** The shell gives no warnings, no confirmations, and no undo, yet you probably use apps every day that ask "are you sure?" for every deletion. How does that contrast make you feel about working in the terminal? Did today's session shift that feeling at all, and if so, what changed?
+
+**Technical level:** The permission-gated contract our agent tools offer (the agent proposes, you approve or deny) is a deliberate layer added on top of the raw shell. Based on today's session, name two specific shell behaviors (redirection, `rm -rf`, background processes, PATH resolution, or something else you encountered) that you would want an agent's permission gate to highlight or warn about — and explain why those two in particular.
+
+**Societal level:** Professionals who can read and write shell commands have historically had significant power over systems and data that non-technical users cannot see or audit. As agent tools extend shell access to people who never learned the command line, what responsibilities do the builders of those permission gates carry? Who should decide what counts as "dangerous enough to require approval"?
+
+---
+
+## Coming Up Next
+
+Now that you can navigate the filesystem, manage files, compose pipelines, and interpret environment variables, you have the vocabulary to read everything an agent proposes before approving it. The next module puts this vocabulary to immediate use: you will launch Claude Code (and at least one other agent CLI) in VS Code's integrated terminal, walk through the permission dialog for a real multi-step coding task, and compare how different agents phrase the same shell operations. The habits you built today — pause, read the full line, check for `&&` chains and redirections, verify PATH — are exactly the habits the next module will stress-test.
 
 ---
 
