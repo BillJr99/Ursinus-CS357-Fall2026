@@ -42,6 +42,8 @@ Before diving in, anchor these terms. You will see every one of them today — l
 
 # Part I: The Mental Model
 
+In this Part, you will build the conceptual model that makes every Docker command make sense: the distinction between an image (the frozen template) and a container (the live, running copy). Once this distinction is clear, you will be able to predict what happens to data when containers start, stop, and restart.
+
 > Think of Docker containers as self-contained apartments: everything the tenant needs — furniture, utilities, appliances — is already inside. Nothing leaks into the neighbor's unit, and if you want a second identical apartment you can clone the whole floor plan instantly. Model 1 explores what that "self-contained" property means when you want to leave a note on the kitchen table.
 
 ## 1. Images and Containers
@@ -69,7 +71,7 @@ The table below pairs every key command with a plain-English translation and a f
 | `docker rmi nginx` | Deletes the `nginx` image from your local disk. | You must remove all containers using the image first. |
 | `docker run --rm -it ubuntu bash` | Runs an interactive Ubuntu shell and automatically deletes the container the moment you exit. | `--rm` is perfect for throwaway experiments — no cleanup required. |
 
-The pair worth internalizing is **run versus exec**: `run` creates a *new* container from an image; `exec` enters an *existing, running* one. Confusing them produces the classic beginner mystery of "I installed it but it is gone," because each `run` starts from the frozen image again.
+The pair worth internalizing is **run versus exec**: `run` creates a *new* container from an image; `exec` enters an *existing, running* one. Confusing them produces the classic beginner mystery of "I installed it but it is gone," because each `run` starts from the frozen image again — your changes from the previous run are not carried over.
 
 ---
 
@@ -95,7 +97,11 @@ A teammate runs `docker run -it ubuntu bash`, creates `/notes.txt` inside, exits
 
 ---
 
+*Part I showed that a container is isolated and disposable by design. Part II shows how to pierce that isolation intentionally: ports let your browser reach inside, and volumes let data survive even when the container is destroyed.*
+
 # Part II: Ports and Volumes
+
+In this Part, you will learn the two flags that appear in nearly every real Docker command: `-p` for port mapping (making a service reachable from your browser) and `-v` for volumes (keeping data alive across container restarts). These are the mechanisms that make containerized services actually usable.
 
 > Continuing the apartment analogy: by default your apartment has no mailbox slot (no ports) and no storage unit outside the building (no persistent volumes). This section is about installing both. Ports are the doorbell that lets the outside world ring in; volumes are the storage locker in the parking garage that survives even if the apartment is demolished and rebuilt.
 
@@ -141,11 +147,11 @@ Now the application's data directory lives on *your* disk; destroy and recreate 
 | Mount the current working directory into the container | `-v "$(pwd):/app"` | Useful during development so code changes take effect without rebuilding the image |
 
 [[MC]]
-You run a model server with `docker run -p 8080:11434 ...` and the docs say the server listens on port 11434. Which URL does your browser use?
-- ( ) http://localhost:11434, because that is the server's port
-- (x) http://localhost:8080, because the host side of -p is what the outside world sees
-- ( ) http://localhost:8080:11434
-- ( ) Either one; Docker forwards both
+You run a model server with `docker run -p 8080:11434 ...` and the docs say the server listens on port 11434 inside the container. Which URL does your browser use to reach it?
+- ( ) http://localhost:11434, because that is the port the server actually listens on
+- (x) http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
+- ( ) http://localhost:8080:11434, combining both ports
+- ( ) Either one; Docker forwards both directions automatically
 
 ---
 

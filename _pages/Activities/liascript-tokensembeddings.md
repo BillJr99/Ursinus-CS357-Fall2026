@@ -40,11 +40,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: From Characters to Tokens
 
+In this part, you will tokenize a short phrase by hand using a simplified rule set and discover why models struggle with tasks that seem trivially easy for humans — like counting the letters in a word. Understanding tokenization also explains why your chat budget is measured in tokens, not words or characters.
+
 ## 1. Tokenization
 
 **Why this matters:** Every time you send a message to an AI, the first thing it does is chop your text into tokens — not words, not letters, but something in between. This matters because the model never sees the letter "e" inside "cheeseburger"; it sees whatever token the tokenizer carved out. That is why models struggle to count letters, why long numbers trip them up, and why your chat budget is measured in tokens rather than words. It's like the difference between reading a book word-by-word versus reading it one syllable at a time: the chunks you use change what patterns you notice.
 
-**Models do not read words; they read tokens.** A tokenizer splits text into subword units drawn from a fixed vocabulary, typically built by byte-pair encoding (BPE): begin with characters, repeatedly merge the most frequent adjacent pair, and stop at a target vocabulary size (often 30,000 to 200,000 entries). Common words become single tokens; rare words shatter into pieces, so "unhappiness" may become `un` + `happiness` and "Collegeville" may become three fragments.
+**Models do not read words; they read tokens.** A tokenizer (the algorithm that cuts text into tokens) splits text into subword units drawn from a fixed vocabulary, typically built by byte-pair encoding (BPE — a compression algorithm that starts with individual characters and repeatedly merges the most frequent adjacent pair into a single token): begin with characters, repeatedly merge the most frequent adjacent pair, and stop at a target vocabulary size (often 30,000 to 200,000 entries). Common words become single tokens; rare words shatter into pieces, so "unhappiness" may become `un` + `happiness` and "Collegeville" may become three fragments.
 
 **Tokenization explains odd model behaviors.** Counting letters in a word is hard when the model never sees individual letters; arithmetic on long numbers is hard when digits group unpredictably; and the *context window* (the model's working memory) is measured in tokens, which is why a 4,000-token budget holds roughly 3,000 English words. A rough rule of thumb: **1 token ≈ ¾ of an English word**, or about 4 characters.
 
@@ -111,9 +113,11 @@ Two sentences receive embeddings with cosine similarity 0.92. The best interpret
 
 # Part II: Semantic Search in Code
 
+In this part, you will use a real embedding model (a neural network that converts text to vectors) to build a tiny search engine that finds documents by meaning rather than by matching exact words. This is the retrieval foundation that your agents will use in the next module to access documents they were never trained on.
+
 ## 3. A Search Engine in Twenty Lines
 
-Ollama serves embedding models too. We embed a handful of campus FAQ sentences and search them by meaning, not keywords.
+Ollama serves embedding models too. We embed a handful of campus FAQ sentences and search them by meaning, not keywords. The code below first calls the embedding model to convert each document to a vector (a list of numbers representing its meaning), stores all the vectors in a matrix, and then finds the closest match to any new query using cosine similarity.
 
 ---
 
@@ -177,6 +181,8 @@ search("where do I leave my car")
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will extend the search engine to reveal the geometry of meaning — building similarity matrices, testing the classic king-man+woman=queen analogy, and auditing how token counts constrain what you can fit in an agent's context window.
 
 ## 4. Exercises
 

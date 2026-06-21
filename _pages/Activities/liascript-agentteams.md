@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Case for Specialists
 
+In this section you will compare a monolithic agent (one enormous prompt doing everything) against a three-agent team, using a concrete meeting-notes task. You will decompose the task yourself, identify where errors enter, and practice the debugging logic that makes teams more maintainable than monoliths.
+
 ## Model 1: Monolith Versus Team
 
 Think of the difference between a general practitioner (GP) and a team of specialists in a hospital. A GP must hold the entire medical textbook in mind for every appointment, and you cannot easily blame one section when something goes wrong. A specialist team — cardiologist, radiologist, pharmacist — each holds deep knowledge in a narrow domain, passes structured findings (lab reports, imaging reads) to the next specialist, and can each be evaluated and replaced independently. Agent teams work the same way. A monolith carries everything everywhere; a team carries only what each role needs. Today we see exactly what that distinction means in code.
@@ -81,6 +83,8 @@ A student org wants an agent system that turns raw meeting notes into (a) a poli
 ---
 
 # Part II: Topology and State
+
+In this section you will compare three ways agent teams can be arranged — hierarchical, peer-to-peer, and blackboard — and you will read the working implementation of the meeting-notes team. The questions connect the code's state machine directly to the critique-refine and safety-control patterns you have already studied.
 
 ## Model 2: Team Shapes and the Blackboard
 

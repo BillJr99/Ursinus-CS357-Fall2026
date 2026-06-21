@@ -42,6 +42,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. Parameters Versus Context
 
+In this Part you will distinguish the two kinds of memory a language model has — the knowledge baked into its parameters during training versus the text currently in its prompt — and understand why RAG (Retrieval-Augmented Generation) turns a hard "closed-book" question into a much easier "open-book" one.
+
 **Why this matters:** Imagine asking someone a trivia question about an obscure historical event. If they do not know it, they will either admit ignorance or make something up — and AI models tend to make something up convincingly. RAG is the equivalent of saying "here, look it up in the encyclopedia first, then answer." The model goes from guessing to reading and summarizing, which is a job it is much better at. This single insight is why RAG has become the most widely deployed AI engineering technique of the past three years.
 
 **A model has two memories.** *Parametric memory* (from "parameters," the numbers learned during training) is whatever was baked into the weights during training: vast, fuzzy, frozen in time. *Contextual memory* is whatever sits in the prompt right now: small, precise, current. Hallucination (the model confidently stating something false) is what happens when we ask parametric memory for precision it does not have. RAG converts the question from a closed-book exam into an open-book one:

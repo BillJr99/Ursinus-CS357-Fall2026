@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Architecture Before Containers
 
+In this part, you will learn the five-tier mental model that organizes every service in our stack — so that instead of memorizing twenty container names, you can place any new service by asking "what job does it do?" This mental model is the same one professional engineers use to design and debug complex distributed systems.
+
 ## 1. The Tier Model
 
 **Why this matters:** When you first see a list of twenty container names, it looks overwhelming — like being handed a car's parts list before you have seen a car. The tier model is the map that organizes all those parts. Instead of memorizing twenty names, you memorize five jobs, and every container slots into one. This is the same principle engineers use to design any complex system: layer it so each layer has one responsibility, and components in different layers communicate through clean interfaces. Think of it like a restaurant: the kitchen (inference) prepares food, the server (gateway) carries it to tables, the dining room (frontend) is where guests sit, and the delivery app (agent tier) places orders automatically.
@@ -102,9 +104,11 @@ Notice the `searxng` row: its image default (8080) collides with `local-ai`, so 
 
 # Part II: Standing Up the Core
 
+In this part, you will bring up the stack tier by tier — inference first, then gateway, then frontends and tools, then agents. Each tier must be working before the next one is added. This incremental approach is the professional practice: it isolates failures and makes debugging tractable.
+
 ## 3. Inference: Ollama First
 
-Ollama is the foundation; everything else can be added incrementally once it answers:
+Ollama is the inference foundation — the service that downloads model files and answers requests. Everything else can be added incrementally once it answers:
 
 ```bash
 # Native install (preferred: keeps model I/O off the Docker path)
@@ -117,7 +121,7 @@ curl http://localhost:11434/api/tags        # verify: lists your models
 
 ## 4. The Gateway: llmproxy
 
-The gateway (a LiteLLM-style router) is one Compose service plus one routing file:
+The gateway (a LiteLLM-style router — a program that receives requests in the standard OpenAI format and forwards them to whichever local or cloud model you have configured) is one Compose service plus one routing file. Pay attention to the `api_base` field: this is where the `host.docker.internal` hostname (the special address that lets a container reach the host machine) becomes critical.
 
 ```yaml
 # llmproxy/litellm_config.yaml
@@ -179,7 +183,7 @@ Inside the llmproxy container, the routing config points at http://host.docker.i
 
 ## 6. The Agent Tier
 
-Agents are where the stack earns its name, and they come in personalities. `hermes` is a named agent identity built around the Hermes 3 model family's unusually reliable tool calling; our deployment probes the image first, then runs interactively with an identity mount:
+Agents are where the stack earns its name — they are the autonomous workers that use the inference, gateway, frontend, and tool tiers as their instruments. Each agent has a distinct personality and capability level, but they all deploy the same way: a port row, an identity directory, and a gateway URL in their config. The code below shows the pattern for `hermes`, a tool-calling agent; the others follow the same template.
 
 ```bash
 docker pull nousresearch/hermes-agent:latest
@@ -195,7 +199,9 @@ The others slot in by personality: `agent0` (Agent Zero) is the fully autonomous
 
 ## 7. Verification: The Wiring Matrix
 
-A stack is not up until its connections are proven, pairwise, from the right vantage points. Build the matrix:
+A stack is not up until its connections are proven, pairwise, from the right vantage points. The matrix below tests each critical link: host-to-service, container-to-host, and end-to-end through the full chain. Run these commands in order; a failure at any cell tells you exactly which link broke and where to look first.
+
+Build the matrix:
 
 ```bash
 # From the HOST: is each service alive?

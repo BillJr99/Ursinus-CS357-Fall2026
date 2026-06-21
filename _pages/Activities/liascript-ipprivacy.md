@@ -40,15 +40,17 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Intellectual Property
 
+In this part, you will learn to separate three legally distinct questions about AI and intellectual property that news coverage routinely conflates. Keeping these three questions distinct will help you reason more carefully about your own projects and about the legal landscape you'll navigate as a practitioner.
+
 ## 1. Three Distinct Questions
 
 Three separate questions arise at the intersection of AI and intellectual property, and conflating them produces confused reasoning. Keep them apart whenever you read news coverage, policy proposals, or vendor terms of service.
 
-**Input: was training a lawful use of copyrighted work?** Training corpora include books, code, journalism, and art whose creators largely did not consent. Litigation (authors, artists, and news organizations versus model vendors) turns substantially on *fair use*, a four-factor balancing test in US law (purpose and character, nature of the work, amount used, market effect). Courts are actively dividing on these questions; engineers should track outcomes, not assume them.
+**Question 1 — Input: was training a lawful use of copyrighted work?** Training corpora include books, code, journalism, and art whose creators largely did not consent. Litigation (authors, artists, and news organizations versus model vendors) turns substantially on *fair use* (a four-factor balancing test in US law: purpose and character of the use, nature of the work, amount used, and market effect). Courts are actively dividing on these questions; engineers should track outcomes, not assume them.
 
-**Output: who owns what the model produces?** The US Copyright Office requires human authorship; purely machine-generated material is not copyrightable, while human creative selection and arrangement can be. For your projects: your prompts, curation, code, and editorial choices are where your authorship lives, so document them.
+**Question 2 — Output: who owns what the model produces?** The US Copyright Office requires human authorship; purely machine-generated material is not copyrightable, while human creative selection and arrangement can be. For your projects: your prompts, curation, code, and editorial choices are where your authorship lives, so document them.
 
-**Memorization: can the model emit its training data?** Yes, occasionally and more often for text repeated frequently in the corpus; verbatim regurgitation of protected work is the cleanest infringement risk. Mitigations include deduplication at training time and output filters at deployment, neither perfect.
+**Question 3 — Memorization: can the model emit its training data?** Yes, occasionally and more often for text repeated frequently in the corpus; verbatim regurgitation of protected work is the cleanest infringement risk. **Memorization** (when a model reproduces word-for-word text it saw during training) is mitigated by deduplication at training time and output filters at deployment — neither is perfect.
 
 ---
 
@@ -76,22 +78,24 @@ A student trains a small image model on 400 of their own paintings, then also fi
 
 # Part II: Privacy
 
+In this part, you will trace what actually happens to a prompt when you hit enter — legally and technically — and learn why the pipelines you've already built have different privacy implications depending on what data you run through them.
+
 ## 2. Where Prompts Go, and the Special Status of Student Data
 
 Privacy is not just a personal preference — in educational and research contexts, it is a legal obligation. Understanding which laws apply to which data, and what "sending a prompt" actually means for data handling, turns you from a user who hopes for the best into an engineer who designs for compliance.
 
 **A prompt is a disclosure.** Text sent to a hosted service transits and rests on third-party infrastructure under that provider's terms, which may permit retention, human review, or training on your inputs. The engineering questions are always the same: what data leaves, where it is stored, for how long, who can see it, and can you delete it.
 
-**Some data is regulated, not just sensitive.** In our own context: **FERPA** protects student education records (grades, submissions, advising notes); **IRB** protocols govern human-subjects research data; **HIPAA** governs health information. Pasting a roster into a consumer chatbot is not a vibe violation; it is plausibly a compliance violation. **GDPR** (EU) and a growing patchwork of US state laws add rights of access, deletion, and limits on automated decision-making.
+**Some data is regulated, not just sensitive.** In our own context: **FERPA** (Family Educational Rights and Privacy Act) protects student education records such as grades, submissions, and advising notes; **IRB** (Institutional Review Board) protocols govern human-subjects research data; **HIPAA** (Health Insurance Portability and Accountability Act) governs health information. Pasting a class roster into a consumer chatbot is not just bad practice; it is plausibly a compliance violation. **GDPR** (General Data Protection Regulation, EU) and a growing patchwork of US state laws add rights of access, deletion, and limits on automated decision-making.
 
 **Agents raise the stakes mechanically.** A chatbot leaks what you paste; an *agent with tools* can leak what it can *reach*: files, calendars, email. The tool-permission taxonomy you built (read-only, reversible, irreversible) is privacy infrastructure, and the local stack you have run all semester is the strongest single control: data that never leaves the machine cannot be retained by anyone else.
 
 [[MC]]
 An instructor wants AI-assisted feedback on essays containing student names and grades. The design that most directly addresses the FERPA concern is:
-- ( ) A hosted frontier model with an enterprise logo
-- ( ) Asking students not to write personal details
+- ( ) A hosted frontier model with an enterprise logo, because enterprise agreements always cover FERPA
+- ( ) Asking students not to write personal details in their essays, because the data never enters the system
 - (x) A local model on institutional hardware, with de-identification before processing and documented data handling
-- ( ) Any model, provided temperature is 0
+- ( ) Any model, provided temperature is 0, because deterministic outputs are not considered personal data
 
 ---
 
@@ -109,6 +113,8 @@ Consider three pipelines you have personally built this term: Lab 2 (RAG over yo
 
    *Hint: Consider a fire extinguisher used as a doorstop — the object did not change, but the use did. Now apply that framing to your pipeline. Is the code "responsible" for how it is deployed?*
 
+   > *Hint:* A law like FERPA doesn't care what language your pipeline is written in or whether you meant to violate it. It cares whether protected data was processed in an unauthorized context. Who in your pipeline decides the context — the code, or the person who runs it?
+
 6. Write the three-sentence data-handling disclosure you would owe users of your final project. (This text goes directly into your governance assignment.)
 
    *Hint: Include (a) what data the system collects or processes, (b) where that data goes and how long it is kept, and (c) what the user can do if they want their data deleted or have a concern.*
@@ -116,6 +122,8 @@ Consider three pipelines you have personally built this term: Lab 2 (RAG over yo
 > **Common Misconception:** "If I'm not storing the data, there's no privacy risk." Many users believe that as long as they do not save a transcript or export a file, no data is retained. In reality, every call to a hosted API transmits your input to the provider's servers under their terms of service, which may allow retention for logging, abuse detection, or model improvement for months or years. "I didn't save it" and "the service didn't save it" are very different claims.
 
 ---
+
+Now that you understand both IP and privacy as legal frameworks, this part asks you to apply them practically — reading real terms of service, probing memorization behavior in your local model, and writing the compliance memo your project will actually need.
 
 # Part III: Synthesis and Practice
 
