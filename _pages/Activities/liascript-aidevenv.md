@@ -41,6 +41,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Problem of Stateless Agents
 
+In this part, you will diagnose why AI coding agents "forget" your project conventions between sessions and map the three layers of context (working memory, project memory, long-term memory) that a well-designed environment must provide.
+
 ## 1. Why Context Does Not Persist
 
 **Why this matters:** Every time you start a new session with a coding agent, you are talking to a version of that agent with no memory of your previous conversations, your project architecture, or your preferences. This is by design — agent context windows are finite, and persisting all prior work would quickly overflow them. But it creates a real cost: if you re-explain the same project context at the start of every session, you waste tokens, introduce inconsistencies, and rely on yourself to remember what to say. Systematic context management is the solution.
@@ -95,6 +97,8 @@ A developer always wants their coding agent to use Black for Python formatting, 
 ---
 
 # Part II: Writing Effective Project Instructions
+
+In this part, you will write and critique `AGENTS.md` project instruction files — the persistent context layer that tells a coding agent your architecture, invariants, and out-of-scope changes before it writes a single line.
 
 ## 2. What Belongs in `AGENTS.md`
 
@@ -171,6 +175,8 @@ Which of the following best belongs in a project instructions file rather than i
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will extend your dev environment with the Superpowers plugin for OpenCode and design your own personalized AI environment — choosing which context layers to populate and how to keep them maintained as your project evolves.
 
 ## 3. The Superpowers Plugin for OpenCode
 

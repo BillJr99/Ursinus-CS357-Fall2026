@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Big Idea
 
+In this part, you will learn how swapping a single domain in a GitHub URL unlocks six different power tools — from in-browser editors to instant MCP servers — turning any public repo into an AI-ready resource without cloning anything.
+
 ## 1. Domain Swapping
 
 You already know that pressing the `.` key on any GitHub repository opens `github.dev` — a full VS Code editor in the browser, no installation required. That one-key trick is a domain swap in disguise: the browser replaces `github.com` with `github.dev` and GitHub serves a different application. Five specialized services have extended this pattern to deliver capabilities that matter specifically for AI-assisted development.
@@ -59,6 +61,8 @@ The table below maps each tool to its purpose. Some tools belong in your daily w
 ---
 
 # Part II: Feeding Code to AI
+
+In this part, you will practice two complementary techniques for getting code into an AI context window — browsing it interactively with `github.dev` before committing to a fork, and ingesting an entire repo as a single prompt-ready block with `gitingest.com`.
 
 ## 2. Reading Before Forking (`github.dev`)
 
@@ -112,6 +116,8 @@ Your team will work through the following steps using the `litellm` repository (
 ---
 
 # Part III: Real-Time AI Grounding
+
+In this part, you will turn any GitHub repo into a live MCP server via `getmcp.io` — giving a coding agent real-time access to a library's source instead of relying on potentially stale training data.
 
 ## 4. MCP Servers from Repos (`getmcp.io`)
 
@@ -192,6 +198,8 @@ Why does connecting an agent to a live MCP server reduce hallucinated API calls,
 
 # Part IV: Understanding Unfamiliar Codebases
 
+In this part, you will use `deepwiki.com` and `gdagram.com` to generate instant documentation and architecture diagrams for any repo — the fastest way to orient yourself in an unfamiliar codebase before you start modifying it.
+
 ## 5. Auto-Documentation (`deepwiki.com`)
 
 When you encounter an agent framework for the first time, the README rarely answers the question you actually have: "Where does the agent decide to call a tool versus answer directly?" `deepwiki.com` addresses this by reading the repository and generating a structured, Wikipedia-style explanation of the project, with a Q&A interface for follow-up questions. It is not a search engine — it synthesizes an explanation of the code's design.
@@ -244,7 +252,9 @@ A teammate wants to use `gdagram.com` to verify that a dependency they plan to r
 
 ---
 
-# Part III: Synthesis and Practice
+# Part V: Synthesis and Practice
+
+In this part, you will combine the tools from Parts I–IV in a real codebase sprint: orient, ingest, ground, and extend — the complete GitHub power-user workflow.
 
 ## 7. Exercises
 
