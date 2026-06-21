@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Registry Mental Model
 
+In this part, you will learn what registries are, how artifacts are named and versioned, and why the naming conventions matter for users who depend on your published work. The mental model you build here applies to every registry — GHCR, Docker Hub, npm, and PyPI all follow the same principles.
+
 ## 1. Registries, Names, and Tags
 
 Shipping a Docker image is like publishing a recipe that anyone can run in their own kitchen, guaranteed to taste the same every time — as long as you package the recipe with all its ingredients and label the jar precisely. The registry is the cookbook store; the name and tag on the image are the title and edition of the recipe. Without that precision, a collaborator who `docker pull`s your image might get last week's broken version, or nothing at all.
@@ -88,6 +90,8 @@ Understanding what a registry name tells you before you pull anything is a found
 ---
 
 # Part II: Publishing Container Images
+
+In this part, you will publish a container image to GHCR and Docker Hub using the same four-step process that professional teams use in production. Pay attention to the visibility step — it is the most common reason a first publish appears to "fail."
 
 ## 3. To GHCR, Step by Step
 

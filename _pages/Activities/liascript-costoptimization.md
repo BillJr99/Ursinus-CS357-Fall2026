@@ -112,9 +112,13 @@ A production agent has a 2,000-token system prompt that is identical for all use
 >
 > A local model eliminates per-token API fees, but not cost. You still pay for: the GPU or cloud compute instance to run the model (a decent GPU costs $0.50–$2.00/hour on cloud providers), electricity, the engineering time to set up and maintain the local inference stack, and the opportunity cost of GPU time that could serve other tasks. For low-volume projects, a local model often costs *more* when you account for idle GPU time. The breakeven analysis depends on your query volume — which is exactly what the cost model in Part IV is designed to compute.
 
+Caching reduces the cost of repeated work; Part III introduces model routing, which reduces cost on novel work by matching each query to the cheapest model tier capable of answering it correctly.
+
 ---
 
 # Part III: Model Routing
+
+In this part, you will apply the right-sizing principle to a routing decision table and design a classifier that dispatches queries to the appropriate model tier — the same pattern used in production systems that serve millions of queries per day.
 
 ## Model 3: Right-Sizing and the Routing Decision
 
@@ -148,9 +152,13 @@ Routing architectures take several forms:
 
    *Hint:* LLMs are known to be poorly calibrated — they are often very confident when wrong. What could you check about the *output itself* (rather than the model's confidence score) to decide if it looks trustworthy?
 
+Routing handles the per-query cost; Part IV closes the loop with batching for non-interactive workloads and a cost formula that lets you project your system's expenses before you deploy it.
+
 ---
 
 # Part IV: Batching, Streaming, and Building a Cost Model
+
+In this part, you will distinguish batching from streaming (they are often confused), learn when each is appropriate, and build a cost model that projects your agent's monthly expenditure across three usage scenarios.
 
 ## Model 4: Batching, Streaming, and the Cost Formula
 
@@ -178,7 +186,7 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
 9. Build a cost model for a hypothetical Ursinus College tutoring agent. Assume: 200 student queries per day, each with a 300-token system prompt, a 100-token student question, and a 250-token answer. Estimate the monthly cost at GPT-4 pricing ($15/$60 per million input/output tokens). Then estimate the cost with a local model running on a GPU that costs $0.50/hour. At what query volume per day does local inference become cheaper than the API?
 
-   *Starter hint:*
+   *Starter hint:* Run this script and compare the two monthly cost figures — the crossover point where local inference becomes cheaper depends entirely on how fully you can utilize the GPU.
    ```python
    # Cost model for Ursinus tutoring agent
    queries_per_day = 200
