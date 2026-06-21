@@ -7,10 +7,11 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To diagnose and fix five specific failure modes in a pre-written research agent
-    - To add structured logging to an agent for observability
-    - To write a minimal test suite that catches regressions
-    - To understand why agent bugs are harder to diagnose than conventional software bugs
+    - To diagnose each of five specific failure modes in a pre-written research agent by observing its symptom, locating the root cause in the source, and classifying it as a crash or a silent failure
+    - To repair all five bugs such that the fixed agent passes a defined set of test cases without crashes or None returns
+    - To instrument an agent with structured logging that captures tool name, arguments, result, response length, elapsed time, and severity level at each step
+    - To construct a regression test suite that verifies correct behavior for fact retrieval, multi-tool chaining, empty input, unknown-topic abstention, and step-budget enforcement
+    - To explain why silent agent failures are harder to detect than crashes, and to propose one architectural change that would prevent a class of bugs
   rubric:
     - weight: 40
       description: Bug Diagnosis and Fixes

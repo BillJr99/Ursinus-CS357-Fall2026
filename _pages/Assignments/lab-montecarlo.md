@@ -7,10 +7,13 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To implement a Monte Carlo simulation in Python and generate a labeled visualization
-    - To send an image to a local multimodal model and receive a structured analysis
-    - To iterate on the AI's interpretation by asking follow-up questions
-    - To evaluate where AI interpretation adds genuine insight and where it fails or misleads
+    - To implement a Monte Carlo retirement simulation that draws annual returns from a configurable normal distribution and records portfolio paths across 1,000 simulations
+    - To generate a labeled two-panel visualization showing simulated paths with median and percentile bands, and a histogram of final balances
+    - To construct a multimodal API request that encodes a PNG image as a base64 string, packages it in the correct Ollama JSON payload, and parses the structured text response
+    - To conduct a two-turn conversation with a multimodal model using a structured prompt that specifies role, required response sections, and audience assumptions
+    - To compare AI-generated quantitative claims against ground-truth statistics and identify specific numerical errors with verbatim AI excerpts
+    - To evaluate the sensitivity of simulation outcomes to parameter changes and explain the compounding effect of return mean and volatility on the outcome distribution
+    - To propose a user-facing guardrail that limits over-reliance on AI numerical claims in financial contexts
   rubric:
     - weight: 30
       description: Simulation and Visualization
@@ -21,15 +24,15 @@ info:
     - weight: 25
       description: Multimodal AI Integration
       preemerging: No AI integration attempted
-      beginning: Image sent to AI but prompt is vague ("what does this chart show?")
-      progressing: AI receives the image with a structured prompt asking for specific analysis components
-      proficient: AI receives the image with a structured prompt specifying (1) what to analyze, (2) the format of the response, and (3) what the analyst should assume about the audience; at least one follow-up question is asked based on the AI's initial response; the interaction includes at least 2 turns
+      beginning: Image sent to AI but the request uses an incorrect endpoint or payload structure (e.g., base64 string missing from the images array, or /api/chat used instead of /api/generate)
+      progressing: Image correctly base64-encoded and sent in the images array to /api/generate with a prompt; response parsed from the response field; no follow-up turn
+      proficient: JSON payload includes model, prompt, stream (False), and images fields with a valid base64-encoded PNG string; response is parsed from response.json()["response"]; Turn 1 prompt specifies role, four required numbered sections, and assumed audience; Turn 2 follow-up presses the model on a specific quantitative claim from Turn 1; both turns are saved to model_responses.txt
     - weight: 25
       description: Comparative Analysis
       preemerging: No comparison between AI and human interpretation
-      beginning: AI interpretation summarized without comparison
-      progressing: One difference between AI and human interpretation identified with evidence
-      proficient: Three specific differences identified between AI and human reading of the chart; at least one where AI was wrong or imprecise is shown with exact AI output excerpt; student proposes one prompt engineering change that would have improved the AI's accuracy
+      beginning: AI interpretation summarized without comparison to the student's own reading or the statistics file
+      progressing: One difference between AI and human interpretation identified, with either the AI excerpt or the ground-truth statistic cited but not both
+      proficient: Three specific differences identified between AI and human reading of the chart; at least one difference shows the AI giving a wrong or imprecise number, supported by an exact verbatim AI excerpt from model_responses.txt alongside the true value from simulation_stats.txt; student implements one prompt engineering change (e.g., hedging instruction or step-by-step visual reasoning request), re-runs Part 2, and records whether the AI's response improved or not
     - weight: 20
       description: Writeup and Reflection
       preemerging: No writeup
