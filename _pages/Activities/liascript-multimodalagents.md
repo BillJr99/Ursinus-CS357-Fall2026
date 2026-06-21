@@ -72,6 +72,8 @@ Multimodality is not magic — it is an extension of the fundamental token-proce
 
    *Hint:* The model has some uncertainty about the digits — its output is sampled, not deterministic at temperature > 0. Running extraction twice and comparing results is a simple way to detect low-confidence extractions. What would you do when the two runs disagree?
 
+Now that we understand the token-level mechanics of modality conversion, we can look at specific models and tools — and what makes each one the right choice for a given document type.
+
 ---
 
 # Part II: Vision Language Models
@@ -123,6 +125,8 @@ In practice, robust document processing pipelines combine all three: extract tex
 6. An audio processing agent transcribes a doctor-patient consultation and extracts the patient's current medications and dosages. What specific types of transcription errors are most dangerous in this scenario, and how would you design a validation step to catch them before the extracted data is written to an electronic health record?
 
    *Hint:* "Metformin 500mg" vs. "Metformin 50mg" — a single dropped digit can cause a 10x dosage error. "Lisinopril" vs. "Lisinopril" — drug names are often unfamiliar to the ASR model and easily mangled. What validation can you do with just a known drug name list and a dose range table?
+
+The conversion failures you've seen in specific tools are all instances of a deeper structural problem — and grounding is the technique that makes those failures detectable rather than silent.
 
 ---
 
