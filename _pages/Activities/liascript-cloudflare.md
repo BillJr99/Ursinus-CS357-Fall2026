@@ -266,6 +266,10 @@ Before ruling, the Manager ensures the team has named the deciding principle for
 
 ---
 
+> **⚠️ Common Misconception:** Students often assume that because a Worker is serverless — no server to manage, no container to maintain — it is also stateless in the sense that nothing persists between users or between requests. This is true for in-memory variables (each request gets a fresh execution context), but Cloudflare provides persistent storage primitives like KV that Workers can bind to. More importantly, the distinction between "does not persist" and "does not store" is crucial for governance: a Worker that forwards data to a third-party LLM provider does not store data itself, but it does transmit data to a service that may log, train on, or retain it. "We use a Worker, so we don't store data" is not a complete data-handling answer — it is the beginning of one.
+
+---
+
 ## Exercises
 
 **Exercise 1.** Hello, edge. Scaffold, run locally, and deploy the JSON Worker from Section 4. Submit the public URL and the `curl` outputs for all three routes, including the 404.
