@@ -44,6 +44,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 The three configurations below represent a spectrum from minimal to dangerous. Each row describes a real deployment pattern. The filesystem is the agent's workspace — getting permissions wrong is like giving a houseguest the master key to your house instead of a key to just the guest room. Study the access model and the resulting risk level before answering questions.
 
+Study the Risk Level and "Why This Risk Level" columns first, then work backward to understand which access rules produced that risk level — this reverse-reading reveals the security reasoning more clearly than reading left to right.
+
 | Agent Type | Filesystem Access | Network Access | Can Execute Shell? | Risk Level | Why This Risk Level |
 |---|---|---|---|---|---|
 | **Research Agent** | Read-only bind mount of `/home/user/knowledgebase` only; the agent cannot write to any path on the system | Outbound HTTPS to a whitelist of approved domains only; all other network traffic is blocked | No — the agent can only call registered tool functions; it cannot run `subprocess` or `exec` commands | Low | The agent can read stale data and produce wrong answers, but it cannot modify files, steal secrets it cannot reach, or install malware; mistakes are safe to recover from |
@@ -73,6 +75,8 @@ Each agent in a multi-agent system should have its own **identity directory**: a
 Think of identity directories like individual lockers in a school — each student (agent) has their own locker and cannot open anyone else's. The teacher (the orchestrator) has a master key but only uses it when necessary.
 
 The following terminal session sets up a two-agent workspace with isolated identity directories. Read each comment carefully — the comments explain *why* each command is written the way it is, not just *what* it does.
+
+The following terminal session creates two agent identity directories with restrictive permissions, then runs each agent in a Docker container with carefully scoped mounts. Read the comments inside the code — each one explains a security decision, not just a syntax choice.
 
 ```bash
 # Create the top-level agents directory under the project root
@@ -131,6 +135,8 @@ docker run --rm \
 # Expected: the agent reads summaries from /workspace/input/, writes a draft to /workspace/output/
 ```
 
+The table below maps the same physical directories to what each agent sees inside its container. Notice that some paths on the host are completely invisible to one agent — Docker's mount system enforces this, not convention.
+
 **Before vs. After: What the Agent Can See**
 
 | Path on Host | Researcher Sees It As | Writer Sees It As |
@@ -159,10 +165,10 @@ docker run --rm \
 
 [[MC]]
 An agent's **identity directory** is designed to:
-- ( ) Give the agent access to the entire user home directory for maximum flexibility
-- ( ) Store the agent's model weights and embedding indices
+- ( ) Give the agent access to the entire user home directory for maximum flexibility — mounting `/home/user` gives each agent a consistent, full-featured environment to work in
+- ( ) Store the agent's model weights and embedding indices — keeping model artifacts in the identity directory ensures the agent always uses the correct model version
 - (x) Provide each agent with an isolated space for its own config, memory, logs, and workspace so agents cannot accidentally access each other's state
-- ( ) Replace Docker isolation as a lighter-weight alternative
+- ( ) Replace Docker isolation as a lighter-weight alternative — identity directories provide the same filesystem isolation as Docker without the container overhead
 
 ---
 
@@ -171,6 +177,8 @@ An agent's **identity directory** is designed to:
 Two students are deploying the same researcher agent. Their Docker commands look similar but have dramatically different security properties. Study the difference carefully.
 
 The key to reading these commands is understanding the `-v` flag: `-v HOST_PATH:CONTAINER_PATH:FLAGS`. The host path is what exists on your real machine; the container path is what the agent sees inside Docker; the optional `:ro` flag means read-only (no writes allowed).
+
+The two `docker run` commands below implement the same agent with dramatically different security properties. Read each one and predict the blast radius before looking at the comparison table.
 
 **Student A's command:**
 
@@ -285,6 +293,8 @@ docker run --rm \
 *Technical:* Today we applied least privilege to Docker volume mounts. Describe a specific scenario where a developer, in a hurry, would be tempted to use Student A's approach (mounting the full home directory) instead of Student B's approach. What pressure leads to that shortcut, and what would a safe-by-default tooling design look like that makes the restrictive option easier than the permissive one?
 
 *Societal:* Filesystem isolation limits what an AI agent can do on your personal machine. But many agents operate on cloud infrastructure where "the filesystem" is a database or an object store shared by thousands of users. What is the equivalent of "identity directories" in a multi-tenant cloud environment, and who is responsible for enforcing those boundaries — the cloud provider, the application developer, or the user?
+
+> *Hint:* Consider what "tenant isolation" means in a shared database: each tenant's rows are stored in the same physical tables, but a row-level security policy ensures queries only return that tenant's data. Is that the same guarantee as a Docker volume mount, or a weaker one?
 
 ---
 

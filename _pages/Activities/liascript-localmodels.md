@@ -223,9 +223,13 @@ Q4 quantization of a 7B language model means:
 - ( ) The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
 - ( ) Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
 
+With hardware matching and model selection understood, Part III gives you hands-on practice pulling and comparing real models so that your model choice for the final project is grounded in direct observation rather than benchmark numbers alone.
+
 ---
 
 # Part III: Synthesis and Practice
+
+In this part, you will pull and compare real models on your own hardware, test the quantization tradeoff on a concrete task, and analyze the privacy implications of local versus cloud data flows — the three exercises that turn this module's concepts into deployable decisions.
 
 ## Exercises
 
