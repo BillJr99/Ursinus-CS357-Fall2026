@@ -111,10 +111,10 @@ The pattern earns its keep through daily uses, each of which is just the same lo
 
 [[MC]]
 The fixed page skeleton for paper summaries (claim, method, evidence, limitations, relevance) primarily buys:
-- ( ) Shorter pages
+- ( ) Shorter pages — consistent structure does not reduce page length; it organizes content into the same sections regardless of paper length
 - (x) Comparability across many papers, so synthesis questions spanning the literature can be answered structurally rather than by rereading
-- ( ) Compliance with Obsidian's format requirements
-- ( ) Faster PDF parsing
+- ( ) Compliance with Obsidian's internal format requirements — Obsidian imposes no required heading structure; the skeleton is a schema choice, not a tool requirement
+- ( ) Faster PDF parsing — the skeleton is applied after parsing, not during; it affects how results are stored, not how fast the source is read
 
 ---
 

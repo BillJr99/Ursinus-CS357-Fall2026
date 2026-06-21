@@ -143,10 +143,10 @@ One honest boundary completes the track: know what you are accountable for shipp
 
 [[MC]]
 A non-coding maker's strongest defense against an agent's specification gaps is:
-- ( ) Asking the agent to double-check its own work
-- ( ) Choosing the largest available model
+- ( ) Asking the agent to double-check its own work — a model that made a specification error will typically affirm the same error when asked to review its own output
+- ( ) Choosing the largest available model — a bigger model follows the same ambiguous specification more fluently, but fluentness is not correctness
 - (x) Writing concrete acceptance criteria first and instructing the agent to ask clarifying questions before generating, then verifying against the criteria after every change
-- ( ) Regenerating until the output looks right
+- ( ) Regenerating until the output looks right — if the specification is ambiguous, regenerating produces different plausible-looking artifacts, not a correct one
 
 Both tracks now converge on the same institutional mechanism: a system that runs every check automatically, every time, so that verification does not depend on anyone remembering to do it.
 
@@ -179,6 +179,8 @@ jobs:
 ```
 
 Commit that file and the green check or red X appears on every push and pull request, including the agent's. For Track B the same idea applies one level up: connect your project to Pages or a similar service so every change produces a *preview deployment*, and your acceptance checklist runs against the preview before anything reaches the real URL. In both tracks, CI is also the honest referee between you and your agent: an agent's change that turns the build red is rejected by the system itself, with no negotiation, which is a deterministic checker in exactly the sense your pre-mortems demanded. And note where the human gates survive: CI *verifies* on every push, but *publishing* still triggers only on a deliberate human act (a tag, a merge), the design the publishing module called the gate moving rather than vanishing.
+
+All of this verification infrastructure ultimately serves one purpose: ensuring that a real person, using your artifact under real conditions, has a good experience — which is what Part V examines.
 
 ---
 
