@@ -8,9 +8,9 @@ info:
   points: 100
   goals:
     - To construct a complete retrieval-augmented generation pipeline over a personal document corpus using Chroma and a local model
-    - To make and defend chunking decisions empirically
+    - To make and defend chunking decisions empirically by comparing at least two strategies with recall@k metrics
     - To evaluate retrieval quality with recall at k and grounding quality with a citation audit
-    - To implement honest abstention when the corpus does not contain an answer
+    - To implement and demonstrate honest abstention when the corpus does not contain an answer
   rubric:
     - weight: 30
       description: Pipeline Implementation
@@ -35,13 +35,13 @@ info:
       preemerging: Code commenting and structure are absent, or code structure departs significantly from best practice
       beginning: Code commenting and structure is limited in ways that reduce the readability of the program
       progressing: Code documentation is present that re-states the explicit code definitions
-      proficient: Code is documented at non-trivial points in a manner that enhances the readability of the program
+      proficient: Every non-trivial function has a docstring; all network, embedding, and database operations are wrapped in exception handlers that print a located message (e.g., [lab2:query_corpus]) followed by a traceback; model name, chunk size, overlap, top-k, and abstention threshold are read from a JSON config file rather than hardcoded
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions, including a readme writeup, the pair programming log, a corpus datasheet, and thoughtful answers to the reflection prompts
+      proficient: The program is submitted according to the directions, including a readme writeup, a pair programming log with at least two timestamped role swaps, a corpus datasheet covering sources, time range, representation gaps, and known limitations, and reflection answers that each cite a specific experimental result from the lab rather than restating the prompt
   readings:
     - rtitle: "RAG Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md"

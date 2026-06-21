@@ -7,35 +7,42 @@ info:
   coursenum: CS357
   points: 100
   goals:
-    - To design and document reusable prompt patterns including personas, few-shot examples, and structured output
-    - To demonstrate empirically how prompt elements change model behavior
-    - To compute softmax with temperature and a cosine similarity by hand, in the AI by Hand tradition
-    - To connect by-hand mathematics to observed sampling and retrieval behavior
+    - To design and document reusable prompt patterns including personas, few-shot examples, structured output, and guardrails with controlled before-and-after demonstrations
+    - To demonstrate empirically how each prompt element changes model behavior by isolating it as the only variable
+    - To compute softmax with temperature and cosine similarity by hand with all intermediate steps shown and Python-verified
+    - To connect by-hand mathematics to observed sampling and retrieval behavior in the prompt experiments
+    - To design and iteratively repair a system prompt using the ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS framework against adversarial and edge-case inputs
   rubric:
-    - weight: 35
+    - weight: 30
       description: Prompt Pattern Portfolio
       preemerging: Few or no patterns are presented, or patterns lack any demonstration
-      beginning: Patterns are presented but demonstrations are missing or do not isolate the pattern's effect
-      progressing: All required patterns are presented with before and after demonstrations, with limited analysis of why each works
-      proficient: All required patterns are presented with controlled before and after demonstrations, and each is analyzed with reference to the distributional behavior of language models
-    - weight: 35
+      beginning: Patterns are presented but demonstrations are missing or do not isolate the pattern's effect — for example, the baseline and pattern-enhanced prompts differ in more than one element, or temperature was not fixed
+      progressing: All four required patterns are presented with controlled before-and-after demonstrations under a stated protocol; analysis describes what changed but does not explain the distributional mechanism
+      proficient: All four patterns are presented with controlled before-and-after demonstrations under a stated protocol (model name, temperature, seed); each analysis paragraph names the specific change observed, explains it in terms of token conditioning or probability distributions, and states what second experiment would confirm the hypothesis; the Pattern 3 table reports parse success rates across five runs for both the bare and schema-constrained prompt
+    - weight: 25
       description: AI by Hand Worked Problems
       preemerging: Worked problems are missing or fundamentally incorrect
       beginning: Worked problems contain arithmetic or conceptual errors, or omit intermediate steps
-      progressing: Worked problems are correct with all intermediate steps shown, with a minor omission
-      proficient: Worked problems are correct with all intermediate steps shown, and each is verified in code with matching results and a sentence connecting the math to observed model behavior
+      progressing: Both problems are correct with all intermediate steps shown and a Python verification snippet included, with at most one minor arithmetic or formatting omission
+      proficient: Both problems show every required sub-step — scaled logits, exponentials to four decimal places, normalizing sum, and final probabilities to three decimal places for all three temperatures in Problem 1; dot product, both norms with sum-of-squares, and cosine similarity to three decimal places plus the cos(a, 3a) = 1.000 proof in Problem 2; Python output is pasted and confirmed to match the hand calculation; each problem ends with a sentence connecting the result to observed model behavior (e.g., what temperature control does to the highest-logit token)
     - weight: 20
+      description: System Prompt Design Workshop
+      preemerging: No system prompt is submitted, or the prompt is missing two or more of the five ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS elements
+      beginning: A system prompt addressing all five elements is submitted but the test table is absent or contains fewer than eight rows, or no repair cycles are documented
+      progressing: The system prompt, eight-row test table with actual model outputs, and at least two repair cycles are present; the adversarial break section is present but the analysis of why the guardrail held or failed is superficial
+      proficient: The initial prompt addresses all five ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS elements; the eight-row test table is fully filled in with verbatim model outputs; three repair cycles are documented each with the specific failure observed (with actual model output), the root cause diagnosis, and the targeted change made; the adversarial break section tests all three attack types (roleplay, authority claim, context manipulation) and the two-paragraph analysis distinguishes instruction-following robustness from value-trained refusal and states under what conditions the guardrail would be trusted in production
+    - weight: 15
       description: Analysis and Synthesis
       preemerging: Little or no written analysis is provided
-      beginning: Analysis restates results without interpretation
-      progressing: Analysis interprets results and connects at least one finding to course concepts
-      proficient: Analysis interprets results, connects findings to sampling theory and persona effects, and proposes one testable hypothesis for future investigation
+      beginning: Analysis restates results without interpretation — for example, "the persona made the output more formal" without explaining why
+      progressing: Analysis interprets results and connects at least one finding to course concepts such as sampling theory or token conditioning
+      proficient: The one-to-two paragraph synthesis names the specific pattern that produced the largest behavioral change for the smallest prompt change and grounds the explanation in the mathematics (what tokens did adding that pattern condition on?); restates in original words where randomness lives in a language model and what temperature specifically controls; proposes one testable hypothesis with the independent variable, dependent variable, and measurement method stated
     - weight: 10
       description: Writeup and Submission
       preemerging: An incomplete submission is provided
-      beginning: The work is submitted, but not according to the directions in one or more ways
-      progressing: The work is submitted according to the directions with a minor omission or correction needed
-      proficient: The work is submitted according to the directions, well organized, with thoughtful answers to the reflection prompts
+      beginning: The work is submitted but is missing one or more required sections or the experimental protocol is absent
+      progressing: The work is submitted with all required sections and the experimental protocol stated; one minor omission or formatting issue is present
+      proficient: The submission is a single PDF containing the stated experimental protocol, all four pattern entries, both worked problems with intermediate steps and Python output, the system prompt workshop deliverables, the analysis and synthesis paragraphs, and software version information (model name and version, Python version, Ollama version)
   readings:
     - rtitle: "Prompt Engineering Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md"

@@ -36,9 +36,9 @@ info:
     - weight: 20
       description: Writeup and Reflection
       preemerging: No writeup
-      beginning: Writeup describes what was done without analysis
-      progressing: Writeup identifies 2 factors that changed simulation outcomes and addresses AI interpretation quality
-      proficient: Writeup covers (1) parameter sensitivity analysis with at least 3 parameter changes and their effect on the outcome distribution, (2) AI interpretation quality with at least one verbatim AI excerpt and evaluation, (3) one design guardrail you would add to prevent users from over-trusting the AI
+      beginning: Writeup describes what was done without interpreting what the numbers or charts mean
+      progressing: Writeup reports sensitivity analysis numbers for at least 2 scenarios and notes at least one AI interpretation error
+      proficient: Writeup includes (1) the four statistics (median, P10, P90, P(>$1M)) for all three sensitivity scenarios in a table, with an explicit comparison of which parameter change — raising mean return or lowering volatility — had a larger effect on the median; (2) evaluation of AI interpretation quality with at least one verbatim AI excerpt and a judgment of correct, approximately correct, or wrong; (3) a 2–3 sentence user-facing guardrail statement that names the specific risk (AI cannot reliably read precise numbers from charts) without using technical jargon
   readings:
     - rtitle: "Sampling, Temperature, and Generation Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md"

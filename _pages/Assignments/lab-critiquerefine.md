@@ -8,9 +8,9 @@ info:
   points: 100
   goals:
     - To implement the generator, critic, refine loop with a structured JSON rubric and explicit stopping rules
-    - To calibrate a critic against drafts with planted defects
-    - To detect and patch a reward hacking loophole in a rubric
-    - To measure whether separated critique outperforms single-shot generation
+    - To calibrate a critic against drafts with planted defects and report detection and false-positive rates per criterion
+    - To detect and patch a reward hacking loophole in a rubric by demonstrating the exploit and verifying the fix
+    - To measure whether separated critique outperforms single-shot generation on a defined task set with matched scoring
   rubric:
     - weight: 30
       description: Loop Implementation
@@ -41,7 +41,7 @@ info:
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions with externalized configuration, located exception handling with tracebacks, the pair log, and thoughtful answers to the reflection prompts
+      proficient: The program is submitted according to the directions with externalized configuration in a JSON file, located exception handling with tracebacks on all model calls, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific numeric result or transcript excerpt from the lab
   readings:
     - rtitle: "Critique and Refine Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md"
