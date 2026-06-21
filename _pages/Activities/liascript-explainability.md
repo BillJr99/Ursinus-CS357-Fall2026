@@ -46,11 +46,11 @@ In this Part, you will examine what kinds of evidence an AI system can honestly 
 
 Think about the last time you trusted a recommendation — from a friend, a review site, or a search engine. What made you trust it? Probably: you could see *why* the recommendation was made (evidence), you could verify it yourself (citations), and you had a sense of how reliable the source usually is (calibration). AI explainability engineering is about building exactly those three properties into your systems, so users have a real basis for trust — not just a confident-sounding answer.
 
-**Traces.** An agent's ReAct transcript (thoughts, tool calls, observations) is a genuine causal record of *what the system did*: which tools ran, with which inputs, returning which evidence. Traces are the workhorse of agent explainability, and you have been generating them since week 1.
+**Traces.** An agent's ReAct transcript — ReAct standing for "Reason + Act," a prompting pattern that interleaves a model's thoughts with tool calls and their results — is a genuine causal record of *what the system did*: which tools ran, with which inputs, returning which evidence. Traces are the workhorse of agent explainability, and you have been generating them since week 1.
 
 **Citations.** A RAG answer that quotes its retrieved chunk lets a human verify the claim against the source *without trusting the model at all*. Verifiability is stronger than persuasiveness, which is why your Lab 2 grounding instructions matter more than eloquence.
 
-**Uncertainty.** A system that says "low confidence" when it is more often wrong is *calibrated* (meaning its stated confidence matches its real accuracy). Calibration is measurable: bucket outputs by stated confidence and compare each bucket's claimed probability with its observed accuracy; the gap is the **calibration error** (ECE — Expected Calibration Error):
+**Uncertainty.** A system that says "low confidence" when it is more often wrong is *calibrated* (meaning its stated confidence matches its real accuracy — so an 80%-confident system is correct roughly 80% of the time). Calibration is measurable: bucket outputs by stated confidence and compare each bucket's claimed probability with its observed accuracy; the gap is the **calibration error** (ECE — Expected Calibration Error, a single number summarizing how far confidence deviates from accuracy across all confidence levels):
 
 $$
 \text{ECE} = \sum_b \frac{n_b}{N} \, \bigl| \text{acc}(b) - \text{conf}(b) \bigr|
@@ -102,10 +102,10 @@ The goal is not to make users trust your system more — it is to make them trus
 
 [[MC]]
 An agent drafts emails and a human clicks "approve" before each one is sent. Over months, approvals become automatic (the human stops reading them) and an erroneous email ships. The design lever that most directly targets this failure is:
-- ( ) A larger model so errors stop occurring — the problem is human attention, not model quality
-- ( ) Removing the human gate since it added no value — this eliminates oversight entirely
+- ( ) Replacing the model with a more capable one — model accuracy is not the issue; the failure is that the human stopped engaging, not that the model stopped being right
+- ( ) Removing the human gate entirely since it added no value — this eliminates oversight and makes the system fully autonomous, which does not address the root cause of inattention
 - (x) Redesigning the confirmation to surface the evidence and anomalies that warrant attention, restoring active judgment
-- ( ) Logging the human's click for accountability — logging records what happened but does not prevent the next error
+- ( ) Logging the human's click for accountability and compliance — logging creates an audit trail after the fact but does nothing to prevent the next rubber-stamp approval from shipping another error
 
 ---
 
@@ -134,6 +134,8 @@ Sketch (on paper) the confirmation screen your project shows a human before its 
 *You have now designed your confirmation screen and stress-tested your system's calibration. In Part III you will build real artifacts: a trace viewer, an abstention audit, and a demo dry-run. These convert today's analysis into deployable components.*
 
 # Part III: Synthesis and Practice
+
+In this Part, you will translate the analysis from Parts I and II into deployable artifacts — a trace viewer, an abstention audit, and a rehearsed demo story. Building these now means your system will be demonstrably explainable by demo day, not just theoretically so.
 
 ## 3. Exercises
 
@@ -178,6 +180,8 @@ Sketch (on paper) the confirmation screen your project shows a human before its 
 *Technical:* Which of the four explainability artifacts (tool logs, citations, traces, narrated rationale) does your project currently produce, and which is it missing? What would you need to add to make your system's outputs fully verifiable by someone who cannot see the source code?
 
 *Societal:* Most users of AI systems have no access to traces, citations, or calibration scores. They see a confident answer. What obligations do AI builders have to surface explainability in ways that non-technical users can actually act on? Who is responsible for closing the gap between what AI systems *can* explain and what they *do* explain?
+
+> *Hint:* Consider the analogy to nutritional labeling on food: the information exists but must be mandated and formatted to be actionable. Who mandated food labels, and what did the industry argue before it was required? Now ask: which stakeholder (developer, deployer, regulator, user) has the most leverage to close the explainability gap for AI — and which has the least incentive to do so voluntarily?
 
 ---
 

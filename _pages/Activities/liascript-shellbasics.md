@@ -65,7 +65,7 @@ Think of the terminal as your agent's native language — like learning to read 
 
 Before you can read or modify files, you need to know where you are and how to move around. The following six commands cover almost all navigation you will ever do in the shell.
 
-Three commands carry most navigation:
+Three commands carry most navigation. The following snippet shows each command alongside a comment explaining what it does — run each one in your terminal and observe the output before moving on. Pay special attention to how `cd ..` and `cd -` complement each other: one moves you up the tree, the other undoes the last move.
 
 ```bash
 pwd                  # print working directory: where am I right now?
@@ -142,7 +142,7 @@ The table below covers the ten commands you will use most often when working wit
 
 Pipes and redirection let you compose simple commands into powerful one-liners without ever saving intermediate results to a file. This is the same composition idea that underlies agent pipelines — small, focused tools chained together to produce complex results.
 
-**A pipe `|` sends one command's output into the next command's input**, composing small tools into pipelines:
+**A pipe `|` sends one command's output into the next command's input**, composing small tools into pipelines. The three examples below each build a chain from left to right — read each one as a sentence ("search for X, then count the results") and predict the output before running it in your terminal.
 
 ```bash
 grep "ERROR" agent.log | wc -l
@@ -158,7 +158,7 @@ cat results.csv | grep "fail" | head -10
 # head -10 keeps only the first 10 of those — result is the first ten failures
 ```
 
-**Redirection sends output to files instead of the screen.** Use `>` to overwrite, `>>` to append, and `2>` to capture error messages separately:
+**Redirection sends output to files instead of the screen.** Use `>` to overwrite, `>>` to append, and `2>` to capture error messages separately. Read the comments in the block below carefully before running any of these — the difference between `>` and `>>` is one character but the consequences are very different, and the `2>` line is the one you will reach for every time a script crashes silently.
 
 ```bash
 python run_eval.py > results.txt
@@ -177,10 +177,10 @@ The four workhorses worth memorizing by name are `grep` (search text for a patte
 
 [[MC]]
 A teammate runs `python eval.py > results.txt` twice in a row with different settings, intending to compare the two runs. What happened to the first run's results?
-- ( ) They appear above the second run's results in the file
+- ( ) They appear above the second run's results in the file — this is how `>>` (append) works, but `>` does not accumulate output; it overwrites from the first byte of the new run
 - (x) They were overwritten and are gone, because > truncates the file before writing; >> would have appended
-- ( ) They were moved to results.txt.bak automatically
-- ( ) Nothing; > only works once per file
+- ( ) They were automatically backed up to `results.txt.bak` by the shell — the shell provides no automatic backup mechanism; silent overwrite is the default behavior and there is no undo
+- ( ) The second run failed silently because the file already existed — `>` does not check whether the destination file exists; it opens, truncates, and writes unconditionally
 
 ---
 
@@ -208,7 +208,7 @@ A teammate runs `python eval.py > results.txt` twice in a row with different set
 
 ## 5. Environment Variables and PATH
 
-**Environment variables** are named values the shell passes to every program it starts — think of them as the shell's global settings. They are how this course's tools receive configuration and credentials without you having to hardcode those values into your code:
+**Environment variables** (the shell's persistent key-value settings — named values the shell stores in memory and automatically passes to every program it launches, so programs can read configuration without hardcoded paths or secrets) are named values the shell passes to every program it starts — think of them as the shell's global settings. They are how this course's tools receive configuration and credentials without you having to hardcode those values into your code. The following block shows the four most important environment variable operations for this course — note that `export` is what makes a variable visible to child processes like Claude Code; without it, the variable exists only in your current shell session and the tool cannot see it.
 
 ```bash
 echo $HOME
@@ -244,7 +244,7 @@ Variables set with `export` last only until the terminal closes; to make them pe
 
 ## 6. Processes
 
-Every running program is a **process** (a running instance of a program, assigned a unique ID number by the operating system). The controls you need:
+Every running program is a **process** (a running instance of a program, assigned a unique process ID number — PID — by the operating system so it can be tracked and stopped independently of other programs). The controls you need. The sequence below covers the full lifecycle: starting a process in the foreground, interrupting it, launching one in the background, finding it by name, and stopping it gracefully or forcibly — in that order.
 
 ```bash
 some_long_command
@@ -287,6 +287,8 @@ When a port is "already in use" (a constant companion in the Docker module), `ls
 *You can now navigate, manage files, compose pipelines, set environment variables, and control processes. Part III brings all of this together in the tool you will use every day: VS Code's integrated terminal, where your agent runs in one pane while you review its changes in another.*
 
 # Part III: The Terminal in VS Code, and Practice
+
+In this Part, you will bring everything together in the tool you will use every day this semester: VS Code's integrated terminal. Understanding how the editor and terminal share a workspace is what lets you supervise agent edits in one pane while reading their file changes in another — the exact workflow the rest of the course depends on.
 
 ## 7. VS Code Is a Terminal with an Editor Attached
 
@@ -355,6 +357,8 @@ In your notebook, respond at three levels:
 **Technical level:** The permission-gated contract our agent tools offer (the agent proposes, you approve or deny) is a deliberate layer added on top of the raw shell. Based on today's session, name two specific shell behaviors (redirection, `rm -rf`, background processes, PATH resolution, or something else you encountered) that you would want an agent's permission gate to highlight or warn about — and explain why those two in particular.
 
 **Societal level:** Professionals who can read and write shell commands have historically had significant power over systems and data that non-technical users cannot see or audit. As agent tools extend shell access to people who never learned the command line, what responsibilities do the builders of those permission gates carry? Who should decide what counts as "dangerous enough to require approval"?
+
+> *Hint:* Consider two analogies: (1) a car's power steering makes driving easier without exposing the hydraulics — but driving instructors still teach the underlying mechanics. (2) A bank's mobile app lets non-experts move money without understanding ACH transfers — but regulators set limits on what the app can do without extra authentication. Which analogy fits agent shell tools better, and what does the better-fit analogy imply about where the "dangerous enough" threshold should be set and who should set it?
 
 ---
 

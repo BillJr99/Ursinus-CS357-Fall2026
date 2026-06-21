@@ -80,7 +80,7 @@ Walkers leave structured feedback on cards, one card per station, with exactly t
 - **Question**: one genuine question the demo raised, ideally about a seam, a failure mode, or governance ("what happens when retrieval returns nothing?").
 - **Risk**: the one thing most likely to fail on demo day, stated kindly and concretely.
 
-Hosts demonstrate honestly: at least one *known failure case* must be shown at every station. A demo that hides its failure modes is rehearsing a deception, and your governance documents say otherwise.
+Hosts demonstrate honestly: at least one *known failure case* (a defect or limitation your team has already identified, documented, and can reproduce on demand — the opposite of a surprise discovered mid-demo) must be shown at every station. A demo that hides its failure modes is rehearsing a deception, and your governance documents say otherwise.
 
 ### Critical Thinking Questions
 
@@ -187,9 +187,13 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 **Personal level:** Compare the feedback you received today with the feedback your own critique agents give in your system. Which was more actionable — human peer feedback or automated evaluation? What does that comparison teach you about what human judgment adds that automated metrics cannot capture?
 
+> *Hint:* Think about the kinds of feedback a gallery walker might give that your automated evaluation harness cannot: "I didn't understand what I was supposed to do with this interface" or "the failure case you showed made me trust the system more, not less." What category of signal is that, and can it be quantified? How would you even design an automated test for it?
+
 **Technical level:** The release-readiness checklist asks you to test your own setup steps using the teammate who did not write them. Why is this the right person to run the test? What category of errors does this catch that the author of the steps cannot catch?
 
 **Societal level:** The gallery walk requires showing a known failure case at every station. In commercial AI deployments, failure cases are rarely demonstrated publicly. What are the incentives that lead companies to hide failure modes, and what would it take — regulation, liability, cultural norms — to make honest failure disclosure the default rather than the exception?
+
+> *Hint:* Consider the analogy to drug side-effect disclosures, which are now legally required on packaging and in ads. Before that regulation, pharmaceutical companies also had strong incentives to minimize discussion of side effects. What changed? Was it a high-profile failure, regulatory action, litigation, or cultural pressure? Which of those vectors seems most plausible for AI — and which actor (government, courts, journalists, or the public) would most likely trigger it?
 
 Write a combined reflection of 150–200 words addressing at least two of the three levels. The Reflector should be prepared to share the team's most surprising piece of gallery feedback with the class.
 
