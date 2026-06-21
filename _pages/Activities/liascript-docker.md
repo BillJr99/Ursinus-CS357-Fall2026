@@ -254,9 +254,11 @@ Within a Compose file, services reach each other *by name* (`http://gateway:4000
 | `docker compose down` | Stops and removes all containers and networks for this stack. Named volumes are preserved by default. | Cleanly shutting down between sessions. |
 | `docker compose down -v` | Same as `down` but also deletes named volumes, wiping all persisted data. | Starting completely fresh — use with caution. |
 
+*Compose puts your services on a private network where they can reach each other by name. But they cannot automatically reach things on your host machine — your laptop or workstation — because the container's network is isolated. This section explains the special address that bridges that gap.*
+
 ## 7. host.docker.internal: Talking to the Host
 
-A container has its own network, so inside a container, `localhost` means *the container itself*, not your machine. The special name **`host.docker.internal`** resolves to your host, which is how a containerized agent reaches a model server running natively on the host (our Ollama runs this way). One platform difference matters enormously: Docker Desktop (macOS, Windows) provides the name automatically, but **on Linux Docker Engine you must request it explicitly** on every container that needs it:
+A container has its own network, so inside a container, `localhost` refers to *the container itself* — not your machine. The special hostname **`host.docker.internal`** is a DNS name (a human-readable address that Docker resolves to your host machine's IP) that lets a containerized service reach programs running on your host. This is how a containerized agent reaches a model server running natively on the host (our Ollama runs this way). One platform difference matters enormously: Docker Desktop (macOS, Windows) provides the name automatically, but **on Linux Docker Engine you must request it explicitly** on every container that needs it:
 
 ```bash
 docker run --add-host=host.docker.internal:host-gateway ...
@@ -299,6 +301,8 @@ A teammate's Open WebUI container cannot reach Ollama. From the host, `curl http
 > **Common Misconception:** Many beginners assume that because `curl http://localhost:11434` works from the host, the containerized service should "just see it" too. This is wrong. Each container runs in its own network namespace. Inside the container, `localhost` (or `127.0.0.1`) refers to the container's own loopback interface, not the host's. The Ollama server bound to the host's port 11434 is completely invisible at that address from inside the container. The fix is always to use `host.docker.internal` as the hostname — and on Linux, to explicitly enable it with `--add-host=host.docker.internal:host-gateway`.
 
 ---
+
+*You now have the full toolkit: images, containers, ports, volumes, Dockerfiles, Compose stacks, and host networking. Part III puts it all together through hands-on exercises that build on each other — completing all five means you are ready to wire the full course AI stack.*
 
 # Part III: Practice
 

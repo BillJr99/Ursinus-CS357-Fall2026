@@ -40,13 +40,15 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: From Values to Mechanisms
 
+In this part, you will learn to distinguish policy language that merely sounds good from policy language that actually commits someone to a specific, checkable action. This is the single most important skill in this activity — everything else builds on it.
+
 ## 1. Governance Is Engineering with Words
 
 A value statement like "our system is fair and transparent" sounds meaningful but commits no one to any specific action. Governance converts values into *mechanisms* that can actually be checked and enforced. Think of it the same way you think about writing tests for code: a test that says "the function should work correctly" is useless; a test that says "given input X, output Y is returned within 200ms" is enforceable. The same logic applies to AI governance policy.
 
 **A value is not a policy.** "Our agent is fair and transparent" commits no one to anything; a policy converts values into *mechanisms*: scopes, prohibitions, gates, logs, owners, and remedies. The test of a policy clause is operational: could a third party determine, from evidence, whether it was followed? Every clause failing that test is decoration.
 
-**The risk-tiered pattern.** Mature frameworks classify uses by risk and scale obligations accordingly. The **EU AI Act** bans a small set of practices, imposes heavy obligations (documentation, human oversight, accuracy reporting) on "high-risk" systems such as those used in education admissions and grading, and lighter transparency duties elsewhere. The **NIST AI Risk Management Framework** organizes the work as four functions: *Govern* (assign accountability), *Map* (know your system and context), *Measure* (evaluate, disaggregate, monitor), and *Manage* (mitigate, respond, document). Notice how much of NIST's *Measure* you can already execute: harnesses, disaggregated metrics, judge audits, citation checks.
+**The risk-tiered pattern.** Mature frameworks classify uses by risk and scale obligations accordingly. The **EU AI Act** (a 2024 European law regulating AI systems by the potential harm they could cause) bans a small set of practices, imposes heavy obligations (documentation, human oversight, accuracy reporting) on "high-risk" systems such as those used in education admissions and grading, and lighter transparency duties elsewhere. The **NIST AI Risk Management Framework** (a voluntary US guideline) organizes the work as four functions: *Govern* (assign accountability), *Map* (know your system and context), *Measure* (evaluate, disaggregate, monitor), and *Manage* (mitigate, respond, document). Notice how much of NIST's *Measure* you can already execute: harnesses, disaggregated metrics, judge audits, citation checks.
 
 **Accountability has names in it.** Policies designate an owner per system, an escalation path, and an incident process. "The team is responsible" means no one is.
 
@@ -62,7 +64,7 @@ Clause B: "The advising agent may draft degree-plan suggestions but may not subm
 
 ### Critical Thinking Questions
 
-1. Apply the third-party test to each sentence of both clauses: which sentences are checkable from evidence, and which are not?
+1. Apply the **third-party test** (could an independent outside party examine evidence and determine whether this clause was actually followed, without asking anyone to interpret what it means?) to each sentence of both clauses. Which sentences are checkable from evidence, and which are not?
 
    *Hint: For each sentence, ask: if I gave this sentence to an outside auditor along with all of the system's logs, could they determine with certainty whether the clause was followed or violated? If the answer requires judgment about what "responsible" means, the clause fails the test.*
 
@@ -75,6 +77,8 @@ Clause B: "The advising agent may draft degree-plan suggestions but may not subm
    *Hint: Think about what a student can do after a bad recommendation versus after a bad registration. Can they undo it? How much does it cost to fix? How quickly must it be fixed to avoid serious harm?*
 
 ---
+
+Now that you can distinguish real policy from decoration, this part gives you the structure for your project's governance document. Every section has a specific job; if you can't fill a section, that gap tells you something important about your system design.
 
 # Part II: The Anatomy of Your Policy
 
