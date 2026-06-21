@@ -52,28 +52,70 @@ tags:
 
 ---
 
-# Overview
+## Project Overview
 
-This project track is for students who want to build something that outlasts the semester: a published, documented, reusable agent or agent component that real users could discover, install, and run. The deliverable is not a demo; it is a **software artifact with a community presence**. You will practice the full lifecycle from identifying a gap in the ecosystem through shipping to a registry and responding to feedback.
+This project track is for students who want to build something that outlasts the semester: a published, documented, reusable agent or agent component that real users could discover, install, and run. The deliverable is not a demo or a course submission — it is a **software artifact with a community presence**. By the end of the project, you will have a published package on a public registry, a README that a stranger could follow, a CI badge, a governance statement, and at least one authentic exchange with a real community member who responded to your post about it. You will practice the full lifecycle from identifying a gap in the ecosystem through shipping to a registry and responding to real feedback.
 
-Choose a scope that is achievable in the time available but genuinely useful: an MCP server that wraps an API no one has packaged yet, an agent that solves a narrow task extremely well, a reusable prompt-caching middleware, a model-routing library, or an evaluation harness for a domain your team knows. The test of scope is the README: if a stranger in the relevant community would star the repository and actually use it, the scope is right.
+This is an **individual or pair project**. Pairs must document individual contributions clearly. Tasks touching sensitive data or making outbound API calls on behalf of users require instructor approval and must include a governance statement addressing those specific risks.
 
-This is an **individual or pair project**. Pairs must document individual contributions clearly. Tasks touching sensitive data or making outbound API calls on behalf of users require instructor approval and must include a governance statement that addresses those specific risks.
+---
+
+## Example Project: Ollama MCP Server for Course Feedback
+
+To calibrate the expected level of ambition and documentation quality, here is a fully worked example at the proficient level.
+
+**Artifact:** An MCP (Model Context Protocol) server that wraps a local Ollama instance and exposes it as a tool to Claude Desktop. This fills a real gap: at the time of the project, Ollama has no official MCP server, and several posts in the r/LocalLLaMA community ask for one.
+
+**Gap verification:** The student searched npm and PyPI for "ollama mcp server" and found zero results. They searched r/LocalLLaMA and found three posts from the past month asking for exactly this. They linked these in their proposal.
+
+**Minimum viable scope:** The server handles a single `generate` tool call, accepts `model` and `prompt` as parameters, streams the response back, and exits cleanly on error. That's it.
+
+**Non-trivial feature implemented:** Streaming. Instead of waiting for the full response, the server streams tokens back to the client as they arrive, which makes it feel responsive for interactive use.
+
+**Three property tests:**
+1. "If the model name is not in `ollama list`, the server returns an error message containing the string 'model not found' rather than crashing."
+2. "Every successful response is a valid JSON object with a `content` string field."
+3. "If the Ollama server is not running, the server returns an error within 5 seconds rather than hanging indefinitely."
+
+**Community engagement:** The student posted to r/LocalLLaMA with the title "I built an MCP server for Ollama — feedback welcome." Three people responded. One found a bug (the server crashed when Ollama returned an empty stream). The student filed an issue, fixed it, released `v1.0.1`, and replied with the fix link. That exchange is documented in the submission.
+
+---
+
+## Getting Started: First 5 Steps
+
+1. **Find the gap before committing to a scope.** Before writing a single line of code, search npm, PyPI, Docker Hub, and the MCP marketplace for tools that do what you are thinking of building. Read the r/LocalLLaMA "weekly tools" threads. If something already exists and does the job well, find a different gap or a specific improvement you can make.
+2. **Verify the gap is real, not imagined.** Find at least one community post, GitHub issue, or Stack Overflow question where a real person asked for what you are planning to build. Link it in your proposal. This is the difference between "I think people want this" and "people have asked for this."
+3. **Define your minimum viable scope on day one.** The MVP is the smallest version that is genuinely useful. Write it as a one-sentence definition: "The MVP is an MCP server that handles a single `generate` call to a local Ollama model and returns the response." Everything beyond that is a stretch goal.
+4. **Set up the repository structure before writing code.** Create: `src/` (or the appropriate source directory), `tests/`, `docs/`, `.github/workflows/ci.yml`, `README.md`, `CONTRIBUTING.md`, `GOVERNANCE.md`, `LICENSE`. Writing code into a properly organized repo is easier than reorganizing a finished project.
+5. **Write your first test before your first function.** Pick the most important behavior of your artifact — the one that, if it doesn't work, nothing works — and write a test for it before the implementation exists. The test will fail (red). That failure is the starting point.
+
+---
+
+## Common Pitfalls
+
+1. **Building a wrapper that wraps something that already exists.** An MCP server for the OpenAI API has been built many times. A scoped, opinionated wrapper for a specific use case (e.g., an MCP server for Ollama that enforces a local-only policy and refuses to send data to any external endpoint) is different. The test: would the README say something different from the READMEs of the three closest alternatives?
+2. **Treating documentation as the last step.** The most common submission gap is a README that the author can follow but a stranger cannot. Write the quickstart section first, on day one, before you have built anything. It will describe what you intend to build. Update it as you build. The final README should be the document you would want to find if you discovered this tool on npm for the first time.
+3. **Writing property tests that always pass.** A property test that says "the output is a string" will always pass unless the program crashes. A property test that says "the output is a valid JSON object with a `content` key that is a non-empty string, and the value of `content` contains at least one sentence-ending punctuation mark" is a real behavioral contract.
+4. **Posting to the community and not following up.** Community engagement is graded on quality, not just occurrence. "Thanks!" in response to a bug report is not engagement. Engagement means: read the feedback, acknowledge its substance, and either incorporate it, explain why you chose not to, or file an issue for future work. The conversation is the deliverable.
+5. **Choosing a license without understanding what it means.** MIT means anyone can use your code in a closed-source commercial product without attribution. AGPL means anyone who runs your code as a service must open-source their modifications. Apache 2.0 includes a patent grant that matters if you ever file patents. Read the first page of each before choosing. The justification paragraph is graded.
 
 ---
 
 ## Stage 1: Proposal (due week 10)
 
-Identify a gap: an agent, tool, MCP server, or agent pattern that does not exist or is not done well. Write a two-page proposal containing:
+Identify a gap: an agent, tool, MCP server, or agent pattern that does not exist or is not done well. Write a two-page proposal containing all of the following.
 
-**Checklist:**
-- What the artifact does, in one paragraph that a stranger with no course context can understand.
-- Who would use it: two to three **user personas** with realistic use cases (not "developers in general").
-- How they would install it: the exact sequence of commands from a clean machine to a working demo.
-- What makes it better than what already exists: name the closest alternative and the specific gap.
-- **Minimum viable scope**: the smallest version that is genuinely useful, achievable before the end of the semester.
-- **Stretch goals**: two to three extensions that would make the project more capable if time allows.
-- **Governance sketch**: who is responsible, what the artifact must never be used for, and what risk the instructor should know about before approving.
+**Proposal Checklist:**
+
+By the end of Stage 1, you will have submitted a 2-page proposal covering:
+
+- **What the artifact does:** One paragraph that a stranger with no course context can understand. No jargon without definition.
+- **Who would use it:** Two to three **user personas** with realistic, specific use cases. Not "developers in general" but "a CS professor who wants to let students query their local Ollama instance through Claude Desktop without setting up API keys."
+- **How they would install it:** The exact sequence of commands from a clean machine to a working demo. If you cannot write this on day one, your scope is undefined.
+- **What makes it better than what already exists:** Name the closest alternative and the specific gap your project fills. Show evidence the gap is real (link the community post, the GitHub issue, or the unanswered Stack Overflow question).
+- **Minimum viable scope:** The smallest version that is genuinely useful, achievable before the end of the semester. One sentence.
+- **Stretch goals:** Two to three extensions that would make the project more capable if time allows.
+- **Governance sketch:** Who is responsible for the deployed artifact? What must the artifact never be used for? What risk should the instructor know about before approving?
 
 ---
 
@@ -81,68 +123,132 @@ Identify a gap: an agent, tool, MCP server, or agent pattern that does not exist
 
 Build the core functionality following the design-first discipline from class: write the interface before the implementation, and write at least one test before each non-trivial function.
 
-**Requirements:**
-- Core functionality works on a clean machine by following the README.
-- At least one **non-trivial feature** is fully implemented: streaming responses, token-level authentication, persistent memory across sessions, or multiple integrated tools with error recovery.
-- **Unit tests** for all deterministic components, with meaningful assertions (not just "it ran without error").
-- **At least three property tests** for LLM-dependent components. A property test asserts a structural property of the output that should always hold — for example: "every response includes a source citation," "the output is valid JSON matching the schema," "the agent declines requests containing the word 'illegal.'" These are not accuracy tests; they are behavioral contracts.
-- **GitHub Actions CI** that installs dependencies, runs the test suite, and reports pass/fail on every pull request and push to main.
-- Configuration externalized to environment variables or a config file with documented defaults; no hard-coded API keys or paths.
-- Model versions and random seeds pinned in configuration so results are reproducible.
+**Implementation requirements:**
+
+- Core functionality works on a clean machine by following the README
+- At least one **non-trivial feature** is fully implemented: streaming responses, token-level authentication, persistent memory across sessions, or multiple integrated tools with error recovery
+- **Unit tests** for all deterministic components with meaningful assertions (not "it ran without error" — "the output matches the expected JSON schema")
+- **At least three property tests** for LLM-dependent components. A property test asserts a structural property of the output that should always hold — not an accuracy test, but a behavioral contract:
+
+| Property Test Example | Why It Is a Good Property |
+|---|---|
+| "Every response includes a source citation" | Tests a structural requirement, not accuracy |
+| "The output is valid JSON matching the schema" | Verifiable without knowing the "correct" answer |
+| "The agent declines requests containing the word 'illegal'" | Tests a safety behavior, not quality |
+| "Response time is under 30 seconds on the CI runner" | Tests a reliability property |
+
+- **GitHub Actions CI** that installs dependencies, runs the test suite, and reports pass/fail on every pull request and push to main. The CI badge must be green on the submission SHA.
+- Configuration externalized to environment variables or a config file with documented defaults; no hard-coded API keys or paths in any committed file
+- Model versions and random seeds pinned in configuration so results are reproducible
+
+**Stage 2 checkpoint:** By the end of week 11, you have a running MVP (core feature only), at least 3 tests (1 unit + 2 property), and CI set up with a green run on the MVP.
 
 ---
 
 ## Stage 3: Documentation (weeks 13 through 14)
 
-Documentation is not optional polish — it is the primary interface between your artifact and the community that will use it.
+Documentation is not optional polish — it is the primary interface between your artifact and the community that will use it. The rubric grades documentation as heavily as implementation.
 
-**Required documents:**
+**README.md** (required contents):
+- A one-sentence description of what the artifact does
+- A quickstart: the user reaches a working demo in **5 commands or fewer** on a clean machine (this constraint forces clarity)
+- A configuration reference: every environment variable and config option, its type, its default, and what happens if it is omitted
+- At least two worked examples showing realistic usage (not just `--help` output)
+- A link to the published registry package
+- The CI badge (copy the Markdown from your GitHub Actions workflow page)
 
-**README.md** containing:
-- A one-sentence description of what the artifact does.
-- A quickstart: the user should reach a working demo in five commands or fewer on a clean machine.
-- A configuration reference: every environment variable and config option, its type, its default, and what happens if it is omitted.
-- At least two worked examples showing realistic usage.
-- A link to the published registry package.
+**CONTRIBUTING.md** (required contents):
+- How to report a bug: what information to include, where to file it
+- How to submit a pull request: branch naming convention, test requirements, review expectations
+- How to run the test suite locally: exact commands from a clean checkout
+- Code of conduct: one paragraph minimum
 
-**CONTRIBUTING.md** containing:
-- How to report a bug: what information to include, where to file it.
-- How to submit a pull request: branch naming, test requirements, review expectations.
-- How to run the test suite locally: exact commands from a clean checkout.
-- Code of conduct (one paragraph minimum).
+**GOVERNANCE.md** (required contents):
+- What the agent does and what it does not do (scope, in plain English)
+- What the agent must never be used for, with reasoning for each prohibition
+- Who is responsible for the deployed artifact and how to reach them
+- How users should report harms or unexpected behavior
+- Known limitations that could cause harm if a user assumes they are not present
 
-**Governance statement** (in GOVERNANCE.md or a dedicated README section) containing:
-- What the agent does and what it does not do (scope).
-- What the agent must never be used for (explicit prohibitions with reasoning).
-- Who is responsible for the deployed artifact and how to reach them.
-- How users should report harms or unexpected behavior.
-- Known limitations that could cause harm if a user assumes they are not present.
+**LICENSE**: Choose one of MIT, Apache 2.0, or AGPL. Justify your choice in one paragraph in the README. The justification must name what the choice means for potential users — not just which license "sounds right."
 
-**License**: choose a license and justify the choice in writing (one paragraph in the README). Consider: MIT (permissive, maximum adoption), Apache 2.0 (permissive with patent grant), AGPL (copyleft, requires open-sourcing derivative services). Your choice signals intent; the justification demonstrates that you made a principled decision.
+**Stage 3 checkpoint:** By the end of week 13, your README quickstart works in 5 or fewer commands on a classmate's clean machine. Test this by having a classmate follow it cold and documenting the result.
 
 ---
 
 ## Stage 4: Publication and Community Engagement (week 14 through 15)
 
-**Publication checklist:**
-- Repository is on GitHub with a proper directory structure (source, tests, docs, CI configuration visible at the top level).
-- Package is published to at least one registry: **npm** (for JavaScript/TypeScript tools or MCP servers), **PyPI** (for Python packages), **Docker Hub** (for containerized services), or the **MCP plugin marketplace** if applicable. The published version matches the submission SHA.
-- The published package is installable from a clean machine using the registry's standard install command.
+### Publication Checklist
 
-**Community engagement:**
-- Post to at least one relevant community: a subreddit (r/LocalLLaMA, r/MachineLearning, r/learnprogramming for an educational tool), a Discord server, or Hacker News in Show HN format.
-- The post must accurately describe what the artifact does and link to the repository. Do not oversell.
-- When you receive feedback — an issue, a comment, a question — respond thoughtfully. "Thanks!" is not a response. Engagement means acknowledging the substance of the feedback and either incorporating it, explaining why you didn't, or opening a follow-up issue.
-- Document the interaction in your submission: include a screenshot or link to the post, the feedback received, and your response.
+Before publishing, verify:
+- [ ] Repository is on GitHub with proper directory structure (source, tests, docs, CI at top level)
+- [ ] No credentials, API keys, or private paths are committed anywhere in the git history
+- [ ] The published version matches the submission commit SHA
+- [ ] The package is installable from a clean machine using the registry's standard install command
+
+Publish to at least one registry:
+- **npm** (for JavaScript/TypeScript tools or MCP servers): `npm publish --access public`
+- **PyPI** (for Python packages): `python -m twine upload dist/*`
+- **Docker Hub** (for containerized services): `docker push username/image:tag` and set to public
+- **MCP plugin marketplace** if applicable
+
+Tag the submission commit `v1.0.0`. This is the version a user would install.
+
+### Community Engagement
+
+Post to at least one relevant community:
+- r/LocalLLaMA (local models and agent tools)
+- r/MachineLearning or r/learnprogramming (for educational tools)
+- A relevant Discord server (Ollama Discord, LangChain Discord, etc.)
+- Hacker News in **Show HN** format: "Show HN: [What it does] – [link]"
+
+**The post must:** accurately describe what the artifact does, link to the repository, and be honest about limitations. Do not oversell.
+
+**Engagement requirement:** When you receive feedback — an issue, a comment, a question — respond substantively. "Thanks!" is not a response. Engagement means: acknowledge the substance of the feedback and either incorporate it, explain why you chose not to, or open a follow-up issue. Document the interaction in your submission: include a screenshot or link to the post, the feedback received, and your response.
+
+If you receive no responses within one week of posting, post to a second community and document the attempt.
+
+**Stage 4 checkpoint:** By submission, your package is installable from the registry, your CI badge is green, and you have at least one documented community exchange with a substantive response.
 
 ---
 
 ## Submission Deliverables (final class meeting and exam slot)
 
-1. **The repository**: public GitHub repo running from a fresh start following the README, with CI green on the submission SHA. Tag the submission commit `v1.0.0`.
-2. **The published package**: a live URL on npm, PyPI, Docker Hub, or the MCP marketplace where the artifact is installable.
-3. **The report** (three to five pages): what gap you identified and why, design decisions and tradeoffs, evaluation results from your property tests, documentation strategy, license justification, governance rationale, community engagement summary (with evidence), and individual contribution statement.
-4. **The presentation** (8 minutes plus questions): live demo of the happy path and one known limitation, the property test results, and a 60-second governance statement addressed to the audience as if they were potential users.
+1. **The repository:** Public GitHub repo running from a fresh start following the README, with CI green on the submission SHA. Tag the submission commit `v1.0.0`.
+2. **The published package:** A live URL on npm, PyPI, Docker Hub, or the MCP marketplace where the artifact is installable.
+3. **The report** (3 to 5 pages):
+   - What gap you identified and how you verified it was real
+   - Key design decisions and their tradeoffs
+   - Evaluation results from your property tests (pass rate, any failures found)
+   - Documentation strategy and the result of the classmate quickstart test
+   - License choice and justification
+   - Governance rationale: why the prohibitions you chose are the right ones
+   - Community engagement summary with evidence (screenshot or link, feedback received, your response)
+   - Individual contribution statement
+4. **The presentation** (8 minutes plus questions):
+   - Live demo of the happy path
+   - One known limitation or failure mode, disclosed honestly
+   - Property test results (what you tested, what you found)
+   - 60-second governance statement addressed to the audience as potential users
+
+---
+
+## Frequently Asked Questions
+
+**Q: I am not a strong programmer. Can I complete this project?**
+A: Yes. The minimum viable scope is intentionally small, and the course teaches the design-first, agent-assisted workflow explicitly. The rubric grades design, documentation, governance, and community engagement — not just code. A simple MCP server that is extremely well-documented, tested, and published with a clear governance statement earns more than a complex one that is hard to install.
+
+**Q: What if I build something and then discover it already exists?**
+A: This is exactly why the proposal requires gap verification. If you discover a very close alternative mid-project, you have two options: pivot to a specific improvement or scoped variant that is meaningfully different, or document the gap closure as a finding (sometimes discovering that the gap has been filled is the research contribution). Do not submit work that you know duplicates an existing well-maintained tool without an explicit differentiation argument.
+
+**Q: How specific do the property tests need to be?**
+A: Specific enough that a failure would actually indicate a problem. A test that says "the output is not empty" will pass even if the output is garbage. A test that says "the output is a JSON object with a 'citations' key that is a list of at least one string" will fail if the agent forgets to include citations. The rubric rewards tests with clearly stated properties that a stranger could read and understand without asking you what they mean.
+
+**Q: Can I build on an existing open-source project instead of starting from scratch?**
+A: Yes, if you make a meaningful contribution and the original project's license permits it. Document clearly what was pre-existing and what you added. The rubric grades your contribution, not the base project.
+
+**Q: What if my community post gets no responses?**
+A: Post to a second community, document the attempt, and note in your submission that you did not receive engagement. The rubric rewards authentic engagement; it does not penalize you for a community that is slow to respond. If you post honestly and substantively and receive no response, that is itself a finding about the community.
 
 ---
 
