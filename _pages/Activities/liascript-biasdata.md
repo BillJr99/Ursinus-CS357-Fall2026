@@ -169,9 +169,9 @@ A resume-screening agent shows equal average approval rates overall but was vali
 
 ---
 
-Now that you've measured bias directly, this part examines the tools that can reduce it — and why each tool has a ceiling. The goal is an honest engineering stance: not "our system is unbiased," but "here are the mitigations we applied and what they do and don't cover."
-
 # Part III: Mitigation Without Illusion
+
+Now that you've measured bias directly, this part examines the tools that can reduce it — and why each tool has a ceiling. The goal is an honest engineering stance: not "our system is unbiased," but "here are the mitigations we applied and what they do and don't cover."
 
 ## Model 3: The Toolbox and Its Limits
 

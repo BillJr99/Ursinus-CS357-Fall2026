@@ -78,9 +78,9 @@ Clause B: "The advising agent may draft degree-plan suggestions but may not subm
 
 ---
 
-Now that you can distinguish real policy from decoration, this part gives you the structure for your project's governance document. Every section has a specific job; if you can't fill a section, that gap tells you something important about your system design.
-
 # Part II: The Anatomy of Your Policy
+
+Now that you can distinguish real policy from decoration, this part gives you the structure for your project's governance document. Every section has a specific job; if you can't fill a section, that gap tells you something important about your system design.
 
 ## 2. The Eight Sections
 
@@ -99,10 +99,10 @@ Your governance document (for the written assignment and your project) uses this
 
 [[MC]]
 A team writes: "Section 6: We will continuously evaluate the system for quality and bias." The revision that survives the third-party test is:
-- ( ) "We will evaluate rigorously and transparently."
-- ( ) "Evaluation is a core value of our team."
+- ( ) "We will evaluate rigorously and transparently using best-practice methods."
+- ( ) "Evaluation is a core value of our team and we take it seriously."
 - (x) "Each Friday the harness in /eval runs the 40-item task set; per-group accuracy and judge-human agreement are posted to the repository; any group gap exceeding 5 points opens an incident."
-- ( ) "Users are encouraged to report problems."
+- ( ) "Users are encouraged to report problems and we will respond appropriately."
 
 ---
 
@@ -112,7 +112,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 4. Map your project onto NIST's four functions: for each of Govern, Map, Measure, and Manage, name the artifact you have already produced this semester that does that work, and the one artifact still missing.
 
-   *Hint: Govern = who owns this and what are they accountable for? Map = what does the system do and who is affected? Measure = how do you know if it's working or failing? Manage = what do you do when something goes wrong? Match each to something you have actually built, written, or run.*
+   > *Hint:* Govern = who owns this and what are they accountable for? Map = what does the system do and who is affected? Measure = how do you know if it's working or failing? Manage = what do you do when something goes wrong? Match each function to something you have actually built, written, or run this semester — your rubric pipeline, your pre-mortem, your data flow diagram, your test harness all count.
 
 5. Would your project be "high-risk" under the EU AI Act's education provisions if deployed for real students rather than a class demo? What single design change most reduces its tier?
 
@@ -127,6 +127,8 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 ---
 
 # Part III: Drafting Workshop
+
+Now that your policy has a structure and you've mapped your project onto real frameworks, this workshop turns those materials into actual written policy — and then tests it against peer review and adversarial reading.
 
 ## 3. Exercises
 

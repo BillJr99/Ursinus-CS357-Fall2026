@@ -79,9 +79,9 @@ Today you will discover that the blueprint and the building encode exactly the s
 
 ---
 
-Now that you understand what visual flows are and how they map to code, let's build them — starting simple and adding complexity one layer at a time.
-
 # Part II: Build Sessions
+
+Now that you understand what visual flows are and how they map to code, let's build them — starting simple and adding complexity one layer at a time.
 
 ## Model 2: Build 1 — Chat with a Persona
 
@@ -135,9 +135,9 @@ The most defensible claim about visual builders versus code for agent systems is
 
 ---
 
-Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
-
 # Part III: Synthesis and Practice
+
+Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
 
 ## Exercises
 

@@ -123,9 +123,9 @@ Consider three pipelines you have personally built this term: Lab 2 (RAG over yo
 
 ---
 
-Now that you understand both IP and privacy as legal frameworks, this part asks you to apply them practically — reading real terms of service, probing memorization behavior in your local model, and writing the compliance memo your project will actually need.
-
 # Part III: Synthesis and Practice
+
+Now that you understand both IP and privacy as legal frameworks, this part asks you to apply them practically — reading real terms of service, probing memorization behavior in your local model, and writing the compliance memo your project will actually need.
 
 ## 3. Exercises
 

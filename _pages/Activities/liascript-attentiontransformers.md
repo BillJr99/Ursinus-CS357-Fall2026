@@ -42,13 +42,15 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 
 # Part I: The Idea of Attention
 
+In this Part, you will learn why a static word-meaning table is not enough for language understanding, and you will work through the attention calculation by hand using a three-token example. By the end, you will have computed exactly how context shifts the meaning of an ambiguous word — and you will understand the arithmetic that every large language model repeats billions of times per second.
+
 ## 1. Context Changes Meaning
 
 **Why attention matters — the short version.** Think of attention as how the model decides which words to "look at" when building the meaning of each token — like a musician who simultaneously glances at the sheet music *and* the conductor, blending both signals into every note they play. The model does the same thing in every layer: each token briefly "consults" every other token and blends in a little of their meaning, weighted by relevance.
 
 **Static embeddings are not enough.** The token "bank" deserves different vectors in "river bank" and "bank loan," yet a lookup table gives it one. Attention solves this by letting each token form a new representation as a **weighted average of all tokens' values**, with weights determined by relevance.
 
-**Queries, keys, and values.** Each token's embedding $\mathbf{x}_i$ is projected into three roles: a **query** $\mathbf{q}_i$ (what am I looking for?), a **key** $\mathbf{k}_i$ (what do I offer?), and a **value** $\mathbf{v}_i$ (what content do I contribute?). Relevance of token $j$ to token $i$ is the dot product $\mathbf{q}_i \cdot \mathbf{k}_j$, normalized across all $j$ by softmax:
+**Queries, keys, and values.** Each token's embedding $\mathbf{x}_i$ is projected into three roles: a **query** $\mathbf{q}_i$ ("what am I looking for?"), a **key** $\mathbf{k}_i$ ("what do I offer as a match?"), and a **value** $\mathbf{v}_i$ ("what content do I contribute if selected?"). Think of it like a library search: the query is your search term, the keys are the index cards, and the values are the actual book contents. Relevance of token $j$ to token $i$ is the dot product $\mathbf{q}_i \cdot \mathbf{k}_j$, normalized across all $j$ by softmax:
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
@@ -65,7 +67,7 @@ Breaking the formula down symbol by symbol:
 - $\text{softmax}(\cdots)$ converts the scaled dot products into weights that sum to 1.
 - Multiplying by $V$ (the value matrix) blends each token's content according to those weights.
 
-The $\sqrt{d_k}$ keeps dot products from growing with dimension and saturating the softmax. A **transformer** stacks this operation (in parallel "heads," interleaved with small neural networks) dozens of times; **causal masking** during generation prevents tokens from attending to the future.
+The $\sqrt{d_k}$ keeps dot products from growing with dimension and saturating (pushing to extreme values) the softmax. A **transformer** (the neural network architecture underlying GPT, Claude, and nearly every modern LLM) stacks this operation (in parallel "heads," interleaved with small neural networks) dozens of times; **causal masking** (blocking each token from attending to any token that comes later in the sequence) during generation prevents tokens from attending to the future.
 
 ---
 
@@ -225,21 +227,23 @@ print("new bank representation:", np.round(new_bank, 3))
 
 ---
 
+*You have just computed the mechanism inside every transformer layer. Part II connects that mechanism to the practical constraints you will hit when building and deploying agents — especially the context window limit and the "lost in the middle" effect.*
+
 # Part II: What Attention Explains About Agents
 
 ## 2. Consequences You Have Already Met
 
-**Why this matters for the agents you will build.** The attention mechanism is not just a mathematical curiosity — it directly sets the budget you have to work with when deploying a language-model agent. Think of the musician analogy again: the musician can only see so much sheet music at once. A transformer's "sheet music" is its context window, and the cost of attention determines exactly how large that window can be. Understanding this constraint is what separates an agent that works in production from one that runs out of memory on the first long document.
+**Why this matters for the agents you will build.** The attention mechanism is not just a mathematical curiosity — it directly sets the budget you have to work with when deploying a language-model agent. Think of the musician analogy again: the musician can only see so much sheet music at once. A transformer's "sheet music" is its context window (the maximum number of tokens the model can consider in one pass), and the cost of attention determines exactly how large that window can be. Understanding this constraint is what separates an agent that works in production from one that runs out of memory on the first long document.
 
 **The context window is the attention span, literally.** Attention compares every token with every other, costing $O(n^2)$ in sequence length $n$; doubling context quadruples this work. This is why context windows are finite, why long contexts are slow on your laptop, and why the *small context window principle* we adopt for agents in week 6 is not merely aesthetic but computational.
 
 **Position matters.** Models attend most reliably to the beginning and end of long contexts (the "lost in the middle" effect), which is why we will place an agent's instructions and the current question at the edges of the prompt, with retrieved evidence in between.
 
 [[MC]]
-An agent's prompt grows from 2,000 to 8,000 tokens. The attention computation per layer grows by approximately a factor of:
-- ( ) 2
-- ( ) 4
-- (x) 16
+An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares every token with every other token, the computation per layer grows by approximately a factor of:
+- ( ) 2 — as if attention grew linearly with the number of tokens
+- ( ) 4 — as if only the number of tokens doubled and cost doubled with it
+- (x) 16 — because 8,000² ÷ 2,000² = 64,000,000 ÷ 4,000,000 = 16; the cost is quadratic ($O(n^2)$)
 - ( ) It does not grow; attention is constant-time
 
 > **⚠️ Common Misconception: "More context is always better"**
@@ -247,6 +251,8 @@ An agent's prompt grows from 2,000 to 8,000 tokens. The attention computation pe
 > It is tempting to assume that giving a model a longer context — more background, more examples, more retrieved documents — always improves its answers. The attention mechanism reveals why this is not true. First, the computational cost grows as $O(n^2)$: quadrupling the context length multiplies the attention work by 16×. Second, the "lost in the middle" effect shows that models reliably extract information from the *beginning* and *end* of long prompts but often miss material buried in the middle. Third, every extra token competes for the finite "attention budget" of each query token, potentially diluting the signal from the most relevant parts of the prompt. The practical lesson: be selective. Retrieve only what is relevant, place it strategically, and keep prompts as short as the task allows.
 
 ---
+
+*Part II connected attention arithmetic to practical agent constraints. Part III asks you to apply both: compute attention for a second token, experiment with masking, and reason about scaling — the three skills that will recur whenever you tune a prompt or choose a retrieval strategy.*
 
 # Part III: Synthesis and Practice
 

@@ -172,9 +172,9 @@ The most important safeguard before trusting an LLM judge's scores on real stude
 
 ---
 
-Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for Lab 5.
-
 # Part III: Auditing the Judge
+
+Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for Lab 5.
 
 ## Exercises
 

@@ -45,6 +45,8 @@ Consider each model and its questions individually before discussing with your g
 
 ---
 
+In this first model, you will map out the space between fully manual and fully autonomous agent operation, and you will learn to apply five specific trigger conditions that determine when a human checkpoint is warranted. This is the foundation of all the design decisions that follow.
+
 ## Model 1: The Autonomy Spectrum and Checkpoint Criteria
 
 Agent deployment exists on a spectrum from fully manual (the human does every step) to fully autonomous (the agent acts without any checkpoints). Between these extremes are two important operating modes:
@@ -75,7 +77,7 @@ The **minimal footprint principle** is a design heuristic that says: when multip
 
 1. The table marks calendar-event creation as "No escalation" because it is reversible. Describe a realistic scenario in which creating a calendar event *should* trigger escalation despite being easy to undo. What specific property of the situation changes the calculus?
 
-   *Hint: Consider an agent that creates a meeting invitation and sends it to 50 external attendees. The event itself is deletable, but what side effect of creating a recurring meeting invitation cannot be easily undone?*
+   > *Hint: Consider an agent that creates a meeting invitation and sends it to 50 external attendees. The event itself is deletable, but what side effect of creating a recurring meeting invitation cannot be easily undone? Think about what the act of sending the invitation does — independent of whether the event is later deleted.*
 
 2. The minimal footprint principle says prefer smaller-scope actions. An agent is asked to "clean up the project folder." It could (a) move files to a dated archive folder with a name like `archive-2026-06-21/`, (b) delete files it deems unnecessary, or (c) ask the user for an explicit list of files to remove before doing anything. Rank these three options by their footprint from smallest to largest, and identify which escalation trigger applies to each option.
 
@@ -83,13 +85,17 @@ The **minimal footprint principle** is a design heuristic that says: when multip
 
 3. Confidence-based escalation requires the agent to know when it does not know. How would you operationalize a "confidence threshold" in practice — what specific numeric signal from the model would you measure, and what are its failure modes (situations where the confidence score is wrong)?
 
-   *Hint: LLMs can output a probability score for each token they generate. One approach is to look at the probability of the top choice versus the second choice: a high-probability first choice suggests confidence; a near-tie suggests uncertainty. But when might a model be confidently wrong — outputting a high-probability answer that is nevertheless incorrect?*
+   > *Hint: LLMs produce a probability score for each possible next token. One approach is to look at the probability of the top choice versus the second choice: a high-probability first choice suggests confidence; a near-tie suggests uncertainty. But calibration is imperfect — when might a model produce a high-probability answer that is nevertheless wrong? Think about domains where the training data was mostly confident assertions, even when those assertions were incorrect.*
 
 ---
 
+*Model 1 defined when to escalate. Model 2 shows how: specifically, how to pause the agent's execution, save everything it needs to resume, and communicate with the human in a format that supports a real decision rather than a rubber-stamp click.*
+
 ## Model 2: The Escalation Protocol
 
-When a trigger condition fires, the agent must pause execution, preserve its current state, communicate the reason for escalation to the human in a way that enables an informed decision, and then resume (or abort) once the human responds. A naive implementation blocks the entire process synchronously — the agent freezes and waits. A production-grade implementation suspends state asynchronously — the agent saves its work and resumes when the human responds, potentially hours later.
+When a trigger condition fires, the agent must pause execution, preserve its current state, communicate the reason for escalation to the human in a way that enables an informed decision, and then resume (or abort) once the human responds. A naive implementation blocks the entire process synchronously — the agent freezes and waits. A production-grade implementation suspends state asynchronously (saving its work and returning immediately, resuming only when the human responds) — the agent saves its work and resumes when the human responds, potentially hours later.
+
+The following Python pseudocode (simplified illustration, not runnable as-is) shows the escalation logic:
 
 ```python
 def execute_action(action, context, confidence):
@@ -159,9 +165,11 @@ In **asynchronous HITL**, the agent saves a complete state snapshot before raisi
 
 ---
 
+*Model 2 showed how to build escalation infrastructure. Model 3 addresses a paradox: too much escalation is as dangerous as too little, because humans who see too many checkpoints stop reading them. This section asks you to design for quality of oversight, not quantity.*
+
 ## Model 3: Approval Fatigue and Trust Calibration
 
-Human oversight only has value if humans engage thoughtfully with the checkpoints they are given. When the approval rate approaches 100% and the average review time drops to under two seconds, the human is no longer providing oversight — they are providing a rubber stamp. This is **approval fatigue**, and it is actively harmful: it creates the *appearance* of oversight without the substance, while adding latency and annoying the reviewer.
+Human oversight only has value if humans engage thoughtfully with the checkpoints they are given. When the approval rate approaches 100% and the average review time drops to under two seconds, the human is no longer providing oversight — they are providing a rubber stamp. This is **approval fatigue** (the cognitive phenomenon where frequent, low-stakes approvals train reviewers to stop reading), and it is actively harmful: it creates the *appearance* of oversight without the substance, while adding latency and annoying the reviewer.
 
 Compare two designs for an agent that processes 50 incoming support tickets per day:
 
@@ -195,10 +203,10 @@ Compare two designs for an agent that processes 50 incoming support tickets per 
 
 [[MC]]
 An agent is given a task that runs overnight as a batch job: process 1,000 customer records and generate personalized outreach emails. No human is available to review approvals until morning. The most appropriate human-in-the-loop design for this scenario is:
-- ( ) Synchronous HITL: pause the batch job for every high-stakes action and wait for a human response before continuing
-- ( ) Disable HITL entirely for batch jobs since no human is available anyway
+- ( ) Synchronous HITL: pause the batch job for every high-stakes action and wait for a human response before continuing — the human is not available; the job would simply freeze all night
+- ( ) Disable HITL entirely for batch jobs since no human is available anyway — "no human is available now" is not a reason to abandon oversight; it is a reason to design asynchronous oversight
 - (x) Asynchronous HITL with a pre-approved action policy: define which actions are pre-approved for batch context, escalate exceptions to a human review queue, and do not send any emails until a human clears the queue in the morning
-- ( ) Run the job fully autonomously and review the sent emails after the fact
+- ( ) Run the job fully autonomously and review the sent emails after the fact — reviewing after sending is not oversight; it is auditing after irreversible harm may have occurred
 
 ---
 
