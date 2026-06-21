@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Local?
 
+In this part, you will examine the five reasons an organization might choose to run AI locally rather than through a cloud API — and identify which reason applies to which context, because "local is more private" is true but incomplete as a decision rationale.
+
 ## 1. The Case for Running Locally
 
 Running AI on your own hardware is like owning vs. renting: you pay more upfront (hardware or setup time), but you control everything — what runs, who sees your data, and how much you pay at scale. Renting (an API) is cheaper to start and someone else handles maintenance, but every document you send leaves your hands.
@@ -78,7 +80,7 @@ Sending text to a commercial API means your text leaves your machine, traverses 
 
 ## 3. Quantization: Fitting Large Models on Real Hardware
 
-A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-parameter model at F32 requires 28 GB — more than most GPUs have. **Quantization** reduces the number of bits used per weight. Think of it like compressing a photo: a 4K RAW image and a JPEG of the same scene look nearly identical for most purposes, but the JPEG is 50x smaller. Similarly, a Q4 model and an F32 model give very similar answers for most tasks, but the Q4 model fits in a fraction of the memory.
+A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-parameter model at F32 requires 28 GB — more than most GPUs have. **Quantization** (compressing model weights from 32-bit floats to 4 or 8-bit integers, trading a small accuracy loss for dramatic memory savings) reduces the number of bits used per weight. Think of it like compressing a photo: a 4K RAW image and a JPEG of the same scene look nearly identical for most purposes, but the JPEG is 50x smaller. Similarly, a Q4 model and an F32 model give very similar answers for most tasks, but the Q4 model fits in a fraction of the memory.
 
 - **F16 / BF16:** 16 bits per weight. Half the memory of F32, negligible quality loss. Still 14 GB for a 7B model. Used by most GPU inference when quality is the top priority.
 - **Q8:** 8 bits per weight. Roughly 7 GB for a 7B model. Quality loss is minimal and generally imperceptible on standard benchmarks. Good choice when you have the RAM.
@@ -88,9 +90,13 @@ A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-p
 
 The suffix `_K_M` in GGUF quantization names (used by Ollama and llama.cpp) refers to a mixed-precision scheme: some layers (particularly attention) are kept at higher precision, while feed-forward layers are quantized more aggressively. This recovers quality compared to uniform quantization at the same average bit count.
 
+With the model families and quantization levels mapped, Part II applies that knowledge concretely: which models can your specific hardware run, and which model is the right choice for each task category?
+
 ---
 
 # Part II: Hardware and Task Matching
+
+In this part, you will match hardware specifications to model sizes, choose models for specific task types, and observe the concrete difference between a generic model and a function-calling-optimized model — a difference that determines whether your agent pipeline works reliably or fails unpredictably.
 
 ## Model 1: Hardware Requirements
 
@@ -105,6 +111,8 @@ These are practical minimums for comfortable (not just technically possible) inf
 | 70B params | 64 GB RAM | 40–48 GB VRAM | 0.5–2 tok/s (batch processing only) | 38–42 GB | Servers with dual A100s or large unified-memory Macs (M2 Ultra) |
 
 Ollama manages model download, quantization selection, and GPU/CPU layer splitting automatically. Common commands:
+
+The following commands cover the full Ollama workflow: pulling a model, starting an interactive session, and querying via the Python SDK. Run `ollama list` after pulling to confirm the model downloaded correctly before starting a session.
 
 ```
 # Install Ollama from https://ollama.com (macOS/Linux/Windows supported)
@@ -141,6 +149,8 @@ ollama ps                         # shows currently running models
 ## Model 2: Task-to-Model Matching
 
 Choosing a model is an engineering decision, not just a capability question. Smaller, specialized models often outperform larger general models on specific tasks while using far less hardware.
+
+The table below maps task categories to recommended models. Use it as a starting point, not a final answer — run two models against your actual task and let the output quality guide the final choice.
 
 | Task | Recommended Model | Why | Alternative | How to Start |
 |---|---|---|---|---|

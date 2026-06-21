@@ -50,6 +50,8 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 Every transformer forward pass is essentially one massive matrix multiplication after another. The hardware underneath determines not just how fast that runs, but whether it runs at all. Quantization is like compressing a photo from RAW to JPEG — you lose a little quality, but the file is 8–16× smaller and loads instantly in a browser where the RAW file would time out. Understanding these hardware constraints is not optional trivia: it is what lets you decide whether your agent can run offline on a Raspberry Pi, on a laptop at a clinic without internet, or only on a rented GPU in a data center.
 
+The following section explains why GPUs dominate AI inference and what the actual bottleneck is during token generation — the answer is more subtle than "GPUs are faster."
+
 ### GPU vs. CPU for Matrix Multiplication
 
 Neural network inference is dominated by one operation: **matrix multiplication**. A transformer forward pass consists almost entirely of multiplying large matrices of weights by vectors of activations, repeatedly, across dozens or hundreds of layers.
@@ -71,6 +73,8 @@ However, **raw FLOPS (floating-point operations per second) is often not the bot
 Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10–20% higher than the weight-only calculation.
 
 ### Hardware Landscape
+
+Use the table below to determine which hardware tier can run which model sizes. The "Models That Fit at FP16" column assumes no quantization — with Q4 quantization, each model fits on hardware with roughly one-quarter the VRAM listed.
 
 | Hardware | VRAM | Peak FLOPS (FP16) | Approximate Cost | Models That Fit at FP16 |
 |----------|------|-------------------|------------------|-------------------------|
@@ -122,6 +126,8 @@ Plus overhead for the KV cache (key-value cache for attention), activations, and
 
 ### Number Format Basics
 
+The table below lists every precision format you will encounter in this course. The key column is "Bytes per Weight" — multiply it by the number of model parameters to get the minimum VRAM required to load the model.
+
 Neural networks store weights as floating-point or integer numbers. The precision of the format determines both the memory footprint and the computational cost:
 
 | Format | Bits per Weight | Bytes per Weight | In Our Course |
@@ -151,6 +157,8 @@ The **GGUF format** (used by llama.cpp and Ollama — the tools you use in this 
 **Perplexity** measures how "surprised" a language model is when reading a held-out text corpus — lower perplexity means better predictions, closer to the original model quality. It is the standard metric for quantization quality loss.
 
 **VRAM Requirements and Quality for a 7B Model**
+
+The table below shows the quality-versus-size tradeoff for a 7B model at each quantization level. The "Perplexity Increase" column is the key: a 1.5% increase (Q4_K_M) is typically invisible in conversation; a 15% increase (Q2_K) is often noticeable.
 
 | Format | Bits/Weight | Model Size (7B) | Perplexity Increase vs. FP16 | Notes |
 |--------|------------|-----------------|------------------------------|-------|
@@ -209,10 +217,10 @@ The **GGUF format** (used by llama.cpp and Ollama — the tools you use in this 
 
 A research team wants to deploy a 70B parameter model for offline inference on a MacBook Pro with Apple Silicon and 32 GB of unified memory. The full FP16 model requires approximately 140 GB. The team's best option is:
 
-[[ ]] Run it at FP32 precision — the model clearly fits comfortably within 32 GB
-[[ ]] It is impossible to run a 70B parameter model on any consumer hardware whatsoever
+[[ ]] Run it at FP32 precision — the 32 GB unified memory is ample for a 32-bit 70B model since Apple Silicon shares all system memory with the GPU
+[[ ]] It is impossible to run a 70B parameter model on consumer hardware — only data center GPUs with 80+ GB of dedicated VRAM can load models this size
 [[x]] Quantize to Q4 (approximately 0.5 bytes/parameter, yielding ~35 GB) or Q3 (~26 GB), which fits within 32 GB unified memory with acceptable quality for most use cases
-[[ ]] Run FP16 on the CPU only, disabling GPU acceleration to avoid VRAM limitations
+[[ ]] Run FP16 on the CPU only — on Apple Silicon, CPU inference bypasses the VRAM limitation because the CPU accesses system memory directly
 
 > **Why this answer?** At Q4, 70B × 0.5 bytes = 35 GB — slightly over the 32 GB limit, so Q3_K_M at approximately 26 GB is the better choice. Apple Silicon's unified memory architecture means the GPU accesses all system memory, so the 32 GB applies to the combined model and KV cache budget. FP32 would require 280 GB — nearly 9× the available memory. CPU-only inference is technically possible but produces token generation rates often below 1 token per second, making it impractical for interactive use.
 
@@ -221,6 +229,8 @@ A research team wants to deploy a 70B parameter model for offline inference on a
 ## Model 3: Edge Deployment and Agent Implications
 
 ### Edge vs. Cloud Inference
+
+The table below compares edge and cloud inference across six dimensions. As you read it, identify which dimension matters most for the rural clinic scenario in Question 7 — not every row is equally important for every deployment.
 
 | Dimension | Edge (Local Device) | Cloud (Remote Server) |
 |-----------|---------------------|-----------------------|
@@ -333,6 +343,8 @@ If you do not have Ollama access, find two published model cards that report bot
 **Personal:** Think about the AI tools you use day-to-day — voice assistants on your phone, code completion in your editor, chatbots in your browser. Do you know whether those models run locally on your device or remotely in a data center? Does it matter to you, and would it change how you use them if you knew?
 
 **Technical:** One of the central tensions in AI deployment is between **centralization and decentralization**. Cloud AI concentrates compute, data, and capability in the hands of a small number of large companies. Edge AI distributes that capability outward to individuals and organizations. Does widespread local model inference democratize AI, or does it just shift the dependency — from cloud providers to GPU manufacturers and open-weight model developers?
+
+> *Hint:* Consider who manufactures the GPUs running Ollama, who trained the open-weight models you download, and whether the open-weight license gives you the right to modify the model weights or just to use them.
 
 **Societal:** A rural clinic with a local model is less dependent on OpenAI — but is now dependent on NVIDIA for GPUs, Qualcomm or Apple for edge chips, and Meta or another organization for open model weights. Is that a meaningful improvement? And at the individual level: if a CS graduate can deploy a capable 70B model on a $2,000 workstation, what does that mean for who can build AI-powered products and who can afford to?
 

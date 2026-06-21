@@ -102,9 +102,9 @@ The tradeoff is engineering cost and precision risk: a semantic cache may surfac
 [[MC]]
 A production agent has a 2,000-token system prompt that is identical for all users. To minimize cost, you should:
 - (x) Use a provider that supports prompt caching, structure the system prompt as a static prefix, and ensure it appears at the start of every request so it maximizes cache hit rate
-- ( ) Reduce the system prompt to 10 tokens regardless of what is lost
-- ( ) Switch to a local model, which has no per-token cost but ignore the infrastructure cost
-- ( ) Batch all requests into once-per-hour jobs so the cache stays warm
+- ( ) Reduce the system prompt to 10 tokens — shorter prompts always produce lower costs regardless of caching behavior
+- ( ) Switch to a local model — local inference has zero per-token cost, so a 2,000-token system prompt has no cost impact
+- ( ) Place the user's dynamic message first in the prompt, then append the static system prompt — this maximizes context available to the model for each query
 
 ---
 
