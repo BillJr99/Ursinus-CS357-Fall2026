@@ -207,9 +207,13 @@ researcher.initiate_chat(manager, message=q)
 
    *Hint:* In her raw SDK code, each agent only received a handcrafted prompt with specific context. In LangGraph, the `PipelineState` may carry the `critic_feedback` key from the Critic node to all downstream nodes. She should inspect the `PipelineState` TypedDict definition and check which keys are passed to the Researcher node's prompt template.
 
+With the hidden machinery now visible, Part III gives you a decision framework for choosing the right level of abstraction for a given project — because the correct answer depends on your goal, your team, and your timeline, not on which framework is most popular.
+
 ---
 
 # Part III: Choosing the Right Tool
+
+In this part, you will apply a selection rubric to realistic project scenarios and practice justifying your framework choice against the strongest counterargument — the professional skill of arguing for a technical decision, not just making one.
 
 ## 3. The Selection Decision
 
@@ -229,9 +233,9 @@ Choosing a framework before understanding the problem is like choosing a power t
 [[MC]]
 A student builds a 4-agent pipeline using LangChain and notices the agents are sharing more context than they should — the Formatter agent is responding to instructions that were only meant for the Researcher. The most likely cause is:
 - (x) LangChain's default memory sharing is exposing more conversation history than intended; they need to configure per-agent memory isolation rather than passing the full shared state to every node
-- ( ) LangChain contains a bug that routes messages to wrong agents
-- ( ) The agents have become too capable and are reading each other's system prompts
-- ( ) They should switch to a different LLM provider
+- ( ) LangChain contains a bug that routes messages to wrong agents in multi-node graphs — this is a known issue that requires upgrading the library
+- ( ) The agents are reading each other's system prompts because LangChain shares the `llm_config` object across all nodes by reference
+- ( ) Switching LLM providers will resolve state-sharing issues because different providers handle memory isolation differently
 
 ---
 
@@ -337,6 +341,8 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 *Technical:* A framework is someone else's opinion about which patterns repeat. Every design choice in a framework reflects the designers' assumptions about what problems are most common. Looking at CrewAI's role-based abstraction and LangGraph's state-machine abstraction, what does each reveal about what its designers thought agent systems were *for*? Which assumption is closer to your own mental model of AI agents, and why does that matter for how you learn?
 
 *Societal:* Frameworks make it easier to build powerful AI agents quickly — a beginner can deploy a multi-agent system in an afternoon that would have taken an expert weeks to build from scratch a year ago. Who benefits from this democratization, and who is disadvantaged? Consider software developers, businesses, end users, and society as a whole. What obligations do framework creators have when their tools lower the barrier to deploying consequential AI systems?
+
+> *Hint:* Consider who can now build a multi-agent customer service system that could previously only be built by a team of ML engineers with months of work. Is that person a small business owner, a student, a well-resourced enterprise, or a bad actor? The same tool reaches all of them.
 
 ---
 
