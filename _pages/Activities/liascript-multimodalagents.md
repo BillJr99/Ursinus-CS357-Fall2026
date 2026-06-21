@@ -193,9 +193,11 @@ Grounding means the model outputs a bounding box or click coordinate alongside i
 [[MC]]
 A VLM is processing a screenshot of a spreadsheet to extract all cell values. The most likely failure mode is:
 - (x) Small text, merged cells, or unusual formatting confuses the model, causing extraction errors or missed values.
-- ( ) The model refuses to process spreadsheets on ethical grounds.
-- ( ) All values are extracted correctly but stored in the wrong column order.
-- ( ) The model can only process image files smaller than 1 MB.
+- ( ) The model refuses to process spreadsheets on ethical grounds — VLMs do not treat spreadsheet images as a restricted category; refusals occur for content policy reasons, not document type.
+- ( ) All values are extracted correctly but stored in the wrong column order — column-order confusion is a real failure mode, but extraction errors and missed values from visual ambiguity are far more common.
+- ( ) The model can only process image files smaller than 1 MB — file size limits are an API constraint, not a capability limitation of the model itself; most APIs accept images well above 1 MB.
+
+With the failure modes of individual components understood, we can now see how they combine — and compound — in a real end-to-end agent pipeline.
 
 ---
 
@@ -229,7 +231,8 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
    *What to do:* Create a simple evaluation script that compares extracted JSON to a manually labeled ground truth JSON. Use exact match for numeric fields and case-insensitive match for text fields.
 
-   *Starter hint:*
+   *Starter hint:* The code below shows the full extraction pipeline for a single image — notice the `temperature=0` setting (which makes extraction deterministic) and the prompt that requests `null` for any field not visible (which prevents hallucination of missing fields):
+
    ```python
    import base64
    from openai import OpenAI
@@ -275,7 +278,8 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
    *What to do:* Transcribe the audio, then send the transcript to an LLM with a structured extraction prompt. Validate that each action item has the required fields.
 
-   *Starter hint:*
+   *Starter hint:* The code below chains two steps — Whisper transcription followed by LLM extraction — look for how the transcript is passed verbatim into the extraction prompt, and consider what happens to the extraction if the transcription contains a word error:
+
    ```python
    import whisper  # pip install openai-whisper
 

@@ -34,11 +34,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Stateful Agent** | An agent that maintains context across multiple turns — conversation history, partially completed tasks, user preferences — which must survive server restarts, container replacements, and load balancer reassignments. Reconciling stateful agents with stateless infrastructure is the central deployment challenge. | A tutoring agent that remembers what a student struggled with last session and continues from where they left off is stateful; if the server restarts between sessions, that memory must survive in an external store. |
 | **Cold Start** | The delay that occurs when a service (especially a serverless function) must initialize from scratch — loading model weights, establishing database connections, importing libraries — before it can respond. For large LLMs, cold starts can add 2–20 seconds to the first response. | A serverless function that loads a 4 GB model on every invocation will take 15–20 seconds for the first request; subsequent requests reuse the warm container and respond in under 2 seconds. |
 | **Canary Deployment** | A deployment strategy where a small fraction of real traffic (e.g., 5%) is routed to the new version of an agent while 95% continues to use the old version. If the new version causes problems, only 5% of users are affected and rollback is immediate. | Rolling out a new system prompt to 5% of users for 48 hours to verify it does not increase content-filter refusals before enabling it for everyone. |
-| **CI/CD Pipeline** | Continuous Integration / Continuous Deployment — an automated sequence of build, test, and deploy steps that runs every time code changes. For agents, the pipeline must include prompt regression testing and LLM-as-judge evaluation, not just unit tests. | Every pull request to the agent codebase automatically runs 500 golden test cases through an LLM judge before it is allowed to merge, preventing silent regressions in model behavior. |
+| **CI/CD Pipeline** | Continuous Integration / Continuous Deployment — an automated sequence of build, test, and deploy steps that runs every time code changes. For agents, the pipeline must include prompt regression testing and LLM-as-judge evaluation (using a second language model to score whether each response meets quality criteria, instead of exact string matching), not just unit tests. | Every pull request to the agent codebase automatically runs 500 golden test cases through an LLM judge before it is allowed to merge, preventing silent regressions in model behavior. |
 
 ---
 
 # Part I: Where Agents Live
+
+In this part, you will compare five deployment tiers — from a developer's laptop to Kubernetes — and identify which tier is appropriate for which workload, including the specific promises each tier makes about latency, cost, and what happens to agent state when a server restarts.
 
 ## Model 1: Deployment Tiers
 
@@ -72,9 +74,13 @@ Every deployment context makes different promises about latency, cost, and persi
 
    *Hint:* Latency is only a problem if a user is waiting for it. Are there agent use cases where no one is waiting during the startup period? What does "provisioned concurrency" or "warm pods" do for this problem?
 
+With the deployment tiers mapped, Part II addresses the central engineering challenge: agents are inherently stateful, but cloud infrastructure prefers stateless services, and reconciling these two facts requires one of three architectural patterns.
+
 ---
 
 # Part II: State and the Cold-Start Problem
+
+In this part, you will study three patterns for keeping conversation state alive across container restarts and identify the specific security and failure risks each pattern introduces — because the "simplest" pattern often introduces the most surprising vulnerability.
 
 ## Model 2: Stateless vs. Stateful Agents in Production
 
@@ -93,6 +99,8 @@ Three architectural patterns address the context cold-start problem:
 
 ### Pattern A — Session Database (Redis / PostgreSQL)
 
+Pattern A stores conversation state in an external database so any container replica can serve any request. Read the `db.get` and `db.set` calls — these are the two lines that make a stateless server behave like a stateful agent.
+
 ```python
 # On every response, persist the updated message history to an external database
 def handle_request(session_id, new_user_message, db):
@@ -109,6 +117,8 @@ The agent process is stateless — any replica can serve any request because the
 ---
 
 ### Pattern B — Client-Sent Context Window
+
+Pattern B eliminates server-side state entirely by having the client send the full conversation history with every request. Notice what this means for server complexity — and think about what it means for the security of that history.
 
 ```python
 # The CLIENT stores the conversation; sends the full history on every turn
@@ -132,6 +142,8 @@ No server-side state at all — zero database infrastructure needed. The client 
 
 ### Pattern C — External Memory Service
 
+Pattern C uses a dedicated memory service that retrieves only the most relevant prior turns rather than the full history. This keeps the context window bounded as conversations grow, but at the cost of implementation complexity and the risk that a critical earlier turn is not retrieved.
+
 ```python
 # A dedicated memory service handles storage, compression, and relevance retrieval
 def handle_request(session_id, new_user_message, memory_service):
@@ -151,10 +163,10 @@ State lives in a vector store or structured memory layer. At each turn, only the
 [[MC]]
 An agent is deployed as a serverless function that loads a 4 GB model from disk on each invocation. Median response latency is 18 seconds; users complain. The MOST effective fix for cold-start latency is:
 
-- ( ) Increase the function timeout limit from 30 s to 60 s
+- ( ) Increase the function timeout limit from 30 s to 60 s — the model finishes loading before the timeout, so the limit is not what is causing the 18-second delay
 - (x) Use provisioned concurrency (or an always-warm instance) so the model stays loaded in memory between invocations
-- ( ) Reduce the system prompt length by 50%
-- ( ) Switch from batch response to streaming output
+- ( ) Reduce the system prompt length by 50% — the 18-second latency is dominated by model weight loading, not by prompt processing time
+- ( ) Switch from batch response to streaming output — streaming reduces time-to-first-token after the model is loaded, but does not affect the loading latency that precedes the first token
 
 > **Common Misconception:** Many developers assume that Pattern B (client-sent context) is "simpler and safer" than Pattern A (session database) because there is no server-side state to manage. In reality, Pattern B introduces its own risks: the full conversation history is stored in the client's browser or app, where it can be inspected, modified, or stolen by malicious scripts. A user who modifies their local conversation history before sending it to the server can inject fabricated "prior assistant messages" that manipulate the agent's behavior. Pattern A's centralized database is actually easier to secure than the client's local storage.
 
@@ -176,9 +188,13 @@ An agent is deployed as a serverless function that loads a 4 GB model from disk 
 
    *Hint:* Task state is more structured than conversation history — it is more like a database record than a chat log. Which pattern's storage mechanism is better suited to structured, transactional state? What happens to a task that was 70% complete when Pattern A's container crashes mid-execution?
 
+With state persistence solved, Part III tackles a subtler problem: how do you ship a new version of an agent safely when you cannot write `assert response == exact_string` to know if it is working correctly?
+
 ---
 
 # Part III: Shipping Agent Updates Safely
+
+In this part, you will study the stages of a production agent CI/CD pipeline and the deployment strategies used to roll out changes safely — including why canary deployments expose some users to degraded behavior by design, and how to bound that exposure.
 
 ## Model 3: CI/CD for Agents
 
@@ -239,9 +255,13 @@ Stage 5:  Full rollout (if stages 3–4 pass gates)
 
     *Hint:* If you cannot tell the user which version changed, what can you tell them? If a deployer is accused of degrading service quality, what evidence is available to adjudicate the claim? What would it take to implement meaningful version transparency for an agent system?
 
+The three parts above have given you the vocabulary — tiers, state patterns, and CI/CD stages — that Part IV now applies to realistic deployment design exercises with real constraints and tradeoffs.
+
 ---
 
 # Part IV: Synthesis and Practice
+
+In this part, you will design a complete deployment architecture, write a canary rollout plan with concrete thresholds, and analyze a medical-grade SLA requirement — applying every concept from the prior three parts to scenarios where the consequences of a wrong decision are real.
 
 ## Exercises
 

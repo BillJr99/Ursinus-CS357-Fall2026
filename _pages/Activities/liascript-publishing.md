@@ -87,6 +87,8 @@ Understanding what a registry name tells you before you pull anything is a found
 
 *Hint:* Imagine you `npm install @someone/tool@1.2.3` in your project and it works perfectly. Six months later, a collaborator runs the same install command on a fresh machine. What does npm's immutability guarantee ensure about what they get? What would be possible if publishers could overwrite existing versions with different code?
 
+With the registry mental model in place, we can now walk through the actual commands that move an artifact from your machine to the registry.
+
 ---
 
 # Part II: Publishing Container Images
@@ -95,7 +97,7 @@ In this part, you will publish a container image to GHCR and Docker Hub using th
 
 ## 3. To GHCR, Step by Step
 
-GHCR is the natural home for course images because it lives beside your code — in the same GitHub account, with the same permissions model, and visible on the same repository page. From zero:
+GHCR is the natural home for course images because it lives beside your code — in the same GitHub account, with the same permissions model, and visible on the same repository page. The four commands below form the complete publish-and-verify cycle — read the comment on Step 4 especially, because pulling from a clean slate is the only way to confirm your image is truly public:
 
 ```bash
 # 1. Authenticate — the PAT must have the write:packages scope
@@ -137,14 +139,18 @@ Docker Hub is where unqualified names resolve — a plain `docker pull nginx` pu
 
 [[MC]]
 After pushing a new image to GHCR for the first time, a classmate reports that docker pull fails for everyone but you. The most likely cause is:
-- ( ) GHCR requires a 24-hour propagation period
-- ( ) The image tag must be latest for public pulls
+- ( ) GHCR requires a 24-hour propagation period — GHCR propagates immediately; a 24-hour delay would suggest a CDN cache miss, not the registry itself
+- ( ) The image tag must be latest for public pulls — any tag can be pulled publicly once the package is set to public; `latest` has no special public-access privilege
 - (x) New GHCR packages default to private visibility, and the package settings have not been changed to public
-- ( ) Docker Hub credentials are interfering
+- ( ) Docker Hub credentials are interfering — Docker Hub credentials are stored separately from GHCR credentials; a failed pull from ghcr.io would not be caused by Docker Hub login state
+
+Container images are one artifact type — the npm ecosystem uses the same registry concepts but serves a different artifact: installable code packages with CLI entry points and version-locked dependency trees.
 
 ---
 
 # Part III: Publishing to npm
+
+In this part, you will publish a working npm package with a CLI entry point — the same mechanism that makes tools like `prettier` and `jest` available as terminal commands. The `files` allowlist and `npm pack --dry-run` steps are the most important habits you will learn, because they are the only barrier between your credentials and public exposure.
 
 ## 5. A Package from Zero
 
@@ -155,6 +161,8 @@ An npm package is a directory with a `package.json`; everything else is detail. 
 mkdir hello-agent && cd hello-agent
 npm init --scope=@yourusername -y      # scoped to your username: collision-proof
 ```
+
+The resulting `package.json` defines the three fields that do the most work — read the note after the code block to understand why `bin`, `files`, and `license` are each load-bearing:
 
 ```json
 {
@@ -271,6 +279,8 @@ Before every publish, the Recorder writes down the team's ruling on each file. T
 
 *Hint:* npm does allow `npm unpublish` within 72 hours — but mirrors and caches may already have the package. After 72 hours, unpublish requires contacting npm support and is not guaranteed. What does this tell you about the irreversibility of publishing? What is the lesson about confirming the file list before you publish rather than after?
 
+The pre-publish review mindset — audit before you ship, not after — applies to every exercise that follows.
+
 ---
 
 > **⚠️ Common Misconception:** Students often assume that because a file is listed in `.npmignore`, it is definitely excluded from the published package. The safer mental model is the reverse: use the `"files"` allowlist in `package.json` to explicitly declare what *is* included, and treat everything else as excluded. With an allowlist, a new file you add to the directory is excluded by default — you must consciously add it. With an ignore-list, a new file is included by default — you must consciously exclude it. The allowlist is safer precisely because the default is to exclude rather than to include, which means the cost of forgetting is "file is missing from the package" rather than "credential is published to npm."
@@ -278,6 +288,8 @@ Before every publish, the Recorder writes down the team's ruling on each file. T
 ---
 
 # Part IV: Practice
+
+In this part, you will complete the full publish-verify cycle for real artifacts under your own name. Each exercise builds on the previous one, so if Exercise 2 fails, the issue likely traces back to something in Exercise 1.
 
 ## 9. Exercises
 
@@ -356,9 +368,13 @@ docker pull ghcr.io/yourusername/hello-cs357:v0.2.0
 
 *You've succeeded when:* Each team has submitted a written review of the other's artifact. Catching nothing after honest effort is also a valid result — but you must document that you looked.
 
+Container and npm publishing share a registry model with the Python ecosystem — but Python's toolchain has its own conventions that are worth knowing before you publish anything to PyPI.
+
 ---
 
 # Part V: Python Package Publishing with pip
+
+In this part, you will learn the Python packaging ecosystem — `pyproject.toml`, wheels, and PyPI — and practice publishing to TestPyPI before touching the real registry. TestPyPI exists specifically so you can make mistakes in a safe environment before your work is permanent.
 
 ## Python Package Publishing with pip
 
@@ -512,10 +528,10 @@ ls dist/
 
 [[MC]]
 A project's API changes in a way that breaks all existing callers — for example, a function that previously returned a string now returns a list. Which version bump is appropriate under SemVer?
-- ( ) Patch: `0.1.0` → `0.1.1`
-- ( ) Minor: `0.1.0` → `0.2.0`
+- ( ) Patch: `0.1.0` → `0.1.1` — a patch bump signals "bug fix with no behavior change"; using it for a breaking change tells consumers their code is safe to upgrade when it is not
+- ( ) Minor: `0.1.0` → `0.2.0` — a minor bump signals "new feature, backward-compatible"; using it for a breaking change violates the compatibility promise consumers rely on to safely run `npm update`
 - (x) Major: `0.1.0` → `1.0.0`
-- ( ) Date-based: `0.1.0` → `2026.06.1`
+- ( ) Date-based: `0.1.0` → `2026.06.1` — date-based versioning communicates when the release happened, not what kind of change it contains; a consumer cannot tell from the version number alone whether upgrading will break their code
 
 ---
 

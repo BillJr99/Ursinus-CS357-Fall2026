@@ -97,6 +97,8 @@ Grammar-constrained decoding guarantees syntactic validity only. Function callin
 
    *Hint: A schema-valid output like `{"urgency": "low", "rationale": "Patient reports mild discomfort"}` might describe a patient who is actually in critical condition. Which validity level catches the difference between "correctly formatted" and "actually right"?*
 
+Understanding what guarantees each output mode provides sets us up for the next question: how should the schema itself be designed to elicit better model behavior, not just valid output format?
+
 ---
 
 ## Model 2: Schema Design as Prompt Engineering
@@ -209,11 +211,15 @@ Version B output:
 
    *Hint: To validate that "environmental groups" is a genuinely missing perspective for a highway article, you need to know what perspectives actually exist for highway projects and which ones the article addressed. You cannot determine this from the JSON alone. What external resource or process would you need?*
 
+Even the best-designed schema cannot guarantee that the model produces valid output every time — which is why validation pipelines with repair loops are essential for any production system.
+
 ---
 
 ## Model 3: The Output Validation Pipeline
 
 Never trust raw LLM output, even in JSON mode or with a schema. Always parse and validate before your code uses the data. When validation fails, you have two options: surface the error to the caller, or attempt a **repair loop** — re-prompting the model with the specific validation error and asking it to fix only that problem.
+
+The code below implements a full repair loop — read the comments carefully, especially the `max_repair_attempts` limit and the `fail loudly` behavior, which prevent the two most dangerous failure modes (infinite API cost and silent bad data flowing downstream):
 
 ```python
 # Pydantic data model — defines the expected structure and validates incoming data
@@ -325,9 +331,9 @@ Key properties of this pipeline:
 [[MC]]
 You ask an LLM to output a JSON object with a field `"confidence": float` constrained to values between 0 and 1. The model outputs `{"confidence": "high"}`. The most likely root cause of this failure is:
 - (x) The JSON schema or response format was not provided to the model (or was provided only as a natural language instruction), so the model produced a plausible English description instead of a number
-- ( ) The model does not understand the concept of numbers and cannot generate them
-- ( ) The schema definition contained a syntax error that caused it to be silently ignored
-- ( ) The model is malfunctioning and needs to be restarted
+- ( ) The model does not understand the concept of numbers and cannot generate them — LLMs routinely generate numbers in other contexts; the issue here is that the model defaulted to natural language because no format constraint forced it to use a float
+- ( ) The schema definition contained a syntax error that caused it to be silently ignored — a schema syntax error would typically surface as an API error before any response is generated, not as a silently mis-formatted output
+- ( ) The model is malfunctioning and needs to be restarted — "high" is a coherent, plausible response to a confidence question; this is normal behavior when format constraints are absent, not a model failure
 
 ---
 
@@ -337,7 +343,8 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *What to do:* The `BiasAnalysis` Pydantic model in Model 3 omits `citations` (which is present in the Version B schema from Model 2). Add `citations` as a nested Pydantic model. Write the complete class definition, then write a unit test that creates a `BiasAnalysis` from a JSON string where `verifiable` is a string instead of a boolean, and confirm that a `ValidationError` is raised.
 
-   *Starter hint:*
+   *Starter hint:* The code below provides the `Citation` nested model and the updated `BiasAnalysis` class — notice how `verifiable: bool` will reject the string `"yes"` automatically, which is the exact behavior the unit test is checking:
+
    ```python
    from pydantic import BaseModel, Field, ValidationError
    from typing import Literal
@@ -372,7 +379,8 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *What to do:* Using a local LLM (Ollama with `ollama run llama3` or similar), run the same bias-analysis prompt 10 times with (a) a plain text instruction to output JSON and (b) `response_format` set to your schema if your library supports it. Record how many times each mode produces parseable output. Report the failure modes you observe.
 
-   *Starter hint:*
+   *Starter hint:* The code below runs the same prompt 10 times and categorizes each result as success, JSON parse error, or schema error — the distribution of these categories is the key finding; a high `json_parse_error` count points to instruction-only mode failing, while a high `schema_error` count suggests the model understood JSON but not the specific field requirements:
+
    ```python
    import ollama
    import json
@@ -405,7 +413,8 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *What to do:* Consider the specific case where the model outputs `{"evidence_quality": null}` — the field is present but its value is `null` (Python `None`) instead of a float. Write the exact repair prompt you would generate from the `ValidationError` that Pydantic produces for this input, following the targeted-repair pattern from Model 3. Then explain in two sentences why a generic "please try again" repair prompt would likely perform worse on this specific error.
 
-   *Starter hint:* Run this in Python to see what error Pydantic actually generates:
+   *Starter hint:* Run this in Python to see what error Pydantic actually generates — copy the exact error message (the `type=`, `input_value=`, and constraint fields) into your repair prompt, because giving the model this specific information is what makes targeted repair more effective than "please try again":
+
    ```python
    from pydantic import BaseModel, Field, ValidationError
    class Test(BaseModel):
