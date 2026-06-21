@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The LLM Wiki: Karpathy's Pattern and a Vault Full of Use Cases
 
-In April 2026, Andrej Karpathy published a short gist describing how he uses LLMs to build and maintain **personal knowledge bases**: not a product, not a framework, just a pattern, and one that lands squarely on the vault you built in the second brain module. His one-line summary of the division of labor: *the editor is the IDE, the LLM is the programmer, and the wiki is the codebase.* This module studies the pattern, contrasts it with the RAG architecture you built earlier this semester, and then tours the use cases that make the system earn its keep daily (a research wiki, journaling, meeting notes, raw paper summaries, and more), ending with the complete technical setup wired to hermes. The arc: **the pattern and its three layers $\rightarrow$ wiki versus RAG $\rightarrow$ the use-case tour $\rightarrow$ the full setup, end to end**.
+In April 2026, Andrej Karpathy published a short gist describing how he uses LLMs to build and maintain **personal knowledge bases**: not a product, not a framework, just a pattern, and one that lands squarely on the vault you built in the second brain module. His one-line summary of the division of labor: *the editor is the IDE, the LLM is the programmer, and the wiki is the codebase.* This module studies the pattern, contrasts it with the RAG architecture you built earlier this semester, and then tours the use cases that make the system earn its keep daily (a research wiki, journaling, meeting notes, raw paper summaries, and more), ending with the complete technical setup wired to hermes. The arc: **the pattern and its three layers → wiki versus RAG → the use-case tour → the full setup, end to end**.
 
 ---
 
@@ -29,12 +29,12 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Source layer** | The read-only zone where raw material lands exactly as it arrives — articles, transcripts, papers, exports — and is never edited | Dropping a PDF of a research paper into `raw/papers/` without changing a word of it |
-| **Wiki layer** | The structured Markdown knowledge base that the LLM both reads and writes — organized into entity pages, concept pages, and hub indexes that grow as sources accumulate | The agent creates `wiki/research/transformers/attention-mechanisms.md` after processing three attention papers |
-| **Schema layer** | The instruction file (`AGENTS.md`) that tells the LLM how to manage the wiki: what page types exist, how to link between pages, when to merge versus create, and how to handle conflicting sources | `AGENTS.md` specifies: "Each paper gets exactly one page under `wiki/papers/` with sections: claim, method, evidence, limitations, relevance" |
-| **Lint (wiki lint)** | A periodic sweep where the LLM reads the entire wiki looking for contradictions, orphaned pages, stale claims, and broken links — then either repairs them conservatively or flags them for human review | The lint pass finds that `wiki/research/topic-A.md` claims X while `wiki/research/topic-B.md` claims not-X, and flags the conflict |
-| **RAG (Retrieval-Augmented Generation)** | An architecture where a large corpus is chunked, embedded as vectors, and searched at query time — the nearest chunks are retrieved and passed to the LLM as context | Your RAG pipeline from earlier in the semester: embed all course documents, retrieve the most relevant chunks for each question |
-| **Compounding knowledge** | The property of a well-maintained wiki where each new source makes previous sources more useful, because the wiki accumulates cross-links and synthesized understanding rather than just adding more raw text | After 20 papers, asking "what are the open problems in X?" returns a synthesis of all 20 papers' limitations sections — better than any single paper |
+| **Source layer** | The read-only zone where raw material lands exactly as it arrives — articles, transcripts, papers, exports — and is never edited after it is dropped in | Dropping a PDF of a research paper into `raw/papers/` without changing a single word of it |
+| **Wiki layer** | The structured Markdown knowledge base that the LLM both reads and writes — organized into entity pages, concept pages, and hub indexes that grow and interlink as sources accumulate over time | The agent creates `wiki/research/transformers/attention-mechanisms.md` after processing three attention papers and links it from the relevant hub page |
+| **Schema layer** | The instruction file (`AGENTS.md`) that tells the LLM exactly how to manage the wiki: what page types exist, how to link between pages, when to merge a new finding into an existing page versus create a new one, and how to handle conflicting sources | `AGENTS.md` specifies: "Each paper gets exactly one page under `wiki/papers/` with sections: claim, method, evidence, limitations, relevance" |
+| **Lint (wiki lint)** | A periodic sweep where the LLM reads the entire wiki looking for contradictions between pages, orphaned pages that nothing links to, stale claims superseded by newer sources, and broken links — then either repairs them conservatively or flags them for human review | The lint pass finds that `wiki/research/topic-A.md` claims X while `wiki/research/topic-B.md` claims the opposite, and flags the conflict for you to resolve |
+| **RAG (Retrieval-Augmented Generation)** | An architecture where a large corpus is broken into chunks, embedded as vectors, and searched at query time — the nearest chunks are retrieved and passed to the LLM as context for answering a question | Your RAG pipeline from earlier in the semester: embed all course documents into a vector store, retrieve the most relevant chunks for each question at query time |
+| **Compounding knowledge** | The property of a well-maintained wiki where each new source makes all previous sources more useful, because the wiki accumulates cross-links and synthesized understanding rather than just appending more raw text | After ingesting 20 papers, asking "what are the open problems in X?" returns a synthesis drawing on all 20 papers' limitations sections — something no single paper or single chat session could provide |
 
 ---
 
@@ -54,12 +54,12 @@ You built a RAG pipeline in this course: chunk the corpus, embed the chunks, ret
 
 | Dimension | RAG | Wiki (Karpathy pattern) |
 |-----------|-----|------------------------|
-| **Scale** | Handles corpora of millions of documents — far more than any context window can hold | Tops out at personal-to-team scale — a few thousand pages, not millions |
-| **Curation cost** | Minimal — chunk and embed automatically; no synthesis required | Ongoing — each new source triggers a synthesis pass (in agent tokens, mostly) |
-| **Query quality** | Depends on embedding quality and chunking strategy; retrieved chunks may lack connective tissue | Reasons over connected pages with cross-links intact; better for questions that span multiple topics |
-| **Human browsability** | The embedded chunks are not human-readable in the traditional sense | The wiki *is* your Obsidian vault — you can browse it like a normal notebook |
-| **Knowledge compounding** | Scales by adding more chunks; knowledge accumulates but does not synthesize | Knowledge genuinely compounds — later sources make earlier pages more useful |
-| **Model error propagation** | A retrieval miss is an isolated failure | A synthesis error can propagate to many pages before lint catches it |
+| **Scale** | Handles corpora of millions of documents — far more than any context window can hold, making it the only viable choice at large corpus scale | Tops out at personal-to-team scale — a few thousand pages, not millions; beyond that, curation cost becomes prohibitive |
+| **Curation cost** | Minimal — chunk and embed automatically with no synthesis required; new documents are immediately available after indexing | Ongoing — each new source triggers a synthesis pass (mostly in agent tokens) to update concept pages, create cross-links, and resolve conflicts |
+| **Query quality** | Depends on embedding quality and chunking strategy; retrieved chunks may be stripped of the connective tissue that gives them meaning in context | Reasons over connected pages with cross-links intact; better for questions that span multiple topics or require understanding relationships between ideas |
+| **Human browsability** | The embedded chunks are not human-readable in a traditional sense — you cannot simply browse a vector store the way you browse a folder | The wiki *is* your Obsidian vault — you can browse it like a normal notebook, share pages with collaborators, and read it without running any queries |
+| **Knowledge compounding** | Scales by adding more chunks; knowledge accumulates in the index but does not synthesize — each query starts fresh from retrieval | Knowledge genuinely compounds — later sources make earlier pages more useful, because the wiki records how ideas relate, not just what the ideas are |
+| **Model error propagation** | A retrieval miss is an isolated failure that affects only one query | A synthesis error can propagate to many cross-linked pages before the lint pass catches it, making the schema's preserve-uncertainty rules load-bearing |
 
 One more honest caution from the pattern's critics: the wiki is only as good as the model maintaining it, since a weak model can propagate a source's error into five confident pages. This is why the schema's preserve-uncertainty rules and the lint pass are load-bearing rather than decorative.
 
@@ -67,31 +67,21 @@ One more honest caution from the pattern's critics: the wiki is only as good as 
 
 ## Model 1: Choose the Architecture
 
-Understanding the wiki-versus-RAG trade-off is not about memorizing which is better — it depends entirely on scale, curation capacity, and what kinds of questions you need to answer. Work through the concrete cases below to develop your judgment.
+Understanding the wiki-versus-RAG trade-off is not about memorizing which is better — it depends entirely on scale, curation capacity, and what kinds of questions you need to answer. Think of it like choosing between a card catalog (RAG: fast lookup, scales to any library size) and a personal research notebook (wiki: slower to maintain, but lets you see how your ideas connect). Work through the concrete cases below to develop your judgment about which tool fits which situation.
 
 ### Critical Thinking Questions
 
-**Question 1.** For each corpus, choose wiki, RAG, or a hybrid, with the deciding factor named: (a) your own 200 accumulated course and research notes; (b) the full text of 40,000 arXiv papers; (c) your team's project decision log; (d) a professor's 30 years of mixed-format files, mostly never to be read again.
+**Question 1.** For each corpus below, choose wiki, RAG, or a hybrid, and name the single most important deciding factor that drove your choice: (a) your own 200 accumulated course and research notes; (b) the full text of 40,000 arXiv papers; (c) your team's project decision log for a semester-long project; (d) a professor's 30 years of mixed-format files, most of which were never intended to be searched again.
 
-[[___ Your answer here ___]]
+*Hint:* For (a): Is 200 notes small enough to curate and synthesize? What kinds of cross-topic questions would you want to ask? For (b): Does any context window exist that could hold meaningful portions of 40,000 papers? What does that imply about your only option for scale? For (c): Is a semester decision log small enough to maintain as a wiki, and would you benefit from explicit links between related decisions? For (d): If most files will never be read again, is the per-source synthesis cost of a wiki justified — or would you rather pay only when you query?
 
-*Hint:* For (a): Is 200 notes curate-able? What kinds of questions would you want to ask across them? For (b): Does a context window exist that could hold meaningful portions of 40,000 papers? For (c): Is a decision log small enough to curate, and would you benefit from cross-links between decisions? For (d): If most files will never be read again, is the synthesis cost of a wiki justified?
+**Question 2.** The wiki's "compression" is lossy by design: when the agent synthesizes a source into wiki pages, it necessarily discards some of the source's detail in favor of the structure the schema requires. Where does the pattern park the lost detail so it is not gone forever, and what does that imply about the one rule the Source layer must never break?
 
-**Question 2.** The wiki's "compression" is lossy by design: synthesis discards source detail. Where does the pattern park the lost detail, and what does that imply about the one rule the Source layer must never break?
+*Hint:* The lost detail stays permanently in the Source layer — the original raw files are never deleted or modified. If a wiki page turns out to be wrong (because of a synthesis error or a conflict between sources), you need to be able to return to the original source to adjudicate. Ask yourself: what happens to the system's trustworthiness if someone edits or deletes a file in `raw/`? The answer makes clear why "never edit the source layer" is the one rule that everything else depends on.
 
-[[___ Your answer here ___]]
+**Question 3.** Connect lint to a course concept: which evaluation idea from our LLM-as-judge unit is lint the knowledge-base version of, and what is lint's reward-hacking analog — that is, what would an agent do if it were optimizing for "making lint pass" rather than "making the wiki true"?
 
-*Hint:* The lost detail stays in the Source layer — the raw files are never deleted or modified. If a wiki page turns out to be wrong (synthesis error, conflicting sources), you need the original source to adjudicate. What happens if you delete or modify files in `raw/`? Why is the "never edit the source layer" rule the one rule that makes the whole system trustworthy?
-
-**Question 3.** Connect lint to a course concept: which evaluation idea from our LLM-as-judge unit is lint the knowledge-base version of, and what is its reward-hacking analog (an agent that makes lint pass without making the wiki true)?
-
-[[___ Your answer here ___]]
-
-*Hint:* In the LLM-as-judge unit, we discussed the risk of an agent optimizing for the judge's rubric rather than for the underlying quality being measured. Lint is a judge: it checks for contradictions, orphans, and broken links. What would it look like for an agent to "pass lint" by making superficial changes that resolve the reported errors without actually making the wiki more accurate? What would a reward-hacking lint-passer do?
-
----
-
-> **⚠️ Common Misconception:** Students often assume that more sources automatically make the wiki better. This is only true if the agent synthesizes them faithfully and the lint pass catches errors. A wiki maintained by a weak model with no lint pass can become *less* reliable as sources accumulate, because each synthesis error gets cross-linked into more and more pages. The discipline is not in adding sources — it is in the schema and the lint pass that keep the synthesis honest.
+*Hint:* In the LLM-as-judge unit, we discussed the risk of an agent optimizing for the judge's rubric rather than for the underlying quality the rubric is meant to measure. Lint is a judge: it checks for contradictions, orphaned pages, and broken links. What would it look like for an agent to "pass lint" by making superficial changes that resolve the reported errors without actually making the wiki more accurate? For example, an agent could "resolve" a contradiction by deleting one of the conflicting claims — lint passes, but the wiki is now worse. What is the analog to Goodhart's Law here?
 
 ---
 
@@ -124,27 +114,25 @@ The fixed page skeleton for paper summaries (claim, method, evidence, limitation
 
 ## Model 2: Design Your Corner
 
-Each teammate picks one use case from the tour (no duplicates within a team). The goal is to arrive at conventions specific enough that you could hand them to someone else — or to the agent — and they would know exactly what to do.
+Each teammate picks one use case from the tour (no duplicates within a team). The goal is to arrive at conventions specific enough that you could hand them to someone else — or to the agent — and they would know exactly what to do without asking you any clarifying questions. Think of this like writing a recipe: a recipe that says "add some flour" is useless, but one that says "add 2 cups of all-purpose flour, sifted" is something a stranger can follow. Your conventions need to be that specific.
 
 ### Critical Thinking Questions
 
-**Question 4.** Specify your use case's conventions in four lines: the `raw/` drop convention (where and how to drop sources), the `wiki/` directory and page-naming scheme, the page skeleton (what sections every page in this use case has), and the one standing prompt that maintains it. The Recorder collects all four sets.
+**Question 4.** Specify your use case's conventions in four lines: (a) the `raw/` drop convention — where to put sources and what to name them; (b) the `wiki/` directory path and page-naming scheme — what the folder structure looks like and how individual pages are named; (c) the page skeleton — the exact section headings that every page in this use case must contain; and (d) the one standing prompt that the agent runs to process new sources and maintain the wiki. The Recorder collects all four sets from the team.
 
-[[___ Your conventions here ___]]
+*Hint:* Be specific enough that the conventions are mechanical and leave no room for interpretation. "Drop papers in `raw/papers/` with the filename format `lastname2026-shorttitle.pdf`" is specific enough that anyone can follow it. "Put papers somewhere" is not. The page skeleton should list exact section headings (using Markdown `##` syntax), because if two pages in the same use case have different headings, the agent cannot answer comparative questions structurally.
 
-*Hint:* Be specific enough that the conventions are mechanical. "Drop papers in `raw/papers/` with the filename format `lastname2026-shorttitle.pdf`" is specific. "Put papers somewhere" is not. The page skeleton should specify exact section headings — if someone reads two pages from your use case, they should always see the same structure.
+**Question 5.** Name the one question you most want your corner of the wiki to be able to answer by December, and then work backward from that question to verify that your conventions from Question 4 actually capture all the inputs that question requires. If your conventions do not capture the required inputs, revise them until they do.
 
-**Question 5.** Name the question you most want your corner to answer in December, and verify your conventions actually capture the inputs that question requires. Work backward from the question to the inputs, and check that your `raw/` drop convention and page skeleton would make those inputs available.
+*Hint:* If your December question is "which papers in my research wiki disagree about approach X?" then your page skeleton must have a section that explicitly records each paper's position on approach X — not just a general "summary" section, because a summary might or might not mention the paper's stance on X. Work backward from the question to the required data, then check that the required data appears in your skeleton. If it does not, add a section for it.
 
-[[___ Your answer here ___]]
+**Question 6.** Identify the privacy boundary your use case comes closest to crossing — journaling and meeting notes are the most sensitive, since they often contain information about other people who have not consented to being in your AI-maintained vault — and write down the one inclusion rule you will follow, stated as a single enforceable sentence.
 
-*Hint:* If your December question is "which papers in my research wiki disagree about approach X?" then your page skeleton must have a section for each paper's position on approach X. If the skeleton just says "summary," the agent has no way to record positions in a comparable, queryable way. Work backward from the question to the required structure.
+*Hint:* An enforceable inclusion rule is one you can check before every single drop, without relying on judgment calls made under time pressure. "I will include all meeting notes" is not enforceable, because it does not handle the edge case of a meeting where sensitive personnel or legal matters were discussed. "I will include meeting notes only from meetings where all attendees were told in advance that notes may be processed by an AI system, and where no HR, legal, or confidential business matters were discussed" is enforceable — you can check every item on that list before dropping a file into `raw/`.
 
-**Question 6.** Identify the privacy boundary your use case skirts closest to (journaling and meeting notes are the most sensitive), and write the inclusion rule you will follow, in one enforceable sentence.
+---
 
-[[___ Your inclusion rule here ___]]
-
-*Hint:* An enforceable inclusion rule specifies what types of content are and are not included, without relying on judgment calls in the moment. "I will include all meeting notes" is not enforceable (what about notes from meetings where sensitive personnel decisions were discussed?). "I will include meeting notes only from meetings where all attendees are aware their notes may be processed by an AI system" is enforceable — you can check it before every drop.
+> **⚠️ Common Misconception:** Many students assume that adding more sources to the vault automatically makes it more useful and reliable. This is only true if the agent synthesizes them faithfully and the lint pass catches errors promptly. A wiki maintained by a model that is not well-prompted, or one that runs without a lint pass, can actually become *less* reliable as sources accumulate — because each synthesis error gets cross-linked into more and more pages, making the error harder to trace and correct. The discipline is not in adding sources. The discipline is in writing a precise schema (the `AGENTS.md` contract) and running lint regularly to keep the synthesis honest. More sources with a weak schema is worse than fewer sources with a strong one.
 
 ---
 
@@ -175,7 +163,7 @@ Verification matrix, in the agent stack module's spirit: after the first schedul
 
 **Exercise 1.** Schema extension. Add your Model 2 conventions and the lint specification to `AGENTS.md`, committed through Obsidian sync.
 
-*What to do:* Open `AGENTS.md` in your vault. Add a new section titled `## Use-Case: [Your Use Case Name]` with the four convention lines from Question 4. Add a `## Lint Specification` section with the lint behavior described in Step 1 above.
+*What to do:* Open `AGENTS.md` in your vault. Add a new section titled `## Use-Case: [Your Use Case Name]` with the four convention lines from Question 4 — raw drop convention, wiki directory and naming scheme, page skeleton with exact section headings, and the standing prompt. Then add a `## Lint Specification` section with the lint behavior described in Step 1 above (sweep targets, conservative repair policy, report location, and the flag-rather-than-apply rule for ambiguous cases).
 
 *Starter hint:*
 
@@ -197,41 +185,47 @@ Verification matrix, in the agent stack module's spirit: after the first schedul
 **Standing prompt:** "Process any unprocessed files in raw/papers/ into wiki/papers/ using the skeleton above, then thread each paper into relevant concept pages under wiki/research/."
 ```
 
-*You've succeeded when:* `AGENTS.md` includes your full use-case section and lint specification, committed to the repository, and the structure is specific enough that someone who has never seen your vault could follow it without asking you questions.
+*You've succeeded when:* `AGENTS.md` in your repository includes your full use-case section and lint specification, the commit is visible on GitHub, and the conventions are specific enough that a teammate who has never seen your vault could follow them without asking you any clarifying questions. Submit the diff of your `AGENTS.md` changes.
 
-Submit the diff of your `AGENTS.md` changes.
+---
 
 **Exercise 2.** Seed and ingest. Execute Steps 2 and 4 with real sources, and submit the agent's commit log, one resulting wiki page, and the answer to your December question's nearest present-day approximation with the wiki pages it cited.
 
-*What to do:* Drop three real sources into `raw/`. Run the ingestion prompt from Step 2 against hermes. Then run the query prompt from Step 4 with the closest approximation of your December question that is answerable now.
+*What to do:* Drop three real sources that belong to your use case into the appropriate `raw/` subfolder. Run the ingestion prompt from Step 2 against hermes, substituting your GitHub username. After the agent commits, pull the repository in Obsidian and verify the new wiki pages appear with the correct skeleton structure. Then run the query prompt from Step 4 using the closest approximation of your December question that you can answer now with the sources you have seeded.
 
-*Starter hint:* Use the exact ingestion prompt from Step 2 above, substituting your GitHub username. After the agent commits, pull in Obsidian and verify the new wiki pages appear. Then run: *"Using the vault per AGENTS.md, answer from wiki/ first: [your question]. If raw/ holds newer relevant material, update the wiki before answering."*
+*Starter hint:* Use the exact ingestion prompt from Step 2 above, substituting your GitHub username. After the agent commits, pull in Obsidian and verify the new wiki pages appear. Then run: *"Using the vault per AGENTS.md, answer from wiki/ first: [your question]. If raw/ holds newer relevant material, update the wiki before answering."* The answer should cite specific wiki page paths, not raw file paths.
 
-*You've succeeded when:* The agent's response to your question cites specific wiki pages by path (not raw files), and those pages exist in your repository with the correct skeleton structure.
+*You've succeeded when:* The agent's response to your question cites specific wiki pages by their full path (for example, `wiki/papers/smith2025-attention.md`) rather than raw files, and those pages exist in your repository with the correct skeleton section headings from Question 4.
 
-**Exercise 3.** Paper pipeline. Ingest two related papers using the fixed skeleton, then ask the cross-paper question: "Where do these two papers disagree, and what evidence would settle the disagreement?" Evaluate the answer's groundedness against the pages, using your judge-calibration instincts from earlier in the semester.
+---
 
-*What to do:* Drop two papers on the same topic into `raw/papers/`. Run the ingestion prompt. Then run the cross-paper question. For each claim in the answer, check: is there a sentence in the corresponding wiki page that supports it?
+**Exercise 3.** Paper pipeline. Ingest two related papers using the fixed skeleton convention, then ask the cross-paper synthesis question: "Where do these two papers disagree with each other, and what additional evidence would be needed to settle the disagreement?" Evaluate the quality and groundedness of the answer using your judge-calibration instincts from earlier in the semester.
 
-*Starter hint:* A well-grounded answer cites specific page paths and section headings: "According to `wiki/papers/smith2025-attention.md#Limitations`, the method does not generalize to...". An ungrounded answer synthesizes from memory: "In general, these approaches differ in...". The former is what you are looking for.
+*What to do:* Drop two papers on the same topic into `raw/papers/`. Run the ingestion prompt to create both wiki pages and thread them into the relevant concept pages. Then run the cross-paper question. For each substantive claim in the answer, check whether there is a specific sentence in the corresponding wiki page section that supports it.
 
-*You've succeeded when:* You can label each sentence in the cross-paper answer as "grounded" (supported by a specific wiki page section) or "ungrounded" (synthesized without traceable support), and at least 80% of the answer's substantive claims are grounded.
+*Starter hint:* A well-grounded answer cites specific page paths and section headings, such as: "According to `wiki/papers/smith2025-attention.md#Limitations`, the method does not generalize beyond the domain it was trained on, while `wiki/papers/jones2025-scaling.md#Evidence` shows the opposite pattern in a multi-domain setting." An ungrounded answer synthesizes from the model's general knowledge: "In general, these approaches tend to differ in their generalization behavior." The former is what you are looking for.
 
-**Exercise 4.** First lint. Plant one contradiction and one orphan page deliberately, run the lint pass, and grade the agent's report and repairs.
+*You've succeeded when:* You can label each substantive sentence in the cross-paper answer as either "grounded" (traceable to a specific section of a specific wiki page) or "ungrounded" (synthesized without a traceable source), and at least 80% of the answer's substantive claims are grounded in your wiki pages.
 
-*What to do:* Edit one wiki page to say something that contradicts another page on the same topic. Create a new wiki page with no links to it from any other page (the orphan). Then run the lint pass: *"Run the lint pass specified in AGENTS.md. Report what you found and what you changed. Flag anything you were unsure about rather than applying a repair automatically."*
+---
 
-*Starter hint:* Good lint behavior: finds both the contradiction and the orphan, repairs the orphan by adding a link from the most relevant hub page, flags the contradiction for human review with both conflicting statements quoted. Bad lint behavior: silently resolves the contradiction by deleting one claim (bulldoze), or misses either the contradiction or the orphan.
+**Exercise 4.** First lint. Deliberately plant one contradiction and one orphan page in your wiki, run the lint pass, and grade the agent's lint report and repairs.
 
-*You've succeeded when:* You can write a two-sentence verdict: what the lint pass correctly found and fixed, and what it missed or handled incorrectly. "It correctly identified the orphan and linked it from the topic hub. It found the contradiction but silently deleted one claim instead of flagging it — a conservative repair would have flagged it instead."
+*What to do:* Edit one existing wiki page to assert something that directly contradicts a claim on another page about the same topic. Then create a new wiki page that is not linked from any other page (the orphan). Run the lint pass with this prompt: *"Run the lint pass specified in AGENTS.md. Report everything you found and describe every change you made. Flag anything you were unsure about rather than applying a repair automatically."* Then compare the report to what you planted.
 
-**Exercise 5.** Schedule it. Build the n8n nightly-ingest workflow, let it run twice, and submit evidence that both runs behaved correctly.
+*Starter hint:* Good lint behavior looks like this: the agent finds both the contradiction and the orphan, repairs the orphan by adding a link from the most relevant hub or concept page, and flags the contradiction for human review with both conflicting statements quoted verbatim — rather than silently picking one. Bad lint behavior: silently resolving the contradiction by deleting one of the claims without flagging it (bulldozing), or failing to find either the contradiction or the orphan entirely.
 
-*What to do:* In n8n, create a scheduled workflow that runs the ingestion prompt against hermes each night. Let it run on two consecutive nights. After each run, check: (a) did it commit new wiki pages? (b) do the pages have the correct metadata entries? (c) did Obsidian sync pull them?
+*You've succeeded when:* You can write a two-sentence verdict that specifically names what the lint pass got right and what it missed or mishandled. For example: "The agent correctly identified the orphan page and linked it from the topic hub index. It found the contradiction but silently deleted one claim rather than flagging it — the schema requires flag-and-report, not silent deletion, so this is a repair policy violation."
 
-*Starter hint:* The n8n workflow has three nodes: Schedule trigger (set to nightly), HTTP Request to the hermes API (with the ingestion prompt as the body), and a Slack/email notification with the agent's summary. The verification checklist from Step 4 is your success criterion.
+---
 
-*You've succeeded when:* You can show two consecutive run logs with commits visible on GitHub, Obsidian sync pulling the pages on both mornings, and no metadata violations. The checklist from Step 4 is your verification document — submit it filled in for both runs.
+**Exercise 5.** Schedule it. Build the n8n nightly-ingest workflow, let it run on two consecutive nights, and submit evidence that both runs completed correctly.
+
+*What to do:* In n8n, create a scheduled workflow that fires each night and runs the ingestion prompt against hermes. After each of two consecutive nights, check the following: (a) did the run produce a new commit on GitHub with wiki pages and metadata entries? (b) do the new pages have the correct skeleton structure? (c) did Obsidian sync pull the new pages by the next morning? (d) are there any metadata protocol violations in the commit?
+
+*Starter hint:* A minimal n8n workflow for this has three nodes: a Schedule trigger (set to nightly at a time you will remember to check), an HTTP Request node that calls the hermes API with the ingestion prompt as the request body, and a notification node (Slack message or email) that forwards the agent's summary so you know each morning what the agent did overnight. The verification checklist from Step 4 above is your success criterion — treat each item on the checklist as a row in your submission.
+
+*You've succeeded when:* You can show two consecutive run logs with commits visible on GitHub timestamped on two different nights, Obsidian pulling the new pages on both mornings, no metadata violations in either commit, and a filled-in verification checklist from Step 4 covering both runs. The checklist itself is your monitoring design — submit it as part of your response.
 
 ---
 
@@ -239,24 +233,22 @@ Submit the diff of your `AGENTS.md` changes.
 
 Karpathy's framing puts you in the editor's chair while the model writes, which is either the freeing end of note-taking drudgery or the outsourcing of the very synthesis that made notes valuable to write, depending on whom you ask.
 
-**Personal level:** After running the loop yourself, which is it for you? Which kinds of pages do you want to keep writing by hand precisely because the writing is the thinking? Is there knowledge that becomes less yours if you let a model synthesize it?
+**Personal level:** After running the loop yourself, which is it for you — liberation or loss? Which kinds of pages do you want to keep writing by hand, precisely because the writing is the thinking and the thinking is the point? Is there knowledge that becomes less *yours* if you let a model synthesize it — and if so, how do you recognize it in advance?
 
-**Technical level:** The wiki pattern makes a bet that long-context reasoning over connected pages is better than retrieval-augmented generation over embedded chunks, at personal scale. After this activity, do you believe that bet? What would change your mind — what evidence would convince you that RAG is better for your use case?
+**Technical level:** The wiki pattern makes a concrete bet: that long-context reasoning over a curated, connected set of pages is better than retrieval-augmented generation over embedded chunks, at personal scale. After this activity, do you believe that bet for your use case? What specific evidence from today's exercises supports your view? What evidence would change your mind — what result would convince you that RAG is actually the better choice for your particular use case?
 
-**Societal level:** Karpathy's pattern is explicitly personal — it is a tool for individual knowledge workers. But the same pattern could be applied to organizational knowledge at scale: a company's entire institutional memory maintained and queried by an LLM. What would be gained, and what would be lost, if institutional knowledge were managed this way? Who holds the schema layer, and what happens if they leave?
+**Societal level:** Karpathy's pattern is explicitly personal — it is a tool for individual knowledge workers who maintain their own vault. But the same pattern could be applied to organizational knowledge at scale: a company's entire institutional memory, maintained and queried by an LLM agent operating on a shared schema. What would be gained by doing that, and what would be irreversibly lost? Who holds the schema layer in an organizational setting, and what happens to the institution's knowledge when that person leaves?
 
-Write a combined reflection of 150–250 words addressing at least two of the three levels. The Reflector should be prepared to share which pages the team agreed to keep writing by hand.
-
-[[___ Your reflection here ___]]
+Write a combined reflection of 150–250 words addressing at least two of the three levels above. The Reflector should be prepared to share which pages the team agreed to keep writing by hand, and why.
 
 ---
 
-→ Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation.
+→ Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation. Bring your `AGENTS.md` schema, your first lint report, and the answer from Exercise 2 to the next class session as evidence of a living system.
 
 ---
 
 ## 6. Further Reading
 
-- Andrej Karpathy, the LLM Wiki gist (gist.github.com/karpathy, April 2026): the pattern in its author's words; short, read it whole.
-- W. Mongan, "A Private AI Knowledge Base" (billmongan.com, May 2026): the vault architecture this module builds on, including the AGENTS.md schema in full.
-- Your own RAG lab writeup, reread: the strongest way to internalize the wiki-versus-RAG trade is to argue it against your own prior work.
+- Andrej Karpathy, the LLM Wiki gist (gist.github.com/karpathy, April 2026): the pattern in its author's words; it is short and worth reading in full before you extend your schema.
+- W. Mongan, "A Private AI Knowledge Base" (billmongan.com, May 2026): the vault architecture this module builds on, including the complete `AGENTS.md` schema that the second brain module introduced.
+- Your own RAG lab writeup, reread with fresh eyes: the strongest way to internalize the wiki-versus-RAG trade-off is to argue it against your own prior work — take the position that your RAG pipeline was wrong for your use case and see how far the argument holds.
