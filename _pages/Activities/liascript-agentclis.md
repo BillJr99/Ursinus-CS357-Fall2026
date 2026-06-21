@@ -101,6 +101,8 @@ With the anatomy clear and your first session running, Part II builds on that fo
 
 # Part II: Context, Gates, and the Local Gateway
 
+In this part, you will write a project context file, configure permission gates deliberately, and redirect your CLI tool through the course's local gateway — the three controls that turn a capable tool into a supervised one.
+
 ## 3. Project Context Files: Standing Instructions
 
 Imagine you hired a very capable but completely new contractor to work on your apartment. On day one you explain everything: "don't touch the walls in the east bedroom, always ask before buying materials, and the supply list is in the kitchen drawer." On day two, you would have to explain it all again — unless you left a note on the door. The context file is that note on the door. Every tool reads its context file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`) from the project root at startup, making it the place for standing instructions that survive every session: what the project is, conventions to follow, commands to use for testing, and boundaries. A starter worth copying:
@@ -129,10 +131,10 @@ The gates are not friction; they are the course's human-oversight principle runn
 
 [[MC]]
 A teammate launches an agent CLI from their home directory instead of the project directory "to save a cd". The principled objection is:
-- ( ) The agent will run more slowly with more files present
+- ( ) The agent will run more slowly because it must index all files before starting — launch location is a performance concern, not a safety one
 - (x) The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
-- ( ) Context files are only read from the home directory
-- ( ) There is no objection; directories do not matter to agents
+- ( ) Context files are only read from the home directory, so launching from there is actually required for the context file to be found
+- ( ) The working directory only affects which files the agent proposes to edit in its plan — file tool calls are still scoped to the project folder
 
 ---
 
@@ -166,6 +168,8 @@ For the other tools, the same redirect looks slightly different:
 
 The payoff is the unbundling theme of this course: the *interface* (the CLI you like) is now independent of the *model* (local, free-tier, or frontier), swappable per task with `/model`. For privacy-sensitive coursework, local routing is not just cheaper; it is the data-minimization requirement satisfied by architecture.
 
+Now that your tool is scoped, instructed, and routed, Part III shows how to bring it into your editor and run it inside a container so the workspace boundary is enforced by the operating system, not just convention.
+
 ---
 
 > **Common Misconception:** Many students assume that "permission gates" and "the working directory" are two separate safety measures that each protect against different risks. In practice, they compose: the working directory limits *what* the agent can touch (only files under that directory are reachable by the file tools), while permission gates limit *when* the agent acts (it must pause and ask before each consequential step). Disabling either one alone cuts your safety roughly in half. Turning off gates while keeping a narrow working directory still lets the agent delete every file in your project without a pause. Keeping gates active while launching from `~` means every gate prompt covers a blast radius of your entire home directory. You need both, calibrated together.
@@ -174,6 +178,8 @@ The payoff is the unbundling theme of this course: the *interface* (the CLI you 
 
 # Part III: VS Code, Containers, and Practice
 
+In this part, you will integrate your chosen agent CLI into VS Code and understand the containerized invocation pattern so you can isolate an agent's filesystem access by design rather than by trust.
+
 ## 6. Driving Agents from VS Code
 
 Three levels of integration, in increasing depth. **Level one, the integrated terminal** (Ctrl+`): launch any CLI tool there and you get the workflow most professionals actually use, agent in the bottom pane, live diffs in the editor above; this works today for every tool in the table with zero configuration. **Level two, official extensions**: Claude Code and Codex ship VS Code extensions (search the marketplace by name) that surface the session in a panel, render proposed diffs in VS Code's native diff view, and let you approve from the editor; install, sign in, and the workflow is the terminal workflow with better optics. **Level three, editor-native agents**: KiloCode lives entirely inside VS Code with direct access to the language server (diagnostics, symbols, refactoring), and connects to our gateway with a one-field base URL change in its settings. Recommendation for this course: level one for fluency first, then level two; you will debug problems best in the layer you understand.
@@ -181,6 +187,8 @@ Three levels of integration, in increasing depth. **Level one, the integrated te
 ## 7. Containerized Invocation (the Course Pattern)
 
 Our stack runs every CLI tool inside a dedicated container with three mounts: an identity directory (the tool's logins and settings), the shared workspace, and an optional read-only skills directory. The shape, from the course deploy scripts:
+
+The following `docker run` command is the standard course pattern for running a CLI agent inside a container. Read each flag carefully before running it — each one enforces a specific boundary between the agent and your host machine.
 
 ```bash
 docker run --rm -it \
@@ -280,6 +288,8 @@ The flags explained: `--rm` deletes the container when it exits (experiments are
 In your notebook, respond at three levels:
 
 **Personal level:** These tools place a capable agent one keystroke from your filesystem, and the differences between them are mostly differences in how much friction they put between intention and action. After today, where do you personally want that friction? Did your answer change from what it was before you ran your first session — and if so, what in the session shifted it?
+
+> *Hint:* Think about the permission gates you encountered today. Did any gate prompt make you pause and reconsider? Did any gate fire for an action you had not anticipated? Your intuition about friction may have updated from the session itself.
 
 **Technical level:** The working directory, the context file, and the permission gates form a three-layer scoping system. Describe in your own words what each layer controls and what breaks if you remove any one of them. Is there a fourth layer you think is missing?
 

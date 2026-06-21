@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Architecture
 
+In this part, you will understand why a single versioned vault — rather than five disconnected tool silos — is the right architectural choice for persistent AI context, and what each component of the system contributes to that goal.
+
 ## Model 1: Why This Architecture — and What Each Piece Does
 
 Every AI tool you use today maintains its own context about you. Your coding assistant knows your recent files. Your chat AI knows this conversation. Your email AI knows your last few messages. None of them know what the others know, and none of them persist that knowledge reliably across sessions. The result is that you re-explain yourself constantly — to tools that could, in principle, already know.
@@ -76,7 +78,11 @@ The design has four pieces, each independently replaceable:
 
 ---
 
+Now that you understand what each architectural piece does and why it was chosen, you are ready to design the internal structure and rules that make it safe for agents to operate inside the vault.
+
 # Part II: Structure and the Agent Contract
+
+In this part, you will design the zone structure and contract file that make it safe to give agents write access to your vault — which is the difference between a helpful automated collaborator and one that silently corrupts your source files.
 
 ## Model 2: The Three-Zone Vault and the AGENTS.md Contract
 
@@ -117,7 +123,11 @@ An agent processing a new PDF in raw/ notices a typo in the PDF and also that wi
 
 ---
 
+With the zone structure and contract defined, you are ready to learn the metadata protocol — the low-level bookkeeping detail that is invisible when it works and catastrophic when it doesn't.
+
 # Part III: The Metadata Protocol (the Part Everyone Gets Wrong)
+
+In this part, you will learn the specific metadata bookkeeping step that every agent commit must include to keep the bidirectional sync working — the single most common failure point when wiring agents to a gitless-synced vault.
 
 ## Model 3: Why Agent Writes Need One Extra Step
 
@@ -146,6 +156,8 @@ The two invariants that must never break:
 For completeness, because a thorough agent may pre-compute it: the `sha` field, when not null, is a **git blob SHA**, computed differently from a plain SHA-1 of the file. Git hashes the byte string `blob {N}\0` (where `{N}` is the content's byte length and `\0` is a literal null byte) concatenated with the raw content.
 
 ## Code Cell
+
+The following code demonstrates how to compute a git blob SHA — the exact hash format that git uses internally and that the sync metadata file requires. Run it and observe that the plain SHA-1 of the same content (shown in the second output line) produces a different value, which is the mistake that causes silent sync failures.
 
 ```python
 # The git blob SHA, demystified: this reproduces `git hash-object` exactly.
@@ -187,7 +199,11 @@ Notice the last line: for content containing multi-byte characters (accented let
 
 ---
 
+Having mastered the metadata protocol, you have everything you need to wire an actual agent to the vault and observe the full read-synthesize-write loop in action.
+
 # Part IV: Wiring an Agent (hermes) by Prompting
+
+In this final part, you will see that connecting an agent to your vault requires only a well-formed prompt — not integration code — and you will trace the session rhythm that results when the full system is running.
 
 ## Model 4: The Wiring Is Just a Prompt
 

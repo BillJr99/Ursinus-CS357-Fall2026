@@ -102,7 +102,7 @@ The most widely used form of synthetic data for LLM fine-tuning is **instruction
 
 ### Self-Instruct (Wang et al., 2022)
 
-Self-Instruct is the pipeline behind several influential open-source instruction-tuned models. It works as a bootstrapping loop:
+Self-Instruct is the pipeline behind several influential open-source instruction-tuned models. It works as a bootstrapping loop (a self-improving cycle where each iteration generates new data that feeds the next iteration, growing a large dataset from a small starting set):
 
 1. Start with a **seed set** of roughly 175 human-written instruction examples covering a range of task types.
 2. Prompt a large model (originally GPT-3) to generate new instructions by analogy with randomly sampled examples from the seed set: "Here are 8 example instructions. Generate 4 more that are different in task type and topic."
@@ -141,7 +141,7 @@ seed_instructions
 
 - **Length check:** The response is not trivially short (one word) or obviously padded with filler content.
 - **Coherence check:** The response actually addresses the instruction rather than drifting to an unrelated topic.
-- **Non-duplication check:** Cosine similarity to existing dataset items is below a threshold (typically 0.7–0.8) so the dataset remains diverse.
+- **Non-duplication check:** Cosine similarity (a number between 0 and 1 measuring how semantically similar two pieces of text are — values above 0.9 mean the texts are nearly identical in meaning) to existing dataset items is below a threshold (typically 0.7–0.8) so the dataset remains diverse.
 - **Safety check:** The instruction and response do not contain toxic, harmful, or inappropriate content.
 
 > ⚠️ **Common Misconception:** Generating more synthetic data is not the same as generating *better* synthetic data. A common error is to generate enormous quantities of synthetic instruction data and assume that more is always better. In practice, quality filters are more important than quantity: a dataset of 10,000 high-quality, diverse, well-filtered examples typically produces better fine-tuning results than 100,000 low-quality or highly redundant examples. The Alpaca model demonstrated this: 52,000 carefully generated examples from a seed of 175 produced a capable model. Simply running the generation loop for 10 more hours to produce 500,000 examples would not have produced a model 10× better — and might have introduced more mode collapse.
@@ -176,10 +176,10 @@ seed_instructions
 
 A research team trains a model entirely on AI-generated text. They then use that model to generate more training data for the next model version and repeat this process 10 times. The most likely outcome, based on current research, is:
 
-[[ ]] Each generation produces a progressively better model because the pipeline iteratively refines and improves the quality of the synthetic data
-[[ ]] The models converge to a stable, consistent quality level after a few generations and then stop changing
+[[ ]] Each generation produces a progressively better model because the LLM pipeline iteratively refines and distills errors — more cycles means higher quality, like proofreading a document repeatedly
+[[ ]] The models converge to a stable quality level after a few generations because the distribution self-corrects — similar to how a population reaches equilibrium
 [[x]] Model quality degrades over generations as rare but important patterns in the real-world data distribution are progressively lost from the synthetic outputs — a phenomenon called model collapse
-[[ ]] The model learns to generate infinitely creative and diverse output as it samples more broadly from its own expanding distribution
+[[ ]] The model learns to generate more creative and diverse output as it samples from an expanding, self-improving distribution — synthetic training data inherently increases diversity with each generation
 
 > **Why this answer?** Shumailov et al. (2023) demonstrated model collapse empirically: when models are trained on outputs of previous models, the tails of the distribution — rare but important patterns — are systematically underrepresented in the training data of each subsequent generation. The model becomes progressively more "average," handling common cases well but becoming brittle and unreliable on unusual inputs. This is why real-world data anchoring is critical: mixing some proportion of real human-generated data into each generation's training set significantly slows or prevents collapse.
 
