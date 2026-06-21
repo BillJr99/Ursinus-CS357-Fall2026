@@ -96,6 +96,8 @@ Think of the agent loop like a student working through a homework problem: they 
 
    *Hint: Estimate the number of distinct files that probably need to change, multiply by the number of verify-and-fix cycles you'd expect, and add a buffer. What information would you want to collect from past runs to refine this estimate?*
 
+> **⚠️ Common Misconception:** Many students assume that a coding agent "understands" the codebase the way a senior developer does — holding a mental model of every function, every dependency, and every implicit assumption. It does not. The agent only knows what it has loaded into its context window during the current run. If a critical convention (like "never use raw SQL strings — always use the ORM") was established in a file the agent did not load, the agent will happily violate it. This is why human diff review remains essential even when the test suite passes: tests verify behavior, not design adherence.
+
 [[MC]]
 In the coding agent loop, the *Verify* stage fails silently when:
 - ( ) The test runner crashes with an exception
