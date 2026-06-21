@@ -66,19 +66,19 @@ A student org wants an agent system that turns raw meeting notes into (a) a poli
 
 1. Draft the monolithic system prompt (just its section headers). How many distinct jobs is one context holding, and which job would most likely be performed poorly because the model's attention is diluted?
 
-   *Hint:* Try writing out the headers: "## Your job", "## Action item format", "## Minutes format", "## Summary rules", "## Verification steps". Count the headers and ask yourself which would be forgotten in a long context.
+   > *Hint: Try writing out the headers: "## Your job", "## Action item format", "## Minutes format", "## Summary rules", "## Verification steps". Count the headers and ask yourself which would be forgotten in a long context.*
 
 2. Decompose into the smallest sensible team. For each role, specify its *exact* input and output — be format-precise: JSON fields, markdown, or prose.
 
-   *Hint:* The 3-agent pipeline in the table above is a starting point. Could you break any role down further? Could you merge any two without losing clarity?
+   > *Hint: The 3-agent pipeline in the table above is a starting point. Could you break any role down further? Could you merge any two without losing clarity?*
 
 3. Identify the seam where a hallucinated action item would most plausibly enter, and station one of Unit 3's patterns there as a guard.
 
-   *Hint:* A "hallucinated action item" is one the model invented that does not appear in the original notes. Which agent produces action items? What should the Checker do if it detects one?
+   > *Hint: A "hallucinated action item" is one the model invented that does not appear in the original notes. Which agent produces action items? What should the Checker do if it detects one?*
 
 4. Which single role would you evaluate *first* if the final summaries are coming out wrong, and what does that choice reveal about why decomposition aids debugging?
 
-   *Hint:* Work backwards from the output. The summary is produced by the Writer. But the Writer depends on the Extractor's action list. If the action list is wrong, the Writer cannot fix it.
+   > *Hint: Work backwards from the output. The summary is produced by the Writer. But the Writer depends on the Extractor's action list. If the action list is wrong, the Writer cannot fix it.*
 
 ---
 

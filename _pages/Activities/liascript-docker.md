@@ -155,9 +155,11 @@ You run a model server with `docker run -p 8080:11434 ...` and the docs say the 
 
 ---
 
+*With ports and volumes, you can run and persist pre-built images. The next step is building your own: writing a Dockerfile that packages your Python agent code into a portable, reproducible image anyone can run with a single command.*
+
 ## 5. Writing a Dockerfile
 
-**A Dockerfile is the recipe that builds an image**, one layer per instruction. Here is a complete, real one for a tiny Python agent service, annotated:
+**A Dockerfile is the recipe that builds an image** — a text file of instructions that Docker executes top to bottom, saving each step as a layer (a cached snapshot). One instruction per layer, and Docker only re-executes layers where something changed. Here is a complete, real one for a tiny Python agent service, annotated:
 
 ```dockerfile
 FROM python:3.12-slim
@@ -202,9 +204,11 @@ The ordering rule (stable layers first, volatile layers last) is the single most
 | `EXPOSE port` | Documents which port the container expects to receive traffic on. Does not actually publish the port — you still need `-p` at run time. | `EXPOSE 8000` |
 | `CMD ["exec", "args"]` | The default command run when the container starts. Overridable at `docker run` time. | `CMD ["python", "server.py"]` |
 
+*A single Dockerfile defines one service. When your stack needs multiple services — a model gateway, a chat UI, your agent — Compose lets you define and start them all with one command.*
+
 ## 6. Docker Compose: Stacks as a File
 
-Running three services with hand-typed `docker run` lines gets old immediately. **Compose declares the whole stack in one YAML file**:
+Running three services with hand-typed `docker run` lines gets old immediately. **Compose declares the whole stack in one YAML file** (YAML is a human-readable configuration format, similar to a Python dictionary but without the quotes and brackets):
 
 ```yaml
 # docker-compose.yml
