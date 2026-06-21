@@ -99,9 +99,9 @@ Think of this like testing a bridge: you don't only test it with one car at norm
 [[MC]]
 Your agent's output is non-deterministic: the same question produces a different answer on every run. The most practical approach to regression testing is:
 - (x) Define semantic properties the output must always satisfy — valid JSON, contains a citation, stays on topic, format compliance — and test those properties rather than comparing exact output strings
-- ( ) Set temperature to 0 and compare exact output strings on each run
-- ( ) Test only the tool functions and treat the agent itself as untestable
-- ( ) Avoid testing non-deterministic systems entirely until the technology matures
+- ( ) Set temperature to 0 and compare exact output strings on each run — temperature 0 produces consistent outputs from the same model version, so exact string comparison is sufficient for regression testing
+- ( ) Test only the tool functions and treat the agent itself as untestable — since the agent's reasoning is non-deterministic, there is no way to define a meaningful pass/fail criterion for agent-level behavior
+- ( ) Avoid testing non-deterministic systems entirely until the technology matures — non-determinism makes testing impossible, and any test that sometimes passes and sometimes fails provides no useful signal
 
 ---
 
@@ -195,7 +195,7 @@ Think of it like editing a recipe: you adjusted the salt because last week's sou
 
    *What to do:* Build a minimal eval harness for your project — a script that (a) loads a JSON file of test cases with `{input, expected_properties}` structure, (b) runs each input through your agent, (c) checks each property function against the output, (d) prints a summary table of pass/fail/score per test case, and (e) writes a timestamped results file so you can compare runs over time. This harness is a required artifact of your project submission.
 
-   *Starter hint:*
+   *Starter hint:* The harness below loads test cases from a JSON file, runs each through the agent, checks the defined property functions, and writes a timestamped results file — the timestamped file is what lets you compare two runs side-by-side later.
    ```python
    import json, datetime
 
