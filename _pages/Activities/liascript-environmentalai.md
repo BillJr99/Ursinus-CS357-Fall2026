@@ -46,7 +46,7 @@ In this Part, you will build a concrete, numerical sense of how much energy and 
 
 Most people who use AI daily have a rough sense that large models require a lot of computation, but almost no intuition for what that means in carbon terms. Developing that intuition — even approximately — is what allows you to make design decisions that are grounded in reality rather than either dismissiveness ("it's just electricity") or paralysis ("AI is destroying the planet"). The goal is proportional reasoning: knowing which choices matter and which are noise.
 
-**Training** a large language model is a one-time but enormous energy expenditure. Estimates for GPT-3 (175B parameters) place training energy at approximately 1,287 MWh and carbon emissions at roughly 500 tonnes of CO$_2$ equivalent — comparable to the lifetime emissions of five average American cars or about 125 transatlantic flights. GPT-4-scale models are estimated to require substantially more, though developers do not publish precise figures. These numbers are order-of-magnitude estimates; the actual figure depends heavily on the regional carbon intensity (the CO$_2$ emitted per unit of electricity, which varies by energy source) of the electrical grid where training runs.
+**Training** a large language model is a one-time but enormous energy expenditure. Estimates for GPT-3 (175B parameters) place training energy at approximately 1,287 MWh and carbon emissions at roughly 500 tonnes of CO$_2$ equivalent — comparable to the lifetime emissions of five average American cars or about 125 transatlantic flights. GPT-4-scale models are estimated to require substantially more, though developers do not publish precise figures. These numbers are order-of-magnitude estimates; the actual figure depends heavily on the regional carbon intensity — the grams of CO$_2$ emitted per kilowatt-hour of electricity generated, which swings from near-zero in Iceland's geothermal grid to several hundred grams in coal-heavy regions — of the electrical grid where training runs.
 
 **Inference** at scale often exceeds training in total impact because it recurs with every query. A single ChatGPT prompt is estimated to consume roughly ten times the energy of a Google search. With hundreds of millions of queries per day, inference energy becomes the dominant term. Water usage compounds this: Microsoft reported in 2023 that its data centers consumed approximately 1.7 liters of water (for cooling) per 20-50 ChatGPT prompts. Water stress in regions hosting large data centers is a real externality, not a hypothetical one.
 
@@ -56,7 +56,7 @@ Most people who use AI daily have a rough sense that large models require a lot 
 
 ## Model 1: Carbon Cost Comparison
 
-Why this matters: every time you choose which model to use for a task — a frontier API versus a local quantized model versus a fine-tuned small model — you are making an environmental decision, whether or not you think of it that way. The table below gives you the proportional anchors to make that choice with some quantitative grounding rather than pure convenience.
+Why this matters: every time you choose which model to use for a task — a frontier API versus a local quantized model versus a fine-tuned small model — you are making an environmental decision, whether or not you think of it that way. The table below gives you the proportional anchors to make that choice with some quantitative grounding rather than pure convenience. As you read it, look for the ratio between the smallest and largest entries — that span of nine orders of magnitude is the key intuition to carry into the design decisions in Part II.
 
 | Action | Estimated CO$_2$ equivalent | Approximate real-world equivalent | Engineering implication |
 |---|---|---|---|
@@ -133,10 +133,10 @@ The single most impactful design decision for reducing AI environmental cost is 
 
 [[MC]]
 A development team wants to reduce the carbon footprint of their AI-powered customer support system. Which intervention is most likely to produce the largest reduction in inference-time carbon emissions?
-- ( ) Switching from Python to a compiled language for the API wrapper — this speeds up the code surrounding the model call but does not reduce the model's compute cost
-- ( ) Adding a caching layer that serves identical responses to repeated queries without re-running the model — useful, but only helps for truly repeated queries; the model still runs for every unique question
+- ( ) Switching from Python to a compiled language for the API wrapper — runtime efficiency gains in the surrounding code are in the microsecond range, whereas the model forward pass dominates at the millisecond-to-second scale; the wrapper is not the bottleneck
+- ( ) Adding a caching layer that serves identical responses to repeated queries without re-running the model — caching is a meaningful lever but only eliminates compute for exact or near-duplicate queries; a customer support system with diverse question phrasing will still run the full model for the majority of requests
 - (x) Replacing a 70B-parameter frontier model with a fine-tuned 7B-parameter model that achieves equivalent accuracy on the support domain — a 10x reduction in model size directly cuts inference compute by roughly 10x
-- ( ) Moving the service from HTTP to WebSockets — changes how data is transferred, not how much compute the model uses
+- ( ) Purchasing carbon offsets equal to the service's measured emissions — offsets shift accounting responsibility but do not reduce the actual energy the model consumes per query; the compute load and its direct energy draw remain identical
 
 ---
 
@@ -188,6 +188,8 @@ Sofia is a CS student working on a capstone project for one week. Her AI use inc
 
 # Part IV: Synthesis
 
+In this Part, you will apply the proportional reasoning, design vocabulary, and systemic thinking from Parts I–III to your own project and practice context. The goal is to leave with a concrete number, a specific substitution proposal, and a policy recommendation you could actually hand to an engineering team.
+
 ## Exercises
 
 1. *Personal carbon audit.*
@@ -223,6 +225,8 @@ Sofia is a CS student working on a capstone project for one week. Her AI use inc
 *Technical:* Jevons paradox suggests that the engineers most committed to efficiency may be the ones who inadvertently drive the largest increases in total consumption, because they make expansion economically rational. Is there a version of your course project that fits this pattern? What would you need to believe about how it gets deployed to conclude that it reduces, rather than increases, aggregate environmental impact?
 
 *Societal:* The organizations best positioned to reduce AI's environmental impact (large cloud providers, frontier model developers) are the same organizations with the strongest financial incentives to increase AI use. What governance mechanisms — regulatory, market-based, or professional — could align those incentives with aggregate carbon reduction? Is there a precedent from another industry that suggests such mechanisms can work?
+
+> *Hint:* Consider the history of automotive fuel-economy standards (CAFE standards in the US): automakers resisted, lobbied, and then ultimately innovated when the regulation held. Ask: what would the AI equivalent look like — mandatory energy-per-inference disclosure, a carbon cost embedded in API pricing, or an industry reporting standard? Which of those is most likely to survive political and market pressure, and which is most likely to trigger a Jevons rebound?
 
 ---
 
