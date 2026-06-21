@@ -40,9 +40,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Medium and the Message
 
+In this part, you will discover that every AI pipeline you've coded this semester can be expressed visually as a drag-and-drop flow — and you will learn *when* that matters and *when* it doesn't.
+
 ## Model 1: Translation Table
 
-Think of architectural blueprints versus a physical building. Both represent the same structure, but blueprints are easier to share with a client who has never swung a hammer, while the physical building is what actually runs. Langflow is the blueprint tool: it makes the architecture of your AI system visible and explainable to non-programmers, while the code you have been writing is the building. Today you will discover that the blueprint and the building encode exactly the same ideas — and that choosing between them depends on your audience, not on what is technically possible. Visual builders have democratized who can *assemble* AI systems; your job today is to understand what that means for who can *audit* them.
+Think of architectural blueprints versus a physical building. Both represent the same structure, but blueprints are easier to share with a client who has never swung a hammer, while the physical building is what actually runs. Langflow is the blueprint tool: it makes the architecture of your AI system visible and explainable to non-programmers, while the code you have been writing is the building.
+
+Today you will discover that the blueprint and the building encode exactly the same ideas — and that choosing between them depends on your audience, not on what is technically possible. Visual builders have democratized who can *assemble* AI systems; your job today is to understand what that means for who can *audit* them.
 
 **A flow is a dataflow graph.** Nodes are components (prompt templates, model calls, retrievers, parsers); edges carry typed data between them. Langflow renders the graph on a canvas, executes it on demand, and exposes every intermediate value for inspection — which makes it, among other things, a *teaching and debugging instrument*: the architecture diagram and the running system are the same object.
 
@@ -74,6 +78,8 @@ Think of architectural blueprints versus a physical building. Both represent the
    *Hint:* Think about what you can *see* on a canvas that is implicit in code (data flow direction, which nodes are connected). Then think about what you can *inspect* in code that is hidden behind a node's icon (exact prompt text, exception tracebacks).
 
 ---
+
+Now that you understand what visual flows are and how they map to code, let's build them — starting simple and adding complexity one layer at a time.
 
 # Part II: Build Sessions
 
