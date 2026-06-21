@@ -125,6 +125,8 @@ The result is a dataset with a natural difficulty gradient, which is particularl
 
 ### Quality Filtering Pipeline
 
+The diagram below shows how raw generated pairs flow through a series of filters before being added to the training set. Read it left-to-right: each arrow represents a filter that reduces the quantity of data but improves its quality — the loop at the bottom is where generation and filtering cycle repeatedly.
+
 ```
 seed_instructions
     → generate_variants(LLM)

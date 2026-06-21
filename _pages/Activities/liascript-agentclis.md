@@ -42,9 +42,11 @@ Before diving in, make sure these terms are solid. You will encounter all of the
 
 # Part I: One Anatomy, Many Tools
 
+In this part, you will learn the shared anatomy of agentic CLI tools and install your first tool end-to-end — so that the differences between tools become variations on a pattern you already understand, rather than five separate things to memorize.
+
 ## 1. What Every Agentic CLI Shares
 
-Think of these tools the way you think about web browsers: Chrome, Firefox, and Safari look and feel different, but under the hood they all speak HTTP, render HTML, and run JavaScript. Agentic CLIs are the same story — different names, different makers, different default personalities, but every one of them is running the same agent loop you studied in week one. The shared parts are: a **REPL-style chat** in your project directory; **file tools** (read, edit, create) scoped to that directory; a **shell tool** that proposes commands; **permission gates** before consequential actions; a **project context file** read automatically at startup; and a growing convergence on **MCP** for external tools. Once you can drive one, you can drive them all; what differs is philosophy, which the comparison below makes concrete.
+Think of these tools the way you think about web browsers: Chrome, Firefox, and Safari look and feel different, but under the hood they all speak HTTP, render HTML, and run JavaScript. Agentic CLIs are the same story — different names, different makers, different default personalities, but every one of them is running the same agent loop you studied in week one. The shared parts are: a **REPL-style chat** in your project directory; **file tools** (read, edit, create) scoped to that directory; a **shell tool** that proposes commands; **permission gates** before consequential actions; a **project context file** read automatically at startup; and a growing convergence on **MCP** (Model Context Protocol — an open standard for connecting agents to external tools like databases and browsers) for external tools. Once you can drive one, you can drive them all; what differs is philosophy, which the comparison below makes concrete.
 
 | Tool | Maker | Install | Context file | Personality |
 |------|-------|---------|--------------|-------------|
@@ -59,6 +61,8 @@ Two more belong to our course ecosystem and are covered where they live: **freeb
 ## 2. The First Session, Step by Step
 
 From zero to a working session, with Claude Code as the example (the others are near-identical):
+
+The following commands take you from a fresh machine to a running Claude Code session. Watch carefully for the authentication step — the tool will prompt you to log in on first launch.
 
 ```bash
 node --version                                # 1. confirm Node 20+
@@ -90,6 +94,8 @@ Each pair installs one assigned tool, runs the weather-script task above in a fr
 3. The agent read files you never mentioned. Which ones, and how do you know? (Find the evidence in the transcript; observability is a course theme, not an accident.)
 
    *Hint:* Look for lines where the tool reports a file-read action — Claude Code shows `Read file: <path>`, Codex shows a similar tool-use trace, and Gemini prints the file name before processing it. Common files an agent reads even in an "empty" directory: `.gitignore`, `pyproject.toml`, `requirements.txt`, `README.md`, and any `*.md` context file. If your directory is truly empty, the agent will likely say so — that is also useful evidence.
+
+With the anatomy clear and your first session running, Part II builds on that foundation by showing how to give the agent standing instructions, calibrate its safety gates, and route it through your local model stack.
 
 ---
 

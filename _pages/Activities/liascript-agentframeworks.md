@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Frameworks Exist
 
+In this part, you will compare four major agent frameworks side-by-side and identify what each one hides from the developer — building the intuition that a framework's convenience is always purchased at the price of visibility into what is happening underneath.
+
 ## Model 1: Framework Comparison
 
 Every agent system, regardless of framework, must solve the same four boilerplate problems: **memory management** (which prior turns does the agent see?), **tool routing** (how does the model's function-call land in real code?), **prompt templating** (how do dynamic values get inserted without string bugs?), and **conversation history** (how is the message list accumulated and truncated?). Frameworks pre-solve these so you don't re-solve them on every project. The cost is **abstraction leakage**: the moment the framework's assumptions diverge from your requirements, the hidden machinery becomes your adversary.
@@ -73,6 +75,8 @@ Choosing a framework is like choosing a car vs. a motorcycle vs. a bicycle for a
 
 # Part II: The Leaky Abstraction Problem
 
+In this part, you will trace what each framework hides inside the same three-agent pipeline, and practice identifying the specific hidden mechanism that could leak and cause a bug — because the most common framework bugs require understanding the hidden layer to fix.
+
 ## 2. What Frameworks Are Really Hiding
 
 When a framework's assumption breaks down, you must understand the hidden layer to fix the problem. The same three-agent pipeline implemented in three frameworks reveals dramatically different hidden machinery.
@@ -80,6 +84,8 @@ When a framework's assumption breaks down, you must understand the hidden layer 
 ## Model 2: The Same Pipeline, Three Frameworks
 
 Consider a three-agent pipeline: **Researcher** (searches the web and retrieves relevant passages) → **Drafter** (writes a response using those passages) → **Critic** (identifies weaknesses and returns a revision list). Below is the conceptual structure in three frameworks, with the hidden machinery surfaced.
+
+The three code blocks below implement the same three-agent pipeline in three different frameworks. As you read each one, note what you have to write explicitly versus what the framework handles invisibly — those invisible parts are exactly where abstraction leaks can occur.
 
 **LangChain / LangGraph (`pip install langgraph`):**
 ```python
@@ -104,9 +110,11 @@ result = app.invoke({"question": q})
 ```
 *What this makes easy:* Stateful loops, conditional branching, streaming intermediate results to LangSmith for monitoring. Every node's input and output is a typed dictionary slice of `PipelineState`.
 
-*What this hides (and can leak):* The `PipelineState` accumulates state from all prior nodes. If `researcher_chain` adds a key to the state, the `critic_chain` can see it — even if you didn't intend that. LCEL's `|` operator overloading hides the prompt structure; to see the exact system prompt your Researcher is receiving, you must call `researcher_chain.get_prompts()`.
+*What this hides (and can leak):* The `PipelineState` accumulates state from all prior nodes. If `researcher_chain` adds a key to the state, the `critic_chain` can see it — even if you didn't intend that. LCEL's (LangChain Expression Language) `|` operator overloading hides the prompt structure; to see the exact system prompt your Researcher is receiving, you must call `researcher_chain.get_prompts()`.
 
 ---
+
+The CrewAI version replaces explicit routing code with plain-English role descriptions. Notice how much less Python you write — and think about what the framework is generating on your behalf that you cannot see.
 
 **CrewAI (`pip install crewai crewai-tools`):**
 ```python
@@ -141,6 +149,8 @@ crew.kickoff(inputs={"question": q})
 *What this hides (and can leak):* CrewAI writes part of every agent's system prompt for you — the `role`, `backstory`, and `goal` are injected into a prompt template you cannot see by default. Inter-task data passing is implicit: `{passages}` in `task_d` is filled by the output of `task_r` automatically. If the Researcher's output doesn't match what the Drafter's description expects, the pipeline silently uses unexpected data.
 
 ---
+
+The AutoGen version exposes the shared `groupchat.messages` list explicitly. As you read it, ask yourself: which agents can see which messages, and could that sharing cause unintended behavior?
 
 **AutoGen (`pip install pyautogen`):**
 ```python

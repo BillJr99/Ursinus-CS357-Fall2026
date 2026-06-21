@@ -81,7 +81,7 @@ Observability in distributed systems is built on three complementary data types.
 
 When an agent receives a query, it may invoke a retriever, call an LLM, execute a tool, and format a response — each of these is a **span** in a **trace**. A span records its start time, end time, parent span, and any attributes (key-value metadata). The spans are linked by a common trace ID, so you can visualize the entire causal chain for a single request.
 
-Below is the span tree for an agent handling a Retrieval-Augmented Generation (RAG) query:
+Below is the span tree for an agent handling a Retrieval-Augmented Generation (RAG) query. Read it top-to-bottom: the root span represents the entire request, and the indented child spans (retrieve, llm_generate, tool_call) each represent one step inside it — notice how the durations add up to reveal where time is actually being spent.
 
 ```
 [root span] handle_query   duration: 2340ms
@@ -125,7 +125,7 @@ Attributes on spans are the primary mechanism for answering questions about prod
 
 **OpenTelemetry** (OTel) is a vendor-neutral open standard for collecting and exporting telemetry data (traces, metrics, and logs) from applications. It provides a unified API and SDK so you can instrument your agent once and export to any compatible backend (Jaeger, Honeycomb, Grafana Tempo, etc.) by changing configuration, not code.
 
-The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python:
+The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python. As you read it, notice two things: (1) the setup block runs once at startup and wires up the exporter, and (2) each instrumented function uses `with tracer.start_as_current_span(...)` to create a span — look at which attributes are logged and which sensitive information (like the raw query text) is deliberately omitted.
 
 ```python
 from opentelemetry import trace
@@ -165,10 +165,10 @@ For **SLA tracking**, the attributes you instrument determine what you can measu
 [[MC]]
 A production agent is silently failing on approximately 8% of queries — users receive a response, but it is unhelpful or factually wrong. There are currently no logs, metrics, or traces in place. Which observability pillar would you add FIRST to diagnose this problem?
 
-- ( ) Metrics — aggregate error rates will tell you exactly which requests failed
-- ( ) Traces — the span tree will immediately reveal which model produced the wrong answer
+- ( ) Metrics — aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
+- ( ) Traces — a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
 - (x) Logs — structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
-- ( ) All three simultaneously — you cannot diagnose anything without all pillars in place
+- ( ) All three simultaneously — instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
 
 ### Critical Thinking Questions
 
