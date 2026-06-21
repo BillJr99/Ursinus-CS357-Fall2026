@@ -121,6 +121,8 @@ An agent team keeps stalling: the checker waits for verified facts while the res
 
 ## Code Cell
 
+The code below implements the three-agent meeting-notes team using a blackboard pattern: a shared `state` dictionary holds all the data, and a `while` loop fires whichever agent matches the current `status` field. Read the `extractor`, `writer`, and `checker` functions in order — each one reads only the slice of the state it needs, writes its output back to a specific key, and advances the `status` to the next stage.
+
 ```python
 import requests
 
@@ -182,15 +184,15 @@ print("\nSUMMARY:\n", state["summary"])
 
 5. Trace one full pass of the `while` loop: which role fired at each `status`, and what did it write to the shared state? The Recorder draws the state machine on paper with boxes for each status and arrows labeled with which agent causes the transition.
 
-   *Hint:* Start at `status = "extracting"`. The `extractor` function fires. After it runs, what is `state["status"]`? Then which function fires next?
+   > *Hint: Start at `status = "extracting"`. The `extractor` function fires. After it runs, what is `state["status"]`? Then which function fires next?*
 
 6. The checker can send `status` back to `"drafting"`, creating a critique-refine loop *inside* the team. What prevents an infinite loop, and where have you seen that same safeguard at least twice before in this course?
 
-   *Hint:* Look at the variable `guard`. What would happen if the checker kept failing and `guard` was not there? Where did we use a similar guard count in the debate and critique-refine modules?
+   > *Hint: Look at the variable `guard`. What would happen if the checker kept failing and `guard` was not there? Where did we use a similar guard count in the debate and critique-refine modules?*
 
 7. Each `llm` call sees only a slice of the state dictionary. For each role (extractor, writer, checker), name one piece of state it deliberately does *not* see, and explain the specific failure that omission prevents.
 
-   *Hint:* For example, the extractor does not see `state["minutes"]` because minutes have not been written yet — but also because seeing a draft might bias the action-item extraction. What analogous risks exist for the writer and checker?
+   > *Hint: For example, the extractor does not see `state["minutes"]` because minutes have not been written yet — but also because seeing a draft might bias the action-item extraction. What analogous risks exist for the writer and checker?*
 
 > **⚠️ Common Misconception:** Students often assume that giving every agent access to the *full* state object is safer — "the more context, the better." In practice, the opposite is often true. An agent given irrelevant context is more likely to be distracted by it, to over-fit its output to previous stages, or to reproduce upstream errors with false confidence. The discipline of passing only what each role needs is not a technical limitation — it is a deliberate design choice that makes each agent's behavior more predictable and more testable in isolation.
 
