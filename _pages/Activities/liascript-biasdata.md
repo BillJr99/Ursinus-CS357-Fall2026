@@ -95,11 +95,15 @@ Recall three scenes from *Coded Bias*: the white-mask discovery; the Brooklyn ap
 
 # Part II: Hands on the Distribution
 
+In this part, you will run a bias probe directly on your local model — asking it to complete sentences about different occupations and counting the pronouns it chooses. This turns the abstract concept of "training data bias" into a number you measured yourself.
+
 ## Model 2: Probing a Local Model
 
 We probe associations in your local model the disciplined way: many samples, counted, disaggregated. (We probe occupations, a domain where training-text skew is well documented.)
 
 Why this probe matters: if a hiring-assistant agent uses the same model to draft outreach messages, and the model associates "nurse" with feminine pronouns, the agent may subtly vary its messages — using warmer language when addressing presumed women, more formal language when addressing presumed men. No single message is damning; the pattern only appears when you measure across thousands of messages. This is exactly why disaggregated measurement is the right tool.
+
+The code below asks the model to write a sentence about a specific occupation 12 times and counts which pronoun it uses each time. A perfectly unbiased model would use "she," "he," and "they" roughly equally regardless of occupation. What you observe will likely differ — that difference is the bias you are measuring.
 
 ---
 
@@ -146,7 +150,7 @@ for occ in ["nurse", "engineer", "kindergarten teacher", "electrician"]:
 
    *Hint:* Tracking the demographics means the model reflects reality. Exaggerating them means the model amplifies existing disparities — because training text over-represents extreme cases. Contradicting them (e.g., "kindergarten teacher → he" despite a female-dominated field) is the rarest outcome but possible where media coverage skews. In each case: who decided what the training corpus would contain, and was that a considered choice?
 
-5. This probe used $n = 12$ samples per occupation. Compute how confident you should be in a 9-versus-3 split favoring "she" over "he." Use a sign test or reason from coin-flip intuition: if the model had no preference, how often would you get a 9-3 split or more extreme by chance?
+5. This probe used $n = 12$ samples per occupation. Compute how confident you should be in a 9-versus-3 split favoring "she" over "he." Use a sign test (a statistical test that asks: if there were truly no preference, how likely would this result be by chance?) or reason from coin-flip intuition: if the model had no preference, how often would you get a 9-3 split or more extreme by chance?
 
    *Hint:* Under the null hypothesis (no preference, 50/50 coin flip), the probability of getting 9 or more "she" out of 12 is the probability of getting at least 9 heads in 12 flips of a fair coin. You can estimate this: getting 9, 10, 11, or 12 heads. Is that likely or unlikely by chance alone? What does this tell you about how many samples you need before claiming a real pattern?
 
@@ -156,10 +160,10 @@ for occ in ["nurse", "engineer", "kindergarten teacher", "electrician"]:
 
 [[MC]]
 A resume-screening agent shows equal average approval rates overall but was validated only on resumes from one region's universities. The *Coded Bias*-informed concern is:
-- ( ) Average approval is the wrong metric; throughput matters more
+- ( ) Average approval is the wrong metric; throughput (how many resumes per hour) matters more
 - (x) Performance may degrade sharply on groups absent from validation data, and the aggregate hides it
-- ( ) The model's temperature was too high
-- ( ) Agents cannot exhibit bias because they follow prompts
+- ( ) The model's temperature was too high, causing random variation that looks like bias
+- ( ) Agents cannot exhibit bias because they follow explicit prompt instructions rather than making their own judgments
 
 > **⚠️ Common Misconception:** A common but dangerous belief is that "the agent just follows instructions — it can't be biased." This is wrong on two levels. First, the model underlying the agent was trained on biased text, so its probability distributions already encode the associations in that text. Second, even a perfectly neutral model can be made biased by prompts that introduce biased assumptions (e.g., "draft a professional outreach message for a nurse named Alex" — the model's completion of "professional for a nurse" already carries occupational gender associations). Bias is not a property of whether the agent "means" to discriminate; it is a property of the statistical patterns in its outputs, measured across many runs on many people.
 

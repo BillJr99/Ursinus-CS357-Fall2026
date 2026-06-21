@@ -108,9 +108,11 @@ Hosts demonstrate honestly: at least one *known failure case* must be shown at e
 
 ---
 
+*You have collected feedback cards from every station. Triage is the step where raw feedback becomes a concrete action plan — which feedback demands a fix, which demands an honest disclosure, and which can safely wait.*
+
 ## 3. Triage (20 minutes)
 
-Teams cluster their feedback cards and sort every item into exactly one bucket: **Fix before demo** (breaks the core story), **Disclose at demo** (real, acknowledged, out of scope), or **Future work** (report material). The discipline is the second bucket: mature engineering names its known defects. The Scribe converts bucket one into assigned, dated backlog items on the spot.
+Teams cluster their feedback cards and sort every item into exactly one bucket: **Fix before demo** (breaks the core story), **Disclose at demo** (real, acknowledged, out of scope), or **Future work** (report material). The discipline is the second bucket: mature engineering names its known defects rather than hoping nobody notices. The Scribe converts bucket one into assigned, dated backlog items on the spot.
 
 ### Triage Exercise
 
@@ -125,6 +127,8 @@ For each piece of feedback your team received, the Coordinator calls it out, the
 *Hint:* The hardest items to triage are the ones where the team disagrees about whether something is "core" or "peripheral." The test: if this failure happens during the demo and you have not disclosed it, does it undermine the audience's understanding of what the system does? If yes, it is Disclose at minimum, Fix if there is time.
 
 ---
+
+*With your backlog triaged and your disclosures drafted, the final step is a formal readiness check. The Evaluator's sign-off is only valid if each "Yes" comes with evidence — a time, a link, a run result — not just confidence.*
 
 ## 4. Release Readiness Checklist
 

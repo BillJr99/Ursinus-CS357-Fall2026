@@ -122,7 +122,11 @@ A pre-mortem is most useful when it is conducted:
 
 ---
 
+The pre-mortem identified what could go wrong; this model shows, week by week, how the consequences of skipping the pre-mortem play out in a real project compared to a team that did the design work upfront.
+
 ## Model 3: Design-First vs. Code-First — A Six-Week Timeline
+
+In this model you will compare two student teams building the same pipeline on parallel tracks and trace exactly when and why the code-first team's early-saved time is spent back — with interest.
 
 **Why this matters:** The design-first approach is sometimes dismissed as "slowing down" development. This timeline shows that the total time spent is similar, but *where* the work happens differs dramatically. Design-first front-loads effort into cheap, reversible planning. Code-first back-loads the same effort into expensive, disruptive rework. The question is not whether to do the hard thinking — it is whether to do it on paper or in production.
 
@@ -152,6 +156,8 @@ Two student teams build the same 3-agent research pipeline. Team A starts coding
     > *Hint: Is there any project type where the requirements are so unstable or unknown that writing a design doc first would be wasted effort? What would a project like that look like, and is a 3-agent research pipeline that kind of project?*
 
 ---
+
+Having seen what design-first buys you across six weeks, these exercises give you practice writing the artifacts yourself — agent table, pre-mortem, and debate — before you face blank-page paralysis on your final project.
 
 ## Exercises
 
