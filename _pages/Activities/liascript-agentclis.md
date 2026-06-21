@@ -25,19 +25,34 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+Before diving in, make sure these terms are solid. You will encounter all of them in today's work, and the table gives you a quick reference to return to.
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| **Agent loop** | The repeating cycle an AI agent runs: observe the environment, plan the next step, use a tool, observe the result, repeat until done | When you ask Claude Code to write a weather script, it reads your directory, drafts the file, proposes a shell command to test it, and waits for your approval — then loops again |
+| **REPL** | Read-Eval-Print Loop: an interactive session where you type something, the program responds, and you keep going — like a conversation | The `claude` command drops you into a REPL; you type goals, it replies with plans and proposed changes |
+| **Permission gate** | A pause point where the tool stops and asks you to approve or refuse a proposed action before it runs | Before running `pip install requests`, Claude Code will display the command and ask "allow?" |
+| **Context file** | A project-specific text file (e.g., `CLAUDE.md`) the agent reads automatically at startup, containing standing instructions about the project | You write "never modify files under `data/raw/`" in `CLAUDE.md` and the agent respects that boundary every session without you repeating it |
+| **MCP (Model Context Protocol)** | An open standard that lets agents connect to external tools — databases, APIs, browsers — in a uniform way | Both Claude Code and Gemini CLI can call the same MCP server to query your database; you only write the server once |
+| **Gateway / base URL** | A local proxy server that sits between your CLI tool and any AI model, letting you swap models without changing the tool | Setting `ANTHROPIC_BASE_URL=http://localhost:4000` makes Claude Code talk to your local Ollama instance instead of Anthropic's cloud |
+
+---
+
 # Part I: One Anatomy, Many Tools
 
 ## 1. What Every Agentic CLI Shares
 
-Strip away the branding and every tool in this family is the same machine, the agent loop from week one wearing a terminal interface: a **REPL-style chat** in your project directory; **file tools** (read, edit, create) scoped to that directory; a **shell tool** that proposes commands; **permission gates** before consequential actions; a **project context file** read automatically at startup; and a growing convergence on **MCP** for external tools. Once you can drive one, you can drive them all; what differs is philosophy, which the comparison below makes concrete.
+Think of these tools the way you think about web browsers: Chrome, Firefox, and Safari look and feel different, but under the hood they all speak HTTP, render HTML, and run JavaScript. Agentic CLIs are the same story — different names, different makers, different default personalities, but every one of them is running the same agent loop you studied in week one. The shared parts are: a **REPL-style chat** in your project directory; **file tools** (read, edit, create) scoped to that directory; a **shell tool** that proposes commands; **permission gates** before consequential actions; a **project context file** read automatically at startup; and a growing convergence on **MCP** for external tools. Once you can drive one, you can drive them all; what differs is philosophy, which the comparison below makes concrete.
 
 | Tool | Maker | Install | Context file | Personality |
 |------|-------|---------|--------------|-------------|
-| Claude Code | Anthropic | `npm install -g @anthropic-ai/claude-code` | `CLAUDE.md` | Most complete: subagents, MCP, fine-grained gates |
-| Codex CLI | OpenAI | `npm install -g @openai/codex` | `AGENTS.md` | Rust core; native multi-provider TOML config |
-| Gemini CLI | Google | `npm install -g @google/gemini-cli` | `GEMINI.md` | Generous free tier; three-tier skill discovery |
-| opencode | opencode.ai | `curl -fsSL https://opencode.ai/install \| bash` | `AGENTS.md` | Most provider-flexible; any OpenAI-compatible backend |
-| pi | pi.dev | `npm install -g @mariozechner/pi-coding-agent` | minimal | Deliberately small: no gates, no plan mode; for fast exploration |
+| Claude Code | Anthropic | `npm install -g @anthropic-ai/claude-code` — installs the `claude` binary globally via npm; requires Node 20+ | `CLAUDE.md` in your project root | The most fully-featured of the five: supports autonomous subagents that spawn their own loops, a rich MCP tool ecosystem, and the finest-grained permission gates (allow once / allow for session / allow always, per command pattern) |
+| Codex CLI | OpenAI | `npm install -g @openai/codex` — installs the `codex` binary; the core is written in Rust for speed, wrapped in a Node package for distribution | `AGENTS.md` in your project root | Configured via a TOML file that names multiple model providers; you can point it at OpenAI, Azure, or any compatible endpoint in the same config block |
+| Gemini CLI | Google | `npm install -g @google/gemini-cli` — installs the `gemini` binary; authenticate with `gemini auth login` the first time | `GEMINI.md` in your project root | Comes with the most generous free tier of the commercial tools; uses a three-tier skill discovery system (local → project → global) to find custom capabilities |
+| opencode | opencode.ai | `curl -fsSL https://opencode.ai/install \| bash` — a single-line installer that detects your OS and places the binary on your PATH | `AGENTS.md` in your project root (same spec as Codex) | The most provider-flexible of the group: it speaks to any OpenAI-compatible backend, which means you can point it at Claude, Gemini, local Ollama, or any API that follows the spec, all via a small JSON config file |
+| pi | pi.dev | `npm install -g @mariozechner/pi-coding-agent` — installs the `pi` binary; no gate configuration needed because there are no gates | Minimal — reads a small `pi.md` if present but does not require it | Deliberately stripped down: no permission gates, no plan mode, no subagents. This is not a limitation to fix; it is a design choice that makes pi fast and low-ceremony for quick experiments. Use it for low-stakes exploration where speed matters more than oversight |
 
 Two more belong to our course ecosystem and are covered where they live: **freebuff**, a task harness we run as a container in the local stack (the agent stack module deploys it; configure per its README), and **KiloCode**, the VS Code-native member, in Part III. Each tool authenticates on first run (`claude` then `/login`, or an exported API key per its docs); the course site lists the current free-access path for each.
 
@@ -58,13 +73,23 @@ Then, inside the session, the rhythm: describe a small goal ("write a Python scr
 
 ## Model 1: First Contact
 
+**Why this matters:** The first session with an agentic CLI is a bit like handing someone the keys to your apartment and watching what they do. The agent will open drawers (read files) you did not point it to, propose actions you did not anticipate, and ask permission at moments that reveal its internal plan. Paying close attention during this first session — rather than just clicking "approve" — is what transforms you from a passive user into someone who can supervise an agent intentionally. Think of the permission gates as the dashboard of a car: you can ignore them and still arrive somewhere, but reading them tells you a lot about where the car thinks it is going.
+
 Each pair installs one assigned tool, runs the weather-script task above in a fresh directory, and captures the transcript.
 
 ### Critical Thinking Questions
 
 1. List every permission request your tool raised, in order. Which proposed action was the riskiest, and would you have noticed without the gate?
+
+   *Hint:* Most tools print a gate prompt that looks like `Allow [tool] to run: <command>? (y/n/a)`. Review your transcript top-to-bottom and copy every line containing that pattern. For the "riskiest" judgment, consider: does the action write to disk, make a network call, or run a shell command with side effects? Commands like `pip install`, `curl`, or any `rm` are higher risk than a simple `cat`.
+
 2. Compare transcripts across the team's tools: same task, different agents. Where did they differ in plan, in verbosity, in caution? Connect one difference to the table's "personality" column.
+
+   *Hint:* Look for three things in each transcript: (a) how many steps the agent planned before acting, (b) how many files it read before writing any, and (c) how many permission gates it raised. A tool described as "most complete" in the personality column should show more gates than one described as "deliberately small." Quote a specific line from two transcripts to anchor your comparison.
+
 3. The agent read files you never mentioned. Which ones, and how do you know? (Find the evidence in the transcript; observability is a course theme, not an accident.)
+
+   *Hint:* Look for lines where the tool reports a file-read action — Claude Code shows `Read file: <path>`, Codex shows a similar tool-use trace, and Gemini prints the file name before processing it. Common files an agent reads even in an "empty" directory: `.gitignore`, `pyproject.toml`, `requirements.txt`, `README.md`, and any `*.md` context file. If your directory is truly empty, the agent will likely say so — that is also useful evidence.
 
 ---
 
@@ -72,7 +97,7 @@ Each pair installs one assigned tool, runs the weather-script task above in a fr
 
 ## 3. Project Context Files: Standing Instructions
 
-Every tool reads its context file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`) from the project root at startup, making it the place for standing instructions that survive every session: what the project is, conventions to follow, commands to use for testing, and boundaries. A starter worth copying:
+Imagine you hired a very capable but completely new contractor to work on your apartment. On day one you explain everything: "don't touch the walls in the east bedroom, always ask before buying materials, and the supply list is in the kitchen drawer." On day two, you would have to explain it all again — unless you left a note on the door. The context file is that note on the door. Every tool reads its context file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`) from the project root at startup, making it the place for standing instructions that survive every session: what the project is, conventions to follow, commands to use for testing, and boundaries. A starter worth copying:
 
 ```markdown
 # CLAUDE.md
@@ -94,7 +119,7 @@ This is the same pattern as the vault's `AGENTS.md` in the second brain module, 
 
 ## 4. Permission Gates Are Your Governance Layer
 
-The gates are not friction; they are the course's human-oversight principle running on your laptop. Tools differ in granularity (Claude Code lets you allow a command pattern once, for the session, or always; pi has no gates at all, which is exactly why it is for low-stakes exploration only). Calibrate deliberately: auto-approve reads, gate writes, and *always* gate `rm`, `git push`, network calls to new hosts, and anything touching credentials. When a tool offers a "skip all permissions" mode, recognize it as the same trade your governance assignment analyzes, and decline it for coursework.
+The gates are not friction; they are the course's human-oversight principle running on your laptop. Think of them as the "sign here" moments in a legal document: they exist so that later, if something goes wrong, there is a clear record of what was authorized by a human and what was not. Tools differ in granularity (Claude Code lets you allow a command pattern once, for the session, or always; pi has no gates at all, which is exactly why it is for low-stakes exploration only). Calibrate deliberately: auto-approve reads, gate writes, and *always* gate `rm`, `git push`, network calls to new hosts, and anything touching credentials. When a tool offers a "skip all permissions" mode, recognize it as the same trade your governance assignment analyzes, and decline it for coursework.
 
 [[MC]]
 A teammate launches an agent CLI from their home directory instead of the project directory "to save a cd". The principled objection is:
@@ -110,12 +135,34 @@ A teammate launches an agent CLI from their home directory instead of the projec
 Our stack (agent stack module) exposes one OpenAI-compatible endpoint for everything, and pointing a commercial CLI at it is two environment variables:
 
 ```bash
-export ANTHROPIC_BASE_URL=http://localhost:4000
-export ANTHROPIC_API_KEY=sk-litellm-local
+export ANTHROPIC_BASE_URL=http://localhost:4000   # redirect all API calls to local gateway
+export ANTHROPIC_API_KEY=sk-litellm-local         # dummy key accepted by the local proxy
 claude        # now running against local models through the gateway
 ```
 
-opencode does the same in its JSON config (`"baseURL": "http://localhost:4000/v1"`), Codex via a `[model_providers.*]` block in its TOML, and pi via a provider block in `models.json` pointing at `http://host.docker.internal:11434/v1` when containerized. The payoff is the unbundling theme of this course: the *interface* (the CLI you like) is now independent of the *model* (local, free-tier, or frontier), swappable per task with `/model`. For privacy-sensitive coursework, local routing is not just cheaper; it is the data-minimization requirement satisfied by architecture.
+The flags explained: `ANTHROPIC_BASE_URL` overrides the default `https://api.anthropic.com` endpoint — any value you set here is where Claude Code sends its requests. `ANTHROPIC_API_KEY` is still required by the client library, but the gateway ignores its value and uses its own routing rules instead; `sk-litellm-local` is a conventional placeholder.
+
+For the other tools, the same redirect looks slightly different:
+
+```bash
+# opencode: edit ~/.config/opencode/config.json and set:
+# "baseURL": "http://localhost:4000/v1"
+
+# Codex: add to ~/.codex/config.toml:
+# [model_providers.local]
+# base_url = "http://localhost:4000/v1"
+# api_key  = "sk-litellm-local"
+
+# pi: add to models.json in your pi config directory:
+# { "provider": "openai", "base_url": "http://host.docker.internal:11434/v1" }
+# (use host.docker.internal instead of localhost when running pi in a container)
+```
+
+The payoff is the unbundling theme of this course: the *interface* (the CLI you like) is now independent of the *model* (local, free-tier, or frontier), swappable per task with `/model`. For privacy-sensitive coursework, local routing is not just cheaper; it is the data-minimization requirement satisfied by architecture.
+
+---
+
+> **Common Misconception:** Many students assume that "permission gates" and "the working directory" are two separate safety measures that each protect against different risks. In practice, they compose: the working directory limits *what* the agent can touch (only files under that directory are reachable by the file tools), while permission gates limit *when* the agent acts (it must pause and ask before each consequential step). Disabling either one alone cuts your safety roughly in half. Turning off gates while keeping a narrow working directory still lets the agent delete every file in your project without a pause. Keeping gates active while launching from `~` means every gate prompt covers a blast radius of your entire home directory. You need both, calibrated together.
 
 ---
 
@@ -138,21 +185,105 @@ docker run --rm -it \
   commercial-ai:latest claude
 ```
 
-The payoff paragraph from the Docker module applies verbatim: the agent sees exactly what is mounted and nothing else, identities hot-swap by changing one path, and an experiment is destroyed with the container. The agent stack module provides the full `build.sh`/`run.sh` set; today, understand *why* the mounts are shaped this way.
+The flags explained: `--rm` deletes the container when it exits (experiments are self-cleaning). `-it` allocates an interactive terminal (required for any REPL). `--add-host=host.docker.internal:host-gateway` makes `host.docker.internal` resolve to your actual machine's IP from inside the container, which is how containerized tools reach the local gateway at `http://host.docker.internal:4000`. The two `-v` flags mount directories from your host into the container: the first keeps the agent's authentication tokens and settings persistent across container restarts (otherwise you would re-login every time); the second is the shared workspace the agent reads and writes. `-w /workspace` sets the container's working directory so the agent's world is exactly the workspace mount, nothing else. The payoff paragraph from the Docker module applies verbatim: the agent sees exactly what is mounted and nothing else, identities hot-swap by changing one path, and an experiment is destroyed with the container. The agent stack module provides the full `build.sh`/`run.sh` set; today, understand *why* the mounts are shaped this way.
 
 ## 8. Exercises
 
-1. *Install two.* Install Claude Code plus one other tool from the table, complete authentication, and run the same three-line task in both. Submit both transcripts with one paragraph comparing the experience.
-2. *Context file experiment.* Run a task in a project without a context file, then add the starter `CLAUDE.md` above (adapted) and rerun. Document two concrete behavior changes the file caused.
-3. *Gate calibration.* In your preferred tool, find the permission settings and configure: reads auto-approved, writes gated, shell gated. Provoke each gate once and screenshot it.
-4. *Gateway switch.* With the course stack running, route your tool through the local gateway, verify with a prompt that names its own model, then switch models mid-session with `/model`. Two-sentence report on latency and quality differences you noticed.
-5. *VS Code session.* Complete one full task entirely inside VS Code (terminal or extension), using the editor's diff view to review every change before approval. Reflect in three sentences: did the visual diff change any decision?
+1. *Install two.*
+
+   *What to do:* Install Claude Code plus one other tool from the comparison table, complete authentication for both, and run the identical three-line task ("write a Python script that fetches the weather for Collegeville, prints the result, and handles errors with a traceback") in both tools inside a fresh empty directory. Submit both full transcripts with one paragraph comparing the experience.
+
+   *Starter hint:* Run these commands in order, substituting your second tool's install command from the table:
+   ```bash
+   mkdir ~/cs357-exercise1 && cd ~/cs357-exercise1
+   npm install -g @anthropic-ai/claude-code   # install Claude Code
+   npm install -g @google/gemini-cli          # example: install Gemini CLI as your second tool
+   claude                                     # start Claude Code session; /login if prompted
+   ```
+
+   *You've succeeded when:* You have two transcript files saved, each showing the full exchange from the first prompt to a working Python script, and your comparison paragraph names at least one specific difference in how the two tools handled permission gates or file reads.
+
+2. *Context file experiment.*
+
+   *What to do:* Run the same task in a project directory first *without* any context file, then create the starter `CLAUDE.md` shown in Section 3 (adapt the project description to your actual task), and rerun the identical prompt. Document two concrete behavior changes the context file caused — things the agent did differently in session two that you can point to in the transcript.
+
+   *Starter hint:*
+   ```bash
+   mkdir ~/cs357-exercise2 && cd ~/cs357-exercise2
+   claude   # run your task; save transcript as transcript-no-context.txt
+   # now add the context file:
+   # create CLAUDE.md in ~/cs357-exercise2 with the starter from Section 3
+   claude   # run the identical task again; save as transcript-with-context.txt
+   diff transcript-no-context.txt transcript-with-context.txt   # look for differences
+   ```
+
+   *You've succeeded when:* You can quote two specific lines — one from each transcript — that show a concrete difference in agent behavior attributable to the context file, such as a different test command, a different boundary the agent respected, or a different convention in the generated code.
+
+3. *Gate calibration.*
+
+   *What to do:* In your preferred tool, locate the permission settings and configure them so that file reads are auto-approved, file writes are gated, and shell commands are gated. Then deliberately provoke each gate type once (read a file, write a file, run a shell command) and screenshot each gate prompt as it appears.
+
+   *Starter hint:* For Claude Code, gate settings live in the settings file and can also be set interactively. The quickest way to configure per-session behavior is the `--allowedTools` and `--disallowedTools` flags at launch:
+   ```bash
+   cd ~/cs357-exercise3
+   # Launch with reads allowed automatically, writes and shell requiring approval:
+   claude --allowedTools "read_file" --disallowedTools "write_file,execute_command"
+   # Then inside the session, ask: "read README.md, then create hello.py, then run it"
+   # Each of the three actions will hit a different gate behavior
+   ```
+
+   *You've succeeded when:* You have three screenshots showing (a) a file read that passed silently, (b) a file write gate prompt, and (c) a shell command gate prompt, and you can explain in one sentence why each is calibrated the way it is.
+
+4. *Gateway switch.*
+
+   *What to do:* With the course stack running locally, set the two environment variables from Section 5 to route your tool through the local gateway. Verify the redirect worked by asking the agent to name the model it is using. Then switch models mid-session using `/model` and send the same prompt to both models. Write a two-sentence report on any latency or quality differences you noticed.
+
+   *Starter hint:*
+   ```bash
+   # In your terminal, before launching the tool:
+   export ANTHROPIC_BASE_URL=http://localhost:4000   # redirect to local gateway
+   export ANTHROPIC_API_KEY=sk-litellm-local         # placeholder key for the proxy
+   cd ~/cs357-exercise4
+   claude   # now talking to the gateway
+   # Inside the session, type: "What model are you?"
+   # Then: /model    (to see available models and switch)
+   ```
+
+   *You've succeeded when:* The agent's response to "what model are you?" names a model served by your local gateway (not the default Anthropic cloud model), and you have tried at least two different models via `/model` with the same prompt.
+
+5. *VS Code session.*
+
+   *What to do:* Complete one full task entirely inside VS Code — either in the integrated terminal (Ctrl+`) or via the official Claude Code or Codex extension if you have it installed. Use the editor's diff view to review every proposed file change before you approve it. Reflect in three sentences: did seeing the diff visually (rather than reading it in the terminal) change any decision you made?
+
+   *Starter hint:*
+   ```bash
+   # Open VS Code in your project directory:
+   code ~/cs357-exercise5
+   # Press Ctrl+` to open the integrated terminal
+   cd ~/cs357-exercise5
+   claude   # launch the agent in the VS Code terminal
+   # When the agent proposes a file edit, look at the diff view that appears in the editor pane above
+   ```
+
+   *You've succeeded when:* You have approved at least one change and refused or revised at least one proposed change based on what you saw in the diff view, and your three-sentence reflection names the specific change you caught or reconsidered.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: these tools place a capable agent one keystroke from your filesystem, and the differences between them are mostly differences in how much friction they put between intention and action. After today, where do you personally want that friction, and is your answer the same for yourself as for the students you might someday supervise?
+In your notebook, respond at three levels:
+
+**Personal level:** These tools place a capable agent one keystroke from your filesystem, and the differences between them are mostly differences in how much friction they put between intention and action. After today, where do you personally want that friction? Did your answer change from what it was before you ran your first session — and if so, what in the session shifted it?
+
+**Technical level:** The working directory, the context file, and the permission gates form a three-layer scoping system. Describe in your own words what each layer controls and what breaks if you remove any one of them. Is there a fourth layer you think is missing?
+
+**Societal level:** These tools are yours in the sense that you installed them and you approve their actions. But the models they connect to are trained on data you did not consent to, by companies whose values you did not set, running on infrastructure you do not own. Is your answer about where you want friction the same for yourself as for the students you might someday supervise — or for a professional domain (medicine, law, journalism) where the stakes of an unreviewed agent action are higher than a broken Python script?
+
+---
+
+## → Coming Up Next
+
+In the next module you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 7 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before next class.
 
 ---
 
