@@ -269,6 +269,10 @@ Before every publish, the Recorder writes down the team's ruling on each file. T
 
 ---
 
+> **⚠️ Common Misconception:** Students often assume that because a file is listed in `.npmignore`, it is definitely excluded from the published package. The safer mental model is the reverse: use the `"files"` allowlist in `package.json` to explicitly declare what *is* included, and treat everything else as excluded. With an allowlist, a new file you add to the directory is excluded by default — you must consciously add it. With an ignore-list, a new file is included by default — you must consciously exclude it. The allowlist is safer precisely because the default is to exclude rather than to include, which means the cost of forgetting is "file is missing from the package" rather than "credential is published to npm."
+
+---
+
 # Part IV: Practice
 
 ## 9. Exercises
