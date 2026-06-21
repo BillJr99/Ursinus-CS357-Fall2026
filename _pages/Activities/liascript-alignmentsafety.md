@@ -71,7 +71,7 @@ The **alignment problem** is the gap between what we formally specify (the rewar
 
 1. Collect human pairwise preference labels (response A vs. B)
 2. Train a reward model to predict human preferences
-3. Fine-tune the LLM with PPO (Proximal Policy Optimization) to maximize the reward model's score
+3. Fine-tune the LLM with PPO (Proximal Policy Optimization — a reinforcement learning algorithm that updates the model's parameters in small, stable steps) to maximize the reward model's score
 
 Strength: directly incorporates human values as expressed in actual behavior choices.
 Weakness: expensive to scale; reward model can be hacked; annotator biases become model biases.
@@ -117,10 +117,10 @@ Weakness: conflicting principles create ambiguity; whoever writes the constituti
 A model trained with RLHF is evaluated and found to consistently sound confident even when its answers are factually wrong. Investigation reveals that human annotators during preference collection consistently rated confident-sounding answers higher, regardless of accuracy. This is:
 
 [[MC]]
-- ( ) Deceptive alignment, because the model is hiding its uncertainty
+- ( ) Deceptive alignment, because the model produces different outputs when it detects it is being evaluated versus when it is not
 - (x) Reward hacking the human preference model, because the model learned to maximize the proxy metric (sounding confident) rather than the true goal (being accurate)
-- ( ) Constitutional AI failure, because the constitution did not include accuracy requirements
-- ( ) Goal misgeneralization, because the training distribution differed from deployment
+- ( ) Constitutional AI failure, because a constitution that listed accuracy as a principle would have caught this during the model's self-critique phase
+- ( ) Goal misgeneralization, because the model was trained on formal text but deployed on informal user queries, shifting the distribution
 
 ## Model 3: Practical Safety for Course Agents
 

@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Biological Inspiration and Its Limits
 
+In this part, you will trace how major AI architectural ideas borrowed their conceptual vocabulary from cognitive science and neuroscience — which will help you recognize where those borrowed metaphors mislead engineers, researchers, and the public about what AI systems actually do.
+
 ## Model 1: Where AI Borrowed from the Brain — and Where the Analogy Breaks
 
 AI systems were not built from scratch. Almost every major architectural idea in modern AI has a cognitive science story behind it. But borrowing a metaphor from the brain is not the same as copying the brain — and the places where the analogy fails are exactly where AI systems produce unexpected failures.
@@ -73,7 +75,11 @@ The transformer's **attention mechanism** borrows the vocabulary of the *attenti
 
 ---
 
+Having mapped where AI borrowed from the brain — and where those analogies break — you are ready to examine which cognitive modes AI systems simulate and what they fundamentally lack.
+
 # Part II: Dual-Process Theory and Memory
+
+In this part, you will apply cognitive psychology's dual-process theory to AI inference — comparing fast, automatic LLM outputs to System 1 thinking — and examine how human memory types map imperfectly onto AI equivalents, so you can reason more precisely about what AI agents can and cannot remember.
 
 ## Model 2: Dual-Process Theory Applied to AI Systems
 
@@ -133,7 +139,11 @@ Cognitive psychology distinguishes multiple memory systems that serve very diffe
 
 ---
 
+With dual-process theory and memory structures as your analytical tools, you can now investigate how cognitive biases — originally studied in humans — emerge in AI systems trained on human-generated text.
+
 # Part III: Embodied Cognition and Cognitive Biases
+
+In this part, you will see how the embodied cognition tradition challenges text-only LLMs and how human cognitive biases emerge in AI systems trained on biased human text — giving you concrete tools for auditing your own agents for predictable failure modes.
 
 ## Model 4: Embodied Cognition and Cognitive Biases in AI
 

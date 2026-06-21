@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Opportunity and the Gap
 
+In this part, you will examine both the genuine benefits and access risks of AI-powered accessibility tools — building the habit of holding both truths simultaneously that any ethical AI practitioner needs.
+
 ## Model 1: Opportunity vs. Risk Matrix
 
 AI-powered accessibility tools span a wide range of capabilities and populations. Each entry below represents a real deployed or research application. Notice that every row has both a genuine benefit and a genuine risk — the goal of this model is to hold both in mind simultaneously.
@@ -67,9 +69,13 @@ AI-powered accessibility tools span a wide range of capabilities and populations
 
    *Hint:* If someone spent years building a set of phrases that express their humor, their interests, and their personality — and an AI replaces those phrases with generic predictions — what exactly has been lost?
 
+Now that you have mapped where AI accessibility tools succeed and fail, Part II shows you why headline accuracy numbers can obscure the most important failures.
+
 ---
 
 # Part II: The Training Data Gap
+
+In this part, you will see how a technically accurate accuracy metric can hide serious inequity — a pattern that recurs across every domain where AI affects underrepresented groups.
 
 ## Model 2: When Aggregate Accuracy Hides Inequity
 
@@ -89,9 +95,9 @@ The weighted average across these groups is approximately 99% — the headline n
 [[MC]]
 An AI caption generator achieves 98% word accuracy across all test speakers. A disability advocate argues this metric is insufficient. The most compelling reason is:
 - (x) The 2% error rate likely concentrates among speakers with speech differences, meaning the people who most need captions may face substantially higher error rates than the headline metric suggests
-- ( ) 98% accuracy is objectively sufficient for all real-world captioning use cases
-- ( ) The advocate should test the system personally before criticizing the published metric
-- ( ) Word accuracy is not an established metric and should be replaced with a different one
+- ( ) 98% accuracy is high enough that any remaining errors are distributed roughly equally across all speaker groups
+- ( ) The advocate's concern would only be valid if the tool had no human captioner fallback available
+- ( ) Word accuracy is a flawed metric because it counts every word equally, making it impossible to identify subgroup disparities
 
 ---
 
@@ -115,9 +121,13 @@ An AI caption generator achieves 98% word accuracy across all test speakers. A d
 >
 > Aggregate accuracy metrics can be mathematically accurate and deeply misleading at the same time. If 78% of your test set performs at 99.5% accuracy, that group will dominate any weighted average — even if a minority group experiences 84% accuracy. In accessibility contexts, the groups with the worst performance are often the groups with the fewest alternatives. Reporting only the aggregate number is not just a statistical oversight; it is a choice about whose experience counts.
 
+Understanding who gets left out by training data gaps sets up the design question in Part III: how do we build AI interfaces that do not recreate those gaps by accident?
+
 ---
 
 # Part III: Universal Design and the AI Interface
+
+In this part, you will audit a generic AI interface against real disability contexts, connecting the "nothing about us without us" principle to concrete engineering choices.
 
 ## Model 3: Accessibility Audit of a Generic AI Chat Interface
 

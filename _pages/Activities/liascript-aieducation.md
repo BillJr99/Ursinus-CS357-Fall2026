@@ -74,6 +74,8 @@ AI is entering education in at least three distinct functional roles. Each role 
 
 ---
 
+Having seen how AI shifts roles in education, you are now ready to examine the integrity and assessment challenges that follow directly from those shifts.
+
 ## Model 2: Academic Integrity in the Age of LLMs
 
 ### The Detection Arms Race
@@ -124,9 +126,11 @@ A student uses an LLM to brainstorm a list of possible thesis arguments for a pa
 - ( ) Always plagiarism because AI was involved at any point in the process
 - ( ) Always acceptable because no text was copied from the AI
 - (x) Potentially acceptable or not depending on the specific policy, the instructor's guidance, and whether disclosure was required — illustrating why blanket "no AI" or "AI is fine" policies are insufficient
-- ( ) Irrelevant to integrity concerns because AI cannot generate genuinely good ideas
+- ( ) Always acceptable as long as the student discloses AI use somewhere in the submission, regardless of what the specific course policy says
 
 ---
+
+The detection arms race shows why purely reactive integrity policies fail — the more productive design challenge, which you will explore next, is creating learning structures where AI assistance itself becomes part of a genuine educational experience.
 
 ## Model 3: Designing for Learning, Not Just Output
 

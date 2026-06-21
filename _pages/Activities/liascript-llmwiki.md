@@ -40,6 +40,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Pattern
 
+In this part, you will learn Karpathy's three-layer wiki architecture and understand why it differs from the RAG pipeline you built earlier — setting up the architectural choice you will reason through in Part II.
+
 ## 1. Three Layers and a Linter
 
 Think of a well-curated wiki like a well-organized research notebook that writes its own index. When you finish reading a paper, you do not just file it away — you update your notes on the concept it addresses, add a cross-reference from the authors' names, and flag where it contradicts something you read last week. That is exactly what Karpathy's pattern automates: the LLM does the filing, cross-referencing, and contradiction-flagging, so you spend your time reading and asking questions rather than updating notes.
@@ -85,7 +87,11 @@ Understanding the wiki-versus-RAG trade-off is not about memorizing which is bet
 
 ---
 
+> With the architectural trade-offs mapped out, Part II tours the six concrete use cases that make the wiki pattern earn its place in a daily workflow — each one is just the same three-layer loop aimed at a different corner of your life or work.
+
 # Part II: The Use-Case Tour
+
+In this part, you will explore six concrete use cases — research wikis, journaling, meeting notes, and more — and design the specific naming conventions and page skeletons that make each one queryable months later.
 
 ## 3. What a Living Vault Is Actually For
 
@@ -136,7 +142,11 @@ Each teammate picks one use case from the tour (no duplicates within a team). Th
 
 ---
 
+> With your use-case conventions designed, Part III walks you through the four setup steps that wire those conventions into a living system — from extending the schema to scheduling the nightly ingestion loop.
+
 # Part III: The Setup, End to End
+
+In this part, you will extend your AGENTS.md schema, seed the wiki with real sources, and schedule the nightly ingestion loop — by the end, your vault will update itself while you sleep.
 
 ## 4. From Standing Vault to Living Wiki
 
@@ -145,6 +155,8 @@ Everything below assumes the second brain module's foundation (private repositor
 **Step 1: extend the schema.** Append a use-case section to `AGENTS.md` declaring your conventions from Model 2, the lint specification (sweep for contradictions, orphans, staleness, broken links; repair conservatively; write a report to the repository root; flag ambiguous repairs for human review rather than applying them), and the page-skeleton definitions. The schema layer is where the pattern lives; an undocumented convention does not exist.
 
 **Step 2: seed the wiki.** Drop three to five real sources into `raw/` (a paper PDF, a meeting transcript, last week's journal entries) and run the ingestion prompt against hermes:
+
+The prompt below tells hermes to clone your vault, read AGENTS.md, and process every unprocessed file in raw/ — run this once and watch the wiki/ directory fill with structured pages.
 
 ```
 Clone https://github.com/YOURUSERNAME/Obsidian-Vault using the token in
@@ -165,7 +177,7 @@ Verification matrix, in the agent stack module's spirit: after the first schedul
 
 *What to do:* Open `AGENTS.md` in your vault. Add a new section titled `## Use-Case: [Your Use Case Name]` with the four convention lines from Question 4 — raw drop convention, wiki directory and naming scheme, page skeleton with exact section headings, and the standing prompt. Then add a `## Lint Specification` section with the lint behavior described in Step 1 above (sweep targets, conservative repair policy, report location, and the flag-rather-than-apply rule for ambiguous cases).
 
-*Starter hint:*
+*Starter hint:* The example below shows the exact Markdown structure your use-case section should follow — copy the skeleton and fill in your own conventions, replacing "Research Wiki" with your chosen use case.
 
 ```markdown
 ## Use-Case: Research Wiki

@@ -79,6 +79,8 @@ The table below surveys AI applications across scientific domains:
 
 ---
 
+Now that you have seen what AI can accomplish in scientific discovery, you are equipped to examine how these same tools introduce new reproducibility risks that the scientific community must grapple with.
+
 ## Model 2: Reproducibility, Provenance, and Trust
 
 Science depends on reproducibility: an experiment should be replicable by an independent team. AI introduces new reproducibility challenges on top of existing ones.
@@ -117,11 +119,13 @@ A research team publishes results from an LLM-assisted literature review. An ind
 
 [[MC]]
 - ( ) Declare the original paper fraudulent, since the results cannot be reproduced
-- ( ) Declare LLMs categorically unusable for scientific research
+- ( ) Ask the journal to retract the original paper until the model provider can guarantee identical outputs across all future runs of the same prompt
 - (x) Report both runs in full, document exact prompt versions and model IDs (including version dates), and rigorously analyze where and why the outputs diverged — treating the divergence itself as a scientific finding about model stability
 - ( ) Average the conclusions of the two runs and publish a correction
 
 ---
+
+Understanding the reproducibility challenges of individual LLM calls sets the stage for examining what happens when those calls are chained together into a multi-step automated research pipeline.
 
 ## Model 3: The Agent as Research Assistant
 
