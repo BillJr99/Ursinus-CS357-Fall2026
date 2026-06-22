@@ -1,11 +1,6 @@
-Incorporate research howto i.e. Mathforum AI ✅ (liascript-airesearch.md)
-Policywriting as an exercise ✅ (liascript-governance.md)
 Incorporate nviz and shapley
 Develop around assignments - have course notes support
-Integrate OpenWebUI and Ollama for local AI ✅ (liascript-localai.md)
-Give them a problem to solve using multimodal AI like a financial simulation that returns a visualization; perhaps a monte carlo retirement simulation ✅ (lab-montecarlo.md)
 AI for all tools slides (https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit?slide=id.g37566d3c2b1_0_103#slide=id.g37566d3c2b1_0_103) - link as Week 0 reading when slides are finalized
-Governance should use Coded Bias, see https://www.billmongan.com/Ursinus-CIE100-Fall2023/Assignments/Essay3 ✅ (Week 11 Date 1 Coded Bias film reading)
 Use Python notebooks and Colab
 Get into the tools - multimodal, temperature, top_k, top k rag, system prompt
 Break up the intro slides into multiple days
@@ -13,43 +8,15 @@ Relate to text generation with a workflow diagram, how does this become a neutra
 Also why do we get random output from a deterministic function?
 More clarity in jupyter notebooks, explanations, ask them to fill in or interact
 Reflection about competing texts
-Combining ReLU to get more non-linearity. How layers integrate ✅ (liascript-mlfoundations.md)
-Shakespeare GPT example ✅ (liascript-shakespearegpt.md)
 More integration of Langflow and Langchain including tutorials and liascript slide notes
 Break apart existing labs - give them more to do with things like the custom GPT
 Use Josh's AI reflections (see AI Assisted Learning Template at https://drive.google.com/drive/u/0/folders/1WCD_KNtAJZv3btX2viDS5IEBUvN9CeZd) as part of the assignment template
 Combine representation and embedding
-Incorporate nn forward numbers worksheet ✅ (liascript-mlfoundations.md Part II)
 See workbooks
-Langchain with openwebui/ollama and local chroma db? ✅ (YouTube links added to Week 4 readings)
-* https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s ✅
-* https://www.youtube.com/watch?v=E4l91XKQSgw ✅
-* https://www.youtube.com/watch?v=QmUsG_3wHPg ✅
 More on policy
-De-emphasize neural nets and focus more on use inspired discussion of embedding and transformers ✅ (liascript-mlfoundations.md, liascript-llmpretraining.md)
-See submodules for examples ✅ (6 submodules documented in README.md with MIT/CC0 citations)
-
-Incorporate multi-agent debate patterns from https://www.mindstudio.ai/blog/agent-chat-rooms-multi-agent-debate-claude-code ✅ (liascript-multiagentdebate.md)
-Incorporate multi-agent team architecture framing from https://medium.com/@v31u/stop-overloading-your-ai-agent-build-a-team-instead-256fb0097eb7 ✅ (liascript-agentteams.md)
-Incorporate critique-refine pattern with code example from https://github.com/ksankaran/multi-agent-patterns/blob/main/critique_refine.py ✅ (liascript-critiquerefine.md)
-Incorporate stochastic multi-agent consensus from https://www.mindstudio.ai/blog/stochastic-multi-agent-consensus-ai-agents ✅ (liascript-consensus.md)
-Emphasize keeping agent context windows small to avoid drift as a core agentic design principle ✅ (liascript-memorycontext.md)
-Add demo activity: generate N candidates, debate from multiple agent perspectives, converge on ranked consensus output (e.g., tomatillo recipe debate) ✅ (liascript-multiagentdebate.md)
-Add module on private/local AI setup using https://docs.google.com/document/d/11M3PUh5ZCuK_NmXeSNBoBBi3zSjy_L4cb_Cv36Pe4ZU/edit?tab=t.0 ✅ (liascript-localai.md)
 Add threaded auto-research shell pipeline as a lab example (threaded-autoresearch-setup.sh)
-Add LLM wiki/knowledge base setup as a RAG lab example (llm-wiki-setup.sh) ✅ (liascript-llmwiki.md)
 Add agentic OpenWebUI integration demo (agentic-openwebui.html)
 Add ISS and assessment software integration module
-Add LLM-based rubric grading pipeline lab: JSON rubric + student submission ZIP → OpenWebUI → CSV of ratings and feedback ✅ (lab-rubricpipeline.md)
 Add student at-risk identification use case via Canvas data and Qualtrics surveys with ursinus.ai
-Add case study: used Cowork to migrate CS173 webpages from Replit iframes to custom code viewer (https://www.billmongan.com/Ursinus-CS173/Activities/Boolean) ✅ (liascript-agentcasestudies.md)
-Add case study: used Claude browsing agent to navigate KOA website and find available weekends ✅ (liascript-agentcasestudies.md)
-Add case study: wrote Claude script to auto-paginate through SITE proceedings to find a paper (https://www.learntechlib.org/j/SITE/) ✅ (liascript-agentcasestudies.md)
-Add OpenWebUI chess AI coach skill as a student skill-building template (chess_ai_coach.html) ✅ (liascript-agentskills.md)
-Add Obsidian Q&A RAG demo as a personal knowledge base example (obsidian-qa.html) ✅ (liascript-secondbrain.md + liascript-obsidiansync.md)
-Add structured reflection prompt at end of CS357 labs (learning log experiment from CS477) ✅ (all activities have Reflection Prompt sections)
 Review Nick Saraev agentic AI workflow videos for additional course material - review and link relevant videos when identified
-
 See 4/22 TLI AI workshop materials and asana notes
-
-Workflows like grill-me (mattpocock/skills, MIT) and caveman (JuliusBrussee/caveman, MIT) ✅ (referenced in liascript-agentskills.md Community Skills section)
