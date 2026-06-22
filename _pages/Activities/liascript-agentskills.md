@@ -603,11 +603,56 @@ In your notebook, respond at three levels:
 
 ---
 
+## Community Skills Worth Knowing
+
+Two open-source skills from the community are worth studying as design examples — both for what they do and for the engineering principles they embody. Both are MIT licensed and installable with a single `opencode skills install` command.
+
+### grill-me (mattpocock/skills, MIT)
+
+**What it does:** Before you commit to a plan, architecture, or implementation approach, `grill-me` subjects your proposal to exhaustive critical questioning. It walks a decision tree — probing hidden assumptions, unstated alternatives, and unresolved dependencies — until every branch is explicit. It is particularly useful before writing code, because it forces you to articulate *why* you chose one design over its alternatives.
+
+**Why it is a good skill example:** It has a single, narrow purpose (pre-commitment scrutiny), a concrete trigger (when you describe a plan), and a well-defined output (structured questions, one branch at a time). It does not try to also write code, generate documentation, or do anything else.
+
+**Install and try:**
+```bash
+opencode skills install git+https://github.com/mattpocock/skills.git
+# Then inside a session:
+# > I'm planning to use a single SQLite database for all user data in our RAG pipeline. Grill me on this.
+```
+
+Source: https://github.com/mattpocock/skills — MIT License.
+
+---
+
+### caveman (JuliusBrussee/caveman, MIT)
+
+**What it does:** `caveman` compresses the agent's output by 65–75% by forcing terse, article-free responses ("No articles. Short. Cave-style."). It drops filler words and pleasantries while preserving all technical terms, code, and precision. Three intensity levels (lite, full, ultra) let you tune verbosity to your task — `full` for interactive sessions where you want fast scanning; `lite` for when you still want some prose; `ultra` for token-budget-constrained pipelines. It automatically reverts to normal communication for security warnings and irreversible actions.
+
+**Why it is a good skill example:** It demonstrates scoped behavior with explicit safety overrides — the instruction to revert to normal prose for warnings is a concrete constraint that prevents the compression from obscuring critical information. It also shows how to implement multiple intensity modes within a single skill by name-parameterizing invocations.
+
+**Install and try:**
+```bash
+opencode skills install git+https://github.com/JuliusBrussee/caveman.git
+# Then inside a session:
+# > /caveman full   (or invoke: "use caveman full mode")
+# > Explain how KV caching works.
+```
+
+Source: https://github.com/JuliusBrussee/caveman — MIT License.
+
+---
+
+**Design comparison exercise:** After studying both skills, answer: (a) What is each skill's single clear purpose? (b) What explicit constraint prevents each skill from misbehaving in a dangerous situation? (c) How does each skill's `when` trigger (or invocation pattern) differ from a system prompt? Compare your answers with a partner's before the next class.
+
+---
+
 ## Further Reading
 
 - OpenCode documentation (opencode.ai/docs): the full `opencode.json` schema, skill configuration reference, and plugin install commands.
 - pi.ai documentation (pi.dev/docs): the plugin manifest format, `pi plugin` subcommands, and scoping rules.
 - The Superpowers plugin repository (github.com/obra/superpowers): a real-world example of a well-structured skill bundle with `SKILL.md` frontmatter and an `instructions/` directory layout.
+- grill-me (github.com/mattpocock/skills, MIT): pre-commitment decision-tree interrogation skill — study the SKILL.md manifest format and how a single-purpose instruction is structured.
+- caveman (github.com/JuliusBrussee/caveman, MIT): output-compression skill with intensity levels and safety overrides — a good example of scoped constraint and parameterized invocation.
 - W. Mongan, "Agentic CLI Tools" (this course, prior module): the context file and permission gate foundations that skills build on.
 - "Prompt Engineering for Agents" — the course reading on specifying behavior precisely enough to test; the same precision discipline applies to skill authoring.
 - The Model Context Protocol site (modelcontextprotocol.io): if you want your skill to call an external tool (a real function, not an instruction template), MCP is the standard the underlying agent runtime uses.
