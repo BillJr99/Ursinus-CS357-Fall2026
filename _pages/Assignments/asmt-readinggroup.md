@@ -122,6 +122,10 @@ These are suggested sources. You are not limited to this list — propose others
 - AI Now Institute Annual Report (most recent year).
 - Partnership on AI — Guidance on Responsible Practices for Synthetic Media.
 
+### Ethical and Theological Perspectives
+- Pope Leo XIV. *Magnifica Humanitas* (Encyclical Letter, 2026). [vatican.va](https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html) — a magisterial encyclical on artificial intelligence and the dignity of the human person; a strong non-secular lens to contrast with the course's utilitarian, deontological, and virtue frameworks.
+- Dicasteries for the Doctrine of the Faith and for Culture and Education. *Antiqua et Nova: Note on the Relationship Between Artificial Intelligence and Human Intelligence* (2025). vatican.va — a companion Note to the encyclical above.
+
 ---
 
 ## Discussion Questions You Must Prepare
