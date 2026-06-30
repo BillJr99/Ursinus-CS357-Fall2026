@@ -1,0 +1,3 @@
+# Never commit secrets or the agent's scratch workspace.
+agent.env
+workspace/
