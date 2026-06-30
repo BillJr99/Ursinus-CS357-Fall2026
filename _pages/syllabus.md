@@ -159,6 +159,15 @@ textbooks:
   link: false
   isrequired: false 
   freelyavailable: false
+- title: "AI Engineering from Scratch"
+  authors: "Rohit Ghumare (rohitg00)"
+  link: "https://github.com/rohitg00/ai-engineering-from-scratch"
+  isrequired: false
+  freelyavailable: "https://github.com/rohitg00/ai-engineering-from-scratch"
+# Open-source (MIT-licensed) curriculum used as the engineering-track reading basis for CS357.
+# Vendored as a submodule at files/ai-engineering-from-scratch; specific phases are assigned in the schedule below.
+# TODO(instructor): add the specific physical books from your home and work offices here
+#   (titles/ISBNs not in the repo), and mark required vs. optional, then map chapters into the schedule readings.
   
 objectives:
 - objective: "Analyze the ethical implications of AI agents acting on behalf of people, using case studies, governance frameworks, and design justice principles."
@@ -185,7 +194,7 @@ grade_breakdown:
   weight: "35%"
 - category: "Written Assignments (choose 3 from 6 available)"
   weight: "20%"
-- category: "Final Project (choose one: Custom Agent Team, Responsible AI Audit, or Open-Source Agent)"
+- category: "Final Project (choose one: Custom Agent Team, Responsible AI Audit, Open-Source Agent, or Request Intake and Triage Agent)"
   weight: "25%"
 - category: "Class Activities and Participation"
   weight: "10%"
@@ -257,6 +266,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
   - rtitle: "Supplemental Tutorial: The Karpathy Coding Approach — Spec-First, TDD, and Supervised AI Development"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-karpathycoding.md"
+  - rtitle: "AI Engineering from Scratch, Phase 11 (LLM Engineering): prompt engineering, few-shot, function calling, guardrails (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
 - week: "1"
   date: "1"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -316,6 +327,9 @@ schedule:
     dlink: "Assignments/PromptPatterns"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
+  readings:
+  - rtitle: "AI Engineering from Scratch, Phase 5 (NLP Foundations to Advanced): tokenization, embeddings, attention (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
 - week: "3"
   date: "1"
   title: "Hands-On: The Local Agent Stack (Tiers, Ports, and Compose)"
@@ -333,6 +347,8 @@ schedule:
     rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/AgentStack"
   - rtitle: "Supplemental Tutorial: Containerizing AI Systems — Safety, Isolation, and Trust Boundaries"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md"
+  - rtitle: "Supplemental Tutorial: Running Agents in YOLO Mode Safely"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-yolomode.md"
 - week: "4"
   date: "0"
   title: "Retrieval-Augmented Generation with Chroma"
@@ -388,6 +404,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-obsidiansync.md"
   - rtitle: "Supplemental Activity: Memory Types in Agents — Working, Episodic, Semantic, and Procedural"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorytypes.md"
+  - rtitle: "Supplemental Tutorial: Agent Traceability — Switching Models and Stop/Start/Resume for the Context Window"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenttraceability.md"
 - week: "5"
   date: "1"
   title: "Tool Use and Function Calling"
@@ -424,6 +442,10 @@ schedule:
     dlink: "Assignments/DesignFirst"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-designfirst.md"
+  - dtitle: "Lab: Hire an Agent Teammate and Run It Safely in YOLO Mode Handed Out (optional lab)"
+    dlink: "Assignments/AgentTeammate"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-agentteammate.md"
   readings:
   - rtitle: "Supplemental Activity: Designing Agent Personas and System Prompts"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentpersonas.md"
@@ -431,6 +453,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aidevenv.md"
   - rtitle: "Supplemental Tutorial: Agent Skills and Plugins — Writing, Configuring, and Publishing Skills for OpenCode and pi.ai"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentskills.md"
+  - rtitle: "Supplemental Activity: Hiring an Agent — Charter, How-I-Work, and Resume (CTP2 Case Study)"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ctp2teammateprofile.md"
 - week: "7"
   date: "0"
   title: "Advanced Agent Loops: Reflection, Recovery, and Control Flow"
@@ -448,6 +472,9 @@ schedule:
     dlink: "Assignments/AgentSkillsLab"
     points: "100"
     rubricpath: "_pages/Assignments/lab-agentskillslab.md"
+  readings:
+  - rtitle: "AI Engineering from Scratch, Phase 14 (Agent Engineering): agent loops, ReWOO, Reflexion, memory systems, LangGraph (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
 - week: "7"
   date: "1"
   title: "Orchestration Patterns: Pipelines, Routers, and Planners"
@@ -459,6 +486,10 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md"
   - rtitle: "Supplemental Activity: Debugging AI Agents — What Went Wrong and How to Find Out"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentdebugging.md"
+  - rtitle: "Supplemental Tutorial: Deep Agents — Planning, Subagents, and a Virtual Filesystem (LangChain) with LangSmith Tracing"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-deepagents.md"
+  - rtitle: "Supplemental Tutorial: Workflow Automation for Intake and Triage — LangChain and Power Automate"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-workflowautomation.md"
   deliverables:
   - dtitle: "Lab 3: Critique and Refine Handed Out"
     dlink: "Assignments/CritiqueRefine"
@@ -468,6 +499,10 @@ schedule:
     dlink: "Assignments/CodingAgents"
     points: "100"
     rubricpath: "_pages/Assignments/lab-codingagents.md"
+  - dtitle: "Lab: Build a Deep Agent with Planning, Subagents, and a Virtual Filesystem Handed Out (optional lab)"
+    dlink: "Assignments/DeepAgents"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-deepagents.md"
 - week: "8"
   date: "0"
   title: "The Critique and Refine Pattern"
@@ -482,6 +517,11 @@ schedule:
   readings:
   - rtitle: "Supplemental Activity: Multi-Agent Communication — Protocols, Shared State, and Coordination"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentprotocols.md"
+  deliverables:
+  - dtitle: "Lab: Hire an Agent Teammate and Run It Safely in YOLO Mode Due (optional lab)"
+    dlink: "Assignments/AgentTeammate"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-agentteammate.md"
 - week: "9"
   date: "0"
   title: "Stochastic Multi-Agent Consensus"
@@ -499,6 +539,9 @@ schedule:
     dlink: "Assignments/MultiAgentDebate"
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
+  readings:
+  - rtitle: "AI Engineering from Scratch, Phase 16 (Multi-Agent & Swarms): supervisor/worker, consensus, negotiation (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
 - week: "9"
   date: "1"
   title: "Agent Teams: Specialists over Monoliths"
@@ -516,6 +559,10 @@ schedule:
     dlink: "Projects/OpenSourceAgent"
     points: "100"
     rubricpath: "_pages/Projects/proj-opensourceagent.md"
+  - dtitle: "Final Project: Request Intake and Triage Agent Handed Out (alternative track)"
+    dlink: "Projects/RequestTriage"
+    points: "100"
+    rubricpath: "_pages/Projects/proj-requesttriage.md"
   - dtitle: "Lab: Coding Agents in Practice Due (optional lab)"
     dlink: "Assignments/CodingAgents"
     points: "100"
@@ -560,6 +607,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-benchmarking.md"
   - rtitle: "Supplemental Activity: The Economics of AI Agents — Pricing, Incentives, and Market Dynamics"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenteconomics.md"
+  - rtitle: "AI Engineering from Scratch, Phase 17 (Infrastructure & Production): observability, caching, serving, cost (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
   deliverables:
   - dtitle: "Lab 4: Multi-Agent Debate and Consensus Due"
     dlink: "Assignments/MultiAgentDebate"
@@ -573,6 +622,10 @@ schedule:
     dlink: "Assignments/AgentEval"
     points: "100"
     rubricpath: "_pages/Assignments/lab-agenteval.md"
+  - dtitle: "Lab: Build a Deep Agent with Planning, Subagents, and a Virtual Filesystem Due (optional lab)"
+    dlink: "Assignments/DeepAgents"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-deepagents.md"
 - week: "11"
   date: "0"
   title: "Agentic Case Studies: Migration, Browsing, and Research Agents"
@@ -615,6 +668,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-philosophyai.md"
   - rtitle: "Supplemental Activity: Ethical Frameworks for Agentic AI Systems"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
+  - rtitle: "Antiqua et Nova: Note on the Relationship Between AI and Human Intelligence (2025) — a faith-tradition ethical lens (optional)"
+    rlink: "https://www.vatican.va/roman_curia/congregations/cfaith/documents/rc_ddf_doc_20250128_antiqua-et-nova_en.html"
   - rtitle: "Supplemental Activity: Dataset Documentation — Model Cards and Datasheets"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
   - rtitle: "Supplemental Activity: AI in Education — Opportunity, Disruption, and the Integrity Question"
@@ -658,6 +713,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-alignmentsafety.md"
   - rtitle: "Supplemental Activity: AI Regulation — EU AI Act, NIST AI RMF, and Sector Rules"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-regulation.md"
+  - rtitle: "AI Engineering from Scratch, Phase 18 (Ethics, Safety & Alignment): red-teaming, Constitutional AI, regulatory frameworks (optional engineering track)"
+    rlink: "https://github.com/rohitg00/ai-engineering-from-scratch"
   deliverables:
   - dtitle: "Written Assignment: Governance and Policy Handed Out"
     dlink: "Assignments/Governance"
