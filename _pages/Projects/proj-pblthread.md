@@ -205,7 +205,7 @@ Every thread milestone ends with reflection prompts keyed to the four **Ursinus 
 | **How can we understand the world?** | The literature review's multi-disciplinary lens; what counts as evidence in CS versus in your stakeholder's discipline. |
 | **What will I do?** | The intervention you build, the skills you can now name, and what you will carry into the work you do after this course. |
 
-## How This Course Is Designed for Different Learners
+## How This Course Is Designed for Learner Agency
 
 The structure of CS357 is deliberate choice architecture, in the spirit of Universal Design for Learning: you **choose 5 labs from the 19 offered**, **3 written assignments from the 7 offered**, and **1 final-project track from 3** — so you can steer toward the work that matches your background, interests, and the stakeholder problem your team adopts, without any path being the "remedial" one. The Project Thread's milestones are the shared spine everyone travels; the choices surround it. Reflection and expression admit multiple formats throughout (prose, diagrams, recorded demos where noted), presentations address more than one audience by design, and the transparency framing on each assignment (Purpose / Task / Criteria, per [TILT](https://www.tilthighered.com/)) exists so that no one has to guess what "good" looks like. If a format barrier is getting between you and demonstrating what you know, say so — there is almost always an equivalent route.
 
