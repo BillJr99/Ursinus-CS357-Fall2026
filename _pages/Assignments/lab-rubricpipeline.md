@@ -794,7 +794,18 @@ It is ethical to measure potential bias in a grading system using synthetic test
 
 Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
 
-## Reflection Prompts
+## Learning Log
+
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+
+1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+2. **What surprised me.**
+3. **What I verified and how.** Evidence, not vibes.
+4. **How I used AI during this lab**, and what I learned from that use.
+5. **What I'd tell the next student** before they start.
+6. **One open question I still have.**
+
+### Lab-specific prompts
 
 - Your pipeline could grade a real class's submissions tomorrow by changing one path in a configuration file. List two conditions — one technical and one procedural — that you believe must be satisfied before that would be responsible. For each condition, name the specific course concept it connects to (e.g., hallucinated evidence rate, human-to-judge agreement, bias measurement).
 - Where did you and your partner disagree with each other more than with the judge? What does that specific disagreement reveal about what the rubric was measuring versus what you thought it was measuring? What would you add to the rubric to resolve it?

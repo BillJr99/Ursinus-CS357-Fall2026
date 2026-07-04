@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Frameworks: LangChain, CrewAI, AutoGen, and Agno
 
-Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.* When the wager pays off, you write a research agent in twenty lines instead of two hundred. When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system. This activity examines what the major 2024–2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project. The arc: **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool**.
+Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.* When the wager pays off, you write a research agent in twenty lines instead of two hundred. When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system. This activity examines what the major 2024–2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project. The arc: **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama**.
 
 ---
 
@@ -255,6 +255,108 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 
 ---
 
+# Part IV: Hands-On — Building with LangChain
+
+In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in Lab 1 — so that the framework's abstractions land on concepts you have already implemented yourself, not on faith.
+
+## Model 4: Hands-On — A LangChain Agent on Ollama
+
+> **A note on versions:** LangChain's APIs evolve quickly — package names, import paths, and helper functions have all changed across releases and will change again. The code below is pinned to *conceptual clarity*: the structure (a chat model object, a decorated tool, a bind-tools call, an explicit loop) is stable even when the spelling changes. When something does not import, check the current documentation at https://python.langchain.com/docs/ rather than fighting the error message.
+
+**Step 1 — the model object.** LangChain wraps every provider behind a common chat interface. `ChatOllama` is the wrapper for your local server (`pip install langchain-ollama`); its `.invoke()` is doing exactly what your Lab 1 `requests.post` to `/api/chat` did, with retry, parsing, and message formatting hidden inside:
+
+```python
+# pip install langchain-ollama langchain-core
+from langchain_ollama import ChatOllama
+
+llm = ChatOllama(model="llama3.2", temperature=0)
+print(llm.invoke("In one sentence: what is an agent?").content)
+```
+
+**Step 2 — a tool and an agent loop.** The `@tool` decorator builds the JSON schema for you *from the function's type hints and docstring* — the same schema you wrote by hand in the Tool Use activity. `bind_tools` attaches the schemas to every request, and the loop below is deliberately written in the same shape as your Lab 1 loop so you can see what moved into the framework and what did not:
+
+```python
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, ToolMessage
+
+@tool
+def days_between(start_iso: str, end_iso: str) -> str:
+    """Returns the number of days between two ISO dates (YYYY-MM-DD)."""
+    from datetime import date
+    d0, d1 = date.fromisoformat(start_iso), date.fromisoformat(end_iso)
+    return str((d1 - d0).days)
+
+llm_with_tools = llm.bind_tools([days_between])
+registry = {"days_between": days_between}   # still YOUR security boundary
+
+messages = [HumanMessage("How many days between 2026-08-31 and 2026-12-07?")]
+for _ in range(4):                          # perceive-plan-act, same as Lab 1
+    ai = llm_with_tools.invoke(messages)    # framework: HTTP, formatting, parsing
+    messages.append(ai)
+    if not ai.tool_calls:                   # yours: the stopping decision
+        print(ai.content)
+        break
+    for call in ai.tool_calls:              # yours: execution and its gates
+        result = registry[call["name"]].invoke(call["args"])
+        print(f"[tool] {call['name']}({call['args']}) -> {result}")
+        messages.append(ToolMessage(content=result, tool_call_id=call["id"]))
+```
+
+Read the comments as a ledger: the framework absorbed the *plumbing* (schema generation, request formatting, `tool_calls` parsing into typed objects), while the *authority* — which functions exist, when to stop, whether a call needs human confirmation — stayed in your loop. LangChain also ships prebuilt agent loops (e.g., LangGraph's `create_react_agent`) that absorb the loop itself; use them once you can say precisely what they took from you.
+
+**Step 3 — a multi-agent handoff.** Two "agents" are two differently-prompted model objects; the handoff is nothing more than one agent's output becoming the other agent's entire context:
+
+```python
+from langchain_core.messages import SystemMessage, HumanMessage
+
+clarifier = ChatOllama(model="llama3.2", temperature=0)
+executor  = ChatOllama(model="llama3.2", temperature=0.3)
+
+question = "Summarize why local models matter."
+
+# Agent 1: turn a vague request into a precise, self-contained brief
+brief = clarifier.invoke([
+    SystemMessage("You are a clarifier. Rewrite the user's request as a precise, "
+                  "self-contained brief: audience, length, and three points to "
+                  "cover. Output only the brief."),
+    HumanMessage(question),
+]).content
+
+# The handoff: the executor's ENTIRE context is the clarifier's output
+answer = executor.invoke([
+    SystemMessage("You are an executor. Fulfill the brief exactly as written."),
+    HumanMessage(brief),
+]).content
+print(answer)
+```
+
+Notice what the handoff pattern controls that a shared group chat does not: the executor sees *only* the brief — not the original question, not the clarifier's system prompt. In LangGraph terms, this is a two-node graph whose state carries a single `brief` field; in Model 2's terms, it is the leak-proof version of AutoGen's shared message list.
+
+**The extended tutorial:** the course notebook [langchain_ollama_multiagent_tutorial.ipynb](/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb) develops this sequence end to end — environment setup, a first raw query, the multiply tool with a single tool-call roundtrip, retrieval over a directory of documents (RAG), a supervisor pattern that exposes sub-agents as tools, and the clarifier → executor handoff above — with exercises after each stage.
+
+### Critical Thinking Questions
+
+11. In the Step 2 loop, list what the framework absorbed from your Lab 1 code and what remained yours, then answer: did LangChain absorb any *decision*, or only *plumbing*? Why does that distinction predict where your future bugs will and will not be?
+
+    *Hint:* Absorbed: schema generation from the docstring, request/response formatting, parsing `tool_calls` into objects. Retained: the registry, the step budget, the stopping condition, execution itself. Plumbing bugs now hide inside the framework (harder to see, rarer); decision bugs are still in your ten lines (visible, yours). Which kind was more common in your Lab 1 debugging?
+
+12. In Lab 1 you wrote the tool's JSON schema by hand; here `@tool` generates it from the signature and docstring. Recalling Model 1 of the Tool Use activity (schema-as-interface), what new *failure mode* does auto-generation introduce, and what practice defends against it?
+
+    *Hint:* The docstring is now dual-purpose: documentation for humans AND the model's only description of the tool. A terse or stale docstring ("helper function") silently becomes a Team-A-quality schema. Defense: write docstrings as prompt engineering, and print the generated schema (`days_between.args_schema.model_json_schema()`) to review what the model will actually see.
+
+13. The Step 3 handoff gives the executor *only* the brief. Connect this to CTQ 5's AutoGen scenario: which class of multi-agent bug does the handoff pattern eliminate, and what new risk does it accept in exchange?
+
+    *Hint:* Eliminated: cross-talk — the executor cannot be influenced by messages never placed in its context. Accepted: information loss — if the clarifier's brief omits something essential from the original question, the executor has no way to recover it. Explicit state passing trades leakage for bottlenecks; which failure is easier to detect in testing?
+
+[[MC]]
+In the hands-on LangChain agent, which responsibility did the framework take over from the from-scratch Lab 1 loop?
+- ( ) Deciding when the loop should stop
+- ( ) Choosing which Python functions the model is allowed to execute
+- (x) Generating the tool's JSON schema from the function signature and docstring, and parsing the model's response into typed `tool_calls` objects
+- ( ) Confirming irreversible actions with a human before execution
+
+---
+
 ## Exercises
 
 1. *Framework audit.* Choose any two frameworks from Model 1 and install them in a local environment. Write the minimal code in each to call one LLM with one tool and print the result. Count the lines of code. Which boilerplate problems does each framework eliminate versus require you to handle?
@@ -357,3 +459,6 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 - CrewAI documentation. "Core Concepts: Agents, Tasks, Crews, Processes." (2024, online) — https://docs.crewai.com/concepts/agents
 - Agno documentation. "Quickstart and Architecture Overview." (2025, online) — https://docs.agno.com/introduction
 - Liu, J. "LlamaIndex: A Data Framework for LLM Applications." (2023, online) — https://docs.llamaindex.ai
+- LangChain documentation. "Introduction, Chat Models, and Tools." (online) — https://python.langchain.com/docs/
+- LangChain documentation. "ChatOllama integration." (online) — https://python.langchain.com/docs/integrations/chat/ollama/
+- Course notebook: LangChain + Ollama multi-agent tutorial — [/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb](/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb)

@@ -11,37 +11,44 @@ info:
     - To identify at least three concrete failure modes with named mechanisms in a deployed AI system, distinguishing risks that have materialized from risks that are foreseeable
     - To produce a governance document with a monitoring plan containing specific metrics and thresholds, an incident response procedure with named roles and timelines, a stakeholder communication plan, and an appeal process navigable without a lawyer
     - To communicate findings and recommendations to a non-technical stakeholder audience in plain English in a fifteen-minute board presentation that moves from evidence to action
+    - To ground the audit in the team's Stakeholder Brief and Literature Review, follow the Project Thread process standards, and communicate the findings to technical and non-technical audiences using the Open Questions to assess growth (Goals 11, 12, 13, 14, 15)
   rubric:
-    - weight: 20
+    - weight: 17
       description: System Selection and Scoping
       preemerging: The selected system is too generic to analyze meaningfully (e.g., "AI in hiring" rather than a named product), or no proposal is submitted
       beginning: A specific system is selected but the proposal does not identify the affected populations, what the system decides or outputs, or why the chosen framework fits better than the alternatives
       progressing: The proposal identifies a specific system with named affected populations and a rationale for the chosen framework; the scope is mostly well-defined but key decisions or data flows are left unspecified, or the preliminary hypothesis is absent
       proficient: The proposal names the specific system and its operator, identifies the affected populations and how the system's decisions reach them, argues in three sentences why the chosen framework fits this system better than the two alternatives, states at least one preliminary hypothesis about where the highest risks lie, and demonstrates that enough public information exists to support the analysis (citing at least two independent sources found in the initial 30-minute search)
-    - weight: 25
+    - weight: 22
       description: Risk Analysis and Framework Application
       preemerging: The chosen framework is not applied, or application is superficial name-checking — for example, "the system GOVERNS by having terms of service" without naming a responsible role or artifact
       beginning: The framework is applied to some parts of the system but major steps or categories are skipped; findings are stated without citing a source for the claim
       progressing: The framework is applied systematically with most steps completed and findings grounded in cited sources; at least two failure modes are identified with mechanisms, but one or more findings describe abstract risks ("the system may exhibit bias") rather than specific, mechanistic failure modes
       proficient: Every major framework step or category produces a specific, evidenced finding with a citation; at least three distinct failure modes are documented — each names the affected group or input type, the specific erroneous output, and the mechanism by which the failure occurs; the analysis explicitly distinguishes between risks that have materialized (with evidence) and risks that are foreseeable; accountability gaps are named — not just "accountability is unclear" but specifically what role is absent and what decision it cannot be made without
-    - weight: 25
+    - weight: 21
       description: Governance Recommendations
       preemerging: No governance recommendations are provided, or recommendations are aspirational values without mechanisms — for example, "increase transparency" without a named artifact or process
       beginning: Recommendations are present but are generic best practices not tailored to this system, or lack owners, timelines, or the threshold that triggers review
       progressing: Recommendations are specific to the system with named roles; the monitoring plan names metrics but omits thresholds or measurement frequency; the incident response procedure and appeal process are present but incompletely specified
       proficient: The monitoring plan names each metric, its data source, its measurement frequency, the specific threshold that triggers review, and the named role responsible — for example, "demographic parity ratio measured monthly on a random 50-essay sample, review triggered if ratio falls below 0.9, owned by the District AI Coordinator"; the incident response procedure defines what constitutes an incident with a specific trigger (not "unexpectedly low scores"), names who is notified in what order within what timeframe, and names who has authority to suspend the system; the stakeholder communication table distinguishes what each stakeholder group needs to know and who delivers it; the appeal process names how to initiate, who reviews, what evidence the reviewer receives, what remedies are available, and the timeline from initiation to resolution; every recommendation is traceable to a specific risk finding from Stage 2
-    - weight: 15
+    - weight: 13
       description: Stakeholder Communication
       preemerging: The stakeholder presentation is missing or is addressed to a technical audience using unexplained framework terminology
       beginning: A presentation is provided but uses technical language a non-specialist board could not act on, or omits the key risks or recommendations
       progressing: The presentation is largely accessible to a non-technical audience with key risks and top recommendations communicated clearly, but at least one section lapses into jargon or the sequence from evidence to recommendation is unclear
       proficient: The presentation is fully accessible to a non-technical stakeholder audience — no unexplained acronyms or framework terms; it covers what the system does, who is at risk, what was found (organized by severity and leading with the most serious finding), and what is recommended (each recommendation with an estimated effort level and timeline); it includes at least one concrete, realistic example of an individual person who could be harmed; it anticipates and has specific evidence-based responses to the three likely board objections listed in the project instructions; it is completable in fifteen minutes
-    - weight: 15
+    - weight: 12
       description: Presentation and Artifacts
       preemerging: The presentation and artifact package are missing or substantially incomplete
       beginning: A presentation is delivered but without a rehearsed structure or timing; the artifact package is incomplete — one or more required documents are missing
       progressing: The presentation is organized and delivered within the time limit; the artifact package contains most required documents but at least one is incomplete (e.g., risk analysis cites fewer than eight sources, or governance document is missing the appeal process)
       proficient: The presentation is delivered within fifteen minutes with a clear narrative arc following the required section structure; visual aids are specific enough that a board member could refer to them afterward without the presenter present; the artifact package contains all five required documents — approved proposal, 4-to-6-page risk analysis report with at least 8 citations and 3 documented failure modes, 3-to-5-page governance document with all four required sections, presentation materials, and individual contribution statement if a pair — organized and complete enough to hand to a regulator without modification
+    - weight: 15
+      description: Stakeholder Grounding, Multi-Audience Communication, and Process Quality (Goals 11, 12, 13, 14, 15)
+      preemerging: The audit shows no connection to the team's Stakeholder Brief or Literature Review, no technically grounded segment accompanies the board presentation, and no Project Thread process artifacts (decision log, signatures, AI-use disclosures) are present
+      beginning: The audited system is chosen without reference to the Brief and Literature Review, or the presentation serves only one audience, or no disseminable artifact exists, or process artifacts are spotty across milestones
+      progressing: The proposal integrates the Stakeholder Brief and Literature Review and the final presentation serves both audiences with a disseminable artifact, with minor gaps such as a thin multidisciplinary reflection, an incomplete GANTT-style timeline, or one milestone missing its AI-use disclosure
+      proficient: The proposal integrates the Stakeholder Brief and Literature Review, connecting the audited system to the stakeholder's problem and the gap the review identified (Goals 11, 12); process is visible throughout — decision log and role assignments are current, every team document names a primary author per section, every progress report carries all members' signatures, and an AI-use disclosure accompanies each milestone (Goal 13); the final presentation pairs the plain-English board segment with a technically grounded evidence walkthrough for technical peers, and a disseminable artifact (poster, one-pager, or public page) presents the stakeholder context and a multidisciplinary reflection on how disciplines beyond CS shaped the analysis (Goal 14); the individual reflection uses the Open Questions to describe specific new understandings and growth (Goal 15); milestone work shows approach, professionalism/process, and product, and the grade record supports combining team output with individual contribution and individual understanding
 
 tags:
   - final-project
@@ -50,6 +57,10 @@ tags:
   - responsible-ai
 
 ---
+
+<!-- Project Thread integration: original rubric weights before the Stakeholder Grounding / Multi-Audience Communication / Process Quality row was added were 20 / 25 / 25 / 15 / 15. -->
+
+> **The Project Thread:** This track is the final stage of the semester-long [Project Thread](/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview) — the audited system should live in the domain your stakeholder cares about — your team operates under its signed charter and the [Team Playbook](/Projects/PBLThread), and Demo Day (wk15.0) addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
@@ -119,6 +130,8 @@ Avoid general-purpose chatbots unless you scope to a specific deployment context
 | Affected populations | Who is directly affected by the system's decisions, and how those decisions reach them |
 | Framework choice | Which framework (NIST AI RMF, EU AI Act, or Montreal Declaration) and a 3-sentence justification for why it fits this system better than the alternatives |
 | Preliminary hypothesis | Where do you expect the highest risks to lie, and why? (Write this before your deep analysis — it is your prior.) |
+| Stakeholder and thread grounding | How the audited system connects to your [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview): the problem in the stakeholder's terms, the gap your review identified, and why this system's deployment context matters to that stakeholder (Goals 11, 12) |
+| Implementation-and-assessment sketch | Who holds which role at each stage, how progress will be assessed at each stage boundary, and a shared GANTT-style timeline mapping Stages 2 through 4 to weeks with named owners (Goal 13) |
 
 Submit the proposal for instructor approval before proceeding. Systems that are too generic, inaccessible to public analysis, or outside the course scope will be redirected.
 
@@ -199,6 +212,12 @@ Deliver a **15-minute presentation** to the class, which will role-play as the b
 
 Non-technical language is required throughout. Every claim must be supportable — you may be asked where a finding came from, and "I read it somewhere" is not an acceptable answer.
 
+**Demo Day additions (The Project Thread):** in addition to the board presentation above, your Demo Day slot includes:
+
+- A **technically grounded segment** for your CS peers (the "technical demo" of this track): a walkthrough of your framework application and evidence — how you mapped the system, where the strongest evidence came from, and how a specific failure mode's mechanism works (Goal 14)
+- A **disseminable artifact** — a poster, one-pager, or public web page suitable for handing to your stakeholder or a board member: the stakeholder context, the top findings by severity, and the priority recommendations (Goal 14)
+- **Stakeholder context and a multidisciplinary reflection**: how the system's domain connects to your team's Stakeholder Brief, and how disciplines beyond CS shaped your analysis (Goals 11, 12)
+
 **Prepare for these likely board objections:**
 - "These risks are theoretical — we've been using this system for two years without a problem."
 - "The vendor told us it was tested for fairness."
@@ -217,6 +236,7 @@ Submit the following as a complete artifact package. The package should be organ
 3. **Governance document** (3 to 5 pages): monitoring plan with metrics and thresholds, incident response procedure, stakeholder communication plan, appeal process
 4. **Presentation materials**: slides or equivalent visual aid, suitable for a non-technical board, including at least one concrete individual harm example
 5. **Individual contribution statement** (if pair): one paragraph per person describing their specific contributions
+6. **Disseminable artifact**: the poster, one-pager, or public page from Demo Day, suitable for handing to the stakeholder (Goal 14)
 
 ---
 
@@ -243,5 +263,6 @@ Answer individually in your submission:
 - What was the hardest part of applying the framework to this system, and what does that difficulty reveal about the framework or the system?
 - If your governance recommendations were adopted, which one do you think would make the most practical difference to affected individuals, and why?
 - Did the analysis change your initial hypothesis about where the highest risks lay? If so, what changed your mind?
+- Using the four Open Questions (*What should matter to me? How should we live together? How can we understand the world? What will I do?*), describe one specific new understanding and one area of growth or skill development from the Project Thread — from formation survey to Demo Day (Goal 15).
 - Do you certify that your submission accurately represents your own work? Please identify any and all portions of your submission that were not originally written by you, including any AI-assisted writing.
 - Approximately how many hours did the project take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

@@ -31,8 +31,8 @@ info:
       description: Comparative Analysis
       preemerging: No comparison between AI and human interpretation
       beginning: AI interpretation summarized without comparison to the student's own reading or the statistics file
-      progressing: One difference between AI and human interpretation identified, with either the AI excerpt or the ground-truth statistic cited but not both
-      proficient: Three specific differences identified between AI and human reading of the chart; at least one difference shows the AI giving a wrong or imprecise number, supported by an exact verbatim AI excerpt from model_responses.txt alongside the true value from simulation_stats.txt; student implements one prompt engineering change (e.g., hedging instruction or step-by-step visual reasoning request), re-runs Part 2, and records whether the AI's response improved or not
+      progressing: One difference between AI and human interpretation identified, with either the AI excerpt or the ground-truth statistic cited but not both; the tool-calling extension is attempted but the critique addresses only the agent's parameter choices or only its interpretation
+      proficient: Three specific differences identified between AI and human reading of the chart; at least one difference shows the AI giving a wrong or imprecise number, supported by an exact verbatim AI excerpt from model_responses.txt alongside the true value from simulation_stats.txt; student implements one prompt engineering change (e.g., hedging instruction or step-by-step visual reasoning request), re-runs Part 2, and records whether the AI's response improved or not; the tool-calling extension critique audits both the agent's parameter choices and its interpretation against simulation_stats.txt and the tool's returned statistics, with verbatim excerpts
     - weight: 20
       description: Writeup and Reflection
       preemerging: No writeup
@@ -633,6 +633,108 @@ Write a 2–3 sentence **guardrail statement** you would add to a financial plan
 
 ---
 
+## Part 5: The Simulation as a Tool — Function-Calling Extension
+
+In Parts 1–4, the model only *interpreted* an experiment you designed. This extension inverts the relationship, bridging this lab to the **Tool Use and Function Calling** session: you wrap your simulation as a tool with a JSON schema, and the model **chooses the parameters**, asks your code to invoke the tool, and then interprets the visualization the tool produced. The model never executes anything — it can only request; your code runs the simulation and returns the results.
+
+A fully worked, runnable version of this part (including canned offline responses for machines without Ollama) is in the [companion notebook](/files/notebooks/MonteCarloRetirement.ipynb).
+
+**Note on models:** `llava` does not support function calling. Use a tool-capable model for the parameter-selection turn (`ollama pull llama3.1`, or `qwen2.5`), and keep `llava` for the vision turn.
+
+### Step 1: Wrap the simulation as a tool.
+
+Refactor your Part 1 code into a single callable with an agent-friendly signature. The new `stock_allocation` parameter blends an equity-like return distribution (mean 8%, std 15%) with a bond-like one (mean 3%, std 5%), giving the agent a genuinely meaningful lever to reason about.
+
+```python
+def run_retirement_sim(years=40, annual_contribution=6000, stock_allocation=0.8,
+                       n_paths=1000, seed=42):
+    """
+    Run a Monte Carlo retirement simulation and return summary statistics
+    plus the path to a saved two-panel chart.
+
+    stock_allocation: fraction 0.0-1.0 in stocks; the remainder in bonds.
+    Blend: mean = alloc*0.08 + (1-alloc)*0.03, std = alloc*0.15 + (1-alloc)*0.05.
+
+    Returns:
+        dict with keys: median, p10, p90, mean, prob_million, years,
+        annual_contribution, stock_allocation, n_paths, seed, chart_path.
+    """
+    # TODO: build a cfg dict from these arguments (reuse your Part 1 functions),
+    #       call simulate_retirement and plot_simulation, and return the stats dict.
+```
+
+### Step 2: Write the tool's JSON schema.
+
+The schema — not your Python code — is the tool's entire interface from the agent's point of view. Every name, description, and bound you write here shapes what parameters the model will choose.
+
+```python
+RETIREMENT_TOOL_SCHEMA = {
+    "type": "function",
+    "function": {
+        "name": "run_retirement_sim",
+        "description": ("Run a Monte Carlo retirement savings simulation and return "
+                        "summary statistics plus a saved two-panel chart."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "years": {"type": "integer", "minimum": 1, "maximum": 60,
+                          "description": "Years of saving before retirement."},
+                "annual_contribution": {"type": "number", "minimum": 0,
+                          "description": "Dollars contributed per year."},
+                "stock_allocation": {"type": "number", "minimum": 0.0, "maximum": 1.0,
+                          "description": "Fraction of the portfolio in stocks; higher raises both expected return and volatility."},
+                "n_paths": {"type": "integer", "minimum": 100, "maximum": 10000,
+                          "description": "Number of Monte Carlo paths (1000 recommended)."},
+                "seed": {"type": "integer", "description": "Random seed for reproducibility."}
+            },
+            "required": ["years", "annual_contribution", "stock_allocation"]
+        }
+    }
+}
+```
+
+### Step 3: Drive the agent loop.
+
+Give the tool-capable model a plain-English goal plus the schema via Ollama's `/api/chat` endpoint with a `tools` array; it responds with a *tool call* — a function name and a JSON object of arguments it selected. Your code executes `run_retirement_sim` with those arguments, then sends the resulting chart to `llava` (and the exact stats dict back in the prompt) for interpretation.
+
+```python
+goal = ("I am 25 and want to know whether contributing $500 a month with a fairly "
+        "aggressive portfolio gives me a good chance of retiring at 65 with over "
+        "$1 million. Choose appropriate parameters, run the simulation, and "
+        "interpret the results for me.")
+
+payload = {
+    "model": "llama3.1",
+    "messages": [
+        {"role": "system", "content": "You are a retirement planning assistant. Use the "
+         "simulation tool, choosing parameters that faithfully reflect the user's situation."},
+        {"role": "user", "content": goal},
+    ],
+    "tools": [RETIREMENT_TOOL_SCHEMA],
+    "stream": False,
+}
+# TODO: POST to /api/chat, read message["tool_calls"][0]["function"],
+#       invoke run_retirement_sim(**arguments), and save the goal, the tool call,
+#       the tool result, and the interpretation to tool_call_transcript.txt.
+```
+
+### Step 4: Critique the agent (exercise).
+
+The agent has now done two things a human analyst would do: chosen the experiment's inputs and narrated its output. Audit **both** against `simulation_stats.txt` and the tool's returned stats dict:
+
+1. **Parameter choices.** The user said "$500 a month" and "retire at 65" starting at 25. Did the model's `annual_contribution` equal $500 × 12? Did `years` equal 40? Is the chosen `stock_allocation` a defensible reading of "fairly aggressive," and did the model justify it anywhere? Record each as correct, approximately correct, or wrong, quoting the tool call verbatim from `tool_call_transcript.txt`.
+2. **Interpretation.** Compare the model's narrative to the tool's exact `prob_million` and to the ground truth in `simulation_stats.txt`. Does its qualitative language ("roughly three-quarters," "more likely than not") match the actual number? Quote the exact sentence and the exact statistic side by side, exactly as you did in Part 4.
+3. **Compounding risk.** In 2–3 sentences: when the same agent both picks the parameters and interprets the results, how can an early mistranslation (a wrong contribution, an unjustified allocation) compound into a confident but misleading recommendation — and which single check from steps 1–2 would you automate as a guardrail?
+
+---
+
+> **Checkpoint: You have completed Part 5 when:**
+> - Your `run_retirement_sim` tool runs from a single call and returns the stats dict plus a chart path
+> - The model selected parameters via a tool call (not prose), and your transcript captures the goal, the call, the tool result, and the interpretation
+> - Your critique covers at least one judgment of the agent's parameter choices and one of its interpretation, each backed by a verbatim excerpt and a ground-truth number
+
+---
+
 ## Reflection Prompts
 
 Answer in your readme:
@@ -656,6 +758,8 @@ Submit a ZIP file containing all of the following. Items marked with a checkbox 
 - [ ] `simulation_stats.txt` — the statistics summary from your baseline run
 - [ ] `model_responses.txt` — both turns of the AI conversation from your baseline run
 - [ ] `sensitivity_results.txt` or equivalent — the three-scenario comparison table
+- [ ] `tool_call_transcript.txt` — the Part 5 tool-calling transcript: the user goal, the model's tool call (name and arguments), the tool's returned statistics, and the model's interpretation
+- [ ] Part 5 critique (in the readme) — the agent's parameter choices and its interpretation each audited against `simulation_stats.txt` and the tool's stats dict, with verbatim excerpts
 - [ ] `readme.md` — writeup covering: (1) sensitivity analysis with all three scenarios and four statistics each, (2) critical analysis with three AI/human comparison items including at least one AI error with verbatim excerpt, (3) the prompt engineering change you tested and whether it helped, (4) your guardrail statement for deployment
 - [ ] `pair_log.txt` — driver/navigator swap log with timestamps and roles
 - [ ] Reflection prompts answered in the readme

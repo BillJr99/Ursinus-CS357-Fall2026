@@ -673,7 +673,18 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 Submit a ZIP containing your code, JSON configuration and rubric files, planted-defect drafts with labels, calibration results (CSV or table), reward hack transcript and patch, comparison results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
 
-## Reflection Prompts
+## Learning Log
+
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+
+1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+2. **What surprised me.**
+3. **What I verified and how.** Evidence, not vibes.
+4. **How I used AI during this lab**, and what I learned from that use.
+5. **What I'd tell the next student** before they start.
+6. **One open question I still have.**
+
+### Lab-specific prompts
 
 - Your critic is an LLM judging an LLM. At what specific points in this lab did you, the humans, remain indispensable — and what would have gone wrong if you had removed yourselves? Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
 - Describe the most surprising critic behavior you observed: a missed defect, a phantom defect, or an oscillation (the critic reverses its verdict across rounds without the draft changing). What does that behavior imply about using this critic in a high-stakes setting?

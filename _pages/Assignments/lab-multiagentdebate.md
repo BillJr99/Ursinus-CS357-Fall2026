@@ -17,7 +17,7 @@ info:
       preemerging: The debate fails to run due to major issues, or the program fails to run
       beginning: The debate runs but fails on test questions due to one or more minor issues
       progressing: The debate runs correctly with configurable agents and rounds and majority vote aggregation, with a fragile component such as answer extraction
-      proficient: The debate runs correctly with configurable agents, rounds, and temperature schedule; answer extraction anchors on a required ANSWER: line and handles its absence with a located error message; both majority-vote and judge-agent aggregation are available; a transcript of at least one complete 3-agent, 2-round debate is included in the submission
+      proficient: "The debate runs correctly with configurable agents, rounds, and temperature schedule; answer extraction anchors on a required ANSWER: line and handles its absence with a located error message; both majority-vote and judge-agent aggregation are available; a transcript of at least one complete 3-agent, 2-round debate is included in the submission"
     - weight: 25
       description: Consensus Implementation
       preemerging: The consensus pipeline fails to run due to major issues
@@ -755,7 +755,18 @@ This is unexpected — a lower threshold should produce more (tighter) clusters.
 
 Submit a ZIP containing your code, JSON configuration, task set with labels, comparison results (CSV or table), debate and consensus transcripts for at least two questions each, the correlated failure analysis, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds where determinism is intended and listing software version information.
 
-## Reflection Prompts
+## Learning Log
+
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+
+1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+2. **What surprised me.**
+3. **What I verified and how.** Evidence, not vibes.
+4. **How I used AI during this lab**, and what I learned from that use.
+5. **What I'd tell the next student** before they start.
+6. **One open question I still have.**
+
+### Lab-specific prompts
 
 - Debate and consensus spend extra computation to buy reliability. Name one decision in your own life where you would pay that cost and one where you would not. Map each onto a condition from your shootout (single-shot, self-consistency, or debate), and explain what feature of the task — not just the cost — drives the choice.
 - Your synthesizer "follows the majority." Name a real scenario — in medicine, law, or public policy — where the majority of experts can all be wrong in the same direction, and explain what mechanism (not more samples) would be needed to catch that error.

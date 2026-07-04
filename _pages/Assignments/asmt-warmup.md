@@ -117,6 +117,8 @@ Describe one thing you hope to be able to build or do by December that you canno
 
 ## Part 3: Team Charter
 
+> **Note:** the charter you write here is the **pre-draft**. Your team will expand it into the full, signed semester charter in the dedicated [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) — bring this draft with you.
+
 With your assigned team, co-author a one-page charter. All members must contribute. Typed names at the bottom serve as signatures.
 
 **Charter Template:**

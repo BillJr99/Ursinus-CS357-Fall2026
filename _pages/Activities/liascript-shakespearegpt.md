@@ -335,6 +335,7 @@ Both models convert context into a probability distribution over next tokens. Th
 
 ## Further Reading
 
+- [Bigram Word Generator notebook](/files/notebooks/Bigram_Word_Generator.ipynb) — a runnable companion that builds a word-level bigram model, plots next-word histograms, and generates text by sampling or argmax.
 - Jurafsky and Martin. *Speech and Language Processing*, Chapter 3 (n-gram language models). Available free online at web.stanford.edu/~jurafsky/slp3/.
 - Andrej Karpathy. "The Unreasonable Effectiveness of Recurrent Neural Networks" (blog post, 2015). Shows character-level LM outputs at various training stages.
 - Andrej Karpathy. *makemore* (GitHub). A step-by-step series building exactly this kind of character-level model up to a full transformer.

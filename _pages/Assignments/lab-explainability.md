@@ -80,6 +80,8 @@ pip install shap lime scikit-learn matplotlib pandas numpy
 
 No Ollama or network access is required for this lab. Everything runs locally on a synthetic dataset you generate in Part 1.
 
+If you would like an alternate starter path for the dataset and model, the [Credit Score Feature Weight Estimator notebook](/files/notebooks/CreditScoreFeatureWeightEstimator.ipynb) trains a small, fully transparent linear credit-scoring model whose feature weights you can read directly — a useful warm-up baseline before applying SHAP and LIME to this lab's model.
+
 **Health check** — run this before writing any lab code:
 
 ```python

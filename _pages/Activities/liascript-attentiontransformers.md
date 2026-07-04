@@ -310,6 +310,7 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ## 4. Further Reading
 
+- [Attention notebook](/files/notebooks/Attention.ipynb) — a runnable companion that computes dot-product attention by hand on a sentence with an ambiguous word, mirroring today's worked example.
 - Vaswani et al. "Attention Is All You Need." *NeurIPS* (2017). The transformer paper.
 - Tom Yeh. *AI by Hand*, attention worksheets (today's models follow this style).
 - Jay Alammar. "The Illustrated Transformer" (online).
