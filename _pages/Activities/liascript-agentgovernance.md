@@ -36,7 +36,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Charter** | The project's constitution: mission, ranked priorities, rules, milestones, and guardrails, written down once and treated as the highest authority in every agent session. | A `CHARTER.md` whose Documentation Authority Rule overrides anything an agent "remembers" |
 | **Documentation Authority Rule** | The rule that written project documentation always beats an agent's memory: if the docs conflict with remembered context, the docs win; if the docs are incomplete, fix the docs. | An agent that "remembers" a build step from a prior session must re-read `docs/` instead of acting on the memory |
 | **Handoff State** | The small set of files an agent must update before stopping *for any reason*, so that a brand-new agent can continue safely with zero conversation history. | `.ai/SESSION.md` and `.ai/CURRENT_TASK.md`, each ending with a "Next Safe Action" |
-| **Kickoff Prompt** | A versioned, paste-into-a-fresh-agent prompt that boots a session: role, source of authority, read order, scope boundary, prohibitions, and a required closing report. | `kickoff_v4.txt` — the `_v4` means the prompt itself is engineered and iterated like code |
+| **Kickoff Prompt** | A versioned, paste-into-a-fresh-agent prompt that boots a session: role, source of authority, read order, scope boundary, prohibitions, and a required closing report. | A kickoff prompt on its fourth revision — the prompt itself is engineered and iterated like code |
 | **Decision Record** | A durable trace of *why* the project evolved as it did: RFCs for proposals, a decision log for outcomes, a forensics table for inherited work. | A log entry with decision, rationale, alternatives considered, and long-term implications |
 | **Milestone Gate** | A hard stop between project phases: the agent must halt at the end of a milestone and wait for explicit human direction before starting the next. | "Stop after Milestone 0 is complete. Do not begin Milestone 1 until explicitly directed." |
 
@@ -222,7 +222,7 @@ In this part, you will dissect the versioned prompt that boots a cold-start sess
 
 ## 4. The Kickoff Prompt as Engineered Artifact
 
-**Why this matters:** The case-study project's first-session prompt was a *file* — `kickoff_v4.txt` — versioned like code because it was iterated like code. Its structure is a checklist you can reuse for any project:
+**Why this matters:** The case-study project's first-session prompt was a *file* on its fourth revision — versioned like code (through Git commits and an in-file version marker, per the charter's own git policy) because it was iterated like code. Its structure is a checklist you can reuse for any project:
 
 1. **Role assignment** — "You are the lead software engineer for the `<ProjectName>` project."
 2. **Source of authority** — "Your authority is derived entirely from the project documentation." The agent has no standing beyond the docs.
