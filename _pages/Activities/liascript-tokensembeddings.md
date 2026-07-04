@@ -25,37 +25,64 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| **Token** | The smallest chunk of text a model reads — roughly ¾ of a word on average, so "hamburger" is one token but "cheeseburger" might be two. Think of tokens as puzzle pieces that text is cut into. | `the` + `thing` → 2 tokens using our toy rules |
+| **Tokenizer** | The algorithm that cuts text into tokens, usually by starting with characters and merging frequent pairs (byte-pair encoding, or BPE). | Merging `t`+`h` → `th`, then `th`+`e` → `the` |
+| **Embedding** | A list of numbers (a vector) that represents the *meaning* of a piece of text. It's like a GPS coordinate for meaning: similar meanings land near each other in this numerical space. | `"the dog ran"` → `(1, 2, 2)` in a toy 3-D space |
+| **Cosine Similarity** | A score from −1 to 1 measuring how similar two meaning-vectors are — specifically, the cosine of the angle between them. A score of 1 means "same direction = same meaning"; 0 means "unrelated." | `cos(a, b) = 1.0` when `b` is just a scaled copy of `a` |
+| **Context Window** | The maximum number of tokens a model can read at once — its "working memory." A 4,000-token window holds roughly 3,000 English words. | A 4,000-token budget ≈ a 6-page double-spaced essay |
+| **Semantic Search** | Finding documents by *meaning* rather than exact keyword match. Powered by comparing embedding vectors. | Querying "when can I get help from my professor" finds "Office hours for CS357 are Tuesday and Thursday mornings" |
+
+---
+
 # Part I: From Characters to Tokens
+
+In this part, you will tokenize a short phrase by hand using a simplified rule set and discover why models struggle with tasks that seem trivially easy for humans — like counting the letters in a word. Understanding tokenization also explains why your chat budget is measured in tokens, not words or characters.
 
 ## 1. Tokenization
 
-**Models do not read words; they read tokens.** A tokenizer splits text into subword units drawn from a fixed vocabulary, typically built by byte-pair encoding (BPE): begin with characters, repeatedly merge the most frequent adjacent pair, and stop at a target vocabulary size (often 30,000 to 200,000 entries). Common words become single tokens; rare words shatter into pieces, so "unhappiness" may become `un` + `happiness` and "Collegeville" may become three fragments.
+**Why this matters:** Every time you send a message to an AI, the first thing it does is chop your text into tokens — not words, not letters, but something in between. This matters because the model never sees the letter "e" inside "cheeseburger"; it sees whatever token the tokenizer carved out. That is why models struggle to count letters, why long numbers trip them up, and why your chat budget is measured in tokens rather than words. It's like the difference between reading a book word-by-word versus reading it one syllable at a time: the chunks you use change what patterns you notice.
 
-**Tokenization explains odd model behaviors.** Counting letters in a word is hard when the model never sees letters; arithmetic on long numbers is hard when digits group unpredictably; and the *context window* is measured in tokens, which is why a 4,000-token budget holds roughly 3,000 English words.
+**Models do not read words; they read tokens.** A tokenizer (the algorithm that cuts text into tokens) splits text into subword units drawn from a fixed vocabulary, typically built by byte-pair encoding (BPE — a compression algorithm that starts with individual characters and repeatedly merges the most frequent adjacent pair into a single token): begin with characters, repeatedly merge the most frequent adjacent pair, and stop at a target vocabulary size (often 30,000 to 200,000 entries). Common words become single tokens; rare words shatter into pieces, so "unhappiness" may become `un` + `happiness` and "Collegeville" may become three fragments.
+
+**Tokenization explains odd model behaviors.** Counting letters in a word is hard when the model never sees individual letters; arithmetic on long numbers is hard when digits group unpredictably; and the *context window* (the model's working memory) is measured in tokens, which is why a 4,000-token budget holds roughly 3,000 English words. A rough rule of thumb: **1 token ≈ ¾ of an English word**, or about 4 characters.
 
 ---
 
 ## Model 1: Tokenize by Hand
 
-Given the toy merge rules (`t`+`h`$\to$`th`, `th`+`e`$\to$`the`, `i`+`n`$\to$`in`, `in`+`g`$\to$`ing`), tokenize: "the thing".
+Given the toy merge rules (`t`+`h`→`th`, `th`+`e`→`the`, `i`+`n`→`in`, `in`+`g`→`ing`), tokenize: "the thing".
 
 ### Critical Thinking Questions
 
 1. Apply the merges step by step. How many tokens result? The Recorder shows the merge sequence.
+
+   > *Hint: Start with every character as its own token: `t h e   t h i n g`. Then apply each merge rule left-to-right, in order, as many times as it applies. Count what remains.*
+
 2. Why do frequent character pairs deserve dedicated tokens? Connect your answer to compression.
+
+   > *Hint: If "th" appears in thousands of words, how many fewer tokens do you need to store a typical English text if "th" is one token instead of two? Think of it like a ZIP file for language.*
+
 3. Predict which is more tokens: "internationalization" or "the cat sat on the mat". Justify before checking intuition against the class.
+
+   > *Hint: "internationalization" is a single rare word — rare words shatter into many subword pieces. The second phrase has 6 common words. Which do you expect has more tokens? Try to estimate using the ¾-word rule.*
 
 ---
 
 ## 2. Embeddings: Meaning as Geometry
 
-**An embedding maps a token, sentence, or document to a vector** $\mathbf{v} \in \mathbb{R}^d$ (with $d$ commonly 384 to 4096) such that *semantically similar texts map to nearby vectors*. The standard similarity measure is **cosine similarity**, the cosine of the angle between vectors:
+**Why this matters:** Once text is tokenized, the model still needs a way to understand that "dog" and "puppy" are related while "dog" and "tax return" are not. The solution is to map every piece of text to a point in a high-dimensional space — think of it as a map where meaning is location. Words with similar meanings land near each other on the map, just like cities in the same region are physically close. This single idea powers search engines, recommendation systems, and the retrieval pipelines our agents will use next week.
+
+**An embedding maps a token, sentence, or document to a vector** $\mathbf{v} \in \mathbb{R}^d$ (with $d$ commonly 384 to 4096 — that is, a list of 384 to 4096 numbers) such that *semantically similar texts map to nearby vectors*. The standard similarity measure is **cosine similarity** (the cosine of the angle between two vectors):
 
 $$
 \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\lVert \mathbf{a} \rVert \, \lVert \mathbf{b} \rVert}
 $$
 
-which ranges from $-1$ (opposite) through $0$ (unrelated) to $1$ (identical direction). Embedding models are trained so that paraphrases score high and unrelated texts score low; this single idea powers semantic search, clustering, recommendation, and the retrieval pipelines our agents will use next week.
+which ranges from $-1$ (opposite meaning) through $0$ (unrelated) to $1$ (identical direction/meaning). Embedding models are trained so that paraphrases score high and unrelated texts score low; this single idea powers semantic search, clustering, recommendation, and the retrieval pipelines our agents will use next week.
 
 ---
 
@@ -66,7 +93,14 @@ Let $\mathbf{a} = (1, 2, 2)$ for "the dog ran" and $\mathbf{b} = (2, 4, 4)$ for 
 ### Critical Thinking Questions
 
 4. Compute $\cos(\mathbf{a}, \mathbf{b})$ and $\cos(\mathbf{a}, \mathbf{c})$ by hand (AI by Hand style: show the dot products and norms). The Recorder writes the full arithmetic.
+
+   > *Hint: The dot product $\mathbf{a} \cdot \mathbf{b} = (1)(2) + (2)(4) + (2)(4)$. The norm $\lVert \mathbf{a} \rVert = \sqrt{1^2 + 2^2 + 2^2}$. Divide the dot product by the product of the two norms.*
+
 5. $\mathbf{b} = 2\mathbf{a}$ exactly. What does cosine similarity say about vectors that differ only in magnitude, and why is that a desirable property for comparing a short query with a long document?
+
+   > *Hint: A short question like "parking rules?" and a long parking policy document might have similar meanings but very different lengths. Should length penalize similarity? What does the division by the norms accomplish?*
+
+> **⚠️ Common Misconception:** A high cosine similarity score does NOT mean the two sentences share the same words, that one logically implies the other, or that either is factually true. It only means the embedding model placed them in a similar *direction* in meaning-space — they are topically close. Two completely wrong sentences about the same topic can score 0.95 with each other.
 
 [[MC]]
 Two sentences receive embeddings with cosine similarity 0.92. The best interpretation is:
@@ -79,9 +113,11 @@ Two sentences receive embeddings with cosine similarity 0.92. The best interpret
 
 # Part II: Semantic Search in Code
 
+In this part, you will use a real embedding model (a neural network that converts text to vectors) to build a tiny search engine that finds documents by meaning rather than by matching exact words. This is the retrieval foundation that your agents will use in the next module to access documents they were never trained on.
+
 ## 3. A Search Engine in Twenty Lines
 
-Ollama serves embedding models too. We embed a handful of campus FAQ sentences and search them by meaning, not keywords.
+Ollama serves embedding models too. We embed a handful of campus FAQ sentences and search them by meaning, not keywords. The code below first calls the embedding model to convert each document to a vector (a list of numbers representing its meaning), stores all the vectors in a matrix, and then finds the closest match to any new query using cosine similarity.
 
 ---
 
@@ -131,24 +167,58 @@ search("where do I leave my car")
 ### Critical Thinking Questions
 
 6. Neither query shares a single content word with its best match. Identify exactly which line of code performed the "understanding," and what it computes mathematically.
-7. Craft a query that retrieves the *wrong* document with high confidence. What does the failure reveal about what embeddings capture and what they miss (negation, numbers, names)?
+
+   > *Hint: Look at the line `sims = D @ q / ...`. `D @ q` is a matrix-vector product — what does each entry of the result represent? Which earlier formula from Model 2 does this implement?*
+
+7. Craft a query that retrieves the *wrong* document with high confidence. What does the failure reveal about what embeddings capture and what they miss (negation, numbers, proper names)?
+
+   > *Hint: Try something like "the library is NOT open on weekends" — does the negation change the retrieved document? Try a query with a specific number that doesn't appear in any document. What does that tell you about what the embedding "remembers"?*
+
 8. The matrix-vector product `D @ q` computes all similarities at once. For one million documents, what becomes expensive, and what data structure might help? (This previews vector databases.)
+
+   > *Hint: With 1 million documents each having 768 numbers, how many multiplications does one search require? (Multiply 1,000,000 × 768.) What if you could organize the vectors spatially so you only had to check a fraction of them?*
 
 ---
 
 # Part III: Synthesis and Practice
 
+In this part, you will extend the search engine to reveal the geometry of meaning — building similarity matrices, testing the classic king-man+woman=queen analogy, and auditing how token counts constrain what you can fit in an agent's context window.
+
 ## 4. Exercises
 
-1. *Similarity matrix.* Embed eight sentences of your team's choosing spanning two obvious topics. Compute the full 8x8 cosine matrix, render it as a heatmap, and verify that the block structure matches the topics.
+1. *Similarity matrix.* Embed eight sentences of your team's choosing spanning two obvious topics. Compute the full 8×8 cosine similarity matrix, render it as a heatmap, and verify that the block structure matches the topics.
+
+   - *What to do:* Choose 4 sentences about Topic A (e.g., dining) and 4 about Topic B (e.g., parking). Call `embed()` on each, build the 8×8 matrix using the cosine formula, and visualize with `matplotlib` using `imshow`.
+   - *Starter hint:* `matrix[i][j] = np.dot(vecs[i], vecs[j]) / (np.linalg.norm(vecs[i]) * np.linalg.norm(vecs[j]))`. For the heatmap: `plt.imshow(matrix, vmin=-1, vmax=1, cmap='coolwarm')`.
+   - *You've succeeded when:* The top-left 4×4 block and bottom-right 4×4 block show high similarity (warm colors), while the off-diagonal blocks show low similarity (cool colors).
+
 2. *Analogy probe.* Test the classic claim that embedding arithmetic captures analogy: compare $\cos(\text{embed}(\text{"king"}) - \text{embed}(\text{"man"}) + \text{embed}(\text{"woman"}),\ \text{embed}(\text{"queen"}))$ against unrelated words. Report whether your sentence-level model exhibits the effect, and hypothesize why or why not.
+
+   - *What to do:* Compute the four embeddings, do the vector arithmetic, then compare the result to `embed("queen")` using cosine similarity. Also compare it to `embed("table")` as a baseline.
+   - *Starter hint:* `analogy_vec = embed("king") - embed("man") + embed("woman")`. Then `cosine(analogy_vec, embed("queen"))` vs `cosine(analogy_vec, embed("table"))`.
+   - *You've succeeded when:* You can report the two similarity scores and explain why sentence-level models may show a weaker analogy effect than word-level models like Word2Vec.
+
 3. *Token budget audit.* Estimate the token count of your team charter document at four characters per token, then explain how that figure constrains stuffing it into an agent's prompt every turn. (We address this properly in the memory module.)
+
+   - *What to do:* Count the total characters in your charter (or any document of at least 500 words), divide by 4 to estimate tokens, and compare that figure to a 4,000-token context window.
+   - *Starter hint:* `token_estimate = len(document_text) / 4`. If your context window is 4,000 tokens and your system prompt costs 300 tokens and each user turn costs ~50 tokens, how many turns can fit alongside the full charter?
+   - *You've succeeded when:* You can state the charter's token estimate, the percentage of the context window it occupies, and one concrete consequence for an agent that carries the full charter every turn.
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: meaning, for an embedding model, is location in a high-dimensional space learned from co-occurrence. Name one aspect of meaning in *your* favorite discipline (a poem's irony, a proof's elegance, a primary source's provenance) that you suspect geometry cannot capture, and say why.
+*Personal:* Think about a time you searched for something online and the search engine found exactly what you meant even though you used different words than the page used. How does that experience connect to what embeddings are doing mathematically?
+
+*Technical:* In your notebook: meaning, for an embedding model, is location in a high-dimensional space learned from co-occurrence patterns in text. Name one aspect of meaning in your favorite discipline (a poem's irony, a proof's elegance, a primary source's provenance) that you suspect geometry cannot capture, and explain why co-occurrence statistics would fail to encode it.
+
+*Societal:* Embedding models encode the statistical patterns of whatever text they were trained on, including that text's biases. If a job-application screening system uses embeddings to find "similar" resumes to high-performing employees, what kinds of historical bias might get amplified? Who is harmed, and what safeguard would you design?
+
+---
+
+## → Coming Up Next
+
+In the next module, we put embeddings to work at scale: instead of searching five sentences, we will index thousands of document chunks in a **vector database** (Chroma) and use that index to give our agents access to up-to-date information they were never trained on — a technique called Retrieval-Augmented Generation (RAG).
 
 ---
 

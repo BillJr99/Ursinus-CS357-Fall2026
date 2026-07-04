@@ -25,42 +25,63 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Key Concepts
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| Ollama | A free, open-source program that downloads AI model files and serves them as a local web API on your own machine, with no account or internet connection required during use | Running `ollama run llama3.2 "Say hello"` on your laptop and getting an answer in seconds |
+| OpenWebUI | A browser-based chat interface that connects to your local Ollama server, giving you the look and feel of a commercial chatbot with full privacy | Browsing to `http://localhost:3000` and chatting with a model that never sends data outside your machine |
+| REST API | A standard way for programs to communicate over a network using web addresses (URLs) and JSON data — here, the way your Python code talks to Ollama | Calling `requests.post("http://localhost:11434/api/chat", json={...})` to send a prompt and receive a response |
+| Quantization | A technique that reduces the storage size of a model by representing each number with fewer bits, trading a small amount of accuracy for the ability to run on ordinary hardware | A 4-bit quantized 8B-parameter model takes roughly 4 GB instead of 16 GB at full precision |
+| Parameter count | The number of numerical values (weights) that define a model's learned behavior — roughly correlated with capability, but also with memory and speed requirements | llama3.2 has ~3 billion parameters; larger models like llama3:70b have 70 billion |
+| Tokens per second | A measure of how fast a model generates output — each "token" is roughly a word or word-piece, so 10 tokens per second is roughly 10 words per second | You will measure this today by timing a 100-word generation against your system's hardware |
+
+---
+
 # Part I: Why Run Models Locally?
+
+In this part, you will understand the privacy, cost, and capability tradeoffs that motivate running AI models on your own hardware — so that when you choose between local and cloud inference for the rest of the semester, you can justify that choice with specific reasons.
 
 ## 1. The Case for Local
 
+Before we get to installation, consider why running AI locally matters. Imagine a doctor who needs to draft a clinical summary using patient records, or a researcher analyzing confidential survey responses. Sending those prompts to a cloud service means the data leaves the institution — potentially violating privacy law. A local model solves this by never letting the data leave the machine at all. At the same time, local models have real limitations: a model that fits on a laptop is far smaller than a frontier cloud model, and knowing which tasks each handles well is a core practitioner skill.
+
 **Privacy.** Prompts sent to a hosted service leave your machine; prompts to a local model never do. For work involving student records, health information, unpublished research, or anything covered by FERPA or an IRB protocol, local inference is often the only responsible choice.
 
-**Cost and control.** A local model has no per-token bill, no rate limits, and no surprise deprecations. You choose the model, pin the version, and reproduce results later, which connects directly to scientific reproducibility.
+**Cost and control.** A local model has no per-token bill, no rate limits, and no surprise deprecations. You choose the model, pin the version, and reproduce results months later — which connects directly to scientific reproducibility.
 
-**The tradeoff is capability.** A model that fits on a laptop is far smaller than a frontier hosted model. Part of becoming a practitioner is learning *which tasks small local models do well* (formatting, extraction, drafting, classification, RAG over your own documents) and which still demand frontier capability.
+**The tradeoff is capability.** Part of becoming a practitioner is learning *which tasks small local models do well* (formatting, extraction, drafting, classification, retrieval-augmented generation over your own documents) and which still demand frontier capability (complex multi-step reasoning, broad world knowledge, subtle creative tasks).
 
 ---
 
 ## 2. What a Model File Is
 
-A model you download is a tensor of learned weights plus metadata. Its size is governed by parameter count and **quantization**, the number of bits used to store each weight:
+A model you download is a tensor (a large multi-dimensional array — think of it as a very large spreadsheet of numbers) of learned numerical weights plus metadata that tells Ollama how to run it. Its size is governed by two numbers: the parameter count $N$ (how many individual weights the model has) and the **quantization level** (the number of bits — the units of computer storage — used to store each weight):
 
 $$
 \text{size} \approx N_{\text{params}} \times \frac{\text{bits}}{8} \text{ bytes}
 $$
 
-An 8-billion-parameter model at 4-bit quantization occupies roughly $8\text{B} \times 0.5 = 4$ GB. Quantization trades a small amount of accuracy for the ability to run on commodity hardware; it is the reason local AI is possible at all.
+An 8-billion-parameter model at 4-bit quantization occupies roughly $8\text{B} \times 0.5 = 4$ GB. Quantization trades a small amount of accuracy for the ability to run on commodity hardware — it is the reason local AI is practical at all on student laptops.
 
 [[MC]]
 A team wants to run a 70B-parameter model quantized to 4 bits on a laptop with 16 GB of RAM. The approximate memory needed for weights alone is:
 - ( ) About 8 GB, so it fits comfortably
-- (x) About 35 GB, so it does not fit; choose a smaller model
+- (x) About 35 GB, so it does not fit; choose a smaller model or a machine with more RAM
 - ( ) About 70 GB regardless of quantization
 - ( ) Quantization makes memory use independent of parameter count
+
+> **⚠️ Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy. In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks — the main practical impact is speed and memory, not correctness. The serious quality drop typically happens at 2-bit or below. Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
 
 ---
 
 # Part II: The Build
 
+In this part, you will install and configure your own local AI stack — Ollama to serve models and optionally OpenWebUI for a chat interface — and verify that your Python code can talk to it over a local network connection. Every step is hands-on: the goal by the end of class is a working system you can call from your own scripts.
+
 ## 3. Install Checklist
 
-Follow this sequence as a team; the Recorder logs each step's outcome.
+Follow this sequence as a team; the Recorder logs each step's outcome, including the exact error message if a step fails. A failed step is not a problem — it is data. Record the error verbatim, write down your hypothesis for the cause, and test the hypothesis before asking for help. This troubleshooting protocol is itself a course outcome.
 
 ```
 1. Install Ollama:        https://ollama.com/download
@@ -73,9 +94,9 @@ Follow this sequence as a team; the Recorder logs each step's outcome.
 6. Browse to http://localhost:3000 and connect it to Ollama.
 ```
 
-If a step fails, that is data, not defeat: record the error verbatim, hypothesize a cause, and test the hypothesis before asking for help. (This troubleshooting protocol is itself a course outcome.)
-
 ---
+
+The code cell below sends a single message to your locally running Ollama server using Python's `requests` library (a standard tool for making web requests). If Ollama is running correctly, it will respond with a confirmation message. The second block lists every model currently downloaded on your machine.
 
 ## Code Cell
 
@@ -110,32 +131,65 @@ except Exception as e:
 
 ## Model: Reading the Hardware
 
-While a long generation runs, open your system monitor (Activity Monitor, Task Manager, or `htop`).
+While a long generation runs, open your system monitor (Activity Monitor on macOS, Task Manager on Windows, or `htop` on Linux) and watch which resources spike.
 
 ### Critical Thinking Questions
 
-1. Which resource saturates during generation: CPU, GPU, memory, or disk? What does that tell you about where the bottleneck of local inference lies?
-2. Time a 100-word generation. Estimate tokens per second, and compare with a hosted service. What kinds of agent designs does slow generation penalize most?
-3. Disconnect from the network and repeat a prompt. Articulate, precisely, what data left your machine. Why does this matter for the FERPA and IRB scenarios in Section 1?
-4. Pull a second model of a different size (for example, `ollama pull llama3.2:1b`) and pose the same reasoning question to both. The Recorder captures both outputs for the class comparison.
+1. Which resource saturates during generation — CPU, GPU, memory (RAM), or disk? What does that tell you about where the primary bottleneck of local inference lies on your hardware?
+
+   > *Hint: If you have a GPU, watch GPU memory utilization. If you do not, the model falls back to CPU. Either way, something will peg near 100% — that resource is your bottleneck.*
+
+2. Time a 100-word generation using Python's `time` module. Estimate tokens per second, and compare that rate to a hosted service you have used. What kinds of agent designs does slow generation penalize most?
+
+   > *Hint: An agent that makes five tool calls in a loop pays the generation cost five times. Multiply your tokens-per-second by 5 × (average tokens per step) to estimate wall-clock time for a full run.*
+
+3. Disconnect from the network and repeat a prompt. Articulate precisely what data left your machine during the offline run. Why does the answer to this question matter for the FERPA and IRB scenarios in Section 1?
+
+   > *Hint: With the network disconnected, the only data path is between your CPU/GPU and RAM. Nothing leaves the machine. Compare that to what would happen with a cloud API call.*
+
+4. Pull a second model of a different size (for example, `ollama pull llama3.2:1b`) and pose the same reasoning question to both. The Recorder captures both full outputs for the class comparison.
+
+   > *Hint: Choose a question that requires multi-step reasoning, such as a simple math word problem or a question about cause and effect. Single-word-answer questions will not reveal quality differences between model sizes.*
 
 ---
 
 # Part III: Synthesis and Practice
 
+In this part, you will probe your local model across five different task types to build a concrete capability map — a table showing where it succeeds and where it fails. This map will serve as your baseline for the rest of the semester as you add tools, retrieval, and multi-agent techniques.
+
 ## 4. Exercises
 
-1. *Capability map.* As a team, test your local model on five task types (summarize, extract to JSON, arithmetic word problem, recent-events question, creative writing). Build a table of pass/fail with one-sentence evidence each. Which failures could retrieval fix? (Foreshadowing week 5.)
-2. *Quantization estimate.* Using the formula in Section 2, estimate weight sizes for 1B, 8B, and 70B models at 4-bit and 16-bit quantization, and mark which fit in your laptop's RAM.
-3. *Stack diagram.* Draw the boxes and arrows from OpenWebUI to Ollama to the model file to your Python script. Label which component owns the system prompt, the sampling parameters, and the weights.
+1. *Capability map.*
+
+   - *What to do*: As a team, test your local model on five task types: (a) summarize a paragraph, (b) extract key facts into JSON, (c) solve an arithmetic word problem, (d) answer a question about a recent event (post-training-cutoff), and (e) write a short creative passage. Build a table of pass / partial / fail with one sentence of evidence for each cell.
+   - *Starter hint*: For the recent-event question, choose something that happened in 2025 or 2026. For extraction, give the model a paragraph and ask for `{"name": ..., "date": ..., "location": ...}` — check whether the JSON is valid.
+   - *You've succeeded when*: Your table has five rows, a clear pass/partial/fail verdict for each, and you can identify which failure type (knowledge cutoff, format compliance, reasoning) explains each failing cell.
+
+2. *Quantization estimate.*
+
+   - *What to do*: Using the formula from Section 2, compute the approximate weight-only storage size for models with 1B, 8B, and 70B parameters at both 4-bit and 16-bit quantization. Mark which fit in your laptop's RAM.
+   - *Starter hint*: Plug into $\text{size} = N \times \frac{\text{bits}}{8}$ bytes, then convert to GB by dividing by $10^9$. For example, 1B parameters at 4-bit: $1 \times 10^9 \times 0.5 = 0.5$ GB.
+   - *You've succeeded when*: You have a 3-by-2 table (three model sizes by two quantization levels) with sizes in GB and a checkmark or cross next to each based on your laptop's actual RAM.
+
+3. *Stack diagram.*
+
+   - *What to do*: Draw a box-and-arrow diagram showing the full data flow from OpenWebUI to Ollama to the model weights and back, plus your Python script as a separate entry point. Label which component owns the system prompt, the sampling parameters (temperature, top-p), and the model weights.
+   - *Starter hint*: Your diagram should have at least four boxes: OpenWebUI (or your Python script), the Ollama process, the model weights file on disk, and the GPU or CPU memory where inference actually runs. Arrows should show the direction of data flow for both the input prompt and the output response.
+   - *You've succeeded when*: Someone who was not in class today could read your diagram and correctly answer: "Where does the system prompt live? Where do the weights live? What does Ollama actually do?"
 
 ---
 
 ## Reflection Prompt
 
-In your notebook: you now own a working AI stack that costs nothing per query and shares nothing with anyone. What is one project, personal or academic, that becomes possible for you now that privacy is no longer a barrier? What still stops you?
+*Personal*: You now own a working AI stack that costs nothing per query and shares nothing with anyone outside your machine. Did anything about the installation process surprise you — was it harder or easier than expected? What mental model did you have before about "where AI lives," and how has that changed?
+
+*Technical*: You now have a tool that can run privately on your laptop. Identify one project — academic, personal, or professional — that becomes newly possible for you because privacy and cost are no longer barriers. Describe what you would build and what the remaining obstacle is.
+
+*Societal*: Local AI puts the full capability of a language model in the hands of any individual with a modern laptop, with no oversight, no logging, and no terms of service enforcement. What are two benefits and two risks of that shift in power from institutions to individuals? Who benefits most from local AI, and who might be harmed?
 
 ---
+
+→ Coming Up Next: Our models are running — but why do they give different answers every time we ask the same question? In the next activity we open the hood on text generation itself, and learn how temperature, top-p, and randomness turn a probability distribution into a word.
 
 ## 5. Further Reading
 

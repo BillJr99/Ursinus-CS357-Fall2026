@@ -52,35 +52,140 @@ tags:
 
 ---
 
-This individual assignment is the maker's full arc compressed into one small, real, public artifact: you will specify it, build it with an agent, test it, put it under continuous integration, and publish it under your own name. Small and finished beats ambitious and abandoned; the rubric rewards discipline, not scope. **Choose one track and one artifact**, and observe the standing course rule throughout: agents may prepare every step, but a human (you) runs every publish or deploy command.
+In this individual assignment you will carry one artifact — chosen by you — from a written specification through building with an AI agent, testing, continuous integration, and public publication under your own name. This is the maker's full arc compressed into one real, public, small artifact. By the end, something you built will exist in the world, installable or reachable by anyone, with your name on it. The rubric rewards discipline, not scope: a small, finished, well-tested, well-documented artifact earns more than an ambitious one that does not run. **Choose one track and one artifact**, and observe the standing course rule throughout: agents may prepare every step, but a human (you) runs every publish or deploy command.
+
+---
+
+## What a Strong Submission Looks Like
+
+A strong submission has these qualities:
+
+- **The specification preceded the artifact — with a timestamp to prove it.** The dated specification file is submitted in its original form, before any agent-generated code touches it. The rubric rewards the original spec even if it was imperfect; discovering and documenting a spec gap is a graded deliverable, not a failure.
+- **CI is wired to reality, not a placeholder.** The GitHub Actions workflow runs the project's actual tests (or actual accessibility/content checks for Track B), not `echo "tests pass"`. The submission includes links or screenshots of one red run and one green run — the red run proves the CI was not trivially passing before the code worked.
+- **A classmate confirmed it works cold.** The "stranger test" is documented: a classmate's GitHub username or name, what they installed or visited, and their one-line confirmation that it worked from the public record alone. This is not optional — it is what "published" means.
+- **The AI contribution statement is honest and specific.** A weak statement says "I used AI to help build this." A strong statement says: "The agent generated the initial `handler.js` function and all three test files. I wrote the `config.json` schema and the README, and I rewrote the error handling in lines 44–62 of `handler.js` after the agent's version silently swallowed exceptions. I verified every test manually before pushing."
+
+A weak submission has CI that passes immediately with no red run, a readme that only an author could follow, and an AI contribution statement that could apply to any project.
+
+---
 
 ## Choose Your Track and Artifact
 
-**Track A (software engineering background).** Choose one: a container image published to GHCR (a small useful service, such as a rubric-checking API or a markdown linter for course conventions); a scoped npm package with a working `bin` (a CLI utility you actually wanted); or a Cloudflare Worker API (the gateway-facade pattern is a strong choice). Your specification instrument is a failing test suite written before implementation.
+**Track A (software engineering background).** Choose one:
+- A container image published to GHCR — a small useful service such as a rubric-checking API or a markdown linter for course conventions
+- A scoped npm package with a working `bin` — a CLI utility you actually want to exist
+- A Cloudflare Worker API — the gateway-facade pattern is a strong choice
 
-**Track B (maker track, no coding background assumed).** Choose one: a static site deployed to Cloudflare Pages (a project page, a resource hub, an interactive explainer built with an agent); or a simple Cloudflare Worker built entirely through agent collaboration (a JSON API for something you care about). Your specification instruments are an acceptance checklist written before generation and the five-questions instruction to your agent.
+Your specification instrument is a **failing test suite written before implementation**. The agent's job is to make the tests pass without modifying them.
 
-Artifacts must be original, must not include course-restricted materials or anyone's personal data, and must carry a license. If your idea touches credentials, payments, or other people's private information, redesign or consult the instructor first; recognizing that boundary is part of the assignment.
+**Track B (maker track, no coding background assumed).** Choose one:
+- A static site deployed to Cloudflare Pages — a project page, a resource hub, or an interactive explainer built with an agent
+- A simple Cloudflare Worker built entirely through agent collaboration — a JSON API for something you care about
+
+Your specification instruments are an **acceptance checklist written before generation** and the five-questions instruction to your agent (what it should do, what it must not do, who will use it, what counts as working, and what the edge cases are).
+
+Artifacts must be original, must not include course-restricted materials or anyone's personal data, and must carry a license. If your idea touches credentials, payments, or other people's private information, redesign or consult the instructor first — recognizing that boundary is part of the assignment.
+
+---
 
 ## Stage 1: Specify (submit before building)
 
-Write and date your specification: Track A's failing tests or Track B's checklist, plus a one-paragraph persona (who uses this, on what device, under what pressure) and explicit behavior for at least one misuse case (empty input, absurd input, the wrong button). Post it to the assignment thread before generation begins; the timestamp is part of the grade.
+Write and date your specification before generation begins. The timestamp is part of the grade — post it to the assignment thread or commit it to the repository before any agent-generated code exists.
+
+**Track A specification:**
+Write your failing test suite. Tests should cover: the happy path, at least one edge case (empty input, malformed input), and at least one deliberate misuse case (input designed to trigger an error or unexpected behavior). Include a `spec.md` describing what the artifact should do in plain English — one paragraph per major feature.
+
+**Track B specification:**
+Write your acceptance checklist. Each item should be a falsifiable statement: "The page loads in under 3 seconds on a standard wifi connection," not "The page is fast." Also write: a one-paragraph persona (who uses this, on what device, under what pressure) and explicit expected behavior for at least one misuse case (what happens when someone submits an empty form, clicks an unexpected button, or uses the artifact in an unintended way).
+
+**Both tracks:** State in your specification what "done" means — the specific condition under which you would consider this artifact ready to publish. You will compare your shipped artifact against this standard in the writeup.
+
+---
 
 ## Stage 2: Build and Verify
 
-Work with your agent against the specification (Track A: "make these tests pass without modifying them"; Track B: iterate against the checklist with bug reports in the what-I-did, what-I-expected, what-happened form). Keep the transcript or session log. Verify every criterion, run your misuse case, and for Track B conduct the silent stranger test and log it. Document one specification gap you discovered and how you repaired the spec, not just the artifact.
+Work with your agent against the specification.
+
+**Track A:** Instruct your agent: "Make these tests pass without modifying the test files." Keep the conversation log or session notes. When the agent generates code, read it before running it. Verify every test passes. Run your misuse case. If you modify any agent-generated code, note what you changed and why.
+
+**Track B:** Iterate against your checklist. For each failed checklist item, file a bug report in the agent conversation in what-I-did / what-I-expected / what-happened form. When all items pass, conduct the **silent stranger test**: give a classmate the public URL and nothing else. Watch (or ask them to document) what they do, where they get confused, and whether they complete the primary task without help. Log their experience.
+
+**Both tracks:** Document one specification gap you discovered during building — a criterion you forgot to specify, a behavior you assumed but did not state, or a constraint you discovered mid-build. Show the original spec, the gap, and how you repaired the spec (not just the artifact).
+
+---
 
 ## Stage 3: Continuous Integration
 
-Add the automated check appropriate to your artifact (a GitHub Actions test workflow for Track A; a preview-deployment-plus-checklist pipeline, or an Actions-driven build check, for Track B). Demonstrate one red run and one green run, and arrange the pipeline so publication requires green **and** a deliberate human act. State in your writeup, in one sentence, where the human gate lives.
+Add the automated check appropriate to your artifact.
+
+**Track A:** A GitHub Actions workflow (`.github/workflows/ci.yml`) that installs dependencies, runs your test suite, and reports pass/fail on every push to `main` and every pull request.
+
+**Track B:** A preview-deployment-plus-checklist pipeline, or an Actions-driven build check that verifies the site builds without errors and key content is present.
+
+**Both tracks:**
+- Demonstrate one **red run**: a commit that intentionally fails at least one check. Include the link or screenshot.
+- Demonstrate one **green run**: the commit that makes all checks pass. Include the link or screenshot.
+- Arrange the pipeline so that publication to the public registry requires CI green **plus** a deliberate human act (pushing a tag, merging to a release branch, or running a manual publish step). In your writeup, state in exactly one sentence where the human gate lives.
+
+---
 
 ## Stage 4: Publish
 
-Conduct the pre-publication audit from the publishing module (the `npm pack --dry-run` review, the image layer listing, or the deploy-directory review), then publish: push the image and set visibility, `npm publish --access public`, `wrangler deploy`, or `wrangler pages deploy`. Versioning is semantic and starts at 0.1.0; ship at least one subsequent patch release so the version walk is demonstrated. A classmate must then install or visit your artifact cold, from the public record alone, and confirm it works; their one-line confirmation goes in your submission.
+Before publishing, conduct the pre-publication audit:
+- **npm:** Run `npm pack --dry-run` and review the file listing. Verify no secrets, no test fixtures, no node_modules are included.
+- **Container image:** Run `docker image inspect <image>` and review the layer listing. Verify no credentials or private data are in any layer.
+- **Cloudflare:** Review the deploy directory listing before `wrangler deploy`. Verify no `.env` files or private keys are staged.
+
+Document the audit output in your submission — this is not just a checklist item, it is evidence of the professional discipline the course requires.
+
+Then publish:
+- `npm publish --access public` (npm)
+- `docker push` and set visibility to public (GHCR)
+- `wrangler deploy` or `wrangler pages deploy` (Cloudflare)
+
+**Versioning:** Start at `0.1.0`. Ship at least one subsequent patch release (`0.1.1`) so the version walk is demonstrated. Use semantic versioning: patch for bug fixes, minor for new features.
+
+**Stranger confirmation:** A classmate must install or visit your artifact from the public record alone — no setup instructions from you, no personal help. They should use only your README. Their one-line confirmation ("I ran `npm install -g your-package` and `your-package --help` worked — [GitHub username]") goes in your submission.
+
+---
 
 ## Deliverables
 
-Submit a ZIP (or repository link plus PDF) containing: the dated specification; the build transcript or session log; verification evidence for every criterion including the misuse case (and the stranger-test log for Track B); the CI workflow with red and green run links or screenshots; the pre-publication audit artifact; the public URL or registry name with install instructions; the classmate confirmation; a readme suitable for strangers; and an **AI contribution statement** honestly delineating what the agent produced, what you wrote or changed, and what you verified. Ensure reproducibility by pinning versions and listing software version information.
+Submit a ZIP (or repository link plus PDF) containing:
+
+1. The dated specification (original form, before generation)
+2. The build transcript or session log (conversation with the agent, or commit history)
+3. Verification evidence for every specification criterion, including the misuse case
+4. For Track B: the stranger-test log (what your classmate did, where they got confused, what you changed as a result)
+5. The CI workflow file and links or screenshots of one red run and one green run
+6. The pre-publication audit artifact (the dry-run output, layer listing, or deploy directory review)
+7. The public URL or registry name with install instructions
+8. The classmate confirmation (one line, with their name or username)
+9. A README suitable for strangers (what, install, use — answerable in 30 seconds)
+10. An **AI contribution statement** honestly delineating what the agent produced, what you wrote or changed, and what you verified
+
+Ensure reproducibility by pinning dependency versions and listing software version information (Node version, npm version, Docker version, or Wrangler version as applicable).
+
+---
+
+## Frequently Asked Questions
+
+**Q: My CI keeps failing because of a flaky network call in my tests. What should I do?**
+A: Mock the network call in tests. The specification discipline the course teaches requires tests that are deterministic. If a test depends on an external service, it should be mocked in the test suite and tested against the real service only in a separate integration test step that is clearly labeled as potentially flaky. Document the decision in your writeup.
+
+**Q: What counts as a "deliberate misuse case"?**
+A: An input or user action that is wrong, adversarial, or outside the happy path. Examples: an empty input field, an input that is 10,000 characters long, a file of the wrong type, a sequence of requests that tries to exhaust a rate limit. The requirement is that your specification named the case and your testing shows what the artifact does when it happens.
+
+**Q: Do I really need to publish to a public registry? Can I just push to a private GitHub repo?**
+A: No. The "stranger confirmation" criterion requires a classmate to install or visit from the public record alone, which means the artifact must be publicly accessible. A private repository does not satisfy this requirement.
+
+**Q: Can my classmate "confirm it works" by email instead of in the submission?**
+A: Include the confirmation in your submission, not just in email. Quote their exact words and identify them by name or GitHub username. The confirmation should describe what they did, not just say "it worked."
+
+**Q: My Track B artifact is a static site. Do I still need to demonstrate CI?**
+A: Yes. Even a static site can have automated checks: a build step that verifies the HTML is valid, a link checker, a content check that confirms key pages exist. The CI requirement applies to both tracks. Cloudflare Pages has built-in GitHub Actions integration that makes this straightforward.
+
+---
 
 ## Reflection Prompts
 
