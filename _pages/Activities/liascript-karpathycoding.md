@@ -327,3 +327,4 @@ Your vibe-coded feature is working and tested locally. The next challenge is mak
 - Kent Beck. *Test-Driven Development: By Example*. Addison-Wesley (2002). The canonical TDD reference; the red-green-refactor cycle is defined here.
 - OWASP. "OWASP Top 10 for Large Language Model Applications." https://owasp.org/www-project-top-10-for-large-language-model-applications/ — see especially "Prompt Injection" and "Insecure Output Handling."
 - Google Project Zero. "0day In the Wild." https://googleprojectzero.blogspot.com — illustrates real-world consequences of the categories of bugs introduced in this activity.
+- This course: [Governing Coding Agents — Charters, Handoffs, and Durable Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md) — a production case study of these rules governing a multi-month, multi-agent project.

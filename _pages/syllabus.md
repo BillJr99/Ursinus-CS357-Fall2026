@@ -533,6 +533,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentdebugging.md"
   - rtitle: "Supplemental Video: Agentic Workflows — a full free course on orchestration, multi-agent MCP, and agent chatrooms (Nick Saraev)"
     rlink: "https://www.youtube.com/watch?v=MxyRjL7NG18"
+  - rtitle: "Supplemental Case Study: Governing Coding Agents — Charters, Handoffs, and Durable Memory"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md"
   deliverables:
   - dtitle: "Lab 3: Critique and Refine Handed Out"
     dlink: "Assignments/CritiqueRefine"
@@ -550,11 +552,18 @@ schedule:
   date: "0"
   title: "The Critique and Refine Pattern"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md"
+  deliverables:
+  - dtitle: "Written Assignment: Design Your Agent Operating System Handed Out (optional assignment)"
+    dlink: "Assignments/AgentArchitecture"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-agentarchitecture.md"
   readings:
   - rtitle: "Project Thread: midpoint Team Charter revisit (in class; bring your charter)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md"
   - rtitle: "Supplemental Tutorial: Human-in-the-Loop — Oversight, Escalation, and Appropriate Autonomy"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
+  - rtitle: "Supplemental Case Study: From Second Brain to Chief of Staff — A Personal Agent in Production"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
 - week: "8"
   date: "1"
   title: "Multi-Agent Debate"
@@ -624,6 +633,10 @@ schedule:
     dlink: "Projects/PBLThread"
     points: "0"
     rubricpath: "_pages/Projects/proj-pblthread.md"
+  - dtitle: "Written Assignment: Design Your Agent Operating System Due (optional assignment)"
+    dlink: "Assignments/AgentArchitecture"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-agentarchitecture.md"
   readings:
   - rtitle: "Activity: Building a Visual Agent with Langflow (see Part IV: Hands-On Langflow Build)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md"
