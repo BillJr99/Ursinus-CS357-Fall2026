@@ -575,9 +575,18 @@ The model may be stuck in a tool-call loop. Increase `step_budget` temporarily t
 
 Submit a ZIP containing your code, your JSON configuration file, your task set and results (CSV or markdown table), transcripts for the documented failures, your pair programming log, and a readme writeup (approximately two pages) describing your design, your evaluation, and your findings. Ensure reproducibility by fixing random seeds and listing software version information.
 
-## Reflection Prompts
+## Learning Log
 
-Answer in your readme:
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+
+1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+2. **What surprised me.**
+3. **What I verified and how.** Evidence, not vibes.
+4. **How I used AI during this lab**, and what I learned from that use.
+5. **What I'd tell the next student** before they start.
+6. **One open question I still have.**
+
+### Lab-specific prompts
 
 - Where in your code does the agent perceive, plan, act, and remember? Point to line numbers.
 - Your agent's "thoughts" shaped its actions. Describe one transcript where the stated reasoning and the chosen action did not match, if you observed one, and what that implies about trusting narrated reasoning.

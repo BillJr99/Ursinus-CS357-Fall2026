@@ -637,7 +637,18 @@ This is a "wrong citation" failure. It is worth noting separately from fabricati
 
 Submit a ZIP containing your code, JSON configuration, corpus (or a pointer plus a sample if it is large), datasheet, question set with labels, evaluation results (CSV or table), audit results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
 
-## Reflection Prompts
+## Learning Log
+
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+
+1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+2. **What surprised me.**
+3. **What I verified and how.** Evidence, not vibes.
+4. **How I used AI during this lab**, and what I learned from that use.
+5. **What I'd tell the next student** before they start.
+6. **One open question I still have.**
+
+### Lab-specific prompts
 
 - Which failure did you find more often: retrieval fetching the wrong chunk, or generation misusing a correct chunk? What does that imply about where to invest next — better retrieval, or a stricter generation prompt?
 - Your corpus datasheet names who is absent from your documents. Give a concrete example of a question where that absence would cause your system to either abstain incorrectly (the answer exists somewhere but not in your corpus) or answer incorrectly (the corpus contains a biased or incomplete view). What would you add to the corpus to fix it?
