@@ -380,6 +380,7 @@ A CI pipeline runs your quality checks automatically on every push and pull requ
 Create `.github/workflows/ci.yml`:
 
 ```yaml
+{% raw %}
 name: CI
 
 on:
@@ -424,6 +425,7 @@ jobs:
         run: |
           # TODO: Run pytest with --cov=research_agent, --cov-report=term-missing,
           # and --cov-branch. Add --cov-fail-under=80 so the step fails if coverage drops.
+{% endraw %}
 ```
 
 ### Step 2: Complete the YAML TODOs.

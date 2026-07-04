@@ -169,6 +169,7 @@ Choose **one agent** from earlier in the course: your course assistant agent, yo
 1. **Create `evaluate.py`** using this starter skeleton. Fill in every `# TODO` comment:
 
 ```python
+{% raw %}
 # evaluate.py — Agent evaluation harness
 import json
 import csv
@@ -348,6 +349,7 @@ if __name__ == "__main__":
     output = sys.argv[1] if len(sys.argv) > 1 else "results_before.csv"
     rate = run_evaluation("eval_dataset.json", output)
     sys.exit(0 if rate >= 0.80 else 1)
+{% endraw %}
 ```
 
 2. **Run the evaluation** against your agent:
@@ -471,6 +473,7 @@ Improved: 5, Regressed: 2, Unchanged: 13
 1. **Create `.github/workflows/eval.yml`** in your repository:
 
 ```yaml
+{% raw %}
 # .github/workflows/eval.yml
 name: Agent Evaluation
 
@@ -525,6 +528,7 @@ jobs:
               repo: context.repo.repo,
               body: body
             });
+{% endraw %}
 ```
 
 2. **Add your API key as a GitHub secret.** Go to your repository Settings > Secrets and variables > Actions > New repository secret. Name it `OPENAI_API_KEY` (or the appropriate key for your provider).
