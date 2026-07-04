@@ -13,37 +13,44 @@ info:
     - To make the system explainable through the honest evidence hierarchy with a human confirmation gate on consequential actions and a demonstrated abstention behavior
     - To commit a governance document that matches the deployed system's behavior and to lead a class discussion grounded in the team's own measurements
     - To complete four sprints with rotating POGIL roles, producing a runnable increment and a numeric evaluation update at each sprint boundary
+    - To ground the system in the team's Stakeholder Brief and Literature Review, follow the Project Thread process standards, and communicate the result to technical and non-technical audiences using the Open Questions to assess growth (Goals 11, 12, 13, 14, 15)
   rubric:
-    - weight: 30
+    - weight: 25
       description: System Design and Rationale
       preemerging: The system is a single undifferentiated prompt, or the design is undocumented
       beginning: Multiple agents exist but roles overlap, contexts are bloated, and design choices are unjustified
       progressing: The team decomposes the task into focused roles with a documented design table and topology statement; some choices reference a course pattern but others are left as defaults
       proficient: The team decomposes the task into at least three agents with meaningfully distinct roles and small contexts; the design table is complete with one row per agent covering role, prompt summary, inputs, outputs, temperature with justification, and tools; the report names the topology (pipeline, router, planner, blackboard, or hybrid) and defends the choice in 3 sentences; every major choice — including state design, handoff format, and temperature settings — is justified by a named course pattern or principle
-    - weight: 25
+    - weight: 22
       description: Evaluation and Analysis
       preemerging: No systematic evaluation is provided
       beginning: Informal trials are described without a protocol, metric, or baseline comparison
       progressing: A fixed task set with defined metrics is evaluated against the monolith baseline with numeric results; failure analysis is present but fewer than three failure modes are documented with transcripts
       proficient: A fixed ten-task evaluation set (finalized no later than Sprint 1) is evaluated against the monolith baseline with a stated protocol that a stranger could reproduce; metrics are numeric (e.g., precision, recall, parse success rate, latency); results are disaggregated where applicable; at least three failure modes are documented with agent transcripts showing the actual inputs and outputs; at least one mitigation is implemented and re-measured with before-and-after numbers
-    - weight: 20
+    - weight: 17
       description: Explainability and Governance
       preemerging: The system offers no insight into its behavior and no governance document accompanies it
       beginning: Traces exist but are not surfaced to the user; the governance document is present but generic — it does not match the specific system's agents, data flows, or risks
       progressing: The system surfaces traces, citations, or confidence scores to the user; a human gate guards at least one consequential action; the governance document matches the system with minor gaps such as a missing data retention period or an unaddressed pre-mortem risk
       proficient: The system surfaces evidence following the honest hierarchy (direct retrieval citation preferred over generated summary); a confirmation gate shows the user the evidence at the moment of decision for every consequential action; an abstention behavior is demonstrated in the presentation (the system declines rather than hallucinating when evidence is absent); the committed GOVERNANCE.md matches the deployed behavior including data handling, human gates, and incident response; the team leads a 10-minute class discussion grounded in their own measurements — at least one claim is supported by a number from the evaluation table
-    - weight: 13
+    - weight: 11
       description: Implementation Quality and Artifact Packaging
       preemerging: The system fails to run from a fresh start, and no tests or CI are present
       beginning: The system runs but configuration is hard-coded, exceptions produce silent failures, setup is undocumented, and no tests exist
       progressing: The system runs from documented setup with externalized configuration and located exception handling (error messages name the file and line); at least one automated test exists but CI is absent or fails intermittently
       proficient: The system runs from a fresh start in under three minutes following the README on a machine the team has not configured; all configuration (model names, paths, seeds) is externalized to config.json with no hard-coded values in any committed file; exceptions are handled with located messages and tracebacks; model versions and random seeds are pinned; a test suite with at least one end-to-end test passes in CI on every push; the submission tag triggers a publish step that pushes the artifact to GHCR, Docker Hub, or npm; the repository is organized so a stranger can navigate it in under 5 minutes
-    - weight: 12
+    - weight: 10
       description: Presentation and Report
       preemerging: The presentation or report is missing
       beginning: The presentation demonstrates only the happy path; the report restates the code without design rationale or evaluation results
       progressing: The presentation demonstrates the system including one known failure case; the report covers design, evaluation results, and limitations but the baseline comparison table is absent or the contribution statements do not document role rotation
       proficient: The presentation demonstrates the happy path live (not screenshots), includes a rehearsed failure disclosure showing a case where the system fails and explaining why, shows the evaluation table with the baseline comparison side by side, delivers the 90-second explainability story, and has every teammate speaking for a substantive portion; the report covers design rationale tied to named course patterns, the evaluation results with baseline comparison and failure analysis with transcripts, the explainability design, the "disclose" bucket from the gallery walk verbatim, a governance summary referencing the committed GOVERNANCE.md, and individual contribution statements documenting which role each member held in each sprint
+    - weight: 15
+      description: Stakeholder Grounding, Multi-Audience Communication, and Process Quality (Goals 11, 12, 13, 14, 15)
+      preemerging: The project shows no connection to the team's Stakeholder Brief or Literature Review, the presentation addresses only a technical audience, and no Project Thread process artifacts (decision log, signatures, AI-use disclosures) are present
+      beginning: The stakeholder is mentioned but the proposal does not actually build on the Brief and Literature Review, or the Demo Day presentation lacks a non-technical segment or a disseminable artifact, or process artifacts are spotty across milestones
+      progressing: The proposal integrates the Stakeholder Brief and Literature Review and Demo Day includes both technical and stakeholder-facing segments with a disseminable artifact, with minor gaps such as a thin multidisciplinary reflection, an incomplete GANTT-style timeline, or one milestone missing its AI-use disclosure
+      proficient: The proposal integrates the Stakeholder Brief and Literature Review, naming the problem in the stakeholder's terms and the gap the system addresses (Goals 11, 12); team process is visible throughout — decision log and role rotation are current, every team document names a primary author per section, every progress report carries all members' signatures, and an AI-use disclosure accompanies each milestone (Goal 13); Demo Day includes a live technical demo, a non-technical stakeholder-facing segment in plain language, and a disseminable artifact (poster, one-pager, or public page) that presents the stakeholder context and a multidisciplinary reflection on how disciplines beyond CS shaped the design (Goal 14); the individual reflection uses the Open Questions to describe specific new understandings and growth (Goal 15); milestone work shows approach, professionalism/process, and product, and the grade record supports combining team output with individual contribution and individual understanding
   readings:
     - rtitle: "Agent Teams Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
@@ -59,6 +66,10 @@ tags:
   - governance
 
 ---
+
+<!-- Project Thread integration: original rubric weights before the Stakeholder Grounding / Multi-Audience Communication / Process Quality row was added were 30 / 25 / 20 / 13 / 12. -->
+
+> **The Project Thread:** This track is the final stage of the semester-long [Project Thread](/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview), your team operates under its signed charter and the [Team Playbook](/Projects/PBLThread), and Demo Day (wk15.0) addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
@@ -131,6 +142,8 @@ By the end of Stage 1, you will have submitted:
 - A **pre-mortem table** with at least 5 predicted risks: your specification gap, irreversible action, global invariant, and two more; each with the deterministic checker or gate that owns it
 - An evaluation plan: your 10-task task set sketch, the metrics you will use (precision, recall, latency, parse success rate, or human rating), the protocol, and a description of the **monolith baseline**
 - A sprint plan mapping the remaining weeks, with the role rotation schedule showing who holds which role in which sprint
+- A **stakeholder grounding section** integrating your [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview): the problem in the stakeholder's terms, the gap your review identified, how this system addresses it, and anything that has changed since (Goals 11, 12)
+- An **implementation-and-assessment sketch**: who holds which project role in which sprint, how the system will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to weeks with named owners (Goal 13)
 
 ---
 
@@ -188,7 +201,10 @@ Required elements:
 - A rehearsed failure disclosure: show a case where the system fails and explain why
 - The evaluation table (baseline vs. multi-agent, side by side)
 - The 90-second explainability story (what does a user see when the system makes a decision?)
+- A **non-technical, stakeholder-facing segment** (2-3 minutes, plain language, no unexplained jargon): the stakeholder context — who this is for and the problem in their terms — what the system does for them, what it must not be used for, and a brief **multidisciplinary reflection** on how disciplines beyond CS shaped the design (Goal 14)
 - Every teammate speaks for a substantive portion of the presentation
+
+**5. The disseminable artifact:** a poster, one-pager, or public web page, suitable for handing to your stakeholder or displaying publicly, that presents the project for a non-technical audience: the stakeholder context, what the system does, its limits, and where to learn more (Goal 14). Bring it to Demo Day and include it in the artifacts folder.
 
 **4. The artifacts folder:**
 - Agent design table (final version)
@@ -205,5 +221,6 @@ Answer individually in your contribution statement:
 
 - Which course principle did your team most rely on, and where did you knowingly violate one, with what consequence?
 - What did the monolith baseline teach you that you did not expect?
+- Using the four Open Questions (*What should matter to me? How should we live together? How can we understand the world? What will I do?*), describe one specific new understanding and one area of growth or skill development from the Project Thread — from formation survey to Demo Day (Goal 15).
 - Do you certify that your contribution statement accurately represents your own work? Please identify any and all portions of the project that were not originally created by your team.
 - Approximately how many hours did the project take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

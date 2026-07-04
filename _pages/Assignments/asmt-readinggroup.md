@@ -97,6 +97,18 @@ You may choose any of the following:
 
 ---
 
+## Alternative Format Option: Competing Texts Session
+
+Any of the options above may instead be led as a **Competing Texts Session**: rather than presenting a single source, you stage **two opposing sources on the same AI question** — for example, an optimist piece and a skeptic piece on the same capability, risk, or policy. If you choose this format, your session must include:
+
+1. **A steelman summary of each source:** present each author's argument in its strongest form — the version its author would endorse — not a caricature.
+2. **One probing question per side:** one question that presses on the optimist source's weakest assumption, and one that presses on the skeptic source's weakest assumption.
+3. **A closing reflection on which claims survive:** close by identifying which claims from each text survive contact with the other text, and which do not.
+
+The session structure and timing are unchanged: your 5-minute summary covers both texts (steelmanned), the probing questions count toward your three to five discussion questions, and your one-sentence closing synthesis states which claims survived. The same rubric applies.
+
+---
+
 ## Seed Reading List
 
 These are suggested sources. You are not limited to this list — propose others with instructor approval.
@@ -134,6 +146,8 @@ Prepare exactly **three to five** discussion questions. They should progress in 
 
 At least one question should connect to something specific from the course — a lab, a reading, a lecture concept — and you should call that connection out explicitly.
 
+If you chose the **Competing Texts Session** format, two of your questions must be the required probing questions — one per side.
+
 ---
 
 ## Reflection Write-Up
@@ -144,6 +158,8 @@ Submit a 300–500 word reflection within **one week** of your discussion date, 
 2. **What to improve:** One thing you would do differently if leading this discussion again.
 3. **Course connection:** The main insight from the discussion and the specific course concept (by name) it connects to or complicates.
 4. **Your position:** One sentence stating what you now believe about the topic that you did not believe (or had not thought about) before preparing.
+
+If you chose the **Competing Texts Session** format, your reflection must also include the closing reflection on which claims from each text survived contact with the other.
 
 ---
 
