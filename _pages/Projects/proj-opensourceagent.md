@@ -11,37 +11,44 @@ info:
     - To practice the full software lifecycle from design through implementation, testing, documentation, and publication to a public registry
     - To engage with open-source community norms by posting to a relevant forum, responding substantively to feedback, and maintaining a CONTRIBUTING.md with bug reporting and test execution instructions
     - To apply the course's governance and safety principles in a published GOVERNANCE.md that names what the agent does, what it must never be used for, who is responsible, and what known limitations could cause harm
+    - To ground the artifact in the team's Stakeholder Brief and Literature Review, follow the Project Thread process standards, and communicate the result to technical and non-technical audiences using the Open Questions to assess growth (Goals 11, 12, 13, 14, 15)
   rubric:
-    - weight: 20
+    - weight: 17
       description: Design and Usefulness
       preemerging: The project idea is vague or duplicates an existing well-documented tool with no clear improvement; no evidence of gap verification
       beginning: A problem is identified and a target user is named, but the gap is asserted rather than verified with evidence (no linked community post, GitHub issue, or unanswered Stack Overflow question), or the scope is too large to complete in the semester
       progressing: The proposal identifies a genuine gap with at least one piece of linked evidence, names concrete target users with realistic use cases, and defines a minimum viable scope; the README makes the value proposition clear to a stranger but the stretch goals are vague or the closest alternative is not named
       proficient: The proposal identifies a gap that a stranger can independently verify — linking at least one community post, GitHub issue, or Stack Overflow question where a real person asked for what is being built; names the closest existing alternative and states the specific gap it does not fill; defines two to three user personas with realistic, specific use cases; sets a one-sentence minimum viable scope that is achievable before submission; names two to three specific stretch goals; the final README makes a compelling case to a user who has never heard of the course, with no jargon without definition
-    - weight: 25
+    - weight: 21
       description: Implementation and Code Quality
       preemerging: The core functionality does not work; code is absent or fails to run from a fresh checkout
       beginning: The project runs but contains hard-coded credentials or paths in committed files, lacks error handling for common failure modes, or implements only trivial functionality with no non-trivial features
       progressing: The core functionality works and implements at least one non-trivial feature; configuration is externalized to environment variables or a config file; exceptions are caught with located messages naming the file and line; code is readable but inconsistently organized across files
       proficient: The core functionality works reliably on a clean machine by following the README; at least one non-trivial feature (streaming responses, token-level authentication, persistent memory across sessions, or multiple integrated tools with error recovery) is fully implemented; all configuration is externalized with documented defaults and no hard-coded values in any committed file; exceptions are handled with located tracebacks; code is organized so a stranger can navigate it in under 5 minutes; model versions and random seeds are pinned in configuration
-    - weight: 20
+    - weight: 17
       description: Testing and CI
       preemerging: No tests exist; CI is absent or never ran
       beginning: One or two unit tests exist but CI is absent or consistently failing; LLM-dependent behavior is entirely untested
       progressing: Unit tests cover deterministic components with meaningful assertions; CI runs on every push; at least one LLM-dependent property test exists but the property is weakly specified (e.g., "output is not empty") rather than naming a structural behavioral contract
       proficient: All deterministic functions have unit tests with meaningful assertions (not "it ran without error" but "the output matches the expected JSON schema"); at least three property tests cover LLM-dependent components — each property test names a clearly stated behavioral contract that a stranger could read and understand, such as "every response includes a source citation", "the output is valid JSON matching the named schema", or "the agent declines requests containing the word 'illegal'" — all three properties must be non-trivially specified; CI runs the full suite on every push and the badge is green on the submission SHA
-    - weight: 20
+    - weight: 17
       description: Documentation and Publication
       preemerging: README is absent or consists of the project title only; the project is not published to any registry
       beginning: README exists but the quickstart requires more than 15 commands or fails on a clean machine; CONTRIBUTING.md is absent; governance statement is missing
       progressing: README quickstart works in under 10 minutes on a clean machine; CONTRIBUTING.md explains how to report bugs and how to run tests locally; governance statement exists but is generic (does not name specific prohibitions or a specific responsible person)
       proficient: README quickstart works in 5 commands or fewer on a clean machine — verified by a classmate cold-following it with the result documented; README contains a one-sentence description, the quickstart, a configuration reference for every env var with its type and default, at least two worked examples showing realistic usage, the registry package link, and the CI badge; CONTRIBUTING.md covers bug reporting (what to include and where to file), PR submission (branch naming, test requirements, review expectations), local test execution (exact commands from a clean checkout), and a one-paragraph code of conduct; the artifact is live and installable via the standard registry install command; license choice is justified in one paragraph naming what the choice means for potential users
-    - weight: 15
+    - weight: 13
       description: Governance, Safety, and Community Engagement
       preemerging: No governance statement published; project was not submitted to any registry or community; no community interaction occurred
       beginning: A governance statement exists in the repository but was not published or is not linked from the README; the project was pushed to GitHub but not submitted to a registry; a community post was made but no response to feedback occurred or the post misrepresents the artifact's capabilities
       progressing: GOVERNANCE.md is published and linked from the README; project is installable from at least one registry; at least one community post was made in an appropriate forum and at least one response was received, but engagement with feedback was superficial ("Thanks!")
       proficient: GOVERNANCE.md is published in the repository and contains four specific elements — what the agent does and does not do (scope), what the agent must never be used for with a stated reason for each prohibition, who is responsible and how to reach them, and known limitations that could cause harm if a user assumes they are not present; the project is findable and installable from at least one public registry (npm, PyPI, Docker Hub, or MCP marketplace); a community post accurately describing the artifact was made in an appropriate forum (r/LocalLLaMA, r/MachineLearning, a relevant Discord, or HN Show HN); at least one response was received and the student engaged with it substantively — acknowledging the substance of the feedback and either incorporating it, explaining why not, or filing an issue — with the exchange documented in the submission report with a screenshot or link
+    - weight: 15
+      description: Stakeholder Grounding, Multi-Audience Communication, and Process Quality (Goals 11, 12, 13, 14, 15)
+      preemerging: The artifact shows no connection to the team's Stakeholder Brief or Literature Review, the presentation addresses only a technical audience, and no Project Thread process artifacts (decision log, signatures, AI-use disclosures) are present
+      beginning: The gap is verified only against generic community posts with no connection to the Brief and Literature Review, or the Demo Day presentation lacks a non-technical stakeholder-facing segment or a disseminable artifact, or process artifacts are spotty across milestones
+      progressing: The proposal integrates the Stakeholder Brief and Literature Review and Demo Day includes both technical and stakeholder-facing segments with a disseminable artifact, with minor gaps such as a thin multidisciplinary reflection, an incomplete GANTT-style timeline, or one milestone missing its AI-use disclosure
+      proficient: The proposal integrates the Stakeholder Brief and Literature Review, connecting the verified ecosystem gap to the stakeholder problem and the gap the review identified (Goals 11, 12); process is visible throughout — decision log and role assignments are current, every team document names a primary author per section, every progress report carries all members' signatures, and an AI-use disclosure accompanies each milestone (Goal 13); Demo Day includes the live technical demo, a non-technical stakeholder-facing segment in plain language, and a disseminable artifact (poster, one-pager, or public project page) presenting the stakeholder context and a multidisciplinary reflection on how disciplines beyond CS shaped the design (Goal 14); the individual reflection uses the Open Questions to describe specific new understandings and growth (Goal 15); milestone work shows approach, professionalism/process, and product, and the grade record supports combining team output with individual contribution and individual understanding
 
 tags:
   - project
@@ -51,6 +58,10 @@ tags:
   - community
 
 ---
+
+<!-- Project Thread integration: original rubric weights before the Stakeholder Grounding / Multi-Audience Communication / Process Quality row was added were 20 / 25 / 20 / 20 / 15. -->
+
+> **The Project Thread:** This track is the final stage of the semester-long [Project Thread](/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview) — the gap your artifact fills should serve the community your stakeholder belongs to — your team operates under its signed charter and the [Team Playbook](/Projects/PBLThread), and Demo Day (wk15.0) addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
@@ -116,6 +127,8 @@ By the end of Stage 1, you will have submitted a 2-page proposal covering:
 - **Minimum viable scope:** The smallest version that is genuinely useful, achievable before the end of the semester. One sentence.
 - **Stretch goals:** Two to three extensions that would make the project more capable if time allows.
 - **Governance sketch:** Who is responsible for the deployed artifact? What must the artifact never be used for? What risk should the instructor know about before approving?
+- **Stakeholder grounding:** How the verified ecosystem gap connects to your [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview) — the problem in the stakeholder's terms, the gap your review identified, and who in the stakeholder's community would adopt this artifact (Goals 11, 12)
+- **Implementation-and-assessment sketch:** Who holds which role at each stage, how progress will be assessed at each stage boundary, and a shared GANTT-style timeline mapping Stages 2 through 4 to weeks with named owners (Goal 13)
 
 ---
 
@@ -230,6 +243,8 @@ If you receive no responses within one week of posting, post to a second communi
    - One known limitation or failure mode, disclosed honestly
    - Property test results (what you tested, what you found)
    - 60-second governance statement addressed to the audience as potential users
+   - A **non-technical, stakeholder-facing segment** (plain language, no unexplained jargon): the stakeholder context — whose problem this serves and in their terms — what the artifact does for that community, what it must not be used for, and a brief **multidisciplinary reflection** on how disciplines beyond CS shaped the design (Goal 14)
+5. **The disseminable artifact:** a poster, one-pager, or public project page (a well-crafted public README landing page qualifies) suitable for sharing with your stakeholder's community: the stakeholder context, what the artifact does, its limits, and how to get it (Goal 14)
 
 ---
 
@@ -259,5 +274,6 @@ Answer individually in your contribution statement:
 - What gap did you find, and how did you verify it was real rather than imagined?
 - Which engineering decision are you most proud of, and which would you make differently?
 - What did community feedback teach you that you did not expect?
+- Using the four Open Questions (*What should matter to me? How should we live together? How can we understand the world? What will I do?*), describe one specific new understanding and one area of growth or skill development from the Project Thread — from formation survey to Demo Day (Goal 15).
 - Do you certify that your contribution statement accurately represents your own work? Please identify any and all portions of the project that were not originally created by you.
 - Approximately how many hours did the project take you personally?

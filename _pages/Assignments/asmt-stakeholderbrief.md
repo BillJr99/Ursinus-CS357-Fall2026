@@ -1,0 +1,164 @@
+---
+layout: assignment
+permalink: /Assignments/StakeholderBrief
+title: "CS357: Foundations of Artificial Intelligence - Stakeholder Brief"
+
+info:
+  coursenum: CS357
+  points: 50
+  goals:
+    - To identify and research an issue, question, or practical problem by finding a real stakeholder outside computer science and learning their problem in their own terms (Goal 11)
+    - To develop a multi-disciplinary understanding of the problem, naming the disciplinary perspectives involved and how each frames what a solution would mean (Goal 12)
+    - To conduct a professional, well-prepared, listen-and-learn stakeholder interview with appropriate consent and follow-up etiquette
+    - To translate a stakeholder's account into a problem statement that an agent system could address, honestly scoped by what the team does not yet know
+  rubric:
+    - weight: 30
+      description: Problem Identification and Research Grounding (Goal 11)
+      preemerging: No real stakeholder is identified, or the "problem" is invented by the team rather than drawn from the stakeholder
+      beginning: A stakeholder is named but the issue is described in the team's words rather than the stakeholder's, or the brief shows no preparation research about the stakeholder's context
+      progressing: A real stakeholder outside CS was interviewed and the issue is presented in their terms with supporting context, but the problem statement drifts from what the stakeholder actually said or is too broad to act on
+      proficient: The brief presents a real, named-with-consent stakeholder outside CS; the issue appears in the stakeholder's own terms (with at least two direct quotes or close paraphrases attributed to the interview); the problem statement is specific, traceable to the interview, and framed as something an agent system could plausibly address; the "what we don't yet know" section names concrete open questions rather than generic uncertainty (Goal 11)
+    - weight: 30
+      description: Multi-Disciplinary Understanding (Goal 12)
+      preemerging: The brief treats the problem as purely technical, with no disciplinary perspective beyond CS
+      beginning: One non-CS perspective is name-checked ("this is also an education problem") without any account of how that discipline sees the issue
+      progressing: At least two disciplinary perspectives are identified with a plausible account of each, but the brief does not connect them — the perspectives sit in separate paragraphs without interaction
+      proficient: The brief names at least two disciplinary perspectives beyond CS involved in the problem, explains what each discipline notices that the others miss (including what would count as evidence or success in that discipline), and identifies at least one point where the perspectives are in tension — a place where the eventual project will have to choose (Goal 12)
+    - weight: 20
+      description: Interview Quality and Professionalism
+      preemerging: No interview took place, or the interaction is undocumented
+      beginning: An interview took place but was unprepared — no prep questions, no record of what was asked, or missing consent to be named
+      progressing: The interview followed the protocol with prep questions and a documented listen-and-learn stance, with a minor gap such as a missing follow-up thank-you or an unclear consent record
+      proficient: The interview packet shows the full protocol — researched prep questions written in advance, a documented listen-and-learn stance (the record shows the stakeholder talking more than the interviewers), explicit consent to be named (or the brief anonymizes accordingly), and a follow-up message thanking the stakeholder and confirming the team's understanding, with the stakeholder's confirmation or corrections noted
+    - weight: 20
+      description: Writeup, Process, and Submission
+      preemerging: An incomplete submission is provided
+      beginning: The brief is submitted but misses the length or required sections, or lacks per-section primary authors, signatures, or the AI-use disclosure
+      progressing: The brief is complete and well-organized with all Project Thread process elements present, with a minor omission such as a thin track-fit section covering fewer than all three final-project tracks
+      proficient: The 2-3 page brief contains all required sections including a candidate track fit that works for all three final-project tracks; every section names its primary author and every member is primary author of at least one section; the submission carries all members' signatures and an AI-use disclosure stating what was AI-assisted and how it was verified (Goals 13, 14)
+  readings:
+    - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
+      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
+    - rtitle: "Structured Peer Review Activity (SQR protocol used at the brief exchange)"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md"
+    - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."
+
+tags:
+  - project-thread
+  - stakeholder
+  - multidisciplinary
+  - written
+
+---
+
+In this Project Thread milestone, your team finds a **real stakeholder outside computer science** — a campus office, a local organization, or faculty or students in another discipline — and learns about a problem *they* have, in *their* words. The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks. The assignment is handed out at wk2.1 with an in-class kickoff and is due at wk4.1; briefs are then exchanged across teams for structured peer review at wk5.0.
+
+The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
+
+---
+
+## Purpose, Task, and Criteria
+
+Following the TILT framework ([tilthighered.com](https://tilthighered.com/)):
+
+| | |
+|---|---|
+| **Purpose** | To ground your semester project in a real problem owned by a real person outside CS (Goal 11), and to understand that problem through the disciplines it actually lives in, not only through ours (Goal 12). |
+| **Task** | Identify a stakeholder, prepare, conduct a listen-and-learn interview using the protocol below, and write a 2-3 page brief with the six required sections. |
+| **Criteria** | See the rubric: the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an honest account of what you do not yet know. |
+
+---
+
+## Key Concepts
+
+| Term | Plain-English Definition | Where It Appears |
+|------|--------------------------|------------------|
+| **Stakeholder** | A real person or office, outside computer science, who owns the problem — they experience it, they would benefit from progress on it, and they can tell you when you have misunderstood it. | Part 1 |
+| **Listen-and-learn stance** | An interview posture in which your goal is to understand, not to pitch. You ask, you follow up, you do not propose solutions in the first meeting. | Part 2 |
+| **The problem in the stakeholder's own terms** | The issue as the stakeholder describes it, in their vocabulary, before any translation into CS language. Captured with quotes. | Brief section 2 |
+| **Disciplinary perspective** | A field's characteristic way of framing the problem: what it notices, what it measures, what counts as evidence, what "solved" means. | Brief section 3 |
+| **Problem statement** | One paragraph, traceable to the interview, stating the problem an agent system could address — without committing to a design yet. | Brief section 4 |
+| **Track fit** | A short argument that the problem could support any of the three final-project tracks (build, audit, or open-source), keeping your options open until wk9.1. | Brief section 5 |
+| **Known unknowns** | The concrete things you would need to find out before proposing anything — the honest edge of your understanding. | Brief section 6 |
+
+---
+
+## In-Class Kickoff: Speed-Dating Topic Generation (wk2.1)
+
+Before any team commits to a stakeholder, we generate candidates together. In class, you will run a **speed-dating round**: pairs of students rotate every four minutes, and in each pairing both people answer, "What is a problem you have personally seen in a campus office, a local organization, or another department — and who owns it?" The Recorder from each team collects every candidate mentioned. By the end of class, your team short-lists three candidates and ranks them by (a) access — can you realistically get an interview within two weeks? (b) shape — could an agent system plausibly help? and (c) interest — does the domain match your team's survey rankings? Log the ranking and the choice in your decision log.
+
+---
+
+## Part 1: Identify a Real Stakeholder
+
+The stakeholder must be **real and outside computer science**. Good candidates:
+
+- **Campus offices:** sustainability, library, registrar, accessibility services, career services, admissions, facilities, dining
+- **Local organizations:** nonprofits, community centers, historical societies, food banks, small businesses, municipal offices
+- **Another discipline on campus:** faculty or students in biology, education, environmental studies, economics, art, health sciences — anyone with a research or operational problem outside CS
+
+Not acceptable: another CS student or CS faculty member's tooling problem, a hypothetical persona, or "students in general." If your team is unsure whether a candidate qualifies, ask the instructor *before* the interview.
+
+**Etiquette for the first contact:** one short, professional message that says who you are, what the course is, what you are asking for (a 30-minute conversation about a problem in their work, not a commitment of any kind), and when you can meet. Copy the instructor if you want a credibility boost.
+
+---
+
+## Part 2: The Interview Protocol
+
+The protocol has four phases. Your interview packet (an appendix to the brief) documents each.
+
+**Phase 1 — Prepare.** Before the meeting, research the stakeholder's context (their office's public materials, their discipline's basics) and write **at least six prep questions** in advance. Good prep questions are open and concrete:
+
+- "Walk me through the last time this problem cost you an afternoon."
+- "Who else is affected when this goes wrong?"
+- "What have you already tried, and what happened?"
+- "What would a good outcome look like, in your terms?"
+- "What should we read to understand your field's view of this?"
+- "Is there data or paperwork this problem produces that we could see?"
+
+**Phase 2 — Listen and learn.** In the meeting, your job is to understand, not to pitch. Ground rules: the stakeholder should do most of the talking; follow-up questions ("can you say more about...?") beat new questions; and **no proposing solutions in the first meeting** — a premature "we could just build an app that..." teaches the stakeholder to stop describing the problem. Take notes; one member interviews while another records.
+
+**Phase 3 — Consent.** Ask explicitly: "May we name you and your office in our course writeup, or would you prefer we describe you generically?" Record the answer and honor it in the brief. If they decline to be named, the brief still works — describe the role, not the person.
+
+**Phase 4 — Follow up.** Within 48 hours, send a thank-you that includes a two-or-three sentence summary of the problem as you understood it, and ask them to correct anything you got wrong. Their confirmation (or correction) goes in the interview packet — it is your first accuracy check, and it keeps the door open for the rest of the semester.
+
+---
+
+## Part 3: The Brief
+
+Write **2-3 pages** with these six sections. Every section names its **primary author**, and every member is primary author of at least one section (the standing [Project Thread](/Projects/PBLThread) rule).
+
+1. **Stakeholder context.** Who they are (as consented), what their office or field does, and how this problem fits into their work.
+2. **The issue in the stakeholder's own terms.** Their framing, their vocabulary, at least two direct quotes or attributed close paraphrases. Resist translation; that comes later.
+3. **Disciplinary perspectives involved.** At least two perspectives beyond CS. For each: what does this discipline notice about the problem, what would count as evidence, and what would "solved" mean? Name at least one point where the perspectives pull in different directions.
+4. **A problem statement an agent system could address.** One paragraph, traceable to the interview. State the problem, not a design.
+5. **Candidate track fit.** Two or three sentences per track showing the problem could support **all three** final-project tracks: a built [Custom Agent Team](/Projects/AgentTeam), a [Responsible AI Audit](/Projects/ResponsibleAI) of an existing or proposed system in this domain, or an [Open-Source Agent](/Projects/OpenSourceAgent) artifact the stakeholder's community could adopt. You are not choosing a track yet — you are proving the problem is rich enough to keep the choice open.
+6. **What you don't yet know.** Concrete open questions: missing facts, unverified assumptions, and things only the literature (or a second conversation) can answer. This section seeds your Literature Review.
+
+Attach the **interview packet** as an appendix: prep questions, notes, consent record, and the follow-up exchange.
+
+---
+
+## Peer Exchange
+
+At **wk5.0**, briefs are exchanged across teams for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
+
+---
+
+## Deliverables
+
+Submit one PDF per team via the LMS by **wk4.1** containing:
+
+- The 2-3 page brief (six sections, primary author named per section)
+- The interview packet appendix (prep questions, notes, consent record, follow-up exchange)
+- All team members' typed signatures (re-affirming your charter)
+- An AI-use disclosure: what, if anything, was AI-assisted, with what tool, and how the team verified it
+
+## Reflection Prompts
+
+Answer individually in your Reflection Notebook, keyed to the Open Questions (Goal 15):
+
+- *What should matter to me?* — Before the interview you had assumptions about what this stakeholder's real problem was. Which assumption died first, and what does the gap between what you expected to matter and what actually mattered to them tell you about how you choose problems?
+- *How can we understand the world?* — Name one thing the stakeholder's discipline treats as obvious evidence that CS would not, or vice versa. What would your team lose by using only one of the two lenses?
+- If collaboration beyond your team occurred, identify it. Do you certify that this submission represents your team's original work? Please identify any and all portions of your submission that were not originally written by your team.
+- Approximately how many hours did this assignment take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

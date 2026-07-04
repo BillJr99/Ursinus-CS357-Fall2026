@@ -181,5 +181,6 @@ You may use AI tools for brainstorming or grammar checking, but the argument mus
 
 Submit a single PDF. Include a references section at the end (not counted in the word count). Word count must appear at the top of the first page.
 
+- Name the dialectic move you made in this essay: which objection did you allow to genuinely threaten your thesis, and what changed — in your position, your argument, or its scope — as a result of taking that objection seriously?
 - If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did it take you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

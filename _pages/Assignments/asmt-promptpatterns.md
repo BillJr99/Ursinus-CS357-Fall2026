@@ -147,7 +147,9 @@ Write 2-3 paragraphs in your analysis: (1) Did the circumvention succeed or fail
 
 ## Part 2: AI by Hand
 
-Complete both problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, paste a short Python snippet that verifies your result.
+Complete all three problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, paste a short Python snippet that verifies your result.
+
+As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
 
 ### Problem 1: Softmax with Temperature
 
@@ -222,6 +224,43 @@ print(f"cos(a, 3a) = {cosine_sim(a, 3*a):.3f}")
 
 Paste your output and confirm it matches.
 
+### Problem 3: A Forward Pass by Numbers
+
+**Setup:** A tiny neural network has 2 inputs, 2 hidden ReLU neurons, and 1 linear output — the same architecture as the trace table in the From Text Generation to a Neural Network activity, with different weights:
+
+$$h_1 = \text{ReLU}(2.0\,x_1 - 1.0\,x_2 - 0.5) \qquad h_2 = \text{ReLU}(-1.0\,x_1 + 1.0\,x_2 - 0.5)$$
+
+$$y = 2.0\,h_1 + 1.0\,h_2 + 1.0$$
+
+where $\text{ReLU}(z) = \max(0, z)$.
+
+**Task:** Compute the complete forward pass for the input $\mathbf{x} = (1.0, 1.0)$.
+
+**Show all of the following, in a trace table with one row per step:**
+1. The pre-activation of each hidden neuron (show every multiplication and the bias addition)
+2. The activation of each hidden neuron after ReLU (state explicitly which neuron, if any, was clipped to zero)
+3. The output $y$ (show the weighted sum and the output bias)
+
+**Second calculation:** Repeat the full trace for $\mathbf{x} = (0.0, 2.0)$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
+
+**Python verification:**
+```python
+W1 = [[2.0, -1.0], [-1.0, 1.0]]
+b1 = [-0.5, -0.5]
+V, c = [2.0, 1.0], 1.0
+
+def forward(x):
+    pre = [W1[j][0]*x[0] + W1[j][1]*x[1] + b1[j] for j in range(2)]
+    h = [max(0.0, p) for p in pre]
+    y = V[0]*h[0] + V[1]*h[1] + c
+    print(f"x={x}  pre={pre}  h={h}  y={y}")
+
+forward([1.0, 1.0])
+forward([0.0, 2.0])
+```
+
+Paste your output and confirm it matches your hand traces.
+
 ---
 
 ## Analysis and Synthesis
@@ -258,7 +297,7 @@ A: No. Handwritten and scanned is explicitly accepted. If you type it, any legib
 Submit a single PDF containing:
 - Your stated experimental protocol
 - All four pattern entries (baseline prompt, enhanced prompt, both outputs, analysis)
-- Both worked math problems with all intermediate steps shown
+- All three worked math problems (softmax with temperature, cosine similarity, and the forward pass by numbers) with all intermediate steps shown
 - The Python verification snippets and their output
 - Your analysis and synthesis (one to two paragraphs)
 - Your reflection responses
