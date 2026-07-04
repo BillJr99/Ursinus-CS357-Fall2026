@@ -222,6 +222,7 @@ npm publish                        # publish the new version (no --access needed
 Once publishing works by hand, a GitHub Actions workflow can automate it on every tagged release. The container pattern, from the course stack's own deployment:
 
 ```yaml
+{% raw %}
 # .github/workflows/publish.yml
 - uses: docker/login-action@v3
   with:
@@ -235,6 +236,7 @@ Once publishing works by hand, a GitHub Actions workflow can automate it on ever
     push: true
     tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
     # github.ref_name is the tag you pushed (e.g., v0.2.0)
+{% endraw %}
 ```
 
 The npm equivalent swaps in `npm ci && npm publish` with an `NPM_TOKEN` stored as a repository secret. Notice what triggers the workflow: a *tag you push deliberately* — not every commit — so the human decision to publish survives the automation. That design is the AI-maker module's CI lesson and the governance assignment's publication gate, implemented in seven lines of YAML.

@@ -98,10 +98,12 @@ Keep `.obsidian/plugins/` and `.obsidian/app.json` in version control so your pl
 The plugin's commit message template controls what appears in your GitHub history. A useful template that records context automatically:
 
 ```
+{% raw %}
 vault: {{date}} {{time}} — {{numFiles}} file(s) changed
+{% endraw %}
 ```
 
-`{{date}}` and `{{time}}` are built-in template variables the plugin replaces at commit time. You will see entries like `vault: 2026-06-21 14:32 — 3 file(s) changed` in your history, which makes it easy to verify sync is working and to correlate agent commits with your own edits.
+{% raw %}`{{date}}` and `{{time}}`{% endraw %} are built-in template variables the plugin replaces at commit time. You will see entries like `vault: 2026-06-21 14:32 — 3 file(s) changed` in your history, which makes it easy to verify sync is working and to correlate agent commits with your own edits.
 
 > **⚠️ Common Misconception:** "Obsidian sync and Obsidian Git are the same thing."
 >

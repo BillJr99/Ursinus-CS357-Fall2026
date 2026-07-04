@@ -297,7 +297,7 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
    extraction_prompt = f"""From this meeting transcript, extract all action items.
    Return ONLY valid JSON with this schema:
-   {{"action_items": [{{"description": str, "assignee": str, "due_date": str or null}}]}}
+   {% raw %}{{"action_items": [{{"description": str, "assignee": str, "due_date": str or null}}]}}{% endraw %}
 
    Transcript:
    {transcript}"""
