@@ -50,6 +50,12 @@ if ! command -v python3 >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! python3 -c "import requests" >/dev/null 2>&1; then
+  echo "ERROR: the Python 'requests' package is required by the worker and merge scripts." >&2
+  echo "Install it with:  python3 -m pip install requests" >&2
+  exit 1
+fi
+
 # SearXNG is optional: if a local instance answers, workers search first;
 # otherwise they degrade gracefully to the model's parametric knowledge.
 if curl -fsS --max-time 3 "${SEARXNG_URL}/search?q=test&format=json" >/dev/null 2>&1; then
@@ -82,6 +88,7 @@ fi
 cat > worker.py <<'PYEOF'
 """Research one topic; write a short summary to summaries/<slug>.md."""
 import os, re, sys
+import hashlib
 import requests
 
 MODEL = os.environ.get("MODEL", "llama3.2")
@@ -90,7 +97,10 @@ OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 SEARXNG_URL = os.environ.get("SEARXNG_URL", "")  # empty = skip search
 
 def slugify(text):
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:60]
+    # short stable hash suffix keeps truncated names unique per topic
+    digest = hashlib.sha1(text.encode("utf-8")).hexdigest()[:8]
+    stem = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:60]
+    return f"{stem}-{digest}"
 
 def search(topic):
     """Optionally pull a few result snippets from a local SearXNG instance."""

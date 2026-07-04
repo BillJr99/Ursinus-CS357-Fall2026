@@ -404,11 +404,6 @@ schedule:
   date: "1"
   title: "RAG Quality: Chunking, Clustering, and Reranking"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
-  readings:
-  - rtitle: "Supplemental Tutorial: Fine-Tuning, RAG, and Prompting — Choosing the Right Approach"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
-  - rtitle: "Supplemental Activity: Synthetic Data — Using AI to Train AI"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-syntheticdata.md"
   deliverables:
   - dtitle: "Optional Lab: Hands-On Fine-Tuning with LoRA and QLoRA Handed Out"
     dlink: "Assignments/FineTuning"
@@ -427,6 +422,10 @@ schedule:
     points: "50"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
+  - rtitle: "Supplemental Tutorial: Fine-Tuning, RAG, and Prompting — Choosing the Right Approach"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
+  - rtitle: "Supplemental Activity: Synthetic Data — Using AI to Train AI"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-syntheticdata.md"
   - rtitle: "Activity: RAG Chunking Strategy Comparison (see Hands-On section)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
   - rtitle: "Supplemental Tutorial: The LLM Wiki Pattern (Wikis versus RAG)"
