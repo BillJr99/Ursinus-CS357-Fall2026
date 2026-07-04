@@ -300,7 +300,7 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 
 ---
 
-→ Coming Up Next: The LLM Wiki module explores what becomes possible once the vault loop is running — using agents to maintain a living knowledge base that grows more useful with each session, and connecting it to the broader agent stack.
+→ Coming Up Next: The LLM Wiki module explores what becomes possible once the vault loop is running — using agents to maintain a living knowledge base that grows more useful with each session, and connecting it to the broader agent stack. Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
 
 ## Reflection Prompt
 
@@ -317,3 +317,4 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 - W. Mongan, "A Private AI Knowledge Base: Obsidian, GitHub Sync, and Cross-Platform AI Context" (billmongan.com, May 2026): the full architecture this module teaches, including the complete AGENTS.md specification and SHA protocol.
 - The GitHub Gitless Sync plugin repository and README: settings, conflict resolution, and the config-sync caution.
 - GitHub Docs, "Managing your personal access tokens": fine-grained tokens and scoping.
+- This course: [From Second Brain to Chief of Staff — A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md) — the production case study of the vault contract you built here.
