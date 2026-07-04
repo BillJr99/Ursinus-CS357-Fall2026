@@ -25,3 +25,6 @@
 [submodule "files/ai-agents-from-scratch"]
 	path = files/ai-agents-from-scratch
 	url = https://github.com/pguso/ai-agents-from-scratch.git
+[submodule "files/ai-engineering-from-scratch"]
+	path = files/ai-engineering-from-scratch
+	url = https://github.com/rohitg00/ai-engineering-from-scratch
