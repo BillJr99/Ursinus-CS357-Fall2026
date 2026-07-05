@@ -724,6 +724,8 @@ schedule:
   readings:
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
+  - rtitle: "The Revenge of the Philosophy Majors (Wallace, The New York Times, 2026)"
+    rlink: "https://www.nytimes.com/2026/07/05/business/philosophy-majors-ai-jobs.html"
   - rtitle: "Supplemental Case Study: Early-Alert and At-Risk Identification with Local AI (synthetic data)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-atriskidentification.md"
   - rtitle: "Supplemental Activity: The Philosophy and Psychology of Artificial Intelligence"
