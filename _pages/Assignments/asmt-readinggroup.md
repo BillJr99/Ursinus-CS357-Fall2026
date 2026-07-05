@@ -134,6 +134,9 @@ These are suggested sources. You are not limited to this list — propose others
 - AI Now Institute Annual Report (most recent year).
 - Partnership on AI — Guidance on Responsible Practices for Synthetic Media.
 
+### Essays and Journalism
+- Wallace, B. (2026, July 5). The revenge of the philosophy majors. *The New York Times.* https://www.nytimes.com/2026/07/05/business/philosophy-majors-ai-jobs.html
+
 ---
 
 ## Discussion Questions You Must Prepare
