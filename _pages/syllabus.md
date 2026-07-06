@@ -466,11 +466,18 @@ schedule:
   date: "1"
   title: "Tool Use and Function Calling"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md"
+  deliverables:
+  - dtitle: "Lab: Build Your Own AI Coach Handed Out"
+    dlink: "Assignments/AICoach"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-aicoach.md"
   readings:
   - rtitle: "Activity: Tool Calling and Function Schemas (see Hands-On section)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md"
   - rtitle: "Supplemental Tutorial: Structured Outputs — JSON Mode, Tool Schemas, and Output Validation"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md"
+  - rtitle: "Supplemental Tutorial: Building an AI Chess Coach — LLM API Calls in a Real Web App"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-chessaicoach.md"
 - week: "6"
   date: "0"
   title: "Connecting Agents to the World: MCP and APIs"
