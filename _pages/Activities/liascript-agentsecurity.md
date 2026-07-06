@@ -362,3 +362,11 @@ In this final part, you will apply everything from Parts I through V to your own
 - Greshake et al. "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection." arXiv:2302.12173 (2023).
 - Perez and Ribeiro. "Ignore Previous Prompt: Attack Techniques For Language Models." arXiv:2211.09527 (2022).
 - NIST AI Risk Management Framework: https://www.nist.gov/system/files/documents/2023/01/26/AI%20RMF%201.0.pdf
+
+**State-of-the-art injection defenses (named mitigations):**
+
+- Hines et al. (Microsoft). "Defending Against Indirect Prompt Injection Attacks With Spotlighting." arXiv:2403.14720 (2024).
+- Wallace et al. (OpenAI). "The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions." arXiv:2404.13208 (2024).
+- Chen et al. "StruQ" (arXiv:2402.06363, USENIX Security 2025) and "SecAlign" (arXiv:2410.05451, ACM CCS 2025) — structured-query and preference-optimization defenses.
+- Debenedetti et al. (Google DeepMind). "Defeating Prompt Injections by Design" (CaMeL). arXiv:2503.18813 (2025); Willison, "The Dual LLM pattern," https://simonwillison.net/2023/Apr/25/dual-llm-pattern/; and "The lethal trifecta," https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+- Applied to AI *coding* agents — repo-artifact injection, the AI software-supply-chain, and real 2025 incidents — see `liascript-codingagentsecurity.md`.

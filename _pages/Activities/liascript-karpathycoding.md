@@ -305,6 +305,22 @@ A coding agent produces an implementation that passes all five acceptance-criter
 
 ---
 
+## Group Discussion: Ensuring Code Quality in a World of AI-Generated Code
+
+When a human wrote every line, code review, tests, and architecture reviews were the quality gates. When an agent can generate hundreds of lines in seconds — faster than anyone can read them — *which* gates still work, and which have to change? Discuss the following as a team. There is no single right answer; the goal is to reason about where quality actually comes from when the author is a model.
+
+**Prompt.** Your team is about to let a coding agent implement a real feature. You cannot review every line as carefully as if you had written it yourself. Design the quality regime you would trust, arguing through each of these levers:
+
+- **Tests before code (TDD), and *secret* tests.** Why is a test *written before* the agent generates code a stronger quality signal than one written after? Now push further: why might you keep a set of **held-out ("secret") acceptance tests the agent never sees** — and what specifically does that defend against that agent-visible tests do not? (Connect to the "missing tests" and security-property test exercises above, and to held-out evaluation in `liascript-testingagents.md`.)
+- **Charter-first architecting.** Fixing the architecture, invariants, and interfaces *before* generation constrains what the agent is even able to build. How does deciding the design up front reduce the blast radius of an AI error, compared to letting the agent invent structure as it goes? (Connect to the charter in `liascript-agentgovernance.md`.)
+- **Verification vs. trust, and accountability.** You will approve a diff you did not fully read. What is the minimum you must verify yourself for that approval to be responsible — and if a defect ships anyway, who is accountable: the person who wrote the spec, the agent, the reviewer who approved, or the team that deployed?
+
+**Deliverable.** Produce a short "quality checklist" (5–7 items) your team would actually apply to an AI-generated pull request, and mark each item as a gate that runs *before* generation, *during* review, or *after* merge.
+
+> *Hint: The strongest regimes combine all three levers rather than relying on one. A held-out test the agent cannot see is uncheatable; a charter written first bounds what can go wrong; and a human who verifies the security-critical and irreversible paths — even without reading every line — catches what tests miss. Ask which lever catches which category of failure.*
+
+---
+
 ## Reflection Prompt
 
 *Personal:* Looking back at the planted-bug diff in Model 3, did you spot all three issues before reading the questions? Be honest. What made the dangerous ones easy or hard to see?

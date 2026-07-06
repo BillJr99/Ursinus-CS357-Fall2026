@@ -35,6 +35,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Tool Registry** | A dictionary in your code that maps tool names to actual Python functions, used to look up and execute the function the model requested. Acts as a security boundary. | `REGISTRY = {"get_today": get_today, "days_until": days_until}` |
 | **Perceive-Plan-Act Loop** | The cycle an agent runs: receive input (perceive), decide what to do including which tool to call (plan), execute the tool and observe the result (act), then loop. Tool calling formalizes the "act" step. | The `agent()` function loops up to `max_steps=4` times through this cycle |
 | **Read-Only vs. Irreversible-Write** | A classification of tools by the consequences of their actions. Read-only tools (look up a date, search the web) are safe to call without confirmation. Irreversible-write tools (send an email, delete a file, post to social media) require human approval before execution. | `get_today()` is read-only; a hypothetical `send_email()` is irreversible-write |
+| **Context window** | The fixed-size token buffer that holds *everything* the model can see on a given turn: system prompt, conversation history, **every tool schema**, and every tool result. Nothing outside it exists to the model. | A model with a 128K-token window; see `liascript-memorycontext.md` |
+| **Tool-definition token cost** | Each tool's schema (name + description + parameter spec) occupies tokens in the prompt on *every* turn it is offered — not just when the tool is called. Ten tools are ten schemas riding along in the context the whole conversation. | A 5-parameter tool schema might cost ~120 tokens every turn |
+| **Tool round-trip** | A single tool use adds tokens to the context *twice*: once for the model's `tool_calls` request, and again for the `tool`-role result your code appends. Both stay in the history for the rest of the conversation. | A search tool returning 200 tokens of results leaves 200 tokens in context permanently |
 
 ---
 
@@ -187,7 +190,79 @@ In native function calling, the component that actually executes the function is
 
 ---
 
-# Part III: Synthesis and Practice
+# Part III: What a Tool Call Costs in the Context Window
+
+Part II traced the *messages* in a tool call — who authors each one and in what order. This Part traces the *tokens*. Everything the model can see on a turn — the system prompt, the whole conversation history, **every tool schema you offer**, and every tool result — shares one fixed-size buffer, the context window (`liascript-memorycontext.md`). Tools are not free riders in that buffer. Understanding their token cost is what separates an agent that stays fast and accurate from one that slows down, gets more expensive, and starts picking the wrong tool.
+
+## Model 3: The Token Ledger of a Tool Call
+
+Return to the message sequence from Model 2 and attach an approximate token cost to each piece. (Exact counts depend on the tokenizer; these are illustrative, but the *structure* is exact.) Suppose the agent is offered two tools and answers "How many days until the final exam?"
+
+| # | What enters the context | Author | Approx. tokens | Stays in context after? |
+|---|---|---|---|---|
+| 0 | System prompt | You (setup) | ~150 | Yes — every turn |
+| 0 | **Schema for `get_today`** | You (setup) | ~60 | **Yes — every turn, called or not** |
+| 0 | **Schema for `days_until`** | You (setup) | ~90 | **Yes — every turn, called or not** |
+| 1 | User question | Human | ~12 | Yes |
+| 2 | Model's `tool_calls` request | Model | ~25 | Yes |
+| 3 | `tool`-role result your code appends | **Your code** | ~15 | Yes |
+| 4 | Model's next `tool_calls` (chained) | Model | ~30 | Yes |
+| 5 | Second `tool`-role result | Your code | ~10 | Yes |
+| 6 | Final natural-language answer | Model | ~20 | Yes |
+
+Two facts fall out of this ledger. First, the **two tool schemas cost ~150 tokens on every single turn**, whether or not either tool is used — they are standing furniture in the prompt, exactly like the system prompt. Offer twenty tools and you are carrying twenty schemas in every request for the whole conversation. Second, each tool use is a **round-trip**: the request (row 2) *and* the result (row 3) both land in the history and stay there. A tool that returns 200 tokens of search results does not cost 200 tokens once — it costs 200 tokens for the rest of the conversation, re-sent on every subsequent turn. This is the same token-occupancy accounting as the "Bloated Agent" ledger in `liascript-memorycontext.md`, now applied to tools.
+
+### Critical Thinking Questions
+
+1. An agent is offered 15 tools, each with a schema costing about 80 tokens, but a typical conversation only ever uses 2 of them. How many tokens per turn are spent on tool schemas, and how many of those are for tools that are never called in this conversation?
+
+   > *Hint: Every offered schema rides along every turn regardless of use. $15 \times 80$ is the standing cost; only 2 tools are used, so how many schemas' worth is pure overhead here?*
+
+2. A research tool returns 500 tokens of retrieved text. The agent then has a 10-turn conversation. Roughly how many token-turns does that one result consume, and why is that different from the cost of the *request* that triggered it?
+
+   > *Hint: A result appended to history is re-sent on every later turn. Multiply the result size by the remaining turns. The request is small; the result is the heavy part that lingers.*
+
+3. Connect this to cost and latency from `liascript-costoptimization.md` and `liascript-llmserving.md`: if tool schemas and results inflate the input token count on every turn, which two user-facing quantities get worse, and why?
+
+   > *Hint: More input tokens means more to bill for and more to prefill. What happens to per-turn cost, and to time-to-first-token, as the prompt grows?*
+
+[[MC]]
+You offer an agent 12 tools but a given conversation only calls 1 of them. What is the token cost of the other 11 tool schemas?
+- ( ) Zero — schemas only cost tokens when their tool is actually called
+- ( ) They cost tokens once, on the first turn only
+- (x) They cost tokens on every turn of the conversation, because all offered schemas sit in the prompt whether or not they are called
+- ( ) They are stored on the server and never count against the context window
+
+## Model 4: Fewer Tools, Cleaner Context — and Subagents
+
+Two practices follow directly from the ledger.
+
+**Limit the tools you offer.** Beyond the raw token cost, a long tool list *degrades tool selection*. The model must choose the right tool from everything offered; the more near-duplicate or irrelevant options crowd the list, the more often it picks wrong or fills arguments poorly — the same lesson as the schema-quality ablation in the Exercises, now at the level of tool *count*. Offer the smallest set of well-described tools each task actually needs, not everything you have ever built.
+
+**Use subagents to keep each context focused.** When a task genuinely needs many tools or produces large intermediate results, the fix is not one agent holding all of it. It is to hand a narrow sub-task to a **subagent** running in its *own* context window, with only the few tools and the brief it needs, and return just the answer to the main thread — so the main context never accumulates the sub-task's schemas and scratch work. This course teaches that pattern in depth elsewhere: the small-context-window principle (`liascript-memorycontext.md`), subagents with isolated context and filesystem offload (`liascript-agentframeworks.md`), and orchestration where each stage "sees only what it needs" (`liascript-orchestration.md`). The token ledger above is *why* those patterns work.
+
+### Critical Thinking Questions
+
+1. You have built 30 tools across a semester. A new task needs 3 of them. Give two distinct reasons — one about tokens, one about accuracy — why you should offer only those 3 rather than all 30.
+
+   > *Hint: One reason is the standing schema cost from Model 3. The other is what a crowded menu does to the model's chance of selecting and arguing the right tool.*
+
+2. A subagent runs a 12-tool research sub-task and returns a 3-sentence summary to the main agent. What does the main agent's context *avoid* carrying compared to doing the research inline itself?
+
+   > *Hint: Think about what stays in history when you do the work inline — the schemas, every tool request, every raw result. What comes back from the subagent instead?*
+
+[[MC]]
+Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selection accuracy?
+- ( ) Fewer tools make each schema description longer automatically
+- (x) A shorter, less redundant menu gives the model fewer wrong or near-duplicate options to confuse, so it more reliably picks and fills the right one
+- ( ) The model can only read the first tool in any list
+- ( ) Fewer tools disable the context window limit
+
+> **⚠️ Common Misconception:** It feels safe — even helpful — to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts — not to hand one agent a giant toolbox and a bloated prompt.
+
+---
+
+# Part IV: Synthesis and Practice
 
 ## 3. Exercises
 
