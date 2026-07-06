@@ -15,7 +15,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Connecting Agents to the World: MCP and APIs
 
-Yesterday each team hand-wired tools into one agent; that approach does not scale to the world. Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server. We move from **APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server**.
+Yesterday each team hand-wired tools into one agent; that approach does not scale to the world. Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server. We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
 
 ---
 
@@ -35,10 +35,36 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **N-by-M Problem** | If you have N agent applications and M services, bespoke (custom, one-off) integration requires up to N × M separate adapters. MCP reduces this to N + M by providing one standard both sides follow. | 4 agents × 6 services = 24 adapters without MCP; 4 + 6 = 10 with MCP. |
 | **Tool Discovery** | The ability of an agent to ask a server at runtime "what can you do?" rather than having the tool list hard-coded in the agent's source code. | `requests.get("http://localhost:8765/tools/list")` returns the current tool menu dynamically. |
 | **JSON-RPC** | A protocol for making remote function calls by sending JSON messages. MCP's full specification is built on top of JSON-RPC. | `{"method": "tools/call", "params": {"name": "hours", "arguments": {"facility": "library"}}}` |
+| **OAuth 2.0** | An authorization standard that lets a user grant an app limited, revocable access to their account on another service without sharing their password; the app receives a scoped token instead. | Clicking "Allow this app to read my Google Calendar" issues a token, not your password. |
+| **No-code automation / connector** | A platform that builds service-to-service workflows by configuring pre-built "connectors" — each wrapping a service's OAuth/REST API — instead of writing integration code. | Power Automate, Zapier, Make, and IFTTT expose Google, Asana, and hundreds of services as ready-made connectors. |
 
 ---
 
 # Part I: The Integration Problem
+
+## Warm-Up: The Services You Already Use
+
+Before we study the integration problem in the abstract, make it personal. As a team, brainstorm the online services and apps each of you relies on in a typical week — email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
+
+For every service someone names, ask the question this entire unit turns on: **could an agent reach it, and how?** Investigate whether each service exposes:
+
+- an **MCP server** — an agent can discover and call its tools directly through the protocol we study today;
+- an **OAuth 2.0 / REST API** — an agent can call it over HTTP with the user's delegated, revocable permission; or
+- **neither** — no public programmatic access, so a human (or brittle screen-scraping) is the only way in.
+
+Look each service up rather than guessing — the answer keeps changing as vendors ship new APIs and MCP servers. A few examples to prime the conversation:
+
+| Service | What people use it for | Programmatic access to investigate |
+|---|---|---|
+| **Google** (Gmail, Calendar, Drive) | Email, scheduling, documents, storage | Mature OAuth 2.0 REST APIs per product; a fast-growing set of MCP servers wraps them |
+| **Asana** | Team task and project tracking | Documented OAuth 2.0 REST API for tasks and projects; MCP servers are available |
+| **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API — a good example of a service that is *not* openly agent-reachable, where access means unofficial scraping or a third-party data aggregator |
+
+[[___ List 3-5 services your team uses. For each, mark MCP? / OAuth-REST? / neither, and note how you found out. ___]]
+
+> **Talking point:** A pattern is already forming. Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all. That split — a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks — is exactly the fragmentation the rest of this activity is about. Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
+
+---
 
 ## 1. APIs, Then the N-by-M Problem
 
@@ -214,6 +240,50 @@ The primary value MCP adds over each team writing custom tool integrations is:
 - (x) It standardizes discovery and invocation so any client can use any compliant tool server
 - ( ) It eliminates the need for authentication
 - ( ) It runs tools inside the model for speed
+
+---
+
+## No-Code Integration: Microsoft Power Automate
+
+You just built an integration in **code** — a Flask server plus a Python client. Most organizations also connect services a second way: **no-code automation platforms**. Microsoft **Power Automate** is the one you are most likely to meet in a workplace (Zapier, Make, and IFTTT are close cousins). Instead of writing an MCP server, you assemble a **flow** from pre-built **connectors**, each of which already wraps a service's OAuth/REST API. It is the same "reach the world's services" goal as MCP, reached with configuration instead of code.
+
+**The building blocks of a flow:**
+
+- **Trigger** — the event that starts the flow: a schedule, a new email, a new Asana task, a submitted form, or a manual button.
+- **Connector actions** — the steps that follow ("Create a Google Calendar event," "Add a task in Asana," "Post to Teams"). Each connector authenticates once with **OAuth 2.0** and the platform stores the token, so the flow itself never contains a password or key.
+- **Conditions and loops** — no-code control flow ("if the email has an attachment, then…").
+- **HTTP action** *(premium)* — call any REST endpoint the built-in connectors do not cover, including a language-model API or one of your own services.
+- **AI Builder / Copilot** — Microsoft's built-in AI steps: prompt a model, summarize, extract fields, or classify, dragged in like any other action.
+
+**How to build one, end to end:**
+
+1. Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
+2. Choose **Create → Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
+3. Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, …). The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
+4. Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
+5. To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint — the same request body you have used all unit.
+6. **Test** with the built-in run panel, inspect each step's inputs and outputs, then **turn the flow on** so its trigger runs it automatically.
+
+**Where it fits — and where it does not.** No-code platforms are fastest when a connector already exists for both services and the logic is simple. They struggle when you need custom logic, real version control, or a portable integration you can host yourself — which is exactly when writing an MCP server or a small agent (as you did above) wins. And the trust questions do not disappear: a connector holds a real OAuth token with real scopes, so the same "who wrote it, what can it do, is it least-privilege" checklist from Model 2 still applies.
+
+### Critical Thinking Questions
+
+7. A Power Automate connector and your Flask server both let a system "create a calendar event." Name two things the no-code connector gives you for free that you handled yourself in code, and one thing the code version gives you that the connector cannot.
+
+   > *Hint: For free — the OAuth flow and token storage, plus a maintained schema/UI for the service's fields. In code you keep — custom logic, self-hosting and portability, and version-controlled review of exactly what runs.*
+
+8. In step 5 you can call a model with an HTTP action whose body is a `/v1/chat/completions` payload. Where should the model's API key live so it does not end up pasted into the flow definition that teammates can open and export?
+
+   > *Hint: Store it as a secure input / environment variable / connection secret (or a Key Vault reference) and reference it — never hard-code it into the HTTP action's headers, where it becomes part of the exported flow. Same rule as every other secret this term.*
+
+[[MC]]
+Compared with writing an MCP server, a no-code platform like Power Automate primarily trades:
+- ( ) accuracy for speed — its flows produce less correct results
+- (x) control and portability for speed and pre-built, already-authenticated connectors
+- ( ) security for convenience — flows cannot use OAuth
+- ( ) nothing; it is strictly better in every way
+
+> **⚠️ Common Misconception:** "No-code means there is no security to think about." Often the opposite: one flow can hold OAuth tokens to your email, files, and calendar at once and run unattended. The connector hides the *plumbing*, not the *risk* — least-privilege scopes, controlling who can edit the flow, and keeping model keys out of the flow body all still matter.
 
 ---
 
