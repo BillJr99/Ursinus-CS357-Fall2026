@@ -56,6 +56,14 @@ After your session, you submit a 300–500 word reflection write-up within one w
 
 ---
 
+## For the Audience: Your Participation Counts
+
+Leading a session is extra credit; being a thoughtful member of its audience is ordinary, expected participation, and it counts toward your Class Activities and Participation grade. A student-led discussion is only as good as the room it is held in, so when a classmate presents, you have a job.
+
+**Before the session,** post a brief [reading response]({{ site.baseurl }}/Participation/ReadingResponses) to the presenter's source — one takeaway, one question, and one connection to something we have built or run — or, when the source is circulated the same day, arrive with one genuine question ready. **During the session,** engage: build on the presenter's framing, offer a counter-view, or connect their source to a system we have worked with. The [Reading Responses]({{ site.baseurl }}/Participation/ReadingResponses) guide explains the format, and audience engagement is assessed within the [participation rubric]({{ site.baseurl }}/Participation/PreparingForClass). This is what makes the student-led sessions worth holding — and it means everyone, not only the presenter, has a stake in them.
+
+---
+
 ## Extra Credit Scale
 
 Sign up as early as you can — the extra credit maximum decreases by roughly one point per week:
