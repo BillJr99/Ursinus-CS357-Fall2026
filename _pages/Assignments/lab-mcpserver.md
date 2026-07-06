@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Build and Deploy an
 
 info:
   coursenum: CS357
+  purpose: "To extend your own agent's reach with standardized, OAuth-gated tools it can discover and call, so only authorized callers get in."
+  tilt:
+    task: "Build an MCP server that exposes two tools, secure it with the OAuth 2.0 client-credentials flow, and have a local agent invoke it end-to-end."
+    criteria: "Assessed on the working MCP server, enforced OAuth token and scope validation, and a live agent-to-tool demonstration; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement a working MCP server that exposes at least two tools

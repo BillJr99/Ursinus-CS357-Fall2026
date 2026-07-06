@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Literature Review"
 
 info:
   coursenum: CS357
+  purpose: "To ground your project in evidence rather than intuition, and to make your understanding of the problem genuinely multi-disciplinary by reading what the stakeholder's own field says about it."
+  tilt:
+    task: "Individually annotate 2-3 credible sources, then as a team write a one-page synthesis that connects them to your problem statement and names the gap your project will address."
+    criteria: "Assessed on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, and a gap that actually follows from the sources; see the rubric below for the full breakdown."
   points: 50
   goals:
     - To research the team's stakeholder problem through published sources, assessing each source's credibility and relevance to the problem statement (Goal 11)
@@ -55,18 +59,6 @@ tags:
 In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem. The review runs in two phases: **Phase 1 is individual** — each team member builds an annotated bibliography of 2-3 sources — and **Phase 2 is a team synthesis** — one page connecting everyone's sources to the problem statement and naming the gap your project will address. The assignment goes out at wk5.0 (as your Stakeholder Briefs come back from peer review); Phase 1 is due **wk6.1** and Phase 2 is due **wk7.1**.
 
 A literature review is not a book report and not a pile of links. It is an argument: *here is what is known, here is who knows it, here is the hole in it, and here is why that hole matters to our stakeholder.* The two-phase structure means every member does real source work (there is no way to ride along on a teammate's reading), and the synthesis forces the sources to talk to each other.
-
----
-
-## Purpose, Task, and Criteria
-
-Following the TILT framework ([tilthighered.com](https://tilthighered.com/)):
-
-| | |
-|---|---|
-| **Purpose** | To ground your project in evidence rather than intuition (Goal 11), and to make your understanding of the problem genuinely multi-disciplinary by reading what the stakeholder's own field says about it (Goal 12). |
-| **Task** | Individually: find and annotate 2-3 sources (at least one scholarly; across the team, at least one from the stakeholder's discipline). As a team: write a one-page synthesis, with a named primary author, that connects the sources to your problem statement and identifies the gap your project addresses. |
-| **Criteria** | See the rubric: faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a **hard requirement** of at least two disciplinary perspectives in the combined review, and a gap that actually follows from the sources. |
 
 ---
 

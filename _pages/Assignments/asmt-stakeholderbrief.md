@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Stakeholder Brief"
 
 info:
   coursenum: CS357
+  purpose: "To ground your semester project in a real problem owned by a real person outside CS, and to understand that problem through the disciplines it actually lives in, not only through ours."
+  tilt:
+    task: "Identify a stakeholder, conduct a prepared listen-and-learn interview, and write a 2-3 page brief with six required sections that frames the problem in the stakeholder's own terms."
+    criteria: "Assessed on the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an honest account of what you do not yet know; see the rubric below for the full breakdown."
   points: 50
   goals:
     - To identify and research an issue, question, or practical problem by finding a real stakeholder outside computer science and learning their problem in their own terms (Goal 11)
@@ -54,18 +58,6 @@ tags:
 In this Project Thread milestone, your team finds a **real stakeholder outside computer science** — a campus office, a local organization, or faculty or students in another discipline — and learns about a problem *they* have, in *their* words. The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks. The assignment is handed out at wk2.1 with an in-class kickoff and is due at wk4.1; briefs are then exchanged across teams for structured peer review at wk5.0.
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
-
----
-
-## Purpose, Task, and Criteria
-
-Following the TILT framework ([tilthighered.com](https://tilthighered.com/)):
-
-| | |
-|---|---|
-| **Purpose** | To ground your semester project in a real problem owned by a real person outside CS (Goal 11), and to understand that problem through the disciplines it actually lives in, not only through ours (Goal 12). |
-| **Task** | Identify a stakeholder, prepare, conduct a listen-and-learn interview using the protocol below, and write a 2-3 page brief with the six required sections. |
-| **Criteria** | See the rubric: the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an honest account of what you do not yet know. |
 
 ---
 

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Coding Agents in Pr
 
 info:
   coursenum: CS357
+  purpose: "To learn to direct, constrain, and critically review a coding agent so you reach trustworthy code rather than merely accepting what it generates."
+  tilt:
+    task: "Drive a coding agent to build a REST endpoint from a written spec, then review, constrain, and iterate on its diffs until the result is trustworthy."
+    criteria: "Assessed on spec fidelity, line-by-line diff review, and the system prompt that constrains the agent; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To use a coding agent (OpenCode or Claude Code) to implement a feature from a written spec

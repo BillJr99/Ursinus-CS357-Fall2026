@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Privacy Audit for a
 
 info:
   coursenum: CS357
+  purpose: "To hold an agent you built accountable for the sensitive data it touches, auditing its PII exposure and governing it responsibly."
+  tilt:
+    task: "Audit an agent you built for PII across every boundary, implement input and output scrubbing, and write a retention and governance policy."
+    criteria: "Assessed in equal measure on the PII inventory, the scrubbing implementation, the retention policy, and the utility-privacy trade-off analysis; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To identify and classify PII exposure risks in a deployed agent system

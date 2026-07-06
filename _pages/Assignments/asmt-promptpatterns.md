@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Prom
 
 info:
   coursenum: CS357
+  purpose: "To connect prompting practice to the mathematics beneath it — building reusable prompt patterns with reproducible effects and working by hand the softmax and cosine-similarity computations that explain why those patterns work."
+  tilt:
+    task: "Build a portfolio of four controlled prompt-pattern demonstrations, work the softmax-with-temperature and cosine-similarity problems by hand with Python verification, and design and iteratively repair a system prompt against adversarial inputs."
+    criteria: "Assessed most heavily on the prompt-pattern portfolio and the by-hand worked problems, then the system-prompt design workshop, analysis and synthesis, and submission quality; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To design and document reusable prompt patterns including personas, few-shot examples, structured output, and guardrails with controlled before-and-after demonstrations

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: CI/CD, TDD, and Pub
 
 info:
   coursenum: CS357
+  purpose: "To hold the agent software you build to professional engineering standards so it can be tested, trusted, installed, and shipped."
+  tilt:
+    task: "Practice TDD against a mocked model, automate code quality, build a GitHub Actions CI pipeline, and publish your agent as a wheel and a container image."
+    criteria: "Assessed in equal measure on test-driven development, automated code quality, the CI pipeline, and packaging and publishing; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement test-driven development practices for non-deterministic agent outputs using semantic, format, and safety test patterns
