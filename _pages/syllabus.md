@@ -477,7 +477,7 @@ schedule:
   - rtitle: "Supplemental Tutorial: Structured Outputs — JSON Mode, Tool Schemas, and Output Validation"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md"
   - rtitle: "Supplemental Tutorial: Building an AI Chess Coach — LLM API Calls in a Real Web App"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-chessaicoach.md"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
 - week: "6"
   date: "0"
   title: "Connecting Agents to the World: MCP and APIs"

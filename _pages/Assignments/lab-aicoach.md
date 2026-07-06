@@ -48,7 +48,7 @@ info:
       proficient: The write-up clearly explains the design decisions, honestly assesses where the AI helps and where it is unreliable, names concrete limitations, and answers both standard closing questions
   readings:
     - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-chessaicoach.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
     - rtitle: "RESTful LLM Access: The api/v1 Paradigm (prerequisite)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md"
 
