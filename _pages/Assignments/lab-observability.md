@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Instrumenting Agent
 
 info:
   coursenum: CS357
+  purpose: "To turn an agent you run from a black box into an observable production system you can trace, diagnose, and alert on."
+  tilt:
+    task: "Instrument a tool-using agent with OpenTelemetry spans, analyze the traces in Jaeger or Zipkin, and write alert rules with a runbook."
+    criteria: "Assessed in equal measure on span instrumentation, span-attribute design, trace analysis, and alerting with a runbook; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To instrument an AI agent with OpenTelemetry spans, capturing LLM call metadata, tool call metadata, and retrieval metadata as structured attributes

@@ -289,6 +289,8 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
   readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class — what changed once the model ran on your own machine?"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Project Thread: teams announced today; before next class, read the Team Charter and Norms activity"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md"
   - rtitle: "Supplemental Tutorial: Docker from First Principles"
@@ -392,6 +394,8 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-agentdebug.md"
   readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Supplemental Tutorial: Vector Databases — How Agents Search for Meaning"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-vectordatabases.md"
   - rtitle: "Supplemental Video: LangChain RAG from Scratch (YouTube)"
@@ -571,6 +575,8 @@ schedule:
   title: "Multi-Agent Debate"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md"
   readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class — when does a multi-agent design help, and when does it just cost tokens?"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Supplemental Activity: Multi-Agent Communication — Protocols, Shared State, and Coordination"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentprotocols.md"
 - week: "9"
@@ -726,6 +732,8 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-datacards.md"
   readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class — one design choice you would make differently in a system you deploy"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
   - rtitle: "The Revenge of the Philosophy Majors (Wallace, The New York Times, 2026)"
@@ -834,6 +842,8 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-finetuning.md"
   readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Supplemental Activity: AI Creativity — Generative Models, Authorship, and the Nature of Originality"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aicreativity.md"
 - week: "14"
@@ -902,3 +912,44 @@ schedule:
     points: "100"
     rubricpath: "_pages/Projects/proj-opensourceagent.md"
 ---
+
+This course is about building agents you understand and can run yourself. The sections below explain how the course gives you real choice over your path, how to read an assignment, how to prepare for each hands-on session, and how the day-to-day work of participating — including engaging with your classmates' work — is valued and evaluated. Read them now, and return to the participation and preparation guides throughout the term.
+
+## How This Course Works: Choice and Universal Design
+
+This course is designed as deliberate choice architecture, in the spirit of Universal Design for Learning: there are many routes through it, several ways to demonstrate what you have learned, and no path is the "remedial" one. You have real authorship over your semester.
+
+- **Choose your work.** You choose **5 labs from the 19 offered**, **3 written assignments from the 7 offered**, and **1 final-project track from 3** (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent). The hands-on and the analytical are equally valid ways to earn your grade; build the balance that fits how you learn.
+- **A shared spine.** The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone. It carries the team milestones — charter, stakeholder brief, literature review, proposal, and demo — and the peer review that ties the section together.
+- **Optional depth, everywhere.** The schedule is dense with optional labs, supplemental tutorials, and activities — local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, and more. These are invitations to go deeper where your interest pulls you, not obligations. Follow the ones that matter to you and tell me when one becomes the thing you want to build on.
+
+If a path you want is not on the menu, propose it. The point of the choices is to let you leave this course able to stand up, operate, and reason about an AI system of your own.
+
+## How Assignments Are Structured: Purpose, Task, and Criteria
+
+Every assignment is written to be transparent about three things, so you are never guessing about what is being asked or how it will be judged:
+
+- **Purpose** — *why* the assignment exists and what capability it builds toward.
+- **Task** — *what* you will actually do, in concrete steps.
+- **Criteria** — *how* your work will be evaluated. Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
+
+Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended — and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work.
+
+## Preparing for Each Class
+
+Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready, and "ready" is a routine you can run rather than a matter of luck. The **[Preparing for Each Class](Participation/PreparingForClass)** guide lays it out: how to work through a technical activity in passes, how to attempt the reading responses beforehand, and how to arrive with a question or a stuck point — often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
+
+## Class Activities and Participation (10%)
+
+This is a course you do, not one you watch. This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work. It is assessed against the rubric on the **[Preparing for Each Class](Participation/PreparingForClass)** guide, across four dimensions: **preparation, contribution, collaboration, and reflection.** It takes several forms, by design:
+
+- **In-class activities.** Your team rotates the POGIL roles — **Manager, Recorder, Presenter, and Reflector** — so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
+- **Reading responses and discussion.** From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand. These are marked on the schedule.
+- **The student-led Reading Group.** When a classmate leads a [Reading Group](Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it. (Leading a session remains separately available for extra credit.)
+- **Project-Thread peer review.** The structured **SQR** peer reviews — one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation — that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
+
+Participation takes more than one form on purpose. If the spoken room is hard for you, the written channels — the discussion board, reading responses, and SQR cards — are real ways to earn this component. Being confused is part of learning this material; talk with me early and we will find the path that fits.
+
+## Reflection Notebook (10%)
+
+This course asks not just *how* to build agents but *whether* and *when* we should, and your **[Reflection Notebook](Participation/ReflectionNotebook)** is where you think that through. Keyed to the four Ursinus Open Questions, it collects your responses to the reflection prompt that closes each activity, lab, and Project-Thread milestone. It is reviewed at midterm and at the end of the term; the guide explains what to keep and how it is evaluated.

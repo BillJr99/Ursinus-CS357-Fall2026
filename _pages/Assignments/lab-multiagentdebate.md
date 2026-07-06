@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab 4: Multi-Agent Debat
 
 info:
   coursenum: CS357
+  purpose: "To orchestrate multiple agents into debate and consensus and learn empirically when aggregation improves answers and when correlated errors defeat it."
+  tilt:
+    task: "Implement multi-agent debate and embedding-clustered consensus, then compare both against a single-shot baseline at matched call budgets."
+    criteria: "Assessed on the debate loop, the consensus pipeline, and a matched-budget comparison that surfaces a correlated failure; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement multi-agent debate with independent first rounds and peer-informed revision rounds using configurable agents, rounds, and temperature schedules

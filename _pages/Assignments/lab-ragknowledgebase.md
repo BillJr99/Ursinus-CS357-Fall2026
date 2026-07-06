@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab 2: A RAG Knowledge B
 
 info:
   coursenum: CS357
+  purpose: "To give an agent you run grounded, citable memory over a corpus you care about, including the honesty to abstain when the answer is not there."
+  tilt:
+    task: "Build a RAG pipeline over your own corpus with Chroma and a local model, compare chunking strategies by recall@k, and audit its citations and abstention."
+    criteria: "Assessed on the citing, abstaining pipeline, an empirical chunking comparison, and a hand-audited evaluation of retrieval and citations; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To construct a complete retrieval-augmented generation pipeline over a personal document corpus using Chroma and a local model

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - The Project Thread: A Se
 
 info:
   coursenum: CS357
+  purpose: "To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions."
+  tilt:
+    task: "Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day."
+    criteria: "Every milestone is evaluated on three dimensions — approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown."
   points: 0
   goals:
     - To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
@@ -56,18 +60,6 @@ tags:
 This page is the hub for the **Project Thread**: a semester-long, project-based learning arc that runs underneath everything else in CS357. The thread carries no points of its own — every milestone is graded on its own assignment page — but it is the map that shows how the pieces connect: how a survey in week 0 becomes a team, how a team becomes a charter, how a conversation with a real stakeholder becomes a literature review, and how all of it converges on your final project and Demo Day.
 
 **The project is the vehicle, not the destination.** What this course is actually teaching through the thread is a *process*: how to find a problem worth solving, how to understand it from more than one discipline's point of view, how to work on a team that stays healthy under pressure, and how to communicate what you built to people who do not share your training. Project-based learning of this kind is one of the most consistently effective educational experiences documented in the literature (Kuh, 2008, names it among the high-impact practices), precisely because it forces you to work on problems whose answers are not in the back of the book — what Shulman (2005) calls the *pedagogies of uncertainty*. Uncertainty is a feature here, not a bug: your stakeholder's problem will be messy, your team will disagree, and your first plan will be wrong. The thread exists so that none of those moments is a crisis. And you will not learn these practices by being told about them: a team becomes a working community by doing real work together, at the edge of its competence, alongside people who are learning the same craft — what Lave and Wenger (1991) call *situated learning* in a community of practice. The thread is that community's calendar.
-
----
-
-## Purpose, Task, and Criteria
-
-Following the TILT (Transparency in Learning and Teaching) framework ([tilthighered.com](https://tilthighered.com/)), here is this thread in one box:
-
-| | |
-|---|---|
-| **Purpose** | To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication (Goals 11-14), and to make your own learning visible along the way using the Ursinus Open Questions (Goal 15). |
-| **Task** | Complete the sequence of thread milestones below with your standing POGIL team: a formation survey, a signed charter, a stakeholder brief, a two-phase literature review, structured peer reviews, a final-project proposal on one of three tracks, sprints, a gallery walk, and a Demo Day presentation. |
-| **Criteria** | Every milestone is evaluated on three dimensions — **approach** (was the work deliberate and grounded?), **professionalism and process** (did the team follow its playbook?), and **product** (does the artifact serve its audience?). The rubric on this page defines those dimensions once; each milestone's own rubric applies them. |
 
 ---
 

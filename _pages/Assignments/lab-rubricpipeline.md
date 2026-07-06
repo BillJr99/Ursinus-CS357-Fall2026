@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab 5: An LLM Rubric-Gra
 
 info:
   coursenum: CS357
+  purpose: "To industrialize an LLM judge you run into a batch grading pipeline, and to prove with human-agreement and bias tests whether it can be trusted."
+  tilt:
+    task: "Build a batch pipeline that scores submissions against a JSON rubric into a CSV, then validate it against blind human scores and measure a judge bias."
+    criteria: "Assessed on the batch scoring pipeline, human-to-judge agreement on a blind calibration set, and an empirical bias measurement; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To build a batch pipeline that scores a folder of submissions against a JSON rubric using a local model and emits a CSV report with per-criterion evidence and a weighted total

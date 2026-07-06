@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Project: Build and Publi
 
 info:
   coursenum: CS357
+  purpose: "To ship a genuinely useful open-source agent tool into the world — practicing the full software lifecycle from a verified ecosystem gap through testing, documentation, publication, and real community engagement."
+  tilt:
+    task: "Identify and verify a real gap in the agent tooling ecosystem, then build, test, document, and publish an open-source agent to a public registry, engaging a real community with its governance and limitations disclosed."
+    criteria: "Assessed across design and usefulness, implementation and code quality, testing and CI, documentation and publication, governance and community engagement, and stakeholder grounding and process; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To identify a verifiable gap in the agent tooling ecosystem, define a minimum viable scope achievable in the semester, and build an artifact that is genuinely useful to real users

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Assignment: Writing Mode
 
 info:
   coursenum: CS357
+  purpose: "To treat documentation as the primary way future deployers, regulators, and users understand what an AI system is and is not for — by writing real datasheets and model cards for systems you have used in this course."
+  tilt:
+    task: "Write a datasheet for a real dataset and a model card for a course model, then document two fully specified bias risks and three realistic misuse scenarios with implementable controls."
+    criteria: "Assessed in four equal parts — datasheet completeness, model-card quality, the specificity of your bias analysis, and realistic misuse scenarios paired with implementable controls; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To apply the Datasheet for Datasets framework (Gebru et al.) to a real dataset with section-by-section specificity sufficient for an informed deployment decision
