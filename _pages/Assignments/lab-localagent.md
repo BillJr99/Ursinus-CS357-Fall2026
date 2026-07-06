@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab 1: Your First Local 
 
 info:
   coursenum: CS357
+  purpose: "To give you a working, private local agent you fully control as the foundation for everything that follows in the course."
+  tilt:
+    task: "Stand up a local model with Ollama and drive a perceive-plan-act loop with a persona, a tool, and structured action parsing from your own machine."
+    criteria: "Assessed on a correct, step-budgeted agent loop, a fully specified system prompt and persona, and an empirical failure analysis; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement the perceive, plan, act loop against a locally hosted language model

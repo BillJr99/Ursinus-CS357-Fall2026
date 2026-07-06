@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Gove
 
 info:
   coursenum: CS357
+  purpose: "To learn the difference between a value and a mechanism by writing an enforceable governance document for your own agent system — one that could be handed to an auditor rather than framed on a wall."
+  tilt:
+    task: "Author a complete eight-section governance document for your final project's agent team, map it onto the NIST AI RMF and EU AI Act risk tiers, and close a loophole surfaced by adversarial peer review."
+    criteria: "Assessed most heavily on enforceability and mechanism design, then framework integration, completeness and technical grounding, and your response to peer review; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To author a complete, enforceable governance document for an agentic system of your own design covering all eight required sections

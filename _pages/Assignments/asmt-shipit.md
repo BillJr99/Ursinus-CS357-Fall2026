@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - ShipIt Guide: Build, Tes
 
 info:
   coursenum: CS357
+  purpose: "To experience the maker's full arc on one small, real, public artifact — carrying it from a written specification through AI-assisted building, testing, and CI to responsible publication under your own name."
+  tilt:
+    task: "Take a single artifact in your chosen track from a written specification through agent-assisted building, automated CI, and a human-gated publish to a real registry or host, documented for strangers."
+    criteria: "Self-assessed on specification-and-verification discipline, continuous integration, publication quality, and your AI-disclosure evidence portfolio; the same checklist is scored within the Final Project rubric — see the self-check below for the full breakdown."
   points: 0
   goals:
     - To carry one artifact from specification through testing and continuous integration to public publication

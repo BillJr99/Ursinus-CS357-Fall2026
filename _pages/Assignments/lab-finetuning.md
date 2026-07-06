@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Hands-On Fine-Tunin
 
 info:
   coursenum: CS357
+  purpose: "To adapt a model you run to a specific domain with LoRA, and to decide from evidence whether fine-tuning was worth it against RAG and prompting."
+  tilt:
+    task: "Fine-tune a local model with LoRA or QLoRA on a domain dataset, instrument the loss curve, evaluate against the baseline, and write a model card."
+    criteria: "Assessed on the fine-tuning pipeline, the dataset preparation, and a systematic before-and-after evaluation; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To apply parameter-efficient fine-tuning (LoRA/QLoRA) to a local model using a real dataset

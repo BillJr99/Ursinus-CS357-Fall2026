@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Final Project: Custom Ag
 
 info:
   coursenum: CS357
+  purpose: "To synthesize the entire course into one running, published, evaluated multi-agent system you can defend — proving that each architectural choice was a decision, not a default."
+  tilt:
+    task: "Design, build, evaluate, and present a team of at least three specialized agents that accomplishes a real goal-oriented task end to end on your local stack, benchmarked against a monolithic baseline and governed by a document you can defend."
+    criteria: "Assessed most heavily on system design and rationale and on evaluation against a baseline, then explainability and governance, implementation quality, presentation, and stakeholder grounding and process; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To design and implement a team of at least three specialized agents that accomplishes a goal-oriented task end to end on local infrastructure

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Project: Responsible AI 
 
 info:
   coursenum: CS357
+  purpose: "To perform the kind of evidenced, structured responsible-AI audit that regulation increasingly requires — turning a real deployed system into findings and governance a real organization could act on."
+  tilt:
+    task: "Audit a specific deployed AI system with a structured framework, document at least three mechanistic failure modes, write an adoptable governance document, and present the findings to a non-technical board in fifteen minutes."
+    criteria: "Assessed most heavily on risk analysis and framework application and on governance recommendations, then system scoping, stakeholder communication, presentation artifacts, and stakeholder grounding and process; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To select a specific, named, deployed AI system with identifiable affected populations and apply a structured framework (NIST AI RMF, EU AI Act, or Montreal Declaration) to it completely and systematically

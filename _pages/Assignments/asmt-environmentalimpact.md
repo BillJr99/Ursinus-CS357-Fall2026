@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: The 
 
 info:
   coursenum: CS357
+  purpose: "To make the energy and carbon cost of AI concrete — measuring it in your own use and your project, then confronting whether efficiency gains actually reduce total consumption."
+  tilt:
+    task: "Keep a one-week personal AI carbon audit, estimate your final project's per-session and at-scale footprint, propose prioritized design changes, and argue a defended position on the Jevons paradox."
+    criteria: "Assessed in four equal parts — a grounded personal carbon audit, a traceable project footprint analysis, prioritized design recommendations with honest capability trade-offs, and a well-argued Jevons-paradox analysis; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To quantify the approximate energy and carbon cost of different AI operations

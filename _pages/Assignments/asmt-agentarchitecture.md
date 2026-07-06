@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Desi
 
 info:
   coursenum: CS357
+  purpose: "To learn to govern an AI agent system through written contracts, gates, and handoff state — the operating system that makes an agent trustworthy, interruptible, and independent of any single model or vendor."
+  tilt:
+    task: "Author and adapt a full agent operating system — charter, agent contract, standing prompt with confirmation gates, and handoff files — for a domain of your choice, then prove it works by interrupting an agent mid-task and having a second session resume from the written state alone."
+    criteria: "Assessed on the completeness and domain adaptation of the document set, gate design justified against concrete failure modes, a working handoff-traceability walkthrough, and honest reflection; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To author the governing document set for an AI agent system in a domain of the student's choosing - a charter, an agent contract, a standing prompt with confirmation gates, and handoff state files - adapted from production templates rather than copied verbatim

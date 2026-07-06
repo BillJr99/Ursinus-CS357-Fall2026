@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Assignment: Mapping a Re
 
 info:
   coursenum: CS357
+  purpose: "To practice the rigorous thinking a compliance officer or auditor performs, by mapping a real, deployed AI system onto the regulatory frameworks that increasingly govern it."
+  tilt:
+    task: "Select a real deployed AI system and classify it under the EU AI Act, map it onto the NIST AI RMF's four functions, identify the sector-specific rules it triggers, and build a structured risk register."
+    criteria: "Assessed in four equal parts — the accuracy of your EU AI Act classification, your NIST AI RMF mapping, the sector-specific rules you identify, and a complete risk register with implementable mitigations; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To classify a real AI system under the EU AI Act risk pyramid with justification

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Composing the Local
 
 info:
   coursenum: CS357
+  purpose: "To assemble and wire the full multi-tier stack your own AI system runs on, so its services coexist reliably rather than by luck."
+  tilt:
+    task: "Deploy a five-tier local AI stack with Docker Compose, wire the services to each other and the host, and verify it with a wiring matrix."
+    criteria: "Assessed on a fully running five-tier stack, correct host-and-container wiring, and systematic verification with honest postmortems; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To deploy a multi-container local AI stack with an inference backend, a unified gateway, a frontend, a tool service, and an agent

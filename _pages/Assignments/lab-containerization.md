@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Containerizing an A
 
 info:
   coursenum: CS357
+  purpose: "To put a real, least-privilege trust boundary around an AI system you run, and to understand what a container can and cannot protect you from."
+  tilt:
+    task: "Harden a deliberately insecure AI agent container step by step to least privilege, then document and red-team its threat model."
+    criteria: "Assessed on the applied hardening measures, a threat model mapped to those defenses, and verification that includes a red-team attempt; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To apply Docker security hardening principles to a multi-container AI system

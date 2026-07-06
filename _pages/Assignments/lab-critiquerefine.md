@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab 3: Critique and Refi
 
 info:
   coursenum: CS357
+  purpose: "To build the generator-critic-refine loop at the heart of self-improving agentic systems, and to learn when separated critique earns its cost."
+  tilt:
+    task: "Implement a generator-critic-refine loop against a JSON rubric, calibrate the critic on planted defects, and demonstrate then patch a reward hack."
+    criteria: "Assessed on a correct fail-closed loop, critic calibration against planted defects, and a demonstrated-then-patched reward hack; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement the generator, critic, refine loop with a structured JSON rubric and explicit stopping rules

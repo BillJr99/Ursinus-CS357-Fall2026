@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Does
 
 info:
   coursenum: CS357
+  purpose: "To decide, and defend, whether it matters if machines genuinely understand — and to see that the answer changes how you design and deploy real AI systems."
+  tilt:
+    task: "Write a 1000-1500 word argumentative essay that analyzes at least two named philosophical positions, defends your own against its strongest counterargument, and ties it to a concrete deployment implication and one guidance statement for CS357 students."
+    criteria: "Assessed in four equal parts — philosophical engagement, argument quality and evidence, practical implications, and writing quality and originality; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To engage with foundational philosophical arguments about machine understanding and intelligence by accurately characterizing and critically analyzing at least two named positions

@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Building an Agent E
 
 info:
   coursenum: CS357
+  purpose: "To give you the measurement discipline to know objectively when an agent you operate has improved, regressed, or broken."
+  tilt:
+    task: "Build an evaluation harness with a categorized dataset, automated metrics including an LLM judge, a regression runner, and a CI gate."
+    criteria: "Assessed in equal measure on the eval dataset, the metrics, the before-and-after regression suite, and the CI integration; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To design a structured evaluation dataset with golden, stylistic, and adversarial question categories that expose distinct failure modes in an agent

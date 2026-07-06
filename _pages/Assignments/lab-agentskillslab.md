@@ -2,46 +2,53 @@
 layout: assignment
 title: "Lab: Build and Test Your Own Agent Skills"
 type: lab
-points: 100
-description: "Design, implement, and test two agent skills: a safety guardrail skill that protects against destructive operations, and an Obsidian vault skill that gives an agent persistent read/write access to a personal knowledge base synced to GitHub."
-goals:
-  - "Write a valid OpenCode skill manifest (SKILL.md + opencode.json) that an agent loads and invokes by name"
-  - "Implement a safety guardrail skill that intercepts file deletion and branch-push operations and requires explicit confirmation before proceeding"
-  - "Implement an Obsidian vault memory skill that reads context from vault notes and appends dated session summaries to a memory log"
-  - "Write a test harness that exercises each skill with a scripted prompt sequence and verifies the agent's behavior matches the skill's intent"
-  - "Reflect on the limits of instruction-based skills versus code-based tool enforcement"
-rubric:
-  - criterion: "Safety Skill Implementation"
-    description: "Quality and correctness of the safety guardrail skill"
-    beginning: "Skill file exists but the instruction is vague or does not specify which operations are intercepted."
-    developing: "Skill specifies at least one guarded operation (e.g., file deletion) but does not specify the required confirmation format or logging behavior."
-    proficient: "Skill instructs the agent to: (1) list the affected files/branch before acting, (2) require explicit user confirmation, and (3) write the operation to `logs/agent-actions.md` with a timestamp. Loads correctly in OpenCode."
-    exemplary: "Skill is scoped precisely (lists specific guarded commands by name), includes an example confirmation dialogue in the instructions, handles the case where the user declines, and the test harness demonstrates all three behaviors."
-  - criterion: "Obsidian Vault Skill Implementation"
-    description: "Quality of the vault read/write skill"
-    beginning: "Skill exists but only reads from or writes to the vault, not both."
-    developing: "Skill reads from a vault directory and writes session summaries, but the write format is inconsistent (no frontmatter, no date, no project field)."
-    proficient: "Skill reads from `vault/context/*.md` at session start (injecting relevant notes into working context) and appends a YAML-frontmattered entry to `vault/memories/session-log.md` at session end with date, project, and key-decisions fields."
-    exemplary: "Skill additionally maintains a `vault/_index.md` that it updates when new notes are added, and the test harness verifies that the index entry appears after a simulated session."
-  - criterion: "Test Harness"
-    description: "Rigor and coverage of the skill test suite"
-    beginning: "Test is a single manual conversation with no verification of expected behavior."
-    developing: "Test harness runs a scripted prompt sequence but only checks whether the agent responded, not whether it followed the skill's specific instructions."
-    proficient: "Test harness runs at least three scenarios per skill (normal operation, guarded operation with confirmation, guarded operation with refusal) and asserts on specific outputs (file existence, log entry content, confirmation prompt wording)."
-    exemplary: "Test harness is automated (a Python or shell script), uses `ollama` or the REST API to send prompts programmatically, and produces a pass/fail report. At least one test checks that the agent does NOT act without confirmation."
-  - criterion: "GitHub Installation"
-    description: "Publishability of the skill as a GitHub-installable package"
-    beginning: "Skill files are only local; no GitHub repo or install instructions."
-    developing: "Skill is in a GitHub repo but cannot be installed via `git+https://...` (missing package.json, SKILL.md, or incorrect directory structure)."
-    proficient: "Skill can be installed from the GitHub repo URL, loads in OpenCode without error, and appears in the skill list. A partner has confirmed installation works on their machine."
-    exemplary: "Skill repo includes a `README.md` with installation instructions, example prompts for each skill, and a screenshot or log excerpt showing the skill in action."
-  - criterion: "Reflection"
-    description: "Depth of the written reflection"
-    beginning: "Reflection is a summary of what was built with no analysis."
-    developing: "Reflection identifies one limitation of the skill but does not connect it to the broader question of instruction-based vs. code-based enforcement."
-    proficient: "Reflection compares instruction-based skills (which rely on the model following the instruction) to code-based tools (which enforce behavior programmatically regardless of model compliance), gives a concrete example of when each is appropriate, and identifies one scenario where the safety skill could be bypassed."
-    exemplary: "Reflection proposes a hybrid design — where the skill provides instructions AND a companion tool enforces the logging requirement with actual code — and explains what that would look like in opencode.json."
 permalink: /Assignments/AgentSkillsLab
+description: "Design, implement, and test two agent skills: a safety guardrail skill that protects against destructive operations, and an Obsidian vault skill that gives an agent persistent read/write access to a personal knowledge base synced to GitHub."
+
+info:
+  coursenum: CS357
+  purpose: "To extend an agent you operate with your own skills, and to feel firsthand the difference between instructing a model and enforcing behavior in code."
+  tilt:
+    task: "Design, implement, and test two agent skills — a safety guardrail and an Obsidian vault memory skill — package them for GitHub installation, and reflect on instruction- versus code-based enforcement."
+    criteria: "Assessed on the correctness of both skills, the rigor of your test harness, GitHub installability, and the depth of your reflection; see the rubric below for the full breakdown."
+  points: 100
+  goals:
+    - "Write a valid OpenCode skill manifest (SKILL.md + opencode.json) that an agent loads and invokes by name"
+    - "Implement a safety guardrail skill that intercepts file deletion and branch-push operations and requires explicit confirmation before proceeding"
+    - "Implement an Obsidian vault memory skill that reads context from vault notes and appends dated session summaries to a memory log"
+    - "Write a test harness that exercises each skill with a scripted prompt sequence and verifies the agent's behavior matches the skill's intent"
+    - "Reflect on the limits of instruction-based skills versus code-based tool enforcement"
+  rubric:
+    - weight: 25
+      description: "Safety Skill Implementation — quality and correctness of the safety guardrail skill"
+      preemerging: "Skill file exists but the instruction is vague or does not specify which operations are intercepted."
+      beginning: "Skill specifies at least one guarded operation (e.g., file deletion) but does not specify the required confirmation format or logging behavior."
+      progressing: "Skill instructs the agent to: (1) list the affected files/branch before acting, (2) require explicit user confirmation, and (3) write the operation to `logs/agent-actions.md` with a timestamp. Loads correctly in OpenCode."
+      proficient: "Skill is scoped precisely (lists specific guarded commands by name), includes an example confirmation dialogue in the instructions, handles the case where the user declines, and the test harness demonstrates all three behaviors."
+    - weight: 25
+      description: "Obsidian Vault Skill Implementation — quality of the vault read/write skill"
+      preemerging: "Skill exists but only reads from or writes to the vault, not both."
+      beginning: "Skill reads from a vault directory and writes session summaries, but the write format is inconsistent (no frontmatter, no date, no project field)."
+      progressing: "Skill reads from `vault/context/*.md` at session start (injecting relevant notes into working context) and appends a YAML-frontmattered entry to `vault/memories/session-log.md` at session end with date, project, and key-decisions fields."
+      proficient: "Skill additionally maintains a `vault/_index.md` that it updates when new notes are added, and the test harness verifies that the index entry appears after a simulated session."
+    - weight: 20
+      description: "Test Harness — rigor and coverage of the skill test suite"
+      preemerging: "Test is a single manual conversation with no verification of expected behavior."
+      beginning: "Test harness runs a scripted prompt sequence but only checks whether the agent responded, not whether it followed the skill's specific instructions."
+      progressing: "Test harness runs at least three scenarios per skill (normal operation, guarded operation with confirmation, guarded operation with refusal) and asserts on specific outputs (file existence, log entry content, confirmation prompt wording)."
+      proficient: "Test harness is automated (a Python or shell script), uses `ollama` or the REST API to send prompts programmatically, and produces a pass/fail report. At least one test checks that the agent does NOT act without confirmation."
+    - weight: 15
+      description: "GitHub Installation — publishability of the skill as a GitHub-installable package"
+      preemerging: "Skill files are only local; no GitHub repo or install instructions."
+      beginning: "Skill is in a GitHub repo but cannot be installed via `git+https://...` (missing package.json, SKILL.md, or incorrect directory structure)."
+      progressing: "Skill can be installed from the GitHub repo URL, loads in OpenCode without error, and appears in the skill list. A partner has confirmed installation works on their machine."
+      proficient: "Skill repo includes a `README.md` with installation instructions, example prompts for each skill, and a screenshot or log excerpt showing the skill in action."
+    - weight: 15
+      description: "Reflection — depth of the written reflection"
+      preemerging: "Reflection is a summary of what was built with no analysis."
+      beginning: "Reflection identifies one limitation of the skill but does not connect it to the broader question of instruction-based vs. code-based enforcement."
+      progressing: "Reflection compares instruction-based skills (which rely on the model following the instruction) to code-based tools (which enforce behavior programmatically regardless of model compliance), gives a concrete example of when each is appropriate, and identifies one scenario where the safety skill could be bypassed."
+      proficient: "Reflection proposes a hybrid design — where the skill provides instructions AND a companion tool enforces the logging requirement with actual code — and explains what that would look like in opencode.json."
 ---
 
 ## Overview
