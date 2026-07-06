@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: AI Explainability w
 
 info:
   coursenum: CS357
+  purpose: "To open the black box of a model's decisions with SHAP and LIME and judge honestly whether post-hoc explanations can justify a high-stakes outcome."
+  tilt:
+    task: "Generate SHAP and LIME explanations for a credit-scoring model, compare where they disagree, and write a jargon-free, regulation-grade denial statement."
+    criteria: "Assessed on the SHAP visualizations, the LIME comparison, and the ethical and regulatory analysis of feature proxies; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To generate SHAP global explanations (beeswarm and bar plots) that rank feature importance across the full test set and identify counterintuitive directions of influence

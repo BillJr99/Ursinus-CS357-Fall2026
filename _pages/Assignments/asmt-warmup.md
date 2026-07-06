@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Warmup"
 
 info:
   coursenum: CS357
+  purpose: "To get your local AI stack working before the labs depend on it, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
+  tilt:
+    task: "Install and verify a working local AI environment, write a short baseline reflection on AI agency and trust, and co-author a team charter with your semester group."
+    criteria: "Assessed on a complete and honest setup-verification transcript and a specific, personal reflection in equal measure, plus an actionable team charter; see the rubric below for the full breakdown."
   points: 25
   goals:
     - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call

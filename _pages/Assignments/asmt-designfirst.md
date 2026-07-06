@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Desi
 
 info:
   coursenum: CS357
+  purpose: "To build the discipline of specifying an agentic system — its goals, agents, data flow, failure modes, and success criteria — before writing a line of code, so ambiguity and risk surface while they are still cheap to fix."
+  tilt:
+    task: "Produce a complete design document for an agentic system: a constrained problem statement, an agent design table, a data-flow diagram, a six-item pre-mortem, and measurable success criteria."
+    criteria: "Assessed on the specificity of your problem statement and constraints, the agent design table, the data-flow diagram, a concrete pre-mortem, and third-party-measurable evaluation criteria; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To articulate the goals, constraints, and evaluation criteria for an agentic system before implementation, with every constraint specific enough that a third party could determine whether it was satisfied

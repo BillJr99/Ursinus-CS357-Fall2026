@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Debugging a Broken 
 
 info:
   coursenum: CS357
+  purpose: "To build the diagnostic and instrumentation skills you need to trust an agent you operate, since agent failures often surface far from their root cause."
+  tilt:
+    task: "Diagnose and repair five planted failure modes in a research agent, then instrument it with structured logging and a regression test suite."
+    criteria: "Assessed on correctly diagnosed and repaired bugs, structured per-step logging, and a regression suite that covers the failure paths; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To diagnose each of five specific failure modes in a pre-written research agent by observing its symptom, locating the root cause in the source, and classifying it as a crash or a silent failure

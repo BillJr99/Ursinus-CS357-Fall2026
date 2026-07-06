@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Multimodal AI and M
 
 info:
   coursenum: CS357
+  purpose: "To probe where a multimodal model you operate reads a chart confidently but wrongly, using a Monte Carlo simulation you build as ground truth."
+  tilt:
+    task: "Build a Monte Carlo retirement simulation and chart, send it to a multimodal model, and check its numerical claims against your ground-truth statistics."
+    criteria: "Assessed on the configurable simulation and visualization, the multimodal API integration, and a grounded comparison of AI claims against the true numbers; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To implement a Monte Carlo retirement simulation that draws annual returns from a configurable normal distribution and records portfolio paths across 1,000 simulations

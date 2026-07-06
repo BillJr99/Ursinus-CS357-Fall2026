@@ -4,6 +4,10 @@ permalink: /Assignments/PromptInjection
 title: "CS357: Foundations of Artificial Intelligence - Lab: Finding and Defending Against Prompt Injection"
 info:
   coursenum: CS357
+  purpose: "To red-team and then defend an agent you run against prompt injection, and to reckon honestly with the risk that no defense fully removes."
+  tilt:
+    task: "Red-team an agent with five prompt-injection attack categories, layer in defenses, re-test after each, and quantify the residual risk."
+    criteria: "Assessed on the red-team execution, the layered defenses and their attack matrix, and an honest residual-risk analysis; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To understand direct and indirect prompt injection through controlled red-team exercises

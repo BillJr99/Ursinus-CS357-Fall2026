@@ -5,6 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Team Formation Survey"
 
 info:
   coursenum: CS357
+  purpose: "To form semester-long teams around compatibility of schedules and working styles — the strongest predictors of team friction — so your team's energy goes into the project instead of into calendar archaeology."
+  tilt:
+    task: "Answer a short structured questionnaire about your availability, working style, and project interests, individually, in the LMS survey."
+    criteria: "Graded on completeness and thoughtfulness only, never on the content of your answers, with specific and self-aware responses scoring highest; see the rubric below for the full breakdown."
   points: 10
   goals:
     - To provide the structured information about availability, working style, and interests that the instructor uses to form compatible semester-long project teams, as the first step in collaborating to develop a strategic intervention (Goal 13)
@@ -38,16 +42,6 @@ tags:
 This short, individually submitted survey is the first milestone of the [Project Thread](/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the first class meeting (wk0.0) and due before the second week begins (wk1.0); teams are announced at wk1.1.
 
 **How teams are formed — full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics — members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict — while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Honest answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
-
----
-
-## Purpose, Task, and Criteria
-
-| | |
-|---|---|
-| **Purpose** | To form semester-long teams around compatibility of schedules and working styles — the strongest predictors of team friction — so that your team's energy goes into the project instead of into calendar archaeology (Goal 13). |
-| **Task** | Answer the structured questionnaire below, individually, in the LMS survey. There are no wrong answers; there are only answers specific enough to match on and answers too vague to use. |
-| **Criteria** | Graded on completeness and thoughtfulness only (see rubric). Your answers are never graded for *content* — preferring to work at the deadline is exactly as acceptable as finishing early. |
 
 ---
 
