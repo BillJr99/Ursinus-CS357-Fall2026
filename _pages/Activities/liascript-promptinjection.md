@@ -282,3 +282,12 @@ A user asks an agent to browse a consumer review website and summarize the top-r
 - Greshake et al. "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection." *arXiv* 2302.12173 (2023).
 - Perez and Ribeiro. "Ignore Previous Prompt: Attack Techniques For Language Models." *arXiv* 2211.09527 (2022).
 - Anthropic. "Core Views on AI Safety." https://www.anthropic.com/safety
+
+**State-of-the-art defenses (named mitigations):**
+
+- Hines et al. (Microsoft). "Defending Against Indirect Prompt Injection Attacks With Spotlighting." *arXiv* 2403.14720 (2024). Delimiting, datamarking, and encoding of untrusted input.
+- Wallace et al. (OpenAI). "The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions." *arXiv* 2404.13208 (2024).
+- Chen et al. "StruQ: Defending Against Prompt Injection with Structured Queries." *arXiv* 2402.06363 (USENIX Security 2025); and "SecAlign: Defending Against Prompt Injection with Preference Optimization." *arXiv* 2410.05451 (ACM CCS 2025).
+- Debenedetti et al. (Google DeepMind). "Defeating Prompt Injections by Design" (CaMeL). *arXiv* 2503.18813 (2025); and Willison, "The Dual LLM pattern." https://simonwillison.net/2023/Apr/25/dual-llm-pattern/
+- Willison. "The lethal trifecta for AI agents: private data, untrusted content, and external communication." (2025) https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+- For these defenses applied to AI *coding* agents, plus the AI software-supply-chain (slopsquatting, dependency confusion) and real 2025 incidents (EchoLeak CVE-2025-32711, the Rules File Backdoor), see the companion activity `liascript-codingagentsecurity.md`.

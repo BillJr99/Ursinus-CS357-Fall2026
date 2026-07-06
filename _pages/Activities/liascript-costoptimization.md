@@ -99,6 +99,8 @@ The tradeoff is engineering cost and precision risk: a semantic cache may surfac
 
 **Caching ROI Example.** A system receives 10,000 queries per day. The system prompt is 500 tokens and is identical for all users. Without caching: $10{,}000 \times 500 \times \$0.000015 = \$75$/day just for the system prompt prefix. With prompt caching (cache-read at $0.0000015$): $\$7.50$/day — a 90% reduction on that portion alone. If semantic caching additionally catches 20% of queries as duplicates, those 2,000 queries cost $0, saving the full output token cost for 2,000 responses.
 
+> **Two layers, same idea.** The **prompt caching** here is a *billing* feature of a hosted API — you are charged less for a shared prefix. There is a distinct but related optimization one layer down, inside the inference engine itself: **prefix caching** in a serving stack like vLLM reuses the shared prefix's *KV cache* in GPU memory so its prefill is never recomputed, cutting time-to-first-token rather than your bill. If you self-host, you get the serving-layer version; if you call a hosted API, you get the billing-layer version. See Part IV of *Serving LLMs in Production* (`liascript-llmserving.md`) for how serving-layer prefix caching works and why PagedAttention makes it possible.
+
 [[MC]]
 A production agent has a 2,000-token system prompt that is identical for all users. To minimize cost, you should:
 - (x) Use a provider that supports prompt caching, structure the system prompt as a static prefix, and ensure it appears at the start of every request so it maximizes cache hit rate

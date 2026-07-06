@@ -70,7 +70,7 @@ However, **raw FLOPS (floating-point operations per second) is often not the bot
 - 13B parameters × 2 bytes = **26 GB VRAM** (exceeds a single RTX 4090; requires an A100 or Apple Silicon with enough unified memory)
 - 70B parameters × 2 bytes = **140 GB VRAM** (requires multiple A100s, an H100 with NVLink, or quantization to fit on consumer hardware)
 
-Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10–20% higher than the weight-only calculation.
+Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10–20% higher than the weight-only calculation. That KV-cache overhead is not a fixed 10–20% — it grows with every concurrent request and every token of context, and it is where most serving inefficiency hides. For *how* the non-weight VRAM is actually managed (fragmentation, PagedAttention, and the tuning knobs that decide how many users a card can serve), see Part IV of the companion activity *Serving LLMs in Production* (`liascript-llmserving.md`).
 
 ### Hardware Landscape
 
