@@ -2,45 +2,52 @@
 layout: assignment
 title: Reading Group Discussion Leader
 type: written
-points: 0
-description: "Lead a short class discussion on a current event or assigned reading in AI. This assignment is entirely extra credit — the earlier in the term you present, the more extra credit you earn."
-goals:
-  - "Select and summarize a current event or reading relevant to course themes (AI systems, responsible AI, societal impact, technical foundations)"
-  - "Craft three to five focused discussion questions that move from comprehension to analysis to personal judgment"
-  - "Facilitate a class discussion that draws out multiple perspectives and reaches a synthesis conclusion"
-  - "Reflect in writing on what you learned from leading the discussion and how it connects to course material"
-rubric:
-  - criterion: "Reading or Event Selection"
-    description: "Relevance and quality of the chosen source"
-    beginning: "The source is tangentially related to AI or so recent it has not been analyzed in credible outlets."
-    developing: "The source is relevant to AI but does not connect clearly to course themes or is a general news summary without depth."
-    proficient: "The source is directly relevant to a course theme (probabilistic computing, responsible AI, agent design, societal impact, etc.), comes from a credible outlet, and has enough substance to support 15 minutes of discussion."
-    exemplary: "The source is timely, substantive, credibly sourced, and connects to at least two course themes. The student contextualizes it within something the class has studied."
-  - criterion: "Summary and Framing (5-minute presentation)"
-    description: "Quality of the student-led introduction to the discussion"
-    beginning: "The summary reads the source aloud or is missing key context; the class does not know why the topic matters."
-    developing: "The summary conveys the main point but does not frame a tension or open question for discussion."
-    proficient: "The 5-minute summary accurately conveys the source's main argument, identifies the relevant tension or question, and closes with a clear framing that sets up the discussion questions."
-    exemplary: "The summary is concise and engaging, draws on at least one concrete example or data point from the source, and situates the topic within the course arc in a way that makes students want to engage."
-  - criterion: "Discussion Questions"
-    description: "Quality and depth of the three to five questions"
-    beginning: "Questions are yes/no, recall-only, or so broad ('Is AI good or bad?') that they cannot generate structured discussion."
-    developing: "Questions are open-ended but do not scaffold from comprehension to analysis; most require no course knowledge to answer."
-    proficient: "Three to five questions progress from 'What did the source say?' through 'What does this imply?' to 'What should we do or think about it?', and at least one question requires course-specific knowledge to answer well."
-    exemplary: "Questions are well-sequenced, one explicitly connects to a concept from course readings or labs, and the final question invites students to take and defend a position."
-  - criterion: "Discussion Facilitation"
-    description: "Effectiveness of leading the class discussion"
-    beginning: "The student reads questions aloud and waits; the discussion stalls or is dominated by one or two voices."
-    developing: "The student follows up on some responses but does not redirect tangents or synthesize across contributions."
-    proficient: "The student draws out quieter participants, redirects off-topic contributions, connects two or more student responses to each other, and closes the discussion with a one-sentence synthesis."
-    exemplary: "The student demonstrates active listening throughout, explicitly builds on prior student contributions ('Building on what X said...'), and the closing synthesis captures genuine tension or insight from the discussion, not just a restatement of the source."
-  - criterion: "Reflection Write-Up"
-    description: "Quality of the 300–500 word post-discussion reflection"
-    beginning: "The reflection is a plot summary of the source or missing."
-    developing: "The reflection describes what happened but does not analyze why the discussion went the way it did."
-    proficient: "The reflection identifies one thing that went well, one thing to do differently, and connects the discussion's main insight to a specific concept from the course (naming the lecture, activity, or reading it connects to)."
-    exemplary: "The reflection is analytically sharp: it identifies a moment where the discussion revealed a genuine disagreement, explains what underlying assumption drove the disagreement, and states what the student now thinks about that assumption."
 permalink: /Assignments/ReadingGroup
+description: "Lead a short class discussion on a current event or assigned reading in AI. This assignment is entirely extra credit — the earlier in the term you present, the more extra credit you earn."
+
+info:
+  coursenum: CS357
+  purpose: "To make you a leader and a critical consumer of the AI conversation by preparing, framing, and facilitating a real discussion for your peers."
+  tilt:
+    task: "Select a timely, course-relevant source, frame it in a five-minute summary, facilitate a class discussion with three to five scaffolded questions, and submit a short reflection."
+    criteria: "Assessed on the relevance of your source, your framing, the depth and sequencing of your questions, your facilitation, and your reflection; see the rubric below. This assignment is extra credit, and the rubric scales the credit earned for your slot."
+  points: 0
+  goals:
+    - "Select and summarize a current event or reading relevant to course themes (AI systems, responsible AI, societal impact, technical foundations)"
+    - "Craft three to five focused discussion questions that move from comprehension to analysis to personal judgment"
+    - "Facilitate a class discussion that draws out multiple perspectives and reaches a synthesis conclusion"
+    - "Reflect in writing on what you learned from leading the discussion and how it connects to course material"
+  rubric:
+    - weight: 20
+      description: "Reading or Event Selection — relevance and quality of the chosen source"
+      preemerging: "The source is tangentially related to AI or so recent it has not been analyzed in credible outlets."
+      beginning: "The source is relevant to AI but does not connect clearly to course themes or is a general news summary without depth."
+      progressing: "The source is directly relevant to a course theme (probabilistic computing, responsible AI, agent design, societal impact, etc.), comes from a credible outlet, and has enough substance to support 15 minutes of discussion."
+      proficient: "The source is timely, substantive, credibly sourced, and connects to at least two course themes. The student contextualizes it within something the class has studied."
+    - weight: 20
+      description: "Summary and Framing (5-minute presentation) — quality of the student-led introduction"
+      preemerging: "The summary reads the source aloud or is missing key context; the class does not know why the topic matters."
+      beginning: "The summary conveys the main point but does not frame a tension or open question for discussion."
+      progressing: "The 5-minute summary accurately conveys the source's main argument, identifies the relevant tension or question, and closes with a clear framing that sets up the discussion questions."
+      proficient: "The summary is concise and engaging, draws on at least one concrete example or data point from the source, and situates the topic within the course arc in a way that makes students want to engage."
+    - weight: 20
+      description: "Discussion Questions — quality and depth of the three to five questions"
+      preemerging: "Questions are yes/no, recall-only, or so broad ('Is AI good or bad?') that they cannot generate structured discussion."
+      beginning: "Questions are open-ended but do not scaffold from comprehension to analysis; most require no course knowledge to answer."
+      progressing: "Three to five questions progress from 'What did the source say?' through 'What does this imply?' to 'What should we do or think about it?', and at least one question requires course-specific knowledge to answer well."
+      proficient: "Questions are well-sequenced, one explicitly connects to a concept from course readings or labs, and the final question invites students to take and defend a position."
+    - weight: 20
+      description: "Discussion Facilitation — effectiveness of leading the class discussion"
+      preemerging: "The student reads questions aloud and waits; the discussion stalls or is dominated by one or two voices."
+      beginning: "The student follows up on some responses but does not redirect tangents or synthesize across contributions."
+      progressing: "The student draws out quieter participants, redirects off-topic contributions, connects two or more student responses to each other, and closes the discussion with a one-sentence synthesis."
+      proficient: "The student demonstrates active listening throughout, explicitly builds on prior student contributions ('Building on what X said...'), and the closing synthesis captures genuine tension or insight from the discussion, not just a restatement of the source."
+    - weight: 20
+      description: "Reflection Write-Up — quality of the 300–500 word post-discussion reflection"
+      preemerging: "The reflection is a plot summary of the source or missing."
+      beginning: "The reflection describes what happened but does not analyze why the discussion went the way it did."
+      progressing: "The reflection identifies one thing that went well, one thing to do differently, and connects the discussion's main insight to a specific concept from the course (naming the lecture, activity, or reading it connects to)."
+      proficient: "The reflection is analytically sharp: it identifies a moment where the discussion revealed a genuine disagreement, explains what underlying assumption drove the disagreement, and states what the student now thinks about that assumption."
 ---
 
 ## Overview
