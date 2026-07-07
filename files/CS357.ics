@@ -220,15 +220,6 @@ PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f414
-DTSTAMP:20261013T000000Z
-DTSTART;VALUE=DATE:20261013
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Design Before You Build Due (optional assignment)
-LOCATION:
-DESCRIPTION:
-PRIORITY:3
-END:VEVENT
-BEGIN:VEVENT
-UID:00000000-0000-0000-0000-033f3494f415
 DTSTAMP:20261015T000000Z
 DTSTART;VALUE=DATE:20261015
 SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 3: Critique and Refine Handed Out
@@ -237,10 +228,19 @@ DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
-UID:00000000-0000-0000-0000-033f3494f416
+UID:00000000-0000-0000-0000-033f3494f415
 DTSTAMP:20261015T000000Z
 DTSTART;VALUE=DATE:20261015
 SUMMARY:CS357 Foundations of Artificial Intelligence: Literature Review: Team Synthesis Due (Project Thread)
+LOCATION:
+DESCRIPTION:
+PRIORITY:3
+END:VEVENT
+BEGIN:VEVENT
+UID:00000000-0000-0000-0000-033f3494f416
+DTSTAMP:20261020T000000Z
+DTSTART;VALUE=DATE:20261020
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Design Before You Build Due (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -339,25 +339,25 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f421
 DTSTAMP:20261110T000000Z
 DTSTART;VALUE=DATE:20261110
-SUMMARY:CS357 Foundations of Artificial Intelligence: Final Project Proposal Due
-LOCATION:
-DESCRIPTION:
-PRIORITY:3
-END:VEVENT
-BEGIN:VEVENT
-UID:00000000-0000-0000-0000-033f3494f422
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20261112
 SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Does It Matter If Machines Understand? Handed Out (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
-UID:00000000-0000-0000-0000-033f3494f423
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20261112
+UID:00000000-0000-0000-0000-033f3494f422
+DTSTAMP:20261110T000000Z
+DTSTART;VALUE=DATE:20261110
 SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Model Cards and Datasheets Handed Out (optional assignment)
+LOCATION:
+DESCRIPTION:
+PRIORITY:3
+END:VEVENT
+BEGIN:VEVENT
+UID:00000000-0000-0000-0000-033f3494f423
+DTSTAMP:20261110T000000Z
+DTSTART;VALUE=DATE:20261110
+SUMMARY:CS357 Foundations of Artificial Intelligence: Final Project Proposal Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -366,7 +366,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f424
 DTSTAMP:20261117T000000Z
 DTSTART;VALUE=DATE:20261117
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 5: An LLM Rubric-Grading Pipeline Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Governance and Policy Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -375,34 +375,34 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f425
 DTSTAMP:20261117T000000Z
 DTSTART;VALUE=DATE:20261117
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 6: Responsible AI Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 5: An LLM Rubric-Grading Pipeline Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f426
-DTSTAMP:20261119T000000Z
-DTSTART;VALUE=DATE:20261119
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Governance and Policy Handed Out
+DTSTAMP:20261117T000000Z
+DTSTART;VALUE=DATE:20261117
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 6: Responsible AI Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f427
-DTSTAMP:20261124T000000Z
-DTSTART;VALUE=DATE:20261124
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Does It Matter If Machines Understand? Due (optional assignment)
+DTSTAMP:20261119T000000Z
+DTSTART;VALUE=DATE:20261119
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Mapping a Real AI System to the Regulatory Landscape Handed Out (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f428
-DTSTAMP:20261124T000000Z
-DTSTART;VALUE=DATE:20261124
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Mapping a Real AI System to the Regulatory Landscape Handed Out (optional assignment)
+DTSTAMP:20261119T000000Z
+DTSTART;VALUE=DATE:20261119
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Model Cards and Datasheets Due (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -411,25 +411,25 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f429
 DTSTAMP:20261124T000000Z
 DTSTART;VALUE=DATE:20261124
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Model Cards and Datasheets Due (optional assignment)
-LOCATION:
-DESCRIPTION:
-PRIORITY:3
-END:VEVENT
-BEGIN:VEVENT
-UID:00000000-0000-0000-0000-033f3494f42a
-DTSTAMP:20261126T000000Z
-DTSTART;VALUE=DATE:20261126
 SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: The Carbon Cost of Intelligence Handed Out (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
+UID:00000000-0000-0000-0000-033f3494f42a
+DTSTAMP:20261124T000000Z
+DTSTART;VALUE=DATE:20261124
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Does It Matter If Machines Understand? Due (optional assignment)
+LOCATION:
+DESCRIPTION:
+PRIORITY:3
+END:VEVENT
+BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42b
-DTSTAMP:20261201T000000Z
-DTSTART;VALUE=DATE:20261201
-SUMMARY:CS357 Foundations of Artificial Intelligence: Intra-Team Check-In 3 Due (structured form, private to instructor)
+DTSTAMP:20261126T000000Z
+DTSTART;VALUE=DATE:20261126
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Governance and Policy Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -438,16 +438,16 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42c
 DTSTAMP:20261201T000000Z
 DTSTART;VALUE=DATE:20261201
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Governance and Policy Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Mapping a Real AI System to the Regulatory Landscape Due (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42d
-DTSTAMP:20261203T000000Z
-DTSTART;VALUE=DATE:20261203
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: The Carbon Cost of Intelligence Due (optional assignment)
+DTSTAMP:20261201T000000Z
+DTSTART;VALUE=DATE:20261201
+SUMMARY:CS357 Foundations of Artificial Intelligence: Intra-Team Check-In 3 Due (structured form, private to instructor)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -456,7 +456,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42e
 DTSTAMP:20261203T000000Z
 DTSTART;VALUE=DATE:20261203
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Mapping a Real AI System to the Regulatory Landscape Due (optional assignment)
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: The Carbon Cost of Intelligence Due (optional assignment)
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
