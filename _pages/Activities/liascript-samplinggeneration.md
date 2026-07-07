@@ -98,11 +98,62 @@ A distribution assigns probabilities: Paris 0.90, Lyon 0.06, Marseille 0.03, ban
 
 ---
 
+## 3. Other Common Generation Parameters
+
+Temperature, top-k, and top-p decide *which* token to pick. A few other parameters shape *how much* the model generates and *what it avoids*. You pass all of them the same way — inside the Ollama `options` dictionary — and they map to top-level fields on OpenAI-compatible endpoints.
+
+| Parameter (Ollama) | OpenAI-API name | What it does | Reach for it when |
+|--------------------|-----------------|--------------|-------------------|
+| `num_predict` | `max_tokens` | Caps how many tokens the model may generate before it must stop. | You want to bound length, latency, or cost — or cut off a run-on answer. |
+| `repeat_penalty` | `frequency_penalty` / `presence_penalty` | Down-weights tokens the model has already produced, discouraging loops and repetition. | The model gets stuck repeating a word or phrase, especially at low temperature. |
+| `stop` | `stop` | A list of strings that, when generated, immediately end the response. | You want the model to halt at a delimiter — e.g. `"\n\n"`, `"</answer>"`, or a role tag. |
+| `seed` | `seed` | Fixes the random draw so a given prompt + settings reproduces the same output (see Exercise 1). | You need reproducible experiments or tests. |
+
+Two notes on the penalties: Ollama exposes a single `repeat_penalty` (a multiplier, typically 1.0–1.3), while the OpenAI API splits the idea into `frequency_penalty` (scales with how *often* a token has appeared) and `presence_penalty` (a flat penalty once a token appears *at all*). Both attack the same failure — degenerate repetition — from slightly different angles.
+
+The cell below exercises three of these knobs: a short `num_predict` cap, a `repeat_penalty` to break loops, and a `stop` sequence.
+
+## Code Cell
+
+```python
+import requests
+
+def generate(prompt, **options):
+    try:
+        r = requests.post("http://localhost:11434/api/chat", json={
+            "model": "llama3.2", "stream": False,
+            "options": options,
+            "messages": [{"role": "user", "content": prompt}]}, timeout=120)
+        return r.json()["message"]["content"]
+    except Exception as e:
+        print(f"[sampling:generate] {e}")
+        import traceback; traceback.print_exc()
+        return ""
+
+# 1. num_predict caps the length (here, a deliberately short answer).
+print("--- num_predict=12 ---")
+print(generate("List the planets of the solar system.", temperature=0.0, num_predict=12))
+
+# 2. repeat_penalty discourages the model from looping on the same token.
+print("\n--- repeat_penalty=1.3 ---")
+print(generate("Say the word 'buffalo' and then keep going.", temperature=0.8, repeat_penalty=1.3))
+
+# 3. stop ends generation as soon as the string appears.
+print("\n--- stop at first newline ---")
+print(generate("Write a numbered list of three fruits.", temperature=0.0, stop=["\n"]))
+```
+
+> **Note:** On an OpenAI-compatible endpoint (including OpenWebUI's `/api/chat/completions`), these move out of the `options` dict to the top level of the request body, and `num_predict` becomes `max_tokens`.
+
+> **⚠️ Common Misconception:** The `top_k` in this activity is a **sampling** parameter — it limits which *next tokens* the model may choose from. It is a completely different knob from the `top_k` (often written `k` or `n_results`) you will meet in **Retrieval-Augmented Generation**, where it means "how many *document chunks* to retrieve." Same name, different layer of the system: one truncates a probability distribution over the vocabulary; the other sets the size of a search result set. See the *Retrieval-Augmented Generation with Chroma* activity, where retrieval `k` is tuned.
+
+---
+
 # Part II: Experiments on Your Stack
 
 In this part, you will run a controlled experiment that makes the theory from Part I visible: you will sample the same prompt eight times at three different temperatures and count how often the answers diverge. This turns an intuitive observation into a measurable, reproducible result.
 
-## 3. Measuring Variability
+## 4. Measuring Variability
 
 We quantify "how different are the answers" by sampling the same prompt multiple times and counting how many distinct outputs appear. This turns an intuitive observation ("it seems to vary a lot at high temperature") into a measurable result.
 
@@ -160,7 +211,7 @@ Examine the counter output for each temperature. Notice which temperatures produ
 
 In this part, you will apply the sampling vocabulary to real design decisions — choosing temperature and top-p settings for different agent roles — and close the loop on the hypotheses your team formed in week 1.
 
-## 4. Exercises
+## 5. Exercises
 
 1. *Seeded reproducibility.*
 
@@ -194,8 +245,9 @@ In this part, you will apply the sampling vocabulary to real design decisions �
 
 → Coming Up Next: We know how models generate text — but how do we know whether what they generate is *correct*? In the next activity we build our first evaluation harness, measure hallucination rates, and learn why "it seems pretty good" is not good enough.
 
-## 5. Further Reading
+## 6. Further Reading
 
 - Ari Holtzman et al. "The Curious Case of Neural Text Degeneration." *ICLR* (2020). The paper that introduced nucleus sampling.
 - Tom Yeh. *AI by Hand*, softmax worksheets.
 - Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 3.
+- Ollama parameter reference (the `options` block: `temperature`, `top_k`, `top_p`, `repeat_penalty`, `num_predict`, `seed`, `stop`): https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values and the API docs at https://github.com/ollama/ollama/blob/main/docs/api.md

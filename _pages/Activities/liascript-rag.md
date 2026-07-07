@@ -53,6 +53,8 @@ $$
 
 where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity — exactly the cosine machinery from the tokens and embeddings module.
 
+> **⚠️ Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity. Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt. Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
+
 **The pipeline has two phases.** *Indexing* (once): split documents into chunks, embed each chunk, store vectors in a vector database. *Query* (every question): embed the question, find nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
 
 ---
