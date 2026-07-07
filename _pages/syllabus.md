@@ -245,6 +245,10 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
+  - rtitle: "Interactive (optional): The Token Prediction Playground — an unplugged, in-browser simulator showing what next-token prediction can and cannot do"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/simulators/token-predictor.html"
+  - rtitle: "Optional: AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
+    rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
   - rtitle: "The Project Thread: how the semester-long team project unfolds (read by the end of week 1)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
   - rtitle: "Optional: AI for All — tools overview slide deck"
@@ -255,6 +259,8 @@ schedule:
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md"
   readings:
   - rtitle: "Mitchell, Chapter 2"
+  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2 — Intelligent Agents"
+    rlink: "https://aima.cs.berkeley.edu/"
   - rtitle: "Supplemental Tutorial: Shell Fundamentals for Agent Supervision"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
 - week: "1"
@@ -267,6 +273,9 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
+  - rtitle: "Mitchell, Chapter 3 (on what models do and do not understand)"
+  - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
+    rlink: "https://philarchive.org/rec/CHAWWT-8"
   - rtitle: "Activity: System Prompt Design Workshop (see Part 3 of Prompt Patterns Assignment)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/PromptPatterns"
   - rtitle: "Supplemental Tutorial: Agentic CLI Tools (Claude Code, Codex, Gemini CLI, and Friends)"
@@ -289,6 +298,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
   readings:
+  - rtitle: "Mitchell, Chapter 3"
   - rtitle: "Reading Response / Discussion: post a short response before class — what changed once the model ran on your own machine?"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Project Thread: teams announced today; before next class, read the Team Charter and Norms activity"
@@ -313,6 +323,9 @@ schedule:
     points: "0"
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
+  - rtitle: "Mitchell, Chapter 3"
+  - rtitle: "Jurafsky and Martin, Speech and Language Processing (3rd ed. draft), Chapter 3 — N-gram Language Models"
+    rlink: "https://web.stanford.edu/~jurafsky/slp3/"
   - rtitle: "Activity: Temperature and Sampling Explorer"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-temperatureexplorer.md"
   - rtitle: "Supplemental Activity: Shakespeare GPT — Character-Level Language Models from Scratch"
@@ -346,6 +359,9 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
   readings:
+  - rtitle: "Mitchell, Chapter 2"
+  - rtitle: "Nielsen, Neural Networks and Deep Learning, Chapter 1"
+    rlink: "http://neuralnetworksanddeeplearning.com/"
   - rtitle: "Supplemental Activity: LLM Pre-Training Internals — BPE Tokenization, Training Objectives, and Scaling Laws"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmpretraining.md"
   - rtitle: "Supplemental Activity: From Text Generation to a Neural Network — Workflow, Forward Pass by Numbers, and Visualization"
@@ -374,6 +390,7 @@ schedule:
   title: "Retrieval-Augmented Generation with Chroma"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md"
   readings:
+  - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Supplemental Tutorial: Vector Databases — How Agents Search for Meaning"
@@ -404,6 +421,7 @@ schedule:
     points: "50"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
+  - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Supplemental Tutorial: Fine-Tuning, RAG, and Prompting — Choosing the Right Approach"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
   - rtitle: "Supplemental Activity: Synthetic Data — Using AI to Train AI"
@@ -483,6 +501,9 @@ schedule:
   date: "0"
   title: "Advanced Agent Loops: Reflection, Recovery, and Control Flow"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md"
+  readings:
+  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2 — agent architectures, from simple reflex to utility-based and learning agents"
+    rlink: "https://aima.cs.berkeley.edu/"
 - week: "7"
   date: "1"
   title: "Orchestration Patterns: Pipelines, Routers, and Planners"
@@ -573,6 +594,8 @@ schedule:
     rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/ShipIt"
   - rtitle: "Supplemental Activity: Deploying Agents — From Laptop to Production"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-deploymentpatterns.md"
+  - rtitle: "Supplemental Tutorial: Scheduled and Autonomous Agent Runs — Cron, systemd, n8n, and GitHub Actions (clone → review → open a PR)"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-scheduledagents.md"
 - week: "10"
   date: "0"
   title: "Visual Agent Building with Langflow"
@@ -662,6 +685,8 @@ schedule:
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
+  - rtitle: "O'Neil, Weapons of Math Destruction — the chapter on predictive models in education"
+  - rtitle: "Benjamin, Race After Technology, Chapters 1–2"
   - rtitle: "The Revenge of the Philosophy Majors (Wallace, The New York Times, 2026)"
     rlink: "https://www.nytimes.com/2026/07/05/business/philosophy-majors-ai-jobs.html"
   - rtitle: "Supplemental Case Study: Early-Alert and At-Risk Identification with Local AI (synthetic data)"
@@ -696,6 +721,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-responsibleai.md"
   readings:
+  - rtitle: "Crawford, Atlas of AI, Chapter 6 — Affect / the politics of data"
   - rtitle: "Supplemental Activity: Privacy-Preserving AI — Federated Learning, Differential Privacy, and PII Scrubbing"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-privacypreservingai.md"
 - week: "12"
@@ -703,6 +729,7 @@ schedule:
   title: "Governance and Policy Writing"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
   readings:
+  - rtitle: "Christian, The Alignment Problem — any one chapter (e.g., the section on reward and reinforcement)"
   - rtitle: "Activity: AI Policy Writing Workshop (see Part 0 of Governance Assignment)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/Governance"
   - rtitle: "Supplemental Activity: AI for Accessibility — Opportunity, Obligation, and Risk"
@@ -740,6 +767,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-philosophyessay.md"
   readings:
+  - rtitle: "Carr, The Glass Cage, Chapters 2–3 — automation, deskilling, and automation bias"
   - rtitle: "Supplemental Tutorial: The AI Maker Module (Testing, CI, and Human-Centric Design)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aimaker.md"
   - rtitle: "Supplemental Activity: Explainability in Depth — SHAP, LIME, Attention, and the Limits of Interpretation"
@@ -754,6 +782,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-governance.md"
   readings:
+  - rtitle: "Crawford, Atlas of AI, Chapter 1 — Earth: the mineral and energy costs of computation"
   - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
   - rtitle: "Supplemental Activity: AI Creativity — Generative Models, Authorship, and the Nature of Originality"

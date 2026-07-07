@@ -136,12 +136,22 @@ These are suggested sources. You are not limited to this list — propose others
 - Marcus, G. & Davis, E. (2019). *Rebooting AI.* Pantheon. *(Chapters 3–4)*
 - Wooldridge, M. (2021). *A Brief History of Artificial Intelligence.* Flatiron Books. *(Any chapter)*
 
+### Core and Technical Textbooks (chapters or excerpts)
+These are the technical books assigned across the course schedule — a chapter you present here can double as a deeper dive on a topic we cover in a lecture.
+- Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1–2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
+- Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. *(Chapter 2 on intelligent agents; later chapters by topic.)* https://aima.cs.berkeley.edu/
+- Jurafsky, D. & Martin, J. H. *Speech and Language Processing* (3rd ed. draft). *(Ch 3 on n-gram language models; later chapters on embeddings and transformers.)* https://web.stanford.edu/~jurafsky/slp3/
+- Nielsen, M. *Neural Networks and Deep Learning.* *(Chapter 1, neural nets from first principles.)* http://neuralnetworksanddeeplearning.com/
+- Sutton, R. & Barto, A. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. *(Chapters 1–6 for the RLHF thread.)*
+- Huyen, C. (2022). *Designing Machine Learning Systems.* O'Reilly. *(Chapter 7 on model deployment and prediction services.)*
+
 ### Seminal Papers
 - Bender, E. M. et al. (2021). On the dangers of stochastic parrots: Can language models be too big? *FAccT 2021.*
 - Gebru, T. et al. (2021). Datasheets for datasets. *Communications of the ACM, 64*(12).
 - Parasuraman, R. & Manzey, D. H. (2010). Complacency and bias in human use of automation. *Human Factors, 52*(3).
 - Skitka, L. J., Mosier, K., & Burdick, M. (1999). Does automation bias decision-making? *International Journal of Human-Computer Studies, 51*(5).
 - Bowman, S. R. (2023). Eight things to know about large language models. *arXiv:2304.00612.*
+- Chalmers, D. J. What we talk to when we talk to language models. https://philarchive.org/rec/CHAWWT-8
 
 ### Policy and Reports
 - NIST AI Risk Management Framework (AI RMF 1.0), 2023.
