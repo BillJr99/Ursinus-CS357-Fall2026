@@ -1,4 +1,3 @@
-# Red-Teaming LLMs: Finding Failures Before Deployment
 <!--
 author:   William Mongan
 language: en

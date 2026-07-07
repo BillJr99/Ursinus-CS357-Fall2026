@@ -1,4 +1,3 @@
-# Structured Outputs: JSON Mode, Tool Schemas, and Output Validation
 <!--
 author:   William Mongan
 language: en

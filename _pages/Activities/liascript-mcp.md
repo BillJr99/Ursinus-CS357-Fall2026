@@ -1,4 +1,3 @@
-# Connecting Agents to the World: MCP and APIs
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Agent Security: Threat Modeling and the OWASP LLM Top 10
 <!--
 author:   William Mongan
 language: en

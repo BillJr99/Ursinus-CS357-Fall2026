@@ -1,4 +1,3 @@
-# Temperature and Sampling Explorer: Hands-On Parameter Tuning
 <!--
 author:   William Mongan
 language: en

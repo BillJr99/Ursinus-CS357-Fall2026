@@ -1,4 +1,3 @@
-# Agent Teams: Specialists over Monoliths
 <!--
 author:   William Mongan
 language: en

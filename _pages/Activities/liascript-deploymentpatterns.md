@@ -1,4 +1,3 @@
-# Deploying Agents: From Laptop to Production
 <!--
 author:   William Mongan
 language: en

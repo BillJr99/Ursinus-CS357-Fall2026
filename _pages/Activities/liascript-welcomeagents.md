@@ -1,4 +1,3 @@
-# Welcome: What Is AI, and What Is an Agent?
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Stochastic Multi-Agent Consensus
 <!--
 author:   William Mongan
 language: en

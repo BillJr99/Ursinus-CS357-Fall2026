@@ -1,4 +1,3 @@
-# RESTful LLM Access: The api/v1 Paradigm
 <!--
 author:   William Mongan
 language: en

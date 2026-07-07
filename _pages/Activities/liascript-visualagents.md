@@ -1,4 +1,3 @@
-# Visual Agent Building with Langflow
 <!--
 author:   William Mongan
 language: en

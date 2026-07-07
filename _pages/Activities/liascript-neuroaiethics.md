@@ -1,4 +1,3 @@
-# Neuro-AI Ethics: Brain-Inspired AI, Cognitive Science, and the Study of Mind
 <!--
 author:   William Mongan
 language: en

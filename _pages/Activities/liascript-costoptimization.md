@@ -1,4 +1,3 @@
-# Cost Optimization: Token Budgets, Caching, and Model Routing
 <!--
 author:   William Mongan
 language: en

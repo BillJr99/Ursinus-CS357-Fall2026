@@ -1,5 +1,3 @@
-# Adversarial Robustness and Red-Teaming LLMs
-
 <!--
 author:   William Mongan
 language: en

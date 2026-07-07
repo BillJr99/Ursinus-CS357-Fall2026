@@ -1,4 +1,3 @@
-# AI Regulation: EU AI Act, NIST AI RMF, and Sector Rules
 <!--
 author:   William Mongan
 language: en

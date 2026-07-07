@@ -1,4 +1,3 @@
-# Agent Observability and Tracing
 <!--
 author:   William Mongan
 language: en

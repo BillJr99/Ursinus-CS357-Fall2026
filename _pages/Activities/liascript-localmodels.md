@@ -1,4 +1,3 @@
-# The Local Model Landscape: Llama, Mistral, Phi, Gemma, and Friends
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Training Data and Bias
 <!--
 author:   William Mongan
 language: en

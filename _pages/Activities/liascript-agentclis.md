@@ -1,4 +1,3 @@
-# Agentic CLI Tools: Claude Code, Codex, Gemini, opencode, pi, and Friends
 <!--
 author:   William Mongan
 language: en

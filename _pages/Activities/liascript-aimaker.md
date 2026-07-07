@@ -1,4 +1,3 @@
-# The AI Maker: Agents, Engineering Discipline, and Human-Centric Design
 <!--
 author:   William Mongan
 language: en

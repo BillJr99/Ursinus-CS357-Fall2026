@@ -1,5 +1,3 @@
-# Designing Agent Personas and System Prompts
-
 <!--
 author:   William Mongan
 language: en
@@ -13,6 +11,8 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
 -->
+
+# Designing Agent Personas and System Prompts
 
 ## POGIL Roles
 

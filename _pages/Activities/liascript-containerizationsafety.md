@@ -1,4 +1,3 @@
-# Containerizing AI Systems: Safety, Isolation, and Trust Boundaries
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# The Second Brain: Obsidian, Gitless GitHub Sync, and Agent Access
 <!--
 author:   William Mongan
 language: en

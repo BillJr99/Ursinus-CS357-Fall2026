@@ -1,5 +1,3 @@
-# AI Coding Agent Security: Poisoned Repos, the Software Supply Chain, and State-of-the-Art Defenses
-
 <!--
 author:   William Mongan
 language: en

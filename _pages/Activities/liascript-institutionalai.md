@@ -1,4 +1,3 @@
-# Integrating AI with Institutional Systems: LMS, Assessment Software, and Student Information Systems
 <!--
 author:   William Mongan
 language: en

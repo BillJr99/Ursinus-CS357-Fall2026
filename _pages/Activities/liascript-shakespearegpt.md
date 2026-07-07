@@ -1,4 +1,3 @@
-# Shakespeare GPT: How Language Models Learn to Write
 <!--
 author:   William Mongan
 language: en

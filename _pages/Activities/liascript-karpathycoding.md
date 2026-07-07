@@ -1,4 +1,3 @@
-# AI-Assisted Development: The "Let Me Cook" Approach
 <!--
 author:   William Mongan
 language: en

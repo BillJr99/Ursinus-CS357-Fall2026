@@ -1,4 +1,3 @@
-# Case Study: Early-Alert and At-Risk Identification with Local AI
 <!--
 author:   William Mongan
 language: en

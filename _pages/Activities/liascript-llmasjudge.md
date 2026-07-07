@@ -1,4 +1,3 @@
-# Evaluating Agents: LLM-as-Judge and Rubric Pipelines
 <!--
 author:   William Mongan
 language: en

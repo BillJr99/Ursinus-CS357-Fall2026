@@ -1,4 +1,3 @@
-# Intellectual Property, Privacy, and the Case for Local AI
 <!--
 author:   William Mongan
 language: en

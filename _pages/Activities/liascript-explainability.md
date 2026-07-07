@@ -1,4 +1,3 @@
-# Explainability and Human-Centric Design
 <!--
 author:   William Mongan
 language: en

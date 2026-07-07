@@ -1,4 +1,3 @@
-# Vector Databases: How Agents Search for Meaning
 <!--
 author:   William Mongan
 language: en

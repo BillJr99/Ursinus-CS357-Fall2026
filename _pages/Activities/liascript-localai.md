@@ -1,4 +1,3 @@
-# Running Your Own AI: Ollama, OpenWebUI, and Private Local Models
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Attention and Transformers, Conceptually and by Hand
 <!--
 author:   William Mongan
 language: en

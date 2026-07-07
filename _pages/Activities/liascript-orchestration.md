@@ -1,4 +1,3 @@
-# Orchestration Patterns: Pipelines, Routers, and Planners
 <!--
 author:   William Mongan
 language: en

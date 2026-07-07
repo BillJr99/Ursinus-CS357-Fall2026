@@ -1,5 +1,3 @@
-# AI and the Future of Work: Automation, Displacement, and Adaptation
-
 <!--
 author:   William Mongan
 language: en
@@ -13,6 +11,8 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
 -->
+
+# AI and the Future of Work: Automation, Displacement, and Adaptation
 
 **CS357: Foundations of Artificial Intelligence / Agentic AI**
 Ursinus College

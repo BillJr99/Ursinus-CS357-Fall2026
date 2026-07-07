@@ -1,4 +1,3 @@
-# Memory and the Small Context Window Principle
 <!--
 author:   William Mongan
 language: en

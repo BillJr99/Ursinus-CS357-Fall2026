@@ -1,4 +1,3 @@
-# The Philosophy and Psychology of Artificial Intelligence
 <!--
 author:   William Mongan
 language: en

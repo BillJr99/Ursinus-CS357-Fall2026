@@ -1,4 +1,3 @@
-# Governance and Policy Writing
 <!--
 author:   William Mongan
 language: en

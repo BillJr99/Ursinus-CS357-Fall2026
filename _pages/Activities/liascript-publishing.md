@@ -1,4 +1,3 @@
-# Publishing Your Work: GHCR, Docker Hub, and npm
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# RAG Quality: Chunking, Clustering, and Reranking
 <!--
 author:   William Mongan
 language: en

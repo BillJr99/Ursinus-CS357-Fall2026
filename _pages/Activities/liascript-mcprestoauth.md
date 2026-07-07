@@ -1,4 +1,3 @@
-# Connecting Agents to the World: MCP, REST APIs, and OAuth 2.0
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Testing Agents: Evaluation, Regression, and the Non-Determinism Problem
 <!--
 author:   William Mongan
 language: en

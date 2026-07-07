@@ -1,4 +1,3 @@
-# Governing Coding Agents: Charters, Handoffs, and Durable Memory
 <!--
 author:   William Mongan
 language: en
