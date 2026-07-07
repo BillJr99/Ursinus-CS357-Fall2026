@@ -1,5 +1,3 @@
-# Anatomy of an LLM Request: One Prompt, End to End, by Hand
-
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# From Second Brain to Chief of Staff: A Personal Agent in Production
 <!--
 author:   William Mongan
 language: en

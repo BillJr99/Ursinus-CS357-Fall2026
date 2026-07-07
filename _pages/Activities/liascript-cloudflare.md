@@ -1,4 +1,3 @@
-# Hosting with Cloudflare: Workers, Pages, and Wrangler
 <!--
 author:   William Mongan
 language: en

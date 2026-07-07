@@ -1,4 +1,3 @@
-# Project Studio and Gallery Walk
 <!--
 author:   William Mongan
 language: en

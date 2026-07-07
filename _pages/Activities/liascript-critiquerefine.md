@@ -1,4 +1,3 @@
-# The Critique and Refine Pattern
 <!--
 author:   William Mongan
 language: en

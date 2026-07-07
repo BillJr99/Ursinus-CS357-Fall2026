@@ -1,4 +1,3 @@
-# AI for Accessibility: Opportunity, Obligation, and Risk
 <!--
 author:   William Mongan
 language: en

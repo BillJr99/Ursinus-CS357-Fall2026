@@ -1,4 +1,3 @@
-# Tool Use and Function Calling
 <!--
 author:   William Mongan
 language: en

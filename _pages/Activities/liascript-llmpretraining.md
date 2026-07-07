@@ -1,4 +1,3 @@
-# How LLMs Are Built: Tokenization, Pre-Training, and Scaling
 <!--
 author:   William Mongan
 language: en

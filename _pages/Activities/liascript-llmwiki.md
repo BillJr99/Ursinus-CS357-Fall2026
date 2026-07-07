@@ -1,4 +1,3 @@
-# The LLM Wiki: Karpathy's Pattern and a Vault Full of Use Cases
 <!--
 author:   William Mongan
 language: en

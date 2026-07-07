@@ -1,4 +1,3 @@
-# The Local Agent Stack: Wiring Containers into a System
 <!--
 author:   William Mongan
 language: en

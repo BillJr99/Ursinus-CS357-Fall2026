@@ -1,4 +1,3 @@
-# Agentic Case Studies: Migration, Browsing, and Research Agents
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Serving LLMs in Production: Latency, Cost, and Throughput
 <!--
 author:   William Mongan
 language: en

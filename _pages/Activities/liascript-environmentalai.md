@@ -1,4 +1,3 @@
-# Environmental Impact and the Carbon Cost of Intelligence
 <!--
 author:   William Mongan
 language: en

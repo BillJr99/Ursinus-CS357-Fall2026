@@ -1,4 +1,3 @@
-# Design First: Plan Before You Build
 <!--
 author:   William Mongan
 language: en

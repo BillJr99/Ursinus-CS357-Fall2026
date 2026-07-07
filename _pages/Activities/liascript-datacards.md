@@ -1,4 +1,3 @@
-# Dataset Documentation: Model Cards and Datasheets
 <!--
 author:   William Mongan
 language: en

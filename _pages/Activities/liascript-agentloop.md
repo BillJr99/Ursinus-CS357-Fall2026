@@ -1,4 +1,3 @@
-# The Agent Loop: Perceive, Plan, Act
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Advanced Agent Loops: Control Flow, Reflection, and Recovery
 <!--
 author:   William Mongan
 language: en

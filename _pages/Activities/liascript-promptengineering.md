@@ -1,4 +1,3 @@
-# Prompt Engineering as Agent Design: Personas and System Prompts
 <!--
 author:   William Mongan
 language: en

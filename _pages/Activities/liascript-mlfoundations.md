@@ -1,4 +1,3 @@
-# Traditional Machine Learning Foundations
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Tokens and Embeddings: How Agents Represent Meaning
 <!--
 author:   William Mongan
 language: en

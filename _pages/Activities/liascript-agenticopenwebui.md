@@ -1,4 +1,3 @@
-# Supplemental Tutorial: Agentic OpenWebUI — Tools, Uploads, and Multi-Agent Workflows
 <!--
 author:   William Mongan
 language: en

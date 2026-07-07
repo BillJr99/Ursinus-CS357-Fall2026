@@ -1,4 +1,3 @@
-# The Shell: Your Agent's Native Habitat
 <!--
 author:   William Mongan
 language: en

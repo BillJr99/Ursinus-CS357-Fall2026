@@ -1,4 +1,3 @@
-# Fine-Tuning, RAG, and Prompting: Choosing the Right Approach
 <!--
 author:   William Mongan
 language: en

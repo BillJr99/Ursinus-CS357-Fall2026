@@ -1,4 +1,3 @@
-# Structured Peer Review: SQR Cards and Team Check-Ins
 <!--
 author:   William Mongan
 language: en

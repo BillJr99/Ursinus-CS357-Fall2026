@@ -1,5 +1,3 @@
-# Memory in Agents: What They Remember and Why It Matters
-
 <!--
 author:   William Mongan
 language: en

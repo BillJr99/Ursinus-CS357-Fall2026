@@ -1,4 +1,3 @@
-# Using AI for Academic Research
 <!--
 author:   William Mongan
 language: en

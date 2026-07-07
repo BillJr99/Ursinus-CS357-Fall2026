@@ -1,4 +1,3 @@
-# Agent Frameworks: LangChain, CrewAI, AutoGen, Agno, and DeepAgents
 <!--
 author:   William Mongan
 language: en

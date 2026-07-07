@@ -1,4 +1,3 @@
-# Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy
 <!--
 author:   William Mongan
 language: en

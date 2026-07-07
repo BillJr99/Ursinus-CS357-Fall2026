@@ -1,4 +1,3 @@
-# Supplemental Tutorial: A Threaded Auto-Research Pipeline
 <!--
 author:   William Mongan
 language: en

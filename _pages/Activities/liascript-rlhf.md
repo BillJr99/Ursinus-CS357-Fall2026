@@ -1,4 +1,3 @@
-# From Rewards to Preferences: Reinforcement Learning and RLHF
 <!--
 author:   William Mongan
 language: en

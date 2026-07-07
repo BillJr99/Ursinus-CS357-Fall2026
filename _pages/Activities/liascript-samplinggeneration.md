@@ -1,4 +1,3 @@
-# Why Different Answers Every Time? Sampling, Temperature, and Generation
 <!--
 author:   William Mongan
 language: en

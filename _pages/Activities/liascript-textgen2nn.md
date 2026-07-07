@@ -1,4 +1,3 @@
-# From Text Generation to a Neural Network
 <!--
 author:   William Mongan
 language: en

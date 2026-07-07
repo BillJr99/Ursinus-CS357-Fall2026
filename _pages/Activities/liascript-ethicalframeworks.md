@@ -1,4 +1,3 @@
-# Ethical Frameworks for Agentic AI Systems
 <!--
 author:   William Mongan
 language: en

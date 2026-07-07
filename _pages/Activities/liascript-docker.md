@@ -1,4 +1,3 @@
-# Docker from Zero: Containers for Agent Builders
 <!--
 author:   William Mongan
 language: en

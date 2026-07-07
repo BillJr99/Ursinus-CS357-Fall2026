@@ -1,4 +1,3 @@
-# Multimodal Agents: Vision, Documents, and Code as First-Class Inputs
 <!--
 author:   William Mongan
 language: en

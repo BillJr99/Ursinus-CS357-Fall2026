@@ -1,4 +1,3 @@
-# Multi-Agent Debate
 <!--
 author:   William Mongan
 language: en

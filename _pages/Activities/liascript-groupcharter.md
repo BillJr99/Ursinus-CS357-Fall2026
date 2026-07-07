@@ -1,4 +1,3 @@
-# Team Charter and Norms
 <!--
 author:   William Mongan
 language: en

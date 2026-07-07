@@ -1,4 +1,3 @@
-# Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault
 <!--
 author:   Prof. Bill Mongan
 language: en

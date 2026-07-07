@@ -1,4 +1,3 @@
-# Building an AI Chess Coach: LLM API Calls in a Real Web App
 <!--
 author:   William Mongan
 language: en

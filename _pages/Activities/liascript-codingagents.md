@@ -1,4 +1,3 @@
-# Coding Agents: Agentic Development Tools
 <!--
 author:   William Mongan
 language: en

@@ -1,4 +1,3 @@
-# Retrieval-Augmented Generation with Chroma
 <!--
 author:   William Mongan
 language: en

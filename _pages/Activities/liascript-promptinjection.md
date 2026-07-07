@@ -1,4 +1,3 @@
-# Prompt Injection and Agent Security: The OWASP LLM Top 10
 <!--
 author:   William Mongan
 language: en

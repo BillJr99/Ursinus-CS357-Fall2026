@@ -1,4 +1,3 @@
-# Hallucinations and Evaluating Agent Outputs
 <!--
 author:   William Mongan
 language: en

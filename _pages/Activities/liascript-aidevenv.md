@@ -1,4 +1,3 @@
-# Designing Your AI Development Environment
 <!--
 author:   William Mongan
 language: en

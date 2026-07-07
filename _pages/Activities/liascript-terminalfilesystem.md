@@ -1,4 +1,3 @@
-# Terminal and Filesystem Isolation for Agent Safety
 <!--
 author:   William Mongan
 language: en

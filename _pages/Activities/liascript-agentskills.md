@@ -1,4 +1,3 @@
-# Agent Skills and Plugins: Building, Configuring, and Publishing Custom Capabilities
 <!--
 author:   Prof. Bill Mongan
 language: en

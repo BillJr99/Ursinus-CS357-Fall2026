@@ -1,4 +1,3 @@
-# GitHub Superpowers for AI Developers
 <!--
 author:   William Mongan
 language: en
