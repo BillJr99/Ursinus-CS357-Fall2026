@@ -246,7 +246,7 @@ schedule:
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
   - rtitle: "Interactive (optional): The Token Prediction Playground — an unplugged, in-browser simulator showing what next-token prediction can and cannot do"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/simulators/token-predictor.html"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor"
   - rtitle: "Optional: AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
   - rtitle: "The Project Thread: how the semester-long team project unfolds (read by the end of week 1)"

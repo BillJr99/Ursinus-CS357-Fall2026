@@ -159,6 +159,8 @@ Delegating well — and, later, discerning good output from bad — depends on a
 
 Read the table as a checklist for **Delegation** and **Discernment**: before handing a task to AI, ask where it lands on each spectrum. A task built from common concepts, mainstream knowledge, a short context, and a concrete instruction is a safe delegation. A task in novel territory, on post-cutoff or contested facts, over a huge context, and requiring a long, precise chain of reasoning is one to supervise closely — or keep for a human.
 
+> **Try it:** Open the [Token Prediction Playground](https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor), a tiny in-browser next-word model. Feed it a common phrase and watch it get confident (capability); feed it rare or ungrounded words and watch it shrug (limitation). It makes the top row of the table above tangible in about two minutes.
+
 *Copyright 2026 Anthropic. Original work building on the AI Fluency Framework developed by Prof. Rick Dakan (Ringling College of Art and Design) and Prof. Joseph Feller (University College Cork). Released under the CC BY-NC-SA 4.0 license.*
 
 ---
