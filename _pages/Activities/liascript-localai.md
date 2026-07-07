@@ -152,11 +152,84 @@ While a long generation runs, open your system monitor (Activity Monitor on macO
 
 ---
 
+## 4. Multi-Turn Conversations: Managing the Message List
+
+The call above sends a single message and forgets it instantly. A real conversation remembers what came before — and here is the key idea: **the Ollama server is stateless.** It does not remember your last turn. *You* remember, by keeping a running `messages` list and re-sending the whole thing on every call. Each turn you append the user's message, send the full list, then append the assistant's reply back onto it. The growing list *is* the conversation's memory.
+
+The cell below holds a three-turn conversation. Notice that `chat()` now takes the entire `messages` list, and that after each reply we append the assistant's message (`r.json()["message"]`) verbatim, so the next turn can see it.
+
+## Code Cell
+
+```python
+import requests
+
+def chat(messages, model="llama3.2", temperature=0.7):
+    try:
+        r = requests.post("http://localhost:11434/api/chat", json={
+            "model": model, "stream": False,
+            "options": {"temperature": temperature},
+            "messages": messages}, timeout=120)
+        return r.json()["message"]        # the whole assistant message dict
+    except Exception as e:
+        print(f"[localai:chat] {e}")
+        import traceback; traceback.print_exc()
+        return {"role": "assistant", "content": ""}
+
+# The conversation state we manage by hand:
+messages = [{"role": "system", "content": "You are a concise assistant."}]
+
+def say(user_text):
+    messages.append({"role": "user", "content": user_text})   # 1. append the user turn
+    reply = chat(messages)                                     # 2. send the WHOLE history
+    messages.append(reply)                                     # 3. append the reply back on
+    print("USER:", user_text)
+    print("ASSISTANT:", reply["content"], "\n")
+
+say("My name is Sam and I am planning a trip to Iceland.")
+say("What is one thing I should pack?")     # note: this turn never says 'Iceland'...
+say("Remind me — what is my name?")         # ...yet the model still knows, from the resent history
+
+print(f"[the message list now holds {len(messages)} entries]")
+```
+
+The last question never mentions Iceland or the name Sam, yet the model answers correctly — because the entire prior exchange rode along in the `messages` list. Delete the `messages.append(reply)` line and the model goes amnesiac.
+
+**The same pattern through OpenWebUI.** If you put OpenWebUI in front of Ollama, its OpenAI-compatible endpoint accepts the *identical* growing `messages` array — only the URL, an `Authorization: Bearer <key>` header, and the response path change:
+
+```python
+# r = requests.post("http://localhost:3000/api/chat/completions",
+#                   headers={"Authorization": f"Bearer {API_KEY}"},
+#                   json={"model": "llama3.2", "messages": messages})
+# reply = r.json()["choices"][0]["message"]   # OpenWebUI/OpenAI nests it under choices[0]
+```
+
+Everything else — append the user turn, resend the whole list, append the reply — stays the same.
+
+## Model: The Growing Context
+
+### Critical Thinking Questions
+
+5. Every turn resends the *entire* history, so a 20-turn chat re-sends turns 1–19 again on turn 20. As the conversation grows, what happens to the number of tokens processed — and therefore the time and cost — per turn?
+
+   > *Hint: If each turn adds roughly the same number of tokens, the total sent by turn $N$ grows like $1 + 2 + \dots + N$. Is that linear or quadratic in $N$?*
+
+6. Every model has a fixed **context window** (a maximum number of tokens it can read at once). What happens when your growing `messages` list exceeds it? Name two strategies to stay under the limit without simply deleting the earliest turns outright.
+
+   > *Hint: You could drop old turns, or you could replace them with a short summary. Which one preserves more of what mattered?*
+
+7. The server is stateless, but your Python process holds the `messages` list in memory. If the program crashes mid-conversation, the history is gone. What would you add to make a conversation survive a restart?
+
+   > *Hint: Think about writing the messages list to disk (as JSON) after each turn and reloading it on startup.*
+
+> **⚠️ Common Misconception:** It is tempting to think the model "remembers" your conversation the way a person does. It does not. Between calls the server keeps *nothing*; the illusion of memory comes entirely from your client resending the full `messages` list each time. When the list grows too long for the context window, that memory silently starts to fall off the front — exactly the problem the *Memory and the Small Context Window* activity later solves with summarization.
+
+---
+
 # Part III: Synthesis and Practice
 
 In this part, you will probe your local model across five different task types to build a concrete capability map — a table showing where it succeeds and where it fails. This map will serve as your baseline for the rest of the semester as you add tools, retrieval, and multi-agent techniques.
 
-## 4. Exercises
+## 5. Exercises
 
 1. *Capability map.*
 
@@ -190,8 +263,8 @@ In this part, you will probe your local model across five different task types t
 
 → Coming Up Next: Our models are running — but why do they give different answers every time we ask the same question? In the next activity we open the hood on text generation itself, and learn how temperature, top-p, and randomness turn a probability distribution into a word.
 
-## 5. Further Reading
+## 6. Further Reading
 
-- Ollama documentation: https://ollama.com and https://github.com/ollama/ollama/blob/main/docs/api.md
+- Ollama documentation: https://ollama.com and https://github.com/ollama/ollama/blob/main/docs/api.md (see the `/api/chat` `messages` array for multi-turn conversations)
 - OpenWebUI documentation: https://docs.openwebui.com
 - Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 3.

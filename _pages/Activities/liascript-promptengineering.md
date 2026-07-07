@@ -110,11 +110,27 @@ An agent must return JSON so that downstream code can parse its decision. The mo
 
 ---
 
+## 3. Plan Before You Prompt
+
+The fastest way to a bad output is a rushed prompt. Before you write the *final* prompt, spend a moment on the plan behind it — this is the **Description** competency from the AI Fluency Framework (see the Welcome activity) in action. A reliable loop has three moves:
+
+1. **Ask and answer questions first.** Instead of demanding an answer immediately, ask the model to *ask you* clarifying questions: "Before you write anything, ask me up to five questions that would change how you approach this." Answering them surfaces assumptions — audience, scope, format, constraints — that you would otherwise discover only after a wrong draft.
+2. **Describe what success looks like.** State the done-conditions up front, exactly as Prompt B did in Model 1 and as every exercise in this course states "*You've succeeded when...*". If you can name what a good output contains — an analogy, three sentences, valid JSON, a citation — the model can aim at it and you can *check* it. A goal you can evaluate is a goal you can hit.
+3. **Iterate on the plan and the prompt together.** Treat the first response as a draft of the *plan*, not the final deliverable. Refine the plan with the model over a few turns, and fold what you learn back into the prompt. The prompt you finish with is almost never the prompt you started with.
+
+This is the same practice you used in the Welcome activity's Delegation icebreaker (Steps 2 and 3): converse to define success, then plan the work before executing it.
+
+> **Tip:** Plan → describe success → iterate. Ask the model what it needs to know, tell it what "done" looks like, and refine both the plan and the prompt before you commit to a full run.
+
+*This plan-first, describe-success, iterate practice draws on the Description competency of The AI Fluency Framework. Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license.*
+
+---
+
 # Part II: Personas in Practice
 
 In this part, you will assign three different persona instructions (identities given to the model via the system prompt) to the same underlying model and observe how each shifts the style and format of the output — without changing the model's weights at all. This matters because understanding personas helps you design agents that behave consistently and avoids the trap of thinking a more authoritative persona produces more accurate answers.
 
-## 3. Personas Shape Distributions, Not Souls
+## 4. Personas Shape Distributions, Not Souls
 
 Before we run the code, try this thought experiment: if you ask a knowledgeable friend the same question while they are in "professor mode" versus "texting a friend mode," you get different vocabularies, different structures, maybe different levels of hedging — but the same underlying facts. A model persona works similarly. It shifts the *style* of the output by making certain patterns more likely, not by granting the model new knowledge.
 
@@ -178,11 +194,91 @@ Run the cell (or examine projected outputs) and compare the three responses to t
 
 ---
 
+## 5. Eval-Driven Prompt Development
+
+Model 1 argued that Prompt B is easier to *evaluate* than Prompt A. Now we make that concrete: we **measure** a prompt against a small set of known-answer examples, then change the prompt and watch the number move. This is how prompts are improved in practice — not by taste, but by a **golden test set**: a fixed list of `input → expected-output` pairs you score automatically.
+
+The cell below defines five `(country, expected capital)` pairs, then runs the *same* test set through two different system prompts — a vague one and a specific, format-constrained one. Because the score uses exact match, the vague prompt's full-sentence answers fail while the specific prompt's one-word answers pass. That accuracy gap is the *evidence* that one prompt is better for this task.
+
+## Code Cell
+
+```python
+import requests
+
+def chat(system, user, temperature=0.0, seed=42, model="llama3.2"):
+    try:
+        r = requests.post("http://localhost:11434/api/chat", json={
+            "model": model, "stream": False,
+            "options": {"temperature": temperature, "seed": seed},
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": user}]}, timeout=120)
+        return r.json()["message"]["content"]
+    except Exception as e:
+        print(f"[promptengineering:eval] {e}")
+        import traceback; traceback.print_exc()
+        return ""
+
+# A small "golden" test set: input -> the exact expected answer.
+tasks = [
+    ("France",    "paris"),
+    ("Japan",     "tokyo"),
+    ("Australia", "canberra"),
+    ("Canada",    "ottawa"),
+    ("Egypt",     "cairo"),
+]
+
+def normalize(text):
+    return text.strip().lower().rstrip(".").strip()
+
+def evaluate(system_prompt, label):
+    correct = 0
+    for country, gold in tasks:
+        pred = normalize(chat(system_prompt, country))
+        hit = (pred == gold)
+        correct += hit
+        print(f"{'PASS' if hit else 'FAIL'} | {country} -> {pred!r} (expected {gold!r})")
+    acc = correct / len(tasks)
+    print(f"{label}: accuracy = {correct}/{len(tasks)} = {acc:.2f}\n")
+    return acc
+
+# Prompt v1: vague. The model tends to reply in a full sentence, which fails exact match.
+vague = "You answer questions about world capitals."
+
+# Prompt v2: specific. Constrains the output format so it is machine-checkable.
+specific = ("You are a geography lookup. Given a country name, reply with ONLY the "
+            "capital city's name in lowercase, with no punctuation, articles, or extra words.")
+
+print("===== Prompt v1 (vague) =====")
+evaluate(vague, "v1 vague")
+print("===== Prompt v2 (specific) =====")
+evaluate(specific, "v2 specific")
+```
+
+The loop is the whole point: **write the test set once, then let it referee every future change to the prompt.** We build a larger, hallucination-focused version of this harness in the *Evaluating Agent Outputs* activity, formalize benchmark design in *Benchmarking*, and generalize from exact-match answers to property and regression checks in *Testing Agents*.
+
+## Model 3: Reading the Eval
+
+### Critical Thinking Questions
+
+8. The vague prompt sometimes produces a *correct capital* buried inside a sentence, yet scores FAIL. Is the model wrong, or is the *metric* wrong? What does this tell you about exact-match scoring?
+
+   > *Hint: Separate "did the model know the answer?" from "did the output match the expected string?" Both matter, but they are different failures with different fixes.*
+
+9. Exact match would reject `"Paris"` (capital P, unnormalized) even from a perfect prompt. Name two ways to make the metric more forgiving without making it so loose that a wrong answer slips through.
+
+   > *Hint: Contrast normalization (lowercasing, stripping punctuation) with semantic checks (substring, or an LLM-as-judge). Each trades strictness for robustness.*
+
+10. Suppose you kept editing the prompt until it scored 5/5 on exactly these five countries. What might happen on a sixth, unseen country? Name the risk and one way to guard against it.
+
+    > *Hint: This is overfitting to the test set. What would a held-out set of countries reveal that the original five cannot?*
+
+---
+
 # Part III: Synthesis and Practice
 
 In this part, you will write and red-team real system prompts — first designing one for a course-scheduling agent, then stress-testing a teammate's design. This is the closest thing to real prompt engineering work: the goal is to discover where a prompt breaks before a real user does.
 
-## 4. Exercises
+## 6. Exercises
 
 1. *Job description.*
 
@@ -208,6 +304,12 @@ In this part, you will write and red-team real system prompts — first designin
    - *Starter hint*: Circumvention strategies to try: (1) ask indirectly, (2) ask the model to hypothetically imagine a version of itself without the restriction, (3) embed the forbidden topic inside a longer innocent-seeming question.
    - *You've succeeded when*: You have three attempts documented with the exact prompt and response, and a one-sentence explanation of the mechanism for each success or failure.
 
+5. *Eval-driven iteration.*
+
+   - *What to do*: Take the golden-test harness from Section 5 and add three new `(country, capital)` pairs of your own. Then write a *third* system prompt that beats both `vague` and `specific` on the full eight-item set — or prove that `specific` is already at ceiling and explain why.
+   - *Starter hint*: If `specific` already scores 8/8, change the *task* to something harder to format (for example, "return the country's capital and its ISO country code as `city, XX`") so there is room for a prompt to improve the score.
+   - *You've succeeded when*: You can show the accuracy of all three prompts on the same test set, and state in one sentence which prompt change caused the largest gain and why.
+
 ---
 
 ## Reflection Prompt
@@ -222,8 +324,10 @@ In this part, you will write and red-team real system prompts — first designin
 
 → Coming Up Next: We have been calling a model running somewhere on a server. In the next activity, we take full control by installing and running AI models entirely on our own hardware — no cloud, no per-token fees, and no data leaving our machines.
 
-## 5. Further Reading
+## 7. Further Reading
 
 - Anthropic and OpenAI prompt engineering guides (online). Practical pattern catalogs maintained by model vendors.
 - Jason Wei et al. "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." *NeurIPS* (2022).
 - Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 3, on what models do and do not understand.
+- Rick Dakan and Joseph Feller, with Anthropic. *The AI Fluency Framework* (2025), on the Description competency — describing goals well enough to prompt useful behavior. Released under CC BY-NC-SA 4.0.
+- On evaluation: see this course's *Evaluating Agent Outputs*, *Benchmarking*, and *Testing Agents* activities for larger golden-test, benchmark, and property-based harnesses.

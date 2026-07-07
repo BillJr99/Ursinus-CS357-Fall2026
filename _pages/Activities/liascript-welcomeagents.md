@@ -119,6 +119,84 @@ The semester unfolds in four units, each building on the last. In Unit 1, *Anato
 
 ---
 
+## The AI Fluency Framework
+
+Building an agent is only half the story; **working well with one is a human competency**, not just a technical one. This course is organized around **The AI Fluency Framework**, which names four interconnected competencies — the **4D Framework** — that make our interactions with AI *effective, efficient, ethical, and safe*.
+
+| Competency (the "4 D's") | What It Means |
+|--------------------------|---------------|
+| **Delegation** | Setting goals and deciding whether, when, and how to engage with AI. |
+| **Description** | Effectively describing goals to prompt useful AI behaviors and outputs. |
+| **Discernment** | Accurately assessing the usefulness of AI outputs and behaviours. |
+| **Diligence** | Taking responsibility for what we do with AI and how we do it. |
+
+These four competencies are interconnected collections of skills, knowledge, insights, and values — not a checklist you finish, but habits you practice all semester.
+
+**Three Modes of AI Interaction.** The framework also distinguishes *how* a human and an AI relate on any given task:
+
+- **Automation**: the AI executes a specific task based on human instructions.
+- **Augmentation**: humans and AI collaborate as thinking partners.
+- **Agency**: humans configure the AI to independently perform future tasks on their behalf.
+
+These modes map onto the **agency spectrum** from Section 2: automation and augmentation keep a human tightly in the loop, while agency shifts work toward the autonomous end — with the greater responsibility that Diligence demands.
+
+You will meet the four D's throughout the course: **Description** returns when we engineer prompts, **Discernment** when we evaluate and test outputs, and **Diligence** in the closing unit on responsibility and governance. We begin with **Delegation** in the icebreaker below.
+
+*Source: The AI Fluency Framework summary ([/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf](/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf)). Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license. This course is based on The AI Fluency Framework by Dakan and Feller.*
+
+---
+
+## The AI Capabilities and Limitations Framework
+
+Delegating well — and, later, discerning good output from bad — depends on a realistic picture of what today's AI is actually good at. This companion framework names **four properties that shape what AI can and can't do for you.** Each sits on a spectrum: the further toward the *limitation* end your task falls, the more you should verify the output and compensate for it.
+
+| Property | The question it answers | Works well (capability) | Gets shaky (limitation) |
+|----------|-------------------------|-------------------------|-------------------------|
+| **Next Token Prediction** | Where do AI answers come from? | Well-worn paths: summarize, reformat, explain common concepts | Novel territory, sparse patterns; "true" vs. "sounds true" |
+| **Knowledge** | What does the AI actually know? | Frequent, recent-in-training, consistent: mainstream topics, popular languages | Rare, post-cutoff, niche, local, or contested topics |
+| **Working Memory** | What is the AI paying attention to right now? | Material fits comfortably, session is current, you supply the relevant context | Very long documents/conversations; expecting cross-session continuity (the "cliff") |
+| **Steerability** | How much am I in control? | Short, concrete, verifiable instructions ("respond as a table," "under 100 words") | Long reasoning chains, abstract asks, native precision |
+
+Read the table as a checklist for **Delegation** and **Discernment**: before handing a task to AI, ask where it lands on each spectrum. A task built from common concepts, mainstream knowledge, a short context, and a concrete instruction is a safe delegation. A task in novel territory, on post-cutoff or contested facts, over a huge context, and requiring a long, precise chain of reasoning is one to supervise closely — or keep for a human.
+
+*Copyright 2026 Anthropic. Original work building on the AI Fluency Framework developed by Prof. Rick Dakan (Ringling College of Art and Design) and Prof. Joseph Feller (University College Cork). Released under the CC BY-NC-SA 4.0 license.*
+
+---
+
+## Icebreaker: Project Planning and Delegation
+
+*Estimated time: 20 minutes.*
+
+Today's first practice is **Delegation**: deciding whether, when, and how to bring AI into a piece of work. You will choose a project to carry with you for the rest of the course and plan it with an AI as your thinking partner.
+
+**Step 1 — Choose your project.** Pick a medium-sized, multi-step project you can return to all semester. It should be *substantial* enough to involve several kinds of tasks, *manageable* enough to finish in about an hour of work, and something you genuinely want to create. A few directions:
+
+- *Communication*: a presentation, a series of posts explaining a complex topic, a proposal or pitch, or a professional bio with supporting materials.
+- *Research*: survey an emerging technology, analyze a dataset for patterns, compare several products or approaches, or investigate a historical event.
+- *Creative*: outline a short story with developed characters, design a small website's structure and content, or develop a concept for a product or experience.
+- *Learning*: build a structured learning plan for a new skill, assemble a resource collection, write a tutorial, or create study materials for a topic you want to master.
+
+**Step 2 — Vision and goals.** Start a conversation with an AI. Share your idea and *invite it to ask you questions* until you have a clear picture of two things: what **success** looks like for the project, and what would make it particularly **valuable or meaningful** to you. Answering the AI's questions is how you surface assumptions you did not know you had.
+
+**Step 3 — Task breakdown through the Delegation lens.** Work with the AI to break the project into its major tasks. For each task, one at a time, discuss:
+
+- What specific skills, knowledge, or AI capabilities does it need?
+- Which parts draw on uniquely **human** strengths?
+- Which parts could **AI** handle well?
+- Where would **collaboration** have the most impact?
+
+Have a genuine conversation — challenge assumptions, ask for clarification, and stay open to insights that emerge. Then write a **project plan** listing your major tasks and your delegation decision for each. **Save it**: you will return to this project later to practice Description, Discernment, and Diligence.
+
+### Reflection
+
+- What insights emerged from your planning conversation with the AI?
+- Which part of your delegation plan do you anticipate will be the most challenging?
+- What additional information or skills would help you delegate more effectively to AI?
+
+*Source: adapted from the AI Fluency course "Project planning and delegation" exercise. Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license.*
+
+---
+
 ## Model 2: Your First Conversation with a Local Model
 
 In this model, you will observe a language model (a large neural network trained to predict text) running entirely on a laptop — no cloud, no internet — and you will form hypotheses about why its answers vary. These hypotheses will be tested rigorously in week 3.
@@ -180,3 +258,4 @@ Your instructor will demonstrate a model running entirely on a laptop using Olla
 - Melanie Mitchell. *Artificial Intelligence: A Guide for Thinking Humans* (2019). Prologue and Chapter 1 frame the questions of this course.
 - Stuart Russell and Peter Norvig. *Artificial Intelligence: A Modern Approach* (4th ed., 2020). Chapter 2 defines agents and environments.
 - Alan Turing. "Computing Machinery and Intelligence." *Mind* (1950). The original imitation game paper, freely available online.
+- Rick Dakan and Joseph Feller, with Anthropic. *The AI Fluency Framework* (2025). The Delegation, Description, Discernment, and Diligence competencies that organize this course. Released under CC BY-NC-SA 4.0.
