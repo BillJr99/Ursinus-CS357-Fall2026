@@ -137,7 +137,33 @@ A teammate launches an agent CLI from their home directory instead of the projec
 
 ---
 
-## 5. Routing Through the Local Gateway
+## 5. Permission Modes: The Dial Above the Gates
+
+Section 4's gates fire one action at a time. Sitting *above* them is a coarser control that most tools now expose: a **permission mode** — a single setting that fixes your default posture for the whole session, and therefore decides how many individual gates you will ever see. If a gate is the "sign here" on one line of a contract, the mode is the standing instruction you give your lawyer *before* reading any of it: "stop me on everything," "let the small stuff through," or "just handle it." You set the dial once; every gate inherits its default. The gates from Section 4 do not disappear — the mode decides which of them still get to interrupt you.
+
+Four postures have converged across the tools, ordered here from most supervised to least:
+
+| Mode | What it does | Gates you still see | Reach for it when |
+|------|--------------|---------------------|-------------------|
+| **Plan / read-only** | The agent may read files and reason out loud, but changes *nothing* — it produces a written plan and waits for your approval before acting | Every write and shell command is blocked until you leave the mode | Exploring an unfamiliar codebase, or getting a design reviewed before a single line changes |
+| **Default (ask)** | The normal loop: the agent acts, but pauses at each consequential gate for a yes/no | Every write, shell command, and irreversible action | Ordinary supervised work — the calibration Section 4 describes |
+| **Auto-accept edits** | File edits apply without a per-edit prompt; shell commands and irreversible actions *still* gate | Shell commands, network calls, `rm`, `git push` | A well-scoped task where you trust the edits but not the side effects — e.g., renaming a symbol across many files in a git repo you can `reset` |
+| **Full-auto / bypass** ("YOLO") | No gates at all; the agent reads, writes, and runs commands unattended | None | Almost never for coursework — only inside a throwaway container with no network and no credentials |
+
+The labels differ by tool, but it is the same dial. In **Claude Code** you cycle modes with **Shift+Tab** (default → auto-accept edits → plan), and the fully ungated mode is the `--dangerously-skip-permissions` flag, whose name is itself the warning. **Codex** exposes approval modes plus a `--full-auto` flag; **Gemini CLI** has a `--yolo` flag; **opencode** offers a plan-style review before it applies a change. **pi**, true to its personality in the Part I table, effectively has *only* the last row — it is always full-auto, which is exactly why the course reserves it for low-stakes throwaway work.
+
+The connection to the human-in-the-loop principle is direct: a mode is how you *spend your oversight budget*. Plan mode spends it all up front — you review one plan instead of twenty gates. Full-auto spends none, and inherits all the risk. Auto-accept edits is the deliberate middle: it aims your attention at the actions that can actually leave your machine or destroy data, which is precisely where the governance module argues a human's judgment is worth the interruption. The mistake is never simply "picking a permissive mode"; it is picking one *without matching it to the task's blast radius*. Auto-accept edits inside a git repo you can roll back is prudent; the same mode on files with no version control is how an afternoon's work quietly disappears.
+
+[[MC]]
+A student sets their agent to **auto-accept edits** mode to refactor a Python package, reasoning that they will review the final diff in git anyway. Midway, the agent decides it needs a library and proposes `pip install requests`. What happens?
+- ( ) It runs without a prompt — auto-accept edits approves every action, shell commands included, so the install proceeds silently
+- (x) It stops at a gate — auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
+- ( ) It runs without a prompt, but only because `pip install` counts as a file edit since it writes package files to disk
+- ( ) It stops, because auto-accept mode automatically reverts to "ask" mode the instant any shell command is proposed
+
+---
+
+## 6. Routing Through the Local Gateway
 
 Our stack (agent stack module) exposes one OpenAI-compatible endpoint for everything, and pointing a commercial CLI at it is two environment variables:
 
@@ -179,11 +205,11 @@ Now that your tool is scoped, instructed, and routed, Part III shows how to brin
 
 In this part, you will integrate your chosen agent CLI into VS Code and understand the containerized invocation pattern so you can isolate an agent's filesystem access by design rather than by trust.
 
-## 6. Driving Agents from VS Code
+## 7. Driving Agents from VS Code
 
 Three levels of integration, in increasing depth. **Level one, the integrated terminal** (Ctrl+`): launch any CLI tool there and you get the workflow most professionals actually use, agent in the bottom pane, live diffs in the editor above; this works today for every tool in the table with zero configuration. **Level two, official extensions**: Claude Code and Codex ship VS Code extensions (search the marketplace by name) that surface the session in a panel, render proposed diffs in VS Code's native diff view, and let you approve from the editor; install, sign in, and the workflow is the terminal workflow with better optics. **Level three, editor-native agents**: KiloCode lives entirely inside VS Code with direct access to the language server (diagnostics, symbols, refactoring), and connects to our gateway with a one-field base URL change in its settings. Recommendation for this course: level one for fluency first, then level two; you will debug problems best in the layer you understand.
 
-## 7. Containerized Invocation (the Course Pattern)
+## 8. Containerized Invocation (the Course Pattern)
 
 Our stack runs every CLI tool inside a dedicated container with three mounts: an identity directory (the tool's logins and settings), the shared workspace, and an optional read-only skills directory. The shape, from the course deploy scripts:
 
@@ -200,7 +226,7 @@ docker run --rm -it \
 
 The flags explained: `--rm` deletes the container when it exits (experiments are self-cleaning). `-it` allocates an interactive terminal (required for any REPL). `--add-host=host.docker.internal:host-gateway` makes `host.docker.internal` resolve to your actual machine's IP from inside the container, which is how containerized tools reach the local gateway at `http://host.docker.internal:4000`. The two `-v` flags mount directories from your host into the container: the first keeps the agent's authentication tokens and settings persistent across container restarts (otherwise you would re-login every time); the second is the shared workspace the agent reads and writes. `-w /workspace` sets the container's working directory so the agent's world is exactly the workspace mount, nothing else. The payoff paragraph from the Docker module applies verbatim: the agent sees exactly what is mounted and nothing else, identities hot-swap by changing one path, and an experiment is destroyed with the container. The agent stack module provides the full `build.sh`/`run.sh` set; today, understand *why* the mounts are shaped this way.
 
-## 8. Exercises
+## 9. Exercises
 
 1. *Install two.*
 
@@ -249,7 +275,7 @@ The flags explained: `--rm` deletes the container when it exits (experiments are
 
 4. *Gateway switch.*
 
-   *What to do:* With the course stack running locally, set the two environment variables from Section 5 to route your tool through the local gateway. Verify the redirect worked by asking the agent to name the model it is using. Then switch models mid-session using `/model` and send the same prompt to both models. Write a two-sentence report on any latency or quality differences you noticed.
+   *What to do:* With the course stack running locally, set the two environment variables from Section 6 to route your tool through the local gateway. Verify the redirect worked by asking the agent to name the model it is using. Then switch models mid-session using `/model` and send the same prompt to both models. Write a two-sentence report on any latency or quality differences you noticed.
 
    *Starter hint:*
    ```bash
@@ -298,11 +324,11 @@ In your notebook, respond at three levels:
 
 ## → Coming Up Next
 
-In the next module you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 7 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before next class.
+In the next module you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before next class.
 
 ---
 
-## 9. Further Reading
+## 10. Further Reading
 
 - Each tool's official docs: docs.anthropic.com (Claude Code), the Codex CLI repository, the Gemini CLI repository, opencode.ai, pi.dev.
 - W. Mongan, "Building a Private AI Stack" (billmongan.com, May 2026): the containerized invocation and gateway routing patterns in full.
