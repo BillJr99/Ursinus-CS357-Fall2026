@@ -729,7 +729,10 @@ Everyone completes the core Critique-and-Refine lab above: the generator/critic/
 
 You may then **extend** the core in the direction below. The direction is not a separate assignment and does not carry its own grade — the single 100-point rubric at the top of this page covers the core lab *and* your chosen direction together. Pick the direction that best fits your interests and carry your critique-and-refine discipline into it.
 
-### Direction 1: Coding Agents in Practice
+- **Direction 1: Coding Agents in Practice** — run the generate/critique/refine loop with a coding agent as the generator: hand it a REST API spec, review its diff line by line, feed a categorized critique back as one refine turn, then harden the accepted result with linting and security scanning.
+
+<details markdown="1">
+<summary><strong>Direction 1: Coding Agents in Practice</strong></summary>
 
 In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt — one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 
@@ -1525,3 +1528,5 @@ Answer each prompt in `pair_log.md` under a heading `## Reflection`. Write at le
 7. **If collaboration beyond your pair occurred, identify it.** Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 
 8. **Approximately how many hours did this direction take** (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+</details>

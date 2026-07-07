@@ -877,9 +877,16 @@ You submit **one** deliverable, and it earns **one grade against the single 100-
 
 Wherever a direction refers to "your agent," you may use the rubric-grading pipeline you built above as that agent (the judge and pipeline are themselves a tool-using, LLM-calling system worth evaluating, tracing, and shipping), or another agent you built earlier in the course. Whichever you choose, keep the connection explicit in your writeup: the direction should measure, instrument, or package the *same* evaluation/measurement pipeline, not an unrelated project.
 
+Choose one:
+
+- **Direction 1: Building an Agent Evaluation Harness** — generalize the judge validation into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push.
+- **Direction 2: Instrumenting Agents with OpenTelemetry** — turn the pipeline from a black box into a system you can reason about, emitting a trace span for every LLM call, tool invocation, and retrieval step to find where the time and the failures go.
+- **Direction 3: CI/CD, TDD, and Publishing for AI Agent Software** — earn trust through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing your agent as a pip package and a container image.
+
 ---
 
-### Direction 1: Building an Agent Evaluation Harness
+<details markdown="1">
+<summary><strong>Direction 1: Building an Agent Evaluation Harness</strong></summary>
 
 How do you know when your pipeline (or any agent) got better? How do you know when a change broke it? This direction extends the rubric-grading work into a reusable **evaluation harness**: a categorized dataset, a set of automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push. Where the core lab validated one judge against human scores on one calibration set, here you generalize that discipline into a standing test suite you can rerun after every change. You will work individually.
 
@@ -1388,9 +1395,12 @@ Fold the following into your single lab submission:
 - What percentage of your adversarial prompts were successfully refused? Does that surprise you? What does it reveal about the gap between intended and actual behavior?
 - Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
 
+</details>
+
 ---
 
-### Direction 2: Instrumenting Agents with OpenTelemetry
+<details markdown="1">
+<summary><strong>Direction 2: Instrumenting Agents with OpenTelemetry</strong></summary>
 
 The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale. You will take a tool-using agent — your rubric-grading pipeline, or another agent from the course — and transform it from a black box into a system you can reason about in production. Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on. You will work individually.
 
@@ -1821,9 +1831,12 @@ Fold the following into your single lab submission:
 - Your traces contain the character lengths of user prompts. Even without storing raw text, what inferences about user behavior could someone draw from a sequence of prompt lengths, and is that a PII risk? How would you mitigate it?
 - Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
 
+</details>
+
 ---
 
-### Direction 3: CI/CD, TDD, and Publishing for AI Agent Software
+<details markdown="1">
+<summary><strong>Direction 3: CI/CD, TDD, and Publishing for AI Agent Software</strong></summary>
 
 The core pipeline earns trust through measurement; this direction earns it through engineering discipline, so the pipeline can be tested, trusted, installed, and shipped. You will apply professional software engineering practices to agentic Python code that calls local LLMs and produces non-deterministic outputs: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing your agent as both a pip-installable package and a container image. This direction is completed **individually**.
 
@@ -2414,3 +2427,5 @@ Cite a specific observation from the direction (a line of code, a terminal outpu
 - Publishing to TestPyPI requires an API token; the Dockerfile accepts `OLLAMA_URL` as an environment variable. What is the general principle of externalizing sensitive or environment-specific configuration, and where does it show up elsewhere in this course? (Your core pipeline reads model, paths, temperature, and seed from config — name that connection.)
 - Looking at your final coverage report: which lines are still not covered, and what would you have to mock to cover them? Is 100% coverage always the right goal for agentic code?
 - Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
+
+</details>

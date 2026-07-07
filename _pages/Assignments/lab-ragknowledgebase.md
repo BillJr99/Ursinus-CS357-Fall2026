@@ -719,7 +719,8 @@ Choose one:
 
 ---
 
-### Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA
+<details markdown="1">
+<summary><strong>Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA</strong></summary>
 
 This direction takes the opposite approach to knowledge injection from the one you just built. In the core lab, your RAG system kept knowledge *outside* the model and retrieved it at query time. Here you will adapt a local model by **baking** domain knowledge into a small set of trainable weights using **LoRA** (Low-Rank Adaptation — a technique that adds a tiny number of trainable parameters to a frozen base model, making fine-tuning feasible on consumer hardware). You will use a real domain-specific dataset, instrument training with loss tracking, evaluate output quality, and document the result with a model card — and then, crucially, decide whether fine-tuning earned its keep versus the RAG pipeline from the core lab.
 
@@ -1301,9 +1302,12 @@ Fold these into your Lab 2 submission ZIP and readme:
 - Your fine-tuned model may now perform better in your domain but worse on general questions. Who is responsible for communicating that trade-off to users?
 - How many hours did this direction take?
 
+</details>
+
 ---
 
-### Direction 2: Multimodal AI and Monte Carlo Simulation
+<details markdown="1">
+<summary><strong>Direction 2: Multimodal AI and Monte Carlo Simulation</strong></summary>
 
 This direction turns from text retrieval to images. In the core lab you audited whether a model faithfully used *text* you retrieved; here you will audit whether a **multimodal** model faithfully reads *a chart*. You will build a Monte Carlo retirement simulation that you generate, send its chart to a local vision model, and discover that AI image analysis is impressively capable at pattern recognition but surprisingly fragile on numerical precision — and that the difference matters enormously when the output might influence someone's financial decisions. The ground-truth-versus-AI-claim audit is the same muscle you built in the core lab's citation audit, applied to pixels instead of passages.
 
@@ -1992,3 +1996,5 @@ Fold these into your Lab 2 submission ZIP and readme:
 4. In Step C, the pessimistic and optimistic scenarios produced dramatically different outcomes despite both using "reasonable" parameters. What does this imply about how a financial planning tool should present parameter uncertainty to a non-expert user?
 5. If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 6. Approximately how many hours did this direction take?
+
+</details>
