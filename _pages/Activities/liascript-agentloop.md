@@ -203,6 +203,92 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
 ---
 
+## 3b. From Scratch: Driving the Loop with the OpenWebUI API
+
+The `chat()` helper above hid the one piece that makes the loop *real*: the network call to a model. Here we open that box. An agent, stripped to its core, is a single primitive — send the running conversation to a model endpoint, read one reply back — wrapped in a loop that **you**, not the model, control. The model only ever produces text; your program decides what that text *means* and what happens next.
+
+OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer. Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings → Account → API Keys*, and name a model you have pulled. Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended — the model's own tool requests and the observations we hand back — not a new human turn.
+
+> This cell talks to your local OpenWebUI over the network, so run it on your own machine rather than in the browser cell above.
+
+---
+
+## Code Cell
+
+```python
+import os, re, requests
+
+OPENWEBUI_URL = os.environ.get("OPENWEBUI_URL", "http://localhost:3000")
+API_KEY       = os.environ.get("OPENWEBUI_API_KEY", "sk-...")   # Settings -> Account -> API Keys
+MODEL         = os.environ.get("OPENWEBUI_MODEL", "llama3.1:8b")
+
+def chat(messages, temperature=0.0):
+    """One turn: send the whole conversation, return just the assistant's text.
+    This is the chat() from the previous section, unwrapped to a real API call."""
+    resp = requests.post(
+        f"{OPENWEBUI_URL}/api/chat/completions",
+        headers={"Authorization": f"Bearer {API_KEY}"},
+        json={"model": MODEL, "messages": messages, "temperature": temperature},
+        timeout=120,
+    )
+    resp.raise_for_status()
+    return resp.json()["choices"][0]["message"]["content"]
+
+# --- the tools the agent is allowed to ask for -------------------------
+def get_weather(city):
+    # A real tool would call a weather service; we fake it so the LOOP is the star.
+    fake = {"austin": "36C and sunny", "collegeville": "18C and raining"}
+    return fake.get(city.strip().lower(), "no data for that city")
+
+TOOLS = {"get_weather": get_weather}
+
+SYSTEM = """You are an agent that can request ONE tool per step.
+Reply in EXACTLY one of these two forms, and nothing else:
+  Action: get_weather(<city>)
+  Final Answer: <one sentence>"""
+
+# --- the loop YOU own --------------------------------------------------
+def agent(prompt, max_steps=5):
+    messages = [{"role": "system", "content": SYSTEM},
+                {"role": "user",   "content": prompt}]      # the single starting prompt
+    for step in range(max_steps):
+        reply = chat(messages)                              # 1. PERCEIVE/PLAN: ask the model
+        messages.append({"role": "assistant", "content": reply})
+        print(f"--- step {step} ---\n{reply}\n")
+        if "Final Answer:" in reply:                        # 2. is it done?
+            return reply.split("Final Answer:")[-1].strip()
+        call = re.search(r"(\w+)\((.*)\)", reply)           # 3. did it request a tool?
+        if call and call.group(1) in TOOLS:
+            observation = TOOLS[call.group(1)](call.group(2))   # ACT: your code runs it
+        else:
+            observation = "No valid tool call. Use the exact required format."
+        messages.append({"role": "user",                    # 4. REMEMBER: add result to context
+                         "content": f"Observation: {observation}"})
+    return "step budget exceeded"
+
+print(agent("What should I wear in Austin today?"))
+```
+
+---
+
+## Model: Reading the From-Scratch Loop
+
+Trace the run as a team. Expect two round-trips to the model: on step 0 the model cannot know the weather, so it emits `Action: get_weather(Austin)`; your code runs the tool and appends `Observation: 36C and sunny`; on step 1 the model reads that observation and emits a `Final Answer:`.
+
+### Critical Thinking Questions
+
+1. Point to the exact line where each stage lives: **perceive/plan**, **act**, and **remember**. Which lines belong to *your* program and which belong to the *model*?
+
+   > *Hint: the model contributes only the string returned by `chat()`. Every `messages.append(...)` is you, editing the agent's memory.*
+
+2. The `Observation:` is appended with `"role": "user"`, even though no human typed it. Why does the loop impersonate the user here, and what would break if you used `"role": "assistant"` instead?
+
+3. This loop grows `messages` by two entries every step. Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost? (We name this problem — and its fix — in week 6.)
+
+4. Replace the mock `get_weather` with a real tool of your choice (a search call, a file read, a database lookup). What in the loop has to change, and what stays exactly the same? *(Almost nothing changes — that is the point: the shape of the loop is independent of the tools.)*
+
+---
+
 # Part III: Synthesis and Practice
 
 In this part, you will extend and stress-test the agent you just built — changing its budget, designing new tools, and deliberately breaking it — so that you understand not just how it works when it succeeds, but why it fails when it does.

@@ -189,6 +189,58 @@ In native function calling, the component that actually executes the function is
 
 ---
 
+## 2b. The Same Tools, Served Through OpenWebUI
+
+The agent above talks straight to Ollama on port `11434`. In many of our setups the model is instead fronted by **OpenWebUI**, which exposes an **OpenAI-compatible** endpoint on port `3000`. The good news: the tool protocol is *identical*. The exact same `TOOLS` schema list travels in the request; the only things that change are the URL, an `Authorization: Bearer` key (from OpenWebUI's *Settings → Account → API Keys*), and the shape of the JSON you read back — OpenAI-style responses nest the reply under `choices[0].message`, and each tool call's `arguments` come back as a **JSON string** you must `json.loads`, rather than the ready-made dict Ollama hands you.
+
+Whether native tool calling works at all still depends on the underlying model: a tool-capable model (e.g. `llama3.1`/`llama3.2`, `qwen2.5`, `mistral-nemo`) will populate `tool_calls`; a model without tool training will just answer in prose and you fall back to the week-1 parsing approach.
+
+---
+
+## Code Cell
+
+```python
+import os, json, requests
+from datetime import date
+
+# get_today / days_until / TOOLS / REGISTRY are reused unchanged from the cell above.
+
+OPENWEBUI_URL = os.environ.get("OPENWEBUI_URL", "http://localhost:3000")
+API_KEY       = os.environ.get("OPENWEBUI_API_KEY", "sk-...")
+
+def agent_openwebui(question, max_steps=4):
+    msgs = [{"role": "user", "content": question}]
+    for _ in range(max_steps):
+        r = requests.post(
+            f"{OPENWEBUI_URL}/api/chat/completions",              # OpenAI-compatible path
+            headers={"Authorization": f"Bearer {API_KEY}"},
+            json={"model": "llama3.2", "messages": msgs,
+                  "tools": TOOLS, "temperature": 0.0},            # SAME schema as Ollama
+            timeout=120,
+        ).json()
+        m = r["choices"][0]["message"]                            # OpenAI nests under choices
+        msgs.append(m)
+        calls = m.get("tool_calls") or []
+        if not calls:
+            return m["content"]
+        for c in calls:
+            name = c["function"]["name"]
+            args = c["function"]["arguments"]
+            if isinstance(args, str):                             # OpenAI returns args as JSON text
+                args = json.loads(args or "{}")
+            result = REGISTRY[name](**args) if name in REGISTRY else "unknown tool"
+            print(f"[tool] {name}({args}) -> {result}")
+            # OpenAI-style tool result must reference the call it answers:
+            msgs.append({"role": "tool", "tool_call_id": c.get("id", name), "content": result})
+    return "step budget exceeded"
+
+print(agent_openwebui("How many days until December 7, 2026?"))
+```
+
+The takeaway is the *portability of the protocol*: you describe a function once as a schema, and the same description drives tool use across Ollama-direct and OpenWebUI (and any other OpenAI-compatible server). Your tool implementations and your executor loop do not change — only the transport does.
+
+---
+
 # Part III: What a Tool Call Costs in the Context Window
 
 Part II traced the *messages* in a tool call — who authors each one and in what order. This Part traces the *tokens*. Everything the model can see on a turn — the system prompt, the whole conversation history, **every tool schema you offer**, and every tool result — shares one fixed-size buffer, the context window (`liascript-memorycontext.md`). Tools are not free riders in that buffer. Understanding their token cost is what separates an agent that stays fast and accurate from one that slows down, gets more expensive, and starts picking the wrong tool.

@@ -310,3 +310,215 @@ Respond to all three levels in your notebook:
 - Anthropic engineering blog. "Building Effective Agents" (2024, online). The workflow patterns formalized today.
 - Wu et al. "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation." (2023).
 - Leon Festinger's classic organizational-communication literature, for the human analogy (optional browse).
+
+---
+
+# Part IV: Fixed Pipelines vs. Dynamic Orchestration
+
+Parts I–III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This part steps back to the single decision that sits *above* all of them: **who decides the control flow — you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
+
+---
+
+## Model 3: Two Families of Orchestration
+
+**Why this matters:** A fixed pipeline is a scheduled commuter train — the same stops, in the same order, every single day; you can print the timetable a year in advance. Dynamic orchestration is a taxi driver who decides the route while driving, rerouting around traffic you could not have predicted. The train is boring, cheap, and easy to audit: if a passenger ends up in the wrong place, you know exactly which segment failed. The taxi is flexible and handles trips no timetable anticipated — but you cannot promise, before the trip starts, exactly which streets it will use. Neither is "better." They answer different questions.
+
+**Family 1 — Fixed (known) orchestration.** *You*, the developer, wire a predetermined graph of agents. The nodes and edges are decided before any input arrives; the control flow lives in your Python, not in a model's head. The pipeline and router from Parts I–II are both of this family. Its virtues are exactly the ones you already measured: predictability, step-by-step debuggability (inspect any intermediate output), and bounded cost (you can count the model calls before you run).
+
+**Family 2 — Dynamic orchestration.** An orchestrator — often called a **supervisor** — is itself an LLM. You hand it the task plus a *roster* of available sub-agents, and each turn *it* decides which sub-agent to run, whether to spawn a fresh one for a newly-discovered subtask, or whether the work is done. The control flow is now a model *output*, not your code. Its virtues are the mirror image of Family 1: flexibility, open-endedness, and the ability to handle tasks whose shape you could not enumerate in advance. Its costs are the same mirror: unpredictable paths, harder debugging (the "why did it do that?" lives in a prompt), and open-ended spend unless you cap it.
+
+| | Fixed / known orchestration | Dynamic / supervisor orchestration |
+|---|---|---|
+| Who authors the control flow | The developer, before runtime | An orchestrator LLM, each turn |
+| Path through the agents | The same every run (up to loops you bounded) | Chosen at runtime; may differ per input |
+| Debugging story | Inspect the intermediate at each fixed seam | Read the supervisor's decisions in a trace |
+| Cost | Countable before you run | Open-ended until you impose a budget |
+| Best when | The workflow is known in advance | The workflow cannot be enumerated in advance |
+
+This extends Part I's heuristic — **choose the least dynamic pattern that solves the problem** — one rung further: fixed families before dynamic ones, and a *bounded* dynamic supervisor before free-roaming autonomy.
+
+---
+
+## 4. Fixed Pipelines, Explained Separately
+
+Fixed orchestration is not one shape but a small family of reusable ones. Below is each shape as its own "slide": a one-line *when to use*, a tiny flow sketch, and a pointer to where you have already met it. In all five, notice the common property — **the wiring is authored by you and does not change based on what the agents produce.**
+
+### 4a. Sequential Pipeline (A → B → C)
+
+*When to use:* the steps are known ahead of time and each stage refines the previous stage's output.
+
+```text
+input --> [ Extract ] --> [ Draft ] --> [ Polish ] --> output
+             facts          prose         tight prose
+```
+
+This is the `digest_pipeline` from Part II. Each stage carries a one-sentence system prompt and sees only its own input; the seams between stages are where you inspect for bugs.
+
+### 4b. Router / Dispatch (classify, then one specialist)
+
+*When to use:* one input, several possible handlers, and exactly one of them applies.
+
+```text
+                       .--> [ Hardware specialist ]
+input --> [ Classify ] +--> [ Software specialist ] --> output
+                       '--> [ Accounts specialist ]
+```
+
+This is `route()` from Part II. The classifier's only job is to emit one label from a closed set; a code-level guard forces any stray output back into the valid set.
+
+### 4c. Parallel Fan-Out / Gather (map-reduce)
+
+*When to use:* the task splits into N *independent* subtasks whose separate results are then combined.
+
+```text
+              .--> [ Agent 1 ] --.
+input --> split +--> [ Agent 2 ] --+--> [ Aggregate ] --> output
+              '--> [ Agent N ] --'
+```
+
+The subtasks share no context — that independence is what lets them run in parallel — and a final aggregator agent (or plain code) merges the results. Compare this to the sequential pipeline: there each stage *depends* on the last; here the branches are deliberately isolated until the gather step.
+
+### 4d. Critique–Refine (generator ↔ critic loop)
+
+*When to use:* there is a quality bar you can articulate and check, and one pass is not reliably good enough.
+
+```text
+input --> [ Generate ] --> draft <==> [ Critique ] --> (revise until pass OR budget) --> output
+```
+
+The loop is bounded — it stops when the critic is satisfied or a revision budget expires — so the control flow is still fixed, even though it iterates. This is the subject of its own activity: [Critique-and-Refine](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md).
+
+### 4e. Debate / Stochastic Consensus (many agents, vote or cluster)
+
+*When to use:* the answer is uncertain or subjective, and several independent attempts give you a more robust result than any single one.
+
+```text
+          .--> [ Agent A ] --.
+input --> +--> [ Agent B ] --+--> [ Vote / Cluster ] --> consensus
+          '--> [ Agent C ] --'
+```
+
+The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result. Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md).
+
+Every shape above is *fixed*: even the critique loop and the debate vote follow a control flow you authored and can draw on a whiteboard before running. What changes in the next section is who draws that diagram.
+
+---
+
+## 5. Dynamic Orchestration — the Supervisor Loop
+
+When you *cannot* draw the diagram in advance — the task is open-ended, and which sub-agents are needed depends on what earlier ones discover — you promote the orchestrator itself to an LLM. This is the pattern behind LangGraph's **supervisor** and behind LangChain **DeepAgents**, which you meet hands-on in the [Agent Frameworks](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md) activity.
+
+The mechanism is a loop. You give the supervisor the task and a **roster** — a menu of sub-agents (and the tools each may use). Then, each turn, the supervisor model reads the task, the roster, and the transcript so far, and emits one *action*: "call sub-agent X on this input," "spawn a new researcher for this newly-discovered subtask," or "STOP, here is the answer." Your code dispatches the chosen action, appends the result to the transcript, and asks the supervisor again. DeepAgents dresses this loop in extra machinery — a planning tool that writes a todo list, sub-agents that run in *isolated context windows* so their scratch work never pollutes the main thread, and a synthesis step at the end — but underneath, it is the same "model decides the next move" loop.
+
+Contrast it with the fixed families: a router makes **one** classification decision and then hands off; a supervisor makes a **new** decision on **every** turn and may keep spawning. That is the source of both its power and its danger.
+
+## Code Cell
+
+The sketch below is illustrative — **read it locally**, do not treat it as production. It uses the course's `chat(messages)` convention against a local OpenAI-compatible endpoint (e.g., Ollama's `/v1`, LM Studio, or a `llama.cpp` server). Watch for the three things that stay *yours* even in a "dynamic" system: the **roster**, the **spawn budget**, and the **stop condition**.
+
+```python
+import json, requests
+
+def chat(messages, temperature=0.0):
+    """One turn against a local OpenAI-compatible chat endpoint.
+    messages: the running list of {"role": ..., "content": ...} dicts.
+    Returns the assistant's text. Illustrative; run locally only."""
+    r = requests.post("http://localhost:11434/v1/chat/completions", json={
+        "model": "llama3.2", "temperature": temperature, "messages": messages,
+    }, timeout=120)
+    return r.json()["choices"][0]["message"]["content"].strip()
+
+# The ROSTER is YOURS: the fixed menu of sub-agents the supervisor may call.
+# Each value is a one-sentence system prompt -- the same small-context
+# discipline as the pipeline stages in Part II.
+ROSTER = {
+    "researcher": "You gather facts for a narrow question. Return exactly 3 bullet points.",
+    "writer":     "You turn bullet points into one tight paragraph. Output only the paragraph.",
+    "critic":     "You list concrete problems with a paragraph, or reply exactly 'OK' if none.",
+}
+
+SPAWN_BUDGET = 6   # YOURS: a hard cap on sub-agent calls -- the stop condition of last resort.
+
+def supervise(task):
+    """The supervisor LLM decides, each turn, which sub-agent to run next -- or to STOP."""
+    transcript = []
+    for _ in range(SPAWN_BUDGET):          # the budget caps runaway spawning
+        decision = chat([
+            {"role": "system", "content":
+                "You are an orchestrator. Choose the next step and reply with ONLY JSON. "
+                f"Available sub-agents: {list(ROSTER)}. "
+                'Reply {"action":"call","agent":"<name>","input":"<text>"} '
+                'to delegate, or {"action":"stop","answer":"<final text>"} when done.'},
+            {"role": "user", "content":
+                f"TASK: {task}\n\nTRANSCRIPT SO FAR:\n{json.dumps(transcript, indent=2)}"},
+        ])
+        try:
+            step = json.loads(decision)
+        except json.JSONDecodeError:
+            break                          # malformed decision -> stop safely (YOUR guard)
+
+        if step.get("action") == "stop":
+            return step.get("answer", "")  # the supervisor decided the work is done
+
+        agent = step.get("agent")
+        if agent not in ROSTER:            # closed-set guard, exactly like the Part II router
+            transcript.append({"agent": agent, "error": "unknown sub-agent"})
+            continue
+
+        # Dispatch: the sub-agent runs in its OWN tiny context -- isolation by construction,
+        # so one sub-agent's scratch work never leaks into another's prompt.
+        result = chat([
+            {"role": "system", "content": ROSTER[agent]},
+            {"role": "user",   "content": step.get("input", "")},
+        ])
+        transcript.append({"agent": agent, "input": step.get("input"), "result": result})
+
+    # Budget exhausted without a STOP: return what we have, and FLAG that we were cut off.
+    return f"[stopped: spawn budget of {SPAWN_BUDGET} reached]\n{json.dumps(transcript, indent=2)}"
+
+print(supervise("Write one tight paragraph on why local models matter, then have it reviewed."))
+```
+
+**What you still own.** Handing control flow to a model does *not* hand it your responsibilities. Three levers stay in your code, and they are the whole reason a dynamic system is safe to ship:
+
+- **The roster.** The supervisor can only call sub-agents you put on the menu. An empty or overly-broad roster is where open-endedness turns into risk.
+- **The spawn budget.** The `for _ in range(SPAWN_BUDGET)` loop is a hard ceiling on model calls. Without it, a confused supervisor can spawn sub-agents forever — burning tokens and time with no result.
+- **The stop condition.** The supervisor may declare `"stop"`, but *you* also stop it when the budget is hit, and you **flag** that outcome rather than pretending the truncated transcript is a finished answer.
+
+DeepAgents makes exactly these decisions — when to plan, when to spawn, when to finish — *inside* its built-in system prompt, which is why it is so concise to use and so much harder to debug when it misbehaves. When you write the loop yourself, those decisions are visible in ten lines; when the framework writes it, they move into the framework's prompt.
+
+---
+
+## Model 4: Who Decides Control Flow?
+
+| Pattern | Who decides the control flow | Reach for it when | Main risk |
+|---|---|---|---|
+| Sequential pipeline | You, before runtime | The steps are known and each refines the last | An error at a seam propagates silently downstream |
+| Router / dispatch | You (the classifier only picks a label) | One input, several handlers, exactly one applies | A mis-classification sends the whole task to the wrong specialist |
+| Parallel fan-out / gather | You (branches are independent by design) | N independent subtasks whose results combine | The aggregator hides disagreement or drops a branch's result |
+| Critique–refine | You (a bounded generator ↔ critic loop) | A checkable quality bar that one pass misses | The loop never converges and burns the revision budget |
+| Debate / consensus | You (a fixed voting or clustering rule) | Uncertain or subjective answers needing robustness | Correlated agents "agree" on the same wrong answer |
+| Supervisor (dynamic) | An orchestrator LLM, each turn | The workflow cannot be enumerated in advance | Runaway spawning and unpredictable, hard-to-audit paths |
+
+### Critical Thinking Questions
+
+7. A hospital wants an agent system to draft discharge summaries and must certify to a regulator that the process is auditable and behaves the same way for comparable patients. Argue why a **fixed** pipeline is easier to certify than a supervisor loop, and name the specific property of each that a regulator would ask about.
+
+   > *Hint: A regulator asks "can you show me, in advance, every path this system can take, and can you reproduce a given run?" For a fixed pipeline the path is the same every time and each seam's intermediate is inspectable. For a supervisor, the path is a model output that can differ between two similar inputs. Which property makes "we tested this exact flow" a true statement?*
+
+8. A supervisor loop is given a vague task and, on each turn, decides to spawn "one more researcher to be thorough." Describe the runaway failure this invites, and explain precisely how the `SPAWN_BUDGET` in the Code Cell caps it — including what should happen at the moment the budget is hit.
+
+   > *Hint: Without a ceiling, "one more to be thorough" has no natural stopping point — cost and latency grow unbounded while the answer never finalizes. The budget converts an open-ended loop into a bounded one. But capping is not enough: look at the final `return` in the code. Why does it prepend `[stopped: ...]` instead of returning the transcript as if it were a finished answer?*
+
+9. You are handed a new task and must pick a family before writing any code. Give one concrete question you would ask about the task whose answer decides between a **fixed** shape and a **dynamic supervisor** — and explain why the same "least dynamic pattern that works" heuristic from Part I still applies one level up.
+
+   > *Hint: The decisive question is roughly "can I enumerate the sequence (or set) of sub-agents this task needs before it starts?" If yes, a fixed shape is cheaper, more predictable, and easier to debug — so prefer it. A supervisor earns its unpredictability only when the honest answer is "no, the needed steps depend on what we discover along the way." How does choosing dynamic-when-fixed-would-do repeat the exact mistake the Part I heuristic warns against?*
+
+> **⚠️ Common Misconception:** Students often assume "dynamic orchestration" means "the developer no longer controls the system." The opposite is true of any system you would actually deploy. In a supervisor loop the model chooses the *next move*, but you still author the roster it chooses from, the budget that bounds it, and the stop condition that ends it. Dynamic orchestration relocates *some* decisions to the model; it never relocates your responsibility for the roster, the budget, and the stop.
+
+[[MC]]
+Which single property most distinguishes a supervisor (dynamic) orchestrator from a router (fixed)?
+- ( ) A supervisor uses a larger model than a router
+- ( ) A router can call tools but a supervisor cannot
+- (x) A router makes one classification decision and then hands off, while a supervisor makes a new control-flow decision on every turn and may spawn additional sub-agents
+- ( ) A supervisor is always cheaper because it stops as soon as it is confident

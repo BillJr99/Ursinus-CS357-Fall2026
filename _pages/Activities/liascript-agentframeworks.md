@@ -427,6 +427,30 @@ out = agent.invoke({
 print(out["files"].get("summary.md", "(no file written)"))   # read what it wrote
 ```
 
+**Step 4e — choosing the model and provider.** Every cell above passed `model="ollama:llama3.2"`, but that argument is doing real work worth understanding, because **DeepAgents does not default to a local model** — out of the box it reaches for a hosted Anthropic Claude model and expects that provider's API key. To run on your own infrastructure you set `model=` explicitly, and it accepts two forms:
+
+```python
+from deepagents import create_deep_agent
+
+# Form 1 — a "provider:model" STRING, resolved by LangChain's init_chat_model.
+# Requires the matching integration package (here: pip install langchain-ollama).
+agent = create_deep_agent(model="ollama:llama3.2", tools=[days_between], system_prompt="...")
+# other strings: "openai:gpt-4o-mini", "anthropic:claude-3-5-sonnet-latest", ...
+
+# Form 2 — a fully-constructed chat model OBJECT, when you need to set options
+# (base_url, temperature, context length) or point at an OpenAI-compatible server.
+from langchain_ollama import ChatOllama
+llm = ChatOllama(model="llama3.2", temperature=0, num_ctx=8192)
+agent = create_deep_agent(model=llm, tools=[days_between], system_prompt="...")
+
+# To route through OpenWebUI's OpenAI-compatible endpoint instead of Ollama-direct:
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(base_url="http://localhost:3000/api", api_key="sk-...", model="llama3.2")
+agent = create_deep_agent(model=llm, tools=[days_between], system_prompt="...")
+```
+
+Two things decide whether this works. First, **the provider must be reachable and its integration installed** — a `provider:model` string only resolves if the corresponding `langchain-<provider>` package is present. Second, **the model must support tool calling**: DeepAgents' whole architecture (planning, sub-agent delegation) is built out of tool calls, so a model without tool training will stall. You can also override the model *per sub-agent* — give a sub-agent its own `model` key — so a small, cheap model handles planning while a stronger one drafts, which is often the practical way to keep a deep agent affordable on local hardware.
+
 **Read the whole tutorial against Step 2's ledger.** There, the framework absorbed only *plumbing* (schema generation, formatting, parsing) while every *decision* — when to stop, what to call, whether a call is safe — stayed in your ten-line loop. DeepAgents absorbs the decisions too: **when to plan (4b), when to spawn a sub-agent (4c), and what to write to disk (4d)** are now made inside the harness by its built-in system prompt. That is the opposite trade. It buys enormous leverage on long, open-ended tasks — but when the agent plans badly or a sub-agent returns something unexpected, the behavior you must debug lives in the framework's prompt and control flow, not in your code. Use it once you can describe precisely what it took from you.
 
 ### Critical Thinking Questions
