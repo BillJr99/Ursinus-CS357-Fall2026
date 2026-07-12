@@ -16,7 +16,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Today your new semester team writes its constitution. This activity is modeled on the **Team Contract Exercise developed by the SWEET Center at Worcester Polytechnic Institute** (WPI SWEET Center Team Contract Exercise), which has teams agree on norms, decision rules, and repair procedures *before* the first conflict rather than during it. We move from **getting to know each other honestly $\rightarrow$ understanding how teams develop and what makes them safe $\rightarrow$ writing an enforceable charter you will all sign**.
 
-You drafted a small pre-draft charter in the Warmup assignment. Bring it: today you will expand it into the real thing. The signed charter is due at the start of week 2 (wk2.0), and your team will formally revisit and revise it at midterm (wk8.0).
+You drafted a small pre-draft charter in the Overview assignment. Bring it: today you will expand it into the real thing. The signed charter is due at the start of week 2 (wk2.0), and your team will formally revisit and revise it at midterm (wk8.0).
 
 ---
 
@@ -160,7 +160,7 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 
 ### Critical Thinking Questions
 
-7. Take your Warmup pre-draft charter and run every sentence through the enforceability test: could a stranger, reading only your team's channel and documents, tell whether the sentence was being followed? Count the sentences that pass. What fraction survived, and what does the most common failure look like?
+7. Take your Overview pre-draft charter and run every sentence through the enforceability test: could a stranger, reading only your team's channel and documents, tell whether the sentence was being followed? Count the sentences that pass. What fraction survived, and what does the most common failure look like?
 
    > *Hint: The most common failure is an attitude word doing the work of a behavior: "respectful," "open," "fair," "flexible." Each one needs to be traded for a who-does-what-by-when. This is the same third-party test you will apply to governance clauses later in the course — practice it here first.*
 
@@ -183,7 +183,7 @@ Which of the following charter clauses passes the enforceability test?
 
 ## Exercises
 
-**Draft the charter (30-40 minutes).** Using your Warmup pre-draft as the starting point and your Model 1 grid as raw material:
+**Draft the charter (30-40 minutes).** Using your Overview pre-draft as the starting point and your Model 1 grid as raw material:
 
 1. Draft all six required sections. Every member is **primary author of at least one section** (name the author under each section heading) — the standing Project Thread rule for all team documents.
 2. Exchange a one-minute read-aloud of the conflict protocol with a neighboring team and collect one suggestion each way.
