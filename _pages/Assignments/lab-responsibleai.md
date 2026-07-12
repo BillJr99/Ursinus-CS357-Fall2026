@@ -12,6 +12,7 @@ info:
   points: 100
   goals:
     - To frame and threat-model an AI agent for responsible-AI risk before hardening it, identifying where security, privacy, and accountability failures could occur
+    - To experience prompt-injection and jailbreak techniques firsthand as both attacker and defender through hands-on adversarial exercises, and to connect the techniques observed to the threat model of an agent you built
     - To evaluate a responsible-AI intervention empirically and articulate honestly what risk remains unmitigated
     - To understand direct and indirect prompt injection through controlled red-team exercises
     - To implement practical defenses including input sanitization, privilege separation, and output validation
@@ -53,8 +54,14 @@ info:
       progressing: The writeup interprets the results and answers the reflection prompts, with a minor omission relative to the deliverables.
       proficient: The writeup interprets the evidence in terms of what the intervention accomplishes and what it does not, states the residual risk honestly, and answers every reflection prompt with a specific observation from this lab; the submission follows the directions in full, including any required certification or governance statement.
   readings:
-    - rtitle: "OWASP Top 10 for LLM Applications"
-      rlink: "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+    - rtitle: "OWASP Top 10 for LLM Applications (2025)"
+      rlink: "https://genai.owasp.org/llm-top-10/"
+    - rtitle: "Gandalf — Prompt Injection Game (shared warm-up)"
+      rlink: "https://gandalf.lakera.ai/"
+    - rtitle: "Tensor Trust — Attack and Defend (shared warm-up)"
+      rlink: "https://tensortrust.ai/"
+    - rtitle: "OWASP labStudentLLM — Vulnerable LLM App Labs (Direction 1)"
+      rlink: "https://github.com/leinn32/labStudentLLM"
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
     - rtitle: "Privacy-Preserving AI"
@@ -93,9 +100,22 @@ Everyone starts the same way. Choose one agent you have already built and put it
 
 Then pick **one** of the three directions below and carry it out in depth. Each direction is a full audit-and-harden cycle along one axis of responsible AI: defending against prompt injection, protecting privacy, or making decisions explainable. Your single 100-point grade covers the shared threat model plus the one direction you choose — the rubric dimensions (threat/risk analysis, implementation, evaluation and evidence, writeup and reflection) are written to apply to whichever direction you pick. Read all three before deciding; the direction you choose should be the one whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one direction — depth on one is worth far more than a shallow pass over several.
 
+## Shared Warm-Up: Feel the Attack Before You Model It
+
+Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like — from both sides of it. This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist. Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
+
+Do both of the following and keep an **adversary's notebook** as you go:
+
+1. **[Gandalf](https://gandalf.lakera.ai/) (attacker's seat).** Gandalf is a browser game in which each level guards a password behind progressively stronger defenses; your job is to talk the model into revealing it. Play until you clear at least the first several levels. For each level you clear, record in your notebook the exact prompt you used and, in one sentence, *why* it worked — which assumption of the defense did it violate? When you get stuck, note what the defense appears to be doing and what you would need to get past it. (Gandalf runs on a hosted model — it is a game, not your infrastructure, so no local setup is involved.)
+2. **[Tensor Trust](https://tensortrust.ai/) (both seats).** Tensor Trust is an attack-and-defend game: you write a defense prompt that is supposed to protect an "access code," and you attack other players' defenses. Write one defense, then attempt at least three attacks. Record which of your attacks succeeded, which of your defense's assumptions an attacker could exploit, and one defense idea you saw that you would reuse.
+
+In your notebook, close the warm-up by naming the **three techniques** you found most effective as an attacker and, for each, the class of defense from OWASP LLM01 (Prompt Injection) that would blunt it. Carry these three techniques forward: when you write the shared threat model below, at least one of the concrete attack scenarios you enumerate must be one you personally executed in this warm-up. In the class session accompanying this lab we run a short attack-and-defend tournament using these same games; participation there is assessed under the ordinary participation rubric, not this lab.
+
+> **Why this is here and not optional:** every direction in this lab — even the privacy and explainability directions — audits a system that an adversary or a careless user can reach. Having felt how easily a plausible-looking guardrail falls makes the "what could go wrong at this boundary?" question in your threat model concrete rather than hypothetical.
+
 ## Choose Your Direction
 
-Every submission begins with the shared threat-model framing above — you name the agent you already built, trace its data and decision flow, and map where it could fail. Then you pick **one** of the three directions below and carry it out in full depth. Each is a complete audit-and-harden cycle along one axis of responsible AI, and your single 100-point grade covers the shared threat model plus the one direction you choose. Read all three before deciding — the right choice is the direction whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
+Every submission begins with the shared warm-up and threat-model framing above — you play the adversary, then you name the agent you already built, trace its data and decision flow, and map where it could fail. Then you pick **one** of the three directions below and carry it out in full depth. Each is a complete audit-and-harden cycle along one axis of responsible AI, and your single 100-point grade covers the shared threat model plus the one direction you choose. Read all three before deciding — the right choice is the direction whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
 
 - **Direction 1: Finding and Defending Against Prompt Injection** — for agents that read untrusted text; red-team the agent, layer defenses, and quantify residual risk.
 - **Direction 2: Privacy Audit for an AI Agent** — for agents that touch sensitive data; inventory PII at every boundary, scrub input and output, and write a governance policy.
@@ -114,10 +134,19 @@ Choose this direction if the agent you built reads untrusted text — user quest
 
 Complete both assigned readings **before** writing a single line of code:
 
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Pay particular attention to LLM01 (Prompt Injection). The OWASP list gives you the vocabulary and threat taxonomy you will use throughout this lab.
+- [OWASP Top 10 for LLM Applications (2025)](https://genai.owasp.org/llm-top-10/) — Pay particular attention to LLM01 (Prompt Injection). The OWASP list gives you the vocabulary and threat taxonomy you will use throughout this lab.
 - [Prompt Injection Attacks and Defenses in LLM-Integrated Applications](https://arxiv.org/abs/2310.12815) — Skim the abstract and Section 2 (attack taxonomy) before Part 2. Read Section 4 (defenses) before Part 3.
 
 You do not need to memorize either document. You need enough familiarity to recognize which OWASP category each attack falls into, and to evaluate whether the paper's proposed defenses match what you implement.
+
+##### Choose Your Target (build-your-own or the OWASP lab apps)
+
+Part 1 asks you to stand up a deliberately vulnerable agent to attack. You have two equally acceptable ways to do this — pick whichever fits the agent you want to harden:
+
+- **Target A (default): build the minimal reference agent below.** Fastest path; the RAG-style knowledge-base agent in Part 1 is fully specified here and maps cleanly onto the five attack categories in Part 2.
+- **Target B: use the [OWASP labStudentLLM](https://github.com/leinn32/labStudentLLM) vulnerable app suite.** This open-source teaching repo ships ten deliberately vulnerable FastAPI apps — one per OWASP LLM Top-10 category — each with attack scripts, a fix, tests, and a **deterministic mock LLM** so the labs run fully offline (or you can point them at your local Ollama). If your agent's real risk is broader than prompt injection alone (excessive agency, sensitive-information disclosure, or vector/embedding weaknesses in your RAG store), start from the matching labStudentLLM app as your baseline instead of the reference agent, then carry it through the same red-team → defend → residual-risk cycle. Cite the specific app(s) you used and keep the exploit → fix → test artifacts in your submission.
+
+Whichever target you choose, the four graded parts (threat model, red-team, layered defense, residual-risk analysis) are identical; Target B simply gives you a richer, standards-aligned starting codebase.
 
 ##### Tools to Install
 
