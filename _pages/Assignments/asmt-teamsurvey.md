@@ -43,6 +43,11 @@ This short, individually submitted survey is the first milestone of the [Project
 
 **How teams are formed — full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics — members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict — while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Honest answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
+**Confidentiality.** Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else. What your future team learns about your working style, it learns from *you*, at the charter activity — where you will be invited to share whichever of these answers you want your teammates to take seriously.
+
+<!-- Instructor note (not rendered): when forming teams from these responses, take care not to isolate students from marginalized groups as the lone member of a team where they may be the "only one" (the only woman, the only student of color, etc.). Where numbers permit, place at least two together; where they do not, check in with the student privately before finalizing rosters. -->
+
+
 ---
 
 ## Key Concepts
@@ -63,20 +68,21 @@ Submit your answers **individually via the LMS survey** (link in the LMS; do not
 
 **Logistics (matched on directly):**
 
-1. **Meeting availability:** List every recurring weekly window (day + start/end time) in which you could reliably meet a team outside class. List at least three.
+1. **Weekly schedule grid:** On the grid provided in the survey (days of the week × time blocks), mark every recurring window in which you could *actually* meet a team outside class — not windows you could theoretically clear, but ones you would reliably show up for, week after week. Mark at least three, and mark class times, work shifts, practices, and commutes as unavailable so the grid reflects your real week.
 2. **Deadline style:** When do you genuinely do your best work — *well before the deadline* or *at the deadline*? Choose one and add a sentence describing your last group project's rhythm.
 3. **Time and energy preferences:** When in the day do you do your best focused work? How many hours per week can you realistically commit to this course's project beyond class time?
 
-**Working style (shared with your future team):**
+**Working style (confidential like everything here; you choose what to re-share at the charter activity):**
 
 4. **Challenges:** What is genuinely hard for you in team settings? (Examples: speaking up in groups, asking for help, saying no to extra work.)
-5. **Energy sources:** What kind of teamwork leaves you energized?
+5. **Energy sources and drains:** What kinds of tasks and teamwork leave you energized, and what kinds drain you? (Examples: brainstorming energizes you but long silent work sessions drain you — or exactly the reverse; debugging alone recharges you but presenting depletes you.)
 6. **Pet peeves:** What teammate behavior reliably frustrates you? Be specific.
-7. **What matters most:** Complete the sentence: "For me, a team is working well when ______." Take a position.
+7. **What matters most:** Complete the sentence: "For me, a team is working well when ______." Take a position. Then answer its mirror: what matters most to *you* in a teammate?
+8. **Role tendencies:** In past teams, which role have you naturally gravitated toward — the **facilitator** who keeps the meeting moving, the **builder** who wants to make the thing, the **writer** who shapes the words, or the **skeptic** who asks "are we sure?" Name your top one or two. (This informs team formation only: on your team, roles **rotate** on a schedule, so everyone will practice every job — including the ones they would not volunteer for.)
 
 **Interests (secondary matching signal):**
 
-8. **Project-domain interests:** Rank your top two or three domains you would find meaningful for a semester-long, stakeholder-grounded project. Example multidisciplinary domains (you may propose others):
+9. **Project-domain interests:** Rank your top two or three domains you would find meaningful for a semester-long, stakeholder-grounded project. Example multidisciplinary domains (you may propose others):
    - **Health** (campus wellness, public health information, accessibility)
    - **Sustainability / environment** (campus energy, food systems, local conservation)
    - **Education** (tutoring, advising, K-12 outreach, study support)
@@ -86,7 +92,8 @@ Submit your answers **individually via the LMS survey** (link in the LMS; do not
 
 **Confidential (seen only by the instructor):**
 
-9. **(Optional, confidential)** Is there anyone in this course you cannot work productively with? This field is read **only by the instructor**, is never shared or acknowledged, and requires no explanation. Answering it has no effect on your grade; it exists so that a known-bad pairing never has to be explained publicly.
+10. **(Optional, confidential)** Name **at most one** person in this course you would prefer not to work with. This field is read **only by the instructor**, is never shared or acknowledged, requires no explanation, and is a preference the instructor will try to honor — **never a guarantee**. Answering it has no effect on your grade; it exists so that a known-bad pairing never has to be explained publicly.
+11. **(Optional, confidential)** Is there anything else the instructor should know to help your team thrive? Accommodations, outside commitments, past team experiences you do not want to repeat, something you are working on as a teammate — anything at all.
 
 ---
 
