@@ -14,6 +14,7 @@ info:
     - To implement the perceive, plan, act loop against a locally hosted language model
     - To design a system prompt that establishes a persona, tools, output format, and guardrails
     - To add a tool to an agent and parse structured actions safely
+    - To guarantee parseable model output using a structured-output technique (Ollama schema-constrained format, Instructor/Pydantic, or grammar-constrained decoding with Outlines) and to distinguish techniques that enforce validity from those that merely encourage it
     - To evaluate agent behavior empirically, including failure modes and step budgets
     - To apply pair programming practices by alternating driver and navigator roles and recording swap times
     - To diagnose each of five specific failure modes in a pre-written research agent by observing its symptom, locating the root cause in the source, and classifying it as a crash or a silent failure
@@ -92,6 +93,16 @@ info:
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
     - rtitle: "MCP Server Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcpserver.md"
+    - rtitle: "Hugging Face MCP Course (built with Anthropic)"
+      rlink: "https://huggingface.co/learn/mcp-course/"
+    - rtitle: "Hugging Face Agents Course (smolagents)"
+      rlink: "https://huggingface.co/learn/agents-course/en/unit2/smolagents/introduction"
+    - rtitle: "Ollama Structured Outputs (required structured-output segment)"
+      rlink: "https://docs.ollama.com/capabilities/structured-outputs"
+    - rtitle: "Instructor — Structured Output with Pydantic and Ollama"
+      rlink: "https://python.useinstructor.com/integrations/ollama/"
+    - rtitle: "Outlines — Grammar-Constrained Generation"
+      rlink: "https://github.com/dottxt-ai/outlines"
     - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
     - rtitle: "RESTful LLM Access: The api/v1 Paradigm (prerequisite)"
@@ -675,6 +686,13 @@ Your agent so far calls a local model directly. Re-point the *perceive/plan* ste
 
 Beyond the core loop, every submission must show that you can make an agent **use a tool**, make an agent **reason**, and work with **MCP** (the Model Context Protocol). Each capability comes in two flavors — build it **from scratch** (you own the wiring) or drive it **from a framework / served model / existing server** (you own the configuration). **Complete at least one option from Tool Use, at least one from Reasoning, and at least one from MCP.** You may do both flavors of one if it interests you, but one of each capability is the floor. Fold your chosen explorations into your writeup with the transcript evidence each one asks for.
 
+> **Required for everyone — Structured output.** Before your tool-use option can be trusted, the model has to return data your code can parse *reliably*, not free-form prose that happens to contain JSON. As part of your Tool Use exploration, demonstrate **one** structured-output technique and show it recovering from a case where naive parsing fails. Pick one:
+> - **Ollama's `format` parameter** — pass a JSON Schema (or `"json"`) in the request so the server constrains the response to valid JSON. See the [Ollama structured outputs docs](https://docs.ollama.com/capabilities/structured-outputs).
+> - **[Instructor](https://python.useinstructor.com/integrations/ollama/)** — define a Pydantic model (a typed schema much like the dataclasses you already write) and let Instructor validate and auto-retry until the response conforms.
+> - **[Outlines](https://github.com/dottxt-ai/outlines)** — constrain decoding to a grammar/regex/JSON schema so invalid tokens are *impossible*, not merely discouraged.
+>
+> Deliver: a two-or-three-sentence note in your writeup showing a before (free-form parse breaks on a real model response) and after (constrained output parses every time), and one sentence on which of the three guarantees validity versus merely encourages it. This is the reliability glue the rest of your agent's tool-calling depends on.
+
 **Tool Use — pick at least one:**
 
 <details markdown="1">
@@ -687,7 +705,7 @@ Give your agent a real, typed tool using **native function calling** (not the we
 <details markdown="1">
 <summary><strong>Tool Use · From a Framework — give an agent tools you did not wire</strong></summary>
 
-Hand the same tool to an agent through a framework so the framework owns the tool-calling loop. Register a Python function as a tool with LangChain/DeepAgents (or Agno) and let it drive invocation (see the [Agent Frameworks activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md), including how to point the framework at your local Ollama/OpenWebUI model). Deliver: the tool registration, a run transcript, and two things the framework hid from you that you had to do by hand in the from-scratch version.
+Hand the same tool to an agent through a framework so the framework owns the tool-calling loop. Register a Python function as a tool with **smolagents** (Hugging Face's lightweight agent library — the gentlest starting point), LangChain/DeepAgents, or Agno, and let it drive invocation (see the [Agent Frameworks activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md), including how to point the framework at your local Ollama/OpenWebUI model). If you are new to frameworks, prefer smolagents: it is a much thinner wrapper than LangChain, so less of the loop is hidden and the code you write stays close to the from-scratch version. Deliver: the tool registration, a run transcript, and two things the framework hid from you that you had to do by hand in the from-scratch version.
 
 </details>
 
@@ -712,7 +730,7 @@ Drive reasoning by *choosing the model* rather than building the loop. Run a rea
 <details markdown="1">
 <summary><strong>MCP · Create — stand up your own MCP server</strong></summary>
 
-Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover → invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the **MCP Server with OAuth 2.0** direction below, that fully satisfies this option.)* Background: the [MCP activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md).
+Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover → invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the **MCP Server with OAuth 2.0** direction below, that fully satisfies this option.)* Background: the [MCP activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
 
 </details>
 
@@ -3187,6 +3205,8 @@ Answer each prompt in complete sentences. Answers that reference specific observ
 <summary><strong>Direction 4: Build and Deploy an MCP Server with OAuth 2.0</strong></summary>
 
 Take the local agent you built in the core lab and give it real, authenticated tools. You will build a Model Context Protocol (MCP) server that exposes at least two working tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools — and document the full data flow from agent request through OAuth token to tool response.
+
+> **Background resource:** the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/), built with Anthropic, covers the MCP protocol, building a server, and connecting clients. Work through its server-building units before this direction if MCP is new to you; this direction then adds the OAuth 2.0 authorization layer on top of that foundation.
 
 In this lab, you and your partner will build a Model Context Protocol (MCP) server that exposes real tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools. The skills being assessed are implementation precision (does the server actually work?), security integration (does OAuth actually gate access?), and documentation clarity (can someone else understand the data flow?). This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 

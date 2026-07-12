@@ -15,7 +15,8 @@ info:
     - To make and defend chunking decisions empirically by comparing at least two strategies with recall@k metrics
     - To evaluate retrieval quality with recall at k and grounding quality with a citation audit
     - To implement and demonstrate honest abstention when the corpus does not contain an answer
-    - To apply parameter-efficient fine-tuning (LoRA/QLoRA) to a local model using a real dataset
+    - To apply parameter-efficient fine-tuning (LoRA/QLoRA) to a local model using a real dataset and a modern training toolchain (Unsloth or hand-rolled transformers/peft/trl)
+    - To export a fine-tuned model to GGUF and run it locally in Ollama, making a model you trained a first-class citizen of your local-first stack
     - To instrument training with loss curves and evaluate output quality before and after fine-tuning
     - To understand the trade-offs between fine-tuning, RAG, and prompting for knowledge injection
     - To document a fine-tuned model with a model card and identify potential bias shifts
@@ -66,6 +67,10 @@ info:
       rlink: "https://docs.trychroma.com"
     - rtitle: "Fine-Tuning vs. RAG"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
+    - rtitle: "Unsloth — Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
+      rlink: "https://unsloth.ai/docs/get-started/unsloth-notebooks"
+    - rtitle: "Unsloth — Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
+      rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localmodels.md"
     - rtitle: "Data Cards and Model Cards"
@@ -737,25 +742,21 @@ This direction takes the opposite approach to knowledge injection from the one y
 
 ##### Environment Setup
 
-**If using Google Colab:** Create a new notebook and run this setup cell first:
+You have a choice of training toolchain within this direction — both are acceptable, and you must pick one:
+
+- **Toolchain A (recommended default): [Unsloth](https://unsloth.ai/).** Unsloth wraps `transformers`/`peft`/`trl` with a faster, lower-memory training path (a 7B model fits comfortably on a free Colab T4 in a 15–60 minute run) and — crucially for this course — exports your fine-tuned model **directly to GGUF so it runs in Ollama**, closing the local-first loop you have used all semester. Start from an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model and adapt it.
+- **Toolchain B (see-the-internals alternative): raw `transformers` + `peft` + `trl`.** If you would rather wire the `LoraConfig`, `BitsAndBytesConfig`, and `SFTTrainer` by hand to see exactly what Unsloth abstracts, use the hand-rolled script in Step B. You then convert to GGUF with `llama.cpp` at the end (Step C.5).
+
+Whichever toolchain you pick, the graded work is identical: a converging training run, an honest before/after evaluation, a model card, **and your fine-tuned model answering a prompt from inside Ollama.**
+
+**If using Google Colab with Unsloth (recommended):** Create a new notebook, set Runtime > Change runtime type > T4 GPU, and run this setup cell first:
 
 ```python
-# Cell 1: Google Colab Setup
-# Run this cell first. Runtime > Change runtime type > T4 GPU
+# Cell 1: Google Colab Setup (Unsloth)
+# Runtime > Change runtime type > T4 GPU
 
-import subprocess
-import sys
-
-# Install required packages
-packages = [
-    "transformers>=4.40.0",
-    "peft>=0.10.0",
-    "datasets>=2.18.0",
-    "bitsandbytes>=0.43.0",
-    "accelerate>=0.29.0",
-    "trl>=0.8.0",
-]
-subprocess.check_call([sys.executable, "-m", "pip", "install", "-q"] + packages)
+import subprocess, sys
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "unsloth"])
 
 # Verify GPU is available
 import torch
@@ -776,7 +777,9 @@ Setup complete!
 **If using local hardware:** Run in your terminal:
 
 ```bash
-pip install transformers peft datasets bitsandbytes accelerate trl
+pip install unsloth          # Toolchain A (recommended)
+# or, for Toolchain B (hand-rolled):
+# pip install transformers peft datasets bitsandbytes accelerate trl
 python -c "import torch; print('GPU:', torch.cuda.get_device_name(0))"
 ```
 
@@ -903,7 +906,49 @@ print(f"\nFormatted example:\n{train_data[0]['text'][:300]}")
 
 **Why this matters:** LoRA does not modify the original model weights at all — it learns two small matrices (called A and B, with rank `r`) that approximate the weight update. This means you can fine-tune a 7B model on a consumer GPU with 8–16 GB of VRAM. **QLoRA** adds 4-bit quantization on top, cutting VRAM usage roughly in half again.
 
-1. **Create your training script** (`train.py` or a Colab notebook cell). Fill in every `# TODO`:
+**Toolchain A (Unsloth, recommended).** Adapt an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model. The core is only a few lines — Unsloth loads the model already 4-bit-quantized and attaches the LoRA adapters for you:
+
+```python
+# train_unsloth.py — LoRA/QLoRA fine-tuning with Unsloth
+from unsloth import FastLanguageModel
+from trl import SFTTrainer
+from transformers import TrainingArguments
+from datasets import load_dataset
+
+MODEL_ID = "unsloth/Phi-3-mini-4k-instruct"   # TODO: your base model (Unsloth 4-bit variant)
+MAX_SEQ = 512
+
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name=MODEL_ID, max_seq_length=MAX_SEQ, load_in_4bit=True,
+)
+model = FastLanguageModel.get_peft_model(
+    model, r=8, lora_alpha=16, lora_dropout=0.05,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # TODO: justify
+)
+
+# TODO: load and format your dataset into a "text" field, as in Toolchain B below
+dataset = load_dataset("sciq")
+def format_example(ex):
+    return {"text": f"### Instruction:\n{ex.get('question','')}\n\n### Response:\n{ex.get('correct_answer','')}"}
+train_data = dataset["train"].map(format_example)
+
+trainer = SFTTrainer(
+    model=model, tokenizer=tokenizer, train_dataset=train_data,
+    dataset_text_field="text", max_seq_length=MAX_SEQ,
+    args=TrainingArguments(
+        output_dir="./lora-finetuned", num_train_epochs=1,
+        per_device_train_batch_size=4, gradient_accumulation_steps=4,
+        learning_rate=2e-4, fp16=True, logging_steps=10, warmup_ratio=0.03,
+        report_to="none",
+    ),
+)
+print("Starting training..."); trainer.train()
+model.save_pretrained("./lora-finetuned")  # LoRA adapters; GGUF export happens in Step C.5
+```
+
+You still own every hyperparameter above and must justify `r`, `learning_rate`, and `target_modules` in your writeup — Unsloth speeds the run, it does not make the choices for you.
+
+**Toolchain B (hand-rolled, see-the-internals alternative).** Create `train.py` and fill in every `# TODO`. This wires the same LoRA/QLoRA setup by hand so you can see what Unsloth abstracts:
 
 ```python
 # train.py — LoRA/QLoRA fine-tuning with SFTTrainer
@@ -1204,6 +1249,39 @@ print("Saved eval_comparison.csv — open it and fill in the improvement and not
 
 > **Troubleshooting:** If the fine-tuned model produces repetitive output (same phrase repeated over and over), add `repetition_penalty=1.2` to the `generate()` call. If both models produce identical output, the LoRA adapter may not have loaded correctly — check that `PeftModel.from_pretrained` is pointing to the correct directory and that `adapter_config.json` exists there. If perplexity of the fine-tuned model is higher than the base model, the model may have overfit — check your loss curve for a rising validation loss.
 
+#### Step C.5: Export to GGUF and Run Your Model in Ollama
+
+**Why this matters:** All semester your agents have talked to **Ollama**. A fine-tuned model that only runs inside a Colab notebook is not yet part of your stack. This step closes the loop: you convert your adapted model to **GGUF** (the quantized file format Ollama loads) and run *your own model* locally, exactly like the stock models you have been using. This is the payoff of a local-first course — the model you trained becomes a first-class citizen of the same runtime.
+
+1. **Merge and export to GGUF.**
+   - **Toolchain A (Unsloth):** Unsloth exports GGUF in one call. After training:
+     ```python
+     # Merge LoRA into the base weights and write a quantized GGUF
+     model.save_pretrained_gguf("my-finetuned-gguf", tokenizer, quantization_method="q4_k_m")
+     # Produces my-finetuned-gguf/*.gguf
+     ```
+   - **Toolchain B (hand-rolled):** merge the adapter, then convert with `llama.cpp`:
+     ```bash
+     # After merging PeftModel into the base model and saving to ./merged-model:
+     git clone https://github.com/ggerganov/llama.cpp
+     python llama.cpp/convert_hf_to_gguf.py ./merged-model --outfile my-finetuned.gguf --outtype q4_k_m
+     ```
+2. **Download the `.gguf` file** to the machine running Ollama (from Colab: `from google.colab import files; files.download(...)`, or save to Google Drive).
+3. **Write a `Modelfile`** that points Ollama at your GGUF and sets the chat template/system prompt you trained against:
+   ```
+   FROM ./my-finetuned.gguf
+   SYSTEM "You are a domain assistant fine-tuned for <your domain>."
+   PARAMETER temperature 0.7
+   ```
+4. **Register and run it:**
+   ```bash
+   ollama create my-finetuned -f Modelfile
+   ollama run my-finetuned "Ask a question from your domain here"
+   ```
+5. **Capture the transcript.** Include a terminal screenshot or log of `ollama run my-finetuned` answering one in-domain prompt. This transcript is a required deliverable — it is the evidence that your fine-tuned model actually runs in your local stack.
+
+> **Troubleshooting:** If `ollama create` fails to parse the GGUF, confirm the file finished downloading (compare byte sizes) and that your Ollama version supports the quantization you chose (`q4_k_m` is widely supported). If the model loads but answers in gibberish, your `Modelfile` chat template likely does not match the instruction format you trained on — set a `TEMPLATE` block matching your `### Instruction / ### Response` format.
+
 #### Step D: Model Card and Reflection
 
 **Why this matters:** A model without documentation is a liability. The model card format (from Mitchell et al. 2019) is the industry standard for responsible AI deployment — every major model on HuggingFace uses it. Writing one forces you to articulate what your model does, what it does not do, and what could go wrong — the same discipline as the corpus datasheet in the core lab.
@@ -1279,18 +1357,20 @@ These challenges push this direction from a working fine-tune to a research-grad
 
 Fold these into your Lab 2 submission ZIP and readme:
 
-- `train.py` or Colab notebook (`.ipynb`) — runnable training script
+- `train.py`/`train_unsloth.py` or Colab notebook (`.ipynb`) — runnable training script (note which toolchain you used)
 - `dataset_format.py` — dataset loading and formatting code
 - `evaluate_models.py` — comparison script
 - `loss_curve.png` — annotated training/validation loss plot
 - `eval_comparison.csv` — before/after comparison table (10 rows)
 - Quantitative metric results (printed output, screenshot, or CSV)
+- `Modelfile` and a terminal transcript/screenshot of `ollama run my-finetuned` answering an in-domain prompt (evidence your model runs in Ollama)
 - `model_card.md` — complete model card with all 8 sections
 - A section in your `writeup.md` covering reflection answers, hyperparameter justifications, and your fine-tuning-versus-RAG recommendation
 
 #### What proficient work looks like (Direction 1)
 
 - Training runs with a loss curve, a quantitative before/after metric (perplexity or a task-specific metric), a before/after comparison table, and at least one hyperparameter choice justified with evidence.
+- The fine-tuned model is exported to GGUF and demonstrably runs in Ollama via a `Modelfile`, with a transcript of it answering an in-domain prompt.
 - The dataset is described with source, size, format, and any cleaning applied; a validation set is used to catch overfitting; and at least one dataset limitation is named.
 - Evaluation is systematic with a defined metric, honestly reports at least one regression (something the fine-tuned model does worse), and delivers a defended recommendation for whether fine-tuning was worth it versus RAG and prompting.
 - The model card is complete across all eight sections, the bias-risk section identifies at least one bias shift the fine-tuning introduced or amplified, and the reflection answers are substantive and grounded in your own results.
