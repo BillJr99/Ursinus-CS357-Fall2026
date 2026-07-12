@@ -238,7 +238,7 @@ Once publishing works by hand, a GitHub Actions workflow can automate it on ever
 {% endraw %}
 ```
 
-The npm equivalent swaps in `npm ci && npm publish` with an `NPM_TOKEN` stored as a repository secret. Notice what triggers the workflow: a *tag you push deliberately* — not every commit — so the human decision to publish survives the automation. That design is the AI-maker module's CI lesson and the governance assignment's publication gate, implemented in seven lines of YAML.
+The npm equivalent swaps in `npm ci && npm publish` with an `NPM_TOKEN` stored as a repository secret. Notice what triggers the workflow: a *tag you push deliberately* — not every commit — so the human decision to publish survives the automation. That design is the AI-maker module's CI lesson and the publication gate from the Responsible AI in Practice assignment's Governance direction, implemented in seven lines of YAML.
 
 ## 8. Publishing Responsibly
 

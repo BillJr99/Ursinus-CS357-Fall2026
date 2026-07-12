@@ -7,7 +7,7 @@ info:
   coursenum: CS357
   purpose: "To ground your semester project in a real problem owned by a real person outside CS, and to understand that problem through the disciplines it actually lives in, not only through ours."
   tilt:
-    task: "Identify a stakeholder, conduct a prepared listen-and-learn interview, and write a 2-3 page brief with six required sections that frames the problem in the stakeholder's own terms."
+    task: "Anchor your team in a real community partner (from the roster in the syllabus, or an approved stakeholder group), conduct a prepared listen-and-learn interview, and write a 2-3 page brief with six required sections that frames the problem in the stakeholder's own terms."
     criteria: "Assessed on the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an honest account of what you do not yet know; see the rubric below for the full breakdown."
   points: 50
   goals:
@@ -20,8 +20,8 @@ info:
       description: Problem Identification and Research Grounding (Goal 11)
       preemerging: No real stakeholder is identified, or the "problem" is invented by the team rather than drawn from the stakeholder
       beginning: A stakeholder is named but the issue is described in the team's words rather than the stakeholder's, or the brief shows no preparation research about the stakeholder's context
-      progressing: A real stakeholder outside CS was interviewed and the issue is presented in their terms with supporting context, but the problem statement drifts from what the stakeholder actually said or is too broad to act on
-      proficient: The brief presents a real, named-with-consent stakeholder outside CS; the issue appears in the stakeholder's own terms (with at least two direct quotes or close paraphrases attributed to the interview); the problem statement is specific, traceable to the interview, and framed as something an agent system could plausibly address; the "what we don't yet know" section names concrete open questions rather than generic uncertainty (Goal 11)
+      progressing: A real community partner outside CS was interviewed and the issue is presented in their terms with supporting context, but the problem statement stops at the partner's first framing rather than the problem behind it, drifts from what the stakeholder actually said, or is too broad to act on
+      proficient: The brief presents a real, named-with-consent community partner outside CS (from the syllabus roster, or an instructor-approved stakeholder group); the issue appears in the stakeholder's own terms (with at least two direct quotes captured with permission, or attributed close paraphrases); the problem statement reaches the problem behind the stated problem, is specific, traceable to the interview, and framed as something an agent system could plausibly address; the "what we don't yet know" section names concrete open questions rather than generic uncertainty (Goal 11)
     - weight: 30
       description: Multi-Disciplinary Understanding (Goal 12)
       preemerging: The brief treats the problem as purely technical, with no disciplinary perspective beyond CS
@@ -55,7 +55,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team finds a **real stakeholder outside computer science** — a campus office, a local organization, or faculty or students in another discipline — and learns about a problem *they* have, in *their* words. The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks. The assignment is handed out at wk2.1 with an in-class kickoff and is due at wk4.1; briefs are then exchanged across teams for structured peer review at wk5.0.
+In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and publishes the roster in the [syllabus](/); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 with an in-class kickoff and is due at wk4.1; briefs are then exchanged across teams for structured peer review at wk5.0.
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
 
@@ -65,8 +65,8 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 
 | Term | Plain-English Definition | Where It Appears |
 |------|--------------------------|------------------|
-| **Stakeholder** | A real person or office, outside computer science, who owns the problem — they experience it, they would benefit from progress on it, and they can tell you when you have misunderstood it. | Part 1 |
-| **Listen-and-learn stance** | An interview posture in which your goal is to understand, not to pitch. You ask, you follow up, you do not propose solutions in the first meeting. | Part 2 |
+| **Stakeholder** | A real person or office, outside computer science, who owns the problem — they experience it, they would benefit from progress on it, and they can tell you when you have misunderstood it. Usually a community partner from the syllabus roster. | Part 1 |
+| **Listen-and-learn stance** | An interview posture in which your goal is to understand, not to pitch. You ask probing questions, you follow up, you listen for the problem behind the stated problem, and you do not propose solutions in the first meeting. | Part 2 |
 | **The problem in the stakeholder's own terms** | The issue as the stakeholder describes it, in their vocabulary, before any translation into CS language. Captured with quotes. | Brief section 2 |
 | **Disciplinary perspective** | A field's characteristic way of framing the problem: what it notices, what it measures, what counts as evidence, what "solved" means. | Brief section 3 |
 | **Problem statement** | One paragraph, traceable to the interview, stating the problem an agent system could address — without committing to a design yet. | Brief section 4 |
@@ -83,7 +83,9 @@ Before any team commits to a stakeholder, we generate candidates together. In cl
 
 ## Part 1: Identify a Real Stakeholder
 
-The stakeholder must be **real and outside computer science**. Good candidates:
+**Start with the partner roster.** The [syllabus](/) publishes a roster of community partners the instructor has already contacted and who expect to hear from student teams — anchoring your brief in a roster partner means your interview access is real, not hoped-for. Teams claim partners at the wk2.1 kickoff (first come, logged in the decision log). If the roster is still being finalized, or your team's speed-dating round surfaced a stronger candidate, you may instead anchor in a **concrete stakeholder group of your own** — a named office or a specific organization with a person you can actually interview, cleared with the instructor before first contact.
+
+Whether from the roster or self-identified, the stakeholder must be **real and outside computer science**. Good candidates:
 
 - **Campus offices:** sustainability, library, registrar, accessibility services, career services, admissions, facilities, dining
 - **Local organizations:** nonprofits, community centers, historical societies, food banks, small businesses, municipal offices
@@ -97,6 +99,8 @@ Not acceptable: another CS student or CS faculty member's tooling problem, a hyp
 
 ## Part 2: The Interview Protocol
 
+**Empathy before ideation.** The discipline this milestone teaches is understanding the issue *from the stakeholder's perspective* — their pressures, their constraints, their definition of a good day — before your team generates a single solution idea. You are not visiting a partner to validate a project concept; you are there to learn what the problem feels like from inside their work. Ideation comes later, and it will be better for the wait.
+
 The protocol has four phases. Your interview packet (an appendix to the brief) documents each.
 
 **Phase 1 — Prepare.** Before the meeting, research the stakeholder's context (their office's public materials, their discipline's basics) and write **at least six prep questions** in advance. Good prep questions are open and concrete:
@@ -108,7 +112,7 @@ The protocol has four phases. Your interview packet (an appendix to the brief) d
 - "What should we read to understand your field's view of this?"
 - "Is there data or paperwork this problem produces that we could see?"
 
-**Phase 2 — Listen and learn.** In the meeting, your job is to understand, not to pitch. Ground rules: the stakeholder should do most of the talking; follow-up questions ("can you say more about...?") beat new questions; and **no proposing solutions in the first meeting** — a premature "we could just build an app that..." teaches the stakeholder to stop describing the problem. Take notes; one member interviews while another records.
+**Phase 2 — Listen and learn.** In the meeting, your job is to understand, not to pitch. Ground rules: the stakeholder should do most of the talking; follow-up questions ("can you say more about...?") beat new questions; and **no proposing solutions in the first meeting** — a premature "we could just build an app that..." teaches the stakeholder to stop describing the problem. Listen for the **problem behind the stated problem**: the first framing a stakeholder offers is often a symptom or an already-imagined fix ("we need a better spreadsheet"), and your probing questions should keep pulling until you can hear the constraint underneath it ("no one can see who changed what, so nobody trusts the numbers"). Capture **direct quotes** as they happen, and ask permission in the moment ("that's a great way to put it — may we quote that in our writeup?"); quoted-with-permission language is what lets your brief present the issue in the stakeholder's own terms rather than yours. Take notes; one member interviews while another records.
 
 **Phase 3 — Consent.** Ask explicitly: "May we name you and your office in our course writeup, or would you prefer we describe you generically?" Record the answer and honor it in the brief. If they decline to be named, the brief still works — describe the role, not the person.
 
@@ -124,7 +128,7 @@ Write **2-3 pages** with these six sections. Every section names its **primary a
 2. **The issue in the stakeholder's own terms.** Their framing, their vocabulary, at least two direct quotes or attributed close paraphrases. Resist translation; that comes later.
 3. **Disciplinary perspectives involved.** At least two perspectives beyond CS. For each: what does this discipline notice about the problem, what would count as evidence, and what would "solved" mean? Name at least one point where the perspectives pull in different directions.
 4. **A problem statement an agent system could address.** One paragraph, traceable to the interview. State the problem, not a design.
-5. **Candidate track fit.** Two or three sentences per track showing the problem could support **all three** final-project tracks: a built [Custom Agent Team](/Projects/AgentTeam), a [Responsible AI Audit](/Projects/ResponsibleAI) of an existing or proposed system in this domain, or an [Open-Source Agent](/Projects/OpenSourceAgent) artifact the stakeholder's community could adopt. You are not choosing a track yet — you are proving the problem is rich enough to keep the choice open.
+5. **Candidate track fit.** Two or three sentences per direction showing the problem could support **all three** directions of the [Final Project](/Projects/FinalProject): a built Custom Agent Team, a Responsible AI Audit of an existing or proposed system in this domain, or an Open-Source Agent artifact the stakeholder's community could adopt. You are not choosing a track yet — you are proving the problem is rich enough to keep the choice open.
 6. **What you don't yet know.** Concrete open questions: missing facts, unverified assumptions, and things only the literature (or a second conversation) can answer. This section seeds your Literature Review.
 
 Attach the **interview packet** as an appendix: prep questions, notes, consent record, and the follow-up exchange.

@@ -36,8 +36,16 @@ Your entries are organized around the four Open Questions that run through the w
 
 - **Activity, lab, and milestone reflections.** Each closes with a reflection prompt keyed to an Open Question; answer it here in a few honest sentences.
 - **Reading-response stuck points.** When a [reading response]({{ site.baseurl }}/Participation/ReadingResponses) or a setup step fought you, note where and why — the failures are where the real understanding is.
-- **AI-use disclosures.** This course expects honest disclosure of your AI tool use; your notebook is a natural place to keep that running record and to reflect on what the tools did and did not do for your learning.
+- **AI-use disclosures.** This course expects honest disclosure of your AI tool use; your notebook is a natural place to keep that running record and to reflect on what the tools did and did not do for your learning. Note that each major deliverable's reflection includes an AI-use disclosure — how and why AI tools were used — so the notebook accumulates that record deliverable by deliverable.
 - **Cross-thread connections.** The most valuable entries link the technical and the ethical: a sentence noticing that a design choice you made for cost or capability was also an ethical choice.
+
+## Project-Stage Prompts: The Team Itself
+
+The [Project Thread]({{ site.baseurl }}/Projects/PBLThread) will ask you, at three points in the semester, to turn the notebook's lens on your team rather than your code. Answer these when the stage arrives:
+
+- **After the charter (wk2):** Re-read the norms your team just signed. Which one will be hardest *for you personally* to keep — and what does it cost you to keep it?
+- **Mid-project (around the wk8.0 charter revisit):** Describe one moment of productive disagreement on your team — how it surfaced, and how the team moved through it. If you cannot name one, ask yourself honestly whether that is harmony or avoidance.
+- **After Demo Day (adjourning, in Tuckman's terms):** What did this team teach you about how *you* collaborate? What will you do differently on your next team — and what will you bring to it on day one?
 
 ## Format, Cadence, and Evaluation
 
