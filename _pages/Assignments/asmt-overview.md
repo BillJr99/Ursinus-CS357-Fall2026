@@ -12,6 +12,7 @@ info:
   points: 25
   goals:
     - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
+    - To demonstrate baseline command-line, git, and Python-environment fluency by navigating a shell, cloning and committing to a repository, and creating a reproducible environment with uv
     - To articulate personal baseline beliefs about AI agency, trust, and delegation with specific examples
     - To co-author a team charter with concrete role rotation, communication, and conflict-resolution procedures
   rubric:
@@ -19,8 +20,8 @@ info:
       description: Environment Setup and Verification
       preemerging: Little or no evidence that the environment was attempted
       beginning: Some components installed, but the verification transcript is missing or incomplete
-      progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information
-      proficient: The transcript shows all four steps completed with verbatim terminal output — the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field — plus the operating system name and version; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
+      progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information, or the command-line and git checkpoint is incomplete
+      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output — the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field — plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
     - weight: 40
       description: Reflection Essay
       preemerging: The reflection is missing or does not address the prompts
@@ -99,6 +100,31 @@ Before moving on, confirm you can answer yes to each of these:
 
 ---
 
+## Part 1.5: Command-Line and Git Checkpoint
+
+Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment. This checkpoint makes sure those underlying tools work *before* the labs depend on them — the same philosophy as the Ollama setup above. You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork. If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
+
+Complete each step and capture the terminal output:
+
+1. **Navigate.** From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`. Then use one search tool — `grep` (or `ripgrep`/`rg` if installed) — to find a string in a file, and paste the command you ran.
+2. **Version control.** Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`. Paste the transcript of `git log --oneline` showing your commit.
+3. **Reproducible Python with uv.** Install [uv](https://docs.astral.sh/uv/) (the fast, modern Python environment manager we standardize on this term). Create and activate a project environment and add the one dependency the labs start with: `uv venv`, then `uv add requests`, then `uv run python -c "import requests; print(requests.__version__)"`. Paste the output. (If you cannot install uv, fall back to `python -m venv` and `pip install requests`, and note in your submission that you used the fallback.)
+
+### Command-Line Survival — reference (use as needed, not required reading cover-to-cover)
+
+- [tldr pages](https://tldr.sh/) — plain-language example-first cheat sheets for any command (`tldr tar`).
+- [explainshell](https://explainshell.com/) — paste any command line and see each flag explained.
+- [ShellCheck](https://www.shellcheck.net/) — catches bugs in shell scripts before they bite.
+- `curl` and [HTTPie](https://httpie.io/) plus [jq](https://jqlang.github.io/jq/) — you will hit JSON APIs (Ollama, MCP) all semester; `curl … | jq` is your friend.
+
+### Part 1.5 Checklist
+
+- [ ] A shell transcript showing directory creation, navigation, and a `grep`/`rg` search
+- [ ] A `git log --oneline` transcript showing at least one commit pushed to a remote
+- [ ] A `uv` (or documented fallback) transcript importing `requests`
+
+---
+
 ## Part 2: Baseline Reflection
 
 Write approximately one page addressing all four prompts below. This is captured now so you can compare it to your thinking at the end of the semester. There are no wrong answers.
@@ -142,6 +168,7 @@ With your assigned team, co-author a one-page charter. All members must contribu
 
 Submit a single PDF or markdown file containing:
 - Your tool setup transcript (all four steps plus version and OS info)
+- Your command-line and git checkpoint transcript (Part 1.5: navigation, git commit/push, uv environment)
 - Your baseline reflection (one page, four sections)
 - Your team charter (one per team is fine; include it with each member's individual submission)
 

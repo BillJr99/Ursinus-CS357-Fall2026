@@ -15,6 +15,7 @@ info:
     - To verify quoted evidence programmatically against source artifacts and report a hallucinated-evidence rate
     - To validate the judge against blind human scores on a calibration set using percent agreement or Cohen's kappa
     - To measure at least one judge bias empirically with a controlled experiment and propose a concrete countermeasure
+    - To express the judge's expected behavior as a versioned, declarative eval configuration in an industry harness (promptfoo or Inspect AI) and demonstrate a regression run against a golden set
     - To design a structured evaluation dataset with golden, stylistic, and adversarial question categories that expose distinct failure modes in an agent
     - To implement multiple automated evaluation metrics including exact match, G-Eval LLM-as-judge scoring, and semantic similarity
     - To identify regressions and improvements by running a controlled before-and-after comparison on a well-defined eval set
@@ -28,13 +29,13 @@ info:
     - To construct a GitHub Actions CI pipeline that validates formatting, linting, and test coverage on every push and pull request
     - To package and publish an AI agent as a pip-installable wheel to TestPyPI and as a container image to the GitHub Container Registry
   rubric:
-    - weight: 30
+    - weight: 25
       description: Pipeline Implementation
       preemerging: The pipeline fails to run due to major issues, or the program fails to run
       beginning: The pipeline runs but fails on the test submissions due to one or more minor issues
       progressing: The pipeline scores a folder of submissions against the JSON rubric and emits a well formed CSV, with a fragile component such as JSON parsing fallback or evidence capture
       proficient: The pipeline robustly walks a folder or ZIP of text submissions, emits one CSV row per artifact with per-criterion level labels, quoted evidence strings, and a weighted total; malformed judge output is flagged in the CSV as "REVIEW_NEEDED" with the raw output logged; the rubric file, model, paths, temperature, and seed are all read from config; a terminal screenshot or log confirms the pipeline runs end-to-end on the twelve synthetic submissions
-    - weight: 25
+    - weight: 20
       description: Human Agreement Validation
       preemerging: No human validation is attempted
       beginning: Human scores exist but are collected after seeing the judge output, or agreement is not quantified
@@ -52,6 +53,12 @@ info:
       beginning: Evidence quotes are collected but never verified
       progressing: Evidence quotes are spot checked by hand with a reported faithfulness rate
       proficient: Evidence quotes are verified programmatically against the source artifact using exact substring match or a fuzzy match (with the stated threshold); hallucinated quotes are flagged in the CSV with a "HALLUCINATED_EVIDENCE" marker; the hallucinated evidence rate (e.g., "3 of 48 quotes, 6.25%") is reported in the readme
+    - weight: 10
+      description: Reproducible Eval Harness
+      preemerging: No declarative eval configuration is attempted
+      beginning: A harness (promptfoo or Inspect AI) is installed and runs, but the eval cases do not correspond to the pipeline's golden set, or results are not captured
+      progressing: The judge's expected behavior is expressed as a versioned eval configuration over the golden calibration set, and one full harness run against the local model is captured
+      proficient: A versioned eval configuration (promptfoo YAML or an Inspect AI task) encodes the golden calibration set with at least one assertion per case; the configuration is committed alongside the code; a before-and-after regression run demonstrates that a deliberate change to the judge prompt or rubric is caught by the harness, with both result sets included and a short interpretation in the readme
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
@@ -75,6 +82,10 @@ info:
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
     - rtitle: "Ollama API Documentation"
       rlink: "https://github.com/ollama/ollama/blob/main/docs/api.md"
+    - rtitle: "promptfoo Documentation (Part 5, Option A)"
+      rlink: "https://www.promptfoo.dev/docs/intro/"
+    - rtitle: "Inspect AI Documentation (Part 5, Option B)"
+      rlink: "https://inspect.aisi.org.uk/"
     - rtitle: "pytest Documentation"
       rlink: "https://docs.pytest.org/en/stable/"
     - rtitle: "Python Packaging User Guide"
@@ -830,9 +841,41 @@ It is ethical to measure potential bias in a grading system using synthetic test
 
 ---
 
+## Part 5: Reproducible Evals with a Declarative Harness
+
+So far, your confidence in the judge lives in ad-hoc scripts and a readme. Industry teams instead encode that confidence as a **versioned eval configuration**: a declarative file that says "given these inputs, the judge must produce these outputs (or satisfy these assertions)," checked into the repository next to the code so that every future change to the prompt, model, or rubric can be re-verified with one command. In this part you will wrap the pipeline you built in Parts 1–4 in exactly such a harness. This replaces any further ad-hoc verification scripting — the harness *is* your verification from here on.
+
+Choose **one** harness (this is a choice within the lab, not an optional extra — everyone completes Part 5 with one of the two):
+
+- **Option A (default): [promptfoo](https://www.promptfoo.dev/)** — a declarative YAML-based harness. You describe prompts, providers, test cases, and assertions in `promptfooconfig.yaml` and run `npx promptfoo eval`. promptfoo speaks to local models through Ollama's OpenAI-compatible endpoint, so no hosted API is required. Most assertion types (`contains`, `equals`, `javascript`, `regex`) run without any judge model at all.
+- **Option B (for pairs who want a Python-native harness): [Inspect AI](https://inspect.aisi.org.uk/)** — the UK AI Security Institute's open-source framework. You define a `Task` (Dataset → Solver → Scorer) in Python and run `inspect eval`. Point the model at your local Ollama endpoint. Inspect's log viewer gives you a per-sample trace of every call.
+
+### Step-by-step guide
+
+1. **Define your golden set.** Reuse the calibration set from Part 2: the (at least eight) synthetic submissions with agreed blind human scores. Each becomes one eval case: the input is the submission text plus the rubric criterion, and the expected output is the human-consensus level for that criterion. Add two adversarial cases from Part 4's bias probe (e.g., the padded and unpadded versions of the same submission, which must receive the same level).
+2. **Encode assertions.** For each case, write at least one assertion: the judge's returned level equals the human-consensus level (exact match on the parsed JSON field), or, for the adversarial pairs, that the two levels are equal to each other. In promptfoo these are `assert:` blocks; in Inspect they are scorers.
+3. **Run the harness against your local model** and capture the results (promptfoo's `output.json`/web viewer screenshot, or Inspect's `.eval` log). Record the pass rate. It will likely not be 100% — that is a finding, not a failure; your Part 2 kappa already told you the judge and humans disagree sometimes.
+4. **Demonstrate a regression.** Make a deliberate, plausible-seeming degradation to your judge prompt (for example, delete the instruction that evidence must be quoted verbatim, or remove the fail-closed JSON instruction). Re-run the harness. Show the pass rate drop, then revert the change and show it recover. Include both result sets and a two-or-three-sentence interpretation in your readme: this is what the harness buys you — a tripwire that catches silent quality regressions before they reach anything real.
+5. **Commit the configuration.** The eval config file lives in your submission alongside the code, with a comment header stating the model, temperature, and seed it was validated against.
+
+> **Connection to Direction 1:** if you choose Direction 1 (Building an Agent Evaluation Harness), you will generalize this discipline — hand-rolling the metrics and the regression runner yourself to see what's inside tools like promptfoo and Inspect. Your Part 5 configuration becomes the baseline your hand-rolled harness must match.
+
+### Troubleshooting — Part 5
+
+**promptfoo cannot reach Ollama**
+Set the provider to Ollama's OpenAI-compatible endpoint, e.g. `openai:chat:llama3.2` with `apiBaseUrl: http://localhost:11434/v1` (any non-empty API key satisfies the client). Verify first with `curl http://localhost:11434/v1/models`.
+
+**Assertions fail because the judge output wraps JSON in prose**
+Reuse the fail-closed JSON parsing lesson from the core pipeline: assert on the *parsed* field, not the raw text — in promptfoo use a `javascript` assertion that parses first; in Inspect, parse in the scorer. If parsing itself fails, that is a legitimate eval failure worth counting.
+
+**Inspect eval runs but every score is zero**
+Check that your scorer compares the parsed level as the same type (int vs string) as the target. Inspect's log viewer (`inspect view`) shows the raw model output per sample, which usually reveals the mismatch immediately.
+
+---
+
 ## Deliverables
 
-Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
+Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, your Part 5 eval harness configuration with both regression result sets, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
 
 ## Learning Log
 
@@ -871,7 +914,7 @@ Instead of putting the entire submission in the prompt, treat grading as a retri
 
 ## Choose Your Direction
 
-Everyone completes the **core rubric-grading pipeline** above: the batch scorer, the human-agreement validation, the evidence verification, and the bias measurement. That core is the required spine of this lab. Once it runs end-to-end, you extend it in **one** direction of your choosing from the three below.
+Everyone completes the **core rubric-grading pipeline** above: the batch scorer, the human-agreement validation, the evidence verification, the bias measurement, and the declarative eval harness. That core is the required spine of this lab. Once it runs end-to-end, you extend it in **one** direction of your choosing from the three below.
 
 You submit **one** deliverable, and it earns **one grade against the single 100-point rubric at the top of this page** — that grade covers both the core pipeline and the direction you chose. The directions are not separate labs and do not add rubric rows; they are different ways to mature the same measurement pipeline from a one-shot script into a trustworthy, observable, shippable system. Read all three, then pick the one that best fits the agent or workflow you want to keep improving. Each direction below carries its own setup, step-by-step instructions, deliverables, and reflection prompts, plus a short "What proficient work looks like" checklist so you know when the direction is done.
 
