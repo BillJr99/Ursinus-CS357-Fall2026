@@ -139,7 +139,7 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 
 ## Model 3: Charter Construction
 
-**Why this matters:** The WPI SWEET Center Team Contract Exercise, on which this activity is modeled, has teams write their contract in terms of *behaviors a third party could verify* — the same enforceability standard your Governance assignment will later apply to AI systems. Here is the anatomy of a charter, shown two ways: as a checklist of required sections, and as a worked before/after example.
+**Why this matters:** The WPI SWEET Center Team Contract Exercise, on which this activity is modeled, has teams write their contract in terms of *behaviors a third party could verify* — the same enforceability standard the Governance direction of the Responsible AI in Practice assignment will later apply to AI systems. Here is the anatomy of a charter, shown two ways: as a checklist of required sections, and as a worked before/after example.
 
 **Required sections (your charter must have all six):**
 

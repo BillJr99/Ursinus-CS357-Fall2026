@@ -114,7 +114,7 @@ Consider three pipelines you have personally built this term: Lab 2 (RAG over yo
 
    > *Hint:* A law like FERPA doesn't care what language your pipeline is written in or whether you meant to violate it. It cares whether protected data was processed in an unauthorized context. Who in your pipeline decides the context — the code, or the person who runs it?
 
-6. Write the three-sentence data-handling disclosure you would owe users of your final project. (This text goes directly into your governance assignment.)
+6. Write the three-sentence data-handling disclosure you would owe users of your final project. (This text goes directly into the Data Handling section of the Governance direction of the Responsible AI in Practice assignment, if you choose that direction.)
 
    *Hint: Include (a) what data the system collects or processes, (b) where that data goes and how long it is kept, and (c) what the user can do if they want their data deleted or have a concern.*
 
