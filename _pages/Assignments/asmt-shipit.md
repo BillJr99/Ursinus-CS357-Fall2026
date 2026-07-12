@@ -33,7 +33,7 @@ info:
       preemerging: I have not published anything, or my publication is broken for strangers
       beginning: My artifact is published, but a stranger cannot use it from the public record alone
       progressing: My artifact is published, installable or reachable by a stranger, with versioning and a readme, though a minor gap remains such as a missing license or visibility friction
-      proficient: My artifact is published with semantic versioning, a license, and a readme answering what, install, and use in thirty seconds; I documented a pre-publication audit (dry run output or layer listing reviewed); and a classmate verified a stranger installation or visit
+      proficient: My artifact is published with semantic versioning, a license, and a readme answering what, install, and use in thirty seconds; I documented a pre-publication audit (dry run output or layer listing reviewed); a classmate verified a stranger installation or visit; and the artifact is pinned or linked from my GitHub profile or personal portfolio page with a short project story
     - weight: 20
       description: "Self-Check: Writeup, AI Disclosure, and Evidence Portfolio"
       preemerging: My evidence portfolio is incomplete
@@ -169,8 +169,19 @@ Assemble the following evidence — this is what you will check against the self
 8. The classmate confirmation (one line, with their name or username)
 9. A README suitable for strangers (what, install, use — answerable in 30 seconds)
 10. An **AI contribution statement** honestly delineating what the agent produced, what you wrote or changed, and what you verified
+11. A **portfolio entry**: the repository pinned or linked from your GitHub profile or portfolio page with your 200-word project story
 
 Ensure reproducibility by pinning dependency versions and listing software version information (Node version, npm version, Docker version, or Wrangler version as applicable).
+
+---
+
+## Your Portfolio Entry and GitHub Profile
+
+Publication is only half of existing in the world; the other half is being findable. Once the artifact is live:
+
+- **Pin the repository** on your GitHub profile. If you do not have a profile README, create one now — it is a ten-minute job with an outsized payoff, and this artifact is its first entry.
+- **Write a project story of roughly 200 words**: the problem, what you built (and what the agent built, honestly delineated — your AI contribution statement is most of this already), and the evidence — the registry link, the CI badge, the classmate's stranger confirmation. Name what *you* did explicitly, because that is the sentence a resume bullet and an interview answer are made from.
+- **Reuse the story.** The same story is your opening move with guests at Demo Day (see the [Demo Day Guide](/Assignments/DemoDayGuide)) and the public, recruiter-legible trace the Final Project's Product rubric asks for. Update your resume and LinkedIn while the numbers are fresh.
 
 ---
 
