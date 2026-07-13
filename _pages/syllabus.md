@@ -188,7 +188,7 @@ goals:
 - goal: "Use the Open Questions to assess the learning process throughout, describing new understandings and specific areas of growth and skill development"
 
 grade_breakdown:
-- category: "Labs (6 required, each with a direction you choose)"
+- category: "Labs (8 required: six full labs, each with a direction you choose, plus the Golden-Set Benchmark and RAG Quality Checkup scaffold labs)"
   weight: "35%"
 - category: "Written Assignments (3 required, each with a direction you choose)"
   weight: "20%"
@@ -370,6 +370,11 @@ schedule:
   date: "0"
   title: "Hallucinations and Evaluating Agent Outputs"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+  deliverables:
+  - dtitle: "Lab: Golden-Set Benchmark Handed Out (your personal 10-item benchmark, reused in the RAG Quality Checkup and Lab 5)"
+    dlink: "Assignments/GoldenSet"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-goldenset.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter — hallucination, evaluation, and what the model cannot check for itself"
 - week: "3"
@@ -392,6 +397,10 @@ schedule:
     dlink: "Assignments/LocalAgent"
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
+  - dtitle: "Lab: Golden-Set Benchmark Due"
+    dlink: "Assignments/GoldenSet"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-goldenset.md"
   - dtitle: "Written Assignment: Prompt Patterns and AI by Hand Handed Out"
     dlink: "Assignments/PromptPatterns"
     points: "100"
@@ -483,6 +492,11 @@ schedule:
   date: "0"
   title: "Studio: Local Agent Stack Clinic and Catch-Up"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
+  deliverables:
+  - dtitle: "Lab: RAG Quality Checkup Handed Out (begun in today's studio on your Lab 2 pipeline)"
+    dlink: "Assignments/RAGCheckup"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
   - rtitle: "Studio session: bring your Lab 2 pipeline-in-progress and your stuck points — today is open build, debugging, and review time before fall break (Lab 2 is due the session after break)"
   - rtitle: "Required prep for Lab 1 Directions 2–3 only (do the installs at home first): The Local Agent Stack — the 3-container minimal stack section (Tiers, Ports, and Compose)"
@@ -502,6 +516,10 @@ schedule:
     dlink: "Assignments/RAGKnowledgeBase"
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
+  - dtitle: "Lab: RAG Quality Checkup Due"
+    dlink: "Assignments/RAGCheckup"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   - dtitle: "Written Assignment 2: Design Your Agent System Handed Out"
     dlink: "Assignments/AgentSystemDesign"
     points: "100"
