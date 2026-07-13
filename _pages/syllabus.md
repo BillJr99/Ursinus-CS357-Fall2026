@@ -840,7 +840,7 @@ This semester the section runs as **4 teams of 4 students**, so every team is la
 
 **Teams are formed, not found.** I form project teams from the Team Formation Survey — balancing schedules, work styles, and deadline habits — and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process. The intra-team check-ins are where we keep that charter honest. If your team is struggling, say so early — in the confidential pulse of any check-in or in office hours — and we will work through it together.
 
-**There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, participation, and reflection notebook carry the grade.
+**There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, participation, and reflection notebook carry the grade. Our four teams present for about fifteen minutes each in the 12:00–1:15 slot; guests attending CS374's Demo Day that morning (10:00–11:15) are welcome at both.
 
 ## How Assignments Are Structured: Purpose, Task, and Criteria
 
