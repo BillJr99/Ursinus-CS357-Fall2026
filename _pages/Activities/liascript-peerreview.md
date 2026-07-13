@@ -18,6 +18,21 @@ Professionals do not wait for the final grade to find out what is wrong with the
 
 ---
 
+## The 15-Minute SQR Protocol Card (in-class version)
+
+This is the complete run-order for the in-class exchange — self-contained, so you can run it from this card alone:
+
+| Minutes | Step |
+|---------|------|
+| 2 | **Silent read** of the other team's artifact. No discussion yet — form your own impressions first. |
+| 5 | **Write** your card: one **S**trength with evidence (point to the sentence or section and say what it accomplishes), one **genuine Q**uestion (something you actually do not know), and one **R**isk with a suggested mitigation (no risk without an exit). |
+| 5 | **Exchange and discuss** cards with the other team — restate their feedback before responding to it. |
+| 3 | **Log** what your team will change as a result: who, what, by when. |
+
+> The full activity below is **required pre-class reading before the first exchange (Sep 29)** — it explains what makes each field of the card work, and how to receive the card you get.
+
+---
+
 ## Directions and Group Roles
 
 Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.

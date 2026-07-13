@@ -16,6 +16,14 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
 
+> **Before class: the 10-minute pre-install checklist**
+>
+> 1. Download and install Ollama at home: https://ollama.com/download
+> 2. Run `ollama pull llama3.2` (about a 2 GB download) while you are on a good connection.
+> 3. Bring the output of `ollama list` to class.
+>
+> In class we verify installs, fix stragglers, and explore. If your install failed or the download would not finish, do not worry — that is exactly what today's session is for. The Docker/OpenWebUI step (step 5 of the install checklist below) is optional today.
+
 ---
 
 ## Directions and Group Roles
