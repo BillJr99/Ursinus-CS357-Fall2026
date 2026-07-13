@@ -41,11 +41,18 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 This section sets up the Python helper function that all later code cells will reuse. It sends a list of messages (the conversation history so far) to a locally running Ollama server and returns the model's reply as a plain string. You don't need to understand every line yet — just run it and confirm the "Environment ready." message appears before moving on.
 
-This section assumes Ollama is running locally (we install it together next class; today your instructor's machine serves the room). The only dependency is `requests`.
+This section assumes Ollama is running locally (we install it together in the Running Your Own AI session next week; today your instructor's machine serves the room). The only dependency is `requests`.
 
 ---
 
 ## Code Cell
+
+> **📝 Today: trace on paper, run next week.** Ollama is not on your machines yet — we install it together in the *Running Your Own AI* session next week. Today your team traces the agent loop **on paper**; run this and the later code cells after the install day next week. Paper-trace protocol:
+>
+> 1. Given the user query, **write the model's likely action line** (a `Thought:` plus either `Action: calc(...)` or `Final Answer: ...`).
+> 2. **Parse it exactly as your code would**: which branch fires — the `Final Answer:` check or the `calc(...)` regex?
+> 3. **Write the observation** your program would compute and append to memory.
+> 4. **Repeat** from step 1 with the updated memory until the trace reaches `Final Answer:`.
 
 ```python
 import json
@@ -145,6 +152,8 @@ We give the model exactly one tool — a calculator — and parse its output for
 
 ## Code Cell
 
+> **Run after install day:** trace this on paper today; execute it after next week's Ollama install session.
+
 ```python
 import re
 
@@ -214,6 +223,8 @@ OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the w
 ---
 
 ## Code Cell
+
+> **Run after install day:** trace this on paper today; execute it after next week's install session, once your local stack is up.
 
 ```python
 import os, re, requests

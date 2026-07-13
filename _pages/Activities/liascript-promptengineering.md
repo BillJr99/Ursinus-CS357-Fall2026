@@ -118,7 +118,7 @@ The fastest way to a bad output is a rushed prompt. Before you write the *final*
 2. **Describe what success looks like.** State the done-conditions up front, exactly as Prompt B did in Model 1 and as every exercise in this course states "*You've succeeded when...*". If you can name what a good output contains — an analogy, three sentences, valid JSON, a citation — the model can aim at it and you can *check* it. A goal you can evaluate is a goal you can hit.
 3. **Iterate on the plan and the prompt together.** Treat the first response as a draft of the *plan*, not the final deliverable. Refine the plan with the model over a few turns, and fold what you learn back into the prompt. The prompt you finish with is almost never the prompt you started with.
 
-This is the same practice you used in the Welcome activity's Delegation icebreaker (Steps 2 and 3): converse to define success, then plan the work before executing it.
+This is the Delegation competency from the Welcome activity's at-home AI Fluency reading, put into practice: converse to define success, then plan the work before executing it.
 
 > **Tip:** Plan → describe success → iterate. Ask the model what it needs to know, tell it what "done" looks like, and refine both the plan and the prompt before you commit to a full run.
 
@@ -141,6 +141,8 @@ Before we run the code, try this thought experiment: if you ask a knowledgeable 
 The code cell below runs the same question ("Why is the sky blue?") through three different system prompts (persona instructions) and prints each response side by side. Notice that only the system prompt changes — the model, the question, and all other settings stay identical.
 
 ## Code Cell
+
+> If you have not installed Ollama yet (we do it together Thursday), read this cell and predict its output — bring your prediction to class.
 
 ```python
 import requests
@@ -201,6 +203,8 @@ Model 1 argued that Prompt B is easier to *evaluate* than Prompt A. Now we make 
 The cell below defines five `(country, expected capital)` pairs, then runs the *same* test set through two different system prompts — a vague one and a specific, format-constrained one. Because the score uses exact match, the vague prompt's full-sentence answers fail while the specific prompt's one-word answers pass. That accuracy gap is the *evidence* that one prompt is better for this task.
 
 ## Code Cell
+
+> If you have not installed Ollama yet (we do it together Thursday), read this cell and predict its output — bring your prediction to class.
 
 ```python
 import requests

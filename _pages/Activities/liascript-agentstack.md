@@ -14,6 +14,8 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Local Agent Stack: Wiring Containers into a System
 
+> **Supplemental — required prep only for Lab 1 Directions 2–3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the Oct 6 studio: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
+
 One container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
 
 ---
@@ -166,6 +168,12 @@ docker run -d --name open-webui -p 3000:8080 \
 # Then in its Admin Settings -> Connections -> OpenAI:
 #   URL http://host.docker.internal:4000/v1, key sk-litellm-local
 ```
+
+---
+
+> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — are the entire Oct 6 studio build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for Lab 1 Directions 2–3, not as in-studio work.
+
+---
 
 The same attach-by-URL move adds the rest of the frontend tier as you need each one (`open-notebook` for research notebooks, `voicebox` for speech, `presenton` for slide generation, `open-terminal` for a browser shell, `open-design` for the agent-embedded canvas, `calibre-web` for your reading library): each gets a port row, an identity directory, the `--add-host` flag, and its connection settings pointed at the gateway. Tool-tier services follow suit: `searxng` gives your agents private web search, `mcpproxy` hosts MCP tools from YAML definitions, and `surrealdb` provides persistence; agents reach them at `http://host.docker.internal:<port>` exactly as they reach the gateway.
 
