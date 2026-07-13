@@ -1,5 +1,5 @@
 ---
-layout: project
+layout: assignment
 permalink: /Projects/FinalProject
 title: "CS357: Foundations of Artificial Intelligence - Final Project"
 

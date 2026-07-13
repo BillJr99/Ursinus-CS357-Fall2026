@@ -376,7 +376,7 @@ question ──> sample k drafts at high temperature      (k model calls)
 
 Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged — the subject of Part 4). For the full treatment, including the in-class tomatillo salsa example and why *independence* between samples matters, work through the [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md) — it is strongly recommended before you start this part.
 
-Implement the sample, cluster, synthesize pipeline: $k$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and **discloses any close disagreement in one line**. Demonstrate the pipeline on a long-form question with no single correct answer (the in-class tomatillo salsa question is a fine starting point; choose your own analogous question too).
+Implement the sample, cluster, synthesize pipeline: $$k$$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and **discloses any close disagreement in one line**. Demonstrate the pipeline on a long-form question with no single correct answer (the in-class tomatillo salsa question is a fine starting point; choose your own analogous question too).
 
 ### Step-by-step guide
 
@@ -599,7 +599,7 @@ Your `distance_threshold` is too small. Increase it from 0.3 to 0.5. This is com
 Construct a labeled task set of at least ten questions with checkable answers (arithmetic word problems with traps work well). At **matched call budgets**, compare:
 
 1. Single shot (one agent, one sample).
-2. Self-consistency (sample $k$, majority vote, no debate rounds).
+2. Self-consistency (sample $$k$$, majority vote, no debate rounds).
 3. Full debate (your Part 1 system).
 
 Report accuracy and total model calls per condition. Then find and document at least one **correlated failure**: a question where every agent agrees on the same wrong answer. Explain, using the independence argument from class, why no aggregation strategy could have saved you, and what non-LLM addition (a tool, retrieval) would.

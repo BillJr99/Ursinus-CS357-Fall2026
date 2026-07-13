@@ -5,12 +5,37 @@ title: "CS357: Foundations of Artificial Intelligence - Reading Responses and Di
 
 info:
   coursenum: CS357
-  points: 0
+  points: 10
   submission: "Post brief responses to the class discussion board before the marked sessions. These are low-stakes preparation, assessed as part of the 10% Class Activities and Participation component."
   goals:
     - To engage each reading or result actively before class, connecting it to systems you run yourself
     - To arrive at discussion days and student-led Reading Group sessions ready to contribute
     - To give presenters an engaged audience and earn participation as a member of it
+  rubric:
+    - weight: 30
+      description: "Takeaway — the single most important claim or result, in your own words"
+      preemerging: "No takeaway, or the response only restates the title or a whole-thing summary."
+      beginning: "A takeaway is present but is a broad summary rather than the one claim that matters, or is copied wording."
+      progressing: "Identifies the single most important claim or result in your own words, accurately."
+      proficient: "Identifies the key claim precisely and in your own words, and signals why it is the one that matters over the others."
+    - weight: 25
+      description: "Question — a real, answerable question the reading raised"
+      preemerging: "No question, or a question answered directly by the text (recall only)."
+      beginning: "An open question, but generic — it could be asked of almost any reading."
+      progressing: "A genuine question specific to this reading: something you doubt, something unresolved, or something you would test."
+      proficient: "A sharp question that names the assumption or evidence in doubt and suggests how it could be resolved or tested."
+    - weight: 30
+      description: "Connection to your own system — tie the reading to something you run or could run"
+      preemerging: "No connection to a system you operate."
+      beginning: "A vague gesture at relevance with no specific system, configuration, or decision named."
+      progressing: "Ties the reading to a concrete system you run or could run (local model, RAG corpus, MCP server, agent eval) and names one thing it would change."
+      proficient: "Names the specific change and its consequence — how you would reconfigure, chunk, scope, or evaluate differently, and what it would cost or risk."
+    - weight: 15
+      description: "Timeliness and engagement — posted before the marked session, ready to contribute"
+      preemerging: "Not posted, or posted after the session."
+      beginning: "Posted, but so late or thin that it does not prepare you to contribute."
+      progressing: "Posted before the session in the three-sentence form, ready to bring to discussion."
+      proficient: "Posted before the session and framed so a presenter or peer could build on it directly in the room."
 
 tags:
   - resource

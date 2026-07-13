@@ -11,7 +11,7 @@ info:
   tilt:
     task: "Select a timely, course-relevant source, frame it in a five-minute summary, facilitate a class discussion with three to five scaffolded questions, and submit a short reflection."
     criteria: "Assessed on the relevance of your source, your framing, the depth and sequencing of your questions, your facilitation, and your reflection; see the rubric below. This assignment is extra credit, and the rubric scales the credit earned for your slot."
-  points: 0
+  points: 10
   goals:
     - "Select and summarize a current event or reading relevant to course themes (AI systems, responsible AI, societal impact, technical foundations)"
     - "Craft three to five focused discussion questions that move from comprehension to analysis to personal judgment"
