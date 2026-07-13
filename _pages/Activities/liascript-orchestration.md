@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Orchestration Patterns: Pipelines, Routers, and Planners
 
-Unit 3 begins: instead of making one agent smarter, we make **several simple agents cooperate**. The enabling insight comes straight from the small context window principle: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt. We move from **why decompose $\rightarrow$ the pipeline $\rightarrow$ the router $\rightarrow$ the planner $\rightarrow$ composing them in code**.
+Unit 3 begins: with your design artifacts from the *Design First: Plan Before You Build* activity in hand, instead of making one agent smarter, we make **several simple agents cooperate**. The enabling insight comes straight from the small context window principle of the *Memory and the Small Context Window Principle* activity: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt. We move from **why decompose $\rightarrow$ the pipeline $\rightarrow$ the router $\rightarrow$ the planner $\rightarrow$ composing them in code $\rightarrow$ keeping the composed loop reliable**.
 
 ---
 
@@ -47,7 +47,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **Router (one decision, then dispatch).** A classifier agent reads the input and forwards it to one of several specialists: billing questions to the billing agent, technical questions to the tech agent. The router's entire context is the input plus the menu of destinations — about as small as a context gets. Reliability comes from constraining the router's output to a closed set of labels.
 
-**Planner (dynamic decomposition).** When the workflow is *not* known in advance, a planner agent writes a step list, worker agents execute steps, and the planner revises on failures. Planners buy flexibility at the cost of predictability, so we bound them with step budgets, exactly as in the advanced loops activity.
+**Planner (dynamic decomposition).** When the workflow is *not* known in advance, a planner agent writes a step list, worker agents execute steps, and the planner revises on failures. Planners buy flexibility at the cost of predictability, so we bound them with step budgets — a technique covered in depth in the supplemental *Advanced Agent Loops: Control Flow, Reflection, and Recovery* activity, if you explored it.
 
 A useful design heuristic follows: **choose the least dynamic pattern that solves the problem.** Pipelines before routers, routers before planners, planners before free-roaming autonomy.
 
@@ -216,7 +216,58 @@ According to the design heuristic developed today, a team should reach for a pla
 
 # Part III: Synthesis and Practice
 
-In this section you will extend and evaluate the pipeline and router you built in Part II, and you will design the message format for a planner. These exercises connect directly to Lab work, so the design decisions you make here carry forward.
+In this part you first fold in two reliability upgrades — reflection and recovery, summarized here from the supplemental *Advanced Agent Loops* activity — and then extend and evaluate the pipeline and router you built in Part II, designing the message format for a planner. These exercises connect directly to Lab work, so the design decisions you make here carry forward.
+
+## Model 3: Reflection and Recovery — Keeping Composed Loops Reliable
+
+*(A two-model summary of material from the supplemental Advanced Agent Loops activity — see Going Deeper at the end if you want the full treatment.)*
+
+**Why this matters:** Every orchestration you built today is still a loop, and loops fail in loop-shaped ways: they oscillate, overrun budgets, crash mid-task, and repeat the same mistake on every run. Two upgrades address this. The **reflection loop** (Reflexion, Shinn et al., 2023): after each *complete attempt* at a task, the agent critiques its own trajectory and stores a short "lesson" in memory — "for arXiv IDs, search arXiv directly rather than Google" — and the next attempt starts with those lessons loaded. It shines on tasks with a clear success/failure signal that you expect to run many times; its failure mode is that a poor self-critique stores a *bad* lesson that actively hurts future runs, and every lesson spends context tokens. The **recovery/budget model**: even a well-architected loop needs circuit breakers — controls that keep a small failure from cascading:
+
+| Control | One-line implementation | What it prevents |
+|---------|------------------------|------------------|
+| Max iterations | `if step >= MAX_STEPS: return partial_result` — a hard ceiling, whatever the agent "thinks" | Infinite loops and runaway spend |
+| Token budget check | Estimate the next call's tokens; compress context if it will not fit | Silent front-truncation of the task mid-thought |
+| Idempotency check | Flag any repeated `(action, args_hash)` pair as possible oscillation | Alternating between two actions forever |
+| Escalation gate | Pause for a human before irreversible actions taken under uncertainty | Low-confidence irreversible harm |
+| Checkpointing | Save full state after each action; on crash, resume — never restart | Lost progress on long or expensive tasks |
+
+One compact loop wearing both upgrades:
+
+```python
+LESSONS = []                                      # reflection memory: survives across attempts
+
+def attempt(task, max_steps=6):
+    state = load_checkpoint(task) or fresh_state(task, lessons=LESSONS)
+    seen = set()                                  # idempotency ledger
+    for step in range(state.step, max_steps):     # budget: hard ceiling
+        if not fits_in_context(state):
+            state = compress(state)               # budget: summarize, never truncate silently
+        action = plan_next(state)                 # the ordinary perceive/plan call
+        if (action.name, action.args_hash) in seen:
+            return escalate("oscillating", state) # recovery: flag it, do not spin
+        seen.add((action.name, action.args_hash))
+        if action.irreversible and state.uncertain:
+            return escalate("needs approval", state)   # recovery: human gate
+        state.observe(execute(action))
+        save_checkpoint(task, state, step)        # recovery: crash-safe resume point
+        if state.done:
+            break
+    LESSONS.append(critique(state.trajectory))    # reflection: store one lesson for next time
+    return state.result
+```
+
+### Critical Thinking Questions
+
+7. Which of the five controls does the Part II *pipeline* barely need, and which does a dynamic *planner or supervisor* absolutely need? Explain using the difference in who authors the control flow.
+
+   > *Hint: the pipeline's step count is fixed at three by your code, so max-iterations is satisfied by construction — but a planner chooses its own next step every turn, so the ceiling, the idempotency ledger, and the escalation gate are the only things standing between it and an unbounded run.*
+
+8. The nightly digest pipeline mangles a date once a week. Write the one-sentence Reflexion lesson you would want stored, and name the safeguard that prevents a bad lesson (say, "always skip the polish stage") from silently degrading every future run.
+
+   > *Hint: a lesson should name the successful strategy, not just criticize the failure — and because lessons are generated by the same model that failed, they deserve the same review you give any seam: log them, cap how many load per run, and audit them when quality drifts.*
+
+---
 
 ## 3. Exercises
 
@@ -301,7 +352,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The next activity introduces the *critique-and-refine* pattern — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
+→ **Coming Up Next:** *The Critique and Refine Pattern* activity is next — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
 
 ---
 
@@ -313,13 +364,15 @@ Respond to all three levels in your notebook:
 
 ---
 
-# Part IV: Fixed Pipelines vs. Dynamic Orchestration
+# Going Deeper (at home): Fixed Pipelines vs. Dynamic Orchestration
 
-Parts I–III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This part steps back to the single decision that sits *above* all of them: **who decides the control flow — you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
+> **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md) — read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
+
+Everything below is **at-home material**: nothing in this section is needed for today's 75 minutes, but all of it deepens what you built in class. Parts I–III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This section steps back to the single decision that sits *above* all of them: **who decides the control flow — you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
 
 ---
 
-## Model 3: Two Families of Orchestration
+## Model 4: Two Families of Orchestration
 
 **Why this matters:** A fixed pipeline is a scheduled commuter train — the same stops, in the same order, every single day; you can print the timetable a year in advance. Dynamic orchestration is a taxi driver who decides the route while driving, rerouting around traffic you could not have predicted. The train is boring, cheap, and easy to audit: if a passenger ends up in the wrong place, you know exactly which segment failed. The taxi is flexible and handles trips no timetable anticipated — but you cannot promise, before the trip starts, exactly which streets it will use. Neither is "better." They answer different questions.
 
@@ -489,7 +542,7 @@ DeepAgents makes exactly these decisions — when to plan, when to spawn, when t
 
 ---
 
-## Model 4: Who Decides Control Flow?
+## Model 5: Who Decides Control Flow?
 
 | Pattern | Who decides the control flow | Reach for it when | Main risk |
 |---|---|---|---|
@@ -502,17 +555,17 @@ DeepAgents makes exactly these decisions — when to plan, when to spawn, when t
 
 ### Critical Thinking Questions
 
-7. A hospital wants an agent system to draft discharge summaries and must certify to a regulator that the process is auditable and behaves the same way for comparable patients. Argue why a **fixed** pipeline is easier to certify than a supervisor loop, and name the specific property of each that a regulator would ask about.
+9. A hospital wants an agent system to draft discharge summaries and must certify to a regulator that the process is auditable and behaves the same way for comparable patients. Argue why a **fixed** pipeline is easier to certify than a supervisor loop, and name the specific property of each that a regulator would ask about.
 
    > *Hint: A regulator asks "can you show me, in advance, every path this system can take, and can you reproduce a given run?" For a fixed pipeline the path is the same every time and each seam's intermediate is inspectable. For a supervisor, the path is a model output that can differ between two similar inputs. Which property makes "we tested this exact flow" a true statement?*
 
-8. A supervisor loop is given a vague task and, on each turn, decides to spawn "one more researcher to be thorough." Describe the runaway failure this invites, and explain precisely how the `SPAWN_BUDGET` in the Code Cell caps it — including what should happen at the moment the budget is hit.
+10. A supervisor loop is given a vague task and, on each turn, decides to spawn "one more researcher to be thorough." Describe the runaway failure this invites, and explain precisely how the `SPAWN_BUDGET` in the Code Cell caps it — including what should happen at the moment the budget is hit.
 
-   > *Hint: Without a ceiling, "one more to be thorough" has no natural stopping point — cost and latency grow unbounded while the answer never finalizes. The budget converts an open-ended loop into a bounded one. But capping is not enough: look at the final `return` in the code. Why does it prepend `[stopped: ...]` instead of returning the transcript as if it were a finished answer?*
+    > *Hint: Without a ceiling, "one more to be thorough" has no natural stopping point — cost and latency grow unbounded while the answer never finalizes. The budget converts an open-ended loop into a bounded one. But capping is not enough: look at the final `return` in the code. Why does it prepend `[stopped: ...]` instead of returning the transcript as if it were a finished answer?*
 
-9. You are handed a new task and must pick a family before writing any code. Give one concrete question you would ask about the task whose answer decides between a **fixed** shape and a **dynamic supervisor** — and explain why the same "least dynamic pattern that works" heuristic from Part I still applies one level up.
+11. You are handed a new task and must pick a family before writing any code. Give one concrete question you would ask about the task whose answer decides between a **fixed** shape and a **dynamic supervisor** — and explain why the same "least dynamic pattern that works" heuristic from Part I still applies one level up.
 
-   > *Hint: The decisive question is roughly "can I enumerate the sequence (or set) of sub-agents this task needs before it starts?" If yes, a fixed shape is cheaper, more predictable, and easier to debug — so prefer it. A supervisor earns its unpredictability only when the honest answer is "no, the needed steps depend on what we discover along the way." How does choosing dynamic-when-fixed-would-do repeat the exact mistake the Part I heuristic warns against?*
+    > *Hint: The decisive question is roughly "can I enumerate the sequence (or set) of sub-agents this task needs before it starts?" If yes, a fixed shape is cheaper, more predictable, and easier to debug — so prefer it. A supervisor earns its unpredictability only when the honest answer is "no, the needed steps depend on what we discover along the way." How does choosing dynamic-when-fixed-would-do repeat the exact mistake the Part I heuristic warns against?*
 
 > **⚠️ Common Misconception:** Students often assume "dynamic orchestration" means "the developer no longer controls the system." The opposite is true of any system you would actually deploy. In a supervisor loop the model chooses the *next move*, but you still author the roster it chooses from, the budget that bounds it, and the stop condition that ends it. Dynamic orchestration relocates *some* decisions to the model; it never relocates your responsibility for the roster, the budget, and the stop.
 

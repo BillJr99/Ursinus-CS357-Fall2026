@@ -88,7 +88,7 @@ gitingest https://github.com/owner/repo --output repo_context.txt
 
 ## Model 1: Hands-On Ingestion Workflow
 
-Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target — a popular proxy that lets one codebase talk to many LLM providers (relevant to next week's material). If that repo is too large, your instructor will direct you to a smaller example.
+Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target — a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity). If that repo is too large, your instructor will direct you to a smaller example.
 
 **Step 1**: Navigate to `github.com/BerriAI/litellm` and press `.`. Locate the main entry point (`__main__.py` or equivalent) and the directory where provider adapters live.
 

@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Governance and Policy Writing
 
-You have built agents that retrieve, decide, judge, and act; **governance** is the discipline of deciding, in advance and in writing, what they may do, who is accountable when they err, and how anyone would know. Today you learn to *write* policy, a genre with teeth, because your final project requires a governance document and your careers will require many more. The arc: **what governance is $\rightarrow$ frameworks in the wild $\rightarrow$ the anatomy of an enforceable policy $\rightarrow$ drafting workshop**.
+The *Intellectual Property, Privacy, and the Case for Local AI* activity mapped what is at stake; you have built agents that retrieve, decide, judge, and act; **governance** is the discipline of deciding, in advance and in writing, what they may do, who is accountable when they err, and how anyone would know. Today you learn to *write* policy, a genre with teeth, because your final project requires a governance document and your careers will require many more. The arc: **what governance is $\rightarrow$ frameworks in the wild $\rightarrow$ the anatomy of an enforceable policy $\rightarrow$ drafting workshop**.
 
 ---
 
@@ -177,7 +177,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
 ## → Coming Up Next
 
-In the next activity, you will examine what it means for an AI system to be *explainable* — how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and the design heuristics from the next session will tell you how to write it.
+In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable* — how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and Lab 6, *Responsible AI*.
 
 ## Further Reading
 

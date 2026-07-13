@@ -82,11 +82,15 @@ Weak work has CI that passes immediately with no red run, a readme that only an 
 - A scoped npm package with a working `bin` — a CLI utility you actually want to exist
 - A Cloudflare Worker API — the gateway-facade pattern is a strong choice
 
+*What this track requires:* a GitHub account, plus GHCR or Docker Hub (container option) or an npm account (package option).
+
 Your specification instrument is a **failing test suite written before implementation**. The agent's job is to make the tests pass without modifying them.
 
-**Track B (maker track, no coding background assumed).** Choose one:
+**Track B (maker track, no programming background assumed — you will use guided DevOps tooling (GitHub Actions and Cloudflare's wrangler), following step-by-step instructions).** Choose one:
 - A static site deployed to Cloudflare Pages — a project page, a resource hub, or an interactive explainer built with an agent
 - A simple Cloudflare Worker built entirely through agent collaboration — a JSON API for something you care about
+
+*What this track requires:* a GitHub account and a Cloudflare free-tier account.
 
 Your specification instruments are an **acceptance checklist written before generation** and the five-questions instruction to your agent (what it should do, what it must not do, who will use it, what counts as working, and what the edge cases are).
 

@@ -183,11 +183,11 @@ Part III builds on this misconception warning by examining the conditions under 
 
 # Part III: Limits and Synthesis
 
-In this section you will examine the situations where consensus makes results worse rather than better, and you will connect those limits to the bias module coming up next week. This is also where you will bridge today's work directly into your Lab 4 design.
+In this section you will examine the situations where consensus makes results worse rather than better, and you will connect those limits to the *Training Data and Bias* activity. This is also where you will bridge today's work directly into your Lab 4 design.
 
 ## Model 3: When Consensus Misleads
 
-Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions — a theme we take up squarely in the bias module next week. The honest synthesis discloses dissent rather than dissolving it.
+Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions — a theme we take up squarely in the *Training Data and Bias* activity. The honest synthesis discloses dissent rather than dissolving it.
 
 ---
 
@@ -203,7 +203,7 @@ Consensus aggregates the model's *distribution*, so it amplifies whatever that d
 
 2. *Consensus versus debate.*
 
-   *What to do:* Run the tomatillo question through yesterday's two-round debate and today's cluster-synthesize pipeline at equal call budgets. Have a neighboring team blind-rank the two outputs and your single-shot baseline.
+   *What to do:* Run the tomatillo question through the two-round debate from the *Multi-Agent Debate* activity and today's cluster-synthesize pipeline at equal call budgets. Have a neighboring team blind-rank the two outputs and your single-shot baseline.
 
    *Starter hint:* Keep call counts equal by adjusting $k$ in the consensus pipeline so it matches the total LLM calls the debate pipeline makes. Blind-ranking means the other team cannot know which output came from which method.
 

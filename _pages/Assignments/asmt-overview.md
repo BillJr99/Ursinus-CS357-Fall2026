@@ -46,7 +46,7 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge.
+In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. This onboarding assignment is due Thursday, September 3, and is assessed within the Class Activities and Participation category.
 
 ---
 
@@ -63,6 +63,14 @@ A weak submission has a transcript that says "it worked" without showing output,
 ---
 
 ## Part 1: Tool Setup
+
+Complete this part by **one of two routes** — the four verification steps and the checklist below apply to both.
+
+### Route A (recommended): host Ollama + the course dev container
+
+Set up the full course environment by following the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1–3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted — include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+
+### Route B: native install
 
 Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; ask the instructor if you are unsure which to use). Then complete each step below and capture the output:
 
@@ -103,6 +111,8 @@ Before moving on, confirm you can answer yes to each of these:
 ## Part 1.5: Command-Line and Git Checkpoint
 
 Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment. This checkpoint makes sure those underlying tools work *before* the labs depend on them — the same philosophy as the Ollama setup above. You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork. If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
+
+**Container-route note (Route A):** perform the git steps of this checkpoint **from inside the course container**, against the `cs357-work` GitHub repository you created in the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md) — the activity's practice section (create `hello_agent.py`, run it against host Ollama, commit, push) is exactly this checkpoint, so its transcript satisfies the navigation and git items below. The `uv` step still runs on your host (the container image already bundles the course packages; `uv` is your reproducible-environment tool for the native route and anywhere outside the container).
 
 Complete each step and capture the terminal output:
 

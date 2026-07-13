@@ -25,10 +25,10 @@ info:
       proficient: All four patterns are presented with controlled before-and-after demonstrations under a stated protocol (model name, temperature, seed); each analysis paragraph names the specific change observed, explains it in terms of token conditioning or probability distributions, and states what second experiment would confirm the hypothesis; the Pattern 3 table reports parse success rates across five runs for both the bare and schema-constrained prompt
     - weight: 25
       description: AI by Hand Worked Problems
-      preemerging: Worked problems are missing or fundamentally incorrect
-      beginning: Worked problems contain arithmetic or conceptual errors, or omit intermediate steps
-      progressing: Both problems are correct with all intermediate steps shown and a Python verification snippet included, with at most one minor arithmetic or formatting omission
-      proficient: Both problems show every required sub-step — scaled logits, exponentials to four decimal places, normalizing sum, and final probabilities to three decimal places for all three temperatures in Problem 1; dot product, both norms with sum-of-squares, and cosine similarity to three decimal places plus the cos(a, 3a) = 1.000 proof in Problem 2; Python output is pasted and confirmed to match the hand calculation; each problem ends with a sentence connecting the result to observed model behavior (e.g., what temperature control does to the highest-logit token)
+      preemerging: One or more of the three worked problems (softmax with temperature in Problem 1, cosine similarity in Problem 2, and the forward pass by numbers in Problem 3) is missing or fundamentally incorrect
+      beginning: The three worked problems (Problems 1, 2, and 3) contain arithmetic or conceptual errors, or omit intermediate steps
+      progressing: All three problems (softmax with temperature in Problem 1, cosine similarity in Problem 2, and the forward pass by numbers in Problem 3) are correct with all intermediate steps shown and a Python verification snippet included, with at most one minor arithmetic or formatting omission
+      proficient: All three problems show every required sub-step — scaled logits, exponentials to four decimal places, normalizing sum, and final probabilities to three decimal places for all three temperatures in Problem 1; dot product, both norms with sum-of-squares, and cosine similarity to three decimal places plus the cos(a, 3a) = 1.000 proof in Problem 2; complete trace tables for both inputs in Problem 3 (the forward pass by numbers), with every pre-activation shown, clipped ReLU neurons identified, the output computation shown, and the active-neuron observation sentence included; Python output is pasted and confirmed to match the hand calculation; each problem ends with a sentence connecting the result to observed model behavior (e.g., what temperature control does to the highest-logit token)
     - weight: 20
       description: System Prompt Design Workshop
       preemerging: No system prompt is submitted, or the prompt is missing two or more of the five ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS elements
@@ -46,7 +46,7 @@ info:
       preemerging: An incomplete submission is provided
       beginning: The work is submitted but is missing one or more required sections or the experimental protocol is absent
       progressing: The work is submitted with all required sections and the experimental protocol stated; one minor omission or formatting issue is present
-      proficient: The submission is a single PDF containing the stated experimental protocol, all four pattern entries, both worked problems with intermediate steps and Python output, the system prompt workshop deliverables, the analysis and synthesis paragraphs, and software version information (model name and version, Python version, Ollama version)
+      proficient: The submission is a single PDF containing the stated experimental protocol, all four pattern entries, all three worked problems with intermediate steps and Python output, the system prompt workshop deliverables, the analysis and synthesis paragraphs, and software version information (model name and version, Python version, Ollama version)
   readings:
     - rtitle: "Prompt Engineering Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md"
@@ -62,7 +62,7 @@ tags:
 
 ---
 
-In this assignment you will build a portfolio of four reusable prompt patterns and work two mathematics problems by hand that explain why those patterns work. This connects your prompting practice to the underlying theory covered in class: temperature controls probability sharpness, cosine similarity drives retrieval, and personas shift the sampling distribution. By the end, you will be able to construct prompts with documented, reproducible effects and explain the statistical reason each pattern produces the change it does. These skills transfer directly to building production agents, where prompt patterns are engineering decisions that must be justified and tested.
+In this assignment you will build a portfolio of four reusable prompt patterns and work three mathematics problems by hand that explain why those patterns work. This connects your prompting practice to the underlying theory covered in class: temperature controls probability sharpness, cosine similarity drives retrieval, and personas shift the sampling distribution. By the end, you will be able to construct prompts with documented, reproducible effects and explain the statistical reason each pattern produces the change it does. These skills transfer directly to building production agents, where prompt patterns are engineering decisions that must be justified and tested.
 
 ---
 
@@ -296,19 +296,6 @@ A: No. Handwritten and scanned is explicitly accepted. If you type it, any legib
 
 ---
 
-## Deliverables
-
-Submit a single PDF containing:
-- Your stated experimental protocol
-- All four pattern entries (baseline prompt, enhanced prompt, both outputs, analysis)
-- All three worked math problems (softmax with temperature, cosine similarity, and the forward pass by numbers) with all intermediate steps shown
-- The Python verification snippets and their output
-- Your analysis and synthesis (one to two paragraphs)
-- Your reflection responses
-- Software version information (model name and version, Python version, Ollama version)
-
----
-
 ## Part 3: System Prompt Design Workshop
 
 **What this part tests**: Whether you can write a system prompt that reliably constrains agent behavior across both expected inputs and adversarial attempts — and whether you can iterate based on observed failures.
@@ -376,6 +363,19 @@ Document what worked, what did not, and why.
 - Final prompt (v4 or later) with changes tracked relative to v1
 - Adversarial break attempts (3) with results
 - 2-paragraph analysis: what made your guardrails hold, and what would an attacker try next
+
+---
+
+## Deliverables
+
+Submit a single PDF containing:
+- Your stated experimental protocol
+- All four pattern entries (baseline prompt, enhanced prompt, both outputs, analysis)
+- All three worked math problems (softmax with temperature, cosine similarity, and the forward pass by numbers) with all intermediate steps shown
+- The Python verification snippets and their output
+- Your analysis and synthesis (one to two paragraphs)
+- Your reflection responses
+- Software version information (model name and version, Python version, Ollama version)
 
 ---
 

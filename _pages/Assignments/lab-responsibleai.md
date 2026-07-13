@@ -37,10 +37,10 @@ info:
       proficient: A complete threat model traces the agent's full data and decision flow, enumerates concrete and prioritized risks at every boundary with likelihood and impact, and clearly motivates the chosen direction with a specific scenario in which the agent would cause harm if left unaddressed.
     - weight: 35
       description: Implementation of Chosen Direction
-      preemerging: No working intervention is implemented, or the code does not run as submitted.
-      beginning: A partial intervention is implemented that addresses only a small slice of the chosen direction, or is implemented incorrectly (e.g., a control so weak it is ineffective).
-      progressing: The chosen direction is implemented across its required components and runs, but one or more components are implemented weakly or are not fully integrated into the agent's real input/output/decision path.
-      proficient: The chosen direction is implemented completely, correctly, and multi-layered where the direction calls for it; every control or explanation is integrated into the agent's real path, clearly marked in the code, and would run from a clean environment following only the provided instructions.
+      preemerging: No working intervention is implemented or concretely specified, or the code does not run as submitted.
+      beginning: A partial intervention — implemented in code, or (on Direction 0) concretely specified as a defense design — addresses only a small slice of the chosen direction, or is done incorrectly (e.g., a control so weak it is ineffective).
+      progressing: The chosen direction's required components are all implemented or concretely specified and function as described, but one or more are weak or not fully connected to the agent's real input/output/decision path (on Direction 0, not clearly mapped to a logged attack).
+      proficient: The chosen direction is realized completely, correctly, and multi-layered where the direction calls for it — as implemented controls or explanations integrated into the agent's real path and clearly marked in the code (Directions 1–3), OR as concretely specified defenses (Direction 0) where each mechanism is named, mapped to a specific logged attack, and precise enough that an engineer could build it from the description; the work would run or be actionable from a clean environment following only the provided instructions.
     - weight: 25
       description: Evaluation and Evidence
       preemerging: No evaluation is provided, or claims are asserted without evidence.
@@ -96,9 +96,13 @@ tags:
 
 By this point in the course you have built at least one working agent — a local agent, a RAG agent, an MCP agent, a coding agent, or a decision model. It runs. It produces answers. That is exactly the moment at which responsibility begins, because an agent that works is an agent that people will be tempted to rely on, and reliance is the thing this lab makes you earn. Building a system and being able to defend it are two different skills; this lab is about the second one.
 
+**Assigned: November 12 — Due: December 1.**
+
+**Honest time budget:** the shared warm-up and threat model take **1.5–2 hours**; your chosen direction takes **3–4 hours**; the writeup takes about **1 hour**.
+
 Everyone starts the same way. Choose one agent you have already built and put it on the examination table. Write a short **threat and risk model**: name the agent, describe what it does and who would use it, and trace its data and decision flow from the moment input arrives to the moment a result leaves. At each boundary — user input, system prompt, retrieved or tool-supplied content, logs, and the final output or decision — ask what could go wrong if an adversary, a careless user, or a regulator were on the other side. This shared framing step is required of every submission regardless of which direction you choose, because you cannot harden what you have not honestly mapped.
 
-Then pick **one** of the three directions below and carry it out in depth. Each direction is a full audit-and-harden cycle along one axis of responsible AI: defending against prompt injection, protecting privacy, or making decisions explainable. Your single 100-point grade covers the shared threat model plus the one direction you choose — the rubric dimensions (threat/risk analysis, implementation, evaluation and evidence, writeup and reflection) are written to apply to whichever direction you pick. Read all three before deciding; the direction you choose should be the one whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one direction — depth on one is worth far more than a shallow pass over several.
+Then pick **one** of the four directions below and carry it out in depth. Each direction is a full audit-and-harden cycle along one axis of responsible AI: defending against prompt injection, protecting privacy, or making decisions explainable — or, on the low-code Direction 0, turning your hands-on attack experience into a rigorous, concretely specified defense design. Your single 100-point grade covers the shared threat model plus the one direction you choose — the rubric dimensions (threat/risk analysis, implementation, evaluation and evidence, writeup and reflection) are written to apply to whichever direction you pick. Read all four before deciding; the direction you choose should be the one whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one direction — depth on one is worth far more than a shallow pass over several.
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
@@ -115,16 +119,94 @@ In your notebook, close the warm-up by naming the **three techniques** you found
 
 ## Choose Your Direction
 
-Every submission begins with the shared warm-up and threat-model framing above — you play the adversary, then you name the agent you already built, trace its data and decision flow, and map where it could fail. Then you pick **one** of the three directions below and carry it out in full depth. Each is a complete audit-and-harden cycle along one axis of responsible AI, and your single 100-point grade covers the shared threat model plus the one direction you choose. Read all three before deciding — the right choice is the direction whose failure mode would do the most damage to the specific agent you built. Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
+Every submission begins with the shared warm-up and threat-model framing above — you play the adversary, then you name the agent you already built, trace its data and decision flow, and map where it could fail. Then you pick **one** of the four directions below and carry it out in full depth. Each is a complete audit-and-harden cycle along one axis of responsible AI, and your single 100-point grade covers the shared threat model plus the one direction you choose. Read all four before deciding — the right choice is the direction whose failure mode would do the most damage to the specific agent you built (or, for Direction 0, the no-code route if you want to reason about defenses without a new codebase). Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
 
+- **Direction 0: Attack and Policy (no code)** — the low-code route; escalate the shared warm-up into a graded artifact, map each successful attack to a layered defense design, and stress-test it in a paper red-team exchange with another team. No programming required.
 - **Direction 1: Finding and Defending Against Prompt Injection** — for agents that read untrusted text; red-team the agent, layer defenses, and quantify residual risk.
 - **Direction 2: Privacy Audit for an AI Agent** — for agents that touch sensitive data; inventory PII at every boundary, scrub input and output, and write a governance policy.
 - **Direction 3: AI Explainability with SHAP and LIME** — for agents that make or support decisions; explain a decision model, compare SHAP and LIME, and audit feature proxies.
 
-Expand your chosen direction below for the full instructions.
+All four are graded under the same direction-agnostic 100-point rubric at the top of this page; on Direction 0 the Implementation dimension credits concretely specified defenses rather than running code. Expand your chosen direction below for the full instructions.
+
+<details markdown="1">
+<summary><strong>Direction 0: Attack and Policy (no code)</strong></summary>
+
+> **What this direction requires**
+>
+> - **A web browser only.** [Gandalf](https://gandalf.lakera.ai/) and [Tensor Trust](https://tensortrust.ai/) are hosted browser games — no local setup, no API key, no programming. Everything you produce on this route is a written and diagrammed artifact.
+> - **A partner team to swap with** for the Part D red-team exchange (arrange this in the lab session).
+
+This is the **low-code route** through Lab 6. Instead of instrumenting a codebase, you turn the hands-on attack experience from the shared warm-up into a rigorous, defensible **defense design** and stress-test it against another team. You still complete the shared warm-up and the shared threat model like everyone else; here those become graded artifacts rather than scaffolding. Direction 0 is assessed under the **same direction-agnostic rubric** as the other three: Threat and Risk Analysis (25), Implementation (35) — where "implementation" here means the **concrete mechanisms of your defense design**, not running code — Evaluation and Evidence (25), and Writeup and Reflection (15). The Implementation row explicitly credits "implemented OR concretely specified defenses (Direction 0)," so your points come from how specific, layered, and attack-mapped your defense design is.
+
+Estimated time: about 3–4 hours for the direction, on top of the shared warm-up and threat model.
+
+#### Part A: Escalate the Warm-Up into a Structured Escalation Log
+
+The warm-up you already do becomes a graded artifact here. Play deliberately and keep a running **escalation log**.
+
+1. **Gandalf — clear at least level 7.** Work up through the levels; the defenses get materially stronger as you climb, which is the point.
+2. **Tensor Trust — at least one full attack-and-defense round.** Write one defense prompt protecting an access code, and run at least one attack against another player's defense.
+
+Record every attempt (successful or not) as a row in an **escalation log** with these columns:
+
+| Level / Round | Attack idea (what you tried and why) | What the defense blocked | What finally worked (and why it slipped through) |
+|---------------|--------------------------------------|--------------------------|--------------------------------------------------|
+
+The last two columns are the analytical heart of the log: for each level, name the assumption the defense was making and the assumption your winning attack violated. This log is a deliverable and feeds Parts C and D.
+
+#### Part B: Shared Threat Model
+
+Complete the **shared threat and risk model** exactly as required of every submission (see "Everyone starts the same way," above): name the agent you built, trace its full data and decision flow, and enumerate concrete, prioritized risks at every boundary with likelihood and impact. As required of all directions, **at least one concrete attack scenario in your threat model must be one you personally executed in Part A's warm-up.** For this route, lean into the injection boundaries specifically — your Part A experience should make the "what could go wrong when untrusted text arrives here?" question concrete.
+
+#### Part C: Written Defense Design
+
+For **each successful attack in your escalation log**, design a layered defense and justify it. Organize your defenses across the four standard layers — a real system needs defense in depth, not a single guardrail:
+
+- **Input validation** — filtering, delimiting, or classifying untrusted input before it reaches the model.
+- **Privilege separation** — limiting what the model is allowed to do or reach, so a successful injection has a small blast radius.
+- **Output filtering** — checking the model's output before it is returned or acted upon.
+- **Human confirmation** — requiring a person in the loop before a consequential action.
+
+Produce a **2–3 page defense-design document** that maps each logged successful attack to the specific layer(s) that would blunt it, names the concrete mechanism (not just "add validation" but *what* validation, checking *what*, and what it does on a match), and justifies the choice. Reference **OWASP LLM01 (Prompt Injection)** explicitly: for each attack, state which class of LLM01 defense your mechanism corresponds to. The grade on the Implementation dimension comes from how concrete and attack-mapped these mechanisms are — an engineer should be able to build from your description.
+
+#### Part D: Red-Team Exchange
+
+Defenses that are never attacked are just hopes. Swap your Part C defense-design document with a partner team.
+
+1. **Attack theirs on paper.** Read their defense design and attempt **three attacks-on-paper**: for each, describe an attack and reason through, step by step, whether their specified defenses would stop it and where a gap remains. Log each attempt and its outcome.
+2. **Receive their attacks on yours.** Take the three attacks the other team ran against your design.
+3. **Revise.** For every attack (theirs on you, and any of your own that exposed a gap in their design that likely exists in yours too), revise your defense design and write **revision notes** explaining what you changed and why. Keep both the exchange log and the revision notes.
+
+This exchange is your **Evaluation and Evidence** for the rubric: a reproducible, adversarial test of your design with documented outcomes and a before/after revision.
+
+#### Part E: Writeup and Reflection
+
+Complete the same writeup and reflection required of all directions (see "Deliverables and Reflection (All Directions)" at the end of this lab), interpreting what your defense design accomplishes and — honestly — what attacks would still get through even after your revisions.
+
+#### Deliverables (Direction 0)
+
+- **Escalation log** (Gandalf through at least level 7, plus the Tensor Trust round), with the assumption-analysis columns filled in
+- **Shared threat model** (as required of all submissions)
+- **Defense-design document** (2–3 pages), each successful attack mapped to concrete, layered defenses referencing OWASP LLM01
+- **Red-team exchange log** (your three attacks-on-paper against the partner team's design, plus their attacks on yours) and your **revision notes**
+- **Writeup and reflection** answering every prompt in the shared reflection section
+
+#### What proficient work looks like (Direction 0)
+
+- The escalation log reaches at least Gandalf level 7 and a full Tensor Trust round, and each row analyzes the *assumption* the defense made and the one the winning attack violated — not just the raw prompts.
+- The threat model traces the full data/decision flow with prioritized, boundary-by-boundary risks, and at least one scenario is an attack you personally executed.
+- The defense design covers all four layers where applicable, maps every logged successful attack to a **named, concrete mechanism**, and cites the corresponding OWASP LLM01 defense class — specific enough to implement.
+- The red-team exchange documents three attacks-on-paper against a partner design with reasoned outcomes, and the revision notes show a genuine before/after change driven by the attacks received.
+
+</details>
 
 <details markdown="1">
 <summary><strong>Direction 1: Finding and Defending Against Prompt Injection</strong></summary>
+
+> **What this direction requires**
+>
+> - **A hosted-model API key OR a local Ollama model** — this direction works either way. The reference agent is shown with a hosted client, but the Setup Notes at the bottom of this lab give the Ollama option and the exact code changes, and the OWASP labStudentLLM target (Target B) ships a deterministic mock model that runs fully offline. If you use a hosted key, note that different models have very different injection susceptibility (record the model in every attack-log entry); if you use Ollama, no key or network is needed.
+> - Python 3.10+ and the client library for whichever model you choose.
 
 Choose this direction if the agent you built reads untrusted text — user questions, retrieved documents, tool output, or web content. You will put that agent on the examination table: stand up a deliberately undefended baseline (your own agent, or the reference agent provided below), red-team it with five categories of prompt-injection attack, layer defenses onto it one at a time, and quantify the risk that survives after every practical control has been applied. Prompt injection is the most pervasive security vulnerability in LLM-based applications, and this direction is a complete audit-and-harden cycle against it.
 
@@ -202,8 +284,6 @@ Different models have meaningfully different susceptibility to prompt injection.
 #### Overview
 
 Prompt injection is the most pervasive security vulnerability in LLM-based applications. Unlike traditional code injection attacks, prompt injection does not exploit a memory error or a parser bug — it exploits the model's fundamental design: it treats all text in its context window as potentially authoritative instruction. In this lab you will build a deliberately vulnerable agent, attack it systematically, layer defenses one at a time, and analyze what risk remains after every practical control has been applied.
-
-> **Ethics and Scope**: All attacks in this lab must be conducted against your own locally running agent. Do not use these techniques against production systems, third-party APIs, or agents you do not own. Keep all attack logs private and submit them only through the course's secure submission portal.
 
 **Before you touch the code, read the full lab.** The attack methodology in Part 2 and the defense in Part 3 are tightly coupled — you need to understand both before starting either. In particular, knowing what you will defend against in Part 3 will change how you observe and document your attacks in Part 2.
 
@@ -1267,6 +1347,11 @@ Answer all of the following in your attack log or as a separate section of your 
 <details markdown="1">
 <summary><strong>Direction 2: Privacy Audit for an AI Agent</strong></summary>
 
+> **What this direction requires**
+>
+> - **Python 3.10+ and a spaCy language model** — install with `pip install spacy presidio-analyzer presidio-anonymizer` and then `python -m spacy download en_core_web_sm` (a one-time ~12 MB model download). No hosted-model API key is required for the scrubbing work; you audit and instrument the agent you already built.
+> - A working agent from a prior lab (RAG, MCP, or coding) that you can run locally.
+
 Choose this direction if the agent you built touches sensitive data — user queries that carry names or medical details, a RAG index of internal documents, or logs that capture full conversation history. You will audit the agent you already built for the personally identifiable information it exposes at every boundary, implement scrubbing at its input and output, and write the data-governance and retention policy that would let someone actually rely on it.
 
 #### Overview
@@ -1729,6 +1814,10 @@ Submit a ZIP containing:
 
 <details markdown="1">
 <summary><strong>Direction 3: AI Explainability with SHAP and LIME</strong></summary>
+
+> **What this direction requires**
+>
+> - **Python 3.10+ with scikit-learn, SHAP, and LIME** (`pip install scikit-learn shap lime`). Everything in this direction runs **pure-local with no network and no API key** — you train a small model and explain it entirely on your own machine.
 
 Choose this direction if the agent you built makes or supports decisions — approvals, rankings, classifications, recommendations — where a person affected by the outcome would be entitled to an explanation. You will open the decision model your agent depends on with two widely deployed explainability techniques, SHAP and LIME, compare where they disagree, and judge honestly whether post-hoc explanations are enough to justify a high-stakes outcome. If your own earlier agent wraps or calls a tabular decision model, audit that; otherwise, use the synthetic credit-scoring model below, which is built to expose exactly the tensions this direction is about.
 

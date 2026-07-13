@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Teams: Specialists over Monoliths
 
-Everything in Unit 3 converges here: pipelines, routers, critics, debaters, and synthesizers are *roles*, and an **agent team** is a deliberate composition of roles around a shared task — exactly what your final project will build. The design thesis of this course is that **a team of small, specialized agents with focused contexts beats one monolithic agent with a giant prompt**, and today we argue it, architect with it, and stress-test it. The arc: **the case for specialists $\rightarrow$ team topologies $\rightarrow$ shared state and handoffs $\rightarrow$ designing your project team**.
+Everything in Unit 3 converges here: the pipelines and routers of *Orchestration Patterns*, the critics of *The Critique and Refine Pattern*, and the debaters of *Multi-Agent Debate* are *roles*, and an **agent team** is a deliberate composition of roles around a shared task — exactly what your final project will build. The design thesis of this course is that **a team of small, specialized agents with focused contexts beats one monolithic agent with a giant prompt**, and today we argue it, architect with it, and stress-test it. The arc: **the case for specialists $\rightarrow$ team topologies $\rightarrow$ shared state and handoffs $\rightarrow$ designing your project team**.
 
 ---
 
@@ -47,7 +47,7 @@ Think of the difference between a general practitioner (GP) and a team of specia
 
 **A monolith carries everything everywhere.** One agent doing research, drafting, fact-checking, and formatting needs all four instruction sets, all intermediate state, and all retrieved evidence in one context: maximal cost (attention is $O(n^2)$), maximal distraction, and instructions stranded mid-context where attention is weakest.
 
-**A team carries only what each role needs.** The researcher sees the question and search results; the writer sees verified facts and a style guide; the checker sees claims and sources; the formatter sees the approved draft. Each context stays small, each system prompt stays unburied, and each role can be **evaluated in isolation** with the week 3 harness — which is the property that makes teams *debuggable*.
+**A team carries only what each role needs.** The researcher sees the question and search results; the writer sees verified facts and a style guide; the checker sees claims and sources; the formatter sees the approved draft. Each context stays small, each system prompt stays unburied, and each role can be **evaluated in isolation** with the harness from the *Hallucinations and Evaluating Agent Outputs* activity — which is the property that makes teams *debuggable*.
 
 **Teams also fail in new ways.** Handoffs lose information; roles deadlock awaiting each other; an upstream error launders itself into downstream confidence. Team design is therefore interface design: what, exactly, crosses each seam.
 
@@ -251,7 +251,7 @@ In this section you will design the agent team for your final project, choose a 
 
 ---
 
-→ Coming Up Next: Now that we can build agent teams, we turn to visual tools — drag-and-drop builders like Langflow — that let us design and share these same architectures without writing every line of code from scratch.
+→ Coming Up Next: In the *Visual Agent Building with Langflow* activity, we turn to visual tools — drag-and-drop builders — that let us design and share these same architectures without writing every line of code from scratch.
 
 ## Further Reading
 

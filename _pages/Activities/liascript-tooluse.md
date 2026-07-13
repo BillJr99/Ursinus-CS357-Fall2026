@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Tool Use and Function Calling
 
-Our week 1 agent parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
+Our agent from *The Agent Loop: Perceive, Plan, Act* activity parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
 
 ---
 
@@ -44,9 +44,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Contract
 
-In this Part you will see why the regex-based tool-calling approach from week 1 breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
+In this Part you will see why the regex-based tool-calling approach from *The Agent Loop* activity breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
 
-**Why this matters:** In week 1 our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
+**Why this matters:** In *The Agent Loop* activity our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
 
 **A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about what the tool does*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:
 
@@ -315,34 +315,6 @@ Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selec
 
 # Part IV: Synthesis and Practice
 
-## 3. Exercises
-
-1. *Third tool.* Implement `course_lookup(course_code)` backed by a small dictionary of five courses. Demonstrate a question that requires chaining it with `days_until`.
-
-   - *What to do:* Add a Python dictionary like `COURSES = {"CS357": {"title": "Foundations of AI", "meets": "MWF 10am", "prereqs": "CS174"}, ...}`. Write the function `course_lookup(course_code)` that returns the entry as a string, add it to TOOLS and REGISTRY, and ask a question like "How many days until the final exam for the AI course?" that requires the agent to first look up when CS357's final is, then compute days remaining.
-   - *Starter hint:* `def course_lookup(course_code): return str(COURSES.get(course_code, "Course not found"))`. The key to chaining is that the agent must call `course_lookup` first to get the final exam date, then call `days_until` with that date. Observe whether the model chains the calls automatically.
-   - *You've succeeded when:* The agent calls both tools in sequence without you explicitly telling it to, and produces a correct final answer with the tool call trace visible in the `[tool]` print output.
-
-2. *Schema ablation.* Replace both tool descriptions with the single word "tool" and rerun your test questions. Report the tool-selection accuracy before and after; connect the result to Model 1.
-
-   - *What to do:* Change both description fields in TOOLS to `"tool"`. Re-run three questions: one that should use `get_today`, one that should use `days_until`, and one that should use both. Compare how often the correct tool is selected and with correct arguments, versus with full descriptions.
-   - *Starter hint:* Tool selection accuracy = (correct tool choices) / (total tool decision points). A "correct tool choice" means the model chose the right tool AND passed valid arguments. Count each step's tool call as one decision point.
-   - *You've succeeded when:* You have accuracy numbers for both conditions (full descriptions vs. "tool"), and you can connect the drop in accuracy to the specific insight from Model 1 about what the description field communicates to the model.
-
-3. *Read-write taxonomy.* Classify ten plausible tools as read-only, reversible-write, or irreversible-write. Propose a default policy for each class. Keep this taxonomy: it becomes part of your project governance document.
-
-   - *What to do:* Choose 10 tools from this list (or substitute your own): web search, calendar read, calendar write, file read, file delete, grade lookup, post to social media, send email, order pizza, book a flight reservation. Classify each by the worst-case consequence of an unintended call.
-   - *Starter hint:* Read-only: no state changes; safe to call without confirmation. Reversible-write: changes state but can be undone (calendar event can be deleted, file can be restored from backup). Irreversible-write: cannot be easily undone (sent email, deleted account, posted public message). Your policy for each class should specify: who must confirm before execution, and what log must be kept.
-   - *You've succeeded when:* You have a table of 10 tools with their class and your proposed policy, and you can articulate why the irreversible-write class requires the strongest governance even when the agent's instructions are correct.
-
-4. *Refusal behavior.* Ask the agent a question no tool can answer. Does it improvise a tool call, hallucinate an answer, or say it cannot help? Report and explain which behavior you want and how to prompt for it.
-
-   - *What to do:* Ask a question entirely outside the tools' scope, such as "What is the capital of France?" or "Write me a poem." Observe which of three behaviors occurs: (a) the model invents a tool call to a non-existent function, (b) the model answers from parametric memory without any tool call, or (c) the model says it cannot help with this. Run at least 3 different out-of-scope questions.
-   - *Starter hint:* Add to the user message: "You have access to tools. Use them when applicable. If no tool can answer the question, say 'I cannot help with that using my available tools.'" Does that system instruction reliably produce behavior (c)?
-   - *You've succeeded when:* You can report which behavior you observed for 3 out-of-scope questions, which behavior is most desirable and why, and what prompt change (if any) you found that produces that behavior.
-
----
-
 With the protocol understood from Part I and II, this Hands-On section has you build three distinct tools — a safe arithmetic evaluator, a clock, and a word counter — and observe exactly how the model decides which one to call based solely on the tool's description field.
 
 ## Hands-On: Build and Call a Tool (30 minutes)
@@ -551,6 +523,38 @@ When the agent loop appends a tool result back into the conversation, what `role
 
 ---
 
+---
+
+**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+
+## 3. Exercises
+
+1. *Third tool.* Implement `course_lookup(course_code)` backed by a small dictionary of five courses. Demonstrate a question that requires chaining it with `days_until`.
+
+   - *What to do:* Add a Python dictionary like `COURSES = {"CS357": {"title": "Foundations of AI", "meets": "MWF 10am", "prereqs": "CS174"}, ...}`. Write the function `course_lookup(course_code)` that returns the entry as a string, add it to TOOLS and REGISTRY, and ask a question like "How many days until the final exam for the AI course?" that requires the agent to first look up when CS357's final is, then compute days remaining.
+   - *Starter hint:* `def course_lookup(course_code): return str(COURSES.get(course_code, "Course not found"))`. The key to chaining is that the agent must call `course_lookup` first to get the final exam date, then call `days_until` with that date. Observe whether the model chains the calls automatically.
+   - *You've succeeded when:* The agent calls both tools in sequence without you explicitly telling it to, and produces a correct final answer with the tool call trace visible in the `[tool]` print output.
+
+2. *Schema ablation.* Replace both tool descriptions with the single word "tool" and rerun your test questions. Report the tool-selection accuracy before and after; connect the result to Model 1.
+
+   - *What to do:* Change both description fields in TOOLS to `"tool"`. Re-run three questions: one that should use `get_today`, one that should use `days_until`, and one that should use both. Compare how often the correct tool is selected and with correct arguments, versus with full descriptions.
+   - *Starter hint:* Tool selection accuracy = (correct tool choices) / (total tool decision points). A "correct tool choice" means the model chose the right tool AND passed valid arguments. Count each step's tool call as one decision point.
+   - *You've succeeded when:* You have accuracy numbers for both conditions (full descriptions vs. "tool"), and you can connect the drop in accuracy to the specific insight from Model 1 about what the description field communicates to the model.
+
+3. *Read-write taxonomy.* Classify ten plausible tools as read-only, reversible-write, or irreversible-write. Propose a default policy for each class. Keep this taxonomy: it becomes part of your project governance document.
+
+   - *What to do:* Choose 10 tools from this list (or substitute your own): web search, calendar read, calendar write, file read, file delete, grade lookup, post to social media, send email, order pizza, book a flight reservation. Classify each by the worst-case consequence of an unintended call.
+   - *Starter hint:* Read-only: no state changes; safe to call without confirmation. Reversible-write: changes state but can be undone (calendar event can be deleted, file can be restored from backup). Irreversible-write: cannot be easily undone (sent email, deleted account, posted public message). Your policy for each class should specify: who must confirm before execution, and what log must be kept.
+   - *You've succeeded when:* You have a table of 10 tools with their class and your proposed policy, and you can articulate why the irreversible-write class requires the strongest governance even when the agent's instructions are correct.
+
+4. *Refusal behavior.* Ask the agent a question no tool can answer. Does it improvise a tool call, hallucinate an answer, or say it cannot help? Report and explain which behavior you want and how to prompt for it.
+
+   - *What to do:* Ask a question entirely outside the tools' scope, such as "What is the capital of France?" or "Write me a poem." Observe which of three behaviors occurs: (a) the model invents a tool call to a non-existent function, (b) the model answers from parametric memory without any tool call, or (c) the model says it cannot help with this. Run at least 3 different out-of-scope questions.
+   - *Starter hint:* Add to the user message: "You have access to tools. Use them when applicable. If no tool can answer the question, say 'I cannot help with that using my available tools.'" Does that system instruction reliably produce behavior (c)?
+   - *You've succeeded when:* You can report which behavior you observed for 3 out-of-scope questions, which behavior is most desirable and why, and what prompt change (if any) you found that produces that behavior.
+
+---
+
 ## Reflection Prompt
 
 *Personal:* In your notebook: with tools, an agent's words become actions. Recall a moment when you gave an instruction — to a person or a system — that was carried out too literally and produced an unintended result. What would "asking a clarifying question first" look like as an agent design feature, and when should an agent be required to use it?
@@ -563,7 +567,7 @@ When the agent loop appends a tool result back into the conversation, what `role
 
 ## → Coming Up Next
 
-Our agents can now call tools, but each agent works alone. The next major topic in the course introduces **multi-agent systems**: teams of specialized agents that collaborate, delegate, and check each other's work — and the governance challenges that arise when agents are supervising other agents.
+Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into Lab 1, *Your First Local Agent*.
 
 ---
 

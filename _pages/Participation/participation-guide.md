@@ -64,7 +64,7 @@ At midterm and at the end of the term, write a short self-assessment (a paragrap
 2. **Contribution and collaboration:** Name one session you helped move forward, one teammate you helped, and one classmate's Reading Group you engaged well.
 3. **A goal:** One concrete thing you will do differently in the second half of the term.
 
-Your own account of your growth is part of this grade, and the self-assessment is where we reconcile your sense of it with mine.
+Your own account of your growth is part of this grade, and the self-assessment is where we reconcile your sense of it with mine. Relatedly, the hours you report on each assignment's reflection are aggregated at midterm to recalibrate the published time budgets.
 
 ## See also
 

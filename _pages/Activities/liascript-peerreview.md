@@ -18,6 +18,21 @@ Professionals do not wait for the final grade to find out what is wrong with the
 
 ---
 
+## The 15-Minute SQR Protocol Card (in-class version)
+
+This is the complete run-order for the in-class exchange — self-contained, so you can run it from this card alone:
+
+| Minutes | Step |
+|---------|------|
+| 2 | **Silent read** of the other team's artifact. No discussion yet — form your own impressions first. |
+| 5 | **Write** your card: one **S**trength with evidence (point to the sentence or section and say what it accomplishes), one **genuine Q**uestion (something you actually do not know), and one **R**isk with a suggested mitigation (no risk without an exit). |
+| 5 | **Exchange and discuss** cards with the other team — restate their feedback before responding to it. |
+| 3 | **Log** what your team will change as a result: who, what, by when. |
+
+> The full activity below is **required pre-class reading before the first exchange, the stakeholder-brief exchange (see the course schedule)** — it explains what makes each field of the card work, and how to receive the card you get.
+
+---
+
 ## Directions and Group Roles
 
 Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
@@ -41,8 +56,8 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **SQR Card** | A structured peer-review card with exactly three parts: one concrete **S**trength with evidence, one genuine **Q**uestion, one **R**isk with a suggested mitigation. | Model 1, and the Exercises |
-| **Review cycle** | The repeating Project Thread pattern: *artifact → peer review → revise → present*. Feedback arrives while revision is still possible. | Brief exchange (wk5.0), proposal critique (wk11.0/11.1), gallery walk (wk14) |
-| **Check-in** | A short, private, structured form about your own team — contribution, reliability, communication, one appreciation, one request — submitted to the instructor only. | Model 2; due wk5, wk10, wk14 |
+| **Review cycle** | The repeating Project Thread pattern: *artifact → peer review → revise → present*. Feedback arrives while revision is still possible. | The stakeholder-brief exchange, proposal critique, and gallery walk — the review milestones on the course schedule |
+| **Check-in** | A short, private, structured form about your own team — contribution, reliability, communication, one appreciation, one request — submitted to the instructor only. | Model 2; due at the stakeholder-brief exchange, proposal review, and gallery-walk milestones on the course schedule |
 | **CATME-informed feedback** | Feedback dimensions drawn from the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): behaviorally anchored ratings of how teammates contribute, not personality judgments. | The check-in form's categories |
 | **Genuine question** | A question you actually do not know the answer to — as opposed to criticism wearing a question mark ("did you even consider...?"). | Model 1, question 2 |
 | **Repair move** | The four-step response to a rupture: *name it, own your part, restate the other side, propose a next step*. Introduced in the Team Charter activity; used here for receiving hard feedback. | Model 3 |
@@ -64,9 +79,9 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 
 The card travels through the Project Thread's standing **review cycle** — *artifact → peer review → revise → present* — at three scheduled moments:
 
-1. **Stakeholder Brief exchange (wk5.0):** teams swap briefs; each team writes SQR cards on the brief it receives; authors revise before the brief feeds the Literature Review.
-2. **Proposal cross-team critique (wk11.0/11.1):** final-project proposals are exchanged the same way, while there is still time to change course.
-3. **Gallery walk (wk14):** every visitor fills out an SQR card for every team visited; the receiving team triages all cards into *fix before submission / disclose in the report / defer to future work*.
+1. **Stakeholder Brief exchange (see the course schedule):** teams swap briefs; each team writes SQR cards on the brief it receives; authors revise before the brief feeds the Literature Review.
+2. **Proposal cross-team critique (see the course schedule):** final-project proposals are exchanged the same way, while there is still time to change course.
+3. **Gallery walk (see the course schedule):** every visitor fills out an SQR card for every team visited; the receiving team triages all cards into *fix before submission / disclose in the report / defer to future work*.
 
 The mnemonic: *host honestly, walk generously*. When you host, show the weak parts too. When you walk, an SQR card is a gift that costs you thought — give real ones.
 
@@ -97,7 +112,7 @@ Which of the following is a valid Risk entry on an SQR card?
 
 ## Model 2: The Intra-Group Check-In
 
-**Why this matters:** Inter-group review keeps the *work* healthy; intra-group review keeps the *team* healthy. The check-in is a short structured form, informed by the CATME Smarter Teamwork research on behaviorally anchored peer evaluation ([catme.org](https://www.catme.org/)), that every member completes **privately, to the instructor only**, at three points in the semester: **wk5, wk10, and wk14** — deliberately timed just after the thread's crunch points, when memories of how the team actually behaved are fresh.
+**Why this matters:** Inter-group review keeps the *work* healthy; intra-group review keeps the *team* healthy. The check-in is a short structured form, informed by the CATME Smarter Teamwork research on behaviorally anchored peer evaluation ([catme.org](https://www.catme.org/)), that every member completes **privately, to the instructor only**, at three points in the semester — **just after the stakeholder-brief exchange, the proposal review, and the gallery walk on the course schedule** — deliberately timed after the thread's crunch points, when memories of how the team actually behaved are fresh.
 
 The form, per teammate (and for yourself):
 
@@ -115,9 +130,9 @@ Alongside the private check-in, one public instrument continues: **every progres
 
 ### Critical Thinking Questions
 
-4. The check-ins are scheduled at wk5, wk10, and wk14 — just after the brief, mid-project, and the gallery walk. What would be lost if there were only one check-in, at wk14? Name two distinct failure patterns the earlier check-ins can catch while they are still fixable.
+4. The check-ins are scheduled just after the stakeholder-brief exchange, the proposal review, and the gallery walk. What would be lost if there were only one check-in, at the gallery walk? Name two distinct failure patterns the earlier check-ins can catch while they are still fixable.
 
-   > *Hint: Pattern one: workload asymmetry that starts small in weeks 3-5 and compounds — visible at wk5, entrenched by wk14. Pattern two: the silent member drifting away (or the dominant member crowding others out) — at wk5 this is a conversation; at wk14 it is a grade dispute. Feedback has a half-life; the wk14 check-in can only document, not repair.*
+   > *Hint: Pattern one: workload asymmetry that starts small early in the project and compounds — visible at the first check-in, entrenched by the last. Pattern two: the silent member drifting away (or the dominant member crowding others out) — at the first check-in this is a conversation; by the gallery walk it is a grade dispute. Feedback has a half-life; the final check-in can only document, not repair.*
 
 5. Why must the "one request" be a *behavior* ("post your section by Thursday standup") rather than a *trait* ("be more responsible")? Connect your answer to both Edmondson's (1999) psychological safety and to plain practicality: which of the two can a teammate actually comply with by next week?
 
@@ -128,7 +143,7 @@ Alongside the private check-in, one public instrument continues: **every progres
    > *Hint: The check-in informs the instructor; it does not inform the teammate. If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it — which is what the charter's conflict protocol exists to provide. Honest check-in AND direct repair move are both required; each does a job the other cannot.*
 
 [[MC]]
-The structured check-in at wk5, wk10, and wk14 is:
+The structured check-in at the three scheduled milestones is:
 - ( ) Shared with your teammates so everyone knows where they stand
 - ( ) Anonymous and used to assign a team-wide penalty
 - (x) Private to the instructor, and used as one input to the individual-contribution component of grading
@@ -171,19 +186,19 @@ And three norms that keep the room safe for honest review, whichever side of it 
 
 *You've succeeded when:* your Strength points at a specific sentence and says what it accomplishes (there is a genuinely strong move in the excerpt's use of quotes); your Question is something you actually cannot answer from the text; and your Risk names a specific failure with a feasible mitigation. If you are stuck on R, look at the distance between what the stakeholder asked for and what the problem statement promises — and at the phrase "replaced in the first sprint."
 
-**Optional stretch:** draft the check-in you would write about *yourself* this week — contribution, reliability, communication, one appreciation, one request. Nobody sees it; the point is to notice how it feels from the other side before wk5.
+**Optional stretch:** draft the check-in you would write about *yourself* this week — contribution, reliability, communication, one appreciation, one request. Nobody sees it; the point is to notice how it feels from the other side before the first check-in.
 
 ---
 
 ## Reflection Prompt
 
-*In your notebook, keyed to the Open Questions (Goal 15).* **How should we live together?** — Honest review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously. Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)? Where has it broken, and which side broke first — the candor or the generosity? **What will I do?** — Which is harder for you personally: writing the honest Risk, or hearing it? Name one concrete thing from Model 3 you will try at the wk5.0 exchange.
+*In your notebook, keyed to the Open Questions (Goal 15).* **How should we live together?** — Honest review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously. Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)? Where has it broken, and which side broke first — the candor or the generosity? **What will I do?** — Which is harder for you personally: writing the honest Risk, or hearing it? Name one concrete thing from Model 3 you will try at the stakeholder-brief exchange.
 
 ---
 
 ## → Coming Up Next
 
-You will use SQR cards for real at the Stakeholder Brief exchange (wk5.0), and your first private check-in is due the same week. The cycle — artifact, review, revise, present — then repeats at the proposal critique and the gallery walk, all the way to Demo Day.
+You will use SQR cards for real at the Stakeholder Brief exchange on the course schedule, and your first private check-in is due at the same milestone. The cycle — artifact, review, revise, present — then repeats at the proposal critique and the gallery walk, all the way to Demo Day.
 
 ---
 

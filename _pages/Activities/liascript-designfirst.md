@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Design First: Plan Before You Build
 
-In traditional software engineering, the cost of a mistake scales with how late it is discovered: a bug found in code review is cheaper to fix than one found in production. Agentic systems amplify this principle dramatically. An agent that sends emails, modifies databases, or calls external APIs can produce **irreversible side effects** within seconds of starting. If the design was wrong, you may not be able to undo what the agent did.
+In the *Studio: Local Agent Stack Clinic* session you stood up a working local stack; before we build anything more ambitious on top of it, we learn to plan on paper. In traditional software engineering, the cost of a mistake scales with how late it is discovered: a bug found in code review is cheaper to fix than one found in production. Agentic systems amplify this principle dramatically. An agent that sends emails, modifies databases, or calls external APIs can produce **irreversible side effects** within seconds of starting. If the design was wrong, you may not be able to undo what the agent did.
 
 The **design-first** practice insists that before any code is written or any agent is deployed, you produce a written artifact that answers: *What is each agent trying to do? What can it touch? How will we know if it succeeded? How will we know if it failed?* This is not bureaucracy - it is the minimum viable protection against an agent that is confidently wrong at scale.
 
@@ -73,6 +73,15 @@ The **agent table** is the core design artifact for a multi-agent system. One ro
 
    > *Hint: What should FormatterAgent do if it receives a draft that CriticAgent marked as having unfixed issues? Should it proceed anyway? How would you encode that decision in the system prompt?*
 
+[[MC]]
+In the agent table, WriterAgent runs at temperature 0.7 while CriticAgent runs at 0.0. The key distinction this encodes is:
+- ( ) WriterAgent is a larger model, so it can tolerate more randomness
+- (x) Generation benefits from creative variation, but evaluation must be deterministic — a critic that gives different verdicts on identical drafts is useless
+- ( ) Higher temperature makes WriterAgent's citations more accurate
+- ( ) Temperature 0.0 disables CriticAgent's tools, which is safer
+
+Complete the design principle: an empty cell in the agent table is not a gap in the document — it is an unresolved [[risk]] waiting to become a bug.
+
 ---
 
 With your agent table complete, the next model turns to the question of how those agents can fail — and specifically how to predict failures before they happen, while the cost of changing the design is still low.
@@ -118,6 +127,13 @@ A pre-mortem is most useful when it is conducted:
 - ( ) During the debugging phase, when actual failures have been observed
 - (x) Before building begins, when changing the design is still cheap
 - ( ) After the first end-to-end test, when the team has hands-on intuition about the system
+
+[[MC]]
+Every agent in the pipeline passes its own individual tests, yet the end-to-end output is still subtly wrong. The pre-mortem's key distinction that explains this is:
+- ( ) Individual tests are unreliable for language models, so passing them means nothing
+- ( ) The orchestrator must be a larger model than the agents it coordinates
+- (x) Component correctness does not imply composition correctness — errors can compound across handoffs that no single agent's test examines
+- ( ) Temperature settings drift over the course of a long run
 
 ---
 
@@ -172,6 +188,8 @@ Having seen what design-first buys you across six weeks, these exercises give yo
 
    *What to do:* As a team, debate and agree on the answer to this question: what is the *minimum* design artifact you need before starting to build an agentic system? What can you skip if you are in a hurry? Produce a ranked list of design artifacts from "never skip under any circumstances" down to "skip if genuinely pressed for time." The Presenter defends the team's top-priority item to the class.
 
+   *Team vote first:* Before any discussion, each member votes silently — **agent table** (structure-first) or **evaluation rubric** (measurement-first) — as the single never-skip artifact. The Recorder tallies the votes and announces the split. If the vote is not unanimous, the team must reconcile it: each side states the most expensive failure its artifact would have prevented, and the team debates until it agrees on one answer (and records what argument moved the minority). Only then build the full ranked list.
+
    *Starter hint:* Consider these candidates: (1) agent table, (2) data flow diagram, (3) pre-mortem, (4) evaluation rubric, (5) system prompt drafts. Which single artifact, if it were all you had, would prevent the most expensive failures?
 
    *You've succeeded when:* The team can defend the top item on the list with a concrete example of a catastrophic failure it would have prevented in a real project.
@@ -198,7 +216,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The next activity examines *advanced agent loops* — how agents detect and recover from failures mid-task, and what engineering controls prevent a loop from running forever or spending unbounded resources.
+→ **Coming Up Next:** The *Orchestration Patterns: Pipelines, Routers, and Planners* activity is next — how the agents you just designed on paper get wired into pipelines, routers, and planner-led workflows. The design artifacts from today feed directly into Written Assignment 2 and your Final Project's design document.
 
 ---
 

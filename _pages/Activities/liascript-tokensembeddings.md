@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Tokens and Embeddings: How Agents Represent Meaning
 
-We open the hood for the first time, on demand: our agents will soon need to *search* documents by meaning, and that requires understanding **tokens** (how text becomes numbers) and **embeddings** (how meaning becomes geometry). We move from **tokenization $\rightarrow$ vectors $\rightarrow$ cosine similarity $\rightarrow$ computing semantic search by hand and in code**.
+In the *Connecting Agents to the World: MCP and APIs* activity our agents learned to reach external tools; now we open the hood for the first time, on demand: our agents will soon need to *search* documents by meaning, and that requires understanding **tokens** (how text becomes numbers) and **embeddings** (how meaning becomes geometry). We move from **tokenization $\rightarrow$ vectors $\rightarrow$ cosine similarity $\rightarrow$ computing semantic search by hand and in code**.
 
 ---
 
@@ -73,7 +73,7 @@ Given the toy merge rules (`t`+`h`→`th`, `th`+`e`→`the`, `i`+`n`→`in`, `in
 
 ## 2. Embeddings: Meaning as Geometry
 
-**Why this matters:** Once text is tokenized, the model still needs a way to understand that "dog" and "puppy" are related while "dog" and "tax return" are not. The solution is to map every piece of text to a point in a high-dimensional space — think of it as a map where meaning is location. Words with similar meanings land near each other on the map, just like cities in the same region are physically close. This single idea powers search engines, recommendation systems, and the retrieval pipelines our agents will use next week.
+**Why this matters:** Once text is tokenized, the model still needs a way to understand that "dog" and "puppy" are related while "dog" and "tax return" are not. The solution is to map every piece of text to a point in a high-dimensional space — think of it as a map where meaning is location. Words with similar meanings land near each other on the map, just like cities in the same region are physically close. This single idea powers search engines, recommendation systems, and the retrieval pipelines our agents will use in the *Retrieval-Augmented Generation with Chroma* activity.
 
 **An embedding maps a token, sentence, or document to a vector** $\mathbf{v} \in \mathbb{R}^d$ (with $d$ commonly 384 to 4096 — that is, a list of 384 to 4096 numbers) such that *semantically similar texts map to nearby vectors*. The standard similarity measure is **cosine similarity** (the cosine of the angle between two vectors):
 
@@ -81,7 +81,7 @@ $$
 \cos(\theta) = \frac{\mathbf{a} \cdot \mathbf{b}}{\lVert \mathbf{a} \rVert \, \lVert \mathbf{b} \rVert}
 $$
 
-which ranges from $-1$ (opposite meaning) through $0$ (unrelated) to $1$ (identical direction/meaning). Embedding models are trained so that paraphrases score high and unrelated texts score low; this single idea powers semantic search, clustering, recommendation, and the retrieval pipelines our agents will use next week.
+which ranges from $-1$ (opposite meaning) through $0$ (unrelated) to $1$ (identical direction/meaning). Embedding models are trained so that paraphrases score high and unrelated texts score low; this single idea powers semantic search, clustering, recommendation, and the retrieval pipelines our agents will use in the *Retrieval-Augmented Generation with Chroma* activity.
 
 ---
 
@@ -217,7 +217,7 @@ In this part, you will extend the search engine to reveal the geometry of meanin
 
 ## → Coming Up Next
 
-In the next module, we put embeddings to work at scale: instead of searching five sentences, we will index thousands of document chunks in a **vector database** (Chroma) and use that index to give our agents access to up-to-date information they were never trained on — a technique called Retrieval-Augmented Generation (RAG).
+In the *Retrieval-Augmented Generation with Chroma* activity, we put embeddings to work at scale: instead of searching five sentences, we will index thousands of document chunks in a **vector database** (Chroma) and use that index to give our agents access to up-to-date information they were never trained on — a technique called Retrieval-Augmented Generation (RAG).
 
 ---
 

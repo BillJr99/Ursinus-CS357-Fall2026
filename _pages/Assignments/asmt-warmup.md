@@ -19,7 +19,7 @@ tags:
 
 ---
 
-The purpose of this assignment is to get us set up for the course, both by getting to know each other better and by getting you connected to the tools we will use all semester.
+The purpose of this assignment is to get us set up for the course, both by getting to know each other better and by getting you connected to the tools we will use all semester.  This onboarding assignment is assessed within the Class Activities and Participation category.
 
 ## Personal Survey (5 Pts)
 

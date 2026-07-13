@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand (pipelines, RAG, routers, agents with tools) exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern we have coded by hand — through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools) — exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 
@@ -86,7 +86,7 @@ Now that you understand what visual flows are and how they map to code, let's bu
 
 Construct the minimal flow: **Chat Input → Prompt (with your Lab 1 persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
 
-This is the visual equivalent of the four-line `llm()` call you have been writing since Week 1. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
+This is the visual equivalent of the four-line `llm()` call you have been writing since *The Agent Loop: Perceive, Plan, Act* activity. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
 
 ## Model 3: Build 2 — RAG over Your Lab 2 Corpus
 
@@ -111,7 +111,7 @@ The visual artifact and your code-world tooling (harnesses, batch evaluation) co
 
 ### Critical Thinking Questions
 
-4. Run your Lab 2 evaluation question set through the Langflow endpoint with your week 3 harness. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
+4. Run your Lab 2 evaluation question set through the Langflow endpoint with your harness from the *Hallucinations and Evaluating Agent Outputs* activity. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
 
    *Hint:* Export the Langflow flow JSON and search for your chunk size value. Is it exactly the same number as in your Python Lab 2 code? Check the retriever's $k$ parameter (number of documents retrieved) in the Chroma node settings.
 
@@ -134,39 +134,7 @@ The most defensible claim about visual builders versus code for agent systems is
 
 ---
 
-# Part III: Synthesis and Practice
-
-Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
-
-## Exercises
-
-1. *Pattern rebuild.*
-
-   *What to do:* Choose one Unit 3 pattern (router, critique-refine, or a two-stage pipeline) and realize it on the Langflow canvas. Capture a screenshot of the working flow with at least one playground transcript showing the expected behavior.
-
-   *Starter hint:* A two-stage pipeline is the simplest: one Prompt+Ollama node for the first stage, whose output feeds a second Prompt+Ollama node. The "router" pattern requires a conditional — look for a "Conditional Router" component in Langflow's sidebar.
-
-   *You've succeeded when:* You can show the screenshot to a teammate who did not build it, and they correctly explain what the flow does without your help.
-
-2. *Limit hunt.*
-
-   *What to do:* Attempt to express your Lab 4 debate (n agents, two rounds, majority vote) visually on the canvas. Document precisely where the canvas resists (loops, dynamic fan-out, variable number of agents), and state the general principle about what dataflow graphs express awkwardly.
-
-   *Starter hint:* Dynamic fan-out means "create $n$ parallel paths where $n$ is determined at runtime." Can you wire $n$ Ollama nodes when you do not know $n$ at flow-design time? What does this tell you about the difference between *static* and *dynamic* computation graphs?
-
-   *You've succeeded when:* You can write one precise sentence stating the structural limitation (e.g., "Langflow flows are static graphs; they cannot spawn a variable number of parallel nodes at runtime") and give a concrete example from the debate pipeline that hits this limit.
-
-3. *Stakeholder demo.*
-
-   *What to do:* Prepare a 90-second explanation of your Build 2 RAG flow for a non-programmer (an RA, a club officer, a professor in another department). Deliver it to another team's Reflector and collect one comprehension question you failed to anticipate.
-
-   *Starter hint:* Your explanation should answer: "What does it do? Where does the knowledge come from? What does it NOT know?" Avoid the words "embedding," "vector," and "Chroma." Use analogies: "It's like a search engine that reads your documents before answering."
-
-   *You've succeeded when:* The other team's Reflector asks a question you had not prepared for, you can record that question, and you can improve your explanation to preemptively answer it next time.
-
----
-
-## Part IV: Hands-On Langflow Build (30 minutes)
+# Part III: Hands-On Langflow Build (30 minutes)
 
 > **Before starting**: Make sure Langflow is running at `http://localhost:7860`. If not installed, run `pip install langflow && langflow run` in your terminal.
 
@@ -266,6 +234,42 @@ Answer these in your Recorder's notes before moving on:
 
 ---
 
+# Part IV: Synthesis and Practice
+
+Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
+
+---
+
+**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+
+## Exercises
+
+1. *Pattern rebuild.*
+
+   *What to do:* Choose one Unit 3 pattern (router, critique-refine, or a two-stage pipeline) and realize it on the Langflow canvas. Capture a screenshot of the working flow with at least one playground transcript showing the expected behavior.
+
+   *Starter hint:* A two-stage pipeline is the simplest: one Prompt+Ollama node for the first stage, whose output feeds a second Prompt+Ollama node. The "router" pattern requires a conditional — look for a "Conditional Router" component in Langflow's sidebar.
+
+   *You've succeeded when:* You can show the screenshot to a teammate who did not build it, and they correctly explain what the flow does without your help.
+
+2. *Limit hunt.*
+
+   *What to do:* Attempt to express your Lab 4 debate (n agents, two rounds, majority vote) visually on the canvas. Document precisely where the canvas resists (loops, dynamic fan-out, variable number of agents), and state the general principle about what dataflow graphs express awkwardly.
+
+   *Starter hint:* Dynamic fan-out means "create $n$ parallel paths where $n$ is determined at runtime." Can you wire $n$ Ollama nodes when you do not know $n$ at flow-design time? What does this tell you about the difference between *static* and *dynamic* computation graphs?
+
+   *You've succeeded when:* You can write one precise sentence stating the structural limitation (e.g., "Langflow flows are static graphs; they cannot spawn a variable number of parallel nodes at runtime") and give a concrete example from the debate pipeline that hits this limit.
+
+3. *Stakeholder demo.*
+
+   *What to do:* Prepare a 90-second explanation of your Build 2 RAG flow for a non-programmer (an RA, a club officer, a professor in another department). Deliver it to another team's Reflector and collect one comprehension question you failed to anticipate.
+
+   *Starter hint:* Your explanation should answer: "What does it do? Where does the knowledge come from? What does it NOT know?" Avoid the words "embedding," "vector," and "Chroma." Use analogies: "It's like a search engine that reads your documents before answering."
+
+   *You've succeeded when:* The other team's Reflector asks a question you had not prepared for, you can record that question, and you can improve your explanation to preemptively answer it next time.
+
+---
+
 ## Reflection Prompt
 
 *Personal:* Today you wired at least one component (a Text Splitter, a Chroma node, an Embeddings node) without fully reading its source code. Identify that component and describe what you know about what it does, what you are uncertain about, and how you would find out.
@@ -276,7 +280,7 @@ Answer these in your Recorder's notes before moving on:
 
 ---
 
-→ Coming Up Next: Now that we can build and evaluate agent systems, we need to measure their output quality at scale — which requires recruiting an AI model to act as the judge of other AI outputs.
+→ Coming Up Next: In the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity, we measure agent output quality at scale — which requires recruiting a model to act as the judge of other models' outputs.
 
 ## Further Reading
 

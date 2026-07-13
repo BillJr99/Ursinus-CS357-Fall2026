@@ -259,7 +259,7 @@ Pair across tracks: each Track A member brings a tested change with its CI run; 
 
 In your notebook, respond at three levels:
 
-**Personal level:** This module argued that AI moved the maker's value from producing artifacts to specifying, verifying, and owning them. Of those three — specifying, verifying, owning — which is currently weakest in you, and why? What concrete artifact from today's exercises revealed that weakness most clearly? What would you build differently next week because of what you noticed?
+**Personal level:** This module argued that AI moved the maker's value from producing artifacts to specifying, verifying, and owning them. Of those three — specifying, verifying, owning — which is currently weakest in you, and why? What concrete artifact from today's exercises revealed that weakness most clearly? What would you build differently in your next project because of what you noticed?
 
 **Technical level:** The module introduced the Minimum Viable Agent as a design principle: do one thing reliably before adding complexity. How would you test whether an agent is truly "minimum"? Is there a principled way to decide when an agent is ready to have a second tool added, or is it always a judgment call? Describe the specific tests you would run before expanding an MVA — be concrete enough that someone else could follow your checklist.
 

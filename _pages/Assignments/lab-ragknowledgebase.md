@@ -30,16 +30,16 @@ info:
   rubric:
     - weight: 30
       description: Pipeline Implementation
-      preemerging: The pipeline fails to index or query due to major issues, or the program fails to run
-      beginning: The pipeline runs but fails on test questions due to one or more minor issues
+      preemerging: The pipeline (code or flow) fails to index or query due to major issues, or the program or flow fails to run
+      beginning: The pipeline (code or flow) runs but fails on test questions due to one or more minor issues
       progressing: The pipeline indexes and answers correctly with citations, but a component such as abstention or configuration is fragile or incomplete
-      proficient: The pipeline indexes, retrieves, answers with cited bracketed source numbers, and abstains with the designated phrase when no chunk is relevant; a screenshot or log shows all three behaviors (answer-with-citation, abstention, and the bare-model hallucination contrast); configuration is externalized and exceptions are handled with located messages and tracebacks
+      proficient: The pipeline — whether hand-coded or built as a Langflow flow — indexes, retrieves, answers with cited bracketed source numbers, and abstains with the designated phrase when no chunk is relevant; a screenshot or log shows all three behaviors (answer-with-citation, abstention, and the bare-model hallucination contrast); configuration is externalized and exceptions are handled with located messages and tracebacks, or, on the flow route, the exported flow JSON plus documented node settings serve as the externalized configuration
     - weight: 25
       description: Chunking Strategy and Justification
       preemerging: A single arbitrary chunking is used without discussion
       beginning: A chunking choice is stated but not compared against an alternative
-      progressing: Two chunking strategies are compared on a small question set with results reported
-      proficient: At least two chunking strategies are compared on a defined question set; recall@k is reported for k in {1,3,5} for each strategy in a table; the shipped choice is defended with a specific numeric comparison (e.g., "strategy A achieves recall@3 of 0.80 vs. 0.60 for strategy B on our question set")
+      progressing: Two chunking strategies (in code, or as two flow configurations) are compared on a small question set with results reported
+      proficient: At least two chunking strategies — implemented in code or as two Langflow configurations with different splitter settings — are compared on a defined question set; recall@k is reported for k in {1,3,5} for each strategy in a table; the shipped choice is defended with a specific numeric comparison (e.g., "strategy A achieves recall@3 of 0.80 vs. 0.60 for strategy B on our question set")
     - weight: 25
       description: Evaluation and Citation Audit
       preemerging: No evaluation is provided
@@ -48,10 +48,10 @@ info:
       proficient: A question set of at least ten questions is evaluated with recall@k and answer accuracy; every citation in a sample of at least ten answers is audited by hand for faithfulness; a faithfulness rate (e.g., "9/10 citations correctly supported the claim") is reported; any failures are shown verbatim and classified using the hallucination taxonomy from class
     - weight: 10
       description: Code Quality and Documentation
-      preemerging: Code commenting and structure are absent, or code structure departs significantly from best practice
-      beginning: Code commenting and structure is limited in ways that reduce the readability of the program
-      progressing: Code documentation is present that re-states the explicit code definitions
-      proficient: Every non-trivial function has a docstring; all network, embedding, and database operations are wrapped in exception handlers that print a located message (e.g., [lab2:query_corpus]) followed by a traceback; model name, chunk size, overlap, top-k, and abstention threshold are read from a JSON config file rather than hardcoded
+      preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from best practice
+      beginning: Code or configuration documentation is limited in ways that reduce the readability and reproducibility of the work
+      progressing: Documentation is present that re-states the explicit code or configuration definitions
+      proficient: Every non-trivial function has a docstring; all network, embedding, and database operations are wrapped in exception handlers that print a located message (e.g., [lab2:query_corpus]) followed by a traceback; model name, chunk size, overlap, top-k, and abstention threshold are read from a JSON config file rather than hardcoded; on the Langflow route this row is earned by configuration quality — the two exported flow JSONs, documented node settings (model, chunk size, overlap, top-k), and setup notes sufficient to reproduce both flows exactly
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
@@ -140,13 +140,16 @@ If `ollama NOT running`, start the server with `ollama serve` in a separate term
 
 **Estimated time budget:**
 
-| Part | Task | Estimated time |
-|------|------|----------------|
-| Part 1 | Curate and document corpus | 45–60 min |
-| Part 2 | Index with intent | 60–90 min |
-| Part 3 | Grounded generation | 60–75 min |
-| Part 4 | Citation audit | 30–45 min |
-| Writeup | Readme, datasheet, reflection | 30–45 min |
+This lab runs across a roughly two-and-a-half-week window (September 29 – October 15) that spans fall break. Budget your weeks: aim to have the core pipeline working before the break so the direction work and audit are not compressed into the final days.
+
+| Component | Estimated time |
+|-----------|----------------|
+| Core Parts 1–4 (corpus and datasheet; indexing; grounded generation; citation audit) | 4–5 hours |
+| Your chosen direction (see Choose Your Direction below) | 3–5 hours |
+| Writeup, learning log, and packaging | included above |
+| **Total** | **≈ 8–10 hours** |
+
+(Direction 0, the low-code Langflow route, is estimated at 7–9 hours on its own — but it *replaces* the coding of core Parts 2–3 rather than adding to it, so the lab total stays ≈ 8–10 hours.)
 
 ---
 
@@ -713,29 +716,138 @@ Add a `last_modified` timestamp to each chunk's metadata (from the file's `mtime
 
 ## Choose Your Direction
 
-Everyone builds the core RAG knowledge base above. Once that pipeline is working, cited, and audited, you extend it in **one** direction of your choosing from the two below. You do not do both. Pick the direction that most interests you, and carry your Lab 2 corpus, config discipline, and evaluation habits into it.
+Everyone completes core Part 1 (corpus and datasheet) and core Part 4 (citation audit). Beyond that, you choose **one** direction below. You do not do more than one. Pick the direction that most interests you, and carry your Lab 2 corpus, config discipline, and evaluation habits into it.
 
-The **single 100-point grade for this lab covers your core RAG work plus your chosen direction together** — the graded rubric above still governs your score. The direction is where you push the ideas further; treat the "What proficient work looks like" bullets in your chosen direction as the standard your extension work should meet, and fold your direction's deliverables into the same submission ZIP and readme as the core lab.
+**Direction 0 is different in kind from the other two.** It is the low-code route through the middle of the lab itself: it **replaces the coding of core Parts 2–3** (indexing and grounded generation) with a visual Langflow build that meets the same requirements — two compared chunking configurations, recall@k, citations, and abstention. Core Part 1 (corpus curation + datasheet) and core Part 4 (citation audit) remain required for everyone, whichever direction you choose. Directions 1 and 2, by contrast, are extensions you complete **after** finishing core Parts 1–4 in code.
+
+The **single 100-point grade for this lab covers your core RAG work plus your chosen direction together** — the graded rubric above still governs your score, and its rows credit a pipeline whether it is hand-coded or built as a flow. Treat the "What proficient work looks like" bullets (or the deliverables list, for Direction 0) in your chosen direction as the standard your work should meet, and fold your direction's deliverables into the same submission ZIP and readme as the core lab.
 
 Choose one:
 
-- **Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA** — instead of retrieving knowledge at query time, bake domain knowledge into the weights, and decide from evidence whether that was worth it compared to your RAG pipeline.
-- **Direction 2: Multimodal AI and Monte Carlo Simulation** — turn from text retrieval to images, and probe where a multimodal model reads a chart confidently but wrongly, using a simulation you build as ground truth.
+- **Direction 0: The Langflow Route (low-code)** — build the same RAG pipeline visually on a Langflow canvas over your own corpus: two chunking configurations compared by recall@k, grounded and abstaining answers, no pipeline code authorship. Estimated 7–9 hours (replacing core Parts 2–3, not adding to them).
+- **Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA** — instead of retrieving knowledge at query time, bake domain knowledge into the weights, and decide from evidence whether that was worth it compared to your RAG pipeline. GPU or free-Colab or provided-adapter paths available — see the requirements box at its top.
+- **Direction 2: Multimodal AI and Monte Carlo Simulation** — turn from text retrieval to images, and probe where a multimodal model reads a chart confidently but wrongly, using a simulation you build as ground truth. Fully local and free (~4.7 GB model pull).
 
 ---
+
+<details markdown="1">
+<summary><strong>Direction 0: The Langflow Route (low-code)</strong></summary>
+
+This direction is the low-code route through the heart of the lab. You will build the same retrieval-augmented pipeline the core lab specifies — your corpus, chunked and embedded into Chroma, retrieved and answered with citations and honest abstention — but you will build it **visually in Langflow**, wiring components on a canvas instead of authoring Python. The requirements do not soften: you still compare two chunking configurations empirically, still report recall@k, still force grounding and abstention, and still audit your citations by hand. What changes is the medium.
+
+**What this replaces and what it does not.** Direction 0 replaces the *coding* of core Parts 2–3 (indexing and grounded generation). Core Part 1 — corpus curation and the datasheet — and core Part 4 — the citation audit — remain required and unchanged; you complete them exactly as written, using your Langflow pipeline's answers as the audit material. The writeup expectations are the core lab's.
+
+> **What this direction requires**
+>
+> - **Accounts:** none.
+> - **API costs:** none — the flow runs entirely against your local Ollama server.
+> - **Installs / disk:** Langflow (`pip install langflow`, or `uv pip install langflow` for a faster install — expect roughly five minutes and a couple of GB of dependencies), plus the `nomic-embed-text` embedding model in Ollama (~270 MB pull).
+> - **Hardware:** any machine that runs the core lab.
+> - **No-cost fallback:** this *is* the no-cost, low-code route.
+
+**Estimated time: 7–9 hours** (in place of core Parts 2–3, so the lab total stays ≈ 8–10 hours).
+
+Background material: the [Visual Agent Building with Langflow activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md), especially Part IV's hands-on build — this direction extends that 30-minute build to the full lab standard.
+
+#### Part A: Install and Launch Langflow
+
+```bash
+pip install langflow        # or: uv pip install langflow (faster resolver)
+langflow run
+```
+
+The install takes about five minutes and pulls a large dependency set. When the server banner appears, browse to `http://localhost:7860`. Also pull the embedding model your flow will use:
+
+```bash
+ollama pull nomic-embed-text
+```
+
+Confirm Ollama is running (`ollama list` shows `llama3.2` and `nomic-embed-text`) before building anything — every model component in your flow points at `http://localhost:11434`.
+
+> **Troubleshooting the install:** if `pip install langflow` fails with a dependency-resolver error, create a fresh virtual environment on Python 3.11/3.12 and install there. If `http://localhost:7860` refuses to connect, the server may still be starting — the first launch is slow; watch the terminal for the "Langflow is running" banner. If a component errors with a connection refusal at runtime, its Base URL is wrong or Ollama is not running.
+
+#### Part B: Build the RAG Flow on the Canvas
+
+Create a **New Flow → Blank Canvas** and wire the pipeline over the corpus you curated in core Part 1 (upload your actual corpus files — not a toy document):
+
+- **Ingest path:** **File** loader (upload your corpus documents) → **Text Splitter** (RecursiveCharacterTextSplitter; set the chunk size and overlap you will defend in Part C) → **Ollama Embeddings** (Model `nomic-embed-text`, Base URL `http://localhost:11434`) → **Chroma** (ingest mode; name the collection and note the persist directory).
+- **Query path:** **Chat Input** → **Retriever** over the same Chroma collection (with **Ollama Embeddings** wired in for query embedding; set top-k to match your config) → **Prompt** node with your grounding-and-citation instructions and a `{context}` variable → **Ollama** chat model (`llama3.2`, temperature 0.1, Base URL `http://localhost:11434`) → **Chat Output**.
+
+Component names vary slightly across Langflow versions; the dataflow is what matters, and the Part IV steps in the visual agents activity walk through the same wiring. Run the flow in the playground and confirm an in-corpus question comes back answered with context before moving on. Record every node setting (model, chunk size, overlap, top-k, temperature) in a config notes file — these are your externalized configuration for the rubric.
+
+#### Part C: The Chunking Comparison — Two Flow Configurations
+
+The core lab's empirical chunking requirement, on canvas. Build **two configurations** of your flow that differ only in the Text Splitter's settings (for example, 500 characters with 50 overlap versus 1,000 characters with 100 overlap, or a small-chunk versus large-chunk regime that mimics the fixed-versus-paragraph contrast). Duplicate the flow rather than editing in place, and give each Chroma collection a distinct name so the two indexes cannot contaminate each other.
+
+Then take the **same ten retrieval queries** the core lab requires — ten questions whose answering chunk you have located by hand in your corpus — and run all ten through **both** configurations. For each query, inspect which chunks the retriever returned (the playground's inspection view shows each node's output; this visibility is the point of the canvas) and record whether the relevant document appeared in the top k, for k in {1, 3, 5}.
+
+**Recall@k, in one sentence: the count (reported as a fraction) of queries whose relevant document appears among the top k retrieved chunks.** Fill in the recall table for both configurations:
+
+| Configuration | recall@1 | recall@3 | recall@5 |
+|---------------|----------|----------|----------|
+| Flow A (chunk=___, overlap=___) | /10 | /10 | /10 |
+| Flow B (chunk=___, overlap=___) | /10 | /10 | /10 |
+
+Defend your shipped choice with a specific numeric comparison, exactly as the rubric's chunking row requires.
+
+#### Part D: Grounding and Abstention
+
+Craft the Prompt node so the model **must** cite the retrieved chunks and **must** abstain otherwise. A starting template (tighten it for your corpus):
+
+```text
+You answer questions using ONLY the numbered context passages below.
+Cite the passage number in brackets, like [1], after every claim.
+If the context does not contain the answer, reply exactly:
+"I don't have enough information in my knowledge base to answer that."
+
+Context:
+{context}
+```
+
+Demonstrate it with **three in-corpus queries** (answers with citations) and **two out-of-corpus queries** (clean abstentions), and save all five transcripts. If the model answers an out-of-corpus question from its own general knowledge instead of abstaining, that is a real finding — tighten the prompt, re-run, and report both versions.
+
+#### Part E: Citation Audit and Writeup
+
+Complete core Part 4 unchanged: audit every citation in a sample of at least ten answers from your shipped flow by hand, report a faithfulness rate, and classify failures with the hallucination taxonomy from class. The playground's node-inspection view makes it easy to see exactly which chunk text the model was given — use it to check each bracketed citation against its source chunk. The writeup, datasheet, learning log, and pair log requirements are identical to the core lab; add one paragraph on what the canvas made easier and what it hid from you compared with the code your classmates wrote.
+
+#### Direction 0 Deliverables
+
+Fold these into the standard Lab 2 submission ZIP:
+
+- **Exported flow JSON × 2** — both chunking configurations (⋯ menu → Export Flow), plus your node-settings config notes.
+- **Query/recall table** — the ten queries, their hand-located source chunks, and the completed recall@k table for both configurations with your defended choice.
+- **Transcripts** — the three in-corpus and two out-of-corpus grounding/abstention runs, and the answers used in your citation audit.
+- **Datasheet** — from core Part 1 (shared requirement).
+- **Writeup** — core-lab scope, including the faithfulness rate and failure classification from the audit and the canvas-versus-code paragraph.
+
+</details>
 
 <details markdown="1">
 <summary><strong>Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA</strong></summary>
 
 This direction takes the opposite approach to knowledge injection from the one you just built. In the core lab, your RAG system kept knowledge *outside* the model and retrieved it at query time. Here you will adapt a local model by **baking** domain knowledge into a small set of trainable weights using **LoRA** (Low-Rank Adaptation — a technique that adds a tiny number of trainable parameters to a frozen base model, making fine-tuning feasible on consumer hardware). You will use a real domain-specific dataset, instrument training with loss tracking, evaluate output quality, and document the result with a model card — and then, crucially, decide whether fine-tuning earned its keep versus the RAG pipeline from the core lab.
 
-**This direction requires GPU access.** Use your own hardware (if you have a compatible GPU), Google Colab (free tier with a T4 GPU is sufficient for a 7B model with QLoRA), or a provisioned cloud instance. Time budget: expect 2–3 hours of active work, with training running in the background.
+> **What this direction requires**
+>
+> - **Accounts:** a free Hugging Face account. If you use a gated Llama base model, you must also accept the model license on its Hugging Face page and log in with `huggingface-cli`; the non-gated bases in the table below need no license step. A Google account if you take the free Colab path.
+> - **API costs:** none — training runs on your own GPU or on Google Colab's free tier; nothing is billed.
+> - **Installs / disk:** the training toolchain (`unsloth`, or `transformers`+`peft`+`trl`) in Colab or locally, plus a few GB of disk for model weights and the exported GGUF.
+> - **Hardware:** a CUDA GPU with roughly 6–8 GB of VRAM — **or no GPU at all**, using one of the two no-GPU paths below.
+> - **No-cost fallback:** Google Colab's free T4 tier runs every step of this direction; if Colab is unavailable to you, the provided-artifact variant below skips training entirely and still earns full credit.
+
+**Time budget:** expect 2–3 hours of active work, with training running in the background (or none at all on the provided-artifact variant).
+
+##### No GPU? Two paths, both full credit
+
+1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A–D exactly as written in the notebook. A 3.8B–8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15–60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
+
+2. **Provided-artifact variant (only if Colab is unavailable to you).** Skip training and start from a published adapter: search the Hugging Face Hub for a public LoRA adapter for `llama3.2` — any published llama3.2 LoRA adapter works; pick one whose model card describes its training domain, and cite it — and download it. Then perform **only the deployment and evaluation half** of this direction: the GGUF merge (Step C.5, merging the downloaded adapter instead of one you trained), the `Modelfile`, the `ollama create` / `ollama run` deployment, and the full before/after evaluation of Step C comparing the base model against the adapted model. **This variant earns full credit, with the evaluation weighted more heavily** in place of the training run: extend your before/after comparison to at least 15 prompts (rather than 10), and include the honest-regression analysis, since the evaluation is your primary evidence. The model card (Step D) is still required — document the adapter's provenance, dataset, and license in place of your own training details. This path preserves the direction's deployment and evaluation learning objectives; the loss-curve deliverable is waived for it.
 
 #### Before You Start
 
 ##### Prerequisite Checklist
 
-- [ ] GPU access confirmed: your own GPU, Google Colab free tier (T4), or a cloud VM
+- [ ] GPU access confirmed: your own GPU, Google Colab free tier (T4), or a cloud VM — or the provided-artifact variant chosen (no GPU needed)
 - [ ] Python 3.10 or later (`python --version`)
 - [ ] If using a Llama model: HuggingFace account and accepted model license at `meta-llama/Meta-Llama-3-8B-Instruct`
 - [ ] HuggingFace CLI installed and logged in (if downloading gated models)
@@ -1392,6 +1504,14 @@ Fold these into your Lab 2 submission ZIP and readme:
 This direction turns from text retrieval to images. In the core lab you audited whether a model faithfully used *text* you retrieved; here you will audit whether a **multimodal** model faithfully reads *a chart*. You will build a Monte Carlo retirement simulation that you generate, send its chart to a local vision model, and discover that AI image analysis is impressively capable at pattern recognition but surprisingly fragile on numerical precision — and that the difference matters enormously when the output might influence someone's financial decisions. The ground-truth-versus-AI-claim audit is the same muscle you built in the core lab's citation audit, applied to pixels instead of passages.
 
 This direction is completed in **pairs using driver/navigator roles**: the driver types while the navigator reviews, questions, and consults documentation, and you must **swap roles at least every 30 minutes**, keeping a brief log of swap times and who held each role.
+
+> **What this direction requires**
+>
+> - **Accounts:** none.
+> - **API costs:** none — the vision model runs locally in Ollama.
+> - **Installs / disk:** `numpy`, `matplotlib`, and `requests`, plus the `llava` multimodal model (~4.7 GB pull; smaller alternatives such as `moondream`, `bakllava`, or `llava-phi3` also work).
+> - **Hardware:** any machine that runs the core lab; the 4.7 GB model is happiest with 8 GB of RAM or more. Pull it before the day you need it.
+> - **No-cost fallback:** not needed — fully local and free.
 
 #### Before You Start
 
