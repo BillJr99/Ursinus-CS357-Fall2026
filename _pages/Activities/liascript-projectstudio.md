@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Project Studio and Gallery Walk
 
-Today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
+With the *Explainability and Human-Centric Design* heuristics fresh, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
 
 ---
 
@@ -200,7 +200,7 @@ Write a combined reflection of 150–200 words addressing at least two of the th
 
 ---
 
-→ Coming Up Next: The LLM Wiki activity shows you how to build and maintain a personal knowledge base using the same agent-driven workflow you have been building all semester — putting your vault to work as a living research tool.
+→ Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/DemoDayGuide) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 

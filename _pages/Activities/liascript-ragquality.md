@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Quality: Chunking, Clustering, and Reranking
 
-Yesterday's RAG pipeline worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in Lab 2.
+The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in Lab 2.
 
 ---
 
@@ -181,31 +181,7 @@ for label in sorted(set(km.labels_)):
 
 # Part III: Synthesis and Practice
 
-## 4. Exercises
-
-In this Part you apply everything from Parts I and II to real documents: run a chunking shootout on a campus policy page, build and test a reranker using your local model, plot a recall curve, and choose a retrieval configuration you can defend with numbers.
-
-1. *Chunking shootout.* Take one real page of a campus document. Index it three ways (fixed 100 tokens no overlap, fixed 300 tokens with 75-token overlap, paragraph-structural). For five questions with known answers, report which indexing strategy wins recall@2, and explain the winner.
-
-   - *What to do:* Choose a real campus policy page (parking, dining, honor code, etc.). Implement three versions of the chunker and create three separate Chroma collections. For 5 questions where you know which paragraph contains the answer, run all three and check whether the answer paragraph appears in the top 2 results.
-   - *Starter hint:* For fixed chunking: `chunks = [text[i:i+n] for i in range(0, len(text), n-overlap)]`. For paragraph structural: `chunks = [p.strip() for p in text.split('\n\n') if p.strip()]`. Count recall@2 as: for each of 5 questions, 1 if the right chunk is in position 1 or 2, else 0. Divide by 5.
-   - *You've succeeded when:* You have a table with 3 rows (one per chunking strategy) and 5 question columns (1 = retrieved, 0 = not), plus a recall@2 score for each strategy and a one-sentence explanation of why the winner worked best for this particular document.
-
-2. *Build a reranker.* Wrap your local model in a relevance-scoring prompt, rerank 10 retrieved candidates for three questions, and report the rank change of the truly relevant chunk.
-
-   - *What to do:* Retrieve the top 10 chunks for 3 questions using your Chroma collection. For each chunk, call the model with a prompt like: "On a scale of 0 to 10, how relevant is the following passage to the question '{question}'? Passage: '{chunk}'. Reply with only a number." Sort by score and report the new rank of the chunk you know is correct.
-   - *Starter hint:* `def rerank_score(question, chunk): return int(chat(f"Rate relevance 0-10 of this passage to '{question}': '{chunk}'. Reply only with a number."))`. Call this for each of your 10 candidates, sort descending, and report where the correct chunk landed before and after reranking.
-   - *You've succeeded when:* For at least 2 of 3 questions, the correct chunk's rank improves after reranking (e.g., moved from position 4 to position 1), and you can explain in one sentence why the initial vector search placed it lower.
-
-3. *Recall curve.* For your Lab 2 corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
-
-   - *What to do:* Build a small evaluation set of 10 questions with labeled relevant chunks. Run your Chroma search with n_results=10 for each question. Compute recall@k for each k value by checking whether the correct chunk appears in the top k. Plot the resulting curve with `matplotlib`.
-   - *Starter hint:* `recall_at_k = [sum(1 for q in eval_set if correct_chunk[q] in top_k_results[q][:k]) / len(eval_set) for k in [1,2,3,5,10]]`. Then `plt.plot([1,2,3,5,10], recall_at_k)`.
-   - *You've succeeded when:* You have a plotted recall curve showing recall@k for k in {1,2,3,5,10}, and your written justification explicitly trades off "more chunks = higher recall but fewer prompt tokens remaining for the answer" against the accuracy you need for your application.
-
----
-
-With the theory of recall and reranking established, the next Part puts chunking strategies head-to-head on a real document so you can see the performance differences numerically rather than hypothetically.
+With the theory of recall and reranking established, this hands-on section puts chunking strategies head-to-head on a real document so you can see the performance differences numerically rather than hypothetically.
 
 ## Hands-On: Chunking Strategy Comparison (30 minutes)
 
@@ -396,6 +372,34 @@ You increase `chunk_size` from 100 characters to 1000 characters (keeping overla
 
 ---
 
+---
+
+**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+
+## 4. Exercises
+
+In this Part you apply everything from Parts I and II to real documents: run a chunking shootout on a campus policy page, build and test a reranker using your local model, plot a recall curve, and choose a retrieval configuration you can defend with numbers.
+
+1. *Chunking shootout.* Take one real page of a campus document. Index it three ways (fixed 100 tokens no overlap, fixed 300 tokens with 75-token overlap, paragraph-structural). For five questions with known answers, report which indexing strategy wins recall@2, and explain the winner.
+
+   - *What to do:* Choose a real campus policy page (parking, dining, honor code, etc.). Implement three versions of the chunker and create three separate Chroma collections. For 5 questions where you know which paragraph contains the answer, run all three and check whether the answer paragraph appears in the top 2 results.
+   - *Starter hint:* For fixed chunking: `chunks = [text[i:i+n] for i in range(0, len(text), n-overlap)]`. For paragraph structural: `chunks = [p.strip() for p in text.split('\n\n') if p.strip()]`. Count recall@2 as: for each of 5 questions, 1 if the right chunk is in position 1 or 2, else 0. Divide by 5.
+   - *You've succeeded when:* You have a table with 3 rows (one per chunking strategy) and 5 question columns (1 = retrieved, 0 = not), plus a recall@2 score for each strategy and a one-sentence explanation of why the winner worked best for this particular document.
+
+2. *Build a reranker.* Wrap your local model in a relevance-scoring prompt, rerank 10 retrieved candidates for three questions, and report the rank change of the truly relevant chunk.
+
+   - *What to do:* Retrieve the top 10 chunks for 3 questions using your Chroma collection. For each chunk, call the model with a prompt like: "On a scale of 0 to 10, how relevant is the following passage to the question '{question}'? Passage: '{chunk}'. Reply with only a number." Sort by score and report the new rank of the chunk you know is correct.
+   - *Starter hint:* `def rerank_score(question, chunk): return int(chat(f"Rate relevance 0-10 of this passage to '{question}': '{chunk}'. Reply only with a number."))`. Call this for each of your 10 candidates, sort descending, and report where the correct chunk landed before and after reranking.
+   - *You've succeeded when:* For at least 2 of 3 questions, the correct chunk's rank improves after reranking (e.g., moved from position 4 to position 1), and you can explain in one sentence why the initial vector search placed it lower.
+
+3. *Recall curve.* For your Lab 2 corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
+
+   - *What to do:* Build a small evaluation set of 10 questions with labeled relevant chunks. Run your Chroma search with n_results=10 for each question. Compute recall@k for each k value by checking whether the correct chunk appears in the top k. Plot the resulting curve with `matplotlib`.
+   - *Starter hint:* `recall_at_k = [sum(1 for q in eval_set if correct_chunk[q] in top_k_results[q][:k]) / len(eval_set) for k in [1,2,3,5,10]]`. Then `plt.plot([1,2,3,5,10], recall_at_k)`.
+   - *You've succeeded when:* You have a plotted recall curve showing recall@k for k in {1,2,3,5,10}, and your written justification explicitly trades off "more chunks = higher recall but fewer prompt tokens remaining for the answer" against the accuracy you need for your application.
+
+---
+
 ## Reflection Prompt
 
 *Personal:* Think about a time someone summarized or quoted something you wrote or said, and the summary changed the meaning. How does that experience connect to what happens when a large chunk is embedded into a single vector?
@@ -408,7 +412,7 @@ You increase `chunk_size` from 100 characters to 1000 characters (keeping overla
 
 ## → Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The next module addresses **Memory and the Small Context Window Principle**: how agents manage, compress, and retrieve their own history without drowning in their past.
+We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
 
 ---
 

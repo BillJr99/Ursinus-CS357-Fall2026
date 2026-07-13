@@ -61,6 +61,8 @@ tags:
 
 In this lab, you and your partner will build and rigorously compare the two aggregation architectures from class: **debate** (agents see and rebut each other) and **stochastic consensus** (independent samples, clustered by meaning, merged by synthesis). This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 
+**Assigned: October 27 — Due: November 5.**
+
 ---
 
 ## Before You Start
@@ -345,6 +347,35 @@ The model hit its context window. Shorten the peer_section by taking only the ex
 
 ## Part 2: Consensus
 
+### The Consensus Pattern (from the Consensus activity)
+
+The consensus activity is now a supplemental (self-paced) resource rather than a scheduled class session, so before you build anything, here is the core idea it teaches. **Stochastic consensus** exploits the fact that a language model at high temperature is a *sampler*, not an oracle: ask it the same question six times and you get six different drafts drawn from a distribution of plausible answers. Individually, any one draft might be idiosyncratic or wrong. But if you group the drafts by *meaning* — not by exact wording — the sizes of the groups tell you something no single draft can: which positions the model keeps returning to (high support) and which are one-off flukes (low support).
+
+The grouping step is where embeddings come in. An embedding model maps each draft to a vector such that drafts with similar meaning land close together, even when they share few words. By normalizing those vectors and clustering them with cosine distance, "six drafts" becomes "three positions, with support counts of 3, 2, and 1." A final low-temperature **synthesizer** then receives one representative draft per cluster (plus its support count) — never all six raw transcripts — and writes a single answer that follows the majority and *discloses* any close disagreement instead of papering over it. That disclosure rule is the pattern's honesty mechanism: when the samples genuinely split, the user deserves to know.
+
+The whole pipeline looks like this:
+
+```
+question ──> sample k drafts at high temperature      (k model calls)
+                    │
+                    ▼
+             embed each draft ──> normalize vectors
+                    │
+                    ▼
+             cluster by cosine distance (threshold)
+                    │
+                    ▼
+      one representative per cluster + support count
+                    │
+                    ▼
+             synthesizer at low temperature            (1 model call)
+                    │
+                    ▼
+   single answer, majority-following, close-disagreement disclosed
+```
+
+Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged — the subject of Part 4). For the full treatment, including the in-class tomatillo salsa example and why *independence* between samples matters, work through the [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md) — it is strongly recommended before you start this part.
+
 Implement the sample, cluster, synthesize pipeline: $k$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and **discloses any close disagreement in one line**. Demonstrate the pipeline on a long-form question with no single correct answer (the in-class tomatillo salsa question is a fine starting point; choose your own analogous question too).
 
 ### Step-by-step guide
@@ -385,6 +416,8 @@ def sample_drafts(question, config):
 ```
 
 **Step 2: Embed and cluster the drafts.**
+
+> **This code is provided complete — copy it as-is.** You are not expected to write embedding or clustering internals with one semester of Python behind you; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do that work. Your job in this step is to *call* this function and *interpret* what it returns: which drafts landed in which cluster, which cluster has the most support, and whether the grouping matches your own reading of the drafts.
 
 ```python
 import numpy as np
@@ -438,6 +471,12 @@ def cluster_drafts(drafts, config):
 
     return labels, normed, representatives
 ```
+
+**Interpretation questions (answer these in your readme after running the provided clustering code):**
+
+1. Print `labels` next to the first 80 characters of each draft. Read the drafts in each cluster yourself: do the groupings match *your* judgment of which drafts say the same thing? Name one pair the clusterer grouped that you would not have, or vice versa.
+2. Which cluster has the highest support count, and in one sentence, what position does its representative draft take?
+3. The representative is the draft closest to the cluster centroid. Look at the representative chosen for your largest cluster — is it also the draft you would have picked as the "most typical" of that group? Why might the centroid-nearest draft differ from the best-written draft?
 
 **Step 3: Synthesize from cluster representatives.**
 
@@ -578,9 +617,20 @@ Good task types for this comparison:
 SHOOTOUT_TASKS = [
     {"id": "S01", "question": "A shirt costs $40 and is on sale for 25% off. You also have a coupon for 10% off the sale price. What is the final price?", "answer": "27.00"},
     {"id": "S02", "question": "If you fold a piece of paper in half 10 times, how many layers thick is it?", "answer": "1024"},
-    # TODO: Add S03 through S10
-    # Include at least one question where you expect correlated failure (a well-known misconception)
+    {"id": "S03", "question": "A store buys a jacket for $60 and marks the price up by 50%. During a sale, the marked-up price is then reduced by 50%. What is the sale price?", "answer": "45.00"},
+    {"id": "S04", "question": "Three friends split a $75 dinner bill evenly, and then each person adds a $5 tip of their own. How much does each person pay in total?", "answer": "30.00"},
+    {"id": "S05", "question": "A town's population of 8,000 grows by 10% one year and then shrinks by 10% the next year. What is the population after both years?", "answer": "7920"},
+    {"id": "S06", "question": "How many bones are in the typical adult human body?", "answer": "206"},
+    {"id": "S07", "question": "What is the capital city of Australia?", "answer": "Canberra"},
+    {"id": "S08", "question": "In what year did humans first walk on the Moon?", "answer": "1969"},
+    {"id": "S09", "question": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost, in cents?", "answer": "5"},
+    {"id": "S10", "question": "A patch of lily pads doubles in size every day. It covers the entire lake after 48 days. After how many days did it cover half the lake?", "answer": "47"},
 ]
+# S03-S05 are arithmetic word problems with a trap step; S06-S08 are short factual
+# questions with verifiable answers; S09-S10 are classic reasoning puzzles where the
+# intuitive-but-wrong answer (10 cents; 24 days) is a well-known misconception --
+# good candidates for a correlated failure, where every agent agrees on the same
+# wrong answer. Feel free to swap in questions of your own, keeping this mix.
 ```
 
 **Step 2: Run all three conditions at matched call budgets.**

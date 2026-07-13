@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Explainability and Human-Centric Design
 
-The final design lecture asks the question your demo audience will ask next week: *why should I trust this?* **Explainability** is the engineering of justified trust: surfacing evidence, exposing reasoning, communicating uncertainty, and designing the human's role on purpose. We move from **kinds of explanation $\rightarrow$ what agents can honestly show $\rightarrow$ calibration $\rightarrow$ human-centric design heuristics for your demos**.
+Fresh from the *Governance and Policy Writing* and *Environmental Impact and the Carbon Cost of Intelligence* session, the final design lecture asks the question your Demo Day audience will ask: *why should I trust this?* **Explainability** is the engineering of justified trust: surfacing evidence, exposing reasoning, communicating uncertainty, and designing the human's role on purpose. We move from **kinds of explanation $\rightarrow$ what agents can honestly show $\rightarrow$ calibration $\rightarrow$ human-centric design heuristics for your demos**.
 
 ---
 
@@ -45,7 +45,7 @@ In this Part, you will examine what kinds of evidence an AI system can honestly 
 
 Think about the last time you trusted a recommendation — from a friend, a review site, or a search engine. What made you trust it? Probably: you could see *why* the recommendation was made (evidence), you could verify it yourself (citations), and you had a sense of how reliable the source usually is (calibration). AI explainability engineering is about building exactly those three properties into your systems, so users have a real basis for trust — not just a confident-sounding answer.
 
-**Traces.** An agent's ReAct transcript — ReAct standing for "Reason + Act," a prompting pattern that interleaves a model's thoughts with tool calls and their results — is a genuine causal record of *what the system did*: which tools ran, with which inputs, returning which evidence. Traces are the workhorse of agent explainability, and you have been generating them since week 1.
+**Traces.** An agent's ReAct transcript — ReAct standing for "Reason + Act," a prompting pattern that interleaves a model's thoughts with tool calls and their results — is a genuine causal record of *what the system did*: which tools ran, with which inputs, returning which evidence. Traces are the workhorse of agent explainability, and you have been generating them since *The Agent Loop: Perceive, Plan, Act* activity.
 
 **Citations.** A RAG answer that quotes its retrieved chunk lets a human verify the claim against the source *without trusting the model at all*. Verifiability is stronger than persuasiveness, which is why your Lab 2 grounding instructions matter more than eloquence.
 
@@ -186,7 +186,7 @@ In this Part, you will translate the analysis from Parts I and II into deployabl
 
 ## → Coming Up Next
 
-The next activities shift from design choices to the frameworks — ethical, philosophical, and policy — that explain why these choices matter beyond your individual project. The explainability heuristics you practiced today will reappear as concrete obligations in the governance and ethics frameworks ahead.
+The *Project Studio and Gallery Walk* sessions and Demo Day are next: dedicated build time, then the demos themselves. The explainability sections you drafted today feed directly into your final governance document and into the demo your audience will interrogate.
 
 ## Further Reading
 

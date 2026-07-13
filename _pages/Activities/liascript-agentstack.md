@@ -14,13 +14,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Local Agent Stack: Wiring Containers into a System
 
-One container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
+> **Supplemental — required prep only for Lab 1 Directions 2–3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
+
+The *Docker from Zero: Containers for Agent Builders* supplemental activity gave you one container — and one container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the shell and Docker modules, completed honestly. Hardware note: the full stack runs comfortably on a mini PC or a mid-range laptop because we choose small models; nothing here requires a GPU. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the *The Shell: Your Agent's Native Habitat* and *Docker from Zero: Containers for Agent Builders* supplemental activities, completed honestly. Hardware note: the full stack runs comfortably on a mini PC or a mid-range laptop because we choose small models; nothing here requires a GPU. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
@@ -122,35 +124,66 @@ curl http://localhost:11434/api/tags        # verify: lists your models
 
 The gateway (a LiteLLM-style router — a program that receives requests in the standard OpenAI format and forwards them to whichever local or cloud model you have configured) is one Compose service plus one routing file. Pay attention to the `api_base` field: this is where the `host.docker.internal` hostname (the special address that lets a container reach the host machine) becomes critical.
 
-```yaml
-# llmproxy/litellm_config.yaml
-model_list:
-  - model_name: llama3
-    litellm_params:
-      model: ollama/llama3
-      api_base: http://host.docker.internal:11434
-  - model_name: qwen2.5-3b
-    litellm_params:
-      model: ollama/qwen2.5:3b
-      api_base: http://host.docker.internal:11434
-```
+Build it as a numbered checklist — complete and verify each step before starting the next:
 
-```yaml
-# llmproxy/docker-compose.yml
-services:
-  llmproxy:
-    image: ghcr.io/berriai/litellm:main-latest
-    ports: ["4000:4000"]
-    volumes: ["./litellm_config.yaml:/app/config.yaml:ro"]
-    command: ["--config", "/app/config.yaml", "--port", "4000"]
-    extra_hosts: ["host.docker.internal:host-gateway"]
-    restart: unless-stopped
-```
+1. **Create the routing file** at `llmproxy/litellm_config.yaml`. This maps each public model name to a backend:
 
-```bash
-docker compose up -d
-curl -s http://localhost:4000/models -H "Authorization: Bearer sk-litellm-local"
-```
+   ```yaml
+   # llmproxy/litellm_config.yaml
+   model_list:
+     - model_name: llama3
+       litellm_params:
+         model: ollama/llama3
+         api_base: http://host.docker.internal:11434
+     - model_name: qwen2.5-3b
+       litellm_params:
+         model: ollama/qwen2.5:3b
+         api_base: http://host.docker.internal:11434
+   ```
+
+2. **Create the Compose file** at `llmproxy/docker-compose.yml`, mounting the routing file read-only:
+
+   ```yaml
+   # llmproxy/docker-compose.yml
+   services:
+     llmproxy:
+       image: ghcr.io/berriai/litellm:main-latest
+       ports: ["4000:4000"]
+       volumes: ["./litellm_config.yaml:/app/config.yaml:ro"]
+       command: ["--config", "/app/config.yaml", "--port", "4000"]
+       extra_hosts: ["host.docker.internal:host-gateway"]
+       restart: unless-stopped
+   ```
+
+3. **Start the service** from the `llmproxy/` directory:
+
+   ```bash
+   docker compose up -d
+   ```
+
+   ✅ **Checkpoint:** what should `docker compose ps` show now?
+
+   <details>
+   <summary>Expected answer</summary>
+
+   Exactly one service, `llmproxy`, with status `Up` (or `running`) and the ports column showing `0.0.0.0:4000->4000/tcp`. If the status is `Restarting`, run `docker logs llmproxy` — the usual culprit is a typo in the mounted config path or invalid YAML in the routing file.
+
+   </details>
+
+4. **Verify from the host** that the gateway answers and knows its models:
+
+   ```bash
+   curl -s http://localhost:4000/models -H "Authorization: Bearer sk-litellm-local"
+   ```
+
+   ✅ **Checkpoint:** what should this `curl` return?
+
+   <details>
+   <summary>Expected answer</summary>
+
+   A JSON object whose `data` array lists the two configured model names, `llama3` and `qwen2.5-3b`. An empty list means the routing file did not mount into the container; `connection refused` means the container is not running — go back to the step 3 checkpoint.
+
+   </details>
 
 Read the config's `api_base` carefully: the gateway is *itself a container*, so it reaches host-resident Ollama via `host.docker.internal`, and the `extra_hosts` line is what makes that name resolve on Linux. This one file is where every future model, local or cloud, gets added.
 
@@ -166,6 +199,38 @@ docker run -d --name open-webui -p 3000:8080 \
 # Then in its Admin Settings -> Connections -> OpenAI:
 #   URL http://host.docker.internal:4000/v1, key sk-litellm-local
 ```
+
+## Model: Isolation and Trust Boundaries (for everyone)
+
+This model is conceptual and takes about ten minutes — it is for every student in the studio, whether or not you ever run Docker yourself. It is the reason this stack is built from containers at all, and it is the syllabus goal behind Lab 1's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
+
+A **trust boundary** is a line in your system where the level of trust changes: everything inside the line can be damaged by a mistake inside the line, and nothing outside it can. Four mechanisms draw that line for an agent:
+
+| Mechanism | What it limits | The question it answers |
+|---|---|---|
+| **Container filesystem** | The agent sees only what you mount into it | "If the agent runs `rm -rf`, what actually gets deleted?" |
+| **Read-only mounts** | The agent can look but not touch | "Can it read my notes without being able to corrupt them?" |
+| **Non-root execution** | The agent cannot change the system it runs on | "Can a bad command rewrite the container itself?" |
+| **Network policy / ports** | The agent reaches only the services you exposed | "Can it call anything on the internet, or only my local Ollama?" |
+
+The composite of these is the agent's **blast radius**: the set of things that can possibly go wrong when the agent misbehaves. A well-designed stack makes the blast radius *small and known in advance* — you decide what the agent can destroy before you let it act, instead of discovering it afterward. This is the same idea as the *Design First* activity's irreversible-actions table, implemented in infrastructure instead of in a prompt.
+
+**CTQ (teams, 3 minutes):** Your agent needs to summarize files in your `notes/` folder and save summaries to `summaries/`. Using the table, name the tightest boundary you could give it — which mount is read-only, which is writable, and what network access does it actually need?
+
+    [[?]] Hint: it needs to read one folder, write one folder, and reach exactly one service — the local model.
+
+Which change *reduces* an agent's blast radius?
+
+- [( )] Running the agent as root so it never hits a permissions error
+- [(X)] Mounting the notes folder read-only and giving the container no internet access
+- [( )] Mounting your whole home directory so the agent can find anything it needs
+- [( )] Exposing every service's port so connections never fail
+
+---
+
+> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for Lab 1 Directions 2–3, not as in-studio work.
+
+---
 
 The same attach-by-URL move adds the rest of the frontend tier as you need each one (`open-notebook` for research notebooks, `voicebox` for speech, `presenton` for slide generation, `open-terminal` for a browser shell, `open-design` for the agent-embedded canvas, `calibre-web` for your reading library): each gets a port row, an identity directory, the `--add-host` flag, and its connection settings pointed at the gateway. Tool-tier services follow suit: `searxng` gives your agents private web search, `mcpproxy` hosts MCP tools from YAML definitions, and `surrealdb` provides persistence; agents reach them at `http://host.docker.internal:<port>` exactly as they reach the gateway.
 
@@ -218,7 +283,7 @@ curl -s http://localhost:4000/v1/chat/completions \
   -d '{"model":"qwen2.5-3b","messages":[{"role":"user","content":"Say STACK OK."}]}'
 ```
 
-When a cell of the matrix fails, the Docker module's diagnostic ladder applies: host-side first, container-side second, then the `--add-host` flag, the port row, and the logs, in that order.
+When a cell of the matrix fails, the diagnostic ladder from the *Docker from Zero: Containers for Agent Builders* supplemental activity applies: host-side first, container-side second, then the `--add-host` flag, the port row, and the logs, in that order.
 
 ---
 
@@ -272,7 +337,7 @@ In this part, you will build and verify a working minimal stack, extend it with 
 
 ## → Coming Up Next
 
-Now that the stack is running, we have a powerful tool with a critical limitation: our agents only know what they were trained on. The next module introduces **Retrieval-Augmented Generation (RAG)** — the technique that lets agents access your documents, your data, and up-to-date information at query time, without any retraining.
+Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into Lab 1 Directions 2–3 (the Compose-stack and container-hardening directions).
 
 ---
 

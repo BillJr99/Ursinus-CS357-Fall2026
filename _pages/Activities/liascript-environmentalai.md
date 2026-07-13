@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Environmental Impact and the Carbon Cost of Intelligence
 
-The discourse around AI rarely foregrounds what it costs the planet to run. Energy consumption, water usage, and embodied carbon in hardware are not edge considerations; at the scale of contemporary model training and inference, they are material. Today you develop the quantitative literacy to reason about these costs, the design vocabulary to reduce them, and the critical framework to resist the optimism that efficiency gains automatically reduce aggregate impact. The goal is not guilt but judgment: knowing when AI use is worth its cost and when a smaller or local tool would serve equally well.
+This half-session shares the day with the *Governance and Policy Writing* activity — the policies you draft there need numbers behind them, and today supplies the numbers. The discourse around AI rarely foregrounds what it costs the planet to run. Energy consumption, water usage, and embodied carbon in hardware are not edge considerations; at the scale of contemporary model training and inference, they are material. Today you develop the quantitative literacy to reason about these costs, the design vocabulary to reduce them, and the critical framework to resist the optimism that efficiency gains automatically reduce aggregate impact. The goal is not guilt but judgment: knowing when AI use is worth its cost and when a smaller or local tool would serve equally well.
 
 ---
 
@@ -82,6 +82,30 @@ Why this matters: every time you choose which model to use for a task — a fron
 3. "Embodied carbon" is excluded from most AI carbon footprints. Why might organizations have an incentive to exclude it? Name two design or procurement decisions that would reduce embodied carbon and explain why they are not standard practice.
 
    *Hint: Think about who controls what gets counted in a carbon report. Consider: if embodied carbon is excluded, what appears to happen to the carbon cost of "upgrading to a newer, more efficient GPU generation"? What are the economic incentives that push against hardware longevity and repairability?*
+
+[[MC]]
+The central proportional insight of Model 1 is that:
+- ( ) Training is always the dominant carbon cost of a deployed model, so one-time training decisions matter most
+- (x) Inference, repeated millions or billions of times, often exceeds the one-time training cost in total impact
+- ( ) A single AI query and a single email have roughly comparable carbon costs
+- ( ) Embodied carbon is negligible compared to the electricity a model consumes
+
+### Team Exercise: Estimate, Then Check
+
+A campus helpdesk deploys a cloud chatbot that handles **3,000 queries per day, every day of a 30-day month**. Using only your intuition first — no arithmetic yet — each team writes down an estimate of the deployment's **monthly electricity use (in kWh)** and **monthly cooling-water use (in liters)**. The Recorder logs both estimates before anyone opens the worked numbers.
+
+Then compute it properly from the figures in this Part: take a ChatGPT-style query at roughly **3 Wh** (about ten times a ~0.3 Wh web search) and cooling water at roughly **1.7 liters per 35 prompts** (the midpoint of the reported 20–50 prompt range). Compare against the worked numbers below.
+
+<details>
+<summary>Worked numbers (open only after both estimates are recorded)</summary>
+
+- Queries per month: 3,000 × 30 = **90,000 queries**
+- Electricity: 90,000 × 3 Wh = 270,000 Wh ≈ **270 kWh per month** (roughly a US household's electricity for about a week and a half)
+- Water: (90,000 ÷ 35) × 1.7 L ≈ **4,400 liters per month** (about 29 full bathtubs)
+
+</details>
+
+Finally, each team identifies its **largest gap** — the quantity (energy or water) where the estimate missed by the biggest factor — and explains *why* the intuition was off: which anchor was missing, and which figure from Model 1 would have corrected it?
 
 ---
 
@@ -183,6 +207,13 @@ Sofia is a CS student working on a capstone project for one week. Her AI use inc
 
 > **Common Misconception:** "Switching to renewable energy at the data center makes AI carbon-neutral." Renewable energy purchases do not eliminate energy consumption — they offset it with generation elsewhere on the grid. The actual energy demand, water use for cooling, and embodied carbon in hardware remain unchanged. "100% renewable" cloud providers are making a true but partial claim: they are purchasing renewable energy credits, which is better than not doing so, but it is not the same as using zero carbon. Meaningful carbon reduction requires reducing the energy consumption itself, not only changing its source on paper.
 
+[[MC]]
+According to Jevons paradox, a 10x improvement in model inference efficiency will most likely:
+- ( ) Reduce total AI energy consumption by roughly 10x
+- ( ) Leave total consumption unchanged, because usage patterns are fixed
+- (x) Lower the cost per use and expand the range of viable uses, potentially increasing total consumption
+- ( ) Affect training costs only, since inference is already efficient
+
 ---
 
 # Part IV: Synthesis
@@ -219,6 +250,8 @@ In this Part, you will apply the proportional reasoning, design vocabulary, and 
 
 ## Reflection Prompt
 
+Record your responses to all three levels in your **Reflection Notebook**:
+
 *Personal:* Look at your personal carbon audit results. Did the numbers change how you feel about your own AI use this semester — or did you find yourself rationalizing the usage you already had? Either answer is informative. What would it take for the numbers to actually change your behavior?
 
 *Technical:* Jevons paradox suggests that the engineers most committed to efficiency may be the ones who inadvertently drive the largest increases in total consumption, because they make expansion economically rational. Is there a version of your course project that fits this pattern? What would you need to believe about how it gets deployed to conclude that it reduces, rather than increases, aggregate environmental impact?
@@ -231,7 +264,7 @@ In this Part, you will apply the proportional reasoning, design vocabulary, and 
 
 ## → Coming Up Next
 
-The next activities examine the philosophical and ethical dimensions of AI: questions about machine understanding, responsibility, and the frameworks engineers use to reason about harm. The environmental costs you quantified today are one concrete domain where those frameworks must produce actionable answers.
+The *Explainability and Human-Centric Design* activity is next: how systems earn justified trust from the humans who use them. The carbon analysis you practiced today feeds directly into Written Assignment 3's Direction E, where you quantify and defend the environmental posture of a deployment.
 
 ## Further Reading
 
