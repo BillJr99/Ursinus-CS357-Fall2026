@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Connecting Agents to the World: MCP and APIs
 
-Yesterday each team hand-wired tools into one agent; that approach does not scale to the world. Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server. We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
+In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world. Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server. We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
 
 ---
 
@@ -75,7 +75,7 @@ In this Part you will see why connecting agents to many services becomes expensi
 
 **The problem is multiplication.** With $N$ agent applications and $M$ services, bespoke integration requires up to $N \times M$ adapters, each with its own schema conventions and auth quirks. The history of computing solves such problems with *protocols*: USB for peripherals, HTTP for documents, LSP for editors and languages.
 
-**MCP is that protocol for tools.** A service wraps itself once as an **MCP server** exposing `tools/list` (machine-readable schemas, like yesterday's, discovered at runtime) and `tools/call`. Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls. Integration cost drops from $N \times M$ to $N + M$. The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
+**MCP is that protocol for tools.** A service wraps itself once as an **MCP server** exposing `tools/list` (machine-readable schemas, like the ones you wrote in the *Tool Use and Function Calling* activity, discovered at runtime) and `tools/call`. Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls. Integration cost drops from $N \times M$ to $N + M$. The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
 
 ---
 
@@ -93,7 +93,7 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
    > *Hint: In the bespoke world, draw arrows from "catalog" to every agent that uses it. Each arrow is a codebase change.*
 
-3. Yesterday you wrote tool schemas by hand. Which MCP method replaces that step, and what new *trust* question does runtime discovery create? (Hold this thought for the governance unit.)
+3. In the *Tool Use and Function Calling* activity you wrote tool schemas by hand. Which MCP method replaces that step, and what new *trust* question does runtime discovery create? (Hold this thought for the governance unit.)
 
    > *Hint: If you receive a tool schema from a stranger's server, what are you agreeing to when you call it?*
 
@@ -219,11 +219,11 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
 ### Critical Thinking Questions
 
-4. Your client knew nothing about rooms or hours at startup, yet ended up calling both. Trace exactly where the knowledge entered the program. How does this differ from yesterday's hard-coded `TOOLS` list?
+4. Your client knew nothing about rooms or hours at startup, yet ended up calling both. Trace exactly where the knowledge entered the program. How does this differ from the hard-coded `TOOLS` list you built in the *Tool Use and Function Calling* activity?
 
-   > *Hint: At what line of the client code does the client first learn that "room_lookup" exists? Now compare to yesterday's file where tool names appeared directly in the source.*
+   > *Hint: At what line of the client code does the client first learn that "room_lookup" exists? Now compare to the Tool Use and Function Calling activity's file, where tool names appeared directly in the source.*
 
-5. Convert yesterday's agent to use `discovered` schemas (sketch the three changed lines). What stays identical? What does that invariance tell you about good layering?
+5. Convert your agent from the *Tool Use and Function Calling* activity to use `discovered` schemas (sketch the three changed lines). What stays identical? What does that invariance tell you about good layering?
 
    > *Hint: The agent loop — perceive, plan, act, observe — does not need to know whether tools came from discovery or hard-coding. What does this tell you about the value of keeping layers separate?*
 
@@ -254,6 +254,15 @@ You just built an integration in **code** — a Flask server plus a Python clien
 - **HTTP action** *(premium)* — call any REST endpoint the built-in connectors do not cover, including a language-model API or one of your own services.
 - **AI Builder / Copilot** — Microsoft's built-in AI steps: prompt a model, summarize, extract fields, or classify, dragged in like any other action.
 
+**Predict, then read on.** Your team has two flows turned on: Flow A's trigger is "When a new email arrives" (Outlook connector); Flow B's trigger is "When a task is created" (Asana connector). A student submits a web form, the forms service sends a confirmation *email* to the team inbox, and an hour later a teammate *manually creates* an Asana task for the request. Predict which trigger(s) fire, and in what order — write your prediction down before expanding the answer.
+
+<details>
+<summary>Reveal: which triggers fire?</summary>
+
+Flow A fires first, the moment the confirmation email lands in the inbox. Flow B fires an hour later, when the teammate creates the Asana task. The form submission itself fires *nothing* — no flow is watching the forms service. A trigger responds only to the specific event its connector watches, never to the upstream cause of that event.
+
+</details>
+
 **How to build one, end to end:**
 
 1. Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
@@ -262,6 +271,13 @@ You just built an integration in **code** — a Flask server plus a Python clien
 4. Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
 5. To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint — the same request body you have used all unit.
 6. **Test** with the built-in run panel, inspect each step's inputs and outputs, then **turn the flow on** so its trigger runs it automatically.
+
+[[MC]]
+In a Power Automate flow, the OAuth 2.0 credential that lets a connector act on your account is:
+- ( ) typed into each action as a password parameter
+- (x) granted once through a consent screen and stored by the platform, so the flow definition never contains the secret
+- ( ) pasted into the flow's exported definition so teammates can reuse it
+- ( ) regenerated by the AI Builder step on every run
 
 **Where it fits — and where it does not.** No-code platforms are fastest when a connector already exists for both services and the logic is simple. They struggle when you need custom logic, real version control, or a portable integration you can host yourself — which is exactly when writing an MCP server or a small agent (as you did above) wins. And the trust questions do not disappear: a connector holds a real OAuth token with real scopes, so the same "who wrote it, what can it do, is it least-privilege" checklist from Model 2 still applies.
 
@@ -361,7 +377,7 @@ In your notebook, respond to all three levels:
 
 ---
 
-→ **Coming Up Next:** In the next activity, we look at *design-first* practices — how to plan a multi-agent system on paper before writing any code, so that your MCP integrations and agent interactions are deliberate rather than accidental.
+→ **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into Lab 1's MCP exploration.
 
 ---
 

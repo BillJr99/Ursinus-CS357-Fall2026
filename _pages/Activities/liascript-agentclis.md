@@ -324,7 +324,7 @@ In your notebook, respond at three levels:
 
 ## → Coming Up Next
 
-In the next module you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before next class.
+In the *The Local Agent Stack: Wiring Containers into a System* activity you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before you take on that activity.
 
 ---
 

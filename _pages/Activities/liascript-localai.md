@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Running Your Own AI: Ollama, OpenWebUI, and Private Local Models
 
-Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
+The prompts we engineered in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity have so far run against someone else's server. Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
 
 > **Before class: the 10-minute pre-install checklist**
 >
@@ -269,7 +269,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
-→ Coming Up Next: Our models are running — but why do they give different answers every time we ask the same question? In the next activity we open the hood on text generation itself, and learn how temperature, top-p, and randomness turn a probability distribution into a word.
+→ Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world — and the local stack you built today is the foundation for Lab 1, *Your First Local Agent*. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
 
 ## 6. Further Reading
 

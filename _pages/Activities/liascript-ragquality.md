@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Quality: Chunking, Clustering, and Reranking
 
-Yesterday's RAG pipeline worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in Lab 2.
+The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in Lab 2.
 
 ---
 
@@ -412,7 +412,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ## → Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The next module addresses **Memory and the Small Context Window Principle**: how agents manage, compress, and retrieve their own history without drowning in their past.
+We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
 
 ---
 

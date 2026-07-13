@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Why Different Answers Every Time? Sampling, Temperature, and Generation
 
-In week 1 we observed a deterministic computer producing different answers to identical prompts, and your teams formed hypotheses. Today we resolve the mystery: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it — rolling a weighted die at each step. We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack**, and we connect every knob to agent design.
+In the *Welcome: What Is AI, and What Is an Agent?* activity we observed a deterministic computer producing different answers to identical prompts, and your teams formed hypotheses. Today we resolve the mystery: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it — rolling a weighted die at each step. We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack**, and we connect every knob to agent design.
 
 ---
 
@@ -39,7 +39,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Generation as Repeated Prediction
 
-In this part, you will work out by hand how a language model converts raw scores into a probability distribution and then samples from it — resolving the mystery from week 1 of why identical prompts produce different outputs. The math here (softmax and temperature) will recur every time you tune an agent's behavior for the rest of the semester.
+In this part, you will work out by hand how a language model converts raw scores into a probability distribution and then samples from it — resolving the mystery from the *Welcome: What Is AI, and What Is an Agent?* activity of why identical prompts produce different outputs. The math here (softmax and temperature) will recur every time you tune an agent's behavior for the rest of the semester.
 
 ## 1. One Token at a Time
 
@@ -51,7 +51,7 @@ $$
 P(i) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}
 $$
 
-The system samples one token from this distribution, appends it to the text, and repeats until a stop token appears. Generation is a loop of single predictions — one word-piece at a time — which means a single early sampling choice can steer the entire continuation. This is your hypothesis test from week 1: the randomness lives in the *sampling step*, not in the model weights, which stay fixed.
+The system samples one token from this distribution, appends it to the text, and repeats until a stop token appears. Generation is a loop of single predictions — one word-piece at a time — which means a single early sampling choice can steer the entire continuation. This is the test of your hypotheses from the *Welcome* activity: the randomness lives in the *sampling step*, not in the model weights, which stay fixed.
 
 **Temperature $T$ reshapes the distribution.** As $T \to 0$, the highest-scoring token dominates and sampling approaches deterministic *greedy decoding* (always picking the top word). As $T$ grows, the distribution flattens and less-likely tokens gain probability. Temperature does not add knowledge; it redistributes confidence across the existing options.
 
@@ -209,7 +209,7 @@ Examine the counter output for each temperature. Notice which temperatures produ
 
 # Part III: Synthesis and Practice
 
-In this part, you will apply the sampling vocabulary to real design decisions — choosing temperature and top-p settings for different agent roles — and close the loop on the hypotheses your team formed in week 1.
+In this part, you will apply the sampling vocabulary to real design decisions — choosing temperature and top-p settings for different agent roles — and close the loop on the hypotheses your team formed in the *Welcome: What Is AI, and What Is an Agent?* activity.
 
 ## 5. Exercises
 
@@ -227,9 +227,9 @@ In this part, you will apply the sampling vocabulary to real design decisions �
 
 3. *Hypothesis closure.*
 
-   - *What to do*: Return to your team's week 1 hypotheses about why identical prompts produced different outputs. The Recorder writes one paragraph for each hypothesis: confirmed, refuted, or refined — with specific evidence from today's experiment.
+   - *What to do*: Return to the hypotheses your team formed in the *Welcome* activity about why identical prompts produced different outputs. The Recorder writes one paragraph for each hypothesis: confirmed, refuted, or refined — with specific evidence from today's experiment.
    - *Starter hint*: Common week-1 hypotheses include "the model stores different versions," "time-of-day affects the server," "the model re-reads the internet," or "there is a random element in the generation." Map each to today's sampling explanation.
-   - *You've succeeded when*: Every hypothesis from week 1 has been addressed in writing, and each verdict (confirmed / refuted / refined) is backed by a specific observation from today's temperature experiments.
+   - *You've succeeded when*: Every hypothesis from the *Welcome* activity has been addressed in writing, and each verdict (confirmed / refuted / refined) is backed by a specific observation from today's temperature experiments.
 
 ---
 
@@ -243,7 +243,7 @@ In this part, you will apply the sampling vocabulary to real design decisions �
 
 ---
 
-→ Coming Up Next: We know how models generate text — but how do we know whether what they generate is *correct*? In the next activity we build our first evaluation harness, measure hallucination rates, and learn why "it seems pretty good" is not good enough.
+→ Coming Up Next: We know how models generate text — but how do we know whether what they generate is *correct*? In the *Hallucinations and Evaluating Agent Outputs* activity we build our first evaluation harness, measure hallucination rates, and learn why "it seems pretty good" is not good enough.
 
 ## 6. Further Reading
 

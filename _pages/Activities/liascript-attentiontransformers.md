@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Attention and Transformers, Conceptually and by Hand
 
-Yesterday's embeddings give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem → queries, keys, values → a worked 3-token example → what this explains about context windows**.
+The embeddings from the *Tokens and Embeddings: How Agents Represent Meaning* activity give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem → queries, keys, values → a worked 3-token example → what this explains about context windows**.
 
 ---
 
@@ -234,7 +234,7 @@ print("new bank representation:", np.round(new_bank, 3))
 
 **Why this matters for the agents you will build.** The attention mechanism is not just a mathematical curiosity — it directly sets the budget you have to work with when deploying a language-model agent. Think of the musician analogy again: the musician can only see so much sheet music at once. A transformer's "sheet music" is its context window (the maximum number of tokens the model can consider in one pass), and the cost of attention determines exactly how large that window can be. Understanding this constraint is what separates an agent that works in production from one that runs out of memory on the first long document.
 
-**The context window is the attention span, literally.** Attention compares every token with every other, costing $O(n^2)$ in sequence length $n$; doubling context quadruples this work. This is why context windows are finite, why long contexts are slow on your laptop, and why the *small context window principle* we adopt for agents in week 6 is not merely aesthetic but computational.
+**The context window is the attention span, literally.** Attention compares every token with every other, costing $O(n^2)$ in sequence length $n$; doubling context quadruples this work. This is why context windows are finite, why long contexts are slow on your laptop, and why the *small context window principle* we adopt in the *Memory and the Small Context Window Principle* activity is not merely aesthetic but computational.
 
 **Position matters.** Models attend most reliably to the beginning and end of long contexts (the "lost in the middle" effect), which is why we will place an agent's instructions and the current question at the edges of the prompt, with retrieved evidence in between.
 
@@ -303,7 +303,7 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ---
 
-→ **Coming Up Next:** In the next session we move from single-layer attention to the full transformer stack — positional encodings, feed-forward sublayers, layer normalization, and how all of this is trained end-to-end with next-token prediction. We will also revisit the agent architecture from week 6 and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+→ **Coming Up Next:** In the next session we move from single-layer attention to the full transformer stack — positional encodings, feed-forward sublayers, layer normalization, and how all of this is trained end-to-end with next-token prediction. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
 
 ---
 

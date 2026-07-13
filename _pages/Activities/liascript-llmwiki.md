@@ -254,7 +254,7 @@ Write a combined reflection of 150–250 words addressing at least two of the th
 
 ---
 
-→ Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation. Bring your `AGENTS.md` schema, your first lint report, and the answer from Exercise 2 to the next class session as evidence of a living system.
+→ Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation. Carry your `AGENTS.md` schema, your first lint report, and the answer from Exercise 2 into that project work as evidence of a living system.
 
 ---
 

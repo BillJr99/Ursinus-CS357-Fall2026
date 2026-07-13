@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Retrieval-Augmented Generation with Chroma
 
-Our evaluation harness showed that local models hallucinate (confidently make up facts) where their training data is thin; **retrieval-augmented generation (RAG)** attacks that problem by handing the model the right evidence at the right moment. We move from **the open-book insight $\rightarrow$ the RAG pipeline $\rightarrow$ a working pipeline with Chroma and Ollama $\rightarrow$ grounded answers with citations**.
+The evaluation harness from the *Hallucinations and Evaluating Agent Outputs* activity showed that local models hallucinate (confidently make up facts) where their training data is thin, and the *Tokens and Embeddings: How Agents Represent Meaning* activity gave us semantic search; **retrieval-augmented generation (RAG)** combines the two, handing the model the right evidence at the right moment. We move from **the open-book insight $\rightarrow$ the RAG pipeline $\rightarrow$ a working pipeline with Chroma and Ollama $\rightarrow$ grounded answers with citations**.
 
 ---
 
@@ -158,7 +158,7 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 ### Critical Thinking Questions
 
-4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly). Which hallucination category from week 3 did the RAG instructions just convert into honest abstention?
+4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly). Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions just convert into honest abstention?
 
    > *Hint: Run `chat("What time does the bookstore close?")` without any context and observe the response. Then look at the line in `rag_answer` that contains the phrase "not in my documents" — what instruction creates the abstention behavior?*
 
@@ -185,7 +185,7 @@ The single most important reason RAG reduces factual hallucination is that it:
 
 ## 3. Exercises
 
-In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from week 3. These exercises build directly toward Lab 2.
+In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity. These exercises build directly toward Lab 2.
 
 1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one honest abstention.
 
@@ -193,10 +193,10 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
    - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ. Make sure each sentence is self-contained (contains enough context to be understood in isolation — avoid sentences like "As stated above, the deadline is...").
    - *You've succeeded when:* You can show one output where the model correctly cites a source number, and one output where it says "not in my documents" for a question whose answer genuinely does not appear in your ten sentences.
 
-2. *Eval rematch.* Rerun your week 3 evaluation harness, now routed through `rag_answer`, after adding documents containing the answers. Report accuracy before and after; quantify the lift.
+2. *Eval rematch.* Rerun the evaluation harness you built in the *Hallucinations and Evaluating Agent Outputs* activity, now routed through `rag_answer`, after adding documents containing the answers. Report accuracy before and after; quantify the lift.
 
-   - *What to do:* Take the question-answer pairs from your week 3 evaluation. For each question that the bare model got wrong, add a document containing the correct answer to the Chroma index. Run the same questions through `rag_answer` and compare accuracy scores.
-   - *Starter hint:* Your accuracy metric from week 3 was (correct answers / total questions). Run it twice: once with the bare model, once with RAG. The "lift" is `accuracy_rag - accuracy_bare`. Report both numbers and the lift.
+   - *What to do:* Take the question-answer pairs from your *Hallucinations and Evaluating Agent Outputs* evaluation. For each question that the bare model got wrong, add a document containing the correct answer to the Chroma index. Run the same questions through `rag_answer` and compare accuracy scores.
+   - *Starter hint:* Your accuracy metric from that evaluation harness was (correct answers / total questions). Run it twice: once with the bare model, once with RAG. The "lift" is `accuracy_rag - accuracy_bare`. Report both numbers and the lift.
    - *You've succeeded when:* You have a table showing at least 5 questions with the bare model's answer, the RAG answer, and a correct/incorrect label for each, plus the two accuracy scores and the lift.
 
 3. *Citation audit.* Ask five questions and verify each citation by hand: does the cited chunk actually support the claim? Compute a faithfulness rate (number of faithful citations divided by total citations).
@@ -225,7 +225,7 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 ## → Coming Up Next
 
-Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The next module addresses **RAG Quality**: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality through chunking strategies, clustering, and reranking.
+Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality — the same levers you will tune in Lab 2.
 
 ---
 

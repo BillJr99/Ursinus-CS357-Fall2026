@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Critique and Refine Pattern
 
-Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires. This is the workhorse pattern of Lab 3. We move from **why separation helps $\rightarrow$ the loop and its stopping rules $\rightarrow$ implementation $\rightarrow$ when refinement fails**.
+The *Orchestration Patterns: Pipelines, Routers, and Planners* activity wired agents into pipelines; today we study the most important two-agent pipeline of all. Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires. This is the workhorse pattern of Lab 3. We move from **why separation helps $\rightarrow$ the loop and its stopping rules $\rightarrow$ implementation $\rightarrow$ when refinement fails**.
 
 ---
 
@@ -318,7 +318,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The next activity extends the critique-refine idea to *multi-agent debate* — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. Debate works best when errors across agents are partially independent — we will measure whether that condition holds.
+→ **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of Lab 3, *Critique and Refine*.
 
 ---
 

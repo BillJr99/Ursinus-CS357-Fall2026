@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Intellectual Property, Privacy, and the Case for Local AI
 
-Generative models are trained on creative work and prompted with personal information, which places two bodies of law and ethics (intellectual property and privacy) at the center of agentic practice. Today we map both, *as engineers*: not to play lawyer, but to recognize the decisions that have legal and ethical weight and to design accordingly, with our local-first stack as a recurring answer. The arc: **the IP questions $\rightarrow$ the privacy questions $\rightarrow$ regulatory landscape $\rightarrow$ design responses you already know how to build**.
+The *Training Data and Bias* activity showed what models absorb from their training distributions; today we ask who owns that material and who gets watched. Generative models are trained on creative work and prompted with personal information, which places two bodies of law and ethics (intellectual property and privacy) at the center of agentic practice. Today we map both, *as engineers*: not to play lawyer, but to recognize the decisions that have legal and ethical weight and to design accordingly, with our local-first stack as a recurring answer. The arc: **the IP questions $\rightarrow$ the privacy questions $\rightarrow$ regulatory landscape $\rightarrow$ design responses you already know how to build**.
 
 ---
 
@@ -154,7 +154,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 4. *Case watch.*
 
-   *What to do:* Find one currently active AI copyright or privacy case or regulatory action (search the news), and summarize the question it will settle in two sentences. We will pool these next class as the governance landscape.
+   *What to do:* Find one currently active AI copyright or privacy case or regulatory action (search the news), and summarize the question it will settle in two sentences. We will pool these in the *Governance and Policy Writing* activity as the governance landscape.
 
    *Starter hint:* Search for terms like "AI copyright lawsuit 2024 2025," "generative AI training data lawsuit," "AI privacy enforcement action," or "state AI privacy law." Look for cases involving large language models, image generators, or AI training data scraping.
 
@@ -174,7 +174,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 ## → Coming Up Next
 
-In the next activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy.
+In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy, and the privacy analysis feeds Lab 6, *Responsible AI*.
 
 ## Further Reading
 

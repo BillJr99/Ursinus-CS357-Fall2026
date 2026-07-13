@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Tool Use and Function Calling
 
-Our week 1 agent parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
+Our agent from *The Agent Loop: Perceive, Plan, Act* activity parsed `calc(...)` out of free text with a regular expression, and it worked until it did not. Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it. We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
 
 ---
 
@@ -44,9 +44,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Contract
 
-In this Part you will see why the regex-based tool-calling approach from week 1 breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
+In this Part you will see why the regex-based tool-calling approach from *The Agent Loop* activity breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
 
-**Why this matters:** In week 1 our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
+**Why this matters:** In *The Agent Loop* activity our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
 
 **A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about what the tool does*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:
 
@@ -567,7 +567,7 @@ When the agent loop appends a tool result back into the conversation, what `role
 
 ## → Coming Up Next
 
-Our agents can now call tools, but each agent works alone. The next major topic in the course introduces **multi-agent systems**: teams of specialized agents that collaborate, delegate, and check each other's work — and the governance challenges that arise when agents are supervising other agents.
+Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into Lab 1, *Your First Local Agent*.
 
 ---
 

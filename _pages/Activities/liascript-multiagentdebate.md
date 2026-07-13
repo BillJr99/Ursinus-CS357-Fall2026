@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Multi-Agent Debate
 
-A critic improves a draft; a **debate** improves a decision. In this pattern, multiple agents argue *different positions* before a judge or a vote settles the question, exploiting the fact that a model is often better at *spotting* a flaw in someone else's answer than at avoiding the flaw itself. We move from **why disagreement helps $\rightarrow$ debate protocols $\rightarrow$ implementation $\rightarrow$ measuring whether debate actually improved accuracy**.
+In *The Critique and Refine Pattern* activity, a critic improved a draft; a **debate** improves a decision. In this pattern, multiple agents argue *different positions* before a judge or a vote settles the question, exploiting the fact that a model is often better at *spotting* a flaw in someone else's answer than at avoiding the flaw itself. We move from **why disagreement helps $\rightarrow$ debate protocols $\rightarrow$ implementation $\rightarrow$ measuring whether debate actually improved accuracy**.
 
 ---
 
@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The final activities move from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application, and how to evaluate the system holistically rather than component by component.
+→ **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of Lab 4, *Multi-Agent Debate*.
 
 ---
 

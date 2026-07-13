@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Evaluating Agents: LLM-as-Judge and Rubric Pipelines
 
-Exact-match accuracy served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment — which is the architecture of Lab 5 and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
+Exact-match accuracy — our metric since the *Hallucinations and Evaluating Agent Outputs* activity — served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment — which is the architecture of Lab 5 and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
 
 ---
 
@@ -195,7 +195,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 3. *Batch pipeline.*
 
-   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of Lab 5; bring your CSV to the next class.
+   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of Lab 5, *Rubric Pipeline*; save your CSV — it feeds directly into that lab.
 
    *Starter hint:* Use `import os; os.listdir("essays/")` to get filenames, `open(filepath).read()` to load each essay, and `import csv; writer.writerow([...])` to append to the CSV. Wrap each judge call in a `try/except` so one parse error does not stop the whole batch.
 
@@ -221,7 +221,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ---
 
-→ Coming Up Next: We move from evaluating individual outputs to studying complete real-world agentic systems — examining what went right and wrong when agents were deployed on actual tasks, and extracting design principles for your own projects.
+→ Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of Lab 5, *Rubric Pipeline*.
 
 ## Further Reading
 
