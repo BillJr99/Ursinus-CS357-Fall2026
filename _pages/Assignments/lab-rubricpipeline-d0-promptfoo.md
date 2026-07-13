@@ -1,29 +1,38 @@
 ---
-layout: assignment
+layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction0
-title: "CS357: Foundations of Artificial Intelligence - Lab 5, Direction 0: The promptfoo Route"
-
+title: 'CS357: Foundations of Artificial Intelligence - Lab 5, Direction 0: The promptfoo Route'
 info:
   coursenum: CS357
-  purpose: "To meet the core Lab 5 objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python."
-  points: 0
+  purpose: To meet the core Lab 5 objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
   readings:
-    - rtitle: "Lab 5 Core: An LLM Rubric-Grading Pipeline"
-      rlink: "/Assignments/RubricPipeline"
-    - rtitle: "LLM-as-Judge Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
-    - rtitle: "Evaluating Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
-    - rtitle: "promptfoo Documentation"
-      rlink: "https://www.promptfoo.dev/docs/intro/"
-
+  - rtitle: 'Lab 5 Core: An LLM Rubric-Grading Pipeline'
+    rlink: /Assignments/RubricPipeline
+  - rtitle: LLM-as-Judge Activity
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md
+  - rtitle: Evaluating Outputs Activity
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md
+  - rtitle: promptfoo Documentation
+    rlink: https://www.promptfoo.dev/docs/intro/
 tags:
-  - evaluation
-  - llm-as-judge
-  - pipelines
-  - testing
-
+- evaluation
+- llm-as-judge
+- pipelines
+- testing
 ---
+
+# CS357: Foundations of Artificial Intelligence - Lab 5, Direction 0: The promptfoo Route
+
+## Purpose
+
+To meet the core Lab 5 objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
+
+## Background Reading and References
+
+- [Lab 5 Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md)
+- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
+- [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
 This page is **Direction 0** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
 

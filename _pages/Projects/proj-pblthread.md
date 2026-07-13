@@ -1,61 +1,87 @@
 ---
-layout: assignment
+layout: default-standard
 permalink: /Projects/PBLThread
-title: "CS357: Foundations of Artificial Intelligence - The Project Thread: A Semester-Long Multidisciplinary Project"
-
+title: 'CS357: Foundations of Artificial Intelligence - The Project Thread: A Semester-Long Multidisciplinary Project'
 info:
   coursenum: CS357
-  purpose: "To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions."
+  purpose: To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions.
   tilt:
-    task: "Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day."
-    criteria: "Every milestone is evaluated on three dimensions — approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown."
-  points: 0
+    task: Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day.
+    criteria: Every milestone is evaluated on three dimensions — approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown.
   goals:
-    - To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
-    - To develop a multi-disciplinary understanding of that problem and explore how it could be addressed (Goal 12)
-    - To collaborate on a standing team, governed by a charter, to develop a strategic intervention that constructively addresses the issue (Goal 13)
-    - To communicate effectively with a variety of audiences — technical peers, non-technical stakeholders, and the public — through multiple modalities (Goal 14)
-    - To use the Ursinus Open Questions to assess the learning process throughout the semester, describing new understandings and specific areas of growth and skill development (Goal 15)
+  - To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
+  - To develop a multi-disciplinary understanding of that problem and explore how it could be addressed (Goal 12)
+  - To collaborate on a standing team, governed by a charter, to develop a strategic intervention that constructively addresses the issue (Goal 13)
+  - To communicate effectively with a variety of audiences — technical peers, non-technical stakeholders, and the public — through multiple modalities (Goal 14)
+  - To use the Ursinus Open Questions to assess the learning process throughout the semester, describing new understandings and specific areas of growth and skill development (Goal 15)
   rubric:
-    - weight: 35
-      description: Approach (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
-      preemerging: The milestone artifact shows no evidence of a deliberate approach — decisions are unexplained and the work does not build on prior thread milestones
-      beginning: An approach is described but is generic; the artifact does not connect to the stakeholder, the literature, or the team's stated problem
-      progressing: The approach is deliberate and mostly connected — the artifact builds on prior milestones and cites its sources, with minor gaps in how alternatives were considered (Goals 11, 12)
-      proficient: The approach is deliberate, documented, and cumulative — the artifact names the alternatives that were considered and why they were rejected, grounds its claims in the Stakeholder Brief and Literature Review, and shows a multi-disciplinary understanding of the problem it addresses (Goals 11, 12)
-    - weight: 35
-      description: Professionalism and Process (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
-      preemerging: There is no evidence of team process — no meeting notes, no decision log, no role rotation, and missing signatures
-      beginning: Some process artifacts exist but are incomplete — the decision log has gaps, signatures are missing from a progress report, or the AI-use disclosure is absent
-      progressing: The Team Playbook is followed with minor lapses — standups, decision log, meeting notes, role rotation, all-member signatures, and an AI-use disclosure are present, but one element is thin or late (Goal 13)
-      proficient: The Team Playbook is followed consistently — standup notes and the decision log are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and the AI-use disclosure states specifically what was AI-assisted and how it was verified (Goal 13)
-    - weight: 30
-      description: Product (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
-      preemerging: The artifact is missing or does not meet the milestone's stated requirements
-      beginning: The artifact meets some requirements but would not be usable by its intended audience without significant rework
-      progressing: The artifact meets the milestone requirements and is appropriate for its intended audience, with minor gaps in polish or accessibility (Goal 14)
-      proficient: The artifact meets all milestone requirements and communicates effectively with its intended audience — it is complete, well-organized, honest about its limitations, and would be presentable to the stakeholder as-is (Goal 14)
+  - weight: 35
+    description: Approach (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
+    preemerging: The milestone artifact shows no evidence of a deliberate approach — decisions are unexplained and the work does not build on prior thread milestones
+    beginning: An approach is described but is generic; the artifact does not connect to the stakeholder, the literature, or the team's stated problem
+    progressing: The approach is deliberate and mostly connected — the artifact builds on prior milestones and cites its sources, with minor gaps in how alternatives were considered (Goals 11, 12)
+    proficient: The approach is deliberate, documented, and cumulative — the artifact names the alternatives that were considered and why they were rejected, grounds its claims in the Stakeholder Brief and Literature Review, and shows a multi-disciplinary understanding of the problem it addresses (Goals 11, 12)
+  - weight: 35
+    description: Professionalism and Process (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
+    preemerging: There is no evidence of team process — no meeting notes, no decision log, no role rotation, and missing signatures
+    beginning: Some process artifacts exist but are incomplete — the decision log has gaps, signatures are missing from a progress report, or the AI-use disclosure is absent
+    progressing: The Team Playbook is followed with minor lapses — standups, decision log, meeting notes, role rotation, all-member signatures, and an AI-use disclosure are present, but one element is thin or late (Goal 13)
+    proficient: The Team Playbook is followed consistently — standup notes and the decision log are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and the AI-use disclosure states specifically what was AI-assisted and how it was verified (Goal 13)
+  - weight: 30
+    description: Product (applied at every thread milestone; points are awarded on the individual milestone pages, not here)
+    preemerging: The artifact is missing or does not meet the milestone's stated requirements
+    beginning: The artifact meets some requirements but would not be usable by its intended audience without significant rework
+    progressing: The artifact meets the milestone requirements and is appropriate for its intended audience, with minor gaps in polish or accessibility (Goal 14)
+    proficient: The artifact meets all milestone requirements and communicates effectively with its intended audience — it is complete, well-organized, honest about its limitations, and would be presentable to the stakeholder as-is (Goal 14)
   readings:
-    - rtitle: "Kuh, G. D. (2008). High-Impact Educational Practices: What They Are, Who Has Access to Them, and Why They Matter. Washington, DC: Association of American Colleges and Universities."
-      rlink: "https://www.aacu.org/trending-topics/high-impact"
-    - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."
-    - rtitle: "Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350-383."
-    - rtitle: "Tuckman, B. W. (1965). Developmental Sequence in Small Groups. Psychological Bulletin, 63(6), 384-399."
-    - rtitle: "Lave, J., & Wenger, E. (1991). Situated Learning: Legitimate Peripheral Participation. Cambridge: Cambridge University Press."
-    - rtitle: "TILT Higher Ed: Transparency in Learning and Teaching framework"
-      rlink: "https://tilthighered.com/"
-    - rtitle: "CATME Smarter Teamwork (research-based team formation and peer evaluation tools)"
-      rlink: "https://www.catme.org/"
-    - rtitle: "AAC&U VALUE Rubrics (Teamwork, Problem Solving, and Integrative Learning)"
-      rlink: "https://www.aacu.org/initiatives/value"
-
+  - rtitle: 'Kuh, G. D. (2008). High-Impact Educational Practices: What They Are, Who Has Access to Them, and Why They Matter. Washington, DC: Association of American Colleges and Universities.'
+    rlink: https://www.aacu.org/trending-topics/high-impact
+  - rtitle: Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25.
+  - rtitle: Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350-383.
+  - rtitle: Tuckman, B. W. (1965). Developmental Sequence in Small Groups. Psychological Bulletin, 63(6), 384-399.
+  - rtitle: 'Lave, J., & Wenger, E. (1991). Situated Learning: Legitimate Peripheral Participation. Cambridge: Cambridge University Press.'
+  - rtitle: 'TILT Higher Ed: Transparency in Learning and Teaching framework'
+    rlink: https://tilthighered.com/
+  - rtitle: CATME Smarter Teamwork (research-based team formation and peer evaluation tools)
+    rlink: https://www.catme.org/
+  - rtitle: AAC&U VALUE Rubrics (Teamwork, Problem Solving, and Integrative Learning)
+    rlink: https://www.aacu.org/initiatives/value
 tags:
-  - project
-  - teamwork
-  - multidisciplinary
-  - pbl
-
+- project
+- teamwork
+- multidisciplinary
+- pbl
 ---
+
+# CS357: Foundations of Artificial Intelligence - The Project Thread: A Semester-Long Multidisciplinary Project
+
+## Purpose, Task, and Criteria
+
+**Purpose:** To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions.
+
+**Task:** Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day.
+
+**Criteria:** Every milestone is evaluated on three dimensions — approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown.
+
+## Assignment Goals
+The goals of this assignment are:
+
+1. To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
+2. To develop a multi-disciplinary understanding of that problem and explore how it could be addressed (Goal 12)
+3. To collaborate on a standing team, governed by a charter, to develop a strategic intervention that constructively addresses the issue (Goal 13)
+4. To communicate effectively with a variety of audiences — technical peers, non-technical stakeholders, and the public — through multiple modalities (Goal 14)
+5. To use the Ursinus Open Questions to assess the learning process throughout the semester, describing new understandings and specific areas of growth and skill development (Goal 15)
+
+## Background Reading and References
+
+- [Kuh, G. D. (2008). High-Impact Educational Practices: What They Are, Who Has Access to Them, and Why They Matter. Washington, DC: Association of American Colleges and Universities.](https://www.aacu.org/trending-topics/high-impact)
+- Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25.
+- Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350-383.
+- Tuckman, B. W. (1965). Developmental Sequence in Small Groups. Psychological Bulletin, 63(6), 384-399.
+- Lave, J., & Wenger, E. (1991). Situated Learning: Legitimate Peripheral Participation. Cambridge: Cambridge University Press.
+- [TILT Higher Ed: Transparency in Learning and Teaching framework](https://tilthighered.com/)
+- [CATME Smarter Teamwork (research-based team formation and peer evaluation tools)](https://www.catme.org/)
+- [AAC&U VALUE Rubrics (Teamwork, Problem Solving, and Integrative Learning)](https://www.aacu.org/initiatives/value)
 
 This page is the hub for the **Project Thread**: a semester-long, project-based learning arc that runs underneath everything else in CS357. The thread carries no points of its own — every milestone is graded on its own assignment page — but it is the map that shows how the pieces connect: how a survey in week 0 becomes a team, how a team becomes a charter, how a conversation with a real stakeholder becomes a literature review, and how all of it converges on your final project and Demo Day.
 
@@ -250,3 +276,11 @@ At each milestone you will find prompts keyed to these questions on that milesto
 - *How should we live together?* — Describe the best team you have ever been on. What made it work, and what would it take to recreate that on purpose?
 - *How can we understand the world?* — Name a discipline outside CS whose way of seeing problems you respect. What does it notice that CS tends to miss?
 - *What will I do?* — What is one specific skill you want to be able to claim, with evidence, by Demo Day?
+
+## Assignment Rubric
+
+| Description | Pre-Emerging (< 50%) | Beginning (50%) | Progressing (85%) | Proficient (100%) |
+|---|---|---|---|---|
+| Approach (applied at every thread milestone; points are awarded on the individual milestone pages, not here) (35%) | The milestone artifact shows no evidence of a deliberate approach — decisions are unexplained and the work does not build on prior thread milestones | An approach is described but is generic; the artifact does not connect to the stakeholder, the literature, or the team's stated problem | The approach is deliberate and mostly connected — the artifact builds on prior milestones and cites its sources, with minor gaps in how alternatives were considered (Goals 11, 12) | The approach is deliberate, documented, and cumulative — the artifact names the alternatives that were considered and why they were rejected, grounds its claims in the Stakeholder Brief and Literature Review, and shows a multi-disciplinary understanding of the problem it addresses (Goals 11, 12) |
+| Professionalism and Process (applied at every thread milestone; points are awarded on the individual milestone pages, not here) (35%) | There is no evidence of team process — no meeting notes, no decision log, no role rotation, and missing signatures | Some process artifacts exist but are incomplete — the decision log has gaps, signatures are missing from a progress report, or the AI-use disclosure is absent | The Team Playbook is followed with minor lapses — standups, decision log, meeting notes, role rotation, all-member signatures, and an AI-use disclosure are present, but one element is thin or late (Goal 13) | The Team Playbook is followed consistently — standup notes and the decision log are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and the AI-use disclosure states specifically what was AI-assisted and how it was verified (Goal 13) |
+| Product (applied at every thread milestone; points are awarded on the individual milestone pages, not here) (30%) | The artifact is missing or does not meet the milestone's stated requirements | The artifact meets some requirements but would not be usable by its intended audience without significant rework | The artifact meets the milestone requirements and is appropriate for its intended audience, with minor gaps in polish or accessibility (Goal 14) | The artifact meets all milestone requirements and communicates effectively with its intended audience — it is complete, well-organized, honest about its limitations, and would be presentable to the stakeholder as-is (Goal 14) |

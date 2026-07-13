@@ -3,15 +3,15 @@ layout: assignment
 title: Reading Group Discussion Leader
 type: written
 permalink: /Assignments/ReadingGroup
-description: "Lead a short class discussion on a current event or assigned reading in AI. This assignment is entirely extra credit — the earlier in the term you present, the more extra credit you earn."
+description: "Lead a short (ten-minute) class discussion on a current event or assigned reading in AI. Leading a session earns a 10-point base grade plus up to 10 points of extra credit that decreases the later in the term you present — so sign up early."
 
 info:
   coursenum: CS357
   purpose: "To make you a leader and a critical consumer of the AI conversation by preparing, framing, and facilitating a real discussion for your peers."
   tilt:
-    task: "Select a timely, course-relevant source, frame it in a five-minute summary, facilitate a class discussion with three to five scaffolded questions, and submit a short reflection."
-    criteria: "Assessed on the relevance of your source, your framing, the depth and sequencing of your questions, your facilitation, and your reflection; see the rubric below. This assignment is extra credit, and the rubric scales the credit earned for your slot."
-  points: 0
+    task: "Select a timely, course-relevant source, frame it in a short summary, facilitate a ten-minute presentation and discussion with three to five scaffolded questions, and submit a short reflection."
+    criteria: "Assessed on the relevance of your source, your framing, the depth and sequencing of your questions, your facilitation, and your reflection; see the rubric below. Leading a session earns a 10-point base grade, and the same rubric also scales up to 10 points of extra credit for your slot — earlier slots are worth more extra credit."
+  points: 10
   goals:
     - "Select and summarize a current event or reading relevant to course themes (AI systems, responsible AI, societal impact, technical foundations)"
     - "Craft three to five focused discussion questions that move from comprehension to analysis to personal judgment"
@@ -22,13 +22,13 @@ info:
       description: "Reading or Event Selection — relevance and quality of the chosen source"
       preemerging: "The source is tangentially related to AI or so recent it has not been analyzed in credible outlets."
       beginning: "The source is relevant to AI but does not connect clearly to course themes or is a general news summary without depth."
-      progressing: "The source is directly relevant to a course theme (probabilistic computing, responsible AI, agent design, societal impact, etc.), comes from a credible outlet, and has enough substance to support 15 minutes of discussion."
+      progressing: "The source is directly relevant to a course theme (probabilistic computing, responsible AI, agent design, societal impact, etc.), comes from a credible outlet, and has enough substance to support a ten-minute discussion."
       proficient: "The source is timely, substantive, credibly sourced, and connects to at least two course themes. The student contextualizes it within something the class has studied."
     - weight: 20
-      description: "Summary and Framing (5-minute presentation) — quality of the student-led introduction"
+      description: "Summary and Framing (roughly three-minute presentation) — quality of the student-led introduction"
       preemerging: "The summary reads the source aloud or is missing key context; the class does not know why the topic matters."
       beginning: "The summary conveys the main point but does not frame a tension or open question for discussion."
-      progressing: "The 5-minute summary accurately conveys the source's main argument, identifies the relevant tension or question, and closes with a clear framing that sets up the discussion questions."
+      progressing: "The summary accurately conveys the source's main argument, identifies the relevant tension or question, and closes with a clear framing that sets up the discussion questions."
       proficient: "The summary is concise and engaging, draws on at least one concrete example or data point from the source, and situates the topic within the course arc in a way that makes students want to engage."
     - weight: 20
       description: "Discussion Questions — quality and depth of the three to five questions"
@@ -52,12 +52,12 @@ info:
 
 ## Overview
 
-Each week, one or two students lead a short discussion on a current event or reading related to AI. This is entirely **extra credit** — there is no penalty for not doing it, but going earlier in the term earns significantly more credit.
+Each week, one or two students lead a short discussion on a current event or reading related to AI. Leading a session earns a **10-point base grade** (scored on the rubric below), **plus up to 10 points of extra credit** — and the earlier in the term you present, the larger that extra-credit bonus.
 
-The session structure is:
-- **5 minutes:** Student presenter summarizes the source and frames the central question.
-- **10 minutes:** Class discussion, facilitated by the student presenter.
-- **1 minute:** Student closes with a one-sentence synthesis of what the class concluded.
+The session is a **ten-minute presentation and discussion**:
+- **~3 minutes:** Student presenter summarizes the source and frames the central question.
+- **~6 minutes:** Class discussion, facilitated by the student presenter.
+- **~1 minute:** Student closes with a one-sentence synthesis of what the class concluded.
 
 After your session, you submit a 300–500 word reflection write-up within one week.
 
@@ -65,7 +65,7 @@ After your session, you submit a 300–500 word reflection write-up within one w
 
 ## For the Audience: Your Participation Counts
 
-Leading a session is extra credit; being a thoughtful member of its audience is ordinary, expected participation, and it counts toward your Class Activities and Participation grade. A student-led discussion is only as good as the room it is held in, so when a classmate presents, you have a job.
+Leading a session earns a base grade plus extra credit; being a thoughtful member of its audience is ordinary, expected participation, and it counts toward your Class Activities and Participation grade. A student-led discussion is only as good as the room it is held in, so when a classmate presents, you have a job.
 
 **Before the session,** post a brief [reading response]({{ site.baseurl }}/Participation/ReadingResponses) to the presenter's source — one takeaway, one question, and one connection to something we have built or run — or, when the source is circulated the same day, arrive with one genuine question ready. **During the session,** engage: build on the presenter's framing, offer a counter-view, or connect their source to a system we have worked with. The [Reading Responses]({{ site.baseurl }}/Participation/ReadingResponses) guide explains the format, and audience engagement is assessed within the [participation rubric]({{ site.baseurl }}/Participation/PreparingForClass). This is what makes the student-led sessions worth holding — and it means everyone, not only the presenter, has a stake in them.
 
@@ -73,30 +73,30 @@ Leading a session is extra credit; being a thoughtful member of its audience is 
 
 ## Extra Credit Scale
 
-Sign up as early as you can — the extra credit maximum decreases as the semester progresses (see the table):
+Leading a session always earns the **10-point base grade** (scaled by the rubric). On top of that base, you earn **extra credit** that is largest early in the term and decreases each week — up to **10 points** for the first meeting, graduating down as shown:
 
 | Week | Extra Credit Points |
 |---|---|
-| Week 0 (first class meeting) | 20 |
-| Week 1 | 18 |
-| Week 2 | 16 |
-| Week 3 | 14 |
-| Week 4 | 12 |
-| Week 5 | 10 |
-| Week 6 | 9 |
-| Week 7 | 8 |
-| Week 8 | 7 |
-| Week 9 | 6 |
-| Week 10 | 5 |
-| Week 11 | 4 |
-| Week 12 | 3 |
-| Week 13 | 2 |
-| Week 14 | 2 |
+| Week 0 (first class meeting) | 10 |
+| Week 1 | 9 |
+| Week 2 | 8 |
+| Week 3 | 7 |
+| Week 4 | 6 |
+| Week 5 | 5 |
+| Week 6 | 5 |
+| Week 7 | 4 |
+| Week 8 | 4 |
+| Week 9 | 3 |
+| Week 10 | 3 |
+| Week 11 | 2 |
+| Week 12 | 2 |
+| Week 13 | 1 |
+| Week 14 | 1 |
 | Week 15 | 1 |
 
 Sign-up is first-come, first-served via the course sign-up sheet (link on the course LMS). **Two students may sign up per class meeting.** If a slot is full, choose the next available slot.
 
-**Important:** You earn the extra credit points only if you complete both the in-class discussion *and* the written reflection on time. Earning the slot without presenting forfeits the credit.
+**Important:** You earn the base grade and the extra-credit points only if you complete both the in-class discussion *and* the written reflection on time. Earning the slot without presenting forfeits both.
 
 ---
 
@@ -120,7 +120,7 @@ Any of the options above may instead be led as a **Competing Texts Session**: ra
 2. **One probing question per side:** one question that presses on the optimist source's weakest assumption, and one that presses on the skeptic source's weakest assumption.
 3. **A closing reflection on which claims survive:** close by identifying which claims from each text survive contact with the other text, and which do not.
 
-The session structure and timing are unchanged: your 5-minute summary covers both texts (steelmanned), the probing questions count toward your three to five discussion questions, and your one-sentence closing synthesis states which claims survived. The same rubric applies.
+The session structure and timing are unchanged: within the ten-minute session, your summary covers both texts (steelmanned), the probing questions count toward your three to five discussion questions, and your one-sentence closing synthesis states which claims survived. The same rubric applies.
 
 ---
 
@@ -193,6 +193,6 @@ If you chose the **Competing Texts Session** format, your reflection must also i
 
 ## Grading
 
-This assignment is scored on the rubric above. Points earned are added as extra credit to your final course grade. The rubric has five criteria; each criterion is worth one-fifth of the extra credit points for your slot, scaled by the proficiency level earned — Proficient, the top level, earns full credit (4 of 4) on that criterion.
+This assignment is scored on the rubric above. Leading a session earns a **10-point base grade**: the rubric's five criteria each contribute one-fifth, scaled by the proficiency level earned — Proficient, the top level, earns full credit (4 of 4) on that criterion. On top of the base, you earn **extra credit** equal to your slot's extra-credit maximum (see the scale above), scaled by the same rubric proficiency.
 
-**Example:** a Week-2 leader (16 EC points) earning Proficient on all five criteria receives the full 16 extra credit points; one earning Progressing (3 of 4) on all five criteria receives 16 × 0.75 = 12 extra credit points added to the final grade.
+**Example:** a Week-2 leader (8 extra-credit points available) earning Proficient on all five criteria receives the full **10-point base grade** *and* the full **8 extra-credit points**; one earning Progressing (3 of 4) on all five criteria receives 10 × 0.75 = 7.5 base points and 8 × 0.75 = 6 extra-credit points added to the final grade.

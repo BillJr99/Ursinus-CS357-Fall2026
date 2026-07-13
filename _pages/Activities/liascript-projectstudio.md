@@ -200,7 +200,7 @@ Write a combined reflection of 150–200 words addressing at least two of the th
 
 ---
 
-→ Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/DemoDayGuide) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
+→ Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 
