@@ -40,8 +40,8 @@ info:
       description: Verifiability and Evidence
       preemerging: No success criteria or walkthrough is provided, or criteria are purely subjective, or the walkthrough is absent
       beginning: Criteria are stated but cannot be measured without access to the system's internals or its authors; or a walkthrough is described but the interruption is trivial or the resumption relies on information not present in the written state
-      progressing: Most criteria are third-party measurable from outputs alone though at least one needs clarification; or a genuine mid-task interruption and resumption is shown but the write-up does not distinguish what the second session learned from the documents versus what it rediscovered
-      proficient: "For Direction A: three to five criteria complete all four columns (criterion, what success looks like, measurement method, passing threshold), cover functional correctness plus at least one safety or quality dimension, and the reflection states how the data would be collected one week after deployment, by whom, and what follows if a criterion fails. For Direction B: the walkthrough shows a real or rigorously simulated session interrupted mid-task; the updated SESSION and CURRENT_TASK files are included verbatim, each ending with a next safe action and an evidence-cited reality check; the second session resumes from the written state alone without duplicating completed work; and every question it had to ask a human is identified along with the document revision that now answers it"
+      progressing: Most criteria are third-party measurable from outputs alone though at least one needs clarification, or the token ledger questions are attempted with an arithmetic or setup error; or a genuine mid-task interruption and resumption is shown but the write-up does not distinguish what the second session learned from the documents versus what it rediscovered
+      proficient: "For Direction A: three to five criteria complete all four columns (criterion, what success looks like, measurement method, passing threshold), cover functional correctness plus at least one safety or quality dimension, and the reflection states how the data would be collected one week after deployment, by whom, and what follows if a criterion fails. For Direction B: the walkthrough shows a real or rigorously simulated session interrupted mid-task; the updated SESSION and CURRENT_TASK files are included verbatim, each ending with a next safe action and an evidence-cited reality check; the second session resumes from the written state alone without duplicating completed work; and every question it had to ask a human is identified along with the document revision that now answers it. Both directions: the token ledger questions are answered with correct, shown arithmetic grounded in the submission's own tool count and prompt sizes"
     - weight: 10
       description: Reflection and Presentation
       preemerging: No reflection is provided, or the submission is incomplete or contains unredacted personal or sensitive information
@@ -244,9 +244,17 @@ A single PDF or Markdown bundle containing the five documents, the classificatio
 
 ---
 
+## Required for Both Directions: Token Ledger Questions
+
+Whichever direction you choose, close your submission with this short worked-theory section — the by-hand budget math from the Tool Use session's token ledger and the Memory and Small Context Window session, applied to *your* designed system. Show your arithmetic; these are graded within the **Verifiability and Evidence** rubric row, because a design whose costs you cannot compute is a design you cannot verify.
+
+1. **Schema overhead.** Your design advertises some number of tools. Using ~80 tokens per schema, compute the per-turn token overhead of your tool menu, and the overhead per turn that is *wasted* on tools the turn does not use in your system's most common workflow. State one design change (e.g., a sub-agent holding some tools, per the Small Context Window principle) and recompute.
+2. **Conversation growth.** Assume your system re-sends full history each turn and averages some tokens per exchange (state your estimate and justify it from your prompt skeletons). Compute total tokens *sent* across a 10-turn session — show why the total grows roughly quadratically rather than linearly — and identify the turn at which your chosen model's context window overflows.
+3. **The mitigation, priced.** For one mitigation from the memory session (sliding window with a pinned summary, or summarize-and-restart), recompute question 2's total and state what information your system loses in exchange.
+
 ## Submission Instructions
 
-Submit a single PDF or markdown bundle containing your chosen direction's deliverable and your reflection responses. State at the top of the first page which direction you chose.
+Submit a single PDF or markdown bundle containing your chosen direction's deliverable, the token ledger questions, and your reflection responses. State at the top of the first page which direction you chose.
 
 ---
 
