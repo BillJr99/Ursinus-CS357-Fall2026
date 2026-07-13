@@ -5,7 +5,7 @@ title: "CS357: Foundations of Artificial Intelligence - Preparing for Each Class
 
 info:
   coursenum: CS357
-  points: 0
+  points: 10
   submission: "Nothing to submit. This is a support page; return to it before class throughout the term."
   goals:
     - To arrive at each hands-on session ready to build, run, and discuss

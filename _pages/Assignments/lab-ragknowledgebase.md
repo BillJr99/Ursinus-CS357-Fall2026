@@ -231,7 +231,7 @@ Always open files with `encoding="utf-8", errors="replace"` to handle non-ASCII 
 
 ## Part 2: Index with Intent
 
-Implement indexing with **two chunking strategies** (for example, fixed-size with overlap versus paragraph-structural), with chunk parameters externalized in a JSON configuration file. Build a question set of at least ten questions whose answers you have located by hand (note the source chunk for each). Report **recall@k** for $k \in \{1, 3, 5\}$ under both strategies, and choose your shipped configuration with a quantitative defense.
+Implement indexing with **two chunking strategies** (for example, fixed-size with overlap versus paragraph-structural), with chunk parameters externalized in a JSON configuration file. Build a question set of at least ten questions whose answers you have located by hand (note the source chunk for each). Report **recall@k** for $$k \in \{1, 3, 5\}$$ under both strategies, and choose your shipped configuration with a quantitative defense.
 
 ### Step-by-step guide
 
