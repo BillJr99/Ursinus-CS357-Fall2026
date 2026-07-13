@@ -46,7 +46,7 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge.
+In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. This onboarding assignment is due Thursday, September 3, and is assessed within the Class Activities and Participation category.
 
 ---
 

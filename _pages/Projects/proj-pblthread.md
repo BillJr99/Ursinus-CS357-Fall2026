@@ -73,7 +73,7 @@ This page is the hub for the **Project Thread**: a semester-long, project-based 
 | **Psychological Safety** | The shared belief that a team is safe for interpersonal risk-taking — asking a naive question, admitting a mistake, disagreeing with the group — without being punished or embarrassed (Edmondson, 1999). | The working norm for every team meeting |
 | **Tuckman Stages** | The observed sequence most teams pass through: forming, storming, norming, performing, adjourning (Tuckman, 1965). Storming is normal, expected, and survivable. | The stage map below; the charter activity |
 | **SQR Card** | A structured peer-review card: one **S**trength with evidence, one genuine **Q**uestion, one **R**isk with a suggested mitigation. | Peer review exchanges (weeks 5, 11, 14) |
-| **Sprint** | A short, fixed-length build cycle ending in a runnable increment, an updated evaluation, and a retrospective. | Final project (weeks 11 to 15) |
+| **Sprint** | A short, fixed-length build cycle ending in a runnable increment, an updated evaluation, and a retrospective. | Final project (proposal week 11, Nov 10; sprints weeks 12 to 14) |
 | **Open Questions** | The four questions at the center of the Ursinus curriculum: *What should matter to me? How should we live together? How can we understand the world? What will I do?* | Every milestone's reflection prompts (Goal 15) |
 | **Primary Author** | The named team member responsible for drafting and defending one section of a team document. Every student is primary author of at least one section of every team document. | Every team deliverable |
 | **AI-Use Disclosure** | A short statement, attached to every milestone, of what (if anything) was AI-assisted, with what tool, and how the team verified it. | Every milestone submission |
@@ -92,14 +92,14 @@ Two views of the same thread — a table for scanning, then a narrative for read
 | wk1.1 | **Teams announced** | Standing POGIL teams for the semester are posted. | In class |
 | wk1.1 → wk2.0 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft); the signed charter is due wk2.0. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
 | wk2.1 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
-| wk4.1 | **Stakeholder Brief due** | 2-3 page brief: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
-| wk5.0 | **Peer review round 1** | Briefs are exchanged across teams for SQR review; first private intra-team check-in goes to the instructor. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
-| wk5.0 → wk7.1 | **Literature Review** | Phase 1 (individual annotated bibliographies) due wk6.1; Phase 2 (team synthesis) due wk7.1. | [Literature Review](/Assignments/LitReview) |
+| wk5.1 (Oct 1) | **Stakeholder Brief due** | 2-3 page brief: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
+| wk5.0 (Sep 29) | **Peer review round 1** | Brief drafts are exchanged across teams for SQR review; first private intra-team check-in goes to the instructor. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
+| wk5.0 → wk8.0 | **Literature Review** | Phase 1 (individual annotated bibliographies) due wk7.1 (Oct 15); Phase 2 (team synthesis) due wk8.0 (Oct 20). | [Literature Review](/Assignments/LitReview) |
 | wk8.0 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
 | wk9.1 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team](/Projects/FinalProject), [Responsible AI Audit](/Projects/FinalProject), or [Open-Source Agent](/Projects/FinalProject). | Track pages |
 | wk10 | **Peer review round 2** | Second private intra-team check-in to the instructor. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
-| wk11.0 | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review; cross-team SQR critique at wk11.0/11.1. | Track pages |
-| wk11 → wk14 | **Sprints** | Build in sprints with rotating roles, runnable increments, and evaluation updates. | Track pages |
+| wk11.0 (Nov 10) | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review; cross-team SQR critique at wk11.0/11.1. | Track pages |
+| wk12 → wk14 | **Sprints** | Build in sprints with rotating roles, runnable increments, and evaluation updates. | Track pages |
 | wk14 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards; third private intra-team check-in. | Track pages |
 | wk15.0 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, and a disseminable artifact. | Track pages |
 
@@ -183,10 +183,10 @@ The decision log is what the "approach" rubric dimension reads. It also ends the
 
 ### POGIL Role Rotation Cadence
 
-Roles (**Manager**, **Recorder**, **Presenter**, **Reflector** in activities; **Coordinator**, **Builder**, **Evaluator**, **Scribe** in the final project) rotate:
+Roles (**Manager**, **Recorder**, **Presenter**, **Reflector** in activities; **Coordinator**, **Builder**, **Evaluator**, **Scribe** in the final project) rotate. The two role sets are deliberately different: the activity roles (Manager/Recorder/Presenter/Reflector) rotate within POGIL class sessions, while the project roles (Coordinator/Builder/Evaluator/Scribe) rotate across the sprint weeks.
 
 - **Weekly** through wk8, so every member holds every role at least once before the final project begins.
-- **Per sprint** from wk11 on, documented in the contribution statements.
+- **Per sprint** during the sprint weeks (wk12 → wk14), documented in the contribution statements.
 
 Rotation is not optional and not tradeable: the point is that everyone practices every job, including the ones they would not volunteer for.
 

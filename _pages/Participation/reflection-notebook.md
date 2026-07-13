@@ -17,7 +17,7 @@ tags:
 
 ---
 
-This course asks two kinds of question at once: the technical one — *how do you build and run this?* — and the human one — *should you, and for whom, and at what cost?* The engineers who matter are the ones who hold both at the same time. Your Reflection Notebook is where you practice that. It is worth 10% of your grade, and it rewards genuine engagement over polish.
+This course asks two kinds of question at once: the technical one — *how do you build and run this?* — and the human one — *should you, and for whom, and at what cost?* The engineers who matter are the ones who hold both at the same time. Your Reflection Notebook is where you practice that. It is graded as the Reflection Notebook category (10% of the course grade) via the midterm and end-of-term reviews; individual entries carry no per-item points. It rewards genuine engagement over polish.
 
 ## Purpose
 
