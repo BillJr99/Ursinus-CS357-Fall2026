@@ -252,6 +252,8 @@ schedule:
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
   - rtitle: "The Project Thread: how the semester-long team project unfolds (read by the end of week 1)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
+  - rtitle: "Required setup (Overview assignment, Route A): Your Course Development Environment — Host Ollama, the Course Container, Git, and GitHub"
+    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
   - rtitle: "Going Deeper: AI for All — tools overview slide deck"
     rlink: "https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit"
 - week: "0"
