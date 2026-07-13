@@ -72,6 +72,8 @@ tags:
 
 In this lab, you and your partner will build the evaluator-optimizer workhorse of agentic systems: a generator that drafts, a critic that judges against an explicit JSON rubric, and a loop that converges or honestly reports that it did not. This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 
+**Assigned: October 15 — Due: October 27.**
+
 ---
 
 ## Before You Start
@@ -122,6 +124,8 @@ If you see a connection error, start Ollama with `ollama serve` in a separate te
 | Part 3 | Reward Hack Your Rubric | 30–45 min |
 | Part 4 | Comparative Evaluation | 45–60 min |
 | Writeup | Readme and reflection | 30–45 min |
+
+**Honest total:** plan on roughly **3.5–4.5 hours for the core lab** (Parts 1–4 plus the writeup), plus roughly **2.5–3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
 
 ---
 
@@ -413,6 +417,40 @@ Create a file `calibration_drafts.json`:
 ]
 ```
 
+> **Worked example — adding a new entry (D04).** Two things trip people up here. First, JSON does not allow comments, so **delete the `// TODO` line** before you run your code — it is a note to you, not valid JSON. Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote. Here is a complete D04 entry with a *subtle* planted defect (the parameter descriptions list names but omit types — a violation of C2 that requires careful reading to spot):
+>
+> ```json
+> {
+>   "id": "D04",
+>   "defect": "missing_C2",
+>   "description": "Parameters listed but types omitted",
+>   "draft": "\"\"\"Merge two sorted lists of integers into a single sorted list.\n\nArgs:\n    a: The first sorted list.\n    b: The second sorted list.\n\nReturns:\n    list[int]: A new sorted list containing all elements from a and b.\n\nExample:\n    >>> merge_sorted_lists([1, 3], [2, 4])\n    [1, 2, 3, 4]\n\"\"\""
+> }
+> ```
+>
+> Rather than hand-escaping every entry, you can let Python do the escaping for you. Write the draft as a normal triple-quoted string and let `json.dumps` produce the escaped version to paste into your file:
+>
+> ```python
+> import json
+>
+> draft_d05 = """\"\"\"Merge two sorted lists.
+>
+> Args:
+>     a (list[int]): First sorted list.
+>     b (list[int]): Second sorted list.
+> \"\"\""""  # planted defect: no Returns section and no Example (missing C3 and C4)
+>
+> entry = {
+>     "id": "D05",
+>     "defect": "missing_C3_and_C4",
+>     "description": "No return description and no example",
+>     "draft": draft_d05,
+> }
+> print(json.dumps(entry, indent=2))  # copy this output into calibration_drafts.json
+> ```
+>
+> Follow this same pattern for D06 through D12: pick a criterion (or two), decide on a defect that violates it, write the draft, and record the defect label so Step 3 can score it.
+
 **Step 2: Run the critic over every draft and record results.**
 
 ```python
@@ -592,7 +630,14 @@ On a fixed set of at least eight tasks, compare single-shot generation against y
 COMPARISON_TASKS = [
     "Write a docstring for a function `binary_search(arr, target)` that searches a sorted list.",
     "Write a docstring for a function `flatten(nested_list)` that recursively flattens nested lists.",
-    # TODO: Add 6 more tasks of increasing complexity
+    # Worked example of a more complex task — note how it adds competing constraints
+    # (multiple parameters, an exception case, and a default value) that all four
+    # rubric criteria must cover simultaneously:
+    "Write a docstring for a function `paginate(items, page_size=10, page=1)` that returns one page of a list and raises ValueError when page is out of range.",
+    # TODO: Add 5 more tasks of increasing complexity, following the pattern above.
+    # Each task is just a plain string in this list. Good sources of "complexity":
+    # more parameters, default values, error/exception cases, and edge cases
+    # (empty input, ties, duplicates) that the docstring must document.
 ]
 
 # Use your calibrated rubric as the scoring instrument
@@ -733,6 +778,14 @@ You may then **extend** the core in the direction below. The direction is not a 
 
 <details markdown="1">
 <summary><strong>Direction 1: Coding Agents in Practice</strong></summary>
+
+> **What this direction requires**
+>
+> - **Node.js and npm** (install from [https://nodejs.org](https://nodejs.org) if you do not have them)
+> - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
+> - **An API key** for the provider your agent uses (roughly $5 of credit is more than enough for this direction, or use the instructor-provided key if one is announced in class)
+>
+> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1–4) runs entirely against your local Ollama setup from Labs 1–2. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
 
 In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt — one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 
