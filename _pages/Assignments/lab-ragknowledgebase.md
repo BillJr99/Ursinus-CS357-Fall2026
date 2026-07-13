@@ -14,7 +14,7 @@ info:
     - To construct a complete retrieval-augmented generation pipeline over a personal document corpus using Chroma and a local model
     - To make and defend chunking decisions empirically by comparing at least two strategies with recall@k metrics
     - To evaluate retrieval quality with recall at k and grounding quality with a citation audit
-    - To implement and demonstrate honest abstention when the corpus does not contain an answer
+    - To implement and demonstrate abstention when the corpus does not contain an answer
     - To apply parameter-efficient fine-tuning (LoRA/QLoRA) to a local model using a real dataset and a modern training toolchain (Unsloth or hand-rolled transformers/peft/trl)
     - To export a fine-tuned model to GGUF and run it locally in Ollama, making a model you trained a first-class citizen of your local-first stack
     - To instrument training with loss curves and evaluate output quality before and after fine-tuning
@@ -140,7 +140,7 @@ If `ollama NOT running`, start the server with `ollama serve` in a separate term
 
 **Estimated time budget:**
 
-This lab runs across a roughly two-and-a-half-week window (September 29 – October 15) that spans fall break. Budget your weeks: aim to have the core pipeline working before the break so the direction work and audit are not compressed into the final days.
+This lab runs across a multi-week window (see the course schedule for the assigned and due dates). Budget your weeks: aim to have the core pipeline working early — and if a break falls inside your window, front-load — so the direction work and audit are not compressed into the final days.
 
 | Component | Estimated time |
 |-----------|----------------|
@@ -461,7 +461,7 @@ The `all-MiniLM-L6-v2` model (~80 MB) downloads from HuggingFace on first run. I
 Implement the query path: embed the question, retrieve top-k, assemble a prompt that instructs the model to answer **only** from the provided context, to cite bracketed source numbers, and to reply with a designated abstention phrase when the context is insufficient. Demonstrate:
 
 - Five answered questions with correct citations.
-- Two honest abstentions on questions your corpus cannot answer.
+- Two abstentions on questions your corpus cannot answer.
 - One before/after comparison showing the bare model hallucinating where your RAG system either answers correctly or abstains.
 
 ### Step-by-step guide
@@ -733,7 +733,7 @@ Choose one:
 <details markdown="1">
 <summary><strong>Direction 0: The Langflow Route (low-code)</strong></summary>
 
-This direction is the low-code route through the heart of the lab. You will build the same retrieval-augmented pipeline the core lab specifies — your corpus, chunked and embedded into Chroma, retrieved and answered with citations and honest abstention — but you will build it **visually in Langflow**, wiring components on a canvas instead of authoring Python. The requirements do not soften: you still compare two chunking configurations empirically, still report recall@k, still force grounding and abstention, and still audit your citations by hand. What changes is the medium.
+This direction is the low-code route through the heart of the lab. You will build the same retrieval-augmented pipeline the core lab specifies — your corpus, chunked and embedded into Chroma, retrieved and answered with citations and abstention — but you will build it **visually in Langflow**, wiring components on a canvas instead of authoring Python. The requirements do not soften: you still compare two chunking configurations empirically, still report recall@k, still force grounding and abstention, and still audit your citations by hand. What changes is the medium.
 
 **What this replaces and what it does not.** Direction 0 replaces the *coding* of core Parts 2–3 (indexing and grounded generation). Core Part 1 — corpus curation and the datasheet — and core Part 4 — the citation audit — remain required and unchanged; you complete them exactly as written, using your Langflow pipeline's answers as the audit material. The writeup expectations are the core lab's.
 
@@ -841,7 +841,7 @@ This direction takes the opposite approach to knowledge injection from the one y
 
 1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A–D exactly as written in the notebook. A 3.8B–8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15–60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
 
-2. **Provided-artifact variant (only if Colab is unavailable to you).** Skip training and start from a published adapter: search the Hugging Face Hub for a public LoRA adapter for `llama3.2` — any published llama3.2 LoRA adapter works; pick one whose model card describes its training domain, and cite it — and download it. Then perform **only the deployment and evaluation half** of this direction: the GGUF merge (Step C.5, merging the downloaded adapter instead of one you trained), the `Modelfile`, the `ollama create` / `ollama run` deployment, and the full before/after evaluation of Step C comparing the base model against the adapted model. **This variant earns full credit, with the evaluation weighted more heavily** in place of the training run: extend your before/after comparison to at least 15 prompts (rather than 10), and include the honest-regression analysis, since the evaluation is your primary evidence. The model card (Step D) is still required — document the adapter's provenance, dataset, and license in place of your own training details. This path preserves the direction's deployment and evaluation learning objectives; the loss-curve deliverable is waived for it.
+2. **Provided-artifact variant (only if Colab is unavailable to you).** Skip training and start from a published adapter: search the Hugging Face Hub for a public LoRA adapter for `llama3.2` — any published llama3.2 LoRA adapter works; pick one whose model card describes its training domain, and cite it — and download it. Then perform **only the deployment and evaluation half** of this direction: the GGUF merge (Step C.5, merging the downloaded adapter instead of one you trained), the `Modelfile`, the `ollama create` / `ollama run` deployment, and the full before/after evaluation of Step C comparing the base model against the adapted model. **This variant earns full credit, with the evaluation weighted more heavily** in place of the training run: extend your before/after comparison to at least 15 prompts (rather than 10), and include the regression analysis, since the evaluation is your primary evidence. The model card (Step D) is still required — document the adapter's provenance, dataset, and license in place of your own training details. This path preserves the direction's deployment and evaluation learning objectives; the loss-curve deliverable is waived for it.
 
 #### Before You Start
 
@@ -859,7 +859,7 @@ You have a choice of training toolchain within this direction — both are accep
 - **Toolchain A (recommended default): [Unsloth](https://unsloth.ai/).** Unsloth wraps `transformers`/`peft`/`trl` with a faster, lower-memory training path (a 7B model fits comfortably on a free Colab T4 in a 15–60 minute run) and — crucially for this course — exports your fine-tuned model **directly to GGUF so it runs in Ollama**, closing the local-first loop you have used all semester. Start from an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model and adapt it.
 - **Toolchain B (see-the-internals alternative): raw `transformers` + `peft` + `trl`.** If you would rather wire the `LoraConfig`, `BitsAndBytesConfig`, and `SFTTrainer` by hand to see exactly what Unsloth abstracts, use the hand-rolled script in Step B. You then convert to GGUF with `llama.cpp` at the end (Step C.5).
 
-Whichever toolchain you pick, the graded work is identical: a converging training run, an honest before/after evaluation, a model card, **and your fine-tuned model answering a prompt from inside Ollama.**
+Whichever toolchain you pick, the graded work is identical: a converging training run, a before/after evaluation, a model card, **and your fine-tuned model answering a prompt from inside Ollama.**
 
 **If using Google Colab with Unsloth (recommended):** Create a new notebook, set Runtime > Change runtime type > T4 GPU, and run this setup cell first:
 

@@ -138,7 +138,7 @@ The checklist below is a real engineering artifact — notice that every item is
 - [ ] My roommate completed a tip without any instruction from me
 ```
 
-One honest boundary completes the track: know what you are accountable for shipping. A page that handles no one's personal data and takes no payments is yours to publish (the Cloudflare module showed how); anything touching credentials, money, or other people's private information needs a Track A partner or a reviewer, and recognizing that line *is* the engineering judgment this track teaches.
+One boundary completes the track: know what you are accountable for shipping. A page that handles no one's personal data and takes no payments is yours to publish (the Cloudflare module showed how); anything touching credentials, money, or other people's private information needs a Track A partner or a reviewer, and recognizing that line *is* the engineering judgment this track teaches.
 
 [[MC]]
 A non-coding maker's strongest defense against an agent's specification gaps is:
@@ -153,11 +153,11 @@ Both tracks now converge on the same institutional mechanism: a system that runs
 
 # Part IV: The Shared Discipline of CI
 
-In this part, you will set up Continuous Integration — the mechanism that runs your checks automatically on every change so that verification never depends on human memory or goodwill. CI is the honest referee that no agent can charm.
+In this part, you will set up Continuous Integration — the mechanism that runs your checks automatically on every change so that verification never depends on human memory or goodwill. CI is the referee that no agent can charm.
 
 ## 5. Continuous Integration: Your Standards, Running While You Sleep
 
-**Why this matters:** Imagine if every time you pushed a change to a shared project, a robot immediately ran every check you had ever written and emailed you the results before anyone else saw the change. That is CI, and it means the question "did I break anything?" has an answer in two minutes rather than two days. For agent-assisted projects specifically, CI is the honest referee that the agent cannot charm: a persuasive agent can convince you its change is correct, but a failing CI run simply reports the test result, with no negotiation.
+**Why this matters:** Imagine if every time you pushed a change to a shared project, a robot immediately ran every check you had ever written and emailed you the results before anyone else saw the change. That is CI, and it means the question "did I break anything?" has an answer in two minutes rather than two days. For agent-assisted projects specifically, CI is the referee that the agent cannot charm: a persuasive agent can convince you its change is correct, but a failing CI run simply reports the test result, with no negotiation.
 
 CI is the mechanization of everything above: a service (GitHub Actions, in our course) that runs your checks automatically on every push, so the question "did anything break?" gets answered by a machine, every time, before a human ever trusts the change. A complete, real workflow — read the `on: [push, pull_request]` trigger and the `run: python -m pytest tests/ -v` step carefully, because those two lines are where your automated checks attach to the development process:
 
@@ -177,7 +177,7 @@ jobs:
       - run: python -m pytest tests/ -v
 ```
 
-Commit that file and the green check or red X appears on every push and pull request, including the agent's. For Track B the same idea applies one level up: connect your project to Pages or a similar service so every change produces a *preview deployment*, and your acceptance checklist runs against the preview before anything reaches the real URL. In both tracks, CI is also the honest referee between you and your agent: an agent's change that turns the build red is rejected by the system itself, with no negotiation, which is a deterministic checker in exactly the sense your pre-mortems demanded. And note where the human gates survive: CI *verifies* on every push, but *publishing* still triggers only on a deliberate human act (a tag, a merge), the design the publishing module called the gate moving rather than vanishing.
+Commit that file and the green check or red X appears on every push and pull request, including the agent's. For Track B the same idea applies one level up: connect your project to Pages or a similar service so every change produces a *preview deployment*, and your acceptance checklist runs against the preview before anything reaches the real URL. In both tracks, CI is also the referee between you and your agent: an agent's change that turns the build red is rejected by the system itself, with no negotiation, which is a deterministic checker in exactly the sense your pre-mortems demanded. And note where the human gates survive: CI *verifies* on every push, but *publishing* still triggers only on a deliberate human act (a tag, a merge), the design the publishing module called the gate moving rather than vanishing.
 
 All of this verification infrastructure ultimately serves one purpose: ensuring that a real person, using your artifact under real conditions, has a good experience — which is what Part V examines.
 

@@ -53,7 +53,7 @@ A **Worker** is a JavaScript (or TypeScript, or Python) function that runs on Cl
 
 Around them sit storage primitives you may eventually want, of which **KV** (a key-value store bindable into a Worker, like a simple database your Worker can read and write) is the one worth knowing exists today.
 
-**Wrangler** is the command-line interface to all of it: it scaffolds projects, runs them locally, deploys them, and manages secrets, which makes it the `docker` of this module. The honest framing for our course: the local stack is where private things live; Cloudflare is where *shareable, non-sensitive* things go, and deciding which is which is a governance exercise you have already trained for.
+**Wrangler** is the command-line interface to all of it: it scaffolds projects, runs them locally, deploys them, and manages secrets, which makes it the `docker` of this module. The framing for our course: the local stack is where private things live; Cloudflare is where *shareable, non-sensitive* things go, and deciding which is which is a governance exercise you have already trained for.
 
 ## 2. Wrangler from Zero
 
@@ -114,10 +114,10 @@ That `compatibility_date` line deserves a pause: it is the platform's version-pi
 
 A Worker exports a `fetch` handler: an HTTP request comes in, your function runs, an HTTP response goes out. Everything else is your logic. Here is a complete, production-quality example with routing and error handling:
 
-The following Worker exports a `fetch` handler with three routes and honest error handling. Read the comments inside the code — they explain what each piece does and why it is structured this way.
+The following Worker exports a `fetch` handler with three routes and error handling. Read the comments inside the code — they explain what each piece does and why it is structured this way.
 
 ```javascript
-// src/index.js: a tiny JSON API with three routes and honest error handling
+// src/index.js: a tiny JSON API with three routes and error handling
 export default {
   async fetch(request, env, ctx) {
     try {

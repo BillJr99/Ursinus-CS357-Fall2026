@@ -61,7 +61,7 @@ tags:
 
 In this lab, you and your partner will build and rigorously compare the two aggregation architectures from class: **debate** (agents see and rebut each other) and **stochastic consensus** (independent samples, clustered by meaning, merged by synthesis). This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 
-**Assigned: October 27 — Due: November 5.**
+**See the course schedule for the assigned and due dates.**
 
 ---
 

@@ -235,7 +235,7 @@ schedule:
   deliverables:
   - dtitle: "Overview Assignment Handed Out"
     dlink: "Assignments/Overview"
-    points: "25"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-overview.md"
   - dtitle: "Warmup Assignment Handed Out"
     dlink: "Assignments/Warmup"
@@ -297,7 +297,7 @@ schedule:
   deliverables:
   - dtitle: "Overview Assignment Due"
     dlink: "Assignments/Overview"
-    points: "25"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-overview.md"
   - dtitle: "Lab 1: Your First Local Agent Handed Out"
     dlink: "Assignments/LocalAgent"
@@ -352,7 +352,7 @@ schedule:
   deliverables:
   - dtitle: "Stakeholder Brief Handed Out (Project Thread)"
     dlink: "Assignments/StakeholderBrief"
-    points: "50"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's sampling and generation behavior in mind"
@@ -441,7 +441,7 @@ schedule:
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   - dtitle: "Literature Review Handed Out (Project Thread; individual annotations, then team synthesis)"
     dlink: "Assignments/LitReview"
-    points: "50"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   - dtitle: "Intra-Team Check-In 1 Due (structured form, private to instructor)"
     dlink: "Projects/PBLThread"
@@ -470,7 +470,7 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
   - dtitle: "Stakeholder Brief Due (Project Thread)"
     dlink: "Assignments/StakeholderBrief"
-    points: "50"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
   - rtitle: "Supplemental Tutorial: An Obsidian Second Brain with Agent Sync"
@@ -543,7 +543,7 @@ schedule:
   deliverables:
   - dtitle: "Literature Review: Team Synthesis Due (Project Thread)"
     dlink: "Assignments/LitReview"
-    points: "50"
+    points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
 - week: "8"
   date: "1"

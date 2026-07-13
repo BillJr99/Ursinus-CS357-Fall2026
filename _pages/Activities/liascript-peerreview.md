@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Structured Peer Review: SQR Cards and Team Check-Ins
 
-Professionals do not wait for the final grade to find out what is wrong with their work — they build review into the process. Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, honest feedback about *your own team*. We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
+Professionals do not wait for the final grade to find out what is wrong with their work — they build review into the process. Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*. We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
 
 ---
 
@@ -138,9 +138,9 @@ Alongside the private check-in, one public instrument continues: **every progres
 
    > *Hint: A trait judgment is an attack on identity — it triggers defense, not change, and it teaches the team that check-ins are where you get character-assassinated (there goes psychological safety). A behavior request has a built-in success condition: either the section shows up Thursday or it doesn't. You can comply with a behavior; you can only argue with a verdict.*
 
-6. You are filling in the check-in and realize your honest answer about a teammate's reliability is negative — and you have never raised the issue with them directly. What does the charter (and Model 3's repair moves) say you should do in the week after submitting the check-in, and why does the private channel not discharge that obligation?
+6. You are filling in the check-in and realize your answer about a teammate's reliability is negative — and you have never raised the issue with them directly. What does the charter (and Model 3's repair moves) say you should do in the week after submitting the check-in, and why does the private channel not discharge that obligation?
 
-   > *Hint: The check-in informs the instructor; it does not inform the teammate. If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it — which is what the charter's conflict protocol exists to provide. Honest check-in AND direct repair move are both required; each does a job the other cannot.*
+   > *Hint: The check-in informs the instructor; it does not inform the teammate. If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it — which is what the charter's conflict protocol exists to provide. The check-in AND the direct repair move are both required; each does a job the other cannot.*
 
 [[MC]]
 The structured check-in at the three scheduled milestones is:
@@ -164,7 +164,7 @@ The structured check-in at the three scheduled milestones is:
 | **Restate the other side** | "So your risk is: if the office won't share the spreadsheet, we have no evaluation data at all. Did I get that right?" (Restating *before* rebutting is the single highest-value habit in this table.) |
 | **Propose a next step** | "We'll ask about a de-identified export in Friday's follow-up and add a fallback to the proposal. Recorder, can you log that?" |
 
-And three norms that keep the room safe for honest review, whichever side of it you are on: **thank the reviewer before triaging** (even for the card you will ultimately reject — the thanks pays for the *next* honest card); **triage in the open** (fix / disclose / defer, logged, so reviewers see their cards mattered); and **critique the artifact, receive as the team** — a card about "the brief's section 3" is never about section 3's author, and the team answers as one.
+And three norms that keep the room safe for candid review, whichever side of it you are on: **thank the reviewer before triaging** (even for the card you will ultimately reject — the thanks pays for the *next* candid card); **triage in the open** (fix / disclose / defer, logged, so reviewers see their cards mattered); and **critique the artifact, receive as the team** — a card about "the brief's section 3" is never about section 3's author, and the team answers as one.
 
 ### Critical Thinking Questions
 
@@ -192,7 +192,7 @@ And three norms that keep the room safe for honest review, whichever side of it 
 
 ## Reflection Prompt
 
-*In your notebook, keyed to the Open Questions (Goal 15).* **How should we live together?** — Honest review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously. Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)? Where has it broken, and which side broke first — the candor or the generosity? **What will I do?** — Which is harder for you personally: writing the honest Risk, or hearing it? Name one concrete thing from Model 3 you will try at the stakeholder-brief exchange.
+*In your notebook, keyed to the Open Questions (Goal 15).* **How should we live together?** — Candid review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously. Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)? Where has it broken, and which side broke first — the candor or the generosity? **What will I do?** — Which is harder for you personally: writing the candid Risk, or hearing it? Name one concrete thing from Model 3 you will try at the stakeholder-brief exchange.
 
 ---
 

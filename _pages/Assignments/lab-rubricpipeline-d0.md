@@ -29,7 +29,7 @@ This page is **Direction 0** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignm
 
 **Direction 0 replaces the coding in core Parts 1–4.** If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs. Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route** — the entire route *is* a declarative harness. You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route. As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log** — the blind human-scoring step in Part C requires both partners.
 
-**Assigned: November 5 — Due: November 17.** Honest budget: expect **7–9 hours total** for this route (it replaces the core coding, so this is your entire Lab 5 time, not an add-on).
+**See the course schedule for the assigned and due dates.** Budget: expect **7–9 hours total** for this route (it replaces the core coding, so this is your entire Lab 5 time, not an add-on).
 
 > **What this direction requires**
 >
