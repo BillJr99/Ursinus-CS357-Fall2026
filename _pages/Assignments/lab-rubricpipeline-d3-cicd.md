@@ -1,31 +1,41 @@
 ---
-layout: assignment
+layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction3
-title: "CS357: Foundations of Artificial Intelligence - Lab 5, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software"
-
+title: 'CS357: Foundations of Artificial Intelligence - Lab 5, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software'
 info:
   coursenum: CS357
-  purpose: "To earn trust in agentic software through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing the agent as a pip package and a container image."
-  points: 0
+  purpose: 'To earn trust in agentic software through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing the agent as a pip package and a container image.'
   readings:
-    - rtitle: "Lab 5 Core: An LLM Rubric-Grading Pipeline"
-      rlink: "/Assignments/RubricPipeline"
-    - rtitle: "Publishing Activity: GHCR, Docker Hub, and npm"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
-    - rtitle: "Coding Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
-    - rtitle: "pytest Documentation"
-      rlink: "https://docs.pytest.org/en/stable/"
-    - rtitle: "Python Packaging User Guide"
-      rlink: "https://packaging.python.org/en/latest/tutorials/packaging-projects/"
-
+  - rtitle: 'Lab 5 Core: An LLM Rubric-Grading Pipeline'
+    rlink: /Assignments/RubricPipeline
+  - rtitle: 'Publishing Activity: GHCR, Docker Hub, and npm'
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md
+  - rtitle: Coding Agents Activity
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md
+  - rtitle: pytest Documentation
+    rlink: https://docs.pytest.org/en/stable/
+  - rtitle: Python Packaging User Guide
+    rlink: https://packaging.python.org/en/latest/tutorials/packaging-projects/
 tags:
-  - ci-cd
-  - tdd
-  - publishing
-  - testing
-
+- ci-cd
+- tdd
+- publishing
+- testing
 ---
+
+# CS357: Foundations of Artificial Intelligence - Lab 5, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software
+
+## Purpose
+
+To earn trust in agentic software through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing the agent as a pip package and a container image.
+
+## Background Reading and References
+
+- [Lab 5 Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Publishing Activity: GHCR, Docker Hub, and npm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md)
+- [pytest Documentation](https://docs.pytest.org/en/stable/)
+- [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
 This page is **Direction 3** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
 

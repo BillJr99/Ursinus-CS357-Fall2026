@@ -1,26 +1,34 @@
 ---
-layout: assignment
+layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction1
-title: "CS357: Foundations of Artificial Intelligence - Lab 5, Direction 1: Building an Agent Evaluation Harness"
-
+title: 'CS357: Foundations of Artificial Intelligence - Lab 5, Direction 1: Building an Agent Evaluation Harness'
 info:
   coursenum: CS357
-  purpose: "To generalize the judge validation from the core rubric-pipeline lab into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push."
-  points: 0
+  purpose: 'To generalize the judge validation from the core rubric-pipeline lab into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push.'
   readings:
-    - rtitle: "Lab 5 Core: An LLM Rubric-Grading Pipeline"
-      rlink: "/Assignments/RubricPipeline"
-    - rtitle: "Evaluating Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
-    - rtitle: "Testing Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
-
+  - rtitle: 'Lab 5 Core: An LLM Rubric-Grading Pipeline'
+    rlink: /Assignments/RubricPipeline
+  - rtitle: Evaluating Outputs Activity
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md
+  - rtitle: Testing Agents Activity
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md
 tags:
-  - evaluation
-  - testing
-  - ci
-
+- evaluation
+- testing
+- ci
 ---
+
+# CS357: Foundations of Artificial Intelligence - Lab 5, Direction 1: Building an Agent Evaluation Harness
+
+## Purpose
+
+To generalize the judge validation from the core rubric-pipeline lab into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push.
+
+## Background Reading and References
+
+- [Lab 5 Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
+- [Testing Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md)
 
 This page is **Direction 1** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
 

@@ -5,7 +5,7 @@ title: "CS357: Foundations of Artificial Intelligence - The Reflection Notebook"
 
 info:
   coursenum: CS357
-  points: 0
+  points: 10
   submission: "Kept all semester in a notebook or a repository of your choice; reviewed at midterm and at the end of the term. Its quality is the 10% Reflection Notebook grade."
   goals:
     - To think through not just how to build agents but whether and when we should

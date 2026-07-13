@@ -157,17 +157,17 @@ As preparation for Problem 3, work through the [From Text Generation to a Neural
 
 ### Problem 1: Softmax with Temperature
 
-**Setup:** You have three tokens A, B, and C with logits $z = (4, 2, 1)$.
+**Setup:** You have three tokens A, B, and C with logits $$z = (4, 2, 1)$$.
 
-**Task:** Compute the full softmax probability distribution $P(T)$ at three temperature settings: $T = 1$, $T = 0.5$, and $T = 2$.
+**Task:** Compute the full softmax probability distribution $$P(T)$$ at three temperature settings: $$T = 1$$, $$T = 0.5$$, and $$T = 2$$.
 
 The formula is:
 $$P_i(T) = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}$$
 
 **Show all of the following for each temperature:**
-1. The scaled logits $z_i / T$ for each token
-2. The exponentials $e^{z_i / T}$ for each token (to four decimal places)
-3. The normalizing sum $\sum_j e^{z_j / T}$
+1. The scaled logits $$z_i / T$$ for each token
+2. The exponentials $$e^{z_i / T}$$ for each token (to four decimal places)
+3. The normalizing sum $$\sum_j e^{z_j / T}$$
 4. The final probability for each token (to three decimal places)
 
 Then fill in this summary table:
@@ -197,20 +197,20 @@ Paste your output and confirm it matches your hand calculation.
 
 ### Problem 2: Cosine Similarity
 
-**Setup:** You have two vectors: $\mathbf{a} = (2, 1, 0, 2)$ and $\mathbf{b} = (1, 1, 1, 1)$.
+**Setup:** You have two vectors: $$\mathbf{a} = (2, 1, 0, 2)$$ and $$\mathbf{b} = (1, 1, 1, 1)$$.
 
-**Task:** Compute the cosine similarity between $\mathbf{a}$ and $\mathbf{b}$.
+**Task:** Compute the cosine similarity between $$\mathbf{a}$$ and $$\mathbf{b}$$.
 
 The formula is:
 $$\cos(\mathbf{a}, \mathbf{b}) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\| \cdot \|\mathbf{b}\|}$$
 
 **Show all of the following:**
-1. The dot product $\mathbf{a} \cdot \mathbf{b}$ (element-by-element multiplication and sum)
-2. The norm $\|\mathbf{a}\| = \sqrt{\sum_i a_i^2}$ (show the sum of squares)
-3. The norm $\|\mathbf{b}\|$ (show the sum of squares)
+1. The dot product $$\mathbf{a} \cdot \mathbf{b}$$ (element-by-element multiplication and sum)
+2. The norm $$\|\mathbf{a}\| = \sqrt{\sum_i a_i^2}$$ (show the sum of squares)
+3. The norm $$\|\mathbf{b}\|$$ (show the sum of squares)
 4. The cosine similarity (to three decimal places)
 
-**Second calculation:** Now compute $\cos(\mathbf{a},\ 3\mathbf{a})$. Work it out by hand and show why the result is exactly 1.000. Then write one sentence explaining why this property matters for comparing document embeddings of different lengths.
+**Second calculation:** Now compute $$\cos(\mathbf{a},\ 3\mathbf{a})$$. Work it out by hand and show why the result is exactly 1.000. Then write one sentence explaining why this property matters for comparing document embeddings of different lengths.
 
 **Python verification:**
 ```python
@@ -236,16 +236,16 @@ $$h_1 = \text{ReLU}(2.0\,x_1 - 1.0\,x_2 - 0.5) \qquad h_2 = \text{ReLU}(-1.0\,x_
 
 $$y = 2.0\,h_1 + 1.0\,h_2 + 1.0$$
 
-where $\text{ReLU}(z) = \max(0, z)$.
+where $$\text{ReLU}(z) = \max(0, z)$$.
 
-**Task:** Compute the complete forward pass for the input $\mathbf{x} = (1.0, 1.0)$.
+**Task:** Compute the complete forward pass for the input $$\mathbf{x} = (1.0, 1.0)$$.
 
 **Show all of the following, in a trace table with one row per step:**
 1. The pre-activation of each hidden neuron (show every multiplication and the bias addition)
 2. The activation of each hidden neuron after ReLU (state explicitly which neuron, if any, was clipped to zero)
-3. The output $y$ (show the weighted sum and the output bias)
+3. The output $$y$$ (show the weighted sum and the output bias)
 
-**Second calculation:** Repeat the full trace for $\mathbf{x} = (0.0, 2.0)$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
+**Second calculation:** Repeat the full trace for $$\mathbf{x} = (0.0, 2.0)$$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
 
 **Python verification:**
 ```python
