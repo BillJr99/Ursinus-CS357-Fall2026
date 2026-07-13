@@ -108,7 +108,7 @@ tags:
 
 In this lab, you and your partner will industrialize the in-class judge into a batch grading pipeline: a JSON rubric and a folder (or ZIP) of submissions go in; a CSV of per-criterion scores, quoted evidence, and weighted totals comes out; and, crucially, you will measure whether the judge deserves to be trusted. **All submissions in this lab are synthetic artifacts you author yourselves; no real student work may be used.** This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 
-**Assigned: November 5 — Due: November 17.**
+**See the course schedule for the assigned and due dates.**
 
 This lab has two pathways: the **code route** below (core Parts 1–5, then one of Directions 1–3), or the **low-code route**, [Direction 0: The promptfoo Route](/Assignments/RubricPipeline/Direction0), which meets the same objectives declaratively and replaces the core Parts 1–4 coding. See "Choose Your Pathway and Direction" near the end of this page before you start.
 
@@ -163,7 +163,7 @@ If you see connection errors, start Ollama: `ollama serve` in a separate termina
 | Part 5 | Reproducible Evals with a Declarative Harness | 45–60 min |
 | Writeup | Readme and reflection | 30–45 min |
 
-**Honest totals:**
+**Totals:**
 
 | Pathway | Total time |
 |---------|------------|

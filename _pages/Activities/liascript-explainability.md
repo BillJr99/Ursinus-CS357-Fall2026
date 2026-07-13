@@ -41,7 +41,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 In this Part, you will examine what kinds of evidence an AI system can honestly offer to support its outputs — and learn why some evidence is stronger than others. This matters because your demo audience will need a real reason to trust your system, and "it sounds right" is not one.
 
-## 1. Three Honest Artifacts and One Caution
+## 1. Three Evidence Artifacts and One Caution
 
 Think about the last time you trusted a recommendation — from a friend, a review site, or a search engine. What made you trust it? Probably: you could see *why* the recommendation was made (evidence), you could verify it yourself (citations), and you had a sense of how reliable the source usually is (calibration). AI explainability engineering is about building exactly those three properties into your systems, so users have a real basis for trust — not just a confident-sounding answer.
 
@@ -55,7 +55,7 @@ $$
 \text{ECE} = \sum_b \frac{n_b}{N} \, \bigl| \text{acc}(b) - \text{conf}(b) \bigr|
 $$
 
-**The caution.** A model's *prose self-explanation* ("I concluded X because Y") is generated text, not a readout of computation — think of it like a student who writes a confident essay about a process they do not fully understand. It can be a plausible story rather than the actual cause. Treat narrated reasoning as a claim to verify (against the trace, the citation, the tool log), not as ground truth. The honest hierarchy: tool logs > citations > traces > narrated rationale.
+**The caution.** A model's *prose self-explanation* ("I concluded X because Y") is generated text, not a readout of computation — think of it like a student who writes a confident essay about a process they do not fully understand. It can be a plausible story rather than the actual cause. Treat narrated reasoning as a claim to verify (against the trace, the citation, the tool log), not as ground truth. The evidence hierarchy: tool logs > citations > traces > narrated rationale.
 
 ---
 
@@ -114,7 +114,7 @@ Sketch (on paper) the confirmation screen your project shows a human before its 
 
 ### Critical Thinking Questions
 
-4. What evidence appears on your screen, and in what order? Apply the honest hierarchy from Part I.
+4. What evidence appears on your screen, and in what order? Apply the evidence hierarchy from Part I.
 
    *Hint: The most trustworthy evidence goes first. If your system retrieved a document, show the specific passage. If it ran a tool, show what the tool returned. Put the model's narrated summary at the bottom, not the top — it is the least verifiable item.*
 
@@ -126,7 +126,7 @@ Sketch (on paper) the confirmation screen your project shows a human before its 
 
    *Hint: Collect 10 outputs with stated confidence levels. For each, mark whether it was correct. Group them by confidence level (e.g., high/medium/low). In each group, compare the average stated confidence to the actual accuracy rate. If your "high confidence" outputs are only right 40% of the time, your system is overconfident.*
 
-> **Common Misconception:** "A more detailed explanation always means a more trustworthy system." More words do not mean more transparency. A long, fluent paragraph explaining an AI's reasoning can be entirely confabulated — generated to sound plausible rather than to accurately describe the computation. The honest hierarchy (tool logs > citations > traces > narrated rationale) matters precisely because length and fluency are not measures of accuracy. A single cited source the user can verify is worth more than three paragraphs of confident prose.
+> **Common Misconception:** "A more detailed explanation always means a more trustworthy system." More words do not mean more transparency. A long, fluent paragraph explaining an AI's reasoning can be entirely confabulated — generated to sound plausible rather than to accurately describe the computation. The evidence hierarchy (tool logs > citations > traces > narrated rationale) matters precisely because length and fluency are not measures of accuracy. A single cited source the user can verify is worth more than three paragraphs of confident prose.
 
 ---
 
@@ -160,7 +160,7 @@ In this Part, you will translate the analysis from Parts I and II into deployabl
 
    *Starter hint:* Your story should cover three things: (1) what the system does when it is confident and correct; (2) what it does when it is uncertain; and (3) what it does when it cannot answer. If you cannot describe all three, your system is not ready for demo. Practice with someone who has not seen your project.
 
-   *You've succeeded when:* The other team raises at least one objection you had not considered, and you can describe the design change (or honest limitation) that addresses it.
+   *You've succeeded when:* The other team raises at least one objection you had not considered, and you can describe the design change (or disclosed limitation) that addresses it.
 
 4. *Reliance experiment design.*
 

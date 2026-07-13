@@ -8,8 +8,8 @@ info:
   purpose: "To get your local AI stack working before the labs depend on it, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
   tilt:
     task: "Install and verify a working local AI environment, write a short baseline reflection on AI agency and trust, and co-author a team charter with your semester group."
-    criteria: "Assessed on a complete and honest setup-verification transcript and a specific, personal reflection in equal measure, plus an actionable team charter; see the rubric below for the full breakdown."
-  points: 25
+    criteria: "Assessed on a complete setup-verification transcript and a specific, personal reflection in equal measure, plus an actionable team charter; see the rubric below for the full breakdown."
+  points: 100
   goals:
     - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
     - To demonstrate baseline command-line, git, and Python-environment fluency by navigating a shell, cloning and committing to a repository, and creating a reproducible environment with uv
@@ -46,7 +46,7 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. This onboarding assignment is due Thursday, September 3, and is assessed within the Class Activities and Participation category.
+In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
 
 ---
 
@@ -151,7 +151,7 @@ Write your own definition of what makes a system an "agent" rather than just a p
 Name one task you would happily hand to an AI agent and one you would not. For each, write one or two sentences explaining the specific reason — what is it about that task that makes delegation feel appropriate or inappropriate? The difference between your two examples is more interesting than either example alone.
 
 ### What I Want to Build
-Describe one thing you hope to be able to build or do by December that you cannot do today. Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
+Describe one thing you hope to be able to build or do by the end of the semester that you cannot do today. Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
 
 ---
 

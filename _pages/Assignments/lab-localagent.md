@@ -25,7 +25,7 @@ info:
     - To deploy a multi-container local AI stack with an inference backend, a unified gateway, a frontend, a tool service, and an agent
     - To wire containers to host services and to each other using host.docker.internal with correct platform flags
     - To express the stack declaratively with docker compose, a port table, and per-service identity directories
-    - To verify the stack systematically with a wiring matrix and document failures with honest postmortems
+    - To verify the stack systematically with a wiring matrix and document failures with postmortems
     - To apply Docker security hardening principles to a multi-container AI system
     - To design and enforce a trust boundary between an AI agent and the host system
     - To document and test the threat model for a containerized AI deployment
@@ -181,7 +181,7 @@ Expected output (abbreviated):
 
 **Estimated time budget:**
 
-This is a multi-week lab, not a single-evening one. Across the roughly two-and-a-half-week window (September 3 – September 22), plan for:
+This is a multi-week lab, not a single-evening one. Across the lab's window (see the course schedule for the assigned and due dates), plan for:
 
 | Component | Estimated time |
 |-----------|----------------|

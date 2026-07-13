@@ -228,7 +228,7 @@ In this Part, you will apply the proportional reasoning, design vocabulary, and 
 
    *Starter hint:* List every AI tool you used in the past week (chatbots, image generators, code assistants, voice assistants). Estimate the number of queries for each. Use the per-query figures from Model 1 to calculate totals. The largest contributor is your highest-volume, highest-cost-per-query combination. For the substitution, ask: could a local model or a smaller API model have handled that use case? What would you lose?
 
-   *You've succeeded when:* You have a specific number (in grams of CO$_2$eq) for your weekly AI footprint, a clear identification of the dominant source, and a substitution proposal with an honest estimate of the accuracy or convenience trade-off.
+   *You've succeeded when:* You have a specific number (in grams of CO$_2$eq) for your weekly AI footprint, a clear identification of the dominant source, and a substitution proposal with an estimate of the accuracy or convenience trade-off.
 
 2. *Right-sizing your project.*
 

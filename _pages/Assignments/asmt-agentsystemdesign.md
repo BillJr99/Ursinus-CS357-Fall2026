@@ -71,7 +71,7 @@ tags:
 
 ---
 
-**Handed out:** Wednesday, October 15 (Week 7, with the Design First session) · **Due:** Wednesday, October 29 (Week 9)
+**Handed out** alongside the Design First session — **see the course schedule for the assigned and due dates.**
 
 Every trustworthy agent system exists twice: once as running code, and once on paper — as the specification, contract, and gates that say what it is supposed to do, what it must never do, and how anyone would know the difference. This assignment asks you to produce that paper system. Both directions below build the same skill: designing an agent system in writing, before or alongside building it, so that ambiguity and risk surface while they are still cheap to fix. Direction A designs a system that does not exist yet — a spec-first design document of the kind engineering teams call a design proposal, system spec, or RFC. Direction B designs the operating system *around* an agent — the charter, contract, gates, and handoff state that make it trustworthy, interruptible, and independent of any single model or vendor — and then proves it works by interrupting a session mid-task. In both, the document *is* the deliverable, and polish matters exactly as much as it would in production, because in Direction B these documents are the production system.
 
