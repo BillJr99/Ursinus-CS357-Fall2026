@@ -96,9 +96,9 @@ tags:
 
 By this point in the course you have built at least one working agent — a local agent, a RAG agent, an MCP agent, a coding agent, or a decision model. It runs. It produces answers. That is exactly the moment at which responsibility begins, because an agent that works is an agent that people will be tempted to rely on, and reliance is the thing this lab makes you earn. Building a system and being able to defend it are two different skills; this lab is about the second one.
 
-**Assigned: November 12 — Due: December 1.**
+**See the course schedule for the assigned and due dates.**
 
-**Honest time budget:** the shared warm-up and threat model take **1.5–2 hours**; your chosen direction takes **3–4 hours**; the writeup takes about **1 hour**.
+**Time budget:** the shared warm-up and threat model take **1.5–2 hours**; your chosen direction takes **3–4 hours**; the writeup takes about **1 hour**.
 
 Everyone starts the same way. Choose one agent you have already built and put it on the examination table. Write a short **threat and risk model**: name the agent, describe what it does and who would use it, and trace its data and decision flow from the moment input arrives to the moment a result leaves. At each boundary — user input, system prompt, retrieved or tool-supplied content, logs, and the final output or decision — ask what could go wrong if an adversary, a careless user, or a regulator were on the other side. This shared framing step is required of every submission regardless of which direction you choose, because you cannot harden what you have not honestly mapped.
 

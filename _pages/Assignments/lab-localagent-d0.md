@@ -18,7 +18,7 @@ title: "CS357 Lab 1 Direction 0: The OpenWebUI Route (low-code)"
 
 ## Who this direction is for
 
-Direction 0 is the **low-code route through the entire lab**. Instead of authoring Python for core Parts 1–3, you will build the *same* agent — a persona, two working tools, guaranteed-parseable structured output, and an honest empirical evaluation — entirely through OpenWebUI's configuration surface. You configure and **test** tools; you do not code them.
+Direction 0 is the **low-code route through the entire lab**. Instead of authoring Python for core Parts 1–3, you will build the *same* agent — a persona, two working tools, guaranteed-parseable structured output, and an empirical evaluation — entirely through OpenWebUI's configuration surface. You configure and **test** tools; you do not code them.
 
 This route delivers the same learning objectives as the core lab: you will still design a complete system prompt, still watch an agent decide when to invoke a tool, still force a model to emit structured JSON and verify that it parses, and still run a fixed evaluation set and analyze the failures. What changes is the medium: where a core-route student writes a `parse_response` function, you will read the tool schema OpenWebUI generates and document what it tells the model; where they write an evaluation loop, you will run the queries through the UI and audit the exported transcripts.
 

@@ -9,7 +9,7 @@ info:
   tilt:
     task: "Individually annotate 2-3 credible sources, then as a team write a one-page synthesis that connects them to your problem statement and names the gap your project will address."
     criteria: "Assessed on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, and a gap that actually follows from the sources; see the rubric below for the full breakdown."
-  points: 50
+  points: 100
   goals:
     - To research the team's stakeholder problem through published sources, assessing each source's credibility and relevance to the problem statement (Goal 11)
     - To build a multi-disciplinary understanding of the problem by drawing sources from at least two disciplinary perspectives, including the stakeholder's own discipline (Goal 12)
@@ -72,7 +72,7 @@ A literature review is not a book report and not a pile of links. It is an argum
 | **Credibility assessment** | Your judgment of what a source can support, based on venue, method, incentives, and recency — not a binary "credible/not." | Every annotation |
 | **Synthesis** | Writing that connects sources *to each other* and to your problem — agreement, conflict, and complement — rather than summarizing them one at a time. | Phase 2 |
 | **The gap** | The specific missing thing your project will address: a question no source answers, a population no study covers, a tool no one has built for this context. | Phase 2 |
-| **Citation chaining** | Finding sources by following a good source's references (backward) and the papers that cite it (forward). The fastest honest way to map a literature. | Information literacy guidance |
+| **Citation chaining** | Finding sources by following a good source's references (backward) and the papers that cite it (forward). The fastest way to map a literature. | Information literacy guidance |
 
 ---
 

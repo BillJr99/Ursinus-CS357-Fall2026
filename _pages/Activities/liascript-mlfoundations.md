@@ -96,7 +96,7 @@ Which of the following is the clearest example of a **regression** problem?
 
 # Part II: Bias, Variance, and Model Evaluation
 
-In this part, you will see why the training-set score is not enough, learn how cross-validation gives a more honest estimate of generalization, and run a live comparison of a single decision tree (prone to high variance) against a random forest (an ensemble that reduces it).
+In this part, you will see why the training-set score is not enough, learn how cross-validation gives a more accurate estimate of generalization, and run a live comparison of a single decision tree (prone to high variance) against a random forest (an ensemble that reduces it).
 
 ## 2. The Bias-Variance Tradeoff
 
@@ -247,7 +247,7 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
 
 *Personal*: Before this activity, did you think of "machine learning" and "AI" as the same thing? After seeing how much of RAG, embeddings, and agent routing reduces to supervised classification or regression, has your mental model changed? Describe one concrete thing that shifted.
 
-*Technical*: Cross-validation gave us an honest estimate of model performance without wasting data on a fixed test set. Describe one situation where cross-validation would give an *overly optimistic* estimate — that is, where even CV accuracy would not reliably predict real-world performance.
+*Technical*: Cross-validation gave us an accurate estimate of model performance without wasting data on a fixed test set. Describe one situation where cross-validation would give an *overly optimistic* estimate — that is, where even CV accuracy would not reliably predict real-world performance.
 
 > *Hint: Think about what assumption cross-validation makes about the relationship between your training data and the data you will see at deployment. What could violate that assumption?*
 

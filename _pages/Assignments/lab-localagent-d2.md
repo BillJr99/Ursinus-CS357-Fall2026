@@ -572,7 +572,7 @@ Cause:    [the specific misconfiguration — what was missing or wrong]
 Fix:      [the exact change that resolved it]
 ```
 
-If you encountered a **real unplanned failure** during the lab, you may substitute its postmortem. A real failure with an honest postmortem is more valuable than the intentional break.
+If you encountered a **real unplanned failure** during the lab, you may substitute its postmortem. A real failure with a postmortem is more valuable than the intentional break.
 
 ##### Step 4c: Final Compose File and Down/Up Test
 

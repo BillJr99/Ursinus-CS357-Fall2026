@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Terminal and Filesystem Isolation for Agent Safety
 
-An agent that can write to any path on your filesystem is as dangerous as a houseguest who has been handed the master key — not because they are malicious, but because a single honest mistake (wrong room, wrong drawer) can cause damage that is difficult or impossible to undo. The key insight of filesystem isolation is not that agents are malicious — it is that agents make *mistakes*, and a mistake inside a bounded workspace is recoverable while a mistake that touches your SSH keys, your production database credentials, or your system binaries may not be.
+An agent that can write to any path on your filesystem is as dangerous as a houseguest who has been handed the master key — not because they are malicious, but because a single innocent mistake (wrong room, wrong drawer) can cause damage that is difficult or impossible to undo. The key insight of filesystem isolation is not that agents are malicious — it is that agents make *mistakes*, and a mistake inside a bounded workspace is recoverable while a mistake that touches your SSH keys, your production database credentials, or your system binaries may not be.
 
 **Blast radius** is the term security engineers use for "how much damage can one mistake cause?" A well-isolated agent has a small blast radius: even if it does something wrong, the consequences are limited to its designated workspace. This module develops the UNIX concepts, Docker primitives, and practical patterns you need to design small-blast-radius agent deployments.
 

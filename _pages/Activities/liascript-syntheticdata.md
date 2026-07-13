@@ -48,7 +48,7 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ## Model 1: Why Synthetic Data?
 
-The key insight behind synthetic data is that data labeling is often the bottleneck, not compute. A radiologist who can label 20 chest X-rays per day costs ~$300,000 per year and produces roughly 5,000 labeled examples annually. A single GPU running a generative model can produce thousands of synthetic medical descriptions per hour. The question is not whether this is useful — it obviously is — but whether synthetic data is a complete substitute for real data, a dangerous shortcut, or something in between. As you will see in this activity, the honest answer depends entirely on what you are generating, how carefully you filter it, and whether you have any real data to validate against.
+The key insight behind synthetic data is that data labeling is often the bottleneck, not compute. A radiologist who can label 20 chest X-rays per day costs ~$300,000 per year and produces roughly 5,000 labeled examples annually. A single GPU running a generative model can produce thousands of synthetic medical descriptions per hour. The question is not whether this is useful — it obviously is — but whether synthetic data is a complete substitute for real data, a dangerous shortcut, or something in between. As you will see in this activity, the answer depends entirely on what you are generating, how carefully you filter it, and whether you have any real data to validate against.
 
 ### The Data Scarcity Problem
 

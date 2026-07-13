@@ -225,4 +225,4 @@ Respond to all three levels in your notebook:
 - Gary Klein. "Performing a Project Premortem." *Harvard Business Review* (2007). The origin of the pre-mortem technique applied here.
 - Chip Heath and Dan Heath. *Decisive: How to Make Better Choices in Life and Work* (2013), Chapter 7. The "premortem" and "preparade" as decision tools.
 - Anthropic. "Building Effective Agents." https://www.anthropic.com/research/building-effective-agents — the orchestration and agent design patterns section is directly relevant.
-- Fred Brooks. *The Mythical Man-Month* (1975/1995), Chapter 1. "Plan to throw one away" — still the most honest advice about first-system costs.
+- Fred Brooks. *The Mythical Man-Month* (1975/1995), Chapter 1. "Plan to throw one away" — still the most candid advice about first-system costs.

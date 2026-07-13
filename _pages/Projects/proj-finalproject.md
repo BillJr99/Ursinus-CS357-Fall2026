@@ -33,7 +33,7 @@ info:
       proficient: Team process is visible and current throughout — every meeting has a posted agenda and notes with owners and dates; the decision log records alternatives and rationale; project management is real (a maintained GANTT-style timeline with named owners, sprint boundaries honored, runnable increments at each sprint); all three intra-team check-ins are submitted on time; the team demonstrably operates under its signed charter, including its conflict protocol; roles rotate per sprint and every student is primary author of at least one section or component of every team deliverable (editable by teammates); every milestone carries all members' signatures and an AI-use disclosure stating specifically what was AI-assisted, with what tool, why, and how it was verified (Goal 13)
     - weight: 40
       description: Product — the working system, audit, or publication; the Demo Day presentation; and the partner-facing artifact
-      preemerging: The direction's core artifact is missing or does not function — the system does not run, the audit lacks findings and governance, or nothing was published; the Demo Day presentation is missing or covers only a happy path with no honest limitation; no partner-facing artifact exists
+      preemerging: The direction's core artifact is missing or does not function — the system does not run, the audit lacks findings and governance, or nothing was published; the Demo Day presentation is missing or covers only a happy path with no disclosed limitation; no partner-facing artifact exists
       beginning: The core artifact partially meets its direction's requirements but would not be usable by its intended audience without significant rework — the system runs but is unreproducible or unevaluated, the audit's governance recommendations lack owners, thresholds, or timelines, or the published artifact lacks working documentation, tests, or a registry presence; the presentation serves only a technical audience or omits the failure disclosure; the partner-facing artifact is missing or unusable by the partner
       progressing: The core artifact meets its direction's requirements — a running, documented, evaluated system with committed governance (A); a complete risk analysis and adoptable governance document (B); or a published, installable, tested, documented artifact with a community exchange (C) — and Demo Day includes both a technical segment and a stakeholder-facing segment with a partner-facing artifact, with minor gaps in polish, accessibility, or the honesty of the limitations discussion, and a public repository or write-up exists but has gaps in recruiter-legibility (a README a stranger could not follow, or no contribution attribution) (Goal 14)
       proficient: "The core artifact fully meets its direction's requirements and is honest about its limits. — Direction A: the system runs from a fresh start following the README; configuration and seeds are externalized and pinned; CI passes on the submission SHA; evidence is surfaced to the user with a confirmation gate on consequential actions; and the committed GOVERNANCE.md matches deployed behavior. — Direction B: the artifact package (risk analysis with at least 8 citations; governance document with monitoring plan, incident response, communication plan, and appeal process) could be handed to a regulator without modification. — Direction C: the artifact is live and installable from a public registry with green CI, a stranger-tested quickstart, CONTRIBUTING.md and GOVERNANCE.md, and a documented substantive community exchange. — All directions: the Demo Day presentation serves the multi-audience — a live technical segment with a rehearsed failure or limitation disclosure and a plain-language stakeholder segment — with every teammate speaking substantively and every teammate able to present any part; the partner-facing artifact (one-page brief, demo video, or deployed tool) is something the community partner can actually use, presented at Demo Day and included in the submission; and the project leaves a public, recruiter-legible trace — a public repository (Directions A and C) or a public write-up or portfolio page (Direction B) whose README or summary answers what it is, why it matters, and how to run or read it in thirty seconds, names each member's contribution, and is suitable for linking from a resume (Goal 14)"
@@ -76,18 +76,18 @@ These are directions within the one project, not separate assignments: your team
 
 ## The Unified Timeline
 
-This is the authoritative schedule for the Final Project, superseding any dates on earlier drafts or handouts. **No work is accepted after the last class meeting.**
+The Final Project's milestones run in the sequence below; see the course schedule in the syllabus for the dates. **No work is accepted after the last class meeting.**
 
-| Date | Week | Milestone | Points |
-|------|------|-----------|--------|
-| Thu Oct 29 | wk9 | **Project handed out.** Teams read all three directions and begin converging on one. | — |
-| Tue Nov 3 | wk10 | **Intra-team check-in 2** (private, to the instructor) — this check-in precedes and informs your proposal. | — |
-| Tue Nov 10 | wk11 | **Proposal due**, with direction declared, stakeholder grounding, and AI-use disclosure. | **25 / 100** |
-| wk12 – wk14 | wk12–14 | **Sprints.** Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the sprint/gallery-walk window (week 14). | — |
-| Tue Dec 1 | wk14 | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | — |
-| Tue Dec 8 | wk15 (last class) | **Demo Day + final submission**, including the partner-facing artifact and the final AI-use disclosure. | **75 / 100** |
+| Sequence | Milestone | Points |
+|------|-----------|--------|
+| Hand-out | **Project handed out.** Teams read all three directions and begin converging on one. | — |
+| Before the proposal | **Intra-team check-in 2** (private, to the instructor) — this check-in precedes and informs your proposal. | — |
+| Proposal deadline | **Proposal due**, with direction declared, stakeholder grounding, and AI-use disclosure. | **25 / 100** |
+| Sprint window | **Sprints.** Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the sprint/gallery-walk window (the final sprint). | — |
+| Final sprint | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | — |
+| Last class | **Demo Day + final submission**, including the partner-facing artifact and the final AI-use disclosure. | **75 / 100** |
 
-The registrar's final-exam slot is reserved for Demo Day overflow only — if all teams present on Dec 8, it is not used. Either way, Dec 8 is the submission deadline: no work is accepted after the last class meeting.
+The registrar's final-exam slot is reserved for Demo Day overflow only — if all teams present at the last class meeting, it is not used. Either way, the last class meeting is the submission deadline: no work is accepted after it.
 
 ---
 
@@ -95,9 +95,9 @@ The registrar's final-exam slot is reserved for Demo Day overflow only — if al
 
 This project is deliberately community-grounded: **every team connects its project to a community stakeholder**. Partners are identified by the instructor — see the partner roster in the syllabus. Three touchpoints are required:
 
-1. **Proposal (Tue Nov 10):** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief](/Assignments/StakeholderBrief). Name the problem in the partner's terms and state how the direction you chose serves it.
-2. **Partner feedback pass (week 14):** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact) and document their feedback and how you triaged it — incorporate, disclose, or defer.
-3. **Partner-facing artifact (Demo Day, Tue Dec 8):** deliver an artifact an external stakeholder can actually use — a one-page brief, a demo video, or a deployed tool — and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
+1. **Proposal:** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief](/Assignments/StakeholderBrief). Name the problem in the partner's terms and state how the direction you chose serves it.
+2. **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact) and document their feedback and how you triaged it — incorporate, disclose, or defer.
+3. **Partner-facing artifact (Demo Day):** deliver an artifact an external stakeholder can actually use — a one-page brief, a demo video, or a deployed tool — and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
 
 ---
 
@@ -115,7 +115,7 @@ Your final-project grade combines **team output**, **individual contribution**, 
 
 ---
 
-## Stage 1: Proposal — due Tue Nov 10 (25 points)
+## Stage 1: Proposal (25 points)
 
 Every proposal (2–3 pages), regardless of direction, must include:
 
@@ -125,7 +125,7 @@ Every proposal (2–3 pages), regardless of direction, must include:
 - **AI-use disclosure** for the proposal itself.
 - The **direction-specific elements** listed under your direction below.
 
-Incomplete proposals are returned ungraded; proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected. The second intra-team check-in (Tue Nov 3) lands one week before this deadline — use it to surface scope disagreements early.
+Incomplete proposals are returned ungraded; proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected. The second intra-team check-in lands shortly before this deadline — use it to surface scope disagreements early.
 
 ---
 
@@ -139,15 +139,15 @@ Build in three sprints aligned with in-class studio days. Each sprint produces: 
 | Sprint 2 (wk13) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4–6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
 | Sprint 3 (wk14) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
-**Partner feedback pass (week 14):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
+**Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
-**Gallery walk + peer review (Tue Dec 1):** mandatory and graded within the Process family. Host honestly — demonstrate your work including at least one known failure or open finding. Walk generously — fill out a **S**trength / **Q**uestion / **R**isk card for every team you visit. Triage all feedback you receive into three buckets — *fix before submission*, *disclose in the report*, or *defer to future work* — and put your triage decisions in the artifacts folder. Intra-team check-in 3 is due the same day.
+**Gallery walk + peer review (final sprint):** mandatory and graded within the Process family. Host honestly — demonstrate your work including at least one known failure or open finding. Walk generously — fill out a **S**trength / **Q**uestion / **R**isk card for every team you visit. Triage all feedback you receive into three buckets — *fix before submission*, *disclose in the report*, or *defer to future work* — and put your triage decisions in the artifacts folder. Intra-team check-in 3 is due the same day.
 
 ---
 
-## Stage 3: Demo Day and Final Submission — Tue Dec 8 (75 points)
+## Stage 3: Demo Day and Final Submission (75 points)
 
-**Demo Day logistics:** this semester's 4 teams present within the 75-minute class slot (12:00–1:15), so each team has approximately 15 minutes including Q&A — rehearse to time.
+**Demo Day logistics:** all teams present within the single class slot, splitting the time evenly, so each team's window is short and fixed, including Q&A — rehearse to time.
 
 Every team, regardless of direction, delivers at Demo Day:
 
@@ -176,7 +176,7 @@ Design, build, evaluate, and present a **custom agent team**: cooperating, speci
 **Direction A build requirements:**
 - Build the monolith baseline *first* and evaluate against it; freeze the 10-task evaluation set at Sprint 1
 - Document at least three failure modes with agent transcripts; implement and re-measure at least one mitigation with before-and-after numbers
-- Surface evidence to the user following the honest evidence hierarchy (direct retrieval citation over generated summary), with a **human confirmation gate** on every consequential action and a demonstrated **abstention behavior** (the system declines rather than hallucinating when evidence is absent)
+- Surface evidence to the user following the evidence hierarchy (direct retrieval citation over generated summary), with a **human confirmation gate** on every consequential action and a demonstrated **abstention behavior** (the system declines rather than hallucinating when evidence is absent)
 - Commit a **GOVERNANCE.md** that matches the deployed system's behavior — data handling, human gates, incident response — updated at each sprint boundary, not written at the end
 - Lead a **10-minute class discussion** (scheduled per team during the sprint weeks) on the responsible use of your system, grounded in your own measurements, with at least 4 minutes for class questions and two genuine questions you do not know the answer to
 
@@ -234,7 +234,7 @@ Build something that outlasts the semester: a published, documented, reusable ag
 - **GitHub Actions CI** running the full suite on every push, green on the submission SHA; configuration externalized with documented defaults; no credentials anywhere in the git history; model versions and seeds pinned
 - **Documentation:** a README whose quickstart works in 5 commands or fewer on a clean machine (verified by a classmate cold-following it, result documented), with a configuration reference, two worked examples, the registry link, and the CI badge; a **CONTRIBUTING.md** covering bug reporting, PR submission, local test execution, and a code of conduct; a **GOVERNANCE.md** covering scope, prohibited uses with reasons, responsibility and contact, harm reporting, and known limitations that could cause harm; and a **LICENSE** (MIT, Apache 2.0, or AGPL) justified in one paragraph naming what the choice means for users
 - **Publication:** installable from at least one public registry (npm, PyPI, Docker Hub, or the MCP marketplace); submission commit tagged `v1.0.0` and matching the published version
-- **Community engagement:** an honest post in a relevant community (r/LocalLLaMA, r/MachineLearning, a relevant Discord, or Show HN); respond substantively to feedback — acknowledge its substance and incorporate it, explain why not, or file an issue — and document the exchange with a screenshot or link. If no response arrives within a week, post to a second community and document the attempt
+- **Community engagement:** a post in a relevant community (r/LocalLLaMA, r/MachineLearning, a relevant Discord, or Show HN); respond substantively to feedback — acknowledge its substance and incorporate it, explain why not, or file an issue — and document the exchange with a screenshot or link. If no response arrives within a week, post to a second community and document the attempt
 
 **Direction C final deliverables:**
 1. **The repository and the published package**: public GitHub repo running from a fresh start, CI green on the submission SHA, and a live registry URL where the artifact is installable

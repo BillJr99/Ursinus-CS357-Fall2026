@@ -8,8 +8,8 @@ info:
   purpose: "To ground your semester project in a real problem owned by a real person outside CS, and to understand that problem through the disciplines it actually lives in, not only through ours."
   tilt:
     task: "Anchor your team in a real community partner (from the roster in the syllabus, or an approved stakeholder group), conduct a prepared listen-and-learn interview, and write a 2-3 page brief with six required sections that frames the problem in the stakeholder's own terms."
-    criteria: "Assessed on the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an honest account of what you do not yet know; see the rubric below for the full breakdown."
-  points: 50
+    criteria: "Assessed on the issue in the stakeholder's own terms, at least two disciplinary perspectives that genuinely interact, a documented professional interview, and an account of what you do not yet know; see the rubric below for the full breakdown."
+  points: 100
   goals:
     - To identify and research an issue, question, or practical problem by finding a real stakeholder outside computer science and learning their problem in their own terms (Goal 11)
     - To develop a multi-disciplinary understanding of the problem, naming the disciplinary perspectives involved and how each frames what a solution would mean (Goal 12)
@@ -55,7 +55,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and publishes the roster in the [syllabus](/); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 (Sep 10) with an in-class kickoff; draft briefs are exchanged across teams for structured peer review in class at wk5.0 (Sep 29), and the revised brief is due at wk5.1 (Oct 1).
+In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and publishes the roster in the [syllabus](/); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 with an in-class kickoff; draft briefs are exchanged across teams for structured peer review in class at wk5.0, and the revised brief is due at wk5.1 (see the course schedule for the dates).
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
 
@@ -71,7 +71,7 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 | **Disciplinary perspective** | A field's characteristic way of framing the problem: what it notices, what it measures, what counts as evidence, what "solved" means. | Brief section 3 |
 | **Problem statement** | One paragraph, traceable to the interview, stating the problem an agent system could address — without committing to a design yet. | Brief section 4 |
 | **Track fit** | A short argument that the problem could support any of the three final-project tracks (build, audit, or open-source), keeping your options open until wk9.1. | Brief section 5 |
-| **Known unknowns** | The concrete things you would need to find out before proposing anything — the honest edge of your understanding. | Brief section 6 |
+| **Known unknowns** | The concrete things you would need to find out before proposing anything — the edge of your understanding. | Brief section 6 |
 
 ---
 
@@ -139,13 +139,13 @@ Attach the **interview packet** as an appendix: prep questions, notes, consent r
 
 ## Peer Exchange
 
-At **wk5.0 (Sep 29)**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk5.1 (Oct 1) due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
+At **wk5.0**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk5.1 due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
 
 ---
 
 ## Deliverables
 
-Submit one PDF per team via the LMS by **wk5.1 (Oct 1)** containing:
+Submit one PDF per team via the LMS by **wk5.1** containing:
 
 - The 2-3 page brief (six sections, primary author named per section)
 - The interview packet appendix (prep questions, notes, consent record, follow-up exchange)

@@ -5,7 +5,7 @@ title: "CS357: Foundations of Artificial Intelligence - Demo Day Guide: External
 
 info:
   coursenum: CS357
-  purpose: "To prepare you to present your project to people beyond the course — your community partner, invited alumni and industry guests, and eventually interviewers — by practicing the plain-language pitch, the honest limitation, and the interview-style deep dive on a system you actually built."
+  purpose: "To prepare you to present your project to people beyond the course — your community partner, invited alumni and industry guests, and eventually interviewers — by practicing the plain-language pitch, the limitation disclosure, and the interview-style deep dive on a system you actually built."
   tilt:
     task: "Read the guest-facing brief, take part in the cross-team mock technical interview during the week 14 Project Studio rehearsal, and arrive at Demo Day ready to present your project to a mixed audience of classmates, partners, faculty, and invited external guests."
     criteria: "Nothing is separately graded here — the multi-audience presentation is assessed within the Final Project's Product dimension, and the mock-interview rehearsal is credited as class participation. Use the self-check below to know you are ready."
@@ -72,7 +72,7 @@ Have these five moves rehearsed before Demo Day:
 
 1. **The ninety-second opener.** The stakeholder problem in the partner's terms, what your project does about it, who it is for, and one sentence on what you personally built. Write it, say it aloud, cut every term a non-CS friend would stumble on. (Your stakeholder-facing Demo Day segment is the long form of this; the opener is the version you give a guest standing in front of your table.)
 2. **The three-sentence architecture.** The system in plain words: *a request comes in; specialist agents each handle their piece — one retrieves evidence, one drafts, one critiques; a human approves anything consequential before it happens.* Then one sentence on where your part lives. Audit teams: the framework in plain words — *we mapped who the system touches, measured where it fails, and wrote the rules a real organization could adopt.*
-3. **The honest limitation.** One known failure mode or finding, stated plainly, with its evidence and why you triaged it as disclose-rather-than-fix. Practice saying it without apologizing.
+3. **The limitation.** One known failure mode or finding, stated plainly, with its evidence and why you triaged it as disclose-rather-than-fix. Practice saying it without apologizing.
 4. **The redirect.** For questions you cannot answer: "I don't know — my teammate built that part, let me hand you to them," or "I don't know, but here's how I'd find out." Both are strong answers. Bluffing is the only weak one — and in this course, saying *I don't know* when the evidence is absent is literally what we graded your systems on.
 5. **The question back.** Prepare two genuine questions to ask a guest — about their work, how AI is changing it, or their path. Demo Day is a networking event wearing a final-exam costume; treat the conversation as two-way.
 

@@ -62,7 +62,7 @@ You built a RAG pipeline in this course: chunk the corpus, embed the chunks, ret
 | **Knowledge compounding** | Scales by adding more chunks; knowledge accumulates in the index but does not synthesize — each query starts fresh from retrieval | Knowledge genuinely compounds — later sources make earlier pages more useful, because the wiki records how ideas relate, not just what the ideas are |
 | **Model error propagation** | A retrieval miss is an isolated failure that affects only one query | A synthesis error can propagate to many cross-linked pages before the lint pass catches it, making the schema's preserve-uncertainty rules load-bearing |
 
-One more honest caution from the pattern's critics: the wiki is only as good as the model maintaining it, since a weak model can propagate a source's error into five confident pages. This is why the schema's preserve-uncertainty rules and the lint pass are load-bearing rather than decorative.
+One more caution from the pattern's critics: the wiki is only as good as the model maintaining it, since a weak model can propagate a source's error into five confident pages. This is why the schema's preserve-uncertainty rules and the lint pass are load-bearing rather than decorative.
 
 ---
 
