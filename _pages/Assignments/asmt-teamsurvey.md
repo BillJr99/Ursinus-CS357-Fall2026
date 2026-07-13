@@ -19,7 +19,7 @@ info:
       preemerging: The survey is not submitted, or most items are blank
       beginning: The survey is submitted but several items are skipped or answered with a single word where the item asks for specifics
       progressing: Every item is answered, with a minor gap such as availability windows that are too vague to schedule against (e.g., "evenings" with no days)
-      proficient: Every item is answered concretely — availability names specific days and time windows, the deadline-style and energy items commit to an honest answer rather than "either is fine," and at least two project-domain interests are ranked (Goal 13)
+      proficient: Every item is answered concretely — availability names specific days and time windows, the deadline-style and energy items commit to an answer rather than "either is fine," and at least two project-domain interests are ranked (Goal 13)
     - weight: 50
       description: Thoughtfulness
       preemerging: Answers are perfunctory or copied between items
@@ -41,7 +41,7 @@ tags:
 
 This short, individually submitted survey is the first milestone of the [Project Thread](/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the first class meeting (wk0.0) and due before the second week begins (wk1.0); teams are announced at wk1.1.
 
-**How teams are formed — full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics — members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict — while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Honest answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
+**How teams are formed — full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics — members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict — while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Accurate answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
 **Confidentiality.** Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else. What your future team learns about your working style, it learns from *you*, at the charter activity — where you will be invited to share whichever of these answers you want your teammates to take seriously.
 

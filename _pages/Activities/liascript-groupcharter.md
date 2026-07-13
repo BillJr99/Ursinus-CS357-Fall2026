@@ -58,7 +58,7 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 
 ## Model 1: The Get-to-Know Protocol
 
-**Why this matters:** Most team conflicts are not caused by malice; they are caused by unshared assumptions. The Team Formation Survey already asked each of you four questions privately. Now you answer them *to each other*. Structured self-disclosure like this is the fastest honest route through Tuckman's forming stage — and it is the first deposit into psychological safety: each answer is a small interpersonal risk that the team practices receiving well (Edmondson, 1999).
+**Why this matters:** Most team conflicts are not caused by malice; they are caused by unshared assumptions. The Team Formation Survey already asked each of you four questions privately. Now you answer them *to each other*. Structured self-disclosure like this is the fastest route through Tuckman's forming stage — and it is the first deposit into psychological safety: each answer is a small interpersonal risk that the team practices receiving well (Edmondson, 1999).
 
 **The protocol.** Go around the team four times, one round per prompt. One person speaks at a time; listeners may ask one clarifying question, but may not debate or "fix" anything. The Recorder keeps a grid like this (you will use it in Model 3):
 
@@ -82,7 +82,7 @@ Round prompts, in order:
 
 2. The protocol forbids listeners from debating or "fixing" what a speaker shares. What does that rule protect, and what would likely happen in round 1 (Challenges) without it?
 
-   > *Hint: Think about what it costs a person to admit "I struggle to ask for help" — and what it teaches them if the immediate response is advice, judgment, or someone else's story. Would round 3 (pet peeves) still get honest answers?*
+   > *Hint: Think about what it costs a person to admit "I struggle to ask for help" — and what it teaches them if the immediate response is advice, judgment, or someone else's story. Would round 3 (pet peeves) still get candid answers?*
 
 3. Which single cell of your team's grid do you predict will matter most by the midpoint charter revisit? The Recorder should write the prediction down, with a one-sentence reason — you will check it at the charter revisit.
 

@@ -112,7 +112,7 @@ Selected clauses with agentic implications:
 
 **1.6 Respect privacy.** Agents that collect, store, or transmit data as a side effect of their operation are doing something the users may not understand. A coding assistant that logs all user code to improve the model is collecting data beyond what the interaction requires — without the user's informed awareness.
 
-**2.5 Give comprehensive and thorough evaluations.** This clause requires honest assessment of one's own work — including failure modes and limitations — before deployment. It prohibits shipping a system with known serious defects while representing it as fit for purpose, even when the defects are in a subpopulation the developer considers less important.
+**2.5 Give comprehensive and thorough evaluations.** This clause requires candid assessment of one's own work — including failure modes and limitations — before deployment. It prohibits shipping a system with known serious defects while representing it as fit for purpose, even when the defects are in a subpopulation the developer considers less important.
 
 **3.1 Ensure that the public good is the central concern.** When organizational pressures conflict with public interest, professionals must recognize the conflict, document it, and escalate. The Code does not say "comply with organizational pressure and note your discomfort"; it says the public good is *central*.
 

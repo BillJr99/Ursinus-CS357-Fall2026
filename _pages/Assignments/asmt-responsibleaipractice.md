@@ -89,7 +89,7 @@ tags:
 
 ---
 
-**Handed out:** Thursday, November 5 (Week 10) · **Due:** Tuesday, November 24 (Week 13)
+**See the course schedule for the assigned and due dates.**
 
 By this point in the course you have built systems that answer questions, retrieve documents, call tools, and make or support decisions. Responsible AI is what happens when you stop asking "does it work?" and start asking "should anyone rely on it — and on what terms?" That question can be approached from five distinct angles: whether it matters that these systems genuinely understand anything; whether their data and behavior are documented honestly; whether their operation is governed by enforceable rules; whether they comply with the regulations that increasingly bind them; and what their energy and carbon cost really is. Each direction below takes one of those angles and applies it to a **concrete artifact** — an essay defending a position, a datasheet and model card for a system you have used, a governance document for your own project, a regulatory mapping of a real deployed system, or a carbon audit of your own AI use.
 
@@ -114,7 +114,7 @@ Complete **one** of the five directions below in full. Expand your chosen direct
 
 - **Direction A: Does It Matter If Machines Understand?** — a 1000–1500 word argumentative essay engaging at least two named philosophical positions and arriving at a defended position with a concrete deployment implication.
 - **Direction B: Model Cards and Datasheets** — real documentation (a Gebru et al. datasheet and a Mitchell et al. model card) for a system you have used in this course, plus a bias analysis and misuse scenarios with implementable controls.
-- **Direction C: Governance and Policy** — an enforceable eight-section governance document for your final project's agent team, mapped onto the NIST AI RMF and the EU AI Act, and hardened by adversarial peer review. Includes the Policy Clause Workshop used in the November 19 class session.
+- **Direction C: Governance and Policy** — an enforceable eight-section governance document for your final project's agent team, mapped onto the NIST AI RMF and the EU AI Act, and hardened by adversarial peer review. Includes the Policy Clause Workshop used in the Governance and Policy Writing class session.
 - **Direction D: Mapping a Real AI System to the Regulatory Landscape** — classify a real deployed AI system under the EU AI Act, map it onto the NIST AI RMF, identify the sector-specific rules it triggers, and build a structured risk register.
 - **Direction E: The Carbon Cost of Intelligence** — a one-week personal AI carbon audit, an environmental analysis of your final project at scale, prioritized efficiency redesigns, and a defended position on the Jevons paradox.
 
@@ -239,7 +239,7 @@ Apply these to every sentence before submitting — they are the same tests real
 
 #### Part 0: Policy Clause Workshop (Warm-Up)
 
-> This workshop is run during the **Thursday, November 19 class session** on Governance and Policy Writing — when that session says "see the Governance direction," this is the sub-section it means. The workshop itself is an **in-class activity for everyone**: students in class on November 19 complete it there regardless of which direction they choose, and doing so is credited as class participation. **Only Direction C students** additionally submit the workshop artifact as part of this assignment; your instructor will provide brief written feedback on it before the full governance document is due.
+> This workshop is run during the **Governance and Policy Writing class session** — when that session says "see the Governance direction," this is the sub-section it means. The workshop itself is an **in-class activity for everyone**: students in class that day complete it there regardless of which direction they choose, and doing so is credited as class participation. **Only Direction C students** additionally submit the workshop artifact as part of this assignment; your instructor will provide brief written feedback on it before the full governance document is due.
 
 **The Hospital Sepsis AI Scenario.** Read this abbreviated incident report:
 

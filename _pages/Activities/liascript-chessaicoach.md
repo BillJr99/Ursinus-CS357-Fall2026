@@ -642,7 +642,7 @@ Notice the `try/catch/finally`: a failed API call turns into a **visible message
 
 ## 14. Graceful Degradation, One More Time
 
-Because `aiEnabled` gates every model call, the app has a complete, honest fallback path:
+Because `aiEnabled` gates every model call, the app has a complete fallback path:
 
 - **Evaluation bar**: `getAIEvaluation` when enabled; local `evaluate()` otherwise.
 - **Commentary**: model prose when enabled; a plain "you played Nf3" note otherwise.

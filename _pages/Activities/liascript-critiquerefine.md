@@ -53,7 +53,7 @@ In this section you will examine why separating generation from evaluation produ
 {"verdict": "revise", "issues": ["word count is 142, must be under 100", "claim 2 has no citation"]}
 ```
 
-**Stopping rules prevent infinite polishing.** Loop until `verdict == "accept"`, with a maximum of $R$ rounds. On budget exhaustion, return the best draft *with the outstanding critique attached* — honest disclosure of known defects rather than silent confidence.
+**Stopping rules prevent infinite polishing.** Loop until `verdict == "accept"`, with a maximum of $R$ rounds. On budget exhaustion, return the best draft *with the outstanding critique attached* — disclosure of known defects rather than silent confidence.
 
 The following equation summarizes this loop compactly: at each round $t$, the critic $C$ evaluates the current draft against the rubric and returns a list of issues, and the generator $G$ produces an improved draft using those issues. The loop runs until the critic accepts or round $R-1$ is reached.
 

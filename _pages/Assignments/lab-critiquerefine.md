@@ -72,7 +72,7 @@ tags:
 
 In this lab, you and your partner will build the evaluator-optimizer workhorse of agentic systems: a generator that drafts, a critic that judges against an explicit JSON rubric, and a loop that converges or honestly reports that it did not. This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
 
-**Assigned: October 15 — Due: October 27.**
+**See the course schedule for the assigned and due dates.**
 
 ---
 
@@ -125,7 +125,7 @@ If you see a connection error, start Ollama with `ollama serve` in a separate te
 | Part 4 | Comparative Evaluation | 45–60 min |
 | Writeup | Readme and reflection | 30–45 min |
 
-**Honest total:** plan on roughly **3.5–4.5 hours for the core lab** (Parts 1–4 plus the writeup), plus roughly **2.5–3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
+**Total:** plan on roughly **3.5–4.5 hours for the core lab** (Parts 1–4 plus the writeup), plus roughly **2.5–3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
 
 ---
 

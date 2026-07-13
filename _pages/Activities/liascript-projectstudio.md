@@ -37,7 +37,7 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 
 ---
 
-In this first section, each team answers four fixed questions in two minutes — no more. You will use the stand-up to surface the honest current state of your project: real metrics, real blockers, and the single riskiest unfinished piece. Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
+In this first section, each team answers four fixed questions in two minutes — no more. You will use the stand-up to surface the current state of your project: real metrics, real blockers, and the single riskiest unfinished piece. Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
 
 ## Model 1: Stand-Up and Readiness Assessment
 
@@ -107,7 +107,7 @@ Hosts demonstrate honestly: at least one *known failure case* (a defect or limit
 
 ---
 
-*You have collected feedback cards from every station. Triage is the step where raw feedback becomes a concrete action plan — which feedback demands a fix, which demands an honest disclosure, and which can safely wait.*
+*You have collected feedback cards from every station. Triage is the step where raw feedback becomes a concrete action plan — which feedback demands a fix, which demands a disclosure, and which can safely wait.*
 
 ## 3. Triage (20 minutes)
 
@@ -190,7 +190,7 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 **Technical level:** The release-readiness checklist asks you to test your own setup steps using the teammate who did not write them. Why is this the right person to run the test? What category of errors does this catch that the author of the steps cannot catch?
 
-**Societal level:** The gallery walk requires showing a known failure case at every station. In commercial AI deployments, failure cases are rarely demonstrated publicly. What are the incentives that lead companies to hide failure modes, and what would it take — regulation, liability, cultural norms — to make honest failure disclosure the default rather than the exception?
+**Societal level:** The gallery walk requires showing a known failure case at every station. In commercial AI deployments, failure cases are rarely demonstrated publicly. What are the incentives that lead companies to hide failure modes, and what would it take — regulation, liability, cultural norms — to make candid failure disclosure the default rather than the exception?
 
 > *Hint:* Consider the analogy to drug side-effect disclosures, which are now legally required on packaging and in ads. Before that regulation, pharmaceutical companies also had strong incentives to minimize discussion of side effects. What changed? Was it a high-profile failure, regulatory action, litigation, or cultural pressure? Which of those vectors seems most plausible for AI — and which actor (government, courts, journalists, or the public) would most likely trigger it?
 

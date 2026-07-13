@@ -73,7 +73,7 @@ Five agents at temperature 1.0 propose tomatillo salsa recipes. Three roast the 
 
 2. Write, in two sentences, the synthesis you would want: it should commit where the majority is strong and disclose where it is split.
 
-   > *Hint: The majority (3 of 5) agrees on roasting. The chile choice is evenly split. Your synthesis should say something definite about cooking method and something honest about the chile.*
+   > *Hint: The majority (3 of 5) agrees on roasting. The chile choice is evenly split. Your synthesis should say something definite about cooking method and something candid about the chile.*
 
 3. Exact-match voting on full recipe texts would yield five singleton "answers." State precisely why, in terms of the difference between *string* identity and *semantic* identity.
 
@@ -187,7 +187,7 @@ In this section you will examine the situations where consensus makes results wo
 
 ## Model 3: When Consensus Misleads
 
-Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions — a theme we take up squarely in the *Training Data and Bias* activity. The honest synthesis discloses dissent rather than dissolving it.
+Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions — a theme we take up squarely in the *Training Data and Bias* activity. A candid synthesis discloses dissent rather than dissolving it.
 
 ---
 

@@ -49,7 +49,7 @@ The discipline of asking *the same* five questions is what turns anecdotes into 
 | **Architecture** | Which agent patterns were in use: single agent with tools, multi-step pipeline, planner-executor, human-in-the-loop gates, or a combination. | The task required a pattern (e.g., human gate on irreversible actions) that was not included in the architecture. |
 | **Perception** | Everything the agent could observe — files, web pages, API responses — and everything it could not see: implicit conventions, off-screen state, database contents behind a rendered page. | The agent acted on incomplete information and could not have known it was incomplete. |
 | **Failure or friction** | The specific moment where the agent's behavior diverged from what was needed, and the underlying cause (specification gap, context limit, perception gap, global invariant violation). | The agent produced output that looked correct but was not (done-looking vs. done). |
-| **Repair** | A concrete design change that addresses the failure: a specification artifact, an external state representation, a deterministic verifier, or a human gate — with an honest assessment of what the repair costs. | The proposed repair either does not address the root cause or is so expensive that it changes the cost-benefit calculation of using an agent at all. |
+| **Repair** | A concrete design change that addresses the failure: a specification artifact, an external state representation, a deterministic verifier, or a human gate — with an assessment of what the repair costs. | The proposed repair either does not address the root cause or is so expensive that it changes the cost-benefit calculation of using an agent at all. |
 
 ---
 

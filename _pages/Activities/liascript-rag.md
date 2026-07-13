@@ -154,11 +154,11 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 ## Model 2: Grounding in Action
 
-**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer simply is not in the index? A bare language model will often invent a plausible-sounding answer ("The bookstore closes at 5pm on weekdays"). RAG, if designed well, will say it does not know. That difference — between confident invention and honest abstention — is the core of what makes RAG trustworthy for high-stakes applications like medical information, legal research, or campus policy.
+**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer simply is not in the index? A bare language model will often invent a plausible-sounding answer ("The bookstore closes at 5pm on weekdays"). RAG, if designed well, will say it does not know. That difference — between confident invention and abstention — is the core of what makes RAG trustworthy for high-stakes applications like medical information, legal research, or campus policy.
 
 ### Critical Thinking Questions
 
-4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly). Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions just convert into honest abstention?
+4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly). Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions just convert into abstention?
 
    > *Hint: Run `chat("What time does the bookstore close?")` without any context and observe the response. Then look at the line in `rag_answer` that contains the phrase "not in my documents" — what instruction creates the abstention behavior?*
 
@@ -187,7 +187,7 @@ The single most important reason RAG reduces factual hallucination is that it:
 
 In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity. These exercises build directly toward Lab 2.
 
-1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one honest abstention.
+1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one abstention.
 
    - *What to do:* Find a real document (your CS357 syllabus, a club's bylaws, the college's honor code). Extract 10 meaningful sentences. Index them in Chroma. Ask five questions — at least two should be unanswerable from your documents.
    - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ. Make sure each sentence is self-contained (contains enough context to be understood in isolation — avoid sentences like "As stated above, the deadline is...").

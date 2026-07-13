@@ -20,7 +20,7 @@ Building something that works on your machine is the first half of making; **pub
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the Docker module, a GitHub account, and (for Part III) Node.js. Everything in this module is free; we publish small, honest artifacts under your own names. **Course safety rule, stated up front: a human runs every publish command. Agents may prepare; only you push the button**, which is our external-publication governance gate practiced for real. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the Docker module, a GitHub account, and (for Part III) Node.js. Everything in this module is free; we publish small artifacts under your own names. **Course safety rule, stated up front: a human runs every publish command. Agents may prepare; only you push the button**, which is our external-publication governance gate practiced for real. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
@@ -153,7 +153,7 @@ In this part, you will publish a working npm package with a CLI entry point — 
 
 ## 5. A Package from Zero
 
-An npm package is a directory with a `package.json`; everything else is detail. A minimal, honest CLI utility that works as a real publishable package:
+An npm package is a directory with a `package.json`; everything else is detail. A minimal CLI utility that works as a real publishable package:
 
 ```bash
 # Create the directory and initialize the package with your scoped username
@@ -367,7 +367,7 @@ docker pull ghcr.io/yourusername/hello-cs357:v0.2.0
 
 *Starter hint:* For Docker images: `docker history ghcr.io/otherteam/their-image:0.1.0` shows the layers and the commands that built each layer. Look for any `COPY` or `ADD` commands that might have included sensitive files.
 
-*You've succeeded when:* Each team has submitted a written review of the other's artifact. Catching nothing after honest effort is also a valid result — but you must document that you looked.
+*You've succeeded when:* Each team has submitted a written review of the other's artifact. Catching nothing after genuine effort is also a valid result — but you must document that you looked.
 
 Container and npm publishing share a registry model with the Python ecosystem — but Python's toolchain has its own conventions that are worth knowing before you publish anything to PyPI.
 
