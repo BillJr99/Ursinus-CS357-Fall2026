@@ -683,11 +683,6 @@ schedule:
   date: "1"
   title: "Training Data and Bias"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
-  deliverables:
-  - dtitle: "Lab 6: Responsible AI Handed Out"
-    dlink: "Assignments/ResponsibleAI"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-responsibleai.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class — one design choice you would make differently in a system you deploy"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
@@ -727,6 +722,10 @@ schedule:
     dlink: "Assignments/RubricPipeline"
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
+  - dtitle: "Lab 6: Responsible AI Handed Out"
+    dlink: "Assignments/ResponsibleAI"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-responsibleai.md"
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 6 — Affect / the politics of data"
   - rtitle: "Supplemental Activity: Privacy-Preserving AI — Federated Learning, Differential Privacy, and PII Scrubbing"

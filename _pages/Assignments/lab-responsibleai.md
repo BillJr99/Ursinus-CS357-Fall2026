@@ -96,7 +96,7 @@ tags:
 
 By this point in the course you have built at least one working agent — a local agent, a RAG agent, an MCP agent, a coding agent, or a decision model. It runs. It produces answers. That is exactly the moment at which responsibility begins, because an agent that works is an agent that people will be tempted to rely on, and reliance is the thing this lab makes you earn. Building a system and being able to defend it are two different skills; this lab is about the second one.
 
-**Assigned: November 12 — Due: December 1.**
+**Assigned: November 17 — Due: December 1.**
 
 **Honest time budget:** the shared warm-up and threat model take **1.5–2 hours**; your chosen direction takes **3–4 hours**; the writeup takes about **1 hour**.
 
