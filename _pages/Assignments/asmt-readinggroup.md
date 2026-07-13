@@ -73,7 +73,7 @@ Leading a session is extra credit; being a thoughtful member of its audience is 
 
 ## Extra Credit Scale
 
-Sign up as early as you can — the extra credit maximum decreases by roughly one point per week:
+Sign up as early as you can — the extra credit maximum decreases as the semester progresses (see the table):
 
 | Week | Extra Credit Points |
 |---|---|
@@ -193,6 +193,6 @@ If you chose the **Competing Texts Session** format, your reflection must also i
 
 ## Grading
 
-This assignment is scored on the rubric above. Points earned are added as extra credit to your final course grade. The rubric has five criteria; each criterion is worth one-fifth of the extra credit points for your slot. A student presenting in Week 1 (18 EC points) earns up to 18/5 × rubric score per criterion.
+This assignment is scored on the rubric above. Points earned are added as extra credit to your final course grade. The rubric has five criteria; each criterion is worth one-fifth of the extra credit points for your slot, scaled by the proficiency level earned — Proficient, the top level, earns full credit (4 of 4) on that criterion.
 
-**Example:** Week 2 slot (16 EC points), student earns Proficient (3/4) on all five criteria → 16 × (3/4) = 12 extra credit points added to final grade.
+**Example:** a Week-2 leader (16 EC points) earning Proficient on all five criteria receives the full 16 extra credit points; one earning Progressing (3 of 4) on all five criteria receives 16 × 0.75 = 12 extra credit points added to the final grade.

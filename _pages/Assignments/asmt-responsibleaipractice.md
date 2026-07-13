@@ -89,7 +89,7 @@ tags:
 
 ---
 
-**Handed out:** Tuesday, November 10 (Week 11) · **Due:** Tuesday, November 24 (Week 13)
+**Handed out:** Thursday, November 5 (Week 10) · **Due:** Tuesday, November 24 (Week 13)
 
 By this point in the course you have built systems that answer questions, retrieve documents, call tools, and make or support decisions. Responsible AI is what happens when you stop asking "does it work?" and start asking "should anyone rely on it — and on what terms?" That question can be approached from five distinct angles: whether it matters that these systems genuinely understand anything; whether their data and behavior are documented honestly; whether their operation is governed by enforceable rules; whether they comply with the regulations that increasingly bind them; and what their energy and carbon cost really is. Each direction below takes one of those angles and applies it to a **concrete artifact** — an essay defending a position, a datasheet and model card for a system you have used, a governance document for your own project, a regulatory mapping of a real deployed system, or a carbon audit of your own AI use.
 
@@ -239,7 +239,7 @@ Apply these to every sentence before submitting — they are the same tests real
 
 #### Part 0: Policy Clause Workshop (Warm-Up)
 
-> This workshop is run during the **November 19 class session** on Governance and Policy Writing — when that session says "see the Governance direction," this is the sub-section it means. It is ungraded, but it must be completed and submitted with this direction; your instructor will provide brief written feedback before the full governance document is due. Students in class on November 19 complete it there regardless of which direction they choose.
+> This workshop is run during the **Thursday, November 19 class session** on Governance and Policy Writing — when that session says "see the Governance direction," this is the sub-section it means. The workshop itself is an **in-class activity for everyone**: students in class on November 19 complete it there regardless of which direction they choose, and doing so is credited as class participation. **Only Direction C students** additionally submit the workshop artifact as part of this assignment; your instructor will provide brief written feedback on it before the full governance document is due.
 
 **The Hospital Sepsis AI Scenario.** Read this abbreviated incident report:
 
