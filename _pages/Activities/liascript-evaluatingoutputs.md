@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Hallucinations and Evaluating Agent Outputs
 
-A model that writes fluently can be fluently wrong. This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness** — because an agent we cannot measure is an agent we cannot trust or improve. We move from **mechanism $\rightarrow$ taxonomy $\rightarrow$ measurement $\rightarrow$ mitigation previews**.
+In the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity we saw that a model samples plausible continuations — and a model that writes fluently can be fluently wrong. This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness** — because an agent we cannot measure is an agent we cannot trust or improve. We move from **mechanism $\rightarrow$ taxonomy $\rightarrow$ measurement $\rightarrow$ mitigation previews**.
 
 ---
 
@@ -174,7 +174,7 @@ In this part, you will build your own benchmark — a domain-specific task set y
 1. *Benchmark sketch.*
 
    - *What to do*: Draft a 10-item task set for a domain your team knows well — a sport, a fandom, a local community, a scientific field. Specify: the 10 questions, the gold answers, the metric you will use (exact match, substring, or something else), and the full protocol (which model, what temperature, what seed).
-   - *Starter hint*: Choose a domain where you can verify the correct answers independently (you know them from experience or can check a reliable source). Make at least two questions "thin training data" questions where you expect the model to struggle. Save this task set — you will reuse it to evaluate retrieval-augmented generation in week 5 and your project agents at the end of the semester.
+   - *Starter hint*: Choose a domain where you can verify the correct answers independently (you know them from experience or can check a reliable source). Make at least two questions "thin training data" questions where you expect the model to struggle. Save this task set — you will reuse it to evaluate retrieval-augmented generation in the *Retrieval-Augmented Generation with Chroma* activity and your project agents at the end of the semester.
    - *You've succeeded when*: Your task set has 10 questions with verified gold answers, a written metric definition, and a written protocol — specific enough that a teammate could run it without asking you any questions.
 
 2. *Calibration probe.*
@@ -185,8 +185,8 @@ In this part, you will build your own benchmark — a domain-specific task set y
 
 3. *Mitigation preview.*
 
-   - *What to do*: For each of the three hallucination taxonomy categories (factual, faithfulness, reasoning error), name the upcoming course topic that most directly addresses it, and write one sentence explaining the connection.
-   - *Starter hint*: The three upcoming topics are: retrieval-augmented generation (week 5), tool use / external APIs (week 4), and critique agents / multi-agent debate (week 7). Match each to the hallucination type it addresses most directly.
+   - *What to do*: For each of the three hallucination taxonomy categories (factual, faithfulness, reasoning error), name the course topic that most directly addresses it, and write one sentence explaining the connection.
+   - *Starter hint*: The three topics to match are: retrieval-augmented generation (the *Retrieval-Augmented Generation with Chroma* activity), tool use / external APIs (the *Tool Use and Function Calling* activity), and critique agents / multi-agent debate (the *Critique and Refine* and *Multi-Agent Debate* activities). Match each to the hallucination type it addresses most directly.
    - *You've succeeded when*: You have three pairings, each with a one-sentence justification that explains the *mechanism* of why that technique addresses that hallucination type — not just that they are both in the course.
 
 ---
@@ -201,7 +201,7 @@ In this part, you will build your own benchmark — a domain-specific task set y
 
 ---
 
-→ Coming Up Next: We have seen that models hallucinate partly because they have no access to facts outside their training data. In the next activity we solve this with retrieval-augmented generation — giving the agent a live database to search before it answers, so its responses are grounded in real, verifiable sources.
+→ Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools — one of the mitigations previewed today. The evaluation harness pattern you built here returns in Lab 2's retrieval evaluation and Lab 5's rubric pipeline.
 
 ## 5. Further Reading
 

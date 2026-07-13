@@ -85,7 +85,7 @@ A new agent with no conversation history is pointed at the funnel. After each re
 
 3. The case-study project also enforced: *"Do not claim that a file, artifact, log, or generated output is missing or present without checking the current repository/runtime state first. Treat prior logs and memory as hints only."* Relate this rule to what you learned about hallucination earlier in the course. Why are agents *especially* prone to this failure on long-running projects?
 
-   > *Hint: In week 2 you saw that models generate plausible continuations. What makes "the file we created last time is still there" an extremely plausible — and frequently wrong — continuation?*
+   > *Hint: In the Why Different Answers Every Time? Sampling, Temperature, and Generation activity you saw that models generate plausible continuations. What makes "the file we created last time is still there" an extremely plausible — and frequently wrong — continuation?*
 
 > **⚠️ Common Misconception:** "Good agents have long context windows now, so this bookkeeping is obsolete." Context length does not survive a *vendor switch*, a *quota reset*, or a *conversation you deleted*. The funnel is not a workaround for small contexts — it is what makes the project independent of any one agent, vendor, or session. It is the same reason teams of humans write documentation even though each human has an excellent memory.
 

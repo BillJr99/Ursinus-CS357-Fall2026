@@ -249,7 +249,7 @@ In this Part you will apply FERPA, data minimization, and human-in-the-loop requ
 
 7. Rank proposals A-D from most to least appropriate, applying the three governance requirements and the "not appropriate" list. For the proposal you rank last, name *every* criterion it violates. (The Recorder writes the ranking with one justification per proposal; the Presenter reports where the group disagreed.)
 
-   > *Hint: C uses minimal, non-content data with a human reader — hard to object to. A keeps a strong human gate over content. B violates HITL on the highest-stakes write path (Model 1's channel 5). D uses protected-class and financial data as predictive features, outputs a score a busy advisor may treat as fact, and touches next week's early-alert case study — count its violations carefully: minimization? auditability? contestability?*
+   > *Hint: C uses minimal, non-content data with a human reader — hard to object to. A keeps a strong human gate over content. B violates HITL on the highest-stakes write path (Model 1's channel 5). D uses protected-class and financial data as predictive features, outputs a score a busy advisor may treat as fact, and touches the early-alert case study from the *Case Study: Early-Alert and At-Risk Identification with Local AI* activity — count its violations carefully: minimization? auditability? contestability?*
 
 8. For proposal D, the vendor argues the human gate is satisfied because "an advisor sees the prediction before acting." Using the idea of *automation bias* (people tend to accept a machine's suggestion rather than re-derive it), explain why a nominal human gate can fail to be a real one, and propose one concrete interface change that makes the human's judgment genuinely load-bearing.
 

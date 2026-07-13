@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Agent Loop: Perceive, Plan, Act
 
-This module develops the **agent loop**, the control structure that turns a reactive language model into a goal-directed system. We move from **intuition $\rightarrow$ the sense-think-act cycle $\rightarrow$ the ReAct pattern $\rightarrow$ a working agent loop in Python** against a local Ollama model.
+In the *Welcome: What Is AI, and What Is an Agent?* activity we placed systems on an agency spectrum; today we build the machinery that moves a system along it. This module develops the **agent loop**, the control structure that turns a reactive language model into a goal-directed system. We move from **intuition $\rightarrow$ the sense-think-act cycle $\rightarrow$ the ReAct pattern $\rightarrow$ a working agent loop in Python** against a local Ollama model.
 
 ---
 
@@ -41,13 +41,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 This section sets up the Python helper function that all later code cells will reuse. It sends a list of messages (the conversation history so far) to a locally running Ollama server and returns the model's reply as a plain string. You don't need to understand every line yet — just run it and confirm the "Environment ready." message appears before moving on.
 
-This section assumes Ollama is running locally (we install it together in the Running Your Own AI session next week; today your instructor's machine serves the room). The only dependency is `requests`.
+This section assumes Ollama is running locally (we install it together in the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity; today your instructor's machine serves the room). The only dependency is `requests`.
 
 ---
 
 ## Code Cell
 
-> **📝 Today: trace on paper, run next week.** Ollama is not on your machines yet — we install it together in the *Running Your Own AI* session next week. Today your team traces the agent loop **on paper**; run this and the later code cells after the install day next week. Paper-trace protocol:
+> **📝 Today: trace on paper, run after the install session.** Ollama is not on your machines yet — we install it together in the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity. Today your team traces the agent loop **on paper**; run this and the later code cells after that install session. Paper-trace protocol:
 >
 > 1. Given the user query, **write the model's likely action line** (a `Thought:` plus either `Action: calc(...)` or `Final Answer: ...`).
 > 2. **Parse it exactly as your code would**: which branch fires — the `Final Answer:` check or the `calc(...)` regex?
@@ -152,7 +152,7 @@ We give the model exactly one tool — a calculator — and parse its output for
 
 ## Code Cell
 
-> **Run after install day:** trace this on paper today; execute it after next week's Ollama install session.
+> **Run after the install session:** trace this on paper today; execute it after the *Running Your Own AI* install session.
 
 ```python
 import re
@@ -204,7 +204,7 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
    > *Hint: Think about what `eval` can do in Python even with `__builtins__` restricted. Also think about what the model might put inside `calc(...)` if it is confused about the tool's purpose.*
 
-4. What happens to the conversation `memory` list as steps accumulate? Predict a specific problem this causes for long-running agents. (We name this problem in week 6.)
+4. What happens to the conversation `memory` list as steps accumulate? Predict a specific problem this causes for long-running agents. (We name this problem in the *Memory and the Small Context Window Principle* activity.)
 
    > *Hint: Language models can only read a fixed amount of text at once — their "context window." What happens when `memory` grows beyond that limit?*
 
@@ -224,7 +224,7 @@ OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the w
 
 ## Code Cell
 
-> **Run after install day:** trace this on paper today; execute it after next week's install session, once your local stack is up.
+> **Run after the install session:** trace this on paper today; execute it after the *Running Your Own AI* install session, once your local stack is up.
 
 ```python
 import os, re, requests
@@ -294,7 +294,7 @@ Trace the run as a team. Expect two round-trips to the model: on step 0 the mode
 
 2. The `Observation:` is appended with `"role": "user"`, even though no human typed it. Why does the loop impersonate the user here, and what would break if you used `"role": "assistant"` instead?
 
-3. This loop grows `messages` by two entries every step. Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost? (We name this problem — and its fix — in week 6.)
+3. This loop grows `messages` by two entries every step. Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost? (We name this problem — and its fix — in the *Memory and the Small Context Window Principle* activity.)
 
 4. Replace the mock `get_weather` with a real tool of your choice (a search call, a file read, a database lookup). What in the loop has to change, and what stays exactly the same? *(Almost nothing changes — that is the point: the shape of the loop is independent of the tools.)*
 
@@ -326,7 +326,7 @@ In this part, you will extend and stress-test the agent you just built — chang
 
 4. *Spectrum revisited.*
 
-   - *What to do*: Place this calculator agent on last class's agency spectrum, and justify the placement relative to the thermostat and the campsite-finder.
+   - *What to do*: Place this calculator agent on the agency spectrum from the *Welcome: What Is AI, and What Is an Agent?* activity, and justify the placement relative to the thermostat and the campsite-finder.
    - *Starter hint*: Consider: how many steps does it take autonomously? Does it use tools? Can it recover from an error observation? Compare those answers to the thermostat (one fixed rule) and the campsite-finder (many steps, many tools, external web).
    - *You've succeeded when*: Your placement is backed by at least two specific features of the agent's behavior that distinguish it from both the thermostat and the campsite-finder.
 
@@ -342,7 +342,7 @@ In this part, you will extend and stress-test the agent you just built — chang
 
 ---
 
-→ Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it — in the next activity we study prompt engineering and learn to write system prompts that function like a job description for an agent.
+→ Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it — in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity we learn to write system prompts that function like a job description for an agent.
 
 ## 5. Further Reading
 

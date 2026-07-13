@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Project Studio and Gallery Walk
 
-Today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
+With the *Explainability and Human-Centric Design* heuristics fresh, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
 
 ---
 

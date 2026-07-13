@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Prompt Engineering as Agent Design: Personas and System Prompts
 
-A prompt is not a question; it is a **program written in natural language** that configures an agent's behavior. This module moves from **anatomy of a prompt $\rightarrow$ core patterns $\rightarrow$ personas and system prompts $\rightarrow$ designing the policy of your own agent**, because in an agentic system the system prompt *is* the agent's job description.
+In *The Agent Loop: Perceive, Plan, Act* activity, two-thirds of our calculator agent's design lived in one string — its system prompt. A prompt is not a question; it is a **program written in natural language** that configures an agent's behavior. This module moves from **anatomy of a prompt $\rightarrow$ core patterns $\rightarrow$ personas and system prompts $\rightarrow$ designing the policy of your own agent**, because in an agentic system the system prompt *is* the agent's job description.
 
 ---
 
@@ -142,7 +142,7 @@ The code cell below runs the same question ("Why is the sky blue?") through thre
 
 ## Code Cell
 
-> If you have not installed Ollama yet (we do it together Thursday), read this cell and predict its output — bring your prediction to class.
+> If you have not installed Ollama yet (we do it together in the *Running Your Own AI* session), read this cell and predict its output — bring your prediction to class.
 
 ```python
 import requests
@@ -204,7 +204,7 @@ The cell below defines five `(country, expected capital)` pairs, then runs the *
 
 ## Code Cell
 
-> If you have not installed Ollama yet (we do it together Thursday), read this cell and predict its output — bring your prediction to class.
+> If you have not installed Ollama yet (we do it together in the *Running Your Own AI* session), read this cell and predict its output — bring your prediction to class.
 
 ```python
 import requests
@@ -326,7 +326,7 @@ In this part, you will write and red-team real system prompts — first designin
 
 ---
 
-→ Coming Up Next: We have been calling a model running somewhere on a server. In the next activity, we take full control by installing and running AI models entirely on our own hardware — no cloud, no per-token fees, and no data leaving our machines.
+→ Coming Up Next: We have been calling a model running somewhere on a server. In the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity, we take full control by installing and running AI models entirely on our own hardware — no cloud, no per-token fees, and no data leaving our machines.
 
 ## 7. Further Reading
 

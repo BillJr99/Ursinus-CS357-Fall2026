@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand (pipelines, RAG, routers, agents with tools) exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern we have coded by hand — through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools) — exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 
@@ -86,7 +86,7 @@ Now that you understand what visual flows are and how they map to code, let's bu
 
 Construct the minimal flow: **Chat Input → Prompt (with your Lab 1 persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
 
-This is the visual equivalent of the four-line `llm()` call you have been writing since Week 1. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
+This is the visual equivalent of the four-line `llm()` call you have been writing since *The Agent Loop: Perceive, Plan, Act* activity. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
 
 ## Model 3: Build 2 — RAG over Your Lab 2 Corpus
 
@@ -111,7 +111,7 @@ The visual artifact and your code-world tooling (harnesses, batch evaluation) co
 
 ### Critical Thinking Questions
 
-4. Run your Lab 2 evaluation question set through the Langflow endpoint with your week 3 harness. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
+4. Run your Lab 2 evaluation question set through the Langflow endpoint with your harness from the *Hallucinations and Evaluating Agent Outputs* activity. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
 
    *Hint:* Export the Langflow flow JSON and search for your chunk size value. Is it exactly the same number as in your Python Lab 2 code? Check the retriever's $k$ parameter (number of documents retrieved) in the Chroma node settings.
 
@@ -280,7 +280,7 @@ Now that you've built, tested, and exported flows, this part asks you to push th
 
 ---
 
-→ Coming Up Next: Now that we can build and evaluate agent systems, we need to measure their output quality at scale — which requires recruiting an AI model to act as the judge of other AI outputs.
+→ Coming Up Next: In the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity, we measure agent output quality at scale — which requires recruiting a model to act as the judge of other models' outputs.
 
 ## Further Reading
 

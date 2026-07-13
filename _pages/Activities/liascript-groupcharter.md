@@ -16,7 +16,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Today your new semester team writes its constitution. This activity is modeled on the **Team Contract Exercise developed by the SWEET Center at Worcester Polytechnic Institute** (WPI SWEET Center Team Contract Exercise), which has teams agree on norms, decision rules, and repair procedures *before* the first conflict rather than during it. We move from **getting to know each other honestly $\rightarrow$ understanding how teams develop and what makes them safe $\rightarrow$ writing an enforceable charter you will all sign**.
 
-You drafted a small pre-draft charter in the Overview assignment. Bring it: today you will expand it into the real thing. The signed charter is due at the start of week 2 (wk2.0), and your team will formally revisit and revise it at midterm (wk8.0).
+You drafted a small pre-draft charter in the Overview assignment. Bring it: today you will expand it into the real thing. The signed charter is due at the charter milestone on the course schedule, and your team will formally revisit and revise it at the midpoint charter revisit on the schedule.
 
 ---
 
@@ -50,7 +50,7 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 | **Psychological Safety** | A shared belief that the team is safe for interpersonal risk-taking — questions, mistakes, and disagreement do not get punished (Edmondson, 1999). | The norm that makes every other norm workable |
 | **Decision Rule** | The agreed procedure for making a choice when the team does not naturally agree: consensus, majority vote, role-holder decides, or escalate. | "Technical disputes: 10-minute timebox, then the sprint Coordinator decides and logs it" |
 | **Repair Move** | A named, rehearsed conversational move for de-escalating conflict and fixing a rupture: *name it, own your part, restate the other side, propose a next step*. | Model 3's conflict protocol |
-| **Revisit Clause** | The charter section stating when and how the charter itself gets re-examined and amended. | "Full revisit at wk8.0; any member may call an early revisit by posting AGENDA: charter" |
+| **Revisit Clause** | The charter section stating when and how the charter itself gets re-examined and amended. | "Full revisit at the midpoint charter revisit on the schedule; any member may call an early revisit by posting AGENDA: charter" |
 
 ---
 
@@ -84,9 +84,9 @@ Round prompts, in order:
 
    > *Hint: Think about what it costs a person to admit "I struggle to ask for help" — and what it teaches them if the immediate response is advice, judgment, or someone else's story. Would round 3 (pet peeves) still get honest answers?*
 
-3. Which single cell of your team's grid do you predict will matter most by week 8? The Recorder should write the prediction down, with a one-sentence reason — you will check it at the charter revisit.
+3. Which single cell of your team's grid do you predict will matter most by the midpoint charter revisit? The Recorder should write the prediction down, with a one-sentence reason — you will check it at the charter revisit.
 
-   > *Hint: Look for the answer that interacts with deadlines, since the thread's crunch points (Brief wk4.1, synthesis wk7.1, proposal wk11.0) are where working-style differences surface.*
+   > *Hint: Look for the answer that interacts with deadlines, since the thread's crunch points (the stakeholder brief, the synthesis, and the proposal milestones on the course schedule) are where working-style differences surface.*
 
 ---
 
@@ -102,7 +102,7 @@ Here is the same idea two ways — a stage table, and then a scenario trace thro
 |-------|--------------------|----------|-------------------|
 | Forming | Politeness, vagueness, easy agreement | Mistaking politeness for alignment | Force specifics now (this activity) |
 | Storming | First real disagreements; frustration | Reading conflict as "the team is broken"; going silent | A rehearsed conflict protocol with repair moves |
-| Norming | Rhythms, shorthand, trust | Norms drift undocumented | The wk8.0 revisit codifies what changed |
+| Norming | Rhythms, shorthand, trust | Norms drift undocumented | The midpoint charter revisit codifies what changed |
 | Performing | Self-correcting, low-drama output | Coasting on unexamined habits | Lighter process, but the decision log continues |
 | Adjourning | The team ends; work is handed off | Ghosting the ending | Contribution statements and final reflection |
 
@@ -147,8 +147,8 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 2. **Decision rules** — how technical and non-technical decisions get made when consensus does not appear: the timebox, the tiebreaker, and where the decision is logged.
 3. **Conflict protocol with named repair moves** — what any member does when frustrated with another (step 1 is never "post sarcasm to the channel"), the four repair moves your team commits to (*name it, own your part, restate the other side, propose a next step*), and who convenes the repair conversation.
 4. **Accountability** — the missed-deadline procedure (what a member does, and by when, if they will miss a commitment), the definition of "done," and how work is rebalanced without takeovers.
-5. **Role rotation** — the POGIL/sprint role schedule, mirroring the Playbook cadence (weekly through wk8, per-sprint afterward).
-6. **Revisit clause** — the scheduled full revisit at **wk8.0**, plus the trigger any member can pull to call an early revisit.
+5. **Role rotation** — the POGIL/sprint role schedule, mirroring the Playbook cadence (weekly through the midpoint charter revisit, per-sprint afterward).
+6. **Revisit clause** — the scheduled full revisit at **the midpoint charter revisit on the course schedule**, plus the trigger any member can pull to call an early revisit.
 
 **Before/after — the enforceability test:**
 
@@ -190,7 +190,7 @@ Which of the following charter clauses passes the enforceability test?
 3. Run the full enforceability pass (Question 7) on the final text as a team.
 4. Sign it.
 
-**Deliverable statement.** The finished charter must be **signed by ALL team members** (typed names with date), and it is a living document: **every future progress report your team submits — sprint reports, milestone submissions, check-ins — carries all members' signatures**, re-affirming the charter each time. Submit the signed charter by **wk2.0** as directed in the LMS. Your team will formally **revisit the charter at the midterm checkpoint (wk8.0)**: re-read it, mark each clause *held / drifted / never real*, and file a signed revision — teams change, and a charter that cannot change with them stops being true.
+**Deliverable statement.** The finished charter must be **signed by ALL team members** (typed names with date), and it is a living document: **every future progress report your team submits — sprint reports, milestone submissions, check-ins — carries all members' signatures**, re-affirming the charter each time. Submit the signed charter by **the charter milestone on the course schedule** as directed in the LMS. Your team will formally **revisit the charter at the midpoint charter revisit on the schedule**: re-read it, mark each clause *held / drifted / never real*, and file a signed revision — teams change, and a charter that cannot change with them stops being true.
 
 ---
 

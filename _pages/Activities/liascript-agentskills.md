@@ -641,7 +641,7 @@ Source: https://github.com/JuliusBrussee/caveman — MIT License.
 
 ---
 
-**Design comparison exercise:** After studying both skills, answer: (a) What is each skill's single clear purpose? (b) What explicit constraint prevents each skill from misbehaving in a dangerous situation? (c) How does each skill's `when` trigger (or invocation pattern) differ from a system prompt? Compare your answers with a partner's before the next class.
+**Design comparison exercise:** After studying both skills, answer: (a) What is each skill's single clear purpose? (b) What explicit constraint prevents each skill from misbehaving in a dangerous situation? (c) How does each skill's `when` trigger (or invocation pattern) differ from a system prompt? Compare your answers with a partner's.
 
 ---
 

@@ -121,7 +121,7 @@ The semester unfolds in four units, each building on the last. In Unit 1, *Anato
 
 ## Going Deeper (read at home): The AI Fluency Framework
 
-Building an agent is only half the story; **working well with one is a human competency**, not just a technical one. This course is organized around **The AI Fluency Framework**, whose four interconnected competencies — **Delegation** (deciding whether, when, and how to engage AI), **Description** (describing goals well enough to prompt useful behavior), **Discernment** (assessing the usefulness of AI outputs), and **Diligence** (taking responsibility for what we do with AI) — make our interactions with AI effective, efficient, ethical, and safe. The framework also distinguishes three modes of interaction (automation, augmentation, and agency) that map onto the agency spectrum from Section 2. You will meet the four D's throughout the course: Description when we engineer prompts, Discernment when we evaluate and test outputs, and Diligence in the closing unit on responsibility and governance. **Before the next class**, read the framework summary: [/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf](/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf).
+Building an agent is only half the story; **working well with one is a human competency**, not just a technical one. This course is organized around **The AI Fluency Framework**, whose four interconnected competencies — **Delegation** (deciding whether, when, and how to engage AI), **Description** (describing goals well enough to prompt useful behavior), **Discernment** (assessing the usefulness of AI outputs), and **Diligence** (taking responsibility for what we do with AI) — make our interactions with AI effective, efficient, ethical, and safe. The framework also distinguishes three modes of interaction (automation, augmentation, and agency) that map onto the agency spectrum from Section 2. You will meet the four D's throughout the course: Description when we engineer prompts, Discernment when we evaluate and test outputs, and Diligence in the closing unit on responsibility and governance. **Before *The Agent Loop: Perceive, Plan, Act* activity**, read the framework summary: [/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf](/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf).
 
 *Source: The AI Fluency Framework summary ([/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf](/files/ai-fluency/1.2_AI_Fluency_Summary_16x9.pdf)). Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license. This course is based on The AI Fluency Framework by Dakan and Feller.*
 
@@ -180,13 +180,13 @@ Compare within the team: where did everyone agree? Where did predictions scatter
 
 ## Model 2: Your First Conversation with a Local Model
 
-In this model, you will observe a language model (a large neural network trained to predict text) running entirely on a laptop — no cloud, no internet — and you will form hypotheses about why its answers vary. These hypotheses will be tested rigorously in week 3.
+In this model, you will observe a language model (a large neural network trained to predict text) running entirely on a laptop — no cloud, no internet — and you will form hypotheses about why its answers vary. These hypotheses will be tested rigorously in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.
 
 Your instructor will demonstrate a model running entirely on a laptop using Ollama (a free tool for downloading and running AI models locally), with no internet connection. We will pose the same prompt three times.
 
 ### Critical Thinking Questions
 
-5. The model produced three different answers to the identical prompt. Brainstorm with your group: how can a deterministic computer program produce different outputs from the same input? List at least two hypotheses. (We will test them in week 3.)
+5. The model produced three different answers to the identical prompt. Brainstorm with your group: how can a deterministic computer program produce different outputs from the same input? List at least two hypotheses. (We will test them in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
 
    > *Hint: Think about randomness. Is a coin flip "deterministic"? Where in a process that assigns probabilities to words might randomness enter?*
 
@@ -210,7 +210,7 @@ Your instructor will demonstrate a model running entirely on a laptop using Olla
 
 2. *Goalpost archaeology.*
 
-   - *What to do*: Find one news headline from before 2020 declaring that some capability "is not really AI." Bring it to the next class.
+   - *What to do*: Find one news headline from before 2020 declaring that some capability "is not really AI." Bring it to *The Agent Loop: Perceive, Plan, Act* activity.
    - *Starter hint*: Search for phrases like "that's not real AI" or "just a program" alongside the name of a system (chess engine, recommendation algorithm, autocorrect) that we now take for granted.
    - *You've succeeded when*: You can name the capability, the year it was dismissed, and explain using the AI effect why the dismissal was predictable in hindsight.
 
@@ -232,7 +232,7 @@ Your instructor will demonstrate a model running entirely on a laptop using Olla
 
 ---
 
-→ Coming Up Next: In the next activity, we zoom inside the agent loop itself — the repeating cycle of perceive, plan, and act — and we write our first working agent in Python that calls a tool and loops until it finds an answer.
+→ Coming Up Next: In *The Agent Loop: Perceive, Plan, Act* activity, we zoom inside the agent loop itself — the repeating cycle of perceive, plan, and act — and we write our first working agent in Python that calls a tool and loops until it finds an answer.
 
 ## 5. Further Reading
 

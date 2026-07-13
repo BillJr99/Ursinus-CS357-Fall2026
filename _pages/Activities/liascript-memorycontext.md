@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Memory and the Small Context Window Principle
 
-In week 1 you predicted that an agent's growing conversation memory would eventually cause trouble; today we name the trouble and adopt this course's central design principle: **keep each agent's context window small and focused**. We move from **why context fills up $\rightarrow$ what degrades when it does $\rightarrow$ memory architectures $\rightarrow$ a summarizing-memory agent in code**.
+In *The Agent Loop: Perceive, Plan, Act* activity you predicted that an agent's growing conversation memory would eventually cause trouble; today we name the trouble and adopt this course's central design principle: **keep each agent's context window small and focused**. We move from **why context fills up $\rightarrow$ what degrades when it does $\rightarrow$ memory architectures $\rightarrow$ a summarizing-memory agent in code**.
 
 ---
 
@@ -212,7 +212,7 @@ In this Part you quantify the memory savings from summarization, stress-test the
 
 *Personal:* In your notebook: the agent forgot your exact words but kept a summary it wrote about you. Human memory works similarly — we remember the gist and reconstruct the details. Describe one time your memory of a conversation differed from someone else's. Who was "right"?
 
-*Technical:* The `SummarizingMemory` class calls the model to compress its own history. This means the summarizer can hallucinate facts or drop important constraints. Design a more robust summarization approach that provides a check on the summary's faithfulness, drawing on what you learned in the RAG quality module.
+*Technical:* The `SummarizingMemory` class calls the model to compress its own history. This means the summarizer can hallucinate facts or drop important constraints. Design a more robust summarization approach that provides a check on the summary's faithfulness, drawing on what you learned in the *RAG Quality: Chunking, Clustering, and Reranking* activity.
 
 *Societal:* The agent kept a summary it wrote about you. If an AI assistant used this pattern over months of conversations, it would build up an increasingly detailed (but potentially distorted) model of who you are. Who should have the right to read, correct, or delete that summary? Is it meaningfully different from a therapist's session notes?
 
@@ -220,7 +220,7 @@ In this Part you quantify the memory savings from summarization, stress-test the
 
 ## → Coming Up Next
 
-We now have agents that can manage their own memory. The next module gives agents hands: the ability to call external functions, APIs, and tools — turning their words into real-world actions. That power requires careful governance, which is exactly what **Tool Use and Function Calling** addresses next.
+We now have agents that can manage their own memory. The *Studio: Local Agent Stack Clinic* session comes next on the schedule — bring your full local stack, because we will wire everything you have built into one system. The memory principles from today feed directly into your Final Project's context design.
 
 ---
 

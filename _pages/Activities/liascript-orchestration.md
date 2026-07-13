@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Orchestration Patterns: Pipelines, Routers, and Planners
 
-Unit 3 begins: instead of making one agent smarter, we make **several simple agents cooperate**. The enabling insight comes straight from the small context window principle: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt. We move from **why decompose $\rightarrow$ the pipeline $\rightarrow$ the router $\rightarrow$ the planner $\rightarrow$ composing them in code $\rightarrow$ keeping the composed loop reliable**.
+Unit 3 begins: with your design artifacts from the *Design First: Plan Before You Build* activity in hand, instead of making one agent smarter, we make **several simple agents cooperate**. The enabling insight comes straight from the small context window principle of the *Memory and the Small Context Window Principle* activity: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt. We move from **why decompose $\rightarrow$ the pipeline $\rightarrow$ the router $\rightarrow$ the planner $\rightarrow$ composing them in code $\rightarrow$ keeping the composed loop reliable**.
 
 ---
 
@@ -47,7 +47,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **Router (one decision, then dispatch).** A classifier agent reads the input and forwards it to one of several specialists: billing questions to the billing agent, technical questions to the tech agent. The router's entire context is the input plus the menu of destinations — about as small as a context gets. Reliability comes from constraining the router's output to a closed set of labels.
 
-**Planner (dynamic decomposition).** When the workflow is *not* known in advance, a planner agent writes a step list, worker agents execute steps, and the planner revises on failures. Planners buy flexibility at the cost of predictability, so we bound them with step budgets, exactly as in the advanced loops activity.
+**Planner (dynamic decomposition).** When the workflow is *not* known in advance, a planner agent writes a step list, worker agents execute steps, and the planner revises on failures. Planners buy flexibility at the cost of predictability, so we bound them with step budgets — a technique covered in depth in the supplemental *Advanced Agent Loops: Control Flow, Reflection, and Recovery* activity, if you explored it.
 
 A useful design heuristic follows: **choose the least dynamic pattern that solves the problem.** Pipelines before routers, routers before planners, planners before free-roaming autonomy.
 
@@ -216,11 +216,11 @@ According to the design heuristic developed today, a team should reach for a pla
 
 # Part III: Synthesis and Practice
 
-In this part you first fold in two reliability upgrades from advanced loop design — reflection and recovery — and then extend and evaluate the pipeline and router you built in Part II, designing the message format for a planner. These exercises connect directly to Lab work, so the design decisions you make here carry forward.
+In this part you first fold in two reliability upgrades — reflection and recovery, summarized here from the supplemental *Advanced Agent Loops* activity — and then extend and evaluate the pipeline and router you built in Part II, designing the message format for a planner. These exercises connect directly to Lab work, so the design decisions you make here carry forward.
 
 ## Model 3: Reflection and Recovery — Keeping Composed Loops Reliable
 
-*(A two-model summary from the Advanced Agent Loops activity — see Going Deeper at the end for the full treatment.)*
+*(A two-model summary of material from the supplemental Advanced Agent Loops activity — see Going Deeper at the end if you want the full treatment.)*
 
 **Why this matters:** Every orchestration you built today is still a loop, and loops fail in loop-shaped ways: they oscillate, overrun budgets, crash mid-task, and repeat the same mistake on every run. Two upgrades address this. The **reflection loop** (Reflexion, Shinn et al., 2023): after each *complete attempt* at a task, the agent critiques its own trajectory and stores a short "lesson" in memory — "for arXiv IDs, search arXiv directly rather than Google" — and the next attempt starts with those lessons loaded. It shines on tasks with a clear success/failure signal that you expect to run many times; its failure mode is that a poor self-critique stores a *bad* lesson that actively hurts future runs, and every lesson spends context tokens. The **recovery/budget model**: even a well-architected loop needs circuit breakers — controls that keep a small failure from cascading:
 
@@ -352,7 +352,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The next activity introduces the *critique-and-refine* pattern — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
+→ **Coming Up Next:** *The Critique and Refine Pattern* activity is next — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
 
 ---
 
