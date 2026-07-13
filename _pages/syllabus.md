@@ -624,8 +624,6 @@ schedule:
   readings:
   - rtitle: "Supplemental Tutorial: Publishing Artifacts (GHCR, Docker Hub, and npm)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
-  - rtitle: "ShipIt Guide: Build, Test, CI, and Publish (required for Final Project)"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ShipIt"
   - rtitle: "Note: Direction C now includes a contribute-to-an-existing-project variant (MCP servers, Ollama/OpenWebUI, promptfoo, Inspect AI) — see the Final Project page"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject"
   - rtitle: "Supplemental Activity: Deploying Agents — From Laptop to Production"
@@ -826,15 +824,9 @@ schedule:
   date: "1"
   title: "Project Studio: Final Integration and Demo Rehearsal"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
-  readings:
-  - rtitle: "Demo Day Guide: External Guests and Technical Interview Practice (required prep — today's rehearsal includes cross-team mock interviews, credited as participation)"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/DemoDayGuide"
 - week: "15"
   date: "0"
   title: "Demo Day: Final Project Presentations (Class Switch Day: follows a Thursday schedule)"
-  readings:
-  - rtitle: "Demo Day Guide: who is in the room (community partners, alumni, industry guests, and faculty, as available) and how to talk to them"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/DemoDayGuide"
   deliverables:
   - dtitle: "Final Project and Demo Day Presentations Due"
     dlink: "Projects/FinalProject"
