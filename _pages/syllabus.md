@@ -231,7 +231,7 @@ schedule:
 - week: "0"
   date: "0"
   title: "Welcome: What Is AI, and What Is an Agent?"
-  link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-welcomeagents.md"
+  link: "https://www.billmongan.com/Ursinus-CS357-Overview"
   deliverables:
   - dtitle: "Overview Assignment Handed Out"
     dlink: "Assignments/Overview"
