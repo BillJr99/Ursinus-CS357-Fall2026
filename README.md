@@ -25,7 +25,7 @@ This repository includes six open-source educational resources as git submodules
 
 ## Course Framework
 
-This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringling College of Art and Design) and Prof. Joseph Feller (University College Cork), developed with Anthropic. Its four competencies — Delegation, Description, Discernment, and Diligence — organize the early activities. The summary slide is included at `files/ai-fluency/`, and the framework and its summary materials are released under **CC BY-NC-SA 4.0** (compatible with this course's license). Attribution appears in the activity files that draw on it (e.g., `_pages/Activities/liascript-welcomeagents.md` and `liascript-promptengineering.md`).
+This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringling College of Art and Design) and Prof. Joseph Feller (University College Cork), developed with Anthropic. Its four competencies — Delegation, Description, Discernment, and Diligence — organize the early activities. The summary slide is included at `files/ai-fluency/`, and the framework and its summary materials are released under **CC BY-NC-SA 4.0** (compatible with this course's license). Attribution appears in the materials that draw on it (e.g., the [Ursinus-CS357-Overview](https://www.billmongan.com/Ursinus-CS357-Overview) welcome slide deck and `_pages/Activities/liascript-promptengineering.md`).
 
 ---
 

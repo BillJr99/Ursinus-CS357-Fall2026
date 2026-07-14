@@ -36,7 +36,7 @@ info:
       proficient: The charter addresses all six rows of the Charter Template — role rotation schedule with named roles and rotation timing, a primary communication channel with a specific response-time expectation, a meeting cadence with a named day and time, a disagreement procedure naming who has the deciding vote or how consensus is reached, a missed-deadline procedure with a stated timeline, and a definition of done naming who checks it — and all team members' typed names appear at the bottom
   readings:
     - rtitle: "Welcome Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-welcomeagents.md"
+      rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
     - rtitle: "Mitchell, Prologue and Chapter 1"
 
 tags:
