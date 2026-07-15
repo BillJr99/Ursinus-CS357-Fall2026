@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Hosting with Cloudflare: Workers, Pages, and Wrangler
 
-Your local stack is private by design, which is its virtue and its limit: nothing on `localhost` can be shown to a collaborator, demoed at a poster session, or used by anyone else. **Cloudflare's developer platform** fills that gap with a generous free tier: **Pages** hosts static sites, **Workers** runs serverless code at the edge, and **Wrangler** is the CLI that drives both from your terminal. This tutorial goes from no account to a deployed, secret-bearing API. The arc: **the platform map $\rightarrow$ Wrangler from zero $\rightarrow$ your first Worker $\rightarrow$ secrets and configuration $\rightarrow$ a Pages site $\rightarrow$ what belongs at the edge versus at home**.
+Your local stack is private by design, which is its virtue and its limit: nothing on `localhost` can be shown to a collaborator, demoed at a poster session, or used by anyone else. **Cloudflare's developer platform** fills that gap with a generous free tier: **Pages** hosts static sites, **Workers** runs serverless code at the edge, and **Wrangler** is the CLI that drives both from your terminal. This tutorial goes from no account to a deployed, secret-bearing API. The arc: **the platform map $\rightarrow$ Wrangler from zero $\rightarrow$ your first Worker $\rightarrow$ secrets and configuration $\rightarrow$ a Pages site $\rightarrow$ what belongs at the edge versus at home $\rightarrow$ automating the deploy safely (CI, secrets, and guardrails)**.
 
 ---
 
@@ -34,6 +34,14 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **`wrangler.toml`** | The configuration file for a Cloudflare Worker project — sets the Worker's name, entry point, and pinned runtime version | `name = "hello-worker"` sets the subdomain; `compatibility_date` pins runtime behavior |
 | **Worker secret** | A sensitive value (API key, token) stored on Cloudflare's servers and injected into the Worker at runtime — never written to any file or repository | `npx wrangler secret put UPSTREAM_API_KEY` — the value is entered interactively and stored server-side only |
 | **Edge network** | Cloudflare's globally distributed set of data centers that run Workers close to whoever is making the request — reducing latency by running code near the user rather than in one central location | A request from a user in Tokyo is handled by a Cloudflare data center in Asia, not by a server in Virginia |
+| **CI/CD pipeline** | Continuous Integration / Continuous Deployment — an automated sequence (build, test, deploy) that a service like **GitHub Actions** runs whenever code changes, so shipping is a repeatable pipeline rather than a person typing commands | A push to `main` triggers a workflow that runs your tests and then calls your deploy script — no human retyping `wrangler deploy` |
+| **Deploy script vs. workflow** | The **workflow** (YAML) *orchestrates*: it says when to run and in what order. The **deploy script** (`deploy.sh`) holds the actual deploy *logic*, so it is testable and runnable locally — not trapped inside CI-only YAML | `deploy.yml` checks out the code and runs `./deploy.sh`; `deploy.sh` is the same script you can run on your laptop |
+| **GitHub secret vs. variable** | A **secret** is an encrypted value (a token) that CI injects into the run and masks in logs; a **variable** is a plain, non-sensitive value visible in the UI. Secrets can be scoped to a repository or, more tightly, to an **environment** | `CLOUDFLARE_API_TOKEN` is an environment secret; `WORKER_NAME` is a plain variable |
+| **Log masking** | CI automatically replaces any registered secret value with `***` in the log output — but only if you never deliberately print it. `echo "$TOKEN"` or `set -x` can still leak it around the mask | The token appears as `***` in the Actions log unless a careless `echo` reveals its characters |
+| **OIDC / federated token** | A short-lived, per-run identity token the CI provider mints and signs. The cloud trusts it by verifying the **signature** against the provider's **public keys**, plus the **`audience`** and **`subject`** claims — no long-lived key is ever stored | GitHub issues a token whose `subject` says "repo X, branch `main`, environment `production`"; AWS verifies it and hands back credentials that expire in minutes |
+| **Least privilege** | Grant an identity exactly the permissions it needs and no more — a deploy token scoped to "edit Workers on this one account," never an all-powerful Global API Key | A scoped Cloudflare API token can deploy a Worker but cannot read your billing or delete your DNS |
+| **Deployment guardrail** | A control that governs *who* can deploy, *from where*, and *with whose approval* — environment protection with required reviewers, an actor allowlist, a branch restriction, or a concurrency/rate limit | The workflow refuses to deploy unless the actor is on the allowlist, the branch is `main`, and a reviewer approves the `production` environment |
+| **Idempotent / non-interactive script** | A script that produces the same end state whether run once or five times, and that never pauses for keyboard input — mandatory in CI, where there is no human to answer a prompt | `deploy.sh` creates the KV namespace only if it does not already exist, and passes assume-yes flags so nothing waits on `read` |
 
 ---
 
@@ -287,6 +295,329 @@ Before ruling, the Manager ensures the team has named the deciding principle for
 
 ---
 
+# Part IV: Automating the Deploy — Safely
+
+In this part, you will turn the manual `wrangler deploy` from Part II into an automated CI/CD pipeline — and, more importantly, keep it *safe*: deploy logic in a script rather than trapped in YAML, cloud credentials that are scoped and short-lived, and guardrails that decide who may deploy, from which branch, with whose approval. Everything here is vendor-neutral in principle; we use **GitHub Actions + Cloudflare** as the concrete example, and note where a cloud like AWS does it differently.
+
+> **⚠️ Before you begin:** everything in this part uses **your own sandbox account** and throwaway projects. **Never commit a token, API key, or password to a repository** — not even in a branch, not even briefly. If you create any `.env`, `.dev.vars`, or credentials file while following along, add it to `.gitignore` *before* you `git add` anything. A real secret in git history is compromised even after you delete it.
+
+## 8. The Human Gate Moves Into the Pipeline
+
+Every deploy in this course so far has ended with *you* typing `wrangler deploy` and confirming the prompt — the "a human runs every deploy" governance gate. Automation does not delete that gate; it **moves it into the pipeline**. Instead of trusting that a person eyeballed the command, we encode the checks — right branch, allowed person, reviewer approval — as rules the pipeline enforces on every run.
+
+The first principle of a safe pipeline is **where the deploy logic lives**. A tempting mistake is to write all the deploy steps as inline commands in the workflow YAML. That code is then trapped: you cannot run it on your laptop, you cannot unit-test it, and every fix requires a full CI round trip. Instead, put the logic in a **deploy script** the workflow merely *orchestrates*.
+
+The following `deploy.sh` is the entire deploy logic. Read the top three lines and the comments: it fails fast, it reads the token *from the environment* (never a hardcoded string), and it never prints the token.
+
+```bash
+#!/usr/bin/env bash
+# deploy.sh — the deploy LOGIC. The workflow only decides WHEN to run this.
+# Runs identically on your laptop and in CI, which makes it testable.
+set -euo pipefail          # -e: stop on any error  -u: error on unset var  -o pipefail: catch errors mid-pipe
+
+# The token arrives in the environment (from `wrangler secret`-style CI injection),
+# NOT as a command-line argument and NOT hardcoded here. Fail loudly if it is missing.
+: "${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN is not set}"
+
+WORKER_NAME="${WORKER_NAME:-<YOUR-WORKER-NAME>}"   # TODO: set via a plain (non-secret) variable
+
+echo "Deploying ${WORKER_NAME}..."   # safe: prints the NAME, never the token
+
+# Idempotent + non-interactive: wrangler reads CLOUDFLARE_API_TOKEN from the env automatically.
+# </dev/null guarantees no step can block waiting for keyboard input in CI.
+npx wrangler deploy --name "${WORKER_NAME}" </dev/null
+
+echo "Deploy complete."
+```
+
+The workflow that runs it is short, because the logic is elsewhere:
+
+```yaml
+# .github/workflows/deploy.yml  (skeleton — full guarded version appears in Section 11)
+- name: Deploy
+  run: ./deploy.sh          # <- the workflow orchestrates; the script does the work
+  env:
+    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # injected, then masked in logs
+    WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain, non-secret variable
+```
+
+## Model 2: The CI Deploy Pipeline
+
+A push (or a manual dispatch) sets off a chain of steps. The security of the whole thing is not in any one step — it is in the **gates** the request must pass before the deploy step ever runs. Study where each gate sits.
+
+```text
+   Developer                         GitHub Actions runner                    Cloudflare
+   ─────────                         ─────────────────────                    ──────────
+   git push  ──────────────►  ┌───────────────────────────────┐
+   (or manual  workflow_      │  GATE 1: branch == main?       │  no ─► ✗ stop
+    dispatch)                 │  GATE 2: actor on allowlist?   │  no ─► ✗ stop
+                              │  GATE 3: environment reviewer  │  no ─► ⏸ wait for approval
+                              │          approved "production"?│
+                              └───────────────┬───────────────┘
+                                              │ all gates pass
+                                              ▼
+                              ┌───────────────────────────────┐
+                              │  inject CLOUDFLARE_API_TOKEN   │   (masked as *** in logs)
+                              │  run ./deploy.sh               │ ───────────► wrangler deploy ─► ✓ live Worker
+                              └───────────────────────────────┘
+```
+
+The deploy step at the bottom is trivial — it is one script call. Everything valuable is the three gates above it, and each is a separate control you configure once and the pipeline enforces forever.
+
+### Critical Thinking Questions
+
+**Question 4.** In Part II, the safety of a deploy rested on a human seeing the `wrangler deploy` confirmation prompt and choosing to proceed. In the pipeline above, that prompt is gone (the script runs non-interactively). For each of the three gates, name *which part of the old human judgment it replaces* — what was the person implicitly checking that the gate now checks explicitly?
+
+[[___ Your answer here ___]]
+
+*Hint:* When a careful person ran a deploy by hand, they implicitly confirmed three things: that they were on the right branch (not a half-finished feature), that *they personally* were authorized to ship, and — on a team — that someone had signed off. Map each of those to Gate 1, Gate 2, and Gate 3.
+
+**Question 5.** A teammate argues it is simpler to put all the deploy commands directly in the workflow YAML and skip the `deploy.sh` file. Give two concrete costs of that choice — one about testing/debugging and one about what happens when the deploy breaks at 11pm before a demo.
+
+[[___ Your answer here ___]]
+
+*Hint:* If the logic is only in YAML, how do you reproduce a failure on your own machine? How many push-wait-read-log cycles does each one-character fix take, versus editing and re-running a script locally?
+
+---
+
+## 9. Secrets in CI: Injected, Masked, Never Printed
+
+In Part II, `wrangler secret put` stored a secret on Cloudflare for the *running Worker*. CI needs a different secret: the **deploy credential** the pipeline uses to *authenticate to Cloudflare in the first place*. That is the `CLOUDFLARE_API_TOKEN`, and it lives in GitHub's encrypted secret store — never in the repository.
+
+GitHub gives you three places to put values, and choosing correctly is the whole game:
+
+| Where | Sensitive? | Scope | Use it for |
+|-------|-----------|-------|------------|
+| **Repository secret** | Yes (encrypted, masked) | Every workflow in the repo | A credential many workflows share |
+| **Environment secret** | Yes (encrypted, masked) | Only jobs targeting that environment (e.g. `production`) — *and* only after the environment's protection rules pass | The deploy token — tie it to the protected `production` environment so approval is required to use it |
+| **Variable** | No (plain, visible) | Repo or environment | Non-secret config: the Worker name, the account subdomain |
+
+**The one rule that prevents most leaks:** a registered secret is automatically masked as `***` in logs — *unless you print it yourself*. These two lines defeat the mask and leak the token into a world-readable log:
+
+```bash
+echo "Deploying with token $CLOUDFLARE_API_TOKEN"   # ✗ NEVER — prints the secret verbatim
+set -x                                               # ✗ DANGEROUS in a script that touches secrets:
+                                                     #    it echoes every command with its expanded values
+```
+
+Instead, prove a secret arrived without revealing it — the same discipline as Exercise 2, now for CI:
+
+```bash
+# ✓ Confirms the token is present without exposing a single character of it
+if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
+  echo "CLOUDFLARE_API_TOKEN is set (length ${#CLOUDFLARE_API_TOKEN})."
+else
+  echo "CLOUDFLARE_API_TOKEN is missing." >&2; exit 1
+fi
+```
+
+And local development still uses `.dev.vars` / `.env` — which are **git-ignored**, always:
+
+```bash
+# .gitignore — add these the moment the files could exist, before your first git add
+.dev.vars
+.env
+*.local
+```
+
+[[MC]]
+Your deploy script needs the Cloudflare token, and you want a required reviewer to approve every production deploy. The correct place to store the token is:
+- ( ) Hardcoded in `deploy.sh` so the script is self-contained and works anywhere
+- ( ) A plain repository *variable*, so teammates can see it is configured
+- (x) A repository *environment secret* attached to a protected `production` environment, so it is encrypted, masked in logs, and only usable after the environment's approval rule passes
+- ( ) In `wrangler.toml`'s `[vars]` table, since the Worker reads everything from `env` anyway
+
+## 10. Least Privilege and Short-Lived Credentials
+
+A deploy identity should be able to do exactly one thing: deploy. The classic failure is using an all-powerful credential — Cloudflare's **Global API Key** or an AWS root/administrator key — "just to get it working," and never tightening it. If that credential leaks from a CI log or a compromised dependency, the blast radius is your entire account.
+
+**Cloudflare, concretely:** create a **scoped API token** (dashboard → My Profile → API Tokens) from a template limited to *Edit Cloudflare Workers*, restricted to the one account you deploy to. It can publish your Worker; it cannot read billing, touch DNS, or delete other projects. A practical workflow is **verify-broad-then-tighten**: if you are unsure which permissions a deploy needs, start slightly broad, confirm the deploy works, then remove permissions until it *just* stops working and add the last one back.
+
+**The transferable principle — short-lived beats long-lived.** A scoped token is still a *long-lived* secret sitting in a store. The stronger pattern, supported by clouds like AWS, is **OIDC federation**: the CI provider mints a fresh, signed identity token *for that one run*, and the cloud exchanges it for credentials that expire in minutes. **No key is ever stored.** Here is how the trust actually works:
+
+```text
+  GitHub Actions run                          Identity Provider          Cloud (AWS STS)
+  ──────────────────                          (token.actions.           ───────────────
+                                               githubusercontent.com)
+  1. job requests an OIDC token  ───────────►  mints + SIGNS a token
+     (id-token: write)                          with claims:
+                                                  aud = sts.amazonaws.com
+                                                  sub = repo:ORG/REPO:
+                                                        environment:production
+  2. present signed token  ─────────────────────────────────────────►  a) fetch provider PUBLIC KEYS (JWKS)
+                                                                        b) verify SIGNATURE  ─► forged? ✗
+                                                                        c) check AUDIENCE matches      ✗ if not
+                                                                        d) check SUBJECT matches the
+                                                                           role's trust policy         ✗ if not
+                                                                              │ all checks pass
+                                                                              ▼
+  3. ◄─────────────────────  short-lived credentials (expire in minutes) ◄─ assume-role
+```
+
+Three claims do the security work, and **the identity provider — not your workflow — stamps them**, which is why they cannot be forged:
+
+- **Signature:** the cloud verifies the token against the provider's *public* keys (its JWKS). Anyone can fetch the public keys, but only the provider holds the private key, so a token it did not mint fails verification.
+- **`audience` (`aud`):** who the token is *for*. Binding it to the specific cloud endpoint stops a token minted for one service from being replayed against another.
+- **`subject` (`sub`):** *which* workload this is — encoded as `repo:ORG/REPO:ref:refs/heads/main` or `repo:ORG/REPO:environment:production`. The cloud's trust policy pins the exact subject it will accept.
+
+The **classic, dangerous mistake** is a loose subject scope. A trust policy that accepts `repo:ORG/*` — or worse, `*` — will hand production credentials to *any* repository (or any branch, or a pull request from a fork). Pin the subject to the exact repo **and** branch/environment you deploy from:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": { "Federated": "arn:aws:iam::<ACCOUNT_ID>:oidc-provider/token.actions.githubusercontent.com" },
+    "Action": "sts:AssumeRoleWithWebIdentity",
+    "Condition": {
+      "StringEquals": {
+        "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+        "// TODO pin the EXACT repo + environment — never a wildcard": "",
+        "token.actions.githubusercontent.com:sub": "repo:<ORG>/<REPO>:environment:production"
+      }
+    }
+  }]
+}
+```
+
+And the *permission* policy the role grants should be least-privilege too — only the actions the deploy performs, never `"Action": "*"`:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["s3:PutObject", "cloudfront:CreateInvalidation"],
+    "Resource": ["arn:aws:s3:::<YOUR-SITE-BUCKET>/*", "arn:aws:cloudfront::<ACCOUNT_ID>:distribution/<DIST_ID>"]
+  }]
+}
+```
+
+> **⚠️ Common Misconception:** "OIDC is complicated, so a stored token must be the simpler and therefore safer choice." The opposite is usually true. A stored long-lived token is a standing liability — it can leak, and until someone notices and rotates it, an attacker has your access. An OIDC token is minted per run, expires in minutes, and is bound by its subject to one repository and branch. The *setup* is a bit more involved; the *ongoing risk* is far lower. Cloudflare's Wrangler flow uses a scoped API token today, so you still hold one carefully-scoped secret — but the direction every mature pipeline moves is: smallest scope, shortest life, no key at rest.
+
+### Critical Thinking Questions
+
+**Question 6.** An OIDC trust policy is set to accept subject `repo:<ORG>/*`. Describe a concrete attack: what could a student who creates *any* new repository under that organization do, and what exactly did the wildcard give them that a pinned subject would not?
+
+[[___ Your answer here ___]]
+
+*Hint:* If the cloud accepts a token from *any* repo in the org, then the security no longer depends on *which* code is deploying. What could someone put in a brand-new repo's workflow, and whose credentials would it run with?
+
+**Question 7.** Explain why the cloud verifying the token's signature against the provider's *public* keys is enough to trust it — even though those public keys are, by definition, public and anyone can read them. What does the provider hold that no one else does?
+
+[[___ Your answer here ___]]
+
+*Hint:* Signatures are made with a private key and checked with the matching public key. Reading the public key lets you *verify* a signature; it does not let you *create* one. Who is the only party that can produce a signature the public key will accept?
+
+---
+
+## 11. Guardrails: Who May Deploy, From Where, With Whose Approval
+
+With credentials scoped, the last layer is governance: constraining *who* can trigger a deploy and *under what conditions*. Four guardrails, from simplest to strongest:
+
+- **Branch restriction** — deploy only from a trusted branch, so an unreviewed feature branch can never reach production. (`on: push: branches: [main]`, and/or check `github.ref` in the job.)
+- **Actor allowlist** — the job runs only if the triggering user is on an explicit list, binding deploys to specific people. (`if: contains(fromJSON('["<USER1>","<USER2>"]'), github.actor)`.)
+- **Environment protection + required reviewers** — target a named `environment:` (e.g. `production`); a listed reviewer must approve before the job proceeds, and the environment's secrets are unavailable until they do. **Caveat, phrased to stay true over time:** the availability of required-reviewer protection depends on your repository's visibility and your account's plan tier — on some tiers it is limited to public repositories. Treat it as "check what your repo/plan supports right now," not a fixed guarantee.
+- **Manual dispatch vs. auto-trigger** — `workflow_dispatch` requires a person to click *Run* (or call the API), keeping a human in the loop; a `push` trigger deploys automatically on every merge. Choose deliberately: auto-trigger is convenient but removes the last manual checkpoint, so it belongs *only* behind the gates above.
+- **Rate / concurrency limit** — a `concurrency:` group cancels or queues overlapping runs so two deploys cannot race, and prevents a rapid series of pushes from stampeding the deploy.
+
+Here is the full guarded workflow — the skeleton from Section 8 with every gate wired in. Every `<PLACEHOLDER>` is a TODO you fill in for your own repo.
+
+```yaml
+# .github/workflows/deploy.yml
+name: deploy
+
+on:
+  workflow_dispatch:                 # manual: a human (or an authorized skill) clicks/calls Run
+    inputs:
+      environment:
+        description: "Target environment"
+        default: production
+  push:
+    branches: [main]                 # GATE 1 (branch): auto-deploy only from main
+
+concurrency:                         # rate/serialize: no overlapping production deploys
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production          # GATE 3: required-reviewer approval + environment secrets
+    # GATE 2 (actor allowlist): only these users may actually run the deploy
+    if: contains(fromJSON('["<YOUR-GH-USERNAME>"]'), github.actor)
+    permissions:
+      contents: read
+      id-token: write                # only needed for the OIDC path (Section 10)
+    steps:
+      - uses: actions/checkout@<PINNED_SHA_OR_TAG>   # TODO: pin the action version
+      - uses: actions/setup-node@<PINNED_SHA_OR_TAG>
+        with:
+          node-version: "20"
+      - name: Deploy
+        run: ./deploy.sh             # the workflow orchestrates; the script does the work
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # environment secret, masked
+          WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain variable
+```
+
+## 12. Automation-Safe Scripts: No Prompts, No Hangs
+
+The `wrangler deploy` you ran in Part II paused for a confirmation — the human gate. In CI there is no human, and a script that waits for input does not fail cleanly: it **hangs the runner** until the job times out (minutes of wasted CI), or it silently consumes piped input meant for something else.
+
+Two rules make a script CI-safe:
+
+- **Never wait for input.** Pass assume-yes flags (`--yes`, `--force`, or the tool's non-interactive mode), set `CI=true` where the tool honors it, and redirect stdin from nothing with `</dev/null` so any accidental prompt gets EOF and the command proceeds or fails instead of blocking.
+- **Be idempotent.** Running the script twice must reach the same end state — create-if-not-exists, not create-and-crash-if-it-exists. A re-run after a flaky network should be harmless.
+
+```bash
+# ✗ Hangs forever in CI — there is no one to press a key:
+read -p "Deploy to production? [y/N] " ok      # blocks on stdin; the runner waits, then times out
+
+# ✓ Non-interactive and idempotent:
+npx wrangler deploy --name "$WORKER_NAME" </dev/null   # </dev/null => any stray prompt gets EOF
+
+# ✓ Idempotent setup — create the KV namespace only if it is absent:
+if ! npx wrangler kv namespace list </dev/null | grep -q "$KV_TITLE"; then
+  npx wrangler kv namespace create "$KV_TITLE" </dev/null
+fi
+```
+
+> **How to recognize the failure:** a CI job that "just sits there" and eventually hits its time limit, with the log frozen on a step that *would* have asked a question, is almost always a script blocked on a prompt. The fix is upstream — remove the interactive `read`, add the assume-yes flag, or append `</dev/null`.
+
+## 13. A Claude Skill That Requests the Deploy — But Cannot Bypass the Gates
+
+You can let an agent *initiate* a deploy without giving it any power to bypass your guardrails. The key idea: a skill only **requests** a run via `workflow_dispatch`; the guardrails from Section 11 (branch, actor allowlist, environment approval) are enforced **server-side by the pipeline**, so the request is powerless unless it satisfies them.
+
+A minimal Claude skill is a folder with a `SKILL.md` describing when and how to invoke the workflow:
+
+```markdown
+---
+name: deploy-worker
+description: Request a production deploy of the course Worker by dispatching the
+  guarded GitHub Actions workflow. Use only when the user explicitly asks to deploy.
+---
+
+# deploy-worker
+
+To request a deploy, dispatch the workflow on the `main` branch:
+
+    gh workflow run deploy.yml --ref main -f environment=production
+
+This only *requests* a deploy. The pipeline still enforces, server-side:
+  - branch must be `main`
+  - the triggering actor must be on the workflow's allowlist
+  - a required reviewer must approve the `production` environment
+
+If any gate fails, the run stops or waits — the skill cannot override it.
+Never put a token in this skill or in the command; the workflow reads the
+CLOUDFLARE_API_TOKEN environment secret itself.
+```
+
+This is the whole security lesson in miniature: **the skill can ask, but the environment decides.** Convenience (an agent kicks off the deploy) and control (a human still approves production, from the right branch, as an allowed actor) are not in tension — the guardrails let you have both.
+
+---
+
 ## Exercises
 
 **Exercise 1.** Hello, edge. Scaffold, run locally, and deploy the JSON Worker from Section 4. Submit the public URL and the `curl` outputs for all three routes, including the 404.
@@ -388,6 +719,77 @@ curl https://throwaway-worker.<your-subdomain>.workers.dev/  # should fail
 
 *You've succeeded when:* You can describe what happens at the URL after deletion, whether the secrets stored via `wrangler secret put` are also deleted, and one sentence on what "reversibility" means for deployed Workers.
 
+**Exercise 6.** Break-it-down: audit a flawed pipeline. The workflow and script below contain **five** distinct security or automation defects. Find each one, name why it is dangerous, and write the corrected line.
+
+*What to do:* Read the two files carefully. For each defect, write: (1) the offending line, (2) the risk in one sentence, (3) the fix. There are five.
+
+*Starter hint:* The five categories to hunt for are — a hardcoded secret, an over-broad credential, a missing who/where guardrail, a secret leaked to the logs, and a script that will hang in CI. Look for one of each.
+
+```yaml
+# .github/workflows/deploy.yml  (DELIBERATELY FLAWED — do not copy)
+on:
+  push:                                   # (defect) which branches? any branch can deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest                # (defect) no environment, no actor check
+    steps:
+      - uses: actions/checkout@main
+      - run: |
+          echo "token is $CLOUDFLARE_API_TOKEN"   # (defect) prints the secret past the mask
+          ./deploy.sh
+        env:
+          CLOUDFLARE_API_TOKEN: cf_live_9s8d7f6g5h4j3k2l1   # (defect) hardcoded secret in the repo
+```
+
+```bash
+# deploy.sh  (DELIBERATELY FLAWED — do not copy)
+set -x                                    # (defect) echoes every command + expanded secret
+read -p "Deploy now? [y/N] " ok           # (defect) hangs forever in CI — no human to answer
+npx wrangler deploy --api-token GLOBAL_KEY # (over-broad: a global key, not a scoped token)
+```
+
+*You've succeeded when:* You have listed all five defects with a fix for each, and can explain — in one sentence — which single defect you would fix *first* if you could only fix one, and why.
+
+**Exercise 7.** Add one guardrail. Starting from the guarded workflow in Section 11, wire in **one** guardrail end-to-end and prove it works: an actor allowlist, a branch restriction, **or** environment required-reviewer approval. If you have no Cloudflare account, use the **simulated-deploy fallback** — replace the deploy step with `run: echo "would deploy ${WORKER_NAME}"` — so you still exercise the trigger, secret injection, and guardrail without a cloud bill.
+
+*What to do:* Create a minimal repo with `deploy.yml`. Add your chosen guardrail. Then *demonstrate the block*: trigger the workflow in a way that should be refused (wrong branch, disallowed actor, or unapproved environment) and capture the run showing it stopped or waited; then trigger it correctly and show it proceeds.
+
+*Starter hint:* The easiest to demonstrate quickly is the branch restriction or the actor allowlist — push from a non-`main` branch, or have a teammate (not on the allowlist) trigger it, and screenshot the skipped/blocked job. The simulated deploy step keeps everything free:
+
+```yaml
+      - name: Deploy (simulated)
+        run: echo "would deploy ${WORKER_NAME} — real wrangler deploy goes here"
+        env:
+          WORKER_NAME: ${{ vars.WORKER_NAME }}
+```
+
+*You've succeeded when:* You can show one run that was correctly *refused* by your guardrail and one that was correctly *allowed*, and explain which human judgment the guardrail replaced.
+
+**Exercise 8.** The skill that asks, the pipeline that decides. Author a minimal `deploy-worker` Claude skill (Section 13) that dispatches your guarded workflow, then show that the guardrail still holds even though an agent initiated the run.
+
+*What to do:* Write the `SKILL.md` with the `gh workflow run` invocation. Use it to request a deploy under a condition your guardrail forbids (e.g. the skill runs as a non-allowlisted actor, or targets a branch other than `main`). Capture the result.
+
+*Starter hint:* The point is not that the skill succeeds — it is that the skill **cannot bypass** the gates. Requesting a deploy that violates a guardrail should be stopped by the pipeline exactly as a human request would be. Never place a token in the skill or the command.
+
+*You've succeeded when:* You can show the skill *requesting* a deploy, the pipeline *enforcing* the guardrail server-side, and can state in one sentence why "the skill can ask, but the environment decides" is the safe division of authority.
+
+---
+
+### Self-Check Before You Ship
+
+Run this checklist against your pipeline before you call it done. Every box should be checked.
+
+| ✓ | Check | Why it matters |
+|---|-------|----------------|
+| ☐ | No secret, token, or key appears anywhere in the repo (or its git history) | A committed secret is compromised even after deletion |
+| ☐ | The deploy credential is a **scoped** token (or OIDC role), never a Global/root key | Limits the blast radius if it ever leaks |
+| ☐ | The token is stored as a GitHub **secret** (ideally environment-scoped), not a variable or a file | Encrypted, masked in logs, gated by the environment |
+| ☐ | No `echo` of the secret and no `set -x` in scripts that touch it | Both defeat automatic log masking |
+| ☐ | At least one guardrail is active: branch restriction, actor allowlist, or reviewer approval | Constrains who deploys, from where, with whose sign-off |
+| ☐ | The deploy script is **non-interactive** (assume-yes / `</dev/null`) and **idempotent** | It cannot hang the runner, and a re-run is harmless |
+| ☐ | Deploy logic lives in a **script** the workflow calls, runnable and testable locally | Not trapped in CI-only YAML |
+| ☐ | `.dev.vars` / `.env` are in `.gitignore` | Local secrets never reach the repo |
+
 ---
 
 ## Reflection Prompt
@@ -410,8 +812,13 @@ Write a combined reflection of 150–200 words addressing at least two of the th
 
 ---
 
-## 9. Further Reading
+## 14. Further Reading
 
 - Cloudflare Workers documentation (developers.cloudflare.com/workers): the Get Started path and the `fetch` handler reference.
 - Cloudflare Pages documentation: direct upload versus Git integration.
 - The Wrangler command reference: `dev`, `deploy`, `secret`, `tail`, `pages deploy`, `delete`.
+- Cloudflare CI/CD with GitHub Actions and scoped API tokens (developers.cloudflare.com/workers → "CI/CD" and "Create API token"): the concrete deploy-from-Actions path used in Part IV.
+- GitHub Actions — "Security hardening for GitHub Actions" (docs.github.com): using secrets, avoiding secret leakage in logs, and pinning action versions.
+- GitHub Actions — "About security hardening with OpenID Connect" and "Configuring OIDC in AWS" (docs.github.com): how the signed per-run token, `audience`, and `subject` claims work, and how to pin the `sub` to your repo/branch/environment.
+- GitHub — "Using environments for deployment" and "Reviewing deployments" (docs.github.com): environment protection rules and required reviewers (availability varies by repository visibility and plan tier — check what applies to yours).
+- Claude Code — Agent Skills documentation (docs.anthropic.com): the `SKILL.md` format used by the deploy-request skill in Section 13.
