@@ -618,6 +618,57 @@ This is the whole security lesson in miniature: **the skill can ask, but the env
 
 ---
 
+## 14. Code Review and Spending CI Credits Wisely
+
+Two practical realities sit on top of everything above: *someone (or something) reviews the change before it ships*, and *every CI run costs something*. Both are levers you control.
+
+**Automated code review — a second reviewer, not the only one.** Tools like **GitHub Copilot code review** can be attached to a pull request to post inline comments automatically — flagging likely bugs, missing error handling, or style issues — either on every PR or on request (`@` the reviewer, or click *Request review*). Used well, it is a fast first pass that catches easy problems before a human spends attention on them. Two rules keep it honest:
+
+- **It is advisory, not authoritative.** An AI reviewer can be confidently wrong, miss a real defect, or comment on the wrong thing. It does **not** replace the human required-reviewer gate from Section 11 — treat its comments as suggestions you verify, exactly as you would a classmate's review. For a *security-sensitive* change (a new secret, a widened token scope, an OIDC trust policy), a human still signs off.
+- **Never let a bot's approval satisfy a protection rule.** Required-reviewer approval on the `production` environment should require a *person*. An automated review comment is input to that person's decision, not a substitute for it.
+
+**Automatic vs. manual runs — CI time is metered.** CI providers bill by the minute (GitHub Actions consumes a monthly allowance of runner minutes; private-repo minutes are limited, and some runners cost a multiplier). A workflow set to run on *every* push to *every* branch can quietly burn that allowance — and slow everyone down. The same triggering controls that made deploys *safe* also make them *cheap*:
+
+- **Manual dispatch for expensive jobs.** Put costly workflows (full deploys, large test matrices, browser E2E) behind `workflow_dispatch` so they run when a person asks, not on every commit. This is the credit-saving twin of the human gate.
+- **Scope automatic triggers.** Restrict `push`/`pull_request` triggers to the branches and paths that matter, so a docs-only edit does not trigger a full build:
+
+```yaml
+on:
+  push:
+    branches: [main]                 # not every branch
+    paths: ["src/**", "deploy.sh"]   # skip runs when only docs/images change
+  workflow_dispatch:                 # expensive path stays manual/on-demand
+```
+
+- **Cancel superseded runs.** A `concurrency` group with `cancel-in-progress: true` stops an older run when a newer commit arrives, so you are not paying for a build that is already obsolete (use this for *test/CI* jobs; keep `cancel-in-progress: false` for the *deploy* job so a live deploy is never interrupted mid-flight):
+
+```yaml
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true           # newer push cancels the older, still-running CI
+```
+
+- **Trim what runs.** Skip redundant jobs with `if:` conditions, keep the test matrix as small as it can be, and cache dependencies so each run does less work.
+
+The through-line of this whole part holds here too: **automatic where it is cheap and safe, manual where it is expensive or consequential.** You are deciding, per workflow, how much to trade convenience for control and cost.
+
+[[MC]]
+Your team's full deploy workflow is burning the month's Actions minutes because it runs on every push to every branch. The change that saves the most credits *without* weakening the production safety gates is:
+- ( ) Delete the required-reviewer rule on the `production` environment so runs stop waiting
+- ( ) Hardcode the Cloudflare token so runs skip the secret-fetch step
+- (x) Restrict the trigger to `main` (plus `paths` filters) and move the full deploy behind `workflow_dispatch`, so it runs on demand rather than on every commit
+- ( ) Give every teammate admin so anyone can cancel runs manually
+
+### Critical Thinking Question
+
+**Question 8.** GitHub Copilot code review comments on a pull request that widens an OIDC trust policy's subject to `repo:<ORG>/*`, and marks the PR as reviewed. Your `production` environment also requires a human reviewer. Explain why the automated review is useful here but must **not** be what unblocks the deploy — and describe the split of responsibility between the bot and the human reviewer.
+
+[[___ Your answer here ___]]
+
+*Hint:* What is the bot good at (spotting the wildcard, fast, on every PR) versus what does accountability for shipping a credential change require (a person who understands the blast radius and can be answerable for the decision)? Recall the wildcard risk from Question 6.
+
+---
+
 ## Exercises
 
 **Exercise 1.** Hello, edge. Scaffold, run locally, and deploy the JSON Worker from Section 4. Submit the public URL and the `curl` outputs for all three routes, including the 404.
@@ -812,7 +863,7 @@ Write a combined reflection of 150–200 words addressing at least two of the th
 
 ---
 
-## 14. Further Reading
+## 15. Further Reading
 
 - Cloudflare Workers documentation (developers.cloudflare.com/workers): the Get Started path and the `fetch` handler reference.
 - Cloudflare Pages documentation: direct upload versus Git integration.
@@ -822,3 +873,6 @@ Write a combined reflection of 150–200 words addressing at least two of the th
 - GitHub Actions — "About security hardening with OpenID Connect" and "Configuring OIDC in AWS" (docs.github.com): how the signed per-run token, `audience`, and `subject` claims work, and how to pin the `sub` to your repo/branch/environment.
 - GitHub — "Using environments for deployment" and "Reviewing deployments" (docs.github.com): environment protection rules and required reviewers (availability varies by repository visibility and plan tier — check what applies to yours).
 - Claude Code — Agent Skills documentation (docs.anthropic.com): the `SKILL.md` format used by the deploy-request skill in Section 13.
+- GitHub Copilot — "Using GitHub Copilot code review" (docs.github.com): requesting automatic or on-demand AI review on pull requests, and its limitations as an advisory (not authoritative) reviewer.
+- GitHub Actions — "About billing for GitHub Actions" and "Usage limits, billing, and administration" (docs.github.com): how runner minutes are metered and how private-repo/runner multipliers affect cost.
+- GitHub Actions — workflow trigger reference (`on:`, `paths`/`branches` filters, `workflow_dispatch`) and "Control the concurrency of workflows" (docs.github.com): the credit-saving controls in Section 14.
