@@ -30,7 +30,7 @@ Your entries are organized around the four Open Questions that run through the w
 - **What should matter to me?** — What do you actually value in a system you would deploy: capability, privacy, cost, control, transparency? Where have those values collided this term?
 - **How should we live together?** — Who is affected by the agents we build, and who decides? Where does responsibility sit when an autonomous system errs?
 - **How can we understand the world?** — What did a by-hand calculation, a broken pipeline, or a failed evaluation teach you that the abstraction hid?
-- **What will I do?** — Given what you now know about how these systems work and fail, what will you build, refuse to build, or build differently?
+- **What will I do?** — Given what you now know about how these systems work and fail, what will you build, refuse to build, or build differently? For your final entry, one strong way to answer is to polish the drafted project post from the ShipIt checklist: the problem, what you built, one number, what you learned — whether or not you ever publish it, writing it makes the claim concrete.
 
 ## What Goes In It
 
