@@ -879,16 +879,7 @@ This course is deliberately **project-based**: the semester-long team project is
 
 **Community partners.** Each team anchors its project in the needs of a real community stakeholder. Your Stakeholder Brief, proposal, gallery-walk feedback pass, and Demo Day partner-facing artifact all build on that relationship — Demo Day itself is a multi-audience presentation, for your technical peers and for the stakeholders your project serves.
 
-**Community partner roster (in progress).** The confirmed roster is published here and discussed in class before the Stakeholder Brief kickoff (week 2). Confirmation is underway; standing on-campus partners are always available in the meantime.
-
-| Partner | Focus area | Status |
-|---|---|---|
-| *To be announced* | *Confirmation in progress* | Pending |
-| *To be announced* | *Confirmation in progress* | Pending |
-| *To be announced* | *Confirmation in progress* | Pending |
-| Standing on-campus partners: Disability and Access Services, Myrin Library, the Office of Sustainability, the Center for Writing and Speaking, and campus operations offices | Accessibility, information access, sustainability, communication, operations | Always available |
-
-If no roster partner fits your team's interests, ask: I will broker an introduction to a standing partner within one week of the request — no team's Stakeholder Brief is blocked by the roster.
+**Community partner roster.** Partners are confirmed each semester and shared in class before the Stakeholder Brief kickoff (week 2), rather than published on this page. If no partner fits your team's interests, ask: I will broker an introduction within one week of the request — no team's Stakeholder Brief is blocked by the roster.
 
 This semester the section runs as **4 teams of 4 students**, so every team is large enough to rotate roles and small enough that no one can hide.
 
