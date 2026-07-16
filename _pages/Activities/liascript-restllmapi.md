@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RESTful LLM Access: The api/v1 Paradigm
 
-This module develops the mechanics of talking to a language model over HTTP — the protocol that all provider-agnostic AI code uses under the hood. We move from **what REST is $\rightarrow$ the two key LLM endpoints $\rightarrow$ writing the same request three ways $\rightarrow$ tool calling over the API $\rightarrow$ switching providers by changing one line**.
+This module develops the mechanics of talking to a language model over HTTP — the protocol that all provider-agnostic AI code uses under the hood. We move from **what REST is $\rightarrow$ the two key LLM endpoints $\rightarrow$ writing the same request three ways $\rightarrow$ tool calling over the API $\rightarrow$ switching providers by changing one line $\rightarrow$ building prompts from templates, voting for consensus, and chaining stages with JSON**.
 
 ---
 
@@ -35,6 +35,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Tool call** | A structured JSON object the model returns instead of plain text when it wants to invoke a function; the surrounding program executes the function and sends back the result | `{"tool_calls": [{"function": {"name": "get_weather", "arguments": "{\"city\": \"Collegeville\"}"}}]}` |
 | **Streaming** | Sending the model's response one token at a time as it is generated, rather than waiting for the full response | `"stream": true` in the request body; response arrives as a series of `data: {...}` lines |
 | **LiteLLM** | A proxy server and Python library that accepts OpenAI-format requests and translates them to the format required by 100+ different providers | `litellm.completion(model="ollama/llama3.2", messages=[...])` |
+| **Prompt Template** | A string with named `{}` blanks that you fill at call time; the model sees only the rendered result | `"Context:\n{context}\n\nQuestion: {question}".format(...)` |
+| **Consensus / Self-Consistency** | Sampling the same prompt several times at nonzero temperature and aggregating (e.g., majority vote) to reduce variance | 5 samples of a sentiment label → `Counter` majority vote |
+| **Pipeline / Chaining** | Feeding one prompt's structured (JSON) output into the blanks of the next prompt's template | Stage 1 emits `{"topic": "billing", "urgent": true}` → fills Stage 2's `{topic}` blank |
 
 ---
 
@@ -456,11 +459,289 @@ What is the minimum change needed to point an OpenAI Python SDK call at a local 
 
 ---
 
-# Part V: Synthesis and Practice
+# Part V: Prompt Templating, Consensus, and Pipelines
 
-In this part, you will apply everything from Parts I–IV in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
+Every request so far sent a hand-written `messages` array. Real systems rarely hand-write the `content` field — they **generate it from a template**, filling `{}` blanks with data that changes each call. In this part you will build prompts from templates, run the *same* template many times and take a **consensus** vote, and **chain stages** so that one prompt's structured JSON output becomes the next prompt's input. These three moves — fill, vote, chain — are the backbone of every production LLM pipeline.
 
-## 7. Exercises
+## 7. Templating the Prompt: Filling `{}` Placeholders
+
+A **prompt template** is a string with named blanks you fill at call time. In Python the mechanism is `str.format()` (or an f-string): `"Answer as a {tone} expert: {question}".format(tone="terse", question=q)`. The model never sees the blanks — it sees the fully rendered string.
+
+**Why this matters:** Templating is the single mechanism behind three things you have already met. **Memory** pastes prior turns into a `{history}` blank. **RAG** pastes retrieved documents into a `{context}` blank. **Few-shot prompting** pastes worked examples into an `{examples}` blank. Once you see that "context injection" is just `.format()`, the whole family collapses into one idea: *decide what text goes in the blank, then render and send.*
+
+The clearest demonstration is a **before/after** contrast on a `{context}` blank. With the blank empty, the model must guess; with the blank filled from a knowledge source, it answers from the injected facts — the exact mechanism of RAG and of memory, made visible.
+
+---
+
+## Code Cell
+
+```python
+import requests
+
+ENDPOINT = "http://localhost:11434/v1/chat/completions"
+MODEL = "llama3.2"
+
+def complete(prompt_text, temperature=0.0, seed=42):
+    """Render a template into one user message and return the reply text."""
+    try:
+        r = requests.post(ENDPOINT, json={
+            "model": MODEL,
+            "messages": [{"role": "user", "content": prompt_text}],
+            "stream": False, "temperature": temperature, "seed": seed
+        }, timeout=120)
+        r.raise_for_status()
+        return r.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        return ""
+
+# A template with two named blanks. The model sees only the rendered string.
+TEMPLATE = """Use ONLY the context below to answer. If the context does not
+contain the answer, say "I don't know."
+
+Context:
+{context}
+
+Question: {question}
+Answer:"""
+
+question = "What port does our local Ollama server listen on?"
+
+# Pretend this came from a vector store / notes file — the 'retrieved' knowledge.
+retrieved = "Our lab's Ollama instance is reachable at http://localhost:11434 (port 11434)."
+
+# --- BEFORE: empty {context}. The model has no grounded source. ---
+print("=== BEFORE (empty context) ===")
+print(complete(TEMPLATE.format(context="(none provided)", question=question)))
+
+# --- AFTER: filled {context}. Same call, now grounded in injected facts. ---
+print("\n=== AFTER (context injected) ===")
+print(complete(TEMPLATE.format(context=retrieved, question=question)))
+```
+
+---
+
+## Model 4: The Template as an Injection Point
+
+The two calls above differ only in what got pasted into `{context}`. The "after" call can cite port 11434; the "before" call cannot know it. This is retrieval and memory reduced to their mechanical core: **fill a blank, render, send.**
+
+### Critical Thinking Questions
+
+10. The template instructs the model to answer "I don't know" when the context is insufficient. Why is that instruction *in the template itself* rather than a separate rule enforced by your code? What failure does it guard against when `{context}` is empty or irrelevant?
+
+    > *Hint: The model only obeys text it can see. Putting the abstention rule inside the rendered string is the only way the model knows the rule exists. It guards against confident hallucination — without it, an empty `{context}` invites the model to invent a plausible-sounding port number.*
+
+11. Suppose `{question}` is filled with untrusted user text that itself contains the substring `{context}` or a stray `}`. Explain how naive `.format()` could break or be abused, and name one safer way to build the string.
+
+    > *Hint: `str.format()` treats `{` and `}` as special. User text containing braces can raise `KeyError`/`IndexError` or, worse, reference other format fields. Safer options: escape user text, use a templating library that separates data from format, or build the message from a structured `messages` array so roles stay distinct. This is the prompt-injection surface from the security activities.*
+
+12. A JSON example inside a template (for instance, showing the model the shape `{"topic": "..."}`) collides with `.format()` because the braces are interpreted as fields. What is the fix, and why does this collision push many teams toward f-strings or dedicated template engines?
+
+    > *Hint: In `.format()` you must double every literal brace — `{{` and `}}` — so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*
+
+[[MC]]
+In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the model actually receive when you call `.format(context=docs, question=q)`?
+- ( ) The template string with the blanks still shown as `{context}` and `{question}`
+- ( ) Two separate API requests, one per blank
+- (x) A single fully rendered string with `docs` and `q` substituted in place of the blanks
+- ( ) A structured object where `context` and `question` remain separate fields the model can query
+
+> **⚠️ Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again — if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
+
+---
+
+## 8. Multi-Prompting and Consensus (Self-Consistency)
+
+A single sample from a model is a roll of the dice: at `temperature > 0` the same prompt can yield different answers. **Consensus** (also called *self-consistency*, Wang et al. 2022) turns that variance into a strength — run the *same* filled template several times, then aggregate. For a question with a discrete answer, take the **majority vote**; for open-ended text, pass the candidates to an *aggregator* prompt that reconciles them.
+
+**Why this matters:** Voting is cheap reliability. One sample at `temperature=0.7` might slip; five samples where four agree is a far stronger signal, and the disagreement rate itself tells you how confident the model is. This is the same "sample-and-reduce" pattern behind ensemble methods in classical ML — applied to prompts instead of classifiers.
+
+---
+
+## Code Cell
+
+```python
+import requests
+from collections import Counter
+
+ENDPOINT = "http://localhost:11434/v1/chat/completions"
+MODEL = "llama3.2"
+
+def complete(prompt_text, temperature=0.0, seed=None):
+    body = {"model": MODEL,
+            "messages": [{"role": "user", "content": prompt_text}],
+            "stream": False, "temperature": temperature}
+    if seed is not None:
+        body["seed"] = seed
+    try:
+        r = requests.post(ENDPOINT, json=body, timeout=120)
+        r.raise_for_status()
+        return r.json()["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        return ""
+
+# Template that forces a one-word answer so votes are comparable.
+CLASSIFY = """Classify the sentiment of the review as exactly one word:
+POSITIVE, NEGATIVE, or NEUTRAL. Answer with the single word only.
+
+Review: {review}
+Sentiment:"""
+
+review = "The battery lasts forever, but the screen scratches if you look at it wrong."
+
+# Draw N independent samples at nonzero temperature (vary seed so they differ).
+N = 5
+votes = []
+for i in range(N):
+    ans = complete(CLASSIFY.format(review=review), temperature=0.8, seed=i).upper()
+    # Normalize: keep only the label word if the model added extra text.
+    label = next((w for w in ("POSITIVE", "NEGATIVE", "NEUTRAL") if w in ans), ans)
+    votes.append(label)
+    print(f"sample {i}: {label}")
+
+tally = Counter(votes)
+winner, count = tally.most_common(1)[0]
+print(f"\nTally: {dict(tally)}")
+print(f"Consensus: {winner}  (agreement {count}/{N} = {count/N:.0%})")
+```
+
+---
+
+## Model 5: When the Vote Is Split
+
+The tally reports both a winner *and* an agreement fraction. A 5/5 sweep and a 2/2/1 split both produce a "winner," but they mean very different things about model confidence.
+
+### Critical Thinking Questions
+
+13. The classification template ends with `Sentiment:` and demands a single word. Why does forcing a constrained output format matter *specifically* for consensus voting? What breaks if each sample returns a free-form paragraph instead?
+
+    > *Hint: Votes are only comparable if they are the same *kind* of token. Free-form paragraphs cannot be tallied by `Counter` — "mostly positive with caveats" and "leans positive" are the same vote but count as different strings. Constraining the output to a fixed label set makes aggregation a simple exact-match count.*
+
+14. Consensus at `temperature=0.8` costs `N`× the tokens of a single call. Give one scenario where that cost is clearly worth it and one where a single `temperature=0` call is the better engineering choice.
+
+    > *Hint: Worth it: a high-stakes or genuinely ambiguous classification where a wrong single answer is expensive, and the agreement fraction gives you a usable confidence signal. Not worth it: a deterministic lookup or a low-stakes bulk job where `temperature=0` already gives a stable answer and 5× cost buys nothing.*
+
+15. The code normalizes each answer to one of three labels before voting. Redesign this so that a sample the model refuses to classify (returns none of the three words) is counted as an explicit `ABSTAIN` rather than silently polluting the tally. Why is an explicit abstain safer than dropping the sample?
+
+    > *Hint: The current `next(..., ans)` fallback stuffs the raw model text in as a "vote," which can create spurious singleton labels. Mapping unrecognized output to `ABSTAIN` keeps the denominator honest: `3 POSITIVE / 1 NEGATIVE / 1 ABSTAIN` truthfully reports that one sample failed, rather than hiding it or inflating a real label's count.*
+
+> **⚠️ Common Misconception:** "More samples always means a more correct answer." Voting reduces *variance*, not *bias*. If the model is systematically wrong about something (it consistently misreads a domain term), all five samples will agree on the wrong answer and consensus will report high confidence in a mistake. Self-consistency improves reliability only when the correct answer is the single most likely one and errors are scattered — it cannot fix a model that is confidently and consistently wrong.
+
+---
+
+## 9. Chaining Stages: Templated JSON Hand-Off
+
+The most powerful use of templates is **pipelining**: the output of one prompt becomes the input that fills the *next* prompt's blanks. To make the hand-off reliable, an early stage emits **structured JSON** — a small object of "flags" and extracted fields — which your program parses and injects into the next template. This is how routing, extraction-then-generation, and multi-step agents are built.
+
+**Why this matters:** Free text is hard for a program to branch on; JSON is trivial. When stage 1 returns `{"topic": "billing", "urgent": true, "needs_calc": false}`, your code can *route* on `topic`, *escalate* on `urgent`, and *skip* a calculator call when `needs_calc` is false — then fill only the relevant fields into stage 2's template. The model does the understanding; your code does the control flow. This is the same "structured outputs" idea you will formalize elsewhere, applied as the glue between pipeline stages.
+
+Note the templating subtlety: because stage 1's instruction *shows* the model a literal JSON shape, the braces in that example must be **doubled** (`{{ }}`) if you build the instruction with `.format()`. Below we sidestep the collision by keeping stage 1 as a plain string (no `.format()` needed) and using `.format()` only in stage 2, where the blanks are ours.
+
+---
+
+## Code Cell
+
+```python
+import requests, json
+
+ENDPOINT = "http://localhost:11434/v1/chat/completions"
+MODEL = "llama3.2"
+
+def complete(prompt_text, temperature=0.0):
+    try:
+        r = requests.post(ENDPOINT, json={
+            "model": MODEL,
+            "messages": [{"role": "user", "content": prompt_text}],
+            "stream": False, "temperature": temperature
+        }, timeout=120)
+        r.raise_for_status()
+        return r.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        return ""
+
+# --- STAGE 1: EXTRACT. Emit JSON flags the program can branch on. ---
+# Plain string (no .format) so the literal JSON braces need no escaping.
+STAGE1 = '''Read the support ticket and reply with ONLY a JSON object, no prose:
+{"topic": "billing" | "technical" | "account", "urgent": true | false, "needs_calc": true | false}
+Set "needs_calc" true only if answering requires arithmetic.
+
+Ticket: ''' + '"I was charged $90 for three months at $30 but expected a 20% loyalty discount. Fix it today."'
+
+raw = complete(STAGE1, temperature=0.0)
+print("=== Stage 1 raw output ===")
+print(raw)
+
+# Parse defensively — models sometimes wrap JSON in prose or fences.
+def parse_flags(text):
+    start, end = text.find("{"), text.rfind("}")
+    try:
+        return json.loads(text[start:end + 1])
+    except Exception:
+        return {"topic": "account", "urgent": False, "needs_calc": False}
+
+flags = parse_flags(raw)
+print("\nParsed flags:", flags)
+
+# --- STAGE 2: RESPOND. Inject the parsed fields into the next template. ---
+STAGE2 = """You are a {tone} support agent handling a {topic} ticket.
+{calc_note}
+Write a two-sentence reply to the customer.
+
+Ticket: {ticket}
+Reply:"""
+
+ticket = "I was charged $90 for three months at $30 but expected a 20% loyalty discount. Fix it today."
+resolved = STAGE2.format(
+    tone="high-priority" if flags.get("urgent") else "friendly",
+    topic=flags.get("topic", "account"),
+    calc_note=("Show the corrected amount with the 20% discount applied."
+               if flags.get("needs_calc") else ""),
+    ticket=ticket,
+)
+print("\n=== Stage 2 rendered prompt ===")
+print(resolved)
+print("\n=== Stage 2 reply ===")
+print(complete(resolved, temperature=0.3))
+```
+
+---
+
+## Model 6: The JSON Seam Between Stages
+
+Stage 1's job is *not* to answer the customer — it is to produce machine-readable flags. Stage 2 does the answering, but only after your code has read those flags and chosen what to inject. The JSON object is the **seam**: a typed contract between two prompts that your program can inspect, log, and branch on.
+
+### Critical Thinking Questions
+
+16. Stage 1 is asked for JSON only, yet `parse_flags` still searches for the first `{` and last `}` and falls back to a default on failure. Why is defensive parsing mandatory rather than optional when a model produces the JSON that drives your control flow?
+
+    > *Hint: Models are probabilistic — they may wrap JSON in ```` ```json ```` fences, add "Here you go:", or emit malformed JSON. If your pipeline does `json.loads(raw)` directly and stage 1 adds one word of prose, the whole pipeline crashes. Slicing between the outer braces and falling back to a safe default keeps stage 2 running even when stage 1 misbehaves.*
+
+17. The `needs_calc` flag lets your program *skip* work (the calculation note) when it is not needed. Explain how this flag-driven branching keeps each stage's prompt smaller and more focused, connecting it to the small-context-window principle from the *Memory* activity.
+
+    > *Hint: Instead of one giant prompt that handles every possible case, each stage receives only the instructions relevant to *this* ticket. When `needs_calc` is false, the arithmetic instruction is never injected, so the model is not distracted by an irrelevant task. Flags let you assemble the minimum sufficient prompt per call — the same principle as keeping working memory small.*
+
+18. Design a third stage that consumes stage 2's reply and emits a JSON `{"resolved": true|false, "escalate": true|false}` verdict. What template blanks would it need, and how would your program act on each flag?
+
+    > *Hint: Stage 3's template needs an `{original_ticket}` blank and a `{draft_reply}` blank so it can judge whether the reply actually addresses the ticket. Your program would send the reply to the customer when `resolved` is true, and route to a human queue when `escalate` is true — a classic generate-then-check loop where each seam is a small JSON contract.*
+
+[[MC]]
+Why does an early pipeline stage emit JSON flags instead of a plain-English summary for the next stage to read?
+- ( ) JSON is shorter than English and always uses fewer tokens
+- ( ) The model can only output JSON when `temperature` is 0
+- (x) JSON is machine-parseable, so the program can branch, route, and fill later templates deterministically instead of re-interpreting free text
+- ( ) Plain-English summaries cannot be passed between `/v1/chat/completions` calls
+
+> **⚠️ Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
+
+---
+
+# Part VI: Synthesis and Practice
+
+In this part, you will apply everything from Parts I–V in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
+
+## 10. Exercises
 
 1. *Endpoint explorer.*
 
@@ -486,6 +767,12 @@ In this part, you will apply everything from Parts I–IV in open-ended exercise
    - *Starter hint*: `PROVIDERS = {"ollama_llama": {"base_url": "http://localhost:11434/v1", "model": "llama3.2"}, "ollama_mistral": {"base_url": "http://localhost:11434/v1", "model": "mistral"}}`. This pattern scales to real provider switching — just add entries to the dictionary.
    - *You've succeeded when*: Adding a new provider requires only a new dictionary entry, and the request-sending code is untouched.
 
+5. *Template-to-pipeline.*
+
+   - *What to do*: Combine all three Part V ideas into one script. Stage 1 fills a `{ticket}` blank and returns JSON flags. Take a **consensus** over 3 samples of stage 1 (majority vote on the `topic` field so a single misclassification cannot mis-route). Then fill stage 2's template from the voted flags and generate the reply.
+   - *Starter hint*: Reuse `parse_flags` from Section 9 and the `Counter` majority-vote pattern from Section 8. Vote only on the discrete `topic` field; for boolean flags like `urgent`, you can take the majority of `True`/`False` across the 3 samples.
+   - *You've succeeded when*: Running the script prints the 3 stage-1 votes, the consensus flags, the rendered stage-2 prompt, and the final reply — and mis-routing no longer happens when one stage-1 sample disagrees.
+
 ---
 
 ## Reflection Prompt
@@ -504,8 +791,9 @@ Now that you can speak the REST protocol fluently, the next activity takes the `
 
 ---
 
-## 8. Further Reading
+## 11. Further Reading
 
 - OpenAI. "Chat Completions API Reference." *platform.openai.com/docs/api-reference/chat*. The canonical specification for the request and response format; all OpenAI-compatible servers implement a subset of this.
 - BerriAI. *LiteLLM Documentation*. `docs.litellm.ai`. Covers provider setup, proxy configuration, and the translation layer between OpenAI format and provider-specific APIs.
 - Shunyu Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR* (2023). The intellectual foundation for tool-calling agents, implemented at the REST level in today's tool loop.
+- Xuezhi Wang et al. "Self-Consistency Improves Chain of Thought Reasoning in Language Models." *ICLR* (2023). The consensus/voting pattern in Part V, Section 8.
