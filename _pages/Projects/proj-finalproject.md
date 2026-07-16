@@ -93,7 +93,7 @@ The registrar's final-exam slot is reserved for Demo Day overflow only — if al
 
 ## Community Partner Engagement
 
-This project is deliberately community-grounded: **every team connects its project to a community stakeholder**. Partners are identified by the instructor — see the partner roster in the syllabus. Three touchpoints are required:
+This project is deliberately community-grounded: **every team connects its project to a community stakeholder**. Partners are identified by the instructor and the roster is shared in class (it is not published on the website). Three touchpoints are required:
 
 1. **Proposal:** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief](/Assignments/StakeholderBrief). Name the problem in the partner's terms and state how the direction you chose serves it.
 2. **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact) and document their feedback and how you triaged it — incorporate, disclose, or defer.
