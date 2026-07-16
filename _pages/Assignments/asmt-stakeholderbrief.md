@@ -55,7 +55,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and publishes the roster in the [syllabus](/); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 with an in-class kickoff; draft briefs are exchanged across teams for structured peer review in class at wk5.0, and the revised brief is due at wk5.1 (see the course schedule for the dates).
+In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and publishes the roster in the [syllabus](/); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 with an in-class kickoff; draft briefs are exchanged across teams for structured peer review in class at wk5.0, and the revised brief is due at wk6.0 (see the course schedule for the dates).
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
 
@@ -85,7 +85,7 @@ Before any team commits to a stakeholder, we generate candidates together. In cl
 
 **Start with the partner roster.** The [syllabus](/) publishes a roster of community partners the instructor has already contacted and who expect to hear from student teams — anchoring your brief in a roster partner means your interview access is real, not hoped-for. Teams claim partners at the wk2.1 kickoff (first come, logged in the decision log). If the roster is still being finalized, or your team's speed-dating round surfaced a stronger candidate, you may instead anchor in a **concrete stakeholder group of your own** — a named office or a specific organization with a person you can actually interview, cleared with the instructor before first contact.
 
-**If the roster does not yet fit, do not wait.** If the published roster does not yet name a partner that fits your team's problem, you may immediately draw from a standing on-campus stakeholder list: **Disability and Access Services, the library, the Office of Sustainability, the Center for Writing and Speaking, Community Engagement/UCARE, and Athletics operations**. Any office that serves real users counts. Confirm your choice with the instructor in one sentence on Teams.
+**If the roster does not yet fit, do not wait.** If the published roster does not yet name a partner that fits your team's problem, you may immediately draw from a standing on-campus stakeholder list: **Disability and Access Services, the library, the Office of Sustainability, the Center for Writing and Speaking, Community Engagement/UCARE, and Athletics operations**. Any office that serves real users counts. Confirm your choice with the instructor in one sentence on Teams. And if nothing on the roster or the standing list fits your team's interests, ask: the instructor will broker an introduction to a suitable partner within one week of the request — no team's brief is blocked by the roster.
 
 Whether from the roster or self-identified, the stakeholder must be **real and outside computer science**. Good candidates:
 
@@ -139,13 +139,13 @@ Attach the **interview packet** as an appendix: prep questions, notes, consent r
 
 ## Peer Exchange
 
-At **wk5.0**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk5.1 due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
+At **wk5.0**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk6.0 due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
 
 ---
 
 ## Deliverables
 
-Submit one PDF per team via the LMS by **wk5.1** containing:
+Submit one PDF per team via the LMS by **wk6.0** containing:
 
 - The 2-3 page brief (six sections, primary author named per section)
 - The interview packet appendix (prep questions, notes, consent record, follow-up exchange)
