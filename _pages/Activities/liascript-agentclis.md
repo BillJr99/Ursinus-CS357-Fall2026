@@ -39,6 +39,27 @@ Before diving in, make sure these terms are solid. You will encounter all of the
 
 ---
 
+## The Three Paradigms: Chat, Code, and Cowork
+
+Before you install a single tool, it helps to know *which kind* of tool you are installing. The AI-assistant landscape has settled into three paradigms, and the difference between them is not the model — it is **who runs the actions and where those actions land**. A useful analogy: a **chat** assistant is a knowledgeable colleague on the phone (they tell you what to do, you do it); a **code** agent is a contractor you handed the keys to *one room* (they do the work, you approve each consequential step); a **cowork** agent is a personal assistant loose in your *whole office* (they open apps, edit documents, and run errands across your desktop).
+
+| Paradigm | What you do | Who runs the actions | Primarily for | Autonomy | Example tools |
+|----------|-------------|----------------------|---------------|----------|---------------|
+| **Chat** | Converse in a window; copy answers and code out yourself | **You** are the runtime — you paste and run the code by hand | Anyone; ideation, explanation, quick snippets | None (no file or shell access) | ChatGPT, Claude.ai, **LM Studio** (chat mode), Ollama chat |
+| **Code** | Give a goal in your terminal or IDE; the agent reads files, edits them, runs commands and tests, and loops | **The agent** acts on your repository, behind permission gates | Developers working inside a codebase | Medium–high, but gated | **Claude Code**, **opencode**, Codex CLI, Gemini CLI, pi — and, at scale, managed by **herdr** |
+| **Cowork** | Delegate general computer and document tasks on a desktop | The agent drives apps, files, and the desktop directly | **Non-developers** and knowledge work beyond code | High, task-scoped | **Claude Cowork**, **OpenWork** (open-source, opencode-powered) |
+
+The whole of this tutorial lives in the **code** column: an agent scoped to a project directory, acting through gates. But the paradigms are worth holding in your head together for two reasons. First, they mark a ladder of blast radius: chat can only mislead you, code can change your repository, and cowork can touch anything on your machine — so the human-oversight lessons in Parts II and III matter *more* as you climb, not less. Second, the boundaries are blurring. **LM Studio Bionic** is a case in point: it began as a chat app for open, local models and grew a code-project mode (point it at a folder and it investigates, edits, and debugs) plus local voice input — one tool spanning chat and code, run entirely on models you host yourself.
+
+[[MC]]
+A teammate says, "Chat, code, and cowork are just three brand names for the same thing — a model answering prompts." The most accurate correction is:
+- ( ) They differ only in price; the underlying capability and risk are identical
+- (x) They differ in *who executes the actions and how large the blast radius is* — in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
+- ( ) They differ only in which company trained the model behind them
+- ( ) They are ordered by intelligence: cowork models are strictly smarter than code models, which are smarter than chat models
+
+---
+
 # Part I: One Anatomy, Many Tools
 
 In this part, you will learn the shared anatomy of agentic CLI tools and install your first tool end-to-end — so that the differences between tools become variations on a pattern you already understand, rather than five separate things to memorize.
@@ -55,7 +76,7 @@ Think of these tools the way you think about web browsers: Chrome, Firefox, and 
 | opencode | opencode.ai | `curl -fsSL https://opencode.ai/install \| bash` — a single-line installer that detects your OS and places the binary on your PATH | `AGENTS.md` in your project root (same spec as Codex) | The most provider-flexible of the group: it speaks to any OpenAI-compatible backend, which means you can point it at Claude, Gemini, local Ollama, or any API that follows the spec, all via a small JSON config file |
 | pi | pi.dev | `npm install -g @mariozechner/pi-coding-agent` — installs the `pi` binary; no gate configuration needed because there are no gates | Minimal — reads a small `pi.md` if present but does not require it | Deliberately stripped down: no permission gates, no plan mode, no subagents. This is not a limitation to fix; it is a design choice that makes pi fast and low-ceremony for quick experiments. Use it for low-stakes exploration where speed matters more than oversight |
 
-Two more belong to our course ecosystem and are covered where they live: **freebuff**, a task harness we run as a container in the local stack (the agent stack module deploys it; configure per its README), and **KiloCode**, the VS Code-native member, in Part III. Each tool authenticates on first run (`claude` then `/login`, or an exported API key per its docs); the course site lists the current free-access path for each.
+A few more belong to our course ecosystem and are covered where they live: **freebuff**, a task harness we run as a container in the local stack (the agent stack module deploys it; configure per its README); **KiloCode**, the VS Code-native member, in Part III; and **LM Studio Bionic**, a desktop **agent for open, local models** (GLM- and Kimi-class) that spans the chat and code paradigms and adds local voice input — with an optional Zero-Data-Retention cloud path for the largest open models. Bionic is the same data-minimization story as the local gateway in Section 6: the model runs on hardware you control, so privacy-sensitive coursework never leaves your machine. Each tool authenticates on first run (`claude` then `/login`, or an exported API key per its docs); the course site lists the current free-access path for each.
 
 ## 2. The First Session, Step by Step
 
@@ -226,7 +247,80 @@ docker run --rm -it \
 
 The flags explained: `--rm` deletes the container when it exits (experiments are self-cleaning). `-it` allocates an interactive terminal (required for any REPL). `--add-host=host.docker.internal:host-gateway` makes `host.docker.internal` resolve to your actual machine's IP from inside the container, which is how containerized tools reach the local gateway at `http://host.docker.internal:4000`. The two `-v` flags mount directories from your host into the container: the first keeps the agent's authentication tokens and settings persistent across container restarts (otherwise you would re-login every time); the second is the shared workspace the agent reads and writes. `-w /workspace` sets the container's working directory so the agent's world is exactly the workspace mount, nothing else. The payoff paragraph from the Docker module applies verbatim: the agent sees exactly what is mounted and nothing else, identities hot-swap by changing one path, and an experiment is destroyed with the container. The agent stack module provides the full `build.sh`/`run.sh` set; today, understand *why* the mounts are shaped this way.
 
-## 9. Exercises
+---
+
+# Part IV: Running Agents Unattended — Terminal Multiplexing and herdr
+
+So far every session has assumed you sit and watch. But a coding agent working through a real task can run for many minutes, and you will often want to start several at once and step away. In this part you will learn the mechanism that lets an agent keep working after you disconnect — the terminal multiplexer — and **herdr**, a multiplexer built specifically for herding coding agents, and you will turn "walk away and come back" into a discipline rather than a hope.
+
+## 9. Terminal Multiplexing: Sessions That Outlive Your Connection
+
+Here is a failure every remote worker eventually hits: you SSH into a machine, launch a half-hour agent task, close your laptop for the train — and the task dies, because it was a child of your SSH connection and the connection went away. A **terminal multiplexer** (`tmux` or the older `screen`) fixes this by running your shell inside a persistent **server process** that is *not* tied to your terminal. You **attach** a view to it, and you can **detach** that view without stopping anything underneath.
+
+```bash
+tmux new -s agents        # start a persistent session named "agents"
+claude                    # launch a long agent task inside it
+# press Ctrl-b then d      -> DETACH: the view closes, the agent keeps running
+# ... close your laptop, ride the train, open it again ...
+tmux attach -t agents     # REATTACH from anywhere, even a fresh SSH login
+```
+
+The session is a room that keeps its lights on after you leave. Detaching is walking out the door; the work inside continues. Multiplexers also **split** one terminal into several panes, so you can watch two or three agents side by side. This is the mechanical foundation of every "walk away and come back" workflow: a long agent run belongs inside a multiplexer, never in a raw SSH shell that dies with the connection.
+
+## 10. herdr: An Agent-Aware Multiplexer
+
+`tmux` is agent-*ignorant*: to it, a pane running Claude Code is just bytes on a screen. It cannot tell you *which* of your five agents is stuck waiting for a permission answer and which is still churning. **herdr** closes that gap. It is a single Rust binary — think "`tmux` rebuilt from scratch with first-class awareness of coding agents." Its architecture mirrors `tmux`: a persistent, **headless server** keeps every agent's pane and process alive, and a **TUI client** attaches to it. What herdr adds is *state*: it watches each agent and shows you, at a glance, whether it is **blocked** (needs your input), **working**, or **done**.
+
+That one addition changes the job from *babysitting one agent* to *supervising a herd*. herdr runs Claude Code, Codex, opencode, Cursor Agent, Copilot CLI, and 15+ other agents each in its own real pane; you glance at the status column, jump to whichever agent is blocked, answer its gate, and move on. And because the server is persistent, you **detach and reattach from any terminal — over SSH, even from your phone** — and the herd survives restarts.
+
+| Capability | `tmux` / `screen` | **herdr** |
+|------------|-------------------|-----------|
+| Persistent, detachable server | ✅ | ✅ |
+| Reattach over SSH / from a phone | ✅ | ✅ |
+| Split panes for many agents at once | ✅ | ✅ |
+| **Knows which agent is blocked / working / done** | ❌ (just panes of text) | ✅ |
+| Purpose-built for coding-agent workflows | ❌ | ✅ |
+
+The relationship is not "herdr *versus* `tmux`" — it is `tmux`'s persistence *plus* the observability an agent workflow needs. Learn the plain multiplexer first (it is everywhere, on every server); reach for herdr when you are running enough agents that "which one needs me?" becomes the real question.
+
+## 11. The "Walk Away and Come Back" Discipline
+
+Put the pieces together and the pattern has three properties, each supplied by something you have now seen:
+
+- **Persistence** — the background server keeps agents alive after you disconnect (the multiplexer, §9).
+- **Observability** — agent-state awareness tells you *who needs you* without your having to watch (herdr, §10).
+- **Reattachment** — you resume from any terminal, over SSH, from a phone (both).
+
+But persistence cuts both ways, and this is the governance point: **detaching does not pause an agent.** It keeps reading, editing, running commands, and spending tokens the entire time you are gone. An agent you would supervise closely for five minutes is the *same* agent, now acting for an hour with nobody at the gate. That is exactly where the controls from Parts II and III stop being optional. Before you walk away, set the permission **mode** deliberately (Section 5) — an unattended agent in full-auto is an unattended agent with your whole account's blast radius — and prefer to run it inside the **scoped container** from Section 8, with no credentials mounted and a workspace you can `git reset`. The rule of thumb: *the less you are watching, the more the environment, not your attention, has to be the thing keeping the agent safe.* Never hand `--dangerously-skip-permissions` to an agent you are about to stop watching on a machine that matters.
+
+This same idea — an agent that keeps working while you are away — scales up in the next module from "several agents in panes" to **loops that restart themselves and crews that coordinate** (the Ralph loop, `gnhf`, and `firstmate`).
+
+### Critical Thinking Questions
+
+1. A classmate runs a 40-minute refactor over SSH *without* a multiplexer, closes their laptop, and returns to find the agent gone and the work half-done. Explain precisely what killed the process, and what one command at the start would have prevented it.
+
+   *Hint:* Think about the process tree. Your shell — and everything it launched — is a child of the SSH session. What happens to children when their parent (the connection) is terminated? A multiplexer moves the agent out from under that parent into a server process that the disconnect does not touch.
+
+2. herdr and `tmux` both keep agents alive after you detach, but only herdr tells you which agent is blocked. Describe a concrete situation with three simultaneous agents where that difference changes how much time you waste. Then name one situation where plain `tmux` is still the right choice.
+
+   *Hint:* With three agents in plain `tmux` panes, how do you discover that agent #2 has been sitting at a permission prompt for ten minutes? You cycle through panes and read. Now consider a server where you cannot install anything new — what is guaranteed to already be available?
+
+3. "The environment, not your attention, keeps an unattended agent safe." Take the containerized pattern from Section 8 and the permission modes from Section 5, and describe the specific configuration you would use before detaching from an agent overnight. What is each choice protecting against?
+
+   *Hint:* Walk the blast radius. What can the agent reach (the `-v` mounts and `-w` working dir)? What can it do without asking (the permission mode)? What credentials are within reach if it goes wrong (what did you *not* mount)? How do you undo an hour of bad edits (what makes the workspace reversible)?
+
+> **⚠️ Common Misconception:** Many students believe that detaching from a multiplexer *pauses* the agent, the way closing a laptop lid sleeps a machine — so "I'll detach to stop it for a bit" feels safe. It does the opposite: detaching only removes your *view*. The agent keeps running at full speed on the persistent server, reading files, executing commands, and spending tokens with no one watching the gates. Persistence is the feature you came for and the risk you must plan around — which is why the permission mode and the container boundary are set *before* you walk away, not after you come back.
+
+[[MC]]
+You start a long agent task inside `tmux`, press `Ctrl-b d`, and close your SSH connection. Thirty minutes later you `tmux attach` from a different machine. What do you find?
+- ( ) The task is paused at the moment you detached and resumes only now that you have reattached
+- ( ) The task was killed when the SSH connection closed and must be restarted from scratch
+- (x) The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state — including anything it did while you were gone
+- ( ) The task ran only while at least one client was attached, so it made no progress during the 30 minutes you were disconnected
+
+---
+
+## 12. Exercises
 
 1. *Install two.*
 
@@ -306,6 +400,30 @@ The flags explained: `--rm` deletes the container when it exits (experiments are
 
    *You've succeeded when:* You have approved at least one change and refused or revised at least one proposed change based on what you saw in the diff view, and your three-sentence reflection names the specific change you caught or reconsidered.
 
+6. *Detach and reattach.*
+
+   *What to do:* Start a multi-minute agent task inside a multiplexer (`tmux`, or `herdr` if you have installed it), give the agent a goal that will take a little while ("write a small CLI tool with tests and run the tests"), then **detach** the session. Do something else for two minutes. **Reattach** and confirm the agent kept working while you were gone. Write two sentences: what state did you return to, and what would have happened without the multiplexer?
+
+   *Starter hint:*
+   ```bash
+   tmux new -s ex6            # persistent session
+   cd ~/cs357-exercise6
+   claude                     # give it a multi-step goal
+   # press Ctrl-b then d      -> detach; the agent keeps running
+   tmux ls                    # confirm the session still exists
+   tmux attach -t ex6         # reattach and inspect progress
+   ```
+
+   *You've succeeded when:* Your reattached session shows progress the agent made *after* you detached (new files, more test output, or a completed task), and you can state in one sentence why the same task in a plain SSH shell would not have survived a disconnect.
+
+7. *Chat vs. code on local models (optional).*
+
+   *What to do:* Install **LM Studio Bionic**, load an open model, and try the same small task twice — once in **chat** mode (you copy the code out and run it yourself) and once as a **Code project** pointed at a local folder (Bionic reads, edits, and runs). Write three sentences comparing the two experiences and mapping each to a row of the Three Paradigms table.
+
+   *Starter hint:* Create an empty folder, open it as a Code project in Bionic, and give it the weather-script task from Section 2. In chat mode, paste the same prompt into a plain chat and notice everything *you* have to do that the Code project did on its own (save the file, run it, read the error, fix it).
+
+   *You've succeeded when:* You can name at least two concrete steps that the Code project performed for you but that you had to perform by hand in chat mode — and you correctly identify which paradigm each mode belongs to.
+
 ---
 
 ## Reflection Prompt
@@ -324,12 +442,16 @@ In your notebook, respond at three levels:
 
 ## → Coming Up Next
 
-In the *The Local Agent Stack: Wiring Containers into a System* activity you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before you take on that activity.
+In the *The Local Agent Stack: Wiring Containers into a System* activity you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before you take on that activity. The *Coding Agents* activity then takes the "walk away and come back" idea from Part IV one step further — into **loops that restart themselves and crews that coordinate** (the Ralph loop, `gnhf`, and `firstmate`).
 
 ---
 
-## 10. Further Reading
+## 13. Further Reading
 
 - Each tool's official docs: docs.anthropic.com (Claude Code), the Codex CLI repository, the Gemini CLI repository, opencode.ai, pi.dev.
 - W. Mongan, "Building a Private AI Stack" (billmongan.com, May 2026): the containerized invocation and gateway routing patterns in full.
 - The Model Context Protocol site (modelcontextprotocol.io): the tool-integration standard these CLIs converge on.
+- **herdr** — the agent-aware terminal multiplexer: github.com/ogulcancelik/herdr.
+- **tmux** — the ubiquitous terminal multiplexer that underlies the "detach / reattach" pattern: github.com/tmux/tmux/wiki.
+- **LM Studio Bionic** — an agent for open, local models spanning chat and code: lmstudio.ai/blog/introducing-lm-studio-bionic.
+- **Cowork** and open alternatives: Claude Cowork (claude.ai), and **OpenWork**, the open-source, opencode-powered cowork tool: github.com/different-ai/openwork.

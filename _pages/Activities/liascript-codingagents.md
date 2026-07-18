@@ -145,6 +145,68 @@ Reading this table top-to-bottom is like watching a time-lapse of the agent work
 
 ---
 
+## Model 4: Loops That Run Themselves — Ralph, autoresearch, gnhf, and Crews
+
+Model 2 traced *one* pass of the agent loop. But the loop's real power appears when you run it **over and over, unattended** — the agent finishes, a shell script starts it again, and it keeps going while you sleep. The surprising design choice that makes this work is that each iteration begins with a **fresh context window**. That sounds like amnesia, and it would be, except the agent's memory does not live in the conversation — it lives on **disk**: the codebase itself, a running `TODO` file, and the `git` history. Fresh context is a *feature*: it sidesteps the context-overflow failure mode from Model 2's Perceive stage, because the agent re-reads only what it needs each round instead of dragging a bloated, half-forgotten history behind it.
+
+Think of it like a relay of identical runners who cannot talk to each other but share one notebook. Each runner reads the notebook, runs one leg, writes down what they did, and hands off. No runner remembers the race — the notebook does.
+
+Study the Safety Model column below the way you did in Model 1: when the loop runs while you are asleep, that column is the only thing standing between you and a branch full of confident nonsense.
+
+| Pattern | What it is | Memory between iterations | How it stops | Safety model |
+|---|---|---|---|---|
+| **Ralph loop** (Geoffrey Huntley) | A brute-force `while` loop that re-runs the *same prompt file* against the agent, iteration after iteration | The codebase, a `TODO` file, and `git` history — each iteration starts with a fresh context and re-reads them | A human stops it, or a "task complete" check written into the prompt trips | Deliberately minimal — relies entirely on the test suite plus the ability to `git revert` a bad iteration |
+| **autoresearch** (Karpathy's variant) | The *same* loop pointed at ML research instead of code | Model checkpoints and metrics logs on disk | A target validation-loss or metric is reached | The success *metric* is the guardrail — you iterate on model quality, and a worse score is simply discarded |
+| **gnhf** ("good night, have fun") | An overnight orchestrator that splits a goal into small steps, each run in a fresh context seeded with a base context plus prior learnings | Each successful step is a commit on a dedicated `gnhf/<slug>` branch | A step budget, or the goal's acceptance check, is met | Success ⇒ commit; failure ⇒ `git reset --hard` and exponential backoff; `git` worktrees isolate parallel agents; agent-agnostic (Claude Code, Codex, opencode, Copilot, pi, ACP targets) |
+| **firstmate** (a "crew") | An agent *distro* — a portable directory of instructions, skills, tooling, policies, and state that turns one general agent into a coordinated crew | Shared distro state plus the repository | You end the primary session | "Talk to one agent, ship with a crew" — one primary session delegates to specialized sub-agents, each with a narrower, safer scope |
+
+Notice what these share: they are the **Step Budget** and **Acceptance Criteria** from the Key Concepts table, scaled up. In an interactive session you are the stopping condition and the final judge. In an unattended loop you are asleep — so the *step budget* is the only thing preventing a runaway bill, and the *acceptance check* (usually the test suite) is the only thing preventing a tidy commit of broken code. Model 2's Verify stage is no longer one step among five; when the loop runs itself, **Verify is the whole game**.
+
+### Critical Thinking Questions
+
+10. A Ralph loop starts each iteration with an empty context window, yet it can complete a multi-day refactor no single session could hold. Explain where the agent's "memory" actually lives, and why re-reading it each iteration is *safer* than carrying the full history forward.
+
+    *Hint: A single long session accumulates every file it ever read until the important early facts scroll out — the exact failure in Model 2's Perceive row. What does a runner who re-reads the shared notebook each leg avoid that a runner trying to remember the whole race does not?*
+
+11. `gnhf` commits each successful step to a branch but runs `git reset --hard` after a failed one. Contrast this with a Ralph loop that edits files in place with no automatic rollback. For an overnight run on a codebase you care about, which safety model would you choose, and what property of your project (tests? review habits? branch protection?) does your choice depend on?
+
+    *Hint: What does `git reset --hard` throw away, and what does it protect? If your test suite is thin, does per-step rollback still save you — or does it just tidily discard work while still letting a passing-but-wrong step through?*
+
+12. `firstmate` turns one agent into a crew of specialized sub-agents. Using Model 1's "controlled entirely by which tools are registered" idea, explain how giving each crew member a *narrow* scope can make the whole crew safer than a single agent with every capability at once. Then name a coordination failure a crew introduces that a single agent does not have.
+
+    *Hint: A sub-agent that can only edit tests cannot also `git push`. But now two sub-agents share one repository — what goes wrong if both edit the same file, or if one's idea of "done" contradicts another's?*
+
+> **⚠️ Common Misconception:** Students often assume that "fresh context each iteration" means the agent forgets everything and cannot make real progress — that it must be flailing in circles. The opposite is true, *and it is the whole point*: the loop deliberately externalizes memory to the filesystem and `git` so that no single context window has to hold the entire task. The agent is not remembering less; it is remembering *on disk*, where memory is durable, inspectable, and does not decay as the window fills. The real risk is not amnesia — it is an unattended loop with a weak Verify stage happily committing work that passes thin tests but violates a requirement no test encodes.
+
+[[MC]]
+Why does a Ralph loop start each iteration with a *fresh* context window instead of carrying the full conversation forward?
+- ( ) To reduce the number of API calls, since a fresh context uses fewer total tokens over the whole run
+- ( ) Because the model is legally required to discard prior context between runs
+- (x) Because the task's memory lives on disk (codebase, `TODO` file, `git` history), so each iteration can re-read exactly what it needs and avoid the context-overflow failure that plagues one very long session
+- ( ) Because a fresh context makes the agent more creative by preventing it from repeating earlier ideas
+
+---
+
+## The Cowork Paradigm: General Agents Beyond Code
+
+Every architecture so far assumes the agent's world is a **codebase**. But the same loop — perceive, plan, act, verify — works just as well when the "files" are a spreadsheet, a slide deck, and a browser tab. That is a different paradigm, and it is worth naming the three explicitly (the *Agentic CLI Tools* activity develops this framing in full):
+
+| Paradigm | The agent's world | Who it is for | Example tools |
+|----------|-------------------|---------------|---------------|
+| **Chat** | A conversation window; *you* run any action it suggests | Anyone | ChatGPT, Claude.ai, LM Studio |
+| **Code** | A scoped project directory the agent reads, edits, and tests | Developers | Claude Code, opencode, Codex |
+| **Cowork** | Your whole desktop — apps, documents, files | Non-developers and general knowledge work | **Claude Cowork**, **OpenWork** |
+
+**Cowork** is the coding-agent loop pointed at general computer work: drafting and editing documents, filling spreadsheets, moving files, driving apps — for people who are not writing code at all. **Claude Cowork** is a desktop application built for exactly this; **OpenWork** is an open-source alternative that wraps the same **opencode** engine you configured earlier in this activity, which is a neat illustration that "code" and "cowork" are the same machinery aimed at different worlds. And `firstmate`'s "crew" idea generalizes cleanly here: a crew of general agents can research, draft, and cross-check a report the way a code crew builds a feature.
+
+The paradigm shift raises the stakes on everything this module taught about review. A wrong diff in the code paradigm is caught by tests and reversed by `git`. A cowork agent editing the wrong document, emailing the wrong person, or deleting the wrong file has no test suite and often no undo. The human's judgment does not disappear as agents leave the codebase — it *moves*, from "review the diff" to "define the guardrails of a world that has no `git revert`."
+
+**Question B.** In the code paradigm, `git` and the test suite give you a safety net: you can review a diff and roll back a bad change. When a cowork agent operates across your whole desktop, what plays the role of "the diff" and "the rollback" — and where does that leave the human's responsibility?
+
+[[___ Your answer here ___]]
+
+---
+
 ## Exercises
 
 1. **Design an agent brief.**
@@ -180,6 +242,21 @@ Reading this table top-to-bottom is like watching a time-lapse of the agent work
    *Starter hint:* When reading a diff, lines beginning with `+` were added and lines beginning with `-` were removed. Context lines (no prefix) show surrounding code that was not changed. Look for: added imports that were not needed, deleted lines that might have been load-bearing, and test changes that reduce coverage rather than add it.
 
    *You've succeeded when* your Presenter can explain the team's rejection reasoning in terms of a specific risk — not just "it looks wrong" but "if this change ships, then X could happen."
+
+4. **Design an overnight brief.**
+
+   *What to do:* Write a brief you would hand a `gnhf`-style self-running loop to work on while you sleep. It must contain three things: (a) a goal small and concrete enough to be verifiable, (b) an acceptance-criteria checklist the loop's Verify stage can check on its own (reuse the testable-vs-vague discipline from Exercise 1), and (c) an explicit **stop condition** — a step budget *and* the check that means "done." Then write one sentence naming the worst thing that could land in the morning's branch if your acceptance criteria are too weak.
+
+   *Starter hint:* A good overnight goal is bounded and testable, e.g. "Add input validation to every route in `api/`, so that a missing required field returns HTTP 400 with a JSON error body." A weak acceptance criterion ("validation works") lets a loop commit code that passes because no test exercises the missing-field case — exactly the silent-Verify failure from Model 2. Pair every criterion with a test the loop can actually run:
+   ```text
+   Goal: add missing-field validation to all routes in api/
+   Acceptance:
+     - POST /users with no "email" returns HTTP 400  (test: test_users_missing_email)
+     - every existing test in tests/ still passes
+   Stop when: all acceptance tests pass, OR 30 iterations reached
+   ```
+
+   *You've succeeded when* another team could hand your brief to an unattended loop and know, without asking you, both when it should stop and how it would decide it succeeded — and you can name the failure a weak criterion would let through.
 
 ---
 
@@ -331,3 +408,7 @@ Two instructions are being considered for `opencode.json` in a project's reposit
 - Plandex documentation: https://docs.plandex.ai — especially the "plans" concept and diff review workflow.
 - OpenCode GitHub repository: https://github.com/sst/opencode — read the README for architecture decisions and the `--dangerously-skip-permissions` flag discussion.
 - Lilian Weng. "LLM Powered Autonomous Agents." *Lil'Log* (2023). https://lilianweng.github.io/posts/2023-06-23-agent/ — comprehensive survey of agent architectures including coding agents.
+- Geoffrey Huntley. "everything is a ralph loop." https://ghuntley.com/loop/ — the origin and rationale of the fresh-context brute-force loop; see also https://ralph-wiggum.ai/.
+- **gnhf** ("good night, have fun") — overnight autonomous orchestrator: https://github.com/kunchenguid/gnhf.
+- **firstmate** — an agent distro for running a crew: https://github.com/kunchenguid/firstmate.
+- **OpenWork** — the open-source, opencode-powered alternative to Claude Cowork: https://github.com/different-ai/openwork.
