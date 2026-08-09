@@ -77,32 +77,8 @@ An agent has run 30 steps. Its prompt now contains: the system prompt (300 token
 
 # Part II: Memory Architectures
 
-## 2. A Vocabulary of Memories
 
-In this Part you will see how professional agent systems layer three types of memory — working memory, episodic summary, and long-term retrieval — then run a Python class that automatically compresses old conversation turns into a summary, so you can observe exactly what information survives compression and what is lost.
-
-**Why this matters:** Human memory is not a single thing — we distinguish between what you are thinking about right now (working memory), your episodic memories of specific past events, and procedural knowledge like how to ride a bike. Effective agent architectures mirror this layering, assigning each type of information to the storage tier that fits its access pattern. The key insight is that an agent should never carry information it is not likely to need in its next decision.
-
-Practical agents layer several memory types. **Working memory**: the last few turns, kept verbatim — the model needs exact wording for what was just said. **Episodic summary**: a running compressed narrative of the session (e.g., "user wants X; we tried Y, it failed because Z"), rewritten by the model itself every few turns. **Long-term memory**: facts persisted *outside* the context in files or a vector store, retrieved by similarity when relevant — this is exactly the RAG machinery repurposed as memory. The agent's prompt is assembled fresh each turn:
-
-$$
-\text{prompt}_t = \text{system} + \text{summary}_t + \text{retrieve}(q_t, M_{\text{long}}) + \text{recent}_t + q_t
-$$
-
-| Memory Type | What It Stores | Where It Lives | When It's Accessed | Example / In Our Course |
-|-------------|---------------|-----------------|-------------------|-------------------------|
-| Working memory | The last 3–5 turns verbatim | In the prompt, always present | Every turn | The 4 most recent messages in `self.turns` |
-| Episodic summary | A bullet-point compression of older turns, written by the model | In the prompt, always present | Every turn, replacing old verbatim turns | `self.summary`: "Chemistry exam Dec 14; user is weaker in chemistry" |
-| Long-term memory | Persistent user preferences, past decisions, reference facts | External file or vector database | On demand, when the current question seems relevant | A Chroma collection of user facts retrieved by similarity to the current question |
-
-[[MC]]
-An agent must recall a user preference stated 200 turns ago in a months-long relationship. The architecture that handles this *without* growing the prompt is:
-- ( ) Increase the context window to one million tokens
-- ( ) Keep all turns verbatim and trust attention
-- (x) Persist preferences to external storage and retrieve them by similarity when relevant
-- ( ) Raise the temperature so the model improvises the preference
-
----
+> **The vocabulary of memory types** - working, episodic, semantic, and procedural - is laid out in the optional activity [Types of Agent Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorytypes.md). For today it is enough to know that an agent's memory is always, in the end, text placed into the prompt.
 
 ## 3. Memory Is Just Prompt-Building
 
@@ -218,7 +194,11 @@ for msg in ["My chemistry exam is Dec 14 and statistics is Dec 16.",
 
 ---
 
-## 4. A Summarizing-Memory Agent
+> **Continued below.** A summarizing-memory agent, and a model for watching compression happen, are in Part III as at-home work.
+
+# Part III: Synthesis and Practice
+
+## 4 (At Home). A Summarizing-Memory Agent
 
 The `SummarizingMemory` class below has three moving parts: `add()` appends a turn to the verbatim window and triggers compression when the window is full; `prompt()` assembles the full message list for each model call, placing the compressed summary before the recent verbatim turns; and the main loop at the bottom drives a five-turn study-planning conversation so you can watch the summary evolve in real time. It is the same "fill the blank each turn" idea from Section 3 — but now the blank is filled with a *compressed* history instead of the raw one.
 
@@ -274,7 +254,7 @@ for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
 
 ---
 
-## Model 3: Watching Compression
+## Model 3 (At Home): Watching Compression
 
 **Why this matters:** The `SummarizingMemory` class is a concrete implementation of a principle you have seen abstractly: replace bulk with essence. Watch carefully which facts survive compression and which are lost. The summary is the agent's only link to conversations that have scrolled out of the verbatim window — so a lost fact in the summary is a lost fact forever (until retrieved from long-term storage). This is not a theoretical problem: real production agents fail tasks because their summaries dropped a key constraint stated early in the conversation.
 
@@ -296,7 +276,6 @@ for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
 
 ---
 
-# Part III: Synthesis and Practice
 
 ## 5. Exercises
 
