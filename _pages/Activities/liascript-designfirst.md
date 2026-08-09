@@ -139,7 +139,11 @@ Every agent in the pipeline passes its own individual tests, yet the end-to-end 
 
 The pre-mortem identified what could go wrong; this model shows, week by week, how the consequences of skipping the pre-mortem play out in a real project compared to a team that did the design work upfront.
 
-## Model 3: Design-First vs. Code-First — A Six-Week Timeline
+## Exercises
+
+> Read the six-week timeline below before the next session; it is the narrative version of what you just did on paper.
+
+## Model 3 (At Home): Design-First vs. Code-First — A Six-Week Timeline
 
 In this model you will compare two student teams building the same pipeline on parallel tracks and trace exactly when and why the code-first team's early-saved time is spent back — with interest.
 
@@ -174,7 +178,6 @@ Two student teams build the same 3-agent research pipeline. Team A starts coding
 
 Having seen what design-first buys you across six weeks, these exercises give you practice writing the artifacts yourself — agent table, pre-mortem, and debate — before you face blank-page paralysis on your final project.
 
-## Exercises
 
 1. **Write a one-page design document.**
 

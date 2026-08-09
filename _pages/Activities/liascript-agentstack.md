@@ -200,50 +200,8 @@ docker run -d --name open-webui -p 3000:8080 \
 #   URL http://host.docker.internal:4000/v1, key sk-litellm-local
 ```
 
-## Model: Isolation and Trust Boundaries (for everyone)
 
-This model is conceptual and takes about ten minutes — it is for every student in the studio, whether or not you ever run Docker yourself. It is the reason this stack is built from containers at all, and it is the syllabus goal behind Lab 1's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
-
-A **trust boundary** is a line in your system where the level of trust changes: everything inside the line can be damaged by a mistake inside the line, and nothing outside it can. Four mechanisms draw that line for an agent:
-
-| Mechanism | What it limits | The question it answers |
-|---|---|---|
-| **Container filesystem** | The agent sees only what you mount into it | "If the agent runs `rm -rf`, what actually gets deleted?" |
-| **Read-only mounts** | The agent can look but not touch | "Can it read my notes without being able to corrupt them?" |
-| **Non-root execution** | The agent cannot change the system it runs on | "Can a bad command rewrite the container itself?" |
-| **Network policy / ports** | The agent reaches only the services you exposed | "Can it call anything on the internet, or only my local Ollama?" |
-
-The composite of these is the agent's **blast radius**: the set of things that can possibly go wrong when the agent misbehaves. A well-designed stack makes the blast radius *small and known in advance* — you decide what the agent can destroy before you let it act, instead of discovering it afterward. This is the same idea as the *Design First* activity's irreversible-actions table, implemented in infrastructure instead of in a prompt.
-
-**CTQ (teams, 3 minutes):** Your agent needs to summarize files in your `notes/` folder and save summaries to `summaries/`. Using the table, name the tightest boundary you could give it — which mount is read-only, which is writable, and what network access does it actually need?
-
-    [[?]] Hint: it needs to read one folder, write one folder, and reach exactly one service — the local model.
-
-Which change *reduces* an agent's blast radius?
-
-- [( )] Running the agent as root so it never hits a permissions error
-- [(X)] Mounting the notes folder read-only and giving the container no internet access
-- [( )] Mounting your whole home directory so the agent can find anything it needs
-- [( )] Exposing every service's port so connections never fail
-
----
-
-> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for Lab 1 Directions 2–3, not as in-studio work.
-
----
-
-The same attach-by-URL move adds the rest of the frontend tier as you need each one (`open-notebook` for research notebooks, `voicebox` for speech, `presenton` for slide generation, `open-terminal` for a browser shell, `open-design` for the agent-embedded canvas, `calibre-web` for your reading library): each gets a port row, an identity directory, the `--add-host` flag, and its connection settings pointed at the gateway. Tool-tier services follow suit: `searxng` gives your agents private web search, `mcpproxy` hosts MCP tools from YAML definitions, and `surrealdb` provides persistence; agents reach them at `http://host.docker.internal:<port>` exactly as they reach the gateway.
-
-> **⚠️ Common Misconception:** Many students expect `localhost` to work the same way inside a Docker container as it does outside. It does not. Inside a container, `localhost` refers to the container itself — not to your laptop or desktop. If Ollama is running natively on your host machine and a container tries to reach it at `localhost:11434`, the connection will fail. The fix is always `host.docker.internal:11434` with the `--add-host` flag on Linux. This is the single most common source of mysterious connection failures in this stack.
-
-[[MC]]
-Inside the llmproxy container, the routing config points at http://host.docker.internal:11434 rather than http://localhost:11434 because:
-- ( ) Port 11434 is reserved for host.docker.internal
-- (x) Inside a container, localhost means the container itself, so reaching the host-resident Ollama requires the special host alias (with --add-host or extra_hosts on Linux)
-- ( ) The gateway requires HTTPS
-- ( ) localhost works but is slower
-
----
+> **Isolation and trust boundaries** - which tier may talk to which, and what a container actually isolates - are worked through in the optional activity [Containerization and Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md).
 
 ## 6. The Agent Tier
 

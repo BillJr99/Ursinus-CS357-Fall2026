@@ -255,6 +255,10 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 ---
 
+# Part III: Synthesis and Practice
+
+> Work through the full matrix below at home; it is the same arithmetic as Model 1, carried out for every pair of words.
+
 ## Worked Example: the full $QK^\top$ matrix
 
 Model 1 computed one row — the query for "bank." Exercise 1 asks you to do "river." Here is the whole matrix at once, because seeing all three rows together is what makes the mechanism click: **attention is not a special operation applied to one token, it is the same operation applied to every token in parallel.**
@@ -298,7 +302,6 @@ Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^
 3. **Every row is $O(n)$ work and there are $n$ rows.** That is the $O(n^2)$ cost of self-attention, visible as the literal area of the table. Double the context length and the table quadruples. This is the whole economic argument for retrieval instead of just pasting more text into the prompt.
 
 
-# Part III: Synthesis and Practice
 
 ## 3. Exercises
 

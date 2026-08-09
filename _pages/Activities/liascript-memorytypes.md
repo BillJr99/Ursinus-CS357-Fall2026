@@ -204,3 +204,33 @@ Long-term user preference memory can be maintained in a vector store: after each
 - Liu et al. "Lost in the Middle: How Language Models Use Long Contexts" (2023). The empirical study behind the layout-matters finding: https://arxiv.org/abs/2307.03172
 - LangChain Memory module documentation: https://python.langchain.com/docs/modules/memory/
 - Zhong et al. "MemoryBank: Enhancing Large Language Models with Long-Term Memory" (2023). An alternative architecture to MemGPT using a structured memory bank with forgetting curves.
+
+> **From the Memory and the Small Context Window session.** The vocabulary below (working, episodic, semantic, procedural) was introduced in that session and is developed at length here.
+
+## 2. A Vocabulary of Memories
+
+In this Part you will see how professional agent systems layer three types of memory — working memory, episodic summary, and long-term retrieval — then run a Python class that automatically compresses old conversation turns into a summary, so you can observe exactly what information survives compression and what is lost.
+
+**Why this matters:** Human memory is not a single thing — we distinguish between what you are thinking about right now (working memory), your episodic memories of specific past events, and procedural knowledge like how to ride a bike. Effective agent architectures mirror this layering, assigning each type of information to the storage tier that fits its access pattern. The key insight is that an agent should never carry information it is not likely to need in its next decision.
+
+Practical agents layer several memory types. **Working memory**: the last few turns, kept verbatim — the model needs exact wording for what was just said. **Episodic summary**: a running compressed narrative of the session (e.g., "user wants X; we tried Y, it failed because Z"), rewritten by the model itself every few turns. **Long-term memory**: facts persisted *outside* the context in files or a vector store, retrieved by similarity when relevant — this is exactly the RAG machinery repurposed as memory. The agent's prompt is assembled fresh each turn:
+
+$$
+\text{prompt}_t = \text{system} + \text{summary}_t + \text{retrieve}(q_t, M_{\text{long}}) + \text{recent}_t + q_t
+$$
+
+| Memory Type | What It Stores | Where It Lives | When It's Accessed | Example / In Our Course |
+|-------------|---------------|-----------------|-------------------|-------------------------|
+| Working memory | The last 3–5 turns verbatim | In the prompt, always present | Every turn | The 4 most recent messages in `self.turns` |
+| Episodic summary | A bullet-point compression of older turns, written by the model | In the prompt, always present | Every turn, replacing old verbatim turns | `self.summary`: "Chemistry exam Dec 14; user is weaker in chemistry" |
+| Long-term memory | Persistent user preferences, past decisions, reference facts | External file or vector database | On demand, when the current question seems relevant | A Chroma collection of user facts retrieved by similarity to the current question |
+
+[[MC]]
+An agent must recall a user preference stated 200 turns ago in a months-long relationship. The architecture that handles this *without* growing the prompt is:
+- ( ) Increase the context window to one million tokens
+- ( ) Keep all turns verbatim and trust attention
+- (x) Persist preferences to external storage and retrieve them by similarity when relevant
+- ( ) Raise the temperature so the model improvises the preference
+
+---
+
