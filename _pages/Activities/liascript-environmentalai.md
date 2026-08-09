@@ -129,41 +129,8 @@ The single most impactful design decision for reducing AI environmental cost is 
 
 ---
 
-## Model 2: Right-Sizing Decision Matrix
 
-| Task | Appropriate Model Scale | Rationale for Scale Choice | Local vs. Cloud Preference | Environmental Trade-off |
-|---|---|---|---|---|
-| Classify incoming email as spam or not spam | Fine-tuned small model (1B parameters or fewer) | Binary classification is a well-defined, low-complexity task with massive labeled data available for fine-tuning to high accuracy | Local or edge; no real-time cloud round-trip needed | Highest environmental benefit from right-sizing; frontier model here is ~100x over-powered |
-| Summarize a 10-page PDF | Mid-size model (7B-13B parameters) | Requires coherent abstractive reasoning but the document fits in context and 7B models handle it well | Local is viable on consumer hardware; cloud for convenience | Local on a modern laptop adds ~0.07 kg/8h; cloud call at ~0.0005 kg is lower for a single summary |
-| Generate a photorealistic logo | Diffusion model (specialized architecture) | Image synthesis requires a different architecture from text; quality depends heavily on model scale and fine-tuning | Cloud typical; GPU requirements for quality generation are high | Per-image cost is low; volume at production scale becomes significant |
-| Debug a 500-line codebase with cross-file dependencies | Large model (30B+ parameters) with code specialization | Complex multi-step reasoning across a large context window; rare error patterns benefit from extensive training data | Cloud preferred; local possible on high-end hardware | Justified higher cost because smaller models fail measurably on this task class |
-| Answer a trivia question | Any scale, including very small models | Low reasoning demand; factual recall; fast response is more important than depth | Local sufficient; cloud API call is unnecessary overhead for this task | Largest unnecessary expense: routing simple factual queries to frontier models |
-| Transcribe and summarize a 2-hour lecture | Specialized speech model plus a lightweight summarizer | Two-model pipeline; transcription model is heavily optimized for audio; summarizer is a lightweight text task | Local is fully feasible; privacy argument is strong for lecture content | Demonstrates that task decomposition can reduce energy relative to a single large model |
-
-### Critical Thinking Questions
-
-4. The right-sizing matrix does not include a column for accuracy. Construct the missing argument: under what conditions does using a smaller model for a task impose a *social* cost that must be weighed against the carbon benefit?
-
-   *Hint: Consider a medical triage task or a hiring screening task where the smaller model's error rate is meaningfully higher. Who bears the cost of those errors? Are those costs visible in the same accounting that makes the carbon benefit visible? Is there a way to measure both in the same units?*
-
-5. The "local-first" principle is often presented as unambiguously better. Identify two scenarios where local inference has *worse* environmental impact than a well-managed cloud inference endpoint, and explain why.
-
-   *Hint: Think about what happens when many individual users each run a model on their own hardware versus one highly optimized cloud endpoint serving the same workload. Think about hardware utilization rates, cooling efficiency, and renewable energy purchasing. When does centralization have an environmental advantage?*
-
-6. You are advising a nonprofit organization that does document analysis for human rights investigations — processing thousands of witness testimonies in multiple languages. They currently use a frontier cloud API. What model-choice and deployment recommendations would you make, and how would you weigh privacy, accuracy, cost, and carbon against each other?
-
-   *Hint: Start by listing the constraints: the testimonies are highly sensitive (privacy argument for local), multi-language capability is required (accuracy constraint), the organization has limited budget (cost constraint), and the work matters (accuracy cost of a wrong inference is high). Where do these constraints converge, and where do they conflict?*
-
-[[MC]]
-A development team wants to reduce the carbon footprint of their AI-powered customer support system. Which intervention is most likely to produce the largest reduction in inference-time carbon emissions?
-- ( ) Switching from Python to a compiled language for the API wrapper — runtime efficiency gains in the surrounding code are in the microsecond range, whereas the model forward pass dominates at the millisecond-to-second scale; the wrapper is not the bottleneck
-- ( ) Adding a caching layer that serves identical responses to repeated queries without re-running the model — caching is a meaningful lever but only eliminates compute for exact or near-duplicate queries; a customer support system with diverse question phrasing will still run the full model for the majority of requests
-- (x) Replacing a 70B-parameter frontier model with a fine-tuned 7B-parameter model that achieves equivalent accuracy on the support domain — a 10x reduction in model size directly cuts inference compute by roughly 10x
-- ( ) Purchasing carbon offsets equal to the service's measured emissions — offsets shift accounting responsibility but do not reduce the actual energy the model consumes per query; the compute load and its direct energy draw remain identical
-
----
-
-*Parts I and II focused on choices you can make as an individual developer. Part III zooms out to ask: what happens when everyone makes those choices — and whether efficiency gains collectively reduce impact or accidentally increase it.*
+> **Right-sizing, in detail.** The full decision matrix for matching a model's size to a task lives in the optional activity [Cost Optimization](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md). The principle for today: the smallest model that passes your golden set is the right one, on carbon as on cost.
 
 # Part III: Jevons Paradox and Systemic Risk
 

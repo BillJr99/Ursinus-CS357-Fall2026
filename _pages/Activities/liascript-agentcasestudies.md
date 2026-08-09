@@ -127,7 +127,24 @@ Think of hiring a personal assistant to book a campsite for you. You give them d
 
 After reading Case B, notice how the action-reversibility taxonomy you built earlier in the semester reappears here as safety infrastructure — not abstract theory, but a concrete design requirement.
 
-## Model 3: Case C — Pagination and the Proceedings
+# Part II: Cross-Case Synthesis
+
+[[MC]]
+Across all three cases, the single most recurrent engineering lesson is:
+- ( ) Larger models would have prevented every friction, since capability failures caused each problem
+- (x) Agent reliability comes from the surrounding structure: explicit specifications, externalized state, deterministic verification, and gates on irreversible actions
+- ( ) Browsing agents should never be used because the web is too unpredictable for automation
+- ( ) Humans should review every individual model call to prevent any errors from reaching users
+
+> **⚠️ Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model → better output quality; better surrounding structure → better reliability. Both matter, but only one of them is under your control as a system designer.
+
+---
+
+## Exercises
+
+> **A third case, for teams who want it.** Two cases carry the session; this one is here for anyone whose project involves paginated or rate-limited sources.
+
+## Model 3 (At Home, Optional): Case C — Pagination and the Proceedings
 
 Think of editing a printed book where every chapter references page numbers in the table of contents. You add one paragraph to chapter 3, pushing every subsequent chapter back by a page. Now the entire table of contents is wrong. You could fix each entry manually — but fixing entry 5 does not know that you already "fixed" entry 4, and your fixes might cascade into new errors. The only robust solution is to freeze the content first, then compute all page numbers in one deterministic pass, then generate the table of contents from that computed result. Case C shows why some problems require restructuring the *order of operations*, not improving the *quality of operations*.
 
@@ -158,20 +175,6 @@ Think of editing a printed book where every chapter references page numbers in t
 
 ---
 
-# Part II: Cross-Case Synthesis
-
-[[MC]]
-Across all three cases, the single most recurrent engineering lesson is:
-- ( ) Larger models would have prevented every friction, since capability failures caused each problem
-- (x) Agent reliability comes from the surrounding structure: explicit specifications, externalized state, deterministic verification, and gates on irreversible actions
-- ( ) Browsing agents should never be used because the web is too unpredictable for automation
-- ( ) Humans should review every individual model call to prevent any errors from reaching users
-
-> **⚠️ Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model → better output quality; better surrounding structure → better reliability. Both matter, but only one of them is under your control as a system designer.
-
----
-
-## Exercises
 
 1. *Jigsaw teach-back.*
 
