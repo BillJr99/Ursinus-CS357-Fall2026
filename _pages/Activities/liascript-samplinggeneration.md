@@ -95,61 +95,6 @@ A distribution assigns probabilities: Paris 0.90, Lyon 0.06, Marseille 0.03, ban
 - ( ) All four tokens
 
 
-### Worked Example: top-k and top-p, including the step everyone skips
-
-The multiple-choice item above hands you a finished distribution and asks only which tokens fall inside the nucleus. That is the easy half. The half that actually matters — and the one that silently changes what your agent emits — is **renormalization**: after you throw tokens away, the survivors no longer sum to 1, so you have to divide by what is left.
-
-Start from the same logits as Model 1: Paris $z=5$, Lyon $z=2$, banana $z=-1$, and add Marseille $z=1$.
-
-**Step 1 — softmax at $T=1$.**
-
-| Token | $z$ | $e^{z}$ | $P = e^z / \sum$ |
-|---|---|---|---|
-| Paris | 5 | 148.41 | 0.9007 |
-| Lyon | 2 | 7.389 | 0.0448 |
-| Marseille | 1 | 2.718 | 0.0165 |
-| banana | −1 | 0.368 | 0.0022 |
-| | | **158.89** | **0.9642** |
-
-(The probabilities shown are rounded; they sum to 1 before rounding.)
-
-**Step 2 — top-k with $k = 2$.** Keep Paris and Lyon. Discard the rest.
-
-Surviving mass: $0.9007 + 0.0448 = 0.9455$. **This is not 1, so it is not yet a distribution.** Divide each survivor by the surviving mass:
-
-| Token | $P$ before | $P$ after renormalizing |
-|---|---|---|
-| Paris | 0.9007 | $0.9007 / 0.9455 = $ **0.9526** |
-| Lyon | 0.0448 | $0.0448 / 0.9455 = $ **0.0474** |
-| | | sum = **1.0000** ✓ |
-
-Notice Paris's probability *went up* — from 0.9007 to 0.9526 — without its logit changing at all. Truncation is not a neutral filter; it redistributes the discarded mass onto the survivors, proportionally. Every token you cut makes the leaders more likely.
-
-**Step 3 — top-p with $p = 0.9$, same distribution.** Accumulate from the top until you reach $p$:
-
-| Token | $P$ | Running total | In the nucleus? |
-|---|---|---|---|
-| Paris | 0.9007 | 0.9007 | yes — and 0.9007 ≥ 0.9, so we stop |
-| Lyon | 0.0448 | — | no |
-
-The nucleus is **Paris alone**. Renormalizing a single survivor gives $0.9007 / 0.9007 = 1.0$ — the sampler is now deterministic, at a temperature you never set to zero.
-
-**This is the whole lesson.** On the *same* distribution, $k=2$ leaves Lyon a 4.7% chance and $p=0.9$ leaves it none. Top-p adapts to confidence: when the model is sure, the nucleus collapses to one token; when it is unsure, the nucleus widens. Top-k does not adapt — $k=2$ keeps exactly two candidates whether the model is certain or hopelessly torn.
-
-[[MC]]
-On the distribution above, you set top-p = 0.95 instead of 0.9. What is Lyon's probability after renormalization?
-- ( ) 0.0448, unchanged — renormalization only affects the top token
-- (x) 0.0474 — the nucleus is {Paris, Lyon} with mass 0.9455, and 0.0448 / 0.9455 = 0.0474
-- ( ) 0.05, because top-p rounds the nucleus to the threshold
-- ( ) 0 — Lyon falls outside any nucleus below p = 0.99
-
-> **Watch out!** Because truncation renormalizes, **top-k and top-p interact with temperature in ways that are easy to get backwards.** Raising temperature flattens the distribution, which *widens* the top-p nucleus (more tokens are needed to reach $p$) — so turning temperature up while leaving top-p fixed increases randomness twice over. For an agent that must emit an exact tool call, this compounding is exactly what you do not want.
-
-
-> **⚠️ Common Misconception:** Students often assume that top-p = 0.9 means "keep the top 90% of tokens by count" — for example, keeping 45,000 out of 50,000 vocabulary entries. In reality, top-p keeps the *smallest set of tokens* needed to reach 90% of the *total probability mass*. Because probability mass is extremely concentrated in the top few tokens, top-p = 0.9 typically keeps only 5-50 tokens, not thousands. The long tail of the vocabulary collectively holds very little probability.
-
----
-
 ## 3. Other Common Generation Parameters
 
 Temperature, top-k, and top-p decide *which* token to pick. A few other parameters shape *how much* the model generates and *what it avoids*. You pass all of them the same way — inside the Ollama `options` dictionary — and they map to top-level fields on OpenAI-compatible endpoints.
@@ -260,6 +205,64 @@ Examine the counter output for each temperature. Notice which temperatures produ
 ---
 
 # Part III: Synthesis and Practice
+
+> Work through this at home. It shows the renormalization step that most explanations of top-k and top-p leave out.
+
+### Worked Example: top-k and top-p, including the step everyone skips
+
+The multiple-choice item above hands you a finished distribution and asks only which tokens fall inside the nucleus. That is the easy half. The half that actually matters — and the one that silently changes what your agent emits — is **renormalization**: after you throw tokens away, the survivors no longer sum to 1, so you have to divide by what is left.
+
+Start from the same logits as Model 1: Paris $z=5$, Lyon $z=2$, banana $z=-1$, and add Marseille $z=1$.
+
+**Step 1 — softmax at $T=1$.**
+
+| Token | $z$ | $e^{z}$ | $P = e^z / \sum$ |
+|---|---|---|---|
+| Paris | 5 | 148.41 | 0.9007 |
+| Lyon | 2 | 7.389 | 0.0448 |
+| Marseille | 1 | 2.718 | 0.0165 |
+| banana | −1 | 0.368 | 0.0022 |
+| | | **158.89** | **0.9642** |
+
+(The probabilities shown are rounded; they sum to 1 before rounding.)
+
+**Step 2 — top-k with $k = 2$.** Keep Paris and Lyon. Discard the rest.
+
+Surviving mass: $0.9007 + 0.0448 = 0.9455$. **This is not 1, so it is not yet a distribution.** Divide each survivor by the surviving mass:
+
+| Token | $P$ before | $P$ after renormalizing |
+|---|---|---|
+| Paris | 0.9007 | $0.9007 / 0.9455 = $ **0.9526** |
+| Lyon | 0.0448 | $0.0448 / 0.9455 = $ **0.0474** |
+| | | sum = **1.0000** ✓ |
+
+Notice Paris's probability *went up* — from 0.9007 to 0.9526 — without its logit changing at all. Truncation is not a neutral filter; it redistributes the discarded mass onto the survivors, proportionally. Every token you cut makes the leaders more likely.
+
+**Step 3 — top-p with $p = 0.9$, same distribution.** Accumulate from the top until you reach $p$:
+
+| Token | $P$ | Running total | In the nucleus? |
+|---|---|---|---|
+| Paris | 0.9007 | 0.9007 | yes — and 0.9007 ≥ 0.9, so we stop |
+| Lyon | 0.0448 | — | no |
+
+The nucleus is **Paris alone**. Renormalizing a single survivor gives $0.9007 / 0.9007 = 1.0$ — the sampler is now deterministic, at a temperature you never set to zero.
+
+**This is the whole lesson.** On the *same* distribution, $k=2$ leaves Lyon a 4.7% chance and $p=0.9$ leaves it none. Top-p adapts to confidence: when the model is sure, the nucleus collapses to one token; when it is unsure, the nucleus widens. Top-k does not adapt — $k=2$ keeps exactly two candidates whether the model is certain or hopelessly torn.
+
+[[MC]]
+On the distribution above, you set top-p = 0.95 instead of 0.9. What is Lyon's probability after renormalization?
+- ( ) 0.0448, unchanged — renormalization only affects the top token
+- (x) 0.0474 — the nucleus is {Paris, Lyon} with mass 0.9455, and 0.0448 / 0.9455 = 0.0474
+- ( ) 0.05, because top-p rounds the nucleus to the threshold
+- ( ) 0 — Lyon falls outside any nucleus below p = 0.99
+
+> **Watch out!** Because truncation renormalizes, **top-k and top-p interact with temperature in ways that are easy to get backwards.** Raising temperature flattens the distribution, which *widens* the top-p nucleus (more tokens are needed to reach $p$) — so turning temperature up while leaving top-p fixed increases randomness twice over. For an agent that must emit an exact tool call, this compounding is exactly what you do not want.
+
+
+> **⚠️ Common Misconception:** Students often assume that top-p = 0.9 means "keep the top 90% of tokens by count" — for example, keeping 45,000 out of 50,000 vocabulary entries. In reality, top-p keeps the *smallest set of tokens* needed to reach 90% of the *total probability mass*. Because probability mass is extremely concentrated in the top few tokens, top-p = 0.9 typically keeps only 5-50 tokens, not thousands. The long tail of the vocabulary collectively holds very little probability.
+
+---
+
 
 In this part, you will apply the sampling vocabulary to real design decisions — choosing temperature and top-p settings for different agent roles — and close the loop on the hypotheses your team formed in the *Welcome: What Is AI, and What Is an Agent?* activity.
 
