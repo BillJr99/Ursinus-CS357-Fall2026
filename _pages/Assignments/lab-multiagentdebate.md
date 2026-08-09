@@ -1,13 +1,13 @@
 ---
 layout: assignment
 permalink: /Assignments/MultiAgentDebate
-title: "CS357: Foundations of Artificial Intelligence - Lab 4: Multi-Agent Debate and Consensus"
+title: "CS357: Foundations of Artificial Intelligence - Lab 4: Multi-Agent Patterns (Critique, Refine, Debate, Consensus)"
 
 info:
   coursenum: CS357
-  purpose: "To orchestrate multiple agents into debate and consensus and learn empirically when aggregation improves answers and when correlated errors defeat it."
+  purpose: "To orchestrate multiple agents through the four patterns that make agent systems more reliable than a single call - critique, refine, debate, and consensus - and to learn empirically when aggregation improves answers and when correlated errors defeat it."
   tilt:
-    task: "Implement multi-agent debate and embedding-clustered consensus, then compare both against a single-shot baseline at matched call budgets."
+    task: "Implement a generator/critic/refine loop, then multi-agent debate and embedding-clustered consensus, and compare all of them against a single-shot baseline at matched call budgets."
     criteria: "Assessed on the debate loop, the consensus pipeline, and a matched-budget comparison that surfaces a correlated failure; see the rubric below for the full breakdown."
   points: 100
   goals:
@@ -16,19 +16,25 @@ info:
     - To compare debate, consensus, and single-shot baselines at matched call budgets on a labeled task set
     - To identify and explain correlated failure modes that aggregation cannot repair and propose a non-LLM remedy
   rubric:
-    - weight: 30
+    - weight: 20
+      description: "Part A: Critique and Refine Loop"
+      preemerging: "No generator/critic/refine loop, or the critic does not influence the next generation."
+      beginning: "A loop exists but runs a fixed number of rounds with no stopping rule, so it cannot tell improvement from churn."
+      progressing: "The loop runs generator, critic, and refiner with a stated stopping rule, and a transcript shows an output changing in response to a critique."
+      proficient: "As progressing, and the writeup shows a case where the critic was wrong and says how you could tell - plus what the loop cost in extra calls for the quality it bought."
+    - weight: 25
       description: Debate Implementation
       preemerging: The debate fails to run due to major issues, or the program fails to run
       beginning: The debate runs but fails on test questions due to one or more minor issues
       progressing: The debate runs correctly with configurable agents and rounds and majority vote aggregation, with a fragile component such as answer extraction
       proficient: "The debate runs correctly with configurable agents, rounds, and temperature schedule; answer extraction anchors on a required ANSWER: line and handles its absence with a located error message; both majority-vote and judge-agent aggregation are available; a transcript of at least one complete 3-agent, 2-round debate is included in the submission"
-    - weight: 25
+    - weight: 20
       description: Consensus Implementation
       preemerging: The consensus pipeline fails to run due to major issues
       beginning: Drafts are sampled but clustering or synthesis is missing or incorrect
       progressing: The pipeline samples, clusters by embedding similarity with normalized vectors, and synthesizes from cluster representatives, with a minor issue
       proficient: The pipeline samples k high-temperature drafts, clusters with cosine distance over normalized embeddings and a justified threshold, synthesizes using one representative per cluster with its support count, discloses close disagreements in one line, and the synthesizer receives cluster summaries rather than all k transcripts; a demonstration on a long-form question is included
-    - weight: 25
+    - weight: 20
       description: Comparative Evaluation
       preemerging: No evaluation is provided
       beginning: Conditions are compared anecdotally without matched budgets or a protocol
@@ -40,7 +46,7 @@ info:
       beginning: Code commenting and structure is limited in ways that reduce the readability of the program
       progressing: Code documentation is present that re-states the explicit code definitions
       proficient: Every non-trivial function has a docstring; all model calls and embedding operations are wrapped in exception handlers that print a located message (e.g., [lab4:debate_round]) followed by a traceback; number of agents, rounds, temperature schedule, and distance threshold are read from a JSON config file rather than hardcoded
-    - weight: 10
+    - weight: 5
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
@@ -76,6 +82,18 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 
 ```bash
 # Sentence transformers for embedding clustering (Part 2)
+
+## This lab has two halves
+
+Critique-and-refine and debate-and-consensus used to be two separate 100-point labs due eight days apart. They are the same family of idea - *use more than one model call to get a better answer* - so they are now **one lab with one grade**.
+
+**Part A - Critique and Refine.** Build the generator/critic/refine loop and its stopping rule. The full step-by-step specification lives on its own page so this one stays readable: **[Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/CritiqueRefine)**. Do Part A first; the debate work in Part B reuses its scaffolding, and a critic you can already trust is what makes a debate round worth reading.
+
+**Part B - Debate and Consensus.** Everything below on this page.
+
+Both halves are submitted together, once, against the single rubric in this assignment. There is no separate Critique-and-Refine deadline.
+
+
 pip install sentence-transformers scikit-learn numpy
 
 # Requests for Ollama calls
