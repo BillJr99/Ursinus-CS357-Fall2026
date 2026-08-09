@@ -157,6 +157,45 @@ for label in sorted(set(km.labels_)):
 
 ---
 
+
+### Worked Example: one k-means iteration, by hand
+
+The code cell above clusters your corpus and draws the map. Before you trust a map, it is worth knowing how it was drawn — and k-means is simple enough to do on paper. Here is one full iteration on four chunk embeddings, reduced to two dimensions so the arithmetic stays visible.
+
+Four chunks, with their (toy, 2-D) embeddings:
+
+| Chunk | Vector | Roughly about |
+|---|---|---|
+| A | $(1.0,\; 1.0)$ | course policies |
+| B | $(1.5,\; 2.0)$ | grading policy |
+| C | $(5.0,\; 4.0)$ | RAG implementation |
+| D | $(6.0,\; 5.0)$ | vector databases |
+
+**Step 1 — initialize.** Pick $k = 2$ and seed the centroids at two of the points: $c_1 = (1,1)$, $c_2 = (6,5)$.
+
+**Step 2 — assign each point to its nearest centroid** (Euclidean distance):
+
+| Chunk | $d$ to $c_1$ | $d$ to $c_2$ | Assigned |
+|---|---|---|---|
+| A | $0.00$ | $6.40$ | **cluster 1** |
+| B | $\sqrt{0.5^2 + 1^2} = 1.12$ | $5.41$ | **cluster 1** |
+| C | $\sqrt{4^2 + 3^2} = 5.00$ | $\sqrt{1^2+1^2} = 1.41$ | **cluster 2** |
+| D | $6.40$ | $0.00$ | **cluster 2** |
+
+**Step 3 — recompute each centroid as the mean of its members:**
+
+- $c_1 = \left(\frac{1.0 + 1.5}{2},\; \frac{1.0 + 2.0}{2}\right) = (1.25,\; 1.50)$
+- $c_2 = \left(\frac{5.0 + 6.0}{2},\; \frac{4.0 + 5.0}{2}\right) = (5.50,\; 4.50)$
+
+**Step 4 — repeat.** Reassign with the new centroids: nothing changes, so the algorithm has **converged** after one iteration. Two clusters, and they correspond to something real — policy chunks and implementation chunks — which nobody labeled.
+
+**What this tells you about your own corpus map.** Three things worth carrying into Model 2:
+
+1. **The clusters are an artifact of $k$, not a fact about your documents.** We chose $k = 2$. Choose $k = 4$ on this data and you get four singleton clusters, each perfectly "coherent" and completely useless. When the map looks clean, ask whether $k$ made it clean.
+2. **The seeds matter.** Had we seeded at B and C instead, the first assignment would differ, and on messier data the final clustering can differ too. This is why production implementations use k-means++ seeding and run several times.
+3. **Distance here is Euclidean, but retrieval usually ranks by cosine.** On *normalized* vectors the two give the same ordering — which is exactly why the pipeline normalizes embeddings before clustering. If you ever cluster un-normalized vectors, long documents drift away from the origin and form their own cluster purely because they are long, not because they are about anything in particular.
+
+
 ## Model 2: Reading the Map
 
 **Why this matters:** The clusters the algorithm produces may or may not match the categories a human would draw. When they do not match, the mismatch is a window into what the embedding model actually "hears" in the text — and that is valuable information for predicting where your retrieval system will succeed and where it will fail.
