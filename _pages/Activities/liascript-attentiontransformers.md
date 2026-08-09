@@ -253,6 +253,51 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 *Part II connected attention arithmetic to practical agent constraints. Part III asks you to apply both: compute attention for a second token, experiment with masking, and reason about scaling — the three skills that will recur whenever you tune a prompt or choose a retrieval strategy.*
 
+---
+
+## Worked Example: the full $QK^\top$ matrix
+
+Model 1 computed one row — the query for "bank." Exercise 1 asks you to do "river." Here is the whole matrix at once, because seeing all three rows together is what makes the mechanism click: **attention is not a special operation applied to one token, it is the same operation applied to every token in parallel.**
+
+Queries $\mathbf{q}$: river $(1,0)$, bank $(1,1)$, loan $(1,1)$.
+Keys $\mathbf{k}$: river $(1,0)$, bank $(0,1)$, loan $(1,1)$.
+Values $\mathbf{v}$: river $(1,1)$, bank $(2,0)$, loan $(0,2)$.
+
+**Raw scores $QK^\top$** (each cell is $\mathbf{q}_{\text{row}} \cdot \mathbf{k}_{\text{col}}$):
+
+| $\mathbf{q} \downarrow$ / $\mathbf{k} \rightarrow$ | river | bank | loan |
+|---|---|---|---|
+| **river** | 1 | 0 | 1 |
+| **bank** | 1 | 1 | 2 |
+| **loan** | 1 | 1 | 2 |
+
+**Scaled by $\sqrt{d_k} = \sqrt{2} \approx 1.414$:**
+
+| | river | bank | loan |
+|---|---|---|---|
+| **river** | 0.71 | 0.00 | 0.71 |
+| **bank** | 0.71 | 0.71 | 1.41 |
+| **loan** | 0.71 | 0.71 | 1.41 |
+
+**Softmax, row by row** (each row sums to 1 — that is what makes it a distribution over "where do I look"):
+
+| | river | bank | loan | → new vector |
+|---|---|---|---|---|
+| **river** | 0.40 | 0.20 | 0.40 | $(0.80,\; 1.20)$ |
+| **bank** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
+| **loan** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
+
+Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^{0.71} = 2.03$, sum $= 5.06$, so weights $2.03/5.06 = 0.40$, $1.00/5.06 = 0.20$, $0.40$. Then $0.40(1,1) + 0.20(2,0) + 0.40(0,2) = (0.80, 1.20)$.
+
+**Three things this matrix shows that a single row cannot.**
+
+1. **The matrix is not symmetric.** Row "river" gives "bank" a weight of 0.20, but row "bank" gives "river" 0.25. Attention is *directional* — "what does A want from B" is a different question from "what does B want from A" — because queries and keys are different projections. This is the single most common misconception about attention.
+
+2. **"bank" and "loan" have identical rows.** They started with identical query vectors $(1,1)$, so they attend identically and end up with the same output. Nothing in this toy distinguishes them — which is exactly why real models use *many* attention heads with *different* learned projections, so that different heads can separate tokens this head cannot.
+
+3. **Every row is $O(n)$ work and there are $n$ rows.** That is the $O(n^2)$ cost of self-attention, visible as the literal area of the table. Double the context length and the table quadruples. This is the whole economic argument for retrieval instead of just pasting more text into the prompt.
+
+
 # Part III: Synthesis and Practice
 
 ## 3. Exercises
@@ -303,7 +348,7 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ---
 
-→ **Coming Up Next:** In the next session we move from single-layer attention to the full transformer stack — positional encodings, feed-forward sublayers, layer normalization, and how all of this is trained end-to-end with next-token prediction. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+→ **Coming Up Next:** The next session turns to sampling — how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
 
 ---
 

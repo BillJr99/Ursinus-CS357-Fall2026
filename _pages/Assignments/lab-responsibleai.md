@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/ResponsibleAI
-title: "CS357: Foundations of Artificial Intelligence - Lab 6: Responsible AI"
+title: "CS357: Foundations of Artificial Intelligence - Responsible AI Capstone"
 
 info:
   coursenum: CS357
@@ -9,7 +9,7 @@ info:
   tilt:
     task: "Threat-model an agent you already built, then audit and harden it along one chosen responsible-AI direction: prompt-injection defense, privacy, or explainability."
     criteria: "Assessed on your threat and risk analysis, your implementation of the chosen direction, your evaluation and evidence, and your writeup and reflection; see the rubric below for the full breakdown."
-  points: 100
+  points: 200
   goals:
     - To frame and threat-model an AI agent for responsible-AI risk before hardening it, identifying where security, privacy, and accountability failures could occur
     - To experience prompt-injection and jailbreak techniques firsthand as both attacker and defender through hands-on adversarial exercises, and to connect the techniques observed to the threat model of an agent you built
@@ -258,6 +258,22 @@ ollama serve &
 ollama pull llama3.2
 curl http://localhost:11434/api/tags
 # Expected: {"models":[{"name":"llama3.2",...}]}
+
+## One capstone, two components, 200 points
+
+The Responsible AI **lab** and the Responsible AI in Practice **written assignment** used to be two 100-point deliverables due two days apart in the final week, alongside the Final Project. They are now a single capstone worth 200 points, handed out November 10 and due December 1.
+
+**Component 1 - Build (100 points).** The audit, red-team, and mitigation work specified on this page. You produce evidence about a system's behavior.
+
+**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
+
+Submit both together. The rubric below covers Component 1; the rubric on the Practice page covers Component 2, and the two are averaged into one 200-point grade.
+
+**Why they are one thing.** An audit with no recommendation is a bug report nobody owns; a policy with no evidence is a press release. The capstone asks you to do both about the *same* system, which is the actual professional task. Your Component 2 argument must cite your own Component 1 findings - not a paper you read.
+
+**Prerequisites, all taught before this is handed out:** Training Data, Bias, and Explainability (Nov 10). Governance and Policy Writing (Nov 17) and The Environmental Cost of Inference (Nov 19) land inside the work window, twelve and fourteen days before it is due.
+
+
 ```
 
 ##### A Note on Model Choice
