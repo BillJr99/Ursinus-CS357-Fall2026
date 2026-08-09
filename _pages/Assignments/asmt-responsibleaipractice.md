@@ -268,6 +268,12 @@ Use this structural skeleton (you may add subsections but may not omit a numbere
 
 ```
 # Governance Document: [System Name]
+
+> **This page is Component 2 of the Responsible AI Capstone, not a separate assignment.** It has no deadline of its own. Its rubric contributes 100 of the capstone's 200 points, and it is submitted together with Component 1. See **[Responsible AI Capstone](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAI)** for the due date and the submission instructions.
+>
+> Your argument here must be grounded in the findings you produced in Component 1 - the audit you ran, not a study you read.
+
+
 Version 1.0 | Date | Authors: [team members and roles]
 ## 1. Purpose and Scope        ## 5. Data Handling
 ## 2. System Description       ## 6. Evaluation and Monitoring

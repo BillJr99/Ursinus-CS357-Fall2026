@@ -37,7 +37,7 @@ Why does OAuth matter here? Without authentication, any process on the same mach
 
 **Complete these prerequisite activities first:**
 
-- [MCP Server Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcpserver.md) — introduces the MCP protocol and the Python SDK
+- [MCP Server Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md) — introduces the MCP protocol and the Python SDK
 - [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) — walks through running a local AI agent and wiring in tools
 
 ##### Install Required Tools

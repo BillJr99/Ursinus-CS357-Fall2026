@@ -69,6 +69,101 @@ Given the toy merge rules (`t`+`h`→`th`, `th`+`e`→`the`, `i`+`n`→`in`, `in
 
    > *Hint: "internationalization" is a single rare word — rare words shatter into many subword pieces. The second phrase has 6 common words. Which do you expect has more tokens? Try to estimate using the ¾-word rule.*
 
+### Worked Example: where those merge rules came from (BPE, by hand)
+
+The four merge rules above were handed to you. Real tokenizers *learn* them, and the learning rule is almost embarrassingly simple: **repeatedly merge the most frequent adjacent pair.** Here is the whole algorithm on a four-word corpus.
+
+**Corpus** (word, frequency), with `</w>` marking a word end:
+
+```
+low </w>      5
+lower </w>    2
+newest </w>   6
+widest </w>   3
+```
+
+**Step 0 — start from characters.** The initial vocabulary is every character: `l o w e r n s t i d </w>`.
+
+```
+l o w </w>            5
+l o w e r </w>        2
+n e w e s t </w>      6
+w i d e s t </w>      3
+```
+
+**Merge 1.** Count every adjacent pair across the corpus, weighted by word frequency:
+
+| Pair | Where it occurs | Count |
+|---|---|---|
+| `e s` | newest (6), widest (3) | **9** |
+| `s t` | newest (6), widest (3) | 9 |
+| `l o` | low (5), lower (2) | 7 |
+| `o w` | low (5), lower (2) | 7 |
+| `w e` | newest (6) | 6 |
+
+`e s` and `s t` tie at 9; break the tie by order encountered and merge **`e s` → `es`**:
+
+```
+l o w </w>            5
+l o w e r </w>        2
+n e w es t </w>       6
+w i d es t </w>       3
+```
+
+**Merge 2.** Recount. Now `es t` occurs 6 + 3 = **9**, the new maximum. Merge **`es t` → `est`**:
+
+```
+l o w </w>            5
+l o w e r </w>        2
+n e w est </w>        6
+w i d est </w>        3
+```
+
+**Merge 3.** Recount. `est </w>` occurs 9 times. Merge **`est </w>` → `est</w>`**:
+
+```
+l o w </w>            5
+l o w e r </w>        2
+n e w est</w>         6
+w i d est</w>         3
+```
+
+Three merges in, the learned merge table is `[es, est, est</w>]` — and notice what it discovered without being told: **`est` is an English suffix.** Nobody supplied a morphology rule. Frequency did it.
+
+### Worked Example: encoding a word the tokenizer has never seen
+
+This is the step that explains the failures the course keeps invoking. Take the learned merge table above, in order, and encode **`lowest`** — a word that never appeared in the training corpus.
+
+| Stage | Sequence | Rule applied |
+|---|---|---|
+| start | `l o w e s t </w>` | split to characters |
+| after merge 1 | `l o w es t </w>` | `e s` → `es` |
+| after merge 2 | `l o w est </w>` | `es t` → `est` |
+| after merge 3 | `l o w est</w>` | `est </w>` → `est</w>` |
+| final | **`l` `o` `w` `est</w>`** | no more rules apply |
+
+Four tokens, and the model has never seen this word. It sees a prefix spelled out letter by letter plus a suffix it knows well.
+
+**Now the punchline.** Ask a model how many `r`s are in *strawberry*. A production tokenizer splits it into something like `str` `aw` `berry` — three chunks, and **not one of them is a letter**. The model is not looking at `s-t-r-a-w-b-e-r-r-y`; it is looking at three opaque IDs. Counting letters inside a token is not a reasoning failure, it is an *input representation* failure: the information was destroyed before the model ever saw it. The same mechanism explains why models are shaky at rhyming, at reversing strings, and at arithmetic on long numbers.
+
+### Check it against a real tokenizer
+
+Hand-tracing is the point, but seeing where the toy diverges from production is worth fifteen lines:
+
+```python  liascript
+# pip install tiktoken
+import tiktoken
+enc = tiktoken.get_encoding("cl100k_base")
+
+for word in ["lowest", "strawberry", "Collegeville", "CS357", "internationalization"]:
+    ids = enc.encode(word)
+    pieces = [enc.decode([i]) for i in ids]
+    print(f"{word:22s} -> {len(ids)} tokens  {pieces}")
+```
+
+Run it and compare against your hand trace. Two things to notice: common words are single tokens while rare ones shatter, and the split points frequently land *mid-morpheme* — the tokenizer optimizes for frequency, not for meaning. That gap is where a surprising share of model weirdness lives.
+
+
 ---
 
 ## 2. Embeddings: Meaning as Geometry

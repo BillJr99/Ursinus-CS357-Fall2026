@@ -328,7 +328,7 @@ Both models convert context into a probability distribution over next tokens. Th
 
 ---
 
-→ **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance — not just the last n-1 characters. In the next session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
+→ **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance — not just the last n-1 characters. In the *Attention and the Transformer* session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
 
 ---
 
