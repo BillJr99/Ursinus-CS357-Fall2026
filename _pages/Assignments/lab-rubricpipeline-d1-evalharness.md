@@ -1,7 +1,7 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction1
-title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 1: Building an Agent Evaluation Harness'
+title: 'CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 1: Building an Agent Evaluation Harness'
 info:
   coursenum: CS357
   purpose: 'To generalize the judge validation from the core rubric-pipeline lab into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push.'
@@ -18,7 +18,7 @@ tags:
 - ci
 ---
 
-# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 1: Building an Agent Evaluation Harness
+# CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 1: Building an Agent Evaluation Harness
 
 ## Purpose
 

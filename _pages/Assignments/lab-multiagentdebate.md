@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/MultiAgentDebate
-title: "CS357: Foundations of Artificial Intelligence - Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus)"
+title: "CS357: Foundations of Artificial Intelligence - Lab: Multi-Agent Patterns (Critique, Refine, Debate, Consensus)"
 
 info:
   coursenum: CS357

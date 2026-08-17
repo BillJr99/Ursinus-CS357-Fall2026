@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/RAGKnowledgeBase
-title: "CS357: Foundations of Artificial Intelligence - RAG Knowledge Base Lab"
+title: "CS357: Foundations of Artificial Intelligence - Lab: RAG Knowledge Base"
 
 info:
   coursenum: CS357

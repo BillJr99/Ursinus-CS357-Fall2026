@@ -86,7 +86,7 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 **Tools to install:**
 
 ```bash
-# All you need is the requests library and Ollama (already installed if you did Labs 1-2)
+# All you need is the requests library and Ollama (already installed if you did the earlier labs)
 
 > **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
 
@@ -789,7 +789,7 @@ You may then **extend** the core in the direction below. The direction is not a 
 > - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
 > - **An API key** for the provider your agent uses (roughly $5 of credit is more than enough for this direction, or use the instructor-provided key if one is announced in class)
 >
-> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1–4) runs entirely against your local Ollama setup from Labs 1–2. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
+> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1–4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
 
 In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt — one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 

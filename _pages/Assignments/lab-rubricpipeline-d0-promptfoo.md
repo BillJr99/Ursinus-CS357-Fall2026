@@ -1,7 +1,7 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction0
-title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 0: The promptfoo Route'
+title: 'CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 0: The promptfoo Route'
 info:
   coursenum: CS357
   purpose: To meet the core Rubric Pipeline Lab objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
@@ -21,7 +21,7 @@ tags:
 - testing
 ---
 
-# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 0: The promptfoo Route
+# CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 0: The promptfoo Route
 
 ## Purpose
 
@@ -43,7 +43,7 @@ This page is **Direction 0** of the [Rubric Pipeline Lab](/Assignments/RubricPip
 > **What this direction requires**
 >
 > - **Node.js and npm** (install from [https://nodejs.org](https://nodejs.org)) — promptfoo runs via `npx`, so nothing else needs a global install
-> - **Local Ollama** with the `llama3.2` model, as in Labs 1–4
+> - **Local Ollama** with the `llama3.2` model, as in the earlier labs
 > - **No API key.** Everything on this route runs locally.
 
 ---
