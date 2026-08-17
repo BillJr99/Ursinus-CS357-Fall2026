@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/MultiAgentDebate
-title: "CS357: Foundations of Artificial Intelligence - Lab 4: Multi-Agent Patterns (Critique, Refine, Debate, Consensus)"
+title: "CS357: Foundations of Artificial Intelligence - Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus)"
 
 info:
   coursenum: CS357
@@ -753,7 +753,7 @@ Check the temperature and seed for that agent. At very high temperature (>1.0) t
 > **Checkpoint: Before moving to Part 4, make sure you can answer:**
 > 1. On your task set, which condition had the best accuracy? Did it also have the highest call count? What does that tradeoff imply about deployment decisions?
 > 2. Describe your correlated failure in one sentence. Why could neither majority vote nor debate fix it?
-> 3. Name the non-LLM resource that would fix your correlated failure. How would you integrate it into your existing agent architecture (think back to Lab 1's tool pattern)?
+> 3. Name the non-LLM resource that would fix your correlated failure. How would you integrate it into your existing agent architecture (think back to the Local Agent Lab's tool pattern)?
 
 ---
 

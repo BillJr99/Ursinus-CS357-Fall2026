@@ -130,7 +130,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40b
 DTSTAMP:20260903T000000Z
 DTSTART;VALUE=DATE:20260903
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 1: Your First Local Agent Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -166,7 +166,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40f
 DTSTAMP:20260922T000000Z
 DTSTART;VALUE=DATE:20260922
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 1: Your First Local Agent Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -175,7 +175,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f410
 DTSTAMP:20260922T000000Z
 DTSTART;VALUE=DATE:20260922
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 1 Checkpoint: Golden-Set Benchmark Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Checkpoint: Golden-Set Benchmark Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -193,7 +193,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f412
 DTSTAMP:20260924T000000Z
 DTSTART;VALUE=DATE:20260924
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 2: Tools, MCP, and the Agent's Hands Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Tools and MCP Lab Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -211,7 +211,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f414
 DTSTAMP:20261006T000000Z
 DTSTART;VALUE=DATE:20261006
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 1 Checkpoint: Golden-Set Benchmark Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Checkpoint: Golden-Set Benchmark Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -220,7 +220,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f415
 DTSTAMP:20261006T000000Z
 DTSTART;VALUE=DATE:20261006
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 3: A RAG Knowledge Base of Your Own Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -247,7 +247,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f418
 DTSTAMP:20261020T000000Z
 DTSTART;VALUE=DATE:20261020
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 2: Tools, MCP, and the Agent's Hands Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Tools and MCP Lab Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -274,7 +274,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41b
 DTSTAMP:20261027T000000Z
 DTSTART;VALUE=DATE:20261027
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 2 Checkpoint: RAG Quality Checkup Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -283,7 +283,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41c
 DTSTAMP:20261029T000000Z
 DTSTART;VALUE=DATE:20261029
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 3: A RAG Knowledge Base of Your Own Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -301,7 +301,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41e
 DTSTAMP:20261103T000000Z
 DTSTART;VALUE=DATE:20261103
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 4: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus) Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -319,7 +319,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f420
 DTSTAMP:20261105T000000Z
 DTSTART;VALUE=DATE:20261105
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 5: An LLM Rubric-Grading Pipeline Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Rubric Pipeline Lab Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -337,7 +337,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f422
 DTSTAMP:20261110T000000Z
 DTSTART;VALUE=DATE:20261110
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 2 Checkpoint: RAG Quality Checkup Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -373,7 +373,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f426
 DTSTAMP:20261117T000000Z
 DTSTART;VALUE=DATE:20261117
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 4: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -391,7 +391,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f428
 DTSTAMP:20261124T000000Z
 DTSTART;VALUE=DATE:20261124
-SUMMARY:CS357 Foundations of Artificial Intelligence: Lab 5: An LLM Rubric-Grading Pipeline Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Rubric Pipeline Lab Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3

@@ -1,10 +1,10 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent/Direction1
-title: "CS357 Lab 1 Direction 1: Debugging a Broken Agent"
+title: "CS357 Local Agent Lab Direction 1: Debugging a Broken Agent"
 ---
 
-> **Grading:** This page is one of the directions for [Lab 1: Your First Local Agent](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Lab 1 rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
 
 > **What this direction requires**
 >
@@ -32,7 +32,7 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 **Prerequisite concepts** — complete these before writing any code:
 
 - [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) — the perceive/plan/act/remember cycle
-- Lab 1 (Local Agent) or working familiarity with the Ollama `/api/chat` endpoint and the `requests` library
+- The Local Agent Lab, or working familiarity with the Ollama `/api/chat` endpoint and the `requests` library
 
 **Tools to install:**
 
