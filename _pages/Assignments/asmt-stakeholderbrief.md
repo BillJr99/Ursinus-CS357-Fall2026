@@ -122,6 +122,21 @@ The protocol has four phases. Your interview packet (an appendix to the brief) d
 
 ---
 
+## Interlude: Your Own First Draft, Written Without AI
+
+**Due at the class meeting after the brief is handed out** (see the [schedule](/)), individually, before your team begins drafting Part 3. **3 points, assessed within Class Activities and Participation, on completion only.**
+
+After your interview and before your team writes anything together, write **half a page, by yourself, with no AI assistance of any kind**: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about. No sources, no polish, no rewriting it later — a first honest attempt.
+
+This is a **calibration exercise, not a test.** It is not compared against your teammates' drafts, it is not marked for quality, and nothing in it can lower your grade. It exists for two reasons, both of them yours:
+
+- **It gives you something to bring.** The standing thread principle is *independent work before group work* — the same reason the Literature Review's annotated bibliographies are individual. A team synthesis is only a synthesis if there were several real contributions to reconcile; five people who each thought about the problem alone first will write a better brief than five people who watched one person type.
+- **It is a baseline you can point at.** Later in the semester you will want to know what you can do unaided, because that is the only way to tell whether a tool is extending your judgment or substituting for it. Keep this draft. Re-read it at Demo Day.
+
+Bring it to class in whatever form you wrote it — typed, handwritten, or a photo of the page — and submit it individually via the LMS. Because this one is unassisted by design, it carries **no AI-use disclosure**: there is nothing to disclose, and that is the point.
+
+---
+
 ## Part 3: The Brief
 
 Write **2-3 pages** with these six sections. Every section names its **primary author**, and every member is primary author of at least one section (the standing [Project Thread](/Projects/PBLThread) rule).
@@ -145,7 +160,9 @@ At **wk5.0**, draft briefs are exchanged across teams in class for structured pe
 
 ## Deliverables
 
-Submit one PDF per team via the LMS by **wk6.0** containing:
+**Individually,** before your team drafts: the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
+
+**As a team,** submit one PDF via the LMS by **wk6.0** containing:
 
 - The 2-3 page brief (six sections, primary author named per section)
 - The interview packet appendix (prep questions, notes, consent record, follow-up exchange)

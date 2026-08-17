@@ -477,7 +477,14 @@ schedule:
   date: "0"
   title: "Connecting Agents to the World: MCP and APIs"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md"
+  deliverables:
+  - dtitle: "Project: Stakeholder Brief — Individual Unassisted Problem Statement Due"
+    dlink: "Assignments/StakeholderBrief"
+    points: "3"
+    rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
+  - rtitle: "Project Thread: bring your half-page unassisted problem statement — written individually, without AI, before your team drafts the brief (completion credit; it is a calibration baseline, not a test)"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/StakeholderBrief"
   - rtitle: "Required prep for the Local Agent Lab Direction 4: MCP Deep Dive — REST APIs, OAuth 2.0 Flows, and Secure Tool Invocation"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md"
   - rtitle: "Hugging Face MCP Course (built with Anthropic) — protocol, building a server, connecting clients (supports Local Agent Lab MCP work)"
