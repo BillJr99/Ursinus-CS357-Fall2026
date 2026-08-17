@@ -55,7 +55,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and shares the roster in class before the kickoff (it is not published on the website); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk2.1 with an in-class kickoff; draft briefs are exchanged across teams for structured peer review in class at wk5.0, and the revised brief is due at wk6.0 (see the course schedule for the dates).
+In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners — campus offices and local organizations who have agreed to talk with student teams — and shares the roster in class before the kickoff (it is not published on the website); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks — this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The assignment is handed out at wk4.0 with an in-class kickoff; each member writes a short unassisted problem statement individually at wk5.0; draft briefs are exchanged across teams for structured peer review in class at wk6.0, and the revised brief is due at wk8.1 (see the course schedule for the dates).
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty — and it is the difference between building something and building something *useful*.
 
@@ -70,12 +70,12 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 | **The problem in the stakeholder's own terms** | The issue as the stakeholder describes it, in their vocabulary, before any translation into CS language. Captured with quotes. | Brief section 2 |
 | **Disciplinary perspective** | A field's characteristic way of framing the problem: what it notices, what it measures, what counts as evidence, what "solved" means. | Brief section 3 |
 | **Problem statement** | One paragraph, traceable to the interview, stating the problem an agent system could address — without committing to a design yet. | Brief section 4 |
-| **Track fit** | A short argument that the problem could support any of the three final-project tracks (build, audit, or open-source), keeping your options open until wk9.1. | Brief section 5 |
+| **Track fit** | A short argument that the problem could support any of the three final-project tracks (build, audit, or open-source), keeping your options open until wk10.1. | Brief section 5 |
 | **Known unknowns** | The concrete things you would need to find out before proposing anything — the edge of your understanding. | Brief section 6 |
 
 ---
 
-## In-Class Kickoff: Speed-Dating Topic Generation (wk2.1)
+## In-Class Kickoff: Speed-Dating Topic Generation (wk4.0)
 
 Before any team commits to a stakeholder, we generate candidates together. In class, you will run a **speed-dating round**: pairs of students rotate every four minutes, and in each pairing both people answer, "What is a problem you have personally seen in a campus office, a local organization, or another department — and who owns it?" The Recorder from each team collects every candidate mentioned. By the end of class, your team short-lists three candidates and ranks them by (a) access — can you realistically get an interview within two weeks? (b) shape — could an agent system plausibly help? and (c) interest — does the domain match your team's survey rankings? Log the ranking and the choice in your decision log.
 
@@ -83,7 +83,7 @@ Before any team commits to a stakeholder, we generate candidates together. In cl
 
 ## Part 1: Identify a Real Stakeholder
 
-**Start with the partner roster.** The instructor shares in class a roster of community partners already contacted and who expect to hear from student teams (the roster is not published on the website) — anchoring your brief in a roster partner means your interview access is real, not hoped-for. Teams claim partners at the wk2.1 kickoff (first come, logged in the decision log). If the roster is still being finalized, or your team's speed-dating round surfaced a stronger candidate, you may instead anchor in a **concrete stakeholder group of your own** — a named office or a specific organization with a person you can actually interview, cleared with the instructor before first contact.
+**Start with the partner roster.** The instructor shares in class a roster of community partners already contacted and who expect to hear from student teams (the roster is not published on the website) — anchoring your brief in a roster partner means your interview access is real, not hoped-for. Teams claim partners at the wk4.0 kickoff (first come, logged in the decision log). If the roster is still being finalized, or your team's speed-dating round surfaced a stronger candidate, you may instead anchor in a **concrete stakeholder group of your own** — a named office or a specific organization with a person you can actually interview, cleared with the instructor before first contact.
 
 **If the roster does not yet fit, do not wait.** If the published roster does not yet name a partner that fits your team's problem, you may immediately draw from a standing on-campus stakeholder list: **Disability and Access Services, the library, the Office of Sustainability, the Center for Writing and Speaking, Community Engagement/UCARE, and Athletics operations**. Any office that serves real users counts. Confirm your choice with the instructor in one sentence on Teams. And if nothing on the roster or the standing list fits your team's interests, ask: the instructor will broker an introduction to a suitable partner within one week of the request — no team's brief is blocked by the roster.
 
@@ -124,7 +124,7 @@ The protocol has four phases. Your interview packet (an appendix to the brief) d
 
 ## Interlude: Your Own First Draft, Written Without AI
 
-**Due at the class meeting after the brief is handed out** (see the [schedule](/)), individually, before your team begins drafting Part 3. **3 points, assessed within Class Activities and Participation, on completion only.**
+**Due wk5.0**, individually, before your team begins drafting Part 3. **3 points, assessed within Class Activities and Participation, on completion only.**
 
 After your interview and before your team writes anything together, write **half a page, by yourself, with no AI assistance of any kind**: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about. No sources, no polish, no rewriting it later — a first honest attempt.
 
@@ -154,15 +154,15 @@ Attach the **interview packet** as an appendix: prep questions, notes, consent r
 
 ## Peer Exchange
 
-At **wk5.0**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk6.0 due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
+At **wk6.0**, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the wk8.1 due date, before it feeds the Literature Review — the cycle is *artifact → peer review → revise*, and it repeats at the proposal and the gallery walk.
 
 ---
 
 ## Deliverables
 
-**Individually,** before your team drafts: the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
+**Individually,** by **wk5.0**: the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
 
-**As a team,** submit one PDF via the LMS by **wk6.0** containing:
+**As a team,** submit one PDF via the LMS by **wk8.1** containing:
 
 - The 2-3 page brief (six sections, primary author named per section)
 - The interview packet appendix (prep questions, notes, consent record, follow-up exchange)

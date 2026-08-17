@@ -94,12 +94,12 @@ This page is the hub for the **Project Thread**: a semester-long, project-based 
 | Term | Plain-English Definition | Where You Will Meet It |
 |------|--------------------------|------------------------|
 | **Project Thread** | The semester-long sequence of connected team milestones that culminates in the final project. Each milestone feeds the next. | This page; every milestone links back here |
-| **Stakeholder** | A real person or office outside computer science whose problem your project addresses — a campus office, a local organization, or faculty/students in another discipline. | The Stakeholder Brief (week 2.1 to 6.0) |
-| **Team Charter** | A short, signed team contract stating your team's norms, roles, decision rules, conflict repair process, and accountability procedures. A living document: re-read at every check-in, revised at midterm. | Charter activity (week 1.1); every check-in; revisit (week 8.0) |
+| **Stakeholder** | A real person or office outside computer science whose problem your project addresses — a campus office, a local organization, or faculty/students in another discipline. | The Stakeholder Brief (week 4.0 to 8.1) |
+| **Team Charter** | A short, signed team contract stating your team's norms, roles, decision rules, conflict repair process, and accountability procedures. A living document: re-read at every check-in, revised at midterm. | Charter activity (week 1.1); every check-in; revisit (week 9.1) |
 | **Psychological Safety** | The shared belief that a team is safe for interpersonal risk-taking — asking a naive question, admitting a mistake, disagreeing with the group — without being punished or embarrassed (Edmondson, 1999). | The working norm for every team meeting |
 | **Tuckman Stages** | The observed sequence most teams pass through: forming, storming, norming, performing, adjourning (Tuckman, 1965). Storming is normal, expected, and survivable. | The stage map below; the charter activity |
-| **SQR Card** | A structured peer-review card: one **S**trength with evidence, one genuine **Q**uestion, one **R**isk with a suggested mitigation. | Peer review exchanges (weeks 5, 11, 14) |
-| **Sprint** | A short, fixed-length build cycle ending in a runnable increment, an updated evaluation, and a retrospective. | Final project (proposal week 11; sprints weeks 12 to 14) |
+| **SQR Card** | A structured peer-review card: one **S**trength with evidence, one genuine **Q**uestion, one **R**isk with a suggested mitigation. | Peer review exchanges (weeks 6, 13, 14) |
+| **Sprint** | A short, fixed-length build cycle ending in a runnable increment, an updated evaluation, and a retrospective. | Final project (proposal week 12; three sprints from wk12.1 to Demo Day) |
 | **Open Questions** | The four questions at the center of the Ursinus curriculum: *What should matter to me? How should we live together? How can we understand the world? What will I do?* | Every milestone's reflection prompts (Goal 15) |
 | **Primary Author** | The named team member responsible for drafting and defending one section of a team document. Every student is primary author of at least one section of every team document. | Every team deliverable |
 | **AI-Use Disclosure** | A short statement, attached to every milestone, of what (if anything) was AI-assisted, with what tool, and how the team verified it. | Every milestone submission |
@@ -116,21 +116,23 @@ Two views of the same thread — a table for scanning, then a narrative for read
 |------|-----------|--------------|-------|
 | wk0.0 → wk1.0 | **Team Formation Survey** (individual) | You tell the instructor your availability, deadline style, energy patterns, and interests. Teams are formed from this data. | [Team Formation Survey](/Assignments/TeamSurvey) |
 | wk1.1 | **Teams announced** | Standing POGIL teams for the semester are posted. | In class |
-| wk1.1 → wk2.0 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft); the signed charter is due wk2.0. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
-| wk2.1 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
-| before peer review round 1 | **Unassisted problem statement** (individual) | Half a page, written alone and without AI, on what you now believe the stakeholder's real problem is. Completion credit; a calibration baseline, not a test. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
-| wk5.0 | **Peer review round 1** | Brief drafts are exchanged across teams for SQR review; first private intra-team check-in goes to the instructor. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
-| wk6.0 | **Stakeholder Brief due** | 2-3 page brief, revised after peer review: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
-| wk6.0 → wk9.1 | **Literature Review** | Phase 1 (individual annotated bibliographies) due wk8.0; Phase 2 (team synthesis) due wk9.1. | [Literature Review](/Assignments/LitReview) |
-| wk8.0 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
-| wk9.1 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team](/Projects/FinalProject), [Responsible AI Audit](/Projects/FinalProject), or [Open-Source Agent](/Projects/FinalProject). | Track pages |
-| wk10.0 | **Peer review round 2** | Second private intra-team check-in to the instructor, now with the confidential peer pulse (below). | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
-| wk11.0 | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review; cross-team SQR critique at wk11.0/11.1. | Track pages |
-| wk12 → wk14 | **Sprints** | Build in sprints with rotating roles, runnable increments, and evaluation updates. | Track pages |
+| wk1.1 → wk2.1 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft); the signed charter is due wk2.1. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
+| wk4.0 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
+| wk5.0 | **Unassisted problem statement** (individual) | Half a page, written alone and without AI, on what you now believe the stakeholder's real problem is. Completion credit; a calibration baseline, not a test. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
+| wk6.0 | **Peer review round 1** | Brief drafts are exchanged across teams in class for SQR review. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
+| wk7.1 | **Intra-team check-in 1** | Signed team progress report, plus the first confidential individual pulse to the instructor. | [Check-Ins](#intra-team-check-ins-1-3) |
+| wk7.1 → wk11.1 | **Literature Review** | Handed out wk7.1. Phase 1 (individual annotated bibliographies) due wk9.1; Phase 2 (team synthesis) due wk11.1. | [Literature Review](/Assignments/LitReview) |
+| wk8.1 | **Stakeholder Brief due** | 2-3 page brief, revised after peer review: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
+| wk9.1 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
+| wk10.1 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team](/Projects/FinalProject), [Responsible AI Audit](/Projects/FinalProject), or [Open-Source Agent](/Projects/FinalProject). | Track pages |
+| wk11.0 | **Intra-team check-in 2** | Second signed progress report and confidential pulse, now with the peer-evaluation section (below). | [Check-Ins](#intra-team-check-ins-1-3) |
+| wk12.1 | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review. | Track pages |
+| wk12.1 → wk15.0 | **Sprints** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, and evaluation updates. Sprint 2 spans the Thanksgiving break — plan for it in your charter's cadence. | Track pages |
+| wk13.0 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
 | wk14.0 → wk14.1 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the wk14.0 studio; the third private intra-team check-in follows at wk14.1, reflecting on what the gallery walk surfaced. | Track pages |
 | wk15.0 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, and a disseminable artifact — the team's deliberate adjourning: final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
 
-**The same map, as a story.** In week 0 you fill out a short survey, and by the second meeting of week 1 you have a team formed for compatibility of schedules and working styles. Your first job as a team is not technical: it is to write down, and sign, how you will treat each other. Then you go find a real problem — not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words. You spend the middle weeks understanding that problem the way scholars do: reading, annotating, and synthesizing sources from at least two disciplines. At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not. Only *then* — nine weeks in, with a grounded problem and a healthy team — do you choose a final project track and propose an intervention. The last five weeks are sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
+**The same map, as a story.** In week 0 you fill out a short survey, and by the second meeting of week 1 you have a team formed for compatibility of schedules and working styles. Your first job as a team is not technical: it is to write down, and sign, how you will treat each other. Then you go find a real problem — not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words. You spend the middle weeks understanding that problem the way scholars do: reading, annotating, and synthesizing sources from at least two disciplines. At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not. Only *then* — ten weeks in, with a grounded problem and a healthy team — do you choose a final project track and propose an intervention. The last three weeks are sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
 
 ---
 
@@ -142,11 +144,11 @@ Tuckman (1965) observed that small groups reliably pass through recognizable dev
 |---|---|---|---|
 | **Forming** | wk0 - wk2 | Polite, careful, a little vague. Everyone agrees with everyone. | Use the structure: the survey, the charter activity, and the get-to-know protocol exist to accelerate this stage honestly. |
 | **Storming** | wk3 - wk7 | First real disagreements — over the stakeholder choice, over who is doing the work, over standards. This usually surfaces during the Brief and Literature Review. | Do not panic and do not go silent. Run the charter's conflict protocol. Storming is a stage, not a verdict (Tuckman, 1965). |
-| **Norming** | wk8 - wk10 | The team develops its own shorthand and rhythms. Roles feel natural. | This is exactly why the charter revisit is scheduled at wk8.0 — codify what you actually learned to do. |
+| **Norming** | wk8 - wk10 | The team develops its own shorthand and rhythms. Roles feel natural. | This is exactly why the charter revisit is scheduled at wk9.1 — codify what you actually learned to do. |
 | **Performing** | wk11 - wk14 | Sprints run themselves; the team self-corrects without drama. | Lighten the scaffolding (see the Playbook below) and spend the saved energy on the product. |
 | **Adjourning** | wk15 | Demo Day, submission, and the end of the team. Often bittersweet. | Close deliberately: the final reflection, contribution statements, and your professional portfolio artifact (pinned repo, project story, drafted post) are the adjourning ritual — the team ends by each member naming what they can now claim. |
 
-**In prose:** expect the beginning to feel easy and the middle to feel hard. The single most common team failure mode in a semester project is treating the first real conflict (usually around weeks 3-7) as evidence that the team is broken, and responding by disengaging. The charter's conflict protocol, the psychological-safety norm below, and the scheduled wk8.0 charter revisit are all placed where they are because that is where teams need them.
+**In prose:** expect the beginning to feel easy and the middle to feel hard. The single most common team failure mode in a semester project is treating the first real conflict (usually around weeks 3-7) as evidence that the team is broken, and responding by disengaging. The charter's conflict protocol, the psychological-safety norm below, and the scheduled wk9.1 charter revisit are all placed where they are because that is where teams need them.
 
 ---
 
@@ -163,27 +165,27 @@ Edmondson (1999) defines **psychological safety** as a team's shared belief that
 
 ## The Team Charter: A Signed Team Contract
 
-Your team's first deliverable is not technical — it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the wk1.1 charter activity and signed by every member by wk2.0, that turns "we'll figure it out" into commitments you can point to later. The charter must cover seven things:
+Your team's first deliverable is not technical — it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the wk1.1 charter activity and signed by every member by wk2.1, that turns "we'll figure it out" into commitments you can point to later. The charter must cover seven things:
 
 1. **Norms and values.** Three to five concrete, behavioral norms — not "communicate well" but "if you will miss a deadline, say so in the channel at least 24 hours out." Start from your survey answers: the pet peeves and "what matters most" answers your members choose to share are the raw material.
 2. **Meeting cadence with a rotating agenda-owner.** When and where the team meets (built from your overlapping survey windows), and who owns the agenda — a role that **rotates** each week, so no one person becomes the team's default manager. The agenda-owner posts the agenda before the meeting and confirms notes exist after it.
-3. **Rotating roles, with responsibilities in writing.** The POGIL roles you already use in class — **Manager**, **Recorder**, **Presenter**, **Reflector** — carry directly into project work. The charter states, in a sentence each, what each role owes the team that week, and records the rotation schedule (weekly through wk8, per sprint after; see the Playbook below). Rotation is a charter commitment, not a suggestion.
+3. **Rotating roles, with responsibilities in writing.** The POGIL roles you already use in class — **Manager**, **Recorder**, **Presenter**, **Reflector** — carry directly into project work. The charter states, in a sentence each, what each role owes the team that week, and records the rotation schedule (weekly through wk9, per sprint after; see the Playbook below). Rotation is a charter commitment, not a suggestion.
 4. **Communication channels and response-time expectations.** Which channel is for what (decisions vs. logistics vs. drafts), and how quickly a teammate is owed a reply (e.g., 24 hours on weekdays, no expectation after 9pm). Most "my teammate is ignoring me" conflicts are actually unstated response-time mismatches.
 5. **Decision-making process.** How the team decides when it disagrees — consensus with a fallback vote, Manager breaks ties, "disagree and commit" with a revisit date — and the standing rule that every non-trivial decision lands in the decision log.
 6. **A conflict repair process.** Name friction **early**, while it is still small; raise it **inside the team first**, using the move your charter names (many teams use the SQR framing: a strength, a question, a risk — about the situation, not the person); and escalate to the **instructor as backstop**, not as first resort. Going to the instructor is never a betrayal — but the repair skill you are here to practice lives in the step before that.
 7. **Psychological-safety ground rules.** Concrete commitments that make it safe to speak up: questions are never mocked, mistakes reported early are thanked, disagreement is addressed to the work. This is not team-building decoration — Edmondson (1999) found that this one condition, the ability to speak up without punishment or humiliation, accounts for much of the variability between high- and low-performing teams.
 
-**Every member signs.** And the charter is a **living document**: your team re-reads it at each intra-team check-in (below), asks "does this still describe us?", and files a formal revision at the wk8.0 revisit. A charter that never changes is a charter nobody is reading.
+**Every member signs.** And the charter is a **living document**: your team re-reads it at each intra-team check-in (below), asks "does this still describe us?", and files a formal revision at the wk9.1 revisit. A charter that never changes is a charter nobody is reading.
 
 ---
 
 ## The Team Playbook
 
-The playbook is your team's operating system. The structure is **deliberately heavier early** (forming and storming stages, wk1-8) **and lighter later** (norming and performing, wk9-15): scaffolding comes down as the team demonstrates it no longer needs it.
+The playbook is your team's operating system. The structure is **deliberately heavier early** (forming and storming stages, wk1-9) **and lighter later** (norming and performing, wk10-15): scaffolding comes down as the team demonstrates it no longer needs it.
 
 ### Standups
 
-Open every team meeting (and post to your team channel between meetings, twice weekly through wk8, then at your discretion) with the three-line standup. Each member answers, in writing or out loud:
+Open every team meeting (and post to your team channel between meetings, twice weekly through wk9, then at your discretion) with the three-line standup. Each member answers, in writing or out loud:
 
 ```
 Since last time I: ...
@@ -205,15 +207,15 @@ The decision log is what the "approach" rubric dimension reads. It also ends the
 
 ### Meeting Agenda and Notes Discipline
 
-- Through wk8: every meeting has a written agenda posted **before** the meeting and notes posted **after** (the POGIL Recorder owns this). Notes capture decisions, action items with owners and dates, and open questions.
-- After wk8: agendas may be a single line, but decisions and action items are still logged. Sprint retrospectives always get full notes.
+- Through wk9: every meeting has a written agenda posted **before** the meeting and notes posted **after** (the POGIL Recorder owns this). Notes capture decisions, action items with owners and dates, and open questions.
+- After wk9: agendas may be a single line, but decisions and action items are still logged. Sprint retrospectives always get full notes.
 
 ### POGIL Role Rotation Cadence
 
 Roles (**Manager**, **Recorder**, **Presenter**, **Reflector** in activities; **Coordinator**, **Builder**, **Evaluator**, **Scribe** in the final project) rotate. The two role sets are deliberately different: the activity roles (Manager/Recorder/Presenter/Reflector) rotate within POGIL class sessions, while the project roles (Coordinator/Builder/Evaluator/Scribe) rotate across the sprint weeks.
 
-- **Weekly** through wk8, so every member holds every role at least once before the final project begins.
-- **Per sprint** during the sprint weeks (wk12 → wk14), documented in the contribution statements.
+- **Weekly** through wk9, so every member holds every role at least once before the final project begins.
+- **Per sprint** during the sprint weeks (wk12.1 → wk15.0), documented in the contribution statements.
 
 Rotation is not optional and not tradeable: the point is that everyone practices every job, including the ones they would not volunteer for.
 
@@ -221,7 +223,7 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 
 ## Intra-Team Check-Ins 1-3
 
-Three times in the semester — **wk5.0**, **wk10.0**, and **wk14.1** — your team pauses for a structured check-in. Each check-in carries **3 points, assessed within Class Activities and Participation** — enough to make it a real commitment, small enough that the check-in itself, not the score, is the point. Every check-in has the same two parts:
+Three times in the semester — **wk7.1**, **wk11.0**, and **wk14.1** — your team pauses for a structured check-in. Each check-in carries **3 points, assessed within Class Activities and Participation** — enough to make it a real commitment, small enough that the check-in itself, not the score, is the point. Every check-in has the same two parts:
 
 1. **A short team progress report, signed by all members**: what shipped since the last milestone, what is next, and the current risks. Three sections, half a page, honest. The signatures matter — signing a report you know is rosy is the small version of every engineering-ethics case study you will ever read.
 2. **A confidential individual team-health pulse to the instructor**: a few private sentences on how the team is working *for you* — not a report on your teammates, but on your experience. Is your voice landing? Is your workload fair? Is there anything you cannot raise in the room? This channel exists precisely for the things psychological safety has not yet made sayable; it is read only by the instructor and never quoted back.
@@ -230,8 +232,8 @@ The three check-ins are timed to the Tuckman map above, and each has a stage-spe
 
 | Check-In | When | Tuckman Transition | Team Focus |
 |---|---|---|---|
-| **1** | wk5.0 | Storming → Norming | Surface the differing values and work styles the first real disagreements have exposed, and set (or reset) ground rules. Re-read the charter: which norm has been hardest to keep? |
-| **2** | wk10.0 | Norming → Performing | Audit the mechanics: are roles *actually* rotating, or has the team quietly specialized? Is anyone under-loaded or over-loaded? Fix it now, before the sprints amplify it. |
+| **1** | wk7.1 | Storming → Norming | Surface the differing values and work styles the first real disagreements have exposed, and set (or reset) ground rules. Re-read the charter: which norm has been hardest to keep? |
+| **2** | wk11.0 | Norming → Performing | Audit the mechanics: are roles *actually* rotating, or has the team quietly specialized? Is anyone under-loaded or over-loaded? Fix it now, before the sprints amplify it. |
 | **3** | wk14.1 | Performing → Adjourning | Look back deliberately: capture what this team learned about collaboration — the norms that worked, the repair that succeeded, the thing you would put in your next team's charter on day one. |
 
 Each team progress report answers three stage-specific prompts alongside the standard shipped/next/risks sections:
