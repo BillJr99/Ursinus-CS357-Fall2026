@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/ToolsMCP
-title: "CS357: Foundations of Artificial Intelligence - Tools and MCP Lab"
+title: "CS357: Foundations of Artificial Intelligence - Lab: Tools and MCP"
 
 info:
   coursenum: CS357
@@ -48,7 +48,7 @@ tags:
 
 ---
 
-# Tools and MCP Lab
+# Lab: Tools and MCP
 
 The Local Agent Lab built an agent that perceives, plans, and acts in a loop - but its only action was producing text. This lab gives it hands.
 
