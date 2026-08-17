@@ -56,7 +56,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem. The review runs in two phases: **Phase 1 is individual** — each team member builds an annotated bibliography of 2-3 sources — and **Phase 2 is a team synthesis** — one page connecting everyone's sources to the problem statement and naming the gap your project will address. The assignment goes out at wk7.1 (while your team is revising the Stakeholder Brief); Phase 1 is due **wk9.1** and Phase 2 is due **wk11.1**.
+In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem. The review runs in two phases: **Phase 1 is individual** — each team member builds an annotated bibliography of 2-3 sources — and **Phase 2 is a team synthesis** — one page connecting everyone's sources to the problem statement and naming the gap your project will address. The assignment goes out as your revised [Stakeholder Brief](/Assignments/StakeholderBrief) is submitted, and the two phases are due about two weeks apart; see the [course schedule](/) for the dates.
 
 A literature review is not a book report and not a pile of links. It is an argument: *here is what is known, here is who knows it, here is the hole in it, and here is why that hole matters to our stakeholder.* The two-phase structure means every member does real source work (there is no way to ride along on a teammate's reading), and the synthesis forces the sources to talk to each other.
 
@@ -76,7 +76,7 @@ A literature review is not a book report and not a pile of links. It is an argum
 
 ---
 
-## Phase 1: Individual Annotated Bibliography (due wk9.1)
+## Phase 1: Individual Annotated Bibliography
 
 **Each team member, individually,** finds and annotates **2-3 sources** relevant to the team's problem statement. Requirements per person:
 
@@ -94,7 +94,7 @@ Also note **how you found it** (database and search terms, or what you chained f
 
 ---
 
-## Phase 2: Team Synthesis (due wk11.1)
+## Phase 2: Team Synthesis
 
 One page, with a **named primary author** (drafting responsibility — the whole team reviews and signs). The synthesis must:
 
@@ -126,8 +126,8 @@ Two ways into the same skill — a search recipe and a reading protocol.
 
 ## Deliverables
 
-- **Phase 1 (wk9.1):** each member submits their own annotated bibliography (2-3 annotated sources, search notes, complete citations) individually via the LMS.
-- **Phase 2 (wk11.1):** one team PDF containing the one-page synthesis (primary author named), the combined bibliography, all members' typed signatures, and the team AI-use disclosure.
+- **Phase 1:** each member submits their own annotated bibliography (2-3 annotated sources, search notes, complete citations) individually via the LMS.
+- **Phase 2:** one team PDF containing the one-page synthesis (primary author named), the combined bibliography, all members' typed signatures, and the team AI-use disclosure.
 
 ## Reflection Prompts
 

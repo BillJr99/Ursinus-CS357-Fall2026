@@ -121,7 +121,7 @@ Every proposal (2–3 pages), regardless of direction, must include:
 
 - **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion.
 - **Stakeholder grounding** integrating your [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
-- **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to weeks 12–14 with named owners (Goal 13).
+- **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to the three sprints with named owners (Goal 13).
 - **AI-use disclosure** for the proposal itself.
 - The **direction-specific elements** listed under your direction below.
 
@@ -129,15 +129,15 @@ Incomplete proposals are returned ungraded; proposals whose scope is too generic
 
 ---
 
-## Stage 2: Sprints — weeks 12 through 14
+## Stage 2: Sprints
 
-Build in three sprints aligned with in-class studio days. Each sprint produces: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective. Roles rotate at each boundary so every member holds every role.
+Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule](/) for the boundaries. Each sprint produces: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective. Roles rotate at each boundary so every member holds every role.
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
-| Sprint 1 (wk12.1 → wk13.0) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
-| Sprint 2 (wk13.0 → wk14.0, spanning the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4–6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
-| Sprint 3 (wk14.0 → wk15.0) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
+| Sprint 1 (proposal submitted → cross-team proposal critique) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
+| Sprint 2 (proposal critique → gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4–6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
+| Sprint 3 (gallery walk → Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
 **Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
@@ -156,7 +156,7 @@ Every team, regardless of direction, delivers at Demo Day:
 - The **partner-facing artifact**, presented to the multi-audience and included in the submission.
 - A **public portfolio artifact**: the public repository (Directions A and C) or public write-up/portfolio page (Direction B) described in the Product rubric — run the [ShipIt](#shipping-your-artifact-the-shipit-checklist) self-check against it before your publish gate.
 - **Every teammate speaks substantively**, and every teammate must be prepared to present any part (see the absence policy above).
-- Q&A with the instructor, peers, and partners — this is where individual understanding is assessed. Demo Day is **external-facing**: alumni, industry guests, and faculty from other departments may join the audience and Q&A, as available — your grade never depends on who attends. Prepare with the [Demo Day Guide](#demo-day-external-guests-and-technical-interview-practice); the week 14 Project Studio includes a cross-team mock-interview rehearsal, credited as class participation.
+- Q&A with the instructor, peers, and partners — this is where individual understanding is assessed. Demo Day is **external-facing**: alumni, industry guests, and faculty from other departments may join the audience and Q&A, as available — your grade never depends on who attends. Prepare with the [Demo Day Guide](#demo-day-external-guests-and-technical-interview-practice); the final Project Studio includes a cross-team mock-interview rehearsal, credited as class participation.
 
 The final submission (due the same day) includes your direction's deliverables below, individual contribution statements documenting the role rotation, individual reflections, and the **final AI-use disclosure**.
 
@@ -493,7 +493,7 @@ Have these five moves rehearsed before Demo Day:
 
 #### The Mock Technical Interview (Week 14 Project Studio)
 
-During the week 14 "Final Integration and Demo Rehearsal" studio, you will pair **across teams** for interview rounds, credited as class participation:
+During the "Final Integration and Demo Rehearsal" studio, you will pair **across teams** for interview rounds, credited as class participation:
 
 **Format.** Ten minutes per round, then swap roles. The interviewer asks from the question bank below (or invents better ones); the interviewee answers **without slides** — a whiteboard or paper is allowed, your repository is not. Close each round with an SQR-style feedback card: one **Strength**, one **Question** the interviewee should be ready for at Demo Day.
 

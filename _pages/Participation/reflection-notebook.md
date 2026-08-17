@@ -43,8 +43,8 @@ Your entries are organized around the four Open Questions that run through the w
 
 The [Project Thread]({{ site.baseurl }}/Projects/PBLThread) will ask you, at three points in the semester, to turn the notebook's lens on your team rather than your code. Answer these when the stage arrives:
 
-- **After the charter (wk2):** Re-read the norms your team just signed. Which one will be hardest *for you personally* to keep — and what does it cost you to keep it?
-- **Mid-project (around the wk9.1 charter revisit):** Describe one moment of productive disagreement on your team — how it surfaced, and how the team moved through it. If you cannot name one, ask yourself honestly whether that is harmony or avoidance.
+- **After the charter is signed:** Re-read the norms your team just signed. Which one will be hardest *for you personally* to keep — and what does it cost you to keep it?
+- **Mid-project (around the midpoint charter revisit):** Describe one moment of productive disagreement on your team — how it surfaced, and how the team moved through it. If you cannot name one, ask yourself honestly whether that is harmony or avoidance.
 - **After Demo Day (adjourning, in Tuckman's terms):** What did this team teach you about how *you* collaborate? What will you do differently on your next team — and what will you bring to it on day one?
 
 ## Format, Cadence, and Evaluation
