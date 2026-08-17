@@ -220,13 +220,13 @@ goals:
 - goal: "Use the Open Questions to assess the learning process throughout, describing new understandings and specific areas of growth and skill development"
 
 grade_breakdown:
-- category: "Labs (7 graded items: the Local Agent Lab, the Tools and MCP Lab, the RAG Knowledge Base Lab, the Multi-Agent Patterns Lab, and the Rubric Pipeline Lab, plus two checkpoints - the Golden-Set Benchmark inside the Local Agent Lab window and the RAG Quality Checkup inside the RAG Knowledge Base Lab window)"
+- category: "Labs"
   weight: "30%"
-- category: "Written Assignments (2 required: Prompt Patterns and AI by Hand, and Design Your Agent System)"
+- category: "Written Assignments"
   weight: "15%"
-- category: "Responsible AI Capstone (one 200-point deliverable with a build component and a governance component)"
+- category: "Responsible AI Capstone"
   weight: "10%"
-- category: "Final Project and Project Thread milestones (one team project with three directions: Custom Agent Team, Responsible AI Audit, or Open-Source Agent)"
+- category: "Final Project and Project Thread Milestones"
   weight: "25%"
 - category: "Class Activities and Participation"
   weight: "10%"
