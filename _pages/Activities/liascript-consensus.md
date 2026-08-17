@@ -183,7 +183,7 @@ Part III builds on this misconception warning by examining the conditions under 
 
 # Part III: Limits and Synthesis
 
-In this section you will examine the situations where consensus makes results worse rather than better, and you will connect those limits to the *Training Data and Bias* activity. This is also where you will bridge today's work directly into your Lab 4 design.
+In this section you will examine the situations where consensus makes results worse rather than better, and you will connect those limits to the *Training Data and Bias* activity. This is also where you will bridge today's work directly into your Multi-Agent Patterns Lab design.
 
 ## Model 3: When Consensus Misleads
 
@@ -217,13 +217,13 @@ Consensus aggregates the model's *distribution*, so it amplifies whatever that d
 
    *You've succeeded when:* You can show that a cluster holding exactly one-third of the vote still appears explicitly in the synthesized output, and the output does not misrepresent the minority as the majority position.
 
-4. *Lab 4 bridge.*
+4. *Multi-Agent Patterns Lab bridge.*
 
-   *What to do:* Sketch the architecture you will submit for Lab 4: where debate fits, where consensus fits, and the exact JSON each stage passes to the next.
+   *What to do:* Sketch the architecture you will submit for the Multi-Agent Patterns Lab: where debate fits, where consensus fits, and the exact JSON each stage passes to the next.
 
    *Starter hint:* Draw two boxes (debate stage, consensus stage) and label each arrow between them with a Python dict showing the keys and value types that travel across it.
 
-   *You've succeeded when:* A teammate who has not seen your Lab 4 plan can read your sketch and accurately describe what each stage receives and produces.
+   *You've succeeded when:* A teammate who has not seen your Multi-Agent Patterns Lab plan can read your sketch and accurately describe what each stage receives and produces.
 
 ---
 

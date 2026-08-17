@@ -207,7 +207,7 @@ blackboard["critiques"].append(verdict)
 print(verdict)
 ```
 
-If the verdict begins with `REVISE`, the orchestrator loops the affected steps back through the Worker with the critique appended — bounded by a maximum iteration count, exactly like `max_steps` in your Lab 1 agent loop.
+If the verdict begins with `REVISE`, the orchestrator loops the affected steps back through the Worker with the critique appended — bounded by a maximum iteration count, exactly like `max_steps` in your Local Agent Lab agent loop.
 
 ### Critical Thinking Questions
 

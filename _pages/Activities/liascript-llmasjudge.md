@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Evaluating Agents: LLM-as-Judge and Rubric Pipelines
 
-Exact-match accuracy — our metric since the *Hallucinations and Evaluating Agent Outputs* activity — served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment — which is the architecture of Lab 5 and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
+Exact-match accuracy — our metric since the *Hallucinations and Evaluating Agent Outputs* activity — served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment — which is the architecture of the Rubric Pipeline Lab and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
 
 ---
 
@@ -173,7 +173,7 @@ The most important safeguard before trusting an LLM judge's scores on real stude
 
 # Part III: Auditing the Judge
 
-Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for Lab 5.
+Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for the Rubric Pipeline Lab.
 
 ## Exercises
 
@@ -195,7 +195,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 3. *Batch pipeline.*
 
-   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of Lab 5, *Rubric Pipeline*; save your CSV — it feeds directly into that lab.
+   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of the Rubric Pipeline Lab; save your CSV — it feeds directly into that lab.
 
    *Starter hint:* Use `import os; os.listdir("essays/")` to get filenames, `open(filepath).read()` to load each essay, and `import csv; writer.writerow([...])` to append to the CSV. Wrap each judge call in a `try/except` so one parse error does not stop the whole batch.
 
@@ -213,7 +213,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ## Reflection Prompt
 
-*Personal:* An instructor uses an LLM judge for first-pass formative feedback (feedback intended to help you improve, not to determine your grade) on drafts, with full disclosure to students. A classmate objects on principle. Write the strongest possible sentence of the objection and the strongest possible sentence of the defense, then state where you personally land today — knowing that your Lab 5 builds exactly this machinery.
+*Personal:* An instructor uses an LLM judge for first-pass formative feedback (feedback intended to help you improve, not to determine your grade) on drafts, with full disclosure to students. A classmate objects on principle. Write the strongest possible sentence of the objection and the strongest possible sentence of the defense, then state where you personally land today — knowing that your Rubric Pipeline Lab builds exactly this machinery.
 
 *Technical:* The rubric pipeline produces a score and a quoted evidence string for each criterion. Describe a complete audit protocol you would run before deploying this pipeline on a real class of students: what data you would collect, what agreement threshold you would require, and what you would do if the judge fails the audit on one criterion but passes on others.
 
@@ -221,7 +221,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ---
 
-→ Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of Lab 5, *Rubric Pipeline*.
+→ Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
 
 ## Further Reading
 

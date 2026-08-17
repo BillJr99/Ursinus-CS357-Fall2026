@@ -100,7 +100,7 @@ An instructor wants AI-assisted feedback on essays containing student names and 
 
 ## Model 2: Data Flow Audit
 
-Consider three pipelines you have personally built this term: Lab 2 (RAG over your own documents), Lab 5 (rubric pipeline over submissions), and your final project.
+Consider three pipelines you have personally built this term: the RAG Knowledge Base Lab (RAG over your own documents), the Rubric Pipeline Lab (rubric pipeline over submissions), and your final project.
 
 ### Critical Thinking Questions
 
@@ -108,7 +108,7 @@ Consider three pipelines you have personally built this term: Lab 2 (RAG over yo
 
    *Hint: Start from the raw input (a file, a prompt, a submission) and trace every step forward: file reader, embedding model, vector store, LLM call, output display. Each arrow between steps is where a privacy question lives.*
 
-5. Your Lab 5 pipeline processes synthetic essays; the same code pointed at real student work changes compliance category entirely while changing zero lines of code. What does that imply about where responsibility lives: in code, or in deployment decisions?
+5. Your Rubric Pipeline Lab pipeline processes synthetic essays; the same code pointed at real student work changes compliance category entirely while changing zero lines of code. What does that imply about where responsibility lives: in code, or in deployment decisions?
 
    *Hint: Consider a fire extinguisher used as a doorstop — the object did not change, but the use did. Now apply that framing to your pipeline. Is the code "responsible" for how it is deployed?*
 
@@ -174,7 +174,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 ## → Coming Up Next
 
-In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy, and the privacy analysis feeds Lab 6, *Responsible AI*.
+In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
 
 ## Further Reading
 

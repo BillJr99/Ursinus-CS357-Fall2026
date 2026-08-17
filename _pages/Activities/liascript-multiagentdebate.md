@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of Lab 4, *Multi-Agent Debate*.
+→ **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
 
 ---
 

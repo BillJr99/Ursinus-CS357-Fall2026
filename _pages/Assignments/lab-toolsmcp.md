@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/ToolsMCP
-title: "CS357: Foundations of Artificial Intelligence - Lab 2: Tools, MCP, and the Agent's Hands"
+title: "CS357: Foundations of Artificial Intelligence - Tools and MCP Lab"
 
 info:
   coursenum: CS357
@@ -48,11 +48,11 @@ tags:
 
 ---
 
-# Lab 2: Tools, MCP, and the Agent's Hands
+# Tools and MCP Lab
 
-Lab 1 built an agent that perceives, plans, and acts in a loop - but its only action was producing text. This lab gives it hands.
+The Local Agent Lab built an agent that perceives, plans, and acts in a loop - but its only action was producing text. This lab gives it hands.
 
-The three capabilities below were previously bolted onto Lab 1, where they were due before the sessions that teach them. They now stand on their own, handed out the day we cover tool use and due after we cover MCP, so that every part of this lab is something you have already seen in class.
+The three capabilities below were previously bolted onto the Local Agent Lab, where they were due before the sessions that teach them. They now stand on their own, handed out the day we cover tool use and due after we cover MCP, so that every part of this lab is something you have already seen in class.
 
 **Prerequisites, all taught before this lab is due:** the Tool Use and Function Calling session, the MCP and APIs session, and the structured-output reading attached to both.
 

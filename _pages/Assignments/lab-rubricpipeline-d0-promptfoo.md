@@ -1,12 +1,12 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction0
-title: 'CS357: Foundations of Artificial Intelligence - Lab 5, Direction 0: The promptfoo Route'
+title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 0: The promptfoo Route'
 info:
   coursenum: CS357
-  purpose: To meet the core Lab 5 objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
+  purpose: To meet the core Rubric Pipeline Lab objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
   readings:
-  - rtitle: 'Lab 5 Core: An LLM Rubric-Grading Pipeline'
+  - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: LLM-as-Judge Activity
     rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md
@@ -21,24 +21,24 @@ tags:
 - testing
 ---
 
-# CS357: Foundations of Artificial Intelligence - Lab 5, Direction 0: The promptfoo Route
+# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 0: The promptfoo Route
 
 ## Purpose
 
-To meet the core Lab 5 objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
+To meet the core Rubric Pipeline Lab objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
 
 ## Background Reading and References
 
-- [Lab 5 Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
 - [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md)
 - [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
-This page is **Direction 0** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
+This page is **Direction 0** of the [Rubric Pipeline Lab](/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
 
 **Direction 0 replaces the coding in core Parts 1–4.** If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs. Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route** — the entire route *is* a declarative harness. You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route. As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log** — the blind human-scoring step in Part C requires both partners.
 
-**See the course schedule for the assigned and due dates.** Budget: expect **7–9 hours total** for this route (it replaces the core coding, so this is your entire Lab 5 time, not an add-on).
+**See the course schedule for the assigned and due dates.** Budget: expect **7–9 hours total** for this route (it replaces the core coding, so this is your entire Rubric Pipeline Lab time, not an add-on).
 
 > **What this direction requires**
 >
@@ -65,7 +65,7 @@ The `init` command scaffolds a `promptfooconfig.yaml`. Verify promptfoo can reac
 {% raw %}
 ```yaml
 # smoke-test promptfooconfig.yaml — verify Ollama connectivity
-description: "Lab 5 Direction 0 smoke test"
+description: "Rubric Pipeline Lab Direction 0 smoke test"
 
 prompts:
   - "Reply with exactly one word: the capital of France."
@@ -118,7 +118,7 @@ Record privately (before running anything) which criteria you *intend* each answ
 ```yaml
 # promptfooconfig-baseline.yaml
 # Validated against: ollama llama3.2, temperature 0
-description: "Lab 5 Direction 0 — baseline rubric-as-judge batch scoring"
+description: "Rubric Pipeline Lab Direction 0 — baseline rubric-as-judge batch scoring"
 
 prompts:
   # The echo provider passes each stored answer straight through as the "output",

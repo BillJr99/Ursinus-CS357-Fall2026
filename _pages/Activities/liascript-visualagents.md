@@ -30,10 +30,10 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 |---|---|---|
 | **Langflow** | A visual, drag-and-drop tool for building AI pipelines where components appear as boxes on a canvas and data flows along drawn connections between them. | You will drag an "Ollama" box onto the canvas and connect it to a "Chat Output" box instead of writing `requests.post(...)` in Python. |
 | **Dataflow graph** | A diagram where nodes represent processing steps and edges (arrows) represent data traveling from one step to the next; every flow you build today is a dataflow graph. | Your RAG pipeline becomes a graph: File Loader → Text Splitter → Embedder → Chroma → Prompt → Ollama → Output. |
-| **RAG (Retrieval-Augmented Generation)** | A technique where the AI looks up relevant documents from a database before answering, so its answers are grounded in real source material rather than just training data. | Your Lab 2 bot that searches your uploaded corpus before answering questions. |
+| **RAG (Retrieval-Augmented Generation)** | A technique where the AI looks up relevant documents from a database before answering, so its answers are grounded in real source material rather than just training data. | Your RAG Knowledge Base Lab bot that searches your uploaded corpus before answering questions. |
 | **REST API (Representational State Transfer Application Programming Interface)** | A standard way for programs to communicate over the internet by sending and receiving structured data; Langflow can turn any flow into a REST API endpoint that your Python code can call. | After building your RAG flow visually, you export it and call it from three lines of Python using the `requests` library. |
 | **Low-code** | A style of software development where most logic is assembled visually with minimal hand-written code, making it accessible to people without programming backgrounds. | Wiring a complete RAG pipeline in Langflow by dragging boxes — no Python required — so a club officer could set it up themselves. |
-| **Chunk size** | The number of characters or words each piece of a document is split into before being stored in the vector database; larger chunks preserve more context but cost more to embed and retrieve. | In Lab 2 you chose a chunk size (e.g., 500 characters); today you enter the same number in Langflow's Text Splitter component. |
+| **Chunk size** | The number of characters or words each piece of a document is split into before being stored in the vector database; larger chunks preserve more context but cost more to embed and retrieve. | In the RAG Knowledge Base Lab you chose a chunk size (e.g., 500 characters); today you enter the same number in Langflow's Text Splitter component. |
 
 ---
 
@@ -57,7 +57,7 @@ Today you will discover that the blueprint and the building encode exactly the s
 |---|---|---|---|
 | System-prompt string in `llm()` | **Prompt** node with a text field for your instructions | The instructions themselves are identical | You type them into a GUI box instead of a Python string variable |
 | `chat()` wrapper function calling Ollama | **Ollama** node with base URL and model name fields | The model name, temperature, and base URL are the same settings | You set them in dropdown menus rather than in a `json=` dict |
-| Text chunker (e.g., `chunk_text(text, 500)`) | **Text Splitter** node with chunk size and overlap fields | The chunk size and overlap you chose in Lab 2 apply directly | The splitting algorithm is a node you wire rather than a function you call |
+| Text chunker (e.g., `chunk_text(text, 500)`) | **Text Splitter** node with chunk size and overlap fields | The chunk size and overlap you chose in the RAG Knowledge Base Lab apply directly | The splitting algorithm is a node you wire rather than a function you call |
 | `embed(text)` function | **Ollama Embeddings** node | Same embedding model (e.g., `nomic-embed-text`) | Wired visually rather than called explicitly |
 | ChromaDB vector store | **Chroma** node with collection name and persist directory | The collection name and directory path are the same | Ingest and query are two separate wired paths on the canvas |
 | Critique-refine loop | A cycle in the graph from checker node back to writer node | The same critique prompt logic | Loops in Langflow require special handling; some loops must stay in code |
@@ -84,13 +84,13 @@ Now that you understand what visual flows are and how they map to code, let's bu
 
 ## Model 2: Build 1 — Chat with a Persona
 
-Construct the minimal flow: **Chat Input → Prompt (with your Lab 1 persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
+Construct the minimal flow: **Chat Input → Prompt (with your Local Agent Lab persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
 
 This is the visual equivalent of the four-line `llm()` call you have been writing since *The Agent Loop: Perceive, Plan, Act* activity. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
 
-## Model 3: Build 2 — RAG over Your Lab 2 Corpus
+## Model 3: Build 2 — RAG over Your RAG Knowledge Base Lab Corpus
 
-Recreate your Lab 2 pipeline visually. The ingest path is: **File Loader → Text Splitter → Ollama Embeddings → Chroma (ingest mode)**. The query path is: **Chat Input → Chroma (query mode) → Prompt (with your grounding-and-citation instructions) → Ollama → Chat Output**. Use the same chunk size you shipped in Lab 2 so you can make a fair comparison.
+Recreate your RAG Knowledge Base Lab pipeline visually. The ingest path is: **File Loader → Text Splitter → Ollama Embeddings → Chroma (ingest mode)**. The query path is: **Chat Input → Chroma (query mode) → Prompt (with your grounding-and-citation instructions) → Ollama → Chat Output**. Use the same chunk size you shipped in the RAG Knowledge Base Lab so you can make a fair comparison.
 
 Note that "ingest" and "query" are the same Chroma node set to different modes — a design detail that is invisible in Python (you call different methods) but explicit on the canvas (you use different Chroma nodes or toggle a mode field).
 
@@ -111,15 +111,15 @@ The visual artifact and your code-world tooling (harnesses, batch evaluation) co
 
 ### Critical Thinking Questions
 
-4. Run your Lab 2 evaluation question set through the Langflow endpoint with your harness from the *Hallucinations and Evaluating Agent Outputs* activity. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
+4. Run your RAG Knowledge Base Lab evaluation question set through the Langflow endpoint with your harness from the *Hallucinations and Evaluating Agent Outputs* activity. Do the two implementations score identically? If not, hunt the delta: which knob (chunking, $k$ retrieved documents, prompt wording) silently differs between the Python implementation and the Langflow flow?
 
-   *Hint:* Export the Langflow flow JSON and search for your chunk size value. Is it exactly the same number as in your Python Lab 2 code? Check the retriever's $k$ parameter (number of documents retrieved) in the Chroma node settings.
+   *Hint:* Export the Langflow flow JSON and search for your chunk size value. Is it exactly the same number as in your Python RAG Knowledge Base Lab code? Check the retriever's $k$ parameter (number of documents retrieved) in the Chroma node settings.
 
 5. Time both versions on ten queries. Attribute any latency overhead to a specific cause, and decide whether the difference matters for an interactive chatbot versus a batch processing pipeline.
 
    *Hint:* Use Python's `time.time()` before and after each query. If Langflow is slower, consider: is it doing the same computation, or is there HTTP overhead from the local API call? Does that matter if a user is waiting 2 seconds versus 0.5 seconds?
 
-6. Hand your canvas to a teammate who did not build it, with no narration allowed. Ask them to explain the system. Try the same with your Python Lab 2 file. Record the asymmetry honestly: which medium was clearer to a newcomer, and which medium revealed more detail to an expert?
+6. Hand your canvas to a teammate who did not build it, with no narration allowed. Ask them to explain the system. Try the same with your Python RAG Knowledge Base Lab file. Record the asymmetry honestly: which medium was clearer to a newcomer, and which medium revealed more detail to an expert?
 
    *Hint:* The Reflector should record specific moments of confusion or clarity. Which medium let the newcomer correctly predict what would happen if you changed the chunk size? Which let the expert find the exact temperature setting used?
 
@@ -153,9 +153,9 @@ One team member opens `http://localhost:7860` while the Recorder keeps notes on 
 4. Click **Run** (play button at top right)
 5. Type a question in the Chat Input field. You should see a response in Chat Output.
 
-**Critical Thinking**: What Python code (from Lab 1 or Lab 2) does this three-node flow replace? Write out the equivalent Python in your notes.
+**Critical Thinking**: What Python code (from the Local Agent Lab or RAG Knowledge Base Lab) does this three-node flow replace? Write out the equivalent Python in your notes.
 
-> *Hint: The Ollama node calls the same `/api/chat` endpoint you wrote `requests.post(...)` to in Lab 1. The Chat Input is your `input()` call. The Chat Output is your `print()` call.*
+> *Hint: The Ollama node calls the same `/api/chat` endpoint you wrote `requests.post(...)` to in the Local Agent Lab. The Chat Input is your `input()` call. The Chat Output is your `print()` call.*
 
 ---
 
@@ -179,7 +179,7 @@ The Prompt node in Langflow corresponds to which part of your Python agent code?
 
 ### Step 3: Add RAG (15 minutes)
 
-This replicates your Lab 2 RAG pipeline visually.
+This replicates your RAG Knowledge Base Lab RAG pipeline visually.
 
 1. Drag onto the canvas:
    - **File** component (under Data) — click "Upload File" and upload any short text document (or create a 3-paragraph `.txt` file about any topic)
@@ -204,9 +204,9 @@ Context: {context}
 
 **Critical Thinking**:
 
-1. In Lab 2, you chose a chunk size and justified it. In Langflow, you see the same parameter in a GUI field. Did you use the same chunk size? What would you need to know to change it?
+1. In the RAG Knowledge Base Lab, you chose a chunk size and justified it. In Langflow, you see the same parameter in a GUI field. Did you use the same chunk size? What would you need to know to change it?
 
-2. Your Lab 2 RAG pipeline had explicit code to handle "no relevant chunks found" and return an abstention message. Where in the Langflow flow would you implement this?
+2. Your RAG Knowledge Base Lab RAG pipeline had explicit code to handle "no relevant chunks found" and return an abstention message. Where in the Langflow flow would you implement this?
 
    > *Hint: You could add a **Conditional Router** node that checks whether the retriever returned any results before passing context to the Prompt. Or you could handle it in the Prompt template itself with a fallback instruction.*
 
@@ -220,7 +220,7 @@ Context: {context}
    - The `chunk_size` value you set
    - How edges (connections) are represented in the JSON
 
-**Critical Thinking**: The JSON export is the "source code" for your visual pipeline. Compare it to your Lab 2 Python code. Which is easier to read? Which is easier to version-control and diff in a tool like `git`?
+**Critical Thinking**: The JSON export is the "source code" for your visual pipeline. Compare it to your RAG Knowledge Base Lab Python code. Which is easier to read? Which is easier to version-control and diff in a tool like `git`?
 
 ---
 
@@ -254,7 +254,7 @@ Now that you've built, tested, and exported flows, this part asks you to push th
 
 2. *Limit hunt.*
 
-   *What to do:* Attempt to express your Lab 4 debate (n agents, two rounds, majority vote) visually on the canvas. Document precisely where the canvas resists (loops, dynamic fan-out, variable number of agents), and state the general principle about what dataflow graphs express awkwardly.
+   *What to do:* Attempt to express your Multi-Agent Patterns Lab debate (n agents, two rounds, majority vote) visually on the canvas. Document precisely where the canvas resists (loops, dynamic fan-out, variable number of agents), and state the general principle about what dataflow graphs express awkwardly.
 
    *Starter hint:* Dynamic fan-out means "create $n$ parallel paths where $n$ is determined at runtime." Can you wire $n$ Ollama nodes when you do not know $n$ at flow-design time? What does this tell you about the difference between *static* and *dynamic* computation graphs?
 
