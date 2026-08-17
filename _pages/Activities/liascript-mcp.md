@@ -320,7 +320,7 @@ In your notebook, respond to all three levels:
 
 ---
 
-→ **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into Lab 1's MCP exploration.
+→ **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
 
 ---
 

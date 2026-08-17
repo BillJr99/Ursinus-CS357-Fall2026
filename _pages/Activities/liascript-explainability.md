@@ -47,7 +47,7 @@ Think about the last time you trusted a recommendation — from a friend, a revi
 
 **Traces.** An agent's ReAct transcript — ReAct standing for "Reason + Act," a prompting pattern that interleaves a model's thoughts with tool calls and their results — is a genuine causal record of *what the system did*: which tools ran, with which inputs, returning which evidence. Traces are the workhorse of agent explainability, and you have been generating them since *The Agent Loop: Perceive, Plan, Act* activity.
 
-**Citations.** A RAG answer that quotes its retrieved chunk lets a human verify the claim against the source *without trusting the model at all*. Verifiability is stronger than persuasiveness, which is why your Lab 2 grounding instructions matter more than eloquence.
+**Citations.** A RAG answer that quotes its retrieved chunk lets a human verify the claim against the source *without trusting the model at all*. Verifiability is stronger than persuasiveness, which is why your RAG Knowledge Base Lab grounding instructions matter more than eloquence.
 
 **Uncertainty.** A system that says "low confidence" when it is more often wrong is *calibrated* (meaning its stated confidence matches its real accuracy — so an 80%-confident system is correct roughly 80% of the time). Calibration is measurable: bucket outputs by stated confidence and compare each bucket's claimed probability with its observed accuracy; the gap is the **calibration error** (ECE — Expected Calibration Error, a single number summarizing how far confidence deviates from accuracy across all confidence levels):
 
@@ -97,7 +97,7 @@ The goal is not to make users trust your system more — it is to make them trus
 
 **Disclose the system's nature.** Users deserve to know they are interacting with an AI system, what data it uses, and where its competence ends. Your governance document already commits you to this; the design task is making the disclosure *legible* — prominent, plain-language, not buried in a footer.
 
-**Fail loudly and usefully.** "Not in my documents" (your Lab 2 abstention) beats a fluent guess; a good failure message names what was attempted and what the human can do next.
+**Fail loudly and usefully.** "Not in my documents" (your RAG Knowledge Base Lab abstention) beats a fluent guess; a good failure message names what was attempted and what the human can do next.
 
 [[MC]]
 An agent drafts emails and a human clicks "approve" before each one is sent. Over months, approvals become automatic (the human stops reading them) and an erroneous email ships. The design lever that most directly targets this failure is:

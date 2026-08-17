@@ -331,7 +331,7 @@ CMD ["python", "/app/agent.py"]
 
 ## Model: Isolation and Trust Boundaries (for everyone)
 
-This model is conceptual and takes about ten minutes — it is for every student in the studio, whether or not you ever run Docker yourself. It is the reason this stack is built from containers at all, and it is the syllabus goal behind Lab 1's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
+This model is conceptual and takes about ten minutes — it is for every student in the studio, whether or not you ever run Docker yourself. It is the reason this stack is built from containers at all, and it is the syllabus goal behind the Local Agent Lab's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
 
 A **trust boundary** is a line in your system where the level of trust changes: everything inside the line can be damaged by a mistake inside the line, and nothing outside it can. Four mechanisms draw that line for an agent:
 
@@ -357,7 +357,7 @@ Which change *reduces* an agent's blast radius?
 
 ---
 
-> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for Lab 1 Directions 2–3, not as in-studio work.
+> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for the Local Agent Lab Directions 2–3, not as in-studio work.
 
 ---
 

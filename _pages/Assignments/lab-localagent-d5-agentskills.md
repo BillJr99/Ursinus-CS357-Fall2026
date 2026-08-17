@@ -1,10 +1,10 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent/Direction5
-title: "CS357 Lab 1 Direction 5: Build and Test Your Own Agent Skills"
+title: "CS357 Local Agent Lab Direction 5: Build and Test Your Own Agent Skills"
 ---
 
-> **Grading:** This page is one of the directions for [Lab 1: Your First Local Agent](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Lab 1 rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
 
 > **What this direction requires**
 >
@@ -37,7 +37,7 @@ You will build:
 
 Before starting this lab you should have:
 
-- OpenCode installed and working with a local Ollama model (from Lab 1)
+- OpenCode installed and working with a local Ollama model (from the Local Agent Lab)
 - An Obsidian vault with the Git/Gitless Sync community plugin configured and syncing to a private GitHub repo (see the *Syncing Obsidian to GitHub* supplemental tutorial)
 - A GitHub account for publishing your skill
 

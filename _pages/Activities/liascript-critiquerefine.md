@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Critique and Refine Pattern
 
-The *Orchestration Patterns: Pipelines, Routers, and Planners* activity wired agents into pipelines; today we study the most important two-agent pipeline of all. Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires. This is the workhorse pattern of Lab 3. We move from **why separation helps $\rightarrow$ the loop and its stopping rules $\rightarrow$ implementation $\rightarrow$ when refinement fails**.
+The *Orchestration Patterns: Pipelines, Routers, and Planners* activity wired agents into pipelines; today we study the most important two-agent pipeline of all. Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires. This is the workhorse pattern of Critique and Refine. We move from **why separation helps $\rightarrow$ the loop and its stopping rules $\rightarrow$ implementation $\rightarrow$ when refinement fails**.
 
 ---
 
@@ -39,7 +39,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why a Separate Critic?
 
-In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both. You will analyze two real critique transcripts and practice writing structured, actionable feedback — skills you will need when designing your own critic agents in Lab 3.
+In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both. You will analyze two real critique transcripts and practice writing structured, actionable feedback — skills you will need when designing your own critic agents in the Critique and Refine.
 
 ## 1. Generation and Evaluation Are Different Jobs
 
@@ -182,7 +182,7 @@ def critique_refine(task, rounds=3):
     return draft, verdict, rounds
 
 final, verdict, used = critique_refine(
-    "Announce that Lab 3 is due October 27 and office hours moved to Wednesday."
+    "Announce that Critique and Refine is due October 27 and office hours moved to Wednesday."
 )
 print(f"\n=== FINAL DRAFT (after {used} revision rounds) ===\n{final}")
 if verdict["verdict"] != "accept":
@@ -209,7 +209,7 @@ if verdict["verdict"] != "accept":
 
 > **⚠️ Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement — run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
 
-Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Lab 3 implementation.
+Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Critique and Refine implementation.
 
 [[MC]]
 The principal reason the critic receives a rubric while the generator does not is:
@@ -224,9 +224,9 @@ The principal reason the critic receives a rubric while the generator does not i
 
 In this section you will study three failure modes that can make the critique-refine loop produce worse results than a single-shot approach. Knowing these failure signatures — and how to measure them — is what separates a loop that works in a demo from one that works reliably in production.
 
-## 3. Failure Modes to Hunt in Lab 3
+## 3. Failure Modes to Hunt in Critique and Refine
 
-**Why this matters:** Understanding how the critique-refine loop fails is as important as knowing how it works. Each of the three failure modes below has a measurable signature — you can detect them by instrumenting the loop rather than only checking the final output. Building this measurement into Lab 3 from the start (rather than discovering failures at submission time) is the application of the design-first principle from the earlier activity.
+**Why this matters:** Understanding how the critique-refine loop fails is as important as knowing how it works. Each of the three failure modes below has a measurable signature — you can detect them by instrumenting the loop rather than only checking the final output. Building this measurement into Critique and Refine from the start (rather than discovering failures at submission time) is the application of the design-first principle from the earlier activity.
 
 **Rubber-stamping:** The critic accepts everything — often because the criteria are vague, because the critic sees the generator's reasoning and is anchored by it, or because the model is trained to be agreeable. You can detect this by measuring the acceptance rate on deliberately flawed drafts: if the critic accepts a draft with a known planted defect, it is rubber-stamping.
 
@@ -318,7 +318,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of Lab 3, *Critique and Refine*.
+→ **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of the Critique and Refine, *Critique and Refine*.
 
 ---
 

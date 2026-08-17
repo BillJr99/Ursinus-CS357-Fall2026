@@ -269,7 +269,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
-→ Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world — and the local stack you built today is the foundation for Lab 1, *Your First Local Agent*. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
+→ Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world — and the local stack you built today is the foundation for the Local Agent Lab. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
 
 ## 6. Further Reading
 

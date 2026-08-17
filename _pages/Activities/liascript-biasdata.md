@@ -32,7 +32,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Bias (in AI)** | A systematic difference in model performance or outputs across demographic groups, caused by patterns in training data, labeling choices, or deployment context — not a random error, but a consistent one that disadvantages specific groups. | The facial recognition systems in *Coded Bias* had error rates above 30% for dark-skinned women but below 1% for light-skinned men, because benchmark datasets used for training and testing were overwhelmingly light-skinned and male. |
 | **Disaggregation** | Reporting performance metrics separately for each subgroup (by gender, race, age, income level, etc.) rather than only reporting an overall average, which can hide large disparities between groups. | A resume-screening model with 95% overall accuracy might be 99% accurate for applicants from one university and 70% accurate for applicants from another — disaggregation reveals this; a single average conceals it. |
 | **Labeling bias** | Errors or skews introduced at the stage where humans assign labels to training data — for example, if annotators consistently describe the same behavior differently depending on the race of the person depicted. | Human annotators in sentiment analysis tasks have been shown to rate identical text as more "aggressive" when they believe the author is Black, introducing racial bias into the labeled training set. |
-| **Datasheet for datasets** | A standardized documentation format that records who collected a dataset, what it contains, who is represented, who is missing, known limitations, and intended and prohibited uses — making the data's properties auditable. | The datasheet for your Lab 2 corpus would record the publication dates of included documents, the languages covered, which authors or regions are over- or under-represented, and whether any demographic group is systematically absent. |
+| **Datasheet for datasets** | A standardized documentation format that records who collected a dataset, what it contains, who is represented, who is missing, known limitations, and intended and prohibited uses — making the data's properties auditable. | The datasheet for your RAG Knowledge Base Lab corpus would record the publication dates of included documents, the languages covered, which authors or regions are over- or under-represented, and whether any demographic group is systematically absent. |
 | **Disaggregated evaluation** | Running your model's evaluation metrics separately for each subgroup and reporting all subgroup metrics alongside the overall metric — the single most important habit this module teaches. | Instead of reporting "the judge pipeline scores essays with 85% agreement with humans," you report "85% overall, 91% for essays on scientific topics, 74% for essays on social topics, 88% for longer essays, 79% for shorter essays." |
 
 ---
@@ -190,7 +190,7 @@ Mitigations exist at every stage — and none of them is complete. The stance to
 
 1. *Disaggregation drill.*
 
-   *What to do:* Take your Lab 5 rubric pipeline and a set of 10 short essays. Create 10 slightly varied versions of the same essay by changing only the author byline at the top (use names that statistically connote different gender and national origin — e.g., "by Alex Johnson," "by Priya Sharma," "by Wei Zhang," "by Mohammed Al-Rashid"). Submit all 10 to your judge. Report per-byline score distributions. Any score gap is a directly measured judging bias you must now explain or propose to fix.
+   *What to do:* Take your Rubric Pipeline Lab rubric pipeline and a set of 10 short essays. Create 10 slightly varied versions of the same essay by changing only the author byline at the top (use names that statistically connote different gender and national origin — e.g., "by Alex Johnson," "by Priya Sharma," "by Wei Zhang," "by Mohammed Al-Rashid"). Submit all 10 to your judge. Report per-byline score distributions. Any score gap is a directly measured judging bias you must now explain or propose to fix.
 
    *Starter hint:* Keep the essay body *identical* across all 10 versions — only the byline changes. If scores vary, the variation can only come from the byline. Record the actual scores in a table and compute the range (highest minus lowest) across bylines.
 
@@ -198,7 +198,7 @@ Mitigations exist at every stage — and none of them is complete. The stance to
 
 2. *Datasheet sprint.*
 
-   *What to do:* Write a one-page datasheet for the corpus you indexed in Lab 2. Cover: sources (where did the documents come from?), time range (what period do they cover?), languages represented, who is represented as an author or subject, who is absent or underrepresented, and known limitations that would affect a model trained on this data.
+   *What to do:* Write a one-page datasheet for the corpus you indexed in the RAG Knowledge Base Lab. Cover: sources (where did the documents come from?), time range (what period do they cover?), languages represented, who is represented as an author or subject, who is absent or underrepresented, and known limitations that would affect a model trained on this data.
 
    *Starter hint:* Use the Gebru et al. "Datasheets for Datasets" structure: Motivation, Composition, Collection Process, Preprocessing/Cleaning, Uses, Distribution, and Maintenance. You do not need to fill every subsection — focus on the ones where you actually know the answer and where gaps would matter for a deployed system.
 
@@ -224,7 +224,7 @@ Mitigations exist at every stage — and none of them is complete. The stance to
 
 ---
 
-→ Coming Up Next: The *Intellectual Property, Privacy, and the Case for Local AI* activity is next, moving from what models learn to who owns it and who gets watched. The disaggregation drills you practiced today feed directly into Lab 6, *Responsible AI*.
+→ Coming Up Next: The *Intellectual Property, Privacy, and the Case for Local AI* activity is next, moving from what models learn to who owns it and who gets watched. The disaggregation drills you practiced today feed directly into the Responsible AI Capstone.
 
 ## Further Reading
 

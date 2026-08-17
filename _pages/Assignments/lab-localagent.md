@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent
-title: "CS357: Foundations of Artificial Intelligence - Lab 1: Your First Local Agent"
+title: "CS357: Foundations of Artificial Intelligence - Local Agent Lab"
 
 info:
   coursenum: CS357
@@ -191,7 +191,7 @@ This is a multi-week lab, not a single-evening one. Across the lab's window (see
 | **Total for Directions 1–6** | **≈ 9–14 hours** |
 | **Total for Direction 0** (replaces Parts 1–3 rather than extending them) | **≈ 8–10 hours** |
 
-Read that last row carefully: **Direction 0's 8–10 hours is the whole lab**, not an addition to it. Comparing "8–10" against a direction's "+4–8" is comparing a total to an increment — Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to Lab 2.
+Read that last row carefully: **Direction 0's 8–10 hours is the whole lab**, not an addition to it. Comparing "8–10" against a direction's "+4–8" is comparing a total to an increment — Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
 
 Budget your weeks accordingly: the direction work goes far better when the core parts are finished in the first week, and the large image pulls some directions require should happen before the day you need them.
 
@@ -693,7 +693,7 @@ Your agent so far calls a local model directly. Re-point the *perceive/plan* ste
 
 ## Looking Ahead: Tools, Reasoning, and MCP
 
-This lab stops at a working agent loop with reliable structured output. Making that agent **use tools**, **reason**, and speak **MCP** is the subject of **Lab 2: Tools, MCP, and the Agent's Hands**, handed out the day we cover tool use — so those capabilities arrive *after* the sessions that teach them rather than before. Nothing in this lab requires them.
+This lab stops at a working agent loop with reliable structured output. Making that agent **use tools**, **reason**, and speak **MCP** is the subject of the **Tools and MCP Lab**, handed out the day we cover tool use — so those capabilities arrive *after* the sessions that teach them rather than before. Nothing in this lab requires them.
 
 
 ## Choose Your Direction

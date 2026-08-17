@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/GoldenSet
-title: "CS357: Foundations of Artificial Intelligence - Lab 1 Checkpoint: Golden-Set Benchmark"
+title: "CS357: Foundations of Artificial Intelligence - Local Agent Lab Checkpoint: Golden-Set Benchmark"
 
 info:
   coursenum: CS357
@@ -38,7 +38,7 @@ tags:
 
 ---
 
-This small **lab** builds an artifact you will use for the rest of the course: your personal **golden set** — ten benchmark questions with expected answers and scoring rules, run against your local model under a fixed protocol. The RAG Quality Checkup lab reuses it as the seed of your regression harness, Lab 2's evaluation leans on it, and Lab 5's rubric pipeline grades against exactly this kind of set. Budget **one to two hours**; the class evaluation-harness code from the Hallucinations and Evaluating Agent Outputs session is your starting point, so there is little new code to write.
+This small **lab** builds an artifact you will use for the rest of the course: your personal **golden set** — ten benchmark questions with expected answers and scoring rules, run against your local model under a fixed protocol. The RAG Quality Checkup lab reuses it as the seed of your regression harness, the RAG Knowledge Base Lab's evaluation leans on it, and the Rubric Pipeline Lab's rubric pipeline grades against exactly this kind of set. Budget **one to two hours**; the class evaluation-harness code from the Hallucinations and Evaluating Agent Outputs session is your starting point, so there is little new code to write.
 
 See the course schedule for the assigned and due dates.
 
@@ -57,7 +57,7 @@ Design deliberately:
 
 Run all ten items against your local model with the class harness protocol pinned: temperature 0.0, a fixed seed, and the model name recorded. Capture per-item PASS/FAIL in `results.md`, then write the analysis: for every item where your prediction missed, one sentence classifying it as a **knowledge failure** (the model doesn't know) or a **metric failure** (your scoring rule mis-graded a correct or incorrect answer) — and one revision to the set that the results motivated (an item you would replace, or a rule you would tighten).
 
-Keep `goldenset.json` under version control with your course work — you will point your RAG Checkup regression harness at it, extend it for Lab 2's corpus, and recognize its shape again in Lab 5.
+Keep `goldenset.json` under version control with your course work — you will point your RAG Checkup regression harness at it, extend it for the RAG Knowledge Base Lab's corpus, and recognize its shape again in the Rubric Pipeline Lab.
 
 ---
 

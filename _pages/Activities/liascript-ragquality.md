@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Quality: Chunking, Clustering, and Reranking
 
-The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in Lab 2.
+The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in the RAG Knowledge Base Lab.
 
 ---
 
@@ -41,7 +41,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Goldilocks Problem
 
-In this Part you will explore why the size of text chunks matters enormously for retrieval quality, examine three splitting strategies, and develop a principled hybrid policy you can apply to your own documents in Lab 2.
+In this Part you will explore why the size of text chunks matters enormously for retrieval quality, examine three splitting strategies, and develop a principled hybrid policy you can apply to your own documents in the RAG Knowledge Base Lab.
 
 **Why this matters:** Imagine searching a book using only its table of contents (chapters as chunks) versus searching it word by word (sentences as chunks). The table of contents gives you chapters that might be 50 pages long — your embedding has to summarize 50 pages into one vector, which blurs the meaning across dozens of topics. Individual sentences are precise but often meaningless in isolation: "He approved the request" tells you nothing about *who*, *what*, or *why*. Good chunking finds the passage-length sweet spot that is semantically self-contained and focused enough to embed meaningfully. It is the most impactful tuning knob in any real RAG system.
 
@@ -71,7 +71,7 @@ Consider a 12-page student handbook with sections on housing, dining, conduct, a
 
    > *Hint: At embedding time: one vector has to represent 3,000 tokens covering academic honesty, social conduct, residence hall policies, and disciplinary procedures. What happens to the "meaning direction" of that vector? At prompt assembly: if this chunk is retrieved, how much of your 4,000-token context window does it consume?*
 
-3. Propose a hybrid policy for the handbook (one sentence per rule), and have the Recorder write it as if it were documentation for Lab 2.
+3. Propose a hybrid policy for the handbook (one sentence per rule), and have the Recorder write it as if it were documentation for the RAG Knowledge Base Lab.
 
    > *Hint: A hybrid policy might say: "Use structural splits on section headings first, then apply fixed-size chunking with 50-token overlap within any structural chunk larger than 400 tokens, with a minimum chunk size of 100 tokens." Write this as a numbered specification your lab partner could implement.*
 
@@ -210,7 +210,7 @@ Four chunks, with their (toy, 2-D) embeddings:
 
    > *Hint: K-means minimizes Euclidean distance (straight-line distance in space) to cluster centroids. Cosine similarity ignores vector length and only measures direction. If two vectors point in the same direction but one is 10 times longer, cosine similarity says they are identical (score 1.0), but Euclidean distance says they are far apart. Normalizing (setting all vectors to length 1) makes Euclidean distance proportional to cosine distance.*
 
-6. Describe two concrete uses of this cluster map when curating the knowledge base for Lab 2: one use for finding *gaps* in your corpus, and one for finding *duplicates*.
+6. Describe two concrete uses of this cluster map when curating the knowledge base for the RAG Knowledge Base Lab: one use for finding *gaps* in your corpus, and one for finding *duplicates*.
 
    > *Hint: For gaps: if your corpus has 3 clusters but your users' questions span 5 topics, what does that tell you? For duplicates: if one cluster contains 12 chunks and they all say nearly the same thing in slightly different words, what is the problem for retrieval and for prompt assembly?*
 
@@ -431,7 +431,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
    - *Starter hint:* `def rerank_score(question, chunk): return int(chat(f"Rate relevance 0-10 of this passage to '{question}': '{chunk}'. Reply only with a number."))`. Call this for each of your 10 candidates, sort descending, and report where the correct chunk landed before and after reranking.
    - *You've succeeded when:* For at least 2 of 3 questions, the correct chunk's rank improves after reranking (e.g., moved from position 4 to position 1), and you can explain in one sentence why the initial vector search placed it lower.
 
-3. *Recall curve.* For your Lab 2 corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
+3. *Recall curve.* For your RAG Knowledge Base Lab corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
 
    - *What to do:* Build a small evaluation set of 10 questions with labeled relevant chunks. Run your Chroma search with n_results=10 for each question. Compute recall@k for each k value by checking whether the correct chunk appears in the top k. Plot the resulting curve with `matplotlib`.
    - *Starter hint:* `recall_at_k = [sum(1 for q in eval_set if correct_chunk[q] in top_k_results[q][:k]) / len(eval_set) for k in [1,2,3,5,10]]`. Then `plt.plot([1,2,3,5,10], recall_at_k)`.

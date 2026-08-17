@@ -1,10 +1,10 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent/Direction0
-title: "CS357 Lab 1 Direction 0: The OpenWebUI Route (low-code)"
+title: "CS357 Local Agent Lab Direction 0: The OpenWebUI Route (low-code)"
 ---
 
-> **Grading:** This page is one of the directions for [Lab 1: Your First Local Agent](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your work is graded with the Lab 1 rubric on the core lab page. The rubric's rows are pathway-neutral: the "Agent Loop Implementation" row is earned here by a correctly configured OpenWebUI agent with documented tool invocations, and the "Code Quality and Documentation" row is earned by configuration quality — your exported model JSON, documented tool schemas, and reproducible setup notes.
+> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your work is graded with the Local Agent Lab rubric on the core lab page. The rubric's rows are pathway-neutral: the "Agent Loop Implementation" row is earned here by a correctly configured OpenWebUI agent with documented tool invocations, and the "Code Quality and Documentation" row is earned by configuration quality — your exported model JSON, documented tool schemas, and reproducible setup notes.
 
 > **What this direction requires**
 >
@@ -247,7 +247,7 @@ Identical to the core lab: an approximately two-page readme covering your design
 
 ## Deliverables
 
-Fold these into the standard Lab 1 submission ZIP, alongside the shared pair log and writeup:
+Fold these into the standard Local Agent Lab submission ZIP, alongside the shared pair log and writeup:
 
 - **Exported model JSON** for both custom Models (Workspace → Models → ⋮ → Export): the persona model and the JSON-format model.
 - **`tool-config-notes.md`** — each tool's name, description, parameter schema as shown in the UI, valve settings, and search-engine choice (Part B4).
