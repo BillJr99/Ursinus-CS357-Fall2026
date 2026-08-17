@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/RAGCheckup
-title: "CS357: Foundations of Artificial Intelligence - RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup"
+title: "CS357: Foundations of Artificial Intelligence - Lab: RAG Quality Checkup Checkpoint"
 
 info:
   coursenum: CS357
