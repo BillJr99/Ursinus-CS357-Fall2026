@@ -1,7 +1,7 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction2
-title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 2: Instrumenting Agents with OpenTelemetry'
+title: 'CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 2: Instrumenting Agents with OpenTelemetry'
 info:
   coursenum: CS357
   purpose: 'To turn the rubric-grading pipeline (or another course agent) from a black box into an observable system: every LLM call, tool invocation, and retrieval step emits a structured trace span you can query, visualize, and alert on.'
@@ -16,7 +16,7 @@ tags:
 - monitoring
 ---
 
-# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 2: Instrumenting Agents with OpenTelemetry
+# CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 2: Instrumenting Agents with OpenTelemetry
 
 ## Purpose
 

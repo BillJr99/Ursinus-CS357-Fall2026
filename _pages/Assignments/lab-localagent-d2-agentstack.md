@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent/Direction2
-title: "CS357 Local Agent Lab Direction 2: Composing the Local Agent Stack"
+title: "CS357 Lab: Local Agent, Direction 2: Composing the Local Agent Stack"
 ---
 
 > **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.

@@ -46,9 +46,9 @@ RUN pip install --no-cache-dir \
         chromadb \
         # sentence-transformers -- RAG Knowledge Base Lab: embedding text for retrieval
         sentence-transformers \
-        # scikit-learn -- Labs 4-6: classical ML models and metrics
+        # scikit-learn -- Multi-Agent Patterns, Rubric Pipeline, Responsible AI: classical ML models and metrics
         scikit-learn \
-        # numpy -- Labs 4-6: the arrays underneath everything
+        # numpy -- Multi-Agent Patterns, Rubric Pipeline, Responsible AI: the arrays underneath everything
         numpy \
         # spacy -- Responsible AI Capstone Direction 2: NLP pipelines
         spacy \

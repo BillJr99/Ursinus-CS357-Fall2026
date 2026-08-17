@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/GoldenSet
-title: "CS357: Foundations of Artificial Intelligence - Local Agent Lab Checkpoint: Golden-Set Benchmark"
+title: "CS357: Foundations of Artificial Intelligence - Lab: Golden-Set Benchmark Checkpoint"
 
 info:
   coursenum: CS357
