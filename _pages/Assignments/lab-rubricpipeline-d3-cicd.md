@@ -1,7 +1,7 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction3
-title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software'
+title: 'CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software'
 info:
   coursenum: CS357
   purpose: 'To earn trust in agentic software through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing the agent as a pip package and a container image.'
@@ -23,7 +23,7 @@ tags:
 - testing
 ---
 
-# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software
+# CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 3: CI/CD, TDD, and Publishing for AI Agent Software
 
 ## Purpose
 

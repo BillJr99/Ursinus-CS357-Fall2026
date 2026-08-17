@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/LocalAgent
-title: "CS357: Foundations of Artificial Intelligence - Local Agent Lab"
+title: "CS357: Foundations of Artificial Intelligence - Lab: Local Agent"
 
 info:
   coursenum: CS357

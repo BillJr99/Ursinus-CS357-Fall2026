@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/RubricPipeline
-title: "CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab"
+title: "CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline"
 
 info:
   coursenum: CS357
