@@ -49,7 +49,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f402
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Overview Assignment Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Overview Assignment Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -58,7 +58,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f403
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Warmup Assignment Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -67,7 +67,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f404
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Team Formation Survey Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Team Formation Survey Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -76,7 +76,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f405
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Reading Group Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Group Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -85,7 +85,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f406
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Reading Responses Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Responses Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -94,7 +94,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f407
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Class Activities and Participation Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Class Activities Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -112,7 +112,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f409
 DTSTAMP:20260901T000000Z
 DTSTART;VALUE=DATE:20260901
-SUMMARY:CS357 Foundations of Artificial Intelligence: Warmup Assignment Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -121,7 +121,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40a
 DTSTAMP:20260901T000000Z
 DTSTART;VALUE=DATE:20260901
-SUMMARY:CS357 Foundations of Artificial Intelligence: Team Formation Survey Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Team Formation Survey Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -130,7 +130,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40b
 DTSTAMP:20260903T000000Z
 DTSTART;VALUE=DATE:20260903
-SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Local Agent Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -139,7 +139,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40c
 DTSTAMP:20260908T000000Z
 DTSTART;VALUE=DATE:20260908
-SUMMARY:CS357 Foundations of Artificial Intelligence: Overview Assignment Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Overview Assignment Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -148,7 +148,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40d
 DTSTAMP:20260910T000000Z
 DTSTART;VALUE=DATE:20260910
-SUMMARY:CS357 Foundations of Artificial Intelligence: Signed Team Charter (Forming) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Signed Team Charter (Forming) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -157,7 +157,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40e
 DTSTAMP:20260910T000000Z
 DTSTART;VALUE=DATE:20260910
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment 1: Prompt Patterns and AI by Hand Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Prompt Patterns and AI by Hand Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -166,7 +166,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f40f
 DTSTAMP:20260922T000000Z
 DTSTART;VALUE=DATE:20260922
-SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Local Agent Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -175,7 +175,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f410
 DTSTAMP:20260922T000000Z
 DTSTART;VALUE=DATE:20260922
-SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Checkpoint: Golden-Set Benchmark Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Golden-Set Benchmark Checkpoint Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -184,7 +184,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f411
 DTSTAMP:20260922T000000Z
 DTSTART;VALUE=DATE:20260922
-SUMMARY:CS357 Foundations of Artificial Intelligence: Stakeholder Brief Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Stakeholder Brief Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -193,7 +193,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f412
 DTSTAMP:20260924T000000Z
 DTSTART;VALUE=DATE:20260924
-SUMMARY:CS357 Foundations of Artificial Intelligence: Tools and MCP Lab Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Tools and MCP Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -202,7 +202,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f413
 DTSTAMP:20261001T000000Z
 DTSTART;VALUE=DATE:20261001
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment 1: Prompt Patterns and AI by Hand Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Prompt Patterns and AI by Hand Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -211,7 +211,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f414
 DTSTAMP:20261006T000000Z
 DTSTART;VALUE=DATE:20261006
-SUMMARY:CS357 Foundations of Artificial Intelligence: Local Agent Lab Checkpoint: Golden-Set Benchmark Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Golden-Set Benchmark Checkpoint Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -220,7 +220,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f415
 DTSTAMP:20261006T000000Z
 DTSTART;VALUE=DATE:20261006
-SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: RAG Knowledge Base Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -229,7 +229,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f416
 DTSTAMP:20261015T000000Z
 DTSTART;VALUE=DATE:20261015
-SUMMARY:CS357 Foundations of Artificial Intelligence: Intra-Team Check-In 1 (Storming into Norming) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Intra-Team Check-In (Storming into Norming) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -238,7 +238,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f417
 DTSTAMP:20261015T000000Z
 DTSTART;VALUE=DATE:20261015
-SUMMARY:CS357 Foundations of Artificial Intelligence: Literature Review Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -247,7 +247,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f418
 DTSTAMP:20261020T000000Z
 DTSTART;VALUE=DATE:20261020
-SUMMARY:CS357 Foundations of Artificial Intelligence: Tools and MCP Lab Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Tools and MCP Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -256,7 +256,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f419
 DTSTAMP:20261022T000000Z
 DTSTART;VALUE=DATE:20261022
-SUMMARY:CS357 Foundations of Artificial Intelligence: Stakeholder Brief Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Stakeholder Brief Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -265,7 +265,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41a
 DTSTAMP:20261022T000000Z
 DTSTART;VALUE=DATE:20261022
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment 2: Design Your Agent System Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Design Your Agent System Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -274,7 +274,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41b
 DTSTAMP:20261027T000000Z
 DTSTART;VALUE=DATE:20261027
-SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: RAG Quality Checkup Checkpoint Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -283,7 +283,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41c
 DTSTAMP:20261029T000000Z
 DTSTART;VALUE=DATE:20261029
-SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: RAG Knowledge Base Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -292,7 +292,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41d
 DTSTAMP:20261029T000000Z
 DTSTART;VALUE=DATE:20261029
-SUMMARY:CS357 Foundations of Artificial Intelligence: Literature Review: Individual Annotated Bibliographies Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review — Individual Annotated Bibliographies Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -301,7 +301,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41e
 DTSTAMP:20261103T000000Z
 DTSTART;VALUE=DATE:20261103
-SUMMARY:CS357 Foundations of Artificial Intelligence: Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus) Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -310,7 +310,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41f
 DTSTAMP:20261105T000000Z
 DTSTART;VALUE=DATE:20261105
-SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment 2: Design Your Agent System Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Written Assignment: Design Your Agent System Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -319,7 +319,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f420
 DTSTAMP:20261105T000000Z
 DTSTART;VALUE=DATE:20261105
-SUMMARY:CS357 Foundations of Artificial Intelligence: Rubric Pipeline Lab Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Rubric Pipeline Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -328,7 +328,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f421
 DTSTAMP:20261105T000000Z
 DTSTART;VALUE=DATE:20261105
-SUMMARY:CS357 Foundations of Artificial Intelligence: Final Project Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Final Project Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -337,7 +337,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f422
 DTSTAMP:20261110T000000Z
 DTSTART;VALUE=DATE:20261110
-SUMMARY:CS357 Foundations of Artificial Intelligence: RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: RAG Quality Checkup Checkpoint Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -346,7 +346,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f423
 DTSTAMP:20261110T000000Z
 DTSTART;VALUE=DATE:20261110
-SUMMARY:CS357 Foundations of Artificial Intelligence: Intra-Team Check-In 2 (Norming into Performing) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Intra-Team Check-In (Norming into Performing) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -364,7 +364,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f425
 DTSTAMP:20261112T000000Z
 DTSTART;VALUE=DATE:20261112
-SUMMARY:CS357 Foundations of Artificial Intelligence: Literature Review: Team Synthesis Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review — Team Synthesis Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -373,7 +373,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f426
 DTSTAMP:20261117T000000Z
 DTSTART;VALUE=DATE:20261117
-SUMMARY:CS357 Foundations of Artificial Intelligence: Multi-Agent Patterns Lab (Critique, Refine, Debate, Consensus) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -382,7 +382,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f427
 DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20261119
-SUMMARY:CS357 Foundations of Artificial Intelligence: Final Project Proposal Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Final Project Proposal Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -391,7 +391,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f428
 DTSTAMP:20261124T000000Z
 DTSTART;VALUE=DATE:20261124
-SUMMARY:CS357 Foundations of Artificial Intelligence: Rubric Pipeline Lab Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Lab: Rubric Pipeline Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -409,7 +409,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42a
 DTSTAMP:20261203T000000Z
 DTSTART;VALUE=DATE:20261203
-SUMMARY:CS357 Foundations of Artificial Intelligence: Intra-Team Check-In 3 (Performing into Adjourning) Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Intra-Team Check-In (Performing into Adjourning) Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -418,7 +418,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42b
 DTSTAMP:20261208T000000Z
 DTSTART;VALUE=DATE:20261208
-SUMMARY:CS357 Foundations of Artificial Intelligence: Final Project and Demo Day Presentations Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Demo Day Presentations Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -427,7 +427,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42c
 DTSTAMP:20261208T000000Z
 DTSTART;VALUE=DATE:20261208
-SUMMARY:CS357 Foundations of Artificial Intelligence: Reading Group Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Group Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -436,7 +436,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42d
 DTSTAMP:20261208T000000Z
 DTSTART;VALUE=DATE:20261208
-SUMMARY:CS357 Foundations of Artificial Intelligence: Reading Responses Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Responses Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -445,7 +445,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f42e
 DTSTAMP:20261208T000000Z
 DTSTART;VALUE=DATE:20261208
-SUMMARY:CS357 Foundations of Artificial Intelligence: Class Activities and Participation Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Class Activities Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
