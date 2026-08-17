@@ -25,7 +25,7 @@ LABEL org.opencontainers.image.title="CS357 course development environment" \
 # System packages:
 #   git    -- commit and push your work from inside the container
 #   curl   -- probe the Ollama API and other HTTP endpoints
-#   nodejs, npm -- run promptfoo (Lab 5)
+#   nodejs, npm -- run promptfoo (Rubric Pipeline Lab)
 #   zip    -- package submissions
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -42,32 +42,32 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir \
         # requests -- every lab: HTTP calls to the Ollama API on the host
         requests \
-        # chromadb -- Lab 2: the vector store for retrieval
+        # chromadb -- RAG Knowledge Base Lab: the vector store for retrieval
         chromadb \
-        # sentence-transformers -- Lab 2: embedding text for retrieval
+        # sentence-transformers -- RAG Knowledge Base Lab: embedding text for retrieval
         sentence-transformers \
         # scikit-learn -- Labs 4-6: classical ML models and metrics
         scikit-learn \
         # numpy -- Labs 4-6: the arrays underneath everything
         numpy \
-        # spacy -- Lab 6 Direction 2: NLP pipelines
+        # spacy -- Responsible AI Capstone Direction 2: NLP pipelines
         spacy \
-        # shap -- Lab 6 Direction 3: model explanations
+        # shap -- Responsible AI Capstone Direction 3: model explanations
         shap \
-        # lime -- Lab 6 Direction 3: model explanations
+        # lime -- Responsible AI Capstone Direction 3: model explanations
         lime \
-        # matplotlib -- Lab 6 Direction 3: plots
+        # matplotlib -- Responsible AI Capstone Direction 3: plots
         matplotlib \
-        # pandas -- Lab 6 Direction 3: tabular data
+        # pandas -- Responsible AI Capstone Direction 3: tabular data
         pandas \
-        # flask -- Lab 1 Direction 4: a small web endpoint for your agent
+        # flask -- Local Agent Lab Direction 4: a small web endpoint for your agent
         flask
 
-# The small English model spacy needs (Lab 6 Direction 2), baked into the
+# The small English model spacy needs (Responsible AI Capstone Direction 2), baked into the
 # image so the lab works offline.
 RUN python -m spacy download en_core_web_sm
 
-# promptfoo -- Lab 5: prompt/agent evaluation harness.
+# promptfoo -- Rubric Pipeline Lab: prompt/agent evaluation harness.
 RUN npm install -g promptfoo
 
 # Code inside the container reaches the HOST's Ollama server here. This is

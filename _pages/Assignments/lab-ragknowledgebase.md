@@ -1,7 +1,7 @@
 ---
 layout: assignment
 permalink: /Assignments/RAGKnowledgeBase
-title: "CS357: Foundations of Artificial Intelligence - Lab 2: A RAG Knowledge Base of Your Own"
+title: "CS357: Foundations of Artificial Intelligence - RAG Knowledge Base Lab"
 
 info:
   coursenum: CS357
@@ -116,7 +116,7 @@ pip install chromadb
 # Sentence transformers for local embeddings (no API key required)
 pip install sentence-transformers
 
-# Requests for Ollama calls (already installed if you did Lab 1)
+# Requests for Ollama calls (already installed if you did the Local Agent Lab)
 pip install requests
 ```
 
@@ -716,7 +716,7 @@ Add a `last_modified` timestamp to each chunk's metadata (from the file's `mtime
 
 ## Choose Your Direction
 
-Everyone completes core Part 1 (corpus and datasheet) and core Part 4 (citation audit). Beyond that, you choose **one** direction below. You do not do more than one. Pick the direction that most interests you, and carry your Lab 2 corpus, config discipline, and evaluation habits into it.
+Everyone completes core Part 1 (corpus and datasheet) and core Part 4 (citation audit). Beyond that, you choose **one** direction below. You do not do more than one. Pick the direction that most interests you, and carry your RAG Knowledge Base Lab corpus, config discipline, and evaluation habits into it.
 
 **Direction 0 is different in kind from the other two.** It is the low-code route through the middle of the lab itself: it **replaces the coding of core Parts 2–3** (indexing and grounded generation) with a visual Langflow build that meets the same requirements — two compared chunking configurations, recall@k, citations, and abstention. Core Part 1 (corpus curation + datasheet) and core Part 4 (citation audit) remain required for everyone, whichever direction you choose. Directions 1 and 2, by contrast, are extensions you complete **after** finishing core Parts 1–4 in code.
 
@@ -812,7 +812,7 @@ Complete core Part 4 unchanged: audit every citation in a sample of at least ten
 
 #### Direction 0 Deliverables
 
-Fold these into the standard Lab 2 submission ZIP:
+Fold these into the standard RAG Knowledge Base Lab submission ZIP:
 
 - **Exported flow JSON × 2** — both chunking configurations (⋯ menu → Export Flow), plus your node-settings config notes.
 - **Query/recall table** — the ten queries, their hand-located source chunks, and the completed recall@k table for both configurations with your defended choice.
@@ -924,7 +924,7 @@ If you see `OSError: Can't load tokenizer`, check your internet connection and t
 
 #### Step A: Choose a Domain Dataset
 
-**Why this matters:** The dataset you choose determines everything — what your model learns, what biases it might amplify, and how you can measure success. A natural choice is a dataset in the *same domain as your Lab 2 corpus*, so your before/after comparison speaks directly to the RAG-versus-fine-tuning question. Choosing a well-structured dataset is the difference between training that converges and training that produces nonsense.
+**Why this matters:** The dataset you choose determines everything — what your model learns, what biases it might amplify, and how you can measure success. A natural choice is a dataset in the *same domain as your RAG Knowledge Base Lab corpus*, so your before/after comparison speaks directly to the RAG-versus-fine-tuning question. Choosing a well-structured dataset is the difference between training that converges and training that produces nonsense.
 
 1. **Choose one of the following datasets,** or propose your own (get instructor approval first):
 
@@ -1355,7 +1355,7 @@ print("Saved eval_comparison.csv — open it and fill in the improvement and not
 
 4. **Document at least one regression** in your writeup — a prompt where the base model was better. This is expected and important to be honest about.
 
-5. **Compare against your RAG pipeline.** Take two or three of the questions your Lab 2 RAG system answered from your corpus, and ask the fine-tuned model the same questions with no retrieval. Which approach answered more faithfully? Which hallucinated? Record the head-to-head so your recommendation (below) rests on evidence, not intuition.
+5. **Compare against your RAG pipeline.** Take two or three of the questions your RAG system answered from your corpus, and ask the fine-tuned model the same questions with no retrieval. Which approach answered more faithfully? Which hallucinated? Record the head-to-head so your recommendation (below) rests on evidence, not intuition.
 
 > **Checkpoint:** Before moving on, verify that `eval_comparison.csv` has 10 rows, that you have manually filled in the `improvement` column for each row, and that your quantitative metric (perplexity, accuracy, or judge score) has been computed for both base and fine-tuned models.
 
@@ -1467,7 +1467,7 @@ These challenges push this direction from a working fine-tune to a research-grad
 
 #### Direction 1 Deliverables
 
-Fold these into your Lab 2 submission ZIP and readme:
+Fold these into your RAG Knowledge Base Lab submission ZIP and readme:
 
 - `train.py`/`train_unsloth.py` or Colab notebook (`.ipynb`) — runnable training script (note which toolchain you used)
 - `dataset_format.py` — dataset loading and formatting code
@@ -2168,7 +2168,7 @@ The agent has now done two things a human analyst would do: chosen the experimen
 
 #### Direction 2 Deliverables
 
-Fold these into your Lab 2 submission ZIP and readme:
+Fold these into your RAG Knowledge Base Lab submission ZIP and readme:
 
 - `montecarlo.py` — complete simulation, visualization, and multimodal analysis code
 - `config.json` — your baseline configuration file

@@ -201,7 +201,7 @@ In this part, you will build your own benchmark — a domain-specific task set y
 
 ---
 
-→ Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools — one of the mitigations previewed today. The evaluation harness pattern you built here returns in Lab 2's retrieval evaluation and Lab 5's rubric pipeline.
+→ Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools — one of the mitigations previewed today. The evaluation harness pattern you built here returns in the RAG Knowledge Base Lab's retrieval evaluation and the Rubric Pipeline Lab's rubric pipeline.
 
 ## 5. Further Reading
 

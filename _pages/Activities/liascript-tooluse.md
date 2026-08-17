@@ -567,7 +567,7 @@ When the agent loop appends a tool result back into the conversation, what `role
 
 ## → Coming Up Next
 
-Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into Lab 1, *Your First Local Agent*.
+Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into the Local Agent Lab.
 
 ---
 

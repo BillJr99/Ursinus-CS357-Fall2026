@@ -261,13 +261,13 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 
 # Part IV: Hands-On — Building with LangChain
 
-In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in Lab 1 — so that the framework's abstractions land on concepts you have already implemented yourself, not on faith. Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem — the top of the abstraction ladder this activity has been climbing.
+In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in the Local Agent Lab — so that the framework's abstractions land on concepts you have already implemented yourself, not on faith. Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem — the top of the abstraction ladder this activity has been climbing.
 
 ## Model 4: Hands-On — A LangChain Agent on Ollama
 
 > **A note on versions:** LangChain's APIs evolve quickly — package names, import paths, and helper functions have all changed across releases and will change again. The code below is pinned to *conceptual clarity*: the structure (a chat model object, a decorated tool, a bind-tools call, an explicit loop) is stable even when the spelling changes. When something does not import, check the current documentation at https://python.langchain.com/docs/ rather than fighting the error message.
 
-**Step 1 — the model object.** LangChain wraps every provider behind a common chat interface. `ChatOllama` is the wrapper for your local server (`pip install langchain-ollama`); its `.invoke()` is doing exactly what your Lab 1 `requests.post` to `/api/chat` did, with retry, parsing, and message formatting hidden inside:
+**Step 1 — the model object.** LangChain wraps every provider behind a common chat interface. `ChatOllama` is the wrapper for your local server (`pip install langchain-ollama`); its `.invoke()` is doing exactly what your Local Agent Lab `requests.post` to `/api/chat` did, with retry, parsing, and message formatting hidden inside:
 
 ```python
 # pip install langchain-ollama langchain-core
@@ -277,7 +277,7 @@ llm = ChatOllama(model="llama3.2", temperature=0)
 print(llm.invoke("In one sentence: what is an agent?").content)
 ```
 
-**Step 2 — a tool and an agent loop.** The `@tool` decorator builds the JSON schema for you *from the function's type hints and docstring* — the same schema you wrote by hand in the Tool Use activity. `bind_tools` attaches the schemas to every request, and the loop below is deliberately written in the same shape as your Lab 1 loop so you can see what moved into the framework and what did not:
+**Step 2 — a tool and an agent loop.** The `@tool` decorator builds the JSON schema for you *from the function's type hints and docstring* — the same schema you wrote by hand in the Tool Use activity. `bind_tools` attaches the schemas to every request, and the loop below is deliberately written in the same shape as your Local Agent Lab loop so you can see what moved into the framework and what did not:
 
 ```python
 from langchain_core.tools import tool
@@ -294,7 +294,7 @@ llm_with_tools = llm.bind_tools([days_between])
 registry = {"days_between": days_between}   # still YOUR security boundary
 
 messages = [HumanMessage("How many days between 2026-08-31 and 2026-12-07?")]
-for _ in range(4):                          # perceive-plan-act, same as Lab 1
+for _ in range(4):                          # perceive-plan-act, same as Local Agent Lab
     ai = llm_with_tools.invoke(messages)    # framework: HTTP, formatting, parsing
     messages.append(ai)
     if not ai.tool_calls:                   # yours: the stopping decision
@@ -455,11 +455,11 @@ Two things decide whether this works. First, **the provider must be reachable an
 
 ### Critical Thinking Questions
 
-11. In the Step 2 loop, list what the framework absorbed from your Lab 1 code and what remained yours, then answer: did LangChain absorb any *decision*, or only *plumbing*? Why does that distinction predict where your future bugs will and will not be?
+11. In the Step 2 loop, list what the framework absorbed from your Local Agent Lab code and what remained yours, then answer: did LangChain absorb any *decision*, or only *plumbing*? Why does that distinction predict where your future bugs will and will not be?
 
-    *Hint:* Absorbed: schema generation from the docstring, request/response formatting, parsing `tool_calls` into objects. Retained: the registry, the step budget, the stopping condition, execution itself. Plumbing bugs now hide inside the framework (harder to see, rarer); decision bugs are still in your ten lines (visible, yours). Which kind was more common in your Lab 1 debugging?
+    *Hint:* Absorbed: schema generation from the docstring, request/response formatting, parsing `tool_calls` into objects. Retained: the registry, the step budget, the stopping condition, execution itself. Plumbing bugs now hide inside the framework (harder to see, rarer); decision bugs are still in your ten lines (visible, yours). Which kind was more common in your Local Agent Lab debugging?
 
-12. In Lab 1 you wrote the tool's JSON schema by hand; here `@tool` generates it from the signature and docstring. Recalling Model 1 of the Tool Use activity (schema-as-interface), what new *failure mode* does auto-generation introduce, and what practice defends against it?
+12. In the Local Agent Lab you wrote the tool's JSON schema by hand; here `@tool` generates it from the signature and docstring. Recalling Model 1 of the Tool Use activity (schema-as-interface), what new *failure mode* does auto-generation introduce, and what practice defends against it?
 
     *Hint:* The docstring is now dual-purpose: documentation for humans AND the model's only description of the tool. A terse or stale docstring ("helper function") silently becomes a Team-A-quality schema. Defense: write docstrings as prompt engineering, and print the generated schema (`days_between.args_schema.model_json_schema()`) to review what the model will actually see.
 
@@ -472,7 +472,7 @@ Two things decide whether this works. First, **the provider must be reachable an
     *Hint:* Candidate decisions now inside the harness: *when to write or revise the plan (todos)*, *when to spawn a sub-agent versus answer directly*, and *what to offload to the virtual filesystem*. In Step 2, a bad stopping or tool-choice decision was visible in your ten lines. In Step 4, a bad *planning* or *delegation* decision lives in the framework's built-in system prompt and control flow — you cannot see it by reading your own code, so debugging shifts from "read my loop" to "trace the harness." Which is harder for a beginner to diagnose?
 
 [[MC]]
-In the hands-on LangChain agent, which responsibility did the framework take over from the from-scratch Lab 1 loop?
+In the hands-on LangChain agent, which responsibility did the framework take over from the from-scratch Local Agent Lab loop?
 - ( ) Deciding when the loop should stop
 - ( ) Choosing which Python functions the model is allowed to execute
 - (x) Generating the tool's JSON schema from the function signature and docstring, and parsing the model's response into typed `tool_calls` objects

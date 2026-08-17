@@ -1,12 +1,12 @@
 ---
 layout: default-standard
 permalink: /Assignments/RubricPipeline/Direction2
-title: 'CS357: Foundations of Artificial Intelligence - Lab 5, Direction 2: Instrumenting Agents with OpenTelemetry'
+title: 'CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 2: Instrumenting Agents with OpenTelemetry'
 info:
   coursenum: CS357
   purpose: 'To turn the rubric-grading pipeline (or another course agent) from a black box into an observable system: every LLM call, tool invocation, and retrieval step emits a structured trace span you can query, visualize, and alert on.'
   readings:
-  - rtitle: 'Lab 5 Core: An LLM Rubric-Grading Pipeline'
+  - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: Observability Activity
     rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md
@@ -16,7 +16,7 @@ tags:
 - monitoring
 ---
 
-# CS357: Foundations of Artificial Intelligence - Lab 5, Direction 2: Instrumenting Agents with OpenTelemetry
+# CS357: Foundations of Artificial Intelligence - Rubric Pipeline Lab, Direction 2: Instrumenting Agents with OpenTelemetry
 
 ## Purpose
 
@@ -24,10 +24,10 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 
 ## Background Reading and References
 
-- [Lab 5 Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
 - [Observability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md)
 
-This page is **Direction 2** of [Lab 5: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 2** of the [Rubric Pipeline Lab](/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
 
 > **What this direction requires**
 >
@@ -471,4 +471,4 @@ Fold the following into your single lab submission:
 
 ---
 
-When you finish, fold the deliverables above into your single Lab 5 submission and return to the [core lab page](/Assignments/RubricPipeline) for the submission checklist.
+When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page](/Assignments/RubricPipeline) for the submission checklist.

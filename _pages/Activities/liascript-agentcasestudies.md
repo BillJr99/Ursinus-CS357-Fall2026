@@ -218,4 +218,4 @@ Think of editing a printed book where every chapter references page numbers in t
 
 - Anthropic engineering blog. "How we built our multi-agent research system" (2025, online), on verification and state in long-running agents.
 - Yao et al. "WebShop" and successors on web agents (2022 onward), for the perception problems of Case B.
-- Your Lab 5 specification, which industrializes the verification mindset of all three cases.
+- Your Rubric Pipeline Lab specification, which industrializes the verification mindset of all three cases.

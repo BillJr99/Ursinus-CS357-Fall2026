@@ -185,7 +185,7 @@ The single most important reason RAG reduces factual hallucination is that it:
 
 ## 3. Exercises
 
-In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity. These exercises build directly toward Lab 2.
+In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity. These exercises build directly toward the RAG Knowledge Base Lab.
 
 1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one abstention.
 
@@ -225,7 +225,7 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 ## → Coming Up Next
 
-Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality — the same levers you will tune in Lab 2.
+Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality — the same levers you will tune in the RAG Knowledge Base Lab.
 
 ---
 

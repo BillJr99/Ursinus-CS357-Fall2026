@@ -1,13 +1,13 @@
 ---
 layout: assignment
 permalink: /Assignments/RAGCheckup
-title: "CS357: Foundations of Artificial Intelligence - Lab 2 Checkpoint: RAG Quality Checkup"
+title: "CS357: Foundations of Artificial Intelligence - RAG Knowledge Base Lab Checkpoint: RAG Quality Checkup"
 
 info:
   coursenum: CS357
-  purpose: "To run a structured mid-flight diagnostic on your in-progress RAG pipeline — retrieval quality measured, citations audited, one failure understood — and to freeze that diagnostic into a rerunnable regression harness that follows you into Lab 5."
+  purpose: "To run a structured mid-flight diagnostic on your in-progress RAG pipeline — retrieval quality measured, citations audited, one failure understood — and to freeze that diagnostic into a rerunnable regression harness that follows you into the Rubric Pipeline Lab."
   tilt:
-    task: "Complete the studio worksheet on your own Lab 2 pipeline — recall@k across two chunking configurations, a citation audit, and one analyzed failure — then pin a golden set into a rerunnable regression harness and demonstrate reproducibility."
+    task: "Complete the studio worksheet on your own RAG Knowledge Base Lab pipeline — recall@k across two chunking configurations, a citation audit, and one analyzed failure — then pin a golden set into a rerunnable regression harness and demonstrate reproducibility."
     criteria: "Assessed on a completed worksheet with real measurements from your own pipeline, and a regression harness that reruns identically; see the rubric below for the full breakdown."
   points: 100
   goals:
@@ -26,14 +26,14 @@ info:
       description: "The Regression Harness (Goal 4)"
       preemerging: No harness exists, or it cannot be rerun
       beginning: A harness exists but the golden set is not pinned (questions or scoring change between runs), or it was run only once
-      progressing: The harness reruns with a pinned golden set and protocol, but the two runs' outputs were not compared, or the harness is not committed alongside the Lab 2 work
-      proficient: The harness — plain Python built on the class evaluation harness, or declarative promptfoo YAML, student's choice — pins a golden set (seeded from the Golden-Set Benchmark lab, extended with corpus-specific items) and a fixed protocol; two runs are shown to agree; and the harness lives in the Lab 2 repository where Lab 5's pipeline work can pick it up
+      progressing: The harness reruns with a pinned golden set and protocol, but the two runs' outputs were not compared, or the harness is not committed alongside the RAG Knowledge Base Lab work
+      proficient: The harness — plain Python built on the class evaluation harness, or declarative promptfoo YAML, student's choice — pins a golden set (seeded from the Golden-Set Benchmark lab, extended with corpus-specific items) and a fixed protocol; two runs are shown to agree; and the harness lives in the RAG Knowledge Base Lab repository where the Rubric Pipeline Lab's pipeline work can pick it up
   readings:
     - rtitle: "Hallucinations and Evaluating Agent Outputs Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
     - rtitle: "RAG Quality: Chunking, Clustering, and Reranking Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
-    - rtitle: "Required prep for Lab 5: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
+    - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
     - rtitle: "Reference: promptfoo — declarative LLM/agent eval and red-teaming (harness option, runs against Ollama)"
       rlink: "https://www.promptfoo.dev/"
@@ -46,9 +46,9 @@ tags:
 
 ---
 
-This small **lab** is a structured checkup on the RAG pipeline you are building in Lab 2, begun during the studio session and finished on your own — budget **two to three hours total, most of it in class**. It is deliberately a scaffold: everything you produce here is work Lab 2's evaluation asks for anyway, done earlier and under supervision, plus one forward investment — a **regression harness** you will be glad to already have when Lab 5 asks you to build a reproducible evaluation pipeline.
+This small **lab** is a structured checkup on the RAG pipeline you are building in the RAG Knowledge Base Lab, begun during the studio session and finished on your own — budget **two to three hours total, most of it in class**. It is deliberately a scaffold: everything you produce here is work the RAG Knowledge Base Lab's evaluation asks for anyway, done earlier and under supervision, plus one forward investment — a **regression harness** you will be glad to already have when the Rubric Pipeline Lab asks you to build a reproducible evaluation pipeline.
 
-Work on your **own** pipeline and corpus (this lab is individual, though the studio makes collaboration on debugging natural). Bring your Lab 2 repository to the studio session running.
+Work on your **own** pipeline and corpus (this lab is individual, though the studio makes collaboration on debugging natural). Bring your RAG Knowledge Base Lab repository to the studio session running.
 
 See the course schedule for the assigned and due dates.
 
@@ -56,10 +56,10 @@ See the course schedule for the assigned and due dates.
 
 ## Part 1: The Checkup Worksheet (60 points)
 
-Complete `checkup.md` against your in-progress Lab 2 pipeline:
+Complete `checkup.md` against your in-progress RAG Knowledge Base Lab pipeline:
 
-1. **Retrieval quality.** For five queries representative of your corpus, measure **recall@k** under your current chunking configuration and one alternative (different chunk size or overlap). Record the table and name the winner — and carry the winning configuration back into Lab 2.
-2. **Citation audit.** For five answered queries, one row each: the answer's central claim, the chunk it cites, and your verdict — **supported** (the chunk actually contains the claim) or **unsupported**. The Lab 2 rubric weights citation quality heavily; this is that muscle, built early.
+1. **Retrieval quality.** For five queries representative of your corpus, measure **recall@k** under your current chunking configuration and one alternative (different chunk size or overlap). Record the table and name the winner — and carry the winning configuration back into the RAG Knowledge Base Lab.
+2. **Citation audit.** For five answered queries, one row each: the answer's central claim, the chunk it cites, and your verdict — **supported** (the chunk actually contains the claim) or **unsupported**. The RAG Knowledge Base Lab rubric weights citation quality heavily; this is that muscle, built early.
 3. **One failure.** Capture one concrete misbehavior you observed — a wrong retrieval, an unsupported citation, a failed abstention — with the query, the output, a one-paragraph hypothesis for the mechanism, and your planned fix.
 
 ## Part 2: The Regression Harness (40 points)
@@ -67,15 +67,15 @@ Complete `checkup.md` against your in-progress Lab 2 pipeline:
 Freeze your evaluation so it can be rerun forever:
 
 - Pin a golden set: start from your **Golden-Set Benchmark** items, replace or extend with at least five corpus-specific questions (including at least one that should trigger abstention).
-- Build the harness in your choice of medium: **plain Python** grown from the class evaluation harness, or **declarative promptfoo YAML** run against your local Ollama — the same tool that anchors Lab 5's low-code direction, so either choice pays forward.
+- Build the harness in your choice of medium: **plain Python** grown from the class evaluation harness, or **declarative promptfoo YAML** run against your local Ollama — the same tool that anchors the Rubric Pipeline Lab's low-code direction, so either choice pays forward.
 - Pin the protocol (temperature 0.0, fixed seed, model recorded), run it **twice**, and show the runs agree.
-- Commit the harness and golden set inside your Lab 2 repository.
+- Commit the harness and golden set inside your RAG Knowledge Base Lab repository.
 
 ---
 
 ## Deliverables
 
-Submit `checkup.md` (worksheet with real measurements), the harness (script or YAML) with its golden set, and the two-run agreement log — all committed in your Lab 2 repository, with paths noted in the submission.
+Submit `checkup.md` (worksheet with real measurements), the harness (script or YAML) with its golden set, and the two-run agreement log — all committed in your RAG Knowledge Base Lab repository, with paths noted in the submission.
 
 ## Grading Breakdown
 
