@@ -144,6 +144,9 @@ instructors:
     starttime: "3:00 PM"
     endtime: "5:00 PM"
     location: "Pfahler Hall 101L"
+- name: AJ Luthra
+  title: Teaching Assistant
+  officehours: [] # TBD
 textbooks:
 - title: "Artificial Intelligence: A Guide for Thinking Humans"
   authors: "Melanie Mitchell"
