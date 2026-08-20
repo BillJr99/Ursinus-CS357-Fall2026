@@ -46,6 +46,16 @@ The following terms appear throughout today's activity. Read through them as a t
 
 ---
 
+### Before You Start
+
+**What you need:** A terminal. macOS and Linux have one; on Windows use WSL. Nothing else installed.
+
+**What you will have at the end:** the handful of shell moves every later lab assumes, practiced rather than read.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: Orientation
 
 In this Part, you will learn what a shell is, how to navigate the filesystem, and how to read and decode a compound shell command before running it. By the end, you will be able to look at any agent-proposed command and explain what it does — the first requirement for safe agent supervision.

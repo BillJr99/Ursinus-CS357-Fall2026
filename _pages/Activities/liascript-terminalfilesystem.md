@@ -39,6 +39,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Docker and a terminal.
+
+**What you will have at the end:** an agent sandbox where you can state exactly what the agent may read and write.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## Model 1: Filesystem Access Permissions for Three Agent Configurations
 
 The three configurations below represent a spectrum from minimal to dangerous. Each row describes a real deployment pattern. The filesystem is the agent's workspace — getting permissions wrong is like giving a houseguest the master key to your house instead of a key to just the guest room. Study the access model and the resulting risk level before answering questions.

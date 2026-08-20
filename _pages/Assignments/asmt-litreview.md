@@ -56,7 +56,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem. The review runs in two phases: **Phase 1 is individual** — each team member builds an annotated bibliography of 2-3 sources — and **Phase 2 is a team synthesis** — one page connecting everyone's sources to the problem statement and naming the gap your project will address. The assignment goes out as your revised [Stakeholder Brief](/Assignments/StakeholderBrief) is submitted, and the two phases are due about two weeks apart; see the [course schedule](/) for the dates.
+In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem. The review runs in two phases: **Phase 1 is individual** — each team member builds an annotated bibliography of 2-3 sources — and **Phase 2 is a team synthesis** — one page connecting everyone's sources to the problem statement and naming the gap your project will address. The assignment goes out as your revised [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) is submitted, and the two phases are due about two weeks apart; see the [course schedule](/) for the dates.
 
 A literature review is not a book report and not a pile of links. It is an argument: *here is what is known, here is who knows it, here is the hole in it, and here is why that hole matters to our stakeholder.* The two-phase structure means every member does real source work (there is no way to ride along on a teammate's reading), and the synthesis forces the sources to talk to each other.
 

@@ -151,9 +151,16 @@ Write 2-3 paragraphs in your analysis: (1) Did the circumvention succeed or fail
 
 ## Part 2: AI by Hand
 
-Complete all three problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, paste a short Python snippet that verifies your result.
+Complete all three problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, show that your result checks out.
 
-As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
+**Two ways to verify, both fully accepted.** The by-hand arithmetic is the graded work; how you check it is up to you.
+
+- **Spreadsheet:** put the logits in a column, compute `EXP(value/T)` beside them, divide each by the column sum, and screenshot the sheet. This is the same computation the Python does, and building it column by column tends to make the temperature effect more visible, not less.
+- **Python:** paste the short snippet given with each problem and its output.
+
+Either one earns the verification credit. What is not accepted is an unverified answer.
+
+As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
 
 ### Problem 1: Softmax with Temperature
 
@@ -245,7 +252,7 @@ where $$\text{ReLU}(z) = \max(0, z)$$.
 2. The activation of each hidden neuron after ReLU (state explicitly which neuron, if any, was clipped to zero)
 3. The output $$y$$ (show the weighted sum and the output bias)
 
-**Second calculation:** Repeat the full trace for $$\mathbf{x} = (0.0, 2.0)$$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet](/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
+**Second calculation:** Repeat the full trace for $$\mathbf{x} = (0.0, 2.0)$$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
 
 **Python verification:**
 ```python

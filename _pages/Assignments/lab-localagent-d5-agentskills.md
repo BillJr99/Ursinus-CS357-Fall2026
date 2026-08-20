@@ -4,7 +4,9 @@ permalink: /Assignments/LocalAgent/Direction5
 title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skills"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+
+> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >

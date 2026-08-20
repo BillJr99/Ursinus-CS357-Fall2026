@@ -37,6 +37,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Docker, and an agent of your own from an earlier lab to deploy.
+
+**What you will have at the end:** the same agent running at three tiers, and a clear-eyed account of what each tier costs.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: Where Agents Live
 
 In this part, you will compare five deployment tiers — from a developer's laptop to Kubernetes — and identify which tier is appropriate for which workload, including the specific promises each tier makes about latency, cost, and what happens to agent state when a server restarts.

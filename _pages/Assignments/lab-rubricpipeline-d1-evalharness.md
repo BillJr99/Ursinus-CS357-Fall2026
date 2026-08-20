@@ -26,11 +26,13 @@ To generalize the judge validation from the core rubric-pipeline lab into a stan
 
 ## Background Reading and References
 
-- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
 - [Testing Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md)
 
-This page is **Direction 1** of the [Rubric Pipeline Lab](/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 1** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+
+> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
@@ -551,4 +553,4 @@ Fold the following into your single lab submission:
 
 ---
 
-When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page](/Assignments/RubricPipeline) for the submission checklist.
+When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.

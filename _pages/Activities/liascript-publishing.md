@@ -37,6 +37,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Docker, git, and a free account on GHCR or Docker Hub.
+
+**What you will have at the end:** your work published under a name someone else can pull and run.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: The Registry Mental Model
 
 In this part, you will learn what registries are, how artifacts are named and versioned, and why the naming conventions matter for users who depend on your published work. The mental model you build here applies to every registry — GHCR, Docker Hub, npm, and PyPI all follow the same principles.

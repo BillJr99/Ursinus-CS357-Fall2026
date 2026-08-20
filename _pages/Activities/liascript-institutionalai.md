@@ -121,9 +121,9 @@ In this Part you will run a synthetic LMS gradebook export through the same loca
 
 ## 2. From Export to Report
 
-**Why this matters:** This is the smallest real integration that exists in the wild: export from the system of record, process with a local model, and produce a human-reviewable report. It builds directly on your [Lab: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline) — same model, same discipline (temperature 0, structured output, evidence required), new data source. Everything here uses the synthetic dataset `synthetic_gradebook.csv`; **no real student data is ever used in this course, and none may be**.
+**Why this matters:** This is the smallest real integration that exists in the wild: export from the system of record, process with a local model, and produce a human-reviewable report. It builds directly on your [Lab: An LLM Rubric-Grading Pipeline](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RubricPipeline) — same model, same discipline (temperature 0, structured output, evidence required), new data source. Everything here uses the synthetic dataset `synthetic_gradebook.csv`; **no real student data is ever used in this course, and none may be**.
 
-The code below plays both roles: first it stands in for the LMS by writing a small synthetic gradebook export (the same format as the course dataset [/files/data/synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv), which you can substitute), then it aggregates each row into a *minimized* feature summary — no names, no demographics — and asks the local model for a one-line, evidence-cited progress note per student, exactly as the rubric pipeline demanded evidence per criterion.
+The code below plays both roles: first it stands in for the LMS by writing a small synthetic gradebook export (the same format as the course dataset [/files/data/synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv), which you can substitute), then it aggregates each row into a *minimized* feature summary — no names, no demographics — and asks the local model for a one-line, evidence-cited progress note per student, exactly as the rubric pipeline demanded evidence per criterion.
 
 ## Code Cell
 
@@ -203,7 +203,7 @@ for feat in features:
 
    > *Hint: A new box appears outside the campus boundary: the vendor's servers, retention policies, and staff. The question is whether the vendor qualifies as a "school official" with a "legitimate educational interest" under a contract that limits use and redistribution — the standard FERPA mechanism for outsourcing. Without it, transmitting identifiable records is a disclosure.*
 
-6. Stage 4 re-checks the model's citations against the source record — the same hallucinated-evidence audit you built in the [rubric pipeline lab](/Assignments/RubricPipeline). Why does this verification become *more* important, not less, as the integration gets closer to institutional systems?
+6. Stage 4 re-checks the model's citations against the source record — the same hallucinated-evidence audit you built in the [rubric pipeline lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RubricPipeline). Why does this verification become *more* important, not less, as the integration gets closer to institutional systems?
 
    > *Hint: On your laptop, a hallucinated quote wastes your time. In a report that an advisor, registrar, or academic-standards committee treats as coming "from the system," a fabricated claim inherits institutional authority. The closer to the system of record, the more a false statement costs and the less likely a busy reader is to re-check it.*
 
@@ -286,7 +286,7 @@ Under FERPA, the cleanest reason a *local* model changes the compliance analysis
 
 3. *Run the worked integration against the full synthetic dataset.*
 
-   - *What to do:* Replace the inline `EXPORT` string in the code cell with the full course dataset [/files/data/synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv) (40 synthetic students), run the pipeline, and report: how many notes were produced, how many failed JSON parsing or evidence verification, and one note you would *not* forward to a human reader as-is.
+   - *What to do:* Replace the inline `EXPORT` string in the code cell with the full course dataset [/files/data/synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv) (40 synthetic students), run the pipeline, and report: how many notes were produced, how many failed JSON parsing or evidence verification, and one note you would *not* forward to a human reader as-is.
    - *Starter hint:* Load the file with `open(...)` in place of `io.StringIO(EXPORT)`. Handle blank score cells (they are realistic missingness, not errors) — the `summarize` function already skips them; confirm it.
    - *You've succeeded when:* You report counts (produced / parse-failed / verification-failed) like the rubric lab's CSV report did, plus a two-sentence quality judgment of the weakest note.
 

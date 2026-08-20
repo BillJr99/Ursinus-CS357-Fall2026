@@ -8,6 +8,16 @@ link: https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap
 
 # Why Doesn't AI Give the Same Answer Twice? Deterministic and Probabilistic Computing
 
+### Before You Start
+
+**What you need:** Nothing installed — this one is discussion and paper first. Python only if you run the optional demo.
+
+**What you will have at the end:** a working rule for telling deterministic systems from probabilistic ones, and why that changes how you test them.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## Overview and Roles
 
 Most software you have used behaves predictably: the same input always produces the same output. AI systems built on large language models deliberately do not. Understanding *why* — and what that means for how you interpret and rely on AI outputs — is one of the most practically important ideas in this course.
