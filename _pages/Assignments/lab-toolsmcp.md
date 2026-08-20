@@ -117,6 +117,217 @@ Consume MCP instead of authoring it. Point your agent (or a framework client) at
 
 ---
 
+## Build and Call a Tool: The Full Walkthrough
+
+In this section you define three tools using the OpenAI function-calling JSON schema format (the standard way to describe a tool's name, purpose, and parameters as a JSON object) and call them from your local model via Ollama's `/api/chat` endpoint. Run all code locally — no external API keys or cloud services needed.
+
+---
+
+### Tool Definitions
+
+Each tool is a JSON object with a `name`, a `description` (the only thing the model reads to decide whether to use this tool), and a `parameters` block written in JSON Schema:
+
+```python
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "calculator",
+            "description": (
+                "Evaluates a simple arithmetic expression and returns the numeric result. "
+                "Use this whenever the user asks for a calculation, not for counting words."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "expression": {
+                        "type": "string",
+                        "description": (
+                            "A valid Python arithmetic expression using only numbers and "
+                            "operators +, -, *, /, **, and parentheses. "
+                            "Example: '(3 + 4) * 2' or '2 ** 10'."
+                        )
+                    }
+                },
+                "required": ["expression"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_time",
+            "description": (
+                "Returns the current local date and time as a string. "
+                "Call this whenever the user asks what time or date it is."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "word_count",
+            "description": (
+                "Counts the number of words in the provided text and returns the integer count. "
+                "Use this when the user asks how many words are in a passage or sentence."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string",
+                        "description": "The text whose words should be counted."
+                    }
+                },
+                "required": ["text"]
+            }
+        }
+    },
+]
+```
+
+---
+
+### Tool Implementations and the Executor Pattern
+
+The executor pattern keeps a **registry** (a plain Python dictionary mapping tool names to their implementations). Your agent loop never calls a tool directly from the model's request; it looks up the name in the registry first. This is the security boundary: only tools you explicitly register can ever run. Notice that the `calculator` function uses Python's `ast` module (a library for safely parsing code into a tree of operations) rather than `eval()` — see the note after the code block for why this matters.
+
+```python
+import ast
+import operator
+import datetime
+
+# Safe arithmetic evaluator — no eval() of arbitrary code
+_SAFE_OPS = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.truediv,
+    ast.Pow: operator.pow,
+    ast.USub: operator.neg,
+}
+
+def _safe_eval(node):
+    if isinstance(node, ast.Constant):
+        return node.value
+    if isinstance(node, ast.BinOp):
+        return _SAFE_OPS[type(node.op)](_safe_eval(node.left), _safe_eval(node.right))
+    if isinstance(node, ast.UnaryOp):
+        return _SAFE_OPS[type(node.op)](_safe_eval(node.operand))
+    raise ValueError(f"Unsupported node type: {type(node)}")
+
+def calculator(expression: str) -> str:
+    try:
+        tree = ast.parse(expression, mode="eval")
+        result = _safe_eval(tree.body)
+        return str(result)
+    except Exception as e:
+        return f"error: {e}"
+
+def get_current_time() -> str:
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def word_count(text: str) -> str:
+    return str(len(text.split()))
+
+REGISTRY = {
+    "calculator": calculator,
+    "get_current_time": get_current_time,
+    "word_count": word_count,
+}
+```
+
+Note that `calculator` uses Python's `ast` module to parse the expression rather than calling `eval()`. This is intentional: `eval()` on a model-supplied string is an arbitrary code execution vulnerability. The `_safe_eval` function only handles numeric literals and the four arithmetic operators, so the model cannot inject `import os; os.system(...)` or any other dangerous expression.
+
+---
+
+### The Agent Loop
+
+```python
+import json
+import requests
+
+def agent(question: str, max_steps: int = 5) -> str:
+    msgs = [{"role": "user", "content": question}]
+
+    for step in range(max_steps):
+        try:
+            response = requests.post(
+                "http://localhost:11434/api/chat",
+                json={
+                    "model": "llama3.2",
+                    "stream": False,
+                    "tools": TOOLS,
+                    "options": {"temperature": 0.0, "seed": 42},
+                    "messages": msgs,
+                },
+                timeout=120,
+            ).json()["message"]
+        except Exception as e:
+            import traceback; traceback.print_exc()
+            return f"request error: {e}"
+
+        msgs.append(response)
+        calls = response.get("tool_calls") or []
+
+        if not calls:
+            # Model chose to answer directly — no tool needed
+            return response.get("content", "")
+
+        for call in calls:
+            name = call["function"]["name"]
+            args = call["function"].get("arguments") or {}
+            if name in REGISTRY:
+                result = REGISTRY[name](**args)
+            else:
+                result = f"unknown tool: {name}"
+            print(f"[tool] {name}({args}) -> {result}")
+            # Tool result goes back as a 'tool' role message
+            msgs.append({"role": "tool", "content": result})
+
+    return "step budget exceeded"
+
+# Test all three tools
+print(agent("What is (144 / 12) ** 2?"))
+print(agent("What time is it right now?"))
+print(agent("How many words are in the sentence: 'The quick brown fox jumps over the lazy dog'?"))
+```
+
+---
+
+### Critical Thinking Questions
+
+7. The model decides whether to call a tool based on the tool's **description**, not its name. Change the `calculator` tool's description to `"counts the words in text"` and re-run the word-count question. What does the model do? What does this tell you about where the real "logic" of tool selection lives?
+
+   > *Hint: The model never sees your Python function bodies — it only sees the JSON schema. Swapping the description effectively swaps the tool's identity from the model's perspective. Run `agent("How many words are in 'hello world'?")` with the swapped description and observe which tool fires.*
+
+When the agent loop appends a tool result back into the conversation, what `role` value must that message use?
+
+[( )] `"user"`
+[( )] `"assistant"`
+[(X)] `"tool"`
+[( )] `"system"`
+
+> *Hint: Look at the line `msgs.append({"role": "tool", "content": result})` in the agent loop. The OpenAI-compatible API (which Ollama follows) requires the role `"tool"` so the model knows this message is a function result rather than a user turn or its own prior response.*
+
+8. Consider a fourth tool: `read_file(path: str) -> str` that opens a file path supplied by the user and returns its contents. What security risk does this create, and what would you do to mitigate it?
+
+   > *Hint: Think about what happens when the model (prompted by a malicious user) supplies the path `/etc/passwd`, `~/.ssh/id_rsa`, or `../../config/secrets.json`. The mitigation involves restricting which directories the tool is allowed to read from — for example, only allowing paths that begin with an approved prefix such as `/home/user/documents/`. You might also check that the resolved absolute path (after following symlinks with `os.path.realpath`) still begins with that prefix, to prevent path traversal attacks.*
+
+> **⚠️ Common Misconception:** Students often assume `tool_choice="auto"` means the model will always call a tool. In reality, it means the model *may* call a tool if it decides one is needed — but it can also answer from memory without calling any tool at all. If you need a specific tool to be invoked for every request (for safety, auditing, or consistency), set `tool_choice={"type": "function", "function": {"name": "tool_name"}}` to force it. The difference matters for tools like `log_query` that you want called every time regardless of the model's judgment.
+
+---
+
+---
+
+**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+
+
 ## Low-Code Route (equal credit)
 
 You may complete this lab **without writing tool-calling code**, by wiring the same three capabilities in Open WebUI or Langflow. The learning goal is identical — understand what a tool call is, when the model chooses one, and how it fails — and so is the credit.
