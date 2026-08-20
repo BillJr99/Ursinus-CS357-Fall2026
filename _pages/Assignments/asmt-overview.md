@@ -7,14 +7,13 @@ info:
   coursenum: CS357
   purpose: "To get your local AI stack working before the labs depend on it, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
   tilt:
-    task: "Install and verify a working local AI environment, write a short baseline reflection on AI agency and trust, and co-author a team charter with your semester group."
-    criteria: "Assessed on a complete setup-verification transcript and a specific, personal reflection in equal measure, plus an actionable team charter; see the rubric below for the full breakdown."
+    task: "Install and verify a working local AI environment and write a short baseline reflection on AI agency and trust."
+    criteria: "Assessed on a complete setup-verification transcript and a specific, personal reflection in equal measure; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
     - To demonstrate baseline command-line, git, and Python-environment fluency by navigating a shell, cloning and committing to a repository, and creating a reproducible environment with uv
     - To articulate personal baseline beliefs about AI agency, trust, and delegation with specific examples
-    - To co-author a team charter with concrete role rotation, communication, and conflict-resolution procedures
   rubric:
     - weight: 40
       description: Environment Setup and Verification
@@ -29,11 +28,11 @@ info:
       progressing: The reflection addresses all four sections with specific examples, but the connection between the two delegation examples is not analyzed or the "What I Want to Build" section is vague
       proficient: All four sections are present and addressed with concrete specifics — a named AI tool and a described moment of surprise in "My AI Experience," a personal definition of agency distinct from any course reading in "What Agent Means to Me," a pair of delegation examples where the contrast between the two is explicitly analyzed, and a "What I Want to Build" description naming what the system would do, who would use it, and what working would look like
     - weight: 20
-      description: Team Charter and Submission
+      description: Submission
       preemerging: An incomplete submission is provided
-      beginning: The submission is provided but the team charter is missing or does not address role rotation
-      progressing: The submission is complete with a charter that addresses roles and communication, with a minor omission such as a missing disagreement procedure or undefined response time expectation
-      proficient: The charter addresses all six rows of the Charter Template — role rotation schedule with named roles and rotation timing, a primary communication channel with a specific response-time expectation, a meeting cadence with a named day and time, a disagreement procedure naming who has the deciding vote or how consensus is reached, a missed-deadline procedure with a stated timeline, and a definition of done naming who checks it — and all team members' typed names appear at the bottom
+      beginning: The submission is provided but is disorganized — the transcript and the reflection are hard to tell apart, or one is missing
+      progressing: All required components are present in a single file, with a minor omission such as an unlabeled transcript section or missing OS information
+      proficient: A single well-organized PDF or Markdown file with each component clearly labeled — the four-step setup transcript with version and OS details, the Part 1.5 command-line and git checkpoint, and the four-section reflection — with the collaboration, AI-disclosure, and time questions answered at the end
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
@@ -50,7 +49,7 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack, write a short baseline reflection on your experiences with AI, and co-author a team charter with your semester group. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, to capture a snapshot of your thinking that you will revisit at the end of the semester, and to launch your team before the first real project sprint. There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
+In this warmup you will install your local AI stack and write a short baseline reflection on your experiences with AI. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you will revisit at the end of the semester. (Your team charter is **not** part of this assignment — it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).) There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
 
 ---
 
@@ -60,9 +59,8 @@ A strong submission has three qualities:
 
 1. **The transcript is complete and honest.** It shows the actual terminal output — version numbers, model names, the API response — copied faithfully. If something broke, the error is quoted verbatim and the student explains what they tried. Fabricated or paraphrased transcripts earn no credit.
 2. **The reflection is personal and specific.** It names a real AI tool the student used, describes a real moment of surprise or confusion, and takes a genuine position on agency and trust — not a dictionary definition, not a summary of the course syllabus. A strong reflection reads like a journal entry from someone thinking carefully, not like an answer written to please a grader.
-3. **The charter is actionable.** It names specific meeting times, specific communication channels, and a concrete procedure for the team to follow when a member misses a deadline. Vague statements like "we will communicate openly" do not count.
 
-A weak submission has a transcript that says "it worked" without showing output, a reflection that restates prompts without answering them, and a charter that could belong to any group of three strangers.
+A weak submission has a transcript that says "it worked" without showing output and a reflection that restates prompts without answering them.
 
 ---
 
@@ -163,32 +161,12 @@ Describe one thing you hope to be able to build or do by the end of the semester
 
 ---
 
-## Part 3: Team Charter
-
-> **Note:** the charter you write here is the **pre-draft**. Your team will expand it into the full, signed semester charter in the dedicated [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) — bring this draft with you.
-
-With your assigned team, co-author a one-page charter. All members must contribute. Typed names at the bottom serve as signatures.
-
-**Charter Template:**
-
-| Charter Section | Your Team's Answer |
-|---|---|
-| **Role rotation schedule** | Which POGIL role does each member hold in Sprint 1? How and when do roles rotate? |
-| **Primary communication channel** | Where (Slack, Discord, text, email) and when (response time expectation)? |
-| **Meeting cadence** | When does the team meet outside class? What is the minimum preparation expected before each meeting? |
-| **Disagreement procedure** | When the team disagrees on a technical decision, what is the process for resolving it? Who has the deciding vote, or how do you reach consensus? |
-| **Missed deadline procedure** | If a member cannot meet a deadline, what do they do, and by when? |
-| **Definition of "done"** | What does it mean for a sprint task to be complete? Who checks? |
-
----
-
 ## Deliverables
 
 Submit a single PDF or markdown file containing:
 - Your tool setup transcript (all four steps plus version and OS info)
 - Your command-line and git checkpoint transcript (Part 1.5: navigation, git commit/push, uv environment)
 - Your baseline reflection (one page, four sections)
-- Your team charter (one per team is fine; include it with each member's individual submission)
 
 ---
 
@@ -202,12 +180,6 @@ A: Slow is okay for a small model on older hardware. An error is okay as long as
 
 **Q: The reflection prompts ask about "agency" and "trust" — do I need to use the textbook definitions?**
 A: No. This is a baseline, not a knowledge test. Write what you actually think before the course shapes your view. The textbook will be there later; this snapshot of your prior thinking is valuable precisely because it is unfiltered.
-
-**Q: Can my team charter be just a paragraph instead of a table?**
-A: Yes, format is flexible. What matters is that every required topic is addressed concretely. A paragraph that says "we will use Discord and meet Sundays at 2pm and rotate roles every two weeks" covers more ground than a table full of vague entries.
-
-**Q: Do all team members submit the same charter, or do we each write our own?**
-A: Submit the same jointly authored charter with each member's individual submission. The charter is a team document; the transcript and reflection are individual.
 
 ---
 
