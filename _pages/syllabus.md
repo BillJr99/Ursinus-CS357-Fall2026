@@ -227,16 +227,14 @@ goals:
 
 grade_breakdown:
 - category: "Labs"
-  weight: "30%"
+  weight: "35%"
 - category: "Written Assignments"
-  weight: "15%"
+  weight: "10%"
 - category: "Responsible AI Capstone"
   weight: "10%"
 - category: "Final Project and Project Thread Milestones"
-  weight: "25%"
+  weight: "35%"
 - category: "Class Activities and Participation"
-  weight: "10%"
-- category: "Reflection Notebook"
   weight: "10%"
 
 letter_grades:
@@ -861,7 +859,7 @@ This semester the section runs as **4 teams of 4 students**, so every team is la
 
 **Teams are formed, not found.** I form project teams from the Team Formation Survey — balancing schedules, work styles, and deadline habits — and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process. The intra-team check-ins are where we keep that charter honest. If your team is struggling, say so early — in the confidential pulse of any check-in or in office hours — and we will work through it together.
 
-**There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, participation, and reflection notebook carry the grade. Our four teams present for about fifteen minutes each during our class meeting; guests attending CS374's Demo Day (same day) are welcome at both.
+**There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, and participation carry the grade. Our four teams present for about fifteen minutes each during our class meeting; guests attending CS374's Demo Day (same day) are welcome at both.
 
 ## How Assignments Are Structured: Purpose, Task, and Criteria
 
@@ -887,7 +885,3 @@ This is a course you do, not one you watch. This component values the daily work
 The first-week onboarding assignments — the **Overview**, the **Warmup**, and the **Team Formation Survey** — are assessed within this Class Activities and Participation category.
 
 Participation takes more than one form on purpose. If the spoken room is hard for you, the written channels — the discussion board, reading responses, and SQR cards — are real ways to earn this component. Being confused is part of learning this material; talk with me early and we will find the path that fits.
-
-## Reflection Notebook (10%)
-
-This course asks not just *how* to build agents but *whether* and *when* we should, and your **[Reflection Notebook](Participation/ReflectionNotebook)** is where you think that through. Keyed to the four Ursinus Open Questions, it collects your responses to the reflection prompt that closes each activity, lab, and Project-Thread milestone. It is reviewed at midterm and at the end of the term; the guide explains what to keep and how it is evaluated.

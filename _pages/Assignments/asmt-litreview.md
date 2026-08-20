@@ -131,7 +131,7 @@ Two ways into the same skill — a search recipe and a reading protocol.
 
 ## Reflection Prompts
 
-Answer individually in your Reflection Notebook, keyed to the Open Questions (Goal 15):
+Answer individually in your submission, keyed to the Open Questions (Goal 15):
 
 - *How can we understand the world?* — Pick the source from another discipline that most changed how you see the problem. What does that discipline accept as evidence that surprised you, and has your idea of what "knowing something" means shifted at all?
 - *What should matter to me?* — The gap your team named is a claim about what deserves work. Whose needs does that gap center, and whose did your sources let you overlook?
