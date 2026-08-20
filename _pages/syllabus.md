@@ -157,50 +157,49 @@ textbooks:
   edition: "Revised Edition"
   isbn: "978-1-250-40485-5"
   link: false
-  isrequired: true 
-  freelyavailable: false
-- title: "AI by Hand"
-  authors: "Tom Yeh"
-  link: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
-  isrequired: true
-  freelyavailable: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
-- title: "Race After Technology: Abolitionist Tools for the New Jim Code"
-  authors: "Ruha Benjamin"
-  isbn: "978-1509526406"
-  link: false
-  isrequired: true
-  freelyavailable: false
-- title: "Weapons of Math Destruction"
-  authors: "Cathy O'Neil"
-  isbn: "978-0553418835"
-  link: false
-  isrequired: true
-  freelyavailable: false
-- title: "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence"
-  authors: "Kate Crawford"
-  isbn: "978-0300264630"
-  link: false
-  isrequired: true
-  freelyavailable: false
-- title: "The Alignment Problem: Machine Learning and Human Values"
-  authors: "Brian Christian"
-  isbn: "978-0393868333"
-  link: false
-  isrequired: true
-  freelyavailable: false
-- title: "The Glass Cage: How Our Computers Are Changing Us"
-  authors: "Nicholas Carr"
-  isbn: "978-0393351243"
-  link: false
   isrequired: true
   freelyavailable: false
 - title: "The Philosophy of Artificial Intelligence"
   authors: "Margaret A. Boden, editor"
   isbn: "978-0198248545"
   link: false
-  isrequired: false 
+  isrequired: true
   freelyavailable: false
-  
+- title: "AI by Hand"
+  authors: "Tom Yeh"
+  link: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
+  isrequired: false
+  freelyavailable: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
+- title: "Race After Technology: Abolitionist Tools for the New Jim Code"
+  authors: "Ruha Benjamin"
+  isbn: "978-1509526406"
+  link: false
+  isrequired: false
+  freelyavailable: false
+- title: "Weapons of Math Destruction"
+  authors: "Cathy O'Neil"
+  isbn: "978-0553418835"
+  link: false
+  isrequired: false
+  freelyavailable: false
+- title: "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence"
+  authors: "Kate Crawford"
+  isbn: "978-0300264630"
+  link: false
+  isrequired: false
+  freelyavailable: false
+- title: "The Alignment Problem: Machine Learning and Human Values"
+  authors: "Brian Christian"
+  isbn: "978-0393868333"
+  link: false
+  isrequired: false
+  freelyavailable: false
+- title: "The Glass Cage: How Our Computers Are Changing Us"
+  authors: "Nicholas Carr"
+  isbn: "978-0393351243"
+  link: false
+  isrequired: false
+  freelyavailable: false
 objectives:
 - objective: "Analyze the ethical implications of AI agents acting on behalf of people, using case studies, governance frameworks, and design justice principles."
 - objective: "Design agentic AI systems, including prompts, retrieval pipelines, tools, and multi-agent orchestrations, that augment human capabilities while adhering to ethical guidelines."
