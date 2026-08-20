@@ -189,6 +189,8 @@ Read the config's `api_base` carefully: the gateway is *itself a container*, so 
 
 ## 5. Frontends and Tools
 
+> **Second half of today's session: build one visually.** Once the stack is up, we move to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas — same concepts, no Python authorship. Part IV of that deck is the hands-on build.
+
 With the gateway answering, frontends attach by URL. Open WebUI:
 
 ```bash
