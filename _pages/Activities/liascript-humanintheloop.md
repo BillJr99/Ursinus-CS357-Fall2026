@@ -200,12 +200,12 @@ Compare two designs for an agent that processes 50 incoming support tickets per 
 
    *Hint: Even a perfectly reliable agent might make different errors in novel situations it has never encountered. What is the minimum checkpoint frequency that should exist regardless of the agent's track record? Is there a category of actions (by stakes or irreversibility) that should always require human review, no matter how well-calibrated the agent is?*
 
-[[MC]]
 An agent is given a task that runs overnight as a batch job: process 1,000 customer records and generate personalized outreach emails. No human is available to review approvals until morning. The most appropriate human-in-the-loop design for this scenario is:
-- ( ) Synchronous HITL: pause the batch job for every high-stakes action and wait for a human response before continuing — the human is not available; the job would simply freeze all night
-- ( ) Disable HITL entirely for batch jobs since no human is available anyway — "no human is available now" is not a reason to abandon oversight; it is a reason to design asynchronous oversight
-- (x) Asynchronous HITL with a pre-approved action policy: define which actions are pre-approved for batch context, escalate exceptions to a human review queue, and do not send any emails until a human clears the queue in the morning
-- ( ) Run the job fully autonomously and review the sent emails after the fact — reviewing after sending is not oversight; it is auditing after irreversible harm may have occurred
+
+[( )] Synchronous HITL: pause the batch job for every high-stakes action and wait for a human response before continuing — the human is not available; the job would simply freeze all night
+[( )] Disable HITL entirely for batch jobs since no human is available anyway — "no human is available now" is not a reason to abandon oversight; it is a reason to design asynchronous oversight
+[(X)] Asynchronous HITL with a pre-approved action policy: define which actions are pre-approved for batch context, escalate exceptions to a human review queue, and do not send any emails until a human clears the queue in the morning
+[( )] Run the job fully autonomously and review the sent emails after the fact — reviewing after sending is not oversight; it is auditing after irreversible harm may have occurred
 
 ---
 

@@ -89,12 +89,12 @@ A new agent with no conversation history is pointed at the funnel. After each re
 
 > **⚠️ Common Misconception:** "Good agents have long context windows now, so this bookkeeping is obsolete." Context length does not survive a *vendor switch*, a *quota reset*, or a *conversation you deleted*. The funnel is not a workaround for small contexts — it is what makes the project independent of any one agent, vendor, or session. It is the same reason teams of humans write documentation even though each human has an excellent memory.
 
-[[MC]]
 The Documentation Authority Rule says that when an agent's remembered context conflicts with the project documentation, the agent must:
-- ( ) Trust its memory if the memory is more recent than the document's last commit
-- (x) Follow the documentation — and if the documentation is incomplete, update the documentation rather than acting from memory
-- ( ) Ask the user to adjudicate every conflict before proceeding
-- ( ) Merge the two by writing its remembered version into the documentation
+
+[( )] Trust its memory if the memory is more recent than the document's last commit
+[(X)] Follow the documentation — and if the documentation is incomplete, update the documentation rather than acting from memory
+[( )] Ask the user to adjudicate every conflict before proceeding
+[( )] Merge the two by writing its remembered version into the documentation
 
 ---
 
@@ -145,12 +145,12 @@ The two documents were written independently — the convergence is the interest
 
 > **⚠️ Common Misconception:** "A charter is just a longer system prompt." A system prompt configures *one agent in one session*. The charter is **agent-independent**: it is read by whichever agent shows up, it is versioned in Git, it survives every session boundary, and — because of the Documentation Authority Rule — it outranks whatever any individual session believes. The system prompt is the *voice*; the charter is the *law*.
 
-[[MC]]
 Why does the case-study charter make Milestone 0 (initialization: docs, scaffolding, inventory — no features) mandatory with a hard stop at its end?
-- ( ) Because feature work is impossible before continuous integration is configured
-- ( ) To give the human time to select which agent vendor to use for the project
-- (x) Because agents are most error-prone when they know least; the gate limits early blast radius and forces the project to become documentable-by-a-fresh-agent before anything irreversible happens
-- ( ) Because Git repositories require an initial commit before branches can be created
+
+[( )] Because feature work is impossible before continuous integration is configured
+[( )] To give the human time to select which agent vendor to use for the project
+[(X)] Because agents are most error-prone when they know least; the gate limits early blast radius and forces the project to become documentable-by-a-fresh-agent before anything irreversible happens
+[( )] Because Git repositories require an initial commit before branches can be created
 
 ---
 
@@ -206,12 +206,12 @@ E. A new agent (different vendor) is started later with the `AGENT_HANDOFF_KICKO
 
 > **⚠️ Common Misconception:** "Handoff notes are for when you switch agents." The case-study rule says *before stopping for any reason* — including finishing normally. That is because you cannot reliably predict which stop is a swap: the session that "completed its task" on Friday becomes a handoff on Monday when the vendor has an outage and a different CLI picks up the work. Every stop is treated as a potential handoff, so no stop is a bad one.
 
-[[MC]]
 Every entry in the case-study `SESSION.md` ends with a "Next Safe Action" because:
-- ( ) LiaScript requires every log entry to end with an action item
-- ( ) It lets the project bill sessions accurately to the correct milestone
-- (x) A brand-new agent with no conversation history needs exactly one trustworthy, concrete first step — and the outgoing session is the only party that can name it
-- ( ) It prevents the session log from growing without bound
+
+[( )] LiaScript requires every log entry to end with an action item
+[( )] It lets the project bill sessions accurately to the correct milestone
+[(X)] A brand-new agent with no conversation history needs exactly one trustworthy, concrete first step — and the outgoing session is the only party that can name it
+[( )] It prevents the session log from growing without bound
 
 ---
 
@@ -253,12 +253,12 @@ Alongside the prompts, the project kept three kinds of **decision record**:
 
    > *Hint: Think in terms of reversibility and blast radius — the same dimensions the confirmation-gate material in the companion activity uses.*
 
-[[MC]]
 The kickoff prompt reframes the first objective ("Your first objective is NOT to <the end goal>...") because:
-- ( ) End goals are secret and should not appear in prompts that may be logged
-- (x) A capable agent given the end goal will pursue it immediately; redirecting the first session toward a reproducible baseline prevents fast, confident progress in an unverified direction
-- ( ) The first session's model is usually too weak to attempt the end goal
-- ( ) Vendors bill discovery sessions at a lower rate than implementation sessions
+
+[( )] End goals are secret and should not appear in prompts that may be logged
+[(X)] A capable agent given the end goal will pursue it immediately; redirecting the first session toward a reproducible baseline prevents fast, confident progress in an unverified direction
+[( )] The first session's model is usually too weak to attempt the end goal
+[( )] Vendors bill discovery sessions at a lower rate than implementation sessions
 
 ---
 
@@ -289,12 +289,12 @@ The safety boundary is the sandbox, not the approval prompt. The *decision* boun
 
    > *Hint: Where does each design place the human's finite attention — on individual commands, or on reviewing outcomes (diffs, logs, session entries)?*
 
-[[MC]]
 In the devbox pattern, agents run with permission prompts disabled. This is acceptable because:
-- ( ) The agents used were verified by their vendors to be incapable of destructive commands
-- ( ) The local model is too small to generate dangerous shell commands
-- (x) The container is disposable, privilege-restricted, and exposes only the mounted repository — so the sandbox is the safety boundary, and Git history plus the charter's prohibitions govern what happens to the one durable surface
-- ( ) Auto-approve flags only apply to read-only commands
+
+[( )] The agents used were verified by their vendors to be incapable of destructive commands
+[( )] The local model is too small to generate dangerous shell commands
+[(X)] The container is disposable, privilege-restricted, and exposes only the mounted repository — so the sandbox is the safety boundary, and Git history plus the charter's prohibitions govern what happens to the one durable surface
+[( )] Auto-approve flags only apply to read-only commands
 
 ---
 

@@ -152,12 +152,12 @@ Vector search fails in predictable ways. Knowing the failure signature helps you
 | Stale index: correct answer exists in the source but is never retrieved | Documents updated or added after the index was last built are invisible to retrieval — the index is a snapshot, not a live view | The correct answer exists in the source database but is never returned even with broad queries | Build an incremental indexing pipeline that detects changes (file modification time, hash comparison, or a change data capture stream from the database) and re-embeds only changed documents |
 | Lost in the middle: the correct chunk is retrieved but the LLM ignores it | The relevant chunk is retrieved and placed in the middle of a long context window; research shows LLMs attend most strongly to the beginning and end of their context | Faithfulness score drops as $k$ increases past 5; manual inspection shows the correct chunk is present in the context but the LLM's answer ignores it | Apply a reranker (e.g., `pip install rerankers`) to place the highest-scoring chunk first in the context; reduce $k$ to 3–5; summarize the context before generation |
 
-[[MC]]
 You are choosing between cosine similarity and L2 distance for a text retrieval system. Your embedding model outputs unit-normalized vectors. Which statement is correct?
-- ( ) L2 distance should be preferred because it accounts for vector magnitude — magnitude carries additional signal about document importance that cosine similarity discards
-- (x) Cosine similarity and L2 distance produce identical rankings when vectors are unit-normalized, so either works; cosine is typically the default for text
-- ( ) L2 distance is always faster to compute than cosine similarity because it avoids the normalization step in the cosine formula
-- ( ) Cosine similarity cannot be used with approximate nearest-neighbor indexes because ANN algorithms like HNSW require a Euclidean distance metric
+
+[( )] L2 distance should be preferred because it accounts for vector magnitude — magnitude carries additional signal about document importance that cosine similarity discards
+[(X)] Cosine similarity and L2 distance produce identical rankings when vectors are unit-normalized, so either works; cosine is typically the default for text
+[( )] L2 distance is always faster to compute than cosine similarity because it avoids the normalization step in the cosine formula
+[( )] Cosine similarity cannot be used with approximate nearest-neighbor indexes because ANN algorithms like HNSW require a Euclidean distance metric
 
 ---
 

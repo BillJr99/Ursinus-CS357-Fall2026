@@ -86,12 +86,12 @@ A developer is working on the RAG lab from earlier in the course. They have accu
 
 > **⚠️ Common Misconception:** "More context is always better — fill the instructions file with everything you know about the project." Context window space is finite and shared with the actual task. An instructions file that lists every class name, every function signature, and the history of every decision crowds out the agent's working space for the current prompt. Effective instructions describe *constraints and invariants* — what the agent must not do, where things are, and what the conventions are — not a narration of the code.
 
-[[MC]]
 A developer always wants their coding agent to use Black for Python formatting, regardless of which project they are working on. Which layer is most appropriate for this instruction?
-- ( ) Project instructions (`AGENTS.md` in the project root) — so it is version-controlled
-- (x) Global instructions (`~/.opencode/instructions.md`) — so it applies to every project automatically
-- ( ) A skill — so it can be invoked by name when formatting is needed
-- ( ) The prompt — paste it at the start of every session
+
+[( )] Project instructions (`AGENTS.md` in the project root) — so it is version-controlled
+[(X)] Global instructions (`~/.opencode/instructions.md`) — so it applies to every project automatically
+[( )] A skill — so it can be invoked by name when formatting is needed
+[( )] The prompt — paste it at the start of every session
 
 ---
 
@@ -164,12 +164,12 @@ Both are served by Ollama at `http://localhost:11434`.
 
 > **⚠️ Common Misconception:** "Project instructions are like a README — describe what the code does." A README is for humans orienting themselves to a project. An instructions file is for constraining agent behavior. The distinction: a README says "this module handles embeddings"; an instructions file says "do not change the embedding model without updating this file." One describes; the other constrains. Descriptions help humans understand; constraints prevent agent errors.
 
-[[MC]]
 Which of the following best belongs in a project instructions file rather than in the source code itself?
-- ( ) The signature of the `search_memory` function
-- ( ) The list of all Python files in the project
-- (x) The invariant "do not modify the Chroma collection schema" and how to run the tests
-- ( ) A copy of the project's git log
+
+[( )] The signature of the `search_memory` function
+[( )] The list of all Python files in the project
+[(X)] The invariant "do not modify the Chroma collection schema" and how to run the tests
+[( )] A copy of the project's git log
 
 ---
 
@@ -238,12 +238,12 @@ Review the most recent diff provided by the user.
 
 > **⚠️ Common Misconception:** "A skill is just a shortcut for typing a long prompt." A skill is a *reusable contract*: it defines what the agent will examine, what it will report, and in what format. Because it is version-controlled and shared with the team, everyone's agent invokes the same workflow. The reproducibility is the value — not just the typing saved.
 
-[[MC]]
 Why is it preferable to install a project-specific plugin in `./opencode.json` rather than the global agent configuration?
-- ( ) The global configuration file has a size limit that project configs do not
-- ( ) Skills defined in the project config run faster than globally installed ones
-- (x) Skills in the project config are only available when working in that project, preventing them from being invoked incorrectly in unrelated projects
-- ( ) The global config does not support the `plugin` field
+
+[( )] The global configuration file has a size limit that project configs do not
+[( )] Skills defined in the project config run faster than globally installed ones
+[(X)] Skills in the project config are only available when working in that project, preventing them from being invoked incorrectly in unrelated projects
+[( )] The global config does not support the `plugin` field
 
 ---
 

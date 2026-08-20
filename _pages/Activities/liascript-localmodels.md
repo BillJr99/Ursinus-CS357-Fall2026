@@ -215,12 +215,12 @@ This is valid JSON conforming to the tool schema. The agent framework can parse,
 
 > **⚠️ Common Misconception:** Many beginners assume that a more capable (larger) general model will automatically be better at function calling than a smaller specialized model. In practice, **a 7B model fine-tuned for function calling (like Hermes-3) reliably outperforms a 70B general model** on structured tool-call tasks. The 70B model is smarter but doesn't reliably produce the right JSON structure. Use the right tool for the job.
 
-[[MC]]
 Q4 quantization of a 7B language model means:
-- (x) Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4–8x with modest quality loss on complex tasks
-- ( ) The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included — "Q4" refers to a training data selection strategy
-- ( ) The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
-- ( ) Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
+
+[(X)] Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4–8x with modest quality loss on complex tasks
+[( )] The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included — "Q4" refers to a training data selection strategy
+[( )] The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
+[( )] Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
 
 With hardware matching and model selection understood, Part III gives you hands-on practice pulling and comparing real models so that your model choice for the final project is grounded in direct observation rather than benchmark numbers alone.
 

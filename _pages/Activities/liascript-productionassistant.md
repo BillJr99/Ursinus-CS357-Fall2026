@@ -95,12 +95,12 @@ For each scenario, decide which of the three files the assistant should be obeyi
 
 > **⚠️ Common Misconception:** "The system prompt is where you make the assistant smart." Nothing in the standing prompt improves the model's intelligence. Every section either *routes* intelligence (read the vault, lead with the outcome) or *bounds* it (gates, escalation). Capability comes from the model and its tools; a production standing prompt is how capability becomes trustworthy.
 
-[[MC]]
 Under the production `AGENTS.md`, when the assistant finds `/wiki/` outdated relative to `/raw/` while answering a question, it should:
-- ( ) Answer from `/raw/` directly, since it is the fresher source
-- ( ) Refuse to answer until the owner reorganizes the vault
-- (x) Update `/wiki/` first when appropriate, then answer grounded in the curated content — so every question asked makes the vault better
-- ( ) Answer from `/wiki/` anyway, since it is the authoritative source
+
+[( )] Answer from `/raw/` directly, since it is the fresher source
+[( )] Refuse to answer until the owner reorganizes the vault
+[(X)] Update `/wiki/` first when appropriate, then answer grounded in the curated content — so every question asked makes the vault better
+[( )] Answer from `/wiki/` anyway, since it is the authoritative source
 
 ---
 
@@ -166,12 +166,12 @@ Classify each action into **Autorun**, **Queue**, or **Forbidden** under the pol
 
 > **⚠️ Common Misconception:** "Approval gates don't scale — you end up approving hundreds of things a day." In the production system the opposite happened, because the *classification* did the scaling: routine actions were deliberately moved into Autorun **with an audit row**, so the queue stayed short enough that each item got real attention. The failure mode to fear is not too many gates — it is gates so numerous and noisy that approval becomes a reflex. (You saw this as *approval fatigue* in the Human-in-the-Loop module.)
 
-[[MC]]
 Under the umbrella rule, the owner says: "I trust you — just handle my inbox this week." The assistant may:
-- ( ) Send routine replies but queue sensitive ones
-- ( ) Send replies but BCC the owner on each
-- (x) Triage, label, and draft replies freely — but every send still queues for its own approval, because blanket consent never satisfies a per-action gate
-- ( ) Nothing, because the instruction is ambiguous
+
+[( )] Send routine replies but queue sensitive ones
+[( )] Send replies but BCC the owner on each
+[(X)] Triage, label, and draft replies freely — but every send still queues for its own approval, because blanket consent never satisfies a per-action gate
+[( )] Nothing, because the instruction is ambiguous
 
 ---
 
@@ -207,12 +207,12 @@ And because an always-on host is sometimes off, the routines carry a **catch-up 
 
    > *Hint: Think about a deadline-radar job missed for three days versus a "log a daily metric snapshot" job missed for three days. Which output is cumulative and which is a view of "now"?*
 
-[[MC]]
 The production system's file-store integration reads *metadata only* in routine digests. The best justification is:
-- ( ) File contents are too large for the model's context window
-- (x) Routine jobs should consume the minimum data needed for their purpose — surfacing that a document changed does not require reading it, and least-privilege limits both privacy exposure and blast radius
-- ( ) The file-store API charges per byte read
-- ( ) Metadata is more accurate than file contents
+
+[( )] File contents are too large for the model's context window
+[(X)] Routine jobs should consume the minimum data needed for their purpose — surfacing that a document changed does not require reading it, and least-privilege limits both privacy exposure and blast radius
+[( )] The file-store API charges per byte read
+[( )] Metadata is more accurate than file contents
 
 ---
 
@@ -259,12 +259,12 @@ An assistant using the harness was asked to "clean up the vault's project pages:
 
    > *Hint: Transcripts are persuasive. If the executor's narration says "I verified all links," what does a verifier reading that narration tend to do — and what does a verifier who can only run the linter itself do?*
 
-[[MC]]
 Under the self-improvement guardrail, the assistant may add a new skill or durable memory only when:
-- ( ) The owner explicitly dictates the exact content to store
-- ( ) The model's confidence in the lesson exceeds a threshold
-- (x) The lesson comes from a run that passed the final reconciliation gate, and it is stored with provenance identifying that run
-- ( ) The same lesson has been observed in at least three sessions
+
+[( )] The owner explicitly dictates the exact content to store
+[( )] The model's confidence in the lesson exceeds a threshold
+[(X)] The lesson comes from a run that passed the final reconciliation gate, and it is stored with provenance identifying that run
+[( )] The same lesson has been observed in at least three sessions
 
 ---
 
@@ -294,12 +294,12 @@ The through-line of the whole case study: intelligence is cheap and replaceable 
 
    > *Hint: A complete, well-organized inventory of a system is exactly what an attacker wants. What turns a treasure map into a harmless index?*
 
-[[MC]]
 The service-ownership table exists primarily to prevent:
-- ( ) The owner from forgetting which cloud vendor hosts the assistant
-- (x) Two assistant instances from silently duplicating or disabling one another when a capability migrates — by recording exactly one current owner and gating every transfer behind a verified cutover
-- ( ) Skills from being installed on more than one instance
-- ( ) The assistant from exceeding its API budget
+
+[( )] The owner from forgetting which cloud vendor hosts the assistant
+[(X)] Two assistant instances from silently duplicating or disabling one another when a capability migrates — by recording exactly one current owner and gating every transfer behind a verified cutover
+[( )] Skills from being installed on more than one instance
+[( )] The assistant from exceeding its API budget
 
 ---
 

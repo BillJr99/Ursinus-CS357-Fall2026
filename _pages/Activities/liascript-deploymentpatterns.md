@@ -159,13 +159,12 @@ def handle_request(session_id, new_user_message, memory_service):
 
 State lives in a vector store or structured memory layer. At each turn, only the most *relevant* prior turns are retrieved and included — not the full history. This keeps the context window bounded regardless of how long the conversation has been running, at the cost of implementation complexity.
 
-[[MC]]
 An agent is deployed as a serverless function that loads a 4 GB model from disk on each invocation. Median response latency is 18 seconds; users complain. The MOST effective fix for cold-start latency is:
 
-- ( ) Increase the function timeout limit from 30 s to 60 s — the model finishes loading before the timeout, so the limit is not what is causing the 18-second delay
-- (x) Use provisioned concurrency (or an always-warm instance) so the model stays loaded in memory between invocations
-- ( ) Reduce the system prompt length by 50% — the 18-second latency is dominated by model weight loading, not by prompt processing time
-- ( ) Switch from batch response to streaming output — streaming reduces time-to-first-token after the model is loaded, but does not affect the loading latency that precedes the first token
+[( )] Increase the function timeout limit from 30 s to 60 s — the model finishes loading before the timeout, so the limit is not what is causing the 18-second delay
+[(X)] Use provisioned concurrency (or an always-warm instance) so the model stays loaded in memory between invocations
+[( )] Reduce the system prompt length by 50% — the 18-second latency is dominated by model weight loading, not by prompt processing time
+[( )] Switch from batch response to streaming output — streaming reduces time-to-first-token after the model is loaded, but does not affect the loading latency that precedes the first token
 
 > **Common Misconception:** Many developers assume that Pattern B (client-sent context) is "simpler and safer" than Pattern A (session database) because there is no server-side state to manage. In reality, Pattern B introduces its own risks: the full conversation history is stored in the client's browser or app, where it can be inspected, modified, or stolen by malicious scripts. A user who modifies their local conversation history before sending it to the server can inject fabricated "prior assistant messages" that manipulate the agent's behavior. Pattern A's centralized database is actually easier to secure than the client's local storage.
 

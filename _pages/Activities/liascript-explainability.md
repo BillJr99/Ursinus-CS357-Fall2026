@@ -99,12 +99,12 @@ The goal is not to make users trust your system more — it is to make them trus
 
 **Fail loudly and usefully.** "Not in my documents" (your RAG Knowledge Base Lab abstention) beats a fluent guess; a good failure message names what was attempted and what the human can do next.
 
-[[MC]]
 An agent drafts emails and a human clicks "approve" before each one is sent. Over months, approvals become automatic (the human stops reading them) and an erroneous email ships. The design lever that most directly targets this failure is:
-- ( ) Replacing the model with a more capable one — model accuracy is not the issue; the failure is that the human stopped engaging, not that the model stopped being right
-- ( ) Removing the human gate entirely since it added no value — this eliminates oversight and makes the system fully autonomous, which does not address the root cause of inattention
-- (x) Redesigning the confirmation to surface the evidence and anomalies that warrant attention, restoring active judgment
-- ( ) Logging the human's click for accountability and compliance — logging creates an audit trail after the fact but does nothing to prevent the next rubber-stamp approval from shipping another error
+
+[( )] Replacing the model with a more capable one — model accuracy is not the issue; the failure is that the human stopped engaging, not that the model stopped being right
+[( )] Removing the human gate entirely since it added no value — this eliminates oversight and makes the system fully autonomous, which does not address the root cause of inattention
+[(X)] Redesigning the confirmation to surface the evidence and anomalies that warrant attention, restoring active judgment
+[( )] Logging the human's click for accountability and compliance — logging creates an audit trail after the fact but does nothing to prevent the next rubber-stamp approval from shipping another error
 
 ---
 

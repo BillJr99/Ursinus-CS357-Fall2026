@@ -135,10 +135,10 @@ These coordination problems are not hypothetical — they motivated the developm
 
 Three agents are collaborating on a report. Agent A finishes writing its section and writes the string `"DONE"` to a shared status file to signal completion. Agent B reads the status file before Agent A writes, sees nothing (or sees the old status), concludes the file is empty, and begins writing its own content — overwriting Agent A's completed section. This scenario is best described as:
 
-- ( ) A deadlock, because both agents are waiting for each other — a deadlock requires both agents to be *blocked waiting*, but here Agent B proceeds immediately; neither agent is stuck waiting for the other
-- (x) A race condition caused by missing synchronization between the read and write operations
-- ( ) A consensus failure, because the agents disagree on the content of the report — consensus failure requires multiple agents to have produced conflicting outputs and be unable to choose; here Agent B simply overwrote Agent A without negotiation
-- ( ) An example of priority inversion, because Agent B executed before Agent A's higher-priority write completed — priority inversion requires a low-priority agent to *hold a resource* that a high-priority agent is waiting for; here no priority ordering or blocking is involved
+[( )] A deadlock, because both agents are waiting for each other — a deadlock requires both agents to be *blocked waiting*, but here Agent B proceeds immediately; neither agent is stuck waiting for the other
+[(X)] A race condition caused by missing synchronization between the read and write operations
+[( )] A consensus failure, because the agents disagree on the content of the report — consensus failure requires multiple agents to have produced conflicting outputs and be unable to choose; here Agent B simply overwrote Agent A without negotiation
+[( )] An example of priority inversion, because Agent B executed before Agent A's higher-priority write completed — priority inversion requires a low-priority agent to *hold a resource* that a high-priority agent is waiting for; here no priority ordering or blocking is involved
 
 ---
 

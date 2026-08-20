@@ -106,11 +106,11 @@ for T in [0.1, 0.5, 1.0, 1.5, 2.0]:
 
    > *Hint: At T=0.1, the scaled logit for Paris is 4.5/0.1 = 45. For banana it is 0.3/0.1 = 3. The difference is 42 log-units — $e^{42}$ is astronomically large compared to $e^3$. At T=2.0, Paris becomes 4.5/2.0 = 2.25, banana becomes 0.3/2.0 = 0.15, a difference of only 2.1 log-units. The ratio $e^{2.1} \approx 8$ is much less extreme.*
 
-2. [[MC]] Entropy measures how unpredictable the distribution is. As temperature increases from 0.1 to 2.0, entropy:
-   - ( ) Decreases, because the distribution becomes more random
-   - (x) Increases, because a flatter distribution is harder to predict
-   - ( ) Stays the same, because the logits are fixed
-   - ( ) Increases then decreases after a peak at T=1.0
+2. Entropy measures how unpredictable the distribution is. As temperature increases from 0.1 to 2.0, entropy:
+   [( )] Decreases, because the distribution becomes more random
+   [(X)] Increases, because a flatter distribution is harder to predict
+   [( )] Stays the same, because the logits are fixed
+   [( )] Increases then decreases after a peak at T=1.0
 
 3. Top-k=3 applied to the 5-token example above keeps only Paris, Lyon, and London (the three highest-probability tokens) and renormalizes. Top-p=0.90 at T=1.0 would keep only Paris (≈0.88 ≥ 0.90, approximately) and stop. But at T=2.0, top-p=0.90 would need to include Paris, Lyon, and London to accumulate at least 0.90 of the total probability mass. Why does the same top-p threshold require more tokens at higher temperature?
 
@@ -196,11 +196,11 @@ for task, prompt in TEST_PROMPTS.items():
 
    > *Hint: In creative writing, any plausible continuation is acceptable — there is no "correct" first line for a science fiction novel. In Python code, a single misplaced character (a wrong parenthesis, a misspelled keyword, an incorrect indentation level) causes a syntax error and the code fails entirely. High temperature makes rare characters more likely at every step, which is fine for prose but catastrophic for code that must exactly match a grammar.*
 
-7. [[MC]] A developer wants their customer service chatbot to give exactly the same answer to the same question every time. They should set temperature=0 and top_k=1.
-   - (x) True — T=0 and top_k=1 both force greedy decoding, giving deterministic outputs on most hardware
-   - ( ) False — there is no way to make an LLM deterministic
-   - ( ) True, but only top_k=1 is needed; temperature has no additional effect
-   - ( ) False — even at T=0, the model might generate different outputs due to random seeding
+7. A developer wants their customer service chatbot to give exactly the same answer to the same question every time. They should set temperature=0 and top_k=1.
+   [(X)] True — T=0 and top_k=1 both force greedy decoding, giving deterministic outputs on most hardware
+   [( )] False — there is no way to make an LLM deterministic
+   [( )] True, but only top_k=1 is needed; temperature has no additional effect
+   [( )] False — even at T=0, the model might generate different outputs due to random seeding
 
    > **⚠️ Common Misconception:** "Lower temperature = better answers." This is not true as a general rule. For creative tasks, low temperature produces repetitive, generic outputs — the model keeps generating the most statistically common continuation, which tends to be bland. For factual tasks, low temperature reduces hallucination risk but can also prevent the model from adapting its phrasing to the user's question. Temperature is a tool you choose to match the task; there is no universally correct setting. The question is always: *how much variation is acceptable, and how much randomness does the task benefit from?*
 
@@ -236,11 +236,11 @@ Now that you have empirical data, use it to build a principled parameter guide. 
 
     > *Hint: (1) Repetition loops: at T=0 without a repetition penalty, the model can get stuck generating the same token forever because the highest-probability token never changes. (2) Failure to rephrase: if the exact highest-probability phrasing is ambiguous or does not match the user's context, the model cannot adapt — it always produces the same phrasing. A small temperature allows the model to occasionally deviate from the single most likely token and avoid both of these traps.*
 
-11. [[MC]] You are running a Q&A system over a medical reference database. The system retrieves relevant passages (RAG) and asks the model to answer based only on those passages. For the generation step, you should:
-    - ( ) Use high temperature (T=1.5) to ensure creative, comprehensive answers
-    - (x) Use low temperature (T=0.1–0.3) and low top_p to keep the answer close to the retrieved evidence
-    - ( ) Use top_k=1 to guarantee the model only repeats the retrieved text verbatim
-    - ( ) Temperature does not matter when using RAG, since the retrieved context constrains the answer
+11. You are running a Q&A system over a medical reference database. The system retrieves relevant passages (RAG) and asks the model to answer based only on those passages. For the generation step, you should:
+   [( )] Use high temperature (T=1.5) to ensure creative, comprehensive answers
+   [(X)] Use low temperature (T=0.1–0.3) and low top_p to keep the answer close to the retrieved evidence
+   [( )] Use top_k=1 to guarantee the model only repeats the retrieved text verbatim
+   [( )] Temperature does not matter when using RAG, since the retrieved context constrains the answer
 
 ---
 

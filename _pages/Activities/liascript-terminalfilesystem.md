@@ -162,12 +162,12 @@ The table below maps the same physical directories to what each agent sees insid
 
    *Hint: If the logs record every file the agent read, every tool it called, and every output it produced, what could those records reveal about whether the agent was behaving normally or had been manipulated by a prompt injection attack?*
 
-[[MC]]
 An agent's **identity directory** is designed to:
-- ( ) Give the agent access to the entire user home directory for maximum flexibility — mounting `/home/user` gives each agent a consistent, full-featured environment to work in
-- ( ) Store the agent's model weights and embedding indices — keeping model artifacts in the identity directory ensures the agent always uses the correct model version
-- (x) Provide each agent with an isolated space for its own config, memory, logs, and workspace so agents cannot accidentally access each other's state
-- ( ) Replace Docker isolation as a lighter-weight alternative — identity directories provide the same filesystem isolation as Docker without the container overhead
+
+[( )] Give the agent access to the entire user home directory for maximum flexibility — mounting `/home/user` gives each agent a consistent, full-featured environment to work in
+[( )] Store the agent's model weights and embedding indices — keeping model artifacts in the identity directory ensures the agent always uses the correct model version
+[(X)] Provide each agent with an isolated space for its own config, memory, logs, and workspace so agents cannot accidentally access each other's state
+[( )] Replace Docker isolation as a lighter-weight alternative — identity directories provide the same filesystem isolation as Docker without the container overhead
 
 ---
 

@@ -130,12 +130,12 @@ prompt = (f"You are a careful research assistant. {context}"
 
    > *Hint: Workers are doing factual summarization — low temperature reduces embellishment. The merge is doing editorial writing — a slightly higher temperature can produce smoother connective prose. The opposite argument: the merge must not invent topics, so maybe *it* is the call to pin down.*
 
-[[MC]]
 The primary reason each worker process keeps its own small context (rather than sharing one big conversation) is:
-- ( ) Small contexts make the GPU run at a lower temperature
-- (x) Each model call stays focused on exactly one topic, preventing cross-topic contamination and attention dilution
-- ( ) Ollama forbids more than one topic per request
-- ( ) Python's `requests` library cannot send prompts longer than one topic
+
+[( )] Small contexts make the GPU run at a lower temperature
+[(X)] Each model call stays focused on exactly one topic, preventing cross-topic contamination and attention dilution
+[( )] Ollama forbids more than one topic per request
+[( )] Python's `requests` library cannot send prompts longer than one topic
 
 ---
 
@@ -192,12 +192,12 @@ print(r.json()["response"])
 
 > **⚠️ Common Misconception:** Students often assume that running three workers in parallel means the model generates three answers three times faster. On a single local GPU (or CPU), Ollama largely *serializes or shares* the underlying computation — parallel workers overlap network waits, search calls, and file I/O, but the token generation itself competes for the same hardware. Fan-out buys you *pipeline* concurrency and *isolation*, not free inference speedup. Measure it (Exercise 3) rather than assuming it.
 
-[[MC]]
 After the fan-out stage completes, the merge step's prompt contains:
-- ( ) The raw SearXNG snippets for every topic
-- ( ) The full conversation history of each worker, including its system prompt
-- (x) Only the finished per-topic summaries, concatenated with separators
-- ( ) Nothing — the merge step reads `topics.txt` directly and re-researches each topic
+
+[( )] The raw SearXNG snippets for every topic
+[( )] The full conversation history of each worker, including its system prompt
+[(X)] Only the finished per-topic summaries, concatenated with separators
+[( )] Nothing — the merge step reads `topics.txt` directly and re-researches each topic
 
 ---
 

@@ -180,12 +180,12 @@ print(agent("How many days until the last day of classes, December 7, 2026?"))
 
 > **⚠️ Common Misconception:** Many beginners assume the language model "executes" the tool itself — that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource — all of that access is mediated by your code. This is where governance lives.
 
-[[MC]]
 In native function calling, the component that actually executes the function is:
-- ( ) The language model, inside its forward pass
-- ( ) The Ollama server, automatically
-- (x) Your program, after reading the model's structured request
-- ( ) The vector database
+
+[( )] The language model, inside its forward pass
+[( )] The Ollama server, automatically
+[(X)] Your program, after reading the model's structured request
+[( )] The vector database
 
 ---
 
@@ -277,12 +277,12 @@ Two facts fall out of this ledger. First, the **two tool schemas cost ~150 token
 
    > *Hint: More input tokens means more to bill for and more to prefill. What happens to per-turn cost, and to time-to-first-token, as the prompt grows?*
 
-[[MC]]
 You offer an agent 12 tools but a given conversation only calls 1 of them. What is the token cost of the other 11 tool schemas?
-- ( ) Zero — schemas only cost tokens when their tool is actually called
-- ( ) They cost tokens once, on the first turn only
-- (x) They cost tokens on every turn of the conversation, because all offered schemas sit in the prompt whether or not they are called
-- ( ) They are stored on the server and never count against the context window
+
+[( )] Zero — schemas only cost tokens when their tool is actually called
+[( )] They cost tokens once, on the first turn only
+[(X)] They cost tokens on every turn of the conversation, because all offered schemas sit in the prompt whether or not they are called
+[( )] They are stored on the server and never count against the context window
 
 ## Model 4: Fewer Tools, Cleaner Context — and Subagents
 
@@ -302,12 +302,12 @@ Two practices follow directly from the ledger.
 
    > *Hint: Think about what stays in history when you do the work inline — the schemas, every tool request, every raw result. What comes back from the subagent instead?*
 
-[[MC]]
 Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selection accuracy?
-- ( ) Fewer tools make each schema description longer automatically
-- (x) A shorter, less redundant menu gives the model fewer wrong or near-duplicate options to confuse, so it more reliably picks and fills the right one
-- ( ) The model can only read the first tool in any list
-- ( ) Fewer tools disable the context window limit
+
+[( )] Fewer tools make each schema description longer automatically
+[(X)] A shorter, less redundant menu gives the model fewer wrong or near-duplicate options to confuse, so it more reliably picks and fills the right one
+[( )] The model can only read the first tool in any list
+[( )] Fewer tools disable the context window limit
 
 > **⚠️ Common Misconception:** It feels safe — even helpful — to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts — not to hand one agent a giant toolbox and a bloated prompt.
 
@@ -506,12 +506,12 @@ print(agent("How many words are in the sentence: 'The quick brown fox jumps over
 
    > *Hint: The model never sees your Python function bodies — it only sees the JSON schema. Swapping the description effectively swaps the tool's identity from the model's perspective. Run `agent("How many words are in 'hello world'?")` with the swapped description and observe which tool fires.*
 
-[[MC]]
 When the agent loop appends a tool result back into the conversation, what `role` value must that message use?
-- ( ) `"user"`
-- ( ) `"assistant"`
-- (x) `"tool"`
-- ( ) `"system"`
+
+[( )] `"user"`
+[( )] `"assistant"`
+[(X)] `"tool"`
+[( )] `"system"`
 
 > *Hint: Look at the line `msgs.append({"role": "tool", "content": result})` in the agent loop. The OpenAI-compatible API (which Ollama follows) requires the role `"tool"` so the model knows this message is a function result rather than a user turn or its own prior response.*
 

@@ -238,12 +238,12 @@ print("new bank representation:", np.round(new_bank, 3))
 
 **Position matters.** Models attend most reliably to the beginning and end of long contexts (the "lost in the middle" effect), which is why we will place an agent's instructions and the current question at the edges of the prompt, with retrieved evidence in between.
 
-[[MC]]
 An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares every token with every other token, the computation per layer grows by approximately a factor of:
-- ( ) 2 — as if attention grew linearly with the number of tokens
-- ( ) 4 — as if only the number of tokens doubled and cost doubled with it
-- (x) 16 — because 8,000² ÷ 2,000² = 64,000,000 ÷ 4,000,000 = 16; the cost is quadratic ($O(n^2)$)
-- ( ) It does not grow; attention is constant-time
+
+[( )] 2 — as if attention grew linearly with the number of tokens
+[( )] 4 — as if only the number of tokens doubled and cost doubled with it
+[(X)] 16 — because 8,000² ÷ 2,000² = 64,000,000 ÷ 4,000,000 = 16; the cost is quadratic ($O(n^2)$)
+[( )] It does not grow; attention is constant-time
 
 > **⚠️ Common Misconception: "More context is always better"**
 >

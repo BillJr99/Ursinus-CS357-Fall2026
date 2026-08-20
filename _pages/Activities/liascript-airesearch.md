@@ -185,12 +185,12 @@ print("\nFOLLOW-UP QUESTIONS:\n", chat(followup_prompt))
 
 > **⚠️ Core Rule:** Never use an AI-generated citation directly. Always verify it in a bibliographic database (Google Scholar, Semantic Scholar, ACM DL, IEEE Xplore) before including it in any written work. The one exception: if you pasted the complete paper text in and the model cites from that text with a page or section reference you can manually verify.
 
-[[MC]]
 Which of the following is the safest use of an AI assistant in academic research?
-- ( ) Asking the AI to list ten papers on a topic and citing them directly
-- ( ) Asking the AI whether a specific DOI is valid
-- (x) Pasting a real abstract and asking the AI to summarize its key contributions
-- ( ) Asking the AI for the publication year of a specific paper
+
+[( )] Asking the AI to list ten papers on a topic and citing them directly
+[( )] Asking the AI whether a specific DOI is valid
+[(X)] Pasting a real abstract and asking the AI to summarize its key contributions
+[( )] Asking the AI for the publication year of a specific paper
 
 ---
 

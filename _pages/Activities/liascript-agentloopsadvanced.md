@@ -178,12 +178,12 @@ Production systems typically combine all three: an explicit criterion when possi
 
 ## Multiple Choice Checkpoint
 
-[[MC]]
 A ReAct agent is on step 18 of a task. Its context window shows 28,000 of 32,000 tokens used. The agent decides to call a tool that typically returns a 6,000-token observation. What is the correct action before making this tool call?
-- ( ) Make the tool call and let the API truncate the response automatically
-- ( ) Immediately terminate the task and return the partial result
-- (x) Summarize or compress earlier context to free token budget before making the tool call
-- ( ) Switch to Tree-of-Thought because it uses fewer tokens
+
+[( )] Make the tool call and let the API truncate the response automatically
+[( )] Immediately terminate the task and return the partial result
+[(X)] Summarize or compress earlier context to free token budget before making the tool call
+[( )] Switch to Tree-of-Thought because it uses fewer tokens
 
 ---
 

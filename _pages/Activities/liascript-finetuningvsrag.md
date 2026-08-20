@@ -160,12 +160,12 @@ At rank $r = 8$ for a 7B model, LoRA trains roughly 4–8 million parameters ins
 
 **Real cost example:** Fine-tuning `llama3.1:8b` with QLoRA on 800 JSON-formatting examples using a rented Lambda Labs A100 instance costs approximately $1.60 (0.8 hours × $2/hour). The resulting adapter file (the A and B matrices) is roughly 40 MB, compared to the 16 GB base model.
 
-[[MC]]
 A team wants to fine-tune a 7B model to always respond in a structured JSON format for a data extraction task. They have 800 labeled examples and a single A100 GPU (40 GB). Which approach is most appropriate?
-- ( ) Full fine-tuning — update all 7B parameters — because format changes require updating every layer of the model to take effect consistently
-- (x) LoRA or QLoRA — freeze the base weights, train small adapter matrices — sufficient for format adaptation at a fraction of the compute cost
-- ( ) RAG — retrieve the JSON schema from a vector database at each call so the model always sees the expected format
-- ( ) Pre-training from scratch on JSON-formatted text corpora, since the base model has no concept of structured output
+
+[( )] Full fine-tuning — update all 7B parameters — because format changes require updating every layer of the model to take effect consistently
+[(X)] LoRA or QLoRA — freeze the base weights, train small adapter matrices — sufficient for format adaptation at a fraction of the compute cost
+[( )] RAG — retrieve the JSON schema from a vector database at each call so the model always sees the expected format
+[( )] Pre-training from scratch on JSON-formatted text corpora, since the base model has no concept of structured output
 
 ---
 

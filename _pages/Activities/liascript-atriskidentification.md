@@ -90,12 +90,12 @@ Two signal families feed the triage stage. **Engagement signals** come from the 
 
    > *Hint: Aggregation limits what the model can leak, misquote, or fixate on, and pre-computing trends in Python keeps arithmetic out of the model's hands. But note the tension you'll test later: the free-text comment is also the most humanly informative signal ("working more shifts lately"). Minimization and context-richness pull in opposite directions; today's pipeline passes the comment through deliberately, as a design decision to examine.*
 
-[[MC]]
 The defensible purpose of an early-alert triage list is to:
-- ( ) Predict each student's final grade as accurately as possible
-- ( ) Replace advisor judgment with a consistent automated score
-- (x) Direct limited human outreach capacity toward students who may benefit from it, with evidence a human can check
-- ( ) Build a permanent record of each student's engagement history
+
+[( )] Predict each student's final grade as accurately as possible
+[( )] Replace advisor judgment with a consistent automated score
+[(X)] Direct limited human outreach capacity toward students who may benefit from it, with evidence a human can check
+[( )] Build a permanent record of each student's engagement history
 
 ---
 
@@ -216,12 +216,12 @@ A run of this pipeline produced (your output will be similar in structure):
 
    > *Hint: The record contains both facts, but placing them in one sentence implies "scores fell because of work." Maybe true — the advisor should explore it, not inherit it. Consider adding: "list co-occurring signals separately; if you suggest a possible connection, label it explicitly as 'possible connection, unverified'."*
 
-[[MC]]
 The prompt includes an `INSUFFICIENT_DATA` tier. Its most important function is to:
-- ( ) Reduce the number of API calls to the local model
-- (x) Give the model a legitimate output for students with missing signals, instead of forcing a confident tier from thin evidence
-- ( ) Ensure every student receives some form of outreach
-- ( ) Penalize students who skipped the survey
+
+[( )] Reduce the number of API calls to the local model
+[(X)] Give the model a legitimate output for students with missing signals, instead of forcing a confident tier from thin evidence
+[( )] Ensure every student receives some form of outreach
+[( )] Penalize students who skipped the survey
 
 > **⚠️ Common Misconception:** Because the output is JSON with cited evidence at temperature 0, it *looks* like the deterministic output of an audited algorithm. It is not: it is a language model's judgment call, shaped by patterns in its training text — including cultural patterns about what struggle "sounds like." Two records with identical numbers and differently-phrased comments can receive different tiers. The structure makes the output *checkable*; it does not make it *objective*.
 
@@ -273,12 +273,12 @@ The framework's logic: automation may flow *toward* evidence-gathering and *away
 
     > *Hint: Students — especially those most likely to be flagged. Mechanisms: student membership on the governance committee that approves the definition (fails if tokenized or under-informed); a published definition with a feedback/contest channel (fails if buried or if contesting carries social cost); opt-in/opt-out for survey signals (fails if opting out itself becomes a signal). The explainability lab's contestability requirement is the same principle downstream.*
 
-[[MC]]
 An early-alert system's false negatives are especially dangerous to the institution's understanding of its own system because:
-- ( ) They cost more advisor time than false positives
-- ( ) They cause the model to retrain itself automatically
-- (x) They are invisible in normal operation — no one reviews the students who were never flagged, so the system's misses generate no complaints and no data
-- ( ) They only affect students with complete data
+
+[( )] They cost more advisor time than false positives
+[( )] They cause the model to retrain itself automatically
+[(X)] They are invisible in normal operation — no one reviews the students who were never flagged, so the system's misses generate no complaints and no data
+[( )] They only affect students with complete data
 
 ---
 

@@ -37,6 +37,10 @@ info:
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
+    - rtitle: "Required setup (Route A): Your Course Development Environment - Host Ollama, the Course Container, Git, and GitHub"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
+    - rtitle: "Required setup: Shell Fundamentals for Agent Supervision - the terminal skills every later lab assumes"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
     - rtitle: "Mitchell, Prologue and Chapter 1"
 
 tags:

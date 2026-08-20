@@ -98,11 +98,10 @@ Examples outside AI: Monte Carlo retirement simulations, weather forecast models
 | Run 1 | "The capital of France is Paris." |
 | Run 2 | "The capital of France is Lyon, though Paris serves as the main administrative hub." |
 
-[[MC]]
-- [(X)] Run 2 — it is factually wrong, yet it is presented in the same confident, authoritative prose as the correct answer. A user cannot tell the difference from the output alone.
-- [( )] Run 1 — consistent outputs suggest the model has memorized rather than understood, which is worse than variance.
-- [( )] Both are equally dangerous because any AI output should be distrusted.
-- [( )] Neither — this question is too simple for an LLM to get wrong, so the scenario is unrealistic.
+[(X)] Run 2 — it is factually wrong, yet it is presented in the same confident, authoritative prose as the correct answer. A user cannot tell the difference from the output alone.
+[( )] Run 1 — consistent outputs suggest the model has memorized rather than understood, which is worse than variance.
+[( )] Both are equally dangerous because any AI output should be distrusted.
+[( )] Neither — this question is too simple for an LLM to get wrong, so the scenario is unrealistic.
 
 > In practice, the same kind of confident-sounding error occurs on far less checkable claims — legal citations, medical statistics, historical dates — where most readers cannot spot the mistake.
 
@@ -158,11 +157,10 @@ Is this automation bias, appropriate expert judgment, or something else? What in
 
 **Q6.** Which of the following best explains why automation bias persists even when humans consciously know that a system is fallible?
 
-[[MC]]
-- [(X)] Checking automated outputs requires effortful cognition. The brain conserves effort when it perceives a trusted external source — a process psychologists call "cognitive offloading." This is adaptive in most contexts but becomes dangerous when the trusted source is unreliable.
-- [( )] Humans inherently distrust their own judgment and will always prefer any external signal over their own reasoning.
-- [( )] Automation bias has been largely debunked; modern users who understand AI do not exhibit it.
-- [( )] Trained users never exhibit automation bias — only untrained or non-expert users do.
+[(X)] Checking automated outputs requires effortful cognition. The brain conserves effort when it perceives a trusted external source — a process psychologists call "cognitive offloading." This is adaptive in most contexts but becomes dangerous when the trusted source is unreliable.
+[( )] Humans inherently distrust their own judgment and will always prefer any external signal over their own reasoning.
+[( )] Automation bias has been largely debunked; modern users who understand AI do not exhibit it.
+[( )] Trained users never exhibit automation bias — only untrained or non-expert users do.
 
 ---
 
@@ -229,11 +227,10 @@ When probabilistic AI outputs are treated as authoritative, three factors compou
 
 **Q10.** Which design change most directly reduces automation bias without requiring users to become AI experts?
 
-[[MC]]
-- [(X)] Displaying explicit uncertainty language ("I am not confident about this — please verify"), requiring confirmation before high-stakes outputs are acted upon, and showing alternative responses alongside the primary one — so the user perceives the system as offering options, not delivering verdicts.
-- [( )] Making the AI system fully deterministic, so it always gives the same answer and users know what to expect.
-- [( )] Increasing the AI's accuracy to 99% — at that threshold, automation bias becomes statistically acceptable.
-- [( )] Removing AI from high-stakes domains entirely until the technology is perfect.
+[(X)] Displaying explicit uncertainty language ("I am not confident about this — please verify"), requiring confirmation before high-stakes outputs are acted upon, and showing alternative responses alongside the primary one — so the user perceives the system as offering options, not delivering verdicts.
+[( )] Making the AI system fully deterministic, so it always gives the same answer and users know what to expect.
+[( )] Increasing the AI's accuracy to 99% — at that threshold, automation bias becomes statistically acceptable.
+[( )] Removing AI from high-stakes domains entirely until the technology is perfect.
 
 ---
 

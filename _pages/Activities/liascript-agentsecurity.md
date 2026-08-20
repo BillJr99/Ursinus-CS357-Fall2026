@@ -250,12 +250,12 @@ A good post-mortem documents what happened without blame and focuses on systemic
 - **Corrective Actions**: Implement access controls requiring two-person approval for knowledge base modifications; add a pre-indexing scanner; add output validation; add anomaly detection on response content.
 - **Residual Risk**: Indirect injection through retrieved content cannot be fully eliminated if the agent must read external documents. This residual risk should be documented, accepted explicitly by management, and mitigated by compensating controls (human-in-the-loop for refund actions, rate limiting on refund tool calls).
 
-[[MC]]
 Which of the following best illustrates the "Excessive Agency" risk from the OWASP LLM Top 10?
-- ( ) An attacker injects malicious instructions into a document that the agent reads — this is a classic example of Excessive Agency because documents are an external trust boundary.
-- (x) An agent is granted file-deletion permissions even though its stated task only requires reading files, and a manipulated prompt causes it to delete critical data.
-- ( ) The agent returns sensitive PII that was present in its training data — this illustrates Excessive Agency because the model has retained information it should not have.
-- ( ) A third-party plugin used by the agent contains a backdoor — since plugins extend what the agent can do, a malicious plugin is the primary example of Excessive Agency.
+
+[( )] An attacker injects malicious instructions into a document that the agent reads — this is a classic example of Excessive Agency because documents are an external trust boundary.
+[(X)] An agent is granted file-deletion permissions even though its stated task only requires reading files, and a manipulated prompt causes it to delete critical data.
+[( )] The agent returns sensitive PII that was present in its training data — this illustrates Excessive Agency because the model has retained information it should not have.
+[( )] A third-party plugin used by the agent contains a backdoor — since plugins extend what the agent can do, a malicious plugin is the primary example of Excessive Agency.
 
 The incident simulation illustrated how threat models translate to real response decisions — Part VI asks you to apply that same thinking to your own projects.
 

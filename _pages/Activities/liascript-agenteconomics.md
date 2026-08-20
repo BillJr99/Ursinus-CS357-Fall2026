@@ -164,11 +164,10 @@ These goals conflict. A system optimized purely for engagement may maximize time
 
 A startup claims their new model beats GPT-4 on every published benchmark. The single most important follow-up question before adopting it for a production application is:
 
-[[MC]]
-- ( ) What GPU cluster did they use to train it?
-- ( ) Are the model weights available as open-source?
-- (x) Were the benchmark test sets included in the model's training or fine-tuning data, making benchmark scores potentially inflated beyond genuine capability?
-- ( ) Did the model achieve these scores on a single benchmark run, or were the results averaged across multiple evaluation runs?
+[( )] What GPU cluster did they use to train it?
+[( )] Are the model weights available as open-source?
+[(X)] Were the benchmark test sets included in the model's training or fine-tuning data, making benchmark scores potentially inflated beyond genuine capability?
+[( )] Did the model achieve these scores on a single benchmark run, or were the results averaged across multiple evaluation runs?
 
 ---
 

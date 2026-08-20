@@ -95,12 +95,12 @@ Think of this like testing a bridge: you don't only test it with one car at norm
 | **Format compliance** | "List all deadlines." | The output is a markdown-formatted list with dates included. | Check that at least one line matches the regex `^\s*[-*] .+\d{1,2}/\d{1,2}` (a bullet point followed by a date). |
 | **Hallucination probe** | "What is the extra credit policy?" (policy not in syllabus) | The agent says it cannot find this information in the syllabus — it does NOT invent a policy. | Verify the output contains a hedging phrase like "I don't see" or "not mentioned"; confirm it does NOT assert a specific policy. |
 
-[[MC]]
 Your agent's output is non-deterministic: the same question produces a different answer on every run. The most practical approach to regression testing is:
-- (x) Define semantic properties the output must always satisfy — valid JSON, contains a citation, stays on topic, format compliance — and test those properties rather than comparing exact output strings
-- ( ) Set temperature to 0 and compare exact output strings on each run — temperature 0 produces consistent outputs from the same model version, so exact string comparison is sufficient for regression testing
-- ( ) Test only the tool functions and treat the agent itself as untestable — since the agent's reasoning is non-deterministic, there is no way to define a meaningful pass/fail criterion for agent-level behavior
-- ( ) Avoid testing non-deterministic systems entirely until the technology matures — non-determinism makes testing impossible, and any test that sometimes passes and sometimes fails provides no useful signal
+
+[(X)] Define semantic properties the output must always satisfy — valid JSON, contains a citation, stays on topic, format compliance — and test those properties rather than comparing exact output strings
+[( )] Set temperature to 0 and compare exact output strings on each run — temperature 0 produces consistent outputs from the same model version, so exact string comparison is sufficient for regression testing
+[( )] Test only the tool functions and treat the agent itself as untestable — since the agent's reasoning is non-deterministic, there is no way to define a meaningful pass/fail criterion for agent-level behavior
+[( )] Avoid testing non-deterministic systems entirely until the technology matures — non-determinism makes testing impossible, and any test that sometimes passes and sometimes fails provides no useful signal
 
 ---
 

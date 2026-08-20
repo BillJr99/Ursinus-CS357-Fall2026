@@ -134,12 +134,12 @@ The table below traces the prompt "The sky is" through one full turn of the loop
 
    > *Hint: The next-token distribution depends on the tokens so far. After appending "blue," the input to the tokenizer has changed, so every downstream stage receives different values. Nothing from the previous pass can simply be reused for the new final position (production systems cache parts of it, but a new forward pass still occurs).*
 
-[[MC]]
 In the generation pipeline, the neural network proper consists of which stages?
-- ( ) Tokenizer, softmax, and sampling
-- (x) Embedding lookup, transformer layers, and output layer
-- ( ) Only the transformer layers
-- ( ) The whole pipeline, including the random sampling step
+
+[( )] Tokenizer, softmax, and sampling
+[(X)] Embedding lookup, transformer layers, and output layer
+[( )] Only the transformer layers
+[( )] The whole pipeline, including the random sampling step
 
 > **⚠️ Common Misconception:** Students often believe the tokenizer is part of the neural network, or that it is learned by gradient descent along with the weights. It is not: the tokenizer is a fixed, deterministic program (built once, before training, from corpus statistics) that converts text to integers. If the tokenizer splits "CS357" into strange pieces, no amount of temperature tuning will fix it — the problem is upstream of the network entirely.
 
@@ -210,12 +210,12 @@ So this network maps $(1.0, 2.0) \mapsto 3.25$. Notice that $h_2$ "died" for thi
 
    > *Hint: With zero inputs, all weight terms vanish, leaving only biases: $h_1 = \text{ReLU}(-0.5) = 0$, $h_2 = \text{ReLU}(0.5) = 0.5$, $y = 2.0(0.5) + 0.25 = 1.25$. Without biases, every neuron's decision boundary would be forced through the origin — could the network then represent a function like $y = x_1 + 5$?*
 
-[[MC]]
 In the trace for $\mathbf{x} = (1.0, 2.0)$, hidden neuron $h_2$ output $0.0$ because:
-- ( ) Its incoming weights were zero
-- ( ) The input $x_2$ was too large for the network to represent
-- (x) Its pre-activation ($-0.5$) was negative and ReLU clips negative values to zero
-- ( ) The output weight $v_2$ was too small
+
+[( )] Its incoming weights were zero
+[( )] The input $x_2$ was too large for the network to represent
+[(X)] Its pre-activation ($-0.5$) was negative and ReLU clips negative values to zero
+[( )] The output weight $v_2$ was too small
 
 ---
 
@@ -357,12 +357,12 @@ Using the cosine similarity formula from the tokens-and-embeddings activity, $\c
 
     > *Hint: The Part II forward pass is what happens inside the "transformer layers" and "output layer" boxes (many times over); the Part IV embedding vectors are the output of the "embedding lookup" box, and the hidden activations of Part II are the same kind of object one layer deeper.*
 
-[[MC]]
 Which statement best captures the "bridge" of Part IV?
-- ( ) Embeddings are computed by the softmax stage at generation time
-- ( ) Embeddings are hand-designed lookup tables curated by linguists
-- (x) An embedding table is a layer of learned weights, so an embedding is a learned representation — the same kind of re-description a hidden layer performs
-- ( ) Embeddings are random vectors that change on every forward pass
+
+[( )] Embeddings are computed by the softmax stage at generation time
+[( )] Embeddings are hand-designed lookup tables curated by linguists
+[(X)] An embedding table is a layer of learned weights, so an embedding is a learned representation — the same kind of re-description a hidden layer performs
+[( )] Embeddings are random vectors that change on every forward pass
 
 ---
 

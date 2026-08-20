@@ -270,12 +270,12 @@ python ~/scripts/inject_vault_context.py > /tmp/vault_context.txt
 pi --context /tmp/vault_context.txt
 ```
 
-[[MC]]
 You have 400 notes in your vault. You want an agent to answer a question that may involve any of them. Which approach is most appropriate?
-- ( ) Inject all 400 notes into the system prompt — agents can handle unlimited context
-- ( ) Only use agents that have been specifically trained on your vault's content
-- [(X)] Use a vault index so the agent can identify which subset of notes to read, then inject only those
-- ( ) RAG is the only correct answer for vaults larger than 50 notes; file injection cannot work
+
+[( )] Inject all 400 notes into the system prompt — agents can handle unlimited context
+[( )] Only use agents that have been specifically trained on your vault's content
+[(X)] Use a vault index so the agent can identify which subset of notes to read, then inject only those
+[( )] RAG is the only correct answer for vaults larger than 50 notes; file injection cannot work
 
 > **⚠️ Common Misconception:** "The agent will figure out which notes are relevant if I just give it the vault directory path."
 >
@@ -399,12 +399,12 @@ git push
 
 This strategy is safe for append-only files because both conflicting versions added content; neither deleted or modified existing entries. The merged result contains everything from both sides.
 
-[[MC]]
 An agent finishes a session and wants to update `memories/session-log.md`. Which action is correct under the append-only protocol?
-- ( ) Rewrite the entire file with a fresh, corrected summary of all past sessions
-- ( ) Delete the oldest entries to keep the file under 100 lines
-- [(X)] Add a new section with today's date at the bottom of the file, below all existing content
-- ( ) Create a new file (e.g., `session-log-2026-06-21.md`) for each session to avoid any possibility of conflict
+
+[( )] Rewrite the entire file with a fresh, corrected summary of all past sessions
+[( )] Delete the oldest entries to keep the file under 100 lines
+[(X)] Add a new section with today's date at the bottom of the file, below all existing content
+[( )] Create a new file (e.g., `session-log-2026-06-21.md`) for each session to avoid any possibility of conflict
 
 > **⚠️ Common Misconception:** "Creating a new file per session avoids all conflict issues, so it's safer than appending."
 >

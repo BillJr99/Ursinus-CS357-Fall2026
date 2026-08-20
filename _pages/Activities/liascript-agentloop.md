@@ -131,12 +131,12 @@ Final Answer: Visit the Berman Museum this afternoon.
 
 **Why does writing out thoughts help?** The model's reasoning becomes part of its own context (the text it can see), so each step conditions on an explicit plan rather than an implicit one. The transcript also gives *us* a trace to audit — our first encounter with explainability.
 
-[[MC]]
 In the ReAct pattern, the *Observation* lines are produced by:
-- ( ) The language model, as part of its generated text
-- (x) The surrounding program, which executes the action and inserts the real result
-- ( ) The human user at each step
-- ( ) A second language model acting as a judge
+
+[( )] The language model, as part of its generated text
+[(X)] The surrounding program, which executes the action and inserts the real result
+[( )] The human user at each step
+[( )] A second language model acting as a judge
 
 ---
 

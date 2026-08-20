@@ -115,11 +115,10 @@ AI may invert this pattern. LLMs excel at exactly the non-routine cognitive task
 
 Which of the following best explains the labor-economics effect of AI coding assistants (e.g., GitHub Copilot) that allow developers to complete tasks approximately 55% faster?
 
-[[MC]]
-- ( ) Immediate mass unemployment of software developers, since fewer are needed to produce the same amount of code
-- (x) Increased demand for developers, because software becomes cheaper to produce and therefore more of it gets built — the same productivity-paradox mechanism as the ATM example
-- ( ) Decreased demand for junior developers specifically, since AI handles entry-level tasks, while senior developer roles remain unchanged and grow in number
-- ( ) Developers being fully replaced by the tools within two years as capability continues to scale
+[( )] Immediate mass unemployment of software developers, since fewer are needed to produce the same amount of code
+[(X)] Increased demand for developers, because software becomes cheaper to produce and therefore more of it gets built — the same productivity-paradox mechanism as the ATM example
+[( )] Decreased demand for junior developers specifically, since AI handles entry-level tasks, while senior developer roles remain unchanged and grow in number
+[( )] Developers being fully replaced by the tools within two years as capability continues to scale
 
 ---
 

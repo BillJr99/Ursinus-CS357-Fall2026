@@ -139,11 +139,10 @@ A toy Q-table for a tiny two-state ("question-answering" vs. "question-pending")
 
 **Which of the following correctly lists all four components of a Markov Decision Process?**
 
-[[MC]]
-- ( ) Agent, environment, training data, loss function
-- ( ) Policy, gradient, learning rate, optimizer
-- (x) States, actions, rewards, and policy (or equivalently, a transition function)
-- ( ) Supervised labels, features, model weights, evaluation metric
+[( )] Agent, environment, training data, loss function
+[( )] Policy, gradient, learning rate, optimizer
+[(X)] States, actions, rewards, and policy (or equivalently, a transition function)
+[( )] Supervised labels, features, model weights, evaluation metric
 
 ---
 

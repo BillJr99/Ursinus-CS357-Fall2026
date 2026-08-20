@@ -104,12 +104,12 @@ Five numbered channels, each with different properties:
 
    > *Hint: With no outbound arrow, the AI is advisory: a human reads its CSV and decides. The new arrow makes the AI an actor in the system of record. Recall your measured hallucinated-evidence rate from the rubric pipeline lab — would you accept that error rate writing directly to the gradebook that feeds channel (5)?*
 
-[[MC]]
 Which channel in the Model 1 diagram represents the *highest-stakes write path* — the one where an AI error would be hardest to contain?
-- ( ) Channel (1), the roster sync from SIS to LMS
-- ( ) Channel (4), the CSV export to disk
-- ( ) Channel (2), the LTI score passback
-- (x) Channel (5), final grade posting from LMS into the SIS system of record
+
+[( )] Channel (1), the roster sync from SIS to LMS
+[( )] Channel (4), the CSV export to disk
+[( )] Channel (2), the LTI score passback
+[(X)] Channel (5), final grade posting from LMS into the SIS system of record
 
 > **⚠️ Common Misconception:** Students often assume "integrating AI with the LMS" means the AI model runs inside the LMS. It almost never does. The integration is plumbing: rosters, submissions, and scores flow between systems over the channels above, and the model runs wherever you put it — on your laptop, on a campus server, or (riskiest) at a cloud vendor. Where the model runs determines who can see the data, which is why our course's local-first stack is itself a privacy decision.
 
@@ -207,12 +207,12 @@ for feat in features:
 
    > *Hint: On your laptop, a hallucinated quote wastes your time. In a report that an advisor, registrar, or academic-standards committee treats as coming "from the system," a fabricated claim inherits institutional authority. The closer to the system of record, the more a false statement costs and the less likely a busy reader is to re-check it.*
 
-[[MC]]
 In the worked integration, data minimization happens at which stage?
-- ( ) Stage 1, because the LMS export contains only a few columns
-- (x) Stage 2, where raw rows are reduced to derived features before any model call
-- ( ) Stage 3, because the local model promises not to memorize inputs
-- ( ) Stage 4, where the report is printed
+
+[( )] Stage 1, because the LMS export contains only a few columns
+[(X)] Stage 2, where raw rows are reduced to derived features before any model call
+[( )] Stage 3, because the local model promises not to memorize inputs
+[( )] Stage 4, where the report is printed
 
 ---
 
@@ -259,12 +259,12 @@ In this Part you will apply FERPA, data minimization, and human-in-the-loop requ
 
    > *Hint: Map = knowing your system and context (the diagram). Measure = evaluation and monitoring (kappa, hallucinated-evidence rate, bias probes). Manage = mitigations in the design (minimization, no write arrow). Govern = assigning accountability — who is named as responsible when the pipeline is wrong? That last one rarely appears in code, which is exactly the point.*
 
-[[MC]]
 Under FERPA, the cleanest reason a *local* model changes the compliance analysis is:
-- ( ) Local models are more accurate than cloud models
-- ( ) FERPA only applies to data transmitted over the internet
-- (x) The education record never leaves institutional control, so no disclosure to an outside party occurs
-- ( ) Local models automatically de-identify their inputs
+
+[( )] Local models are more accurate than cloud models
+[( )] FERPA only applies to data transmitted over the internet
+[(X)] The education record never leaves institutional control, so no disclosure to an outside party occurs
+[( )] Local models automatically de-identify their inputs
 
 ---
 

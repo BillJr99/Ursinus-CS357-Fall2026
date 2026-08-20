@@ -73,12 +73,12 @@ The **agent table** is the core design artifact for a multi-agent system. One ro
 
    > *Hint: What should FormatterAgent do if it receives a draft that CriticAgent marked as having unfixed issues? Should it proceed anyway? How would you encode that decision in the system prompt?*
 
-[[MC]]
 In the agent table, WriterAgent runs at temperature 0.7 while CriticAgent runs at 0.0. The key distinction this encodes is:
-- ( ) WriterAgent is a larger model, so it can tolerate more randomness
-- (x) Generation benefits from creative variation, but evaluation must be deterministic — a critic that gives different verdicts on identical drafts is useless
-- ( ) Higher temperature makes WriterAgent's citations more accurate
-- ( ) Temperature 0.0 disables CriticAgent's tools, which is safer
+
+[( )] WriterAgent is a larger model, so it can tolerate more randomness
+[(X)] Generation benefits from creative variation, but evaluation must be deterministic — a critic that gives different verdicts on identical drafts is useless
+[( )] Higher temperature makes WriterAgent's citations more accurate
+[( )] Temperature 0.0 disables CriticAgent's tools, which is safer
 
 Complete the design principle: an empty cell in the agent table is not a gap in the document — it is an unresolved [[risk]] waiting to become a bug.
 
@@ -121,19 +121,19 @@ For agentic systems, the pre-mortem is especially important because agents can f
 
 > **⚠️ Common Misconception:** Many students treat the pre-mortem as a pessimistic exercise or feel that spending time on it is wasteful when they are eager to start coding. The opposite is true: the pre-mortem is the most cost-effective work you will do on the project. Every failure mode you identify and mitigate in writing takes about five minutes to address. The same failure mode discovered after deployment may take days or weeks to diagnose, and may leave outputs that cannot be recalled or corrected. Designing for failure is not pessimism — it is professionalism.
 
-[[MC]]
 A pre-mortem is most useful when it is conducted:
-- ( ) After the system is deployed, so real failure data informs the analysis
-- ( ) During the debugging phase, when actual failures have been observed
-- (x) Before building begins, when changing the design is still cheap
-- ( ) After the first end-to-end test, when the team has hands-on intuition about the system
 
-[[MC]]
+[( )] After the system is deployed, so real failure data informs the analysis
+[( )] During the debugging phase, when actual failures have been observed
+[(X)] Before building begins, when changing the design is still cheap
+[( )] After the first end-to-end test, when the team has hands-on intuition about the system
+
 Every agent in the pipeline passes its own individual tests, yet the end-to-end output is still subtly wrong. The pre-mortem's key distinction that explains this is:
-- ( ) Individual tests are unreliable for language models, so passing them means nothing
-- ( ) The orchestrator must be a larger model than the agents it coordinates
-- (x) Component correctness does not imply composition correctness — errors can compound across handoffs that no single agent's test examines
-- ( ) Temperature settings drift over the course of a long run
+
+[( )] Individual tests are unreliable for language models, so passing them means nothing
+[( )] The orchestrator must be a larger model than the agents it coordinates
+[(X)] Component correctness does not imply composition correctness — errors can compound across handoffs that no single agent's test examines
+[( )] Temperature settings drift over the course of a long run
 
 ---
 

@@ -75,12 +75,12 @@ At vibe supervision level, the agent has autonomy over *how* to implement; the h
 
 > **⚠️ Common Misconception:** "Vibe coding means you do not have to understand what the agent did." At vibe supervision level the agent writes the code, but *you* are responsible for every line that ships. The diff review and the test suite are not optional extras — they are what makes the "let me cook" approach safe rather than reckless.
 
-[[MC]]
 At which supervision level is the diff the primary artifact you review before accepting the agent's work?
-- ( ) Autocomplete — you review token-by-token suggestions in your editor
-- ( ) Pair — you read every changed line in every file the agent touched
-- (x) Vibe — you have given the agent autonomy over implementation and now inspect what changed
-- ( ) All three levels equally — the diff is always the primary review artifact
+
+[( )] Autocomplete — you review token-by-token suggestions in your editor
+[( )] Pair — you read every changed line in every file the agent touched
+[(X)] Vibe — you have given the agent autonomy over implementation and now inspect what changed
+[( )] All three levels equally — the diff is always the primary review artifact
 
 ---
 
@@ -170,12 +170,12 @@ Running `pytest` on this file before any implementation shows five `FAILED` line
 
 > **⚠️ Common Misconception:** "TDD means you write tests after you write code to make sure it works." In true TDD the tests come first and they must *fail* before any implementation exists. A test that passes before the implementation is written either tests the wrong thing or has a bug in the test itself. The "red" phase is not a formality — it confirms that your test is actually measuring something.
 
-[[MC]]
 In the TDD cycle, what does "red" mean?
-- ( ) The code compiles but has a runtime error
-- ( ) The test file has a syntax error that prevents it from loading
-- (x) The test runs but fails because the implementation does not yet exist or is incorrect
-- ( ) The test passes but the code has poor performance
+
+[( )] The code compiles but has a runtime error
+[( )] The test file has a syntax error that prevents it from loading
+[(X)] The test runs but fails because the implementation does not yet exist or is incorrect
+[( )] The test passes but the code has poor performance
 
 ---
 
@@ -273,12 +273,12 @@ def search_memory(query, k):
 
 > **⚠️ Common Misconception:** "If all tests pass, the code is correct." Tests can only verify the behaviors you thought to test. A function can pass 100 tests and still contain a security vulnerability, a resource leak, or an incorrect behavior on an input the tests did not cover. Passing tests are necessary but not sufficient for correctness — which is precisely why diff review exists alongside testing.
 
-[[MC]]
 A coding agent produces an implementation that passes all five acceptance-criterion tests. A diff reviewer then notices `eval(query)` on line 4. What does this finding demonstrate?
-- ( ) The tests were poorly written and should be discarded
-- ( ) The agent made a mistake that the test suite should have prevented automatically
-- (x) Tests verify sampled behaviors; diff review catches behaviors outside the test's scope, such as security properties
-- ( ) The reviewer is being overly cautious — if all tests pass, the code is safe to ship
+
+[( )] The tests were poorly written and should be discarded
+[( )] The agent made a mistake that the test suite should have prevented automatically
+[(X)] Tests verify sampled behaviors; diff review catches behaviors outside the test's scope, such as security properties
+[( )] The reviewer is being overly cautious — if all tests pass, the code is safe to ship
 
 ---
 

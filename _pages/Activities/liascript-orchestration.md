@@ -205,12 +205,12 @@ for ticket in [
 
 > **⚠️ Common Misconception:** Many students assume that because a pipeline has multiple agents, it is inherently more reliable than a single agent. This is not automatically true. A pipeline can fail at any seam, and because each agent is working from the previous agent's output rather than the original input, errors can compound silently. A pipeline is more *maintainable* and more *debuggable* than a mega-prompt — but only if you actually inspect the intermediate outputs. Return all intermediates from your pipeline functions (as the code above does with `return facts, draft, final`) and check them.
 
-[[MC]]
 According to the design heuristic developed today, a team should reach for a planner agent only when:
-- ( ) The task involves more than two steps
-- ( ) Maximum autonomy is a project goal
-- (x) The sequence of steps cannot be determined before runtime
-- ( ) The budget allows a larger model
+
+[( )] The task involves more than two steps
+[( )] Maximum autonomy is a project goal
+[(X)] The sequence of steps cannot be determined before runtime
+[( )] The budget allows a larger model
 
 ---
 
@@ -569,9 +569,9 @@ DeepAgents makes exactly these decisions — when to plan, when to spawn, when t
 
 > **⚠️ Common Misconception:** Students often assume "dynamic orchestration" means "the developer no longer controls the system." The opposite is true of any system you would actually deploy. In a supervisor loop the model chooses the *next move*, but you still author the roster it chooses from, the budget that bounds it, and the stop condition that ends it. Dynamic orchestration relocates *some* decisions to the model; it never relocates your responsibility for the roster, the budget, and the stop.
 
-[[MC]]
 Which single property most distinguishes a supervisor (dynamic) orchestrator from a router (fixed)?
-- ( ) A supervisor uses a larger model than a router
-- ( ) A router can call tools but a supervisor cannot
-- (x) A router makes one classification decision and then hands off, while a supervisor makes a new control-flow decision on every turn and may spawn additional sub-agents
-- ( ) A supervisor is always cheaper because it stops as soon as it is confident
+
+[( )] A supervisor uses a larger model than a router
+[( )] A router can call tools but a supervisor cannot
+[(X)] A router makes one classification decision and then hands off, while a supervisor makes a new control-flow decision on every turn and may spawn additional sub-agents
+[( )] A supervisor is always cheaper because it stops as soon as it is confident

@@ -72,11 +72,11 @@ Notice that every "b" in the training phrase is followed by "e," so the model is
 
    > *Hint: Trigrams track 2-character contexts instead of 1. In "to be or not to be", the trigram "to" appears before " " (a space) each time it appears. Track what comes after 2-character pairs vs. 1-character ones. Consider how knowing the previous two characters helps you predict whether a "t" is the start of "to" vs. the end of "not".*
 
-2. [[MC]] A character-level bigram model trained on Shakespeare is asked to generate text starting from "Z". It has never seen "Z" in training. The most likely behavior is:
-   - ( ) It generates the most common Shakespeare character ("e") regardless of context
-   - (x) It crashes or backs off to a random character, since "Z" has no bigram entry
-   - ( ) It generates "ounds" because it learned "Z" is usually followed by sounds
-   - ( ) It refuses to generate anything
+2. A character-level bigram model trained on Shakespeare is asked to generate text starting from "Z". It has never seen "Z" in training. The most likely behavior is:
+   [( )] It generates the most common Shakespeare character ("e") regardless of context
+   [(X)] It crashes or backs off to a random character, since "Z" has no bigram entry
+   [( )] It generates "ounds" because it learned "Z" is usually followed by sounds
+   [( )] It refuses to generate anything
 
    > **⚠️ Common Misconception:** Students often assume the model has "knowledge" that lets it handle unseen inputs gracefully. An n-gram model is a lookup table — if the key doesn't exist, there is no entry. This is why modern neural language models vastly outperform n-gram models on rare or unseen contexts: they can *interpolate* from learned representations rather than failing on a lookup miss. The neural model has seen every character; the n-gram model has only seen the specific sequences that appeared in training.
 
@@ -174,11 +174,11 @@ print(generate_text(trigram_model, "ROM", temperature=2.0))
 
    > *Hint: Look at the temperature scaling step: `counts[i] ** (1/T)`. At T=0.3, the exponent is 1/0.3 ≈ 3.3 — raising counts to the 3rd power makes the winner MUCH more dominant over second place. If "e" has count 10 and "a" has count 2, at T=0.3 their scaled values are 10^3.3 ≈ 2000 vs. 2^3.3 ≈ 10. At T=2.0, the exponent is 0.5 — taking the square root of 10 gives 3.16 and of 2 gives 1.41, much closer together.*
 
-6. [[MC]] Increasing n (from bigram to trigram to 10-gram) always improves the quality of generated text.
-   - ( ) True — more context is always better
-   - (x) False — at very high n, the model memorizes training examples and can't generalize
-   - ( ) True, but only up to n=5
-   - ( ) False — n-gram models always generate random text regardless of n
+6. Increasing n (from bigram to trigram to 10-gram) always improves the quality of generated text.
+   [( )] True — more context is always better
+   [(X)] False — at very high n, the model memorizes training examples and can't generalize
+   [( )] True, but only up to n=5
+   [( )] False — n-gram models always generate random text regardless of n
 
    > **⚠️ Common Misconception:** Students often expect that "more context" monotonically improves a statistical model. At very high n, most contexts appear only once or zero times in training data — the model has essentially memorized the training text verbatim. Generation then either exactly reproduces training sequences (when a context was seen) or breaks immediately into the backoff case (when it was not). The sweet spot for character-level n-gram models on literary text is typically n=4 to n=6.
 
@@ -284,11 +284,11 @@ print(generate_text(trigram_model, "Ari", temperature=1.0))
 
    > *Hint: Our model has no concept of "word", "sentence", "line", or "speaker turn." It sees characters. The local model was trained to predict tokens (subwords) and learned from countless examples of dialogue, poetry, and plays that certain patterns follow certain others at the word and sentence level.*
 
-10. [[MC]] Both the n-gram model and the local LLM pick the next token by sampling from a probability distribution. The key difference in HOW that distribution is computed is:
-    - ( ) The LLM uses higher n (longer context) but the same counting approach
-    - ( ) The LLM uses a different sampling method (beam search instead of random sampling)
-    - (x) The LLM uses learned neural network weights that can interpolate over unseen contexts; the n-gram model uses a lookup table that fails on unseen keys
-    - ( ) There is no meaningful difference — they are the same algorithm at different scales
+10. Both the n-gram model and the local LLM pick the next token by sampling from a probability distribution. The key difference in HOW that distribution is computed is:
+   [( )] The LLM uses higher n (longer context) but the same counting approach
+   [( )] The LLM uses a different sampling method (beam search instead of random sampling)
+   [(X)] The LLM uses learned neural network weights that can interpolate over unseen contexts; the n-gram model uses a lookup table that fails on unseen keys
+   [( )] There is no meaningful difference — they are the same algorithm at different scales
 
 11. Give the n-gram model the seed "ZZZ" — three characters that almost certainly never appear in Shakespeare. What happens? Then give the local model the prompt "Continue this Shakespearean text: ZZZ". What does the local model do, and why can it handle this where the n-gram model cannot?
 

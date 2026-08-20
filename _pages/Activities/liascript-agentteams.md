@@ -111,12 +111,12 @@ The `status` field is a tiny state machine; each agent's contract is "when statu
 | **Peer-to-peer** | Specialists pass output directly to the next specialist in a fixed sequence | Well-understood workflows where each step's output is the next step's input | Implicit dependencies; hard to add a new step without redesigning the chain |
 | **Blackboard** | All agents read and write a shared state dictionary; each agent fires when its preconditions are met | Tasks where multiple agents may need to revisit earlier steps or work in parallel | Concurrent writes can conflict; state can become large and hard to audit |
 
-[[MC]]
 An agent team keeps stalling: the checker waits for verified facts while the researcher believes its job is done. The most diagnostic artifact to inspect first is:
-- ( ) The model weights
-- ( ) Each agent's temperature setting
-- (x) The shared state object and each role's precondition/postcondition contract
-- ( ) The total token count
+
+[( )] The model weights
+[( )] Each agent's temperature setting
+[(X)] The shared state object and each role's precondition/postcondition contract
+[( )] The total token count
 
 ---
 

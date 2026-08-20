@@ -196,12 +196,12 @@ Let $\mathbf{a} = (1, 2, 2)$ for "the dog ran" and $\mathbf{b} = (2, 4, 4)$ for 
 
 > **⚠️ Common Misconception:** A high cosine similarity score does NOT mean the two sentences share the same words, that one logically implies the other, or that either is factually true. It only means the embedding model placed them in a similar *direction* in meaning-space — they are topically close. Two completely wrong sentences about the same topic can score 0.95 with each other.
 
-[[MC]]
 Two sentences receive embeddings with cosine similarity 0.92. The best interpretation is:
-- ( ) The sentences share at least 92 percent of their words
-- (x) The embedding model places them in nearly the same direction, suggesting closely related meaning
-- ( ) One sentence logically entails the other
-- ( ) Both sentences are factually true
+
+[( )] The sentences share at least 92 percent of their words
+[(X)] The embedding model places them in nearly the same direction, suggesting closely related meaning
+[( )] One sentence logically entails the other
+[( )] Both sentences are factually true
 
 ---
 

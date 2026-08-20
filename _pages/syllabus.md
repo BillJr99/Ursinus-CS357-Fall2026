@@ -276,28 +276,13 @@ schedule:
   - dtitle: "Participation: Warmup Assignment Handed Out"
     dlink: "Assignments/Warmup"
     points: "10"
-  - dtitle: "Participation: Reading Group Handed Out"
-    dlink: "Assignments/ReadingGroup"
-    points: "10"
-    rubricpath: "_pages/Assignments/asmt-readinggroup.md"
-    module: overarching
-  - dtitle: "Participation: Reading Responses Handed Out"
-    dlink: "Participation/ReadingResponses"
-    points: "10"
-    rubricpath: "_pages/Participation/reading-responses.md"
-    module: overarching
   - dtitle: "Participation: Class Activities Handed Out"
-    points: "10"
-    module: overarching
-  - dtitle: "Reflection Notebook Handed Out"
-    dlink: "Participation/ReflectionNotebook"
     points: "10"
     module: overarching
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
-  - rtitle: "Required setup (Overview assignment, Route A): Your Course Development Environment — Host Ollama, the Course Container, Git, and GitHub"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
-    module: resource
+  - rtitle: "Teachable Machine — train an image, sound, or pose classifier in the browser, with no code, to see what \"learning from examples\" actually means"
+    rlink: "https://teachablemachine.withgoogle.com/"
   - rtitle: "Optional depth — AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
 - week: "0"
@@ -309,6 +294,16 @@ schedule:
     dlink: "Assignments/TeamSurvey"
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
+  - dtitle: "Participation: Reading Group Handed Out"
+    dlink: "Assignments/ReadingGroup"
+    points: "10"
+    rubricpath: "_pages/Assignments/asmt-readinggroup.md"
+    module: overarching
+  - dtitle: "Participation: Reading Responses Handed Out"
+    dlink: "Participation/ReadingResponses"
+    points: "10"
+    rubricpath: "_pages/Participation/reading-responses.md"
+    module: overarching
   readings:
   - rtitle: "Mitchell, Chapter 2"
   - rtitle: "The Project Thread: how the semester-long team project unfolds — read this before you fill out the Team Formation Survey; the survey itself lives on this page"
@@ -336,9 +331,7 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
-  - rtitle: "Required setup for the Overview assignment: Your Course Development Environment - Host Ollama, the Course Container, Git, and GitHub"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
-  - rtitle: "Required: Shell Fundamentals for Agent Supervision - the terminal skills every later lab assumes"
+  - rtitle: "Shell Fundamentals for Agent Supervision - the terminal skills every later lab assumes"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
   - rtitle: "Bring a laptop. We do the install together, in class, so nobody is debugging Docker alone at midnight."
   - rtitle: "Optional depth — AI for All — tools overview slide deck"
@@ -472,9 +465,9 @@ schedule:
   readings:
   - rtitle: "Activity: Tool Calling and Function Schemas (see Hands-On section)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md"
-  - rtitle: "Required prep for the Local Agent Lab (all directions): Structured Outputs — JSON Mode, Tool Schemas, and Output Validation"
+  - rtitle: "Prep for the Local Agent Lab (all directions): Structured Outputs — JSON Mode, Tool Schemas, and Output Validation"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md"
-  - rtitle: "Required prep for the Local Agent Lab (all directions): RESTful LLM Access — The /v1/chat/completions Paradigm, curl, and the OpenAI SDK"
+  - rtitle: "Prep for the Local Agent Lab (all directions): RESTful LLM Access — The /v1/chat/completions Paradigm, curl, and the OpenAI SDK"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md"
   - rtitle: "Optional depth — reference: Ollama Structured Outputs — schema-constrained JSON (used in the Local Agent Lab's required structured-output segment)"
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
@@ -494,7 +487,7 @@ schedule:
   readings:
   - rtitle: "Project Thread: bring your half-page unassisted problem statement — written individually, without AI, before your team drafts the brief (completion credit; it is a calibration baseline, not a test)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/StakeholderBrief"
-  - rtitle: "Required prep for the Local Agent Lab Direction 4: MCP Deep Dive — REST APIs, OAuth 2.0 Flows, and Secure Tool Invocation"
+  - rtitle: "Prep for the Local Agent Lab Direction 4: MCP Deep Dive — REST APIs, OAuth 2.0 Flows, and Secure Tool Invocation"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md"
   - rtitle: "Hugging Face MCP Course (built with Anthropic) — protocol, building a server, connecting clients (supports Local Agent Lab MCP work)"
     rlink: "https://huggingface.co/learn/mcp-course/"
@@ -563,9 +556,9 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
   - rtitle: "Studio session: bring your RAG pipeline-in-progress and your stuck points — today is open build, debugging, and review time coming out of fall break, and the last studio before the RAG Knowledge Base Lab is due (the RAG Quality Checkup is handed out the class meeting before that deadline)"
-  - rtitle: "Required prep for the Local Agent Lab Directions 2–3 only (do the installs at home first): The Local Agent Stack — the 3-container minimal stack section (Tiers, Ports, and Compose)"
+  - rtitle: "Prep for the Local Agent Lab Directions 2–3 only (do the installs at home first): The Local Agent Stack — the 3-container minimal stack section (Tiers, Ports, and Compose)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
-  - rtitle: "Required prep for the Local Agent Lab Directions 2–3 only: Docker from First Principles"
+  - rtitle: "Prep for the Local Agent Lab Directions 2–3 only: Docker from First Principles"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
   - rtitle: "Activity: Building a Visual Agent with Langflow (see Part IV: Hands-On Langflow Build)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md"
@@ -681,7 +674,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Projects/proj-finalproject.md"
   readings:
-  - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
+  - rtitle: "Prep for the Rubric Pipeline Lab: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
   - rtitle: "Optional depth — reference: promptfoo — declarative LLM/agent eval and red-teaming (Rubric Pipeline Lab harness option, runs against Ollama)"
     rlink: "https://www.promptfoo.dev/docs/intro/"
@@ -709,7 +702,7 @@ schedule:
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class — one design choice you would make differently in a system you deploy"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Participation/ReadingResponses"
-  - rtitle: "Required prep for the Responsible AI Capstone Direction 1: Prompt Injection — Attacks and Defenses"
+  - rtitle: "Prep for the Responsible AI Capstone Direction 1: Prompt Injection — Attacks and Defenses"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md"
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
@@ -771,7 +764,7 @@ schedule:
     rubricpath: "_pages/Projects/proj-finalproject.md"
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 1 - Earth: the mineralogical and energy substrate of computation"
-  - rtitle: "Required for the Responsible AI Capstone (environmental direction): The Environmental Cost of AI - energy, water, carbon, and right-sizing"
+  - rtitle: "For the Responsible AI Capstone (environmental direction): The Environmental Cost of AI - energy, water, carbon, and right-sizing"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md"
   - rtitle: "Optional depth: Cost Optimization for AI Systems - caching, batching, and choosing the smallest model that works"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md"
@@ -836,9 +829,6 @@ schedule:
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
   - dtitle: "Participation: Class Activities Due"
-    points: "10"
-  - dtitle: "Reflection Notebook Due"
-    dlink: "Participation/ReflectionNotebook"
     points: "10"
   readings:
   - rtitle: "Demo Day. Bring the running system, the governance one-pager, and the contribution statements. Nothing is due after today."

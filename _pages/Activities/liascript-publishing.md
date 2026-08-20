@@ -136,12 +136,12 @@ docker push yourusername/agent-eval:0.1.0
 
 Docker Hub is where unqualified names resolve — a plain `docker pull nginx` pulls from Docker Hub — which gives it broader reach among users outside GitHub. GHCR gives you co-location with code and shared permissions with your repository. Publishing to both costs one extra `tag` and `push`, and many projects do exactly that.
 
-[[MC]]
 After pushing a new image to GHCR for the first time, a classmate reports that docker pull fails for everyone but you. The most likely cause is:
-- ( ) GHCR requires a 24-hour propagation period — GHCR propagates immediately; a 24-hour delay would suggest a CDN cache miss, not the registry itself
-- ( ) The image tag must be latest for public pulls — any tag can be pulled publicly once the package is set to public; `latest` has no special public-access privilege
-- (x) New GHCR packages default to private visibility, and the package settings have not been changed to public
-- ( ) Docker Hub credentials are interfering — Docker Hub credentials are stored separately from GHCR credentials; a failed pull from ghcr.io would not be caused by Docker Hub login state
+
+[( )] GHCR requires a 24-hour propagation period — GHCR propagates immediately; a 24-hour delay would suggest a CDN cache miss, not the registry itself
+[( )] The image tag must be latest for public pulls — any tag can be pulled publicly once the package is set to public; `latest` has no special public-access privilege
+[(X)] New GHCR packages default to private visibility, and the package settings have not been changed to public
+[( )] Docker Hub credentials are interfering — Docker Hub credentials are stored separately from GHCR credentials; a failed pull from ghcr.io would not be caused by Docker Hub login state
 
 Container images are one artifact type — the npm ecosystem uses the same registry concepts but serves a different artifact: installable code packages with CLI entry points and version-locked dependency trees.
 
@@ -527,12 +527,12 @@ ls dist/
 
 *Hint: A wheel is pre-built and unpacked directly. A source distribution must be built on the target machine. What does "building" require that "unpacking" does not?*
 
-[[MC]]
 A project's API changes in a way that breaks all existing callers — for example, a function that previously returned a string now returns a list. Which version bump is appropriate under SemVer?
-- ( ) Patch: `0.1.0` → `0.1.1` — a patch bump signals "bug fix with no behavior change"; using it for a breaking change tells consumers their code is safe to upgrade when it is not
-- ( ) Minor: `0.1.0` → `0.2.0` — a minor bump signals "new feature, backward-compatible"; using it for a breaking change violates the compatibility promise consumers rely on to safely run `npm update`
-- (x) Major: `0.1.0` → `1.0.0`
-- ( ) Date-based: `0.1.0` → `2026.06.1` — date-based versioning communicates when the release happened, not what kind of change it contains; a consumer cannot tell from the version number alone whether upgrading will break their code
+
+[( )] Patch: `0.1.0` → `0.1.1` — a patch bump signals "bug fix with no behavior change"; using it for a breaking change tells consumers their code is safe to upgrade when it is not
+[( )] Minor: `0.1.0` → `0.2.0` — a minor bump signals "new feature, backward-compatible"; using it for a breaking change violates the compatibility promise consumers rely on to safely run `npm update`
+[(X)] Major: `0.1.0` → `1.0.0`
+[( )] Date-based: `0.1.0` → `2026.06.1` — date-based versioning communicates when the release happened, not what kind of change it contains; a consumer cannot tell from the version number alone whether upgrading will break their code
 
 ---
 

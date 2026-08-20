@@ -117,11 +117,10 @@ AI adds three new dimensions to this crisis:
 
 A research team publishes results from an LLM-assisted literature review. An independent replication team runs the same prompts six months later, using what they believe is the same model, and reaches different conclusions on several key findings. The most scientifically responsible response is:
 
-[[MC]]
-- ( ) Declare the original paper fraudulent, since the results cannot be reproduced
-- ( ) Ask the journal to retract the original paper until the model provider can guarantee identical outputs across all future runs of the same prompt
-- (x) Report both runs in full, document exact prompt versions and model IDs (including version dates), and rigorously analyze where and why the outputs diverged — treating the divergence itself as a scientific finding about model stability
-- ( ) Average the conclusions of the two runs and publish a correction
+[( )] Declare the original paper fraudulent, since the results cannot be reproduced
+[( )] Ask the journal to retract the original paper until the model provider can guarantee identical outputs across all future runs of the same prompt
+[(X)] Report both runs in full, document exact prompt versions and model IDs (including version dates), and rigorously analyze where and why the outputs diverged — treating the divergence itself as a scientific finding about model stability
+[( )] Average the conclusions of the two runs and publish a correction
 
 ---
 

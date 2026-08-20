@@ -122,11 +122,10 @@ Rather than investing in detection (which is losing the arms race), many educato
 
 A student uses an LLM to brainstorm a list of possible thesis arguments for a paper, selects one they find compelling, and then writes all the prose themselves without copying any AI-generated sentences. Under most current academic integrity policies, this is:
 
-[[MC]]
-- ( ) Always plagiarism because AI was involved at any point in the process
-- ( ) Always acceptable because no text was copied from the AI
-- (x) Potentially acceptable or not depending on the specific policy, the instructor's guidance, and whether disclosure was required — illustrating why blanket "no AI" or "AI is fine" policies are insufficient
-- ( ) Always acceptable as long as the student discloses AI use somewhere in the submission, regardless of what the specific course policy says
+[( )] Always plagiarism because AI was involved at any point in the process
+[( )] Always acceptable because no text was copied from the AI
+[(X)] Potentially acceptable or not depending on the specific policy, the instructor's guidance, and whether disclosure was required — illustrating why blanket "no AI" or "AI is fine" policies are insufficient
+[( )] Always acceptable as long as the student discloses AI use somewhere in the submission, regardless of what the specific course policy says
 
 ---
 

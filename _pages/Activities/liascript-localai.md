@@ -71,12 +71,12 @@ $$
 
 An 8-billion-parameter model at 4-bit quantization occupies roughly $8\text{B} \times 0.5 = 4$ GB. Quantization trades a small amount of accuracy for the ability to run on commodity hardware — it is the reason local AI is practical at all on student laptops.
 
-[[MC]]
 A team wants to run a 70B-parameter model quantized to 4 bits on a laptop with 16 GB of RAM. The approximate memory needed for weights alone is:
-- ( ) About 8 GB, so it fits comfortably
-- (x) About 35 GB, so it does not fit; choose a smaller model or a machine with more RAM
-- ( ) About 70 GB regardless of quantization
-- ( ) Quantization makes memory use independent of parameter count
+
+[( )] About 8 GB, so it fits comfortably
+[(X)] About 35 GB, so it does not fit; choose a smaller model or a machine with more RAM
+[( )] About 70 GB regardless of quantization
+[( )] Quantization makes memory use independent of parameter count
 
 > **⚠️ Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy. In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks — the main practical impact is speed and memory, not correctness. The serious quality drop typically happens at 2-bit or below. Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
 

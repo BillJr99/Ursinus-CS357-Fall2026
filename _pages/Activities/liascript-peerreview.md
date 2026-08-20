@@ -99,12 +99,12 @@ The mnemonic: *host honestly, walk generously*. When you host, show the weak par
 
    > *Hint: Ten risks with no exits produce paralysis and a sense of being graded rather than helped. And to propose a mitigation, the reviewer must first understand the team's constraints well enough to suggest something feasible — the requirement quietly forces the reviewer to actually read the work.*
 
-[[MC]]
 Which of the following is a valid Risk entry on an SQR card?
-- ( ) "The interview section is weak."
-- ( ) "This project seems too ambitious."
-- (x) "The brief's problem statement assumes the office will share its spreadsheet data; if that access falls through, the project has no data source — consider asking the stakeholder about a de-identified export at the follow-up, and naming a fallback in the proposal."
-- ( ) "There are several risks here that the team should think carefully about."
+
+[( )] "The interview section is weak."
+[( )] "This project seems too ambitious."
+[(X)] "The brief's problem statement assumes the office will share its spreadsheet data; if that access falls through, the project has no data source — consider asking the stakeholder about a de-identified export at the follow-up, and naming a fallback in the proposal."
+[( )] "There are several risks here that the team should think carefully about."
 
 ---
 
@@ -142,12 +142,12 @@ Alongside the private check-in, one public instrument continues: **every progres
 
    > *Hint: The check-in informs the instructor; it does not inform the teammate. If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it — which is what the charter's conflict protocol exists to provide. The check-in AND the direct repair move are both required; each does a job the other cannot.*
 
-[[MC]]
 The structured check-in at the three scheduled milestones is:
-- ( ) Shared with your teammates so everyone knows where they stand
-- ( ) Anonymous and used to assign a team-wide penalty
-- (x) Private to the instructor, and used as one input to the individual-contribution component of grading
-- ( ) Optional if your team is getting along well
+
+[( )] Shared with your teammates so everyone knows where they stand
+[( )] Anonymous and used to assign a team-wide penalty
+[(X)] Private to the instructor, and used as one input to the individual-contribution component of grading
+[( )] Optional if your team is getting along well
 
 ---
 

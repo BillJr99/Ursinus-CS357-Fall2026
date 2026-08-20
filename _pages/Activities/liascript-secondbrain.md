@@ -107,12 +107,12 @@ The boundaries are the design. `raw/` is a one-way inbox: humans and automations
 
 `AGENTS.md` opens with a non-negotiable instruction (read this file completely before taking any action) and then specifies: zone boundaries (`raw/` strictly read-only; `.obsidian/` untouchable except for the sync metadata file; `.trash/` ignored entirely); the quick-start workflow (read the contract, inspect `wiki/`, inspect relevant `raw/` material, change only `wiki/`, update the metadata, commit atomically); synthesis rules (summarize and deduplicate rather than mirror; preserve uncertainty and conflicts between sources rather than smoothing them; prefer enriching existing canonical pages over spawning duplicates); organization rules (topical directories, hub pages, extensive wikilinks, no flat dumps); and the question-answering rule (answer from `wiki/` first, consulting `raw/` only to fill gaps, updating the wiki *before* answering when it is stale).
 
-[[MC]]
 An agent processing a new PDF in raw/ notices a typo in the PDF and also that wiki/index.md lacks a link to the page it just created. Under the AGENTS.md contract, the correct actions are:
-- ( ) Fix the typo in the PDF and add the index link
-- (x) Leave the PDF untouched (raw/ is read-only), add the index link, and note the source's typo in the wiki page if it matters
-- ( ) Fix the typo and skip the index, since navigation is the human's job
-- ( ) Move the PDF into wiki/ so it can be edited
+
+[( )] Fix the typo in the PDF and add the index link
+[(X)] Leave the PDF untouched (raw/ is read-only), add the index link, and note the source's typo in the wiki page if it matters
+[( )] Fix the typo and skip the index, since navigation is the human's job
+[( )] Move the PDF into wiki/ so it can be edited
 
 ---
 

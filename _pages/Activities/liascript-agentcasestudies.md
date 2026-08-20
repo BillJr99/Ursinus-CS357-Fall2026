@@ -129,12 +129,12 @@ After reading Case B, notice how the action-reversibility taxonomy you built ear
 
 # Part II: Cross-Case Synthesis
 
-[[MC]]
 Across all three cases, the single most recurrent engineering lesson is:
-- ( ) Larger models would have prevented every friction, since capability failures caused each problem
-- (x) Agent reliability comes from the surrounding structure: explicit specifications, externalized state, deterministic verification, and gates on irreversible actions
-- ( ) Browsing agents should never be used because the web is too unpredictable for automation
-- ( ) Humans should review every individual model call to prevent any errors from reaching users
+
+[( )] Larger models would have prevented every friction, since capability failures caused each problem
+[(X)] Agent reliability comes from the surrounding structure: explicit specifications, externalized state, deterministic verification, and gates on irreversible actions
+[( )] Browsing agents should never be used because the web is too unpredictable for automation
+[( )] Humans should review every individual model call to prevent any errors from reaching users
 
 > **⚠️ Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model → better output quality; better surrounding structure → better reliability. Both matter, but only one of them is under your control as a system designer.
 

@@ -145,12 +145,12 @@ Now the application's data directory lives on *your* disk; destroy and recreate 
 | Give a container read-only access to a reference folder | `-v "HOST_PATH:CONTAINER_PATH:ro"` | `docker run -v "$HOME/vault:/vault:ro" myimage` |
 | Mount the current working directory into the container | `-v "$(pwd):/app"` | Useful during development so code changes take effect without rebuilding the image |
 
-[[MC]]
 You run a model server with `docker run -p 8080:11434 ...` and the docs say the server listens on port 11434 inside the container. Which URL does your browser use to reach it?
-- ( ) http://localhost:11434, because that is the port the server actually listens on
-- (x) http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
-- ( ) http://localhost:8080:11434, combining both ports
-- ( ) Either one; Docker forwards both directions automatically
+
+[( )] http://localhost:11434, because that is the port the server actually listens on
+[(X)] http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
+[( )] http://localhost:8080:11434, combining both ports
+[( )] Either one; Docker forwards both directions automatically
 
 ---
 

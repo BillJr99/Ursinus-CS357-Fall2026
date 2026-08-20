@@ -138,11 +138,10 @@ w i d est </w>      × 3
 
 **Which of the following correctly describes what BPE merges at each step?**
 
-[[MC]]
-- ( ) The two tokens that appear most often anywhere in the vocabulary, regardless of position
-- ( ) The longest repeated substring in the training corpus
-- (x) The most frequently occurring adjacent pair of tokens in the current tokenized corpus, merging them into a single new token
-- ( ) The pair of tokens with the smallest combined length in characters
+[( )] The two tokens that appear most often anywhere in the vocabulary, regardless of position
+[( )] The longest repeated substring in the training corpus
+[(X)] The most frequently occurring adjacent pair of tokens in the current tokenized corpus, merging them into a single new token
+[( )] The pair of tokens with the smallest combined length in characters
 
 ---
 
@@ -329,11 +328,10 @@ print("   correct token. What is -log(1.0)? What is e^0? What does perfect perpl
 
 **Which of the following is the pre-training objective used by GPT-style (autoregressive) language models like GPT-4 and LLaMA?**
 
-[[MC]]
-- ( ) Masked Language Modeling — randomly masking 15% of tokens and predicting them from bidirectional context
-- ( ) Sequence-to-sequence with encoder-decoder attention — mapping an input sentence to an output sentence
-- (x) Causal Language Modeling — predicting the next token given all previous tokens, with a causal attention mask preventing access to future positions
-- ( ) Contrastive learning — training the model to assign similar embeddings to semantically related text pairs
+[( )] Masked Language Modeling — randomly masking 15% of tokens and predicting them from bidirectional context
+[( )] Sequence-to-sequence with encoder-decoder attention — mapping an input sentence to an output sentence
+[(X)] Causal Language Modeling — predicting the next token given all previous tokens, with a causal attention mask preventing access to future positions
+[( )] Contrastive learning — training the model to assign similar embeddings to semantically related text pairs
 
 ---
 

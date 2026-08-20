@@ -268,12 +268,12 @@ echo '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_kno
 
 ## Multiple Choice Checkpoint
 
-[[MC]]
 An agent has a refresh token that was issued alongside an access token. The access token expires after 60 minutes. What is the correct behavior when the agent receives an HTTP 401 Unauthorized response?
-- ( ) Immediately ask the user to log in again — the refresh token exists precisely to avoid this interruption; discarding it wastes the user's original consent grant
-- ( ) Discard the refresh token and request new scopes — a 401 means the access token expired, not that the scopes were wrong; requesting new scopes would start a new authorization flow unnecessarily
-- (x) Exchange the refresh token for a new access token, then retry the original request
-- ( ) Cache the 401 response and skip the failed API call — silently skipping a failed call hides the authentication failure from operators and allows the agent to proceed with incomplete results
+
+[( )] Immediately ask the user to log in again — the refresh token exists precisely to avoid this interruption; discarding it wastes the user's original consent grant
+[( )] Discard the refresh token and request new scopes — a 401 means the access token expired, not that the scopes were wrong; requesting new scopes would start a new authorization flow unnecessarily
+[(X)] Exchange the refresh token for a new access token, then retry the original request
+[( )] Cache the 401 response and skip the failed API call — silently skipping a failed call hides the authentication failure from operators and allows the agent to proceed with incomplete results
 
 ---
 

@@ -168,12 +168,12 @@ print("=== CONSENSUS ===\n", consensus)
 
    > *Hint: A lower threshold is stricter — only very similar texts merge. A higher threshold is looser — nearly anything merges. Think about who is harmed if the threshold is set wrong: whose minority opinion gets absorbed into the majority?*
 
-[[MC]]
 Compared with simple majority voting, embedding-clustered consensus is principally designed to handle:
-- ( ) Questions with one-token answers
-- (x) Long-form answers where semantically equivalent positions are phrased differently
-- ( ) Models that cannot follow JSON formats
-- ( ) Deterministic generation at temperature 0
+
+[( )] Questions with one-token answers
+[(X)] Long-form answers where semantically equivalent positions are phrased differently
+[( )] Models that cannot follow JSON formats
+[( )] Deterministic generation at temperature 0
 
 > **⚠️ Common Misconception:** Many students assume that more agents always means better answers. In reality, consensus amplifies whatever the model already believes most often. If the underlying model has a systematic bias — for example, always preferring certain cooking techniques that are over-represented in its training data — running more agents just makes that bias louder, not quieter. Consensus is a tool for aggregating diverse *reasoning paths* toward a correct answer, not for discovering truths the model does not already know.
 

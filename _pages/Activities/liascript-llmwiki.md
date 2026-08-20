@@ -108,12 +108,12 @@ The pattern earns its keep through daily uses, each of which is just the same lo
 
 **Course and project memory** rounds out the set for this class specifically: your CS357 project's decision log, experiment results, and gallery-walk feedback all flow through `raw/` into `wiki/projects/cs357/`, giving your team a queryable institutional memory and giving your final report a source it can cite against itself.
 
-[[MC]]
 The fixed page skeleton for paper summaries (claim, method, evidence, limitations, relevance) primarily buys:
-- ( ) Shorter pages — consistent structure does not reduce page length; it organizes content into the same sections regardless of paper length
-- (x) Comparability across many papers, so synthesis questions spanning the literature can be answered structurally rather than by rereading
-- ( ) Compliance with Obsidian's internal format requirements — Obsidian imposes no required heading structure; the skeleton is a schema choice, not a tool requirement
-- ( ) Faster PDF parsing — the skeleton is applied after parsing, not during; it affects how results are stored, not how fast the source is read
+
+[( )] Shorter pages — consistent structure does not reduce page length; it organizes content into the same sections regardless of paper length
+[(X)] Comparability across many papers, so synthesis questions spanning the literature can be answered structurally rather than by rereading
+[( )] Compliance with Obsidian's internal format requirements — Obsidian imposes no required heading structure; the skeleton is a schema choice, not a tool requirement
+[( )] Faster PDF parsing — the skeleton is applied after parsing, not during; it affects how results are stored, not how fast the source is read
 
 ---
 

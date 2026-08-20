@@ -97,13 +97,12 @@ When does the context fill up?
 
 **The "Lost in the Middle" Phenomenon:** Research (Liu et al., 2023) shows that facts placed in the middle of a long context are retrieved less reliably than facts at the very beginning or very end. This is not a quirk of one model — it has been replicated across multiple LLM families. It means that context *layout* — the order in which you place system prompt, retrieved documents, conversation history, and new messages — is a design decision with measurable impact on model accuracy.
 
-[[MC]]
 A user has a 40-turn conversation with an agent. On turn 41, the agent addresses the user as "there" instead of by name, even though the user introduced themselves on turn 1. The most likely cause is:
 
-- ( ) The model was retrained overnight and lost the conversation — model retraining is a deployment event that takes days, not something that happens between conversational turns
-- (x) The context window was truncated and the early turns containing the introduction were dropped
-- ( ) The agent has no semantic memory module configured — semantic memory stores general world knowledge, not user-specific introductions from this session
-- ( ) The system prompt is too long and overwrote the user's name — the system prompt cannot overwrite conversation history; it occupies a separate region of the context budget
+[( )] The model was retrained overnight and lost the conversation — model retraining is a deployment event that takes days, not something that happens between conversational turns
+[(X)] The context window was truncated and the early turns containing the introduction were dropped
+[( )] The agent has no semantic memory module configured — semantic memory stores general world knowledge, not user-specific introductions from this session
+[( )] The system prompt is too long and overwrote the user's name — the system prompt cannot overwrite conversation history; it occupies a separate region of the context budget
 
 > **Common Misconception:** Students often assume that a larger context window eliminates the need to think carefully about memory architecture. In reality, larger context windows introduce new problems: they cost more per token (inference cost scales with context length), they are slower (attention is quadratic in sequence length for most architectures), and the "Lost in the Middle" effect becomes more pronounced as context grows. A 100K-token context window does not mean you can dump 100K tokens of information into it and trust the model to find what it needs — it means the layout and relevance of what you put in matters even more.
 
@@ -225,12 +224,12 @@ $$
 | Episodic summary | A bullet-point compression of older turns, written by the model | In the prompt, always present | Every turn, replacing old verbatim turns | `self.summary`: "Chemistry exam Dec 14; user is weaker in chemistry" |
 | Long-term memory | Persistent user preferences, past decisions, reference facts | External file or vector database | On demand, when the current question seems relevant | A Chroma collection of user facts retrieved by similarity to the current question |
 
-[[MC]]
 An agent must recall a user preference stated 200 turns ago in a months-long relationship. The architecture that handles this *without* growing the prompt is:
-- ( ) Increase the context window to one million tokens
-- ( ) Keep all turns verbatim and trust attention
-- (x) Persist preferences to external storage and retrieve them by similarity when relevant
-- ( ) Raise the temperature so the model improvises the preference
+
+[( )] Increase the context window to one million tokens
+[( )] Keep all turns verbatim and trust attention
+[(X)] Persist preferences to external storage and retrieve them by similarity when relevant
+[( )] Raise the temperature so the model improvises the preference
 
 ---
 

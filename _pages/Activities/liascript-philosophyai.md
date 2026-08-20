@@ -120,12 +120,12 @@ Mary is a seventy-three-year-old widow whose adult children have suggested she t
 
 > **Common Misconception:** "Users who form emotional attachments to AI are naive or confused." Research consistently shows that the ELIZA effect operates across education levels, age groups, and even among people who know they are talking to a program. It is a feature of human social cognition, not a failure of intelligence. This means that designing an AI to be responsive, warm, and attentive will produce emotional attachment in many users regardless of disclosure — and that disclosure alone ("this is an AI") does not prevent the effect. Engineers have a responsibility to design with this knowledge, not to assume users will simply "be rational."
 
-[[MC]]
 Which of the following most accurately describes the frame problem as it applies to language models?
-- ( ) Language models cannot perform arithmetic because arithmetic is not linguistic
-- ( ) Language models are biased because their training data contains historical biases
-- (x) Language models may fail to track which facts remain unchanged across a sequence of hypothetical actions because this requires reasoning over an open-ended set of implicit world-state assumptions
-- ( ) Language models hallucinate because they lack access to real-time information
+
+[( )] Language models cannot perform arithmetic because arithmetic is not linguistic
+[( )] Language models are biased because their training data contains historical biases
+[(X)] Language models may fail to track which facts remain unchanged across a sequence of hypothetical actions because this requires reasoning over an open-ended set of implicit world-state assumptions
+[( )] Language models hallucinate because they lack access to real-time information
 
 ---
 
