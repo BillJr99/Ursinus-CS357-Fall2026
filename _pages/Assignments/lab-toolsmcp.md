@@ -117,6 +117,20 @@ Consume MCP instead of authoring it. Point your agent (or a framework client) at
 
 ---
 
+## Low-Code Route (equal credit)
+
+You may complete this lab **without writing tool-calling code**, by wiring the same three capabilities in Open WebUI or Langflow. The learning goal is identical — understand what a tool call is, when the model chooses one, and how it fails — and so is the credit.
+
+**How to do it:**
+
+1. **Give the model a tool without code.** In Open WebUI, enable a built-in tool (web search, or the code interpreter) for one model, or import a community tool. In Langflow, drag a **Tool** node onto the canvas and connect it to an **Agent** node.
+2. **Watch the decision, not the output.** Ask three questions: one the model can answer from memory, one that clearly needs the tool, and one that is ambiguous. For each, capture *whether the tool fired* — Open WebUI shows the tool invocation inline; Langflow highlights the executed path.
+3. **Break it on purpose.** Disconnect the tool (or revoke its permission) and re-ask the question that needed it. Record what the model does when the capability disappears: does it say so, or does it invent an answer?
+
+**What you submit instead of code:** screenshots of the flow or tool configuration, a table of your three questions with *tool fired: yes/no* and the answer given, and the same written analysis the code route requires. The analysis is where the grade lives, and it is unchanged.
+
+> Choosing this route is not the easy way out — you still have to explain *why* the model called the tool when it did, which is the hard part either way.
+
 ## What to Submit
 
 One repository or archive containing your code, plus a writeup that includes, for each of the three capabilities, the deliverable that capability asks for. Record the model and parameters you used so a reader can reproduce your runs, and include an AI-use disclosure naming what was AI-assisted and how you verified it.

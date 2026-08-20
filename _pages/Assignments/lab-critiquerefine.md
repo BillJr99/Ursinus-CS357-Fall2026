@@ -733,6 +733,17 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 ---
 
+## Low-Code Route (equal credit)
+
+You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow.
+
+1. **Two roles, one canvas.** In Langflow, chain **Generator → Critic → Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand — slower, but the loop is identical and the seams are more visible.
+2. **Calibrate the critic the same way.** Part 2's work — checking whether the critic's criticism actually tracks quality — is prompt work and analysis, not code. Run your calibration cases through the critic and record agreement.
+3. **Reward-hack it the same way.** Part 3 asks you to write something that scores well and is bad. That is a writing exercise; the route you used to run the rubric does not change it.
+4. **Latency and worth.** Time one pass versus three by the clock, and answer Part 4's question with your own measurements.
+
+**What you submit instead of code:** the exported flow (or your preset prompts), the transcript of at least three refine rounds, your calibration table, your successful reward hack, and the identical written analysis.
+
 ## Deliverables
 
 Submit a ZIP containing your code, JSON configuration and rubric files, planted-defect drafts with labels, calibration results (CSV or table), reward hack transcript and patch, comparison results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.

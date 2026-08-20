@@ -823,6 +823,17 @@ This is unexpected — a lower threshold should produce more (tighter) clusters.
 
 ---
 
+## Low-Code Route (equal credit)
+
+Multi-agent debate is a *protocol*, and you can run the protocol by hand or on a canvas rather than in Python.
+
+1. **Debate without code.** Open two Open WebUI chats with different system prompts (for example, an advocate and a skeptic), give both the same question, then paste each one's answer to the other for a rebuttal round. Two rounds is enough to see the dynamic. In Langflow, the same thing is two Agent nodes and a loop.
+2. **Consensus without code.** Ask the same question *n* times at a temperature above zero, record the answers in a spreadsheet, and cluster them by hand. The clustering judgment is the actual skill; doing it manually makes the ambiguous cases impossible to hide from.
+3. **The shootout.** Compare single-shot, debate, and consensus on the same question set in your spreadsheet, with a column for cost (rough token count or wall-clock time).
+4. **Threshold sensitivity.** Vary the agreement threshold you would accept and show, from your own data, where the answer flips.
+
+**What you submit instead of code:** the exported flow or chat transcripts, the spreadsheet of runs and clusters, and the identical written analysis — including the honest verdict on whether the extra rounds bought you anything.
+
 ## Deliverables
 
 Submit a ZIP containing your code, JSON configuration, task set with labels, comparison results (CSV or table), debate and consensus transcripts for at least two questions each, the correlated failure analysis, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds where determinism is intended and listing software version information.

@@ -61,6 +61,16 @@ Keep `goldenset.json` under version control with your course work — you will p
 
 ---
 
+## Low-Code Route (equal credit)
+
+The whole point of a golden set is judgment about *what to measure*, not the harness that measures it. You may therefore build and run your set **in a spreadsheet plus a chat interface**, with no code at all.
+
+1. **Design the set in a spreadsheet.** One row per case: `id`, `input`, `expected`, `why this case earns its place`. The design criteria in Part 1 apply unchanged — coverage, discriminating power, and honest hard cases.
+2. **Run it by hand or with promptfoo's UI.** Either paste each input into Open WebUI and record the output in a `got` column, or use `promptfoo` in its web view, which takes a YAML list of cases and shows a pass/fail grid without you writing a harness.
+3. **Analyze in the same spreadsheet.** Add `pass/fail` and `failure mode` columns, then compute the pass rate and group the failures by cause.
+
+**What you submit instead of code:** the spreadsheet (CSV export), a screenshot of the grid or your run log, and the identical written analysis — which cases discriminate, which turned out to be duplicates, and what the failure clusters tell you about the model.
+
 ## Deliverables
 
 Submit `goldenset.json` and `results.md` (protocol, per-item outcomes, miss analysis, one motivated revision).
