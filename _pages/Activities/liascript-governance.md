@@ -127,6 +127,8 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 # Part III: Drafting Workshop
 
+> **Second half of today's session.** After the drafting workshop we take up **[Environmental Impact and the Carbon Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md)**, which supplies the numbers your policy's sustainability section has to answer to.
+
 Now that your policy has a structure and you've mapped your project onto real frameworks, this workshop turns those materials into actual written policy — and then tests it against peer review and adversarial reading.
 
 ## 3. Exercises

@@ -324,9 +324,10 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
-  - rtitle: "Bring a laptop. We do the install together, in class, so nobody is debugging Docker alone at midnight."
   - rtitle: "Optional depth — AI for All — tools overview slide deck"
     rlink: "https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit"
+  - rtitle: "Bring a laptop with Docker Desktop already installed - the download alone can eat the session."
+    rlink: false
 - week: "1"
   date: "1"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -370,6 +371,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
   - rtitle: "Optional depth — tutorial: The Karpathy Coding Approach — Spec-First, TDD, and Supervised AI Development"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-karpathycoding.md"
+  - rtitle: "Bring your working Ollama setup from the clinic; today's workshop edits system prompts against a live model."
+    rlink: false
 - week: "2"
   date: "1"
   title: "Tokens and Embeddings: How Agents Represent Meaning"
@@ -397,6 +400,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-textgen2nn.md"
   - rtitle: "Optional depth — synthesis: Anatomy of an LLM Request — One Prompt, End to End, by Hand (threads tokenize → embed → attention → FFN → logits → sample → one training step with a single running example)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md"
+  - rtitle: "Bring the printed Neural Network by Hand worksheet, or a tablet you can write on."
+    rlink: false
 - week: "3"
   date: "0"
   title: "Attention and the Transformer: How Meaning Gets Mixed"
@@ -443,6 +448,8 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter — hallucination, evaluation, and what the model cannot check for itself"
+  - rtitle: "Bring three prompts where a model gave you a confidently wrong answer - we triage real examples, not invented ones."
+    rlink: false
 - week: "4"
   date: "1"
   title: "Tool Use and Function Calling"
@@ -473,6 +480,8 @@ schedule:
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Optional depth — tutorial: GitHub Power-User Tools — gitingest, getmcp.io, deepwiki, gdagram, and github.dev"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-githubpowertools.md"
+  - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
+    rlink: false
 - week: "5"
   date: "1"
   title: "Retrieval-Augmented Generation with Chroma"
@@ -512,6 +521,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-syntheticdata.md"
   - rtitle: "Optional depth — tutorial: The LLM Wiki Pattern (Wikis versus RAG)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmwiki.md"
+  - rtitle: "Bring your team's Stakeholder Brief draft - the peer review round works on real drafts."
+    rlink: false
 - week: "7"
   date: "1"
   title: "Studio: Local Agent Stack Clinic, Catch-Up, and Visual Building with Langflow"
@@ -530,15 +541,14 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
-  - rtitle: "Studio session: bring your RAG pipeline-in-progress and your stuck points — today is open build, debugging, and review time coming out of fall break, and the last studio before the RAG Knowledge Base Lab is due (the RAG Quality Checkup is handed out the class meeting before that deadline)"
-  - rtitle: "Activity: Building a Visual Agent with Langflow (see Part IV: Hands-On Langflow Build)"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md"
   - rtitle: "Optional depth — tutorial: Agentic OpenWebUI — Tools, Uploads, and Multi-Agent Workflows (source material for the Local Agent Lab's low-code route)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenticopenwebui.md"
   - rtitle: "Optional depth — tutorial: Containerizing AI Systems — Safety, Isolation, and Trust Boundaries"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md"
   - rtitle: "Optional depth — tutorial: Cloudflare Workers and Pages with Wrangler"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md"
+  - rtitle: "Bring your stuck points and your pipeline-in-progress; the studio is only as useful as the problems you bring to it."
+    rlink: false
 - week: "8"
   date: "0"
   title: "Memory and the Small Context Window Principle"
@@ -622,6 +632,8 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md"
   - rtitle: "Optional depth — activity: Multi-Agent Communication — Protocols, Shared State, and Coordination"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentprotocols.md"
+  - rtitle: "Post your reading response before class - the debate exercise starts from the positions you staked out."
+    rlink: false
 - week: "10"
   date: "1"
   title: "Evaluating Agents: LLM-as-Judge and Rubric Pipelines"
@@ -700,8 +712,6 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
   readings:
-  - rtitle: "Activity (second half of today's session): Environmental Impact and the Carbon Cost of Intelligence — core models only; also the required reading for Written Assignment 3 Direction E"
-    rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md"
   - rtitle: "Crawford, Atlas of AI, Chapter 1 — Earth: the mineral and energy costs of computation"
   - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
   - rtitle: "Christian, The Alignment Problem — any one chapter (e.g., the section on reward and reinforcement)"
@@ -751,6 +761,8 @@ schedule:
     points: "200"
     rubricpath: "_pages/Assignments/lab-responsibleai.md"
   readings:
+  - rtitle: "Bring your gallery-walk artifact ready to display, and your SQR cards."
+    rlink: false
 - week: "14"
   date: "1"
   title: "Project Studio: Final Integration and Demo Rehearsal"
