@@ -281,17 +281,24 @@ schedule:
     dlink: "Assignments/ReadingGroup"
     points: "10"
     rubricpath: "_pages/Assignments/asmt-readinggroup.md"
+    module: overarching
   - dtitle: "Participation: Reading Responses Handed Out"
     dlink: "Participation/ReadingResponses"
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
+    module: overarching
+  - dtitle: "Participation: Class Activities Handed Out"
+    points: "10"
+    module: overarching
   - dtitle: "Reflection Notebook Handed Out"
     dlink: "Participation/ReflectionNotebook"
     points: "10"
+    module: overarching
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
   - rtitle: "Required setup (Overview assignment, Route A): Your Course Development Environment — Host Ollama, the Course Container, Git, and GitHub"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
+    module: resource
   - rtitle: "Optional depth — AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
 - week: "0"
@@ -829,6 +836,8 @@ schedule:
     dlink: "Participation/ReadingResponses"
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
+  - dtitle: "Participation: Class Activities Due"
+    points: "10"
   - dtitle: "Reflection Notebook Due"
     dlink: "Participation/ReflectionNotebook"
     points: "10"
