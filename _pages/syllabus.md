@@ -11,7 +11,7 @@ info:
   credit_hours: "4 Semester Hours"
   course_homepage: "https://www.billmongan.com/Ursinus-CS357-Fall2026/"
   teamshelproom: "https://teams.microsoft.com/l/team/19%3AwLG9HyqYOj7K3bd_6-rTi9L_ctuc35ppB9WK-ObSTpw1%40thread.tacv2/conversations?groupId=79df3988-c03f-46f1-b2fc-51e4539a7c94&tenantId=921f1c03-8689-4e60-a722-f5ea581e00fe"
-  class_notebook: "https://ursinuscollege365-my.sharepoint.com/personal/wmongan_ursinus_edu/Documents/Class Notebooks/CS357 Fall 2026"
+  class_notebook: https://ursinuscollege365-my.sharepoint.com/personal/wmongan_ursinus_edu/Documents/Class%20Notebooks/CS357%20Fall%202026
   ical: files/CS357.ics
   course_prerequisites: "Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor."
   course_start_date: "2026/08/24"
