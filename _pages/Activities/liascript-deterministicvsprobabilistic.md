@@ -190,7 +190,7 @@ LLMs typically do not. They generate fluent, confident-sounding prose regardless
 
 Read the following two outputs. Both come from the same model in the same fluent style:
 
-```
+```yaml
 User: What is the boiling point of water at sea level?
 AI:   The boiling point of water at sea level is 100°C (212°F).
 

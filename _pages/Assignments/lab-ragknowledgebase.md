@@ -422,7 +422,7 @@ for strategy in ["fixed", "paragraph"]:
 
 Expected output (your numbers will differ):
 
-```
+```yaml
 Strategy: fixed
   recall@1 = 0.50
   recall@3 = 0.80
@@ -1075,6 +1075,7 @@ print("Setup complete!")
 ```
 
 Expected output:
+
 ```
 CUDA available: True
 GPU: Tesla T4
@@ -1104,6 +1105,7 @@ print(f"Tokenizer OK. Token IDs: {tokens['input_ids']}")
 ```
 
 Expected output:
+
 ```
 Tokenizer OK. Token IDs: [1, 15043, 29892, 3186, 29991]
 ```
@@ -1147,6 +1149,7 @@ print(f"\nFirst example:\n{dataset['train'][0]}")
 ```
 
 Expected output (for `sciq`):
+
 ```
 Dataset splits: ['train', 'validation', 'test']
 Train size: 11679
@@ -1367,6 +1370,7 @@ python train.py
 ```
 
 Expected training output (your exact numbers will differ, but the pattern should show decreasing loss):
+
 ```
 trainable params: 4,194,304 || all params: 3,825,160,192 || trainable%: 0.1097
 Starting training...

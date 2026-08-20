@@ -194,6 +194,7 @@ A ReAct agent is on step 18 of a task. Its context window shows 28,000 of 32,000
 *What to do:* Extend the Model 2 ReAct trace to handle the case where the Semantic Scholar API is rate-limited at step 2 (returns HTTP 429 Too Many Requests). Add steps 2b and 2c showing the agent's Thought, Action, and Observation for waiting and retrying, and update the Next Thought at step 2 to reflect the rate-limit scenario.
 
 *Starter hint:*
+
 ```
 Step 2b:
   Thought: The API returned HTTP 429, which means I am sending requests too fast.
@@ -210,6 +211,7 @@ Step 2b:
 *What to do:* Write a Python function `is_oscillating(history, window=6)` that takes a list of `(action_name, args_hash)` tuples representing recent actions and returns `True` if any `(action, args)` pair appears more than once in the last `window` entries.
 
 *Starter hint:*
+
 ```python
 def is_oscillating(history, window=6):
     # Look only at the most recent `window` actions

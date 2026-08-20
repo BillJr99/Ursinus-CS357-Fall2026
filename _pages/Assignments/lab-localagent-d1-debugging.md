@@ -362,7 +362,7 @@ When `max_steps` is exhausted, the function falls off the end of the loop and im
 
 After applying all five fixes, rerun the three sample queries. Expected behavior:
 
-```
+```yaml
 Query: How tall is the Eiffel Tower in feet? (1 meter = 3.28084 feet)
 Answer: The Eiffel Tower is 330 meters tall, which is approximately 1082.68 feet.
 

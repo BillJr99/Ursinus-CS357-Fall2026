@@ -146,7 +146,7 @@ print(r.json()['message']['content'])
 
 Expected output:
 
-```
+```json
 {"test": "ok"}
 ```
 
@@ -191,6 +191,7 @@ Author at least twelve synthetic submissions spanning the quality range, includi
 **Step 1: Create your rubric and configuration files.**
 
 `rubric.json` (example for a persuasive paragraph):
+
 ```json
 {
   "artifact_type": "persuasive_paragraph",
@@ -244,6 +245,7 @@ Author at least twelve synthetic submissions spanning the quality range, includi
 ```
 
 `config.json`:
+
 ```json
 {
   "model": "llama3.2",
@@ -738,6 +740,7 @@ The model may be paraphrasing rather than quoting. Strengthen the prompt: add "T
 
 **`thefuzz` import fails**
 Run `pip install thefuzz python-Levenshtein`. If you cannot install it, use Python's built-in `difflib.SequenceMatcher` as an alternative:
+
 ```python
 from difflib import SequenceMatcher
 score = SequenceMatcher(None, evidence.lower(), submission_text.lower()).ratio() * 100
@@ -811,7 +814,7 @@ print(f"\nAverage verbosity bias: {avg_delta:+.1f} points (positive = verbose sc
 
 Expected output:
 
-```
+```yaml
   s01_excellent.txt: 95.0
   s01_verbose.txt: 97.5
   s04_poor.txt: 32.5

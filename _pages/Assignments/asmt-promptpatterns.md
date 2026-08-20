@@ -188,6 +188,7 @@ Then fill in this summary table:
 **Write two sentences** stating what your numbers demonstrate about temperature and the sharpness of the distribution. Specifically: what happens to the probability of the highest-logit token as temperature decreases toward zero?
 
 **Python verification:**
+
 ```python
 import numpy as np
 
@@ -220,6 +221,7 @@ $$\cos(\mathbf{a}, \mathbf{b}) = \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}
 **Second calculation:** Now compute $$\cos(\mathbf{a},\ 3\mathbf{a})$$. Work it out by hand and show why the result is exactly 1.000. Then write one sentence explaining why this property matters for comparing document embeddings of different lengths.
 
 **Python verification:**
+
 ```python
 import numpy as np
 
@@ -255,6 +257,7 @@ where $$\text{ReLU}(z) = \max(0, z)$$.
 **Second calculation:** Repeat the full trace for $$\mathbf{x} = (0.0, 2.0)$$. Note which hidden neuron is active in each of your two traces, and **write one sentence** explaining what the change in the active-neuron pattern demonstrates about how a ReLU network processes different inputs. (If you want more practice before or after, the [Neural Network by Hand worksheet]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) extends this to a full network with a training pass.)
 
 **Python verification:**
+
 ```python
 W1 = [[2.0, -1.0], [-1.0, 1.0]]
 b1 = [-0.5, -0.5]

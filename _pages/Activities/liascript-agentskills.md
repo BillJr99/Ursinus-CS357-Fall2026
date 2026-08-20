@@ -328,6 +328,7 @@ development in CS357: Foundations of AI at Ursinus College.
 Install with:
 ```bash
 opencode skills install git+https://github.com/your-username/cs357-skills.git
+
 ```
 ```
 
@@ -613,6 +614,7 @@ Two open-source skills from the community are worth studying as design examples 
 **Why it is a good skill example:** It has a single, narrow purpose (pre-commitment scrutiny), a concrete trigger (when you describe a plan), and a well-defined output (structured questions, one branch at a time). It does not try to also write code, generate documentation, or do anything else.
 
 **Install and try:**
+
 ```bash
 opencode skills install git+https://github.com/mattpocock/skills.git
 # Then inside a session:
@@ -630,6 +632,7 @@ Source: https://github.com/mattpocock/skills — MIT License.
 **Why it is a good skill example:** It demonstrates scoped behavior with explicit safety overrides — the instruction to revert to normal prose for warnings is a concrete constraint that prevents the compression from obscuring critical information. It also shows how to implement multiple intensity modes within a single skill by name-parameterizing invocations.
 
 **Install and try:**
+
 ```bash
 opencode skills install git+https://github.com/JuliusBrussee/caveman.git
 # Then inside a session:

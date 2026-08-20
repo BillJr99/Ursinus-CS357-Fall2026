@@ -113,7 +113,7 @@ print(r.json()['message']['content'])
 
 Expected output (the model may add extra text, but the JSON should be present):
 
-```
+```json
 {"verdict": "accept", "issues": []}
 ```
 
@@ -146,6 +146,7 @@ Choose a generation task with checkable criteria: a structured class announcemen
 **Step 1: Create your configuration and rubric files.**
 
 `config.json`:
+
 ```json
 {
   "model": "llama3.2",
@@ -160,6 +161,7 @@ Choose a generation task with checkable criteria: a structured class announcemen
 ```
 
 `rubric.json` (example for a function docstring task — adapt to your chosen task):
+
 ```json
 {
   "task": "function_docstring",
@@ -837,11 +839,13 @@ pip install openai anthropic flake8 bandit
 Then install your coding agent. Choose one (or install both for the Extension Challenges):
 
 **Claude Code:**
+
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
 **OpenCode:**
+
 ```bash
 npm install -g opencode-ai
 ```
@@ -872,6 +876,7 @@ bandit --version
 > ```
 
 **Claude Code:**
+
 ```bash
 claude --version
 ```
@@ -882,6 +887,7 @@ claude --version
 > ```
 
 **OpenCode:**
+
 ```bash
 opencode --version
 ```
@@ -970,6 +976,7 @@ On success (HTTP 200), return JSON:
   "count": <int>,
   "query": "<string echoed back>"
 }
+
 ```
 
 ## Error cases (all must be handled and tested)
@@ -1074,22 +1081,26 @@ You have a spec. You have a system prompt. Now you run the agent — the generat
 Make sure you are inside your `cs357-coding-agents` directory. Run the agent using the command for your chosen tool.
 
 **Claude Code:**
+
 ```bash
 claude --system-prompt "$(cat system_prompt.txt)" "$(cat spec.md)"
 ```
 
 Or, to use the interactive mode where you can watch the agent work step by step:
+
 ```bash
 claude
 ```
 Then paste your system prompt when prompted, and paste the contents of `spec.md` as the task.
 
 **OpenCode:**
+
 ```bash
 opencode run --system "$(cat system_prompt.txt)" --task "$(cat spec.md)"
 ```
 
 Or interactively:
+
 ```bash
 opencode
 ```
@@ -1146,6 +1157,7 @@ If the agent does not use git, copy the proposed changes shown in the terminal a
 **Problem: `claude: command not found` or `opencode: command not found`**
 
 The tool is not on your PATH. Try:
+
 ```bash
 npx @anthropic-ai/claude-code --version
 # or
@@ -1156,6 +1168,7 @@ If that works, use `npx claude` instead of `claude` throughout this direction, o
 **Problem: `Error: ANTHROPIC_API_KEY is not set` (or equivalent)**
 
 You need to export your API key. Run:
+
 ```bash
 export ANTHROPIC_API_KEY="your-key-here"
 ```
@@ -1291,16 +1304,19 @@ critique.md, or pair_log.md.
 Run the agent again, this time using your follow-up prompt as the task:
 
 **Claude Code:**
+
 ```bash
 claude --system-prompt "$(cat system_prompt.txt)" "$(cat followup_prompt.txt)" 2>&1 | tee agent_trace_2.txt
 ```
 
 **OpenCode:**
+
 ```bash
 opencode run --system "$(cat system_prompt.txt)" --task "$(cat followup_prompt.txt)" 2>&1 | tee agent_trace_2.txt
 ```
 
 Save the new diff:
+
 ```bash
 git diff > diff_2.patch
 ```
@@ -1326,6 +1342,7 @@ This is extremely common. Add the new bug to a new row in your critique document
 **Problem: The agent edited a file you prohibited in your system prompt**
 
 Do not accept the edit to the prohibited file. Use your agent's undo/reject mechanism, or restore the file with:
+
 ```bash
 git checkout -- spec.md   # replace with the prohibited filename
 ```
@@ -1421,6 +1438,7 @@ pytest test_app.py -v
 ```
 
 Save the full pytest output to a file:
+
 ```bash
 pytest test_app.py -v > test_output.txt 2>&1
 ```
@@ -1493,6 +1511,7 @@ bandit -r app.py
 > ```
 
 Save the bandit output:
+
 ```bash
 bandit -r app.py > bandit_output.txt 2>&1
 ```

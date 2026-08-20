@@ -264,6 +264,7 @@ CMD ["python", "/app/agent.py"]
 ```
 
 *Starter hint:* A hardened Dockerfile adds these elements:
+
 ```dockerfile
 # AFTER (template — fill in the blanks):
 FROM python:3.12
