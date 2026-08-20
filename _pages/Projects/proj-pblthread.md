@@ -216,6 +216,8 @@ Use this template as a starting point — the format is flexible, but every row 
 
 Submit one charter per team; each member includes it with their own submission. Typed names at the bottom serve as signatures.
 
+Work through the **[Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md)** together when teams are announced — it walks the seven required elements and gives you the language for the harder ones. Revisit it at the midpoint charter check.
+
 
 Your team's first deliverable is not technical — it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the in-class charter activity and signed by every member within the following week, that turns "we'll figure it out" into commitments you can point to later. The charter must cover seven things:
 
@@ -274,6 +276,8 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 ---
 
 ## Intra-Team Check-Ins 1-3
+
+The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol** — one Strength with evidence, one genuine Question, one Risk with a mitigation. The **[Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md)** carries the protocol card; bring it to each review round.
 
 Three times in the semester — with the Stakeholder Brief, between the project tracks and the proposal, and after the gallery walk — your team pauses for a structured check-in. Each check-in carries **3 points, assessed within Class Activities and Participation** — enough to make it a real commitment, small enough that the check-in itself, not the score, is the point. Every check-in has the same two parts:
 
