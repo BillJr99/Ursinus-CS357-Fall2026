@@ -39,6 +39,107 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+## Getting a Coding Agent Running: Install, Configure, Run
+
+Before comparing architectures, get one working. Ten minutes, one tool, one small task.
+
+### Install one (not all)
+
+```bash
+# Pick ONE to start.
+npm install -g @anthropic-ai/claude-code    # Claude Code
+npm install -g opencode-ai                  # opencode
+npm install -g @openai/codex                # Codex CLI
+pip install aider-chat                      # Aider (Python)
+```
+
+Prefer not to install anything on your laptop? The **[Docker module](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md)** builds a `course-agent` image that carries the CLI, so your host stays clean and the agent's blast radius is one mounted folder.
+
+### Configure: point it somewhere, tell it the rules
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."     # or OPENAI_API_KEY / GEMINI_API_KEY
+# or route everything through the local gateway instead:
+export ANTHROPIC_BASE_URL="http://localhost:4000"
+```
+
+Then write the project instruction file — `CLAUDE.md`, `AGENTS.md`, or `opencode.json` — with the test command and the off-limits paths. An agent that knows how to verify its own work is a different tool from one that does not.
+
+### Run: the loop that actually works
+
+```bash
+cd ~/projects/mylang        # the working directory IS the agent's world
+git status                  # start clean, so the diff at the end is only the agent's work
+claude                      # or: opencode / codex / aider
+```
+
+Give it something small and checkable first:
+
+> "Add a `--verbose` flag to `cli.py` that prints each token as it is scanned. Run `pytest -q` and make sure it still passes."
+
+Then **read the diff**. Not the summary — the diff:
+
+```bash
+git diff                    # what actually changed
+git add -p                  # stage it hunk by hunk, rejecting what you did not want
+```
+
+If the change is wrong, `git checkout -- .` costs you nothing. This is why we start every agent session from a clean git tree: it converts "did the agent break something?" from an act of faith into a two-second check.
+
+You started a coding agent from your home directory instead of the project folder. What is the practical consequence?
+
+[( )] Nothing — the agent asks before touching anything outside the project
+[(X)] The agent's working context is your entire home directory: it may read files you never meant to share and propose edits far outside the project
+[( )] The agent runs faster because it has more context available
+[( )] The tool refuses to start outside a git repository
+
+---
+
+## Agents Talking to Agents: GitHub as the Message Bus
+
+Here is the working pattern I use daily, and it is worth adopting early because it scales from one agent to a team of them without inventing any new infrastructure.
+
+**Use GitHub as the coordination layer.** Issues, pull requests, and review comments are already a durable, threaded, permissioned, notification-driven message bus — and both humans and agents can read and write them.
+
+| Artifact | What it carries | Who writes it |
+|---|---|---|
+| **Issue** | The task, its acceptance criteria, and the discussion of approach | You, or an agent that found the problem |
+| **Branch + PR** | One agent's attempt at that task, as a reviewable diff | The coding agent |
+| **PR review comment** | A specific, line-anchored instruction: "this misses the empty-input case" | You, or a *reviewing* agent |
+| **PR checks (CI)** | The objective verdict — tests pass or they do not | The machine |
+| **Merge** | Consensus: this attempt is accepted | You |
+
+**Why this beats a chat window.** A conversation with an agent is ephemeral, unreviewable by teammates, and invisible to CI. The same exchange conducted through an issue and a PR is permanent, searchable a semester later, reviewable by your project team, and gated by tests. Your Project Thread team will thank you.
+
+**The loop, concretely:**
+
+```bash
+# 1. The task becomes an issue (agents can read it by number)
+gh issue create --title "Lexer drops trailing newline" \
+  --body "Repro: echo 'x' | ./mylang. Expected NEWLINE token; got EOF. Acceptance: test added."
+
+# 2. Point the agent at the issue
+claude "Fix issue #42. Read it with 'gh issue view 42', write a failing test first, then fix it."
+
+# 3. The agent opens a PR
+gh pr create --fill
+
+# 4. Review happens in the PR, not in the chat
+gh pr diff 17
+gh pr review 17 --comment -b "The fix works but the test only covers LF. Add a CRLF case."
+
+# 5. A second agent can pick up that comment
+claude "Read the review comments on PR 17 with 'gh pr view 17 --comments' and address them."
+```
+
+Step 5 is the interesting one: **the review comment is the inter-agent message.** One agent wrote code, a human (or another agent) critiqued it in a durable place, and a second agent consumed that critique without either of them sharing a context window. That is multi-agent communication built from tools you already have, with an audit trail as a side effect.
+
+> **Watch out!** Give the agent a **scoped** token, not your personal one. A fine-grained GitHub token limited to one repository with issue and PR write access is enough for this entire loop. Never mount `~/.config/gh` into an agent container — that token can push to everything you can.
+
+**Notes as the other half.** The same instinct applies to your own thinking: I keep an [Obsidian](https://obsidian.md) vault of plain Markdown notes and mount it into agent containers **read-only** (`-v "$HOME/notes/vault:/reference:ro"`), so agents can ground their answers in what I have already worked out without being able to corrupt it. Notes are the long-term memory; issues and PRs are the working memory; the container mount decides which the agent may write to. The **Obsidian Second Brain** and **Syncing Obsidian to GitHub** modules build this out.
+
+---
+
 ## Model 1: A Comparison of Coding Agent Architectures
 
 Three open or widely-used coding agents take meaningfully different architectural approaches to the same problem: how does an agent read a codebase, plan changes, and execute them safely?
