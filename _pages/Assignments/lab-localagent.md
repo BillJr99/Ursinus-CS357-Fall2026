@@ -134,6 +134,8 @@ In this lab, you and a partner will build a working agent from first principles:
 
 ## Before You Start
 
+> **Bring to class.** For the *Hallucinations and Evaluating Agent Outputs* session, come with three prompts where a model gave you a confidently wrong answer. We triage real examples, and yours are better than invented ones.
+
 **Prep decks this lab assumes.** Work through whichever apply to your direction before you start:
 
 - [Structured Outputs — JSON Mode, Tool Schemas, and Output Validation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md) — all directions.
