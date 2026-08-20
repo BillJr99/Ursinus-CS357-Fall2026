@@ -326,7 +326,7 @@ An early-alert system's false negatives are especially dangerous to the institut
 
 *Personal:* This system would have read your own first semester. Would it have flagged you? Would being flagged — or being invisible to it — have helped you, stung, or both? What would you have wanted the human who received the flag to do?
 
-*Technical:* Your bias probe measured how triage shifts when one feature disappears — an ablation, the same experimental logic as SHAP's feature attributions in the [explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/Explainability). What can your ablation detect that a SHAP analysis of a numeric model cannot, and vice versa? Where does *neither* tool reach (recall question 8)?
+*Technical:* Your bias probe measured how triage shifts when one feature disappears — an ablation, the same experimental logic as SHAP's feature attributions in the [explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAI). What can your ablation detect that a SHAP analysis of a numeric model cannot, and vice versa? Where does *neither* tool reach (recall question 8)?
 
 *Societal (Open Questions):* The Ursinus Open Questions ask "How should we live together?" and "What should matter to me?" An early-alert system is one institutional answer: we should notice one another's struggle early, and we should delegate part of the noticing to machines so that no one is overlooked. Write a short paragraph defending that answer, and a second paragraph giving the strongest reply — that being *noticed by a machine* is not the same as being *cared for by a community*, and may crowd it out. Which paragraph do you believe, and what would an early-alert design that took *both* seriously look like?
 
@@ -340,7 +340,7 @@ We built the most defensible version of this system — local, minimized, eviden
 
 ## 4. Further Reading
 
-- Course cross-links: the [Training Data and Bias activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md) (proxies, disaggregated evaluation, feedback loops) and the [Explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/Explainability) (feature attribution, contestable explanations).
+- Course cross-links: the [Training Data and Bias activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md) (proxies, disaggregated evaluation, feedback loops) and the [Explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAI) (feature attribution, contestable explanations).
 - Virginia Eubanks. *Automating Inequality: How High-Tech Tools Profile, Police, and Punish the Poor.* St. Martin's Press (2018).
 - Cathy O'Neil. *Weapons of Math Destruction*, chapter on predictive models in education (2016).
 - Obermeyer et al. "Dissecting racial bias in an algorithm used to manage the health of populations." *Science* (2019). The canonical label-bias case study.

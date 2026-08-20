@@ -16,7 +16,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 You already run OpenWebUI as a chat window over Ollama. Today we treat it as something more interesting: an **agent frontend** — a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive. The arc: **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
 
-This is a **supplemental tutorial** — it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/AgentStack).
+This is a **supplemental tutorial** — it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction2).
 
 ---
 
@@ -271,7 +271,7 @@ You now have two complementary orchestration substrates: shell pipelines over ra
 - OpenWebUI API reference (OpenAI-compatible endpoints, files, and RAG): https://docs.openwebui.com/getting-started/api-endpoints
 - Ollama OpenAI compatibility documentation: https://github.com/ollama/ollama/blob/main/docs/openai.md
 - Hands-on notebooks from this tutorial: [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) and [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)
-- Course lab: [Compose and Verify a Local Agent Stack](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/AgentStack)
+- Course lab: [Compose and Verify a Local Agent Stack](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction2)
 
 > **From the MCP and APIs session.** Power Automate is a second, no-code route to the same integration problem MCP solves; it was moved here so the MCP session could stay on the protocol itself.
 
