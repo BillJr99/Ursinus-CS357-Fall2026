@@ -276,9 +276,6 @@ schedule:
   - dtitle: "Participation: Warmup Assignment Handed Out"
     dlink: "Assignments/Warmup"
     points: "10"
-  - dtitle: "Participation: Class Activities Handed Out"
-    points: "10"
-    module: overarching
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
   - rtitle: "Teachable Machine — train an image, sound, or pose classifier in the browser, with no code, to see what \"learning from examples\" actually means"
@@ -828,8 +825,6 @@ schedule:
     dlink: "Participation/ReadingResponses"
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
-  - dtitle: "Participation: Class Activities Due"
-    points: "10"
   readings:
   - rtitle: "Demo Day. Bring the running system, the governance one-pager, and the contribution statements. Nothing is due after today."
 ---
