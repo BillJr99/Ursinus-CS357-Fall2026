@@ -845,10 +845,16 @@ Fill in this table after running the comparison. Mark each cell **Y** (the relev
 
 You increase `chunk_size` from 100 characters to 1000 characters (keeping overlap=0). Which of the following best describes the trade-off?
 
-[( )] Fewer chunks means faster embedding but always better retrieval precision
-[(X)] Larger chunks improve the chance that a multi-sentence answer is intact in one chunk, but each chunk's embedding blurs across more topics, reducing precision for focused queries
-[( )] Larger chunks always increase recall@k regardless of the query
-[( )] Chunk size affects only storage cost, not retrieval quality
+- Fewer chunks means faster embedding but always better retrieval precision
+- Larger chunks improve the chance that a multi-sentence answer is intact in one chunk, but each chunk's embedding blurs across more topics, reducing precision for focused queries
+- Larger chunks always increase recall@k regardless of the query
+- Chunk size affects only storage cost, not retrieval quality
+
+<details><summary>Answer</summary>
+
+Larger chunks improve the chance that a multi-sentence answer is intact in one chunk, but each chunk's embedding blurs across more topics, reducing precision for focused queries
+
+</details>
 
 > *Hint: Think about the Goldilocks Problem from Part I. A 1000-character chunk might span three different topics. Its embedding vector must summarize all three topics at once. When a user asks about just one of those topics, the chunk may rank lower than a smaller, more focused chunk — even though the answer is physically present inside it.*
 
