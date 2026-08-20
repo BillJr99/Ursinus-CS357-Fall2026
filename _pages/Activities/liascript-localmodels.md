@@ -37,6 +37,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama installed. Disk space is the real constraint: budget 2-5 GB per model you pull.
+
+**What you will have at the end:** a considered choice of local model for your own machine, defended against alternatives.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: Why Local?
 
 In this part, you will examine the five reasons an organization might choose to run AI locally rather than through a cloud API — and identify which reason applies to which context, because "local is more private" is true but incomplete as a decision rationale.

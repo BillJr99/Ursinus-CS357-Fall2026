@@ -37,6 +37,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** An agent script that already works when you run it yourself. Scheduling comes second.
+
+**What you will have at the end:** that agent running unattended on a schedule, with logs you can inspect afterward.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: A Trigger Is Just a Clock
 
 In this part you will see that "autonomous" mostly means "something other than a human started the run," and that the something is one of a small, boring set of schedulers. The intelligence is the same agent you already built; only the *trigger* changed.

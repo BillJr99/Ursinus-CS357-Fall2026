@@ -56,7 +56,7 @@ tags:
 
 ---
 
-> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread](/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview), your team operates under its signed charter and the [Team Playbook](/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
+> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview), your team operates under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
@@ -66,7 +66,7 @@ The Final Project is **one required project with three directions**. Every team 
 - **Direction B: Responsible AI Audit** — perform a structured, evidenced responsible-AI audit of a specific deployed system: a risk analysis with mechanistic failure modes, a governance document a real organization could adopt, and a presentation a real board could act on.
 - **Direction C: Build and Publish an Open-Source Agent** — identify and verify a real gap in the agent tooling ecosystem, then build, test, document, and publish an open-source agent to a public registry, engaging a real community with its governance and limitations disclosed — or, as a variant, contribute reviewed pull requests to an existing open-source agent project (see the variant under Direction C below).
 
-These are directions within the one project, not separate assignments: your team chooses the direction that best serves the stakeholder problem you have carried since the [Stakeholder Brief](/Assignments/StakeholderBrief). All three directions are completed with your standing Project Thread team, operating under its signed charter, with project roles (**Coordinator**, **Builder**, **Evaluator**, **Scribe**) rotating at every sprint boundary.
+These are directions within the one project, not separate assignments: your team chooses the direction that best serves the stakeholder problem you have carried since the [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief). All three directions are completed with your standing Project Thread team, operating under its signed charter, with project roles (**Coordinator**, **Builder**, **Evaluator**, **Scribe**) rotating at every sprint boundary.
 
 **The project is the vehicle, not the destination.** The graded emphasis falls on your *process* as much as your *product*: how you decided, how you worked together, how you engaged your community partner, and how honestly you disclosed what worked and what did not. A team that meets on schedule, logs its decisions, checks in candidly, and reports a limitation honestly will outscore a team with a slicker artifact and no visible process.
 
@@ -95,7 +95,7 @@ The registrar's final-exam slot is reserved for Demo Day overflow only — if al
 
 This project is deliberately community-grounded: **every team connects its project to a community stakeholder**. Partners are identified by the instructor and the roster is shared in class (it is not published on the website). Three touchpoints are required:
 
-1. **Proposal:** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief](/Assignments/StakeholderBrief). Name the problem in the partner's terms and state how the direction you chose serves it.
+1. **Proposal:** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief). Name the problem in the partner's terms and state how the direction you chose serves it.
 2. **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact) and document their feedback and how you triaged it — incorporate, disclose, or defer.
 3. **Partner-facing artifact (Demo Day):** deliver an artifact an external stakeholder can actually use — a one-page brief, a demo video, or a deployed tool — and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
 
@@ -120,7 +120,7 @@ Your final-project grade combines **team output**, **individual contribution**, 
 Every proposal (2–3 pages), regardless of direction, must include:
 
 - **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion.
-- **Stakeholder grounding** integrating your [Stakeholder Brief](/Assignments/StakeholderBrief) and [Literature Review](/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
+- **Stakeholder grounding** integrating your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
 - **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to the three sprints with named owners (Goal 13).
 - **AI-use disclosure** for the proposal itself.
 - The **direction-specific elements** listed under your direction below.

@@ -45,6 +45,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** A free Cloudflare account and Node 20+ for `wrangler`. No credit card, and everything here fits the free tier.
+
+**What you will have at the end:** a Worker and a Pages site deployed to a public URL you own.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: The Platform and the Tool
 
 In this part, you will map the three nouns that make up Cloudflare's developer platform and install Wrangler, the CLI that drives all of them — because understanding what each service does and does not do is the prerequisite for placing the right thing in the right place.

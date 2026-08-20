@@ -41,6 +41,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally, plus `curl` and Python 3.10+. Section 0 checks all of it for you.
+
+**What you will have at the end:** the ability to call any OpenAI-compatible endpoint by hand, and to read the errors when it fails.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## 0. Environment Check
 
 This activity uses a locally running Ollama instance. Verify it is running before Part I.

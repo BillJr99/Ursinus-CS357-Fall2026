@@ -37,6 +37,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Python 3.10+; Ollama only for the optional live comparison.
+
+**What you will have at the end:** a felt sense of what temperature and top-p actually do, from numbers you computed.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: Softmax and Temperature, Revisited Visually
 
 ## 1. The Math With Real Numbers

@@ -42,11 +42,21 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally. Section 0 lets you try the finished app before building anything.
+
+**What you will have at the end:** a working chess coach that explains moves, built from API calls you can read end to end.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## 0. Try the App First
 
 Before reading any code, **play the app** so the rest of the activity has something concrete to attach to.
 
-1. Download or open [`chess-ai-coach.html`](/files/apps/chess-ai-coach.html).
+1. Download or open [`chess-ai-coach.html`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/apps/chess-ai-coach.html).
 2. Because browsers restrict `fetch` from `file://` pages, serve the folder with a tiny local web server and open it over `http://`:
 
 ## Code Cell

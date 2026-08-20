@@ -39,6 +39,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Node 20+ or Python 3.10+, git, and a project folder. A container works if you would rather install nothing.
+
+**What you will have at the end:** one coding agent installed, configured, and driven through a real change you review as a diff.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## Getting a Coding Agent Running: Install, Configure, Run
 
 Before comparing architectures, get one working. Ten minutes, one tool, one small task.

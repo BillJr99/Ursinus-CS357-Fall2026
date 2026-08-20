@@ -43,6 +43,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally. Docker only if you take the containerized route.
+
+**What you will have at the end:** a threaded research pipeline you can point at a question and leave running.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: The Architecture
 
 In this Part you will map the pipeline's four stages and identify which stages run concurrently, which run alone, and why the boundaries sit exactly where they do.

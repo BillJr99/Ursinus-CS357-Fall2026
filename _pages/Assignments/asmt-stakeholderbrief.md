@@ -139,13 +139,13 @@ Bring it to class in whatever form you wrote it — typed, handwritten, or a pho
 
 ## Part 3: The Brief
 
-Write **2-3 pages** with these six sections. Every section names its **primary author**, and every member is primary author of at least one section (the standing [Project Thread](/Projects/PBLThread) rule).
+Write **2-3 pages** with these six sections. Every section names its **primary author**, and every member is primary author of at least one section (the standing [Project Thread]({{ site.baseurl }}/Projects/PBLThread) rule).
 
 1. **Stakeholder context.** Who they are (as consented), what their office or field does, and how this problem fits into their work.
 2. **The issue in the stakeholder's own terms.** Their framing, their vocabulary, at least two direct quotes or attributed close paraphrases. Resist translation; that comes later.
 3. **Disciplinary perspectives involved.** At least two perspectives beyond CS. For each: what does this discipline notice about the problem, what would count as evidence, and what would "solved" mean? Name at least one point where the perspectives pull in different directions.
 4. **A problem statement an agent system could address.** One paragraph, traceable to the interview. State the problem, not a design.
-5. **Candidate track fit.** Two or three sentences per direction showing the problem could support **all three** directions of the [Final Project](/Projects/FinalProject): a built Custom Agent Team, a Responsible AI Audit of an existing or proposed system in this domain, or an Open-Source Agent artifact the stakeholder's community could adopt. You are not choosing a track yet — you are proving the problem is rich enough to keep the choice open.
+5. **Candidate track fit.** Two or three sentences per direction showing the problem could support **all three** directions of the [Final Project]({{ site.baseurl }}/Projects/FinalProject): a built Custom Agent Team, a Responsible AI Audit of an existing or proposed system in this domain, or an Open-Source Agent artifact the stakeholder's community could adopt. You are not choosing a track yet — you are proving the problem is rich enough to keep the choice open.
 6. **What you don't yet know.** Concrete open questions: missing facts, unverified assumptions, and things only the literature (or a second conversation) can answer. This section seeds your Literature Review.
 
 Attach the **interview packet** as an appendix: prep questions, notes, consent record, and the follow-up exchange.

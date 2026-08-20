@@ -45,6 +45,18 @@ Consider each model and its questions individually before discussing with your g
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally is enough for the hands-on attacks; the interactive games (Gandalf, Tensor Trust) need only a browser.
+
+**What you will have at the end:** a set of injections you landed yourself against a system you control, and a defense you tested rather than assumed.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+> A standing rule for this module: every attack here is against your own local model or a purpose-built practice target. Do not point these techniques at systems you do not own or have not been asked to test.
+
+---
+
 ## Model 1: The Injection Taxonomy
 
 **Prompt injection** occurs when attacker-controlled text reaches the LLM's input in a way that causes the model to treat it as instructions rather than data. Because LLMs are trained to follow instructions embedded in text, and because they have no runtime mechanism to distinguish a developer's system prompt from content they were asked to process, the attack surface is the entire input context window.
