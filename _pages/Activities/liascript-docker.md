@@ -39,6 +39,16 @@ Before diving in, anchor these terms. You will see every one of them today — l
 
 ---
 
+### Before You Start
+
+**What you need:** Docker Desktop (or Docker Engine on Linux) and a terminal. No prior container experience assumed.
+
+**What you will have at the end:** images and containers you built yourself, a Compose stack, and a fenced sandbox for running a coding agent.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: The Mental Model
 
 In this Part, you will build the conceptual model that makes every Docker command make sense: the distinction between an image (the frozen template) and a container (the live, running copy). Once this distinction is clear, you will be able to predict what happens to data when containers start, stop, and restart.

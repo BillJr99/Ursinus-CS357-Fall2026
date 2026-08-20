@@ -336,7 +336,7 @@ print(answer)
 
 Notice what the handoff pattern controls that a shared group chat does not: the executor sees *only* the brief — not the original question, not the clarifier's system prompt. In LangGraph terms, this is a two-node graph whose state carries a single `brief` field; in Model 2's terms, it is the leak-proof version of AutoGen's shared message list.
 
-**The extended tutorial:** the course notebook [langchain_ollama_multiagent_tutorial.ipynb](/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb) develops this sequence end to end — environment setup, a first raw query, the multiply tool with a single tool-call roundtrip, retrieval over a directory of documents (RAG), a supervisor pattern that exposes sub-agents as tools, and the clarifier → executor handoff above — with exercises after each stage.
+**The extended tutorial:** the course notebook [langchain_ollama_multiagent_tutorial.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb) develops this sequence end to end — environment setup, a first raw query, the multiply tool with a single tool-call roundtrip, retrieval over a directory of documents (RAG), a supervisor pattern that exposes sub-agents as tools, and the clarifier → executor handoff above — with exercises after each stage.
 
 ## Model 5: Hands-On — Raising the Ceiling with a Deep Agent
 
@@ -602,4 +602,4 @@ Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step
 - LangChain. "DeepAgents." GitHub repository (2025, online) — https://github.com/langchain-ai/deepagents
 - LangChain documentation. "Deep Agents: planning, sub-agents, and file-system context." (online) — https://docs.langchain.com/labs/deep-agents/overview
 - LangChain Blog. "Deep Agents." (2025, online) — https://blog.langchain.com/deep-agents/
-- Course notebook: LangChain + Ollama multi-agent tutorial — [/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb](/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb)
+- Course notebook: LangChain + Ollama multi-agent tutorial — [/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb)

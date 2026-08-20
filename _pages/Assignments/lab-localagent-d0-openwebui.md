@@ -4,7 +4,7 @@ permalink: /Assignments/LocalAgent/Direction0
 title: "CS357 Lab: Local Agent, Direction 0: The OpenWebUI Route (low-code)"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your work is graded with the Local Agent Lab rubric on the core lab page. The rubric's rows are pathway-neutral: the "Agent Loop Implementation" row is earned here by a correctly configured OpenWebUI agent with documented tool invocations, and the "Code Quality and Documentation" row is earned by configuration quality — your exported model JSON, documented tool schemas, and reproducible setup notes.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your work is graded with the Local Agent Lab rubric on the core lab page. The rubric's rows are pathway-neutral: the "Agent Loop Implementation" row is earned here by a correctly configured OpenWebUI agent with documented tool invocations, and the "Code Quality and Documentation" row is earned by configuration quality — your exported model JSON, documented tool schemas, and reproducible setup notes.
 
 > **What this direction requires**
 >

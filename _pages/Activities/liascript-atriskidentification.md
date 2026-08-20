@@ -18,7 +18,7 @@ Colleges everywhere run **early-alert** programs: systems that scan engagement a
 
 **Purpose (why we are doing this):** This is the single most common "AI for student success" proposal on real campuses, and it sits exactly at the intersection of everything you have learned: local models, structured outputs, evidence verification, bias, and governance. You will be in rooms where this system is proposed. **Task:** run a triage pipeline over synthetic gradebook and survey data, make the model cite its evidence, then probe how its judgments shift when single features are removed. **Criteria for success:** you can name, with examples from your own runs, at least three distinct failure modes of at-risk identification, and you can state which decisions in this workflow must never be automated — and why.
 
-> **⚠️ Synthetic data only.** Every dataset in this activity ([synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](/files/data/synthetic_survey.csv)) is computer-generated for teaching. The student IDs, scores, and comments correspond to no real people. **No real student data may be used in this activity or in any course exercise derived from it** — not your own, not a classmate's, not "anonymized" real records. This is both a FERPA obligation and a course rule.
+> **⚠️ Synthetic data only.** Every dataset in this activity ([synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv)) is computer-generated for teaching. The student IDs, scores, and comments correspond to no real people. **No real student data may be used in this activity or in any course exercise derived from it** — not your own, not a classmate's, not "anonymized" real records. This is both a FERPA obligation and a course rule.
 
 ---
 
@@ -42,6 +42,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Human-in-the-Loop (HITL)** | A design where AI output is advisory and a responsible person makes the decision — required here because the "action" touches a person's education and dignity. | The triage list goes to an advisor who reads the evidence and decides whether/how to reach out |
 
 Each concept appears in at least two representations today: this table (words), the pipeline and failure diagrams (pictures), your code output (numbers), and the decision framework (rules). Cross-check them.
+
+---
+
+### Before You Start
+
+**What you need:** Nothing installed. The data files are linked in the activity; a spreadsheet is enough to follow along.
+
+**What you will have at the end:** a worked triage of a synthetic early-alert dataset, and a written account of what the signals can and cannot justify.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
@@ -74,7 +84,7 @@ In this Part you will see what an early-alert system is, why institutions invest
                                  each with cited evidence
 ```
 
-Two signal families feed the triage stage. **Engagement signals** come from the LMS automatically (the [synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv) columns: six assignment scores with realistic missingness, `logins_last_14d`, `discussion_posts`). **Self-report signals** come from a voluntary survey (the [synthetic_survey.csv](/files/data/synthetic_survey.csv) columns: `belonging_1to5`, `workload_1to5`, `hours_working_job`, and a `free_text_comment`). The output is not a grade and not a diagnosis: it is a *priority for human attention* with evidence attached.
+Two signal families feed the triage stage. **Engagement signals** come from the LMS automatically (the [synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv) columns: six assignment scores with realistic missingness, `logins_last_14d`, `discussion_posts`). **Self-report signals** come from a voluntary survey (the [synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv) columns: `belonging_1to5`, `workload_1to5`, `hours_working_job`, and a `free_text_comment`). The output is not a grade and not a diagnosis: it is a *priority for human attention* with evidence attached.
 
 ### Critical Thinking Questions
 
@@ -107,7 +117,7 @@ In this Part you will run the triage stage yourself: aggregate the synthetic gra
 
 **Why this matters:** Everything in Part III's critique lands harder when it is *your* pipeline producing the questionable flag. The prompt pattern here — structured tiers, mandatory evidence citation, explicit "insufficient data" tier, temperature 0 — is the same discipline as the rubric pipeline, applied to people, which is why the discipline is not optional.
 
-The code inlines a few rows of the synthetic datasets so the cell runs anywhere; the full 40-student files are at [/files/data/synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv) and [/files/data/synthetic_survey.csv](/files/data/synthetic_survey.csv) (download both and swap in the `open(...)` lines to run the real exercise).
+The code inlines a few rows of the synthetic datasets so the cell runs anywhere; the full 40-student files are at [/files/data/synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv) and [/files/data/synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv) (download both and swap in the `open(...)` lines to run the real exercise).
 
 ## Code Cell
 
@@ -288,7 +298,7 @@ An early-alert system's false negatives are especially dangerous to the institut
 
 1. *The bias probe: remove one feature, watch the triage move.*
 
-   - *What to do:* Download both full synthetic files ([synthetic_gradebook.csv](/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](/files/data/synthetic_survey.csv)) and run the pipeline over all 40 students twice: once with full features, once passing `drop="hours_working_job"` to the `features()` function. Hold temperature at 0 and the seed fixed so the *only* variable is the feature. Build a table: student, tier-with, tier-without; report how many tiers changed, in which direction, and quote one summary sentence that changed.
+   - *What to do:* Download both full synthetic files ([synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv)) and run the pipeline over all 40 students twice: once with full features, once passing `drop="hours_working_job"` to the `features()` function. Hold temperature at 0 and the seed fixed so the *only* variable is the feature. Build a table: student, tier-with, tier-without; report how many tiers changed, in which direction, and quote one summary sentence that changed.
    - *Starter hint:* `results_full = {sid: triage(features(sid)) for sid in grades}` then `results_drop = {sid: triage(features(sid, drop="hours_working_job")) for sid in grades}`; compare `["tier"]` fields. Then repeat for `drop="survey_comment"` — the free-text field — and compare the *size* of the two effects.
    - *You've succeeded when:* You report changed-tier counts for at least two dropped features, identify which feature the model leans on most, and write three sentences on what this implies: if removing a proxy feature changes who gets flagged, the feature was carrying decision weight — was that weight justified?
 
@@ -316,7 +326,7 @@ An early-alert system's false negatives are especially dangerous to the institut
 
 *Personal:* This system would have read your own first semester. Would it have flagged you? Would being flagged — or being invisible to it — have helped you, stung, or both? What would you have wanted the human who received the flag to do?
 
-*Technical:* Your bias probe measured how triage shifts when one feature disappears — an ablation, the same experimental logic as SHAP's feature attributions in the [explainability lab](/Assignments/Explainability). What can your ablation detect that a SHAP analysis of a numeric model cannot, and vice versa? Where does *neither* tool reach (recall question 8)?
+*Technical:* Your bias probe measured how triage shifts when one feature disappears — an ablation, the same experimental logic as SHAP's feature attributions in the [explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/Explainability). What can your ablation detect that a SHAP analysis of a numeric model cannot, and vice versa? Where does *neither* tool reach (recall question 8)?
 
 *Societal (Open Questions):* The Ursinus Open Questions ask "How should we live together?" and "What should matter to me?" An early-alert system is one institutional answer: we should notice one another's struggle early, and we should delegate part of the noticing to machines so that no one is overlooked. Write a short paragraph defending that answer, and a second paragraph giving the strongest reply — that being *noticed by a machine* is not the same as being *cared for by a community*, and may crowd it out. Which paragraph do you believe, and what would an early-alert design that took *both* seriously look like?
 
@@ -330,7 +340,7 @@ We built the most defensible version of this system — local, minimized, eviden
 
 ## 4. Further Reading
 
-- Course cross-links: the [Training Data and Bias activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md) (proxies, disaggregated evaluation, feedback loops) and the [Explainability lab](/Assignments/Explainability) (feature attribution, contestable explanations).
+- Course cross-links: the [Training Data and Bias activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md) (proxies, disaggregated evaluation, feedback loops) and the [Explainability lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/Explainability) (feature attribution, contestable explanations).
 - Virginia Eubanks. *Automating Inequality: How High-Tech Tools Profile, Police, and Punish the Poor.* St. Martin's Press (2018).
 - Cathy O'Neil. *Weapons of Math Destruction*, chapter on predictive models in education (2016).
 - Obermeyer et al. "Dissecting racial bias in an algorithm used to manage the health of populations." *Science* (2019). The canonical label-bias case study.

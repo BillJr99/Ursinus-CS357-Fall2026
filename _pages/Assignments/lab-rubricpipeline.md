@@ -110,7 +110,7 @@ In this lab, you and your partner will industrialize the in-class judge into a b
 
 **See the course schedule for the assigned and due dates.**
 
-This lab has two pathways: the **code route** below (core Parts 1–5, then one of Directions 1–3), or the **low-code route**, [Direction 0: The promptfoo Route](/Assignments/RubricPipeline/Direction0), which meets the same objectives declaratively and replaces the core Parts 1–4 coding. See "Choose Your Pathway and Direction" near the end of this page before you start.
+This lab has two pathways: the **code route** below (core Parts 1–5, then one of Directions 1–3), or the **low-code route**, [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0), which meets the same objectives declaratively and replaces the core Parts 1–4 coding. See "Choose Your Pathway and Direction" near the end of this page before you start.
 
 ---
 
@@ -940,9 +940,9 @@ Wherever a direction refers to "your agent," you may use the rubric-grading pipe
 
 | Direction | What it is | Estimated time | Key requirements |
 |-----------|------------|----------------|------------------|
-| **[Direction 0: The promptfoo Route](/Assignments/RubricPipeline/Direction0)** | The low-code pathway: batch rubric scoring, human agreement, bias tests, and regression runs, all as promptfoo YAML against local Ollama. Replaces core Parts 1–4 coding. | **≈ 7–9 h total** (this is the whole lab, not an add-on) | Node.js, local Ollama; no API key |
-| **[Direction 1: Building an Agent Evaluation Harness](/Assignments/RubricPipeline/Direction1)** | Generalize the judge validation into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate on every push. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | GitHub repo + Actions; API key as a repo secret, or Ollama with a self-hosted runner / `act` |
-| **[Direction 2: Instrumenting Agents with OpenTelemetry](/Assignments/RubricPipeline/Direction2)** | Turn the pipeline from a black box into a system you can reason about: a trace span for every LLM call, tool invocation, and retrieval step, visualized in Jaeger, with alert rules and a runbook. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | Docker + the Jaeger all-in-one image; no API key needed with local Ollama |
-| **[Direction 3: CI/CD, TDD, and Publishing for AI Agent Software](/Assignments/RubricPipeline/Direction3)** | Earn trust through engineering discipline: TDD against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing as a pip package and container image. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | GitHub repo, TestPyPI account, Docker, GHCR personal access token |
+| **[Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0)** | The low-code pathway: batch rubric scoring, human agreement, bias tests, and regression runs, all as promptfoo YAML against local Ollama. Replaces core Parts 1–4 coding. | **≈ 7–9 h total** (this is the whole lab, not an add-on) | Node.js, local Ollama; no API key |
+| **[Direction 1: Building an Agent Evaluation Harness]({{ site.baseurl }}/Assignments/RubricPipeline/Direction1)** | Generalize the judge validation into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate on every push. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | GitHub repo + Actions; API key as a repo secret, or Ollama with a self-hosted runner / `act` |
+| **[Direction 2: Instrumenting Agents with OpenTelemetry]({{ site.baseurl }}/Assignments/RubricPipeline/Direction2)** | Turn the pipeline from a black box into a system you can reason about: a trace span for every LLM call, tool invocation, and retrieval step, visualized in Jaeger, with alert rules and a runbook. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | Docker + the Jaeger all-in-one image; no API key needed with local Ollama |
+| **[Direction 3: CI/CD, TDD, and Publishing for AI Agent Software]({{ site.baseurl }}/Assignments/RubricPipeline/Direction3)** | Earn trust through engineering discipline: TDD against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing as a pip package and container image. | core ≈ 4.5–6 h **+ ≈ 3–6 h** | GitHub repo, TestPyPI account, Docker, GHCR personal access token |
 
 Read the direction pages before choosing — each opens with a "What this direction requires" box listing accounts, tools, and any keys, so nothing ambushes your time budget mid-lab.

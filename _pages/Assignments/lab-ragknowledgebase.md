@@ -2268,7 +2268,7 @@ Write a 2–3 sentence **guardrail statement** you would add to a financial plan
 
 In Steps A–D, the model only *interpreted* an experiment you designed. This extension inverts the relationship, bridging this direction to the **Tool Use and Function Calling** session: you wrap your simulation as a tool with a JSON schema, and the model **chooses the parameters**, asks your code to invoke the tool, and then interprets the visualization the tool produced. The model never executes anything — it can only request; your code runs the simulation and returns the results.
 
-A fully worked, runnable version of this part (including canned offline responses for machines without Ollama) is in the [companion notebook](/files/notebooks/MonteCarloRetirement.ipynb).
+A fully worked, runnable version of this part (including canned offline responses for machines without Ollama) is in the [companion notebook]({{ site.baseurl }}/files/notebooks/MonteCarloRetirement.ipynb).
 
 **Note on models:** `llava` does not support function calling. Use a tool-capable model for the parameter-selection turn (`ollama pull llama3.1`, or `qwen2.5`), and keep `llava` for the vision turn.
 

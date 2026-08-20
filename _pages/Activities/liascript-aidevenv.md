@@ -38,6 +38,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally, and a project folder under git.
+
+**What you will have at the end:** a context setup — instruction file, folder layout, and session habits — that your agent tools read automatically.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: The Problem of Stateless Agents
 
 In this part, you will diagnose why AI coding agents "forget" your project conventions between sessions and map the three layers of context (working memory, project memory, long-term memory) that a well-designed environment must provide.

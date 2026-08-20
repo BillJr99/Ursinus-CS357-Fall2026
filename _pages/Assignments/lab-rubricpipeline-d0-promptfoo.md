@@ -29,12 +29,12 @@ To meet the core Rubric Pipeline Lab objectives — batch rubric scoring, human-
 
 ## Background Reading and References
 
-- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline](/Assignments/RubricPipeline)
+- [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md)
 - [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
-This page is **Direction 0** of the [Rubric Pipeline Lab](/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
+This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
 
 **Direction 0 replaces the coding in core Parts 1–4.** If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs. Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route** — the entire route *is* a declarative harness. You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route. As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log** — the blind human-scoring step in Part C requires both partners.
 
@@ -242,7 +242,7 @@ Compare `run_baseline.json` and `run_regressed.json` — the viewer's side-by-si
 
 ## Part F: Writeup
 
-**Same writeup as the core lab.** Complete the [core lab page](/Assignments/RubricPipeline)'s **Learning Log** (all six prompts plus the lab-specific prompts) in your readme, citing your percent-agreement numbers, bias flip counts, and regression diff as the specific evidence. Approximately two pages.
+**Same writeup as the core lab.** Complete the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline)'s **Learning Log** (all six prompts plus the lab-specific prompts) in your readme, citing your percent-agreement numbers, bias flip counts, and regression diff as the specific evidence. Approximately two pages.
 
 ---
 
@@ -258,4 +258,4 @@ Submit a ZIP containing:
 
 ## How the rubric reads on this route
 
-You are graded under the same rubric as everyone else, on the [core lab page](/Assignments/RubricPipeline). On this route: *Pipeline Implementation* is your baseline config scoring all 15 items end-to-end; *Human Agreement Validation* is the blind spreadsheet plus percent agreement and the criterion revision; *Bias Measurement* is the two config variants with the comparison table and countermeasure; *Evidence Verification* is the judge-reasoning faithfulness check inside your 3-worst-mismatches analysis; *Reproducible Eval Harness* is the regression demonstration of Part E; *Writeup* is Part F.
+You are graded under the same rubric as everyone else, on the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline). On this route: *Pipeline Implementation* is your baseline config scoring all 15 items end-to-end; *Human Agreement Validation* is the blind spreadsheet plus percent agreement and the criterion revision; *Bias Measurement* is the two config variants with the comparison table and countermeasure; *Evidence Verification* is the judge-reasoning faithfulness check inside your 3-worst-mismatches analysis; *Reproducible Eval Harness* is the regression demonstration of Part E; *Writeup* is Part F.

@@ -4,7 +4,9 @@ permalink: /Assignments/LocalAgent/Direction6
 title: "CS357 Lab: Local Agent, Direction 6: Build Your Own AI Coach"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab](/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+
+> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
@@ -19,7 +21,7 @@ title: "CS357 Lab: Local Agent, Direction 6: Build Your Own AI Coach"
 
 Take the single language-model call at the heart of the core lab and build a real application around it. You will construct an AI coach whose interactive core works entirely on its own logic and then layers a language model on top for commentary and structured output — routed through one provider-agnostic function, parsed defensively, with the API key never exposed to the client. The domain is up to you; the architecture is the point.
 
-You have seen a language model wired into a real, working program: the [Chess AI Coach](/files/apps/chess-ai-coach.html). It plays a full game with pure local logic and then *layers* a language model on top for commentary, an evaluation number, and an Elo estimate — routed through one provider-agnostic function, parsed defensively, with the API key never leaving the user's browser.
+You have seen a language model wired into a real, working program: the [Chess AI Coach]({{ site.baseurl }}/files/apps/chess-ai-coach.html). It plays a full game with pure local logic and then *layers* a language model on top for commentary, an evaluation number, and an Elo estimate — routed through one provider-agnostic function, parsed defensively, with the API key never leaving the user's browser.
 
 Now you build your own. The domain is up to you; the **architecture** is the point. You will reuse the exact pattern from the tutorial: a working interactive core, a single dispatch function that talks to a language model, at least one structured-JSON feature, and airtight key handling.
 

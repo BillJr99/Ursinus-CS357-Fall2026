@@ -44,6 +44,16 @@ Consider each model and its questions individually before discussing with your g
 
 ---
 
+### Before You Start
+
+**What you need:** Ollama running locally and Python 3.10+.
+
+**What you will have at the end:** model output you can parse with confidence, and a fallback for when it still comes back malformed.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 ## Model 1: The Four Output Modes
 
 There is not one "structured output" approach — there is a spectrum of mechanisms with different guarantees and different failure modes. Understanding what each mode actually does (not what its marketing says) determines which one to reach for in a given situation.

@@ -48,6 +48,16 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
+### Before You Start
+
+**What you need:** Python 3.10+. No GPU, no training run — everything here is small enough to watch.
+
+**What you will have at the end:** a tokenizer you built by hand and a concrete sense of what pre-training actually optimizes.
+
+Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+
+---
+
 # Part I: Tokenization — Why We Don't Just Split on Spaces
 
 In this part, you will work through the BPE algorithm by hand on a small example, understand why vocabulary size is a fundamental design tradeoff, and see concretely why tokenization causes models to struggle with letter-counting, arithmetic, and non-English text. These limitations directly affect how you design prompts, structure RAG chunks, and choose which model to use for a given task.
