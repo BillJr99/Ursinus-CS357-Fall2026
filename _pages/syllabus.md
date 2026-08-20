@@ -340,6 +340,10 @@ schedule:
     dlink: "Assignments/LocalAgent"
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
+  - dtitle: "Project: Team Charter Handed Out"
+    dlink: "Projects/PBLThread"
+    points: "3"
+    rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 2 of 4: continue the chapter — running a model on your own machine makes its limits concrete"
   - rtitle: "Reading Response / Discussion: post a short response before class — what changed once the model ran on your own machine?"

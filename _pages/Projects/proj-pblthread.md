@@ -201,6 +201,22 @@ Edmondson (1999) defines **psychological safety** as a team's shared belief that
 
 ## The Team Charter: A Signed Team Contract
 
+> **Handed out** at the *Running Your Own AI* session, once teams are announced, and **signed and due** at the *Tokens and Embeddings* session the following week. See the [course schedule]({{ site.baseurl }}/) for exact dates.
+
+Use this template as a starting point — the format is flexible, but every row has to be answered concretely. A paragraph that says "we will use Discord, meet Sundays at 2pm, and rotate roles every two weeks" covers more ground than a table full of vague entries.
+
+| Charter Section | Your Team's Answer |
+|---|---|
+| **Role rotation schedule** | Which POGIL role does each member hold first? How and when do roles rotate? |
+| **Primary communication channel** | Where (Slack, Discord, text, email) and when (response time expectation)? |
+| **Meeting cadence** | When does the team meet outside class? What is the minimum preparation expected before each meeting? |
+| **Disagreement procedure** | When the team disagrees on a technical decision, what is the process for resolving it? Who has the deciding vote, or how do you reach consensus? |
+| **Missed deadline procedure** | If a member cannot meet a deadline, what do they do, and by when? |
+| **Definition of "done"** | What does it mean for a sprint task to be complete? Who checks? |
+
+Submit one charter per team; each member includes it with their own submission. Typed names at the bottom serve as signatures.
+
+
 Your team's first deliverable is not technical — it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the in-class charter activity and signed by every member within the following week, that turns "we'll figure it out" into commitments you can point to later. The charter must cover seven things:
 
 1. **Norms and values.** Three to five concrete, behavioral norms — not "communicate well" but "if you will miss a deadline, say so in the channel at least 24 hours out." Start from your survey answers: the pet peeves and "what matters most" answers your members choose to share are the raw material.
