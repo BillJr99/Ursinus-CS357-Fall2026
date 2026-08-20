@@ -151,6 +151,8 @@ Write 2-3 paragraphs in your analysis: (1) Did the circumvention succeed or fail
 
 ## Part 2: AI by Hand
 
+> **Bring to class.** Have the printable [Neural Network by Hand worksheet]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) with you — printed, or on a tablet you can write on — for the *Tokens and Embeddings* session, where we work the same style of forward pass together.
+
 Complete all three problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, show that your result checks out.
 
 **Two ways to verify, both fully accepted.** The by-hand arithmetic is the graded work; how you check it is up to you.

@@ -877,6 +877,8 @@ Larger chunks improve the chance that a multi-sentence answer is intact in one c
 
 ## Deliverables
 
+> **Bring to class.** Carry your pipeline-in-progress and your stuck points into the *Studio: Local Agent Stack Clinic* session — the studio is open build time, and it is only as useful as the problems you bring to it.
+
 Submit a ZIP containing your code, JSON configuration, corpus (or a pointer plus a sample if it is large), datasheet, question set with labels, evaluation results (CSV or table), audit results, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.
 
 ## Learning Log
