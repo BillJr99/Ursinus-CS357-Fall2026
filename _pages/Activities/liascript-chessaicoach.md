@@ -112,12 +112,12 @@ Open `chess-ai-coach.html` and skim the top-level function names. Group them int
 
    > *Hint: Only the AI layer makes network calls. The engine and UI keep working, so the user can still play full games against the local computer; they just lose commentary, the AI evaluation, and the Elo estimate. This is graceful degradation, and it is a direct consequence of the layering.*
 
-[[MC]]
 Which group of functions makes the HTTP requests to a language-model provider?
-- ( ) `legalMoves`, `applyMove`, `minimax`
-- ( ) `boardToFEN`, `moveToSAN`, `buildPGN`
-- (x) `callTextModel`, `getAICommentary`, `getAIEvaluation`
-- ( ) `handleSquareClick`, `handleDragStart`
+
+[( )] `legalMoves`, `applyMove`, `minimax`
+[( )] `boardToFEN`, `moveToSAN`, `buildPGN`
+[(X)] `callTextModel`, `getAICommentary`, `getAIEvaluation`
+[( )] `handleSquareClick`, `handleDragStart`
 
 > **⚠️ Common Misconception:** "The AI plays the chess." It does not. The **computer opponent** is the local `minimax` search in the engine layer — pure code, no network. The **language model** only *comments on* moves and *estimates* numbers. You could delete every AI function and still have a working chess game. Conflating "the program that plays" with "the model that talks" is the first confusion to clear up.
 
@@ -325,12 +325,12 @@ The request bodies are nearly identical; the **auth** and the **reply location**
 
    > *Hint: A local guard gives a clear, instant, actionable message and avoids a pointless network round-trip (and a confusing provider-specific error body). Validate what you can locally; only spend a network call on things only the server can decide.*
 
-[[MC]]
 In a response from `POST https://api.anthropic.com/v1/messages`, where is the model's reply text?
-- ( ) `data.choices[0].message.content`
-- (x) `data.content[0].text` (an array of content blocks)
-- ( ) `data.output_text` only
-- ( ) `data.message.content`
+
+[( )] `data.choices[0].message.content`
+[(X)] `data.content[0].text` (an array of content blocks)
+[( )] `data.output_text` only
+[( )] `data.message.content`
 
 > **⚠️ Common Misconception:** "If it's the same prompt, it's the same response object." No. Providers agree on very little beyond "send messages, get a completion." The **request** can look almost identical while the **response shape** and the **auth headers** differ. Write one small parse function per response family (OpenAI-style, Anthropic-style) and route to the right one — never assume `choices[0]` exists.
 
@@ -486,12 +486,12 @@ You are White. You play `Nf3`. Walk the sequence the app performs (see `executeM
 
    > *Hint: `parsed.elo || 1200` supplies `1200` when `elo` is missing/falsy. Defensive defaults on every field mean a partially-malformed structured response degrades to something sensible instead of `undefined` reaching the UI.*
 
-[[MC]]
 Why does `getAIEvaluation` call `safeJsonParse` instead of `JSON.parse` directly?
-- ( ) `safeJsonParse` is faster than `JSON.parse`
-- (x) So a malformed or fenced model reply returns a fallback instead of throwing and breaking the render
-- ( ) Because the model can only output JavaScript objects, never strings
-- ( ) To convert the number from pawns to centipawns
+
+[( )] `safeJsonParse` is faster than `JSON.parse`
+[(X)] So a malformed or fenced model reply returns a fallback instead of throwing and breaking the render
+[( )] Because the model can only output JavaScript objects, never strings
+[( )] To convert the number from pawns to centipawns
 
 > **⚠️ Common Misconception:** "If I ask for JSON, I get JSON." Language models are *usually* obedient but never guaranteed. They add prose, wrap output in code fences, or drop a field. Treat every structured reply as untrusted input: constrain the prompt, strip known wrappers, parse defensively, and default every field. Robust structured output is 20% prompt and 80% parsing discipline.
 
@@ -593,12 +593,12 @@ Three deployment scenarios. For each, decide where the key should live.
 
     > *Hint: `useState` lives only in memory for the tab's lifetime, so the key vanishes when the tab closes and never persists to disk where other scripts or a shared machine's next user could read it. `localStorage` would survive restarts and be readable by any script on the origin — more exposure for no real benefit here.*
 
-[[MC]]
 In a safe public deployment, where does the provider API key live?
-- ( ) In the JavaScript, base64-encoded so it's hard to read
-- ( ) In the browser's `localStorage`, cleared on logout
-- (x) On a backend server you control, read from an environment variable
-- ( ) In a hidden HTML input with `type="password"`
+
+[( )] In the JavaScript, base64-encoded so it's hard to read
+[( )] In the browser's `localStorage`, cleared on logout
+[(X)] On a backend server you control, read from an environment variable
+[( )] In a hidden HTML input with `type="password"`
 
 > **⚠️ Common Misconception:** "`type='password'` protects the key." It only masks the characters on screen. The key is still in memory, still sent over the network in plain view of the Network tab, and still readable by any script on the page. Masking ≠ protecting. The real protections are: keep the key off the client entirely (backend proxy) or use a provider that needs no key (local model).
 

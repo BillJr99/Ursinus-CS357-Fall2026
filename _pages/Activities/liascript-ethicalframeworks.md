@@ -142,12 +142,12 @@ Selected clauses with agentic implications:
 
    *Hint: A software analogy: when two requirements conflict, you do not just pick one — you surface the conflict to a decision-maker with the authority to resolve it. What is the AI equivalent? Who has that authority for your system? How would the system recognize that a conflict has occurred, and what would it do next?*
 
-[[MC]]
 An agent is designed to help users write performance reviews for their employees. Which design choice best satisfies both ACM clause 1.2 (avoid harm) and clause 2.5 (thorough evaluations)?
-- ( ) Deploy immediately and collect feedback from dissatisfied employees after the fact — real-world feedback is more reliable than pre-deployment testing because it reflects actual use patterns
-- ( ) Add a disclaimer stating that the agent's output is not the company's official position — this satisfies 2.5 by documenting a limitation, and 1.2 by making clear the agent is not the decision-maker
-- (x) Before deployment, test the agent's outputs across a diverse set of simulated employees and managers, specifically checking for disparate treatment by demographic group, and document results in a pre-deployment report
-- ( ) Limit the agent to suggesting language from a pre-approved phrase library — this eliminates the need for thorough evaluation because the phrase library has already been reviewed for bias
+
+[( )] Deploy immediately and collect feedback from dissatisfied employees after the fact — real-world feedback is more reliable than pre-deployment testing because it reflects actual use patterns
+[( )] Add a disclaimer stating that the agent's output is not the company's official position — this satisfies 2.5 by documenting a limitation, and 1.2 by making clear the agent is not the decision-maker
+[(X)] Before deployment, test the agent's outputs across a diverse set of simulated employees and managers, specifically checking for disparate treatment by demographic group, and document results in a pre-deployment report
+[( )] Limit the agent to suggesting language from a pre-approved phrase library — this eliminates the need for thorough evaluation because the phrase library has already been reviewed for bias
 
 The Code clauses pointed to specific engineering choices; Part III takes that idea further and shows how the minimal footprint principle operationalizes those choices as a design constraint for autonomous agents.
 

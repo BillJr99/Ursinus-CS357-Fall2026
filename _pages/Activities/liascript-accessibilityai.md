@@ -91,12 +91,12 @@ One of the most important lessons in AI evaluation is that an impressive overall
 
 The weighted average across these groups is approximately 99% — the headline number. The group with the highest error rate (15.7% errors) is the group for whom captioning is not a convenience but a necessary communication bridge.
 
-[[MC]]
 An AI caption generator achieves 98% word accuracy across all test speakers. A disability advocate argues this metric is insufficient. The most compelling reason is:
-- (x) The 2% error rate likely concentrates among speakers with speech differences, meaning the people who most need captions may face substantially higher error rates than the headline metric suggests
-- ( ) 98% accuracy is high enough that any remaining errors are distributed roughly equally across all speaker groups
-- ( ) The advocate's concern would only be valid if the tool had no human captioner fallback available
-- ( ) Word accuracy is a flawed metric because it counts every word equally, making it impossible to identify subgroup disparities
+
+[(X)] The 2% error rate likely concentrates among speakers with speech differences, meaning the people who most need captions may face substantially higher error rates than the headline metric suggests
+[( )] 98% accuracy is high enough that any remaining errors are distributed roughly equally across all speaker groups
+[( )] The advocate's concern would only be valid if the tool had no human captioner fallback available
+[( )] Word accuracy is a flawed metric because it counts every word equally, making it impossible to identify subgroup disparities
 
 ---
 

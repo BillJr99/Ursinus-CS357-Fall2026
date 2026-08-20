@@ -124,12 +124,12 @@ Here is the same idea two ways — a stage table, and then a scenario trace thro
 
    > *Hint: R might begin: "I want to name that my message Thursday was sarcastic and public, and I'm sorry — I was anxious about the deadline (own). I didn't know about your emergency (restate comes after listening)..." A repair script is short. The hard part is that someone has to go first; your charter can name whose job that is (hint: the current Reflector is a natural owner).*
 
-[[MC]]
 According to Tuckman (1965), a team having its first serious disagreement in week 6 of the semester is:
-- ( ) Evidence the team was formed badly and should be reorganized
-- (x) A normal, expected developmental stage that healthy teams pass through
-- ( ) A sign that the team skipped the forming stage
-- ( ) Rare — most teams never experience conflict
+
+[( )] Evidence the team was formed badly and should be reorganized
+[(X)] A normal, expected developmental stage that healthy teams pass through
+[( )] A sign that the team skipped the forming stage
+[( )] Rare — most teams never experience conflict
 
 > **⚠️ Common Misconception:** Psychological safety does *not* mean "niceness" or the absence of disagreement. Edmondson (1999) is explicit that psychologically safe teams disagree *more* openly, not less — safety is what makes candid disagreement survivable. A team that never argues is usually a team in which people have stopped saying what they think. The goal of your charter is not to prevent storms; it is to make storms informative.
 
@@ -172,12 +172,12 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 
    > *Hint: (a) is high-stakes and identity-flavored — buy-in matters most, which argues for consensus with a deadline. (b) is reversible and technical — speed matters, which argues for a timebox plus role-holder decision, logged. (c) involves the charter itself failing — which is exactly what escalation paths are for, and why the charter should name the threshold in advance so reporting is a procedure, not a betrayal.*
 
-[[MC]]
 Which of the following charter clauses passes the enforceability test?
-- ( ) "Team members will treat each other with respect at all times."
-- ( ) "We will try to meet regularly and stay in touch."
-- (x) "The Recorder posts meeting notes with action items and owners to the shared folder within 24 hours of each meeting."
-- ( ) "Everyone agrees to do their best work."
+
+[( )] "Team members will treat each other with respect at all times."
+[( )] "We will try to meet regularly and stay in touch."
+[(X)] "The Recorder posts meeting notes with action items and owners to the shared folder within 24 hours of each meeting."
+[( )] "Everyone agrees to do their best work."
 
 ---
 

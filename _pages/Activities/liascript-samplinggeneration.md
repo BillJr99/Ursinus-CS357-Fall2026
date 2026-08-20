@@ -87,12 +87,12 @@ $$
 
 The key advantage of top-p over top-k is that top-p **adapts to the model's confidence**: when the model is very sure (one word has probability 0.95), the nucleus contains just that word; when many continuations are plausible (ten words each with probability 0.09), the nucleus widens to include all of them. In practice, creative writing tasks often favor higher temperature (0.7-1.0) combined with top-p near 0.9, while agentic control steps that must output exact tool calls favor temperature near 0.0.
 
-[[MC]]
 A distribution assigns probabilities: Paris 0.90, Lyon 0.06, Marseille 0.03, banana 0.01. With top-p $= 0.95$, the candidate set is:
-- ( ) Paris only (0.90 already exceeds 0.95 minus a rounding edge)
-- (x) Paris and Lyon (0.90 + 0.06 = 0.96, which first reaches or exceeds 0.95)
-- ( ) Paris, Lyon, and Marseille
-- ( ) All four tokens
+
+[( )] Paris only (0.90 already exceeds 0.95 minus a rounding edge)
+[(X)] Paris and Lyon (0.90 + 0.06 = 0.96, which first reaches or exceeds 0.95)
+[( )] Paris, Lyon, and Marseille
+[( )] All four tokens
 
 
 ## 3. Other Common Generation Parameters
@@ -249,12 +249,12 @@ The nucleus is **Paris alone**. Renormalizing a single survivor gives $0.9007 / 
 
 **This is the whole lesson.** On the *same* distribution, $k=2$ leaves Lyon a 4.7% chance and $p=0.9$ leaves it none. Top-p adapts to confidence: when the model is sure, the nucleus collapses to one token; when it is unsure, the nucleus widens. Top-k does not adapt — $k=2$ keeps exactly two candidates whether the model is certain or hopelessly torn.
 
-[[MC]]
 On the distribution above, you set top-p = 0.95 instead of 0.9. What is Lyon's probability after renormalization?
-- ( ) 0.0448, unchanged — renormalization only affects the top token
-- (x) 0.0474 — the nucleus is {Paris, Lyon} with mass 0.9455, and 0.0448 / 0.9455 = 0.0474
-- ( ) 0.05, because top-p rounds the nucleus to the threshold
-- ( ) 0 — Lyon falls outside any nucleus below p = 0.99
+
+[( )] 0.0448, unchanged — renormalization only affects the top token
+[(X)] 0.0474 — the nucleus is {Paris, Lyon} with mass 0.9455, and 0.0448 / 0.9455 = 0.0474
+[( )] 0.05, because top-p rounds the nucleus to the threshold
+[( )] 0 — Lyon falls outside any nucleus below p = 0.99
 
 > **Watch out!** Because truncation renormalizes, **top-k and top-p interact with temperature in ways that are easy to get backwards.** Raising temperature flattens the distribution, which *widens* the top-p nucleus (more tokens are needed to reach $p$) — so turning temperature up while leaving top-p fixed increases randomness twice over. For an agent that must emit an exact tool call, this compounding is exactly what you do not want.
 

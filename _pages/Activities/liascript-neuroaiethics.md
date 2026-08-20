@@ -96,12 +96,12 @@ A standard LLM doing a single forward pass is a **System 1 machine**: it produce
 | **Human fast thinking (System 1)** | System 1 | Very fast — automatic, effortless. | High in familiar situations; poor calibration in novel ones. | Optical illusions, heuristic shortcuts (availability, representativeness), priming effects. | N/A — not an AI system. |
 | **Human deliberate thinking (System 2)** | System 2 | Slow — requires sustained effort and working memory. | Appropriately uncertain — good System 2 thinking includes explicit acknowledgment of what is not known. | Logic errors when fatigued; can catch and correct System 1 mistakes when given enough time. | N/A — not an AI system. |
 
-[[MC]]
 The dual-process theory suggests LLMs are primarily System 1 machines. The most important implication for deploying LLMs as agents is:
-- (x) LLMs will tend to give fast, confident, but potentially wrong answers, especially in novel situations — which is why deliberate reasoning structures (CoT, multi-agent critique) and human oversight are essential
-- ( ) LLMs should only be used for tasks that require fast responses and not for slow analytical tasks
-- ( ) System 1 thinking is less useful than System 2 and should be avoided in all agent designs
-- ( ) LLMs should always use chain-of-thought regardless of task type or cost
+
+[(X)] LLMs will tend to give fast, confident, but potentially wrong answers, especially in novel situations — which is why deliberate reasoning structures (CoT, multi-agent critique) and human oversight are essential
+[( )] LLMs should only be used for tasks that require fast responses and not for slow analytical tasks
+[( )] System 1 thinking is less useful than System 2 and should be avoided in all agent designs
+[( )] LLMs should always use chain-of-thought regardless of task type or cost
 
 ---
 

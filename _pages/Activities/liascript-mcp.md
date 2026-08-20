@@ -233,12 +233,12 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
 > **⚠️ Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools — it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited — not by assuming the protocol protects you.
 
-[[MC]]
 The primary value MCP adds over each team writing custom tool integrations is:
-- ( ) It makes models more accurate
-- (x) It standardizes discovery and invocation so any client can use any compliant tool server
-- ( ) It eliminates the need for authentication
-- ( ) It runs tools inside the model for speed
+
+[( )] It makes models more accurate
+[(X)] It standardizes discovery and invocation so any client can use any compliant tool server
+[( )] It eliminates the need for authentication
+[( )] It runs tools inside the model for speed
 
 ---
 

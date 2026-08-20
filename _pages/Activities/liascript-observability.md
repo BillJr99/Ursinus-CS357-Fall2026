@@ -161,13 +161,12 @@ def handle_query(user_query: str, user_id: str) -> str:
 
 For **SLA tracking**, the attributes you instrument determine what you can measure. A service level agreement (SLA) might specify: "95th-percentile latency under 2 seconds," "error rate below 0.1%," or "completion token usage under 500 per request." Each of these requires a specific attribute to be present on spans.
 
-[[MC]]
 A production agent is silently failing on approximately 8% of queries — users receive a response, but it is unhelpful or factually wrong. There are currently no logs, metrics, or traces in place. Which observability pillar would you add FIRST to diagnose this problem?
 
-- ( ) Metrics — aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
-- ( ) Traces — a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
-- (x) Logs — structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
-- ( ) All three simultaneously — instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
+[( )] Metrics — aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
+[( )] Traces — a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
+[(X)] Logs — structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
+[( )] All three simultaneously — instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
 
 ### Critical Thinking Questions
 

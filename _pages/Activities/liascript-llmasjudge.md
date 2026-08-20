@@ -160,12 +160,12 @@ print(json.dumps(detail, indent=1))
 
    *Hint:* The two added sentences contain no citations, no counterargument, and no new position. If the score goes up, which pathology is responsible? Does the criterion descriptor for `claims_cited` say anything about the *ratio* of cited claims to total claims, or just whether citations exist?
 
-[[MC]]
 The most important safeguard before trusting an LLM judge's scores on real student work is:
-- ( ) Using the largest available model as the judge, because bigger models are inherently fairer
-- ( ) Setting temperature to 0, because that eliminates bias by making the model deterministic
-- (x) Validating the judge's scores against human scores on a labeled calibration set before using it on new work
-- ( ) Asking the judge to be fair in the system prompt, so it knows to ignore its biases
+
+[( )] Using the largest available model as the judge, because bigger models are inherently fairer
+[( )] Setting temperature to 0, because that eliminates bias by making the model deterministic
+[(X)] Validating the judge's scores against human scores on a labeled calibration set before using it on new work
+[( )] Asking the judge to be fair in the system prompt, so it knows to ignore its biases
 
 > **⚠️ Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* — it will give the same score every time for the same input — but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
 

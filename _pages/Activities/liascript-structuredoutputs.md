@@ -327,12 +327,12 @@ Key properties of this pipeline:
 
    *Starter hint: One option is to return a partially valid response — the fields that passed validation — alongside an explicit `is_degraded: True` flag and a `validation_errors` field listing what failed. Another option is to return a "manual review required" placeholder. Which is more useful to a downstream system? What does a system that relies on this output need to know to handle both cases correctly?*
 
-[[MC]]
 You ask an LLM to output a JSON object with a field `"confidence": float` constrained to values between 0 and 1. The model outputs `{"confidence": "high"}`. The most likely root cause of this failure is:
-- (x) The JSON schema or response format was not provided to the model (or was provided only as a natural language instruction), so the model produced a plausible English description instead of a number
-- ( ) The model does not understand the concept of numbers and cannot generate them — LLMs routinely generate numbers in other contexts; the issue here is that the model defaulted to natural language because no format constraint forced it to use a float
-- ( ) The schema definition contained a syntax error that caused it to be silently ignored — a schema syntax error would typically surface as an API error before any response is generated, not as a silently mis-formatted output
-- ( ) The model is malfunctioning and needs to be restarted — "high" is a coherent, plausible response to a confidence question; this is normal behavior when format constraints are absent, not a model failure
+
+[(X)] The JSON schema or response format was not provided to the model (or was provided only as a natural language instruction), so the model produced a plausible English description instead of a number
+[( )] The model does not understand the concept of numbers and cannot generate them — LLMs routinely generate numbers in other contexts; the issue here is that the model defaulted to natural language because no format constraint forced it to use a float
+[( )] The schema definition contained a syntax error that caused it to be silently ignored — a schema syntax error would typically surface as an API error before any response is generated, not as a silently mis-formatted output
+[( )] The model is malfunctioning and needs to be restarted — "high" is a coherent, plausible response to a confidence question; this is normal behavior when format constraints are absent, not a model failure
 
 ---
 

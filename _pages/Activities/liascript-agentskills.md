@@ -144,12 +144,12 @@ pi plugin list
 
 Scoping works the same way as OpenCode: a plugin added from inside a project directory (where a `pi.md` project file is present) is scoped to that project. A plugin added from outside a project applies globally.
 
-[[MC]]
 A classmate says: "I added a safety-check skill to `opencode.json`, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does." What is wrong with this claim?
-- ( ) Nothing — skills and system prompts are functionally identical; both are injected before every turn
-- (x) A skill is surfaced on demand or by a `when` trigger, not injected on every turn; without the `when` field or an explicit invocation, the agent will not use the skill automatically
-- ( ) Skills in `opencode.json` override system prompts, so the system prompt would be suppressed
-- ( ) The `opencode.json` file does not support a `skills` array; skills must be stored in `AGENTS.md`
+
+[( )] Nothing — skills and system prompts are functionally identical; both are injected before every turn
+[(X)] A skill is surfaced on demand or by a `when` trigger, not injected on every turn; without the `when` field or an explicit invocation, the agent will not use the skill automatically
+[( )] Skills in `opencode.json` override system prompts, so the system prompt would be suppressed
+[( )] The `opencode.json` file does not support a `skills` array; skills must be stored in `AGENTS.md`
 
 ---
 
@@ -257,12 +257,12 @@ pi
 
 Global pi plugins (installed outside a project directory) apply to all pi sessions. Project-scoped plugins (installed from within a project directory that has a `pi.md`) only activate when pi is run from that directory or any subdirectory. This gives you a clean separation: project-specific coding conventions in local plugins, general-purpose utilities in global plugins.
 
-[[MC]]
 You want to use a "safety-check" skill in OpenCode that fires automatically whenever the user mentions deletion, but you also want to be able to invoke it explicitly at any time. Which configuration achieves both goals simultaneously?
-- ( ) Add two entries to the `skills` array: one with `"when"` and one without, both named `"safety-check"`
-- ( ) Set `"when"` to `"always"` so the skill fires on every turn and is also explicitly invokable
-- (x) Add one entry with `"name": "safety-check"` and `"when": "user asks to delete or remove"` — the `when` field enables auto-surfacing while explicit invocation by name is always available regardless
-- ( ) Move the skill instructions to the system prompt so they are always active, and keep a stub skill entry for the `list` command to show
+
+[( )] Add two entries to the `skills` array: one with `"when"` and one without, both named `"safety-check"`
+[( )] Set `"when"` to `"always"` so the skill fires on every turn and is also explicitly invokable
+[(X)] Add one entry with `"name": "safety-check"` and `"when": "user asks to delete or remove"` — the `when` field enables auto-surfacing while explicit invocation by name is always available regardless
+[( )] Move the skill instructions to the system prompt so they are always active, and keep a stub skill entry for the `list` command to show
 
 > *Hint:* Re-read the "Common Misconception" box at the end of Section 5. The `when` field is a notification mechanism, not a gating mechanism. Consider what the entry needs vs. what the `when` field adds on top of it.
 
@@ -438,12 +438,12 @@ Wrap up this session and use the obsidian-memory skill to log it.
 
 Then open `vault/memories/session-log.md` and confirm: the date heading is correct, the files and commands are accurately listed from the session, and the file was appended (not overwritten).
 
-[[MC]]
 A teammate writes a skill instruction that says: "Always follow Python security best practices when writing code." During testing, the agent produces different security checks across three invocations of the same skill. What authoring principle was violated, and what is the fix?
-- ( ) One clear purpose — the skill should be split into separate skills for each security check
-- ( ) Concrete output format — the skill should specify which headings to use in its security report
-- (x) Explicit constraints — "best practices" is undefined; the fix is to list the specific checks by name (e.g., "check for use of `eval()`, `exec()`, or `pickle.loads()` with untrusted input")
-- ( ) Skills cannot encode security guidance; move this to the system prompt
+
+[( )] One clear purpose — the skill should be split into separate skills for each security check
+[( )] Concrete output format — the skill should specify which headings to use in its security report
+[(X)] Explicit constraints — "best practices" is undefined; the fix is to list the specific checks by name (e.g., "check for use of `eval()`, `exec()`, or `pickle.loads()` with untrusted input")
+[( )] Skills cannot encode security guidance; move this to the system prompt
 
 > *Hint:* Ask yourself: could two reasonable developers disagree about what "Python security best practices" means? If yes, the instruction is underspecified — the agent will fill in the gap from its training data, not from your intent.
 

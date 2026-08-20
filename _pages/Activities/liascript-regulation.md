@@ -121,13 +121,12 @@ General frameworks like the EU AI Act and NIST RMF establish broad principles, b
 | **Education** | FERPA (U.S.); state student privacy laws (e.g., California SOPIPA); proposed NIST AI in Education guidance | Student education records — grades, transcripts, disciplinary actions, course enrollment — are protected and cannot be accessed or shared without student consent. Any AI vendor that accesses student data must sign a data sharing agreement and is limited in how it can use that data. | Sign data processing agreements with all AI vendors before granting data access; implement consent workflows for students who are minors; maintain audit trails for any automated decision that could affect a grade or academic standing |
 | **Law Enforcement** | EU AI Act Unacceptable Risk tier (real-time remote biometric ID in public spaces); ACLU litigation risk in U.S.; state-level bans in some U.S. cities | Real-time facial recognition in public spaces — like scanning a crowd at a train station to identify wanted persons — is banned in the EU. Predictive policing systems that rely solely on AI profiling (without individualized suspicion) are also banned in the EU. The U.S. has no federal ban but faces significant civil rights litigation risk. | In the EU: do not deploy these systems, period. In the U.S.: require legal review before any deployment; mandate a human decision-maker who can override any AI flag; conduct disparate impact testing disaggregated by race; publish public disclosure policies describing how the system is used |
 
-[[MC]]
 A startup builds a chatbot that screens job applications by analyzing resumes and ranking candidates before a human recruiter reviews the shortlist. Under the EU AI Act, this system is most accurately classified as:
 
-- ( ) Minimal risk — because a human reviews the shortlist, the AI is only a tool assisting a human decision, which removes it from higher risk tiers
-- ( ) Limited risk — the system only needs a transparency disclosure telling applicants an AI was involved, since the recruiter makes the final decision
-- (x) High risk — AI systems used in employment and worker management, including CV-screening and candidate ranking, are explicitly listed in Annex III of the EU AI Act as High Risk, regardless of whether a human reviews the output
-- ( ) Unacceptable risk — any automated screening that affects employment decisions without individual consent is banned under the manipulation provisions
+[( )] Minimal risk — because a human reviews the shortlist, the AI is only a tool assisting a human decision, which removes it from higher risk tiers
+[( )] Limited risk — the system only needs a transparency disclosure telling applicants an AI was involved, since the recruiter makes the final decision
+[(X)] High risk — AI systems used in employment and worker management, including CV-screening and candidate ranking, are explicitly listed in Annex III of the EU AI Act as High Risk, regardless of whether a human reviews the output
+[( )] Unacceptable risk — any automated screening that affects employment decisions without individual consent is banned under the manipulation provisions
 
 ### Critical Thinking Questions
 

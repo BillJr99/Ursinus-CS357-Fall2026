@@ -101,12 +101,12 @@ FORMAT: the exact output schema
 GUARDRAILS: what it must refuse or escalate to a human
 ```
 
-[[MC]]
 An agent must return JSON so that downstream code can parse its decision. The most reliable prompting approach is:
-- ( ) Ask politely for JSON at the end of the user message
-- ( ) Raise the temperature so the model explores formats
-- (x) Specify the exact schema in the system prompt and include a few-shot example of a valid response
-- ( ) Avoid mentioning JSON so the model is not confused
+
+[( )] Ask politely for JSON at the end of the user message
+[( )] Raise the temperature so the model explores formats
+[(X)] Specify the exact schema in the system prompt and include a few-shot example of a valid response
+[( )] Avoid mentioning JSON so the model is not confused
 
 ---
 

@@ -83,12 +83,12 @@ Why this matters: every time you choose which model to use for a task — a fron
 
    *Hint: Think about who controls what gets counted in a carbon report. Consider: if embodied carbon is excluded, what appears to happen to the carbon cost of "upgrading to a newer, more efficient GPU generation"? What are the economic incentives that push against hardware longevity and repairability?*
 
-[[MC]]
 The central proportional insight of Model 1 is that:
-- ( ) Training is always the dominant carbon cost of a deployed model, so one-time training decisions matter most
-- (x) Inference, repeated millions or billions of times, often exceeds the one-time training cost in total impact
-- ( ) A single AI query and a single email have roughly comparable carbon costs
-- ( ) Embodied carbon is negligible compared to the electricity a model consumes
+
+[( )] Training is always the dominant carbon cost of a deployed model, so one-time training decisions matter most
+[(X)] Inference, repeated millions or billions of times, often exceeds the one-time training cost in total impact
+[( )] A single AI query and a single email have roughly comparable carbon costs
+[( )] Embodied carbon is negligible compared to the electricity a model consumes
 
 ### Team Exercise: Estimate, Then Check
 
@@ -174,12 +174,12 @@ Sofia is a CS student working on a capstone project for one week. Her AI use inc
 
 > **Common Misconception:** "Switching to renewable energy at the data center makes AI carbon-neutral." Renewable energy purchases do not eliminate energy consumption — they offset it with generation elsewhere on the grid. The actual energy demand, water use for cooling, and embodied carbon in hardware remain unchanged. "100% renewable" cloud providers are making a true but partial claim: they are purchasing renewable energy credits, which is better than not doing so, but it is not the same as using zero carbon. Meaningful carbon reduction requires reducing the energy consumption itself, not only changing its source on paper.
 
-[[MC]]
 According to Jevons paradox, a 10x improvement in model inference efficiency will most likely:
-- ( ) Reduce total AI energy consumption by roughly 10x
-- ( ) Leave total consumption unchanged, because usage patterns are fixed
-- (x) Lower the cost per use and expand the range of viable uses, potentially increasing total consumption
-- ( ) Affect training costs only, since inference is already efficient
+
+[( )] Reduce total AI energy consumption by roughly 10x
+[( )] Leave total consumption unchanged, because usage patterns are fixed
+[(X)] Lower the cost per use and expand the range of viable uses, potentially increasing total consumption
+[( )] Affect training costs only, since inference is already efficient
 
 ---
 

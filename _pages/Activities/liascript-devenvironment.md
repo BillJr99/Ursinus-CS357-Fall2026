@@ -193,12 +193,12 @@ If all three pass, your environment for every lab is done.
     --{{0}}--
 The single most common failure at this step is the host bridge: the one-liner in 5.1 raises a connection error. Before anything else, check the two usual suspects — is Ollama actually running on the host right now, and, on Linux, was the container started through the course compose file, which contains the extra hosts mapping that makes host dot docker dot internal resolve at all?
 
-[[MC]]
 From *inside* the course container, which URL reaches the Ollama server running natively on your host?
-- ( ) `http://localhost:11434`, because that is where Ollama listens
-- (x) `http://host.docker.internal:11434`, because inside the container `localhost` means the container itself
-- ( ) `http://127.0.0.1:11434`, because the loopback address is shared with the host
-- ( ) Either of the first two; Docker forwards both automatically
+
+[( )] `http://localhost:11434`, because that is where Ollama listens
+[(X)] `http://host.docker.internal:11434`, because inside the container `localhost` means the container itself
+[( )] `http://127.0.0.1:11434`, because the loopback address is shared with the host
+[( )] Either of the first two; Docker forwards both automatically
 
 ---
 

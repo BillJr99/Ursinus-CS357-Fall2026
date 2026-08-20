@@ -140,12 +140,12 @@ The checklist below is a real engineering artifact — notice that every item is
 
 One boundary completes the track: know what you are accountable for shipping. A page that handles no one's personal data and takes no payments is yours to publish (the Cloudflare module showed how); anything touching credentials, money, or other people's private information needs a Track A partner or a reviewer, and recognizing that line *is* the engineering judgment this track teaches.
 
-[[MC]]
 A non-coding maker's strongest defense against an agent's specification gaps is:
-- ( ) Asking the agent to double-check its own work — a model that made a specification error will typically affirm the same error when asked to review its own output
-- ( ) Choosing the largest available model — a bigger model follows the same ambiguous specification more fluently, but fluentness is not correctness
-- (x) Writing concrete acceptance criteria first and instructing the agent to ask clarifying questions before generating, then verifying against the criteria after every change
-- ( ) Regenerating until the output looks right — if the specification is ambiguous, regenerating produces different plausible-looking artifacts, not a correct one
+
+[( )] Asking the agent to double-check its own work — a model that made a specification error will typically affirm the same error when asked to review its own output
+[( )] Choosing the largest available model — a bigger model follows the same ambiguous specification more fluently, but fluentness is not correctness
+[(X)] Writing concrete acceptance criteria first and instructing the agent to ask clarifying questions before generating, then verifying against the criteria after every change
+[( )] Regenerating until the output looks right — if the specification is ambiguous, regenerating produces different plausible-looking artifacts, not a correct one
 
 Both tracks now converge on the same institutional mechanism: a system that runs every check automatically, every time, so that verification does not depend on anyone remembering to do it.
 

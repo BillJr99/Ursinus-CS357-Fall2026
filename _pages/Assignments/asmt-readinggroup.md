@@ -73,26 +73,23 @@ Leading a session earns a base grade plus extra credit; being a thoughtful membe
 
 ## Extra Credit Scale
 
-Leading a session always earns the **10-point base grade** (scaled by the rubric). On top of that base, you earn **extra credit** that is largest early in the term and decreases each week — up to **10 points** for the first meeting, graduating down as shown:
+Leading a session always earns the **10-point base grade** (scaled by the rubric). On top of that base, you earn **extra credit** that is largest early in the term and decreases each week — up to **10 points** for the earliest available slot, graduating down to zero as shown. Sessions begin in Week 3, after the reading-group and reading-response guides are handed out and the first assignments are underway:
 
 | Week | Extra Credit Points |
-|---|---|
-| Week 0 (first class meeting) | 10 |
-| Week 1 | 9 |
-| Week 2 | 8 |
-| Week 3 | 7 |
-| Week 4 | 6 |
-| Week 5 | 5 |
-| Week 6 | 5 |
-| Week 7 | 4 |
-| Week 8 | 4 |
-| Week 9 | 3 |
+|------|--------------------:|
+| Week 3 (first available slot) | 10 |
+| Week 4 | 9 |
+| Week 5 | 8 |
+| Week 6 | 7 |
+| Week 7 | 6 |
+| Week 8 | 5 |
+| Week 9 | 4 |
 | Week 10 | 3 |
 | Week 11 | 2 |
-| Week 12 | 2 |
-| Week 13 | 1 |
-| Week 14 | 1 |
-| Week 15 | 1 |
+| Week 12 | 1 |
+| Week 13 | 0 |
+| Week 14 | 0 |
+| Week 15 | 0 |
 
 Sign-up is first-come, first-served via the course sign-up sheet (link on the course LMS). **Two students may sign up per class meeting.** If a slot is full, choose the next available slot.
 
@@ -195,4 +192,4 @@ If you chose the **Competing Texts Session** format, your reflection must also i
 
 This assignment is scored on the rubric above. Leading a session earns a **10-point base grade**: the rubric's five criteria each contribute one-fifth, scaled by the proficiency level earned — Proficient, the top level, earns full credit (4 of 4) on that criterion. On top of the base, you earn **extra credit** equal to your slot's extra-credit maximum (see the scale above), scaled by the same rubric proficiency.
 
-**Example:** a Week-2 leader (8 extra-credit points available) earning Proficient on all five criteria receives the full **10-point base grade** *and* the full **8 extra-credit points**; one earning Progressing (3 of 4) on all five criteria receives 10 × 0.75 = 7.5 base points and 8 × 0.75 = 6 extra-credit points added to the final grade.
+**Example:** a Week-5 leader (8 extra-credit points available) earning Proficient on all five criteria receives the full **10-point base grade** *and* the full **8 extra-credit points**; one earning Progressing (3 of 4) on all five criteria receives 10 × 0.75 = 7.5 base points and 8 × 0.75 = 6 extra-credit points added to the final grade.

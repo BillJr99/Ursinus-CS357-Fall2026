@@ -89,12 +89,12 @@ Privacy is not just a personal preference — in educational and research contex
 
 **Agents raise the stakes mechanically.** A chatbot leaks what you paste; an *agent with tools* can leak what it can *reach*: files, calendars, email. The tool-permission taxonomy you built (read-only, reversible, irreversible) is privacy infrastructure, and the local stack you have run all semester is the strongest single control: data that never leaves the machine cannot be retained by anyone else.
 
-[[MC]]
 An instructor wants AI-assisted feedback on essays containing student names and grades. The design that most directly addresses the FERPA concern is:
-- ( ) A hosted frontier model with an enterprise logo, because enterprise agreements always cover FERPA
-- ( ) Asking students not to write personal details in their essays, because the data never enters the system
-- (x) A local model on institutional hardware, with de-identification before processing and documented data handling
-- ( ) Any model, provided temperature is 0, because deterministic outputs are not considered personal data
+
+[( )] A hosted frontier model with an enterprise logo, because enterprise agreements always cover FERPA
+[( )] Asking students not to write personal details in their essays, because the data never enters the system
+[(X)] A local model on institutional hardware, with de-identification before processing and documented data handling
+[( )] Any model, provided temperature is 0, because deterministic outputs are not considered personal data
 
 ---
 

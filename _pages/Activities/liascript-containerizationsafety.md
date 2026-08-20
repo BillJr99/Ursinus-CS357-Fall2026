@@ -239,12 +239,12 @@ for iteration in range(MAX_ITERATIONS):
 
 ## Multiple Choice Checkpoint
 
-[[MC]]
 A development team deploys a code-generation agent with `docker run --privileged -v /:/host`. A red team finds a prompt injection vulnerability. What is the worst-case outcome compared to a hardened deployment?
-- ( ) The agent generates incorrect code — the quality of generated code is determined by the model, not by Docker flags, so both deployments are equally at risk for correctness
-- ( ) The attacker can read files in /tmp, which the hardened deployment also allows via the --tmpfs flag
-- (x) The attacker gains read/write access to the entire host filesystem and can escalate to full host compromise
-- ( ) The --privileged flag primarily affects network capabilities, so the main additional risk compared to a hardened deployment is unrestricted outbound traffic
+
+[( )] The agent generates incorrect code — the quality of generated code is determined by the model, not by Docker flags, so both deployments are equally at risk for correctness
+[( )] The attacker can read files in /tmp, which the hardened deployment also allows via the --tmpfs flag
+[(X)] The attacker gains read/write access to the entire host filesystem and can escalate to full host compromise
+[( )] The --privileged flag primarily affects network capabilities, so the main additional risk compared to a hardened deployment is unrestricted outbound traffic
 
 ---
 
@@ -365,12 +365,12 @@ The same attach-by-URL move adds the rest of the frontend tier as you need each 
 
 > **⚠️ Common Misconception:** Many students expect `localhost` to work the same way inside a Docker container as it does outside. It does not. Inside a container, `localhost` refers to the container itself — not to your laptop or desktop. If Ollama is running natively on your host machine and a container tries to reach it at `localhost:11434`, the connection will fail. The fix is always `host.docker.internal:11434` with the `--add-host` flag on Linux. This is the single most common source of mysterious connection failures in this stack.
 
-[[MC]]
 Inside the llmproxy container, the routing config points at http://host.docker.internal:11434 rather than http://localhost:11434 because:
-- ( ) Port 11434 is reserved for host.docker.internal
-- (x) Inside a container, localhost means the container itself, so reaching the host-resident Ollama requires the special host alias (with --add-host or extra_hosts on Linux)
-- ( ) The gateway requires HTTPS
-- ( ) localhost works but is slower
+
+[( )] Port 11434 is reserved for host.docker.internal
+[(X)] Inside a container, localhost means the container itself, so reaching the host-resident Ollama requires the special host alias (with --add-host or extra_hosts on Linux)
+[( )] The gateway requires HTTPS
+[( )] localhost works but is slower
 
 ---
 

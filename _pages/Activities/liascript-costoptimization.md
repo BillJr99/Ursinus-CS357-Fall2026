@@ -100,12 +100,12 @@ The tradeoff is engineering cost and precision risk: a semantic cache may surfac
 
 > **Two layers, same idea.** The **prompt caching** here is a *billing* feature of a hosted API — you are charged less for a shared prefix. There is a distinct but related optimization one layer down, inside the inference engine itself: **prefix caching** in a serving stack like vLLM reuses the shared prefix's *KV cache* in GPU memory so its prefill is never recomputed, cutting time-to-first-token rather than your bill. If you self-host, you get the serving-layer version; if you call a hosted API, you get the billing-layer version. See Part IV of *Serving LLMs in Production* (`liascript-llmserving.md`) for how serving-layer prefix caching works and why PagedAttention makes it possible.
 
-[[MC]]
 A production agent has a 2,000-token system prompt that is identical for all users. To minimize cost, you should:
-- (x) Use a provider that supports prompt caching, structure the system prompt as a static prefix, and ensure it appears at the start of every request so it maximizes cache hit rate
-- ( ) Reduce the system prompt to 10 tokens — shorter prompts always produce lower costs regardless of caching behavior
-- ( ) Switch to a local model — local inference has zero per-token cost, so a 2,000-token system prompt has no cost impact
-- ( ) Place the user's dynamic message first in the prompt, then append the static system prompt — this maximizes context available to the model for each query
+
+[(X)] Use a provider that supports prompt caching, structure the system prompt as a static prefix, and ensure it appears at the start of every request so it maximizes cache hit rate
+[( )] Reduce the system prompt to 10 tokens — shorter prompts always produce lower costs regardless of caching behavior
+[( )] Switch to a local model — local inference has zero per-token cost, so a 2,000-token system prompt has no cost impact
+[( )] Place the user's dynamic message first in the prompt, then append the static system prompt — this maximizes context available to the model for each query
 
 ---
 
@@ -284,12 +284,12 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
    *Hint: Start by listing the constraints: the testimonies are highly sensitive (privacy argument for local), multi-language capability is required (accuracy constraint), the organization has limited budget (cost constraint), and the work matters (accuracy cost of a wrong inference is high). Where do these constraints converge, and where do they conflict?*
 
-[[MC]]
 A development team wants to reduce the carbon footprint of their AI-powered customer support system. Which intervention is most likely to produce the largest reduction in inference-time carbon emissions?
-- ( ) Switching from Python to a compiled language for the API wrapper — runtime efficiency gains in the surrounding code are in the microsecond range, whereas the model forward pass dominates at the millisecond-to-second scale; the wrapper is not the bottleneck
-- ( ) Adding a caching layer that serves identical responses to repeated queries without re-running the model — caching is a meaningful lever but only eliminates compute for exact or near-duplicate queries; a customer support system with diverse question phrasing will still run the full model for the majority of requests
-- (x) Replacing a 70B-parameter frontier model with a fine-tuned 7B-parameter model that achieves equivalent accuracy on the support domain — a 10x reduction in model size directly cuts inference compute by roughly 10x
-- ( ) Purchasing carbon offsets equal to the service's measured emissions — offsets shift accounting responsibility but do not reduce the actual energy the model consumes per query; the compute load and its direct energy draw remain identical
+
+[( )] Switching from Python to a compiled language for the API wrapper — runtime efficiency gains in the surrounding code are in the microsecond range, whereas the model forward pass dominates at the millisecond-to-second scale; the wrapper is not the bottleneck
+[( )] Adding a caching layer that serves identical responses to repeated queries without re-running the model — caching is a meaningful lever but only eliminates compute for exact or near-duplicate queries; a customer support system with diverse question phrasing will still run the full model for the majority of requests
+[(X)] Replacing a 70B-parameter frontier model with a fine-tuned 7B-parameter model that achieves equivalent accuracy on the support domain — a 10x reduction in model size directly cuts inference compute by roughly 10x
+[( )] Purchasing carbon offsets equal to the service's measured emissions — offsets shift accounting responsibility but do not reduce the actual energy the model consumes per query; the compute load and its direct energy draw remain identical
 
 ---
 

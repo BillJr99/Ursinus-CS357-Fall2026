@@ -189,12 +189,12 @@ Grounding means the model outputs a bounding box or click coordinate alongside i
 - **Human review**: For high-stakes testing, route flagged regions to a human reviewer who confirms the diagnosis before filing a bug report.
 - **Re-query with crop**: Crop the flagged region and re-query the model asking it to describe only that region. If the description is consistent with the original diagnosis, confidence increases.
 
-[[MC]]
 A VLM is processing a screenshot of a spreadsheet to extract all cell values. The most likely failure mode is:
-- (x) Small text, merged cells, or unusual formatting confuses the model, causing extraction errors or missed values.
-- ( ) The model refuses to process spreadsheets on ethical grounds — VLMs do not treat spreadsheet images as a restricted category; refusals occur for content policy reasons, not document type.
-- ( ) All values are extracted correctly but stored in the wrong column order — column-order confusion is a real failure mode, but extraction errors and missed values from visual ambiguity are far more common.
-- ( ) The model can only process image files smaller than 1 MB — file size limits are an API constraint, not a capability limitation of the model itself; most APIs accept images well above 1 MB.
+
+[(X)] Small text, merged cells, or unusual formatting confuses the model, causing extraction errors or missed values.
+[( )] The model refuses to process spreadsheets on ethical grounds — VLMs do not treat spreadsheet images as a restricted category; refusals occur for content policy reasons, not document type.
+[( )] All values are extracted correctly but stored in the wrong column order — column-order confusion is a real failure mode, but extraction errors and missed values from visual ambiguity are far more common.
+[( )] The model can only process image files smaller than 1 MB — file size limits are an API constraint, not a capability limitation of the model itself; most APIs accept images well above 1 MB.
 
 With the failure modes of individual components understood, we can now see how they combine — and compound — in a real end-to-end agent pipeline.
 

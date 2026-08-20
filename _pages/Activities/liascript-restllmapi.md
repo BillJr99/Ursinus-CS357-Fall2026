@@ -104,12 +104,12 @@ The difference matters in practice because the two APIs use different field name
 
 **The critical difference is in the response structure.** Code that reads `response["message"]["content"]` works against the native API but breaks silently against the OpenAI-compatible API, which wraps the reply inside a `choices` array. This is the source of many confusing "empty response" bugs.
 
-[[MC]]
 In a response from `POST /v1/chat/completions`, which JSON path contains the model's reply text?
-- ( ) `response["message"]["content"]`
-- ( ) `response["content"]`
-- (x) `response["choices"][0]["message"]["content"]`
-- ( ) `response["data"]["text"]`
+
+[( )] `response["message"]["content"]`
+[( )] `response["content"]`
+[(X)] `response["choices"][0]["message"]["content"]`
+[( )] `response["data"]["text"]`
 
 > **⚠️ Common Misconception:** "The OpenAI Python SDK only works if you have an OpenAI account and API key." This is false. The SDK's `OpenAI` client accepts a `base_url` parameter that redirects every call to any server that speaks the same protocol. You still need to pass an `api_key` argument, but the server ignores it — Ollama accepts any string, including `"ollama"` or `"not-a-real-key"`. The SDK is a convenience wrapper around HTTP; it does not enforce which server you talk to.
 
@@ -205,12 +205,12 @@ After running (or reviewing the projected run of) the code above, examine the th
 
    > *Hint: Think about environments where you cannot install packages (a locked-down server, a browser-based runtime, a very small container image). Also think about custom endpoints that return non-standard response shapes — the SDK validates the response structure and will raise errors if the server returns something unexpected.*
 
-[[MC]]
 What does setting `"stream": false` in the request body change at the HTTP protocol level?
-- ( ) The server generates fewer tokens in its response
-- ( ) The server uses a different model internally for non-streaming requests
-- (x) The server sends the complete response in a single HTTP response body instead of as a sequence of server-sent event lines
-- ( ) The client receives the response faster because streaming has overhead
+
+[( )] The server generates fewer tokens in its response
+[( )] The server uses a different model internally for non-streaming requests
+[(X)] The server sends the complete response in a single HTTP response body instead of as a sequence of server-sent event lines
+[( )] The client receives the response faster because streaming has overhead
 
 > **⚠️ Common Misconception:** "Streaming makes the model generate faster." The model generates tokens at the same rate regardless of whether streaming is enabled. Streaming changes how the tokens are *delivered* — in chunks as they are produced versus all at once at the end. For a user watching a chat interface, streaming feels faster because text appears immediately. For a program that processes the final answer, non-streaming is simpler because the full JSON arrives in one piece.
 
@@ -448,12 +448,12 @@ The `chat_completion` function above sends the same payload to two different mod
 
    > *Hint: Abstraction is valuable when you need to switch providers quickly or test across multiple models. Direct access is better when you need a provider-specific parameter that LiteLLM does not expose, or when LiteLLM's version lags behind a provider's latest API update.*
 
-[[MC]]
 What is the minimum change needed to point an OpenAI Python SDK call at a local Ollama server instead of the default remote endpoint?
-- ( ) Reinstall the `openai` package with a special `--local` flag
-- ( ) Replace every `client.chat.completions.create(...)` call with `requests.post(...)`
-- ( ) Set the `OPENAI_API_KEY` environment variable to `"ollama"`
-- (x) Instantiate the `OpenAI` client with `base_url="http://localhost:11434/v1"` and `api_key="ollama"`
+
+[( )] Reinstall the `openai` package with a special `--local` flag
+[( )] Replace every `client.chat.completions.create(...)` call with `requests.post(...)`
+[( )] Set the `OPENAI_API_KEY` environment variable to `"ollama"`
+[(X)] Instantiate the `OpenAI` client with `base_url="http://localhost:11434/v1"` and `api_key="ollama"`
 
 > **⚠️ Common Misconception:** Switching providers is not always as simple as changing `base_url` and `model`. The OpenAI-compatible specification defines a common *structure*, but not every optional field is supported by every server. Features like `logprobs`, `response_format`, `parallel_tool_calls`, and streaming with tool calls are implemented inconsistently. Always test a new provider with the specific features your agent relies on before treating portability as guaranteed.
 
@@ -539,12 +539,12 @@ The two calls above differ only in what got pasted into `{context}`. The "after"
 
     > *Hint: In `.format()` you must double every literal brace — `{{` and `}}` — so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*
 
-[[MC]]
 In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the model actually receive when you call `.format(context=docs, question=q)`?
-- ( ) The template string with the blanks still shown as `{context}` and `{question}`
-- ( ) Two separate API requests, one per blank
-- (x) A single fully rendered string with `docs` and `q` substituted in place of the blanks
-- ( ) A structured object where `context` and `question` remain separate fields the model can query
+
+[( )] The template string with the blanks still shown as `{context}` and `{question}`
+[( )] Two separate API requests, one per blank
+[(X)] A single fully rendered string with `docs` and `q` substituted in place of the blanks
+[( )] A structured object where `context` and `question` remain separate fields the model can query
 
 > **⚠️ Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again — if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
 
@@ -726,12 +726,12 @@ Stage 1's job is *not* to answer the customer — it is to produce machine-reada
 
     > *Hint: Stage 3's template needs an `{original_ticket}` blank and a `{draft_reply}` blank so it can judge whether the reply actually addresses the ticket. Your program would send the reply to the customer when `resolved` is true, and route to a human queue when `escalate` is true — a classic generate-then-check loop where each seam is a small JSON contract.*
 
-[[MC]]
 Why does an early pipeline stage emit JSON flags instead of a plain-English summary for the next stage to read?
-- ( ) JSON is shorter than English and always uses fewer tokens
-- ( ) The model can only output JSON when `temperature` is 0
-- (x) JSON is machine-parseable, so the program can branch, route, and fill later templates deterministically instead of re-interpreting free text
-- ( ) Plain-English summaries cannot be passed between `/v1/chat/completions` calls
+
+[( )] JSON is shorter than English and always uses fewer tokens
+[( )] The model can only output JSON when `temperature` is 0
+[(X)] JSON is machine-parseable, so the program can branch, route, and fill later templates deterministically instead of re-interpreting free text
+[( )] Plain-English summaries cannot be passed between `/v1/chat/completions` calls
 
 > **⚠️ Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
 

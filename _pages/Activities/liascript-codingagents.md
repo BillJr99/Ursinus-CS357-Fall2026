@@ -101,12 +101,12 @@ The table below traces a coding agent through its five stages. As you read each 
 
 > **⚠️ Common Misconception:** Many students assume that a coding agent "understands" the codebase the way a senior developer does — holding a mental model of every function, every dependency, and every implicit assumption. It does not. The agent only knows what it has loaded into its context window during the current run. If a critical convention (like "never use raw SQL strings — always use the ORM") was established in a file the agent did not load, the agent will happily violate it. This is why human diff review remains essential even when the test suite passes: tests verify behavior, not design adherence.
 
-[[MC]]
 In the coding agent loop, the *Verify* stage fails silently when:
-- ( ) The test runner crashes with an exception
-- ( ) The agent runs out of context window space
-- (x) The existing test suite passes but does not cover the new behavior the agent just added
-- ( ) The agent emits a "Final Answer" action before running tests
+
+[( )] The test runner crashes with an exception
+[( )] The agent runs out of context window space
+[(X)] The existing test suite passes but does not cover the new behavior the agent just added
+[( )] The agent emits a "Final Answer" action before running tests
 
 ---
 
@@ -178,12 +178,12 @@ Notice what these share: they are the **Step Budget** and **Acceptance Criteria*
 
 > **⚠️ Common Misconception:** Students often assume that "fresh context each iteration" means the agent forgets everything and cannot make real progress — that it must be flailing in circles. The opposite is true, *and it is the whole point*: the loop deliberately externalizes memory to the filesystem and `git` so that no single context window has to hold the entire task. The agent is not remembering less; it is remembering *on disk*, where memory is durable, inspectable, and does not decay as the window fills. The real risk is not amnesia — it is an unattended loop with a weak Verify stage happily committing work that passes thin tests but violates a requirement no test encodes.
 
-[[MC]]
 Why does a Ralph loop start each iteration with a *fresh* context window instead of carrying the full conversation forward?
-- ( ) To reduce the number of API calls, since a fresh context uses fewer total tokens over the whole run
-- ( ) Because the model is legally required to discard prior context between runs
-- (x) Because the task's memory lives on disk (codebase, `TODO` file, `git` history), so each iteration can re-read exactly what it needs and avoid the context-overflow failure that plagues one very long session
-- ( ) Because a fresh context makes the agent more creative by preventing it from repeating earlier ideas
+
+[( )] To reduce the number of API calls, since a fresh context uses fewer total tokens over the whole run
+[( )] Because the model is legally required to discard prior context between runs
+[(X)] Because the task's memory lives on disk (codebase, `TODO` file, `git` history), so each iteration can re-read exactly what it needs and avoid the context-overflow failure that plagues one very long session
+[( )] Because a fresh context makes the agent more creative by preventing it from repeating earlier ideas
 
 ---
 
@@ -377,12 +377,12 @@ logic to `app.py` — it is a thin routing layer only.
 
 *Hint: Think about what each file contains and who should be affected by it. The project `opencode.json` describes invariants and conventions of the codebase that every contributor and every agent session working on this repository should respect. The global `~/.opencode/instructions.md` describes your personal preferences — things like your preferred coding style, your typical workflow, or notes about your development machine — that are irrelevant or even wrong for other contributors. What happens if you commit your personal instructions and a teammate with different preferences pulls them? What happens if the project instructions are not committed and a new contributor's agent session does not know the invariants?*
 
-[[MC]]
 Two instructions are being considered for `opencode.json` in a project's repository. Which instruction belongs in **project scope** (committed to the repository) rather than in a developer's personal global config?
-- ( ) "Use Black for formatting" — this belongs in project scope because formatting consistency matters to all contributors, not just one developer's personal taste
-- (x) "Do not modify the database schema in `models.py` without creating an Alembic migration first" — this is a project-specific invariant that all contributors and all agent sessions must respect
-- ( ) "My preferred model is llama3.2 at temperature 0.2" — this is a project-wide default that should be committed so all contributors use the same model for reproducibility
-- ( ) "Open files in VSCode rather than the terminal editor" — this should be in project scope to enforce a consistent editing environment across the team
+
+[( )] "Use Black for formatting" — this belongs in project scope because formatting consistency matters to all contributors, not just one developer's personal taste
+[(X)] "Do not modify the database schema in `models.py` without creating an Alembic migration first" — this is a project-specific invariant that all contributors and all agent sessions must respect
+[( )] "My preferred model is llama3.2 at temperature 0.2" — this is a project-wide default that should be committed so all contributors use the same model for reproducibility
+[( )] "Open files in VSCode rather than the terminal editor" — this should be in project scope to enforce a consistent editing environment across the team
 
 ---
 

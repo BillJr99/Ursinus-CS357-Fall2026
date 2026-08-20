@@ -120,12 +120,12 @@ The core pattern (borrowed from the *Personal Agent in Production* case study) i
 
 Two properties make an unattended job trustworthy. **Idempotency**: running it twice must not double-act — so before opening a PR the job checks whether one already exists for this commit. And a **silent-on-success** habit: routines that succeed say nothing, so that the *only* messages you get are the ones that need you.
 
-[[MC]]
 An unattended nightly agent is about to take an action. Which action belongs in the **Autorun** lane rather than **Queue**?
-- ( ) Merging its own pull request because CI passed
-- ( ) Emailing the whole team a summary
-- (x) Opening a **draft** pull request with its proposed changes
-- ( ) Force-pushing a rebased branch to `main`
+
+[( )] Merging its own pull request because CI passed
+[( )] Emailing the whole team a summary
+[(X)] Opening a **draft** pull request with its proposed changes
+[( )] Force-pushing a rebased branch to `main`
 
 > **⚠️ Common Misconception:** "If the tests pass, the agent should just merge." Passing tests mean the change is *plausibly* correct, not that it is *wanted* — the same "sounds right ≠ is right" gap we saw with token prediction. Opening a draft PR (Autorun) keeps a human as the one who clicks merge (Queue). Autonomy is about removing toil, not removing accountability.
 
@@ -226,12 +226,12 @@ But OpenWebUI is still useful here, because it exposes an **OpenAI-compatible AP
 
 This is exactly how the local stack already wires n8n (port 5678) in front of the gateway: *"Every morning at 7am, summarize new emails and save to workspace."* The scheduler is the new part; the model call is the same one you already know.
 
-[[MC]]
 A student says "I'll make OpenWebUI run my agent every night." The most accurate correction is:
-- ( ) OpenWebUI can schedule jobs, but only on the paid tier
-- (x) OpenWebUI has no scheduler; pair it with cron/systemd/n8n/GitHub Actions that call its API on a timer
-- ( ) You must rewrite the agent as an OpenWebUI Function to schedule it
-- ( ) Scheduling is impossible without a cloud provider
+
+[( )] OpenWebUI can schedule jobs, but only on the paid tier
+[(X)] OpenWebUI has no scheduler; pair it with cron/systemd/n8n/GitHub Actions that call its API on a timer
+[( )] You must rewrite the agent as an OpenWebUI Function to schedule it
+[( )] Scheduling is impossible without a cloud provider
 
 ---
 

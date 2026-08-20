@@ -84,12 +84,12 @@ The practical implication: **to improve TTFT, shorten prompts or use a smaller m
 
    > *Hint: Prefill time scales roughly linearly with prompt length for transformer models (each token attends to all prior tokens, so work is proportional to $n$). Decode time is simply TPOT × output tokens. Add them.*
 
-[[MC]]
 A product team is building a streaming chat assistant where the model's response appears word-by-word in a chat bubble. A user complains "the response takes forever to start but then comes out fast." Which metric is the primary problem?
-- (x) TTFT — the time to first token is too high, causing the perceived "blank" period before text begins
-- ( ) TPOT — tokens are arriving too slowly once generation begins, making the text crawl
-- ( ) Throughput — the system is handling too many concurrent users, starving this user's request
-- ( ) Context length — the user's prompt is too long, causing a timeout before the response begins
+
+[(X)] TTFT — the time to first token is too high, causing the perceived "blank" period before text begins
+[( )] TPOT — tokens are arriving too slowly once generation begins, making the text crawl
+[( )] Throughput — the system is handling too many concurrent users, starving this user's request
+[( )] Context length — the user's prompt is too long, causing a timeout before the response begins
 
 > **⚠️ Common Misconception:** Many practitioners treat "latency" as a single number and optimize it uniformly. In reality, TTFT and TPOT are controlled by different system components — TTFT depends heavily on prompt length, model prefill speed, and queue wait time; TPOT depends on model size, quantization level, and hardware memory bandwidth. Reducing one does not necessarily reduce the other. Always measure both separately before deciding where to invest engineering effort.
 
@@ -238,12 +238,12 @@ print("directly improve any individual request's TTFT or TPOT.")
 
    > *Hint: With a longer prefill time, the "wasted slot" time in static batching is the same absolute amount, but now a larger fraction of total wall-clock time. Does continuous batching's slot-reuse help more when prefill is long or when decode is long?*
 
-[[MC]]
 A serving system uses static batching with a fixed batch size of 8. One request in the current batch generates only 5 output tokens; the other 7 requests each need 400 output tokens. During the decode phase, after the 5-token request finishes, what happens to its GPU slot?
-- ( ) It is immediately assigned to the next waiting request in the queue
-- ( ) It is used to speed up the remaining 7 requests by distributing their decode work
-- (x) It sits idle until all 7 remaining requests finish their 400 tokens, then the entire batch is cleared
-- ( ) The serving engine automatically switches to continuous batching for the remainder of this batch
+
+[( )] It is immediately assigned to the next waiting request in the queue
+[( )] It is used to speed up the remaining 7 requests by distributing their decode work
+[(X)] It sits idle until all 7 remaining requests finish their 400 tokens, then the entire batch is cleared
+[( )] The serving engine automatically switches to continuous batching for the remainder of this batch
 
 > **⚠️ Common Misconception:** Students often assume that "increasing batch size always improves user experience." Batch size is a throughput knob, not a latency knob. Increasing batch size increases the total number of tokens the system generates per second across all requests, which reduces cost and improves hardware utilization — but it can *increase* TTFT for individual requests, because a newly arriving request may have to wait in the queue for a batch slot to open. The user-level perception is: the system handles more total load, but individual responses may start later. Choose batch size based on your service's primary objective.
 
@@ -335,12 +335,12 @@ The published PagedAttention research measured the result: traditional systems w
 
    > *Hint: 99 redundant copies of a 500-token prefill. Which of the four tuning knobs in Model 8 is designed for shared prefixes?*
 
-[[MC]]
 A serving system pre-allocates a contiguous block sized to the maximum context length for every request. A user sends a 200-token prompt and gets a 300-token answer, well under the 2,048-token maximum. What is the ~1,500 tokens of unused reserved space called?
-- ( ) External fragmentation — the gaps are between allocations
-- (x) Internal fragmentation — the waste is reserved-but-unfilled space inside the request's own block
-- ( ) Redundant duplication — the same content is stored twice
-- ( ) A KV cache miss — the tokens were evicted and must be recomputed
+
+[( )] External fragmentation — the gaps are between allocations
+[(X)] Internal fragmentation — the waste is reserved-but-unfilled space inside the request's own block
+[( )] Redundant duplication — the same content is stored twice
+[( )] A KV cache miss — the tokens were evicted and must be recomputed
 
 ## Model 7: PagedAttention — Virtual Memory for the KV Cache
 
@@ -370,12 +370,12 @@ Two consequences fall out of this design. First, internal fragmentation drops fr
 
    > *Hint: Think about the 100 users sharing one system prompt. What OS feature lets multiple processes share one physical copy of read-only memory?*
 
-[[MC]]
 In PagedAttention, what does the block table map?
-- ( ) Token IDs to their embedding vectors
-- ( ) Model weights to GPU cores
-- (x) A request's logical block addresses to the physical block addresses in VRAM where the KV data actually sits
-- ( ) Prompts to cached responses
+
+[( )] Token IDs to their embedding vectors
+[( )] Model weights to GPU cores
+[(X)] A request's logical block addresses to the physical block addresses in VRAM where the KV data actually sits
+[( )] Prompts to cached responses
 
 > **⚠️ Common Misconception:** Students often conclude that PagedAttention makes token generation *faster*. It does not speed up the per-token math at all — attention over a paged cache runs at essentially the same speed as over a contiguous one. What PagedAttention removes is *wasted memory*. By reclaiming the 60–80% of KV-cache memory lost to fragmentation, it lets you fit far more concurrent requests on the same GPU. Higher throughput comes from **serving more requests at once**, not from any individual request running faster. Memory efficiency is the lever; concurrency is the payoff.
 
@@ -406,12 +406,12 @@ The unifying idea: the first three knobs are all about **using the KV-cache memo
 
    > *Hint: Decode is memory-bound, so the GPU's compute units are partly idle between memory reads. The draft model fills that idle compute. What happens to idle compute when the batch is already large enough to saturate the GPU?*
 
-[[MC]]
 Which tuning knob most directly eliminates the *redundant duplication* waste identified in Model 6 (the same system prompt cached separately per request)?
-- ( ) `gpu_memory_utilization` — it changes how much VRAM the cache may use
-- (x) Prefix caching — shared prefixes are hashed and stored once, then pointed to
-- ( ) Chunked prefill — it interleaves prefill with decode
-- ( ) Speculative decoding — a draft model proposes tokens
+
+[( )] `gpu_memory_utilization` — it changes how much VRAM the cache may use
+[(X)] Prefix caching — shared prefixes are hashed and stored once, then pointed to
+[( )] Chunked prefill — it interleaves prefill with decode
+[( )] Speculative decoding — a draft model proposes tokens
 
 > **⚠️ Common Misconception:** It is tempting to treat `gpu_memory_utilization` as a "make it faster" dial and crank it to the maximum. It is really a **risk/packing tradeoff**. A higher value admits more concurrent requests (better throughput) but leaves less slack to absorb sudden bursts; when a spike arrives with no headroom, the engine hits out-of-memory and *drops* requests — worse than running slightly under-packed. The right value is workload-specific and found by benchmarking, not by maximizing.
 

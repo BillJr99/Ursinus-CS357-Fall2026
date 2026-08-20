@@ -175,10 +175,10 @@ The limitations of SHAP, LIME, and attention weights become even more pronounced
 
 A medical AI system explains its recommendation for a cancer screening referral by highlighting which regions of a patient's medical scan were most important, using LIME to generate the highlighted regions. A radiologist reviewing the recommendation should treat this explanation as:
 
-- ( ) Definitive evidence identifying which anatomical features caused the AI's diagnosis — LIME explanations point to what the model attended to, which is not the same as what anatomically caused the finding
-- ( ) A complete substitute for their own clinical analysis, since the AI has quantified the evidence — quantification creates an appearance of precision that the underlying LIME instability does not support
-- (x) A plausible but potentially unstable local approximation that should complement — and may usefully direct — their clinical judgment, but cannot replace it
-- ( ) Proof that the model is unbiased and has no spurious correlations in its training data — explanation methods describe behavior on individual inputs; they do not audit whether training data contained biased patterns
+[( )] Definitive evidence identifying which anatomical features caused the AI's diagnosis — LIME explanations point to what the model attended to, which is not the same as what anatomically caused the finding
+[( )] A complete substitute for their own clinical analysis, since the AI has quantified the evidence — quantification creates an appearance of precision that the underlying LIME instability does not support
+[(X)] A plausible but potentially unstable local approximation that should complement — and may usefully direct — their clinical judgment, but cannot replace it
+[( )] Proof that the model is unbiased and has no spurious correlations in its training data — explanation methods describe behavior on individual inputs; they do not audit whether training data contained biased patterns
 
 > *Hint:* Recall that LIME generates a local approximation by perturbing the input — running it on a different random seed would produce a different highlighted region. "Definitive evidence" requires a level of stability and causal connection that LIME does not provide. The last option conflates explanation (what the model attended to) with fairness (whether the model learned spurious patterns) — these are separate questions.
 

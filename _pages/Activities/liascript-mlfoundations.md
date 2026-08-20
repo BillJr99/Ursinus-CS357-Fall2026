@@ -85,12 +85,12 @@ The **hypothesis class** (the family of functions we search over) determines wha
 
 ### Multiple Choice
 
-[[MC]]
 Which of the following is the clearest example of a **regression** problem?
-- ( ) Deciding whether a support ticket should go to the billing team or the technical team
-- (x) Predicting how long (in minutes) a user will spend on a course activity given their prior engagement statistics
-- ( ) Labeling each sentence in an essay as "thesis", "evidence", or "analysis"
-- ( ) Identifying which of five tools an agent should invoke for a given query
+
+[( )] Deciding whether a support ticket should go to the billing team or the technical team
+[(X)] Predicting how long (in minutes) a user will spend on a course activity given their prior engagement statistics
+[( )] Labeling each sentence in an essay as "thesis", "evidence", or "analysis"
+[( )] Identifying which of five tools an agent should invoke for a given query
 
 ---
 

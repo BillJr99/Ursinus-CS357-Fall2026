@@ -211,12 +211,12 @@ if verdict["verdict"] != "accept":
 
 Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Critique and Refine implementation.
 
-[[MC]]
 The principal reason the critic receives a rubric while the generator does not is:
-- ( ) Rubrics are too long for the generator's context
-- (x) Separating exploration from criterion-checking gives each small, focused context one job, improving both
-- ( ) The generator cannot read JSON
-- ( ) Critics require higher temperature than generators
+
+[( )] Rubrics are too long for the generator's context
+[(X)] Separating exploration from criterion-checking gives each small, focused context one job, improving both
+[( )] The generator cannot read JSON
+[( )] Critics require higher temperature than generators
 
 ---
 

@@ -172,12 +172,12 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 > **⚠️ Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way. The model's weights are completely unchanged. RAG simply places text in the prompt that the model then reads and summarizes — the same way you could hand a book to someone who has never seen it and ask them to answer questions from it. The intelligence is in the language model; the facts come from your documents. This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
 
-[[MC]]
 The single most important reason RAG reduces factual hallucination is that it:
-- ( ) Increases the model's parameter count at query time
-- (x) Moves the burden of factual precision from parametric memory to text supplied in the context
-- ( ) Lowers the sampling temperature automatically
-- ( ) Fine-tunes the model on your documents
+
+[( )] Increases the model's parameter count at query time
+[(X)] Moves the burden of factual precision from parametric memory to text supplied in the context
+[( )] Lowers the sampling temperature automatically
+[( )] Fine-tunes the model on your documents
 
 ---
 

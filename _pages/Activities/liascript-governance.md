@@ -96,12 +96,12 @@ Your governance document (for the written assignment and your project) uses this
 7. **Accountability and incident response**: the owner by name or role, the reporting path, and response timelines measured in hours or days.
 8. **Review and sunset**: when the policy is re-examined and the conditions under which the system is retired.
 
-[[MC]]
 A team writes: "Section 6: We will continuously evaluate the system for quality and bias." The revision that survives the third-party test is:
-- ( ) "We will evaluate rigorously and transparently using best-practice methods."
-- ( ) "Evaluation is a core value of our team and we take it seriously."
-- (x) "Each Friday the harness in /eval runs the 40-item task set; per-group accuracy and judge-human agreement are posted to the repository; any group gap exceeding 5 points opens an incident."
-- ( ) "Users are encouraged to report problems and we will respond appropriately."
+
+[( )] "We will evaluate rigorously and transparently using best-practice methods."
+[( )] "Evaluation is a core value of our team and we take it seriously."
+[(X)] "Each Friday the harness in /eval runs the 40-item task set; per-group accuracy and judge-human agreement are posted to the repository; any group gap exceeding 5 points opens an incident."
+[( )] "Users are encouraged to report problems and we will respond appropriately."
 
 ---
 

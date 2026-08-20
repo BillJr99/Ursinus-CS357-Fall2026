@@ -82,12 +82,12 @@ These two vectors, $x_{\text{the}} = (1,0)$ and $x_{\text{cat}} = (1,1)$, are th
 
    > *Hint: $\text{pos}_0 = (0,0)$. Recompute $(0,1) + \text{pos}_0$. If two orderings produced identical vectors, could the model ever distinguish "dog bites man" from "man bites dog"?*
 
-[[MC]]
 Why does a transformer add a positional encoding to the token embedding before attention?
-- ( ) To make the vectors longer so they carry more information
-- (x) Because attention itself is order-agnostic, so without position the model cannot tell "the cat" from "cat the"
-- ( ) To convert the token id into a probability
-- ( ) To reduce the size of the vocabulary
+
+[( )] To make the vectors longer so they carry more information
+[(X)] Because attention itself is order-agnostic, so without position the model cannot tell "the cat" from "cat the"
+[( )] To convert the token id into a probability
+[( )] To reduce the size of the vocabulary
 
 ---
 
@@ -161,12 +161,12 @@ The vector $(0.6698, 1.0)$ is "cat," now aware of the token before it. That is t
 
    > *Hint: The last token dots against all prior keys. Summed over every token attending to every prior token, the total grows like $n^2$.*
 
-[[MC]]
 The context vector $(0.6698, 1.0)$ for "cat" is computed as:
-- ( ) The average of the query, key, and value vectors
-- ( ) The token embedding of "cat" with its position removed
-- (x) The softmax-weighted sum of the **value** vectors, using attention weights from the query·key scores
-- ( ) The largest of the two attention scores
+
+[( )] The average of the query, key, and value vectors
+[( )] The token embedding of "cat" with its position removed
+[(X)] The softmax-weighted sum of the **value** vectors, using attention weights from the query·key scores
+[( )] The largest of the two attention scores
 
 ---
 
@@ -215,12 +215,12 @@ The sum is $24.9313$, giving:
 
    > *Hint: Look for the row whose dot product with $(1.6698, 1.0)$ is most negative. Which direction points "against" $h$?*
 
-[[MC]]
 The five logits are converted into the five next-token probabilities by:
-- ( ) Dividing each logit by the number of tokens
-- (x) Applying softmax across the whole vocabulary so the values are positive and sum to 1
-- ( ) Keeping only the largest logit and setting the rest to 0
-- ( ) Multiplying each logit by its embedding
+
+[( )] Dividing each logit by the number of tokens
+[(X)] Applying softmax across the whole vocabulary so the values are positive and sum to 1
+[( )] Keeping only the largest logit and setting the rest to 0
+[( )] Multiplying each logit by its embedding
 
 > **⚠️ Common Misconception:** It is tempting to picture the model "looking up" the answer to "the cat" in some stored table of sentences. It does no such thing. There is no sentence "the cat sat" stored anywhere. The model holds only **weights** — the embedding rows, the projection matrices $W_Q, W_K, W_V$, the FFN weights, and the unembedding $W_U$. Given "the cat," it *computes* a fresh probability distribution over its entire vocabulary every single time, through exactly the matrix operations above. "sat" is not retrieved; it is the token that wins an arithmetic competition.
 
@@ -266,12 +266,12 @@ Did it help? Recompute just that logit: $\text{logit}_{\text{sat}} = 1.3514\cdot
 
    > *Hint: Each weight's update independently reduces the loss (to first order). What happens when many small improvements combine?*
 
-[[MC]]
 After one gradient-descent step on $W_U[\text{sat},0]$, the loss went from $0.5464$ to $0.3395$. This happened because:
-- ( ) The model looked up the correct answer and memorized it
-- (x) The weight moved opposite its gradient, raising the "sat" logit and thus $p(\text{sat})$, which lowers $-\log p(\text{sat})$
-- ( ) Softmax was disabled after training
-- ( ) The learning rate was set to zero
+
+[( )] The model looked up the correct answer and memorized it
+[(X)] The weight moved opposite its gradient, raising the "sat" logit and thus $p(\text{sat})$, which lowers $-\log p(\text{sat})$
+[( )] Softmax was disabled after training
+[( )] The learning rate was set to zero
 
 ---
 

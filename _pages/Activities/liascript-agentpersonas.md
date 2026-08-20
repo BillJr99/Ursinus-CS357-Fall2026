@@ -120,11 +120,10 @@ The user explicitly instructs the agent to "forget" its persona or "pretend to b
 
 A course assistant persona is designed to be "always positive and encouraging" to help anxious students. A student pastes code and asks "Is this correct?" The code has a critical bug that would fail all test cases. The most responsible design choice is:
 
-[[MC]]
-- ( ) Have the agent say the code looks great — a well-designed "positive" persona should prioritize student emotional wellbeing over factual accuracy
-- (x) Build a truthfulness constraint that overrides tone guidelines when the accuracy of technical feedback is at stake
-- ( ) Have the agent refuse to evaluate code at all — topic boundaries should prevent it from engaging with potentially discouraging content
-- ( ) Add a disclaimer that the persona always gives encouraging feedback regardless of accuracy, so students know not to rely on it for correctness
+[( )] Have the agent say the code looks great — a well-designed "positive" persona should prioritize student emotional wellbeing over factual accuracy
+[(X)] Build a truthfulness constraint that overrides tone guidelines when the accuracy of technical feedback is at stake
+[( )] Have the agent refuse to evaluate code at all — topic boundaries should prevent it from engaging with potentially discouraging content
+[( )] Add a disclaimer that the persona always gives encouraging feedback regardless of accuracy, so students know not to rely on it for correctness
 
 With these failure modes in mind, we can now look at the positive principles that make system prompts resilient from the start.
 

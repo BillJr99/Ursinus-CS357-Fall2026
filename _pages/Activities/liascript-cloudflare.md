@@ -210,12 +210,12 @@ To watch your live Worker's logs in real time (like `docker logs -f` but for the
 npx wrangler tail    # streams live log output from your deployed Worker
 ```
 
-[[MC]]
 A teammate puts an API key in the [vars] section of wrangler.toml "because env reads both the same way." The flaw is:
-- ( ) Workers cannot read vars at runtime — only secrets injected at deploy time are accessible via the `env` object
-- (x) wrangler.toml is committed to the repository, so the key becomes part of the project's public record; secrets must go through wrangler secret put, which stores them server-side only
-- ( ) vars and secrets are both stored server-side by Cloudflare, so committing the key to `wrangler.toml` has no security implication
-- ( ) Secrets are faster to read than vars because they are stored in Cloudflare's KV store with lower latency
+
+[( )] Workers cannot read vars at runtime — only secrets injected at deploy time are accessible via the `env` object
+[(X)] wrangler.toml is committed to the repository, so the key becomes part of the project's public record; secrets must go through wrangler secret put, which stores them server-side only
+[( )] vars and secrets are both stored server-side by Cloudflare, so committing the key to `wrangler.toml` has no security implication
+[( )] Secrets are faster to read than vars because they are stored in Cloudflare's KV store with lower latency
 
 With a live Worker API deployed and secrets stored correctly, Part III shows how to host your static frontend on Pages and — most importantly — draw the line between what belongs at the edge and what must stay on localhost.
 
@@ -420,12 +420,12 @@ And local development still uses `.dev.vars` / `.env` — which are **git-ignore
 *.local
 ```
 
-[[MC]]
 Your deploy script needs the Cloudflare token, and you want a required reviewer to approve every production deploy. The correct place to store the token is:
-- ( ) Hardcoded in `deploy.sh` so the script is self-contained and works anywhere
-- ( ) A plain repository *variable*, so teammates can see it is configured
-- (x) A repository *environment secret* attached to a protected `production` environment, so it is encrypted, masked in logs, and only usable after the environment's approval rule passes
-- ( ) In `wrangler.toml`'s `[vars]` table, since the Worker reads everything from `env` anyway
+
+[( )] Hardcoded in `deploy.sh` so the script is self-contained and works anywhere
+[( )] A plain repository *variable*, so teammates can see it is configured
+[(X)] A repository *environment secret* attached to a protected `production` environment, so it is encrypted, masked in logs, and only usable after the environment's approval rule passes
+[( )] In `wrangler.toml`'s `[vars]` table, since the Worker reads everything from `env` anyway
 
 ## 10. Least Privilege and Short-Lived Credentials
 
@@ -652,12 +652,12 @@ concurrency:
 
 The through-line of this whole part holds here too: **automatic where it is cheap and safe, manual where it is expensive or consequential.** You are deciding, per workflow, how much to trade convenience for control and cost.
 
-[[MC]]
 Your team's full deploy workflow is burning the month's Actions minutes because it runs on every push to every branch. The change that saves the most credits *without* weakening the production safety gates is:
-- ( ) Delete the required-reviewer rule on the `production` environment so runs stop waiting
-- ( ) Hardcode the Cloudflare token so runs skip the secret-fetch step
-- (x) Restrict the trigger to `main` (plus `paths` filters) and move the full deploy behind `workflow_dispatch`, so it runs on demand rather than on every commit
-- ( ) Give every teammate admin so anyone can cancel runs manually
+
+[( )] Delete the required-reviewer rule on the `production` environment so runs stop waiting
+[( )] Hardcode the Cloudflare token so runs skip the secret-fetch step
+[(X)] Restrict the trigger to `main` (plus `paths` filters) and move the full deploy behind `workflow_dispatch`, so it runs on demand rather than on every commit
+[( )] Give every teammate admin so anyone can cancel runs manually
 
 ### Critical Thinking Question
 

@@ -198,12 +198,12 @@ Run the debate on this question. The correct answer is **10 dollars** (if the wa
 
 Part III gives you the structured experiments to generate those measurements yourself, replacing claims about debate with data.
 
-[[MC]]
 Multi-agent debate most reliably improves accuracy when:
-- ( ) All agents run at temperature 0 for consistency
-- ( ) The question requires recalling one rare fact
-- (x) Errors across agents are partially independent and flaws in a wrong answer are easier to verify than to avoid
-- ( ) The agents share a single context window
+
+[( )] All agents run at temperature 0 for consistency
+[( )] The question requires recalling one rare fact
+[(X)] Errors across agents are partially independent and flaws in a wrong answer are easier to verify than to avoid
+[( )] The agents share a single context window
 
 ---
 

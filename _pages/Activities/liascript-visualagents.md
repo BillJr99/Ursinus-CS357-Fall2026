@@ -123,12 +123,12 @@ The visual artifact and your code-world tooling (harnesses, batch evaluation) co
 
    *Hint:* The Reflector should record specific moments of confusion or clarity. Which medium let the newcomer correctly predict what would happen if you changed the chunk size? Which let the expert find the exact temperature setting used?
 
-[[MC]]
 The most defensible claim about visual builders versus code for agent systems is:
-- ( ) Visual builders are for beginners only; code is for professionals who need full capability
-- ( ) Visual flows cannot implement RAG or tool use because they hide too much from the developer
-- (x) Both express the same underlying patterns; visual excels at communication and rapid wiring, code at version control, testing, and arbitrary logic
-- ( ) Flows run faster because they skip the overhead of Python interpretation
+
+[( )] Visual builders are for beginners only; code is for professionals who need full capability
+[( )] Visual flows cannot implement RAG or tool use because they hide too much from the developer
+[(X)] Both express the same underlying patterns; visual excels at communication and rapid wiring, code at version control, testing, and arbitrary logic
+[( )] Flows run faster because they skip the overhead of Python interpretation
 
 > **⚠️ Common Misconception:** It is tempting to conclude that visual builders are "easier" and therefore produce systems that are less capable or less rigorous than hand-written code. This is wrong in two directions. First, Langflow can express any pattern that Python can (with the exception of certain dynamic structures like runtime loops). Second, "easier to build" does not mean "easier to audit" — a visually assembled system can be harder to review for security, bias, or correctness than well-structured Python code, because the implementation details are hidden inside opaque node icons. Ease of construction and rigor of understanding are independent dimensions.
 
@@ -166,12 +166,12 @@ One team member opens `http://localhost:7860` while the Recorder keeps notes on 
 3. Connect: **Chat Input → Prompt → Ollama → Chat Output** (remove the direct Chat Input → Ollama connection)
 4. Re-run with a question and observe the difference
 
-[[MC]]
 The Prompt node in Langflow corresponds to which part of your Python agent code?
-- ( ) The `requests.post()` call to Ollama
-- (x) The system message in the `messages` list (the dict with `"role": "system"`)
-- ( ) The `parse_response()` function
-- ( ) The `print()` at the end
+
+[( )] The `requests.post()` call to Ollama
+[(X)] The system message in the `messages` list (the dict with `"role": "system"`)
+[( )] The `parse_response()` function
+[( )] The `print()` at the end
 
 > **⚠️ Common Misconception:** Students often assume adding a Prompt node changes what the model "knows." It does not — it changes what *instructions* the model receives at the start of each conversation. The model's weights (its actual knowledge) are fixed; only the prompt changes.
 

@@ -95,12 +95,12 @@ Read this as: for each of $N$ questions, check whether the relevant chunk appear
 
 A two-stage design retrieves generously then filters precisely: a fast vector search proposes, say, 20 candidates (achieving high recall — the right chunk is almost certainly in there), and a **reranker** (a slower model scoring each query-chunk pair directly) reorders them so the truly relevant chunk rises into the top 3 that actually fit the prompt (achieving high precision). Even an LLM prompted with "Rate the relevance of this passage to this question from 0 to 10" makes a serviceable reranker — our first taste of models evaluating text for other models.
 
-[[MC]]
 A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 chunks. The highest-leverage fix is:
-- ( ) A larger generation model
-- ( ) Smaller chunks with more overlap
-- (x) A reranking stage between retrieval and prompt assembly
-- ( ) Raising the temperature of the generator
+
+[( )] A larger generation model
+[( )] Smaller chunks with more overlap
+[(X)] A reranking stage between retrieval and prompt assembly
+[( )] Raising the temperature of the generator
 
 ---
 
@@ -390,12 +390,12 @@ Fill in this table after running the comparison. Mark each cell **Y** (the relev
 
    > *Hint: Look for a question where the answer spans a character-boundary cut. For example, if chunk N ends with "the participants were" and chunk N+1 begins with "optimistic, predicting...", neither chunk alone answers a question about the founders' predictions. Print a few boundary regions of the fixed chunks to see exactly where cuts landed.*
 
-[[MC]]
 You increase `chunk_size` from 100 characters to 1000 characters (keeping overlap=0). Which of the following best describes the trade-off?
-- ( ) Fewer chunks means faster embedding but always better retrieval precision
-- (x) Larger chunks improve the chance that a multi-sentence answer is intact in one chunk, but each chunk's embedding blurs across more topics, reducing precision for focused queries
-- ( ) Larger chunks always increase recall@k regardless of the query
-- ( ) Chunk size affects only storage cost, not retrieval quality
+
+[( )] Fewer chunks means faster embedding but always better retrieval precision
+[(X)] Larger chunks improve the chance that a multi-sentence answer is intact in one chunk, but each chunk's embedding blurs across more topics, reducing precision for focused queries
+[( )] Larger chunks always increase recall@k regardless of the query
+[( )] Chunk size affects only storage cost, not retrieval quality
 
 > *Hint: Think about the Goldilocks Problem from Part I. A 1000-character chunk might span three different topics. Its embedding vector must summarize all three topics at once. When a user asks about just one of those topics, the chunk may rank lower than a smaller, more focused chunk — even though the answer is physically present inside it.*
 

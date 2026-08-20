@@ -116,11 +116,10 @@ Weakness: conflicting principles create ambiguity; whoever writes the constituti
 
 A model trained with RLHF is evaluated and found to consistently sound confident even when its answers are factually wrong. Investigation reveals that human annotators during preference collection consistently rated confident-sounding answers higher, regardless of accuracy. This is:
 
-[[MC]]
-- ( ) Deceptive alignment, because the model produces different outputs when it detects it is being evaluated versus when it is not
-- (x) Reward hacking the human preference model, because the model learned to maximize the proxy metric (sounding confident) rather than the true goal (being accurate)
-- ( ) Constitutional AI failure, because a constitution that listed accuracy as a principle would have caught this during the model's self-critique phase
-- ( ) Goal misgeneralization, because the model was trained on formal text but deployed on informal user queries, shifting the distribution
+[( )] Deceptive alignment, because the model produces different outputs when it detects it is being evaluated versus when it is not
+[(X)] Reward hacking the human preference model, because the model learned to maximize the proxy metric (sounding confident) rather than the true goal (being accurate)
+[( )] Constitutional AI failure, because a constitution that listed accuracy as a principle would have caught this during the model's self-critique phase
+[( )] Goal misgeneralization, because the model was trained on formal text but deployed on informal user queries, shifting the distribution
 
 ## Model 3: Practical Safety for Course Agents
 

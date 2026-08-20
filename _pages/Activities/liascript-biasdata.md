@@ -157,12 +157,12 @@ for occ in ["nurse", "engineer", "kindergarten teacher", "electrician"]:
 
    *Hint:* Generate 50 outreach messages for "nurses applying for a position" and 50 for "engineers applying for a position." Run your LLM-as-judge rubric (from the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity) on all 100, scoring each for warmth, formality, encouragement, and professional tone. Compare the score distributions. What statistical test would you run to determine whether any difference is statistically significant rather than random variation?
 
-[[MC]]
 A resume-screening agent shows equal average approval rates overall but was validated only on resumes from one region's universities. The *Coded Bias*-informed concern is:
-- ( ) Average approval is the wrong metric; throughput (how many resumes per hour) matters more
-- (x) Performance may degrade sharply on groups absent from validation data, and the aggregate hides it
-- ( ) The model's temperature was too high, causing random variation that looks like bias
-- ( ) Agents cannot exhibit bias because they follow explicit prompt instructions rather than making their own judgments
+
+[( )] Average approval is the wrong metric; throughput (how many resumes per hour) matters more
+[(X)] Performance may degrade sharply on groups absent from validation data, and the aggregate hides it
+[( )] The model's temperature was too high, causing random variation that looks like bias
+[( )] Agents cannot exhibit bias because they follow explicit prompt instructions rather than making their own judgments
 
 > **⚠️ Common Misconception:** A common but dangerous belief is that "the agent just follows instructions — it can't be biased." This is wrong on two levels. First, the model underlying the agent was trained on biased text, so its probability distributions already encode the associations in that text. Second, even a perfectly neutral model can be made biased by prompts that introduce biased assumptions (e.g., "draft a professional outreach message for a nurse named Alex" — the model's completion of "professional for a nurse" already carries occupational gender associations). Bias is not a property of whether the agent "means" to discriminate; it is a property of the statistical patterns in its outputs, measured across many runs on many people.
 
