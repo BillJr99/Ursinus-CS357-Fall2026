@@ -277,6 +277,8 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 
 ## Intra-Team Check-Ins 1-3
 
+> **Bring to class.** Each review round runs on real artifacts: the Stakeholder Brief draft at the *RAG Quality* session, the proposal at *Agentic Case Studies*, and your gallery-walk artifact plus SQR cards at *Project Studio and Gallery Walk*. A round with nothing to review is a round wasted.
+
 The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol** — one Strength with evidence, one genuine Question, one Risk with a mitigation. The **[Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md)** carries the protocol card; bring it to each review round.
 
 Three times in the semester — with the Stakeholder Brief, between the project tracks and the proposal, and after the gallery walk — your team pauses for a structured check-in. Each check-in carries **3 points, assessed within Class Activities and Participation** — enough to make it a real commitment, small enough that the check-in itself, not the score, is the point. Every check-in has the same two parts:
