@@ -217,7 +217,7 @@ In this Part, you will apply the proportional reasoning, design vocabulary, and 
 
 ## Reflection Prompt
 
-Record your responses to all three levels in your **Reflection Notebook**:
+Record your responses to all three levels in your reflection:
 
 *Personal:* Look at your personal carbon audit results. Did the numbers change how you feel about your own AI use this semester — or did you find yourself rationalizing the usage you already had? Either answer is informative. What would it take for the numbers to actually change your behavior?
 

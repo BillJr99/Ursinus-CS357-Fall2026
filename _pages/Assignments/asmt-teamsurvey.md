@@ -103,7 +103,7 @@ This short, individually submitted survey is the first milestone of the [Project
 
 ## Reflection Prompts
 
-Answer briefly in your Reflection Notebook (not in the survey):
+Answer briefly in your submission (not in the survey answers themselves):
 
 - *How should we live together?* — Which of your survey answers do you most hope your future teammates take seriously, and why?
 - If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.

@@ -308,13 +308,13 @@ Your thread work is read at more than one level, and the mapping below is fixed 
 | **Professionalism and Process** — charter, role rotation, decision log, standups, check-ins, signatures | Goal 13 (collaborate to develop a strategic intervention) | *Teamwork* — contributes to team meetings, facilitates the contributions of others, individual contributions outside meetings, fosters constructive climate, responds to conflict |
 | **Product** — written milestones (brief, review, proposal, governance one-pager) | Goal 14 (communicate across audiences and modalities) | *Written Communication* — context and purpose, content development, sources and evidence, control of syntax |
 | **Product** — Demo Day technical segment, stakeholder segment, partner-facing artifact | Goal 14 | *Oral Communication* — organization, language, delivery, supporting material, central message |
-| **Reflection Notebook** — Open Questions entries at every milestone | Goal 15 (use the Open Questions to assess the learning process) | *Integrative Learning* — reflection and self-assessment; *Civic Engagement* — analysis of knowledge, civic identity and commitment |
+| **Reflection** — Open Questions responses at every milestone | Goal 15 (use the Open Questions to assess the learning process) | *Integrative Learning* — reflection and self-assessment; *Civic Engagement* — analysis of knowledge, civic identity and commitment |
 
 ---
 
 ## Reflection: The Open Questions Run Through Everything (Goal 15)
 
-Every thread milestone ends with reflection prompts keyed to the four **Ursinus Open Questions**. You will answer them in your Reflection Notebook, and by Demo Day you will have a semester-long record of your own growth to draw on. The standing mapping:
+Every thread milestone ends with reflection prompts keyed to the four **Ursinus Open Questions**. You will answer them with each milestone submission, and by Demo Day you will have a semester-long record of your own growth to draw on. The standing mapping:
 
 | Open Question | How It Shows Up on the Thread |
 |---|---|

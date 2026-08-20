@@ -171,7 +171,7 @@ Before the brief is due, draft briefs are exchanged across teams in class for st
 
 ## Reflection Prompts
 
-Answer individually in your Reflection Notebook, keyed to the Open Questions (Goal 15):
+Answer individually in your submission, keyed to the Open Questions (Goal 15):
 
 - *What should matter to me?* — Before the interview you had assumptions about what this stakeholder's real problem was. Which assumption died first, and what does the gap between what you expected to matter and what actually mattered to them tell you about how you choose problems?
 - *How can we understand the world?* — Name one thing the stakeholder's discipline treats as obvious evidence that CS would not, or vice versa. What would your team lose by using only one of the two lenses?
