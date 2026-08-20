@@ -303,9 +303,200 @@ A teammate's Open WebUI container cannot reach Ollama. From the host, `curl http
 
 *You now have the full toolkit: images, containers, ports, volumes, Dockerfiles, Compose stacks, and host networking. Part III puts it all together through hands-on exercises that build on each other — completing all five means you are ready to wire the full course AI stack.*
 
+## 8. Making a Host Folder Available to a Container
+
+This is the single most common thing you will do all semester, and the single most common thing to get wrong. The flag is `-v HOST_PATH:CONTAINER_PATH[:MODE]`, and each of the three parts deserves care.
+
+**Step 1 — create the folder on the host first.** Docker will happily create a missing host path *as root*, leaving you a folder you cannot write to. Make it yourself:
+
+```bash
+mkdir -p "$HOME/agents/work"
+```
+
+**Step 2 — use an absolute path.** A relative path like `-v ./work:/work` works in Compose but is unreliable on the command line. `$HOME` and `$(pwd)` are your friends, and the quotes matter if any folder name contains a space:
+
+```bash
+docker run --rm -v "$HOME/agents/work:/work" alpine ls /work
+```
+
+**Step 3 — know where "your machine" actually is.** This trips up nearly everyone once:
+
+| You are on | Host path to use | Note |
+|---|---|---|
+| macOS or Linux | `$HOME/agents/work` | Just works. |
+| Windows + WSL2 (our setup) | `$HOME/agents/work` *inside WSL* | Keep project files in the Linux filesystem. |
+| Windows + WSL2, files on `C:` | `/mnt/c/Users/you/work` | Works, but **much** slower, and file permissions behave oddly. |
+| Windows PowerShell | `C:\Users\you\work` | Docker Desktop translates it; forward slashes also work. |
+
+> **Watch out!** On WSL, a project living under `/mnt/c/...` can be five to ten times slower for the many-small-files work that agents do (git operations, `npm install`, test runs). If your agent feels inexplicably sluggish, check which filesystem the folder is on before you blame the model.
+
+**Step 4 — verify from inside.** Never assume the mount landed:
+
+```bash
+docker run --rm -v "$HOME/agents/work:/work" alpine sh -c 'ls -la /work && touch /work/hello && echo wrote'
+ls "$HOME/agents/work"          # hello should be here, on your real disk
+```
+
+If `/work` is empty inside the container but full on the host, you mounted the wrong path — Docker created an empty directory rather than erroring.
+
+**Step 5 — choose the mode deliberately.** Appending `:ro` makes the mount read-only *inside* the container:
+
+```bash
+-v "$HOME/agents/work:/work"           # read-write: the agent may create and edit files here
+-v "$HOME/notes:/reference:ro"         # read-only: the agent may read, and cannot corrupt
+```
+
+The mode is enforced by the kernel, not by politeness. A process in the container that tries to write to a `:ro` mount gets `Read-only file system` and fails, no matter what it intended.
+
+---
+
+## 9. Running a Coding Agent Inside a Container
+
+A coding agent is a program that reads your files, writes new ones, and runs shell commands on your behalf — which is precisely the capability profile you would never grant a stranger. A container is how you grant it anyway, on your terms. The goal is not to make the agent weak; it is to make the **blast radius** small and known.
+
+### 9.1 Build a small agent image
+
+Install the agent CLI into an image rather than onto your laptop, so the tool and its dependencies are disposable too:
+
+```dockerfile
+# Dockerfile.agent
+FROM node:22-slim
+
+# git and ripgrep are what coding agents reach for constantly
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      git ripgrep ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install whichever agent CLI you are using. Examples:
+RUN npm install -g @anthropic-ai/claude-code
+# RUN npm install -g @google/gemini-cli
+# RUN npm install -g @openai/codex
+# (Aider is Python: pip install aider-chat)
+
+# Never run as root inside a container you are handing to an agent
+RUN useradd -m agent
+USER agent
+WORKDIR /work
+CMD ["bash"]
+```
+
+```bash
+docker build -f Dockerfile.agent -t course-agent .
+```
+
+### 9.2 The mount layout: exactly one writable folder
+
+The discipline that makes everything else safe is **one read-write mount and everything else read-only or absent**:
+
+```bash
+docker run -it --rm \
+  --name agent \
+  -v "$HOME/agents/project:/work" \
+  -v "$HOME/notes/vault:/reference:ro" \
+  -e ANTHROPIC_API_KEY \
+  course-agent
+```
+
+- `/work` — the project. Read-write, because the agent's job is to change it. This folder is a **git repository**, so every change the agent makes is reviewable with `git diff` and revertible with `git checkout`.
+- `/reference:ro` — your notes, style guides, or corpus. The agent reads them and physically cannot modify them.
+- `-e ANTHROPIC_API_KEY` with no value passes the variable through from your shell without baking it into the image or its history.
+
+What is deliberately **not** mounted matters more than what is:
+
+| Do not mount | Why |
+|---|---|
+| `$HOME` | Hands the agent your entire life, including everything below. |
+| `~/.ssh` | Keys that authenticate as you, everywhere. |
+| `~/.aws`, `~/.config/gcloud` | Cloud credentials with real billing behind them. |
+| `~/.config/gh` | A GitHub token that can push to every repo you can. |
+| `/var/run/docker.sock` | The classic mistake: a container with the Docker socket can start a *privileged* container and own the host entirely. |
+
+### 9.3 Trusted mode, and when it is actually reasonable
+
+Coding agents prompt before each shell command or file write. That prompt is the safety mechanism when the agent runs on your laptop — and it is also why people get prompt-fatigued and start approving without reading, which is worse than no prompt at all.
+
+Most agents offer a way to skip the prompts. Claude Code, for example, has `--dangerously-skip-permissions`; other tools call this "yolo", "auto-approve", or "full-auto" mode. The name is a warning, and it is accurate **on a host**.
+
+Inside a properly constrained container, the calculus changes: the container boundary replaces the per-action prompt.
+
+```bash
+# Reasonable ONLY because of the flags around it
+docker run -it --rm \
+  -v "$HOME/agents/project:/work" \
+  -v "$HOME/notes/vault:/reference:ro" \
+  --network none \
+  --cap-drop ALL \
+  --security-opt no-new-privileges \
+  --pids-limit 256 \
+  --memory 4g \
+  -e ANTHROPIC_API_KEY \
+  course-agent claude --dangerously-skip-permissions
+```
+
+Read that command as a sentence: *the agent may act without asking, and the worst it can do is damage one git-tracked folder.* Every clause earns the first one.
+
+> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress. There is no configuration where an agent can call a hosted model and also be unable to send data outward — decide which property you need.
+
+### 9.4 Read-only root, writable workspace
+
+Isolation gets stronger when the container's *own* filesystem is read-only and only your workspace is writable:
+
+```bash
+docker run -it --rm \
+  --read-only \
+  --tmpfs /tmp:rw,size=256m \
+  --tmpfs /home/agent/.cache:rw,size=512m \
+  -v "$HOME/agents/project:/work" \
+  -v "$HOME/notes/vault:/reference:ro" \
+  course-agent
+```
+
+`--read-only` makes the entire container root filesystem immutable; the two `--tmpfs` mounts give back the scratch space that tools genuinely need, in memory, discarded on exit. An agent under this configuration cannot install a background service, cannot modify its own tooling, and cannot leave anything behind outside `/work`.
+
+**A ladder of configurations,** from most permissive to most constrained — pick the lowest rung that still lets the work happen:
+
+| Rung | Command shape | Agent can | You are trusting |
+|---|---|---|---|
+| 0 | Agent on the host | Everything you can | The model, entirely |
+| 1 | `-v $HOME:/work` | Read and write your whole home directory | Almost everything |
+| 2 | `-v ./project:/work` | Change one project | Git to catch mistakes |
+| 3 | Rung 2 + `:ro` reference + `--cap-drop ALL` | Change one project, read reference | The kernel |
+| 4 | Rung 3 + `--read-only --tmpfs` | Change one project only | The kernel, and nothing persists |
+| 5 | Rung 4 + `--network none` | Change one project, offline | Nothing leaves |
+
+### 9.5 Verify the fence before you trust it
+
+Do not take the flags on faith — test them, the same way you would test any other claim:
+
+```bash
+# Should print "Read-only file system"
+docker run --rm -v "$HOME/notes/vault:/reference:ro" course-agent \
+  sh -c 'touch /reference/breakme || echo BLOCKED-as-expected'
+
+# Should fail: no network
+docker run --rm --network none course-agent \
+  sh -c 'getent hosts api.anthropic.com || echo NO-NETWORK-as-expected'
+
+# Should show only /work as a writable bind mount
+docker run --rm -v "$HOME/agents/project:/work" course-agent mount | grep /work
+```
+
+Then `git status` and `git diff` in the project after a session. The agent's work should be entirely visible as tracked changes — if something appeared that git does not show, your mount layout is wider than you thought.
+
+Which change makes it reasonable to run a coding agent with its permission prompts disabled?
+
+[( )] Using a more capable model, since stronger models make fewer destructive mistakes
+[(X)] Running it in a container whose only writable mount is one git-tracked project folder, so the worst case is a reviewable diff
+[( )] Adding an instruction to the system prompt telling the agent not to delete files
+[( )] Running the agent as root inside the container so it can repair anything it breaks
+
+> **Common Misconception:** "Skip permissions" is often read as a statement about the *agent* — that you trust it now. It is really a statement about the *environment*: you have made the consequences of any single action small enough that approving each one adds no information. If you cannot describe the worst case in one sentence, you have not earned the flag.
+
+---
+
 # Part III: Practice
 
-## 8. Exercises
+## 10. Exercises
 
 1. *First container.*
 
@@ -390,7 +581,7 @@ In the next module you will apply everything here to deploy the full course AI s
 
 ---
 
-## 9. Further Reading
+## 11. Further Reading
 
 - Docker, "Get Started" guide (docs.docker.com): the official walkthrough, well-paced.
 - W. Mongan, "Building a Private AI Stack: From Mini PC to Autonomous Agents" (billmongan.com, May 2026): the course stack's full architecture, which the agent stack module deploys.

@@ -95,6 +95,82 @@ Then, inside the session, the rhythm: describe a small goal ("write a Python scr
 
 ---
 
+## 2b. Install, Configure, Run: Every Tool, Concretely
+
+Section 2 walked one tool end to end. Here is the same path for each of the others, so you can pick one and be running in ten minutes. **You do not need all of them** — install one, finish the session, and add a second only when you want to compare.
+
+### Prerequisites, once
+
+```bash
+node --version     # need 20+ for the Node-based tools; install from nodejs.org or via nvm
+python3 --version  # need 3.10+ for the Python-based tools
+git --version      # every one of these tools assumes git
+```
+
+If `node` is missing and you would rather not install it on your host, skip to §2c and run the tool in a container instead.
+
+### The tools, side by side
+
+| Tool | Install | Launch | Config lives in | Auth |
+|---|---|---|---|---|
+| **Claude Code** | `npm i -g @anthropic-ai/claude-code` | `claude` | `~/.claude/`, project `CLAUDE.md` | Browser login on first run, or `ANTHROPIC_API_KEY` |
+| **Codex CLI** | `npm i -g @openai/codex` | `codex` | `~/.codex/config.toml`, project `AGENTS.md` | `OPENAI_API_KEY` or sign-in |
+| **Gemini CLI** | `npm i -g @google/gemini-cli` | `gemini` | `~/.gemini/`, project `GEMINI.md` | Google sign-in or `GEMINI_API_KEY` |
+| **opencode** | `npm i -g opencode-ai` | `opencode` | `~/.config/opencode/config.json`, project `opencode.json` | Provider key, or a local gateway |
+| **Aider** | `pip install aider-chat` | `aider` | `~/.aider.conf.yml`, project `CONVENTIONS.md` | Provider key in env |
+
+> **Watch out!** `npm i -g` on some systems wants `sudo`, which installs the tool as root and then complains about permissions later. The clean fix is a Node version manager (`nvm`) so your global installs land in your home directory — or a container, which sidesteps the question entirely.
+
+### First run, in order
+
+1. **`cd` into the project first.** The working directory is the agent's world. Launching from `~` hands the agent your whole home directory — the same mistake as `-v $HOME:/work` in the Docker module.
+2. **Authenticate.** Most tools open a browser on first launch. For a key-based setup, export it in your shell profile rather than pasting it into the session:
+   ```bash
+   echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.bashrc && source ~/.bashrc
+   ```
+3. **Check the model and the mode** before you type a real task: `/model` to see what you are talking to, and the tool's status line for the current permission mode.
+4. **Give it a small, checkable job first** — "add a docstring to every function in `parser.py`" — so you see the review loop before you rely on it.
+5. **`git status` when you are done.** If you cannot see the agent's work as a diff, stop and fix that before continuing.
+
+### Configure: the three files that matter
+
+Every one of these tools reads a **project instruction file** — `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `opencode.json`, `CONVENTIONS.md`. They differ in name and format, not in purpose: standing instructions so you stop retyping context. Start with four headings and grow it only when you catch yourself repeating a correction:
+
+```markdown
+# Project
+One paragraph: what this is, who uses it, what "working" means.
+
+# Conventions
+Language version, formatter, test command, naming rules.
+
+# Boundaries
+Files and directories to never touch. Secrets never to read or print.
+
+# How to verify
+The exact command that proves a change is good: `pytest -q`, `npm test`.
+```
+
+Commit that file. It is the cheapest reliability improvement available, and it is reviewable by your teammates in a pull request like any other code.
+
+---
+
+## 2c. Running Any of Them in a Container
+
+If you would rather not install a coding agent on your laptop at all — or you want the freedom to let it work without approving every step — run it in the fenced container from the Docker module:
+
+```bash
+docker run -it --rm \
+  -v "$PWD:/work" \
+  -v "$HOME/notes/vault:/reference:ro" \
+  -e ANTHROPIC_API_KEY \
+  --cap-drop ALL --security-opt no-new-privileges \
+  course-agent claude
+```
+
+One writable mount (`/work`, git-tracked), one read-only mount, no host credentials. The **[Docker from Zero](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md)** module builds `course-agent` and explains each flag, including when disabling the permission prompts becomes a reasonable trade rather than a reckless one.
+
+---
+
 ## Model 1: First Contact
 
 **Why this matters:** The first session with an agentic CLI is a bit like handing someone the keys to your apartment and watching what they do. The agent will open drawers (read files) you did not point it to, propose actions you did not anticipate, and ask permission at moments that reveal its internal plan. Paying close attention during this first session — rather than just clicking "approve" — is what transforms you from a passive user into someone who can supervise an agent intentionally. Think of the permission gates as the dashboard of a car: you can ignore them and still arrive somewhere, but reading them tells you a lot about where the car thinks it is going.
