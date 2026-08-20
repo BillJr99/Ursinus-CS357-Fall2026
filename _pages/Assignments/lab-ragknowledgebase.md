@@ -822,6 +822,8 @@ Fold these into the standard RAG Knowledge Base Lab submission ZIP:
 
 </details>
 
+---
+
 <details markdown="1">
 <summary><strong>Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA</strong></summary>
 
