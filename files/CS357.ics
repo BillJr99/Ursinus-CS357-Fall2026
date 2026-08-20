@@ -49,7 +49,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f402
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Overview Assignment Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -58,7 +58,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f403
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Group Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -67,7 +67,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f404
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Team Formation Survey Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Responses Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -76,7 +76,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f405
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Group Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Class Activities Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -85,25 +85,25 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f406
 DTSTAMP:20260825T000000Z
 DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Reading Responses Handed Out
+SUMMARY:CS357 Foundations of Artificial Intelligence: Reflection Notebook Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f407
-DTSTAMP:20260825T000000Z
-DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Class Activities Handed Out
+DTSTAMP:20260827T000000Z
+DTSTART;VALUE=DATE:20260827
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Team Formation Survey Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
 END:VEVENT
 BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f408
-DTSTAMP:20260825T000000Z
-DTSTART;VALUE=DATE:20260825
-SUMMARY:CS357 Foundations of Artificial Intelligence: Reflection Notebook Handed Out
+DTSTAMP:20260901T000000Z
+DTSTART;VALUE=DATE:20260901
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -112,7 +112,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f409
 DTSTAMP:20260901T000000Z
 DTSTART;VALUE=DATE:20260901
-SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Warmup Assignment Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Participation: Overview Assignment Handed Out
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
