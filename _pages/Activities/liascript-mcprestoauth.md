@@ -296,6 +296,7 @@ An agent has a refresh token that was issued alongside an access token. The acce
 *What to do:* Extend the `knowledge_server.py` from Model 4 to add a second tool: `list_topics`, which takes no arguments and returns a hardcoded list of course topic strings. Write only the additions to `list_tools` and `call_tool` — do not rewrite the entire file.
 
 *Starter hint:*
+
 ```python
 # In list_tools(), add a second Tool object to the returned list:
 types.Tool(
@@ -316,6 +317,7 @@ elif name == "list_topics":
 ```
 
 Test your addition with:
+
 ```bash
 echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_topics","arguments":{}}}' | python knowledge_server.py
 # Expected: returns the list of 4 topic strings

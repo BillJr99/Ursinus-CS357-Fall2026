@@ -63,6 +63,7 @@ pip install sentence-transformers openai anthropic
 ```
 
 Expected output (last line):
+
 ```
 Successfully installed sentence-transformers-x.x.x ...
 ```
@@ -79,6 +80,7 @@ print('Sentence-transformers OK. Vector shape:', vecs.shape)
 ```
 
 Expected output:
+
 ```
 Sentence-transformers OK. Vector shape: (2, 384)
 ```
@@ -347,6 +349,7 @@ python evaluate.py results_before.csv
 ```
 
 Expected output (your numbers will differ):
+
 ```
 ID              CAT          G-Eval    Sim   EM  Pass
 -------------------------------------------------------
@@ -427,6 +430,7 @@ python make_diff.py
 ```
 
 Expected output:
+
 ```
 Improved: 5, Regressed: 2, Unchanged: 13
 ```

@@ -89,6 +89,7 @@ Consider a three-agent pipeline: **Researcher** (searches the web and retrieves 
 The three code blocks below implement the same three-agent pipeline in three different frameworks. As you read each one, note what you have to write explicitly versus what the framework handles invisibly — those invisible parts are exactly where abstraction leaks can occur.
 
 **LangChain / LangGraph (`pip install langgraph`):**
+
 ```python
 from langgraph.graph import StateGraph, END
 from typing import TypedDict
@@ -118,6 +119,7 @@ result = app.invoke({"question": q})
 The CrewAI version replaces explicit routing code with plain-English role descriptions. Notice how much less Python you write — and think about what the framework is generating on your behalf that you cannot see.
 
 **CrewAI (`pip install crewai crewai-tools`):**
+
 ```python
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool  # web search tool
@@ -154,6 +156,7 @@ crew.kickoff(inputs={"question": q})
 The AutoGen version exposes the shared `groupchat.messages` list explicitly. As you read it, ask yourself: which agents can see which messages, and could that sharing cause unintended behavior?
 
 **AutoGen (`pip install pyautogen`):**
+
 ```python
 import autogen
 

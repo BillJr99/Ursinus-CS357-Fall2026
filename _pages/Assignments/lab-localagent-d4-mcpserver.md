@@ -466,7 +466,7 @@ Test your second tool with a similar `curl` command. Also test the error case: s
 
 Check the terminal where the server is running. Each invocation should produce a log line that is valid JSON. For example:
 
-```
+```json
 {"time": "2026-06-21 10:15:32,041", "level": "INFO", "message": "Tool invoked: search_files, arguments: {\"query\": \"README\"}, timestamp: 2026-06-21T10:15:32.041Z"}
 ```
 

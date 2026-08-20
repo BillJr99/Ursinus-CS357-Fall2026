@@ -64,6 +64,7 @@ tags:
 **Criteria:** Every milestone is evaluated on three dimensions — approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown.
 
 ## Assignment Goals
+
 The goals of this assignment are:
 
 1. To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
