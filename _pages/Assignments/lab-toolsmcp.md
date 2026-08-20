@@ -121,11 +121,21 @@ Consume MCP instead of authoring it. Point your agent (or a framework client) at
 
 In this section you define three tools using the OpenAI function-calling JSON schema format (the standard way to describe a tool's name, purpose, and parameters as a JSON object) and call them from your local model via Ollama's `/api/chat` endpoint. Run all code locally — no external API keys or cloud services needed.
 
+**Files you will create.** Everything below goes in one folder — call it `tools-lab/` — as three files, built in this order:
+
+| File | Holds | Section |
+|---|---|---|
+| `tool_definitions.py` | The `TOOLS` list: each tool's name, description, and JSON Schema | Tool Definitions |
+| `tool_impl.py` | The Python functions themselves plus the `REGISTRY` that maps a name to a function | Tool Implementations |
+| `agent.py` | The loop that calls the model, dispatches tool calls, and feeds results back | The Agent Loop |
+
+Splitting them this way is the point of the exercise, not bookkeeping: the model only ever sees `tool_definitions.py`, never the code in `tool_impl.py`. Keeping them in separate files makes that boundary visible. If you would rather work in a single file or a notebook, that is fine — just keep the three parts in clearly separated, labeled sections.
+
 ---
 
 ### Tool Definitions
 
-Each tool is a JSON object with a `name`, a `description` (the only thing the model reads to decide whether to use this tool), and a `parameters` block written in JSON Schema:
+Create `tool_definitions.py`. Each tool is a JSON object with a `name`, a `description` (the only thing the model reads to decide whether to use this tool), and a `parameters` block written in JSON Schema:
 
 ```python
 TOOLS = [
@@ -195,6 +205,8 @@ TOOLS = [
 
 ### Tool Implementations and the Executor Pattern
 
+Create `tool_impl.py`.
+
 The executor pattern keeps a **registry** (a plain Python dictionary mapping tool names to their implementations). Your agent loop never calls a tool directly from the model's request; it looks up the name in the registry first. This is the security boundary: only tools you explicitly register can ever run. Notice that the `calculator` function uses Python's `ast` module (a library for safely parsing code into a tree of operations) rather than `eval()` — see the note after the code block for why this matters.
 
 ```python
@@ -247,6 +259,8 @@ Note that `calculator` uses Python's `ast` module to parse the expression rather
 ---
 
 ### The Agent Loop
+
+Create `agent.py`, importing `TOOLS` from `tool_definitions.py` and `REGISTRY` from `tool_impl.py`.
 
 ```python
 import json
@@ -308,10 +322,16 @@ print(agent("How many words are in the sentence: 'The quick brown fox jumps over
 
 When the agent loop appends a tool result back into the conversation, what `role` value must that message use?
 
-[( )] `"user"`
-[( )] `"assistant"`
-[(X)] `"tool"`
-[( )] `"system"`
+- `"user"`
+- `"assistant"`
+- `"tool"`
+- `"system"`
+
+<details><summary>Answer</summary>
+
+`"tool"`
+
+</details>
 
 > *Hint: Look at the line `msgs.append({"role": "tool", "content": result})` in the agent loop. The OpenAI-compatible API (which Ollama follows) requires the role `"tool"` so the model knows this message is a function result rather than a user turn or its own prior response.*
 
