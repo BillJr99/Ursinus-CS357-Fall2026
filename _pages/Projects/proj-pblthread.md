@@ -114,7 +114,7 @@ Two views of the same thread — a table for scanning, then a narrative for read
 
 | Step | Milestone | What Happens | Where |
 |---|---|---|---|
-| 1 | **Team Formation Survey** (individual) | You tell the instructor your availability, deadline style, energy patterns, and interests. Teams are formed from this data. | [Team Formation Survey](/Assignments/TeamSurvey) |
+| 1 | **Team Formation Survey** (individual) | You tell the instructor your availability, deadline style, energy patterns, and interests. Teams are formed from this data. | [On this page](#step-1-the-team-formation-survey) — see also the [assignment page](/Assignments/TeamSurvey) |
 | 2 | **Teams announced** | Standing POGIL teams for the semester are posted. | In class |
 | 3 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft), then the signed charter. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
 | 4 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief](/Assignments/StakeholderBrief) |
@@ -135,6 +135,39 @@ Two views of the same thread — a table for scanning, then a narrative for read
 | 19 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, and a disseminable artifact — the team's deliberate adjourning: final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
 
 **The same map, as a story.** You open the semester by filling out a short survey, and within the first two weeks you have a team formed for compatibility of schedules and working styles. Your first job as a team is not technical: it is to write down, and sign, how you will treat each other. Then you go find a real problem — not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words. You spend the middle of the term understanding that problem the way scholars do: reading, annotating, and synthesizing sources from at least two disciplines. At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not. Only *then*, with a grounded problem and a healthy team, do you choose a final project track and propose an intervention. The last stretch is sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
+
+---
+
+## Step 1: The Team Formation Survey
+
+This survey is **not in the LMS** — it lives here, on this page. Read the questions below, write your answers, and submit them **individually** to the **Team Formation Survey** assignment in Canvas (a text entry or an uploaded document is fine — there is no form to fill in). Do not email your answers. The [assignment page](/Assignments/TeamSurvey) carries the rubric and the reflection prompts; the [course schedule](/) carries the dates.
+
+Your answers are the data used to form the standing teams you will work with all semester. Teams are *homogenized* on logistics — availability windows and deadline styles — while interests and perspectives are allowed to vary, following the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)). You will not self-select teams. Accurate answers serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
+
+**Confidentiality.** Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else. What your future team learns about your working style, it learns from *you*, at the charter activity.
+
+### Logistics (matched on directly)
+
+1. **Weekly schedule grid.** List every recurring window in which you could *actually* meet a team outside class — not windows you could theoretically clear, but ones you would reliably show up for, week after week. Give at least three, each as a day plus a time range (e.g., "Tue/Thu after 4pm," "Sun 1-4pm"). Note class times, work shifts, practices, and commutes as unavailable so the picture reflects your real week.
+2. **Deadline style.** When do you genuinely do your best work — *well before the deadline* or *at the deadline*? Choose one and add a sentence describing your last group project's rhythm.
+3. **Time and energy preferences.** When in the day do you do your best focused work? How many hours per week can you realistically commit to this course's project beyond class time?
+
+### Working style (confidential; you choose what to re-share at the charter activity)
+
+4. **Challenges.** What is genuinely hard for you in team settings? (Examples: speaking up in groups, asking for help, saying no to extra work.)
+5. **Energy sources and drains.** What kinds of tasks and teamwork leave you energized, and what kinds drain you?
+6. **Pet peeves.** What teammate behavior reliably frustrates you? Be specific.
+7. **What matters most.** Complete the sentence: "For me, a team is working well when ______." Take a position. Then answer its mirror: what matters most to *you* in a teammate?
+8. **Role tendencies.** In past teams, which role have you naturally gravitated toward — the **facilitator**, the **builder**, the **writer**, or the **skeptic**? Name your top one or two. (This informs team formation only: on your team, roles **rotate**, so everyone practices every job.)
+
+### Interests (secondary matching signal)
+
+9. **Project-domain interests.** Rank your top two or three domains you would find meaningful for a semester-long, stakeholder-grounded project — **health**, **sustainability / environment**, **education**, **finance**, **arts**, **campus life**, or another you propose.
+
+### Confidential (seen only by the instructor)
+
+10. **(Optional)** Name **at most one** person in this course you would prefer not to work with. Read **only by the instructor**, never shared or acknowledged, no explanation required, and a preference the instructor will try to honor — **never a guarantee**. Answering has no effect on your grade.
+11. **(Optional)** Is there anything else the instructor should know to help your team thrive? Accommodations, outside commitments, past team experiences you do not want to repeat — anything at all.
 
 ---
 

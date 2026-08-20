@@ -97,6 +97,5 @@ Use these when a reading response is due, or any time you want to prepare a unit
 
 ## See also
 
-- [Preparing for Each Class]({{ site.baseurl }}/Participation/PreparingForClass) — the routine these responses fit into, and the participation rubric.
 - [Reading Group Discussion Leader]({{ site.baseurl }}/Assignments/ReadingGroup) — leading a session, and the audience's role.
 - [Reflection Notebook]({{ site.baseurl }}/Participation/ReflectionNotebook) — where responses and stuck points become tracked reflection.

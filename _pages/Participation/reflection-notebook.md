@@ -55,5 +55,4 @@ It is assessed on engagement, not correctness or length. A strong notebook is **
 
 ## See also
 
-- [Preparing for Each Class]({{ site.baseurl }}/Participation/PreparingForClass) — the routine and the participation rubric.
 - [Reading Responses]({{ site.baseurl }}/Participation/ReadingResponses) — a steady source of notebook material.

@@ -274,17 +274,9 @@ schedule:
   title: "Welcome: What Is AI, and What Is an Agent?"
   link: "https://www.billmongan.com/Ursinus-CS357-Overview"
   deliverables:
-  - dtitle: "Participation: Overview Assignment Handed Out"
-    dlink: "Assignments/Overview"
-    points: "100"
-    rubricpath: "_pages/Assignments/asmt-overview.md"
   - dtitle: "Participation: Warmup Assignment Handed Out"
     dlink: "Assignments/Warmup"
     points: "10"
-  - dtitle: "Project: Team Formation Survey Handed Out"
-    dlink: "Assignments/TeamSurvey"
-    points: "10"
-    rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   - dtitle: "Participation: Reading Group Handed Out"
     dlink: "Assignments/ReadingGroup"
     points: "10"
@@ -293,36 +285,34 @@ schedule:
     dlink: "Participation/ReadingResponses"
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
-  - dtitle: "Participation: Class Activities Handed Out"
-    dlink: "Participation/PreparingForClass"
-    points: "10"
   - dtitle: "Reflection Notebook Handed Out"
     dlink: "Participation/ReflectionNotebook"
     points: "10"
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
-  - rtitle: "The Project Thread: how the semester-long team project unfolds (read by the end of week 1)"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
   - rtitle: "Required setup (Overview assignment, Route A): Your Course Development Environment — Host Ollama, the Course Container, Git, and GitHub"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md"
-  - rtitle: "Optional depth — Interactive (going deeper): The Token Prediction Playground — an unplugged, in-browser simulator showing what next-token prediction can and cannot do"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor"
   - rtitle: "Optional depth — AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
-  - rtitle: "Optional depth — AI for All — tools overview slide deck"
-    rlink: "https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit"
-  - rtitle: "Reference: the Activity Index - every deck in this course, browsable by theme. The schedule lists at most three optional links per session; everything else lives here."
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Activities/"
 - week: "0"
   date: "1"
   title: "The Agent Loop: Perceive, Plan, Act"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md"
+  deliverables:
+  - dtitle: "Project: Team Formation Survey Handed Out"
+    dlink: "Assignments/TeamSurvey"
+    points: "10"
+    rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
   - rtitle: "Mitchell, Chapter 2"
+  - rtitle: "The Project Thread: how the semester-long team project unfolds — read this before you fill out the Team Formation Survey; the survey itself lives on this page"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
   - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2 — Intelligent Agents"
     rlink: "https://aima.cs.berkeley.edu/"
   - rtitle: "Optional depth — tutorial: Shell Fundamentals for Agent Supervision"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
+  - rtitle: "Optional depth — Interactive: The Token Prediction Playground — an unplugged, in-browser simulator showing what next-token prediction can and cannot do"
+    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor"
 - week: "1"
   date: "0"
   title: "Dev Environment Clinic: Ollama, Containers, Git, and the Shell"
@@ -331,6 +321,10 @@ schedule:
   - dtitle: "Participation: Warmup Assignment Due"
     dlink: "Assignments/Warmup"
     points: "10"
+  - dtitle: "Participation: Overview Assignment Handed Out"
+    dlink: "Assignments/Overview"
+    points: "100"
+    rubricpath: "_pages/Assignments/asmt-overview.md"
   - dtitle: "Project: Team Formation Survey Due"
     dlink: "Assignments/TeamSurvey"
     points: "10"
@@ -341,6 +335,8 @@ schedule:
   - rtitle: "Required: Shell Fundamentals for Agent Supervision - the terminal skills every later lab assumes"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
   - rtitle: "Bring a laptop. We do the install together, in class, so nobody is debugging Docker alone at midnight."
+  - rtitle: "Optional depth — AI for All — tools overview slide deck"
+    rlink: "https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit"
 - week: "1"
   date: "1"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -833,9 +829,6 @@ schedule:
     dlink: "Participation/ReadingResponses"
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
-  - dtitle: "Participation: Class Activities Due"
-    dlink: "Participation/PreparingForClass"
-    points: "10"
   - dtitle: "Reflection Notebook Due"
     dlink: "Participation/ReflectionNotebook"
     points: "10"
@@ -887,13 +880,11 @@ Every assignment is written to be transparent about three things, so you are nev
 
 Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended — and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work.
 
-## Preparing for Each Class
-
-Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready, and "ready" is a routine you can run rather than a matter of luck. The **[Preparing for Each Class](Participation/PreparingForClass)** guide lays it out: how to work through a technical activity in passes, how to attempt the reading responses beforehand, and how to arrive with a question or a stuck point — often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
-
 ## Class Activities and Participation (10%)
 
-This is a course you do, not one you watch. This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work. It is assessed against the rubric on the **[Preparing for Each Class](Participation/PreparingForClass)** guide, across four dimensions: **preparation, contribution, collaboration, and reflection.** It takes several forms, by design:
+Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready — having worked through the activity, attempted the reading response, and brought a question or a stuck point, often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
+
+This is a course you do, not one you watch. This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work. It is assessed across four dimensions: **preparation, contribution, collaboration, and reflection.** It takes several forms, by design:
 
 - **In-class activities.** Your team rotates the POGIL roles — **Manager, Recorder, Presenter, and Reflector** — so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
 - **Reading responses and discussion.** From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand. These are marked on the schedule.
