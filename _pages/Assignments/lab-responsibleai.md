@@ -106,6 +106,8 @@ Then pick **one** of the four directions below and carry it out in depth. Each d
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
+**Prep deck for Direction 1.** [Prompt Injection — Attacks and Defenses](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate. Work through it before the warm-up if you are taking the security direction.
+
 Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like — from both sides of it. This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist. Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
 
 Do both of the following and keep an **adversary's notebook** as you go:

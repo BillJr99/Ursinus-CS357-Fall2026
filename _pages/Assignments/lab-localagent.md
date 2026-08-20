@@ -134,6 +134,13 @@ In this lab, you and a partner will build a working agent from first principles:
 
 ## Before You Start
 
+**Prep decks this lab assumes.** Work through whichever apply to your direction before you start:
+
+- [Structured Outputs — JSON Mode, Tool Schemas, and Output Validation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md) — all directions.
+- [RESTful LLM Access — the /v1/chat/completions paradigm, curl, and the OpenAI SDK](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md) — all directions.
+- [Docker from First Principles](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) — Directions 2 and 3 only; do the installs at home first.
+- [MCP Deep Dive — REST APIs, OAuth 2.0 flows, and secure tool invocation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md) — Direction 4 only.
+
 **Prerequisite concepts** — make sure you have completed these activities before writing any code:
 
 - [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) — the perceive/plan/act/remember cycle
