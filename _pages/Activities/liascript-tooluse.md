@@ -372,5 +372,5 @@ Our agents can now call tools reliably — but why does the same tool-calling ag
 - Ollama tool-calling documentation: https://github.com/ollama/ollama/blob/main/docs/api.md
 - Schick et al. "Toolformer: Language Models Can Teach Themselves to Use Tools." *NeurIPS* (2023).
 - Mialon et al. "Augmented Language Models: A Survey." *TMLR* (2023).
-- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MonteCarlo) — a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
+- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) — a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
 - [Monte Carlo Retirement companion notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/MonteCarloRetirement.ipynb) — a runnable version of that lab, including the full function-calling agent loop with offline sample responses.
