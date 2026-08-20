@@ -7,7 +7,7 @@ info:
   coursenum: CS357
   purpose: "To form semester-long teams around compatibility of schedules and working styles — the strongest predictors of team friction — so your team's energy goes into the project instead of into calendar archaeology."
   tilt:
-    task: "Answer a short structured questionnaire about your availability, working style, and project interests, individually, in the LMS survey."
+    task: "Answer a short structured questionnaire about your availability, working style, and project interests, individually. The questionnaire is on the Project Thread page — it is not in the LMS — and you submit your answers to this assignment."
     criteria: "Graded on completeness and thoughtfulness only, never on the content of your answers, with specific and self-aware responses scoring highest; see the rubric below for the full breakdown."
   points: 10
   goals:
@@ -39,7 +39,7 @@ tags:
 
 ---
 
-This short, individually submitted survey is the first milestone of the [Project Thread](/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the first class meeting and due before the second week begins; teams are announced at the class meeting after that. See the [course schedule](/) for the dates.
+This short, individually submitted survey is the first milestone of the [Project Thread](/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the second class meeting and due at the following class meeting; teams are announced the session after that. See the [course schedule](/) for the dates.
 
 **How teams are formed — full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics — members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict — while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Accurate answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
@@ -64,11 +64,11 @@ This short, individually submitted survey is the first milestone of the [Project
 
 ## Part 1: The Survey
 
-Submit your answers **individually via the LMS survey** (link in the LMS; do not email answers). The questionnaire asks the following — shown here so you can think before you type:
+**The survey is not in the LMS.** The questionnaire lives on the [Project Thread page](/Projects/PBLThread#step-1-the-team-formation-survey). Write your answers and submit them **individually to this assignment** in Canvas — a text entry or an uploaded document is fine. Do not email your answers. The questions are reproduced below so you can think before you type:
 
 **Logistics (matched on directly):**
 
-1. **Weekly schedule grid:** On the grid provided in the survey (days of the week × time blocks), mark every recurring window in which you could *actually* meet a team outside class — not windows you could theoretically clear, but ones you would reliably show up for, week after week. Mark at least three, and mark class times, work shifts, practices, and commutes as unavailable so the grid reflects your real week.
+1. **Weekly schedule grid:** List every recurring window in which you could *actually* meet a team outside class — not windows you could theoretically clear, but ones you would reliably show up for, week after week. Mark at least three, and mark class times, work shifts, practices, and commutes as unavailable so the grid reflects your real week.
 2. **Deadline style:** When do you genuinely do your best work — *well before the deadline* or *at the deadline*? Choose one and add a sentence describing your last group project's rhythm.
 3. **Time and energy preferences:** When in the day do you do your best focused work? How many hours per week can you realistically commit to this course's project beyond class time?
 
@@ -99,7 +99,7 @@ Submit your answers **individually via the LMS survey** (link in the LMS; do not
 
 ## Deliverables
 
-- The completed survey, submitted individually via the LMS by the due date on the [course schedule](/). There is nothing to upload; the LMS survey is the submission.
+- Your completed answers to the questionnaire on the [Project Thread page](/Projects/PBLThread#step-1-the-team-formation-survey), submitted individually to this assignment in Canvas — text entry or an uploaded document — by the due date on the [course schedule](/).
 
 ## Reflection Prompts
 
