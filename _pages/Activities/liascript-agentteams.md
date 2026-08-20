@@ -93,7 +93,7 @@ Different problems call for different team shapes, just as different organizatio
 
 A minimal blackboard is just a dictionary with discipline:
 
-```
+```python
 state = {
   "goal":        "...",
   "facts":       [{"claim": "...", "source": "...", "verified": false}],

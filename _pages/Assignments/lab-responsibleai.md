@@ -1394,6 +1394,7 @@ python -m spacy download en_core_web_sm
 ```
 
 Expected output (last few lines):
+
 ```
 ✔ Download and installation successful
 You can now load the package via spacy.load('en_core_web_sm')
@@ -1410,6 +1411,7 @@ for ent in doc.ents:
 ```
 
 Expected output:
+
 ```
   'Alice Smith'                  → PERSON
   'alice@example.com'            → EMAIL (if detected; spaCy may miss email — see Part 2)
@@ -1653,6 +1655,7 @@ print("Saved scrubbing_eval.csv")
 ```
 
 Expected output:
+
 ```
 Precision: 0.923
 Recall:    0.800

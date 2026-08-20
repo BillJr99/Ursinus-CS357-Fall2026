@@ -146,15 +146,19 @@ Write approximately one page addressing all four prompts below. This is captured
 **Reflection Template** (use these as section headings; write a paragraph under each):
 
 ### My AI Experience So Far
+
 Describe which AI tools you use, for what purposes, and how often. Then describe one specific moment when an AI output surprised you — either because it was better than you expected, or because it failed in an unexpected way. Name the tool, describe the task, and describe the surprise.
 
 ### What "Agent" Means to Me Right Now
+
 Write your own definition of what makes a system an "agent" rather than just a program or a tool. You do not need to match any textbook definition — write what you actually think. After the semester, we will return to this and see how your thinking changed.
 
 ### What I Would and Would Not Delegate
+
 Name one task you would happily hand to an AI agent and one you would not. For each, write one or two sentences explaining the specific reason — what is it about that task that makes delegation feel appropriate or inappropriate? The difference between your two examples is more interesting than either example alone.
 
 ### What I Want to Build
+
 Describe one thing you hope to be able to build or do by the end of the semester that you cannot do today. Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
 
 ---

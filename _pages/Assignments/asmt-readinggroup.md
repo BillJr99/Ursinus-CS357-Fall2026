@@ -126,6 +126,7 @@ The session structure and timing are unchanged: within the ten-minute session, y
 These are suggested sources. You are not limited to this list — propose others with instructor approval.
 
 ### Foundational Books (chapters or excerpts)
+
 - Crawford, K. (2021). *Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence.* Yale University Press. *(Chapters 1, 6, or 7)*
 - Benjamin, R. (2019). *Race After Technology: Abolitionist Tools for the New Jim Code.* Polity. *(Chapters 1–2)*
 - Carr, N. (2014). *The Glass Cage: How Our Computers Are Changing Us.* W. W. Norton. *(Chapters 2–3 on automation bias)*
@@ -134,6 +135,7 @@ These are suggested sources. You are not limited to this list — propose others
 - Wooldridge, M. (2021). *A Brief History of Artificial Intelligence.* Flatiron Books. *(Any chapter)*
 
 ### Core and Technical Textbooks (chapters or excerpts)
+
 These are the technical books assigned across the course schedule — a chapter you present here can double as a deeper dive on a topic we cover in a lecture.
 - Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1–2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
 - Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. *(Chapter 2 on intelligent agents; later chapters by topic.)* https://aima.cs.berkeley.edu/
@@ -143,6 +145,7 @@ These are the technical books assigned across the course schedule — a chapter 
 - Huyen, C. (2022). *Designing Machine Learning Systems.* O'Reilly. *(Chapter 7 on model deployment and prediction services.)*
 
 ### Seminal Papers
+
 - Bender, E. M. et al. (2021). On the dangers of stochastic parrots: Can language models be too big? *FAccT 2021.*
 - Gebru, T. et al. (2021). Datasheets for datasets. *Communications of the ACM, 64*(12).
 - Parasuraman, R. & Manzey, D. H. (2010). Complacency and bias in human use of automation. *Human Factors, 52*(3).
@@ -151,12 +154,14 @@ These are the technical books assigned across the course schedule — a chapter 
 - Chalmers, D. J. What we talk to when we talk to language models. https://philarchive.org/rec/CHAWWT-8
 
 ### Policy and Reports
+
 - NIST AI Risk Management Framework (AI RMF 1.0), 2023.
 - EU AI Act — Executive Summary and Annex III (High-Risk Systems List), 2024.
 - AI Now Institute Annual Report (most recent year).
 - Partnership on AI — Guidance on Responsible Practices for Synthetic Media.
 
 ### Essays and Journalism
+
 - Wallace, B. (2026, July 5). The revenge of the philosophy majors. *The New York Times.* https://www.nytimes.com/2026/07/05/business/philosophy-majors-ai-jobs.html
 
 ---

@@ -63,6 +63,7 @@ npx promptfoo@latest init
 The `init` command scaffolds a `promptfooconfig.yaml`. Verify promptfoo can reach your local Ollama with a minimal smoke-test config — replace the scaffolded file's contents with:
 
 {% raw %}
+
 ```yaml
 # smoke-test promptfooconfig.yaml — verify Ollama connectivity
 description: "Rubric Pipeline Lab Direction 0 smoke test"
@@ -115,6 +116,7 @@ Record privately (before running anything) which criteria you *intend* each answ
 **Step 3: The baseline scoring config.** This skeleton is complete except for your rubric text — copy it to `promptfooconfig-baseline.yaml` and fill in the four `value:` blocks with your criterion descriptors:
 
 {% raw %}
+
 ```yaml
 # promptfooconfig-baseline.yaml
 # Validated against: ollama llama3.2, temperature 0

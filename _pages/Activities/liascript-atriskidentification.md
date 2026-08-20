@@ -199,7 +199,7 @@ for sid in grades:
 
 A run of this pipeline produced (your output will be similar in structure):
 
-```
+```json
 {"student": "S001", "tier": "REACH_OUT_NOW",
  "summary": "Scores declined from the 90s to the 40s with one missing assignment, few recent logins, and a comment reporting increased work shifts.",
  "evidence": ["score_trend_late_minus_early: -37.3", "missing_assignments: 1",

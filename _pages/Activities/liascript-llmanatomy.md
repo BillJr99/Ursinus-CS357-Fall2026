@@ -429,8 +429,6 @@ Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^
 3. **Every row is $O(n)$ work and there are $n$ rows.** That is the $O(n^2)$ cost of self-attention, visible as the literal area of the table. Double the context length and the table quadruples. This is the whole economic argument for retrieval instead of just pasting more text into the prompt.
 
 
-
-
 ## Further Reading
 
 - This activity synthesizes five companions, each going deeper on one stage: `liascript-tokensembeddings.md`, `liascript-attentiontransformers.md`, `liascript-textgen2nn.md`, `liascript-samplinggeneration.md`, and `liascript-llmpretraining.md`.

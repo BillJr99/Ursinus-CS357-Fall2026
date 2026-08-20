@@ -253,6 +253,7 @@ key_decisions:
   - [second key decision or artifact created]
 ---
 [2-3 sentence narrative of what was accomplished and what comes next]
+
 ```
 
 Append this AFTER the last existing entry. Do NOT overwrite existing

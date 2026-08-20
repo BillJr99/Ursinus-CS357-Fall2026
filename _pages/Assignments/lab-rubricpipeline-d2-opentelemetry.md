@@ -61,6 +61,7 @@ pip install opentelemetry-sdk opentelemetry-exporter-otlp-proto-grpc
 ```
 
 Expected output (last few lines):
+
 ```
 Successfully installed opentelemetry-api-1.x.x opentelemetry-sdk-1.x.x \
   opentelemetry-exporter-otlp-proto-grpc-1.x.x
@@ -87,6 +88,7 @@ docker compose up -d
 ```
 
 Expected output:
+
 ```
 [+] Running 2/2
  ✔ Network lab_default    Created
@@ -100,6 +102,7 @@ curl -s http://localhost:16686/api/services | python -m json.tool | head -5
 ```
 
 Expected output:
+
 ```json
 {
     "data": [],
@@ -176,6 +179,7 @@ print("Saved baseline_results.csv")
 ```
 
 Expected output after running all 10 prompts:
+
 ```
 Saved baseline_results.csv
 ```
@@ -360,6 +364,7 @@ print('Done. Open http://localhost:16686 to inspect traces.')
 ```
 
 Expected output:
+
 ```
 Running p01...
 Running p02...
