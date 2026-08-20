@@ -261,47 +261,7 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 ## Worked Example: the full $QK^\top$ matrix
 
-Model 1 computed one row — the query for "bank." Exercise 1 asks you to do "river." Here is the whole matrix at once, because seeing all three rows together is what makes the mechanism click: **attention is not a special operation applied to one token, it is the same operation applied to every token in parallel.**
-
-Queries $\mathbf{q}$: river $(1,0)$, bank $(1,1)$, loan $(1,1)$.
-Keys $\mathbf{k}$: river $(1,0)$, bank $(0,1)$, loan $(1,1)$.
-Values $\mathbf{v}$: river $(1,1)$, bank $(2,0)$, loan $(0,2)$.
-
-**Raw scores $QK^\top$** (each cell is $\mathbf{q}_{\text{row}} \cdot \mathbf{k}_{\text{col}}$):
-
-| $\mathbf{q} \downarrow$ / $\mathbf{k} \rightarrow$ | river | bank | loan |
-|---|---|---|---|
-| **river** | 1 | 0 | 1 |
-| **bank** | 1 | 1 | 2 |
-| **loan** | 1 | 1 | 2 |
-
-**Scaled by $\sqrt{d_k} = \sqrt{2} \approx 1.414$:**
-
-| | river | bank | loan |
-|---|---|---|---|
-| **river** | 0.71 | 0.00 | 0.71 |
-| **bank** | 0.71 | 0.71 | 1.41 |
-| **loan** | 0.71 | 0.71 | 1.41 |
-
-**Softmax, row by row** (each row sums to 1 — that is what makes it a distribution over "where do I look"):
-
-| | river | bank | loan | → new vector |
-|---|---|---|---|---|
-| **river** | 0.40 | 0.20 | 0.40 | $(0.80,\; 1.20)$ |
-| **bank** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
-| **loan** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
-
-Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^{0.71} = 2.03$, sum $= 5.06$, so weights $2.03/5.06 = 0.40$, $1.00/5.06 = 0.20$, $0.40$. Then $0.40(1,1) + 0.20(2,0) + 0.40(0,2) = (0.80, 1.20)$.
-
-**Three things this matrix shows that a single row cannot.**
-
-1. **The matrix is not symmetric.** Row "river" gives "bank" a weight of 0.20, but row "bank" gives "river" 0.25. Attention is *directional* — "what does A want from B" is a different question from "what does B want from A" — because queries and keys are different projections. This is the single most common misconception about attention.
-
-2. **"bank" and "loan" have identical rows.** They started with identical query vectors $(1,1)$, so they attend identically and end up with the same output. Nothing in this toy distinguishes them — which is exactly why real models use *many* attention heads with *different* learned projections, so that different heads can separate tokens this head cannot.
-
-3. **Every row is $O(n)$ work and there are $n$ rows.** That is the $O(n^2)$ cost of self-attention, visible as the literal area of the table. Double the context length and the table quadruples. This is the whole economic argument for retrieval instead of just pasting more text into the prompt.
-
-
+We do the single-row arithmetic together in Part I. The **full matrix** version — every query against every key, all scores shown — moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace. Work through it at home if the single row left you wanting the whole picture.
 
 ## 3. Exercises
 
