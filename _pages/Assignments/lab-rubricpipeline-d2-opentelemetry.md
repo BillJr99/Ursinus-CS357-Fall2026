@@ -479,3 +479,21 @@ Fold the following into your single lab submission:
 ---
 
 When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.
+
+---
+
+#### Self-Check Before You Submit
+
+Held against this direction's own *What proficient work looks like* list.
+
+- [ ] Root span, LLM child spans, tool-call child spans, and retrieval spans are all present and **correctly nested**.
+- [ ] The full required attribute set exports to a running Jaeger or Zipkin instance.
+- [ ] `trace_schema.md` documents each span type with naming rationale and **cardinality justification**.
+- [ ] At least one attribute is explicitly identified as removed or redacted for PII or cardinality reasons.
+- [ ] The p95 latency span is identified, with the supporting data.
+- [ ] A failure trace is compared against a success trace, with the **divergence point named**.
+- [ ] One concrete optimization proposed and justified **from trace evidence**.
+- [ ] `trace_fast.png` and `trace_slow.png` are annotated, not raw screenshots.
+- [ ] Three alert rules with justified thresholds, in valid YAML or pseudocode.
+- [ ] `runbook.md` covers all three, naming specific span names, attribute values to inspect, and escalation criteria.
+- [ ] `baseline_results.csv` and `prompts.json` included.

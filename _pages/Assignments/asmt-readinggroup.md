@@ -209,3 +209,16 @@ If you chose the **Competing Texts Session** format, your reflection must also i
 This assignment is scored on the rubric above. Leading a session earns a **10-point base grade**: the rubric's five criteria each contribute one-fifth, scaled by the proficiency level earned, Proficient, the top level, earns full credit (4 of 4) on that criterion. On top of the base, you earn **extra credit** equal to your slot's extra-credit maximum (see the scale above), scaled by the same rubric proficiency.
 
 **Example:** a Week-5 leader (8 extra-credit points available) earning Proficient on all five criteria receives the full **10-point base grade** *and* the full **8 extra-credit points**; one earning Progressing (3 of 4) on all five criteria receives 10 × 0.75 = 7.5 base points and 8 × 0.75 = 6 extra-credit points added to the final grade.
+
+---
+
+## Self-Check, for the Session Leader
+
+- [ ] I read the source in full, not a summary of it, and I could answer a question about a part I am not presenting.
+- [ ] I cleared my source with the instructor at least two weeks out.
+- [ ] The class can get to the source: it is free, linked, or I arranged access.
+- [ ] Setup is fifteen minutes or less. The discussion is the session.
+- [ ] I prepared the required discussion questions, and at least one has no comfortable answer.
+- [ ] At least one question connects the source to something we have actually built or read in this course.
+- [ ] I have a plan for a silent room, and a plan for a room where one person talks the whole time.
+- [ ] The reflection write-up is done, and it says what actually happened rather than what I hoped would.

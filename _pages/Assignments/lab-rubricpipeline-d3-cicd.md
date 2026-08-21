@@ -644,3 +644,24 @@ Cite a specific observation from the direction (a line of code, a terminal outpu
 ---
 
 When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.
+
+---
+
+#### Self-Check Before You Submit
+
+Held against this direction's own *What proficient work looks like* list.
+
+- [ ] All five tests pass, including the three I wrote.
+- [ ] The mock fixture intercepts the Ollama HTTP call, so **no live model is required** to run the suite.
+- [ ] At least one test verifies response **format**.
+- [ ] Each test is labeled with its type: semantic, format, or safety.
+- [ ] `black` and `ruff` both exit 0.
+- [ ] `pytest --cov` reports at least 80% line coverage with **branch coverage enabled**.
+- [ ] The coverage report is pasted into the writeup, with missed lines identified.
+- [ ] Both planted style issues fixed, each fix explained.
+- [ ] `ci.yml` runs on push and pull_request, matrixes Python 3.11 and 3.12, runs all three steps, and carries my inline comment explaining the matrix choice.
+- [ ] A screenshot shows **two green jobs** in the Checks tab.
+- [ ] `pyproject.toml` builds a wheel; `dist/*.whl` exists.
+- [ ] The Dockerfile builds locally and its `CMD` invokes the agent correctly.
+- [ ] TestPyPI receipt or `twine --dry-run` output attached.
+- [ ] The writeup explains the difference between a wheel and a source distribution.

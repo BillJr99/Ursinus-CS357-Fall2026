@@ -110,3 +110,13 @@ Use these when a reading response is due, or any time you want to prepare a unit
 ## See also
 
 - [Reading Group Discussion Leader]({{ site.baseurl }}/Assignments/ReadingGroup): leading a session, and the audience's role.
+
+---
+
+## Self-Check
+
+- [ ] Posted **before** the session, not after.
+- [ ] It engages one specific thing: a claim, a passage, a result, rather than the reading as a whole.
+- [ ] It says what I think, including where I disagree or did not follow.
+- [ ] It gives the class something to start from: a question, a position, or a stuck point.
+- [ ] It is short. Fifteen to twenty minutes of work, not an essay.
