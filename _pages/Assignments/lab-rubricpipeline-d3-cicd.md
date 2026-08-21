@@ -39,12 +39,12 @@ To earn trust in agentic software through engineering discipline: test-driven de
 
 This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
-> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
 > - **A GitHub repository you can push to, with GitHub Actions enabled** (Parts 3-4)
-> - **A TestPyPI account and API token** ([https://test.pypi.org](https://test.pypi.org) — free; if you cannot create one, the `--dry-run` alternative in Part 4 is acceptable)
+> - **A TestPyPI account and API token** ([https://test.pypi.org](https://test.pypi.org), free; if you cannot create one, the `--dry-run` alternative in Part 4 is acceptable)
 > - **Docker Desktop (or Docker Engine)** to build and run the container image in Part 4
 > - **A GitHub Personal Access Token with the `write:packages` scope** for the optional-but-encouraged push to the GitHub Container Registry (GHCR)
 > - Local Ollama (used in the TDD and publishing parts; the tests themselves run against a mock, so **no API key is needed**)
@@ -54,10 +54,10 @@ The core pipeline earns trust through measurement; this direction earns it throu
 
 #### Before You Start (Direction 3)
 
-**Prerequisite activities** — complete these before writing any code:
+**Prerequisite activities**: complete these before writing any code:
 
-- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md) — registries, names, tags, and pip publishing
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md) — agent loops and CI
+- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md): registries, names, tags, and pip publishing
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): agent loops and CI
 
 **Tools to install:**
 
@@ -90,7 +90,7 @@ The example below packages a small research agent, but you may instead package t
 
 ##### Part 1: Test-Driven Development for a Non-Deterministic Agent
 
-The hardest part of testing agent code is that the model's output is never exactly the same twice. Instead of asserting exact strings, you write **semantic tests** (does the response contain the right concept?), **format tests** (does the response have the right structure?), and **safety tests** (does the response avoid forbidden content?). A mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI — the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
+The hardest part of testing agent code is that the model's output is never exactly the same twice. Instead of asserting exact strings, you write **semantic tests** (does the response contain the right concept?), **format tests** (does the response have the right structure?), and **safety tests** (does the response avoid forbidden content?). A mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI, the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
 
 **Step 1: Create the starter agent file.** Create `research_agent.py` in your project root:
 
@@ -206,14 +206,14 @@ def test_extract_facts_returns_list(mock_ollama):
 # ---------------------------------------------------------------------------
 
 def test_ask_model_contains_keyword(mock_ollama):
-    """TODO: semantic test — verify the reply contains an expected keyword."""
+    """TODO: semantic test - verify the reply contains an expected keyword."""
     # TODO: Set mock_ollama.return_value to a response that contains a specific word.
     # Call ask_model with a prompt, then assert the reply contains that word.
     raise NotImplementedError
 
 
 def test_summarize_respects_word_limit(mock_ollama):
-    """TODO: format test — verify summarize returns a string within a word limit."""
+    """TODO: format test - verify summarize returns a string within a word limit."""
     # TODO: Set mock_ollama.return_value to a short reply (e.g., 10 words).
     # Call summarize with max_words=20, then assert the result is a non-empty string
     # and that its word count does not exceed max_words.
@@ -221,7 +221,7 @@ def test_summarize_respects_word_limit(mock_ollama):
 
 
 def test_extract_facts_excludes_forbidden_content(mock_ollama):
-    """TODO: safety test — verify extract_facts output does not contain forbidden strings."""
+    """TODO: safety test - verify extract_facts output does not contain forbidden strings."""
     # TODO: Choose a word that should never appear in a fact list for a neutral topic
     # (e.g., "password", "secret", or "ignore previous instructions").
     # Set mock_ollama.return_value to a response that does NOT contain that word.
@@ -249,13 +249,13 @@ test_agent.py::test_extract_facts_excludes_forbidden_content PASSED
 5 passed in 0.12s
 ```
 
-**Troubleshooting — Part 1**
+**Troubleshooting, Part 1**
 
 - **`NotImplementedError` on every test:** You have not yet filled in the `# TODO:` stubs. The fixture patches `requests.post` correctly; the remaining work is in the function bodies.
 - **`AttributeError: module 'research_agent' has no attribute 'requests'`:** Your patch target must match how `requests` is imported inside `research_agent.py`. With `import requests` at the top, the patch target is `"research_agent.requests.post"`.
-- **All five tests pass without a live Ollama instance:** This is expected — the mock intercepts the HTTP call. Verify by stopping `ollama serve` and re-running `pytest`.
+- **All five tests pass without a live Ollama instance:** This is expected; the mock intercepts the HTTP call. Verify by stopping `ollama serve` and re-running `pytest`.
 
-> **Checkpoint:** Make sure you can answer: (1) Why can we not use `assert result == "..."` to test a language model's output, even if the model is deterministic? (2) What does `patch("research_agent.requests.post")` do exactly — which object does it replace, and for how long? (3) Why might a safety test fail even when the mock returns a safe response? (Hint: look at how `extract_facts` processes the reply.)
+> **Checkpoint:** Make sure you can answer: (1) Why can we not use `assert result == "..."` to test a language model's output, even if the model is deterministic? (2) What does `patch("research_agent.requests.post")` do exactly; which object does it replace, and for how long? (3) Why might a safety test fail even when the mock returns a safe response? (Hint: look at how `extract_facts` processes the reply.)
 
 ##### Part 2: Code Quality and Formatting
 
@@ -316,10 +316,10 @@ TOTAL                  22      3      6      1    84%
 
 If coverage is below 80%, the `Missing` column lists the lines not exercised by any test. Add tests to cover those paths. Paste the final coverage report into your writeup.
 
-**Troubleshooting — Part 2**
+**Troubleshooting, Part 2**
 
 - **`black` and `ruff` disagree on the same line:** Apply `black` first, then run `ruff`. `ruff check --fix` resolves most remaining issues.
-- **Coverage stays below 80% even after adding tests:** `--cov-branch` counts every `if/else` path. The most commonly missed branches are exception handlers — add a test that triggers the exception path in `ask_model` by configuring the mock to raise `requests.exceptions.ConnectionError`.
+- **Coverage stays below 80% even after adding tests:** `--cov-branch` counts every `if/else` path. The most commonly missed branches are exception handlers; add a test that triggers the exception path in `ask_model` by configuring the mock to raise `requests.exceptions.ConnectionError`.
 
 > **Checkpoint:** Make sure you can answer: (1) What is the difference between a formatter (black) and a linter (ruff)? Could one replace the other? (2) Name the two style issues you fixed and the ruff rule code for each. (3) Which lines are listed under `Missing`, and why were they not hit?
 
@@ -391,7 +391,7 @@ git push origin ci-pipeline
 
 Open a pull request from `ci-pipeline` to `main`. In the Checks tab, watch the workflow run. The matrix produces two parallel jobs (one per Python version). Expected outcome: both jobs show a green checkmark. Take a screenshot of the Checks tab.
 
-**Troubleshooting — Part 3**
+**Troubleshooting, Part 3**
 
 - **Workflow does not appear in the Actions tab:** The `.github/workflows/` directory must be committed and pushed. Check the path is exactly `.github/workflows/ci.yml`.
 - **The `black --check` step fails in CI but passes locally:** Ensure you ran `black` on the exact same files listed in the YAML step, and committed the formatted `test_agent.py`.
@@ -592,7 +592,7 @@ npm publish --dry-run
 
 Include the `--dry-run` output if you attempt this step.
 
-**Troubleshooting — Part 4**
+**Troubleshooting, Part 4**
 
 - **`hatchling` is not installed:** Run `pip install hatchling` and retry `python -m build`.
 - **`twine upload` fails with `403 Forbidden`:** Your API token may be scoped to PyPI (not TestPyPI) or expired. Generate a new token scoped to the specific project or "Entire account."
@@ -613,11 +613,11 @@ Include the `--dry-run` output if you attempt this step.
 
 Fold the following into your single lab submission:
 
-- `research_agent.py` — fully implemented, black- and ruff-clean
-- `test_agent.py` — all five tests passing, mock fixture present
-- `.github/workflows/ci.yml` — complete with matrix, all three steps, and your inline comment
-- `pyproject.toml` — all required fields populated; `dist/*.whl` must exist
-- `Dockerfile` — complete CMD line; image must build locally
+- `research_agent.py`: fully implemented, black- and ruff-clean
+- `test_agent.py`: all five tests passing, mock fixture present
+- `.github/workflows/ci.yml`: complete with matrix, all three steps, and your inline comment
+- `pyproject.toml`: all required fields populated; `dist/*.whl` must exist
+- `Dockerfile`: complete CMD line; image must build locally
 - `requirements.txt`
 - Screenshot of the GitHub Actions Checks tab showing two green jobs (3.11 and 3.12)
 - Screenshot of the TestPyPI upload receipt or `twine --dry-run` output
@@ -634,9 +634,9 @@ Fold the following into your single lab submission:
 
 Cite a specific observation from the direction (a line of code, a terminal output, or a CI run result) rather than restating the question.
 
-- When you mocked the Ollama HTTP call, you tested your code's behavior without testing the model's behavior. What aspect of the agent's correctness is your test suite completely unable to verify, and what would a complementary evaluation strategy look like? (The core pipeline's human-agreement and evidence-verification work is one such complement — connect them.)
+- When you mocked the Ollama HTTP call, you tested your code's behavior without testing the model's behavior. What aspect of the agent's correctness is your test suite completely unable to verify, and what would a complementary evaluation strategy look like? (The core pipeline's human-agreement and evidence-verification work is one such complement; connect them.)
 - The CI matrix runs on both Python 3.11 and 3.12. Describe one concrete Python language or library behavior that differs between these versions and that your test suite could catch.
-- Publishing to TestPyPI requires an API token; the Dockerfile accepts `OLLAMA_URL` as an environment variable. What is the general principle of externalizing sensitive or environment-specific configuration, and where does it show up elsewhere in this course? (Your core pipeline reads model, paths, temperature, and seed from config — name that connection.)
+- Publishing to TestPyPI requires an API token; the Dockerfile accepts `OLLAMA_URL` as an environment variable. What is the general principle of externalizing sensitive or environment-specific configuration, and where does it show up elsewhere in this course? (Your core pipeline reads model, paths, temperature, and seed from config; name that connection.)
 - Looking at your final coverage report: which lines are still not covered, and what would you have to mock to cover them? Is 100% coverage always the right goal for agentic code?
 - Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
 

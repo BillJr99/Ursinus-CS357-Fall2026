@@ -5,7 +5,7 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment: Prom
 
 info:
   coursenum: CS357
-  purpose: "To connect prompting practice to the mathematics beneath it — building reusable prompt patterns with reproducible effects and working by hand the softmax and cosine-similarity computations that explain why those patterns work."
+  purpose: "To connect prompting practice to the mathematics beneath it: building reusable prompt patterns with reproducible effects and working by hand the softmax and cosine-similarity computations that explain why those patterns work."
   tilt:
     task: "Build a portfolio of four controlled prompt-pattern demonstrations, work the softmax-with-temperature and cosine-similarity problems by hand with Python verification, and design and iteratively repair a system prompt against adversarial inputs."
     criteria: "Assessed most heavily on the prompt-pattern portfolio and the by-hand worked problems, then the system-prompt design workshop, analysis and synthesis, and submission quality; see the rubric below for the full breakdown."
@@ -20,7 +20,7 @@ info:
     - weight: 30
       description: Prompt Pattern Portfolio
       preemerging: Few or no patterns are presented, or patterns lack any demonstration
-      beginning: Patterns are presented but demonstrations are missing or do not isolate the pattern's effect — for example, the baseline and pattern-enhanced prompts differ in more than one element, or temperature was not fixed
+      beginning: Patterns are presented but demonstrations are missing or do not isolate the pattern's effect, for example, the baseline and pattern-enhanced prompts differ in more than one element, or temperature was not fixed
       progressing: All four required patterns are presented with controlled before-and-after demonstrations under a stated protocol; analysis describes what changed but does not explain the distributional mechanism
       proficient: All four patterns are presented with controlled before-and-after demonstrations under a stated protocol (model name, temperature, seed); each analysis paragraph names the specific change observed, explains it in terms of token conditioning or probability distributions, and states what second experiment would confirm the hypothesis; the Pattern 3 table reports parse success rates across five runs for both the bare and schema-constrained prompt
     - weight: 25
@@ -28,7 +28,7 @@ info:
       preemerging: One or more of the three worked problems (softmax with temperature in Problem 1, cosine similarity in Problem 2, and the forward pass by numbers in Problem 3) is missing or fundamentally incorrect
       beginning: The three worked problems (Problems 1, 2, and 3) contain arithmetic or conceptual errors, or omit intermediate steps
       progressing: All three problems (softmax with temperature in Problem 1, cosine similarity in Problem 2, and the forward pass by numbers in Problem 3) are correct with all intermediate steps shown and a Python verification snippet included, with at most one minor arithmetic or formatting omission
-      proficient: All three problems show every required sub-step — scaled logits, exponentials to four decimal places, normalizing sum, and final probabilities to three decimal places for all three temperatures in Problem 1; dot product, both norms with sum-of-squares, and cosine similarity to three decimal places plus the cos(a, 3a) = 1.000 proof in Problem 2; complete trace tables for both inputs in Problem 3 (the forward pass by numbers), with every pre-activation shown, clipped ReLU neurons identified, the output computation shown, and the active-neuron observation sentence included; Python output is pasted and confirmed to match the hand calculation; each problem ends with a sentence connecting the result to observed model behavior (e.g., what temperature control does to the highest-logit token)
+      proficient: All three problems show every required sub-step, scaled logits, exponentials to four decimal places, normalizing sum, and final probabilities to three decimal places for all three temperatures in Problem 1; dot product, both norms with sum-of-squares, and cosine similarity to three decimal places plus the cos(a, 3a) = 1.000 proof in Problem 2; complete trace tables for both inputs in Problem 3 (the forward pass by numbers), with every pre-activation shown, clipped ReLU neurons identified, the output computation shown, and the active-neuron observation sentence included; Python output is pasted and confirmed to match the hand calculation; each problem ends with a sentence connecting the result to observed model behavior (e.g., what temperature control does to the highest-logit token)
     - weight: 20
       description: System Prompt Design Workshop
       preemerging: No system prompt is submitted, or the prompt is missing two or more of the five ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS elements
@@ -38,7 +38,7 @@ info:
     - weight: 15
       description: Analysis and Synthesis
       preemerging: Little or no written analysis is provided
-      beginning: Analysis restates results without interpretation — for example, "the persona made the output more formal" without explaining why
+      beginning: Analysis restates results without interpretation, for example, "the persona made the output more formal" without explaining why
       progressing: Analysis interprets results and connects at least one finding to course concepts such as sampling theory or token conditioning
       proficient: The one-to-two paragraph synthesis names the specific pattern that produced the largest behavioral change for the smallest prompt change and grounds the explanation in the mathematics (what tokens did adding that pattern condition on?); restates in original words where randomness lives in a language model and what temperature specifically controls; proposes one testable hypothesis with the independent variable, dependent variable, and measurement method stated
     - weight: 10
@@ -70,7 +70,7 @@ In this assignment you will build a portfolio of four reusable prompt patterns a
 
 A strong submission has these qualities:
 
-- **Controlled comparisons.** The baseline and pattern-enhanced prompts differ in exactly one thing — the pattern being studied. The temperature and seed are fixed and stated. The reader can reproduce both outputs.
+- **Controlled comparisons.** The baseline and pattern-enhanced prompts differ in exactly one thing: the pattern being studied. The temperature and seed are fixed and stated. The reader can reproduce both outputs.
 - **Mechanism, not description.** The analysis does not just say "the persona made it more formal." It says: "Adding a persona likely shifts the probability distribution toward domain vocabulary by conditioning on tokens that would appear in texts written by an expert in this field. This is consistent with the increase in technical terminology we observed in the output."
 - **Clean math with verification.** Every intermediate step is shown. The Python verification produces the same numbers to three decimal places. If there is a discrepancy, the student explains it (for example: floating-point rounding in the built-in `math.exp` vs. the manual calculation).
 
@@ -86,7 +86,7 @@ Before presenting any pattern, state your protocol in one paragraph:
 - How you ran the model (Ollama CLI, Python `requests`, Jupyter notebook)
 - How you ensured both prompts were otherwise identical
 
-Use a fixed temperature and seed for all comparisons so the pattern — not the sampling — explains the difference.
+Use a fixed temperature and seed for all comparisons so the pattern (not the sampling) explains the difference.
 
 ---
 
@@ -116,15 +116,15 @@ For each of the four patterns below, produce a **pattern entry** with the follow
 
 ### Pattern 1: Persona and Role
 
-Choose a domain you know well (your major, a hobby, a job). Design a persona for an expert in that domain. Show a question where the persona materially changes the response — not just the tone, but the content, vocabulary, or structure of the answer.
+Choose a domain you know well (your major, a hobby, a job). Design a persona for an expert in that domain. Show a question where the persona materially changes the response: not just the tone, but the content, vocabulary, or structure of the answer.
 
 Write 2-3 paragraphs in your analysis: (1) Describe the specific change you observed. (2) Explain why conditioning on a persona shifts what tokens the model predicts. (3) Name one scenario where a persona would be harmful to include.
 
 ### Pattern 2: Few-Shot Examples
 
-Choose a formatting or transformation task that the bare model performs inconsistently — for example, converting informal meeting notes into bullet-point action items, or transforming verbose sentences into telegraphic ones. Show that providing two or three input-output examples in the prompt stabilizes the output format across five runs. Report: what format did the model produce without examples (describe the variation), and what format did it produce with examples (describe the consistency)?
+Choose a formatting or transformation task that the bare model performs inconsistently: for example, converting informal meeting notes into bullet-point action items, or transforming verbose sentences into telegraphic ones. Show that providing two or three input-output examples in the prompt stabilizes the output format across five runs. Report: what format did the model produce without examples (describe the variation), and what format did it produce with examples (describe the consistency)?
 
-Write 2-3 paragraphs in your analysis: (1) What specifically became consistent? (2) Why do examples work — what are they doing to the model's context? (3) Is there a task where few-shot examples could introduce bias rather than reducing it?
+Write 2-3 paragraphs in your analysis: (1) What specifically became consistent? (2) Why do examples work: what are they doing to the model's context? (3) Is there a task where few-shot examples could introduce bias rather than reducing it?
 
 ### Pattern 3: Structured Output
 
@@ -143,7 +143,7 @@ Write 2-3 paragraphs in your analysis: (1) What was the success rate difference?
 
 ### Pattern 4: Guardrails
 
-Add a refusal or escalation instruction to a system prompt — for example: "If the user asks for medical advice, respond: 'I am not a medical professional. Please consult a doctor.' Do not attempt to answer medical questions." Demonstrate: (a) one case where the guardrail triggers correctly, and (b) one attempted circumvention — a prompt that tries to get the model to answer anyway — and report the outcome.
+Add a refusal or escalation instruction to a system prompt, for example: "If the user asks for medical advice, respond: 'I am not a medical professional. Please consult a doctor.' Do not attempt to answer medical questions." Demonstrate: (a) one case where the guardrail triggers correctly, and (b) one attempted circumvention (a prompt that tries to get the model to answer anyway) and report the outcome.
 
 Write 2-3 paragraphs in your analysis: (1) Did the circumvention succeed or fail? (2) What does this reveal about the robustness of instruction-following versus the robustness of value-trained refusal? (3) Under what conditions would you trust a guardrail like this for a production system?
 
@@ -151,7 +151,7 @@ Write 2-3 paragraphs in your analysis: (1) Did the circumvention succeed or fail
 
 ## Part 2: AI by Hand
 
-> **Bring to class.** Have the printable [Neural Network by Hand worksheet]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) with you — printed, or on a tablet you can write on — for the *Tokens and Embeddings* session, where we work the same style of forward pass together.
+> **Bring to class.** Have the printable [Neural Network by Hand worksheet]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) with you (printed, or on a tablet you can write on) for the *Tokens and Embeddings* session, where we work the same style of forward pass together.
 
 Complete all three problems with all intermediate steps shown. Handwritten and scanned, or typeset, your choice. After each problem, show that your result checks out.
 
@@ -241,7 +241,7 @@ Paste your output and confirm it matches.
 
 ### Problem 3: A Forward Pass by Numbers
 
-**Setup:** A tiny neural network has 2 inputs, 2 hidden ReLU neurons, and 1 linear output — the same architecture as the trace table in the From Text Generation to a Neural Network activity, with different weights:
+**Setup:** A tiny neural network has 2 inputs, 2 hidden ReLU neurons, and 1 linear output, the same architecture as the trace table in the From Text Generation to a Neural Network activity, with different weights:
 
 $$h_1 = \text{ReLU}(2.0\,x_1 - 1.0\,x_2 - 0.5) \qquad h_2 = \text{ReLU}(-1.0\,x_1 + 1.0\,x_2 - 0.5)$$
 
@@ -283,7 +283,7 @@ Paste your output and confirm it matches your hand traces.
 
 After completing both parts, write one to two paragraphs addressing all three questions:
 
-1. Which pattern produced the largest behavioral change for the smallest prompt change, and why do you think that is? Ground your answer in the mathematics — what did adding that pattern do to the tokens the model was predicting?
+1. Which pattern produced the largest behavioral change for the smallest prompt change, and why do you think that is? Ground your answer in the mathematics: what did adding that pattern do to the tokens the model was predicting?
 2. After computing softmax by hand, restate in your own words where the "randomness" in a language model lives. Is the randomness in the network weights, in the logits, or in the sampling step? What does temperature control specifically?
 3. Propose one testable hypothesis about prompt patterns or model behavior that you could investigate with a controlled experiment. State the hypothesis, the independent variable, the dependent variable, and how you would measure it.
 
@@ -295,10 +295,10 @@ After completing both parts, write one to two paragraphs addressing all three qu
 A: Five runs are explicitly required only for Pattern 3 (structured output). For Patterns 1, 2, and 4, you need at least one baseline output and one pattern-enhanced output under fixed settings. If you want to show consistency, running more is better, but the rubric requires controlled comparison, not a large-scale experiment.
 
 **Q: My Python verification gives slightly different numbers than my hand calculation. Is that a problem?**
-A: Minor floating-point differences (for example, 0.843 vs. 0.8427) are expected and acceptable. Explain the source of the discrepancy in one sentence. If the difference is larger than 0.01, recheck your hand calculation — a larger gap indicates an arithmetic error.
+A: Minor floating-point differences (for example, 0.843 vs. 0.8427) are expected and acceptable. Explain the source of the discrepancy in one sentence. If the difference is larger than 0.01, recheck your hand calculation; a larger gap indicates an arithmetic error.
 
 **Q: My guardrail was bypassed in Pattern 4. Should I hide that?**
-A: No — report it honestly. A circumvention that succeeds is more interesting than one that fails, and your analysis of why it succeeded is what earns points. Documenting a real limitation is better than pretending the guardrail is robust.
+A: No; report it honestly. A circumvention that succeeds is more interesting than one that fails, and your analysis of why it succeeded is what earns points. Documenting a real limitation is better than pretending the guardrail is robust.
 
 **Q: Can I use a model other than llama3.2?**
 A: Yes, as long as you name the model and version. The rubric grades your analysis and methodology, not your choice of model.
@@ -310,7 +310,7 @@ A: No. Handwritten and scanned is explicitly accepted. If you type it, any legib
 
 ## Part 3: System Prompt Design Workshop
 
-**What this part tests**: Whether you can write a system prompt that reliably constrains agent behavior across both expected inputs and adversarial attempts — and whether you can iterate based on observed failures.
+**What this part tests**: Whether you can write a system prompt that reliably constrains agent behavior across both expected inputs and adversarial attempts, and whether you can iterate based on observed failures.
 
 ### The ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS Framework
 
@@ -325,10 +325,10 @@ A complete system prompt answers five questions:
 
 | Anti-Pattern | Why It Fails | Better Alternative |
 |---|---|---|
-| "Be helpful and honest" | Unmeasurable — every agent can claim to be helpful | "Respond only to questions about course material; for off-topic requests, say: 'I can only help with CS357 topics'" |
+| "Be helpful and honest" | Unmeasurable; every agent can claim to be helpful | "Respond only to questions about course material; for off-topic requests, say: 'I can only help with CS357 topics'" |
 | "Do not discuss controversial topics" | What counts as controversial? | "Do not discuss political candidates, religious beliefs, or other students' academic records" |
 | "Always respond in JSON" | JSON without a schema is unvalidatable | "Respond with: `{\"answer\": \"...\", \"confidence\": 0-1, \"source\": \"...\"}`" |
-| "Never say you don't know" | Guarantees confident hallucination | "If you are uncertain, say: 'I am not confident about this — please verify with [source]'" |
+| "Never say you don't know" | Guarantees confident hallucination | "If you are uncertain, say: 'I am not confident about this; please verify with [source]'" |
 
 ### Your Task
 

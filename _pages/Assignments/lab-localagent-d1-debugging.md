@@ -4,26 +4,26 @@ permalink: /Assignments/LocalAgent/Direction1
 title: "CS357 Lab: Local Agent, Direction 1: Debugging a Broken Agent"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own; your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
 
-> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
 > - **Accounts:** none.
-> - **API costs:** none — every model call goes to your local Ollama server.
+> - **API costs:** none; every model call goes to your local Ollama server.
 > - **Installs / disk:** nothing beyond the core lab setup (Ollama with `llama3.2`, ~2 GB, and the Python `requests` library).
 > - **Hardware:** any machine that runs the core lab.
-> - **No-cost fallback:** not needed — this direction is already fully local and free.
+> - **No-cost fallback:** not needed; this direction is already fully local and free.
 
 ---
 
 
-Take the local agent you built in the core lab and turn the same debugging and instrumentation discipline on a research agent that someone else wrote — one seeded with five deliberate bugs. Your job is to find them, fix them, explain them, and then instrument the agent so the same bugs would be unmistakable if they reappeared.
+Take the local agent you built in the core lab and turn the same debugging and instrumentation discipline on a research agent that someone else wrote, one seeded with five deliberate bugs. Your job is to find them, fix them, explain them, and then instrument the agent so the same bugs would be unmistakable if they reappeared.
 
 Agent bugs are different from ordinary software bugs. A function that returns the wrong value gives you the wrong value immediately. An agent with a bug might: produce a convincing but incorrect answer; loop forever on a malformed tool call; silently drop the tool result and answer from memory; or reach its step budget without telling you why. This lab gives you a pre-written research agent with five deliberate bugs. Your job is to find them, fix them, explain them, and then instrument the agent so the same bugs would be unmistakable if they appeared in the future.
 
-**Why this matters:** In production, agent bugs cost real money and trust. When an agent-assisted code review approves a vulnerability, or an agent-assisted customer service tool gives wrong refund information, the human in the loop often did not catch it because the agent was confidently wrong. Debugging skill and defensive instrumentation are essential. Unlike a stack trace that points to a line number, an agent failure often manifests many steps after its root cause — the bug may be in how tool results are fed back, not in the tool itself. You will practice tracing cause through effect across message history, which is the core skill of agent debugging.
+**Why this matters:** In production, agent bugs cost real money and trust. When an agent-assisted code review approves a vulnerability, or an agent-assisted customer service tool gives wrong refund information, the human in the loop often did not catch it because the agent was confidently wrong. Debugging skill and defensive instrumentation are essential. Unlike a stack trace that points to a line number, an agent failure often manifests many steps after its root cause; the bug may be in how tool results are fed back, not in the tool itself. You will practice tracing cause through effect across message history, which is the core skill of agent debugging.
 
 This lab is completed in **pairs using driver/navigator roles**: the driver types while the navigator reviews, questions, and consults documentation. **Swap roles at least every 30 minutes** and log each swap time with who held each role.
 
@@ -31,9 +31,9 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 
 #### Before You Start
 
-**Prerequisite concepts** — complete these before writing any code:
+**Prerequisite concepts**: complete these before writing any code:
 
-- [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) — the perceive/plan/act/remember cycle
+- [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md): the perceive/plan/act/remember cycle
 - The Local Agent Lab, or working familiarity with the Ollama `/api/chat` endpoint and the `requests` library
 
 **Tools to install:**
@@ -46,7 +46,7 @@ ollama list
 pip install requests   # only if not already installed
 ```
 
-**Health check** — run this before starting:
+**Health check**: run this before starting:
 
 ```bash
 curl -s http://localhost:11434/api/tags | python3 -m json.tool | head -10
@@ -77,12 +77,12 @@ Keep a log file called `pair_log.txt` in your project folder. Each entry looks l
 
 #### The Broken Agent
 
-Copy the file below into your project as `broken_agent.py`. Do not fix anything yet — run it first and observe the symptoms in Part 1.
+Copy the file below into your project as `broken_agent.py`. Do not fix anything yet; run it first and observe the symptoms in Part 1.
 
 ```python
 """
-broken_agent.py — A deliberately broken research agent for CS357 Lab.
-Find and fix 5 bugs. Each bug is marked with # BUG [N] — but the comment
+broken_agent.py - A deliberately broken research agent for CS357 Lab.
+Find and fix 5 bugs. Each bug is marked with # BUG [N] - but the comment
 does NOT tell you what the bug is. You must diagnose it from the symptoms.
 """
 import requests
@@ -114,7 +114,7 @@ def search_facts(topic: str) -> str:
     return FACT_DB.get(key, f"No information found about: {topic}")
 
 def calculate(expression: str) -> str:
-    # BUG 1 — this implementation has a security issue that also breaks on some inputs
+    # BUG 1 - this implementation has a security issue that also breaks on some inputs
     import ast
     try:
         result = eval(expression, {"__builtins__": {}}, {})  # BUG 1: restricted but still dangerous + breaks on floats like "3.14e2"
@@ -144,13 +144,13 @@ def parse_response(text: str):
     final = None
 
     for line in lines:
-        # BUG 2: split on first colon only — values like "http://example.com" get truncated
+        # BUG 2: split on first colon only - values like "http://example.com" get truncated
         if line.startswith("ACTION:"):
             action = line.split(":")[1].strip()  # BUG 2
         elif line.startswith("INPUT:"):
             input_val = line.split(":")[1].strip()  # BUG 2
         elif line.startswith("FINAL:"):
-            final = line.split(":", 1)[1].strip()  # This one is correct — notice the difference
+            final = line.split(":", 1)[1].strip()  # This one is correct - notice the difference
 
     return action, input_val, final
 
@@ -192,13 +192,13 @@ def run_agent(user_query: str) -> str:
                 result = f"Error: unknown tool '{action}'"
 
             # BUG 4: tool results should be added as 'tool' role (or as 'user' with context),
-            # not as 'assistant' — this makes the model think it called the tool itself
+            # not as 'assistant' - this makes the model think it called the tool itself
             messages.append({
                 "role": "assistant",  # BUG 4
                 "content": f"[Tool result: {result}]"
             })
         else:
-            # Model gave neither a tool call nor a FINAL answer — nudge it
+            # Model gave neither a tool call nor a FINAL answer - nudge it
             messages.append({
                 "role": "user",
                 "content": "Please either use a tool (ACTION: / INPUT:) or give your FINAL: answer."
@@ -272,7 +272,7 @@ Work through the bugs one at a time. After fixing each one, rerun the three samp
 
 ##### Bug 1: `calculate` function
 
-The `calculate` function uses `eval` with `{"__builtins__": {}}` as the globals. This is intended as a safety measure, but it has two problems: (1) it is not actually safe — certain Python expressions can escape the sandbox — and (2) it fails on floating-point scientific notation like `3.14e2` because `e` is not a recognized name in the empty namespace.
+The `calculate` function uses `eval` with `{"__builtins__": {}}` as the globals. This is intended as a safety measure, but it has two problems: (1) it is not actually safe (certain Python expressions can escape the sandbox) and (2) it fails on floating-point scientific notation like `3.14e2` because `e` is not a recognized name in the empty namespace.
 
 **Fix:** Replace `eval` with `ast.literal_eval`, which only parses Python literals. For arithmetic expressions, use a whitelist approach with the `ast` module to parse and evaluate safely, or restrict the allowed character set. A minimal fix:
 
@@ -301,7 +301,7 @@ Compare it to the correct version used for FINAL:
 final = line.split(":", 1)[1].strip()  # This one is correct
 ```
 
-The difference is the `1` argument to `split`. Without it, `split(":")` splits on every colon, so `INPUT: 3.14e2` becomes `["INPUT", " 3.14e2"]` — harmless in that case — but `INPUT: http://example.com` becomes `["INPUT", " http", "//example.com"]`, and only `http` reaches the tool.
+The difference is the `1` argument to `split`. Without it, `split(":")` splits on every colon, so `INPUT: 3.14e2` becomes `["INPUT", " 3.14e2"]` (harmless in that case) but `INPUT: http://example.com` becomes `["INPUT", " http", "//example.com"]`, and only `http` reaches the tool.
 
 **Fix:** Change both `ACTION:` and `INPUT:` lines to use `split(":", 1)`.
 
@@ -386,7 +386,7 @@ Your exact wording will differ; what matters is that: (a) no crash occurs, (b) n
 
 #### Part 3: Add Structured Logging
 
-Observability means that when something goes wrong, the log tells you what happened and when. A print statement at key points is a start, but structured logging gives you severity levels, timestamps, and a persistent file — all essential when running an agent unattended.
+Observability means that when something goes wrong, the log tells you what happened and when. A print statement at key points is a start, but structured logging gives you severity levels, timestamps, and a persistent file, all essential when running an agent unattended.
 
 ##### Step 1: Set up the logger
 
@@ -415,7 +415,7 @@ def setup_logging(log_file: str = "agent_trace.log") -> logging.Logger:
 
 ##### Step 2: Add log calls at key events
 
-In `run_agent`, add logging at each of the following points. The log message should be self-contained — someone reading the log file without the source code should understand what happened.
+In `run_agent`, add logging at each of the following points. The log message should be self-contained; someone reading the log file without the source code should understand what happened.
 
 | Event | Level | Fields to log |
 |-------|-------|---------------|
@@ -459,7 +459,7 @@ A test suite catches regressions: if you change the agent later and accidentally
 
 ```python
 """
-test_agent.py — Regression tests for the fixed research agent.
+test_agent.py - Regression tests for the fixed research agent.
 Run with: python test_agent.py
 Each test prints PASS or FAIL with the actual output.
 """
@@ -600,23 +600,23 @@ Before making your fixes, run `test_agent.py` against `broken_agent.py` by tempo
 
 #### Troubleshooting
 
-**Bug 3 crash — `JSONDecodeError: Extra data`**
+**Bug 3 crash, `JSONDecodeError: Extra data`**
 
-When `stream=True`, Ollama sends the response as multiple lines, each a valid JSON object — one per token. Calling `.json()` on the full response body fails because the parser hits the second JSON object and treats it as unexpected data. The fix is `"stream": False`. To inspect the raw body before fixing, replace `.json()` with `.text` and print the first 500 characters — you will see multiple JSON lines.
+When `stream=True`, Ollama sends the response as multiple lines, each a valid JSON object, one per token. Calling `.json()` on the full response body fails because the parser hits the second JSON object and treats it as unexpected data. The fix is `"stream": False`. To inspect the raw body before fixing, replace `.json()` with `.text` and print the first 500 characters; you will see multiple JSON lines.
 
-**Bug 4 symptom — model generates repeated tool result lines**
+**Bug 4 symptom, model generates repeated tool result lines**
 
 When tool results are attributed to the `"assistant"` role, the model on the next step sees its own prior content and may continue it, generating additional `[Tool result: ...]` lines as if it is producing more tool output. After the fix (`"role": "user"`), the model sees the tool result as an incoming observation and responds to it rather than continuing it.
 
-**Bug 5 symptom — `Answer: None` printed with no error**
+**Bug 5 symptom, `Answer: None` printed with no error**
 
 Python functions return `None` implicitly when no `return` statement is reached. The caller receives `None`, and `print(f"Answer: {result}")` prints `Answer: None` without any indication of why. Always make budget exhaustion explicit with a return value that contains the word "stopped" or "exhausted" so callers can detect it without inspecting the return type.
 
-**Bug 1 — `calculate` fails on scientific notation**
+**Bug 1, `calculate` fails on scientific notation**
 
-The expression `3.14e2` is valid Python, but `eval(..., {"__builtins__": {}}, {})` evaluates in a namespace with no names — including `e`. Python parses `3.14e2` as a float literal (not as `3.14 * e^2`), so it should work in a bare `eval`. The failure actually comes from certain compound expressions. Verify your fix handles: `"330 * 3.28084"`, `"3.14e2"`, `"9.870841"`, and `"384400 * 0.621371"`.
+The expression `3.14e2` is valid Python, but `eval(..., {"__builtins__": {}}, {})` evaluates in a namespace with no names, including `e`. Python parses `3.14e2` as a float literal (not as `3.14 * e^2`), so it should work in a bare `eval`. The failure actually comes from certain compound expressions. Verify your fix handles: `"330 * 3.28084"`, `"3.14e2"`, `"9.870841"`, and `"384400 * 0.621371"`.
 
-**Test `unknown_topic_abstains` fails — model confabulates an answer**
+**Test `unknown_topic_abstains` fails, model confabulates an answer**
 
 Some local models answer questions about unknown topics confidently rather than reporting uncertainty. If this test fails reliably, add an explicit guardrail to the system prompt: "If the search_facts tool returns 'No information found', you must include that phrase verbatim in your FINAL answer. Do not answer from memory." Re-run the test after adding the guardrail and note the change in the writeup.
 
@@ -628,7 +628,7 @@ Answer these in your writeup (`readme.md`), approximately one paragraph each:
 
 1. **Crash vs. silent failure.** Bug 3 caused a crash. Bugs 1, 2, 4, and 5 caused wrong or missing answers without raising an exception. Which type is harder to debug in a deployed system and why? What instrumentation would catch silent failures automatically?
 
-2. **Role confusion.** Bug 4 caused the model to attribute the tool result to itself. What behavior did you observe in the message history? Write 2-3 sentences explaining why this confused the model's subsequent responses — refer to how the model uses conversational role context to determine what to generate next.
+2. **Role confusion.** Bug 4 caused the model to attribute the tool result to itself. What behavior did you observe in the message history? Write 2-3 sentences explaining why this confused the model's subsequent responses; refer to how the model uses conversational role context to determine what to generate next.
 
 3. **Hardest bug.** Which bug was hardest to find, and what made it hard? Was it the distance between cause and symptom, the absence of a crash, or something else?
 
@@ -644,12 +644,12 @@ Answer these in your writeup (`readme.md`), approximately one paragraph each:
 
 Submit a ZIP containing:
 
-- `agent.py` — the fully fixed agent (renamed from `broken_agent.py`)
-- `test_agent.py` — the complete test suite with all five test cases implemented
-- `agent_trace.log` — the log file from at least one complete run of the three sample queries
-- `diagnosis.md` — the completed diagnosis table (symptom, line, root cause for each bug)
-- `readme.md` — approximately two pages covering: the diagnostic process for each bug, the logging design, the test design, and answers to the reflection prompts
-- `pair_log.txt` — the driver/navigator swap log
+- `agent.py`: the fully fixed agent (renamed from `broken_agent.py`)
+- `test_agent.py`: the complete test suite with all five test cases implemented
+- `agent_trace.log`: the log file from at least one complete run of the three sample queries
+- `diagnosis.md`: the completed diagnosis table (symptom, line, root cause for each bug)
+- `readme.md`: approximately two pages covering: the diagnostic process for each bug, the logging design, the test design, and answers to the reflection prompts
+- `pair_log.txt`: the driver/navigator swap log
 
 Ensure `python test_agent.py` exits cleanly on a fresh run before submitting.
 

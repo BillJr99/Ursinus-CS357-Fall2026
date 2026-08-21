@@ -29,7 +29,7 @@ I gave a couple of fun facts about myself in class, but I want to get to know yo
 2.  What is your reason for taking the course? (Blunt honesty is perfectly fine here, if applicable)
 3.  What are you majoring in / interested in majoring in?
 4.  What do you think you might want to do after Ursinus?
-5.  How much experience do you have with programming and with AI tools so far? (There is no wrong answer — I just want to know where everyone is starting from.)
+5.  How much experience do you have with programming and with AI tools so far? (There is no wrong answer; I just want to know where everyone is starting from.)
 6.  What are you most excited about in this course?
 7.  What are you the most worried about in this course?
 8.  A fun fact about yourself

@@ -78,10 +78,10 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 ## Before You Start
 
-**Prerequisite concepts** — complete these activities before writing any code:
+**Prerequisite concepts**: complete these activities before writing any code:
 
-- [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md) — the generator/critic/refine loop and stopping rules
-- [Orchestration Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md) — chaining agents with structured outputs
+- [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Orchestration Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md): chaining agents with structured outputs
 
 **Tools to install:**
 
@@ -129,7 +129,7 @@ If you see a connection error, start Ollama with `ollama serve` in a separate te
 | Part 4 | Comparative Evaluation | 45-60 min |
 | Writeup | Readme and reflection | 30-45 min |
 
-**Total:** plan on roughly **3.5-4.5 hours for the core lab** (Parts 1-4 plus the writeup), plus roughly **2.5-3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
+**Total:** plan on roughly **3.5-4.5 hours for the core lab** (Parts 1-4 plus the writeup), plus roughly **2.5-3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly; this is not a single-sitting lab.
 
 ---
 
@@ -160,7 +160,7 @@ Choose a generation task with checkable criteria: a structured class announcemen
 }
 ```
 
-`rubric.json` (example for a function docstring task — adapt to your chosen task):
+`rubric.json` (example for a function docstring task, adapt to your chosen task):
 
 ```json
 {
@@ -248,7 +248,7 @@ def critique_draft(draft, rubric, config):
     """
     Ask the critic to evaluate the draft against the rubric.
     Returns a dict: {"verdict": "accept"|"revise", "issues": [...]}
-    On JSON parse failure, returns {"verdict": "revise", "issues": ["[JSON parse failure — treating as revise]"]}
+    On JSON parse failure, returns {"verdict": "revise", "issues": ["[JSON parse failure - treating as revise]"]}
     """
     criteria_text = "\n".join(
         f"- {c['id']} ({c['name']}): {c['descriptor']}"
@@ -295,7 +295,7 @@ def critique_draft(draft, rubric, config):
         assert "verdict" in critique and "issues" in critique
         return critique
     except Exception as e:
-        print(f"[lab3:critique_draft:json_parse] Malformed critic output — failing closed. Raw: {raw!r}")
+        print(f"[lab3:critique_draft:json_parse] Malformed critic output - failing closed. Raw: {raw!r}")
         return {"verdict": "revise", "issues": [f"[JSON parse failure] Raw output: {raw[:200]}"]}
 ```
 
@@ -326,7 +326,7 @@ def critique_refine_loop(task_description, config, rubric):
         if critique["verdict"] == "accept":
             return (draft, critique, round_num, "accepted")
 
-    # Budget exhausted — return last draft with critique attached
+    # Budget exhausted - return last draft with critique attached
     final_output = f"{draft}\n\n--- OUTSTANDING CRITIQUE (budget exhausted after {config['round_budget']} rounds) ---\n{json.dumps(critique, indent=2)}"
     return (final_output, critique, config["round_budget"], "budget_exhausted")
 ```
@@ -369,16 +369,16 @@ Args:
 Rounds: 2 | Reason: accepted
 ```
 
-### Troubleshooting — Part 1
+### Troubleshooting, Part 1
 
 **The critic always returns `"verdict": "revise"` even after many rounds**
-Print the full critic output (`raw` before JSON parsing) to see what the model is actually saying. Common causes: (1) the model is outputting JSON wrapped in markdown fences — the strip step in the parser should handle this, but check for unusual fence formats; (2) the rubric descriptors are so strict that no draft can satisfy them — loosen one criterion as a test.
+Print the full critic output (`raw` before JSON parsing) to see what the model is actually saying. Common causes: (1) the model is outputting JSON wrapped in markdown fences; the strip step in the parser should handle this, but check for unusual fence formats; (2) the rubric descriptors are so strict that no draft can satisfy them; loosen one criterion as a test.
 
 **`json.JSONDecodeError` fires on valid-looking output**
 The model may be inserting a BOM or non-breaking space before the opening `{`. Add `raw = raw.encode('ascii', 'ignore').decode('ascii')` before `json.loads` to strip non-ASCII, then re-try.
 
 **The loop never terminates (no `accept` and no budget exhaustion)**
-Check that your `for round_num in range(1, config["round_budget"] + 1)` loop is iterating the correct number of times. Print `round_num` at the start of each iteration. If it runs forever, your `return` on `"accepted"` may be inside an inner scope — check indentation.
+Check that your `for round_num in range(1, config["round_budget"] + 1)` loop is iterating the correct number of times. Print `round_num` at the start of each iteration. If it runs forever, your `return` on `"accepted"` may be inside an inner scope; check indentation.
 
 ---
 
@@ -419,11 +419,11 @@ Create a file `calibration_drafts.json`:
     "description": "Defect-free draft",
     "draft": "\"\"\"Merge two sorted lists of integers into a single sorted list.\n\nArgs:\n    a (list[int]): First sorted list of integers.\n    b (list[int]): Second sorted list of integers.\n\nReturns:\n    list[int]: A new sorted list containing all elements from a and b.\n\nExample:\n    >>> merge_sorted_lists([1, 3], [2, 4])\n    [1, 2, 3, 4]\n\"\"\""
   }
-  // TODO: Add D04 through D12 — at least one defect per criterion, multiple multi-defect drafts
+  // TODO: Add D04 through D12 - at least one defect per criterion, multiple multi-defect drafts
 ]
 ```
 
-> **Worked example — adding a new entry (D04).** Two things trip people up here. First, JSON does not allow comments, so **delete the `// TODO` line** before you run your code — it is a note to you, not valid JSON. Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote. Here is a complete D04 entry with a *subtle* planted defect (the parameter descriptions list names but omit types — a violation of C2 that requires careful reading to spot):
+> **Worked example, adding a new entry (D04).** Two things trip people up here. First, JSON does not allow comments, so **delete the `// TODO` line** before you run your code; it is a note to you, not valid JSON. Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote. Here is a complete D04 entry with a *subtle* planted defect (the parameter descriptions list names but omit types, a violation of C2 that requires careful reading to spot):
 >
 > ```json
 > {
@@ -527,7 +527,7 @@ Example:
 - **Before**: "C4 (Example): At least one example is provided."
 - **After**: "C4 (Example): At least one usage example is shown in doctest format: a line beginning with `>>>` followed by the function call, and a second line with the expected return value."
 
-### Troubleshooting — Part 2
+### Troubleshooting, Part 2
 
 **Detection rate is 1.0 for all criteria even with weak descriptors**
 Your planted defects may be too obvious. Try subtle defects: a parameter description that lists the name but not the type, or an example that shows a call but not the return value. Make the defect require careful reading to spot.
@@ -536,7 +536,7 @@ Your planted defects may be too obvious. Try subtle defects: a parameter descrip
 The model may not be parsing your criterion ID correctly. Change the prompt to include the criterion name in full (not just "C1") and check that the model's issue strings reference those names.
 
 **Your two defect-free drafts get critiqued as "revise"**
-This is a false positive. Record the rate and include it in your analysis — it is an important signal about rubric over-strictness.
+This is a false positive. Record the rate and include it in your analysis; it is an important signal about rubric over-strictness.
 
 ---
 
@@ -556,9 +556,9 @@ Attempt to produce a draft that the critic accepts while being, by your human ju
 **Step 1: Identify a loophole.**
 
 Think about each criterion's descriptor literally. Common loophole types:
-- **Keyword stuffing**: The descriptor says "contains a one-sentence summary" — can you write a sentence so vague it is technically present but useless?
-- **Minimal compliance**: The descriptor says "every parameter is listed" — can you list parameters with empty or copy-pasted descriptions?
-- **Format gaming**: The descriptor says "in doctest format" — can you write a syntactically valid doctest that tests nothing meaningful?
+- **Keyword stuffing**: The descriptor says "contains a one-sentence summary"; can you write a sentence so vague it is technically present but useless?
+- **Minimal compliance**: The descriptor says "every parameter is listed"; can you list parameters with empty or copy-pasted descriptions?
+- **Format gaming**: The descriptor says "in doctest format"; can you write a syntactically valid doctest that tests nothing meaningful?
 
 **Step 2: Author the hack draft and confirm the critic accepts it.**
 
@@ -589,7 +589,7 @@ Document this transcript verbatim in your readme with your human judgment of why
 
 **Step 3: Patch the rubric and verify the patch.**
 
-Create `rubric_patched.json` — change only the exploited criterion's descriptor. Show a diff in your readme. Then:
+Create `rubric_patched.json`; change only the exploited criterion's descriptor. Show a diff in your readme. Then:
 
 ```python
 rubric_patched = load_rubric_from_file("rubric_patched.json")
@@ -604,9 +604,9 @@ critique_good = critique_draft(good_draft, rubric_patched, config)
 print(f"Patched rubric on good draft: {critique_good['verdict']}")  # Expected: accept
 ```
 
-### Troubleshooting — Part 3
+### Troubleshooting, Part 3
 
-**You cannot find a hack — the critic is too strict**
+**You cannot find a hack: the critic is too strict**
 Try the minimal-compliance approach: meet every criterion with the absolute minimum. For example, if the criterion says "every parameter is listed with name, type, and description," write a description of a single character: `a (list[int]): x.`
 
 **The patch rejects both the hack AND the good draft**
@@ -619,7 +619,7 @@ Some Ollama models ignore the seed parameter. Try running the same draft three t
 
 > **Checkpoint: Before moving to Part 4, make sure you can answer:**
 > 1. Describe your hack in one sentence. Which criterion's descriptor had the loophole?
-> 2. What does the existence of reward hacking imply about using any rubric — automated or human — as the sole quality gate?
+> 2. What does the existence of reward hacking imply about using any rubric (automated or human) as the sole quality gate?
 > 3. In your patched rubric, what specific wording change closed the loophole? Why does that wording prevent the hack while still accepting good work?
 
 ---
@@ -636,7 +636,7 @@ On a fixed set of at least eight tasks, compare single-shot generation against y
 COMPARISON_TASKS = [
     "Write a docstring for a function `binary_search(arr, target)` that searches a sorted list.",
     "Write a docstring for a function `flatten(nested_list)` that recursively flattens nested lists.",
-    # Worked example of a more complex task — note how it adds competing constraints
+    # Worked example of a more complex task - note how it adds competing constraints
     # (multiple parameters, an exception case, and a default value) that all four
     # rubric criteria must cover simultaneously:
     "Write a docstring for a function `paginate(items, page_size=10, page=1)` that returns one page of a list and raises ValueError when page is out of range.",
@@ -715,13 +715,13 @@ Loop: avg score=3.50, avg calls=5.2
 
 In your readme, answer: did the loop earn its extra model calls? Under what conditions (task complexity, quality threshold, latency budget) would you choose each approach?
 
-### Troubleshooting — Part 4
+### Troubleshooting, Part 4
 
 **Single-shot and loop produce identical scores**
-Your rubric criteria may be too easy to satisfy in a single shot. Try harder tasks (more criteria to satisfy simultaneously) or add a fifth criterion to your rubric. Alternatively, single-shot may score high because you chose simple tasks — the benefit of the loop shows most clearly on tasks with four or more competing constraints.
+Your rubric criteria may be too easy to satisfy in a single shot. Try harder tasks (more criteria to satisfy simultaneously) or add a fifth criterion to your rubric. Alternatively, single-shot may score high because you chose simple tasks; the benefit of the loop shows most clearly on tasks with four or more competing constraints.
 
 **The loop always hits the round budget without accepting**
-Decrease the `round_budget` to 3 for the comparison experiment so budget-exhaustion cases are more frequent and visible in your data. Document these cases — they show the loop's failure mode.
+Decrease the `round_budget` to 3 for the comparison experiment so budget-exhaustion cases are more frequent and visible in your data. Document these cases; they show the loop's failure mode.
 
 **Scores from the critic feel inconsistent across conditions**
 Use a fresh critic call with a fixed seed for all final scoring (not the verdicts from within the loop). This ensures both conditions are scored by the same "judge call" and results are comparable.
@@ -739,8 +739,8 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow.
 
-1. **Two roles, one canvas.** In Langflow, chain **Generator -> Critic -> Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand — slower, but the loop is identical and the seams are more visible.
-2. **Calibrate the critic the same way.** Part 2's work — checking whether the critic's criticism actually tracks quality — is prompt work and analysis, not code. Run your calibration cases through the critic and record agreement.
+1. **Two roles, one canvas.** In Langflow, chain **Generator -> Critic -> Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand; slower, but the loop is identical and the seams are more visible.
+2. **Calibrate the critic the same way.** Part 2's work (checking whether the critic's criticism actually tracks quality) is prompt work and analysis, not code. Run your calibration cases through the critic and record agreement.
 3. **Reward-hack it the same way.** Part 3 asks you to write something that scores well and is bad. That is a writing exercise; the route you used to run the rubric does not change it.
 4. **Latency and worth.** Time one pass versus three by the clock, and answer Part 4's question with your own measurements.
 
@@ -752,7 +752,7 @@ Submit a ZIP containing your code, JSON configuration and rubric files, planted-
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
 1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
 2. **What surprised me.**
@@ -763,7 +763,7 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 
 ### Lab-specific prompts
 
-- Your critic is an LLM judging an LLM. At what specific points in this lab did you, the humans, remain indispensable — and what would have gone wrong if you had removed yourselves? Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
+- Your critic is an LLM judging an LLM. At what specific points in this lab did you, the humans, remain indispensable, and what would have gone wrong if you had removed yourselves? Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
 - Describe the most surprising critic behavior you observed: a missed defect, a phantom defect, or an oscillation (the critic reverses its verdict across rounds without the draft changing). What does that behavior imply about using this critic in a high-stakes setting?
 - If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
@@ -789,9 +789,9 @@ Use your loop to generate and refine its own rubric: start with a vague rubric, 
 
 Everyone completes the core Critique-and-Refine lab above: the generator/critic/refine loop, the calibration study, the reward-hack analysis, and the comparative evaluation. That core is the required spine of this assignment.
 
-You may then **extend** the core in the direction below. The direction is not a separate assignment and does not carry its own grade — the single 100-point rubric at the top of this page covers the core lab *and* your chosen direction together. Pick the direction that best fits your interests and carry your critique-and-refine discipline into it.
+You may then **extend** the core in the direction below. The direction is not a separate assignment and does not carry its own grade; the single 100-point rubric at the top of this page covers the core lab *and* your chosen direction together. Pick the direction that best fits your interests and carry your critique-and-refine discipline into it.
 
-- **Direction 1: Coding Agents in Practice** — run the generate/critique/refine loop with a coding agent as the generator: hand it a REST API spec, review its diff line by line, feed a categorized critique back as one refine turn, then harden the accepted result with linting and security scanning.
+- **Direction 1: Coding Agents in Practice**: run the generate/critique/refine loop with a coding agent as the generator: hand it a REST API spec, review its diff line by line, feed a categorized critique back as one refine turn, then harden the accepted result with linting and security scanning.
 
 <details markdown="1">
 <summary><strong>Direction 1: Coding Agents in Practice</strong></summary>
@@ -802,9 +802,9 @@ You may then **extend** the core in the direction below. The direction is not a 
 > - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
 > - **An API key** for the provider your agent uses (roughly $5 of credit is more than enough for this direction, or use the instructor-provided key if one is announced in class)
 >
-> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1-4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
+> **The API key is required for this direction**: the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1-4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after; do not let a missing key silently eat your time budget.
 
-In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt — one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
+In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt, one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 
 #### What proficient work looks like
 
@@ -823,8 +823,8 @@ Because this direction is graded under the same 100-point rubric as the core lab
 
 Before beginning, make sure you have completed both of the following activities (linked in the readings above):
 
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md) — covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) — covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
 
 If you have not done both activities, do them now before reading further. The concepts introduced there are assumed throughout this direction.
 
@@ -911,13 +911,13 @@ Add this line to your `~/.bashrc` or `~/.zshrc` so it persists across terminal s
 
 #### Overview
 
-In this direction you will write a specification for a `POST /search` REST API endpoint that queries a local in-memory knowledge base and returns summarized results. You will then hand that spec to a coding agent — the generator — and watch it implement the feature. After the first run you will not accept the changes yet — instead you will read every line of the proposed diff, write a critique document that categorizes what the agent got right and wrong (the same categorize-then-revise move at the heart of your core loop), and feed that critique back to the agent as a follow-up prompt. After the second run you will accept the final diff, run the agent's tests, add at least two tests the agent missed, and run both a linter and a security scanner. By the end you will have a complete picture of what coding agents can and cannot be trusted to do on their own.
+In this direction you will write a specification for a `POST /search` REST API endpoint that queries a local in-memory knowledge base and returns summarized results. You will then hand that spec to a coding agent (the generator) and watch it implement the feature. After the first run you will not accept the changes yet; instead you will read every line of the proposed diff, write a critique document that categorizes what the agent got right and wrong (the same categorize-then-revise move at the heart of your core loop), and feed that critique back to the agent as a follow-up prompt. After the second run you will accept the final diff, run the agent's tests, add at least two tests the agent missed, and run both a linter and a security scanner. By the end you will have a complete picture of what coding agents can and cannot be trusted to do on their own.
 
 #### Part 1: Design First (Before Any Agent Interaction)
 
 **Estimated time: ~30 minutes**
 
-The single most important rule of this direction: **write the spec and the system prompt before you touch the agent.** Agents that receive a vague task produce vague code. Agents that receive no constraints violate them. You are designing the guardrails first — the coding-agent analogue of writing your JSON rubric before you run the critic.
+The single most important rule of this direction: **write the spec and the system prompt before you touch the agent.** Agents that receive a vague task produce vague code. Agents that receive no constraints violate them. You are designing the guardrails first, the coding-agent analogue of writing your JSON rubric before you run the critic.
 
 ##### Step 1: Create the project directory
 
@@ -936,7 +936,7 @@ touch spec.md system_prompt.txt app.py test_app.py critique.md pair_log.md
 
 ##### Step 2: Write the spec in `spec.md`
 
-Open `spec.md` and fill in the template below. Every blank marked `[TODO]` must be completed before you run the agent. Do not skip any field — the agent will use this document as its task description.
+Open `spec.md` and fill in the template below. Every blank marked `[TODO]` must be completed before you run the agent. Do not skip any field; the agent will use this document as its task description.
 
 ```markdown
 # Feature Spec: POST /search Endpoint
@@ -1062,19 +1062,19 @@ When you are done, print a one-paragraph summary of what you changed and why.
 
 Save `system_prompt.txt`.
 
-##### Checkpoint 1 — Answer these questions before moving to Part 2
+##### Checkpoint 1, Answer these questions before moving to Part 2
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 1`.
 
 1. Look at your spec's error case table. For each row, identify which HTTP status code you chose and explain in one sentence why that status code is semantically correct for that error.
-2. Read your system prompt's prohibition list. For each prohibition, describe a specific thing the agent might do if that prohibition were not there. Be concrete — name a function or pattern the agent might reach for.
+2. Read your system prompt's prohibition list. For each prohibition, describe a specific thing the agent might do if that prohibition were not there. Be concrete: name a function or pattern the agent might reach for.
 3. Your spec says the snippet is the first 100 characters of the body. What happens if a body is shorter than 100 characters? Write the expected behavior as a one-sentence addition to your spec, then add it to `spec.md`.
 
 #### Part 2: First Agent Run
 
 **Estimated time: ~45 minutes**
 
-You have a spec. You have a system prompt. Now you run the agent — the generator — and watch carefully.
+You have a spec. You have a system prompt. Now you run the agent (the generator) and watch carefully.
 
 ##### Step 1: Launch the coding agent
 
@@ -1107,7 +1107,7 @@ opencode
 
 ##### What you should see
 
-> The agent will begin by reading existing files (it will likely read `app.py` and `test_app.py`, both of which are empty). It will then propose one or more file edits. For each edit, you will see a diff showing lines added (prefixed with `+`) and lines removed (prefixed with `-`). The agent may also print reasoning about what it is doing. **Do not accept any changes yet.** Your job right now is to watch, not approve — this is the draft the critic will judge.
+> The agent will begin by reading existing files (it will likely read `app.py` and `test_app.py`, both of which are empty). It will then propose one or more file edits. For each edit, you will see a diff showing lines added (prefixed with `+`) and lines removed (prefixed with `-`). The agent may also print reasoning about what it is doing. **Do not accept any changes yet.** Your job right now is to watch, not approve; this is the draft the critic will judge.
 
 ##### Step 2: Capture the agent trace
 
@@ -1150,9 +1150,9 @@ If the agent does not use git, copy the proposed changes shown in the terminal a
 +    ...
 ```
 
-> You should see two files modified: `app.py` (the implementation) and `test_app.py` (the tests). If the agent only produced one of these files, note that in `pair_log.md` — it may have violated the spec.
+> You should see two files modified: `app.py` (the implementation) and `test_app.py` (the tests). If the agent only produced one of these files, note that in `pair_log.md`; it may have violated the spec.
 
-##### Troubleshooting — Part 2
+##### Troubleshooting, Part 2
 
 **Problem: `claude: command not found` or `opencode: command not found`**
 
@@ -1172,13 +1172,13 @@ You need to export your API key. Run:
 ```bash
 export ANTHROPIC_API_KEY="your-key-here"
 ```
-Then rerun the agent command. If you do not have an API key, ask your instructor — do not share or hardcode keys.
+Then rerun the agent command. If you do not have an API key, ask your instructor; do not share or hardcode keys.
 
 **Problem: The agent immediately edits a file you prohibited in the system prompt**
 
-Do not accept the change. Note the violation in `pair_log.md` with the exact file name and the line in your system prompt that prohibits it. Then try again with a stronger prompt — rewrite the prohibition to include the exact file path and add the phrase "under no circumstances."
+Do not accept the change. Note the violation in `pair_log.md` with the exact file name and the line in your system prompt that prohibits it. Then try again with a stronger prompt: rewrite the prohibition to include the exact file path and add the phrase "under no circumstances."
 
-##### Checkpoint 2 — Answer these questions before moving to Part 3
+##### Checkpoint 2, Answer these questions before moving to Part 3
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 2`.
 
@@ -1190,25 +1190,25 @@ Write your answers in `pair_log.md` under a heading `## Checkpoint 2`.
 
 **Estimated time: ~45 minutes**
 
-You have a diff. This is the heart of the direction: the diff review *is* the critique step of your generate/critique/refine loop. Read every line as though you were a senior engineer reviewing a colleague's pull request — except you need to be more skeptical than you would be with a human, because the agent has no stake in whether the code is correct, secure, or complete.
+You have a diff. This is the heart of the direction: the diff review *is* the critique step of your generate/critique/refine loop. Read every line as though you were a senior engineer reviewing a colleague's pull request, except you need to be more skeptical than you would be with a human, because the agent has no stake in whether the code is correct, secure, or complete.
 
 ##### Step 1: Read through the entire diff
 
-Open `diff_1.patch` in your editor and go line by line. You are looking for four categories of finding — the coding-agent counterpart to the issue list your JSON critic emits:
+Open `diff_1.patch` in your editor and go line by line. You are looking for four categories of finding, the coding-agent counterpart to the issue list your JSON critic emits:
 
-- **Correct** — the agent did this right; it matches the spec and is sound
-- **Incorrect / broken** — the agent got this wrong; it does not match the spec or will not work
-- **Missing** — something the spec requires that the agent did not implement
-- **Security risk** — a pattern that could be exploited or that violates a system prompt prohibition
+- **Correct**: the agent did this right; it matches the spec and is sound
+- **Incorrect / broken**: the agent got this wrong; it does not match the spec or will not work
+- **Missing**: something the spec requires that the agent did not implement
+- **Security risk**: a pattern that could be exploited or that violates a system prompt prohibition
 
 ##### Step 2: Produce the critique document in `critique.md`
 
-Open `critique.md` and fill in the template below. You must have at least one entry in each category. If you genuinely cannot find a security risk, look harder — common agent habits include using `eval()`, constructing SQL queries by string concatenation, returning raw exception messages to the client, or importing libraries your system prompt prohibited.
+Open `critique.md` and fill in the template below. You must have at least one entry in each category. If you genuinely cannot find a security risk, look harder; common agent habits include using `eval()`, constructing SQL queries by string concatenation, returning raw exception messages to the client, or importing libraries your system prompt prohibited.
 
 ```markdown
 # Critique Document
 
-## Agent: [Claude Code | OpenCode — fill in which you used]
+## Agent: [Claude Code | OpenCode; fill in which you used]
 ## Diff reviewed: diff_1.patch
 ## Reviewers: [Your names]
 ## Date: [Today's date]
@@ -1274,7 +1274,7 @@ For each prohibition in your system_prompt.txt, state whether the agent complied
 
 ##### Step 3: Write a follow-up prompt
 
-Create a file called `followup_prompt.txt`. This prompt will be your second message to the agent — the refine turn of the loop. It should address every finding in Categories 2, 3, and 4 of your critique document. Be precise — tell the agent exactly what to fix and why.
+Create a file called `followup_prompt.txt`. This prompt will be your second message to the agent, the refine turn of the loop. It should address every finding in Categories 2, 3, and 4 of your critique document. Be precise; tell the agent exactly what to fix and why.
 
 A good follow-up prompt looks like this:
 
@@ -1323,17 +1323,17 @@ git diff > diff_2.patch
 
 ##### Step 5: Compare the two diffs
 
-Open both `diff_1.patch` and `diff_2.patch` side by side. For each finding in your critique document, confirm whether the second diff addresses it — this is the convergence check of your loop. Add a column to each table in `critique.md`:
+Open both `diff_1.patch` and `diff_2.patch` side by side. For each finding in your critique document, confirm whether the second diff addresses it; this is the convergence check of your loop. Add a column to each table in `critique.md`:
 
 ```markdown
 | ... | Resolved in diff_2? (Yes / No / Partially) |
 ```
 
-##### Troubleshooting — Part 3
+##### Troubleshooting, Part 3
 
 **Problem: The agent repeated the same mistakes in the second diff**
 
-This usually means your follow-up prompt was not specific enough. Rewrite the relevant instruction with an explicit line number reference and the exact text the agent should produce. Then run a third iteration if needed — there is no penalty for a third pass, but document it.
+This usually means your follow-up prompt was not specific enough. Rewrite the relevant instruction with an explicit line number reference and the exact text the agent should produce. Then run a third iteration if needed; there is no penalty for a third pass, but document it.
 
 **Problem: The agent fixed what you asked but introduced a new bug**
 
@@ -1348,7 +1348,7 @@ git checkout -- spec.md   # replace with the prohibited filename
 ```
 Document the violation in `critique.md` under "System prompt compliance check."
 
-##### Checkpoint 3 — Answer these questions before moving to Part 4
+##### Checkpoint 3, Answer these questions before moving to Part 4
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 3`.
 
@@ -1370,7 +1370,7 @@ Apply the final diff to your working directory:
 git apply diff_2.patch
 ```
 
-If you were not using git staging, the files may already be in place — verify that `app.py` and `test_app.py` are non-empty:
+If you were not using git staging, the files may already be in place; verify that `app.py` and `test_app.py` are non-empty:
 
 ```bash
 wc -l app.py test_app.py
@@ -1396,7 +1396,7 @@ pytest test_app.py -v
 > X passed in 0.XXs
 > ```
 
-If any test fails, read the error message carefully. Do not edit `app.py` to make the test pass by cheating (e.g., hardcoding a return value) — fix the actual bug. Document any failing test in `pair_log.md` and describe what you changed to fix it.
+If any test fails, read the error message carefully. Do not edit `app.py` to make the test pass by cheating (e.g., hardcoding a return value); fix the actual bug. Document any failing test in `pair_log.md` and describe what you changed to fix it.
 
 Look at the tests that exist and compare them against the eight testing criteria in your `spec.md`. Make a checklist: which criteria are covered, and which are missing?
 
@@ -1518,11 +1518,11 @@ bandit -r app.py > bandit_output.txt 2>&1
 
 ##### Step 6: Address any high-severity findings
 
-Read the bandit output. For each finding with **Severity: High** or **Severity: Medium**, you must fix the underlying issue in `app.py`. Do not use `# nosec` comments to silence findings without first understanding what they mean — if you disagree with a finding, document your reasoning in `pair_log.md` under a heading `## Security scanner findings`.
+Read the bandit output. For each finding with **Severity: High** or **Severity: Medium**, you must fix the underlying issue in `app.py`. Do not use `# nosec` comments to silence findings without first understanding what they mean; if you disagree with a finding, document your reasoning in `pair_log.md` under a heading `## Security scanner findings`.
 
 After any fixes, rerun both flake8 and bandit to confirm the fixes did not introduce new issues.
 
-##### Troubleshooting — Part 4
+##### Troubleshooting, Part 4
 
 **Problem: `ModuleNotFoundError: No module named 'flask'` when running pytest**
 
@@ -1531,7 +1531,7 @@ pip install flask
 ```
 Then rerun pytest. If you are in a virtual environment, make sure it is activated.
 
-**Problem: `ERRORS` in pytest output — a test raises an exception instead of failing cleanly**
+**Problem: `ERRORS` in pytest output, a test raises an exception instead of failing cleanly**
 
 Read the traceback. If it says `fixture 'client' not found`, the agent did not create a pytest fixture for the Flask test client. Add one manually at the top of `test_app.py`:
 
@@ -1546,16 +1546,16 @@ def client():
         yield client
 ```
 
-**Problem: bandit reports `[B201:flask_debug_true]` — Flask app running in debug mode**
+**Problem: bandit reports `[B201:flask_debug_true]`, Flask app running in debug mode**
 
 Check `app.py` for a line like `app.run(debug=True)`. Change `debug=True` to `debug=False`, or remove the `app.run()` call entirely if it is inside an `if __name__ == "__main__":` block that is not needed for testing.
 
-##### Checkpoint 4 — Answer these questions as part of your reflection
+##### Checkpoint 4, Answer these questions as part of your reflection
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 4`.
 
 1. How many of the eight spec testing criteria were covered by the agent's tests before you added your two? List which were covered and which were not.
-2. Did flake8 find any issues that were not stylistic — that is, issues that indicated an actual logic problem or bad practice beyond formatting? If so, describe them.
+2. Did flake8 find any issues that were not stylistic: that is, issues that indicated an actual logic problem or bad practice beyond formatting? If so, describe them.
 3. Did bandit flag anything? If yes, describe the finding and what you changed. If no, explain in one sentence what bandit would have flagged if the agent had used `eval()` to parse the query string.
 
 #### Deliverables (Direction 1)
@@ -1586,7 +1586,7 @@ These challenges are optional and will not affect your grade on the base rubric.
 
 ##### Challenge 1: Deliberate ambiguity
 
-Add one deliberately contradictory requirement to a copy of your spec — for example, "The endpoint must return results sorted alphabetically by title" combined with "The endpoint must return results in the order they appear in the knowledge base." Give this contradictory spec to the coding agent without any hint about the contradiction. Document exactly what the agent does: does it pick one interpretation silently, ask for clarification, implement both with a flag, or do something else? Write a one-paragraph analysis of what the agent's choice reveals about how it handles underspecified instructions.
+Add one deliberately contradictory requirement to a copy of your spec: for example, "The endpoint must return results sorted alphabetically by title" combined with "The endpoint must return results in the order they appear in the knowledge base." Give this contradictory spec to the coding agent without any hint about the contradiction. Document exactly what the agent does: does it pick one interpretation silently, ask for clarification, implement both with a flag, or do something else? Write a one-paragraph analysis of what the agent's choice reveals about how it handles underspecified instructions.
 
 ##### Challenge 2: Two agents, one spec
 
@@ -1598,19 +1598,19 @@ Write a Python script called `harness.py` that runs the coding agent multiple ti
 
 #### Reflection Prompts (Direction 1)
 
-Answer each prompt in `pair_log.md` under a heading `## Reflection`. Write at least three to five sentences per prompt — one-sentence answers will not receive full credit.
+Answer each prompt in `pair_log.md` under a heading `## Reflection`. Write at least three to five sentences per prompt; one-sentence answers will not receive full credit.
 
 1. **What did the coding agent do well that surprised you?** Describe a specific part of the implementation where the agent made a better choice than you expected, and explain what that reveals about what these models are trained on.
 
 2. **Where did it make assumptions you had not anticipated, and how did those assumptions affect the output?** Give at least two concrete examples. For each, explain whether the assumption was reasonable given the spec, and what you would add to the spec or system prompt to prevent that assumption in the future.
 
-3. **How did your system prompt constrain its behavior — and what slipped through the constraints anyway?** For each prohibition in your system prompt, state whether the agent complied on the first run. For anything that slipped through, propose a more precise formulation of the prohibition.
+3. **How did your system prompt constrain its behavior, and what slipped through the constraints anyway?** For each prohibition in your system prompt, state whether the agent complied on the first run. For anything that slipped through, propose a more precise formulation of the prohibition.
 
-4. **Would you trust this code in production? What specifically would need to change before you would?** Think about more than just tests — consider rate limiting, input sanitization depth, error logging, deployment configuration, and dependency management. List at least four specific changes and explain the risk each one addresses.
+4. **Would you trust this code in production? What specifically would need to change before you would?** Think about more than just tests: consider rate limiting, input sanitization depth, error logging, deployment configuration, and dependency management. List at least four specific changes and explain the risk each one addresses.
 
 5. **How does reviewing a coding agent's diff differ from reviewing a human colleague's pull request? What additional skepticism is warranted, and why?** Think about what you know about a human colleague that you do not know about the agent: their understanding of business context, their ability to ask clarifying questions, their stake in the outcome, and their track record. How do those differences change how you read a diff?
 
-6. **If you were deploying this pattern at scale — hundreds of developers using coding agents daily — what organizational controls (beyond individual system prompts) would you want in place?** Consider: who approves system prompts before they are used? How do you audit what agents actually do versus what they are told to do? What happens when an agent produces code that passes all tests but is subtly wrong in a way tests do not catch? Name at least three concrete organizational controls and explain the failure mode each one addresses.
+6. **If you were deploying this pattern at scale (hundreds of developers using coding agents daily), what organizational controls (beyond individual system prompts) would you want in place?** Consider: who approves system prompts before they are used? How do you audit what agents actually do versus what they are told to do? What happens when an agent produces code that passes all tests but is subtly wrong in a way tests do not catch? Name at least three concrete organizational controls and explain the failure mode each one addresses.
 
 7. **If collaboration beyond your pair occurred, identify it.** Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 
