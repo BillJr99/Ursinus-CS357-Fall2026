@@ -1,0 +1,51 @@
+# CS357 Course Development Container -- compose file
+# ---------------------------------------------------
+# Put this file, together with the course Dockerfile, in a `.devcontainer/`
+# folder INSIDE your cloned GitHub work repo:
+#
+#   cs357-work/                <-- your cloned GitHub repo
+#     .devcontainer/
+#       Dockerfile
+#       docker-compose.yml     <-- this file
+#       devcontainer.json
+#     (your lab work lives here, at the repo root)
+#
+# Then, from the .devcontainer/ folder:
+#
+#   docker compose build            # build the image (first time / after edits)
+#   docker compose run --rm cs357   # open a shell inside the container
+#
+# THE HOST-OLLAMA PATTERN: Ollama runs natively on your machine (fast,
+# direct access to your hardware); everything else runs in this container.
+# Inside the container, `localhost` means the container itself, so your
+# code talks to Ollama at http://host.docker.internal:11434 instead --
+# the same bridge you practiced in the "Docker from Zero" activity.
+
+services:
+  cs357:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cs357-dev
+
+    # THE bind mount: ".." is the parent of this .devcontainer/ folder --
+    # that is, the root of your cloned GitHub repo. It appears inside the
+    # container at /workspace. This is the ONLY part of your machine the
+    # container can see or modify. You can `git commit` and `git push`
+    # from inside, because it is the same directory as the clone on disk.
+    volumes:
+      - "..:/workspace"
+
+    working_dir: /workspace
+
+    # host.docker.internal is automatic on Docker Desktop (macOS/Windows),
+    # but Docker Engine on Linux needs this explicit opt-in. Harmless on
+    # the other platforms, essential on Linux -- so it stays in.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    # Keep stdin open and allocate a terminal so that
+    # `docker compose run cs357` gives you a usable interactive bash
+    # (the compose-file equivalent of `docker run -it`).
+    stdin_open: true
+    tty: true

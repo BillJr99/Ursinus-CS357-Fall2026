@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chess AI Coach</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    html, body, #root { margin: 0; min-height: 100%; background: #0d0d1a; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+const { useState, useEffect, useCallback, useRef } = React;
+
+/*
+ * ===============================================================
+ *  CHESS ENGINE - full FIDE rules, pure logic, zero dependencies
+ * ===============================================================
+ */
+
+const PIECES = {
+  K: "♔", Q: "♕", R: "♖", B: "♗", N: "♘", P: "♙",
+  k: "♚", q: "♛", r: "♜", b: "♝", n: "♞", p: "♟",
+};
+const PIECE_VALUES = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+const FILES = "abcdefgh";
+
+function initialBoard() {
+  const b = Array(8).fill(null).map(() => Array(8).fill(null));
+  const back = ["r", "n", "b", "q", "k", "b", "n", "r"];
+  for (let c = 0; c < 8; c++) {
+    b[0][c] = back[c].toUpperCase();
+    b[1][c] = "P";
+    b[6][c] = "p";
+    b[7][c] = back[c];
+  }
+  return b;
+}
+
+function isWhite(p) { return p && p === p.toUpperCase(); }
+function colorOf(p) { return p ? (isWhite(p) ? "w" : "b") : null; }
+function inBounds(r, c) { return r >= 0 && r < 8 && c >= 0 && c < 8; }
+function sqName(r, c) { return FILES[c] + (r + 1); }
+
+function cloneState(state) {
+  return {
+    board: state.board.map(row => [...row]),
+    turn: state.turn,
+    castling: { ...state.castling },
+    enPassant: state.enPassant ? [...state.enPassant] : null,
+    halfmove: state.halfmove,
+    fullmove: state.fullmove,
+  };
+}
+
+function initialState() {
+  return {
+    board: initialBoard(),
+    turn: "w",
+    castling: { K: true, Q: true, k: true, q: true },
+    enPassant: null,
+    halfmove: 0,
+    fullmove: 1,
+  };
+}
+
+function pseudoMoves(state, r, c) {
+  const { board, turn, enPassant, castling } = state;
+  const piece = board[r][c];
+  if (!piece || colorOf(piece) !== turn) return [];
+  const moves = [];
+  const enemy = turn === "w" ? "b" : "w";
+  const type = piece.toLowerCase();
+  const dir = turn === "w" ? 1 : -1;
+
+  const addMove = (tr, tc, special) => {
+    if (inBounds(tr, tc)) {
+      const target = board[tr][tc];
+      if (!target || colorOf(target) === enemy) {
+        moves.push({ fr: r, fc: c, tr, tc, special });
+      }
+    }
+  };
+
+  if (type === "p") {
+    const fwd = r + dir;
+    if (inBounds(fwd, c) && !board[fwd][c]) {
+      if (fwd === 0 || fwd === 7) {
+        moves.push({ fr: r, fc: c, tr: fwd, tc: c, special: "promote" });
+      } else {
+        moves.push({ fr: r, fc: c, tr: fwd, tc: c });
+      }
+      const start = turn === "w" ? 1 : 6;
+      const fwd2 = r + 2 * dir;
+      if (r === start && !board[fwd2][c]) {
+        moves.push({ fr: r, fc: c, tr: fwd2, tc: c, special: "doublepush" });
+      }
+    }
+    for (const dc of [-1, 1]) {
+      const tc2 = c + dc;
+      if (inBounds(fwd, tc2)) {
+        if (board[fwd][tc2] && colorOf(board[fwd][tc2]) === enemy) {
+          if (fwd === 0 || fwd === 7) moves.push({ fr: r, fc: c, tr: fwd, tc: tc2, special: "promote" });
+          else moves.push({ fr: r, fc: c, tr: fwd, tc: tc2 });
+        }
+        if (enPassant && enPassant[0] === fwd && enPassant[1] === tc2) {
+          moves.push({ fr: r, fc: c, tr: fwd, tc: tc2, special: "enpassant" });
+        }
+      }
+    }
+  } else if (type === "n") {
+    for (const [dr, dc] of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]) addMove(r + dr, c + dc);
+  } else if (type === "k") {
+    for (let dr = -1; dr <= 1; dr++)
+      for (let dc = -1; dc <= 1; dc++)
+        if (dr || dc) addMove(r + dr, c + dc);
+    const row = turn === "w" ? 0 : 7;
+    if (r === row && c === 4) {
+      if (castling[turn === "w" ? "K" : "k"] && !board[row][5] && !board[row][6] && board[row][7]?.toLowerCase() === "r" && colorOf(board[row][7]) === turn)
+        moves.push({ fr: r, fc: c, tr: row, tc: 6, special: "castle-k" });
+      if (castling[turn === "w" ? "Q" : "q"] && !board[row][3] && !board[row][2] && !board[row][1] && board[row][0]?.toLowerCase() === "r" && colorOf(board[row][0]) === turn)
+        moves.push({ fr: r, fc: c, tr: row, tc: 2, special: "castle-q" });
+    }
+  } else {
+    const dirs = {
+      b: [[-1,-1],[-1,1],[1,-1],[1,1]],
+      r: [[-1,0],[1,0],[0,-1],[0,1]],
+      q: [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]],
+    };
+    for (const [dr, dc] of dirs[type]) {
+      let nr = r + dr, nc = c + dc;
+      while (inBounds(nr, nc)) {
+        if (board[nr][nc]) {
+          if (colorOf(board[nr][nc]) === enemy) moves.push({ fr: r, fc: c, tr: nr, tc: nc });
+          break;
+        }
+        moves.push({ fr: r, fc: c, tr: nr, tc: nc });
+        nr += dr; nc += dc;
+      }
+    }
+  }
+  return moves;
+}
+
+function isSquareAttacked(board, r, c, byColor) {
+  for (let rr = 0; rr < 8; rr++)
+    for (let cc = 0; cc < 8; cc++) {
+      const p = board[rr][cc];
+      if (!p || colorOf(p) !== byColor) continue;
+      const mvs = pseudoMoves({ board, turn: byColor, castling: { K:false,Q:false,k:false,q:false }, enPassant: null }, rr, cc);
+      if (mvs.some(m => m.tr === r && m.tc === c)) return true;
+    }
+  return false;
+}
+
+function findKing(board, color) {
+  const k = color === "w" ? "K" : "k";
+  for (let r = 0; r < 8; r++)
+    for (let c = 0; c < 8; c++)
+      if (board[r][c] === k) return [r, c];
+  return null;
+}
+
+function applyMove(state, move, promoPiece) {
+  const ns = cloneState(state);
+  const { board } = ns;
+  const piece = board[move.fr][move.fc];
+  board[move.tr][move.tc] = piece;
+  board[move.fr][move.fc] = null;
+  if (move.special === "enpassant") board[move.fr][move.tc] = null;
+  ns.enPassant = move.special === "doublepush" ? [(move.fr + move.tr) / 2, move.fc] : null;
+  if (move.special === "promote") {
+    const pp = promoPiece || "q";
+    board[move.tr][move.tc] = colorOf(piece) === "w" ? pp.toUpperCase() : pp.toLowerCase();
+  }
+  if (move.special === "castle-k") { board[move.tr][5] = board[move.tr][7]; board[move.tr][7] = null; }
+  if (move.special === "castle-q") { board[move.tr][3] = board[move.tr][0]; board[move.tr][0] = null; }
+  if (piece === "K") { ns.castling.K = false; ns.castling.Q = false; }
+  if (piece === "k") { ns.castling.k = false; ns.castling.q = false; }
+  for (const [rr, cc, key] of [[0,0,"Q"],[0,7,"K"],[7,0,"q"],[7,7,"k"]]) {
+    if ((move.fr === rr && move.fc === cc) || (move.tr === rr && move.tc === cc)) ns.castling[key] = false;
+  }
+  ns.turn = ns.turn === "w" ? "b" : "w";
+  if (ns.turn === "w") ns.fullmove++;
+  return ns;
+}
+
+function legalMoves(state) {
+  const all = [];
+  const enemy = state.turn === "w" ? "b" : "w";
+  for (let r = 0; r < 8; r++)
+    for (let c = 0; c < 8; c++) {
+      for (const m of pseudoMoves(state, r, c)) {
+        const ns = applyMove(state, m);
+        const kp = findKing(ns.board, state.turn);
+        if (kp && !isSquareAttacked(ns.board, kp[0], kp[1], enemy)) {
+          if (m.special === "castle-k") {
+            if (isSquareAttacked(state.board, m.fr, 4, enemy) || isSquareAttacked(state.board, m.fr, 5, enemy)) continue;
+          }
+          if (m.special === "castle-q") {
+            if (isSquareAttacked(state.board, m.fr, 4, enemy) || isSquareAttacked(state.board, m.fr, 3, enemy)) continue;
+          }
+          all.push(m);
+        }
+      }
+    }
+  return all;
+}
+
+function isInCheck(state) {
+  const kp = findKing(state.board, state.turn);
+  return kp ? isSquareAttacked(state.board, kp[0], kp[1], state.turn === "w" ? "b" : "w") : false;
+}
+
+function gameStatus(state) {
+  const moves = legalMoves(state);
+  if (moves.length === 0) return isInCheck(state) ? "checkmate" : "stalemate";
+  return isInCheck(state) ? "check" : "playing";
+}
+
+function moveToSAN(state, move) {
+  const { board } = state;
+  const piece = board[move.fr][move.fc];
+  const type = piece.toLowerCase();
+  if (move.special === "castle-k") return "O-O";
+  if (move.special === "castle-q") return "O-O-O";
+  let s = "";
+  if (type !== "p") {
+    s += type.toUpperCase();
+    const others = legalMoves(state).filter(m =>
+      m.tr === move.tr && m.tc === move.tc &&
+      board[m.fr][m.fc] === piece &&
+      (m.fr !== move.fr || m.fc !== move.fc)
+    );
+    if (others.length > 0) {
+      const sameFile = others.some(m => m.fc === move.fc);
+      const sameRank = others.some(m => m.fr === move.fr);
+      if (!sameFile) s += FILES[move.fc];
+      else if (!sameRank) s += (move.fr + 1);
+      else s += FILES[move.fc] + (move.fr + 1);
+    }
+  }
+  const isCapture = board[move.tr][move.tc] !== null || move.special === "enpassant";
+  if (type === "p" && isCapture) s += FILES[move.fc];
+  if (isCapture) s += "x";
+  s += sqName(move.tr, move.tc);
+  if (move.special === "promote") s += "=Q";
+  const ns = applyMove(state, move);
+  const st = gameStatus(ns);
+  if (st === "checkmate") s += "#";
+  else if (st === "check") s += "+";
+  return s;
+}
+
+function boardToFEN(state) {
+  let fen = "";
+  for (let r = 7; r >= 0; r--) {
+    let empty = 0;
+    for (let c = 0; c < 8; c++) {
+      if (state.board[r][c]) { if (empty) { fen += empty; empty = 0; } fen += state.board[r][c]; }
+      else empty++;
+    }
+    if (empty) fen += empty;
+    if (r > 0) fen += "/";
+  }
+  fen += " " + state.turn;
+  let cs = "";
+  if (state.castling.K) cs += "K"; if (state.castling.Q) cs += "Q";
+  if (state.castling.k) cs += "k"; if (state.castling.q) cs += "q";
+  fen += " " + (cs || "-");
+  fen += " " + (state.enPassant ? sqName(state.enPassant[0], state.enPassant[1]) : "-");
+  fen += " " + state.halfmove + " " + state.fullmove;
+  return fen;
+}
+
+function buildPGN(entries, result) {
+  const today = new Date().toISOString().split("T")[0].replace(/-/g, ".");
+  let pgn = `[Event "AI Coach Game"]\n[Site "Claude Chess Coach"]\n[Date "${today}"]\n[White "Player"]\n[Black "Computer"]\n[Result "${result}"]\n\n`;
+  for (let i = 0; i < entries.length; i++) {
+    if (i % 2 === 0) pgn += Math.floor(i / 2 + 1) + ". ";
+    pgn += entries[i].san + " ";
+  }
+  pgn += result;
+  return pgn.trim();
+}
+
+/* --- Evaluation + Computer --- */
+const PST_P = [[0,0,0,0,0,0,0,0],[5,10,10,-20,-20,10,10,5],[5,-5,-10,0,0,-10,-5,5],[0,0,0,20,20,0,0,0],[5,5,10,25,25,10,5,5],[10,10,20,30,30,20,10,10],[50,50,50,50,50,50,50,50],[0,0,0,0,0,0,0,0]];
+const PST_N = [[-50,-40,-30,-30,-30,-30,-40,-50],[-40,-20,0,0,0,0,-20,-40],[-30,0,10,15,15,10,0,-30],[-30,5,15,20,20,15,5,-30],[-30,0,15,20,20,15,0,-30],[-30,5,10,15,15,10,5,-30],[-40,-20,0,5,5,0,-20,-40],[-50,-40,-30,-30,-30,-30,-40,-50]];
+const PST_B = [[-20,-10,-10,-10,-10,-10,-10,-20],[-10,0,0,0,0,0,0,-10],[-10,0,5,10,10,5,0,-10],[-10,5,5,10,10,5,5,-10],[-10,0,10,10,10,10,0,-10],[-10,10,10,10,10,10,10,-10],[-10,5,0,0,0,0,5,-10],[-20,-10,-10,-10,-10,-10,-10,-20]];
+
+function evaluate(state) {
+  let score = 0;
+  for (let r = 0; r < 8; r++)
+    for (let c = 0; c < 8; c++) {
+      const p = state.board[r][c];
+      if (!p) continue;
+      const t = p.toLowerCase();
+      const v = PIECE_VALUES[t] * 100;
+      let pst = 0;
+      const pr = isWhite(p) ? r : 7 - r;
+      if (t === "p") pst = PST_P[pr]?.[c] || 0;
+      else if (t === "n") pst = PST_N[pr]?.[c] || 0;
+      else if (t === "b") pst = PST_B[pr]?.[c] || 0;
+      score += (isWhite(p) ? 1 : -1) * (v + pst);
+    }
+  return score;
+}
+
+function minimax(state, depth, alpha, beta, maximizing) {
+  const st = gameStatus(state);
+  if (st === "checkmate") return maximizing ? -99999 : 99999;
+  if (st === "stalemate") return 0;
+  if (depth === 0) return evaluate(state);
+  const moves = legalMoves(state);
+  if (maximizing) {
+    let best = -Infinity;
+    for (const m of moves) {
+      best = Math.max(best, minimax(applyMove(state, m), depth - 1, alpha, beta, false));
+      alpha = Math.max(alpha, best); if (beta <= alpha) break;
+    }
+    return best;
+  } else {
+    let best = Infinity;
+    for (const m of moves) {
+      best = Math.min(best, minimax(applyMove(state, m), depth - 1, alpha, beta, true));
+      beta = Math.min(beta, best); if (beta <= alpha) break;
+    }
+    return best;
+  }
+}
+
+function computerMove(state, depth = 3) {
+  const moves = legalMoves(state);
+  if (!moves.length) return null;
+  const safeDepth = Math.max(1, Math.min(6, Number(depth) || 3));
+  let bestMove = moves[0], bestVal = Infinity;
+  for (const m of moves) {
+    const val = minimax(applyMove(state, m), safeDepth, -Infinity, Infinity, true);
+    if (val < bestVal) { bestVal = val; bestMove = m; }
+  }
+  return bestMove;
+}
+
+function estimatedComputerEloFromDepth(depth) {
+  const safeDepth = Math.max(1, Math.min(6, Number(depth) || 3));
+  const table = {
+    1: { elo: 550, label: "Beginner" },
+    2: { elo: 800, label: "Novice" },
+    3: { elo: 1100, label: "Intermediate" },
+    4: { elo: 1400, label: "Club Player" },
+    5: { elo: 1700, label: "Advanced" },
+    6: { elo: 1950, label: "Expert-ish" },
+  };
+  return table[safeDepth] || table[3];
+}
+
+
+/* --- AI API calls --- */
+const DEFAULT_MODELS = {
+  anthropic: "claude-sonnet-4-5",
+  openai: "gpt-4.1-mini",
+};
+
+function safeJsonParse(text, fallback) {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return fallback;
+  }
+}
+
+function extractOpenAIText(data) {
+  if (typeof data?.output_text === "string" && data.output_text) return data.output_text;
+  const msg = data?.choices?.[0]?.message;
+  if (typeof msg?.content === "string") return msg.content;
+  if (Array.isArray(msg?.content)) {
+    return msg.content.map(part => part?.text || part?.content || "").join("");
+  }
+  return "";
+}
+
+function normalizeBaseUrl(url) {
+  const cleaned = (url || "").trim().replace(/\/+$/, "");
+  return cleaned;
+}
+
+async function fetchOpenWebUIModels(baseUrl, apiKey) {
+  const base = normalizeBaseUrl(baseUrl);
+  if (!base) throw new Error("Enter an Open WebUI base URL first.");
+  const res = await fetch(base + "/api/models", {
+    headers: {
+      "Authorization": apiKey ? `Bearer ${apiKey}` : "",
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Could not load models (${res.status}): ${text || res.statusText}`);
+  }
+  const data = await res.json();
+  const models = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
+  return models.map(m => ({
+    id: m.id || m.model || m.name,
+    name: m.name || m.id || m.model || "Unnamed model",
+  })).filter(m => m.id);
+}
+
+async function callTextModel(providerConfig, prompt, { maxTokens = 500, temperature = 0.2 } = {}) {
+  const provider = providerConfig.provider;
+  if (provider === "anthropic") {
+    if (!providerConfig.anthropicKey) throw new Error("Enter an Anthropic API key.");
+    const model = providerConfig.anthropicModel || DEFAULT_MODELS.anthropic;
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": providerConfig.anthropicKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: maxTokens,
+        temperature,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+    const data = await res.json().catch(async () => ({ raw: await res.text() }));
+    if (!res.ok || data?.error) {
+      const msg = data?.error?.message || data?.raw || res.statusText;
+      throw new Error(msg);
+    }
+    return data?.content?.map(block => block?.text || "").join("").trim() || "";
+  }
+
+  if (provider === "openai") {
+    if (!providerConfig.openaiKey) throw new Error("Enter an OpenAI API key.");
+    const model = providerConfig.openaiModel || DEFAULT_MODELS.openai;
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "authorization": `Bearer ${providerConfig.openaiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "user", content: prompt }],
+        max_completion_tokens: maxTokens,
+        temperature,
+      }),
+    });
+    const data = await res.json().catch(async () => ({ raw: await res.text() }));
+    if (!res.ok || data?.error) {
+      const msg = data?.error?.message || data?.raw || res.statusText;
+      throw new Error(msg);
+    }
+    return extractOpenAIText(data).trim();
+  }
+
+  if (provider === "openwebui") {
+    const baseUrl = normalizeBaseUrl(providerConfig.openWebUIUrl);
+    if (!baseUrl) throw new Error("Enter an Open WebUI base URL.");
+    if (!providerConfig.openWebUIModel) throw new Error("Choose an Open WebUI model.");
+    const res = await fetch(baseUrl + "/api/chat/completions", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "authorization": providerConfig.openWebUIKey ? `Bearer ${providerConfig.openWebUIKey}` : "",
+      },
+      body: JSON.stringify({
+        model: providerConfig.openWebUIModel,
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: maxTokens,
+        temperature,
+      }),
+    });
+    const data = await res.json().catch(async () => ({ raw: await res.text() }));
+    if (!res.ok || data?.error) {
+      const msg = data?.error?.message || data?.raw || res.statusText;
+      throw new Error(msg);
+    }
+    return extractOpenAIText(data).trim();
+  }
+
+  throw new Error("Unsupported AI provider.");
+}
+
+async function getAICommentary(providerConfig, beforeFen, afterFen, san, pgnSoFar, eloEst) {
+  const prompt = `You are an expert chess coach. The player is White (estimated ~${eloEst} Elo).
+
+You are analyzing the move that was just played, in the context of the entire game so far.
+
+Full PGN so far (ending with the move being analyzed):
+${pgnSoFar || "(opening)"}
+
+Position BEFORE the move (FEN):
+${beforeFen}
+
+Move just played:
+${san}
+
+Position AFTER the move (FEN):
+${afterFen}
+
+Analyze ONLY the move just played, but do so in the context of the whole game so far.
+Explain how the move fits the strategic, positional, or tactical themes already present in the game.
+Judge whether it is good, inaccurate, a mistake, or a blunder.
+If it is suboptimal, name a better move for this turn and explain why.
+Do NOT mention, predict, recommend, or hint at any future moves, replies, continuations, plans, or lines beyond what is already visible in the current position.
+Keep the answer to 2-4 sentences.
+Be encouraging but honest.
+If the opening is recognizable from the PGN so far, you may name it.`;
+
+  return callTextModel(providerConfig, prompt, { maxTokens: 350, temperature: 0.2 });
+}
+
+async function getAIEvaluation(providerConfig, fen) {
+  const prompt = `You are a chess engine. Given this FEN, estimate the evaluation from White's perspective as a single number (positive = White advantage, negative = Black advantage). Respond ONLY with a JSON object like {"eval": 0.5} where the number is in pawns. FEN: ${fen}`;
+  const text = await callTextModel(providerConfig, prompt, { maxTokens: 120, temperature: 0 });
+  const parsed = safeJsonParse(text.replace(/```json|```/g, "").trim(), {});
+  return typeof parsed.eval === "number" ? parsed.eval : 0;
+}
+
+async function getSideAIElo(providerConfig, fen, histSans, sideColor = "w") {
+  const pgn = histSans.map((s, i) => (i % 2 === 0 ? Math.floor(i/2+1) + ". " : "") + s).join(" ");
+  const sideName = sideColor === "b" ? "Black" : "White";
+  const prompt = `You are a chess rating estimator. Based ONLY on ${sideName}'s moves in this game so far, estimate ${sideName}'s approximate Elo rating. Consider move quality, tactical awareness, positional understanding, and opening knowledge. Moves so far: ${pgn || "(none)"}. Current FEN: ${fen}. Respond ONLY with a JSON object like {"elo": 1200, "label": "Intermediate"} where label is one of: Beginner (<800), Novice (800-1000), Intermediate (1000-1400), Club Player (1400-1800), Advanced (1800-2100), Expert (2100+). Be honest and calibrated.`;
+  const text = await callTextModel(providerConfig, prompt, { maxTokens: 120, temperature: 0.1 });
+  const parsed = safeJsonParse(text.replace(/```json|```/g, "").trim(), {});
+  return { elo: parsed.elo || 1200, label: parsed.label || "Unknown" };
+}
+
+async function getAIElo(providerConfig, fen, histSans) {
+  return getSideAIElo(providerConfig, fen, histSans, "w");
+}
+
+
+/* ===============================================================
+ *  REACT COMPONENT
+ * =============================================================== */
+const BOARD_PX = 440;
+const SQ = BOARD_PX / 8;
+
+function ChessAICoach() {
+  const [provider, setProvider] = useState("none");
+  const [anthropicKey, setAnthropicKey] = useState("");
+  const [anthropicModel, setAnthropicModel] = useState(DEFAULT_MODELS.anthropic);
+  const [openaiKey, setOpenAIKey] = useState("");
+  const [openaiModel, setOpenAIModel] = useState(DEFAULT_MODELS.openai);
+  const [openWebUIUrl, setOpenWebUIUrl] = useState("http://localhost:3000");
+  const [openWebUIKey, setOpenWebUIKey] = useState("");
+  const [openWebUIModels, setOpenWebUIModels] = useState([]);
+  const [openWebUIModel, setOpenWebUIModel] = useState("");
+  const [aiStatus, setAIStatus] = useState("Local analysis only.");
+  const [loadingModels, setLoadingModels] = useState(false);
+  const [computerDepth, setComputerDepth] = useState(3);
+
+  const providerConfig = {
+    provider,
+    anthropicKey,
+    anthropicModel,
+    openaiKey,
+    openaiModel,
+    openWebUIUrl,
+    openWebUIKey,
+    openWebUIModel,
+  };
+
+  const providerConfigRef = useRef(providerConfig);
+  const aiEnabledRef = useRef(false);
+
+  const aiEnabled =
+    (provider === "anthropic" && !!anthropicKey.trim()) ||
+    (provider === "openai" && !!openaiKey.trim()) ||
+    (provider === "openwebui" && !!openWebUIUrl.trim() && !!openWebUIModel);
+
+  useEffect(() => {
+    providerConfigRef.current = {
+      provider,
+      anthropicKey,
+      anthropicModel,
+      openaiKey,
+      openaiModel,
+      openWebUIUrl,
+      openWebUIKey,
+      openWebUIModel,
+    };
+
+    aiEnabledRef.current =
+      (provider === "anthropic" && !!anthropicKey.trim()) ||
+      (provider === "openai" && !!openaiKey.trim()) ||
+      (provider === "openwebui" && !!openWebUIUrl.trim() && !!openWebUIModel);
+  }, [provider, anthropicKey, anthropicModel, openaiKey, openaiModel, openWebUIUrl, openWebUIKey, openWebUIModel]);
+
+  const [gameState, setGameState] = useState(initialState());
+  const [history, setHistory] = useState([]);
+  const [viewIndex, setViewIndex] = useState(-1);
+  const [selected, setSelected] = useState(null);
+  const [legalHighlights, setLegalHighlights] = useState([]);
+  const [commentary, setCommentary] = useState("");
+  const [commentaryLoading, setCommentaryLoading] = useState(false);
+  const [evalScore, setEvalScore] = useState(0);
+  const [thinking, setThinking] = useState(false);
+  const [promoModal, setPromoModal] = useState(null);
+  const [gameOver, setGameOver] = useState(null);
+  const [eloEstimate, setEloEstimate] = useState({ elo: 1200, label: "Starting" });
+  const [computerEloEstimate, setComputerEloEstimate] = useState(estimatedComputerEloFromDepth(3));
+  const [pgnText, setPgnText] = useState(null);
+  const [analysisText, setAnalysisText] = useState(null);
+  const [copyFeedback, setCopyFeedback] = useState(false);
+
+  // Drag
+  const [dragging, setDragging] = useState(null);
+  const [dragPos, setDragPos] = useState({ x: 0, y: 0 });
+  const boardRef = useRef(null);
+  const moveListRef = useRef(null);
+
+  const isViewing = viewIndex >= 0 && viewIndex < history.length;
+  const displayState = isViewing
+    ? history[viewIndex].stateAfter
+    : (viewIndex === -2 && history.length > 0 ? history[0].prevState : gameState);
+  const displayStatus = gameStatus(displayState);
+
+  useEffect(() => {
+    const st = gameStatus(gameState);
+    if (st === "checkmate") setGameOver(gameState.turn === "w" ? "Black wins by checkmate!" : "White wins by checkmate!");
+    else if (st === "stalemate") setGameOver("Draw by stalemate.");
+  }, [gameState]);
+
+  useEffect(() => {
+    setComputerEloEstimate(estimatedComputerEloFromDepth(computerDepth));
+  }, [computerDepth]);
+
+  useEffect(() => {
+    if (provider !== "openwebui" || !openWebUIUrl.trim()) return;
+    let cancelled = false;
+    setLoadingModels(true);
+    fetchOpenWebUIModels(openWebUIUrl, openWebUIKey)
+      .then(models => {
+        if (cancelled) return;
+        setOpenWebUIModels(models);
+        if (!openWebUIModel && models[0]) setOpenWebUIModel(models[0].id);
+        if (models.length) setAIStatus(`Loaded ${models.length} Open WebUI model${models.length === 1 ? "" : "s"}.`);
+      })
+      .catch(e => {
+        if (!cancelled) setAIStatus(`Could not load models: ${e.message}`);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingModels(false);
+      });
+    return () => { cancelled = true; };
+  }, [provider, openWebUIUrl, openWebUIKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!aiEnabled) { setEvalScore(evaluate(gameState) / 100); return; }
+    getAIEvaluation(providerConfig, boardToFEN(gameState))
+      .then(v => { if (!cancelled) setEvalScore(v); })
+      .catch(() => { if (!cancelled) setEvalScore(evaluate(gameState) / 100); });
+    return () => { cancelled = true; };
+  }, [gameState, aiEnabled, provider, anthropicKey, anthropicModel, openaiKey, openaiModel, openWebUIUrl, openWebUIKey, openWebUIModel]);
+
+  // Auto-scroll move list
+  useEffect(() => {
+    if (moveListRef.current) moveListRef.current.scrollLeft = moveListRef.current.scrollWidth;
+  }, [history]);
+
+  // --- Interaction helpers ---
+  const canPlay = !isViewing && viewIndex !== -2 && gameState.turn === "w" && !thinking && !gameOver;
+
+  const showLegalFor = useCallback((r, c) => {
+    if (!canPlay) return;
+    if (gameState.board[r][c] && colorOf(gameState.board[r][c]) === "w") {
+      setSelected([r, c]);
+      setLegalHighlights(legalMoves(gameState).filter(m => m.fr === r && m.fc === c).map(m => [m.tr, m.tc]));
+    }
+  }, [gameState, canPlay]);
+
+  const tryMove = useCallback((fr, fc, tr, tc) => {
+    if (!canPlay) return false;
+    const move = legalMoves(gameState).find(m => m.fr === fr && m.fc === fc && m.tr === tr && m.tc === tc);
+    if (!move) return false;
+    if (move.special === "promote") { setPromoModal(move); return true; }
+    executeMove(move);
+    return true;
+  }, [gameState, canPlay, executeMove]);
+
+  const handleSquareClick = useCallback((r, c) => {
+    if (isViewing || viewIndex === -2) { setViewIndex(-1); return; }
+    if (!canPlay) return;
+    if (selected) {
+      if (!tryMove(selected[0], selected[1], r, c)) {
+        showLegalFor(r, c);
+      } else {
+        setSelected(null); setLegalHighlights([]);
+      }
+    } else {
+      showLegalFor(r, c);
+    }
+  }, [selected, canPlay, isViewing, viewIndex, showLegalFor, tryMove]);
+
+  // --- Drag ---
+  const handleDragStart = useCallback((r, c, e) => {
+    if (!canPlay) return;
+    const piece = gameState.board[r][c];
+    if (!piece || colorOf(piece) !== "w") return;
+    e.preventDefault();
+    setDragging({ r, c, piece });
+    setSelected([r, c]);
+    setLegalHighlights(legalMoves(gameState).filter(m => m.fr === r && m.fc === c).map(m => [m.tr, m.tc]));
+    const rect = boardRef.current?.getBoundingClientRect();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    setDragPos({ x: cx - (rect?.left || 0), y: cy - (rect?.top || 0) });
+  }, [gameState, canPlay]);
+
+  useEffect(() => {
+    if (!dragging) return;
+    const onMove = (e) => {
+      e.preventDefault();
+      const cx = e.touches ? e.touches[0].clientX : e.clientX;
+      const cy = e.touches ? e.touches[0].clientY : e.clientY;
+      const rect = boardRef.current?.getBoundingClientRect();
+      setDragPos({ x: cx - (rect?.left || 0), y: cy - (rect?.top || 0) });
+    };
+    const onEnd = (e) => {
+      const cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const cy = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+      const rect = boardRef.current?.getBoundingClientRect();
+      if (rect) {
+        const bx = cx - rect.left, by = cy - rect.top;
+        const dc = Math.floor(bx / SQ), dvr = Math.floor(by / SQ), dr = 7 - dvr;
+        if (inBounds(dr, dc) && (dr !== dragging.r || dc !== dragging.c)) {
+          tryMove(dragging.r, dragging.c, dr, dc);
+        }
+      }
+      setDragging(null); setSelected(null); setLegalHighlights([]);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onEnd);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onEnd);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onEnd);
+    };
+  }, [dragging, tryMove]);
+
+  // --- Execute move ---
+  const executeMove = useCallback(async (move, promoPiece) => {
+    const san = moveToSAN(gameState, move);
+    const newState = applyMove(gameState, move, promoPiece);
+    const entry = {
+      prevState: gameState,
+      san,
+      stateAfter: newState,
+      move,
+      aiCommentary: "",
+      estimatedElo: null,
+      estimatedLabel: null,
+      side: "w",
+      depthUsed: null
+    };
+
+    const newHistory = [...history, entry];
+    setGameState(newState);
+    setHistory(newHistory);
+    setSelected(null);
+    setLegalHighlights([]);
+    setPromoModal(null);
+    setViewIndex(-1);
+    const newSans = newHistory.map(h => h.san);
+    let updatedWhiteEntry = entry;
+    const currentProviderConfig = providerConfigRef.current;
+    const currentAIEnabled = aiEnabledRef.current;
+
+    if (currentAIEnabled) {
+      setCommentaryLoading(true);
+      setCommentary(`Analyzing ${san} with AI...`);
+       try {
+        const pgnSoFar = newSans
+          .map((s, i) => (i % 2 === 0 ? Math.floor(i / 2 + 1) + ". " : "") + s)
+          .join(" ");
+        const beforeFen = boardToFEN(gameState);
+        const afterFen = boardToFEN(newState);
+        const [c, elo] = await Promise.all([
+          getAICommentary(currentProviderConfig, beforeFen, afterFen, san, pgnSoFar, eloEstimate.elo),
+          getAIElo(currentProviderConfig, afterFen, newSans),
+        ]);
+
+        setCommentary(c);
+        setEloEstimate(elo);
+
+        updatedWhiteEntry = {
+          ...entry,
+          aiCommentary: c,
+          estimatedElo: elo.elo,
+          estimatedLabel: elo.label
+        };
+
+        setHistory(prev =>
+          prev.map((h, i) => (i === newHistory.length - 1 ? updatedWhiteEntry : h))
+        );
+
+        setAIStatus(
+          `Connected via ${
+            provider === "openwebui"
+              ? "Open WebUI"
+              : provider[0].toUpperCase() + provider.slice(1)
+          }.`
+        );
+      } catch (e) {
+        const failMsg = `AI request failed: ${e.message}`;
+        setCommentary(failMsg);
+         updatedWhiteEntry = {
+          ...entry,
+          aiCommentary: failMsg
+        };
+
+        setHistory(prev =>
+          prev.map((h, i) => (i === newHistory.length - 1 ? updatedWhiteEntry : h))
+        );
+
+        setAIStatus(`AI error: ${e.message}`);
+      } finally {
+        setCommentaryLoading(false);
+      }
+    } else {
+      const localMsg = `You played ${san}. Configure Anthropic, OpenAI, or Open WebUI for AI analysis.`;
+      setCommentary(localMsg);
+
+      updatedWhiteEntry = {
+        ...entry,
+        aiCommentary: localMsg
+      };
+
+      setHistory(prev =>
+        prev.map((h, i) => (i === newHistory.length - 1 ? updatedWhiteEntry : h))
+      );
+    }
+
+    const compSt = gameStatus(newState);
+    if (compSt === "checkmate" || compSt === "stalemate") return;
+
+    setThinking(true);
+    await new Promise(res => setTimeout(res, 300));
+
+    const cm = computerMove(newState, computerDepth);
+    if (cm) {
+      const compSan = moveToSAN(newState, cm);
+      const afterComp = applyMove(newState, cm);
+      const baselineComputerElo = estimatedComputerEloFromDepth(computerDepth);
+
+      const computerEntry = {
+        prevState: newState,
+        san: compSan,
+        stateAfter: afterComp,
+        move: cm,
+        aiCommentary: `Computer played ${compSan} at minimax depth ${computerDepth}.`,
+        estimatedElo: baselineComputerElo.elo,
+        estimatedLabel: baselineComputerElo.label,
+        side: "b",
+        depthUsed: computerDepth
+      };
+
+      const historyWithComputer = [...history, updatedWhiteEntry, computerEntry];
+      setGameState(afterComp);
+      setHistory(historyWithComputer);
+      if (currentAIEnabled) {
+        try {
+          const compElo = await getSideAIElo(
+            currentProviderConfig,
+            boardToFEN(afterComp),
+            historyWithComputer.map(h => h.san),
+            "b"
+          );
+          setComputerEloEstimate(compElo);
+          setHistory(prev =>
+            prev.map((h, i) =>
+              i === historyWithComputer.length - 1
+                ? { ...h, estimatedElo: compElo.elo, estimatedLabel: compElo.label }
+                : h
+            )
+          );
+        } catch {
+          setComputerEloEstimate(baselineComputerElo);
+        }
+      } else {
+        setComputerEloEstimate(baselineComputerElo);
+      }
+    }
+
+    setThinking(false);
+  }, [gameState, history, eloEstimate, computerDepth]);
+
+  const handleUndo = useCallback(() => {
+    if (history.length < 2 || thinking) return;
+    const target = history[history.length - 2].prevState;
+    setGameState(target); setHistory(history.slice(0, -2));
+    setCommentary("Move undone. Your turn."); setSelected(null); setLegalHighlights([]);
+    setGameOver(null); setViewIndex(-1);
+  }, [history, thinking]);
+
+  const handleNewGame = () => {
+    setGameState(initialState()); setHistory([]); setCommentary(""); setSelected(null);
+    setLegalHighlights([]); setGameOver(null); setViewIndex(-1); setEvalScore(0);
+    setEloEstimate({ elo: 1200, label: "Starting" }); setComputerEloEstimate(estimatedComputerEloFromDepth(computerDepth)); setPgnText(null); setAnalysisText(null); setDragging(null); setAIStatus(aiEnabled ? aiStatus : "Local analysis only.");
+  };
+
+  const handlePromo = (p) => { if (promoModal) executeMove(promoModal, p); };
+
+  // --- History nav ---
+  const goStart = () => { if (history.length > 0) setViewIndex(-2); };
+  const goBack = () => {
+    if (viewIndex === -2) return;
+    if (isViewing) { if (viewIndex === 0) setViewIndex(-2); else setViewIndex(viewIndex - 1); }
+    else if (history.length > 0) setViewIndex(history.length - 1);
+  };
+  const goForward = () => {
+    if (viewIndex === -2) { setViewIndex(0); return; }
+    if (isViewing) { if (viewIndex >= history.length - 1) setViewIndex(-1); else setViewIndex(viewIndex + 1); }
+  };
+  const goLive = () => setViewIndex(-1);
+
+  // --- PGN ---
+  const exportPGN = () => {
+    let result = "*";
+    if (gameOver) {
+      if (gameOver.includes("White")) result = "1-0";
+      else if (gameOver.includes("Black")) result = "0-1";
+      else result = "1/2-1/2";
+    }
+
+    const pgn = buildPGN(history, result);
+    setPgnText(pgn);
+    downloadTextFile("chess_ai_coach_game.pgn", pgn);
+  };
+
+  const copyPGN = () => {
+    if (pgnText) navigator.clipboard?.writeText(pgnText).then(() => { setCopyFeedback(true); setTimeout(() => setCopyFeedback(false), 1800); });
+  };
+
+  const downloadTextFile = (filename, content) => {
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const buildAnalysisExport = () => {
+    let result = "*";
+    if (gameOver) {
+      if (gameOver.includes("White")) result = "1-0";
+      else if (gameOver.includes("Black")) result = "0-1";
+      else result = "1/2-1/2";
+    }
+    const pgn = buildPGN(history, result);
+    const lines = [
+      "Chess AI Coach Analysis Export",
+      `Generated: ${new Date().toLocaleString()}`,
+      `AI Provider: ${provider === "none" ? "None" : provider}`,
+      `Computer minimax depth: ${computerDepth}`,
+      "",
+      "PGN",
+      "---",
+      pgn,
+      "",
+      "Move-by-move analysis",
+      "---------------------",
+    ];
+
+    history.forEach((entry, index) => {
+      const moveNo = Math.floor(index / 2) + 1;
+      const side = index % 2 === 0 ? "White" : "Black";
+      lines.push(`${moveNo}${side === "White" ? "." : "..."} ${entry.san}`);
+      if (entry.aiCommentary) lines.push(`Commentary: ${entry.aiCommentary}`);
+      else lines.push("Commentary: (none)");
+      if (entry.estimatedElo != null) {
+        lines.push(`Estimated Elo after move: ${entry.estimatedElo}${entry.estimatedLabel ? ` (${entry.estimatedLabel})` : ""}`);
+      } else {
+        lines.push("Estimated Elo after move: (none)");
+      }
+      if (entry.side === "b") {
+        lines.push(`Computer depth used: ${entry.depthUsed != null ? entry.depthUsed : computerDepth}`);
+      }
+      lines.push("");
+    });
+
+    return lines.join("\n");
+  };
+
+  const exportAnalysisText = () => {
+    const txt = buildAnalysisExport();
+    setAnalysisText(txt);
+    downloadTextFile("chess_ai_coach_analysis.txt", txt);
+  };
+
+  // --- Derived display ---
+  const clampedEval = Math.max(-10, Math.min(10, evalScore));
+  const whitePct = 50 + (clampedEval / 10) * 50;
+  const viewMoveIndex = isViewing ? viewIndex : (viewIndex === -2 ? -1 : history.length - 1);
+  const lastMove = viewMoveIndex >= 0 ? history[viewMoveIndex]?.move : null;
+
+  // Keyboard nav
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); goBack(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goForward(); }
+      if (e.key === "Home") { e.preventDefault(); goStart(); }
+      if (e.key === "End") { e.preventDefault(); goLive(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  });
+
+  const eloFillPct = Math.min(100, Math.max(3, ((eloEstimate.elo - 400) / 2400) * 100));
+  const eloColor = eloEstimate.elo < 1000 ? "#c06040" : eloEstimate.elo < 1400 ? "#c0a040" : eloEstimate.elo < 1800 ? "#60a040" : "#40a0c0";
+  const computerEloFillPct = Math.min(100, Math.max(3, ((computerEloEstimate.elo - 400) / 2400) * 100));
+  const computerEloColor = computerEloEstimate.elo < 1000 ? "#c06040" : computerEloEstimate.elo < 1400 ? "#c0a040" : computerEloEstimate.elo < 1800 ? "#60a040" : "#40a0c0";
+  const whiteCommentaryLog = history
+    .filter(entry => entry.side === "w")
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
+    .join("\n\n");
+  const blackCommentaryLog = history
+    .filter(entry => entry.side === "b")
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
+    .join("\n\n");
+
+  return (
+    <div style={{
+      minHeight: "100vh", background: "#0d0d1a", color: "#d8d8e8",
+      fontFamily: "'Courier New', monospace",
+      display: "flex", flexDirection: "column", alignItems: "center", padding: "14px 10px",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Playfair+Display:wght@700;900&display=swap');
+        *{box-sizing:border-box}
+        .chess-title{font-family:'Playfair Display',serif;font-weight:900;font-size:26px;background:linear-gradient(135deg,#e2b96f,#f5d89a 40%,#c9952c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;margin-bottom:1px}
+        .chess-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:#44445e;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}
+        .jb{font-family:'JetBrains Mono',monospace}
+
+        .board-wrap{position:relative;border:3px solid #20203e;box-shadow:0 0 50px rgba(226,185,111,0.06),0 10px 36px rgba(0,0,0,0.55);border-radius:3px;overflow:hidden;user-select:none;touch-action:none}
+        .sq{display:flex;align-items:center;justify-content:center;font-size:38px;cursor:pointer;position:relative;transition:box-shadow .12s}
+        .sq-light{background:#c8b88a}.sq-dark{background:#6b5b3e}
+        .sq-sel{box-shadow:inset 0 0 0 3px #e2b96f!important;z-index:2}
+        .sq-lm-light{background:#d4c87e!important}.sq-lm-dark{background:#8a7a3e!important}
+        .sq-legal::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:rgba(20,20,20,0.32)}
+        .sq-cap{box-shadow:inset 0 0 0 4px rgba(190,50,50,0.55)!important}
+        .sq-chk{background:radial-gradient(circle,#ff4444 0%,transparent 65%)!important}
+        .piece-char{pointer-events:none;z-index:3;line-height:1}
+        .drag-ghost{position:absolute;pointer-events:none;z-index:100;font-size:50px;transform:translate(-50%,-50%);filter:drop-shadow(0 6px 12px rgba(0,0,0,0.7));transition:none}
+
+        .eval-bar{width:24px;height:${BOARD_PX}px;border-radius:3px;overflow:hidden;border:2px solid #20203e;position:relative;margin-right:8px;flex-shrink:0}
+        .eval-w{position:absolute;bottom:0;width:100%;background:linear-gradient(to top,#e4d8c0,#fff);transition:height .8s cubic-bezier(.4,0,.2,1)}
+        .eval-b{position:absolute;top:0;width:100%;background:linear-gradient(to bottom,#0d0d1a,#2a2a3a);transition:height .8s cubic-bezier(.4,0,.2,1)}
+        .eval-lbl{position:absolute;width:100%;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;z-index:2}
+
+        .btn{background:#161630;border:1px solid #22224a;color:#9090b0;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:3px;cursor:pointer;transition:all .12s;white-space:nowrap}
+        .btn:hover{background:#22224a;border-color:#e2b96f;color:#e2b96f}
+        .btn:disabled{opacity:.3;cursor:not-allowed}.btn:disabled:hover{background:#161630;border-color:#22224a;color:#9090b0}
+        .btn-gold{background:linear-gradient(135deg,#c9952c,#e2b96f);color:#0d0d1a;font-weight:700;border:none}.btn-gold:hover{filter:brightness(1.1)}
+        .btn-sm{padding:4px 9px;font-size:10px}
+        .btn-nav{padding:4px 10px;font-size:13px;min-width:32px;text-align:center}
+
+        .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+        .badge-ai{background:#0c2814;color:#5ab05a;border:1px solid #164024}
+        .badge-turn{background:#101028;color:#7878b8;border:1px solid #181840}
+        .badge-chk{background:#281010;color:#f06060;border:1px solid #381818}
+        .badge-think{background:#241414;color:#d07070;border:1px solid #341c1c;animation:pulse 1.2s ease-in-out infinite}
+        .badge-view{background:#242410;color:#b8b850;border:1px solid #343418}
+
+        .cbox{background:#10102a;border:1px solid #1a1a36;border-radius:4px;padding:12px 14px;width:100%;max-width:540px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;color:#a0a0c0;min-height:44px;max-height:130px;overflow-y:auto}
+        .cbox .lbl{color:#e2b96f;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-bottom:5px;display:block}
+
+        .ml{font-family:'JetBrains Mono',monospace;font-size:11px;width:100%;max-width:540px;max-height:90px;overflow-x:auto;overflow-y:hidden;background:#0a0a1a;border-radius:3px;padding:7px 10px;display:flex;flex-wrap:nowrap;gap:2px;align-items:baseline;white-space:nowrap}
+        .mn{color:#3a3a56;margin-right:1px;flex-shrink:0}.ms{cursor:pointer;padding:1px 4px;border-radius:2px;transition:all .1s;flex-shrink:0}
+        .ms:hover{background:#1a1a36;color:#e2b96f}.ms.act{background:#28280e;color:#e2b96f;font-weight:700}
+        .ms.wm{color:#b0b0cc}.ms.bm{color:#707088}
+
+        .ebox{background:#10102a;border:1px solid #1a1a36;border-radius:4px;padding:9px 14px;width:100%;max-width:540px;display:flex;align-items:center;gap:12px}
+        .elo-n{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#e2b96f;line-height:1}
+        .elo-l{font-family:'JetBrains Mono',monospace;font-size:9px;color:#555570;text-transform:uppercase;letter-spacing:1px}
+        .elo-meter{flex:1;height:5px;background:#141430;border-radius:3px;overflow:hidden}
+        .elo-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+        .pgn-box{background:#0a0a1a;border:1px solid #1a1a36;border-radius:3px;padding:9px 11px;width:100%;max-width:540px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#7070888;white-space:pre-wrap;word-break:break-all;max-height:110px;overflow-y:auto}
+
+        .promo-ov{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200}
+        .promo-box{background:#12122a;border:2px solid #e2b96f;border-radius:7px;padding:18px;display:flex;gap:10px;flex-direction:column;align-items:center}
+        .promo-pcs{display:flex;gap:7px}
+        .promo-p{width:50px;height:50px;font-size:36px;display:flex;align-items:center;justify-content:center;background:#1a1a36;border:2px solid #24244a;border-radius:4px;cursor:pointer;transition:all .12s}
+        .promo-p:hover{border-color:#e2b96f;background:#24244a}
+
+        .fl,.rl{font-family:'JetBrains Mono',monospace;font-size:9px;color:#303050;font-weight:600}
+
+        .go-banner{background:linear-gradient(135deg,#c9952c10,#e2b96f10);border:1px solid #e2b96f30;padding:9px 18px;border-radius:4px;margin-bottom:8px;text-align:center}
+
+        @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+      `}</style>
+
+      <div className="chess-title">CHESS COACH</div>
+      <div className="chess-sub">AI-Powered Move Analysis</div>
+      <div style={{ marginBottom: 10, maxWidth: 720, textAlign: "center", color: "#8a8aa8", fontFamily: "'JetBrains Mono', monospace", fontSize: 11 }}>
+        For local use, run this through a tiny local web server such as <code style={{ color: "#e2b96f" }}>python -m http.server 8000</code> and open
+        <code style={{ color: "#e2b96f" }}> http://localhost:8000/</code> to avoid browser <code style={{ color: "#e2b96f" }}>file://</code> restrictions.
+      </div>
+      {/* AI Provider */}
+      <div style={{ width: "100%", maxWidth: 760, background: "#10102a", border: "1px solid #1a1a36", borderRadius: 6, padding: "12px 14px", marginBottom: 12 }}>
+        <div className="jb" style={{ fontSize: 10, color: "#e2b96f", letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>AI Provider</div>
+
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}>
+          <label className="jb" style={{ fontSize: 11, color: "#9a9ab8" }}>Provider</label>
+          <select
+            className="jb"
+            value={provider}
+            onChange={e => setProvider(e.target.value)}
+            style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "6px 10px", borderRadius: 3, minWidth: 180 }}
+          >
+            <option value="none">Local only</option>
+            <option value="anthropic">Anthropic</option>
+            <option value="openai">OpenAI</option>
+            <option value="openwebui">Open WebUI</option>
+          </select>
+          <span className={`badge ${aiEnabled ? "badge-ai" : "badge-turn"}`}>{aiEnabled ? "● AI Configured" : "● Local analysis only"}</span>
+          <span className="jb" style={{ fontSize: 11, color: "#707088" }}>{aiStatus}</span>
+        </div>
+
+        {provider === "anthropic" && (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 220px", gap: 8 }}>
+            <input
+              className="jb"
+              type="password"
+              placeholder="Anthropic API key"
+              value={anthropicKey}
+              onChange={e => setAnthropicKey(e.target.value)}
+              style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+            />
+            <input
+              className="jb"
+              type="text"
+              placeholder="Claude model"
+              value={anthropicModel}
+              onChange={e => setAnthropicModel(e.target.value)}
+              style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+            />
+          </div>
+        )}
+
+        {provider === "openai" && (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 220px", gap: 8 }}>
+            <input
+              className="jb"
+              type="password"
+              placeholder="OpenAI API key"
+              value={openaiKey}
+              onChange={e => setOpenAIKey(e.target.value)}
+              style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+            />
+            <input
+              className="jb"
+              type="text"
+              placeholder="OpenAI model"
+              value={openaiModel}
+              onChange={e => setOpenAIModel(e.target.value)}
+              style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+            />
+          </div>
+        )}
+
+        {provider === "openwebui" && (
+          <div style={{ display: "grid", gridTemplateColumns: "1.3fr 1fr auto", gap: 8, alignItems: "start" }}>
+            <div style={{ display: "grid", gap: 8 }}>
+              <input
+                className="jb"
+                type="text"
+                placeholder="Open WebUI base URL (for example http://localhost:3000)"
+                value={openWebUIUrl}
+                onChange={e => setOpenWebUIUrl(e.target.value)}
+                style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+              />
+              <input
+                className="jb"
+                type="password"
+                placeholder="Open WebUI API key (optional if your instance is open)"
+                value={openWebUIKey}
+                onChange={e => setOpenWebUIKey(e.target.value)}
+                style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+              />
+            </div>
+            <select
+              className="jb"
+              value={openWebUIModel}
+              onChange={e => setOpenWebUIModel(e.target.value)}
+              style={{ background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, minHeight: 38 }}
+            >
+              <option value="">{loadingModels ? "Loading models..." : "Choose a model"}</option>
+              {openWebUIModels.map(m => (
+                <option key={m.id} value={m.id}>{m.name}</option>
+              ))}
+            </select>
+            <button
+              className="btn btn-gold"
+              onClick={async () => {
+                setLoadingModels(true);
+                try {
+                  const models = await fetchOpenWebUIModels(openWebUIUrl, openWebUIKey);
+                  setOpenWebUIModels(models);
+                  if (!openWebUIModel && models[0]) setOpenWebUIModel(models[0].id);
+                  setAIStatus(`Loaded ${models.length} Open WebUI model${models.length === 1 ? "" : "s"}.`);
+                } catch (e) {
+                  setAIStatus(`Could not load models: ${e.message}`);
+                } finally {
+                  setLoadingModels(false);
+                }
+              }}
+              disabled={loadingModels}
+            >
+              {loadingModels ? "Loading..." : "Load Models"}
+            </button>
+          </div>
+        )}
+
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginTop: 10 }}>
+          <label className="jb" style={{ fontSize: 11, color: "#9a9ab8" }}>Computer depth</label>
+          <input
+            className="jb"
+            type="number"
+            min="1"
+            max="6"
+            step="1"
+            value={computerDepth}
+            onChange={e => setComputerDepth(Math.max(1, Math.min(6, Number(e.target.value) || 1)))}
+            style={{ width: 86, background: "#0a0a1a", border: "1px solid #1a1a36", color: "#d8d8e8", fontSize: 12, padding: "8px 11px", borderRadius: 3, outline: "none" }}
+          />
+          <span className="jb" style={{ fontSize: 11, color: "#707088" }}>Higher depth is stronger but slower.</span>
+        </div>
+
+        <div className="jb" style={{ fontSize: 10, color: "#555570", marginTop: 8 }}>
+          Keys stay in your browser only. For Anthropic direct browser access, this file sends the extra browser-access header needed for client-side requests.
+        </div>
+      </div>
+
+
+      {gameOver && <div className="go-banner"><span style={{ color: "#e2b96f", fontFamily: "'Playfair Display', serif", fontSize: 16 }}>{gameOver}</span></div>}
+
+      {/* Status */}
+      <div style={{ marginBottom: 8, display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+        {thinking && <span className="badge badge-think">Thinking...</span>}
+        {!thinking && canPlay && <span className="badge badge-turn">Your move</span>}
+        {displayStatus === "check" && !gameOver && <span className="badge badge-chk">Check!</span>}
+        {(isViewing || viewIndex === -2) && <span className="badge badge-view">Move {viewIndex === -2 ? "0" : viewIndex + 1}/{history.length}</span>}
+      </div>
+
+      {/* Board + Eval */}
+      <div style={{ display: "flex", alignItems: "flex-start" }}>
+        <div className="eval-bar">
+          <div className="eval-b" style={{ height: `${100 - whitePct}%` }} />
+          <div className="eval-w" style={{ height: `${whitePct}%` }} />
+          <div className="eval-lbl" style={{ bottom: whitePct > 50 ? 3 : undefined, top: whitePct <= 50 ? 3 : undefined, color: whitePct > 50 ? "#0d0d1a" : "#d8d8e8" }}>
+            {evalScore > 0 ? "+" : ""}{evalScore.toFixed(1)}
+          </div>
+        </div>
+        <div>
+          <div style={{ display: "flex" }}>
+            {[..."abcdefgh"].map(f => <div key={f} className="fl" style={{ width: SQ, textAlign: "center" }}>{f}</div>)}
+          </div>
+          <div style={{ display: "flex" }}>
+            <div className="board-wrap" ref={boardRef}>
+              {[...Array(8)].map((_, vr) => {
+                const r = 7 - vr;
+                return (
+                  <div key={r} style={{ display: "flex" }}>
+                    {[...Array(8)].map((_, c) => {
+                      const light = (r + c) % 2 === 0;
+                      const piece = displayState.board[r][c];
+                      const isDragSrc = dragging && dragging.r === r && dragging.c === c;
+                      const isSel = selected && selected[0] === r && selected[1] === c && canPlay;
+                      const isLegal = canPlay && legalHighlights.some(([lr, lc]) => lr === r && lc === c);
+                      const isCap = isLegal && piece;
+                      const isKC = displayStatus === "check" && piece?.toLowerCase() === "k" && colorOf(piece) === displayState.turn;
+                      const isLM = lastMove && ((lastMove.fr === r && lastMove.fc === c) || (lastMove.tr === r && lastMove.tc === c));
+
+                      let cls = `sq ${light ? "sq-light" : "sq-dark"}`;
+                      if (isLM && !isSel) cls += light ? " sq-lm-light" : " sq-lm-dark";
+                      if (isSel) cls += " sq-sel";
+                      if (isLegal && !isCap) cls += " sq-legal";
+                      if (isCap) cls += " sq-cap";
+                      if (isKC) cls += " sq-chk";
+
+                      return (
+                        <div key={c} className={cls} style={{ width: SQ, height: SQ }}
+                          onClick={() => handleSquareClick(r, c)}
+                          onMouseDown={e => handleDragStart(r, c, e)}
+                          onTouchStart={e => handleDragStart(r, c, e)}
+                        >
+                          {piece && !isDragSrc && (
+                            <span className="piece-char" style={{
+                              textShadow: isWhite(piece) ? "0 1px 3px rgba(0,0,0,0.35)" : "0 1px 4px rgba(0,0,0,0.65)",
+                            }}>{PIECES[piece]}</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {dragging && <div className="drag-ghost" style={{ left: dragPos.x, top: dragPos.y }}>{PIECES[dragging.piece]}</div>}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {[...Array(8)].map((_, vr) => <div key={vr} className="rl" style={{ height: SQ, display: "flex", alignItems: "center", paddingLeft: 4 }}>{8 - vr}</div>)}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls */}
+      <div style={{ display: "flex", gap: 4, marginTop: 10, flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
+        <button className="btn btn-nav" onClick={goStart} disabled={history.length === 0} title="Start (Home)">⏮</button>
+        <button className="btn btn-nav" onClick={goBack} disabled={history.length === 0 && viewIndex !== -1} title="Back (←)">◀</button>
+        <button className="btn btn-nav" onClick={goForward} disabled={viewIndex === -1} title="Forward (→)">▶</button>
+        <button className="btn btn-nav" onClick={goLive} disabled={viewIndex === -1} title="Live (End)">⏭</button>
+        <div style={{ width: 6 }} />
+        <button className="btn" onClick={handleUndo} disabled={history.length < 2 || thinking || isViewing || viewIndex === -2}>↩ Undo</button>
+        <button className="btn" onClick={handleNewGame}>↻ New</button>
+        <button className="btn" onClick={exportPGN} disabled={history.length === 0}>⬇ PGN</button>
+        <button className="btn" onClick={exportAnalysisText} disabled={history.length === 0}>⬇ Analysis TXT</button>
+      </div>
+
+      {/* Move list */}
+      {history.length > 0 && (
+        <div className="ml" ref={moveListRef} style={{ marginTop: 8 }}>
+          {history.map((h, i) => {
+            const w = i % 2 === 0;
+            const act = isViewing ? viewIndex === i : (!isViewing && viewIndex !== -2 ? false : i === history.length - 1);
+            return (
+              <span key={i}>
+                {w && <span className="mn">{Math.floor(i/2+1)}.</span>}
+                <span className={`ms ${w ? "wm" : "bm"} ${act ? "act" : ""}`} onClick={() => setViewIndex(i)}>{h.san}</span>
+              </span>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Commentary */}
+      <div className="cbox" style={{ marginTop: 8, whiteSpace: "pre-wrap" }}>
+        <span className="lbl">♙ White Move Commentary</span>
+        {whiteCommentaryLog || "Make your first move to start the White commentary log."}
+        {commentaryLoading && gameState.turn === "b" ? <div style={{ color: "#e2b96f", animation: "pulse 1.2s ease-in-out infinite", marginTop: 8 }}>Analyzing White's latest move...</div> : null}
+      </div>
+
+      <div className="cbox" style={{ marginTop: 8, whiteSpace: "pre-wrap" }}>
+        <span className="lbl">♛ Black Move Commentary</span>
+        {blackCommentaryLog || "Black move commentary will appear here after the computer replies."}
+        {thinking ? <div style={{ color: "#e2b96f", animation: "pulse 1.2s ease-in-out infinite", marginTop: 8 }}>Waiting for Black's move...</div> : null}
+      </div>
+
+      {/* Elo */}
+      {history.length > 0 && (
+        <>
+          {aiEnabled && (
+            <div className="ebox" style={{ marginTop: 8 }}>
+              <div>
+                <div className="elo-n">{eloEstimate.elo}</div>
+                <div className="elo-l">{eloEstimate.label}</div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div className="elo-l" style={{ marginBottom: 3 }}>Your Estimated Elo</div>
+                <div className="elo-meter">
+                  <div className="elo-fill" style={{ width: `${eloFillPct}%`, background: eloColor }} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="ebox" style={{ marginTop: 8 }}>
+            <div>
+              <div className="elo-n">{computerEloEstimate.elo}</div>
+              <div className="elo-l">{computerEloEstimate.label}</div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div className="elo-l" style={{ marginBottom: 3 }}>Computer Estimated Elo (Depth {computerDepth})</div>
+              <div className="elo-meter">
+                <div className="elo-fill" style={{ width: `${computerEloFillPct}%`, background: computerEloColor }} />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* PGN */}
+      {pgnText !== null && (
+        <div style={{ marginTop: 8, width: "100%", maxWidth: 540 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
+            <span className="jb" style={{ fontSize: 9, color: "#44445e", letterSpacing: 2, textTransform: "uppercase" }}>PGN Export</span>
+            <div style={{ display: "flex", gap: 3 }}>
+              <button className="btn btn-sm" onClick={copyPGN}>{copyFeedback ? "✓ Copied" : "Copy"}</button>
+              <button className="btn btn-sm" onClick={() => setPgnText(null)}>Close</button>
+            </div>
+          </div>
+          <div className="pgn-box">{pgnText}</div>
+        </div>
+      )}
+
+      {analysisText !== null && (
+        <div style={{ marginTop: 8, width: "100%", maxWidth: 540 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 3 }}>
+            <span className="jb" style={{ fontSize: 9, color: "#44445e", letterSpacing: 2, textTransform: "uppercase" }}>Analysis Export Preview</span>
+            <div style={{ display: "flex", gap: 3 }}>
+              <button className="btn btn-sm" onClick={() => downloadTextFile("chess_ai_coach_analysis.txt", analysisText)}>Download Again</button>
+              <button className="btn btn-sm" onClick={() => setAnalysisText(null)}>Close</button>
+            </div>
+          </div>
+          <div className="pgn-box">{analysisText}</div>
+        </div>
+      )}
+
+      {/* Promo */}
+      {promoModal && (
+        <div className="promo-ov">
+          <div className="promo-box">
+            <span style={{ color: "#e2b96f", fontFamily: "'Playfair Display', serif", fontSize: 14 }}>Promote Pawn</span>
+            <div className="promo-pcs">
+              {["q","r","b","n"].map(p => <div key={p} className="promo-p" onClick={() => handlePromo(p)}>{PIECES[p.toUpperCase()]}</div>)}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(<ChessAICoach />);
+
+
+  </script>
+</body>
+</html>
