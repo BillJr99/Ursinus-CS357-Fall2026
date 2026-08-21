@@ -28,12 +28,12 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| Open-Weight Model | A language model whose trained weight files are publicly downloadable — anyone can run, modify, or fine-tune it without paying per call. "Open-weight" does not necessarily mean open-source; licenses vary. | Llama 3.1 8B, Mistral 7B, and Phi-4 are all open-weight models available through Ollama. |
+| Open-Weight Model | A language model whose trained weight files are publicly downloadable; anyone can run, modify, or fine-tune it without paying per call. "Open-weight" does not necessarily mean open-source; licenses vary. | Llama 3.1 8B, Mistral 7B, and Phi-4 are all open-weight models available through Ollama. |
 | Quantization | A technique that stores each model weight using fewer bits (e.g., 4 bits instead of 32), reducing file size and RAM requirements at the cost of a small quality decrease. | A 7B model at full precision (F32) needs 28 GB of RAM; the same model at Q4 quantization fits in 4 GB. |
 | GGUF | The file format used by llama.cpp (the engine under Ollama) to store quantized models. GGUF files encode both the model weights and the quantization metadata in a single file. | Running `ollama pull llama3.2:3b` downloads a GGUF file to `~/.ollama/models/`. |
 | Ollama | A free, open-source tool (install from https://ollama.com) that manages downloading, running, and serving local LLMs through a simple CLI and REST API compatible with the OpenAI API format. | `ollama run phi4` downloads Phi-4 and starts an interactive chat session in your terminal. |
-| Mixture of Experts (MoE) | A model architecture where each input token is routed to only a subset of "expert" networks instead of the full model — giving large-model capability at lower per-token compute cost. | Mixtral 8×7B has 46.7B total parameters but activates only ~12.9B per token. |
-| Function Calling | The ability of a model to produce structured JSON that specifies which tool to call and with what arguments — required for reliable agentic pipelines. | Hermes-3-Llama-3.1-8B outputs `{"tool_call": {"name": "get_weather", "arguments": {"city": "Philadelphia"}}}` instead of describing the call in prose. |
+| Mixture of Experts (MoE) | A model architecture where each input token is routed to only a subset of "expert" networks instead of the full model, giving large-model capability at lower per-token compute cost. | Mixtral 8×7B has 46.7B total parameters but activates only ~12.9B per token. |
+| Function Calling | The ability of a model to produce structured JSON that specifies which tool to call and with what arguments, required for reliable agentic pipelines. | Hermes-3-Llama-3.1-8B outputs `{"tool_call": {"name": "get_weather", "arguments": {"city": "Philadelphia"}}}` instead of describing the call in prose. |
 
 ---
 
@@ -43,23 +43,23 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **What you will have at the end:** a considered choice of local model for your own machine, defended against alternatives.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
 # Part I: Why Local?
 
-In this part, you will examine the five reasons an organization might choose to run AI locally rather than through a cloud API — and identify which reason applies to which context, because "local is more private" is true but incomplete as a decision rationale.
+In this part, you will examine the five reasons an organization might choose to run AI locally rather than through a cloud API, and identify which reason applies to which context, because "local is more private" is true but incomplete as a decision rationale.
 
 ## 1. The Case for Running Locally
 
-Running AI on your own hardware is like owning vs. renting: you pay more upfront (hardware or setup time), but you control everything — what runs, who sees your data, and how much you pay at scale. Renting (an API) is cheaper to start and someone else handles maintenance, but every document you send leaves your hands.
+Running AI on your own hardware is like owning vs. renting: you pay more upfront (hardware or setup time), but you control everything: what runs, who sees your data, and how much you pay at scale. Renting (an API) is cheaper to start and someone else handles maintenance, but every document you send leaves your hands.
 
 Sending text to a commercial API means your text leaves your machine, traverses the internet, is processed on someone else's hardware, and the interaction may be logged. For many applications this is entirely acceptable. For others it is a blocking problem.
 
 **Privacy and data residency.** Medical notes, legal work product, personal financial records, and protected student information (FERPA) cannot be casually sent to a third-party API. Running locally means the data never leaves the machine or the network perimeter. Example: a hospital using a local `llama3.1:8b` model to assist with discharge summary drafts ensures patient data stays within HIPAA boundaries.
 
-**Cost at scale.** API pricing is per-token. For a high-volume application processing millions of documents, a locally-hosted model on leased GPU hardware often becomes cheaper than API calls within weeks. Example: at $5/1M tokens (GPT-4o pricing), processing 10 million 1,000-token documents costs $50,000 in API fees — vs. roughly $1,440/month for a dedicated A100.
+**Cost at scale.** API pricing is per-token. For a high-volume application processing millions of documents, a locally-hosted model on leased GPU hardware often becomes cheaper than API calls within weeks. Example: at $5/1M tokens (GPT-4o pricing), processing 10 million 1,000-token documents costs $50,000 in API fees, vs. roughly $1,440/month for a dedicated A100.
 
 **Latency and offline operation.** A locally-running model has no network round-trip. Embedded devices, field research equipment, and air-gapped systems may have no internet connection at all. Example: a search-and-rescue team using a local `phi4` model on a laptop to analyze maps and reports in the field.
 
@@ -83,13 +83,13 @@ Sending text to a commercial API means your text leaves your machine, traverses 
 | DeepSeek-R1 | DeepSeek AI | 1.5B-671B (distilled: 7B, 14B, 70B) | MIT | Explicit chain-of-thought reasoning in output; competitive with proprietary reasoning models; distilled versions run locally and are significantly better at multi-step math than same-size general models | `ollama pull deepseek-r1:7b` or `ollama pull deepseek-r1:14b` |
 | Hermes series | Nous Research | Varies (built on Llama/Mistral base) | Inherits base model license | Fine-tuned specifically for function calling, tool use, and structured JSON outputs; widely used in production agentic pipelines where schema adherence is critical | `ollama pull hermes3:8b` |
 
-**Sparse Mixture of Experts (MoE):** Mixtral's architecture routes each token through only 2 of 8 expert feed-forward networks. The model has 46.7B total parameters but uses only ~12.9B per token. This gives large-model quality at small-model inference cost — but requires loading all 46.7B parameters into memory.
+**Sparse Mixture of Experts (MoE):** Mixtral's architecture routes each token through only 2 of 8 expert feed-forward networks. The model has 46.7B total parameters but uses only ~12.9B per token. This gives large-model quality at small-model inference cost, but requires loading all 46.7B parameters into memory.
 
 ---
 
 ## 3. Quantization: Fitting Large Models on Real Hardware
 
-A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-parameter model at F32 requires 28 GB — more than most GPUs have. **Quantization** (compressing model weights from 32-bit floats to 4 or 8-bit integers, trading a small accuracy loss for dramatic memory savings) reduces the number of bits used per weight. Think of it like compressing a photo: a 4K RAW image and a JPEG of the same scene look nearly identical for most purposes, but the JPEG is 50x smaller. Similarly, a Q4 model and an F32 model give very similar answers for most tasks, but the Q4 model fits in a fraction of the memory.
+A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-parameter model at F32 requires 28 GB, more than most GPUs have. **Quantization** (compressing model weights from 32-bit floats to 4 or 8-bit integers, trading a small accuracy loss for dramatic memory savings) reduces the number of bits used per weight. Think of it like compressing a photo: a 4K RAW image and a JPEG of the same scene look nearly identical for most purposes, but the JPEG is 50x smaller. Similarly, a Q4 model and an F32 model give very similar answers for most tasks, but the Q4 model fits in a fraction of the memory.
 
 - **F16 / BF16:** 16 bits per weight. Half the memory of F32, negligible quality loss. Still 14 GB for a 7B model. Used by most GPU inference when quality is the top priority.
 - **Q8:** 8 bits per weight. Roughly 7 GB for a 7B model. Quality loss is minimal and generally imperceptible on standard benchmarks. Good choice when you have the RAM.
@@ -105,7 +105,7 @@ With the model families and quantization levels mapped, Part II applies that kno
 
 # Part II: Hardware and Task Matching
 
-In this part, you will match hardware specifications to model sizes, choose models for specific task types, and observe the concrete difference between a generic model and a function-calling-optimized model — a difference that determines whether your agent pipeline works reliably or fails unpredictably.
+In this part, you will match hardware specifications to model sizes, choose models for specific task types, and observe the concrete difference between a generic model and a function-calling-optimized model, a difference that determines whether your agent pipeline works reliably or fails unpredictably.
 
 ## Model 1: Hardware Requirements
 
@@ -143,11 +143,11 @@ ollama ps                         # shows currently running models
 
 1. You have a laptop with 16 GB of RAM and no discrete GPU. Which models from the table can you run at Q4 quantization? At Q8? What is the quality trade-off of choosing Q4 over Q8 for a legal document summarization task?
 
-   *Hint:* At Q4, a 7B model uses ~4 GB and a 13B model uses ~8 GB. At Q8, a 7B model uses ~7 GB and a 13B model uses ~14 GB. Legal summarization requires faithfulness to source material — which quantization level is more likely to miss a key clause?
+   *Hint:* At Q4, a 7B model uses ~4 GB and a 13B model uses ~8 GB. At Q8, a 7B model uses ~7 GB and a 13B model uses ~14 GB. Legal summarization requires faithfulness to source material: which quantization level is more likely to miss a key clause?
 
 2. A 7B model running on a CPU at 10 tokens/second takes roughly 30 seconds to generate a 300-token response. A 70B model accessed via API generates the same response in 3 seconds. For an interactive chat application, which is preferable? Does the answer change for a batch processing pipeline running overnight?
 
-   *Hint:* Interactive chat users typically abandon after 15-20 seconds of waiting. Batch processing doesn't have a human waiting — it just runs overnight. Consider both speed and cost (API charges per token; local runs free after hardware is paid for).
+   *Hint:* Interactive chat users typically abandon after 15-20 seconds of waiting. Batch processing doesn't have a human waiting; it just runs overnight. Consider both speed and cost (API charges per token; local runs free after hardware is paid for).
 
 3. Mixtral 8×7B has 46.7B total parameters but activates only ~12.9B per token. Does it fit in the "7-8B" hardware row or the "30-34B" row of the table above? Justify your answer by thinking about what hardware operation determines memory requirements versus compute requirements.
 
@@ -159,7 +159,7 @@ ollama ps                         # shows currently running models
 
 Choosing a model is an engineering decision, not just a capability question. Smaller, specialized models often outperform larger general models on specific tasks while using far less hardware.
 
-The table below maps task categories to recommended models. Use it as a starting point, not a final answer — run two models against your actual task and let the output quality guide the final choice.
+The table below maps task categories to recommended models. Use it as a starting point, not a final answer; run two models against your actual task and let the output quality guide the final choice.
 
 | Task | Recommended Model | Why | Alternative | How to Start |
 |---|---|---|---|---|
@@ -175,9 +175,9 @@ The table below maps task categories to recommended models. Use it as a starting
 
 ## Model 3: Generic Model vs. Function-Calling Model
 
-The difference between a generic model and a function-calling-optimized model is not just output quality — it is structural reliability. Agentic pipelines that call tools depend on the model producing parseable JSON, not prose. Think of it like the difference between someone who can describe how to fill out a form vs. someone who actually fills it out correctly.
+The difference between a generic model and a function-calling-optimized model is not just output quality; it is structural reliability. Agentic pipelines that call tools depend on the model producing parseable JSON, not prose. Think of it like the difference between someone who can describe how to fill out a form vs. someone who actually fills it out correctly.
 
-The two outputs below come from the same user query sent to two different models. Read them carefully — the difference is not intelligence or fluency, it is whether the output is machine-parseable or just prose that describes what a machine call would look like.
+The two outputs below come from the same user query sent to two different models. Read them carefully; the difference is not intelligence or fluency, it is whether the output is machine-parseable or just prose that describes what a machine call would look like.
 
 **Scenario:** A weather agent exposes this tool:
 
@@ -221,16 +221,16 @@ This is prose *describing* a function call. An agent framework trying to parse t
 }
 ```
 
-This is valid JSON conforming to the tool schema. The agent framework can parse, validate, and execute it directly. The difference is not intelligence — it is format training. Hermes-3 was explicitly fine-tuned on thousands of examples of correct tool-call JSON so the output format is highly reliable.
+This is valid JSON conforming to the tool schema. The agent framework can parse, validate, and execute it directly. The difference is not intelligence; it is format training. Hermes-3 was explicitly fine-tuned on thousands of examples of correct tool-call JSON so the output format is highly reliable.
 
 > **Common Misconception:** Many beginners assume that a more capable (larger) general model will automatically be better at function calling than a smaller specialized model. In practice, **a 7B model fine-tuned for function calling (like Hermes-3) reliably outperforms a 70B general model** on structured tool-call tasks. The 70B model is smarter but doesn't reliably produce the right JSON structure. Use the right tool for the job.
 
 Q4 quantization of a 7B language model means:
 
 [(X)] Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4-8x with modest quality loss on complex tasks
-[( )] The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included — "Q4" refers to a training data selection strategy
-[( )] The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
-[( )] Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
+[( )] The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included; "Q4" refers to a training data selection strategy
+[( )] The model runs exactly 4 times faster and outputs identical results; lower precision removes rounding errors that slow down computation without affecting outputs
+[( )] Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16; this is how mixed-precision quantization works
 
 With hardware matching and model selection understood, Part III gives you hands-on practice pulling and comparing real models so that your model choice for the final project is grounded in direct observation rather than benchmark numbers alone.
 
@@ -238,13 +238,13 @@ With hardware matching and model selection understood, Part III gives you hands-
 
 # Part III: Synthesis and Practice
 
-In this part, you will pull and compare real models on your own hardware, test the quantization tradeoff on a concrete task, and analyze the privacy implications of local versus cloud data flows — the three exercises that turn this module's concepts into deployable decisions.
+In this part, you will pull and compare real models on your own hardware, test the quantization tradeoff on a concrete task, and analyze the privacy implications of local versus cloud data flows, the three exercises that turn this module's concepts into deployable decisions.
 
 ## Exercises
 
 1. *Model selection audit.* Using `ollama list` and `ollama pull`, download two models you can run on your available hardware. For the same five prompts (one factual, one creative, one code, one reasoning, one multilingual), run both models and rate the outputs on a 1-5 scale. Report which model wins each task and whether the result matches the recommendations in Model 2.
 
-   *What to do:* Choose two models that fit your RAM (use the hardware table). Run each model with `ollama run <model>` and type the same five prompts. Use the same prompt text for both models — do not rephrase.
+   *What to do:* Choose two models that fit your RAM (use the hardware table). Run each model with `ollama run <model>` and type the same five prompts. Use the same prompt text for both models; do not rephrase.
 
    *Starter hint:*
    ```bash
@@ -357,11 +357,11 @@ In this part, you will pull and compare real models on your own hardware, test t
 
 *Technical:* Open-weight models make powerful AI accessible without ongoing API costs or data sharing, but they also make powerful AI accessible without the safety interventions commercial providers apply. Identify one beneficial use case enabled by local open-weight models that would be difficult or impossible with a commercial API, and one risk that local deployment introduces compared to a managed API.
 
-*Societal:* What does it mean for AI governance and regulation when capable models can be downloaded for free and run by anyone with a laptop? Identify one policy lever (a licensing requirement, a usage disclosure rule, a technical standard) that could address a specific risk of locally-run open-weight models without unnecessarily restricting beneficial uses. Who should implement that lever — national governments, AI developers, platform providers, or end users?
+*Societal:* What does it mean for AI governance and regulation when capable models can be downloaded for free and run by anyone with a laptop? Identify one policy lever (a licensing requirement, a usage disclosure rule, a technical standard) that could address a specific risk of locally-run open-weight models without unnecessarily restricting beneficial uses. Who should implement that lever: national governments, AI developers, platform providers, or end users?
 
 ---
 
--> Coming Up Next: Now that you can run models locally, the next module examines the security implications of deploying AI agents — what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
+-> Coming Up Next: Now that you can run models locally, the next module examines the security implications of deploying AI agents: what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
 
 ---
 
