@@ -5,22 +5,22 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment 3: Re
 
 info:
   coursenum: CS357
-  purpose: "To apply responsible-AI analysis to one concrete artifact; a defended philosophical position, real documentation, an enforceable governance document, a regulatory mapping of a deployed system, or a quantified carbon audit: and to produce work precise enough that a deployer, regulator, auditor, or fellow practitioner could act on it."
+  purpose: "To apply responsible-AI analysis to one concrete artifact; a defended philosophical position, real documentation, an enforceable governance document, a regulatory mapping of a deployed system, or a quantified carbon audit, and to produce work precise enough that a deployer, regulator, auditor, or fellow practitioner could act on it."
   tilt:
     task: "Choose one direction and carry it out in full depth: argue whether machine understanding matters for deployment; write a datasheet and model card for a course system; author an enforceable governance document mapped to NIST and the EU AI Act; map a real deployed AI system onto the regulatory landscape; or audit the carbon cost of your own AI use and your project at scale."
     criteria: "Assessed on one shared rubric across all five directions, analysis quality, evidence and citation, connection to course systems and concepts, and communication for your audience; see the rubric below for the full breakdown."
   points: 100
   goals:
-    - "To analyze an AI system, practice, or question through a responsible-AI lens: philosophical, documentary, governance, regulatory, or environmental (at a depth a practitioner could act on"
-    - To ground every claim in specific evidence) cited passages, published research, framework provisions with article numbers, reference values with visible arithmetic, or empirical observations of real systems, deployed at the point in the argument where it is needed, not decoratively
+    - "To analyze an AI system, practice, or question through a responsible-AI lens (philosophical, documentary, governance, regulatory, or environmental) at a depth a practitioner could act on"
+    - To ground every claim in specific evidence (cited passages, published research, framework provisions with article numbers, reference values with visible arithmetic, or empirical observations of real systems) deployed at the point in the argument where it is needed, not decoratively
     - To engage honestly with the strongest counterargument, unknown, loophole, or trade-off rather than dismissing it, and to arrive at a defended position or an enforceable, implementable artifact
     - To connect the analysis concretely to the systems and concepts of this course, the agents you have built, your final project design, and the frameworks studied in class
-    - To communicate for a named audience, a CS357 peer, a deployer, an auditor, a regulator, or an engineering team (at the level of specificity that audience needs to make a decision
+    - To communicate for a named audience (a CS357 peer, a deployer, an auditor, a regulator, or an engineering team) at the level of specificity that audience needs to make a decision
   rubric:
     - weight: 35
       description: Analysis Quality
       preemerging: The submission does not arrive at a position or produce the direction's central artifact, or the analysis restates sources and frameworks without applying them
-      beginning: An analysis or artifact is present but superficial) claims are asserted rather than argued, framework sections are generic enough to describe any system, bias or risk discussion names no affected population or mechanism, or numbers appear without reasoning
+      beginning: An analysis or artifact is present but superficial, claims are asserted rather than argued, framework sections are generic enough to describe any system, bias or risk discussion names no affected population or mechanism, or numbers appear without reasoning
       progressing: The analysis is substantive and mostly specific, a clear position with coherent argument, documentation or clauses specific to the chosen system, a defensible classification, or calibrated estimates, but the hardest element is underdeveloped (the strongest objection is not fully engaged, a mechanism or enforcement path is missing, or a trade-off is acknowledged without being analyzed)
       proficient: The analysis does the direction's hardest work fully, the strongest counterargument is stated fairly and answered; each bias risk names the affected group, the specific output behavior, and the likely mechanism; substantially every governance clause passes the third-party test and the "who specifically" test; the regulatory classification is argued item-by-item against the framework's actual categories; or both sides of the Jevons paradox are argued with evidence before a defended position, and the conclusion is specific enough that someone could reasonably disagree with it or an engineer could implement it
     - weight: 25
@@ -93,7 +93,7 @@ tags:
 
 By this point in the course you have built systems that answer questions, retrieve documents, call tools, and make or support decisions. Responsible AI is what happens when you stop asking "does it work?" and start asking "should anyone rely on it, and on what terms?" That question can be approached from five distinct angles: whether it matters that these systems genuinely understand anything; whether their data and behavior are documented honestly; whether their operation is governed by enforceable rules; whether they comply with the regulations that increasingly bind them; and what their energy and carbon cost really is. Each direction below takes one of those angles and applies it to a **concrete artifact**, an essay defending a position, a datasheet and model card for a system you have used, a governance document for your own project, a regulatory mapping of a real deployed system, or a carbon audit of your own AI use.
 
-Read all five directions before choosing, then pick **one** and carry it out in full depth. The right choice is the angle you most want to be able to defend in your future practice: or the one that most directly serves your final project. Do not attempt more than one; depth on one is worth far more than a shallow pass over several. Your single 100-point grade is assessed with the shared rubric above, whose four dimensions, analysis quality, evidence and citation, connection to course systems and concepts, and communication for audience (apply to whichever direction you choose.
+Read all five directions before choosing, then pick **one** and carry it out in full depth. The right choice is the angle you most want to be able to defend in your future practice, or the one that most directly serves your final project. Do not attempt more than one; depth on one is worth far more than a shallow pass over several. Your single 100-point grade is assessed with the shared rubric above, whose four dimensions (analysis quality, evidence and citation, connection to course systems and concepts, and communication for audience) apply to whichever direction you choose.
 
 ---
 
@@ -112,7 +112,7 @@ A strong submission, in any direction, has these qualities:
 
 Complete **one** of the five directions below in full. Expand your chosen direction for the full instructions.
 
-- **Direction A: Does It Matter If Machines Understand?**) a 1000-1500 word argumentative essay engaging at least two named philosophical positions and arriving at a defended position with a concrete deployment implication.
+- **Direction A: Does It Matter If Machines Understand?** A 1000-1500 word argumentative essay engaging at least two named philosophical positions and arriving at a defended position with a concrete deployment implication.
 - **Direction B: Model Cards and Datasheets**, real documentation (a Gebru et al. datasheet and a Mitchell et al. model card) for a system you have used in this course, plus a bias analysis and misuse scenarios with implementable controls.
 - **Direction C: Governance and Policy**: an enforceable eight-section governance document for your final project's agent team, mapped onto the NIST AI RMF and the EU AI Act, and hardened by adversarial peer review. Includes the Policy Clause Workshop used in the Governance and Policy Writing class session.
 - **Direction D: Mapping a Real AI System to the Regulatory Landscape**: classify a real deployed AI system under the EU AI Act, map it onto the NIST AI RMF, identify the sector-specific rules it triggers, and build a structured risk register.
@@ -129,7 +129,7 @@ These summaries are starting points, not substitutes for the readings:
 
 - **Alan Turing (1950)** argues that "can machines think?" is too loaded to be useful and proposes a behavioral test: if a judge cannot distinguish the machine's conversation from a human's, the machine is, for practical purposes, thinking. Behavioral indistinguishability suffices: we do not demand access to internal experience from other humans either.
 - **John Searle (1980)** answers that behavioral indistinguishability is not sufficient for understanding. His Chinese Room manipulates symbols by rule and produces fluent output while understanding nothing: syntax is not sufficient for semantics. A system that passes the Turing Test might be doing exactly what the room does.
-- **Joseph Weizenbaum (1976)**, creator of ELIZA, was disturbed by how readily users bonded with it. His question is not whether machines *can* understand but what we *should* delegate to them: some activities; therapy, judgment, care (require genuine human understanding, and delegating them is a moral failure regardless of the machine's internal states.
+- **Joseph Weizenbaum (1976)**, creator of ELIZA, was disturbed by how readily users bonded with it. His question is not whether machines *can* understand but what we *should* delegate to them: some activities (therapy, judgment, care) require genuine human understanding, and delegating them is a moral failure regardless of the machine's internal states.
 
 > **Common Pitfall:** Turing is asking about behavioral indistinguishability; Searle about intentionality; Weizenbaum about appropriate delegation. If you mix these up, your essay will argue past itself. Define what you mean by "understanding" in your first paragraph and hold to that definition throughout.
 
@@ -262,7 +262,7 @@ Write approximately four to six pages covering all eight sections below. Import,
 5. **Data Handling**: a data inventory; an explicit statement for each regulated category (health, financial, biometric, minors' data): either "this system does not process X" or the specific controls that apply; retention periods, access controls, and a deletion procedure with a timeline.
 6. **Evaluation and Monitoring**: the actual metrics from your evaluation plan (not "we will evaluate performance"), the disaggregation protocol (which subgroups are analyzed separately), the re-evaluation frequency, and the threshold at which a metric failure triggers review.
 7. **Accountability and Incident Response**: what constitutes an incident; at least two severity levels with distinct response timelines; a named role for each step of detection, reporting, and response; and a binding clause for **each** failure mode predicted in your pre-mortem (if a risk is accepted rather than mitigated, say so in your revision memo and why).
-8. **Review and Sunset** (the review schedule, who reviews, the conditions that trigger an immediate review (a new model version, a reported incident), and the condition under which the system is shut down.
+8. **Review and Sunset**: the review schedule, who reviews, the conditions that trigger an immediate review (a new model version, a reported incident), and the condition under which the system is shut down.
 
 Use this structural skeleton (you may add subsections but may not omit a numbered section):
 
@@ -287,7 +287,7 @@ Version 1.0 | Date | Authors: [team members and roles]
 
 #### Step 2: Map Your System to External Frameworks
 
-**NIST AI RMF (Appendix A):** map your system onto all four functions, naming the specific artifact or activity in your project) a file, a log, a test, a human review step; that performs each of GOVERN (policies, culture, accountability), MAP (context, risk identification, affected populations), MEASURE (metrics, testing, trustworthiness assessment), and MANAGE (controls, incident response, residual risk). "We GOVERN by having good norms" names nothing and earns nothing.
+**NIST AI RMF (Appendix A):** map your system onto all four functions, naming the specific artifact or activity in your project (a file, a log, a test, a human review step) that performs each of GOVERN (policies, culture, accountability), MAP (context, risk identification, affected populations), MEASURE (metrics, testing, trustworthiness assessment), and MANAGE (controls, incident response, residual risk). "We GOVERN by having good norms" names nothing and earns nothing.
 
 **EU AI Act (Appendix B):** argue your system's plausible risk tier if deployed for real users in an educational setting (unacceptable / high risk per Annex III / limited / minimal). Name the tier, cite the specific Annex III category (or argue why none applies, engaging the education provisions: do not simply state "our system is low risk"), and name the obligation that would bind first if the system were deployed beyond the classroom.
 
@@ -304,11 +304,11 @@ The governance document (four to six pages), committed to your project repositor
 <details markdown="1">
 <summary><strong>Direction D: Mapping a Real AI System to the Regulatory Landscape</strong></summary>
 
-In this direction you take the regulatory frameworks from class and apply them to a real, deployed AI system. The goal is not to find a "bad" system to criticize, but to practice the rigorous thinking a compliance officer, auditor, or governance lead must perform: think like an auditor, stay close to publicly available evidence, and treat unknown information as data (if a company does not publish its model card, that absence tells you something about its Govern function, and you should say so explicitly.
+In this direction you take the regulatory frameworks from class and apply them to a real, deployed AI system. The goal is not to find a "bad" system to criticize, but to practice the rigorous thinking a compliance officer, auditor, or governance lead must perform: think like an auditor, stay close to publicly available evidence, and treat unknown information as data: if a company does not publish its model card, that absence tells you something about its Govern function, and you should say so explicitly.
 
 > **Glossary:** The **EU AI Act** (in force from 2024) creates a risk pyramid) unacceptable -> high -> limited -> minimal (with obligations by tier. **Annex III** lists the high-risk categories: biometric identification, critical infrastructure, education, employment, essential services (credit, insurance), law enforcement, migration, and administration of justice. **GPAI** (general-purpose AI) models face a separate obligation tier, with additional obligations above a systemic-risk compute threshold. The **NIST AI RMF** is voluntary in the US and organizes AI risk management into Govern, Map, Measure, and Manage.
 
-> **Common Pitfall:** Classifying a system as "minimal risk" without actually checking Annex III. Many systems that look benign) a resume screener, a credit-scoring tool, a medical symptom checker; are explicitly listed as high-risk. Work through the checklist item by item and show that you checked. Also: the EU AI Act and GDPR are separate regulations with different obligations; your system may be subject to both.
+> **Common Pitfall:** Classifying a system as "minimal risk" without actually checking Annex III. Many systems that look benign (a resume screener, a credit-scoring tool, a medical symptom checker) are explicitly listed as high-risk. Work through the checklist item by item and show that you checked. Also: the EU AI Act and GDPR are separate regulations with different obligations; your system may be subject to both.
 
 #### Part 1: Select and Describe a System
 
@@ -359,7 +359,7 @@ A single PDF or markdown document containing all four parts, clearly labeled, wi
 <details markdown="1">
 <summary><strong>Direction E: The Carbon Cost of Intelligence</strong></summary>
 
-Every query you send to a language model consumes electricity, and electricity has a carbon cost that varies by model size, inference provider, and grid energy mix. In this direction you measure that cost for your own behavior, analyze it for your final project, propose design changes that reduce it, and then grapple with the uncomfortable question of whether efficiency improvements actually reduce total energy use at all. Throughout: calibrated reasoning over false precision (round to one or two significant figures, show your work, and state where the uncertainty lies.
+Every query you send to a language model consumes electricity, and electricity has a carbon cost that varies by model size, inference provider, and grid energy mix. In this direction you measure that cost for your own behavior, analyze it for your final project, propose design changes that reduce it, and then grapple with the uncomfortable question of whether efficiency improvements actually reduce total energy use at all. Throughout: calibrated reasoning over false precision: round to one or two significant figures, show your work, and state where the uncertainty lies.
 
 #### Reference Values
 
@@ -374,7 +374,7 @@ Every query you send to a language model consumes electricity, and electricity h
 
 Pick a value within each range that matches your best estimate of model size and provider (lower end for smaller models or cleaner grids), and state which value you chose and why.
 
-> **Common Pitfall:** Comparing AI energy use to a flight (a one-time event, ~1,000,000 g CO2eq) rather than a daily habit. Your week of AI use probably emits between 1 and 50 g CO2eq; the flight comparison is technically accurate but deeply misleading. Compare AI use to other daily-frequency activities) streaming, commuting, lunch; so the scale is meaningful. The relevant question is what the habit costs at scale, over a year, across millions of users.
+> **Common Pitfall:** Comparing AI energy use to a flight (a one-time event, ~1,000,000 g CO2eq) rather than a daily habit. Your week of AI use probably emits between 1 and 50 g CO2eq; the flight comparison is technically accurate but deeply misleading. Compare AI use to other daily-frequency activities (streaming, commuting, lunch) so the scale is meaningful. The relevant question is what the habit costs at scale, over a year, across millions of users.
 
 #### Part 1: Personal Carbon Audit (one week)
 

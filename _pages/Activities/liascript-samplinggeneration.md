@@ -242,7 +242,7 @@ Notice Paris's probability *went up* (from 0.9007 to 0.9526) without its logit c
 
 | Token | $P$ | Running total | In the nucleus? |
 |---|---|---|---|
-| Paris | 0.9007 | 0.9007 | yes; and 0.9007 ≥ 0.9, so we stop |
+| Paris | 0.9007 | 0.9007 | yes, and 0.9007 ≥ 0.9, so we stop |
 | Lyon | 0.0448 | - | no |
 
 The nucleus is **Paris alone**. Renormalizing a single survivor gives $0.9007 / 0.9007 = 1.0$; the sampler is now deterministic, at a temperature you never set to zero.
