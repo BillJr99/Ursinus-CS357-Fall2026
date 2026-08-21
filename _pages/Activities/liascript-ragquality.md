@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Quality: Chunking, Clustering, and Reranking
 
-The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking** — the same levers you will tune in the RAG Knowledge Base Lab.
+The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**. This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking**, the same levers you will tune in the RAG Knowledge Base Lab.
 
 ---
 
@@ -28,7 +28,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Chunk** | A piece of a document that gets its own embedding and its own slot in the vector database. The art is choosing the right size — too big and the embedding blurs across topics; too small and the chunk loses its context. | A 200-token excerpt from the student handbook parking section |
+| **Chunk** | A piece of a document that gets its own embedding and its own slot in the vector database. The art is choosing the right size: too big and the embedding blurs across topics; too small and the chunk loses its context. | A 200-token excerpt from the student handbook parking section |
 | **Fixed-Size Chunking** | Splitting a document every N tokens regardless of sentence or paragraph boundaries. Simple and predictable, but can cut a sentence in half. | Splitting the handbook every 500 tokens, with 50-token overlap between adjacent chunks |
 | **Overlap** | The number of tokens repeated between adjacent chunks to avoid losing information at chunk boundaries. A 50-token overlap means the last 50 tokens of chunk 1 are also the first 50 tokens of chunk 2. | With chunk size 200 and overlap 50, a fact straddling a boundary appears intact in at least one chunk |
 | **Recall@k** | The fraction of questions for which the correct chunk appears somewhere in the top-k retrieved results. Measures whether your retrieval system finds the right content at all, before the model sees it. | recall@3 = 0.80 means 80% of questions had the right chunk somewhere in the top 3 results |
@@ -43,17 +43,17 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 In this Part you will explore why the size of text chunks matters enormously for retrieval quality, examine three splitting strategies, and develop a principled hybrid policy you can apply to your own documents in the RAG Knowledge Base Lab.
 
-**Why this matters:** Imagine searching a book using only its table of contents (chapters as chunks) versus searching it word by word (sentences as chunks). The table of contents gives you chapters that might be 50 pages long — your embedding has to summarize 50 pages into one vector, which blurs the meaning across dozens of topics. Individual sentences are precise but often meaningless in isolation: "He approved the request" tells you nothing about *who*, *what*, or *why*. Good chunking finds the passage-length sweet spot that is semantically self-contained and focused enough to embed meaningfully. It is the most impactful tuning knob in any real RAG system.
+**Why this matters:** Imagine searching a book using only its table of contents (chapters as chunks) versus searching it word by word (sentences as chunks). The table of contents gives you chapters that might be 50 pages long; your embedding has to summarize 50 pages into one vector, which blurs the meaning across dozens of topics. Individual sentences are precise but often meaningless in isolation: "He approved the request" tells you nothing about *who*, *what*, or *why*. Good chunking finds the passage-length sweet spot that is semantically self-contained and focused enough to embed meaningfully. It is the most impactful tuning knob in any real RAG system.
 
 **Chunks too large** dilute the embedding (one vector must summarize many topics) and waste precious context window space. **Chunks too small** orphan their meaning ("He approved the request" retrieves nothing useful without knowing who *he* is). Practical systems balance three strategies:
 
 | Strategy | How It Works | Best For | Trade-Off |
 |----------|-------------|----------|-----------|
 | **Fixed-size** | Split every N tokens, with overlap O tokens repeated between adjacent chunks (e.g., chunks of 200 tokens with 50-token overlap) | Simple documents where you want predictable chunk counts and easy tuning | Ignores sentence and paragraph structure; can split a key sentence across two chunks even with overlap |
-| **Structural** | Split on natural document boundaries — headings, paragraph breaks, bullet items — respecting how the author organized the content | Well-structured documents like policies, manuals, or textbooks with clear sections | One section might be 50 tokens and another 2,000 tokens, creating uneven retrieval quality |
-| **Semantic** | Split where the embedding similarity between consecutive sentences drops sharply — detecting topic shifts algorithmically | Long documents with many topic shifts where structural markers are sparse | More complex to implement; requires embedding every sentence before chunking |
+| **Structural** | Split on natural document boundaries (headings, paragraph breaks, bullet items) respecting how the author organized the content | Well-structured documents like policies, manuals, or textbooks with clear sections | One section might be 50 tokens and another 2,000 tokens, creating uneven retrieval quality |
+| **Semantic** | Split where the embedding similarity between consecutive sentences drops sharply, detecting topic shifts algorithmically | Long documents with many topic shifts where structural markers are sparse | More complex to implement; requires embedding every sentence before chunking |
 
-Overlap repairs boundary damage: with chunk size 200 and overlap 50, a fact straddling a boundary appears intact in at least one chunk. The cost is index size inflation by a factor of roughly $\frac{n}{n - o}$ — so a 200-token chunk with 50-token overlap inflates the index by $\frac{200}{150} \approx 1.33$ times.
+Overlap repairs boundary damage: with chunk size 200 and overlap 50, a fact straddling a boundary appears intact in at least one chunk. The cost is index size inflation by a factor of roughly $\frac{n}{n - o}$, so a 200-token chunk with 50-token overlap inflates the index by $\frac{200}{150} \approx 1.33$ times.
 
 ---
 
@@ -83,7 +83,7 @@ Consider a 12-page student handbook with sections on housing, dining, conduct, a
 
 In this Part you will learn how to measure whether your retrieval system is actually working, understand the recall@k metric (the fraction of questions for which the right chunk appears in the top-k results), and see how a reranker can raise precision without sacrificing recall.
 
-**Why this matters:** You cannot improve what you cannot measure. Before tuning chunk size, overlap, or any other parameter, you need a metric that tells you whether retrieval is actually working. Recall@k is that metric: for a set of test questions where you know the right answer, does the right chunk appear in the top k results? If recall@3 is 0.50, half your questions will get the wrong chunk and therefore a potentially hallucinated answer — regardless of how good your language model is. Generation quality has a ceiling imposed by retrieval quality, and this section gives you the tools to find and raise that ceiling.
+**Why this matters:** You cannot improve what you cannot measure. Before tuning chunk size, overlap, or any other parameter, you need a metric that tells you whether retrieval is actually working. Recall@k is that metric: for a set of test questions where you know the right answer, does the right chunk appear in the top k results? If recall@3 is 0.50, half your questions will get the wrong chunk and therefore a potentially hallucinated answer, regardless of how good your language model is. Generation quality has a ceiling imposed by retrieval quality, and this section gives you the tools to find and raise that ceiling.
 
 For a question set with labeled relevant chunks, **recall@k** asks how often the right chunk appears in the top $k$ results:
 
@@ -93,7 +93,7 @@ $$
 
 Read this as: for each of $N$ questions, check whether the relevant chunk appears anywhere in the top $k$ retrieved results (1 if yes, 0 if no), then average across all questions. A score of 1.0 means every question had its answer chunk in the top $k$; a score of 0.5 means half did.
 
-A two-stage design retrieves generously then filters precisely: a fast vector search proposes, say, 20 candidates (achieving high recall — the right chunk is almost certainly in there), and a **reranker** (a slower model scoring each query-chunk pair directly) reorders them so the truly relevant chunk rises into the top 3 that actually fit the prompt (achieving high precision). Even an LLM prompted with "Rate the relevance of this passage to this question from 0 to 10" makes a serviceable reranker — our first taste of models evaluating text for other models.
+A two-stage design retrieves generously then filters precisely: a fast vector search proposes, say, 20 candidates (achieving high recall; the right chunk is almost certainly in there), and a **reranker** (a slower model scoring each query-chunk pair directly) reorders them so the truly relevant chunk rises into the top 3 that actually fit the prompt (achieving high precision). Even an LLM prompted with "Rate the relevance of this passage to this question from 0 to 10" makes a serviceable reranker, our first taste of models evaluating text for other models.
 
 A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 chunks. The highest-leverage fix is:
 
@@ -106,7 +106,7 @@ A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 
 
 ## 3. Seeing Your Corpus: Semantic Clustering
 
-**Why this matters:** Before you build a RAG system over a large document collection, you need to understand what you have. How many distinct topics does your corpus cover? Are there entire subjects with no coverage? Are there many near-duplicate chunks that waste index space and confuse retrieval? Clustering the embeddings gives you an automatic map of your corpus's topic structure, the same way a heat map of a city shows you where neighborhoods cluster — without reading every street address.
+**Why this matters:** Before you build a RAG system over a large document collection, you need to understand what you have. How many distinct topics does your corpus cover? Are there entire subjects with no coverage? Are there many near-duplicate chunks that waste index space and confuse retrieval? Clustering the embeddings gives you an automatic map of your corpus's topic structure, the same way a heat map of a city shows you where neighborhoods cluster, without reading every street address.
 
 Embeddings let us *map* a document collection before querying it. Clustering chunk vectors (k-means on normalized embeddings approximates clustering by cosine similarity) reveals the topics your corpus actually contains, exposes duplicates, and flags off-topic contamination.
 
@@ -160,7 +160,7 @@ for label in sorted(set(km.labels_)):
 
 ### Worked Example: one k-means iteration, by hand
 
-The code cell above clusters your corpus and draws the map. Before you trust a map, it is worth knowing how it was drawn — and k-means is simple enough to do on paper. Here is one full iteration on four chunk embeddings, reduced to two dimensions so the arithmetic stays visible.
+The code cell above clusters your corpus and draws the map. Before you trust a map, it is worth knowing how it was drawn, and k-means is simple enough to do on paper. Here is one full iteration on four chunk embeddings, reduced to two dimensions so the arithmetic stays visible.
 
 Four chunks, with their (toy, 2-D) embeddings:
 
@@ -171,9 +171,9 @@ Four chunks, with their (toy, 2-D) embeddings:
 | C | $(5.0,\; 4.0)$ | RAG implementation |
 | D | $(6.0,\; 5.0)$ | vector databases |
 
-**Step 1 — initialize.** Pick $k = 2$ and seed the centroids at two of the points: $c_1 = (1,1)$, $c_2 = (6,5)$.
+**Step 1: initialize.** Pick $k = 2$ and seed the centroids at two of the points: $c_1 = (1,1)$, $c_2 = (6,5)$.
 
-**Step 2 — assign each point to its nearest centroid** (Euclidean distance):
+**Step 2: assign each point to its nearest centroid** (Euclidean distance):
 
 | Chunk | $d$ to $c_1$ | $d$ to $c_2$ | Assigned |
 |---|---|---|---|
@@ -182,23 +182,23 @@ Four chunks, with their (toy, 2-D) embeddings:
 | C | $\sqrt{4^2 + 3^2} = 5.00$ | $\sqrt{1^2+1^2} = 1.41$ | **cluster 2** |
 | D | $6.40$ | $0.00$ | **cluster 2** |
 
-**Step 3 — recompute each centroid as the mean of its members:**
+**Step 3: recompute each centroid as the mean of its members:**
 
 - $c_1 = \left(\frac{1.0 + 1.5}{2},\; \frac{1.0 + 2.0}{2}\right) = (1.25,\; 1.50)$
 - $c_2 = \left(\frac{5.0 + 6.0}{2},\; \frac{4.0 + 5.0}{2}\right) = (5.50,\; 4.50)$
 
-**Step 4 — repeat.** Reassign with the new centroids: nothing changes, so the algorithm has **converged** after one iteration. Two clusters, and they correspond to something real — policy chunks and implementation chunks — which nobody labeled.
+**Step 4: repeat.** Reassign with the new centroids: nothing changes, so the algorithm has **converged** after one iteration. Two clusters, and they correspond to something real (policy chunks and implementation chunks) which nobody labeled.
 
 **What this tells you about your own corpus map.** Three things worth carrying into Model 2:
 
 1. **The clusters are an artifact of $k$, not a fact about your documents.** We chose $k = 2$. Choose $k = 4$ on this data and you get four singleton clusters, each perfectly "coherent" and completely useless. When the map looks clean, ask whether $k$ made it clean.
 2. **The seeds matter.** Had we seeded at B and C instead, the first assignment would differ, and on messier data the final clustering can differ too. This is why production implementations use k-means++ seeding and run several times.
-3. **Distance here is Euclidean, but retrieval usually ranks by cosine.** On *normalized* vectors the two give the same ordering — which is exactly why the pipeline normalizes embeddings before clustering. If you ever cluster un-normalized vectors, long documents drift away from the origin and form their own cluster purely because they are long, not because they are about anything in particular.
+3. **Distance here is Euclidean, but retrieval usually ranks by cosine.** On *normalized* vectors the two give the same ordering, which is exactly why the pipeline normalizes embeddings before clustering. If you ever cluster un-normalized vectors, long documents drift away from the origin and form their own cluster purely because they are long, not because they are about anything in particular.
 
 
 ## Model 2: Reading the Map
 
-**Why this matters:** The clusters the algorithm produces may or may not match the categories a human would draw. When they do not match, the mismatch is a window into what the embedding model actually "hears" in the text — and that is valuable information for predicting where your retrieval system will succeed and where it will fail.
+**Why this matters:** The clusters the algorithm produces may or may not match the categories a human would draw. When they do not match, the mismatch is a window into what the embedding model actually "hears" in the text, and that is valuable information for predicting where your retrieval system will succeed and where it will fail.
 
 ### Critical Thinking Questions
 
@@ -224,7 +224,7 @@ With the theory of recall and reranking established, this hands-on section puts 
 
 ## Hands-On: Chunking Strategy Comparison
 
-The full 30-minute build — the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table — now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
+The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
 
 Today we stay on the *judgment*: where a chunk boundary belongs, and what recall@k does and does not tell you.
 
@@ -256,7 +256,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 *Personal:* Think about a time someone summarized or quoted something you wrote or said, and the summary changed the meaning. How does that experience connect to what happens when a large chunk is embedded into a single vector?
 
-*Technical:* In your notebook: chunking is an editorial act — someone (or some algorithm) decides where meaning begins and ends. When you index a document written by someone else, what obligations do you have to preserve its meaning, and how would you check whether your pipeline honored them?
+*Technical:* In your notebook: chunking is an editorial act: someone (or some algorithm) decides where meaning begins and ends. When you index a document written by someone else, what obligations do you have to preserve its meaning, and how would you check whether your pipeline honored them?
 
 *Societal:* A law firm deploys RAG over a corpus of 10,000 legal documents to help paralegals find relevant precedents. The chunking strategy splits some court opinions mid-sentence, occasionally separating the holding (the decision) from its reasoning. Who is harmed if the system retrieves the holding without the reasoning? What audit process would you require before deploying such a system?
 
@@ -264,7 +264,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ## -> Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
+We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation, and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
 
 ---
 
