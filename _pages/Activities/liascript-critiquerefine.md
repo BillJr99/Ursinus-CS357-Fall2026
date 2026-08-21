@@ -207,7 +207,7 @@ if verdict["verdict"] != "accept":
 
    > *Hint: To isolate generator variance, fix the seed of the critic and vary the generator's seed. To isolate critic variance, fix the draft (use the same input every time) and run the critic multiple times. Which experiment is easier to set up with the code above?*
 
-> **⚠️ Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement — run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
+> **Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement — run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
 
 Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Critique and Refine implementation.
 
@@ -235,9 +235,9 @@ In this section you will study three failure modes that can make the critique-re
 **Reward hacking:** The generator satisfies the letter of the rubric while betraying its intent. Example: "exactly 3 sentences" achieved by connecting three ideas with semicolons into one grammatical but unreadable run-on. You can detect this with a human spot-audit of "accepted" outputs — look specifically for drafts that passed all criteria but that a human would rate as poor quality.
 
 Each failure has a measurement:
-- Rubber-stamping → acceptance rate on known-flawed drafts (should be 0%, high rate = failure)
-- Oscillation → issue-recurrence rate across rounds (should decrease monotonically, non-monotone = failure)
-- Reward hacking → human quality rating of accepted drafts vs. rubric-passing rate (gap = failure)
+- Rubber-stamping -> acceptance rate on known-flawed drafts (should be 0%, high rate = failure)
+- Oscillation -> issue-recurrence rate across rounds (should decrease monotonically, non-monotone = failure)
+- Reward hacking -> human quality rating of accepted drafts vs. rubric-passing rate (gap = failure)
 
 ---
 
@@ -318,7 +318,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of the Critique and Refine, *Critique and Refine*.
+-> **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of the Critique and Refine, *Critique and Refine*.
 
 ---
 

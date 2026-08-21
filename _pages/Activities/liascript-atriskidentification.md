@@ -18,7 +18,7 @@ Colleges everywhere run **early-alert** programs: systems that scan engagement a
 
 **Purpose (why we are doing this):** This is the single most common "AI for student success" proposal on real campuses, and it sits exactly at the intersection of everything you have learned: local models, structured outputs, evidence verification, bias, and governance. You will be in rooms where this system is proposed. **Task:** run a triage pipeline over synthetic gradebook and survey data, make the model cite its evidence, then probe how its judgments shift when single features are removed. **Criteria for success:** you can name, with examples from your own runs, at least three distinct failure modes of at-risk identification, and you can state which decisions in this workflow must never be automated — and why.
 
-> **⚠️ Synthetic data only.** Every dataset in this activity ([synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv)) is computer-generated for teaching. The student IDs, scores, and comments correspond to no real people. **No real student data may be used in this activity or in any course exercise derived from it** — not your own, not a classmate's, not "anonymized" real records. This is both a FERPA obligation and a course rule.
+> **Synthetic data only.** Every dataset in this activity ([synthetic_gradebook.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_gradebook.csv), [synthetic_survey.csv](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/data/synthetic_survey.csv)) is computer-generated for teaching. The student IDs, scores, and comments correspond to no real people. **No real student data may be used in this activity or in any course exercise derived from it** — not your own, not a classmate's, not "anonymized" real records. This is both a FERPA obligation and a course rule.
 
 ---
 
@@ -233,7 +233,7 @@ The prompt includes an `INSUFFICIENT_DATA` tier. Its most important function is 
 [( )] Ensure every student receives some form of outreach
 [( )] Penalize students who skipped the survey
 
-> **⚠️ Common Misconception:** Because the output is JSON with cited evidence at temperature 0, it *looks* like the deterministic output of an audited algorithm. It is not: it is a language model's judgment call, shaped by patterns in its training text — including cultural patterns about what struggle "sounds like." Two records with identical numbers and differently-phrased comments can receive different tiers. The structure makes the output *checkable*; it does not make it *objective*.
+> **Common Misconception:** Because the output is JSON with cited evidence at temperature 0, it *looks* like the deterministic output of an audited algorithm. It is not: it is a language model's judgment call, shaped by patterns in its training text — including cultural patterns about what struggle "sounds like." Two records with identical numbers and differently-phrased comments can receive different tiers. The structure makes the output *checkable*; it does not make it *objective*.
 
 ---
 
@@ -332,7 +332,7 @@ An early-alert system's false negatives are especially dangerous to the institut
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 We built the most defensible version of this system — local, minimized, evidence-cited, human-gated — and still found four structural failure modes. The remaining course units give you the vocabulary institutions use to manage exactly this tension: governance frameworks, regulation, and the question of what we owe the people inside our systems.
 

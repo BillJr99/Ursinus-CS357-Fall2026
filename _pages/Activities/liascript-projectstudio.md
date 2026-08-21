@@ -30,7 +30,7 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 |------|--------------------------|--------------------------|
 | **Stand-up** | A brief, structured team status check — each person answers the same fixed questions in two minutes or less — designed to surface blockers and share numbers, not to impress anyone | "The evaluation harness reports 73% tool-call accuracy on our test set. The riskiest unfinished piece is the citation pane." |
 | **Gallery walk** | A peer review format where teams rotate between each other's live demos and leave structured written feedback — the academic equivalent of a design critique or code review | Walkers leave one index card per station with exactly three fields: Strength, Question, Risk |
-| **Triage** | Sorting all feedback into exactly three buckets based on severity and scope — the discipline of deciding what must be fixed, what must be disclosed, and what must be deferred | Feedback: "The retrieval returns empty results for short queries" → Fix before demo |
+| **Triage** | Sorting all feedback into exactly three buckets based on severity and scope — the discipline of deciding what must be fixed, what must be disclosed, and what must be deferred | Feedback: "The retrieval returns empty results for short queries" -> Fix before demo |
 | **Release-readiness checklist** | A concrete, signed-off list of verifiable conditions that must be true before a system is shown publicly — borrowed from software engineering's definition-of-done practice | Six items, each checkable with a yes/no answer, signed off by the Evaluator |
 | **Known failure case** | A defect or limitation that the team has identified, documented, and can demonstrate on demand — as opposed to a hidden failure discovered by someone else during the demo | "When the knowledge base has fewer than three documents, the system returns a hallucinated citation" |
 | **Reproducibility** | The property that another person following your written setup steps, on a fresh machine, gets the same results you do — requires fixed seeds, pinned model versions, and documented steps | Teammate who did not write the setup document successfully runs the system from scratch using only the README |
@@ -103,7 +103,7 @@ Hosts demonstrate honestly: at least one *known failure case* (a defect or limit
 
 ---
 
-> **⚠️ Common Misconception:** Students sometimes treat the gallery walk card format as a formality and write vague feedback ("nice work," "interesting approach") to avoid seeming critical. This defeats the purpose of the exercise. Vague positive feedback gives the receiving team nothing to act on. The most useful feedback you can give is a concrete risk or a genuine question — something the team can investigate and either fix or explicitly disclose. Kindness and specificity are not opposites.
+> **Common Misconception:** Students sometimes treat the gallery walk card format as a formality and write vague feedback ("nice work," "interesting approach") to avoid seeming critical. This defeats the purpose of the exercise. Vague positive feedback gives the receiving team nothing to act on. The most useful feedback you can give is a concrete risk or a genuine question — something the team can investigate and either fix or explicitly disclose. Kindness and specificity are not opposites.
 
 ---
 
@@ -200,7 +200,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
+-> Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 

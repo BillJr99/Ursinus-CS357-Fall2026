@@ -121,7 +121,7 @@ Agent debugging benefits enormously from a structured approach. Without structur
 
 **Stage 5 — Fix and regression-test.** After fixing the root cause, write a test case that would have caught the bug before the fix was applied. Add it to your regression test suite. Verify that the fix resolves the bug without breaking other agent behaviors.
 
-> ⚠️ **Common Misconception:** Many developers try to fix agent bugs by tweaking the prompt slightly and running the agent a few times to see if the bug disappears. If the bug is non-deterministic, this approach is unreliable — the bug may appear to be fixed when it has actually just not triggered randomly. The systematic five-stage process above forces you to confirm a specific, testable hypothesis before declaring the bug fixed, which is the only way to have confidence that your fix actually addresses the root cause.
+> **Common Misconception:** Many developers try to fix agent bugs by tweaking the prompt slightly and running the agent a few times to see if the bug disappears. If the bug is non-deterministic, this approach is unreliable — the bug may appear to be fixed when it has actually just not triggered randomly. The systematic five-stage process above forces you to confirm a specific, testable hypothesis before declaring the bug fixed, which is the only way to have confidence that your fix actually addresses the root cause.
 
 ### Critical Thinking Questions
 
@@ -271,7 +271,7 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
-→ Coming Up Next: In the next activity, we examine synthetic data — using AI to generate training data for AI — and ask what happens when that feedback loop runs for many generations.
+-> Coming Up Next: In the next activity, we examine synthetic data — using AI to generate training data for AI — and ask what happens when that feedback loop runs for many generations.
 
 ## Further Reading
 

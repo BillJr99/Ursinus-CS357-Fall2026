@@ -119,7 +119,7 @@ For agentic systems, the pre-mortem is especially important because agents can f
 
    > *Hint: Consider: what happens if the WriterAgent or CriticAgent receives an unusually long input that approaches its context limit? What happens if two agents receive slightly different versions of the same source document?*
 
-> **⚠️ Common Misconception:** Many students treat the pre-mortem as a pessimistic exercise or feel that spending time on it is wasteful when they are eager to start coding. The opposite is true: the pre-mortem is the most cost-effective work you will do on the project. Every failure mode you identify and mitigate in writing takes about five minutes to address. The same failure mode discovered after deployment may take days or weeks to diagnose, and may leave outputs that cannot be recalled or corrected. Designing for failure is not pessimism — it is professionalism.
+> **Common Misconception:** Many students treat the pre-mortem as a pessimistic exercise or feel that spending time on it is wasteful when they are eager to start coding. The opposite is true: the pre-mortem is the most cost-effective work you will do on the project. Every failure mode you identify and mitigate in writing takes about five minutes to address. The same failure mode discovered after deployment may take days or weeks to diagnose, and may leave outputs that cannot be recalled or corrected. Designing for failure is not pessimism — it is professionalism.
 
 A pre-mortem is most useful when it is conducted:
 
@@ -219,7 +219,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The *Orchestration Patterns: Pipelines, Routers, and Planners* activity is next — how the agents you just designed on paper get wired into pipelines, routers, and planner-led workflows. The design artifacts from today feed directly into Written Assignment 2 and your Final Project's design document.
+-> **Coming Up Next:** The *Orchestration Patterns: Pipelines, Routers, and Planners* activity is next — how the agents you just designed on paper get wired into pipelines, routers, and planner-led workflows. The design artifacts from today feed directly into Written Assignment 2 and your Final Project's design document.
 
 ---
 

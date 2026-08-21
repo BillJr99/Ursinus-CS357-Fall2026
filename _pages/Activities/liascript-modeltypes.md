@@ -43,7 +43,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Reasoning model** | A model trained (often by RL on checkable answers) to generate a long intermediate chain of thought before its final answer | The "thinking" models in Part II |
 | **Chain-of-thought (CoT)** | Intermediate reasoning written out as generated tokens, which condition the tokens that follow | The mechanism behind "think step by step" |
 | **Test-time compute** | Spending more inference tokens/time on a single query to get a better answer | The cost/quality dial in Part II |
-| **Vision / multimodal model** | A model with an image encoder that projects pixels into the token stream, trained on image–text pairs | The short tour in Part III |
+| **Vision / multimodal model** | A model with an image encoder that projects pixels into the token stream, trained on image-text pairs | The short tour in Part III |
 
 ---
 
@@ -57,15 +57,15 @@ In this part you build one clean mental model: a single pipeline of training sta
 
 The pipeline, stage by stage:
 
-**Pretraining (→ a *base* model).** The model is trained on a huge corpus to predict the next token. This is where nearly all world knowledge and language ability is absorbed. The output is a *base* model: fluent, knowledgeable, but not obedient — ask it a question and it may continue your question rather than answer it. The mechanics of tokenization, the next-token objective, and scaling are covered in depth in the pretraining activity.
+**Pretraining (-> a *base* model).** The model is trained on a huge corpus to predict the next token. This is where nearly all world knowledge and language ability is absorbed. The output is a *base* model: fluent, knowledgeable, but not obedient — ask it a question and it may continue your question rather than answer it. The mechanics of tokenization, the next-token objective, and scaling are covered in depth in the pretraining activity.
 
-**Supervised fine-tuning / instruction tuning (→ an *instruct/chat* model).** The base model is trained further on curated (instruction, response) pairs written or vetted by humans. This teaches the *format* of being helpful: read a request, produce a direct, useful answer. The result is an *instruct* or *chat* model — the kind most applications talk to.
+**Supervised fine-tuning / instruction tuning (-> an *instruct/chat* model).** The base model is trained further on curated (instruction, response) pairs written or vetted by humans. This teaches the *format* of being helpful: read a request, produce a direct, useful answer. The result is an *instruct* or *chat* model — the kind most applications talk to.
 
-**Preference alignment (→ a better-behaved instruct model).** Even a well-instruction-tuned model produces answers of uneven quality. Alignment methods — **RLHF** (reinforcement learning from human feedback) and its simpler cousin **DPO** (direct preference optimization) — nudge the model toward responses humans rate higher and away from unhelpful or unsafe ones. The RL and RLHF/DPO mechanics are covered in the RLHF activity.
+**Preference alignment (-> a better-behaved instruct model).** Even a well-instruction-tuned model produces answers of uneven quality. Alignment methods — **RLHF** (reinforcement learning from human feedback) and its simpler cousin **DPO** (direct preference optimization) — nudge the model toward responses humans rate higher and away from unhelpful or unsafe ones. The RL and RLHF/DPO mechanics are covered in the RLHF activity.
 
-**Reasoning training (→ a *reasoning* model).** Optionally, the model is trained with reinforcement learning on problems that have **checkable** answers (math, code, logic puzzles) — rewarding it when a long, correct chain of thought leads to the right final answer. The model learns to *spend tokens thinking* before it commits. The result is a *reasoning* model. This is Part II.
+**Reasoning training (-> a *reasoning* model).** Optionally, the model is trained with reinforcement learning on problems that have **checkable** answers (math, code, logic puzzles) — rewarding it when a long, correct chain of thought leads to the right final answer. The model learns to *spend tokens thinking* before it commits. The result is a *reasoning* model. This is Part II.
 
-**Multimodal training (→ a *vision/multimodal* model).** Separately (and often layered on top of an instruct model), a **vision encoder** is trained and connected via a **projection layer** so that images become tokens the language model can attend to, using image–text pairs. The result is a *vision* or *multimodal* model. This is Part III, with the deep dive in the multimodal agents activity.
+**Multimodal training (-> a *vision/multimodal* model).** Separately (and often layered on top of an instruct model), a **vision encoder** is trained and connected via a **projection layer** so that images become tokens the language model can attend to, using image-text pairs. The result is a *vision* or *multimodal* model. This is Part III, with the deep dive in the multimodal agents activity.
 
 A key idea: these stages are **cumulative and modular**. A reasoning model is still an instruct model underneath; a vision model is usually an aligned instruct model with an image path bolted on. "Model type" is really "how far down the pipeline this snapshot was taken, and which optional branches it took."
 
@@ -78,10 +78,10 @@ Read the pipeline top to bottom. Each row is a training stage; the "Model type p
 | Stage | What it optimizes | Model type produced | Deep-dive activity |
 |-------|-------------------|---------------------|--------------------|
 | Pretraining | Next-token prediction on a huge corpus | **Base** model (fluent, not obedient) | *LLM Pretraining* |
-| Supervised fine-tuning | Imitating good (instruction → response) pairs | **Instruct / chat** model | *Fine-Tuning vs. RAG* |
+| Supervised fine-tuning | Imitating good (instruction -> response) pairs | **Instruct / chat** model | *Fine-Tuning vs. RAG* |
 | Preference alignment (RLHF / DPO) | Matching human preference rankings | Aligned **instruct** model | *RL and RLHF* |
 | Reasoning training (RL on verifiable rewards) | Long chains of thought that reach correct answers | **Reasoning** model | Part II (below) |
-| Multimodal training (encoder + projection) | Aligning image tokens with text on image–text pairs | **Vision / multimodal** model | *Multimodal Agents* |
+| Multimodal training (encoder + projection) | Aligning image tokens with text on image-text pairs | **Vision / multimodal** model | *Multimodal Agents* |
 
 ```text
                     +-------------+
@@ -238,7 +238,7 @@ This part is deliberately short — the full treatment lives in the multimodal a
 
 **Modality fusion.** A vision (or *multimodal*) model keeps the same transformer language backbone but adds two pieces: an **image encoder** that turns pixels into a grid of vectors, and a **projection layer** that maps those vectors into the same space as text tokens. The result is that an image enters the model as a sequence of "image tokens" sitting right alongside the text tokens. The language model attends across both — that is *modality fusion*.
 
-**Trained on image–text pairs.** To make those image tokens meaningful, the model is trained on large collections of images paired with captions or descriptions, learning to align "what the picture shows" with "how we describe it in words." After this, a **vision-language model (VLM)** can read photos, charts, documents, screenshots, and UI states, and reason about them in text.
+**Trained on image-text pairs.** To make those image tokens meaningful, the model is trained on large collections of images paired with captions or descriptions, learning to align "what the picture shows" with "how we describe it in words." After this, a **vision-language model (VLM)** can read photos, charts, documents, screenshots, and UI states, and reason about them in text.
 
 **Why it matters for agents.** A VLM lets an agent perceive things that are not conveniently available as text: a scanned invoice, a diagram, an error dialog, the current screen. But image tokens are lossy — fine print, exact pixel positions, and dense tables can be misread. For the mechanics of VLMs, document pipelines, the modality bottleneck, and grounding, work through the multimodal agents activity linked in Further Reading.
 
@@ -261,7 +261,7 @@ Now we turn the lifecycle into a decision tool. The point of naming model types 
 | **Base** | Pretraining only (next-token prediction) | Text completion, as a starting point for further fine-tuning | Named "base" or "pretrained"; ignores instructions, continues text | Cheapest to run, but rarely what an app wants directly |
 | **Instruct / chat** | + supervised fine-tuning + RLHF/DPO alignment | Following instructions, dialogue, drafting, classification, most everyday tasks | Named "instruct", "chat", or "-it"; answers your question directly | Balanced; the sensible default for most tasks |
 | **Reasoning** | + RL on verifiable rewards (long correct chains of thought) | Multi-step math, code, logic, planning, self-checking | Named "reasoning", "thinking", or "-o"/"-R" style; emits or hides a long think phase | Highest per-query cost and latency (pays test-time compute every call); worth it only for hard, checkable problems |
-| **Vision / multimodal** | Instruct model + image encoder + projection, trained on image–text pairs | Reading images, documents, charts, screenshots, UI | Named "vision", "-V", or "multimodal"; accepts image inputs | Higher cost than text-only; image tokens are lossy on fine detail |
+| **Vision / multimodal** | Instruct model + image encoder + projection, trained on image-text pairs | Reading images, documents, charts, screenshots, UI | Named "vision", "-V", or "multimodal"; accepts image inputs | Higher cost than text-only; image tokens are lossy on fine detail |
 
 The decision, in one line: **default to a fast instruct model; escalate to a reasoning model only when the task is hard, multi-step, and checkable; reach for a vision model only when the input is genuinely an image.** Fine-tuning a model of any of these types for your own data or domain is a further choice — the fine-tuning-vs-RAG activity covers when to fine-tune, when to retrieve, and the LoRA shortcut.
 
@@ -281,7 +281,7 @@ The decision, in one line: **default to a fast instruct model; escalate to a rea
 
 These four activities are the deep dives this hub connects. Open any of them when you need the mechanics behind a stage of the lifecycle:
 
-- [How LLMs Are Built: Tokenization, Pre-Training, and Scaling](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmpretraining.md) — the *pretraining → base model* stage in full.
+- [How LLMs Are Built: Tokenization, Pre-Training, and Scaling](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmpretraining.md) — the *pretraining -> base model* stage in full.
 - [From Rewards to Preferences: Reinforcement Learning and RLHF](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rlhf.md) — RL, RLHF, and DPO, the machinery behind *alignment* and *reasoning* training.
 - [Fine-Tuning, RAG, and Prompting: Choosing the Right Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md) — how to specialize any model type, including the LoRA shortcut.
 - [Multimodal Agents: Vision, Documents, and Code as First-Class Inputs](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md) — the deep dive on *vision/multimodal* models, the modality bottleneck, and grounding.

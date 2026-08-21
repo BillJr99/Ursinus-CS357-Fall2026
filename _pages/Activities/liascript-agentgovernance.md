@@ -71,7 +71,7 @@ A new agent with no conversation history is pointed at the funnel. After each re
 | `docs/ROADMAP.md` | "Which milestones are complete? Which is active?" | "What exactly is in flight right now?" |
 | `.ai/CURRENT_TASK.md` | "What is the active subtask, its completion criteria, and the next immediate action?" | "What did the last session actually do and verify?" |
 | `.ai/SESSION.md` | "What happened last session, what was validated, and what is the Next Safe Action?" | "Does the working tree really match what the log claims?" |
-| `git log` / working tree | Everything above, *verified against reality* | — |
+| `git log` / working tree | Everything above, *verified against reality* | - |
 
 ### Critical Thinking Questions
 
@@ -87,7 +87,7 @@ A new agent with no conversation history is pointed at the funnel. After each re
 
    > *Hint: In the Why Different Answers Every Time? Sampling, Temperature, and Generation activity you saw that models generate plausible continuations. What makes "the file we created last time is still there" an extremely plausible — and frequently wrong — continuation?*
 
-> **⚠️ Common Misconception:** "Good agents have long context windows now, so this bookkeeping is obsolete." Context length does not survive a *vendor switch*, a *quota reset*, or a *conversation you deleted*. The funnel is not a workaround for small contexts — it is what makes the project independent of any one agent, vendor, or session. It is the same reason teams of humans write documentation even though each human has an excellent memory.
+> **Common Misconception:** "Good agents have long context windows now, so this bookkeeping is obsolete." Context length does not survive a *vendor switch*, a *quota reset*, or a *conversation you deleted*. The funnel is not a workaround for small contexts — it is what makes the project independent of any one agent, vendor, or session. It is the same reason teams of humans write documentation even though each human has an excellent memory.
 
 The Documentation Authority Rule says that when an agent's remembered context conflicts with the project documentation, the agent must:
 
@@ -109,7 +109,7 @@ In this part, you will dissect the charter that governed the case-study project 
 - **Mission** — one product sentence, so every session can test "does my change serve this?"
 - **Ranked engineering philosophy** — not a list of values but an *ordered* one (in the case study: correctness-preservation first, then reproducibility, maintainability, automation, documentation). Ranking resolves mid-task conflicts without a human in the loop.
 - **Git policy** — *"Git is the only version history. Never create `*_new`, `*_old`, `*_backup`, `*_fixed`, or duplicate edited files. Each commit should represent one logical engineering change."*
-- **The task loop** — an 11-step per-task cycle: investigate → read docs → read history → document findings → short plan → smallest useful change → build → test → collect logs → update docs → commit one logical change.
+- **The task loop** — an 11-step per-task cycle: investigate -> read docs -> read history -> document findings -> short plan -> smallest useful change -> build -> test -> collect logs -> update docs -> commit one logical change.
 - **Milestone gates** — Milestone 0 is always *project initialization*: scaffolding, documentation, and inventory only, **no feature work**, followed by a hard stop: *"Stop after Milestone 0 is complete. Do not begin Milestone 1 until explicitly directed."*
 - **A regression rule** — *"Whenever a bug is fixed, create a regression test that would have detected it."*
 - **A closing standard** — *"The repository should become easier for the next contributor than it was for the current contributor."*
@@ -143,7 +143,7 @@ The two documents were written independently — the convergence is the interest
 
    > *Hint: One mechanism runs during the task loop; the other is created in response to a failure. Consider the difference between "my change works" and "my fix stays fixed."*
 
-> **⚠️ Common Misconception:** "A charter is just a longer system prompt." A system prompt configures *one agent in one session*. The charter is **agent-independent**: it is read by whichever agent shows up, it is versioned in Git, it survives every session boundary, and — because of the Documentation Authority Rule — it outranks whatever any individual session believes. The system prompt is the *voice*; the charter is the *law*.
+> **Common Misconception:** "A charter is just a longer system prompt." A system prompt configures *one agent in one session*. The charter is **agent-independent**: it is read by whichever agent shows up, it is versioned in Git, it survives every session boundary, and — because of the Documentation Authority Rule — it outranks whatever any individual session believes. The system prompt is the *voice*; the charter is the *law*.
 
 Why does the case-study charter make Milestone 0 (initialization: docs, scaffolding, inventory — no features) mandatory with a hard stop at its end?
 
@@ -192,7 +192,7 @@ E. A new agent (different vendor) is started later with the `AGENT_HANDOFF_KICKO
 
 ### Critical Thinking Questions
 
-1. Put steps A–E in the correct order, and identify which single step, if skipped, would most likely cause the *next* agent to duplicate or destroy work. Defend your choice.
+1. Put steps A-E in the correct order, and identify which single step, if skipped, would most likely cause the *next* agent to duplicate or destroy work. Defend your choice.
 
    > *Hint: Consider what the new agent reads first, and which document is the only one that distinguishes "12 passing because fixed" from "12 passing because the last two were never run."*
 
@@ -204,7 +204,7 @@ E. A new agent (different vendor) is started later with the `AGENT_HANDOFF_KICKO
 
    > *Hint: The next agent must treat docs as authoritative — but the Reality Check row tells it exactly how to re-establish the claim against live state. What does that turn a stale claim into, instead of a landmine?*
 
-> **⚠️ Common Misconception:** "Handoff notes are for when you switch agents." The case-study rule says *before stopping for any reason* — including finishing normally. That is because you cannot reliably predict which stop is a swap: the session that "completed its task" on Friday becomes a handoff on Monday when the vendor has an outage and a different CLI picks up the work. Every stop is treated as a potential handoff, so no stop is a bad one.
+> **Common Misconception:** "Handoff notes are for when you switch agents." The case-study rule says *before stopping for any reason* — including finishing normally. That is because you cannot reliably predict which stop is a swap: the session that "completed its task" on Friday becomes a handoff on Monday when the vendor has an outage and a different CLI picks up the work. Every stop is treated as a potential handoff, so no stop is a bad one.
 
 Every entry in the case-study `SESSION.md` ends with a "Next Safe Action" because:
 
@@ -334,7 +334,7 @@ Copy-paste starting points for every document in this activity are in the course
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 The charter governs agents working on a *repository*. The companion case study, **From Second Brain to Chief of Staff: A Personal Agent in Production**, applies the same governance thinking to an agent wired into your *life*: calendars, task managers, email, and a self-updating knowledge vault — where the irreversible actions are not force-pushes but sent emails and published pages.
 

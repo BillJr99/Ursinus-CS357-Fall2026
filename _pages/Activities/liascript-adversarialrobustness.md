@@ -224,7 +224,7 @@ Once vulnerabilities are patched, ongoing testing ensures regressions do not sil
 
 ---
 
-→ **Coming Up Next:** In the next activity, we examine agent memory systems — how agents remember what you told them, what they forget and when, and how to design external memory architectures that scale beyond the context window while preserving fidelity and privacy.
+-> **Coming Up Next:** In the next activity, we examine agent memory systems — how agents remember what you told them, what they forget and when, and how to design external memory architectures that scale beyond the context window while preserving fidelity and privacy.
 
 ---
 

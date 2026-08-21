@@ -30,7 +30,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 |------|--------------------------|--------------------------|
 | **Orchestrator** | An agent (or piece of code) whose job is to coordinate other agents — deciding what task to assign to whom, in what order, and how to combine their outputs. The orchestrator does not do the actual work; it manages the process. | A campus event system where the orchestrator assigns announcements to an ExtractAgent, then a DraftAgent, then a PolishAgent in sequence. |
 | **Subagent** | A specialized agent that receives a narrow task from the orchestrator, completes it, and returns a result. The subagent typically knows nothing about the larger workflow — it just does its one job. | The PolishAgent, which only sees a draft announcement and returns a polished version — it does not know about the extraction or drafting steps. |
-| **Pipeline** | An orchestration pattern where agents are arranged in a fixed sequence, each passing its output to the next. The sequence is determined before the pipeline runs and does not change based on what the agents produce. | extract → draft → polish for a digest email, with each stage seeing only its own input. |
+| **Pipeline** | An orchestration pattern where agents are arranged in a fixed sequence, each passing its output to the next. The sequence is determined before the pipeline runs and does not change based on what the agents produce. | extract -> draft -> polish for a digest email, with each stage seeing only its own input. |
 | **Router** | An orchestration pattern where a classifier agent reads an input and decides which specialist agent should handle it. The router's only job is to classify; it does not do the work itself. | A help-desk router that classifies incoming tickets as "hardware", "software", or "accounts" and sends each ticket to the right specialist. |
 | **Planner** | An orchestration pattern where a planning agent writes a step list for a task at runtime (because the steps cannot be determined in advance), worker agents execute the steps, and the planner revises the plan when workers report failures. | "Plan my study schedule for finals, adapting dynamically as I report which topics I have finished." |
 | **Seam** | The boundary between two agents in an orchestration — the point where one agent's output becomes the next agent's input. Seams are the most common location of bugs in multi-agent systems, because small inconsistencies in format or content can compound across a pipeline. | The JSON structure that ResearchAgent produces must exactly match the structure WriterAgent expects — a missing field at this seam causes a silent bug. |
@@ -97,7 +97,7 @@ python orchestration.py
 
 ## Code Cell
 
-The code below implements both a three-stage pipeline (extract → draft → polish) and a two-stage router (classify → dispatch) using a local language model. Read through the comments before running it — each comment explains a design choice you will be asked about in the questions that follow.
+The code below implements both a three-stage pipeline (extract -> draft -> polish) and a two-stage router (classify -> dispatch) using a local language model. Read through the comments before running it — each comment explains a design choice you will be asked about in the questions that follow.
 
 ```python
 import requests
@@ -203,7 +203,7 @@ for ticket in [
 
    > *Hint: Think about the critique-and-refine pattern. Could you add a "verify" stage after "polish" that checks the final output against the extracted facts? What would its one-sentence system prompt say?*
 
-> **⚠️ Common Misconception:** Many students assume that because a pipeline has multiple agents, it is inherently more reliable than a single agent. This is not automatically true. A pipeline can fail at any seam, and because each agent is working from the previous agent's output rather than the original input, errors can compound silently. A pipeline is more *maintainable* and more *debuggable* than a mega-prompt — but only if you actually inspect the intermediate outputs. Return all intermediates from your pipeline functions (as the code above does with `return facts, draft, final`) and check them.
+> **Common Misconception:** Many students assume that because a pipeline has multiple agents, it is inherently more reliable than a single agent. This is not automatically true. A pipeline can fail at any seam, and because each agent is working from the previous agent's output rather than the original input, errors can compound silently. A pipeline is more *maintainable* and more *debuggable* than a mega-prompt — but only if you actually inspect the intermediate outputs. Return all intermediates from your pipeline functions (as the code above does with `return facts, draft, final`) and check them.
 
 According to the design heuristic developed today, a team should reach for a planner agent only when:
 
@@ -326,13 +326,13 @@ def attempt(task, max_steps=6):
 
    *Starter hint:*
    ```json
-   // Planner → Worker: task assignment
+   // Planner -> Worker: task assignment
    {"task_id": "t1", "action": "study", "topic": "probability", "duration_minutes": 60, "deadline": "2026-12-10"}
 
-   // Worker → Planner: success report
+   // Worker -> Planner: success report
    {"task_id": "t1", "status": "complete", "notes": "Covered chapters 4-6, comfortable with Bayes theorem"}
 
-   // Worker → Planner: failure report (what should go here?)
+   // Worker -> Planner: failure report (what should go here?)
    {"task_id": "t1", "status": "blocked", "reason": "...", "suggestion": "..."}
    ```
 
@@ -352,7 +352,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** *The Critique and Refine Pattern* activity is next — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
+-> **Coming Up Next:** *The Critique and Refine Pattern* activity is next — a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
 
 ---
 
@@ -368,7 +368,7 @@ Respond to all three levels in your notebook:
 
 > **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md) — read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
 
-Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class. Parts I–III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This section steps back to the single decision that sits *above* all of them: **who decides the control flow — you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
+Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class. Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This section steps back to the single decision that sits *above* all of them: **who decides the control flow — you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
 
 ---
 
@@ -376,7 +376,7 @@ Everything below is **at-home material**: nothing in this section is needed for 
 
 **Why this matters:** A fixed pipeline is a scheduled commuter train — the same stops, in the same order, every single day; you can print the timetable a year in advance. Dynamic orchestration is a taxi driver who decides the route while driving, rerouting around traffic you could not have predicted. The train is boring, cheap, and easy to audit: if a passenger ends up in the wrong place, you know exactly which segment failed. The taxi is flexible and handles trips no timetable anticipated — but you cannot promise, before the trip starts, exactly which streets it will use. Neither is "better." They answer different questions.
 
-**Family 1 — Fixed (known) orchestration.** *You*, the developer, wire a predetermined graph of agents. The nodes and edges are decided before any input arrives; the control flow lives in your Python, not in a model's head. The pipeline and router from Parts I–II are both of this family. Its virtues are exactly the ones you already measured: predictability, step-by-step debuggability (inspect any intermediate output), and bounded cost (you can count the model calls before you run).
+**Family 1 — Fixed (known) orchestration.** *You*, the developer, wire a predetermined graph of agents. The nodes and edges are decided before any input arrives; the control flow lives in your Python, not in a model's head. The pipeline and router from Parts I-II are both of this family. Its virtues are exactly the ones you already measured: predictability, step-by-step debuggability (inspect any intermediate output), and bounded cost (you can count the model calls before you run).
 
 **Family 2 — Dynamic orchestration.** An orchestrator — often called a **supervisor** — is itself an LLM. You hand it the task plus a *roster* of available sub-agents, and each turn *it* decides which sub-agent to run, whether to spawn a fresh one for a newly-discovered subtask, or whether the work is done. The control flow is now a model *output*, not your code. Its virtues are the mirror image of Family 1: flexibility, open-endedness, and the ability to handle tasks whose shape you could not enumerate in advance. Its costs are the same mirror: unpredictable paths, harder debugging (the "why did it do that?" lives in a prompt), and open-ended spend unless you cap it.
 
@@ -396,7 +396,7 @@ This extends Part I's heuristic — **choose the least dynamic pattern that solv
 
 Fixed orchestration is not one shape but a small family of reusable ones. Below is each shape as its own "slide": a one-line *when to use*, a tiny flow sketch, and a pointer to where you have already met it. In all five, notice the common property — **the wiring is authored by you and does not change based on what the agents produce.**
 
-### 4a. Sequential Pipeline (A → B → C)
+### 4a. Sequential Pipeline (A -> B -> C)
 
 *When to use:* the steps are known ahead of time and each stage refines the previous stage's output.
 
@@ -431,7 +431,7 @@ input --> split +--> [ Agent 2 ] --+--> [ Aggregate ] --> output
 
 The subtasks share no context — that independence is what lets them run in parallel — and a final aggregator agent (or plain code) merges the results. Compare this to the sequential pipeline: there each stage *depends* on the last; here the branches are deliberately isolated until the gather step.
 
-### 4d. Critique–Refine (generator ↔ critic loop)
+### 4d. Critique-Refine (generator <-> critic loop)
 
 *When to use:* there is a quality bar you can articulate and check, and one pass is not reliably good enough.
 
@@ -549,7 +549,7 @@ DeepAgents makes exactly these decisions — when to plan, when to spawn, when t
 | Sequential pipeline | You, before runtime | The steps are known and each refines the last | An error at a seam propagates silently downstream |
 | Router / dispatch | You (the classifier only picks a label) | One input, several handlers, exactly one applies | A mis-classification sends the whole task to the wrong specialist |
 | Parallel fan-out / gather | You (branches are independent by design) | N independent subtasks whose results combine | The aggregator hides disagreement or drops a branch's result |
-| Critique–refine | You (a bounded generator ↔ critic loop) | A checkable quality bar that one pass misses | The loop never converges and burns the revision budget |
+| Critique-refine | You (a bounded generator <-> critic loop) | A checkable quality bar that one pass misses | The loop never converges and burns the revision budget |
 | Debate / consensus | You (a fixed voting or clustering rule) | Uncertain or subjective answers needing robustness | Correlated agents "agree" on the same wrong answer |
 | Supervisor (dynamic) | An orchestrator LLM, each turn | The workflow cannot be enumerated in advance | Runaway spawning and unpredictable, hard-to-audit paths |
 
@@ -567,7 +567,7 @@ DeepAgents makes exactly these decisions — when to plan, when to spawn, when t
 
     > *Hint: The decisive question is roughly "can I enumerate the sequence (or set) of sub-agents this task needs before it starts?" If yes, a fixed shape is cheaper, more predictable, and easier to debug — so prefer it. A supervisor earns its unpredictability only when the answer is "no, the needed steps depend on what we discover along the way." How does choosing dynamic-when-fixed-would-do repeat the exact mistake the Part I heuristic warns against?*
 
-> **⚠️ Common Misconception:** Students often assume "dynamic orchestration" means "the developer no longer controls the system." The opposite is true of any system you would actually deploy. In a supervisor loop the model chooses the *next move*, but you still author the roster it chooses from, the budget that bounds it, and the stop condition that ends it. Dynamic orchestration relocates *some* decisions to the model; it never relocates your responsibility for the roster, the budget, and the stop.
+> **Common Misconception:** Students often assume "dynamic orchestration" means "the developer no longer controls the system." The opposite is true of any system you would actually deploy. In a supervisor loop the model chooses the *next move*, but you still author the roster it chooses from, the budget that bounds it, and the stop condition that ends it. Dynamic orchestration relocates *some* decisions to the model; it never relocates your responsibility for the roster, the budget, and the stop.
 
 Which single property most distinguishes a supervisor (dynamic) orchestrator from a router (fixed)?
 

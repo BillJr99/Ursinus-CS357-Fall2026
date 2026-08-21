@@ -78,7 +78,7 @@ A team wants to run a 70B-parameter model quantized to 4 bits on a laptop with 1
 [( )] About 70 GB regardless of quantization
 [( )] Quantization makes memory use independent of parameter count
 
-> **⚠️ Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy. In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks — the main practical impact is speed and memory, not correctness. The serious quality drop typically happens at 2-bit or below. Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
+> **Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy. In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks — the main practical impact is speed and memory, not correctness. The serious quality drop typically happens at 2-bit or below. Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
 
 ---
 
@@ -229,7 +229,7 @@ Everything else — append the user turn, resend the whole list, append the repl
 
    > *Hint: Think about writing the messages list to disk (as JSON) after each turn and reloading it on startup.*
 
-> **⚠️ Common Misconception:** It is tempting to think the model "remembers" your conversation the way a person does. It does not. Between calls the server keeps *nothing*; the illusion of memory comes entirely from your client resending the full `messages` list each time. When the list grows too long for the context window, that memory silently starts to fall off the front — exactly the problem the *Memory and the Small Context Window* activity later solves with summarization.
+> **Common Misconception:** It is tempting to think the model "remembers" your conversation the way a person does. It does not. Between calls the server keeps *nothing*; the illusion of memory comes entirely from your client resending the full `messages` list each time. When the list grows too long for the context window, that memory silently starts to fall off the front — exactly the problem the *Memory and the Small Context Window* activity later solves with summarization.
 
 ---
 
@@ -269,7 +269,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
-→ Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world — and the local stack you built today is the foundation for the Local Agent Lab. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
+-> Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world — and the local stack you built today is the foundation for the Local Agent Lab. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
 
 ## 6. Further Reading
 

@@ -80,11 +80,11 @@ The Final Project's milestones run in the sequence below; see the course schedul
 
 | Sequence | Milestone | Points |
 |------|-----------|--------|
-| Hand-out | **Project handed out.** Teams read all three directions and begin converging on one. | — |
-| Before the proposal | **Intra-team check-in 2** (private, to the instructor) — this check-in precedes and informs your proposal. | — |
+| Hand-out | **Project handed out.** Teams read all three directions and begin converging on one. | - |
+| Before the proposal | **Intra-team check-in 2** (private, to the instructor) — this check-in precedes and informs your proposal. | - |
 | Proposal deadline | **Proposal due**, with direction declared, stakeholder grounding, and AI-use disclosure. | **25 / 100** |
-| Sprint window | **Sprints.** Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the sprint/gallery-walk window (the final sprint). | — |
-| Final sprint | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | — |
+| Sprint window | **Sprints.** Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the sprint/gallery-walk window (the final sprint). | - |
+| Final sprint | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | - |
 | Last class | **Demo Day + final submission**, including the partner-facing artifact and the final AI-use disclosure. | **75 / 100** |
 
 The registrar's final-exam slot is reserved for Demo Day overflow only — if all teams present at the last class meeting, it is not used. Either way, the last class meeting is the submission deadline: no work is accepted after it.
@@ -135,9 +135,9 @@ Build in three sprints between the proposal and Demo Day, aligned with in-class 
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
-| Sprint 1 (proposal submitted → cross-team proposal critique) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
-| Sprint 2 (proposal critique → gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
-| Sprint 3 (gallery walk → Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
+| Sprint 1 (proposal submitted -> cross-team proposal critique) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
+| Sprint 2 (proposal critique -> gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
+| Sprint 3 (gallery walk -> Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
 **Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 

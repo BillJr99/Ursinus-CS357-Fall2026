@@ -231,7 +231,7 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
    > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food? Who provides each kind of protection?*
 
-> **⚠️ Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools — it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited — not by assuming the protocol protects you.
+> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools — it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited — not by assuming the protocol protects you.
 
 The primary value MCP adds over each team writing custom tool integrations is:
 
@@ -320,7 +320,7 @@ In your notebook, respond to all three levels:
 
 ---
 
-→ **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
+-> **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
 
 ---
 

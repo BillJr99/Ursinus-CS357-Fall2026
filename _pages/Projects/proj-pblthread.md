@@ -290,9 +290,9 @@ The three check-ins are timed to the Tuckman map above, and each has a stage-spe
 
 | Check-In | Where On The Thread | Tuckman Transition | Team Focus |
 |---|---|---|---|
-| **1** | With the Stakeholder Brief | Storming → Norming | Surface the differing values and work styles the first real disagreements have exposed, and set (or reset) ground rules. Re-read the charter: which norm has been hardest to keep? |
-| **2** | Between the tracks and the proposal | Norming → Performing | Audit the mechanics: are roles *actually* rotating, or has the team quietly specialized? Is anyone under-loaded or over-loaded? Fix it now, before the sprints amplify it. |
-| **3** | After the gallery walk | Performing → Adjourning | Look back deliberately: capture what this team learned about collaboration — the norms that worked, the repair that succeeded, the thing you would put in your next team's charter on day one. |
+| **1** | With the Stakeholder Brief | Storming -> Norming | Surface the differing values and work styles the first real disagreements have exposed, and set (or reset) ground rules. Re-read the charter: which norm has been hardest to keep? |
+| **2** | Between the tracks and the proposal | Norming -> Performing | Audit the mechanics: are roles *actually* rotating, or has the team quietly specialized? Is anyone under-loaded or over-loaded? Fix it now, before the sprints amplify it. |
+| **3** | After the gallery walk | Performing -> Adjourning | Look back deliberately: capture what this team learned about collaboration — the norms that worked, the repair that succeeded, the thing you would put in your next team's charter on day one. |
 
 Each team progress report answers three stage-specific prompts alongside the standard shipped/next/risks sections:
 

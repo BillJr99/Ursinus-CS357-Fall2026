@@ -222,7 +222,7 @@ A production agent is silently failing on approximately 8% of queries — users 
 
 ---
 
-→ **Coming Up Next:** In the next activity, we examine how regulatory frameworks — the EU AI Act, NIST AI RMF, and sector rules — determine what you are legally required to observe, log, and audit, and what records you must keep when something goes wrong.
+-> **Coming Up Next:** In the next activity, we examine how regulatory frameworks — the EU AI Act, NIST AI RMF, and sector rules — determine what you are legally required to observe, log, and audit, and what records you must keep when something goes wrong.
 
 ---
 

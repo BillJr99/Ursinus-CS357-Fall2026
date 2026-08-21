@@ -174,7 +174,7 @@ The three-phase structure creates significant practical challenges: you need sep
 | **2. Reward Model** | SFT model + human preference labels (A > B for same prompt) | Train a separate classifier to predict human preferences | Reward model (RM): scores (prompt, response) pairs |
 | **3. PPO** | SFT model + reward model | RL loop: generate responses, score with RM, update policy; KL penalty keeps policy near SFT model | Aligned model: maximizes RM scores while staying coherent |
 
-> **⚠️ Common Misconception:** Many students assume the reward model *is* the language model, or that RLHF means "training the model to get positive ratings." In reality, RLHF trains a *separate* reward model on human preference data, then uses that reward model as the environment's reward signal in an RL loop that updates the *language model*. There are three models involved: the SFT model, the reward model, and the PPO-updated policy.
+> **Common Misconception:** Many students assume the reward model *is* the language model, or that RLHF means "training the model to get positive ratings." In reality, RLHF trains a *separate* reward model on human preference data, then uses that reward model as the environment's reward signal in an RL loop that updates the *language model*. There are three models involved: the SFT model, the reward model, and the PPO-updated policy.
 
 ### Critical Thinking Questions
 
@@ -324,7 +324,7 @@ The result: a model that has been trained on thousands of critique-and-revision 
 | **Primary failure mode** | Reward hacking; annotator bias | Conflicting principles; bias in the constitution itself | Both fail differently; production systems often combine both |
 | **Who encodes values** | Annotators (implicitly, through choices) | Constitution authors (explicitly, in writing) | CAI's values are more legible but concentrate power in the team that writes the constitution |
 
-> **⚠️ Common Misconception:** Students often assume Constitutional AI eliminates human judgment from alignment. It does not — humans still write the constitution, and the specific wording of each principle directly shapes how the model resolves edge cases. The difference is *where* the human judgment occurs: at the level of individual response labels (RLHF) versus at the level of general principles (CAI). CAI makes values more transparent but does not make them more neutral.
+> **Common Misconception:** Students often assume Constitutional AI eliminates human judgment from alignment. It does not — humans still write the constitution, and the specific wording of each principle directly shapes how the model resolves edge cases. The difference is *where* the human judgment occurs: at the level of individual response labels (RLHF) versus at the level of general principles (CAI). CAI makes values more transparent but does not make them more neutral.
 
 ### Critical Thinking Questions
 
@@ -380,7 +380,7 @@ The result: a model that has been trained on thousands of critique-and-revision 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the next activity we examine how the transformer architecture and attention mechanism actually learn from pre-training data — and how scaling laws (the relationship between model size, dataset size, and performance) determine why the largest models are trained the way they are.
 

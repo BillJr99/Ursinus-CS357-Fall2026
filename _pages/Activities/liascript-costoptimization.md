@@ -109,9 +109,9 @@ A production agent has a 2,000-token system prompt that is identical for all use
 
 ---
 
-> ⚠️ **Common Misconception:** "Switching to a local model (like Ollama) eliminates AI costs entirely."
+> **Common Misconception:** "Switching to a local model (like Ollama) eliminates AI costs entirely."
 >
-> A local model eliminates per-token API fees, but not cost. You still pay for: the GPU or cloud compute instance to run the model (a decent GPU costs $0.50–$2.00/hour on cloud providers), electricity, the engineering time to set up and maintain the local inference stack, and the opportunity cost of GPU time that could serve other tasks. For low-volume projects, a local model often costs *more* when you account for idle GPU time. The breakeven analysis depends on your query volume — which is exactly what the cost model in Part IV is designed to compute.
+> A local model eliminates per-token API fees, but not cost. You still pay for: the GPU or cloud compute instance to run the model (a decent GPU costs $0.50-$2.00/hour on cloud providers), electricity, the engineering time to set up and maintain the local inference stack, and the opportunity cost of GPU time that could serve other tasks. For low-volume projects, a local model often costs *more* when you account for idle GPU time. The breakeven analysis depends on your query volume — which is exactly what the cost model in Part IV is designed to compute.
 
 Caching reduces the cost of repeated work; Part III introduces model routing, which reduces cost on novel work by matching each query to the cheapest model tier capable of answering it correctly.
 
@@ -234,7 +234,7 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
    *What to do:* For your final project, identify which parts of your prompt are static (identical on every call) and which are dynamic (vary per user or per query). Redesign your prompt structure so that all static content appears first. Estimate the cache hit rate you would achieve if prompt caching were enabled, and calculate the monthly savings.
 
-   *Starter hint:* Draw a diagram of your current prompt structure showing: [SYSTEM PROMPT] → [RETRIEVED CONTEXT] → [USER MESSAGE]. Mark each section as Static (same every call) or Dynamic (changes per call). Static content that appears before any dynamic content is cacheable; dynamic content anywhere in the prefix breaks caching for everything after it.
+   *Starter hint:* Draw a diagram of your current prompt structure showing: [SYSTEM PROMPT] -> [RETRIEVED CONTEXT] -> [USER MESSAGE]. Mark each section as Static (same every call) or Dynamic (changes per call). Static content that appears before any dynamic content is cacheable; dynamic content anywhere in the prefix breaks caching for everything after it.
 
    *You've succeeded when:* You can produce an annotated prompt diagram, a cache-hit-rate estimate with reasoning, and a dollar-amount monthly savings estimate using the formula from Model 4.
 
@@ -248,7 +248,7 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
 ---
 
-→ Coming Up Next: Cost is one constraint on how we build AI systems. The next module examines another: the cognitive science of how humans and AI systems make decisions — and what happens when those processes collide.
+-> Coming Up Next: Cost is one constraint on how we build AI systems. The next module examines another: the cognitive science of how humans and AI systems make decisions — and what happens when those processes collide.
 
 ## Further Reading
 

@@ -100,7 +100,7 @@ The user explicitly instructs the agent to "forget" its persona or "pretend to b
 - Reminder injection: append a condensed persona reminder at context boundaries (e.g., when old turns are dropped)
 - Constitutional constraints: embed non-negotiable rules in a format that is harder to override ("NEVER, under any circumstances...")
 
-> ⚠️ **Common Misconception:** Many people assume that a longer, more detailed system prompt automatically produces a safer agent. In reality, a longer prompt with internal contradictions can produce *worse* behavior than a shorter, internally consistent one. Length is not a substitute for clarity, and adding more rules without checking for conflicts often makes drift and collapse more likely — not less.
+> **Common Misconception:** Many people assume that a longer, more detailed system prompt automatically produces a safer agent. In reality, a longer prompt with internal contradictions can produce *worse* behavior than a shorter, internally consistent one. Length is not a substitute for clarity, and adding more rules without checking for conflicts often makes drift and collapse more likely — not less.
 
 ### Critical Thinking Questions
 
@@ -196,7 +196,7 @@ Empirically, effective system prompts share six characteristics:
 
 **Societal level:** System prompts are usually trade secrets — companies do not publish them. This means users interact with AI agents without knowing the rules those agents are following. Is this acceptable? Should users have a right to know the broad principles governing an agent they use? What would "persona transparency" look like in practice, and what would companies lose by providing it?
 
-→ Coming Up Next: In the Alignment and Safety activity, we will look at how the values embedded in a system prompt connect to the deeper question of how AI systems are trained to be helpful, harmless, and honest in the first place.
+-> Coming Up Next: In the Alignment and Safety activity, we will look at how the values embedded in a system prompt connect to the deeper question of how AI systems are trained to be helpful, harmless, and honest in the first place.
 
 ## Further Reading
 

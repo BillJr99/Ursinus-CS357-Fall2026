@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Docker from Zero: Containers for Agent Builders
 
-Our entire local AI stack (the model servers, the gateways, the agent frameworks, the web frontends) runs in **Docker containers**, and so will the agents you build. This tutorial assumes you have never touched Docker and ends with you writing Dockerfiles and composing multi-service stacks. The arc: **images versus containers → run, exec, logs, stop → ports → volumes → writing a Dockerfile → docker compose → talking to the host**.
+Our entire local AI stack (the model servers, the gateways, the agent frameworks, the web frontends) runs in **Docker containers**, and so will the agents you build. This tutorial assumes you have never touched Docker and ends with you writing Dockerfiles and composing multi-service stacks. The arc: **images versus containers -> run, exec, logs, stop -> ports -> volumes -> writing a Dockerfile -> docker compose -> talking to the host**.
 
 ---
 

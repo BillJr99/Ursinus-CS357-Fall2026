@@ -111,7 +111,7 @@ Which channel in the Model 1 diagram represents the *highest-stakes write path* 
 [( )] Channel (2), the LTI score passback
 [(X)] Channel (5), final grade posting from LMS into the SIS system of record
 
-> **⚠️ Common Misconception:** Students often assume "integrating AI with the LMS" means the AI model runs inside the LMS. It almost never does. The integration is plumbing: rosters, submissions, and scores flow between systems over the channels above, and the model runs wherever you put it — on your laptop, on a campus server, or (riskiest) at a cloud vendor. Where the model runs determines who can see the data, which is why our course's local-first stack is itself a privacy decision.
+> **Common Misconception:** Students often assume "integrating AI with the LMS" means the AI model runs inside the LMS. It almost never does. The integration is plumbing: rosters, submissions, and scores flow between systems over the channels above, and the model runs wherever you put it — on your laptop, on a campus server, or (riskiest) at a cloud vendor. Where the model runs determines who can see the data, which is why our course's local-first stack is itself a privacy decision.
 
 ---
 
@@ -308,7 +308,7 @@ Under FERPA, the cleanest reason a *local* model changes the compliance analysis
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Today's most contested proposal (D) predicted student outcomes from behavioral and demographic data. Next we take that exact use case seriously as a case study: **early-alert and at-risk identification with local AI** — how it works, why institutions want it, and how it fails.
 

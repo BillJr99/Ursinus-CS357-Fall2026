@@ -174,7 +174,7 @@ Having examined how responsibility distributes across the principal-agent chain,
 
 # Part IV: Synthesis
 
-In this final part, you will apply the philosophical tools from Parts I–III to your own course project, producing a concrete responsibility map and design audit that you can use for real professional decisions.
+In this final part, you will apply the philosophical tools from Parts I-III to your own course project, producing a concrete responsibility map and design audit that you can use for real professional decisions.
 
 ## Exercises
 
@@ -214,7 +214,7 @@ In this final part, you will apply the philosophical tools from Parts I–III to
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 The next activity introduces the formal ethical frameworks — utilitarian, deontological, virtue-based, and justice-based — that give you structured vocabulary for the responsibility and design questions you encountered today. You will apply those frameworks directly to the scenarios you analyzed in Model 3.
 

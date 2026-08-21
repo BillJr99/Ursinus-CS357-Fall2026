@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Advanced Agent Loops: Control Flow, Reflection, and Recovery
 
-In the first agent loop activity we established perceive → plan → act → observe. That works for simple, short-horizon tasks. Real deployments reveal failure modes that the basic loop cannot handle: **infinite oscillation**, **context overflow**, **catastrophic forgetting in long tasks**, and **the agent not knowing it is done**. Today we study four architectural patterns — ReAct, Reflexion, Tree-of-Thought, and checkpointing — and the engineering controls that make long-running agents reliable.
+In the first agent loop activity we established perceive -> plan -> act -> observe. That works for simple, short-horizon tasks. Real deployments reveal failure modes that the basic loop cannot handle: **infinite oscillation**, **context overflow**, **catastrophic forgetting in long tasks**, and **the agent not knowing it is done**. Today we study four architectural patterns — ReAct, Reflexion, Tree-of-Thought, and checkpointing — and the engineering controls that make long-running agents reliable.
 
 ---
 
@@ -87,7 +87,7 @@ The task: *"Find the three most-cited papers on transformer self-attention publi
 | 2 | "Attention Is All You Need" (Vaswani et al., 2017) is almost certainly the most-cited transformer paper. I will fetch its citation count first as a baseline. | `get_paper_citations(paper_id="204e3073870fae3d05bcbc2f6a8e263d9b72e776")` | Returns: 97,432 citations as of today's date. | That is the most-cited paper. Now I will fetch the BERT paper, which is also transformer-based and pre-2020. |
 | 3 | BERT (Devlin et al., 2018) is a major transformer paper published before 2020. I will retrieve its citation count next. | `get_paper_citations(paper_id="df2b0e26d0599ce3e70df8a9da02e51594e0e992")` | Returns: 51,618 citations. | Two papers found with counts. I need a third. The search results include "Universal Language Model Fine-Tuning (ULMFiT)" by Howard and Ruder (2018) — I will check it. |
 | 4 | ULMFiT is a 2018 NLP transfer learning paper that is transformer-adjacent. It appeared in the top 10 search results, making it a reasonable candidate for third most-cited. | `get_paper_citations(paper_id="1e077413b25c4d68cd0a8e6e8e42fcc50c85db7a")` | Returns: 4,441 citations. | I now have three papers with citation counts: 97,432; 51,618; 4,441. I can compile and return the final answer. All sub-goals are satisfied. |
-| 5 | I have all data needed to answer the task. No more tool calls are required. The three papers are identified and their citation counts are verified from the API. | *(No tool call — generating final answer text)* | — | Task complete. Returning the three papers and their citation counts to the user. |
+| 5 | I have all data needed to answer the task. No more tool calls are required. The three papers are identified and their citation counts are verified from the API. | *(No tool call — generating final answer text)* | - | Task complete. Returning the three papers and their citation counts to the user. |
 
 Observe that at step 1 the agent decides it needs two separate API calls rather than assuming one call returns everything. At step 5, the agent recognizes termination because it has satisfied all sub-goals — not because it hit a step limit.
 
@@ -105,7 +105,7 @@ Observe that at step 1 the agent decides it needs two separate API calls rather 
 
    > *Hint: What machine-checkable criterion could be added to the task? For example, instead of "find three papers," what if the task specified a verifiable property each paper must have?*
 
-> **⚠️ Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought" — that the `Thought:` entries are genuine inner reasoning. They are not. The `Thought:` entries are generated text, just like the `Action:` entries. The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process. This means a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step. ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable* — but visibility does not guarantee correctness. Always verify key claims in the thought entries against the observations they are based on.
+> **Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought" — that the `Thought:` entries are genuine inner reasoning. They are not. The `Thought:` entries are generated text, just like the `Action:` entries. The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process. This means a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step. ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable* — but visibility does not guarantee correctness. Always verify key claims in the thought entries against the observations they are based on.
 
 Now that you have seen what a ReAct loop looks like step by step, the next model examines what can go wrong when such a loop runs unsupervised — and the engineering controls that prevent those failures.
 
@@ -128,7 +128,7 @@ Even a well-architected loop can fail. These controls are not optional — they 
 | **Human escalation gate** | `if action.is_irreversible() and uncertainty > 0.3: pause_and_notify()` — before any write, delete, send, or purchase action with nontrivial uncertainty, stop and ask for human approval. | Irreversible harm from a low-confidence or misunderstood instruction. |
 | **Checkpointing** | `state.save(step, context, memory, external_actions)` after each action completes — save the full state to disk or a database. | Lost progress on long tasks after crashes, timeouts, or infrastructure failures. |
 
-**Idempotency and oscillation** deserve a closer look. An agent oscillates when it alternates between two actions: `search("climate data")` → finds nothing new → `refine_query("climate data 2024")` → finds nothing new → `search("climate data")` again. The idempotency check stores a hash of `(action_name, args)` and flags repetition.
+**Idempotency and oscillation** deserve a closer look. An agent oscillates when it alternates between two actions: `search("climate data")` -> finds nothing new -> `refine_query("climate data 2024")` -> finds nothing new -> `search("climate data")` again. The idempotency check stores a hash of `(action_name, args)` and flags repetition.
 
 **Checkpointing** allows a loop to resume after failure. The checkpoint stores the full context window, the tool call history, and any external state (files written, IDs retrieved). On restart, the agent replays from the last checkpoint rather than from zero. This is especially important for tasks that take hours or involve expensive API calls.
 
@@ -251,7 +251,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The next activity covers *orchestration patterns* — how to compose multiple specialized agents into pipelines, routers, and planners, and how the lessons from loop safety apply when agents are handing off work to each other.
+-> **Coming Up Next:** The next activity covers *orchestration patterns* — how to compose multiple specialized agents into pipelines, routers, and planners, and how the lessons from loop safety apply when agents are handing off work to each other.
 
 ---
 

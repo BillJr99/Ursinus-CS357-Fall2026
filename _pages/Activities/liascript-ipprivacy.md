@@ -172,7 +172,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
 

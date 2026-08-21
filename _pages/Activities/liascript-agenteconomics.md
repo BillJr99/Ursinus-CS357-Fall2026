@@ -55,10 +55,10 @@ AI services are priced on a **per-token** basis, where a token is roughly 0.75 w
 | Tier | Example | Price / 1M Input Tokens | Price / 1M Output Tokens | Latency | Capability | Who Pays |
 |------|---------|------------------------|--------------------------|---------|------------|----------|
 | Open-source local | Llama 3 8B (self-hosted on your own GPU) | ~$0 API cost (but electricity + hardware amortized) | ~$0 API cost | Very low on a good GPU; can be slow on CPU | Strong for common tasks; weaker than frontier models on nuanced reasoning | Individual or organization pays hardware and electricity; no per-token fee |
-| Small cloud | GPT-4o mini, Gemini Flash 1.5 | $0.10–$0.40 per million input tokens | $0.40–$1.60 per million output tokens | Very low — responses typically in under 1 second | Strong for structured extraction, classification, simple Q&A | Developer or end user pays per call; no upfront hardware cost |
-| Mid cloud | GPT-4o, Claude Sonnet 3.7 | $2–$5 per million input tokens | $8–$15 per million output tokens | Low — typically 1-3 seconds for moderate response length | Strong across most tasks including complex reasoning, code generation, analysis | Developer or enterprise pays per call; this is the most common tier for production applications |
-| Frontier cloud | GPT-4.5, Claude Opus | $15–$75 per million input tokens | $75–$150 per million output tokens | Moderate — may be 5-30 seconds for long responses | Best available capability on the most demanding tasks — complex multi-step reasoning, nuanced judgment | Enterprise or research; typically justified only for tasks where the capability gap is large and the per-task value is high |
-| Fine-tuned | Custom fine-tune on a mid-tier model (e.g., GPT-4o fine-tune) | Base model price + training cost (~$2–$10 per training run) | 10-30% markup over the base model's output price | Similar to the base model | Specialized domain knowledge; consistent format adherence; reduced system prompt length needed | Enterprise pays both training costs (one-time or periodic) and inference costs (per-token, ongoing) |
+| Small cloud | GPT-4o mini, Gemini Flash 1.5 | $0.10-$0.40 per million input tokens | $0.40-$1.60 per million output tokens | Very low — responses typically in under 1 second | Strong for structured extraction, classification, simple Q&A | Developer or end user pays per call; no upfront hardware cost |
+| Mid cloud | GPT-4o, Claude Sonnet 3.7 | $2-$5 per million input tokens | $8-$15 per million output tokens | Low — typically 1-3 seconds for moderate response length | Strong across most tasks including complex reasoning, code generation, analysis | Developer or enterprise pays per call; this is the most common tier for production applications |
+| Frontier cloud | GPT-4.5, Claude Opus | $15-$75 per million input tokens | $75-$150 per million output tokens | Moderate — may be 5-30 seconds for long responses | Best available capability on the most demanding tasks — complex multi-step reasoning, nuanced judgment | Enterprise or research; typically justified only for tasks where the capability gap is large and the per-task value is high |
+| Fine-tuned | Custom fine-tune on a mid-tier model (e.g., GPT-4o fine-tune) | Base model price + training cost (~$2-$10 per training run) | 10-30% markup over the base model's output price | Similar to the base model | Specialized domain knowledge; consistent format adherence; reduced system prompt length needed | Enterprise pays both training costs (one-time or periodic) and inference costs (per-token, ongoing) |
 
 **The Cost Cliff**
 
@@ -126,7 +126,7 @@ A striking example: several leading models achieved near-perfect scores on GSM8K
 
 Open-source models (Llama, Mistral, Phi, Qwen) commoditize capabilities that were previously proprietary. But large companies have a structural advantage: the **data flywheel**.
 
-- More users → more interaction data → better fine-tuning signal → better model → more users
+- More users -> more interaction data -> better fine-tuning signal -> better model -> more users
 
 This advantage is invisible in benchmarks but real in deployment. A company with 100 million users can collect more "what worked / what didn't" signal in a week than a startup can in a year. Benchmarks measure capability at a point in time; the flywheel measures trajectory over time.
 
@@ -142,7 +142,7 @@ Three principals have stakes in how an AI system behaves, with different goals:
 
 These goals conflict. A system optimized purely for engagement may maximize time-on-app rather than task completion. A system optimized for regulatory compliance may be overly restrictive. The user is often the least powerful principal — they have the least information about how the system was optimized.
 
-> ⚠️ **Common Misconception:** Many students assume that "state of the art on benchmarks" means "best for my use case." This is almost never true. Benchmarks measure performance on curated test sets; your use case has different distributions of questions, different error tolerances, and different capability requirements. A model that scores 90% on MMLU might perform worse on your specific domain than a model that scores 80% on MMLU but was trained on domain-relevant data. Always evaluate models on your actual task before choosing.
+> **Common Misconception:** Many students assume that "state of the art on benchmarks" means "best for my use case." This is almost never true. Benchmarks measure performance on curated test sets; your use case has different distributions of questions, different error tolerances, and different capability requirements. A model that scores 90% on MMLU might perform worse on your specific domain than a model that scores 80% on MMLU but was trained on domain-relevant data. Always evaluate models on your actual task before choosing.
 
 ### Critical Thinking Questions
 
@@ -260,7 +260,7 @@ These risks are real and have already happened to production systems:
 
 **Societal level:** The economics of AI development — high upfront costs, data flywheel advantages, vendor lock-in — tend to concentrate AI capability in a small number of very large companies. Does this concentration concern you? What are the risks of having most of the world's foundational AI infrastructure controlled by three or four companies? What policy mechanisms might address concentration risks, and what tradeoffs would they involve?
 
-→ Coming Up Next: Return to the course project to apply today's pricing analysis to your own system — estimate your token costs, identify your principal-agent dynamics, and choose a monetization model for your agent.
+-> Coming Up Next: Return to the course project to apply today's pricing analysis to your own system — estimate your token costs, identify your principal-agent dynamics, and choose a monetization model for your agent.
 
 ---
 

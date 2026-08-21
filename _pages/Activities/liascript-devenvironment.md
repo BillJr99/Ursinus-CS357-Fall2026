@@ -78,7 +78,7 @@ This message shows that your installation appears to be working correctly.
 
 Your lab work lives in a private GitHub repository named `cs357-work` — the directory you will mount into the container and push to all semester.
 
-1. On [github.com](https://github.com/): **New repository** → name `cs357-work` → **Private** → check **Add a README file**.
+1. On [github.com](https://github.com/): **New repository** -> name `cs357-work` -> **Private** -> check **Add a README file**.
 2. Clone it:
 
 ```bash
@@ -162,7 +162,7 @@ Expected output (yours will show your models and digests):
 {'models': [{'name': 'llama3.2:latest', 'model': 'llama3.2:latest', 'modified_at': '...', 'size': 2019393189, 'digest': '...', 'details': {...}}]}
 ```
 
-If you see a `models` list containing `llama3.2`, the whole architecture works: containerized Python → `host.docker.internal` → native Ollama, exactly Model 2 from the Docker from Zero activity, now load-bearing. (Try `curl http://localhost:11434/api/tags` from the same container prompt and watch it fail — `localhost` inside the container is *the container*, not your machine. That failure is correct behavior.)
+If you see a `models` list containing `llama3.2`, the whole architecture works: containerized Python -> `host.docker.internal` -> native Ollama, exactly Model 2 from the Docker from Zero activity, now load-bearing. (Try `curl http://localhost:11434/api/tags` from the same container prompt and watch it fail — `localhost` inside the container is *the container*, not your machine. That failure is correct behavior.)
 
 The image also sets `OLLAMA_HOST=http://host.docker.internal:11434`, so tools that read that variable find the host server automatically; in your own code, use the `host.docker.internal` URL whenever a lab handout says `localhost:11434`.
 
@@ -218,8 +218,8 @@ git config user.email "you@example.com"
 
 **Choice 1 — HTTPS with a personal access token (PAT). Recommended default.**
 
-1. GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
-2. Scope it tightly: *Only select repositories* → `cs357-work`; Repository permissions → **Contents: Read and write**; expiration at or beyond the end of the semester.
+1. GitHub -> **Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens -> Generate new token**.
+2. Scope it tightly: *Only select repositories* -> `cs357-work`; Repository permissions -> **Contents: Read and write**; expiration at or beyond the end of the semester.
 3. Copy the token (shown once). When `git push` prompts for a password, paste the token. Cache it for a work session so you are not retyping:
 
 ```bash
@@ -379,6 +379,6 @@ If your machine cannot run Docker (unsupported hardware, administrator locks, di
 | Verify promptfoo / spacy | `promptfoo --version` / `python3 -c "import spacy; spacy.load('en_core_web_sm')"` |
 | One-repo git identity | `git config user.name "..."` / `git config user.email "..."` (in `/workspace`) |
 | Cache the PAT for a session | `git config credential.helper 'cache --timeout=7200'` |
-| The daily loop | Ollama up → container → work → test → commit → push |
+| The daily loop | Ollama up -> container -> work -> test -> commit -> push |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
 | How it all works | [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) |

@@ -47,7 +47,7 @@ This section assumes Ollama is running locally (we install it together in the *R
 
 ## Code Cell
 
-> **📝 Today: trace on paper, run after the install session.** Ollama is not on your machines yet — we install it together in the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity. Today your team traces the agent loop **on paper**; run this and the later code cells after that install session. Paper-trace protocol:
+> **Today: trace on paper, run after the install session.** Ollama is not on your machines yet — we install it together in the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity. Today your team traces the agent loop **on paper**; run this and the later code cells after that install session. Paper-trace protocol:
 >
 > 1. Given the user query, **write the model's likely action line** (a `Thought:` plus either `Action: calc(...)` or `Final Answer: ...`).
 > 2. **Parse it exactly as your code would**: which branch fires — the `Final Answer:` check or the `calc(...)` regex?
@@ -208,7 +208,7 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
    > *Hint: Language models can only read a fixed amount of text at once — their "context window." What happens when `memory` grows beyond that limit?*
 
-> **⚠️ Common Misconception:** It is tempting to think the language model is "running" the calculator or browsing the web. It is not. The model only produces text that looks like a tool call (for example, `calc(2 + 2)`). The surrounding Python code detects that text, runs the real operation, and feeds the result back as an Observation. The model never executes code directly — it just asks, and the program does. This distinction matters enormously for security and for understanding what agents can and cannot do on their own.
+> **Common Misconception:** It is tempting to think the language model is "running" the calculator or browsing the web. It is not. The model only produces text that looks like a tool call (for example, `calc(2 + 2)`). The surrounding Python code detects that text, runs the real operation, and feeds the result back as an Observation. The model never executes code directly — it just asks, and the program does. This distinction matters enormously for security and for understanding what agents can and cannot do on their own.
 
 ---
 
@@ -260,7 +260,7 @@ In this part, you will extend and stress-test the agent you just built — chang
 
 ---
 
-→ Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it — in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity we learn to write system prompts that function like a job description for an agent.
+-> Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it — in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity we learn to write system prompts that function like a job description for an agent.
 
 ## 5. Further Reading
 

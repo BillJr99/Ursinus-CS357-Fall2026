@@ -259,7 +259,7 @@ docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
 | `AuthenticationError` from the Anthropic SDK | `ANTHROPIC_API_KEY` not passed into container | Verify `echo $ANTHROPIC_API_KEY` on host returns a value; check the `environment:` block in the compose file |
 | `ModuleNotFoundError: No module named 'anthropic'` | `pip install` step failed silently | Add `pip install anthropic` to the compose `command:` and check for network connectivity inside the container |
 
-##### ✅ Part 1 Checkpoint
+##### Part 1 Checkpoint
 
 Answer these questions in your notes before moving to Part 2:
 
@@ -749,7 +749,7 @@ USER agent
 | `connection refused` or API timeout after adding the named network | DNS resolution failing inside the named network | Add `dns: [8.8.8.8]` under the `agent:` service, or verify the host has outbound internet access |
 | `secret not found` or `FileNotFoundError: /run/secrets/anthropic_api_key` | The secrets file path is wrong or the file is empty | Run `ls -la secrets/` on the host; verify the file exists and is not empty (`wc -c secrets/anthropic_api_key` should print a nonzero number) |
 
-##### ✅ Part 2 Checkpoint
+##### Part 2 Checkpoint
 
 Answer these questions in your notes before moving to Part 3:
 
@@ -839,7 +839,7 @@ After all three attempts, write a one-paragraph summary in your notes: what did 
 | Red team attempt 2 succeeds (outbound connection works) | Named networks do not block outbound internet by default | This is expected behavior — document it as residual risk in your threat model; the extension challenge covers egress filtering |
 | Red team attempt 3 succeeds (can read /etc/shadow) | Container is still running as root | Check `docker compose run --rm --entrypoint id agent` — if it shows `uid=0`, the Dockerfile `USER` directive is not in effect; rebuild with `docker compose build --no-cache` |
 
-##### ✅ Part 3 Checkpoint
+##### Part 3 Checkpoint
 
 Answer these questions in your notes before moving to Part 4:
 
@@ -924,7 +924,7 @@ docker compose down
 
 > **What you should see:** `docker compose down` removes the container and network. `docker compose up -d` recreates them. `docker compose logs agent` shows the agent ran and produced a summary. The final `docker compose down` removes everything cleanly. Record the full output.
 
-##### ✅ Part 4 Checkpoint
+##### Part 4 Checkpoint
 
 Answer these questions in your notes before writing your reflection:
 

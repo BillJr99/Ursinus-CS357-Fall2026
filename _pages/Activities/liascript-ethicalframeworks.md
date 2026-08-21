@@ -246,7 +246,7 @@ In this final part, you will apply the frameworks and principles from Parts I th
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 This activity completes the ethics and philosophy arc of the course. The frameworks you applied today — utilitarian, deontological, virtue-based, design justice — are not final answers; they are instruments for reasoning in public about decisions that affect people. Your final project governance document should reflect the application of at least two of these frameworks to your specific design choices.
 

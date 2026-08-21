@@ -58,7 +58,7 @@ Think of the ways you can give a colleague standing guidance. You might write a 
 
 The critical distinction between a skill and a tool: a skill is an **instruction template** — it tells the agent *how to behave* in a situation. A tool is **executable code** — the agent calls it and gets back structured data. A skill says "when reviewing a diff, follow steps 1-4." A tool says "call `run_tests()` and here is the exit code." You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation. The instruction is the skill; the file-listing is the tool.
 
-> **⚠️ Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn — like a system prompt. It will not. A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill"). If you want always-on behavior, a context file or system prompt is the right instrument. If you want composable, named behavior you can invoke selectively, a skill is correct.
+> **Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn — like a system prompt. It will not. A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill"). If you want always-on behavior, a context file or system prompt is the right instrument. If you want composable, named behavior you can invoke selectively, a skill is correct.
 
 ## 2. The OpenCode Skill Model
 
@@ -194,7 +194,7 @@ A production-ready `opencode.json` file pulls together model routing, global set
 
 Every field is optional except `name` and `instructions` inside a skill entry. `description` is the human-readable summary shown by `opencode skills list`. `when` is the trigger phrase — the agent pattern-matches against it in the current conversation; if there is a match, the agent proactively surfaces the skill. Omitting `when` means the skill is available but never auto-surfaced; you invoke it by name in your prompt.
 
-> **⚠️ Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times — it is a *hint* that auto-surfaces the skill when the pattern matches. You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired. Think of `when` as a notification, not a lock.
+> **Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times — it is a *hint* that auto-surfaces the skill when the pattern matches. You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired. Think of `when` as a notification, not a lock.
 
 ## 6. A Worked Example: The Code Review Skill
 
@@ -286,20 +286,20 @@ A skill that is vague or open-ended will be applied inconsistently — the agent
 
 **Concrete output format.** Specify exactly what the agent should produce: which headings, which labels, which order. A skill that produces consistently formatted output is automatable — you can pipe its output to another tool. A skill with free-form output is not.
 
-> **⚠️ Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction — it is a deference to an undefined standard. The agent will infer "best practices" from its training data, which may not match your project's conventions at all. Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item. A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
+> **Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction — it is a deference to an undefined standard. The agent will infer "best practices" from its training data, which may not match your project's conventions at all. Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item. A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
 
 ## 10. The Skill Manifest Format
 
 A publishable skill is a Git repository with a predictable layout. When someone runs `opencode skills install git+https://github.com/you/your-skills.git`, the tool looks for this structure:
 
 ```
-your-skills/                    ← repository root
-|-- SKILL.md                    ← manifest: name, description, author, version
-|-- instructions/               ← one .md file per skill in this bundle
+your-skills/                    <- repository root
+|-- SKILL.md                    <- manifest: name, description, author, version
+|-- instructions/               <- one .md file per skill in this bundle
 |   |-- safety-check.md
 |   |-- code-review.md
 |   `-- obsidian-memory.md
-`-- package.json                ← optional: enables npm install as alternative
+`-- package.json                <- optional: enables npm install as alternative
 ```
 
 The `SKILL.md` manifest file with frontmatter:

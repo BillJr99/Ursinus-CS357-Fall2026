@@ -91,7 +91,7 @@ A product team is building a streaming chat assistant where the model's response
 [( )] Throughput — the system is handling too many concurrent users, starving this user's request
 [( )] Context length — the user's prompt is too long, causing a timeout before the response begins
 
-> **⚠️ Common Misconception:** Many practitioners treat "latency" as a single number and optimize it uniformly. In reality, TTFT and TPOT are controlled by different system components — TTFT depends heavily on prompt length, model prefill speed, and queue wait time; TPOT depends on model size, quantization level, and hardware memory bandwidth. Reducing one does not necessarily reduce the other. Always measure both separately before deciding where to invest engineering effort.
+> **Common Misconception:** Many practitioners treat "latency" as a single number and optimize it uniformly. In reality, TTFT and TPOT are controlled by different system components — TTFT depends heavily on prompt length, model prefill speed, and queue wait time; TPOT depends on model size, quantization level, and hardware memory bandwidth. Reducing one does not necessarily reduce the other. Always measure both separately before deciding where to invest engineering effort.
 
 ---
 
@@ -245,7 +245,7 @@ A serving system uses static batching with a fixed batch size of 8. One request 
 [(X)] It sits idle until all 7 remaining requests finish their 400 tokens, then the entire batch is cleared
 [( )] The serving engine automatically switches to continuous batching for the remainder of this batch
 
-> **⚠️ Common Misconception:** Students often assume that "increasing batch size always improves user experience." Batch size is a throughput knob, not a latency knob. Increasing batch size increases the total number of tokens the system generates per second across all requests, which reduces cost and improves hardware utilization — but it can *increase* TTFT for individual requests, because a newly arriving request may have to wait in the queue for a batch slot to open. The user-level perception is: the system handles more total load, but individual responses may start later. Choose batch size based on your service's primary objective.
+> **Common Misconception:** Students often assume that "increasing batch size always improves user experience." Batch size is a throughput knob, not a latency knob. Increasing batch size increases the total number of tokens the system generates per second across all requests, which reduces cost and improves hardware utilization — but it can *increase* TTFT for individual requests, because a newly arriving request may have to wait in the queue for a batch slot to open. The user-level perception is: the system handles more total load, but individual responses may start later. Choose batch size based on your service's primary objective.
 
 ---
 
@@ -315,8 +315,8 @@ Traditional serving systems manage that 35% badly, in three distinct ways:
 
 | Fragmentation type | What it is | Concrete example |
 |---|---|---|
-| **Internal** | Each request pre-reserves a *contiguous* block sized for the maximum possible output length, then leaves most of it empty | Max context 2,048 tokens, but the average user sends 200 and gets 300 back → ~1,500 tokens of cache reserved and empty, per request |
-| **External** | Requests of different lengths finish and free their blocks, leaving gaps too small or too scattered to reuse | 500 tokens of free memory exists in total, but no single contiguous 500-token region → a new request cannot be admitted |
+| **Internal** | Each request pre-reserves a *contiguous* block sized for the maximum possible output length, then leaves most of it empty | Max context 2,048 tokens, but the average user sends 200 and gets 300 back -> ~1,500 tokens of cache reserved and empty, per request |
+| **External** | Requests of different lengths finish and free their blocks, leaving gaps too small or too scattered to reuse | 500 tokens of free memory exists in total, but no single contiguous 500-token region -> a new request cannot be admitted |
 | **Redundant duplication** | The same system prompt is prefilled and cached separately for every concurrent request | 100 requests sharing one 400-token system prompt store 100 copies of its KV cache |
 
 The published PagedAttention research measured the result: traditional systems waste roughly **60-80% of the KV-cache memory** — the very memory that determines how many users you can serve at once. The pattern should feel familiar: it is exactly the internal/external fragmentation that motivated paged virtual memory in operating systems half a century ago.
@@ -377,7 +377,7 @@ In PagedAttention, what does the block table map?
 [(X)] A request's logical block addresses to the physical block addresses in VRAM where the KV data actually sits
 [( )] Prompts to cached responses
 
-> **⚠️ Common Misconception:** Students often conclude that PagedAttention makes token generation *faster*. It does not speed up the per-token math at all — attention over a paged cache runs at essentially the same speed as over a contiguous one. What PagedAttention removes is *wasted memory*. By reclaiming the 60-80% of KV-cache memory lost to fragmentation, it lets you fit far more concurrent requests on the same GPU. Higher throughput comes from **serving more requests at once**, not from any individual request running faster. Memory efficiency is the lever; concurrency is the payoff.
+> **Common Misconception:** Students often conclude that PagedAttention makes token generation *faster*. It does not speed up the per-token math at all — attention over a paged cache runs at essentially the same speed as over a contiguous one. What PagedAttention removes is *wasted memory*. By reclaiming the 60-80% of KV-cache memory lost to fragmentation, it lets you fit far more concurrent requests on the same GPU. Higher throughput comes from **serving more requests at once**, not from any individual request running faster. Memory efficiency is the lever; concurrency is the payoff.
 
 ## Model 8: Four Knobs You Actually Tune
 
@@ -413,7 +413,7 @@ Which tuning knob most directly eliminates the *redundant duplication* waste ide
 [( )] Chunked prefill — it interleaves prefill with decode
 [( )] Speculative decoding — a draft model proposes tokens
 
-> **⚠️ Common Misconception:** It is tempting to treat `gpu_memory_utilization` as a "make it faster" dial and crank it to the maximum. It is really a **risk/packing tradeoff**. A higher value admits more concurrent requests (better throughput) but leaves less slack to absorb sudden bursts; when a spike arrives with no headroom, the engine hits out-of-memory and *drops* requests — worse than running slightly under-packed. The right value is workload-specific and found by benchmarking, not by maximizing.
+> **Common Misconception:** It is tempting to treat `gpu_memory_utilization` as a "make it faster" dial and crank it to the maximum. It is really a **risk/packing tradeoff**. A higher value admits more concurrent requests (better throughput) but leaves less slack to absorb sudden bursts; when a spike arrives with no headroom, the engine hits out-of-memory and *drops* requests — worse than running slightly under-packed. The right value is workload-specific and found by benchmarking, not by maximizing.
 
 ---
 
@@ -427,7 +427,7 @@ Which tuning knob most directly eliminates the *redundant duplication* waste ide
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 We have a model running efficiently in production — but what happens when a user or adversary deliberately tries to break it? In the next activity we turn from performance engineering to security engineering: how to find failures in LLM systems before deployment through systematic red-teaming.
 

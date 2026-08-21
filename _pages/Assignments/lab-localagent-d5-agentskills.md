@@ -172,7 +172,7 @@ Set up the following directories in your Obsidian vault (these will sync to your
 
 ```
 vault/
-|-- _index.md               # Navigation index: topic → file list
+|-- _index.md               # Navigation index: topic -> file list
 |-- context/
 |   |-- project-overview.md # What this project is about
 |   |-- conventions.md      # Coding conventions the agent should follow

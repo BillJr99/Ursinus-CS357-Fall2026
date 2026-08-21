@@ -194,7 +194,7 @@ Run the debate on this question. The correct answer is **10 dollars** (if the wa
 
    > *Hint: The judge reads everyone's reasoning, not just their final answers. A judge that can explain why it chose one answer over another is more useful than a vote counter. Which agent role from the critique-and-refine activity does this most closely resemble?*
 
-> **⚠️ Common Misconception:** Many students assume that more agents and more rounds always produce more accurate results. This is only true if (a) the agents' errors are independent and (b) the question has a verifiable ground truth that correct reasoning can converge toward. For questions with correlated errors (all agents have the same bias) or no ground truth (matters of opinion), more debate may only produce more confident wrong answers. The research paper that introduced this protocol (Du et al., 2023) reports accuracy gains on specific benchmark tasks — those gains do not automatically transfer to every question type. Always measure, do not assume.
+> **Common Misconception:** Many students assume that more agents and more rounds always produce more accurate results. This is only true if (a) the agents' errors are independent and (b) the question has a verifiable ground truth that correct reasoning can converge toward. For questions with correlated errors (all agents have the same bias) or no ground truth (matters of opinion), more debate may only produce more confident wrong answers. The research paper that introduced this protocol (Du et al., 2023) reports accuracy gains on specific benchmark tasks — those gains do not automatically transfer to every question type. Always measure, do not assume.
 
 Part III gives you the structured experiments to generate those measurements yourself, replacing claims about debate with data.
 
@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
-→ **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
+-> **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
 
 ---
 

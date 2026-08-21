@@ -116,7 +116,7 @@ An AI caption generator achieves 98% word accuracy across all test speakers. A d
 
 ---
 
-> ⚠️ **Common Misconception:** "A high accuracy number means the system works well for everyone."
+> **Common Misconception:** "A high accuracy number means the system works well for everyone."
 >
 > Aggregate accuracy metrics can be mathematically accurate and deeply misleading at the same time. If 78% of your test set performs at 99.5% accuracy, that group will dominate any weighted average — even if a minority group experiences 84% accuracy. In accessibility contexts, the groups with the worst performance are often the groups with the fewest alternatives. Reporting only the aggregate number is not just a statistical oversight; it is a choice about whose experience counts.
 
@@ -190,7 +190,7 @@ Below are five concrete design choices in a typical AI chatbot interface, evalua
 
 ---
 
-→ Coming Up Next: The neuro-AI ethics module examines how cognitive science shapes the way we build and evaluate AI systems — and what happens when the brain metaphors we borrow turn out to be misleading.
+-> Coming Up Next: The neuro-AI ethics module examines how cognitive science shapes the way we build and evaluate AI systems — and what happens when the brain metaphors we borrow turn out to be misleading.
 
 ## Further Reading
 

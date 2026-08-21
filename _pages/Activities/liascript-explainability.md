@@ -184,7 +184,7 @@ In this Part, you will translate the analysis from Parts I and II into deployabl
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 The *Project Studio and Gallery Walk* sessions and Demo Day are next: dedicated build time, then the demos themselves. The explainability sections you drafted today feed directly into your final governance document and into the demo your audience will interrogate.
 

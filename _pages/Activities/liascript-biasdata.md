@@ -56,7 +56,7 @@ Think of a newspaper that has been published for 100 years. If you trained a lan
 - "The engineer reviewed his blueprints before the meeting."
 - "The electrician called his supervisor about the wiring issue."
 
-After seeing thousands of sentences like these, the model learns a strong association: *nurse* → *she*, *engineer* → *he*. This is not a random error. It reflects real historical gender distributions in those occupations — but it also *perpetuates* them. When a hiring assistant agent primed by this model drafts outreach to "nurses," it may subtly adjust its language in ways that feel more welcoming to women — systematically, across thousands of messages, without any single message being visibly discriminatory.
+After seeing thousands of sentences like these, the model learns a strong association: *nurse* -> *she*, *engineer* -> *he*. This is not a random error. It reflects real historical gender distributions in those occupations — but it also *perpetuates* them. When a hiring assistant agent primed by this model drafts outreach to "nurses," it may subtly adjust its language in ways that feel more welcoming to women — systematically, across thousands of messages, without any single message being visibly discriminatory.
 
 **Measurement requires disaggregation.** An aggregate accuracy of 95 percent can decompose into 99 percent for one group and 70 percent for another:
 
@@ -147,7 +147,7 @@ for occ in ["nurse", "engineer", "kindergarten teacher", "electrician"]:
 
 4. Tabulate your team's counts in a table with columns for occupation, "she" count, "he" count, "they" count, and dominant pronoun. Compare the dominant pronoun for each occupation to real workforce demographics (e.g., from the Bureau of Labor Statistics). Do the model's associations track real workforce demographics, exaggerate them, or sometimes contradict them? Why is *each* of those three outcomes — tracking, exaggerating, or contradicting — a design decision that someone made or failed to make explicitly?
 
-   *Hint:* Tracking the demographics means the model reflects reality. Exaggerating them means the model amplifies existing disparities — because training text over-represents extreme cases. Contradicting them (e.g., "kindergarten teacher → he" despite a female-dominated field) is the rarest outcome but possible where media coverage skews. In each case: who decided what the training corpus would contain, and was that a considered choice?
+   *Hint:* Tracking the demographics means the model reflects reality. Exaggerating them means the model amplifies existing disparities — because training text over-represents extreme cases. Contradicting them (e.g., "kindergarten teacher -> he" despite a female-dominated field) is the rarest outcome but possible where media coverage skews. In each case: who decided what the training corpus would contain, and was that a considered choice?
 
 5. This probe used $n = 12$ samples per occupation. Compute how confident you should be in a 9-versus-3 split favoring "she" over "he." Use a sign test (a statistical test that asks: if there were truly no preference, how likely would this result be by chance?) or reason from coin-flip intuition: if the model had no preference, how often would you get a 9-3 split or more extreme by chance?
 
@@ -164,7 +164,7 @@ A resume-screening agent shows equal average approval rates overall but was vali
 [( )] The model's temperature was too high, causing random variation that looks like bias
 [( )] Agents cannot exhibit bias because they follow explicit prompt instructions rather than making their own judgments
 
-> **⚠️ Common Misconception:** A common but dangerous belief is that "the agent just follows instructions — it can't be biased." This is wrong on two levels. First, the model underlying the agent was trained on biased text, so its probability distributions already encode the associations in that text. Second, even a perfectly neutral model can be made biased by prompts that introduce biased assumptions (e.g., "draft a professional outreach message for a nurse named Alex" — the model's completion of "professional for a nurse" already carries occupational gender associations). Bias is not a property of whether the agent "means" to discriminate; it is a property of the statistical patterns in its outputs, measured across many runs on many people.
+> **Common Misconception:** A common but dangerous belief is that "the agent just follows instructions — it can't be biased." This is wrong on two levels. First, the model underlying the agent was trained on biased text, so its probability distributions already encode the associations in that text. Second, even a perfectly neutral model can be made biased by prompts that introduce biased assumptions (e.g., "draft a professional outreach message for a nurse named Alex" — the model's completion of "professional for a nurse" already carries occupational gender associations). Bias is not a property of whether the agent "means" to discriminate; it is a property of the statistical patterns in its outputs, measured across many runs on many people.
 
 ---
 
@@ -224,7 +224,7 @@ Mitigations exist at every stage — and none of them is complete. The stance to
 
 ---
 
-→ Coming Up Next: The *Intellectual Property, Privacy, and the Case for Local AI* activity is next, moving from what models learn to who owns it and who gets watched. The disaggregation drills you practiced today feed directly into the Responsible AI Capstone.
+-> Coming Up Next: The *Intellectual Property, Privacy, and the Case for Local AI* activity is next, moving from what models learn to who owns it and who gets watched. The disaggregation drills you practiced today feed directly into the Responsible AI Capstone.
 
 ## Further Reading
 

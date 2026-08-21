@@ -30,7 +30,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 |------|--------------------------|--------------------------|
 | **Vibe Coding** | Describing the desired outcome to a coding agent in natural language and letting it produce the full implementation, then reviewing the result rather than writing code line-by-line. | "Implement `search_memory` to pass these five tests" — then reviewing what the agent produces |
 | **Specification-First Development** | Writing a clear natural-language spec, acceptance criteria, and failing tests *before* any code exists, so there is an objective standard the implementation must meet. | Writing five `pytest` cases for `search_memory` before prompting the agent to implement it |
-| **Test-Driven Development (TDD)** | A discipline in which every new behavior is defined by a failing test first; code is written to make the test pass; then the code is refactored. Often summarized as **red → green → refactor**. | A test that asserts `len(results) <= k` fails before the agent writes any code; it passes after |
+| **Test-Driven Development (TDD)** | A discipline in which every new behavior is defined by a failing test first; code is written to make the test pass; then the code is refactored. Often summarized as **red -> green -> refactor**. | A test that asserts `len(results) <= k` fails before the agent writes any code; it passes after |
 | **Diff Review** | Examining the exact line-by-line changes an agent produced — insertions and deletions — rather than reading the final file from scratch, so you catch what the agent *changed* rather than what it *left alone*. | Spotting `eval(query)` in a 30-line diff that would otherwise be easy to miss |
 | **Red-Green-Refactor** | The three TDD phases: **Red** — write a test that fails because the code does not yet exist; **Green** — write the minimum code that makes the test pass; **Refactor** — clean up the code without breaking the test. | A `pytest` run showing `FAILED` (red), then the agent's code making it `PASSED` (green) |
 | **Agent Supervision Level** | How closely a human monitors and reviews the agent's output — ranging from autocomplete (every token supervised) to pair (every file reviewed) to vibe (only the final result reviewed). | Choosing "pair" for a security-sensitive module vs. "vibe" for a low-stakes utility script |
@@ -73,7 +73,7 @@ At vibe supervision level, the agent has autonomy over *how* to implement; the h
 
    > *Hint: Tests check the behaviors you thought to test. What categories of security behavior might a developer forget to write tests for? Name at least two.*
 
-> **⚠️ Common Misconception:** "Vibe coding means you do not have to understand what the agent did." At vibe supervision level the agent writes the code, but *you* are responsible for every line that ships. The diff review and the test suite are not optional extras — they are what makes the "let me cook" approach safe rather than reckless.
+> **Common Misconception:** "Vibe coding means you do not have to understand what the agent did." At vibe supervision level the agent writes the code, but *you* are responsible for every line that ships. The diff review and the test suite are not optional extras — they are what makes the "let me cook" approach safe rather than reckless.
 
 At which supervision level is the diff the primary artifact you review before accepting the agent's work?
 
@@ -168,7 +168,7 @@ Running `pytest` on this file before any implementation shows five `FAILED` line
 
    > *Hint: "Silent failure" means the function returns without raising an exception, but returns a wrong, empty, or nonsensical value. For example: returning `[]` when `k` exceeds the corpus size, instead of raising `ValueError`. Why is silent failure dangerous in a system that other code depends on?*
 
-> **⚠️ Common Misconception:** "TDD means you write tests after you write code to make sure it works." In true TDD the tests come first and they must *fail* before any implementation exists. A test that passes before the implementation is written either tests the wrong thing or has a bug in the test itself. The "red" phase is not a formality — it confirms that your test is actually measuring something.
+> **Common Misconception:** "TDD means you write tests after you write code to make sure it works." In true TDD the tests come first and they must *fail* before any implementation exists. A test that passes before the implementation is written either tests the wrong thing or has a bug in the test itself. The "red" phase is not a formality — it confirms that your test is actually measuring something.
 
 In the TDD cycle, what does "red" mean?
 
@@ -181,7 +181,7 @@ In the TDD cycle, what does "red" mean?
 
 # Part III: Synthesis and Practice
 
-In this part, you will read a realistic AI-generated diff with a planted bug, practice the diff-review discipline that catches subtle errors, and apply the full spec → generate → review → test loop on a problem of your own.
+In this part, you will read a realistic AI-generated diff with a planted bug, practice the diff-review discipline that catches subtle errors, and apply the full spec -> generate -> review -> test loop on a problem of your own.
 
 ## 3. Reviewing AI-Generated Diffs
 
@@ -271,7 +271,7 @@ def search_memory(query, k):
 
     > *Hint: Bug 1 — what input to `search_memory` would trigger code execution if `eval()` is present? Bug 2 — how would you simulate an embedding failure and check that an exception (not an empty list) is raised? Bug 3 — what corpus size would make the full-scan computation visible as a performance problem?*
 
-> **⚠️ Common Misconception:** "If all tests pass, the code is correct." Tests can only verify the behaviors you thought to test. A function can pass 100 tests and still contain a security vulnerability, a resource leak, or an incorrect behavior on an input the tests did not cover. Passing tests are necessary but not sufficient for correctness — which is precisely why diff review exists alongside testing.
+> **Common Misconception:** "If all tests pass, the code is correct." Tests can only verify the behaviors you thought to test. A function can pass 100 tests and still contain a security vulnerability, a resource leak, or an incorrect behavior on an input the tests did not cover. Passing tests are necessary but not sufficient for correctness — which is precisely why diff review exists alongside testing.
 
 A coding agent produces an implementation that passes all five acceptance-criterion tests. A diff reviewer then notices `eval(query)` on line 4. What does this finding demonstrate?
 
@@ -330,7 +330,7 @@ When a human wrote every line, code review, tests, and architecture reviews were
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Your vibe-coded feature is working and tested locally. The next challenge is making every push trigger automated testing and deploying the result without manual steps. The next module introduces **CI/CD and Publishing**: how to wire GitHub Actions (or a local pipeline) to run your `pytest` suite on every commit, catch regressions before they reach users, and publish a working artifact automatically.
 

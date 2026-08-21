@@ -33,9 +33,9 @@ info:
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
     - rtitle: "RAG Quality: Chunking, Clustering, and Reranking Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
-    - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents — Evaluation, Regression, and the Non-Determinism Problem"
+    - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents, Evaluation, Regression, and the Non-Determinism Problem"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
-    - rtitle: "Reference: promptfoo — declarative LLM/agent eval and red-teaming (harness option, runs against Ollama)"
+    - rtitle: "Reference: promptfoo, declarative LLM/agent eval and red-teaming (harness option, runs against Ollama)"
       rlink: "https://www.promptfoo.dev/"
 
 tags:

@@ -117,9 +117,9 @@ mkdir -p /home/user/projects/myapp/shared/output
 chmod 750 /home/user/projects/myapp/shared/output
 
 # Run the researcher agent in a Docker container with carefully chosen volume mounts:
-# -v .../researcher:/home/agent:rw  → researcher's own identity dir, read-write (it can save memory/logs)
-# -v .../knowledgebase:/data/kb:ro  → shared knowledge base, READ-ONLY (it cannot change the source docs)
-# --network none                    → no internet access (prevents data exfiltration)
+# -v .../researcher:/home/agent:rw  -> researcher's own identity dir, read-write (it can save memory/logs)
+# -v .../knowledgebase:/data/kb:ro  -> shared knowledge base, READ-ONLY (it cannot change the source docs)
+# --network none                    -> no internet access (prevents data exfiltration)
 # The writer's identity directory is NOT mounted here — researcher literally cannot see it
 docker run --rm \
   -v /home/user/projects/myapp/agents/researcher:/home/agent:rw \
@@ -130,9 +130,9 @@ docker run --rm \
 # Expected: the agent runs, writes summaries to /home/agent/workspace/, exits cleanly
 
 # Run the writer agent with its own separate set of mounts:
-# -v .../writer:/home/agent:rw           → writer's own identity dir, read-write
-# -v .../shared/output:/workspace/output:rw  → shared output dir, read-write (writer produces files here)
-# -v .../researcher/workspace:/workspace/input:ro  → researcher's OUTPUT only, read-only
+# -v .../writer:/home/agent:rw           -> writer's own identity dir, read-write
+# -v .../shared/output:/workspace/output:rw  -> shared output dir, read-write (writer produces files here)
+# -v .../researcher/workspace:/workspace/input:ro  -> researcher's OUTPUT only, read-only
 # Notice: the writer gets researcher's WORKSPACE (output files), NOT researcher's config or memory
 docker run --rm \
   -v /home/user/projects/myapp/agents/writer:/home/agent:rw \
@@ -156,7 +156,7 @@ The table below maps the same physical directories to what each agent sees insid
 | `/home/user/projects/myapp/agents/researcher/workspace/` | `/home/agent/workspace/` (read-write) | `/workspace/input/` (read-only) |
 | `/home/user/projects/myapp/shared/output/` | Not visible at all | `/workspace/output/` (read-write) |
 
-> **⚠️ Common Misconception:** Many students assume that "running in Docker" automatically prevents an agent from accessing sensitive files. It does not — Docker only isolates what you tell it to isolate. If you mount `/home/user:/home/user`, the agent inside the container can read your SSH keys, browser cookies, and git credentials just as easily as if Docker were not there at all. The safety comes from choosing restrictive mounts, not from Docker itself.
+> **Common Misconception:** Many students assume that "running in Docker" automatically prevents an agent from accessing sensitive files. It does not — Docker only isolates what you tell it to isolate. If you mount `/home/user:/home/user`, the agent inside the container can read your SSH keys, browser cookies, and git credentials just as easily as if Docker were not there at all. The safety comes from choosing restrictive mounts, not from Docker itself.
 
 ### Critical Thinking Questions
 
@@ -307,7 +307,7 @@ docker run --rm \
 
 ---
 
-→ Coming Up Next: Identity directories and bind mounts are filesystem-level controls. The next activity zooms out to the container level — examining what Docker's namespace and cgroup isolation actually guarantees, and what it leaves unprotected, when the process inside is an AI agent that can generate and execute code.
+-> Coming Up Next: Identity directories and bind mounts are filesystem-level controls. The next activity zooms out to the container level — examining what Docker's namespace and cgroup isolation actually guarantees, and what it leaves unprotected, when the process inside is an AI agent that can generate and execute code.
 
 ---
 

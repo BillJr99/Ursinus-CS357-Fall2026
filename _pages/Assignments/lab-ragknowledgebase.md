@@ -67,9 +67,9 @@ info:
       rlink: "https://docs.trychroma.com"
     - rtitle: "Fine-Tuning vs. RAG"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
-    - rtitle: "Unsloth — Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
+    - rtitle: "Unsloth: Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
       rlink: "https://unsloth.ai/docs/get-started/unsloth-notebooks"
-    - rtitle: "Unsloth — Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
+    - rtitle: "Unsloth: Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
       rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localmodels.md"
@@ -625,7 +625,7 @@ For each of your ten questions, record:
 
 | Q# | Question | Answer excerpt | Citation # | Chunk cited | Faithful? | Failure type |
 |----|----------|----------------|------------|-------------|-----------|--------------|
-| Q01 | What is ...? | "Gradient descent is ..." [1] | 1 | "lecture03: Gradient descent is a method..." | Yes | — |
+| Q01 | What is ...? | "Gradient descent is ..." [1] | 1 | "lecture03: Gradient descent is a method..." | Yes | - |
 | Q02 | ... | ... | ... | ... | No | Fabrication |
 
 **Step 2: Classify any failures using the taxonomy from class.**
@@ -866,13 +866,13 @@ Larger chunks improve the chance that a multi-sentence answer is intact in one c
 
     > *Hint: Consider a hybrid: use structural splits on numbered clauses or headings first (which legal documents typically have), then apply sentence-based chunking within any clause that exceeds a maximum character count. This gives you semantically coherent units at the clause level without risking 2000-word chunks for complex clauses.*
 
-> **⚠️ Common Misconception:** Students often assume that smaller chunks always give better retrieval because they are more "targeted." But very small chunks lose the surrounding context that the similarity function needs to judge relevance. A chunk containing only the words "the act" scores low against almost any query — there is no context for which act, when, or why it matters. The retrieval model (whether word-frequency or a neural embedding) needs enough surrounding text to understand what the chunk is about. A practical lower bound is roughly one complete sentence; a practical upper bound is roughly one focused paragraph.
+> **Common Misconception:** Students often assume that smaller chunks always give better retrieval because they are more "targeted." But very small chunks lose the surrounding context that the similarity function needs to judge relevance. A chunk containing only the words "the act" scores low against almost any query — there is no context for which act, when, or why it matters. The retrieval model (whether word-frequency or a neural embedding) needs enough surrounding text to understand what the chunk is about. A practical lower bound is roughly one complete sentence; a practical upper bound is roughly one focused paragraph.
 
 ---
 
 ---
 
-**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+**In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
 
 
 ## Deliverables
@@ -970,10 +970,10 @@ Confirm Ollama is running (`ollama list` shows `llama3.2` and `nomic-embed-text`
 
 #### Part B: Build the RAG Flow on the Canvas
 
-Create a **New Flow → Blank Canvas** and wire the pipeline over the corpus you curated in core Part 1 (upload your actual corpus files — not a toy document):
+Create a **New Flow -> Blank Canvas** and wire the pipeline over the corpus you curated in core Part 1 (upload your actual corpus files — not a toy document):
 
-- **Ingest path:** **File** loader (upload your corpus documents) → **Text Splitter** (RecursiveCharacterTextSplitter; set the chunk size and overlap you will defend in Part C) → **Ollama Embeddings** (Model `nomic-embed-text`, Base URL `http://localhost:11434`) → **Chroma** (ingest mode; name the collection and note the persist directory).
-- **Query path:** **Chat Input** → **Retriever** over the same Chroma collection (with **Ollama Embeddings** wired in for query embedding; set top-k to match your config) → **Prompt** node with your grounding-and-citation instructions and a `{context}` variable → **Ollama** chat model (`llama3.2`, temperature 0.1, Base URL `http://localhost:11434`) → **Chat Output**.
+- **Ingest path:** **File** loader (upload your corpus documents) -> **Text Splitter** (RecursiveCharacterTextSplitter; set the chunk size and overlap you will defend in Part C) -> **Ollama Embeddings** (Model `nomic-embed-text`, Base URL `http://localhost:11434`) -> **Chroma** (ingest mode; name the collection and note the persist directory).
+- **Query path:** **Chat Input** -> **Retriever** over the same Chroma collection (with **Ollama Embeddings** wired in for query embedding; set top-k to match your config) -> **Prompt** node with your grounding-and-citation instructions and a `{context}` variable -> **Ollama** chat model (`llama3.2`, temperature 0.1, Base URL `http://localhost:11434`) -> **Chat Output**.
 
 Component names vary slightly across Langflow versions; the dataflow is what matters, and the Part IV steps in the visual agents activity walk through the same wiring. Run the flow in the playground and confirm an in-corpus question comes back answered with context before moving on. Record every node setting (model, chunk size, overlap, top-k, temperature) in a config notes file — these are your externalized configuration for the rubric.
 
@@ -1016,7 +1016,7 @@ Complete core Part 4 unchanged: audit every citation in a sample of at least ten
 
 Fold these into the standard RAG Knowledge Base Lab submission ZIP:
 
-- **Exported flow JSON × 2** — both chunking configurations (⋯ menu → Export Flow), plus your node-settings config notes.
+- **Exported flow JSON × 2** — both chunking configurations (⋯ menu -> Export Flow), plus your node-settings config notes.
 - **Query/recall table** — the ten queries, their hand-located source chunks, and the completed recall@k table for both configurations with your defended choice.
 - **Transcripts** — the three in-corpus and two out-of-corpus grounding/abstention runs, and the answers used in your citation audit.
 - **Datasheet** — from core Part 1 (shared requirement).
@@ -1043,7 +1043,7 @@ This direction takes the opposite approach to knowledge injection from the one y
 
 ##### No GPU? Two paths, both full credit
 
-1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A–D exactly as written in the notebook. A 3.8B–8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15-60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
+1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A-D exactly as written in the notebook. A 3.8B-8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15-60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
 
 2. **Provided-artifact variant (only if Colab is unavailable to you).** Skip training and start from a published adapter: search the Hugging Face Hub for a public LoRA adapter for `llama3.2` — any published llama3.2 LoRA adapter works; pick one whose model card describes its training domain, and cite it — and download it. Then perform **only the deployment and evaluation half** of this direction: the GGUF merge (Step C.5, merging the downloaded adapter instead of one you trained), the `Modelfile`, the `ollama create` / `ollama run` deployment, and the full before/after evaluation of Step C comparing the base model against the adapted model. **This variant earns full credit, with the evaluation weighted more heavily** in place of the training run: extend your before/after comparison to at least 15 prompts (rather than 10), and include the regression analysis, since the evaluation is your primary evidence. The model card (Step D) is still required — document the adapter's provenance, dataset, and license in place of your own training details. This path preserves the direction's deployment and evaluation learning objectives; the loss-curve deliverable is waived for it.
 
@@ -2233,7 +2233,7 @@ Optimistic     $2,891,044      89.7%   $1,201,330   $5,912,448
 
 #### Step D: Critical Analysis
 
-This is the most important part of this direction. In Steps A–C you built a tool. Now you evaluate what happens when AI interprets that tool's output — the same audit discipline as the core lab, moved from retrieved text to a rendered chart.
+This is the most important part of this direction. In Steps A-C you built a tool. Now you evaluate what happens when AI interprets that tool's output — the same audit discipline as the core lab, moved from retrieved text to a rendered chart.
 
 ##### Step D.1: Read the chart yourself first.
 
@@ -2278,7 +2278,7 @@ Write a 2-3 sentence **guardrail statement** you would add to a financial planni
 
 #### Step E: The Simulation as a Tool — Function-Calling Extension
 
-In Steps A–D, the model only *interpreted* an experiment you designed. This extension inverts the relationship, bridging this direction to the **Tool Use and Function Calling** session: you wrap your simulation as a tool with a JSON schema, and the model **chooses the parameters**, asks your code to invoke the tool, and then interprets the visualization the tool produced. The model never executes anything — it can only request; your code runs the simulation and returns the results.
+In Steps A-D, the model only *interpreted* an experiment you designed. This extension inverts the relationship, bridging this direction to the **Tool Use and Function Calling** session: you wrap your simulation as a tool with a JSON schema, and the model **chooses the parameters**, asks your code to invoke the tool, and then interprets the visualization the tool produced. The model never executes anything — it can only request; your code runs the simulation and returns the results.
 
 A fully worked, runnable version of this part (including canned offline responses for machines without Ollama) is in the [companion notebook]({{ site.baseurl }}/files/notebooks/MonteCarloRetirement.ipynb).
 

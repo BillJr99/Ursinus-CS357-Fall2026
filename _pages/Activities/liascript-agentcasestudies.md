@@ -136,7 +136,7 @@ Across all three cases, the single most recurrent engineering lesson is:
 [( )] Browsing agents should never be used because the web is too unpredictable for automation
 [( )] Humans should review every individual model call to prevent any errors from reaching users
 
-> **⚠️ Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model → better output quality; better surrounding structure → better reliability. Both matter, but only one of them is under your control as a system designer.
+> **Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model -> better output quality; better surrounding structure -> better reliability. Both matter, but only one of them is under your control as a system designer.
 
 ---
 
@@ -180,7 +180,7 @@ Think of editing a printed book where every chapter references page numbers in t
 
    *What to do:* In mixed groups (one member from each home team in each new group), each Presenter teaches their assigned case in three minutes using only the five-question autopsy protocol as a guide. Recorders from each home team capture at least one repair idea per case that their home team had not considered.
 
-   *Starter hint:* Structure your three-minute teach-back as: Goal (30s) → Architecture (30s) → Perception (30s) → Friction (45s) → Repair (45s). Practice the timing before the jigsaw.
+   *Starter hint:* Structure your three-minute teach-back as: Goal (30s) -> Architecture (30s) -> Perception (30s) -> Friction (45s) -> Repair (45s). Practice the timing before the jigsaw.
 
    *You've succeeded when:* Every member of your mixed group can state the central engineering lesson of each case without looking at notes, and your Recorder has written down at least one new repair idea per case.
 
@@ -212,7 +212,7 @@ Think of editing a printed book where every chapter references page numbers in t
 
 ---
 
-→ Coming Up Next: In the *Training Data and Bias* activity, we zoom out from individual agent systems to the training data and design choices that shape every model's behavior — and examine how bias enters the pipeline at every stage, from data collection through deployment.
+-> Coming Up Next: In the *Training Data and Bias* activity, we zoom out from individual agent systems to the training data and design choices that shape every model's behavior — and examine how bias enters the pipeline at every stage, from data collection through deployment.
 
 ## Further Reading
 

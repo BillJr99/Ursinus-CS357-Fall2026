@@ -96,7 +96,7 @@ Weakness: conflicting principles create ambiguity; whoever writes the constituti
 | Primary failure mode | Reward hacking; annotator bias becomes model bias | Conflicting principles; constitution bias (whoever wrote it shapes the model's values) | Both fail differently; combining them addresses some weaknesses of each |
 | Who decides values | Annotators (implicitly, through their preferences) | Constitution authors (explicitly, in writing) | Explicit is more transparent but concentrates power in a smaller group |
 
-> ⚠️ **Common Misconception:** Many students assume that Constitutional AI removes human judgment from the training process. It does not — humans still write the constitution, and their choices about which principles to include (and how to phrase them) directly shape the model's values. CAI moves the human judgment from labeling individual responses to writing the rules. This is more transparent, but it is not neutral.
+> **Common Misconception:** Many students assume that Constitutional AI removes human judgment from the training process. It does not — humans still write the constitution, and their choices about which principles to include (and how to phrase them) directly shape the model's values. CAI moves the human judgment from labeling individual responses to writing the rules. This is more transparent, but it is not neutral.
 
 ### Critical Thinking Questions
 
@@ -183,7 +183,7 @@ For a deployed student-facing agent, five safety controls can be layered in incr
 
 **Societal level:** Does your answer to the technical question change depending on whether the model is used by millions of people or by a single organization? If a model trained on one company's constitution is used by governments or hospitals in other countries, does the company's right to set those values change? Who has standing to challenge or revise a constitution that affects them?
 
-→ Coming Up Next: In the Social Impact activity, we will see how alignment choices made at the model level ripple outward into labor markets, education systems, and entire economies — and how the people building these systems bear some responsibility for those effects.
+-> Coming Up Next: In the Social Impact activity, we will see how alignment choices made at the model level ripple outward into labor markets, education systems, and entire economies — and how the people building these systems bear some responsibility for those effects.
 
 ## Further Reading
 

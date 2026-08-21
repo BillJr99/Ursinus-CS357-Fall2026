@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The AI Maker: Agents, Engineering Discipline, and Human-Centric Design
 
-Agentic tools have collapsed the distance between an idea and a working artifact, for professional engineers and for people who have never written a line of code. What they have *not* collapsed is the distance between "it ran once" and "it deserves someone's trust," and that distance is crossed by the same three disciplines in both cases: **testing**, **continuous integration**, and **human-centric design**. This module runs in two parallel tracks (choose yours by background, and read both: the other track is your future collaborator). The arc: **the trust gap → Track A for software engineers → Track B for non-coders → the shared discipline of CI → designing for the humans on the other end**.
+Agentic tools have collapsed the distance between an idea and a working artifact, for professional engineers and for people who have never written a line of code. What they have *not* collapsed is the distance between "it ran once" and "it deserves someone's trust," and that distance is crossed by the same three disciplines in both cases: **testing**, **continuous integration**, and **human-centric design**. This module runs in two parallel tracks (choose yours by background, and read both: the other track is your future collaborator). The arc: **the trust gap -> Track A for software engineers -> Track B for non-coders -> the shared discipline of CI -> designing for the humans on the other end**.
 
 ---
 
@@ -217,7 +217,7 @@ Pair across tracks: each Track A member brings a tested change with its CI run; 
 
 ---
 
-> **⚠️ Common Misconception:** A complex multi-tool agent is more impressive than a simple one that works reliably — so building something with many moving parts signals more skill. In practice, the opposite is true in deployment. Complexity is where failures hide: every additional tool is an additional failure mode, every additional API call is an additional network dependency, and every additional model invocation is an additional opportunity for hallucination to compound. The most trusted production AI systems are often the simplest ones that do one thing well with measurable reliability. Scope creep — adding features because the agent can generate them in seconds — is one of the most common ways student projects fail at the verification stage. Build the Minimum Viable Agent first, verify it thoroughly, and only then add complexity if the problem genuinely requires it.
+> **Common Misconception:** A complex multi-tool agent is more impressive than a simple one that works reliably — so building something with many moving parts signals more skill. In practice, the opposite is true in deployment. Complexity is where failures hide: every additional tool is an additional failure mode, every additional API call is an additional network dependency, and every additional model invocation is an additional opportunity for hallucination to compound. The most trusted production AI systems are often the simplest ones that do one thing well with measurable reliability. Scope creep — adding features because the agent can generate them in seconds — is one of the most common ways student projects fail at the verification stage. Build the Minimum Viable Agent first, verify it thoroughly, and only then add complexity if the problem genuinely requires it.
 
 ---
 
@@ -267,7 +267,7 @@ In your notebook, respond at three levels:
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the next module you will encounter the governance and policy layer that sits above individual maker decisions: what institutions, regulations, and professional norms shape what you are allowed to build, how you must document it, and who is accountable when it fails. The maker disciplines from today — specification as a contractual artifact, testing as an accountability mechanism, CI as an institutional check — reappear in that layer as professional and legal requirements. Make sure your Exercise 3 CI workflow is running and your Exercise 1 spec is documented: both will be reference material for the governance module.
 

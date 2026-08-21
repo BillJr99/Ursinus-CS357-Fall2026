@@ -96,10 +96,10 @@ The order-of-magnitude cost differences between approaches are often underapprec
 
 | Approach | Typical Cost per Query | One-Time Setup Cost | Infrastructure Needed | Data Requirement |
 |---|---|---|---|---|
-| Prompting (API call to GPT-4o or Claude) | $0.003–$0.05 per 1,000-token call depending on model | None beyond prompt engineering time | None — uses a managed API | None — just write better instructions |
-| RAG (API + Chroma/Qdrant vector DB) | $0.001–$0.02 per query (embedding + retrieval + smaller LLM call) | Hours to days of pipeline engineering | Vector DB (free locally, ~$50/mo cloud for small scale), embedding service | Source documents only — no labeled pairs needed |
-| Fine-tuning (small model, LoRA on `llama3.1:8b`) | $0.0001–$0.001 per call after training (self-hosted inference) | $10–$200 per training run on a rented A100 GPU | GPU for training (A100/H100 rented on Lambda Labs), storage for weights | 200-2,000 labeled input-output pairs |
-| Fine-tuning (large model, full weight update) | $0.0001–$0.001 per call after training (self-hosted inference) | $1,000–$50,000 per training run on multi-GPU cluster | Multi-GPU cluster, distributed training framework (DeepSpeed, FSDP) | Thousands to millions of labeled pairs |
+| Prompting (API call to GPT-4o or Claude) | $0.003-$0.05 per 1,000-token call depending on model | None beyond prompt engineering time | None — uses a managed API | None — just write better instructions |
+| RAG (API + Chroma/Qdrant vector DB) | $0.001-$0.02 per query (embedding + retrieval + smaller LLM call) | Hours to days of pipeline engineering | Vector DB (free locally, ~$50/mo cloud for small scale), embedding service | Source documents only — no labeled pairs needed |
+| Fine-tuning (small model, LoRA on `llama3.1:8b`) | $0.0001-$0.001 per call after training (self-hosted inference) | $10-$200 per training run on a rented A100 GPU | GPU for training (A100/H100 rented on Lambda Labs), storage for weights | 200-2,000 labeled input-output pairs |
+| Fine-tuning (large model, full weight update) | $0.0001-$0.001 per call after training (self-hosted inference) | $1,000-$50,000 per training run on multi-GPU cluster | Multi-GPU cluster, distributed training framework (DeepSpeed, FSDP) | Thousands to millions of labeled pairs |
 | Pre-training from scratch | Fractions of a cent per call after training | $1,000,000+ for a competitive model | Massive GPU cluster, months of compute | Billions of tokens of curated text |
 
 The "low cost per call after training" for fine-tuning is deceptive: the inference cost is low, but the up-front training cost is paid once per model version. If the domain or data changes, you re-pay that cost.
@@ -112,12 +112,12 @@ Consider a concrete deployment: **an HR policy assistant that answers questions 
 |---|---|---|---|
 | Implementation effort | Include entire policy in the system prompt — takes minutes to set up | Index policy chunks in a vector DB; retrieve on each query — takes hours to set up (`pip install chromadb`, embed chunks, build query pipeline) | Generate Q&A pairs from the doc, fine-tune a base model like `llama3.1:8b` with LoRA — takes days |
 | How it handles policy updates | Immediately — just update the prompt text with the new policy content | With re-indexing, which takes minutes to hours depending on document size | Must retrain, which takes hours to days and costs GPU compute |
-| Cost per user query | Higher token cost because the entire policy is in every prompt (e.g., a 50-page doc = ~25,000 tokens × $0.005/1K = $0.125 per call) | Moderate: retrieval + smaller context (typically 1,000-3,000 tokens per call) | Very low per call after training, but training itself costs $20–$200 upfront |
+| Cost per user query | Higher token cost because the entire policy is in every prompt (e.g., a 50-page doc = ~25,000 tokens × $0.005/1K = $0.125 per call) | Moderate: retrieval + smaller context (typically 1,000-3,000 tokens per call) | Very low per call after training, but training itself costs $20-$200 upfront |
 | Can handle 500-page policy? | No — a 500-page document exceeds even 128K-token context windows | Yes — only the relevant 3-5 chunks are retrieved per query | Yes — but generating Q&A pairs for 500 pages and training costs significant time and money |
 | Provides citations? | Possible with careful prompting ("Always cite the section number") but not guaranteed | Natural — the retrieved chunk itself is the citation and can be shown to the user | Generally not — knowledge is embedded opaquely in weights, so the model cannot point to its source |
 | Output style consistency | Moderate — varies with how the user phrases their question | Moderate — same retrieval quality, but LLM generation still varies | High — style, format, and phrasing learned during training appear consistently in every response |
 
-> **⚠️ Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution. In reality, for a task like the HR policy assistant, **RAG almost always outperforms fine-tuning** because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge). Fine-tuning wins for style/format, not for factual recall of changing documents.
+> **Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution. In reality, for a task like the HR policy assistant, **RAG almost always outperforms fine-tuning** because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge). Fine-tuning wins for style/format, not for factual recall of changing documents.
 
 ### Critical Thinking Questions
 
@@ -221,7 +221,7 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
 ---
 
-→ Coming Up Next: Now that you understand when to fine-tune, the next module explores the landscape of open-weight local models (Llama, Mistral, Phi, Gemma) and how to choose the right one for your hardware and task — including how quantization lets you run a 7B model on a laptop.
+-> Coming Up Next: Now that you understand when to fine-tune, the next module explores the landscape of open-weight local models (Llama, Mistral, Phi, Gemma) and how to choose the right one for your hardware and task — including how quantization lets you run a 7B model on a laptop.
 
 ---
 

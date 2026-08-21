@@ -177,7 +177,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable* — how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
 

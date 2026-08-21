@@ -28,7 +28,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Temperature** | Controls the shape of the probability distribution before sampling; T→0 = greedy/deterministic, T→∞ = uniform random. | Setting T=0.0 for a code-generation task to get reproducible output. |
+| **Temperature** | Controls the shape of the probability distribution before sampling; T->0 = greedy/deterministic, T->∞ = uniform random. | Setting T=0.0 for a code-generation task to get reproducible output. |
 | **Top-k sampling** | Keeps only the k highest-probability tokens, discards the rest before sampling — fixing the candidate set size regardless of how confident the model is. | With k=3 and candidates [Paris, Lyon, London, banana, croissant], only [Paris, Lyon, London] are considered. |
 | **Top-p (nucleus) sampling** | Keeps the smallest set of tokens that together account for at least p of the total probability mass — adapting the candidate set size to the model's confidence at each step. | With p=0.90 and Paris having probability 0.92, only Paris is kept; if the top five tokens are each 0.18, all five are kept. |
 | **Entropy** | A measure of uncertainty in the distribution; high entropy = flat distribution = unpredictable outputs; low entropy = peaked distribution = predictable outputs. | At T=0.1 the entropy is near 0 (nearly certain); at T=2.0 the entropy is high (many tokens are competitive). |
@@ -212,7 +212,7 @@ for task, prompt in TEST_PROMPTS.items():
    [( )] True, but only top_k=1 is needed; temperature has no additional effect
    [( )] False — even at T=0, the model might generate different outputs due to random seeding
 
-   > **⚠️ Common Misconception:** "Lower temperature = better answers." This is not true as a general rule. For creative tasks, low temperature produces repetitive, generic outputs — the model keeps generating the most statistically common continuation, which tends to be bland. For factual tasks, low temperature reduces hallucination risk but can also prevent the model from adapting its phrasing to the user's question. Temperature is a tool you choose to match the task; there is no universally correct setting. The question is always: *how much variation is acceptable, and how much randomness does the task benefit from?*
+   > **Common Misconception:** "Lower temperature = better answers." This is not true as a general rule. For creative tasks, low temperature produces repetitive, generic outputs — the model keeps generating the most statistically common continuation, which tends to be bland. For factual tasks, low temperature reduces hallucination risk but can also prevent the model from adapting its phrasing to the user's question. Temperature is a tool you choose to match the task; there is no universally correct setting. The question is always: *how much variation is acceptable, and how much randomness does the task benefit from?*
 
 8. The list task (naming three programming languages) showed variation at T=1.5. The same three languages will appear at T=0.0 almost every time. What does the variation at high temperature tell you about what the model "believes" about popular programming languages?
 
@@ -352,7 +352,7 @@ for persona, cfg in PERSONAS.items():
 
 ---
 
-→ **Coming Up Next:** Now that you can reason about output distributions and control them deliberately, the next challenge is getting models to produce *structured* outputs — JSON, tool calls, and typed fields — with high reliability. Agents that call tools need the model to produce exactly the right JSON format, not just approximately correct prose. We will see why low temperature is necessary but not sufficient for reliable tool calls, and what additional techniques (constrained decoding, function calling fine-tunes) close the gap.
+-> **Coming Up Next:** Now that you can reason about output distributions and control them deliberately, the next challenge is getting models to produce *structured* outputs — JSON, tool calls, and typed fields — with high reliability. Agents that call tools need the model to produce exactly the right JSON format, not just approximately correct prose. We will see why low temperature is necessary but not sufficient for reliable tool calls, and what additional techniques (constrained decoding, function calling fine-tunes) close the gap.
 
 ---
 

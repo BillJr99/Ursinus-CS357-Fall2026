@@ -116,7 +116,7 @@ An agent processing a new PDF in raw/ notices a typo in the PDF and also that wi
 
 ---
 
-> ⚠️ **Common Misconception:** "Since it's my private repository, agents can write anywhere they want — I can always fix mistakes."
+> **Common Misconception:** "Since it's my private repository, agents can write anywhere they want — I can always fix mistakes."
 >
 > This reasoning underestimates two risks. First, agents that overwrite source files in `raw/` destroy the pristine record of what your original sources actually said — and if the agent's interpretation was wrong, you've lost the ability to reprocess from scratch. Second, agents that write to `.obsidian/` can corrupt the plugin's sync state in ways that cause silent data loss (your edits in Obsidian stop syncing to GitHub without any error message). The zone boundaries exist precisely because "I can fix it later" is not a recovery strategy when the failure is silent.
 
@@ -299,7 +299,7 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 
 ---
 
-→ Coming Up Next: The LLM Wiki module explores what becomes possible once the vault loop is running — using agents to maintain a living knowledge base that grows more useful with each session, and connecting it to the broader agent stack. Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
+-> Coming Up Next: The LLM Wiki module explores what becomes possible once the vault loop is running — using agents to maintain a living knowledge base that grows more useful with each session, and connecting it to the broader agent stack. Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
 
 ## Reflection Prompt
 

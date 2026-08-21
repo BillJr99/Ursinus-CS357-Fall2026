@@ -214,7 +214,7 @@ Four chunks, with their (toy, 2-D) embeddings:
 
    > *Hint: For gaps: if your corpus has 3 clusters but your users' questions span 5 topics, what does that tell you? For duplicates: if one cluster contains 12 chunks and they all say nearly the same thing in slightly different words, what is the problem for retrieval and for prompt assembly?*
 
-> **⚠️ Common Misconception:** Many students assume that adding more documents always improves a RAG system. In practice, adding off-topic, contradictory, or near-duplicate documents hurts retrieval quality. A search engine that returns 20 near-identical parking regulations when you ask about dining hours is retrieving with high recall but low precision. Corpus *quality* and *coverage* matter more than corpus *size*, and clustering is one of the best tools for auditing both.
+> **Common Misconception:** Many students assume that adding more documents always improves a RAG system. In practice, adding off-topic, contradictory, or near-duplicate documents hurts retrieval quality. A search engine that returns 20 near-identical parking regulations when you ask about dining hours is retrieving with high recall but low precision. Corpus *quality* and *coverage* matter more than corpus *size*, and clustering is one of the best tools for auditing both.
 
 ---
 
@@ -262,7 +262,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation — and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
 

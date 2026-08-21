@@ -28,7 +28,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Domain swap** | Replacing `github.com` in a repo URL with a different domain to activate a specialized tool on that same repo | `github.com/owner/repo` → `gitingest.com/owner/repo` |
+| **Domain swap** | Replacing `github.com` in a repo URL with a different domain to activate a specialized tool on that same repo | `github.com/owner/repo` -> `gitingest.com/owner/repo` |
 | **Token budget** | The maximum amount of text (measured in tokens) a model can process in one call; large repos may exceed it | A 50,000-line codebase flattened to text may be 200 000+ tokens — more than most local models can handle at once |
 | **MCP server** | A running process that exposes resources and tools to an AI agent via the Model Context Protocol; the agent queries it instead of guessing from training data | `getmcp.io` wraps a GitHub repo as a live MCP server the agent can query at runtime |
 | **Architecture diagram** | A visual map of a codebase's modules, their responsibilities, and how data flows between them | `gdagram.com` generates one automatically from a repo URL |
@@ -110,7 +110,7 @@ Your team will work through the following steps using the `litellm` repository (
 
    > *Hint: The gitingest text dump preserves file boundaries but loses the IDE's navigation features. The browser editor preserves navigation but requires you to open files one at a time.*
 
-> **⚠️ Common Misconception:** Students often assume that pasting a codebase into a model's context gives the model "access" to the code in the way a compiler has access — allowing it to run the code or verify that it compiles. The model only reads the text. It cannot execute the code, check for import errors, or confirm that dependencies are installed. It will reason about the code as text, which means it can misinterpret dynamic behavior, miss runtime configuration, and confidently describe code paths that are never actually reached.
+> **Common Misconception:** Students often assume that pasting a codebase into a model's context gives the model "access" to the code in the way a compiler has access — allowing it to run the code or verify that it compiles. The model only reads the text. It cannot execute the code, check for import errors, or confirm that dependencies are installed. It will reason about the code as text, which means it can misinterpret dynamic behavior, miss runtime configuration, and confidently describe code paths that are never actually reached.
 
 ---
 
@@ -191,7 +191,7 @@ Why does connecting an agent to a live MCP server reduce hallucinated API calls,
 [(X)] The agent can query the MCP server for current method signatures and include that verified information in its context before generating code
 [( )] MCP servers patch the model's training data in memory at runtime
 
-> **⚠️ Common Misconception:** "Grounding" does not change the model itself — no weights are updated, and the model does not "learn" the library. It is simply given accurate, current text in its context window at the moment it needs to generate API calls. Remove the MCP server from the configuration and the hallucinations return, because the underlying model still only knows what was in its training data.
+> **Common Misconception:** "Grounding" does not change the model itself — no weights are updated, and the model does not "learn" the library. It is simply given accurate, current text in its context window at the moment it needs to generate API calls. Remove the MCP server from the configuration and the hallucinations return, because the underlying model still only knows what was in its training data.
 
 ---
 
@@ -209,7 +209,7 @@ When you encounter an agent framework for the first time, the README rarely answ
 
 ## 6. Architecture Diagrams (`gdagram.com`)
 
-Before reading code, it helps to see the map. `gdagram.com` takes a GitHub repository URL and generates an interactive diagram showing modules, their dependencies, and (for many frameworks) the data flow between components. For a RAG pipeline, this typically reveals the ingestion path (documents → chunker → embedder → vector store) and the query path (question → retriever → context assembler → model → answer) as distinct visual flows.
+Before reading code, it helps to see the map. `gdagram.com` takes a GitHub repository URL and generates an interactive diagram showing modules, their dependencies, and (for many frameworks) the data flow between components. For a RAG pipeline, this typically reveals the ingestion path (documents -> chunker -> embedder -> vector store) and the query path (question -> retriever -> context assembler -> model -> answer) as distinct visual flows.
 
 **The diagram is a starting point, not a source of truth.** Generated diagrams may omit dynamically loaded modules, miss optional components, or draw connections that exist only in certain configurations. Use it to identify entry points and major components, then verify in the actual code.
 
@@ -247,13 +247,13 @@ A teammate wants to use `gdagram.com` to verify that a dependency they plan to r
 [(X)] This is a useful starting point but should be verified with a code search, because generated diagrams may miss dynamic imports and optional dependencies
 [( )] This is unreliable in all cases; the only correct approach is to read every file manually
 
-> **⚠️ Common Misconception:** Automatically generated architecture diagrams show the relationships that are visible through static analysis of import statements and class definitions. They typically miss plugins loaded at runtime, modules imported conditionally based on configuration, and monkey-patching. Treat the diagram as a hypothesis about the structure — a helpful starting point — and confirm any dependency you plan to remove with a full-text search (`Ctrl+Shift+F` in `github.dev`).
+> **Common Misconception:** Automatically generated architecture diagrams show the relationships that are visible through static analysis of import statements and class definitions. They typically miss plugins loaded at runtime, modules imported conditionally based on configuration, and monkey-patching. Treat the diagram as a hypothesis about the structure — a helpful starting point — and confirm any dependency you plan to remove with a full-text search (`Ctrl+Shift+F` in `github.dev`).
 
 ---
 
 # Part V: Synthesis and Practice
 
-In this part, you will combine the tools from Parts I–IV in a real codebase sprint: orient, ingest, ground, and extend — the complete GitHub power-user workflow.
+In this part, you will combine the tools from Parts I-IV in a real codebase sprint: orient, ingest, ground, and extend — the complete GitHub power-user workflow.
 
 ## 7. Exercises
 
@@ -293,7 +293,7 @@ In this part, you will combine the tools from Parts I–IV in a real codebase sp
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Now that you can efficiently read and feed any public codebase to an AI agent, the next activity asks a deeper question: how do you communicate with a local model at the protocol level, without relying on a high-level SDK? We examine the OpenAI-compatible REST API pattern — the common language spoken by Ollama, LiteLLM, and most local inference servers — so you can write agent code that works across providers without being locked into any single library.
 

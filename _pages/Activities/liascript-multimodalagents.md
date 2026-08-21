@@ -53,7 +53,7 @@ Multimodality is not magic — it is an extension of the fundamental token-proce
 |:---------|:------------|:---------------------|:---------------------|:-------------|:------------|
 | Image or Screenshot | PNG, JPEG, WebP | Divided into patches by a Vision Transformer (ViT); each patch becomes an embedding projected into the text token space | ~256-1,024 tokens per image (depending on resolution and model) | Describe scenes, read printed text, identify UI elements, detect objects, extract structured fields from forms | Fine text, merged cells, unusual fonts, and dense numeric tables are frequently misread; no spatial precision without grounding |
 | PDF Document | Binary PDF file | Three possible pipelines: (1) extract embedded text layer, (2) OCR the rendered image, or (3) render pages as images and send to a VLM | 500-5,000 tokens per page (text extraction); 500-2,000 tokens per page (VLM) | Extract structured fields, summarize, answer questions, identify tables | Scanned PDFs have no text layer; multi-column layouts confuse text extraction; tables are reliably difficult for all three approaches |
-| Audio | WAV, MP3, OGG | Transcribed to text via a speech recognition model (most commonly Whisper: `pip install openai-whisper`) then treated as text, OR processed as audio tokens by a native audio model | Varies by speech rate: ~150 words/minute → ~200 tokens/minute | Transcription, speaker identification, meeting summarization | Transcription errors (wrong words) propagate through the entire pipeline; accents and background noise increase error rate; tone and emotion are lost in text transcription |
+| Audio | WAV, MP3, OGG | Transcribed to text via a speech recognition model (most commonly Whisper: `pip install openai-whisper`) then treated as text, OR processed as audio tokens by a native audio model | Varies by speech rate: ~150 words/minute -> ~200 tokens/minute | Transcription, speaker identification, meeting summarization | Transcription errors (wrong words) propagate through the entire pipeline; accents and background noise increase error rate; tone and emotion are lost in text transcription |
 | Video | MP4, MOV, frames | Sampled as a sequence of image frames (typically 1 frame/second to 1 frame/5 seconds); audio track transcribed separately | Very high: 100 frames × 512 tokens/frame = 51,200 tokens for a 100-second video | Temporal scene understanding, action recognition, caption generation per frame | Extremely high token cost makes long videos expensive; temporal reasoning across hundreds of frames is unreliable; sampling strategy loses frames containing important moments |
 | Code File | .py, .js, .ts, .java, etc. | Passed as plain text (most common), as a serialized Abstract Syntax Tree, or queried incrementally via tools (look up function definition, list imports) | Proportional to file size; a 500-line Python file ≈ 2,000-3,000 tokens | Explanation, refactoring, bug detection, docstring generation, test writing | Files larger than ~1,000 lines exceed context windows; structural relationships (call graphs, inheritance) are invisible in flat text |
 
@@ -88,7 +88,7 @@ Notable VLMs include:
 | Model | Provider | Access Method | Strengths | Best For | Cost Note |
 |---|---|---|---|---|---|
 | GPT-4o | OpenAI | API (`pip install openai`) | Widely deployed; strong on document understanding, UI interaction, and dense text in images | Production deployments where reliability and support matter | ~$0.005 per image input (1024×1024) |
-| Claude Sonnet / Opus | Anthropic | API (`pip install anthropic`) | Effective on long-document vision tasks; strong at nuanced caption and structured analysis; 200K context window | Document-heavy RAG pipelines; tasks requiring long reasoning over multi-page documents | ~$0.003–$0.015 per image depending on model |
+| Claude Sonnet / Opus | Anthropic | API (`pip install anthropic`) | Effective on long-document vision tasks; strong at nuanced caption and structured analysis; 200K context window | Document-heavy RAG pipelines; tasks requiring long reasoning over multi-page documents | ~$0.003-$0.015 per image depending on model |
 | LLaVA (open-source) | Multiple research groups | Local via Ollama (`ollama pull llava:7b`) | Visual instruction tuning on LLaMA base; good for research experiments; free to run locally | Research and education; tasks where data privacy prohibits sending images to the cloud | Free to run locally; requires 8+ GB RAM |
 | Moondream (open-source) | Vikhyat Kopula | Local via Ollama (`ollama pull moondream`) | Very small (1.8B parameters); designed for edge deployment; fast even on CPU | Embedded devices, offline use, situations where a 7B model is too large | Free; fits in 4 GB RAM |
 | Gemma 3 multimodal | Google DeepMind | Local via Ollama (`ollama pull gemma3:12b`) | Vision-capable variant; strong grounding; 128K context for long documents | Long-document vision tasks locally | Free to run locally; requires 16 GB RAM |
@@ -109,7 +109,7 @@ When an agent needs to work with a PDF, there are three main approaches, each wi
 
 In practice, robust document processing pipelines combine all three: extract text where available, fall back to OCR for scanned pages, and use vision for validation or for documents that defeat both.
 
-> **⚠️ Common Misconception:** Many developers assume that a VLM "sees" a PDF the way a human reads it — understanding layout, inferring meaning from position, and reading left-to-right correctly. In reality, **VLMs frequently misread tables, merge adjacent cells, transpose rows and columns, and hallucinate values in dense numeric regions**. Always validate extracted numbers against a range check (is this dollar amount plausible for this type of invoice?) before using them downstream.
+> **Common Misconception:** Many developers assume that a VLM "sees" a PDF the way a human reads it — understanding layout, inferring meaning from position, and reading left-to-right correctly. In reality, **VLMs frequently misread tables, merge adjacent cells, transpose rows and columns, and hallucinate values in dense numeric regions**. Always validate extracted numbers against a range check (is this dollar amount plausible for this type of invoice?) before using them downstream.
 
 ### Critical Thinking Questions
 
@@ -358,7 +358,7 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
 ---
 
-→ Coming Up Next: Now that you understand multimodal agents and how they process different input types, the next module examines the frameworks — LangChain, CrewAI, AutoGen, and Agno — that provide scaffolding for multi-agent pipelines, and helps you decide which level of abstraction belongs in which project.
+-> Coming Up Next: Now that you understand multimodal agents and how they process different input types, the next module examines the frameworks — LangChain, CrewAI, AutoGen, and Agno — that provide scaffolding for multi-agent pipelines, and helps you decide which level of abstraction belongs in which project.
 
 ---
 

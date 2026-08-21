@@ -56,11 +56,11 @@ info:
   readings:
     - rtitle: "OWASP Top 10 for LLM Applications (2025)"
       rlink: "https://genai.owasp.org/llm-top-10/"
-    - rtitle: "Gandalf — Prompt Injection Game (shared warm-up)"
+    - rtitle: "Gandalf: Prompt Injection Game (shared warm-up)"
       rlink: "https://gandalf.lakera.ai/"
-    - rtitle: "Tensor Trust — Attack and Defend (shared warm-up)"
+    - rtitle: "Tensor Trust: Attack and Defend (shared warm-up)"
       rlink: "https://tensortrust.ai/"
-    - rtitle: "OWASP labStudentLLM — Vulnerable LLM App Labs (Direction 1)"
+    - rtitle: "OWASP labStudentLLM: Vulnerable LLM App Labs (Direction 1)"
       rlink: "https://github.com/leinn32/labStudentLLM"
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
@@ -228,7 +228,7 @@ You do not need to memorize either document. You need enough familiarity to reco
 Part 1 asks you to stand up a deliberately vulnerable agent to attack. You have two equally acceptable ways to do this — pick whichever fits the agent you want to harden:
 
 - **Target A (default): build the minimal reference agent below.** Fastest path; the RAG-style knowledge-base agent in Part 1 is fully specified here and maps cleanly onto the five attack categories in Part 2.
-- **Target B: use the [OWASP labStudentLLM](https://github.com/leinn32/labStudentLLM) vulnerable app suite.** This open-source teaching repo ships ten deliberately vulnerable FastAPI apps — one per OWASP LLM Top-10 category — each with attack scripts, a fix, tests, and a **deterministic mock LLM** so the labs run fully offline (or you can point them at your local Ollama). If your agent's real risk is broader than prompt injection alone (excessive agency, sensitive-information disclosure, or vector/embedding weaknesses in your RAG store), start from the matching labStudentLLM app as your baseline instead of the reference agent, then carry it through the same red-team → defend → residual-risk cycle. Cite the specific app(s) you used and keep the exploit → fix → test artifacts in your submission.
+- **Target B: use the [OWASP labStudentLLM](https://github.com/leinn32/labStudentLLM) vulnerable app suite.** This open-source teaching repo ships ten deliberately vulnerable FastAPI apps — one per OWASP LLM Top-10 category — each with attack scripts, a fix, tests, and a **deterministic mock LLM** so the labs run fully offline (or you can point them at your local Ollama). If your agent's real risk is broader than prompt injection alone (excessive agency, sensitive-information disclosure, or vector/embedding weaknesses in your RAG store), start from the matching labStudentLLM app as your baseline instead of the reference agent, then carry it through the same red-team -> defend -> residual-risk cycle. Cite the specific app(s) you used and keep the exploit -> fix -> test artifacts in your submission.
 
 Whichever target you choose, the four graded parts (threat model, red-team, layered defense, residual-risk analysis) are identical; Target B simply gives you a richer, standards-aligned starting codebase.
 
@@ -484,7 +484,7 @@ ls knowledge_base.txt   # should show the file
 python agent_vulnerable.py
 ```
 
-##### ✅ Part 1 Checkpoint
+##### Part 1 Checkpoint
 
 Before moving to Part 2, answer these questions in your attack log:
 
@@ -712,7 +712,7 @@ except Exception as e:
 
 Check two things: (1) Confirm your edit to `knowledge_base.txt` was saved and the injected text is present. (2) The injection text may need to be at the top of the file to appear before the knowledge base content in the prompt. Try moving it to the very first line.
 
-##### ✅ Part 2 Checkpoint
+##### Part 2 Checkpoint
 
 Before moving to Part 3, answer these questions in your attack log:
 
@@ -1126,7 +1126,7 @@ if start == -1 or end == 0:
 return json.loads(raw[start:end])
 ```
 
-##### ✅ Part 3 Checkpoint
+##### Part 3 Checkpoint
 
 Before moving to Part 4, answer these questions in your attack log:
 
@@ -1198,7 +1198,7 @@ Deployment restrictions:
 - This agent SHOULD NOT be used if: [list conditions]
 ```
 
-##### ✅ Part 4 Checkpoint
+##### Part 4 Checkpoint
 
 Before writing your final certification statement, answer these questions:
 
@@ -1409,14 +1409,14 @@ import spacy
 nlp = spacy.load("en_core_web_sm")
 doc = nlp("My name is Alice Smith and my email is alice@example.com")
 for ent in doc.ents:
-    print(f"  {ent.text!r:30s} → {ent.label_}")
+    print(f"  {ent.text!r:30s} -> {ent.label_}")
 ```
 
 Expected output:
 
 ```
-  'Alice Smith'                  → PERSON
-  'alice@example.com'            → EMAIL (if detected; spaCy may miss email — see Part 2)
+  'Alice Smith'                  -> PERSON
+  'alice@example.com'            -> EMAIL (if detected; spaCy may miss email — see Part 2)
 ```
 
 **Step 3: Quick sanity check — confirm your agent still runs**
@@ -1447,7 +1447,7 @@ Map every place in your agent where user or third-party data flows:
 
 ##### Steps
 
-1. **Trace data flows** through your agent. For each step in your agent's execution (user input → system prompt → LLM → tool call → retrieval → response), ask: what data is present here, and does any of it identify a person?
+1. **Trace data flows** through your agent. For each step in your agent's execution (user input -> system prompt -> LLM -> tool call -> retrieval -> response), ask: what data is present here, and does any of it identify a person?
 
 2. **Create `pii_inventory.md`** (or a CSV) with this table. Include at least 6 rows:
 

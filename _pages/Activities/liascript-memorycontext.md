@@ -190,7 +190,7 @@ for msg in ["My chemistry exam is Dec 14 and statistics is Dec 16.",
 
    > *Hint: When you concatenate user text into one big string, the model cannot tell your instructions apart from the user's — the boundary that `role: "system"` vs `role: "user"` provides is gone. This is the prompt-injection surface you saw in the *Prompt Injection* activity. Structured `messages` arrays preserve the role boundary; flattening everything into one templated string erases it.*
 
-> **⚠️ Common Misconception:** "The model has a memory that fills up as we talk." The model has no memory of your conversation at all — each request is independent and the server forgets you the instant it replies. The *program* has the memory: a variable (here, the `conversation` list) that it re-renders into the prompt on every call. This is liberating once you see it: you have total control over what the model "remembers," because you control the string. Summarization, retrieval, and windowing are all just policies for deciding what to put in that blank.
+> **Common Misconception:** "The model has a memory that fills up as we talk." The model has no memory of your conversation at all — each request is independent and the server forgets you the instant it replies. The *program* has the memory: a variable (here, the `conversation` list) that it re-renders into the prompt on every call. This is liberating once you see it: you have total control over what the model "remembers," because you control the string. Summarization, retrieval, and windowing are all just policies for deciding what to put in that blank.
 
 ---
 
@@ -272,7 +272,7 @@ for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
 
    > *Hint: With `keep=1`: only the single most recent message is kept verbatim; everything else is in the summary. With `keep=10`: 10 messages are kept verbatim before any summarization begins. Predict for each: (a) how often does summarization happen? (b) how large does the prompt grow? (c) how faithful is the agent's memory? Then run both and compare your predictions to the actual output.*
 
-> **⚠️ Common Misconception:** Many students assume that a longer context window eliminates the need for memory management. Even with a 1-million-token context (which exists in some frontier models), the lost-in-the-middle effect means the model under-attends to content in the vast middle of the context. And the quadratic attention cost makes 1-million-token contexts dramatically slower and more expensive. Memory architecture is not a workaround for small context windows — it is good engineering practice even when large windows are available.
+> **Common Misconception:** Many students assume that a longer context window eliminates the need for memory management. Even with a 1-million-token context (which exists in some frontier models), the lost-in-the-middle effect means the model under-attends to content in the vast middle of the context. And the quadratic attention cost makes 1-million-token contexts dramatically slower and more expensive. Memory architecture is not a workaround for small context windows — it is good engineering practice even when large windows are available.
 
 ---
 
@@ -311,7 +311,7 @@ In this Part you quantify the memory savings from summarization, stress-test the
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 We now have agents that can manage their own memory. The *Studio: Local Agent Stack Clinic* session comes next on the schedule — bring your full local stack, because we will wire everything you have built into one system. The memory principles from today feed directly into your Final Project's context design.
 

@@ -868,7 +868,7 @@ So far, your confidence in the judge lives in ad-hoc scripts and a readme. Indus
 Choose **one** harness (this is a choice within the lab, not an optional extra — everyone completes Part 5 with one of the two):
 
 - **Option A (default): [promptfoo](https://www.promptfoo.dev/)** — a declarative YAML-based harness. You describe prompts, providers, test cases, and assertions in `promptfooconfig.yaml` and run `npx promptfoo eval`. promptfoo speaks to local models through Ollama's OpenAI-compatible endpoint, so no hosted API is required. Most assertion types (`contains`, `equals`, `javascript`, `regex`) run without any judge model at all.
-- **Option B (for pairs who want a Python-native harness): [Inspect AI](https://inspect.aisi.org.uk/)** — the UK AI Security Institute's open-source framework. You define a `Task` (Dataset → Solver → Scorer) in Python and run `inspect eval`. Point the model at your local Ollama endpoint. Inspect's log viewer gives you a per-sample trace of every call.
+- **Option B (for pairs who want a Python-native harness): [Inspect AI](https://inspect.aisi.org.uk/)** — the UK AI Security Institute's open-source framework. You define a `Task` (Dataset -> Solver -> Scorer) in Python and run `inspect eval`. Point the model at your local Ollama endpoint. Inspect's log viewer gives you a per-sample trace of every call.
 
 ### Step-by-step guide
 

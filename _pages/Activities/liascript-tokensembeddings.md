@@ -28,9 +28,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Token** | The smallest chunk of text a model reads — roughly ¾ of a word on average, so "hamburger" is one token but "cheeseburger" might be two. Think of tokens as puzzle pieces that text is cut into. | `the` + `thing` → 2 tokens using our toy rules |
-| **Tokenizer** | The algorithm that cuts text into tokens, usually by starting with characters and merging frequent pairs (byte-pair encoding, or BPE). | Merging `t`+`h` → `th`, then `th`+`e` → `the` |
-| **Embedding** | A list of numbers (a vector) that represents the *meaning* of a piece of text. It's like a GPS coordinate for meaning: similar meanings land near each other in this numerical space. | `"the dog ran"` → `(1, 2, 2)` in a toy 3-D space |
+| **Token** | The smallest chunk of text a model reads — roughly ¾ of a word on average, so "hamburger" is one token but "cheeseburger" might be two. Think of tokens as puzzle pieces that text is cut into. | `the` + `thing` -> 2 tokens using our toy rules |
+| **Tokenizer** | The algorithm that cuts text into tokens, usually by starting with characters and merging frequent pairs (byte-pair encoding, or BPE). | Merging `t`+`h` -> `th`, then `th`+`e` -> `the` |
+| **Embedding** | A list of numbers (a vector) that represents the *meaning* of a piece of text. It's like a GPS coordinate for meaning: similar meanings land near each other in this numerical space. | `"the dog ran"` -> `(1, 2, 2)` in a toy 3-D space |
 | **Cosine Similarity** | A score from −1 to 1 measuring how similar two meaning-vectors are — specifically, the cosine of the angle between them. A score of 1 means "same direction = same meaning"; 0 means "unrelated." | `cos(a, b) = 1.0` when `b` is just a scaled copy of `a` |
 | **Context Window** | The maximum number of tokens a model can read at once — its "working memory." A 4,000-token window holds roughly 3,000 English words. | A 4,000-token budget ≈ a 6-page double-spaced essay |
 | **Semantic Search** | Finding documents by *meaning* rather than exact keyword match. Powered by comparing embedding vectors. | Querying "when can I get help from my professor" finds "Office hours for CS357 are Tuesday and Thursday mornings" |
@@ -53,7 +53,7 @@ In this part, you will tokenize a short phrase by hand using a simplified rule s
 
 ## Model 1: Tokenize by Hand
 
-Given the toy merge rules (`t`+`h`→`th`, `th`+`e`→`the`, `i`+`n`→`in`, `in`+`g`→`ing`), tokenize: "the thing".
+Given the toy merge rules (`t`+`h`->`th`, `th`+`e`->`the`, `i`+`n`->`in`, `in`+`g`->`ing`), tokenize: "the thing".
 
 ### Critical Thinking Questions
 
@@ -101,7 +101,7 @@ w i d e s t </w>      3
 | `o w` | low (5), lower (2) | 7 |
 | `w e` | newest (6) | 6 |
 
-`e s` and `s t` tie at 9; break the tie by order encountered and merge **`e s` → `es`**:
+`e s` and `s t` tie at 9; break the tie by order encountered and merge **`e s` -> `es`**:
 
 ```
 l o w </w>            5
@@ -110,7 +110,7 @@ n e w es t </w>       6
 w i d es t </w>       3
 ```
 
-**Merge 2.** Recount. Now `es t` occurs 6 + 3 = **9**, the new maximum. Merge **`es t` → `est`**:
+**Merge 2.** Recount. Now `es t` occurs 6 + 3 = **9**, the new maximum. Merge **`es t` -> `est`**:
 
 ```
 l o w </w>            5
@@ -119,7 +119,7 @@ n e w est </w>        6
 w i d est </w>        3
 ```
 
-**Merge 3.** Recount. `est </w>` occurs 9 times. Merge **`est </w>` → `est</w>`**:
+**Merge 3.** Recount. `est </w>` occurs 9 times. Merge **`est </w>` -> `est</w>`**:
 
 ```
 l o w </w>            5
@@ -137,9 +137,9 @@ This is the step that explains the failures the course keeps invoking. Take the 
 | Stage | Sequence | Rule applied |
 |---|---|---|
 | start | `l o w e s t </w>` | split to characters |
-| after merge 1 | `l o w es t </w>` | `e s` → `es` |
-| after merge 2 | `l o w est </w>` | `es t` → `est` |
-| after merge 3 | `l o w est</w>` | `est </w>` → `est</w>` |
+| after merge 1 | `l o w es t </w>` | `e s` -> `es` |
+| after merge 2 | `l o w est </w>` | `es t` -> `est` |
+| after merge 3 | `l o w est</w>` | `est </w>` -> `est</w>` |
 | final | **`l` `o` `w` `est</w>`** | no more rules apply |
 
 Four tokens, and the model has never seen this word. It sees a prefix spelled out letter by letter plus a suffix it knows well.
@@ -194,7 +194,7 @@ Let $\mathbf{a} = (1, 2, 2)$ for "the dog ran" and $\mathbf{b} = (2, 4, 4)$ for 
 
    > *Hint: A short question like "parking rules?" and a long parking policy document might have similar meanings but very different lengths. Should length penalize similarity? What does the division by the norms accomplish?*
 
-> **⚠️ Common Misconception:** A high cosine similarity score does NOT mean the two sentences share the same words, that one logically implies the other, or that either is factually true. It only means the embedding model placed them in a similar *direction* in meaning-space — they are topically close. Two completely wrong sentences about the same topic can score 0.95 with each other.
+> **Common Misconception:** A high cosine similarity score does NOT mean the two sentences share the same words, that one logically implies the other, or that either is factually true. It only means the embedding model placed them in a similar *direction* in meaning-space — they are topically close. Two completely wrong sentences about the same topic can score 0.95 with each other.
 
 Two sentences receive embeddings with cosine similarity 0.92. The best interpretation is:
 
@@ -310,7 +310,7 @@ In this part, you will extend the search engine to reveal the geometry of meanin
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the *Retrieval-Augmented Generation with Chroma* activity, we put embeddings to work at scale: instead of searching five sentences, we will index thousands of document chunks in a **vector database** (Chroma) and use that index to give our agents access to up-to-date information they were never trained on — a technique called Retrieval-Augmented Generation (RAG).
 

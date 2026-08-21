@@ -151,7 +151,7 @@ In the generation pipeline, the neural network proper consists of which stages?
 [( )] Only the transformer layers
 [( )] The whole pipeline, including the random sampling step
 
-> **⚠️ Common Misconception:** Students often believe the tokenizer is part of the neural network, or that it is learned by gradient descent along with the weights. It is not: the tokenizer is a fixed, deterministic program (built once, before training, from corpus statistics) that converts text to integers. If the tokenizer splits "CS357" into strange pieces, no amount of temperature tuning will fix it — the problem is upstream of the network entirely.
+> **Common Misconception:** Students often believe the tokenizer is part of the neural network, or that it is learned by gradient descent along with the weights. It is not: the tokenizer is a fixed, deterministic program (built once, before training, from corpus statistics) that converts text to integers. If the tokenizer splits "CS357" into strange pieces, no amount of temperature tuning will fix it — the problem is upstream of the network entirely.
 
 ---
 
@@ -416,7 +416,7 @@ Which statement best captures the "bridge" of Part IV?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You can now trace a forward pass and point to where representations live. Next we ask what happens *between* the embedding lookup and the logits at scale: attention, the mechanism that lets every token's vector consult every other token's vector — and later, how those millions of weights get their values in the first place (training).
 

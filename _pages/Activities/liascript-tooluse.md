@@ -178,7 +178,7 @@ print(agent("How many days until the last day of classes, December 7, 2026?"))
 
    > *Hint: Find the line `result = REGISTRY[name](**args)`. What happens immediately before this line? What happens immediately after? Where in this sequence would a confirmation dialog ("Are you sure you want to send this email to X?") fit? Why is it more reliable to enforce this in code rather than by adding "always ask for confirmation before sending email" to the prompt?*
 
-> **⚠️ Common Misconception:** Many beginners assume the language model "executes" the tool itself — that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource — all of that access is mediated by your code. This is where governance lives.
+> **Common Misconception:** Many beginners assume the language model "executes" the tool itself — that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource — all of that access is mediated by your code. This is where governance lives.
 
 In native function calling, the component that actually executes the function is:
 
@@ -191,7 +191,7 @@ In native function calling, the component that actually executes the function is
 
 ## 2b. The Same Tools, Served Through OpenWebUI
 
-The agent above talks straight to Ollama on port `11434`. In many of our setups the model is instead fronted by **OpenWebUI**, which exposes an **OpenAI-compatible** endpoint on port `3000`. The good news: the tool protocol is *identical*. The exact same `TOOLS` schema list travels in the request; the only things that change are the URL, an `Authorization: Bearer` key (from OpenWebUI's *Settings → Account → API Keys*), and the shape of the JSON you read back — OpenAI-style responses nest the reply under `choices[0].message`, and each tool call's `arguments` come back as a **JSON string** you must `json.loads`, rather than the ready-made dict Ollama hands you.
+The agent above talks straight to Ollama on port `11434`. In many of our setups the model is instead fronted by **OpenWebUI**, which exposes an **OpenAI-compatible** endpoint on port `3000`. The good news: the tool protocol is *identical*. The exact same `TOOLS` schema list travels in the request; the only things that change are the URL, an `Authorization: Bearer` key (from OpenWebUI's *Settings -> Account -> API Keys*), and the shape of the JSON you read back — OpenAI-style responses nest the reply under `choices[0].message`, and each tool call's `arguments` come back as a **JSON string** you must `json.loads`, rather than the ready-made dict Ollama hands you.
 
 Whether native tool calling works at all still depends on the underlying model: a tool-capable model (e.g. `llama3.1`/`llama3.2`, `qwen2.5`, `mistral-nemo`) will populate `tool_calls`; a model without tool training will just answer in prose and you fall back to the week-1 parsing approach.
 
@@ -309,7 +309,7 @@ Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selec
 [( )] The model can only read the first tool in any list
 [( )] Fewer tools disable the context window limit
 
-> **⚠️ Common Misconception:** It feels safe — even helpful — to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts — not to hand one agent a giant toolbox and a bloated prompt.
+> **Common Misconception:** It feels safe — even helpful — to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts — not to hand one agent a giant toolbox and a bloated prompt.
 
 ---
 
@@ -361,7 +361,7 @@ If your team finishes the Models early, open the lab and start the walkthrough.
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into the Local Agent Lab.
 
