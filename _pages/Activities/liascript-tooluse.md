@@ -28,14 +28,14 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Tool (Function)** | A typed, named function that an agent can request the runtime to execute on its behalf. The model never runs code itself — it asks your program to run the function and report back the result. | `get_today()` returns today's date; `days_until("2026-12-07")` returns the number of days |
+| **Tool (Function)** | A typed, named function that an agent can request the runtime to execute on its behalf. The model never runs code itself; it asks your program to run the function and report back the result. | `get_today()` returns today's date; `days_until("2026-12-07")` returns the number of days |
 | **Tool Schema** | A structured description of a tool: its name, a natural-language description (the only thing the model knows about what the tool does), and a list of typed parameters. Written in JSON Schema format. | `{"name": "days_until", "description": "Returns days from today to the given ISO date", "parameters": {"target_iso": {"type": "string"}}}` |
-| **`tool_calls` Field** | The structured field the model returns (instead of prose) when it decides to use a tool. Contains the tool name and the argument values, parsed as a JSON object — not free text. | `{"function": {"name": "days_until", "arguments": {"target_iso": "2026-12-07"}}}` |
+| **`tool_calls` Field** | The structured field the model returns (instead of prose) when it decides to use a tool. Contains the tool name and the argument values, parsed as a JSON object, not free text. | `{"function": {"name": "days_until", "arguments": {"target_iso": "2026-12-07"}}}` |
 | **Tool Registry** | A dictionary in your code that maps tool names to actual Python functions, used to look up and execute the function the model requested. Acts as a security boundary. | `REGISTRY = {"get_today": get_today, "days_until": days_until}` |
 | **Perceive-Plan-Act Loop** | The cycle an agent runs: receive input (perceive), decide what to do including which tool to call (plan), execute the tool and observe the result (act), then loop. Tool calling formalizes the "act" step. | The `agent()` function loops up to `max_steps=4` times through this cycle |
 | **Read-Only vs. Irreversible-Write** | A classification of tools by the consequences of their actions. Read-only tools (look up a date, search the web) are safe to call without confirmation. Irreversible-write tools (send an email, delete a file, post to social media) require human approval before execution. | `get_today()` is read-only; a hypothetical `send_email()` is irreversible-write |
 | **Context window** | The fixed-size token buffer that holds *everything* the model can see on a given turn: system prompt, conversation history, **every tool schema**, and every tool result. Nothing outside it exists to the model. | A model with a 128K-token window; see `liascript-memorycontext.md` |
-| **Tool-definition token cost** | Each tool's schema (name + description + parameter spec) occupies tokens in the prompt on *every* turn it is offered — not just when the tool is called. Ten tools are ten schemas riding along in the context the whole conversation. | A 5-parameter tool schema might cost ~120 tokens every turn |
+| **Tool-definition token cost** | Each tool's schema (name + description + parameter spec) occupies tokens in the prompt on *every* turn it is offered, not just when the tool is called. Ten tools are ten schemas riding along in the context the whole conversation. | A 5-parameter tool schema might cost ~120 tokens every turn |
 | **Tool round-trip** | A single tool use adds tokens to the context *twice*: once for the model's `tool_calls` request, and again for the `tool`-role result your code appends. Both stay in the history for the rest of the conversation. | A search tool returning 200 tokens of results leaves 200 tokens in context permanently |
 
 ---
@@ -44,9 +44,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. The Contract
 
-In this Part you will see why the regex-based tool-calling approach from *The Agent Loop* activity breaks on real user input, then learn how structured function calling — where the model emits a machine-readable JSON request instead of prose — solves the problem and moves authority over execution into your code.
+In this Part you will see why the regex-based tool-calling approach from *The Agent Loop* activity breaks on real user input, then learn how structured function calling (where the model emits a machine-readable JSON request instead of prose) solves the problem and moves authority over execution into your code.
 
-**Why this matters:** In *The Agent Loop* activity our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4" — grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
+**Why this matters:** In *The Agent Loop* activity our agent extracted tool calls using string patterns like `calc(3+4)`. This works for controlled demos and breaks immediately in the real world: users write "calculate 3 plus 4" or "what is 3+4?", and the regex matches nothing. Worse, a model trying to call a tool by free text might write "I will now call the calculator with the arguments 3 and 4": grammatically valid, semantically clear to a human, but unexecutable by a regex. Structured function calling solves this by giving the model a formal protocol: instead of embedding a tool call in prose, the model returns a machine-readable JSON object that your code can execute reliably. It is the difference between a human telling a colleague "please send the email" and a computer sending a precisely formatted API request.
 
 **A tool is a typed function the model may request.** We describe each tool with a schema: name, natural-language description, and parameters with types. The description is not documentation for humans; it is *the only thing the model knows about what the tool does*, so writing it clearly is prompt engineering. Modern chat APIs (including Ollama's) accept a `tools` list and return, when the model chooses, a structured `tool_calls` field instead of prose:
 
@@ -55,7 +55,7 @@ request:  messages + tools=[{name, description, parameters}]
 response: message.tool_calls = [{function: {name: "get_weather", arguments: {"city": "Collegeville"}}}]
 ```
 
-The runtime executes the function, appends the result as a `tool` role message, and calls the model again — which is precisely our perceive-plan-act loop with the parsing risk engineered away. The model never executes anything; it only *asks*. Authority lives in our code, which is where governance will attach.
+The runtime executes the function, appends the result as a `tool` role message, and calls the model again, which is precisely our perceive-plan-act loop with the parsing risk engineered away. The model never executes anything; it only *asks*. Authority lives in our code, which is where governance will attach.
 
 ---
 
@@ -75,9 +75,9 @@ Two teams expose the same function with different schemas:
 
 1. For the user question "When does the AI class meet?", which schema gives the model enough signal to (a) choose the tool and (b) construct correct arguments? Identify the failure mode Team A invites.
 
-   > *Hint: The model must decide: should I use `lookup`? What do I pass to it? Team A's description gives no signal about what this tool does or what it expects. The model might guess, pass the wrong thing, or not call the tool at all. For Team B: the description says "course code like CS357" — does the user's question contain a course code?*
+   > *Hint: The model must decide: should I use `lookup`? What do I pass to it? Team A's description gives no signal about what this tool does or what it expects. The model might guess, pass the wrong thing, or not call the tool at all. For Team B: the description says "course code like CS357"; does the user's question contain a course code?*
 
-2. The model passes `course_code="the AI class"`. Whose bug is this — the model's or the schema's — and what one schema change reduces it?
+2. The model passes `course_code="the AI class"`. Whose bug is this (the model's or the schema's) and what one schema change reduces it?
 
    > *Hint: The model is trying to be helpful by passing what the user said. But the schema's parameter description should have told the model what *format* is expected. Adding an example ("e.g., CS357 or BIO110") and a constraint ("must be a valid department abbreviation followed by a 3-digit number") gives the model the signal it needs to recognize that "the AI class" is not a valid argument.*
 
@@ -91,7 +91,7 @@ Two teams expose the same function with different schemas:
 
 ## 2. A Two-Tool Agent
 
-In this Part you will run a working two-tool agent that knows today's date and can calculate deadlines. Watch the `[tool]` print lines as it runs — each one shows a moment where your Python program, not the model, executed a function and handed the result back to the model for the next step.
+In this Part you will run a working two-tool agent that knows today's date and can calculate deadlines. Watch the `[tool]` print lines as it runs; each one shows a moment where your Python program, not the model, executed a function and handed the result back to the model for the next step.
 
 The code below defines two tools (`get_today` and `days_until`), describes them in JSON Schema format so the model knows what each tool does and what arguments it expects, and runs a perceive-plan-act loop (the repeating cycle where an agent receives input, decides what to do, executes a tool or answers, then loops) that automatically calls whichever tool the model requests.
 
@@ -162,13 +162,13 @@ print(agent("How many days until the last day of classes, December 7, 2026?"))
 
 ## Model 2: Trace the Protocol
 
-**Why this matters:** The message sequence in tool calling is the core of how structured AI agents work. If you can trace exactly what each message contains and who authored it — human, model, or your Python code — you understand the full control flow and know where to add governance at every step. This trace is also your debugging tool when agents misbehave: find which message in the sequence contains the wrong information, and you know which component to fix.
+**Why this matters:** The message sequence in tool calling is the core of how structured AI agents work. If you can trace exactly what each message contains and who authored it (human, model, or your Python code) you understand the full control flow and know where to add governance at every step. This trace is also your debugging tool when agents misbehave: find which message in the sequence contains the wrong information, and you know which component to fix.
 
 ### Critical Thinking Questions
 
 4. List the exact sequence of messages exchanged for the question above (roles and brief content descriptions). Which message was authored by our Python code rather than by a human or the model?
 
-   > *Hint: The sequence is: (1) user message with the question, (2) model response with a tool_call request, (3) ??? authored by Python code, (4) model response with the final answer. What does message 3 contain? Look at the line `msgs.append({"role": "tool", "content": result})` — who wrote that line of the conversation?*
+   > *Hint: The sequence is: (1) user message with the question, (2) model response with a tool_call request, (3) ??? authored by Python code, (4) model response with the final answer. What does message 3 contain? Look at the line `msgs.append({"role": "tool", "content": result})`; who wrote that line of the conversation?*
 
 5. The registry lookup `REGISTRY[name]` is a security boundary. What does it prevent that a Python `eval` of the model's text output would not?
 
@@ -178,7 +178,7 @@ print(agent("How many days until the last day of classes, December 7, 2026?"))
 
    > *Hint: Find the line `result = REGISTRY[name](**args)`. What happens immediately before this line? What happens immediately after? Where in this sequence would a confirmation dialog ("Are you sure you want to send this email to X?") fit? Why is it more reliable to enforce this in code rather than by adding "always ask for confirmation before sending email" to the prompt?*
 
-> **⚠️ Common Misconception:** Many beginners assume the language model "executes" the tool itself — that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource — all of that access is mediated by your code. This is where governance lives.
+> **Common Misconception:** Many beginners assume the language model "executes" the tool itself, that the model somehow runs Python code or queries a database during its forward pass. This is not how it works. The model only *describes* which function it wants called and with what arguments, in structured JSON. Your Python program reads that description, looks up the function in the registry, calls it, and sends the result back to the model. The model never has direct access to your file system, your network, or any external resource; all of that access is mediated by your code. This is where governance lives.
 
 In native function calling, the component that actually executes the function is:
 
@@ -191,7 +191,7 @@ In native function calling, the component that actually executes the function is
 
 ## 2b. The Same Tools, Served Through OpenWebUI
 
-The agent above talks straight to Ollama on port `11434`. In many of our setups the model is instead fronted by **OpenWebUI**, which exposes an **OpenAI-compatible** endpoint on port `3000`. The good news: the tool protocol is *identical*. The exact same `TOOLS` schema list travels in the request; the only things that change are the URL, an `Authorization: Bearer` key (from OpenWebUI's *Settings → Account → API Keys*), and the shape of the JSON you read back — OpenAI-style responses nest the reply under `choices[0].message`, and each tool call's `arguments` come back as a **JSON string** you must `json.loads`, rather than the ready-made dict Ollama hands you.
+The agent above talks straight to Ollama on port `11434`. In many of our setups the model is instead fronted by **OpenWebUI**, which exposes an **OpenAI-compatible** endpoint on port `3000`. The good news: the tool protocol is *identical*. The exact same `TOOLS` schema list travels in the request; the only things that change are the URL, an `Authorization: Bearer` key (from OpenWebUI's *Settings -> Account -> API Keys*), and the shape of the JSON you read back: OpenAI-style responses nest the reply under `choices[0].message`, and each tool call's `arguments` come back as a **JSON string** you must `json.loads`, rather than the ready-made dict Ollama hands you.
 
 Whether native tool calling works at all still depends on the underlying model: a tool-capable model (e.g. `llama3.1`/`llama3.2`, `qwen2.5`, `mistral-nemo`) will populate `tool_calls`; a model without tool training will just answer in prose and you fall back to the week-1 parsing approach.
 
@@ -237,13 +237,13 @@ def agent_openwebui(question, max_steps=4):
 print(agent_openwebui("How many days until December 7, 2026?"))
 ```
 
-The takeaway is the *portability of the protocol*: you describe a function once as a schema, and the same description drives tool use across Ollama-direct and OpenWebUI (and any other OpenAI-compatible server). Your tool implementations and your executor loop do not change — only the transport does.
+The takeaway is the *portability of the protocol*: you describe a function once as a schema, and the same description drives tool use across Ollama-direct and OpenWebUI (and any other OpenAI-compatible server). Your tool implementations and your executor loop do not change; only the transport does.
 
 ---
 
 # Part III: What a Tool Call Costs in the Context Window
 
-Part II traced the *messages* in a tool call — who authors each one and in what order. This Part traces the *tokens*. Everything the model can see on a turn — the system prompt, the whole conversation history, **every tool schema you offer**, and every tool result — shares one fixed-size buffer, the context window (`liascript-memorycontext.md`). Tools are not free riders in that buffer. Understanding their token cost is what separates an agent that stays fast and accurate from one that slows down, gets more expensive, and starts picking the wrong tool.
+Part II traced the *messages* in a tool call: who authors each one and in what order. This Part traces the *tokens*. Everything the model can see on a turn (the system prompt, the whole conversation history, **every tool schema you offer**, and every tool result) shares one fixed-size buffer, the context window (`liascript-memorycontext.md`). Tools are not free riders in that buffer. Understanding their token cost is what separates an agent that stays fast and accurate from one that slows down, gets more expensive, and starts picking the wrong tool.
 
 ## Model 3: The Token Ledger of a Tool Call
 
@@ -251,9 +251,9 @@ Return to the message sequence from Model 2 and attach an approximate token cost
 
 | # | What enters the context | Author | Approx. tokens | Stays in context after? |
 |---|---|---|---|---|
-| 0 | System prompt | You (setup) | ~150 | Yes — every turn |
-| 0 | **Schema for `get_today`** | You (setup) | ~60 | **Yes — every turn, called or not** |
-| 0 | **Schema for `days_until`** | You (setup) | ~90 | **Yes — every turn, called or not** |
+| 0 | System prompt | You (setup) | ~150 | Yes, every turn |
+| 0 | **Schema for `get_today`** | You (setup) | ~60 | **Yes, every turn, called or not** |
+| 0 | **Schema for `days_until`** | You (setup) | ~90 | **Yes, every turn, called or not** |
 | 1 | User question | Human | ~12 | Yes |
 | 2 | Model's `tool_calls` request | Model | ~25 | Yes |
 | 3 | `tool`-role result your code appends | **Your code** | ~15 | Yes |
@@ -261,7 +261,7 @@ Return to the message sequence from Model 2 and attach an approximate token cost
 | 5 | Second `tool`-role result | Your code | ~10 | Yes |
 | 6 | Final natural-language answer | Model | ~20 | Yes |
 
-Two facts fall out of this ledger. First, the **two tool schemas cost ~150 tokens on every single turn**, whether or not either tool is used — they are standing furniture in the prompt, exactly like the system prompt. Offer twenty tools and you are carrying twenty schemas in every request for the whole conversation. Second, each tool use is a **round-trip**: the request (row 2) *and* the result (row 3) both land in the history and stay there. A tool that returns 200 tokens of search results does not cost 200 tokens once — it costs 200 tokens for the rest of the conversation, re-sent on every subsequent turn. This is the same token-occupancy accounting as the "Bloated Agent" ledger in `liascript-memorycontext.md`, now applied to tools.
+Two facts fall out of this ledger. First, the **two tool schemas cost ~150 tokens on every single turn**, whether or not either tool is used; they are standing furniture in the prompt, exactly like the system prompt. Offer twenty tools and you are carrying twenty schemas in every request for the whole conversation. Second, each tool use is a **round-trip**: the request (row 2) *and* the result (row 3) both land in the history and stay there. A tool that returns 200 tokens of search results does not cost 200 tokens once; it costs 200 tokens for the rest of the conversation, re-sent on every subsequent turn. This is the same token-occupancy accounting as the "Bloated Agent" ledger in `liascript-memorycontext.md`, now applied to tools.
 
 ### Critical Thinking Questions
 
@@ -279,28 +279,28 @@ Two facts fall out of this ledger. First, the **two tool schemas cost ~150 token
 
 You offer an agent 12 tools but a given conversation only calls 1 of them. What is the token cost of the other 11 tool schemas?
 
-[( )] Zero — schemas only cost tokens when their tool is actually called
+[( )] Zero; schemas only cost tokens when their tool is actually called
 [( )] They cost tokens once, on the first turn only
 [(X)] They cost tokens on every turn of the conversation, because all offered schemas sit in the prompt whether or not they are called
 [( )] They are stored on the server and never count against the context window
 
-## Model 4: Fewer Tools, Cleaner Context — and Subagents
+## Model 4: Fewer Tools, Cleaner Context, and Subagents
 
 Two practices follow directly from the ledger.
 
-**Limit the tools you offer.** Beyond the raw token cost, a long tool list *degrades tool selection*. The model must choose the right tool from everything offered; the more near-duplicate or irrelevant options crowd the list, the more often it picks wrong or fills arguments poorly — the same lesson as the schema-quality ablation in the Exercises, now at the level of tool *count*. Offer the smallest set of well-described tools each task actually needs, not everything you have ever built.
+**Limit the tools you offer.** Beyond the raw token cost, a long tool list *degrades tool selection*. The model must choose the right tool from everything offered; the more near-duplicate or irrelevant options crowd the list, the more often it picks wrong or fills arguments poorly; the same lesson as the schema-quality ablation in the Exercises, now at the level of tool *count*. Offer the smallest set of well-described tools each task actually needs, not everything you have ever built.
 
-**Use subagents to keep each context focused.** When a task genuinely needs many tools or produces large intermediate results, the fix is not one agent holding all of it. It is to hand a narrow sub-task to a **subagent** running in its *own* context window, with only the few tools and the brief it needs, and return just the answer to the main thread — so the main context never accumulates the sub-task's schemas and scratch work. This course teaches that pattern in depth elsewhere: the small-context-window principle (`liascript-memorycontext.md`), subagents with isolated context and filesystem offload (`liascript-agentframeworks.md`), and orchestration where each stage "sees only what it needs" (`liascript-orchestration.md`). The token ledger above is *why* those patterns work.
+**Use subagents to keep each context focused.** When a task genuinely needs many tools or produces large intermediate results, the fix is not one agent holding all of it. It is to hand a narrow sub-task to a **subagent** running in its *own* context window, with only the few tools and the brief it needs, and return just the answer to the main thread, so the main context never accumulates the sub-task's schemas and scratch work. This course teaches that pattern in depth elsewhere: the small-context-window principle (`liascript-memorycontext.md`), subagents with isolated context and filesystem offload (`liascript-agentframeworks.md`), and orchestration where each stage "sees only what it needs" (`liascript-orchestration.md`). The token ledger above is *why* those patterns work.
 
 ### Critical Thinking Questions
 
-1. You have built 30 tools across a semester. A new task needs 3 of them. Give two distinct reasons — one about tokens, one about accuracy — why you should offer only those 3 rather than all 30.
+1. You have built 30 tools across a semester. A new task needs 3 of them. Give two distinct reasons (one about tokens, one about accuracy) why you should offer only those 3 rather than all 30.
 
    > *Hint: One reason is the standing schema cost from Model 3. The other is what a crowded menu does to the model's chance of selecting and arguing the right tool.*
 
 2. A subagent runs a 12-tool research sub-task and returns a 3-sentence summary to the main agent. What does the main agent's context *avoid* carrying compared to doing the research inline itself?
 
-   > *Hint: Think about what stays in history when you do the work inline — the schemas, every tool request, every raw result. What comes back from the subagent instead?*
+   > *Hint: Think about what stays in history when you do the work inline: the schemas, every tool request, every raw result. What comes back from the subagent instead?*
 
 Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selection accuracy?
 
@@ -309,17 +309,17 @@ Why does offering an agent *fewer, well-chosen* tools tend to improve tool-selec
 [( )] The model can only read the first tool in any list
 [( )] Fewer tools disable the context window limit
 
-> **⚠️ Common Misconception:** It feels safe — even helpful — to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts — not to hand one agent a giant toolbox and a bloated prompt.
+> **Common Misconception:** It feels safe (even helpful) to give an agent *every* tool it might conceivably need, on the theory that more capability is strictly better. It is not free. Every tool you attach is a schema that occupies context on every turn (raising cost and latency) *and* one more option the model can mis-select. Capability and context-hygiene trade off against each other. The professional move is to offer the minimal tool set for the task at hand and to push overflow work into subagents with their own contexts, not to hand one agent a giant toolbox and a bloated prompt.
 
 ---
 
 # Part IV: Synthesis and Practice
 
-With the protocol understood from Part I and II, this Hands-On section has you build three distinct tools — a safe arithmetic evaluator, a clock, and a word counter — and observe exactly how the model decides which one to call based solely on the tool's description field.
+With the protocol understood from Part I and II, this Hands-On section has you build three distinct tools (a safe arithmetic evaluator, a clock, and a word counter) and observe exactly how the model decides which one to call based solely on the tool's description field.
 
 ## Hands-On: Build and Call a Tool
 
-The full 30-minute build — three tool definitions in OpenAI function-calling schema, the executor pattern, and the agent loop that ties them together — now lives on the **[Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP)**, where you actually do it. We spend today's session on the *protocol* and its costs; the lab is where you write the code.
+The full 30-minute build (three tool definitions in OpenAI function-calling schema, the executor pattern, and the agent loop that ties them together) now lives on the **[Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP)**, where you actually do it. We spend today's session on the *protocol* and its costs; the lab is where you write the code.
 
 If your team finishes the Models early, open the lab and start the walkthrough.
 
@@ -353,17 +353,17 @@ If your team finishes the Models early, open the lab and start the walkthrough.
 
 ## Reflection Prompt
 
-*Personal:* In your notebook: with tools, an agent's words become actions. Recall a moment when you gave an instruction — to a person or a system — that was carried out too literally and produced an unintended result. What would "asking a clarifying question first" look like as an agent design feature, and when should an agent be required to use it?
+*Personal:* In your notebook: with tools, an agent's words become actions. Recall a moment when you gave an instruction (to a person or a system) that was carried out too literally and produced an unintended result. What would "asking a clarifying question first" look like as an agent design feature, and when should an agent be required to use it?
 
 *Technical:* The registry is a security boundary, but it is not the only one needed. For a `send_email(to, body)` tool, list three additional safeguards you would implement at the code level (not the prompt level), and explain what attack or mistake each one prevents.
 
-*Societal:* Tool-calling agents can take actions at machine speed — sending thousands of emails, making purchases, or modifying files in seconds. Name one professional domain (medicine, law, finance, education) where this speed is a benefit, and one where it is a serious risk. What institution or regulatory body should set the rules for how fast AI agents are allowed to act?
+*Societal:* Tool-calling agents can take actions at machine speed: sending thousands of emails, making purchases, or modifying files in seconds. Name one professional domain (medicine, law, finance, education) where this speed is a benefit, and one where it is a serious risk. What institution or regulatory body should set the rules for how fast AI agents are allowed to act?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
-Our agents can now call tools reliably — but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into the Local Agent Lab.
+Our agents can now call tools reliably, but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into the Local Agent Lab.
 
 ---
 
@@ -372,5 +372,5 @@ Our agents can now call tools reliably — but why does the same tool-calling ag
 - Ollama tool-calling documentation: https://github.com/ollama/ollama/blob/main/docs/api.md
 - Schick et al. "Toolformer: Language Models Can Teach Themselves to Use Tools." *NeurIPS* (2023).
 - Mialon et al. "Augmented Language Models: A Survey." *TMLR* (2023).
-- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) — a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
-- [Monte Carlo Retirement companion notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/MonteCarloRetirement.ipynb) — a runnable version of that lab, including the full function-calling agent loop with offline sample responses.
+- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
+- [Monte Carlo Retirement companion notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/MonteCarloRetirement.ipynb), a runnable version of that lab, including the full function-calling agent loop with offline sample responses.

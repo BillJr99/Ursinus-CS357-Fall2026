@@ -28,7 +28,7 @@ info:
     <li>How can system design align agent outcomes with ethical principles, and who is accountable when an autonomous system errs?</li>
     <li>How do coding agents like OpenCode, Plandex, and Hermes reshape software development, and what review discipline do their generated diffs demand?</li>
     <li>What is the carbon and water cost of AI computation, and how should environmental impact influence our design choices for agents?</li>
-    <li>Does it matter whether an AI system genuinely understands, or only whether it behaves as if it does — and what are the ethical implications of our answer?</li>
+    <li>Does it matter whether an AI system genuinely understands, or only whether it behaves as if it does, and what are the ethical implications of our answer?</li>
     <li>How do containers, filesystems, network policies, and OAuth scopes create the safety boundaries that allow us to deploy autonomous agents responsibly?</li>
     </ul>
   welcome_message: "Welcome to CS357!"
@@ -276,9 +276,9 @@ schedule:
     points: "10"
   readings:
   - rtitle: "Mitchell, Prologue and Chapter 1"
-  - rtitle: "Teachable Machine — train an image, sound, or pose classifier in the browser, with no code, to see what \"learning from examples\" actually means"
+  - rtitle: "Teachable Machine: train an image, sound, or pose classifier in the browser, with no code, to see what \"learning from examples\" actually means"
     rlink: "https://teachablemachine.withgoogle.com/"
-  - rtitle: "Optional depth — AI Capabilities and Limitations (Anthropic Skilljar course) — a short self-paced companion to today's Capabilities and Limitations Framework"
+  - rtitle: "Optional depth: AI Capabilities and Limitations (Anthropic Skilljar course), a short self-paced companion to today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
 - week: "0"
   date: "1"
@@ -301,11 +301,11 @@ schedule:
     module: overarching
   readings:
   - rtitle: "Mitchell, Chapter 2"
-  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2 — Intelligent Agents"
+  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2, Intelligent Agents"
     rlink: "https://aima.cs.berkeley.edu/"
-  - rtitle: "Optional depth — tutorial: Shell Fundamentals for Agent Supervision"
+  - rtitle: "Optional depth, tutorial: Shell Fundamentals for Agent Supervision"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shellbasics.md"
-  - rtitle: "Optional depth — Interactive: The Token Prediction Playground — an unplugged, in-browser simulator showing what next-token prediction can and cannot do"
+  - rtitle: "Optional depth, Interactive: The Token Prediction Playground (an unplugged, in-browser simulator showing what next-token prediction can and cannot do)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor"
 - week: "1"
   date: "0"
@@ -324,7 +324,7 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
-  - rtitle: "Optional depth — AI for All — tools overview slide deck"
+  - rtitle: "Optional depth: AI for All (tools overview slide deck)"
     rlink: "https://docs.google.com/presentation/d/1TZxyy6LR3ZAcACTHHqZ8QB9fNg6H9NaVVlt2mGoXRPc/edit"
   - rtitle: "Bring a laptop with Docker Desktop already installed - the download alone can eat the session."
     rlink: false
@@ -342,15 +342,15 @@ schedule:
     points: "3"
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
-  - rtitle: "Mitchell, Chapter 3, part 2 of 4: continue the chapter — running a model on your own machine makes its limits concrete"
-  - rtitle: "Reading Response / Discussion: post a short response before class — what changed once the model ran on your own machine?"
-  - rtitle: "Optional depth — The Local Model Landscape — Llama, Mistral, Phi, Gemma, and Friends"
+  - rtitle: "Mitchell, Chapter 3, part 2 of 4: continue the chapter, running a model on your own machine makes its limits concrete"
+  - rtitle: "Reading Response / Discussion: post a short response before class, what changed once the model ran on your own machine?"
+  - rtitle: "Optional depth: The Local Model Landscape (Llama, Mistral, Phi, Gemma, and Friends)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localmodels.md"
-  - rtitle: "Optional depth — tutorial: Docker from First Principles"
+  - rtitle: "Optional depth, tutorial: Docker from First Principles"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
-  - rtitle: "Optional depth — tutorial: Terminal and Filesystem Isolation for Agent Safety"
+  - rtitle: "Optional depth, tutorial: Terminal and Filesystem Isolation for Agent Safety"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-terminalfilesystem.md"
-  - rtitle: "Optional depth — tutorial: The Hardware Behind AI — GPUs, Quantization, and Running Models at the Edge"
+  - rtitle: "Optional depth, tutorial: The Hardware Behind AI (GPUs, Quantization, and Running Models at the Edge)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-hardwarequantization.md"
 - week: "2"
   date: "0"
@@ -365,11 +365,11 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
   - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
     rlink: "https://philarchive.org/rec/CHAWWT-8"
-  - rtitle: "Optional depth — tutorial: Agentic CLI Tools (Claude Code, Codex, Gemini CLI, and Friends)"
+  - rtitle: "Optional depth, tutorial: Agentic CLI Tools (Claude Code, Codex, Gemini CLI, and Friends)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentclis.md"
-  - rtitle: "Optional depth — tutorial: Coding Agents — OpenCode, Plandex, and Hermes"
+  - rtitle: "Optional depth, tutorial: Coding Agents (OpenCode, Plandex, and Hermes)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
-  - rtitle: "Optional depth — tutorial: The Karpathy Coding Approach — Spec-First, TDD, and Supervised AI Development"
+  - rtitle: "Optional depth, tutorial: The Karpathy Coding Approach (Spec-First, TDD, and Supervised AI Development)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-karpathycoding.md"
   - rtitle: "Bring your working Ollama setup from the clinic; today's workshop edits system prompts against a live model."
     rlink: false
@@ -392,13 +392,13 @@ schedule:
     rlink: "http://neuralnetworksanddeeplearning.com/"
   - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
     rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
-  - rtitle: "Optional depth — Theory Deep Dive: Attention and Transformers, Conceptually and by Hand"
+  - rtitle: "Optional depth, Theory Deep Dive: Attention and Transformers, Conceptually and by Hand"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
-  - rtitle: "Optional depth — activity: LLM Pre-Training Internals — BPE Tokenization, Training Objectives, and Scaling Laws"
+  - rtitle: "Optional depth, activity: LLM Pre-Training Internals (BPE Tokenization, Training Objectives, and Scaling Laws)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmpretraining.md"
-  - rtitle: "Optional depth — activity: From Text Generation to a Neural Network — Workflow, Forward Pass by Numbers, and Visualization"
+  - rtitle: "Optional depth, activity: From Text Generation to a Neural Network (Workflow, Forward Pass by Numbers, and Visualization)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-textgen2nn.md"
-  - rtitle: "Optional depth — synthesis: Anatomy of an LLM Request — One Prompt, End to End, by Hand (threads tokenize → embed → attention → FFN → logits → sample → one training step with a single running example)"
+  - rtitle: "Optional depth, synthesis: Anatomy of an LLM Request, One Prompt, End to End, by Hand (threads tokenize -> embed -> attention -> FFN -> logits -> sample -> one training step with a single running example)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md"
   - rtitle: "Bring the printed Neural Network by Hand worksheet, or a tablet you can write on."
     rlink: false
@@ -419,15 +419,15 @@ schedule:
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's sampling and generation behavior in mind"
-  - rtitle: "Jurafsky and Martin, Speech and Language Processing (3rd ed. draft), Chapter 3 — N-gram Language Models"
+  - rtitle: "Jurafsky and Martin, Speech and Language Processing (3rd ed. draft), Chapter 3: N-gram Language Models"
     rlink: "https://web.stanford.edu/~jurafsky/slp3/"
-  - rtitle: "Optional depth — Temperature and Sampling Explorer"
+  - rtitle: "Optional depth: Temperature and Sampling Explorer"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-temperatureexplorer.md"
-  - rtitle: "Optional depth — activity: Shakespeare GPT — Character-Level Language Models from Scratch"
+  - rtitle: "Optional depth, activity: Shakespeare GPT (Character-Level Language Models from Scratch)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-shakespearegpt.md"
-  - rtitle: "Optional depth — discussion activity: Deterministic vs. Probabilistic Computing — Automation Bias and Why AI Outputs Are Not Ground Truth"
+  - rtitle: "Optional depth, discussion activity: Deterministic vs. Probabilistic Computing (Automation Bias and Why AI Outputs Are Not Ground Truth)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-deterministicvsprobabilistic.md"
-  - rtitle: "Optional depth — activity: Machine Learning Foundations — Supervised Learning, Bias-Variance, and Ensembles"
+  - rtitle: "Optional depth, activity: Machine Learning Foundations (Supervised Learning, Bias-Variance, and Ensembles)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mlfoundations.md"
 - week: "4"
   date: "0"
@@ -447,7 +447,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
-  - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter — hallucination, evaluation, and what the model cannot check for itself"
+  - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter, hallucination, evaluation, and what the model cannot check for itself"
   - rtitle: "Bring three prompts where a model gave you a confidently wrong answer - we triage real examples, not invented ones."
     rlink: false
 - week: "4"
@@ -460,25 +460,25 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
-  - rtitle: "Optional depth — reference: Ollama Structured Outputs — schema-constrained JSON (used in the Local Agent Lab's required structured-output segment)"
+  - rtitle: "Optional depth, reference: Ollama Structured Outputs, schema-constrained JSON (used in the Local Agent Lab's required structured-output segment)"
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
-  - rtitle: "Optional depth — reference: Instructor — typed structured output with Pydantic and Ollama"
+  - rtitle: "Optional depth, reference: Instructor (typed structured output with Pydantic and Ollama)"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
-  - rtitle: "Optional depth — reference: Outlines — grammar-constrained generation (validity by construction)"
+  - rtitle: "Optional depth, reference: Outlines, grammar-constrained generation (validity by construction)"
     rlink: "https://github.com/dottxt-ai/outlines"
 - week: "5"
   date: "0"
   title: "Connecting Agents to the World: MCP and APIs"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md"
   deliverables:
-  - dtitle: "Project: Stakeholder Brief — Individual Unassisted Problem Statement Due"
+  - dtitle: "Project: Stakeholder Brief, Individual Unassisted Problem Statement Due"
     dlink: "Assignments/StakeholderBrief"
     points: "3"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
-  - rtitle: "Hugging Face MCP Course (built with Anthropic) — protocol, building a server, connecting clients (supports Local Agent Lab MCP work)"
+  - rtitle: "Hugging Face MCP Course (built with Anthropic): protocol, building a server, connecting clients (supports Local Agent Lab MCP work)"
     rlink: "https://huggingface.co/learn/mcp-course/"
-  - rtitle: "Optional depth — tutorial: GitHub Power-User Tools — gitingest, getmcp.io, deepwiki, gdagram, and github.dev"
+  - rtitle: "Optional depth, tutorial: GitHub Power-User Tools (gitingest, getmcp.io, deepwiki, gdagram, and github.dev)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-githubpowertools.md"
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
@@ -494,11 +494,11 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
-  - rtitle: "Optional depth — tutorial: Vector Databases — How Agents Search for Meaning"
+  - rtitle: "Optional depth, tutorial: Vector Databases (How Agents Search for Meaning)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-vectordatabases.md"
-  - rtitle: "Optional depth — video: LangChain RAG from Scratch (YouTube)"
+  - rtitle: "Optional depth, video: LangChain RAG from Scratch (YouTube)"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
-  - rtitle: "Optional depth — video: Advanced RAG Techniques (YouTube)"
+  - rtitle: "Optional depth, video: Advanced RAG Techniques (YouTube)"
     rlink: "https://www.youtube.com/watch?v=E4l91XKQSgw"
 - week: "6"
   date: "0"
@@ -515,11 +515,11 @@ schedule:
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
   - rtitle: "Mitchell, Chapter 4"
-  - rtitle: "Optional depth — tutorial: Fine-Tuning, RAG, and Prompting — Choosing the Right Approach"
+  - rtitle: "Optional depth, tutorial: Fine-Tuning, RAG, and Prompting (Choosing the Right Approach)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
-  - rtitle: "Optional depth — activity: Synthetic Data — Using AI to Train AI"
+  - rtitle: "Optional depth, activity: Synthetic Data (Using AI to Train AI)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-syntheticdata.md"
-  - rtitle: "Optional depth — tutorial: The LLM Wiki Pattern (Wikis versus RAG)"
+  - rtitle: "Optional depth, tutorial: The LLM Wiki Pattern (Wikis versus RAG)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmwiki.md"
   - rtitle: "Bring your team's Stakeholder Brief draft - the peer review round works on real drafts."
     rlink: false
@@ -541,11 +541,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
-  - rtitle: "Optional depth — tutorial: Agentic OpenWebUI — Tools, Uploads, and Multi-Agent Workflows (source material for the Local Agent Lab's low-code route)"
+  - rtitle: "Optional depth, tutorial: Agentic OpenWebUI, Tools, Uploads, and Multi-Agent Workflows (source material for the Local Agent Lab's low-code route)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenticopenwebui.md"
-  - rtitle: "Optional depth — tutorial: Containerizing AI Systems — Safety, Isolation, and Trust Boundaries"
+  - rtitle: "Optional depth, tutorial: Containerizing AI Systems (Safety, Isolation, and Trust Boundaries)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md"
-  - rtitle: "Optional depth — tutorial: Cloudflare Workers and Pages with Wrangler"
+  - rtitle: "Optional depth, tutorial: Cloudflare Workers and Pages with Wrangler"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md"
   - rtitle: "Bring your stuck points and your pipeline-in-progress; the studio is only as useful as the problems you bring to it."
     rlink: false
@@ -559,11 +559,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
-  - rtitle: "Optional depth — tutorial: An Obsidian Second Brain with Agent Sync"
+  - rtitle: "Optional depth, tutorial: An Obsidian Second Brain with Agent Sync"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-secondbrain.md"
-  - rtitle: "Optional depth — tutorial: Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault"
+  - rtitle: "Optional depth, tutorial: Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-obsidiansync.md"
-  - rtitle: "Optional depth — activity: Memory Types in Agents — Working, Episodic, Semantic, and Procedural"
+  - rtitle: "Optional depth, activity: Memory Types in Agents (Working, Episodic, Semantic, and Procedural)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorytypes.md"
 - week: "8"
   date: "1"
@@ -575,11 +575,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-agentsystemdesign.md"
   readings:
-  - rtitle: "Optional depth — activity: Designing Agent Personas and System Prompts"
+  - rtitle: "Optional depth, activity: Designing Agent Personas and System Prompts"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentpersonas.md"
-  - rtitle: "Optional depth — tutorial: Designing Your AI Development Environment — Context Models, AGENTS.md, and Superpowers"
+  - rtitle: "Optional depth, tutorial: Designing Your AI Development Environment (Context Models, AGENTS.md, and Superpowers)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aidevenv.md"
-  - rtitle: "Optional depth — tutorial: Agent Skills and Plugins — Writing, Configuring, and Publishing Skills for OpenCode and pi.ai"
+  - rtitle: "Optional depth, tutorial: Agent Skills and Plugins (Writing, Configuring, and Publishing Skills for OpenCode and pi.ai)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentskills.md"
 - week: "9"
   date: "0"
@@ -591,13 +591,13 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
-  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2 — agent architectures, from simple reflex to utility-based and learning agents"
+  - rtitle: "Russell and Norvig, Artificial Intelligence: A Modern Approach (4th ed.), Chapter 2, agent architectures, from simple reflex to utility-based and learning agents"
     rlink: "https://aima.cs.berkeley.edu/"
-  - rtitle: "Optional depth — activity: Advanced Agent Loops — Reflection, Recovery, and Control Flow (its two key models are folded into today's orchestration activity; the full version is optional going-deeper)"
+  - rtitle: "Optional depth, activity: Advanced Agent Loops, Reflection, Recovery, and Control Flow (its two key models are folded into today's orchestration activity; the full version is optional going-deeper)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md"
-  - rtitle: "Optional depth — tutorial: Agent Frameworks — LangChain, CrewAI, AutoGen, and Agno"
+  - rtitle: "Optional depth, tutorial: Agent Frameworks (LangChain, CrewAI, AutoGen, and Agno)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md"
-  - rtitle: "Optional depth — tutorial: Cost Optimization — Token Budgets, Caching, and Model Routing"
+  - rtitle: "Optional depth, tutorial: Cost Optimization (Token Budgets, Caching, and Model Routing)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md"
 - week: "9"
   date: "1"
@@ -608,14 +608,14 @@ schedule:
     dlink: "Assignments/RAGKnowledgeBase"
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
-  - dtitle: "Project: Literature Review — Individual Annotated Bibliographies Due"
+  - dtitle: "Project: Literature Review, Individual Annotated Bibliographies Due"
     dlink: "Assignments/LitReview"
     points: "3"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
-  - rtitle: "Optional depth — tutorial: Human-in-the-Loop — Oversight, Escalation, and Appropriate Autonomy"
+  - rtitle: "Optional depth, tutorial: Human-in-the-Loop (Oversight, Escalation, and Appropriate Autonomy)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
-  - rtitle: "Optional depth — case study: From Second Brain to Chief of Staff — A Personal Agent in Production"
+  - rtitle: "Optional depth, case study: From Second Brain to Chief of Staff (A Personal Agent in Production)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
 - week: "10"
   date: "0"
@@ -627,10 +627,10 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
   readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class — when does a multi-agent design help, and when does it just cost tokens?"
-  - rtitle: "Optional depth — activity: Stochastic Multi-Agent Consensus (its clustering model is built step-by-step inside the Multi-Agent Patterns Lab Part 2; the full activity is optional going-deeper)"
+  - rtitle: "Reading Response / Discussion: post a short response before class, when does a multi-agent design help, and when does it just cost tokens?"
+  - rtitle: "Optional depth, activity: Stochastic Multi-Agent Consensus (its clustering model is built step-by-step inside the Multi-Agent Patterns Lab Part 2; the full activity is optional going-deeper)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md"
-  - rtitle: "Optional depth — activity: Multi-Agent Communication — Protocols, Shared State, and Coordination"
+  - rtitle: "Optional depth, activity: Multi-Agent Communication (Protocols, Shared State, and Coordination)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentprotocols.md"
   - rtitle: "Post your reading response before class - the debate exercise starts from the positions you staked out."
     rlink: false
@@ -652,11 +652,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Projects/proj-finalproject.md"
   readings:
-  - rtitle: "Optional depth — reference: promptfoo — declarative LLM/agent eval and red-teaming (Rubric Pipeline Lab harness option, runs against Ollama)"
+  - rtitle: "Optional depth, reference: promptfoo, declarative LLM/agent eval and red-teaming (Rubric Pipeline Lab harness option, runs against Ollama)"
     rlink: "https://www.promptfoo.dev/docs/intro/"
-  - rtitle: "Optional depth — reference: Inspect AI (UK AI Security Institute) — Dataset/Solver/Scorer eval framework (Rubric Pipeline Lab harness option)"
+  - rtitle: "Optional depth, reference: Inspect AI (UK AI Security Institute), Dataset/Solver/Scorer eval framework (Rubric Pipeline Lab harness option)"
     rlink: "https://inspect.aisi.org.uk/"
-  - rtitle: "Optional depth — reference: Your AI Product Needs Evals (Hamel Husain) — error-analysis-first evaluation methodology"
+  - rtitle: "Optional depth, reference: Your AI Product Needs Evals (Hamel Husain), error-analysis-first evaluation methodology"
     rlink: "https://hamel.dev/blog/posts/evals/"
 - week: "11"
   date: "0"
@@ -676,31 +676,31 @@ schedule:
     points: "200"
     rubricpath: "_pages/Assignments/lab-responsibleai.md"
   readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class — one design choice you would make differently in a system you deploy"
+  - rtitle: "Reading Response / Discussion: post a short response before class, one design choice you would make differently in a system you deploy"
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
-  - rtitle: "O'Neil, Weapons of Math Destruction — the chapter on predictive models in education"
-  - rtitle: "Carr, The Glass Cage, Chapters 2–3 — automation, deskilling, and automation bias"
-  - rtitle: "Optional depth — interactive: Gandalf (Lakera) — prompt-injection game (Responsible AI Capstone shared warm-up)"
+  - rtitle: "O'Neil, Weapons of Math Destruction: the chapter on predictive models in education"
+  - rtitle: "Carr, The Glass Cage, Chapters 2-3: automation, deskilling, and automation bias"
+  - rtitle: "Optional depth, interactive: Gandalf (Lakera), prompt-injection game (Responsible AI Capstone shared warm-up)"
     rlink: "https://gandalf.lakera.ai/"
-  - rtitle: "Optional depth — interactive: Tensor Trust — attack-and-defend prompt-injection game (Responsible AI Capstone shared warm-up)"
+  - rtitle: "Optional depth, interactive: Tensor Trust, attack-and-defend prompt-injection game (Responsible AI Capstone shared warm-up)"
     rlink: "https://tensortrust.ai/"
-  - rtitle: "Optional depth — article: The Revenge of the Philosophy Majors (Wallace, The New York Times, 2026)"
+  - rtitle: "Optional depth, article: The Revenge of the Philosophy Majors (Wallace, The New York Times, 2026)"
     rlink: "https://www.nytimes.com/2026/07/05/business/philosophy-majors-ai-jobs.html"
 - week: "11"
   date: "1"
   title: "Intellectual Property, Privacy, and the Case for Local AI"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ipprivacy.md"
   deliverables:
-  - dtitle: "Project: Literature Review — Team Synthesis Due"
+  - dtitle: "Project: Literature Review, Team Synthesis Due"
     dlink: "Assignments/LitReview"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
-  - rtitle: "Crawford, Atlas of AI, Chapter 6 — Affect / the politics of data"
-  - rtitle: "Optional depth — activity: Privacy-Preserving AI — Federated Learning, Differential Privacy, and PII Scrubbing"
+  - rtitle: "Crawford, Atlas of AI, Chapter 6: Affect / the politics of data"
+  - rtitle: "Optional depth, activity: Privacy-Preserving AI (Federated Learning, Differential Privacy, and PII Scrubbing)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-privacypreservingai.md"
-  - rtitle: "Optional depth — activity: AI Creativity — Generative Models, Authorship, and the Nature of Originality"
+  - rtitle: "Optional depth, activity: AI Creativity (Generative Models, Authorship, and the Nature of Originality)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aicreativity.md"
 - week: "12"
   date: "0"
@@ -712,14 +712,14 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
   readings:
-  - rtitle: "Crawford, Atlas of AI, Chapter 1 — Earth: the mineral and energy costs of computation"
+  - rtitle: "Crawford, Atlas of AI, Chapter 1, Earth: the mineral and energy costs of computation"
   - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
-  - rtitle: "Christian, The Alignment Problem — any one chapter (e.g., the section on reward and reinforcement)"
-  - rtitle: "Optional depth — activity: AI for Accessibility — Opportunity, Obligation, and Risk"
+  - rtitle: "Christian, The Alignment Problem: any one chapter (e.g., the section on reward and reinforcement)"
+  - rtitle: "Optional depth, activity: AI for Accessibility (Opportunity, Obligation, and Risk)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-accessibilityai.md"
-  - rtitle: "Optional depth — activity: Neuro-AI Ethics — Brain-Inspired AI, Cognitive Science, and the Study of Mind"
+  - rtitle: "Optional depth, activity: Neuro-AI Ethics (Brain-Inspired AI, Cognitive Science, and the Study of Mind)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-neuroaiethics.md"
-  - rtitle: "Optional depth — activity: AI Alignment and Safety — From RLHF to Constitutional AI"
+  - rtitle: "Optional depth, activity: AI Alignment and Safety (From RLHF to Constitutional AI)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-alignmentsafety.md"
 - week: "12"
   date: "1"
@@ -744,12 +744,12 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
-  - rtitle: "Benjamin, Race After Technology, Chapters 1–2 — case studies in discriminatory design (read before Thursday's bias session)"
-  - rtitle: "Optional depth — tutorial: Agent Security — Threat Modeling and the OWASP LLM Top 10"
+  - rtitle: "Benjamin, Race After Technology, Chapters 1-2: case studies in discriminatory design (read before Thursday's bias session)"
+  - rtitle: "Optional depth, tutorial: Agent Security (Threat Modeling and the OWASP LLM Top 10)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentsecurity.md"
-  - rtitle: "Optional depth — tutorial: Prompt Injection — Attacks and Defenses"
+  - rtitle: "Optional depth, tutorial: Prompt Injection (Attacks and Defenses)"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md"
-  - rtitle: "Optional depth — activity: Adversarial Robustness and Red-Teaming LLMs"
+  - rtitle: "Optional depth, activity: Adversarial Robustness and Red-Teaming LLMs"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-adversarialrobustness.md"
 - week: "14"
   date: "0"
@@ -794,37 +794,37 @@ schedule:
   - rtitle: "Demo Day. Bring the running system, the governance one-pager, and the contribution statements. Nothing is due after today."
 ---
 
-This course is about building agents you understand and can run yourself. The sections below explain how the course gives you real choice over your path, how to read an assignment, how to prepare for each hands-on session, and how the day-to-day work of participating — including engaging with your classmates' work — is valued and evaluated. Read them now, and return to the participation and preparation guides throughout the term.
+This course is about building agents you understand and can run yourself. The sections below explain how the course gives you real choice over your path, how to read an assignment, how to prepare for each hands-on session, and how the day-to-day work of participating, including engaging with your classmates' work, is valued and evaluated. Read them now, and return to the participation and preparation guides throughout the term.
 
 ## How This Course Works: Choice and Universal Design
 
 This course is designed as deliberate choice architecture, in the spirit of Universal Design for Learning: there are many routes through it, several ways to demonstrate what you have learned, and no path is the "remedial" one. You have real authorship over your semester.
 
-- **Choose your direction.** Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** — nothing on the schedule is optional — and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you. Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent). The hands-on and the analytical are equally valid ways to earn your grade; build the balance that fits how you learn.
-- **Every lab is within reach.** Every lab has a programming pathway that asks for only intro-level Python, with starter code provided — you extend a working scaffold, never start from a blank page. **The Local Agent, Tools and MCP, Rubric Pipeline, and Responsible AI labs additionally offer a supported low-code pathway** — OpenWebUI, Langflow, declarative promptfoo configuration, and an attack-and-policy track, respectively — graded on the same rubric as the programming pathway. **The RAG Knowledge Base and Multi-Agent Patterns labs are code-based**, with heavily scaffolded starter code that keeps the programming at that same intro level.
+- **Choose your direction.** Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you. Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent). The hands-on and the analytical are equally valid ways to earn your grade; build the balance that fits how you learn.
+- **Every lab is within reach.** Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page. **The Local Agent, Tools and MCP, Rubric Pipeline, and Responsible AI labs additionally offer a supported low-code pathway** (OpenWebUI, Langflow, declarative promptfoo configuration, and an attack-and-policy track, respectively), graded on the same rubric as the programming pathway. **The RAG Knowledge Base and Multi-Agent Patterns labs are code-based**, with heavily scaffolded starter code that keeps the programming at that same intro level.
 - **Analytical routes are real routes.** Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths; taking them is authorship, not avoidance.
-- **A shared spine.** The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone. It carries the team milestones — charter, stakeholder brief, literature review, proposal, and demo — and the peer review that ties the section together.
-- **Depth inside every lab.** Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions** — local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more. Pick the direction that pulls you; if the one you want is not on the menu, propose it. Supplemental tutorials and activities remain available throughout for going deeper where your interest leads.
+- **A shared spine.** The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone. It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
+- **Depth inside every lab.** Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more. Pick the direction that pulls you; if the one you want is not on the menu, propose it. Supplemental tutorials and activities remain available throughout for going deeper where your interest leads.
 
 If a path you want is not on the menu, propose it. The point of the choices is to let you leave this course able to stand up, operate, and reason about an AI system of your own.
 
 ## A Project-Based Course: Process, Teams, and Community Partners
 
-This course is deliberately **project-based**: the semester-long team project is the vehicle for the learning, not the destination. The graded emphasis falls on the *process* — how your team frames a problem, works with stakeholders, manages itself, and communicates — as much as on the product you demo. Five process goals run through every Project-Thread milestone:
+This course is deliberately **project-based**: the semester-long team project is the vehicle for the learning, not the destination. The graded emphasis falls on the *process* (how your team frames a problem, works with stakeholders, manages itself, and communicates) as much as on the product you demo. Five process goals run through every Project-Thread milestone:
 
-- **Collaborative inquiry** — team coordination, shared decision-making, and productive disagreement.
-- **Problem framing and scoping** — defining an ill-structured problem, identifying its stakeholders, and iterating on the question.
-- **Evidence-based communication** — synthesizing sources and tailoring your argument to technical and non-technical audiences.
-- **Structured reflection** — metacognitive awareness of your own learning and your team's dynamics.
-- **Stakeholder engagement** — grounding the work in a real community partner's needs and translating your system for them.
+- **Collaborative inquiry:** team coordination, shared decision-making, and productive disagreement.
+- **Problem framing and scoping:** defining an ill-structured problem, identifying its stakeholders, and iterating on the question.
+- **Evidence-based communication:** synthesizing sources and tailoring your argument to technical and non-technical audiences.
+- **Structured reflection:** metacognitive awareness of your own learning and your team's dynamics.
+- **Stakeholder engagement:** grounding the work in a real community partner's needs and translating your system for them.
 
-**Community partners.** Each team anchors its project in the needs of a real community stakeholder. Your Stakeholder Brief, proposal, gallery-walk feedback pass, and Demo Day partner-facing artifact all build on that relationship — Demo Day itself is a multi-audience presentation, for your technical peers and for the stakeholders your project serves.
+**Community partners.** Each team anchors its project in the needs of a real community stakeholder. Your Stakeholder Brief, proposal, gallery-walk feedback pass, and Demo Day partner-facing artifact all build on that relationship. Demo Day itself is a multi-audience presentation, for your technical peers and for the stakeholders your project serves.
 
-**Community partner roster.** Partners are confirmed each semester and shared in class before the Stakeholder Brief kickoff (week 2), rather than published on this page. If no partner fits your team's interests, ask: I will broker an introduction within one week of the request — no team's Stakeholder Brief is blocked by the roster.
+**Community partner roster.** Partners are confirmed each semester and shared in class before the Stakeholder Brief kickoff (week 2), rather than published on this page. If no partner fits your team's interests, ask: I will broker an introduction within one week of the request. No team's Stakeholder Brief is blocked by the roster.
 
 This semester the section runs as **4 teams of 4 students**, so every team is large enough to rotate roles and small enough that no one can hide.
 
-**Teams are formed, not found.** I form project teams from the Team Formation Survey — balancing schedules, work styles, and deadline habits — and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process. The intra-team check-ins are where we keep that charter honest. If your team is struggling, say so early — in the confidential pulse of any check-in or in office hours — and we will work through it together.
+**Teams are formed, not found.** I form project teams from the Team Formation Survey (balancing schedules, work styles, and deadline habits), and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process. The intra-team check-ins are where we keep that charter honest. If your team is struggling, say so early, in the confidential pulse of any check-in or in office hours, and we will work through it together.
 
 **There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, and participation carry the grade. Our four teams present for about fifteen minutes each during our class meeting; guests attending CS374's Demo Day (same day) are welcome at both.
 
@@ -832,23 +832,23 @@ This semester the section runs as **4 teams of 4 students**, so every team is la
 
 Every assignment is written to be transparent about three things, so you are never guessing about what is being asked or how it will be judged:
 
-- **Purpose** — *why* the assignment exists and what capability it builds toward.
-- **Task** — *what* you will actually do, in concrete steps.
-- **Criteria** — *how* your work will be evaluated. Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
+- **Purpose:** *why* the assignment exists and what capability it builds toward.
+- **Task:** *what* you will actually do, in concrete steps.
+- **Criteria:** *how* your work will be evaluated. Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
 
-Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended — and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work.
+Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended, and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work.
 
 ## Class Activities and Participation (10%)
 
-Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready — having worked through the activity, attempted the reading response, and brought a question or a stuck point, often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
+Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready: having worked through the activity, attempted the reading response, and brought a question or a stuck point, often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
 
 This is a course you do, not one you watch. This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work. It is assessed across four dimensions: **preparation, contribution, collaboration, and reflection.** It takes several forms, by design:
 
-- **In-class activities.** Your team rotates the POGIL roles — **Manager, Recorder, Presenter, and Reflector** — so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
+- **In-class activities.** Your team rotates the POGIL roles (**Manager, Recorder, Presenter, and Reflector**) so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
 - **Reading responses and discussion.** From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand. These are marked on the schedule.
 - **The student-led Reading Group.** When a classmate leads a [Reading Group](Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it. (Leading a session remains separately available for extra credit.)
-- **Project-Thread peer review.** The structured **SQR** peer reviews — one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation — that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
+- **Project-Thread peer review.** The structured **SQR** peer reviews (one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation) that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
 
-The first-week onboarding assignments — the **Overview**, the **Warmup**, and the **Team Formation Survey** — are assessed within this Class Activities and Participation category.
+The first-week onboarding assignments (the **Overview**, the **Warmup**, and the **Team Formation Survey**) are assessed within this Class Activities and Participation category.
 
-Participation takes more than one form on purpose. If the spoken room is hard for you, the written channels — the discussion board, reading responses, and SQR cards — are real ways to earn this component. Being confused is part of learning this material; talk with me early and we will find the path that fits.
+Participation takes more than one form on purpose. If the spoken room is hard for you, the written channels (the discussion board, reading responses, and SQR cards) are real ways to earn this component. Being confused is part of learning this material; talk with me early and we will find the path that fits.

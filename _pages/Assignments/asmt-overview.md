@@ -20,19 +20,19 @@ info:
       preemerging: Little or no evidence that the environment was attempted
       beginning: Some components installed, but the verification transcript is missing or incomplete
       progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information, or the command-line and git checkpoint is incomplete
-      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output — the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field — plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
+      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output, the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field, plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
     - weight: 40
       description: Reflection Essay
       preemerging: The reflection is missing or does not address the prompts
       beginning: The reflection addresses some prompts superficially without naming specific tools or moments
       progressing: The reflection addresses all four sections with specific examples, but the connection between the two delegation examples is not analyzed or the "What I Want to Build" section is vague
-      proficient: All four sections are present and addressed with concrete specifics — a named AI tool and a described moment of surprise in "My AI Experience," a personal definition of agency distinct from any course reading in "What Agent Means to Me," a pair of delegation examples where the contrast between the two is explicitly analyzed, and a "What I Want to Build" description naming what the system would do, who would use it, and what working would look like
+      proficient: All four sections are present and addressed with concrete specifics, a named AI tool and a described moment of surprise in "My AI Experience," a personal definition of agency distinct from any course reading in "What Agent Means to Me," a pair of delegation examples where the contrast between the two is explicitly analyzed, and a "What I Want to Build" description naming what the system would do, who would use it, and what working would look like
     - weight: 20
       description: Submission
       preemerging: An incomplete submission is provided
-      beginning: The submission is provided but is disorganized — the transcript and the reflection are hard to tell apart, or one is missing
+      beginning: The submission is provided but is disorganized, the transcript and the reflection are hard to tell apart, or one is missing
       progressing: All required components are present in a single file, with a minor omission such as an unlabeled transcript section or missing OS information
-      proficient: A single well-organized PDF or Markdown file with each component clearly labeled — the four-step setup transcript with version and OS details, the Part 1.5 command-line and git checkpoint, and the four-section reflection — with the collaboration, AI-disclosure, and time questions answered at the end
+      proficient: A single well-organized PDF or Markdown file with each component clearly labeled, the four-step setup transcript with version and OS details, the Part 1.5 command-line and git checkpoint, and the four-section reflection, with the collaboration, AI-disclosure, and time questions answered at the end
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
@@ -49,7 +49,7 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack and write a short baseline reflection on your experiences with AI. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you will revisit at the end of the semester. (Your team charter is **not** part of this assignment — it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).) There are no wrong answers in the reflection — this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
+In this warmup you will install your local AI stack and write a short baseline reflection on your experiences with AI. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you will revisit at the end of the semester. (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).) There are no wrong answers in the reflection; this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
 
 ---
 
@@ -57,8 +57,8 @@ In this warmup you will install your local AI stack and write a short baseline r
 
 A strong submission has three qualities:
 
-1. **The transcript is complete and honest.** It shows the actual terminal output — version numbers, model names, the API response — copied faithfully. If something broke, the error is quoted verbatim and the student explains what they tried. Fabricated or paraphrased transcripts earn no credit.
-2. **The reflection is personal and specific.** It names a real AI tool the student used, describes a real moment of surprise or confusion, and takes a genuine position on agency and trust — not a dictionary definition, not a summary of the course syllabus. A strong reflection reads like a journal entry from someone thinking carefully, not like an answer written to please a grader.
+1. **The transcript is complete and honest.** It shows the actual terminal output (version numbers, model names, the API response), copied faithfully. If something broke, the error is quoted verbatim and the student explains what they tried. Fabricated or paraphrased transcripts earn no credit.
+2. **The reflection is personal and specific.** It names a real AI tool the student used, describes a real moment of surprise or confusion, and takes a genuine position on agency and trust, not a dictionary definition, not a summary of the course syllabus. A strong reflection reads like a journal entry from someone thinking carefully, not like an answer written to please a grader.
 
 A weak submission has a transcript that says "it worked" without showing output and a reflection that restates prompts without answering them.
 
@@ -66,11 +66,11 @@ A weak submission has a transcript that says "it worked" without showing output 
 
 ## Part 1: Tool Setup
 
-Complete this part by **one of two routes** — the four verification steps and the checklist below apply to both.
+Complete this part by **one of two routes**; the four verification steps and the checklist below apply to both.
 
 ### Route A (recommended): host Ollama + the course dev container
 
-Set up the full course environment by following the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1–3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted — include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+Set up the full course environment by following the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1-3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
 
 ### Route B: native install
 
@@ -112,22 +112,22 @@ Before moving on, confirm you can answer yes to each of these:
 
 ## Part 1.5: Command-Line and Git Checkpoint
 
-Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment. This checkpoint makes sure those underlying tools work *before* the labs depend on them — the same philosophy as the Ollama setup above. You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork. If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
+Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment. This checkpoint makes sure those underlying tools work *before* the labs depend on them, the same philosophy as the Ollama setup above. You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork. If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
 
-**Container-route note (Route A):** perform the git steps of this checkpoint **from inside the course container**, against the `cs357-work` GitHub repository you created in the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md) — the activity's practice section (create `hello_agent.py`, run it against host Ollama, commit, push) is exactly this checkpoint, so its transcript satisfies the navigation and git items below. The `uv` step still runs on your host (the container image already bundles the course packages; `uv` is your reproducible-environment tool for the native route and anywhere outside the container).
+**Container-route note (Route A):** perform the git steps of this checkpoint **from inside the course container**, against the `cs357-work` GitHub repository you created in the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md); the activity's practice section (create `hello_agent.py`, run it against host Ollama, commit, push) is exactly this checkpoint, so its transcript satisfies the navigation and git items below. The `uv` step still runs on your host (the container image already bundles the course packages; `uv` is your reproducible-environment tool for the native route and anywhere outside the container).
 
 Complete each step and capture the terminal output:
 
-1. **Navigate.** From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`. Then use one search tool — `grep` (or `ripgrep`/`rg` if installed) — to find a string in a file, and paste the command you ran.
+1. **Navigate.** From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`. Then use one search tool, `grep` (or `ripgrep`/`rg` if installed), to find a string in a file, and paste the command you ran.
 2. **Version control.** Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`. Paste the transcript of `git log --oneline` showing your commit.
 3. **Reproducible Python with uv.** Install [uv](https://docs.astral.sh/uv/) (the fast, modern Python environment manager we standardize on this term). Create and activate a project environment and add the one dependency the labs start with: `uv venv`, then `uv add requests`, then `uv run python -c "import requests; print(requests.__version__)"`. Paste the output. (If you cannot install uv, fall back to `python -m venv` and `pip install requests`, and note in your submission that you used the fallback.)
 
-### Command-Line Survival — reference (use as needed, not required reading cover-to-cover)
+### Command-Line Survival: reference (use as needed, not required reading cover-to-cover)
 
-- [tldr pages](https://tldr.sh/) — plain-language example-first cheat sheets for any command (`tldr tar`).
-- [explainshell](https://explainshell.com/) — paste any command line and see each flag explained.
-- [ShellCheck](https://www.shellcheck.net/) — catches bugs in shell scripts before they bite.
-- `curl` and [HTTPie](https://httpie.io/) plus [jq](https://jqlang.github.io/jq/) — you will hit JSON APIs (Ollama, MCP) all semester; `curl … | jq` is your friend.
+- [tldr pages](https://tldr.sh/): plain-language example-first cheat sheets for any command (`tldr tar`).
+- [explainshell](https://explainshell.com/): paste any command line and see each flag explained.
+- [ShellCheck](https://www.shellcheck.net/): catches bugs in shell scripts before they bite.
+- `curl` and [HTTPie](https://httpie.io/) plus [jq](https://jqlang.github.io/jq/): you will hit JSON APIs (Ollama, MCP) all semester; `curl ... | jq` is your friend.
 
 ### Part 1.5 Checklist
 
@@ -145,15 +145,15 @@ Write approximately one page addressing all four prompts below. This is captured
 
 ### My AI Experience So Far
 
-Describe which AI tools you use, for what purposes, and how often. Then describe one specific moment when an AI output surprised you — either because it was better than you expected, or because it failed in an unexpected way. Name the tool, describe the task, and describe the surprise.
+Describe which AI tools you use, for what purposes, and how often. Then describe one specific moment when an AI output surprised you, either because it was better than you expected, or because it failed in an unexpected way. Name the tool, describe the task, and describe the surprise.
 
 ### What "Agent" Means to Me Right Now
 
-Write your own definition of what makes a system an "agent" rather than just a program or a tool. You do not need to match any textbook definition — write what you actually think. After the semester, we will return to this and see how your thinking changed.
+Write your own definition of what makes a system an "agent" rather than just a program or a tool. You do not need to match any textbook definition; write what you actually think. After the semester, we will return to this and see how your thinking changed.
 
 ### What I Would and Would Not Delegate
 
-Name one task you would happily hand to an AI agent and one you would not. For each, write one or two sentences explaining the specific reason — what is it about that task that makes delegation feel appropriate or inappropriate? The difference between your two examples is more interesting than either example alone.
+Name one task you would happily hand to an AI agent and one you would not. For each, write one or two sentences explaining the specific reason: what is it about that task that makes delegation feel appropriate or inappropriate? The difference between your two examples is more interesting than either example alone.
 
 ### What I Want to Build
 
@@ -173,12 +173,12 @@ Submit a single PDF or markdown file containing:
 ## Frequently Asked Questions
 
 **Q: I don't have a machine that can run Ollama. What should I do?**
-A: Use a lab machine or contact the instructor before the due date. Do not wait until the night before — lab access may require scheduling. Document which machine you used in your transcript.
+A: Use a lab machine or contact the instructor before the due date. Do not wait until the night before; lab access may require scheduling. Document which machine you used in your transcript.
 
 **Q: My Python API call returns an error or the model responds very slowly. Is that okay?**
 A: Slow is okay for a small model on older hardware. An error is okay as long as you document it fully: copy the full error message, describe what you tried, and state whether it was eventually resolved. A partial success with complete documentation earns full credit for that step.
 
-**Q: The reflection prompts ask about "agency" and "trust" — do I need to use the textbook definitions?**
+**Q: The reflection prompts ask about "agency" and "trust"; do I need to use the textbook definitions?**
 A: No. This is a baseline, not a knowledge test. Write what you actually think before the course shapes your view. The textbook will be there later; this snapshot of your prior thinking is valuable precisely because it is unfiltered.
 
 ---

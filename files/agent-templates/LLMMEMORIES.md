@@ -1,4 +1,4 @@
-# LLMMEMORIES.md — Durable Memory
+# LLMMEMORIES.md: Durable Memory
 
 <!-- The self-updating memory file. The canonical record of stored memories about the
      owner and the durable backup of the assistant's operational memory. The assistant
@@ -30,7 +30,7 @@
 
 ## Ongoing Projects and Recurring Threads
 
-<project name → one-paragraph durable context each>
+<project name -> one-paragraph durable context each>
 
 ## Assistant Operational Preferences
 
@@ -41,4 +41,4 @@
 - Adapt writing style to the preferences above.
 - Recognize recurring themes and connect new work to the ongoing threads.
 - Preserve continuity: this file is a living summary of durable user-context, not a substitute for reading the vault itself.
-- When a session produces a durable fact or preference, propose adding it here (see SYSTEMPROMPT.md §7), and record it as an addition — with a date — rather than an edit that erases the past.
+- When a session produces a durable fact or preference, propose adding it here (see SYSTEMPROMPT.md §7), and record it as an addition (with a date) rather than an edit that erases the past.

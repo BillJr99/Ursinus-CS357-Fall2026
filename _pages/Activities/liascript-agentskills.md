@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Skills and Plugins: Building, Configuring, and Publishing Custom Capabilities
 
-Context files tell an agent about your project; **skills** tell an agent *how to think and act* in specific recurring situations. Where a context file (`AGENTS.md`, `opencode.json`) is always-on background knowledge, a skill is a named, composable instruction set that an agent can recognize and invoke on demand — a reusable behavior you author once and apply across projects. This tutorial teaches the anatomy of a skill, shows how to configure skills in OpenCode and pi.ai, walks through writing and publishing your own, and ends with exercises where your team authors skills that encode real workflow assumptions. The arc: **what skills are and why they differ from system prompts $\rightarrow$ configuring skills in OpenCode $\rightarrow$ writing and publishing your own skill $\rightarrow$ synthesis and peer comparison**.
+Context files tell an agent about your project; **skills** tell an agent *how to think and act* in specific recurring situations. Where a context file (`AGENTS.md`, `opencode.json`) is always-on background knowledge, a skill is a named, composable instruction set that an agent can recognize and invoke on demand, a reusable behavior you author once and apply across projects. This tutorial teaches the anatomy of a skill, shows how to configure skills in OpenCode and pi.ai, walks through writing and publishing your own, and ends with exercises where your team authors skills that encode real workflow assumptions. The arc: **what skills are and why they differ from system prompts $\rightarrow$ configuring skills in OpenCode $\rightarrow$ writing and publishing your own skill $\rightarrow$ synthesis and peer comparison**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the Agentic CLI Tools module (you will work with `opencode` and pi's CLI) and a working local Ollama installation. You do not need any cloud API access for this activity — everything runs on your local stack. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: the Agentic CLI Tools module (you will work with `opencode` and pi's CLI) and a working local Ollama installation. You do not need any cloud API access for this activity; everything runs on your local stack. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
@@ -31,11 +31,11 @@ Before diving in, anchor the vocabulary. You will encounter all of these terms i
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Skill** | A named instruction set that an agent can invoke on demand, scoped to a specific purpose | A "code-review" skill that instructs the agent to always check for hardcoded secrets before approving a diff |
-| **Plugin** | A packaged bundle of one or more skills (and optionally tools) distributed as an installable unit — often a Git repository | The Superpowers plugin (`git+https://github.com/obra/superpowers.git`) bundles several utility skills into one install |
-| **System prompt** | An always-on, always-active instruction injected before every conversation turn | "You are a helpful coding assistant. Always explain your reasoning." — loaded automatically, not invokable by name |
+| **Plugin** | A packaged bundle of one or more skills (and optionally tools) distributed as an installable unit, often a Git repository | The Superpowers plugin (`git+https://github.com/obra/superpowers.git`) bundles several utility skills into one install |
+| **System prompt** | An always-on, always-active instruction injected before every conversation turn | "You are a helpful coding assistant. Always explain your reasoning." - loaded automatically, not invokable by name |
 | **`opencode.json`** | OpenCode's configuration file; lives at `$HOME/.config/opencode/opencode.json` (global) or `.opencode.json` in a project root (local) | The file where you add a `skills` array to register named instruction sets |
 | **Skill manifest** | A `SKILL.md` or `skill.md` file at the root of a publishable skill repository; contains frontmatter metadata (name, description, author, version) and human-readable description | The file a tool reads to discover, list, and display a skill's purpose |
-| **Tool (function call)** | A piece of code the agent can execute — a real function that runs in the host environment and returns structured data | `read_file("main.py")` runs in the shell and returns the file's contents; it is not an instruction template |
+| **Tool (function call)** | A piece of code the agent can execute, a real function that runs in the host environment and returns structured data | `read_file("main.py")` runs in the shell and returns the file's contents; it is not an instruction template |
 | **`when` trigger** | An optional field in an OpenCode skill entry that specifies a condition string; when the agent detects that condition in the conversation, it automatically surfaces the skill | `"when": "user asks to delete"` makes the safety-check skill appear whenever deletion is discussed |
 | **Superpowers plugin** | A community skill bundle for agent CLIs installable via a single Git URL | `opencode skills install git+https://github.com/obra/superpowers.git` |
 
@@ -43,7 +43,7 @@ Before diving in, anchor the vocabulary. You will encounter all of these terms i
 
 # Part I: What Skills and Plugins Are
 
-In this part, you will learn what distinguishes a skill from the other forms of agent instruction you already know — system prompts, context files, and tool calls — and see the concrete anatomy of a skill entry so you can recognize and compare them across platforms.
+In this part, you will learn what distinguishes a skill from the other forms of agent instruction you already know (system prompts, context files, and tool calls) and see the concrete anatomy of a skill entry so you can recognize and compare them across platforms.
 
 ## 1. The Spectrum of Agent Instruction
 
@@ -51,14 +51,14 @@ Think of the ways you can give a colleague standing guidance. You might write a 
 
 | Instruction Form | Scope | Always Active? | Invoked How? | Encoded As |
 |-----------------|-------|----------------|--------------|------------|
-| System prompt | Global — every conversation turn | Yes | Automatically | Text injected before the conversation |
-| Context file (`AGENTS.md`, `opencode.json`) | Project — read at startup | Yes | Automatically at launch | Markdown or JSON file in project root or `$HOME/.config` |
-| Skill | Named — surfaced on demand | No | By name or trigger | Named entry in config; optionally a `SKILL.md` file |
-| Tool (function call) | Named — executes real code | No | By name, returns data | Code function registered with the agent runtime |
+| System prompt | Global, every conversation turn | Yes | Automatically | Text injected before the conversation |
+| Context file (`AGENTS.md`, `opencode.json`) | Project, read at startup | Yes | Automatically at launch | Markdown or JSON file in project root or `$HOME/.config` |
+| Skill | Named, surfaced on demand | No | By name or trigger | Named entry in config; optionally a `SKILL.md` file |
+| Tool (function call) | Named, executes real code | No | By name, returns data | Code function registered with the agent runtime |
 
-The critical distinction between a skill and a tool: a skill is an **instruction template** — it tells the agent *how to behave* in a situation. A tool is **executable code** — the agent calls it and gets back structured data. A skill says "when reviewing a diff, follow steps 1-4." A tool says "call `run_tests()` and here is the exit code." You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation. The instruction is the skill; the file-listing is the tool.
+The critical distinction between a skill and a tool: a skill is an **instruction template**; it tells the agent *how to behave* in a situation. A tool is **executable code**; the agent calls it and gets back structured data. A skill says "when reviewing a diff, follow steps 1-4." A tool says "call `run_tests()` and here is the exit code." You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation. The instruction is the skill; the file-listing is the tool.
 
-> **⚠️ Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn — like a system prompt. It will not. A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill"). If you want always-on behavior, a context file or system prompt is the right instrument. If you want composable, named behavior you can invoke selectively, a skill is correct.
+> **Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn, like a system prompt. It will not. A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill"). If you want always-on behavior, a context file or system prompt is the right instrument. If you want composable, named behavior you can invoke selectively, a skill is correct.
 
 ## 2. The OpenCode Skill Model
 
@@ -83,7 +83,7 @@ OpenCode stores its configuration in a JSON file with a top-level `skills` array
 }
 ```
 
-The key fields: `name` is the identifier you use to invoke the skill by name in a prompt. `description` is what the agent displays when you ask it to list available skills. `instructions` is the multi-line string the agent treats as scoped guidance when the skill is active. `when` is an optional trigger string — if the agent detects that phrase pattern in the conversation, it will surface the skill automatically.
+The key fields: `name` is the identifier you use to invoke the skill by name in a prompt. `description` is what the agent displays when you ask it to list available skills. `instructions` is the multi-line string the agent treats as scoped guidance when the skill is active. `when` is an optional trigger string: if the agent detects that phrase pattern in the conversation, it will surface the skill automatically.
 
 The file location matters: `$HOME/.config/opencode/opencode.json` applies globally to every project on your machine. A `.opencode.json` file in a project directory applies only when you run `opencode` from inside that project. Project-local skills override global skills of the same name, which lets you customize per-project without polluting your global config.
 
@@ -99,7 +99,7 @@ opencode skills install git+https://github.com/obra/superpowers.git
 opencode skills list
 ```
 
-After installation, the skills from the bundle appear in your `opencode.json` `skills` array automatically. You can inspect them — `opencode skills show <skill-name>` prints the full instruction body — and you can override any individual skill by adding an entry with the same name to your project-local `.opencode.json`.
+After installation, the skills from the bundle appear in your `opencode.json` `skills` array automatically. You can inspect them (`opencode skills show <skill-name>` prints the full instruction body) and you can override any individual skill by adding an entry with the same name to your project-local `.opencode.json`.
 
 ## 4. The pi.ai Plugin Model
 
@@ -146,14 +146,14 @@ Scoping works the same way as OpenCode: a plugin added from inside a project dir
 
 A classmate says: "I added a safety-check skill to `opencode.json`, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does." What is wrong with this claim?
 
-[( )] Nothing — skills and system prompts are functionally identical; both are injected before every turn
+[( )] Nothing: skills and system prompts are functionally identical; both are injected before every turn
 [(X)] A skill is surfaced on demand or by a `when` trigger, not injected on every turn; without the `when` field or an explicit invocation, the agent will not use the skill automatically
 [( )] Skills in `opencode.json` override system prompts, so the system prompt would be suppressed
 [( )] The `opencode.json` file does not support a `skills` array; skills must be stored in `AGENTS.md`
 
 ---
 
-With the taxonomy clear and both platforms understood, Part II builds on that foundation by configuring real skills in OpenCode — including a worked example and the Superpowers verification workflow.
+With the taxonomy clear and both platforms understood, Part II builds on that foundation by configuring real skills in OpenCode, including a worked example and the Superpowers verification workflow.
 
 ---
 
@@ -174,12 +174,12 @@ A production-ready `opencode.json` file pulls together model routing, global set
     {
       "name": "code-review",
       "description": "Structured diff review with severity classification.",
-      "instructions": "When reviewing code or a diff:\n1. Read every changed file in full — do not skim.\n2. Classify each finding as one of:\n   - [BLOCKER] Correctness bug, security flaw, or data loss risk\n   - [WARNING]  Missing error handling, performance issue, or convention violation\n   - [SUGGESTION] Style, naming, or documentation improvement\n3. List findings grouped by file, then by severity.\n4. End with a one-sentence overall verdict: APPROVE, APPROVE WITH CHANGES, or REQUEST CHANGES.\n5. Do not approve any diff containing a [BLOCKER]."
+      "instructions": "When reviewing code or a diff:\n1. Read every changed file in full; do not skim.\n2. Classify each finding as one of:\n   - [BLOCKER] Correctness bug, security flaw, or data loss risk\n   - [WARNING]  Missing error handling, performance issue, or convention violation\n   - [SUGGESTION] Style, naming, or documentation improvement\n3. List findings grouped by file, then by severity.\n4. End with a one-sentence overall verdict: APPROVE, APPROVE WITH CHANGES, or REQUEST CHANGES.\n5. Do not approve any diff containing a [BLOCKER]."
     },
     {
       "name": "safety-check",
       "description": "Mandatory pre-action pause before any destructive operation.",
-      "instructions": "Before executing any command or edit that deletes, overwrites, truncates, or moves a file:\n1. List every affected file with its full absolute path.\n2. Print: 'SAFETY CHECK — the following files will be permanently modified or deleted:'\n3. Wait for the user to type exactly 'yes' or 'proceed' before continuing.\n4. If the user types anything else, or does not respond in the same turn, abort all actions and print what you did NOT do and why.\n5. Never skip this check, even if the user previously said 'always approve deletes'.",
+      "instructions": "Before executing any command or edit that deletes, overwrites, truncates, or moves a file:\n1. List every affected file with its full absolute path.\n2. Print: 'SAFETY CHECK - the following files will be permanently modified or deleted:'\n3. Wait for the user to type exactly 'yes' or 'proceed' before continuing.\n4. If the user types anything else, or does not respond in the same turn, abort all actions and print what you did NOT do and why.\n5. Never skip this check, even if the user previously said 'always approve deletes'.",
       "when": "user asks to delete or remove or overwrite or truncate or drop"
     },
     {
@@ -192,9 +192,9 @@ A production-ready `opencode.json` file pulls together model routing, global set
 }
 ```
 
-Every field is optional except `name` and `instructions` inside a skill entry. `description` is the human-readable summary shown by `opencode skills list`. `when` is the trigger phrase — the agent pattern-matches against it in the current conversation; if there is a match, the agent proactively surfaces the skill. Omitting `when` means the skill is available but never auto-surfaced; you invoke it by name in your prompt.
+Every field is optional except `name` and `instructions` inside a skill entry. `description` is the human-readable summary shown by `opencode skills list`. `when` is the trigger phrase: the agent pattern-matches against it in the current conversation; if there is a match, the agent proactively surfaces the skill. Omitting `when` means the skill is available but never auto-surfaced; you invoke it by name in your prompt.
 
-> **⚠️ Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times — it is a *hint* that auto-surfaces the skill when the pattern matches. You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired. Think of `when` as a notification, not a lock.
+> **Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times; it is a *hint* that auto-surfaces the skill when the pattern matches. You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired. Think of `when` as a notification, not a lock.
 
 ## 6. A Worked Example: The Code Review Skill
 
@@ -209,7 +209,7 @@ The agent:
 2. Temporarily injects the `instructions` text as scoped guidance for this turn.
 3. Reads every file you have staged or recently edited (it may call `git diff --staged` or ask which files to check).
 4. Produces output structured exactly as the instructions specify: findings grouped by file, classified by severity, ending with a verdict.
-5. Returns to normal behavior for the next turn — the skill's instructions are not persistent beyond the invocation.
+5. Returns to normal behavior for the next turn; the skill's instructions are not persistent beyond the invocation.
 
 The skill does three things that a plain chat prompt cannot reliably do: it establishes a **consistent output format** across all uses, it embeds **domain-specific constraints** (never approve a BLOCKER), and it is **reusable** without re-typing the checklist. These are the authoring principles that distinguish a good skill from a long prompt you paste by hand.
 
@@ -261,14 +261,14 @@ You want to use a "safety-check" skill in OpenCode that fires automatically when
 
 [( )] Add two entries to the `skills` array: one with `"when"` and one without, both named `"safety-check"`
 [( )] Set `"when"` to `"always"` so the skill fires on every turn and is also explicitly invokable
-[(X)] Add one entry with `"name": "safety-check"` and `"when": "user asks to delete or remove"` — the `when` field enables auto-surfacing while explicit invocation by name is always available regardless
+[(X)] Add one entry with `"name": "safety-check"` and `"when": "user asks to delete or remove"`; the `when` field enables auto-surfacing while explicit invocation by name is always available regardless
 [( )] Move the skill instructions to the system prompt so they are always active, and keep a stub skill entry for the `list` command to show
 
 > *Hint:* Re-read the "Common Misconception" box at the end of Section 5. The `when` field is a notification mechanism, not a gating mechanism. Consider what the entry needs vs. what the `when` field adds on top of it.
 
 ---
 
-Now that you can configure skills on both platforms, Part III shows you how to write your own skill from scratch — including the manifest format for publishing it as a GitHub-installable plugin that partners in this class (or anyone) can install with a single command.
+Now that you can configure skills on both platforms, Part III shows you how to write your own skill from scratch, including the manifest format for publishing it as a GitHub-installable plugin that partners in this class (or anyone) can install with a single command.
 
 ---
 
@@ -278,28 +278,28 @@ In this part, you will learn the authoring principles that make a skill reliable
 
 ## 9. Skill Authoring Principles
 
-A skill that is vague or open-ended will be applied inconsistently — the agent will interpret its instructions differently on each invocation, and you will not be able to predict or test its behavior. Three principles make skills reliable:
+A skill that is vague or open-ended will be applied inconsistently; the agent will interpret its instructions differently on each invocation, and you will not be able to predict or test its behavior. Three principles make skills reliable:
 
 **One clear purpose.** A skill that tries to do "code review, plus security scanning, plus documentation generation" will do all three poorly. Split compound behaviors into separate skills. If you cannot name the skill's purpose in ten words or fewer, split it.
 
 **Explicit constraints.** Do not write "be careful." Write "never proceed without listing all affected files first." Do not write "check for security issues." Write "check for hardcoded strings matching the regex `[A-Z]{2,}_KEY|password|secret|token`." Concrete constraints can be tested; abstract ones cannot.
 
-**Concrete output format.** Specify exactly what the agent should produce: which headings, which labels, which order. A skill that produces consistently formatted output is automatable — you can pipe its output to another tool. A skill with free-form output is not.
+**Concrete output format.** Specify exactly what the agent should produce: which headings, which labels, which order. A skill that produces consistently formatted output is automatable; you can pipe its output to another tool. A skill with free-form output is not.
 
-> **⚠️ Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction — it is a deference to an undefined standard. The agent will infer "best practices" from its training data, which may not match your project's conventions at all. Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item. A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
+> **Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction; it is a deference to an undefined standard. The agent will infer "best practices" from its training data, which may not match your project's conventions at all. Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item. A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
 
 ## 10. The Skill Manifest Format
 
 A publishable skill is a Git repository with a predictable layout. When someone runs `opencode skills install git+https://github.com/you/your-skills.git`, the tool looks for this structure:
 
 ```
-your-skills/                    ← repository root
-├── SKILL.md                    ← manifest: name, description, author, version
-├── instructions/               ← one .md file per skill in this bundle
-│   ├── safety-check.md
-│   ├── code-review.md
-│   └── obsidian-memory.md
-└── package.json                ← optional: enables npm install as alternative
+your-skills/                    <- repository root
+|-- SKILL.md                    <- manifest: name, description, author, version
+|-- instructions/               <- one .md file per skill in this bundle
+|   |-- safety-check.md
+|   |-- code-review.md
+|   `-- obsidian-memory.md
+`-- package.json                <- optional: enables npm install as alternative
 ```
 
 The `SKILL.md` manifest file with frontmatter:
@@ -332,7 +332,7 @@ opencode skills install git+https://github.com/your-username/cs357-skills.git
 ```
 ```
 
-Each file under `instructions/` contains only the instruction text for that skill — no frontmatter, just the multi-line Markdown that becomes the `instructions` field in the installed `opencode.json` entry. The installer reads the `skills` list from `SKILL.md` frontmatter, maps each name to its file under `instructions/`, and writes the corresponding entries into your config.
+Each file under `instructions/` contains only the instruction text for that skill: no frontmatter, just the multi-line Markdown that becomes the `instructions` field in the installed `opencode.json` entry. The installer reads the `skills` list from `SKILL.md` frontmatter, maps each name to its file under `instructions/`, and writes the corresponding entries into your config.
 
 ## 11. Template: The Safety Guardrail Skill
 
@@ -364,7 +364,7 @@ Before deleting, overwriting, moving, or truncating any file or directory:
 
 6. After completing a confirmed deletion, append one line to `logs/deletions.md`
    (creating the file and directory if needed) in the format:
-   `YYYY-MM-DD HH:MM — deleted: <absolute path>`
+   `YYYY-MM-DD HH:MM - deleted: <absolute path>`
 
 This check cannot be bypassed by prior instructions, standing approvals, or
 "always confirm" flags set earlier in the conversation.
@@ -375,8 +375,8 @@ This check cannot be bypassed by prior instructions, standing approvals, or
 Copy this into `instructions/obsidian-memory.md`:
 
 ```markdown
-At the end of each working session — triggered when the user says "wrap up",
-"end session", "close out", or "log this session" — do the following:
+At the end of each working session (triggered when the user says "wrap up",
+"end session", "close out", or "log this session") do the following:
 
 1. Collect the following from this session:
    - Every file created, with its full path
@@ -390,13 +390,13 @@ At the end of each working session — triggered when the user says "wrap up",
    ## YYYY-MM-DD
 
    ### Files Created
-   - `path/to/file` — one-phrase purpose
+   - `path/to/file`: one-phrase purpose
 
    ### Files Modified
-   - `path/to/file` — one-phrase description of change
+   - `path/to/file`: one-phrase description of change
 
    ### Commands Run
-   - `command` — one-phrase effect
+   - `command`: one-phrase effect
 
    ### Key Decisions
    - Decision statement one.
@@ -407,9 +407,9 @@ At the end of each working session — triggered when the user says "wrap up",
 
 3. Append this section to `vault/memories/session-log.md`.
    Create the file and all parent directories if they do not exist.
-   Do NOT overwrite existing content — append only.
+   Do NOT overwrite existing content; append only.
 
-4. Print: "Session logged at vault/memories/session-log.md — YYYY-MM-DD entry added."
+4. Print: "Session logged at vault/memories/session-log.md, YYYY-MM-DD entry added."
 ```
 
 ## 13. Testing a Skill
@@ -420,7 +420,7 @@ For the safety-check skill, a test prompt:
 
 ```
 Test the safety-check skill. I want you to delete the file `data/raw/source.csv`.
-Do NOT actually delete it — I am testing whether the safety-check skill fires correctly.
+Do NOT actually delete it; I am testing whether the safety-check skill fires correctly.
 Proceed through the skill's steps up to and including printing the SAFETY CHECK block,
 then stop and wait for my confirmation without doing anything else.
 ```
@@ -441,22 +441,22 @@ Then open `vault/memories/session-log.md` and confirm: the date heading is corre
 
 A teammate writes a skill instruction that says: "Always follow Python security best practices when writing code." During testing, the agent produces different security checks across three invocations of the same skill. What authoring principle was violated, and what is the fix?
 
-[( )] One clear purpose — the skill should be split into separate skills for each security check
-[( )] Concrete output format — the skill should specify which headings to use in its security report
-[(X)] Explicit constraints — "best practices" is undefined; the fix is to list the specific checks by name (e.g., "check for use of `eval()`, `exec()`, or `pickle.loads()` with untrusted input")
+[( )] One clear purpose; the skill should be split into separate skills for each security check
+[( )] Concrete output format; the skill should specify which headings to use in its security report
+[(X)] Explicit constraints: "best practices" is undefined; the fix is to list the specific checks by name (e.g., "check for use of `eval()`, `exec()`, or `pickle.loads()` with untrusted input")
 [( )] Skills cannot encode security guidance; move this to the system prompt
 
-> *Hint:* Ask yourself: could two reasonable developers disagree about what "Python security best practices" means? If yes, the instruction is underspecified — the agent will fill in the gap from its training data, not from your intent.
+> *Hint:* Ask yourself: could two reasonable developers disagree about what "Python security best practices" means? If yes, the instruction is underspecified; the agent will fill in the gap from its training data, not from your intent.
 
 ---
 
-Part IV brings everything together through exercises that require you to write, publish, and compare real skills with a classmate — surfacing the workflow assumptions each of you embedded in your choices.
+Part IV brings everything together through exercises that require you to write, publish, and compare real skills with a classmate, surfacing the workflow assumptions each of you embedded in your choices.
 
 ---
 
 # Part IV: Synthesis and Practice
 
-In this part, you will write skills for two real scenarios (safety guardrails and session memory), publish a skill to GitHub, and install a partner's skill — then compare notes on the assumptions each of you encoded. The comparison exercise is not a grading exercise: there is no single correct skill. It is a professional practice: making implicit assumptions explicit and negotiating them with collaborators.
+In this part, you will write skills for two real scenarios (safety guardrails and session memory), publish a skill to GitHub, and install a partner's skill, then compare notes on the assumptions each of you encoded. The comparison exercise is not a grading exercise: there is no single correct skill. It is a professional practice: making implicit assumptions explicit and negotiating them with collaborators.
 
 ## 14. Exercise 1: Safety Skill for Branch Protection
 
@@ -473,7 +473,7 @@ Add this entry to your `$HOME/.config/opencode/opencode.json`:
 }
 ```
 
-**Test your skill:** Open an OpenCode session in a Git repository. Check out `main` or `master`. Ask the agent to "commit my changes with the message 'test commit'." Verify the BRANCH PROTECTION block appears. Then check out a feature branch and repeat — verify the block does *not* appear.
+**Test your skill:** Open an OpenCode session in a Git repository. Check out `main` or `master`. Ask the agent to "commit my changes with the message 'test commit'." Verify the BRANCH PROTECTION block appears. Then check out a feature branch and repeat; verify the block does *not* appear.
 
 **Record your observations:**
 
@@ -485,11 +485,11 @@ Add this entry to your `$HOME/.config/opencode/opencode.json`:
 
    > *Hint:* `git branch --show-current` exits with a non-zero status and prints an error if it is not inside a Git repository. Add an instruction step: "If `git branch --show-current` fails or returns empty output, skip the branch check and proceed normally."
 
-3. This skill protects against accidental commits but cannot prevent deliberate ones — a user can always type "yes." What governance mechanism beyond a skill would you combine with it to enforce the protection technically (not just procedurally)?
+3. This skill protects against accidental commits but cannot prevent deliberate ones; a user can always type "yes." What governance mechanism beyond a skill would you combine with it to enforce the protection technically (not just procedurally)?
 
 ## 15. Exercise 2: Obsidian Memory Skill
 
-Using the template from Section 12, write an Obsidian memory skill for your own workflow. Your version must differ from the template in at least two ways — adapt it to what you actually want to log in your own development sessions.
+Using the template from Section 12, write an Obsidian memory skill for your own workflow. Your version must differ from the template in at least two ways; adapt it to what you actually want to log in your own development sessions.
 
 **Add it to your project-local `.opencode.json`** (so it only fires in projects where you want session logging, not globally):
 
@@ -515,7 +515,7 @@ mkdir ~/cs357-memory-project && cd ~/cs357-memory-project
 
 ## 16. Exercise 3: Publish and Install
 
-**Part A — Publish your skill:**
+**Part A - Publish your skill:**
 
 1. Create a public GitHub repository named `cs357-skills` under your GitHub account.
 2. Add the repository layout from Section 10: `SKILL.md` with frontmatter, `instructions/` directory, at least two skill files.
@@ -532,7 +532,7 @@ git remote add origin https://github.com/your-username/cs357-skills.git
 git push -u origin main
 ```
 
-**Part B — Install a partner's skill:**
+**Part B - Install a partner's skill:**
 
 Exchange GitHub repository URLs with a teammate. Install their skill bundle into your OpenCode:
 
@@ -547,11 +547,11 @@ opencode skills list
 
 1. Did the install succeed without errors? If not, what was the error, and what in the repository layout caused it?
 
-2. Inspect your partner's installed skills with `opencode skills show`. What is different about their `safety-check` compared to yours — in trigger phrase, in steps, in the confirmation format?
+2. Inspect your partner's installed skills with `opencode skills show`. What is different about their `safety-check` compared to yours, in trigger phrase, in steps, in the confirmation format?
 
 ## 17. Exercise 4: Assumptions Audit
 
-Compare your `safety-check` skill side-by-side with your partner's. This is not a correctness exercise — both can be correct. It is an **assumptions audit**: finding the implicit beliefs each of you encoded and making them explicit.
+Compare your `safety-check` skill side-by-side with your partner's. This is not a correctness exercise; both can be correct. It is an **assumptions audit**: finding the implicit beliefs each of you encoded and making them explicit.
 
 **Structured comparison:** For each difference you find, complete this sentence: *"My skill assumes that [X], while my partner's skill assumes [Y]. This difference matters when [Z]."*
 
@@ -565,7 +565,7 @@ Areas to examine:
 
 1. One of you probably wrote a more permissive confirmation protocol (accepting more words as "yes") and one of you probably wrote a stricter one. Which is better for a solo developer working on a personal project? For a team working on a shared codebase? For a student submitting coursework?
 
-   > *Hint:* "Better" is not a fixed answer here — it depends on the threat model. A solo developer's biggest risk is accidental deletion; a team's biggest risk may be social engineering ("just say yes, it's fine"). A student's biggest risk might be the agent deleting test data the instructor needs to see. Each context justifies different strictness.
+   > *Hint:* "Better" is not a fixed answer here; it depends on the threat model. A solo developer's biggest risk is accidental deletion; a team's biggest risk may be social engineering ("just say yes, it's fine"). A student's biggest risk might be the agent deleting test data the instructor needs to see. Each context justifies different strictness.
 
 2. Your skill is an instruction template, not code. Someone else can install it and it will encode your assumptions about how confirmations work, where logs go, and what counts as a destructive operation. What responsibilities does that give you as a skill author?
 
@@ -577,13 +577,13 @@ Areas to examine:
 
 In your notebook, respond at three levels:
 
-**Personal level:** You have now written instructions that an agent will follow on someone else's machine — possibly a partner's, possibly a future employer's, possibly a student you might someday supervise. The skills you authored encode your workflow assumptions, your risk tolerance, and your sense of what deserves a confirmation gate. Looking at your safety-check skill: whose interests does it protect, and whose does it not? Did writing it make you more conscious of what "safe" means to you personally?
+**Personal level:** You have now written instructions that an agent will follow on someone else's machine, possibly a partner's, possibly a future employer's, possibly a student you might someday supervise. The skills you authored encode your workflow assumptions, your risk tolerance, and your sense of what deserves a confirmation gate. Looking at your safety-check skill: whose interests does it protect, and whose does it not? Did writing it make you more conscious of what "safe" means to you personally?
 
-> *Hint:* Think about the bypass clause. If you wrote "this check cannot be bypassed," you assumed that accidental deletion is a bigger risk than a case where bypassing is genuinely needed. If you left a bypass path, you assumed the opposite. Neither is wrong — but the choice reflects a value.
+> *Hint:* Think about the bypass clause. If you wrote "this check cannot be bypassed," you assumed that accidental deletion is a bigger risk than a case where bypassing is genuinely needed. If you left a bypass path, you assumed the opposite. Neither is wrong, but the choice reflects a value.
 
-**Technical level:** Skills, tools, system prompts, and context files are four different mechanisms for encoding agent behavior. In your own words, describe a scenario where using the wrong mechanism for the job would cause a real problem — for example, a safety requirement that should be a skill but was put in a context file. What is the failure mode?
+**Technical level:** Skills, tools, system prompts, and context files are four different mechanisms for encoding agent behavior. In your own words, describe a scenario where using the wrong mechanism for the job would cause a real problem, for example, a safety requirement that should be a skill but was put in a context file. What is the failure mode?
 
-**Societal level:** The skills you published to GitHub are now installable by anyone. If someone installs your `safety-check` skill and relies on it to protect a production database, and your skill has a bug (it fails to fire for some deletion pattern you did not anticipate), what — if anything — is your responsibility? Compare this to the responsibility of a library author whose code has a security vulnerability. Is authoring an agent skill more like writing code or more like giving advice?
+**Societal level:** The skills you published to GitHub are now installable by anyone. If someone installs your `safety-check` skill and relies on it to protect a production database, and your skill has a bug (it fails to fire for some deletion pattern you did not anticipate), what (if anything) is your responsibility? Compare this to the responsibility of a library author whose code has a security vulnerability. Is authoring an agent skill more like writing code or more like giving advice?
 
 ---
 
@@ -605,11 +605,11 @@ In your notebook, respond at three levels:
 
 ## Community Skills Worth Knowing
 
-Two open-source skills from the community are worth studying as design examples — both for what they do and for the engineering principles they embody. Both are MIT licensed and installable with a single `opencode skills install` command.
+Two open-source skills from the community are worth studying as design examples, both for what they do and for the engineering principles they embody. Both are MIT licensed and installable with a single `opencode skills install` command.
 
 ### grill-me (mattpocock/skills, MIT)
 
-**What it does:** Before you commit to a plan, architecture, or implementation approach, `grill-me` subjects your proposal to exhaustive critical questioning. It walks a decision tree — probing hidden assumptions, unstated alternatives, and unresolved dependencies — until every branch is explicit. It is particularly useful before writing code, because it forces you to articulate *why* you chose one design over its alternatives.
+**What it does:** Before you commit to a plan, architecture, or implementation approach, `grill-me` subjects your proposal to exhaustive critical questioning. It walks a decision tree (probing hidden assumptions, unstated alternatives, and unresolved dependencies) until every branch is explicit. It is particularly useful before writing code, because it forces you to articulate *why* you chose one design over its alternatives.
 
 **Why it is a good skill example:** It has a single, narrow purpose (pre-commitment scrutiny), a concrete trigger (when you describe a plan), and a well-defined output (structured questions, one branch at a time). It does not try to also write code, generate documentation, or do anything else.
 
@@ -621,15 +621,15 @@ opencode skills install git+https://github.com/mattpocock/skills.git
 # > I'm planning to use a single SQLite database for all user data in our RAG pipeline. Grill me on this.
 ```
 
-Source: https://github.com/mattpocock/skills — MIT License.
+Source: https://github.com/mattpocock/skills, MIT License.
 
 ---
 
 ### caveman (JuliusBrussee/caveman, MIT)
 
-**What it does:** `caveman` compresses the agent's output by 65–75% by forcing terse, article-free responses ("No articles. Short. Cave-style."). It drops filler words and pleasantries while preserving all technical terms, code, and precision. Three intensity levels (lite, full, ultra) let you tune verbosity to your task — `full` for interactive sessions where you want fast scanning; `lite` for when you still want some prose; `ultra` for token-budget-constrained pipelines. It automatically reverts to normal communication for security warnings and irreversible actions.
+**What it does:** `caveman` compresses the agent's output by 65-75% by forcing terse, article-free responses ("No articles. Short. Cave-style."). It drops filler words and pleasantries while preserving all technical terms, code, and precision. Three intensity levels (lite, full, ultra) let you tune verbosity to your task: `full` for interactive sessions where you want fast scanning; `lite` for when you still want some prose; `ultra` for token-budget-constrained pipelines. It automatically reverts to normal communication for security warnings and irreversible actions.
 
-**Why it is a good skill example:** It demonstrates scoped behavior with explicit safety overrides — the instruction to revert to normal prose for warnings is a concrete constraint that prevents the compression from obscuring critical information. It also shows how to implement multiple intensity modes within a single skill by name-parameterizing invocations.
+**Why it is a good skill example:** It demonstrates scoped behavior with explicit safety overrides; the instruction to revert to normal prose for warnings is a concrete constraint that prevents the compression from obscuring critical information. It also shows how to implement multiple intensity modes within a single skill by name-parameterizing invocations.
 
 **Install and try:**
 
@@ -640,7 +640,7 @@ opencode skills install git+https://github.com/JuliusBrussee/caveman.git
 # > Explain how KV caching works.
 ```
 
-Source: https://github.com/JuliusBrussee/caveman — MIT License.
+Source: https://github.com/JuliusBrussee/caveman, MIT License.
 
 ---
 
@@ -653,8 +653,8 @@ Source: https://github.com/JuliusBrussee/caveman — MIT License.
 - OpenCode documentation (opencode.ai/docs): the full `opencode.json` schema, skill configuration reference, and plugin install commands.
 - pi.ai documentation (pi.dev/docs): the plugin manifest format, `pi plugin` subcommands, and scoping rules.
 - The Superpowers plugin repository (github.com/obra/superpowers): a real-world example of a well-structured skill bundle with `SKILL.md` frontmatter and an `instructions/` directory layout.
-- grill-me (github.com/mattpocock/skills, MIT): pre-commitment decision-tree interrogation skill — study the SKILL.md manifest format and how a single-purpose instruction is structured.
-- caveman (github.com/JuliusBrussee/caveman, MIT): output-compression skill with intensity levels and safety overrides — a good example of scoped constraint and parameterized invocation.
+- grill-me (github.com/mattpocock/skills, MIT): pre-commitment decision-tree interrogation skill; study the SKILL.md manifest format and how a single-purpose instruction is structured.
+- caveman (github.com/JuliusBrussee/caveman, MIT): output-compression skill with intensity levels and safety overrides, a good example of scoped constraint and parameterized invocation.
 - W. Mongan, "Agentic CLI Tools" (this course, prior module): the context file and permission gate foundations that skills build on.
-- "Prompt Engineering for Agents" — the course reading on specifying behavior precisely enough to test; the same precision discipline applies to skill authoring.
+- "Prompt Engineering for Agents", the course reading on specifying behavior precisely enough to test; the same precision discipline applies to skill authoring.
 - The Model Context Protocol site (modelcontextprotocol.io): if you want your skill to call an external tool (a real function, not an instruction template), MCP is the standard the underlying agent runtime uses.

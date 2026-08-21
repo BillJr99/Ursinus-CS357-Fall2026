@@ -1,11 +1,11 @@
 # Session Log
 
-<!-- Append-only engineering journal — a running log, not merely a final summary.
+<!-- Append-only engineering journal, a running log, not merely a final summary.
      Add a dated entry per working session (or per significant continuation within one).
      Never delete old entries; if an old entry is superseded, annotate it in place:
      "Superseded by the <date> entry below." Every entry ends with a Next Safe Action. -->
 
-## <YYYY-MM-DD> Continuation — <short title>
+## <YYYY-MM-DD> Continuation: <short title>
 
 ### Scope
 
@@ -21,7 +21,7 @@
 
 ### Runtime Facts
 
-<facts verified against the live system this session — versions, paths, ports,
+<facts verified against the live system this session: versions, paths, ports,
 behaviors. These are hints for the next session, not authority; re-verify before
 relying on them.>
 

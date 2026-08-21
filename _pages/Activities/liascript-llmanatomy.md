@@ -14,15 +14,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Anatomy of an LLM Request: One Prompt, End to End, by Hand
 
-You have met every stage of a language model separately — tokens and embeddings, attention, sampling, training loss. This activity threads them together. We take **one** tiny prompt, **"the cat"**, and carry it — with real numbers you can check on paper — all the way from raw text to a single predicted next token, and then take one step of the training that gave the model its weights. Nothing is a black box here: every matrix is small enough to multiply by hand, and a code cell at the end reproduces every number.
+You have met every stage of a language model separately: tokens and embeddings, attention, sampling, training loss. This activity threads them together. We take **one** tiny prompt, **"the cat"**, and carry it (with real numbers you can check on paper) all the way from raw text to a single predicted next token, and then take one step of the training that gave the model its weights. Nothing is a black box here: every matrix is small enough to multiply by hand, and a code cell at the end reproduces every number.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). The Manager keeps the team moving through the five stages in order — skipping ahead breaks the running example. The Recorder writes down every intermediate vector exactly as computed, because each stage's output is the next stage's input. The Presenter prepares a two-minute "trace the token" walkthrough for the class. The Reflector notes which stage the team found least intuitive and why. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). The Manager keeps the team moving through the five stages in order; skipping ahead breaks the running example. The Recorder writes down every intermediate vector exactly as computed, because each stage's output is the next stage's input. The Presenter prepares a two-minute "trace the token" walkthrough for the class. The Reflector notes which stage the team found least intuitive and why. After class, respond to the reflective prompt individually in your notebook.
 
-This activity is a **synthesis**. Each stage has a deeper standalone activity — `liascript-tokensembeddings.md` (tokens/embeddings), `liascript-attentiontransformers.md` (attention by hand), `liascript-textgen2nn.md` (the forward pass and ReLU), `liascript-samplinggeneration.md` (sampling), and `liascript-llmpretraining.md` (loss and perplexity). Here we do not re-derive them; we connect them with one consistent set of numbers.
+This activity is a **synthesis**. Each stage has a deeper standalone activity: `liascript-tokensembeddings.md` (tokens/embeddings), `liascript-attentiontransformers.md` (attention by hand), `liascript-textgen2nn.md` (the forward pass and ReLU), `liascript-samplinggeneration.md` (sampling), and `liascript-llmpretraining.md` (loss and perplexity). Here we do not re-derive them; we connect them with one consistent set of numbers.
 
 ---
 
@@ -30,14 +30,14 @@ This activity is a **synthesis**. Each stage has a deeper standalone activity �
 
 | Term | Plain-English Definition | Where It Appears Today |
 |------|--------------------------|------------------------|
-| **Token** | A chunk of text mapped to an integer id from a fixed vocabulary | "the" → id 0, "cat" → id 1 |
-| **Embedding** | The learned vector a token id looks up — the model's numeric "meaning" for that token | id 1 ("cat") → $(0, 1)$ |
+| **Token** | A chunk of text mapped to an integer id from a fixed vocabulary | "the" -> id 0, "cat" -> id 1 |
+| **Embedding** | The learned vector a token id looks up, the model's numeric "meaning" for that token | id 1 ("cat") -> $(0, 1)$ |
 | **Positional encoding** | A vector added to an embedding to tell the model *where* in the sequence the token sits | position 1 adds $(1, 0)$ |
 | **Q/K/V projection** | Three learned matrices $W_Q, W_K, W_V$ that turn each token vector into a **query**, a **key**, and a **value** | $q = x\,W_Q$, and $q,k,v$ all differ from $x$ |
-| **Attention score** | The dot product of one token's query with another token's key — "how relevant is that token to me?" | key·query $= 2$ and $3$ |
+| **Attention score** | The dot product of one token's query with another token's key, "how relevant is that token to me?" | key·query $= 2$ and $3$ |
 | **Softmax** | Turns a vector of scores into a probability distribution (positive, sums to 1) | scores $\to (0.3302, 0.6698)$ |
-| **Context vector** | The attention-weighted sum of value vectors — one token's view of the whole sequence so far | $(0.6698, 1.0)$ |
-| **Feed-forward network (FFN)** | A small per-token neural network (linear → ReLU) applied after attention | $(0.6698,1.0) \to (1.6698, 1.0)$ |
+| **Context vector** | The attention-weighted sum of value vectors, one token's view of the whole sequence so far | $(0.6698, 1.0)$ |
+| **Feed-forward network (FFN)** | A small per-token neural network (linear -> ReLU) applied after attention | $(0.6698,1.0) \to (1.6698, 1.0)$ |
 | **Unembedding / logits** | A matrix that scores the final vector against every vocabulary token, producing one **logit** per token | 5 logits, one per word |
 | **Cross-entropy loss** | How surprised the model is by the correct next token: $-\log p(\text{target})$ | $-\log(0.5791) = 0.5464$ |
 | **Gradient descent step** | Nudge a weight opposite its gradient so the loss goes down | one entry of $W_U$: $1.0 \to 1.3514$ |
@@ -48,7 +48,7 @@ Throughout we use **2-dimensional** vectors and a **5-word vocabulary** so the a
 
 # Part I: From Text to Vectors
 
-In this part, you turn the prompt into numbers — the only thing a neural network can process.
+In this part, you turn the prompt into numbers, the only thing a neural network can process.
 
 ## Model 1: Tokenize, Embed, and Add Position
 
@@ -62,11 +62,11 @@ Our toy vocabulary has five tokens, each with an integer id and a learned 2-D em
 | ran | 3 | $(-1, 1)$ |
 | mat | 4 | $(1, -1)$ |
 
-**Step 1 — Tokenize.** The prompt **"the cat"** becomes the id sequence $[0, 1]$.
+**Step 1: Tokenize.** The prompt **"the cat"** becomes the id sequence $[0, 1]$.
 
-**Step 2 — Embed.** Look up each id's row: "the" $\to (1, 0)$, "cat" $\to (0, 1)$.
+**Step 2: Embed.** Look up each id's row: "the" $\to (1, 0)$, "cat" $\to (0, 1)$.
 
-**Step 3 — Add positional encoding.** Attention alone cannot tell "the cat" from "cat the," so we add a position vector. Use $\text{pos}_0 = (0,0)$ and $\text{pos}_1 = (1,0)$:
+**Step 3: Add positional encoding.** Attention alone cannot tell "the cat" from "cat the," so we add a position vector. Use $\text{pos}_0 = (0,0)$ and $\text{pos}_1 = (1,0)$:
 
 $$x_{\text{the}} = (1,0) + (0,0) = (1, 0) \qquad x_{\text{cat}} = (0,1) + (1,0) = (1, 1)$$
 
@@ -74,7 +74,7 @@ These two vectors, $x_{\text{the}} = (1,0)$ and $x_{\text{cat}} = (1,1)$, are th
 
 ### Critical Thinking Questions
 
-1. The tokens "the" and "cat" have embeddings $(1,0)$ and $(0,1)$ — orthogonal vectors. In one sentence, what would it mean geometrically if two tokens had *identical* embeddings, and why would that be a problem?
+1. The tokens "the" and "cat" have embeddings $(1,0)$ and $(0,1)$, orthogonal vectors. In one sentence, what would it mean geometrically if two tokens had *identical* embeddings, and why would that be a problem?
 
    > *Hint: Embeddings are the model's only handle on meaning. If two different words map to the same vector, can any later stage ever tell them apart?*
 
@@ -91,7 +91,7 @@ Why does a transformer add a positional encoding to the token embedding before a
 
 ---
 
-# Part II: Attention — Query, Key, Value, and the Weighted Sum
+# Part II: Attention - Query, Key, Value, and the Weighted Sum
 
 In this part, you compute how the last token, "cat," gathers information from the tokens before it. This is the mechanism at the heart of every transformer.
 
@@ -112,7 +112,7 @@ Doing this for all tokens and all three matrices:
 | the $(1,0)$ | $(0, 1)$ | $(1, 1)$ | $(0, 1)$ |
 | cat $(1,1)$ | $(1, 1)$ | $(1, 2)$ | $(1, 1)$ |
 
-Notice that $q$, $k$, and $v$ are all **different** from the input $x$ and from each other — that is the whole point of the projection. The query asks "what am I looking for?"; the key advertises "what do I offer?"; the value is "what I actually contribute if attended to."
+Notice that $q$, $k$, and $v$ are all **different** from the input $x$ and from each other; that is the whole point of the projection. The query asks "what am I looking for?"; the key advertises "what do I offer?"; the value is "what I actually contribute if attended to."
 
 ### Critical Thinking Questions
 
@@ -126,22 +126,22 @@ Notice that $q$, $k$, and $v$ are all **different** from the input $x$ and from 
 
 ## Model 3: Attention Scores, Softmax, and the Context Vector
 
-The last token, "cat," now asks every token (including itself — causal attention lets a token attend to itself and everything before it) how relevant it is, by dotting its query with each key.
+The last token, "cat," now asks every token (including itself; causal attention lets a token attend to itself and everything before it) how relevant it is, by dotting its query with each key.
 
-**Step 1 — Scores.** With $q_{\text{cat}} = (1,1)$:
+**Step 1: Scores.** With $q_{\text{cat}} = (1,1)$:
 
 $$\text{score}_{\text{the}} = k_{\text{the}} \cdot q_{\text{cat}} = (1,1)\cdot(1,1) = 2 \qquad \text{score}_{\text{cat}} = k_{\text{cat}} \cdot q_{\text{cat}} = (1,2)\cdot(1,1) = 3$$
 
-**Step 2 — Scale** by $\sqrt{d_k} = \sqrt{2} \approx 1.4142$ (this keeps scores from growing with dimension — see `liascript-attentiontransformers.md`):
+**Step 2: Scale** by $\sqrt{d_k} = \sqrt{2} \approx 1.4142$ (this keeps scores from growing with dimension; see `liascript-attentiontransformers.md`):
 
 $$\frac{2}{\sqrt 2} = 1.4142 \qquad \frac{3}{\sqrt 2} = 2.1213$$
 
-**Step 3 — Softmax** turns the two scaled scores into attention weights:
+**Step 3: Softmax** turns the two scaled scores into attention weights:
 
 $$e^{1.4142} = 4.1132, \quad e^{2.1213} = 8.3421, \quad \text{sum} = 12.4554$$
 $$\alpha_{\text{the}} = \frac{4.1132}{12.4554} = 0.3302 \qquad \alpha_{\text{cat}} = \frac{8.3421}{12.4554} = 0.6698$$
 
-**Step 4 — Weighted sum of values** gives the context vector for "cat":
+**Step 4: Weighted sum of values** gives the context vector for "cat":
 
 $$\text{context} = 0.3302\,(0,1) + 0.6698\,(1,1) = (0.6698,\; 0.3302 + 0.6698) = (0.6698,\; 1.0)$$
 
@@ -176,14 +176,14 @@ In this part, you turn the context vector into an actual next-word prediction.
 
 ## Model 4: Feed-Forward, Logits, Softmax, Sample
 
-**Step 1 — Feed-forward network.** After attention, each token passes through a small per-token network: a linear layer then a ReLU. With
+**Step 1: Feed-forward network.** After attention, each token passes through a small per-token network: a linear layer then a ReLU. With
 
 $$W_1 = \begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}, \quad b_1 = (0, 0), \qquad z = \text{context}\,W_1 + b_1$$
 $$z = (0.6698\cdot 1 + 1.0\cdot 1,\; 0.6698\cdot 0 + 1.0\cdot 1) = (1.6698,\; 1.0)$$
 
 ReLU replaces negatives with 0. Both components here are positive, so $h = \text{ReLU}(z) = (1.6698, 1.0)$ passes through unchanged. (For a case where ReLU actually clips a negative to zero, see the fully worked 2-2-1 network in `liascript-textgen2nn.md`.)
 
-**Step 2 — Unembedding to logits.** A matrix $W_U$ (one row per vocabulary token — here reusing the embedding directions) scores $h$ against every token: $\text{logit}_i = W_{U,i} \cdot h$.
+**Step 2: Unembedding to logits.** A matrix $W_U$ (one row per vocabulary token, here reusing the embedding directions) scores $h$ against every token: $\text{logit}_i = W_{U,i} \cdot h$.
 
 | Token | row of $W_U$ | logit $= \text{row}\cdot(1.6698, 1.0)$ |
 |---|---|---|
@@ -193,7 +193,7 @@ ReLU replaces negatives with 0. Both components here are positive, so $h = \text
 | ran | $(-1, 1)$ | $-0.6698$ |
 | mat | $(1, -1)$ | $0.6698$ |
 
-**Step 3 — Softmax over the vocabulary** turns logits into next-token probabilities:
+**Step 3: Softmax over the vocabulary** turns logits into next-token probabilities:
 
 $$e^{1.6698}=5.3109,\; e^{1.0}=2.7183,\; e^{2.6698}=14.4365,\; e^{-0.6698}=0.5118,\; e^{0.6698}=1.9538$$
 
@@ -203,13 +203,13 @@ The sum is $24.9313$, giving:
 |---|---|---|---|---|
 | $0.2130$ | $0.1090$ | $\mathbf{0.5791}$ | $0.0205$ | $0.0784$ |
 
-**Step 4 — Sample.** At temperature 0 (greedy) the model emits the argmax: **"sat."** The full request "the cat" → "sat" is complete. (Temperature and top-p reshape this distribution before sampling — see `liascript-samplinggeneration.md`.)
+**Step 4: Sample.** At temperature 0 (greedy) the model emits the argmax: **"sat."** The full request "the cat" -> "sat" is complete. (Temperature and top-p reshape this distribution before sampling; see `liascript-samplinggeneration.md`.)
 
 ### Critical Thinking Questions
 
 1. "sat" won with probability $0.5791$, but "the" had a healthy $0.2130$. At a high temperature, roughly what happens to the gap between these two, and how could that change which token is sampled?
 
-   > *Hint: Temperature divides the logits before softmax. Dividing by a number bigger than 1 flattens the distribution — does that make an upset more or less likely?*
+   > *Hint: Temperature divides the logits before softmax. Dividing by a number bigger than 1 flattens the distribution; does that make an upset more or less likely?*
 
 2. The unembedding gave "sat" the highest logit because its direction $(1,1)$ aligns best with $h = (1.6698, 1.0)$. Which token was *least* likely, and what about its direction explains that?
 
@@ -222,17 +222,17 @@ The five logits are converted into the five next-token probabilities by:
 [( )] Keeping only the largest logit and setting the rest to 0
 [( )] Multiplying each logit by its embedding
 
-> **⚠️ Common Misconception:** It is tempting to picture the model "looking up" the answer to "the cat" in some stored table of sentences. It does no such thing. There is no sentence "the cat sat" stored anywhere. The model holds only **weights** — the embedding rows, the projection matrices $W_Q, W_K, W_V$, the FFN weights, and the unembedding $W_U$. Given "the cat," it *computes* a fresh probability distribution over its entire vocabulary every single time, through exactly the matrix operations above. "sat" is not retrieved; it is the token that wins an arithmetic competition.
+> **Common Misconception:** It is tempting to picture the model "looking up" the answer to "the cat" in some stored table of sentences. It does no such thing. There is no sentence "the cat sat" stored anywhere. The model holds only **weights**: the embedding rows, the projection matrices $W_Q, W_K, W_V$, the FFN weights, and the unembedding $W_U$. Given "the cat," it *computes* a fresh probability distribution over its entire vocabulary every single time, through exactly the matrix operations above. "sat" is not retrieved; it is the token that wins an arithmetic competition.
 
 ---
 
 # Part IV: How the Weights Got Their Values
 
-Every number above — the embeddings, the projection matrices, the unembedding — started as random noise and was *learned*. This part takes one step of that learning, so you can see how a weight changes.
+Every number above (the embeddings, the projection matrices, the unembedding) started as random noise and was *learned*. This part takes one step of that learning, so you can see how a weight changes.
 
 ## Model 5: Loss, Gradient, and One Step of Descent
 
-Suppose the correct next token really is **"sat."** During training we ask: how surprised was the model? That is the **cross-entropy loss** — the negative log probability of the true token:
+Suppose the correct next token really is **"sat."** During training we ask: how surprised was the model? That is the **cross-entropy loss**, the negative log probability of the true token:
 
 $$L = -\log p(\text{sat}) = -\log(0.5791) = 0.5464$$
 
@@ -240,7 +240,7 @@ Lower is better; a perfect model would put probability 1 on "sat" for a loss of 
 
 $$\frac{\partial L}{\partial \text{logit}_i} = p_i - y_i$$
 
-where $y_i = 1$ for the true token and $0$ otherwise. For "sat": $p_{\text{sat}} - 1 = 0.5791 - 1 = -0.4209$ (negative — meaning we should *raise* this logit).
+where $y_i = 1$ for the true token and $0$ otherwise. For "sat": $p_{\text{sat}} - 1 = 0.5791 - 1 = -0.4209$ (negative, meaning we should *raise* this logit).
 
 Now pick **one** weight to update: the first entry of the "sat" row of the unembedding, $W_U[\text{sat},0]$, currently $1.0$. Since $\text{logit}_{\text{sat}} = W_U[\text{sat}] \cdot h$, the chain rule gives
 
@@ -256,11 +256,11 @@ Did it help? Recompute just that logit: $\text{logit}_{\text{sat}} = 1.3514\cdot
 
 1. The gradient $p_i - y_i$ for the true token "sat" was **negative** ($-0.4209$), while for a wrong token like "the" it would be **positive** ($+0.2130$). Explain how the sign tells gradient descent to *raise* the correct token's logit but *lower* a wrong token's.
 
-   > *Hint: Gradient descent moves opposite the gradient. A negative gradient means subtracting a negative — which raises the weight. What does a positive gradient do?*
+   > *Hint: Gradient descent moves opposite the gradient. A negative gradient means subtracting a negative, which raises the weight. What does a positive gradient do?*
 
 2. We used learning rate $\eta = 0.5$. Predict qualitatively what happens to $W_U[\text{sat},0]$ and the loss if $\eta$ were enormous, say $50$. Why do practitioners keep the learning rate small?
 
-   > *Hint: The step size is $\eta$ times the gradient. A giant step can overshoot the minimum entirely — the loss can go *up*. What is the risk of stepping too far?*
+   > *Hint: The step size is $\eta$ times the gradient. A giant step can overshoot the minimum entirely; the loss can go *up*. What is the risk of stepping too far?*
 
 3. We updated only one of the ten-plus weights in this model. If we instead updated *every* weight by its own gradient in the same step, would the loss drop by more or less than the $0.5464 \to 0.3395$ we saw? Why?
 
@@ -277,7 +277,7 @@ After one gradient-descent step on $W_U[\text{sat},0]$, the loss went from $0.54
 
 ## Code Cell: Reproduce Every Number
 
-The cell below runs the entire request — embed, project, attend, feed-forward, unembed, softmax, sample — and then the single training step, printing each intermediate value. Compare every line to your by-hand work; they should match to rounding. It also does a **numerical gradient check**: it perturbs $W_U[\text{sat},0]$ slightly and confirms the measured slope of the loss equals the analytic gradient $-0.7029$.
+The cell below runs the entire request (embed, project, attend, feed-forward, unembed, softmax, sample) and then the single training step, printing each intermediate value. Compare every line to your by-hand work; they should match to rounding. It also does a **numerical gradient check**: it perturbs $W_U[\text{sat},0]$ slightly and confirms the measured slope of the loss equals the analytic gradient $-0.7029$.
 
 ```python
 import numpy as np
@@ -353,7 +353,7 @@ print("numerical grad = %.4f   analytic grad = %.4f  (match!)" % (num, grad))
 **Exercise 1: Change the prompt to "the mat."**
 
 - *What to do*: Keep every matrix the same, but start from "the mat" instead of "the cat." Recompute $x_{\text{mat}}$ (remember position 1 adds $(1,0)$), then $q_{\text{mat}}, k$, the attention scores against both tokens, the context vector, the FFN output, and the five logits. Which token does the model predict now?
-- *Starter hint*: $x_{\text{mat}} = (1,-1) + (1,0) = (2,-1)$. Push it through exactly the steps in Parts II–III. You can check yourself by editing `E`/the input in the code cell.
+- *Starter hint*: $x_{\text{mat}} = (1,-1) + (1,0) = (2,-1)$. Push it through exactly the steps in Parts II-III. You can check yourself by editing `E`/the input in the code cell.
 - *You've succeeded when*: You have a full by-hand trace ending in a predicted token, and the code cell confirms your logits.
 
 **Exercise 2: Make the model *more* confident in "sat."**
@@ -376,19 +376,19 @@ print("numerical grad = %.4f   analytic grad = %.4f  (match!)" % (num, grad))
 
 **Technical**: Every stage here was a matrix multiply followed by a simple nonlinearity (softmax or ReLU). In your notebook, describe how the *same five stages* scale to a real model with thousands of dimensions and a 100,000-token vocabulary. What stays exactly the same, and what only changes in size?
 
-**Societal**: You saw that the model stores no sentences — only weights it computes from. Yet those weights were *learned from human text* whose patterns, biases, and gaps are baked into the embeddings and projection matrices you multiplied. If "sat" won an arithmetic competition decided by learned weights, what does that imply about who is responsible for a model's outputs, and about the data those weights were trained on?
+**Societal**: You saw that the model stores no sentences, only weights it computes from. Yet those weights were *learned from human text* whose patterns, biases, and gaps are baked into the embeddings and projection matrices you multiplied. If "sat" won an arithmetic competition decided by learned weights, what does that imply about who is responsible for a model's outputs, and about the data those weights were trained on?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
-You now understand a single forward pass and a single training step. Two threads open from here. First: *why does the same prompt sometimes give different answers?* — that is sampling and temperature (`liascript-samplinggeneration.md`), acting on the very probability distribution you just computed. Second: *how is this pass run efficiently for thousands of users at once?* — that is KV caching, batching, and PagedAttention (`liascript-llmserving.md`), which optimize exactly the attention computation from Part II.
+You now understand a single forward pass and a single training step. Two threads open from here. First: *why does the same prompt sometimes give different answers?*, that is sampling and temperature (`liascript-samplinggeneration.md`), acting on the very probability distribution you just computed. Second: *how is this pass run efficiently for thousands of users at once?*, that is KV caching, batching, and PagedAttention (`liascript-llmserving.md`), which optimize exactly the attention computation from Part II.
 
 ---
 
 ## Going Deeper: The Full $QK^\top$ Matrix, By Hand
 
-Model 1 computed one row — the query for "bank." Exercise 1 asks you to do "river." Here is the whole matrix at once, because seeing all three rows together is what makes the mechanism click: **attention is not a special operation applied to one token, it is the same operation applied to every token in parallel.**
+Model 1 computed one row, the query for "bank." Exercise 1 asks you to do "river." Here is the whole matrix at once, because seeing all three rows together is what makes the mechanism click: **attention is not a special operation applied to one token, it is the same operation applied to every token in parallel.**
 
 Queries $\mathbf{q}$: river $(1,0)$, bank $(1,1)$, loan $(1,1)$.
 Keys $\mathbf{k}$: river $(1,0)$, bank $(0,1)$, loan $(1,1)$.
@@ -410,9 +410,9 @@ Values $\mathbf{v}$: river $(1,1)$, bank $(2,0)$, loan $(0,2)$.
 | **bank** | 0.71 | 0.71 | 1.41 |
 | **loan** | 0.71 | 0.71 | 1.41 |
 
-**Softmax, row by row** (each row sums to 1 — that is what makes it a distribution over "where do I look"):
+**Softmax, row by row** (each row sums to 1; that is what makes it a distribution over "where do I look"):
 
-| | river | bank | loan | → new vector |
+| | river | bank | loan | -> new vector |
 |---|---|---|---|---|
 | **river** | 0.40 | 0.20 | 0.40 | $(0.80,\; 1.20)$ |
 | **bank** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
@@ -422,9 +422,9 @@ Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^
 
 **Three things this matrix shows that a single row cannot.**
 
-1. **The matrix is not symmetric.** Row "river" gives "bank" a weight of 0.20, but row "bank" gives "river" 0.25. Attention is *directional* — "what does A want from B" is a different question from "what does B want from A" — because queries and keys are different projections. This is the single most common misconception about attention.
+1. **The matrix is not symmetric.** Row "river" gives "bank" a weight of 0.20, but row "bank" gives "river" 0.25. Attention is *directional* ("what does A want from B" is a different question from "what does B want from A") because queries and keys are different projections. This is the single most common misconception about attention.
 
-2. **"bank" and "loan" have identical rows.** They started with identical query vectors $(1,1)$, so they attend identically and end up with the same output. Nothing in this toy distinguishes them — which is exactly why real models use *many* attention heads with *different* learned projections, so that different heads can separate tokens this head cannot.
+2. **"bank" and "loan" have identical rows.** They started with identical query vectors $(1,1)$, so they attend identically and end up with the same output. Nothing in this toy distinguishes them, which is exactly why real models use *many* attention heads with *different* learned projections, so that different heads can separate tokens this head cannot.
 
 3. **Every row is $O(n)$ work and there are $n$ rows.** That is the $O(n^2)$ cost of self-attention, visible as the literal area of the table. Double the context length and the table quadruples. This is the whole economic argument for retrieval instead of just pasting more text into the prompt.
 
@@ -434,4 +434,4 @@ Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^
 - This activity synthesizes five companions, each going deeper on one stage: `liascript-tokensembeddings.md`, `liascript-attentiontransformers.md`, `liascript-textgen2nn.md`, `liascript-samplinggeneration.md`, and `liascript-llmpretraining.md`.
 - Vaswani et al. "Attention Is All You Need." NeurIPS 2017. The paper that introduced the transformer architecture whose forward pass you just traced.
 - Tom Yeh. *AI by Hand.* Worksheets that compute attention, feed-forward layers, and softmax by hand at the same scale used here.
-- 3Blue1Brown, "But what is a GPT? / Attention in transformers" (video series). Visual, animated companions to the matrix operations in Parts II–III.
+- 3Blue1Brown, "But what is a GPT? / Attention in transformers" (video series). Visual, animated companions to the matrix operations in Parts II-III.

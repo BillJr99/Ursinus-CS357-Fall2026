@@ -37,10 +37,10 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Benchmark** | A standardized test used to measure a specific AI capability — not unlike a standardized exam for students, but for models | MMLU tests knowledge across 57 academic subjects; HumanEval tests Python code generation from docstrings |
-| **Benchmark Saturation** | When state-of-the-art models score so high on a benchmark that it no longer distinguishes between them — like a class where everyone gets 100% so the test tells you nothing about who is best | Frontier models now score above 90% on MMLU, making it nearly useless for comparing top models |
+| **Benchmark** | A standardized test used to measure a specific AI capability, not unlike a standardized exam for students, but for models | MMLU tests knowledge across 57 academic subjects; HumanEval tests Python code generation from docstrings |
+| **Benchmark Saturation** | When state-of-the-art models score so high on a benchmark that it no longer distinguishes between them, like a class where everyone gets 100% so the test tells you nothing about who is best | Frontier models now score above 90% on MMLU, making it nearly useless for comparing top models |
 | **Benchmark Contamination** | When the test questions appeared in a model's training data, so high scores reflect memorization rather than genuine ability | HumanEval examples have been found in common pretraining corpora, inflating coding benchmark scores |
-| **Inter-Rater Reliability** | The degree to which two independent human annotators agree on the correct answer for benchmark items — low agreement means the items are ambiguous or subjective | If two experts only agree 55% of the time on whether an answer is "safe," the benchmark items need revision |
+| **Inter-Rater Reliability** | The degree to which two independent human annotators agree on the correct answer for benchmark items; low agreement means the items are ambiguous or subjective | If two experts only agree 55% of the time on whether an answer is "safe," the benchmark items need revision |
 | **Ecological Validity** | How well a benchmark's tasks reflect what the AI system actually needs to do in the real world | A benchmark that tests multiple-choice medical knowledge may have low ecological validity for a system that must write clinical notes |
 | **LLM-as-Judge** | Using a language model to score other language models' outputs automatically, instead of (expensive) human evaluation | Using GPT-4 to rate whether a student-facing chatbot's explanation is accurate and age-appropriate |
 
@@ -48,15 +48,15 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ## Model 1: What Makes a Good Benchmark?
 
-A benchmark that frontier models ace is like a test that everyone gets 100% on — it no longer measures anything. This is the central problem of modern AI evaluation: our best models are improving faster than we can design meaningful tests. At the same time, a benchmark that is too hard or too narrow may fail for different reasons — it may measure the wrong things, or measure the right things in the wrong way. Designing a good benchmark is genuinely difficult, and understanding why helps you use benchmark results more skeptically and critically.
+A benchmark that frontier models ace is like a test that everyone gets 100% on; it no longer measures anything. This is the central problem of modern AI evaluation: our best models are improving faster than we can design meaningful tests. At the same time, a benchmark that is too hard or too narrow may fail for different reasons: it may measure the wrong things, or measure the right things in the wrong way. Designing a good benchmark is genuinely difficult, and understanding why helps you use benchmark results more skeptically and critically.
 
 A **benchmark** is a standardized test used to measure AI system capability. Not all benchmarks are equally trustworthy. A good benchmark has five key properties:
 
-1. **Validity** — It actually measures the capability we care about, not a proxy or shortcut that happens to correlate with performance on easy examples.
-2. **Reliability** — It produces consistent results across repeated evaluations of the same system.
-3. **Coverage** — It spans the target domain broadly enough to be representative of real-world variation in that domain.
-4. **Difficulty Calibration** — It is not so easy that all systems score near 100%, nor so hard that all systems score near 0%. A well-calibrated benchmark spreads scores across a useful range.
-5. **Contamination Resistance** — The test data was not seen during model training, so scores reflect genuine capability rather than memorization of test answers.
+1. **Validity**: It actually measures the capability we care about, not a proxy or shortcut that happens to correlate with performance on easy examples.
+2. **Reliability**: It produces consistent results across repeated evaluations of the same system.
+3. **Coverage**: It spans the target domain broadly enough to be representative of real-world variation in that domain.
+4. **Difficulty Calibration**: It is not so easy that all systems score near 100%, nor so hard that all systems score near 0%. A well-calibrated benchmark spreads scores across a useful range.
+5. **Contamination Resistance**: The test data was not seen during model training, so scores reflect genuine capability rather than memorization of test answers.
 
 ### Historical Benchmarks and Saturation
 
@@ -67,8 +67,8 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 | **ImageNet** | Visual object classification across 1,000 categories | 2009 | 99%+ accuracy on the standard test set | Effectively solved; top models have surpassed human-level performance for years |
 | **MMLU** | Multidisciplinary knowledge spanning 57 academic subjects from medicine to law to history | 2020 | Above 90% for leading models | Near-saturation and suspected training contamination make it unreliable for distinguishing top systems |
 | **HumanEval** | Python code generation from function docstrings, verified by running test cases | 2021 | Above 95% for leading code models | Examples appear in pretraining corpora; scores likely inflated by memorization |
-| **MATH** | Competition-level mathematics problems requiring multi-step symbolic reasoning | 2021 | 70–90% for leading models | Partial saturation; the hardest problems remain challenging but easier problems are saturated |
-| **BIG-Bench** | Over 200 diverse tasks designed to exceed model capabilities at release time | 2022 | Mixed — hardest tasks remain; many easier tasks saturated | Designed as a "living" benchmark but still subject to contamination as corpora grow |
+| **MATH** | Competition-level mathematics problems requiring multi-step symbolic reasoning | 2021 | 70-90% for leading models | Partial saturation; the hardest problems remain challenging but easier problems are saturated |
+| **BIG-Bench** | Over 200 diverse tasks designed to exceed model capabilities at release time | 2022 | Mixed: hardest tasks remain; many easier tasks saturated | Designed as a "living" benchmark but still subject to contamination as corpora grow |
 
 ### Critical Thinking Questions
 
@@ -76,7 +76,7 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 
 [[___ Your answer here ___]]
 
-> *Hint:* MMLU is multiple-choice — there are only four answer options for each question. A model can score around 25% by random guessing, and higher scores can come from recognizing patterns in answer choices or from memorizing the specific phrasing of questions that appeared in training data. Think about the difference between getting a multiple-choice question right and actually being able to explain the concept, apply it to a new situation, or recognize when it doesn't apply. What would a question look like that a model could ace on MMLU but completely fail in a real clinical or legal context?
+> *Hint:* MMLU is multiple-choice; there are only four answer options for each question. A model can score around 25% by random guessing, and higher scores can come from recognizing patterns in answer choices or from memorizing the specific phrasing of questions that appeared in training data. Think about the difference between getting a multiple-choice question right and actually being able to explain the concept, apply it to a new situation, or recognize when it doesn't apply. What would a question look like that a model could ace on MMLU but completely fail in a real clinical or legal context?
 
 ---
 
@@ -98,27 +98,27 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 
 ## Model 2: Designing Your Own Benchmark
 
-Creating a valid benchmark requires more than writing a list of questions. The following six-step process helps ensure benchmark quality — and each step can fail in a way that invalidates the results.
+Creating a valid benchmark requires more than writing a list of questions. The following six-step process helps ensure benchmark quality, and each step can fail in a way that invalidates the results.
 
-**Step 1 — Define the capability:** State in precise, testable terms what you are measuring. "Common sense" is too vague to design items for. "Detecting when a stated action violates an unstated social norm in a given cultural context" is specific enough that two independent researchers could agree on whether a given item tests it.
+**Step 1 - Define the capability:** State in precise, testable terms what you are measuring. "Common sense" is too vague to design items for. "Detecting when a stated action violates an unstated social norm in a given cultural context" is specific enough that two independent researchers could agree on whether a given item tests it.
 
-**Step 2 — Choose the instance format:** Multiple choice, free response, code generation, ranking, binary classification. Each format has tradeoffs: multiple choice is easy to score automatically but susceptible to option-elimination strategies; free response has higher ecological validity but requires expensive human evaluation or an LLM judge.
+**Step 2 - Choose the instance format:** Multiple choice, free response, code generation, ranking, binary classification. Each format has tradeoffs: multiple choice is easy to score automatically but susceptible to option-elimination strategies; free response has higher ecological validity but requires expensive human evaluation or an LLM judge.
 
-**Step 3 — Write instances with known answers:** Every item needs a ground-truth answer that does not depend on the model's output. For subjective items, collect independent human judgments and use majority vote or expert review.
+**Step 3 - Write instances with known answers:** Every item needs a ground-truth answer that does not depend on the model's output. For subjective items, collect independent human judgments and use majority vote or expert review.
 
-**Step 4 — Calibrate difficulty:** Aim for a spread of difficulty: approximately 20–30% easy items, 40–50% medium items, and 20–30% hard items. Pilot with human participants to calibrate before finalizing — what feels hard to the researcher may be trivial to the model or vice versa.
+**Step 4 - Calibrate difficulty:** Aim for a spread of difficulty: approximately 20-30% easy items, 40-50% medium items, and 20-30% hard items. Pilot with human participants to calibrate before finalizing; what feels hard to the researcher may be trivial to the model or vice versa.
 
-**Step 5 — Establish inter-rater reliability:** Have multiple independent humans answer every item. If humans disagree frequently on a given item, the item is ambiguous and should be revised or removed. Inter-rater agreement is typically measured with Cohen's kappa (κ) or percent agreement; κ below 0.6 is generally considered insufficient for a published benchmark.
+**Step 5 - Establish inter-rater reliability:** Have multiple independent humans answer every item. If humans disagree frequently on a given item, the item is ambiguous and should be revised or removed. Inter-rater agreement is typically measured with Cohen's kappa (κ) or percent agreement; κ below 0.6 is generally considered insufficient for a published benchmark.
 
-**Step 6 — Resist contamination:** Do not publish the test set in its entirety. Release training and validation splits publicly for model development; keep the test split private. Release only aggregate scores, not per-item results, to prevent reverse-engineering of the test items.
+**Step 6 - Resist contamination:** Do not publish the test set in its entirety. Release training and validation splits publicly for model development; keep the test split private. Release only aggregate scores, not per-item results, to prevent reverse-engineering of the test items.
 
 ### Common Bias Traps in Benchmark Design
 
-- **Selection bias:** Items are drawn from a narrow slice of the domain — for example, a "global knowledge" benchmark built primarily from Western English-language news sources systematically underrepresents non-Western knowledge.
+- **Selection bias:** Items are drawn from a narrow slice of the domain, for example, a "global knowledge" benchmark built primarily from Western English-language news sources systematically underrepresents non-Western knowledge.
 - **Cultural specificity:** Correct answers assume cultural knowledge or social norms that are not universal across the populations that will use the AI system.
-- **Language complexity confound:** Items that test reading difficulty rather than the target capability — a model that fails a medical knowledge question because of complex sentence structure, not because it lacks medical knowledge, is telling you something about language processing, not domain knowledge.
+- **Language complexity confound:** Items that test reading difficulty rather than the target capability: a model that fails a medical knowledge question because of complex sentence structure, not because it lacks medical knowledge, is telling you something about language processing, not domain knowledge.
 
-> ⚠️ **Common Misconception:** Many people treat published leaderboard rankings as objective ground truth about which AI system is "best." In practice, every benchmark embeds assumptions about what matters, what counts as correct, and whose knowledge and values define the right answer. A model that ranks first on HumanEval may rank fifth on a benchmark of multi-turn agent behavior. A model that aces MMLU may be significantly outperformed on tasks requiring careful uncertainty calibration. Benchmark rankings tell you about performance on *that specific benchmark under those specific conditions* — not about general intelligence or real-world usefulness.
+> **Common Misconception:** Many people treat published leaderboard rankings as objective ground truth about which AI system is "best." In practice, every benchmark embeds assumptions about what matters, what counts as correct, and whose knowledge and values define the right answer. A model that ranks first on HumanEval may rank fifth on a benchmark of multi-turn agent behavior. A model that aces MMLU may be significantly outperformed on tasks requiring careful uncertainty calibration. Benchmark rankings tell you about performance on *that specific benchmark under those specific conditions*, not about general intelligence or real-world usefulness.
 
 ### Critical Thinking Questions
 
@@ -134,7 +134,7 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 
 [[___ Your answer here ___]]
 
-> *Hint:* Inter-rater reliability measures how consistently independent people assign the same label to the same item. If two annotators only agree 60% of the time, it means the items are ambiguous — the "correct" answer depends on interpretation rather than on objective fact. This is a problem because: (1) the ground-truth labels may be wrong for some items; (2) different runs of the benchmark may give different scores to the same model depending on which annotator's label was used; (3) a model that "fails" these items may simply have chosen a different but equally valid interpretation. What do you do — revise the ambiguous items, add a third annotator to break ties, or remove the items entirely?
+> *Hint:* Inter-rater reliability measures how consistently independent people assign the same label to the same item. If two annotators only agree 60% of the time, it means the items are ambiguous: the "correct" answer depends on interpretation rather than on objective fact. This is a problem because: (1) the ground-truth labels may be wrong for some items; (2) different runs of the benchmark may give different scores to the same model depending on which annotator's label was used; (3) a model that "fails" these items may simply have chosen a different but equally valid interpretation. What do you do: revise the ambiguous items, add a third annotator to break ties, or remove the items entirely?
 
 ---
 
@@ -142,7 +142,7 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 
 [[___ Your answer here ___]]
 
-> *Hint:* A floor item is one that even a weak or poorly-configured agent should handle correctly — if an agent fails this, you know it has a fundamental capability gap rather than just an adversarial robustness problem. A ceiling item is one that even the best current system struggles with. Without floor items, you cannot distinguish a badly-broken agent from one that is simply not robust to sophisticated attacks. Without ceiling items, you cannot measure room for improvement. How would you write a concrete floor item and a concrete ceiling item for adversarial robustness in the context of an agent that should refuse harmful requests?
+> *Hint:* A floor item is one that even a weak or poorly-configured agent should handle correctly; if an agent fails this, you know it has a fundamental capability gap rather than just an adversarial robustness problem. A ceiling item is one that even the best current system struggles with. Without floor items, you cannot distinguish a badly-broken agent from one that is simply not robust to sophisticated attacks. Without ceiling items, you cannot measure room for improvement. How would you write a concrete floor item and a concrete ceiling item for adversarial robustness in the context of an agent that should refuse harmful requests?
 
 ---
 
@@ -150,12 +150,12 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 
 A benchmark is released publicly with all test examples included in the paper and available for download. After one year, state-of-the-art models score 97% on it. The most important caveat when interpreting this result is:
 
-[[ ]] Benchmark difficulty is fixed at design time — a 97% score proves the benchmark was always trivially easy, not that models improved through contamination or genuine capability gains
-[[ ]] A state-of-the-art score on a benchmark means the underlying real-world capability has been fully solved — leaderboard performance directly predicts deployment quality in production
+[[ ]] Benchmark difficulty is fixed at design time; a 97% score proves the benchmark was always trivially easy, not that models improved through contamination or genuine capability gains
+[[ ]] A state-of-the-art score on a benchmark means the underlying real-world capability has been fully solved; leaderboard performance directly predicts deployment quality in production
 [[x]] Models may have been trained on or fine-tuned using the published test examples, artificially inflating scores beyond what genuine capability would achieve
-[[ ]] The 3% failure rate is evenly distributed across all input categories — a 97% average accuracy implies the system is reliably correct for every subgroup and edge case
+[[ ]] The 3% failure rate is evenly distributed across all input categories; a 97% average accuracy implies the system is reliably correct for every subgroup and edge case
 
-> **Why this answer?** When a benchmark is published with all test examples publicly available, those examples can appear in the training data of future models — either in the original pretraining corpus if the paper predates the training cutoff, or through deliberate fine-tuning on benchmark items. A 97% score on a contaminated benchmark tells you the model is good at answering those specific questions, not that it has genuinely mastered the underlying capability. The benchmark has become a memorization test rather than a capability test.
+> **Why this answer?** When a benchmark is published with all test examples publicly available, those examples can appear in the training data of future models, either in the original pretraining corpus if the paper predates the training cutoff, or through deliberate fine-tuning on benchmark items. A 97% score on a contaminated benchmark tells you the model is good at answering those specific questions, not that it has genuinely mastered the underlying capability. The benchmark has become a memorization test rather than a capability test.
 
 ---
 
@@ -168,19 +168,19 @@ Accuracy on a benchmark is one signal, but it is rarely sufficient on its own fo
 Human evaluators assess model outputs directly. Common formats:
 
 - **Pairwise preference:** Show two model responses side by side; ask a human evaluator which is better. Used extensively in RLHF training and in platforms like Chatbot Arena (lmsys.org). Pairwise judgments are more reliable than absolute ratings because they avoid the anchoring effects of rating scales.
-- **Likert scales:** Rate output on a 1–5 scale across multiple dimensions such as helpfulness, safety, and fluency. Useful for profiling multiple quality dimensions at once.
+- **Likert scales:** Rate output on a 1-5 scale across multiple dimensions such as helpfulness, safety, and fluency. Useful for profiling multiple quality dimensions at once.
 - **Task completion rate:** Give a human evaluator a goal and have them use the agent to achieve it; measure whether they succeed within a given number of turns. High ecological validity.
 
-**Strengths:** Captures qualities that automatic metrics miss — tone, appropriateness, safety edge cases that don't trigger keyword filters, and the genuine usefulness of an answer in context.
+**Strengths:** Captures qualities that automatic metrics miss: tone, appropriateness, safety edge cases that don't trigger keyword filters, and the genuine usefulness of an answer in context.
 
-**Limitations:** Expensive (professional evaluators cost $10–50 per hour), slow (days to weeks for large-scale studies), subject to annotator bias, and inconsistent across annotators and over time as annotator pools and guidelines evolve.
+**Limitations:** Expensive (professional evaluators cost $10-50 per hour), slow (days to weeks for large-scale studies), subject to annotator bias, and inconsistent across annotators and over time as annotator pools and guidelines evolve.
 
 ### Automatic Evaluation Metrics
 
 | Metric | What It Measures | Key Blind Spot | When to Use It |
 |--------|-----------------|----------------|----------------|
 | **BLEU** | N-gram word overlap between the model's output and a reference answer | Does not capture meaning; penalizes valid paraphrases heavily | Machine translation as a rough filter; not suitable for open-ended generation |
-| **ROUGE** | Recall-oriented n-gram overlap, common in summarization evaluation | Same blind spot as BLEU — surface overlap, not semantic accuracy | Summarization pipeline monitoring as a sanity check |
+| **ROUGE** | Recall-oriented n-gram overlap, common in summarization evaluation | Same blind spot as BLEU: surface overlap, not semantic accuracy | Summarization pipeline monitoring as a sanity check |
 | **BERTScore** | Semantic similarity using contextual embeddings rather than exact word matches | Can miss factual errors; two sentences can be semantically similar but factually opposite | More reliable than BLEU/ROUGE for generation quality; still misses factual accuracy |
 | **G-Eval / LLM-as-Judge** | A language model scores another model's output on a defined rubric | Inherits the judge model's biases, blind spots, and style preferences; expensive per evaluation | Rapid large-scale evaluation when human evaluation budget is limited |
 
@@ -195,7 +195,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 [[___ Your answer here ___]]
 
-> *Hint:* Consider an agent that produces outputs that score well on BERTScore (semantically similar to reference answers) but that are subtly wrong in a dangerous way — for example, a medical information agent that correctly identifies the drug name but gives the wrong dosage, or a legal information agent that correctly identifies the relevant law but misapplies it to the user's specific situation. BERTScore would rate these outputs highly because they contain the right words in roughly the right semantic neighborhood. What would a human evaluator catch that BERTScore misses?
+> *Hint:* Consider an agent that produces outputs that score well on BERTScore (semantically similar to reference answers) but that are subtly wrong in a dangerous way, for example, a medical information agent that correctly identifies the drug name but gives the wrong dosage, or a legal information agent that correctly identifies the relevant law but misapplies it to the user's specific situation. BERTScore would rate these outputs highly because they contain the right words in roughly the right semantic neighborhood. What would a human evaluator catch that BERTScore misses?
 
 ---
 
@@ -203,7 +203,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 [[___ Your answer here ___]]
 
-> *Hint:* Possible explanations include: (1) the benchmark tests a different capability than what users actually need in production — the benchmark was valid for development but lacks ecological validity; (2) the benchmark has single-turn items but production requires multi-turn dialogue; (3) the 90% accuracy hides a systematic failure on the specific types of queries most common in production; (4) the agent is technically correct but communicates in a way that users find unhelpful (too verbose, too terse, wrong tone). Start by looking at the specific queries where users rated the agent poorly and comparing them to the benchmark item distribution — are those failure cases well-represented in the benchmark?
+> *Hint:* Possible explanations include: (1) the benchmark tests a different capability than what users actually need in production: the benchmark was valid for development but lacks ecological validity; (2) the benchmark has single-turn items but production requires multi-turn dialogue; (3) the 90% accuracy hides a systematic failure on the specific types of queries most common in production; (4) the agent is technically correct but communicates in a way that users find unhelpful (too verbose, too terse, wrong tone). Start by looking at the specific queries where users rated the agent poorly and comparing them to the benchmark item distribution: are those failure cases well-represented in the benchmark?
 
 ---
 
@@ -211,7 +211,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 [[___ Your answer here ___]]
 
-> *Hint:* Consider three different layers: (1) A correctness metric — does the agent's suggested fix actually make the student's code pass its test cases? This can be verified automatically by running the suggested code in a sandbox. (2) A pedagogical quality metric — does the agent explain *why* the fix works, not just what to change? This likely requires human evaluation or an LLM judge with a rubric. (3) A safety / harm-avoidance metric — does the agent avoid simply writing the complete solution for the student (undermining learning) while still being helpful enough to be useful? What threshold on each metric would make you say "this agent is not ready for students"?
+> *Hint:* Consider three different layers: (1) A correctness metric: does the agent's suggested fix actually make the student's code pass its test cases? This can be verified automatically by running the suggested code in a sandbox. (2) A pedagogical quality metric: does the agent explain *why* the fix works, not just what to change? This likely requires human evaluation or an LLM judge with a rubric. (3) A safety / harm-avoidance metric: does the agent avoid simply writing the complete solution for the student (undermining learning) while still being helpful enough to be useful? What threshold on each metric would make you say "this agent is not ready for students"?
 
 ---
 
@@ -221,9 +221,9 @@ Human evaluators assess model outputs directly. Common formats:
 
 *What to do:* Write 10 benchmark instances for one specific capability of an agent you have built or designed in this course. Each instance needs an input, a ground-truth answer, a difficulty label (easy, medium, or hard), and a one-sentence justification of the difficulty rating. Aim for 3 easy, 4 medium, and 3 hard items.
 
-*Starter hint:* Choose a narrow, specific capability — not "can the agent answer questions" but something like "can the agent correctly identify when a tool call has returned an error rather than a valid result" or "can the agent recognize when a user question is ambiguous and ask for clarification rather than assuming." Narrow capabilities are easier to write clear ground-truth labels for.
+*Starter hint:* Choose a narrow, specific capability, not "can the agent answer questions" but something like "can the agent correctly identify when a tool call has returned an error rather than a valid result" or "can the agent recognize when a user question is ambiguous and ask for clarification rather than assuming." Narrow capabilities are easier to write clear ground-truth labels for.
 
-*You've succeeded when:* You have 10 complete instances with inputs, ground-truth answers, difficulty labels, and justifications. Share your hardest item with another group and see if they agree on the ground-truth answer — if they don't, you've found an inter-rater reliability problem to fix.
+*You've succeeded when:* You have 10 complete instances with inputs, ground-truth answers, difficulty labels, and justifications. Share your hardest item with another group and see if they agree on the ground-truth answer; if they don't, you've found an inter-rater reliability problem to fix.
 
 ---
 
@@ -231,7 +231,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 *What to do:* Run your 10 benchmark instances through a real AI agent (API-based or local model). Record the agent's response to each instance and score it against your ground-truth answer. Compute the accuracy score. Then identify at least one pattern in the failures.
 
-*Starter hint:* Be consistent in your scoring: decide in advance exactly what counts as correct (exact match, semantic equivalence, partial credit?). After scoring, look at the wrong answers as a group — do they share a common property? Are all the wrong answers on medium-difficulty items? Are they all the same type of error (misidentifying the tool status, always asking for clarification even when the question is clear)? A pattern suggests a systematic capability gap rather than random noise.
+*Starter hint:* Be consistent in your scoring: decide in advance exactly what counts as correct (exact match, semantic equivalence, partial credit?). After scoring, look at the wrong answers as a group: do they share a common property? Are all the wrong answers on medium-difficulty items? Are they all the same type of error (misidentifying the tool status, always asking for clarification even when the question is clear)? A pattern suggests a systematic capability gap rather than random noise.
 
 *You've succeeded when:* You have a scored result for all 10 items, a computed accuracy percentage, and a written paragraph describing at least one specific pattern in the failures and your hypothesis about what capability gap it reveals.
 
@@ -249,7 +249,7 @@ Human evaluators assess model outputs directly. Common formats:
 
 ## Reflection Prompt
 
-**Personal:** Think about a standardized test you have taken — a school exam, the SAT or ACT, a driver's license test. Did it accurately measure what you actually know or can do? What did it miss? Now apply the same critical lens to AI benchmarks: what might a benchmark miss about what an AI system is actually capable of — or incapable of?
+**Personal:** Think about a standardized test you have taken: a school exam, the SAT or ACT, a driver's license test. Did it accurately measure what you actually know or can do? What did it miss? Now apply the same critical lens to AI benchmarks: what might a benchmark miss about what an AI system is actually capable of, or incapable of?
 
 **Technical:** Every benchmark embeds assumptions about what intelligence is, what tasks matter, whose knowledge counts, and what "correct" means. These assumptions are made by the researchers who design the benchmark, who have their own cultural contexts, disciplinary training, and institutional incentives. What would it mean to design a benchmark that is genuinely fair across different cultures, languages, and domains? Is that achievable?
 
@@ -261,7 +261,7 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
-→ Coming Up Next: In the next activity, we move from evaluating agents in controlled tests to debugging them when they fail in the wild — a very different and more difficult problem.
+-> Coming Up Next: In the next activity, we move from evaluating agents in controlled tests to debugging them when they fail in the wild, a very different and more difficult problem.
 
 ## Further Reading
 
@@ -271,4 +271,4 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 - Raji, I. D. et al. "AI and the Everything in the Whole Wide World Benchmark" (NeurIPS 2021 Datasets and Benchmarks Track). A critical examination of how benchmark design choices shape what AI systems are built and optimized to do.
 
-- Hendrycks, D. et al. "Measuring Massive Multitask Language Understanding" (MMLU, 2020). The original MMLU paper — read alongside subsequent critiques and contamination analyses for a complete picture of its strengths and limitations.
+- Hendrycks, D. et al. "Measuring Massive Multitask Language Understanding" (MMLU, 2020). The original MMLU paper; read alongside subsequent critiques and contamination analyses for a complete picture of its strengths and limitations.

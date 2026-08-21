@@ -8,7 +8,7 @@ libraries (`requests`, `chromadb`, `sentence-transformers`, `scikit-learn`,
 
 **Ollama is the one thing that stays on your host.** It runs natively for
 model performance; code inside the container reaches it at
-`http://host.docker.internal:11434` — the host-bridge pattern from the
+`http://host.docker.internal:11434`, the host-bridge pattern from the
 [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
 
 The full walk-through (Ollama first, then Docker, then GitHub setup,
@@ -43,8 +43,8 @@ This README is the quickstart version.
    ```
 
 The bind mount in `docker-compose.yml` (and the `workspaceMount` in
-`devcontainer.json`) exposes **your cloned GitHub repo** — and nothing else on
-your machine — at `/workspace` inside the container. You edit, test, commit,
+`devcontainer.json`) exposes **your cloned GitHub repo** (and nothing else on
+your machine) at `/workspace` inside the container. You edit, test, commit,
 and push there; the files live on your disk and on GitHub, so the container
 itself is disposable.
 
@@ -54,7 +54,7 @@ itself is disposable.
 2. Open the `cs357-work` folder in VS Code.
 3. Run **Dev Containers: Reopen in Container** from the command palette. The
    first build downloads the ML libraries and takes a while; later opens are fast.
-4. Open a terminal in VS Code — you are inside the container at `/workspace`.
+4. Open a terminal in VS Code; you are inside the container at `/workspace`.
 
 ## Route B: plain Docker Compose
 
@@ -90,12 +90,12 @@ and `npm install -g promptfoo` for the evaluation lab, and use
 
 ## Troubleshooting
 
-- `Cannot connect to the Docker daemon` — Docker Desktop is not running; start it.
-- Connection refused to `host.docker.internal:11434` — either Ollama is not
+- `Cannot connect to the Docker daemon`: Docker Desktop is not running; start it.
+- Connection refused to `host.docker.internal:11434`: either Ollama is not
   running on the host, or (Linux) the container was started without the
   `extra_hosts`/`--add-host` mapping. The compose file and `devcontainer.json`
   here both include it.
-- Slow first build — normal (the ML libraries are large); later builds reuse
+- Slow first build: normal (the ML libraries are large); later builds reuse
   cached layers.
-- Push rejected / authentication failures — see the credential section of the
+- Push rejected / authentication failures: see the credential section of the
   [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md).

@@ -27,21 +27,21 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Observability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md)
 
-This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
-> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
-> - **Docker Desktop (or Docker Engine) installed and running** — verify with `docker info`
+> - **Docker Desktop (or Docker Engine) installed and running**; verify with `docker info`
 > - **The Jaeger all-in-one container image** (`jaegertracing/all-in-one:latest`, pulled automatically by the provided `docker-compose.yml`; roughly a 60 MB download) with ports 16686 (UI) and 4317 (OTLP) free on your machine
 > - The OpenTelemetry Python packages (installed below)
-> - A runnable tool-using agent: your rubric-grading pipeline from the core lab or another agent from the course — **no API key is needed** if your agent runs against local Ollama
+> - A runnable tool-using agent: your rubric-grading pipeline from the core lab or another agent from the course; **no API key is needed** if your agent runs against local Ollama
 >
-> If you cannot run Docker on your machine, talk to me before starting — Zipkin or a classmate-hosted Jaeger are workable substitutes, but plan it in advance.
+> If you cannot run Docker on your machine, talk to me before starting; Zipkin or a classmate-hosted Jaeger are workable substitutes, but plan it in advance.
 
 
-The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale. You will take a tool-using agent — your rubric-grading pipeline, or another agent from the course — and transform it from a black box into a system you can reason about in production. Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on. You will work individually.
+The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale. You will take a tool-using agent (your rubric-grading pipeline, or another agent from the course) and transform it from a black box into a system you can reason about in production. Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on. You will work individually.
 
 #### Before You Start (Direction 2)
 
@@ -77,8 +77,8 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
-      - "16686:16686"   # Jaeger UI — open this in your browser
-      - "4317:4317"     # OTLP gRPC receiver — your agent sends traces here
+      - "16686:16686"   # Jaeger UI - open this in your browser
+      - "4317:4317"     # OTLP gRPC receiver - your agent sends traces here
 ```
 
 Then start it:
@@ -95,7 +95,7 @@ Expected output:
  ✔ Container lab-jaeger-1 Started
 ```
 
-**Step 3: Quick sanity check — confirm Jaeger is running**
+**Step 3: Quick sanity check, confirm Jaeger is running**
 
 ```bash
 curl -s http://localhost:16686/api/services | python -m json.tool | head -5
@@ -146,7 +146,7 @@ import json
 import time
 import csv
 
-# TODO: import your agent — replace the line below with your actual import
+# TODO: import your agent - replace the line below with your actual import
 # from my_agent import run_agent
 
 def run_agent(question: str) -> str:
@@ -190,7 +190,7 @@ Saved baseline_results.csv
 
 > **Checkpoint:** Verify that `baseline_results.csv` exists, has exactly 10 rows, and that you can answer "which of my 10 runs was the slowest?" from the data alone.
 
-> **Troubleshooting:** If your agent raises an ImportError, run from the same directory as your agent file or put it on your PYTHONPATH. If `time.perf_counter()` gives a suspiciously small number, remember it is in seconds — multiply by 1000. If `input()` hangs in a notebook, replace it with a hardcoded `"y"` and update manually.
+> **Troubleshooting:** If your agent raises an ImportError, run from the same directory as your agent file or put it on your PYTHONPATH. If `time.perf_counter()` gives a suspiciously small number, remember it is in seconds; multiply by 1000. If `input()` hangs in a notebook, replace it with a hardcoded `"y"` and update manually.
 
 ##### Part 2: Add OpenTelemetry Instrumentation
 
@@ -199,7 +199,7 @@ Saved baseline_results.csv
 1. **Create `agent.py`** (or adapt your existing agent/pipeline file) using this skeleton. Fill in every `# TODO` comment:
 
 ```python
-# agent.py  — OpenTelemetry-instrumented agent skeleton
+# agent.py  - OpenTelemetry-instrumented agent skeleton
 import time
 import os
 from opentelemetry import trace
@@ -208,7 +208,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.trace import StatusCode
 
-# ── Configure the tracer to export to local Jaeger ──────────────────────────
+# -- Configure the tracer to export to local Jaeger --------------------------
 provider = TracerProvider()
 exporter = OTLPSpanExporter(endpoint="http://localhost:4317", insecure=True)
 provider.add_span_processor(BatchSpanProcessor(exporter))
@@ -236,7 +236,7 @@ def call_llm(prompt: str, session_id: str) -> dict:
 
         latency_ms = (time.perf_counter() - start) * 1000
 
-        # TODO: set required span attributes — do NOT store raw prompt text
+        # TODO: set required span attributes - do NOT store raw prompt text
         span.set_attribute("llm.model", "gpt-4o-mini")           # model name
         span.set_attribute("llm.prompt_tokens", prompt_tokens)
         span.set_attribute("llm.completion_tokens", completion_tokens)
@@ -328,10 +328,10 @@ Expected output in Jaeger: A trace with an `agent.run` root span containing nest
 
 ```
 agent.run (total: ~2000ms)
-  ├─ llm.call (800ms)
-  ├─ tool.call [web_search] (600ms)
-  ├─ llm.call (400ms)
-  └─ tool.call [fetch_url] (200ms)
+  |- llm.call (800ms)
+  |- tool.call [web_search] (600ms)
+  |- llm.call (400ms)
+  `- tool.call [fetch_url] (200ms)
 ```
 
 If all spans show at the same level (no nesting), the child spans are not being created inside a `with tracer.start_as_current_span(...)` block under the parent. Fix the nesting.
@@ -342,7 +342,7 @@ If all spans show at the same level (no nesting), the child spans are not being 
 
 ##### Part 3: Trace Analysis
 
-**Why this matters:** Collecting traces is only useful if you can read them. This part builds the core skill of distributed trace analysis — the same skill SREs use to diagnose production incidents in minutes rather than hours.
+**Why this matters:** Collecting traces is only useful if you can read them. This part builds the core skill of distributed trace analysis, the same skill SREs use to diagnose production incidents in minutes rather than hours.
 
 Re-run the same 10 prompts with instrumentation active, then answer each question below in `writeup.md`, citing specific span names, attribute values, or timestamps as evidence.
 
@@ -385,11 +385,11 @@ Done. Open http://localhost:16686 to inspect traces.
 
 > **Checkpoint:** Verify that you have answered all three questions (a/b/c) with specific span names or attribute values as evidence, and that both annotated screenshot files exist.
 
-> **Troubleshooting:** If you see fewer than 10 traces, some runs failed silently — check for tracebacks. If the "Service" dropdown is empty, add `Resource.create({"service.name": "my-agent"})` to your provider. If all traces look identical, add a small `time.sleep(random.uniform(0, 1))` in one tool to simulate variability.
+> **Troubleshooting:** If you see fewer than 10 traces, some runs failed silently; check for tracebacks. If the "Service" dropdown is empty, add `Resource.create({"service.name": "my-agent"})` to your provider. If all traces look identical, add a small `time.sleep(random.uniform(0, 1))` in one tool to simulate variability.
 
 ##### Part 4: Alerting Rules
 
-**Why this matters:** Traces you can only see in a dashboard are not enough in production — you need automated alerts that page you when something breaks at 3 AM. This part bridges observability and incident response.
+**Why this matters:** Traces you can only see in a dashboard are not enough in production; you need automated alerts that page you when something breaks at 3 AM. This part bridges observability and incident response.
 
 1. **Design three alert rules** using either pseudocode or valid Prometheus AlertManager YAML, covering:
 
@@ -438,7 +438,7 @@ Done. Open http://localhost:16686 to inspect traces.
 
 > **Checkpoint:** Verify that `alert_rules.yaml` (or `alert_rules.txt`) exists and that `runbook.md` has three sections with all four questions answered for each alert.
 
-> **Troubleshooting:** If you are unsure of PromQL metric names, write pseudocode alerts using plain-English conditions — the rubric accepts both. If your thresholds feel arbitrary, look at your actual p95 latency from Part 3 and set the alert at 2x that value as a starting point.
+> **Troubleshooting:** If you are unsure of PromQL metric names, write pseudocode alerts using plain-English conditions; the rubric accepts both. If your thresholds feel arbitrary, look at your actual p95 latency from Part 3 and set the alert at 2x that value as a starting point.
 
 #### Extension Challenges (Direction 2, optional)
 

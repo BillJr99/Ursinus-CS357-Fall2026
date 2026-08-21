@@ -73,10 +73,10 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 
 ## Before You Start
 
-**Prerequisite concepts** — complete these activities before writing any code:
+**Prerequisite concepts**: complete these activities before writing any code:
 
-- [Multi-Agent Debate Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md) — independent rounds, peer-informed revision, majority vote
-- [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md) — sampling, embedding clustering, synthesis
+- [Multi-Agent Debate Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md): independent rounds, peer-informed revision, majority vote
+- [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md): sampling, embedding clustering, synthesis
 
 **Tools to install:**
 
@@ -132,11 +132,11 @@ Cosine similarity (should be ~0.7 for similar sentences):
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part 1 | Debate | 60–90 min |
-| Part 2 | Consensus | 60–75 min |
-| Part 3 | The Shootout | 60–75 min |
-| Part 4 | Threshold Sensitivity | 30–45 min |
-| Writeup | Readme and reflection | 30–45 min |
+| Part 1 | Debate | 60-90 min |
+| Part 2 | Consensus | 60-75 min |
+| Part 3 | The Shootout | 60-75 min |
+| Part 4 | Threshold Sensitivity | 30-45 min |
+| Writeup | Readme and reflection | 30-45 min |
 
 ---
 
@@ -246,7 +246,7 @@ def extract_answer(response_text, agent_id, round_num):
     if match:
         return match.group(1).strip()
     else:
-        print(f"[lab4:extract_answer] WARNING: Agent {agent_id}, round {round_num} — no ANSWER: line found. Full response: {response_text[:200]!r}")
+        print(f"[lab4:extract_answer] WARNING: Agent {agent_id}, round {round_num} - no ANSWER: line found. Full response: {response_text[:200]!r}")
         return None
 ```
 
@@ -343,13 +343,13 @@ Majority vote: 36
 Total model calls: 6
 ```
 
-### Troubleshooting — Part 1
+### Troubleshooting, Part 1
 
 **`ANSWER:` is never found even though it appears in the raw output**
 The model may be outputting `Answer:` (capitalized differently) or `**ANSWER:**` (with markdown bold). Update the regex to be case-insensitive (already done in the template with `re.IGNORECASE`) and strip markdown: `response_text = re.sub(r'\*+', '', response_text)`.
 
 **Agents always agree on round 1 (no diversity)**
-Your seeds may be too similar or the temperature is too low. Try `seed_base: 0` and `temperature_schedule: [0.9, 0.5]`. For factual questions, even high temperature may produce agreement — try more subjective questions for testing diversity.
+Your seeds may be too similar or the temperature is too low. Try `seed_base: 0` and `temperature_schedule: [0.9, 0.5]`. For factual questions, even high temperature may produce agreement; try more subjective questions for testing diversity.
 
 **One agent's response is cut off mid-sentence**
 The model hit its context window. Shorten the peer_section by taking only the extracted ANSWER lines from peers (not their full reasoning): `f"Agent {pid} answered: {ans}"`.
@@ -367,32 +367,32 @@ The model hit its context window. Shorten the peer_section by taking only the ex
 
 ### The Consensus Pattern (from the Consensus activity)
 
-The consensus activity is now a supplemental (self-paced) resource rather than a scheduled class session, so before you build anything, here is the core idea it teaches. **Stochastic consensus** exploits the fact that a language model at high temperature is a *sampler*, not an oracle: ask it the same question six times and you get six different drafts drawn from a distribution of plausible answers. Individually, any one draft might be idiosyncratic or wrong. But if you group the drafts by *meaning* — not by exact wording — the sizes of the groups tell you something no single draft can: which positions the model keeps returning to (high support) and which are one-off flukes (low support).
+The consensus activity is now a supplemental (self-paced) resource rather than a scheduled class session, so before you build anything, here is the core idea it teaches. **Stochastic consensus** exploits the fact that a language model at high temperature is a *sampler*, not an oracle: ask it the same question six times and you get six different drafts drawn from a distribution of plausible answers. Individually, any one draft might be idiosyncratic or wrong. But if you group the drafts by *meaning* (not by exact wording) the sizes of the groups tell you something no single draft can: which positions the model keeps returning to (high support) and which are one-off flukes (low support).
 
-The grouping step is where embeddings come in. An embedding model maps each draft to a vector such that drafts with similar meaning land close together, even when they share few words. By normalizing those vectors and clustering them with cosine distance, "six drafts" becomes "three positions, with support counts of 3, 2, and 1." A final low-temperature **synthesizer** then receives one representative draft per cluster (plus its support count) — never all six raw transcripts — and writes a single answer that follows the majority and *discloses* any close disagreement instead of papering over it. That disclosure rule is the pattern's honesty mechanism: when the samples genuinely split, the user deserves to know.
+The grouping step is where embeddings come in. An embedding model maps each draft to a vector such that drafts with similar meaning land close together, even when they share few words. By normalizing those vectors and clustering them with cosine distance, "six drafts" becomes "three positions, with support counts of 3, 2, and 1." A final low-temperature **synthesizer** then receives one representative draft per cluster (plus its support count), never all six raw transcripts, and writes a single answer that follows the majority and *discloses* any close disagreement instead of papering over it. That disclosure rule is the pattern's honesty mechanism: when the samples genuinely split, the user deserves to know.
 
 The whole pipeline looks like this:
 
 ```
-question ──> sample k drafts at high temperature      (k model calls)
-                    │
-                    ▼
-             embed each draft ──> normalize vectors
-                    │
-                    ▼
+question --> sample k drafts at high temperature      (k model calls)
+                    |
+                    v
+             embed each draft --> normalize vectors
+                    |
+                    v
              cluster by cosine distance (threshold)
-                    │
-                    ▼
+                    |
+                    v
       one representative per cluster + support count
-                    │
-                    ▼
+                    |
+                    v
              synthesizer at low temperature            (1 model call)
-                    │
-                    ▼
+                    |
+                    v
    single answer, majority-following, close-disagreement disclosed
 ```
 
-Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged — the subject of Part 4). For the full treatment, including the in-class tomatillo salsa example and why *independence* between samples matters, work through the [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md) — it is strongly recommended before you start this part.
+Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged; the subject of Part 4). For the full treatment, including the in-class tomatillo salsa example and why *independence* between samples matters, work through the [Stochastic Consensus Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md); it is strongly recommended before you start this part.
 
 Implement the sample, cluster, synthesize pipeline: $$k$$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and **discloses any close disagreement in one line**. Demonstrate the pipeline on a long-form question with no single correct answer (the in-class tomatillo salsa question is a fine starting point; choose your own analogous question too).
 
@@ -435,7 +435,7 @@ def sample_drafts(question, config):
 
 **Step 2: Embed and cluster the drafts.**
 
-> **This code is provided complete — copy it as-is.** You are not expected to write embedding or clustering internals with one semester of Python behind you; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do that work. Your job in this step is to *call* this function and *interpret* what it returns: which drafts landed in which cluster, which cluster has the most support, and whether the grouping matches your own reading of the drafts.
+> **This code is provided complete, copy it as-is.** You are not expected to write embedding or clustering internals with one semester of Python behind you; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do that work. Your job in this step is to *call* this function and *interpret* what it returns: which drafts landed in which cluster, which cluster has the most support, and whether the grouping matches your own reading of the drafts.
 
 ```python
 import numpy as np
@@ -494,7 +494,7 @@ def cluster_drafts(drafts, config):
 
 1. Print `labels` next to the first 80 characters of each draft. Read the drafts in each cluster yourself: do the groupings match *your* judgment of which drafts say the same thing? Name one pair the clusterer grouped that you would not have, or vice versa.
 2. Which cluster has the highest support count, and in one sentence, what position does its representative draft take?
-3. The representative is the draft closest to the cluster centroid. Look at the representative chosen for your largest cluster — is it also the draft you would have picked as the "most typical" of that group? Why might the centroid-nearest draft differ from the best-written draft?
+3. The representative is the draft closest to the cluster centroid. Look at the representative chosen for your largest cluster; is it also the draft you would have picked as the "most typical" of that group? Why might the centroid-nearest draft differ from the best-written draft?
 
 **Step 3: Synthesize from cluster representatives.**
 
@@ -592,13 +592,13 @@ A great study group combines clear shared goals, consistent meeting times, and m
 Note: there was minor disagreement about whether size or structure matters more.
 ```
 
-### Troubleshooting — Part 2
+### Troubleshooting, Part 2
 
 **`AgglomerativeClustering` raises `ValueError: The number of samples is too small`**
 This happens if `n_samples < 2`. Make sure `num_samples >= 2` in your config. For clustering to be meaningful, use at least 5 samples.
 
 **All drafts end up in one giant cluster**
-Your `distance_threshold` is too large. Decrease it from 0.3 to 0.15 and re-run. If everything is still one cluster, your question may produce very uniform answers — try a more open-ended question that generates diverse responses.
+Your `distance_threshold` is too large. Decrease it from 0.3 to 0.15 and re-run. If everything is still one cluster, your question may produce very uniform answers; try a more open-ended question that generates diverse responses.
 
 **All drafts end up in separate clusters (no merging)**
 Your `distance_threshold` is too small. Increase it from 0.3 to 0.5. This is common with very short drafts (under 50 words) because their embedding geometry is more spread out.
@@ -654,7 +654,7 @@ SHOOTOUT_TASKS = [
 **Step 2: Run all three conditions at matched call budgets.**
 
 For a budget of B=6 calls per question:
-- Single shot: 1 call (use the remaining 5 as wasted budget — or run 6 single shots and majority-vote them as "self-consistency")
+- Single shot: 1 call (use the remaining 5 as wasted budget, or run 6 single shots and majority-vote them as "self-consistency")
 - Self-consistency: 6 samples, majority vote
 - Full debate: 3 agents × 2 rounds = 6 calls
 
@@ -737,10 +737,10 @@ Debate: accuracy=80.0%, avg_calls=6.0
 
 Find a question in your task set (or add one) where all agents agree on the same wrong answer. Paste all agents' verbatim `ANSWER:` lines alongside the correct answer in your readme. Then explain in your writeup: why does aggregation fail here, and what non-LLM resource (a calculator, a lookup, retrieval from a factual source) would fix it?
 
-### Troubleshooting — Part 3
+### Troubleshooting, Part 3
 
 **Self-consistency and debate produce identical results on every task**
-For debate to outperform self-consistency, some agents need to change their mind in revision rounds. This requires questions where initial diversity exists. Add more word problems with common arithmetic pitfalls — single-step questions rarely produce diversity.
+For debate to outperform self-consistency, some agents need to change their mind in revision rounds. This requires questions where initial diversity exists. Add more word problems with common arithmetic pitfalls; single-step questions rarely produce diversity.
 
 **All three conditions fail on the same questions (not just correlated failure)**
 Your task set may be too hard for the model you are using. Add some easier questions to get a spread of correct/incorrect answers, so the comparison has signal. If everything is wrong, you cannot see which method is better.
@@ -804,15 +804,15 @@ In your readme, create a table:
 | 0.3 | 3 | Balanced; majority position emerges |
 | 0.5 | 1 | Over-merged; diversity lost |
 
-Then answer: who should own this parameter — the system developer, the deployer, or the end user? What documentation would help them choose a value?
+Then answer: who should own this parameter: the system developer, the deployer, or the end user? What documentation would help them choose a value?
 
-### Troubleshooting — Part 4
+### Troubleshooting, Part 4
 
 **All thresholds produce the same number of clusters**
 Your drafts may be nearly identical (low diversity from sampling). Increase `sample_temperature` to 0.9 or 1.0, or use a more open-ended question. You can also inspect the actual pairwise cosine distances with `1 - (normed @ normed.T)` to see what distances you are working with.
 
 **Threshold 0.1 produces fewer clusters than threshold 0.3**
-This is unexpected — a lower threshold should produce more (tighter) clusters. Check that you are using `distance_threshold` as an upper bound for merging (not a lower bound). With `AgglomerativeClustering`, lower threshold = more clusters.
+This is unexpected: a lower threshold should produce more (tighter) clusters. Check that you are using `distance_threshold` as an upper bound for merging (not a lower bound). With `AgglomerativeClustering`, lower threshold = more clusters.
 
 ---
 
@@ -832,7 +832,7 @@ Multi-agent debate is a *protocol*, and you can run the protocol by hand or on a
 3. **The shootout.** Compare single-shot, debate, and consensus on the same question set in your spreadsheet, with a column for cost (rough token count or wall-clock time).
 4. **Threshold sensitivity.** Vary the agreement threshold you would accept and show, from your own data, where the answer flips.
 
-**What you submit instead of code:** the exported flow or chat transcripts, the spreadsheet of runs and clusters, and the identical written analysis — including the honest verdict on whether the extra rounds bought you anything.
+**What you submit instead of code:** the exported flow or chat transcripts, the spreadsheet of runs and clusters, and the identical written analysis, including the honest verdict on whether the extra rounds bought you anything.
 
 ## Deliverables
 
@@ -840,7 +840,7 @@ Submit a ZIP containing your code, JSON configuration, task set with labels, com
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
 1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
 2. **What surprised me.**
@@ -851,8 +851,8 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 
 ### Lab-specific prompts
 
-- Debate and consensus spend extra computation to buy reliability. Name one decision in your own life where you would pay that cost and one where you would not. Map each onto a condition from your shootout (single-shot, self-consistency, or debate), and explain what feature of the task — not just the cost — drives the choice.
-- Your synthesizer "follows the majority." Name a real scenario — in medicine, law, or public policy — where the majority of experts can all be wrong in the same direction, and explain what mechanism (not more samples) would be needed to catch that error.
+- Debate and consensus spend extra computation to buy reliability. Name one decision in your own life where you would pay that cost and one where you would not. Map each onto a condition from your shootout (single-shot, self-consistency, or debate), and explain what feature of the task (not just the cost) drives the choice.
+- Your synthesizer "follows the majority." Name a real scenario (in medicine, law, or public policy) where the majority of experts can all be wrong in the same direction, and explain what mechanism (not more samples) would be needed to catch that error.
 - If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
@@ -863,7 +863,7 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 These are optional and carry no extra credit.
 
 **Challenge 1 (moderate): Implement a judge agent.**
-Instead of majority vote, add an aggregation option that sends all final-round debate answers to a judge agent (a separate model call) that chooses the best answer and explains why. Compare the judge's accuracy to majority vote on your task set. Does the judge ever pick the minority answer — and when it does, is it usually right or wrong?
+Instead of majority vote, add an aggregation option that sends all final-round debate answers to a judge agent (a separate model call) that chooses the best answer and explains why. Compare the judge's accuracy to majority vote on your task set. Does the judge ever pick the minority answer, and when it does, is it usually right or wrong?
 
 **Challenge 2 (harder): Adaptive sampling.**
 In the consensus pipeline, start with 3 samples. If all 3 land in one cluster, you are done. If they span more than 2 clusters, sample 3 more. Continue until either a clear majority cluster exists or you hit a call budget of 9. Measure whether adaptive sampling reduces average cost while maintaining accuracy compared to always sampling 6.
