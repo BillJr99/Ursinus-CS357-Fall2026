@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Designing Your AI Development Environment
 
-A coding agent that starts every session knowing nothing about your project is like a new teammate who reads none of the onboarding docs — capable but constantly asking questions you have already answered. We move from **the stateless agent problem $\rightarrow$ three layers of persistent context $\rightarrow$ writing effective project instructions $\rightarrow$ plugins and skills $\rightarrow$ the meta-loop of improving the environment itself**.
+A coding agent that starts every session knowing nothing about your project is like a new teammate who reads none of the onboarding docs, capable but constantly asking questions you have already answered. We move from **the stateless agent problem $\rightarrow$ three layers of persistent context $\rightarrow$ writing effective project instructions $\rightarrow$ plugins and skills $\rightarrow$ the meta-loop of improving the environment itself**.
 
 ---
 
@@ -28,13 +28,13 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Agent Memory File** | A plain-text file the agent reads at the start of every session to reconstruct context it cannot remember across sessions — project structure, conventions, what not to do. | `AGENTS.md` in the project root listing architecture and invariants |
+| **Agent Memory File** | A plain-text file the agent reads at the start of every session to reconstruct context it cannot remember across sessions: project structure, conventions, what not to do. | `AGENTS.md` in the project root listing architecture and invariants |
 | **Project Instructions** | Agent memory scoped to one project: the architecture, key invariants, test commands, and common pitfalls. Lives next to the code it describes. | An `AGENTS.md` for the RAG lab telling the agent "do not modify the Chroma schema" |
 | **Global Instructions** | Agent memory that applies to every project you work on: your personal style preferences, preferred libraries, tone. Lives in your home directory or agent config. | `~/.opencode/instructions.md` containing "always use Black for Python formatting" |
-| **Skill** | A reusable prompt template — a named workflow you can invoke by name instead of re-typing the same long prompt. | A "security-review" skill that prompts the agent to check a diff for OWASP top-10 agent risks |
+| **Skill** | A reusable prompt template, a named workflow you can invoke by name instead of re-typing the same long prompt. | A "security-review" skill that prompts the agent to check a diff for OWASP top-10 agent risks |
 | **Plugin** | A collection of skills and tools packaged together and loaded by the agent at startup via a config file. | The `superpowers` plugin providing pre-built skills for TDD, security audit, and refactoring |
 | **Environment as Code** | The principle that your agent config files, instructions files, and skill definitions are version-controlled alongside your source code, so the agent environment is reproducible. | Committing `opencode.json` and `AGENTS.md` to the same repository as the application code |
-| **Context Window Hygiene** | The discipline of keeping what goes into the agent's context window purposeful and compact — avoiding bloated instructions that crowd out the actual task. | A 10-line `AGENTS.md` that constrains behavior vs. a 200-line file that describes every method |
+| **Context Window Hygiene** | The discipline of keeping what goes into the agent's context window purposeful and compact, avoiding bloated instructions that crowd out the actual task. | A 10-line `AGENTS.md` that constrains behavior vs. a 200-line file that describes every method |
 
 ---
 
@@ -42,9 +42,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **What you need:** Ollama running locally, and a project folder under git.
 
-**What you will have at the end:** a context setup — instruction file, folder layout, and session habits — that your agent tools read automatically.
+**What you will have at the end:** a context setup (instruction file, folder layout, and session habits) that your agent tools read automatically.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
@@ -54,9 +54,9 @@ In this part, you will diagnose why AI coding agents "forget" your project conve
 
 ## 1. Why Context Does Not Persist
 
-**Why this matters:** Every time you start a new session with a coding agent, you are talking to a version of that agent with no memory of your previous conversations, your project architecture, or your preferences. This is by design — agent context windows are finite, and persisting all prior work would quickly overflow them. But it creates a real cost: if you re-explain the same project context at the start of every session, you waste tokens, introduce inconsistencies, and rely on yourself to remember what to say. Systematic context management is the solution.
+**Why this matters:** Every time you start a new session with a coding agent, you are talking to a version of that agent with no memory of your previous conversations, your project architecture, or your preferences. This is by design: agent context windows are finite, and persisting all prior work would quickly overflow them. But it creates a real cost: if you re-explain the same project context at the start of every session, you waste tokens, introduce inconsistencies, and rely on yourself to remember what to say. Systematic context management is the solution.
 
-**The naive approach** is to paste a block of project context at the start of every prompt: "We are building a RAG system. The corpus is stored in Chroma. Do not modify the collection schema. Tests live in `tests/`. Run them with `pytest -q`." This works, but it is fragile — you forget details, the block grows, and different sessions receive different context.
+**The naive approach** is to paste a block of project context at the start of every prompt: "We are building a RAG system. The corpus is stored in Chroma. Do not modify the collection schema. Tests live in `tests/`. Run them with `pytest -q`." This works, but it is fragile: you forget details, the block grows, and different sessions receive different context.
 
 **The systematic approach** is to encode context in files that the agent always reads, so you never have to re-explain. There are three layers, each scoped appropriately:
 
@@ -94,20 +94,20 @@ A developer is working on the RAG lab from earlier in the course. They have accu
 
    > *Hint: Only files that are version-controlled in the repository are shared when the repo is cloned. Which of the three layers lives inside the repository?*
 
-> **Common Misconception:** "More context is always better — fill the instructions file with everything you know about the project." Context window space is finite and shared with the actual task. An instructions file that lists every class name, every function signature, and the history of every decision crowds out the agent's working space for the current prompt. Effective instructions describe *constraints and invariants* — what the agent must not do, where things are, and what the conventions are — not a narration of the code.
+> **Common Misconception:** "More context is always better; fill the instructions file with everything you know about the project." Context window space is finite and shared with the actual task. An instructions file that lists every class name, every function signature, and the history of every decision crowds out the agent's working space for the current prompt. Effective instructions describe *constraints and invariants* (what the agent must not do, where things are, and what the conventions are), not a narration of the code.
 
 A developer always wants their coding agent to use Black for Python formatting, regardless of which project they are working on. Which layer is most appropriate for this instruction?
 
-[( )] Project instructions (`AGENTS.md` in the project root) — so it is version-controlled
-[(X)] Global instructions (`~/.opencode/instructions.md`) — so it applies to every project automatically
-[( )] A skill — so it can be invoked by name when formatting is needed
-[( )] The prompt — paste it at the start of every session
+[( )] Project instructions (`AGENTS.md` in the project root), so it is version-controlled
+[(X)] Global instructions (`~/.opencode/instructions.md`), so it applies to every project automatically
+[( )] A skill, so it can be invoked by name when formatting is needed
+[( )] The prompt, paste it at the start of every session
 
 ---
 
 # Part II: Writing Effective Project Instructions
 
-In this part, you will write and critique `AGENTS.md` project instruction files — the persistent context layer that tells a coding agent your architecture, invariants, and out-of-scope changes before it writes a single line.
+In this part, you will write and critique `AGENTS.md` project instruction files, the persistent context layer that tells a coding agent your architecture, invariants, and out-of-scope changes before it writes a single line.
 
 ## 2. What Belongs in `AGENTS.md`
 
@@ -115,11 +115,11 @@ In this part, you will write and critique `AGENTS.md` project instruction files 
 
 **What belongs in a project instructions file:**
 
-- **Architecture overview** (2-3 sentences per component, not per file): "The ingestion pipeline reads from `data/`, embeds with Ollama, and writes to Chroma. The query path reads from Chroma only — it never writes."
+- **Architecture overview** (2-3 sentences per component, not per file): "The ingestion pipeline reads from `data/`, embeds with Ollama, and writes to Chroma. The query path reads from Chroma only; it never writes."
 - **Key invariants the agent must not violate**: "Do not modify the Chroma collection schema. Do not add new dependencies without updating `requirements.txt`."
 - **What is out of scope**: "Do not add a web UI. Do not add authentication. Do not change the embedding model without a lab-wide discussion."
 - **Where the tests are and how to run them**: "Tests live in `tests/`. Run with `pytest -q`. All tests must pass before committing."
-- **Common pitfalls in this codebase**: "The `embed()` function returns `[]` on failure — callers must check for this. Do not call `embed()` in a loop without rate-limiting."
+- **Common pitfalls in this codebase**: "The `embed()` function returns `[]` on failure; callers must check for this. Do not call `embed()` in a loop without rate-limiting."
 
 ---
 
@@ -128,7 +128,7 @@ In this part, you will write and critique `AGENTS.md` project instruction files 
 Below is an example `AGENTS.md` for the RAG lab from earlier in the course.
 
 ```markdown
-# RAG Lab — Agent Instructions
+# RAG Lab: Agent Instructions
 
 ## Architecture
 The system has two phases: indexing (run once, writes to Chroma) and query (run per request,
@@ -154,8 +154,8 @@ Both are served by Ollama at `http://localhost:11434`.
 - Do not delete existing tests; only add new ones.
 
 ## Common Pitfalls
-- `embed()` returns `[]` on failure — callers must raise `RuntimeError`, not return silently.
-- Chroma `n_results` must not exceed the collection size — guard with `min(k, col.count())`.
+- `embed()` returns `[]` on failure; callers must raise `RuntimeError`, not return silently.
+- Chroma `n_results` must not exceed the collection size; guard with `min(k, col.count())`.
 ```
 
 ### Critical Thinking Questions
@@ -170,9 +170,9 @@ Both are served by Ollama at `http://localhost:11434`.
 
 6. The instructions say "Do not use `eval()`, `exec()`, or `subprocess`." How would you verify that the agent followed this instruction after it made changes? Write a one-line shell command or `pytest` test that checks for this.
 
-   > *Hint: You do not need to trust the agent's output — you can check the code directly. The `grep` command can search for patterns in files: `grep -r "eval(" .` returns any line containing `eval(`. How would you turn this into a `pytest` test using Python's `subprocess.run`?*
+   > *Hint: You do not need to trust the agent's output; you can check the code directly. The `grep` command can search for patterns in files: `grep -r "eval(" .` returns any line containing `eval(`. How would you turn this into a `pytest` test using Python's `subprocess.run`?*
 
-> **Common Misconception:** "Project instructions are like a README — describe what the code does." A README is for humans orienting themselves to a project. An instructions file is for constraining agent behavior. The distinction: a README says "this module handles embeddings"; an instructions file says "do not change the embedding model without updating this file." One describes; the other constrains. Descriptions help humans understand; constraints prevent agent errors.
+> **Common Misconception:** "Project instructions are like a README; describe what the code does." A README is for humans orienting themselves to a project. An instructions file is for constraining agent behavior. The distinction: a README says "this module handles embeddings"; an instructions file says "do not change the embedding model without updating this file." One describes; the other constrains. Descriptions help humans understand; constraints prevent agent errors.
 
 Which of the following best belongs in a project instructions file rather than in the source code itself?
 
@@ -185,11 +185,11 @@ Which of the following best belongs in a project instructions file rather than i
 
 # Part III: Synthesis and Practice
 
-In this part, you will extend your dev environment with the Superpowers plugin for OpenCode and design your own personalized AI environment — choosing which context layers to populate and how to keep them maintained as your project evolves.
+In this part, you will extend your dev environment with the Superpowers plugin for OpenCode and design your own personalized AI environment, choosing which context layers to populate and how to keep them maintained as your project evolves.
 
 ## 3. The Superpowers Plugin for OpenCode
 
-**Why this matters:** Writing every skill from scratch is repetitive — common developer workflows like "review this diff for security issues" or "write tests for this function before implementing it" are the same across many projects. Plugins package pre-built skills that you can load with a single line in your project config, giving the agent a vocabulary of named workflows without requiring you to write the prompt templates yourself.
+**Why this matters:** Writing every skill from scratch is repetitive; common developer workflows like "review this diff for security issues" or "write tests for this function before implementing it" are the same across many projects. Plugins package pre-built skills that you can load with a single line in your project config, giving the agent a vocabulary of named workflows without requiring you to write the prompt templates yourself.
 
 **OpenCode supports plugins** defined in `opencode.json` at the project root:
 
@@ -220,11 +220,11 @@ Below is a `security-review` skill that checks a diff for OWASP top-10 agent ris
 You are performing a security review of the diff provided. Check for each of the following
 OWASP top-10 risks for LLM-integrated applications:
 
-1. **Prompt Injection** — does any user-supplied string reach a model prompt without sanitization?
-2. **Insecure Output Handling** — does any model output reach `eval()`, `exec()`, or a shell?
-3. **Excessive Agency** — does the agent take destructive actions (delete, overwrite) without confirmation?
-4. **Sensitive Data Exposure** — are API keys, tokens, or PII logged or returned to the user?
-5. **Unbounded Resource Consumption** — are there loops or queries with no upper bound?
+1. **Prompt Injection**: does any user-supplied string reach a model prompt without sanitization?
+2. **Insecure Output Handling**: does any model output reach `eval()`, `exec()`, or a shell?
+3. **Excessive Agency**: does the agent take destructive actions (delete, overwrite) without confirmation?
+4. **Sensitive Data Exposure**: are API keys, tokens, or PII logged or returned to the user?
+5. **Unbounded Resource Consumption**: are there loops or queries with no upper bound?
 
 For each risk, state: FOUND / NOT FOUND / CANNOT DETERMINE, with a one-line explanation.
 If any risk is FOUND, suggest the minimal fix.
@@ -238,15 +238,15 @@ Review the most recent diff provided by the user.
 
    > *Hint: The `superpowers` plugin includes skills that assume specific project structures (a Chroma database, a `tests/` directory, a `pytest` test runner). If these skills are available globally, what happens when you invoke the "design-TDD-review" skill in a project that uses a different database and a different test framework?*
 
-8. The security-review skill above checks for five specific risks. A teammate argues: "A good skill should be general — check for *all* security issues, not just these five." What is the argument on the other side?
+8. The security-review skill above checks for five specific risks. A teammate argues: "A good skill should be general; check for *all* security issues, not just these five." What is the argument on the other side?
 
    > *Hint: A skill that says "check for all security issues" gives the agent no guidance about what to look for or how to report. What does specificity in a prompt template give you that generality does not?*
 
 9. Suppose you want to write a skill for the final project in this course (an agent team or RAG system). Write the first two lines of the skill's Markdown file: the skill name (as an H1) and the first sentence of the agent instruction.
 
-   > *Hint: The first sentence should tell the agent what role it is playing and what it is about to review. Look at the security-review skill above — it opens with "You are performing a security review of the diff provided." What is the analogous opening for a skill that reviews a RAG system's retrieval quality?*
+   > *Hint: The first sentence should tell the agent what role it is playing and what it is about to review. Look at the security-review skill above: it opens with "You are performing a security review of the diff provided." What is the analogous opening for a skill that reviews a RAG system's retrieval quality?*
 
-> **Common Misconception:** "A skill is just a shortcut for typing a long prompt." A skill is a *reusable contract*: it defines what the agent will examine, what it will report, and in what format. Because it is version-controlled and shared with the team, everyone's agent invokes the same workflow. The reproducibility is the value — not just the typing saved.
+> **Common Misconception:** "A skill is just a shortcut for typing a long prompt." A skill is a *reusable contract*: it defines what the agent will examine, what it will report, and in what format. Because it is version-controlled and shared with the team, everyone's agent invokes the same workflow. The reproducibility is the value, not just the typing saved.
 
 Why is it preferable to install a project-specific plugin in `./opencode.json` rather than the global agent configuration?
 
@@ -263,7 +263,7 @@ Why is it preferable to install a project-specific plugin in `./opencode.json` r
 
    - *What to do:* Choose a project you have worked on this semester (the RAG lab, the prompt engineering lab, or a personal project). Write an `AGENTS.md` file with at most 10 lines covering: one architecture sentence, three invariants, one "out of scope" statement, and the test command. Then start a fresh agent session with and without the file and compare the agent's first response to a task prompt.
    - *Starter hint:* Keep each invariant to a single sentence beginning with "Do not" or "Always." Architecture sentences should name components and the direction of data flow, not list files. Test command should be copy-paste runnable.
-   - *You've succeeded when:* You can show that a fresh agent session with `AGENTS.md` present correctly names the test command, the forbidden operation, and the component that handles embedding — without you mentioning any of these in the prompt.
+   - *You've succeeded when:* You can show that a fresh agent session with `AGENTS.md` present correctly names the test command, the forbidden operation, and the component that handles embedding, without you mentioning any of these in the prompt.
 
 2. *Write a skill for retrieval quality review.*
 
@@ -273,38 +273,38 @@ Why is it preferable to install a project-specific plugin in `./opencode.json` r
 
 3. *The meta-loop: improve your own environment.*
 
-   - *What to do:* Identify one repeated pattern in your recent agent sessions — a piece of context you re-explain every session, a task you re-describe every time, or a format you always ask for. Encode it as either (a) an addition to `AGENTS.md`, (b) a new skill, or (c) a global instruction. Test the encoded version by starting a fresh session and checking whether the agent gets it right without being told.
+   - *What to do:* Identify one repeated pattern in your recent agent sessions: a piece of context you re-explain every session, a task you re-describe every time, or a format you always ask for. Encode it as either (a) an addition to `AGENTS.md`, (b) a new skill, or (c) a global instruction. Test the encoded version by starting a fresh session and checking whether the agent gets it right without being told.
    - *Starter hint:* Good candidates for encoding: "always print the retrieved context before the answer," "always run `pytest -q` after making changes," "always include a one-line summary of what changed at the top of your response." Pick the one you re-type most often.
    - *You've succeeded when:* You can demonstrate a fresh session in which the agent exhibits the desired behavior without any explicit instruction in the prompt, and you can point to the file that produced that behavior.
 
 4. *Design the environment for the final project.*
 
-   - *What to do:* Design (do not fully implement) the complete agent environment for the final project in this course — an agent team or a RAG system. Produce: (a) a 10-line `AGENTS.md`, (b) a list of three skills you would want pre-built, and (c) an `opencode.json` that loads the `superpowers` plugin. Justify each item in one sentence.
-   - *Starter hint:* The `AGENTS.md` should cover the multi-agent architecture (which agent does what), the key invariants (what each agent must not do), and the test command. The three skills should cover the three most repeated tasks — likely: run the full evaluation, review a new agent's tool for security issues, and summarize the agent team's latest output.
+   - *What to do:* Design (do not fully implement) the complete agent environment for the final project in this course, an agent team or a RAG system. Produce: (a) a 10-line `AGENTS.md`, (b) a list of three skills you would want pre-built, and (c) an `opencode.json` that loads the `superpowers` plugin. Justify each item in one sentence.
+   - *Starter hint:* The `AGENTS.md` should cover the multi-agent architecture (which agent does what), the key invariants (what each agent must not do), and the test command. The three skills should cover the three most repeated tasks, likely: run the full evaluation, review a new agent's tool for security issues, and summarize the agent team's latest output.
    - *You've succeeded when:* You can hand your environment design to a teammate and they can, without asking you any questions, start a fresh agent session and correctly describe the project architecture, run the tests, and invoke a skill by name.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Identify one repeated prompt you have typed more than three times in this course's agent sessions — a context explanation, a formatting request, or a task description. Would you encode it as a global instruction, a project instruction, or a skill? Why that layer?
+*Personal:* Identify one repeated prompt you have typed more than three times in this course's agent sessions: a context explanation, a formatting request, or a task description. Would you encode it as a global instruction, a project instruction, or a skill? Why that layer?
 
 *Technical:* In your notebook: how does "environment as code" differ from a project README? A README is also a text file that describes the project. What does version-controlling `AGENTS.md` and `opencode.json` give you that version-controlling only a README does not?
 
-*Societal:* Your `AGENTS.md` encodes invariants ("do not modify the database schema") and your global instructions encode preferences ("prefer functional style"). These reflect your assumptions and values. Who should review those files — and should they be subject to the same code review process as the source code? Identify one assumption you have already encoded and argue whether it should be visible to collaborators or kept private.
+*Societal:* Your `AGENTS.md` encodes invariants ("do not modify the database schema") and your global instructions encode preferences ("prefer functional style"). These reflect your assumptions and values. Who should review those files, and should they be subject to the same code review process as the source code? Identify one assumption you have already encoded and argue whether it should be visible to collaborators or kept private.
 
 ---
 
 ## -> Coming Up Next
 
-Your agent environment is version-controlled, your skills are shareable, and your project instructions run automatically. The next challenge is making this reproducible across the whole team and across deployments. The next module introduces **CI/CD and Publishing**: wiring a pipeline that installs your agent environment, runs the test suite, and publishes a working artifact — so the environment you designed today is the environment that ships.
+Your agent environment is version-controlled, your skills are shareable, and your project instructions run automatically. The next challenge is making this reproducible across the whole team and across deployments. The next module introduces **CI/CD and Publishing**: wiring a pipeline that installs your agent environment, runs the test suite, and publishes a working artifact, so the environment you designed today is the environment that ships.
 
 ---
 
 ## 5. Further Reading
 
-- OpenCode documentation: https://opencode.ai/docs — covers `opencode.json` schema, plugin installation, and instructions file format.
-- obra. "Superpowers plugin for OpenCode." https://github.com/obra/superpowers — the plugin used in Part III; source is instructive for writing your own skills.
-- OWASP. "OWASP Top 10 for Large Language Model Applications." https://owasp.org/www-project-top-10-for-large-language-model-applications/ — the risk framework referenced in the security-review skill.
-- Simon Willison. "Prompt injection explained." https://simonwillison.net/2023/Apr/14/prompt-injection/ — on why "do not use user input in prompts without sanitization" is a project invariant worth encoding.
-- This course: [Governing Coding Agents — Charters, Handoffs, and Durable Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md) — the layer above `AGENTS.md`: the charter, handoff protocol, and decision records that keep many sessions pointed at one goal.
+- OpenCode documentation: https://opencode.ai/docs, covers `opencode.json` schema, plugin installation, and instructions file format.
+- obra. "Superpowers plugin for OpenCode." https://github.com/obra/superpowers, the plugin used in Part III; source is instructive for writing your own skills.
+- OWASP. "OWASP Top 10 for Large Language Model Applications." https://owasp.org/www-project-top-10-for-large-language-model-applications/, the risk framework referenced in the security-review skill.
+- Simon Willison. "Prompt injection explained." https://simonwillison.net/2023/Apr/14/prompt-injection/, on why "do not use user input in prompts without sanitization" is a project invariant worth encoding.
+- This course: [Governing Coding Agents: Charters, Handoffs, and Durable Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md), the layer above `AGENTS.md`: the charter, handoff protocol, and decision records that keep many sessions pointed at one goal.
