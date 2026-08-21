@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-memorycontext.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-memorycontext.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-memorycontext.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorycontext.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -78,7 +78,7 @@ An agent has run 30 steps. Its prompt now contains: the system prompt (300 token
 # Part II: Memory Architectures
 
 
-> **The vocabulary of memory types** - working, episodic, semantic, and procedural - is laid out in the optional activity [Types of Agent Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-memorytypes.md). For today it is enough to know that an agent's memory is always, in the end, text placed into the prompt.
+> **The vocabulary of memory types** - working, episodic, semantic, and procedural - is laid out in the optional activity [Types of Agent Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorytypes.md). For today it is enough to know that an agent's memory is always, in the end, text placed into the prompt.
 
 ## 3. Memory Is Just Prompt-Building
 

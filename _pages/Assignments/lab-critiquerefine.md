@@ -52,13 +52,13 @@ info:
       proficient: The program is submitted according to the directions with externalized configuration in a JSON file, located exception handling with tracebacks on all model calls, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific numeric result or transcript excerpt from the lab
   readings:
     - rtitle: "Critique and Refine Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md"
     - rtitle: "Orchestration Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md"
     - rtitle: "Coding Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
     - rtitle: "The Local Agent Stack Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
 
 tags:
   - multi-agent
@@ -82,8 +82,8 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
-- [Orchestration Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md): chaining agents with structured outputs
+- [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Orchestration Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md): chaining agents with structured outputs
 
 **Tools to install:**
 
@@ -846,8 +846,8 @@ Because this direction is graded under the same 100-point rubric as the core lab
 
 Before beginning, make sure you have completed both of the following activities (linked in the readings above):
 
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
 
 If you have not done both activities, do them now before reading further. The concepts introduced there are assumed throughout this direction.
 
