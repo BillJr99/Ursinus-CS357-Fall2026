@@ -82,15 +82,15 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
-- [Orchestration Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md): chaining agents with structured outputs
+- [Critique and Refine Activity]({{ site.activity_url }}liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Orchestration Activity]({{ site.activity_url }}liascript-orchestration.md): chaining agents with structured outputs
 
 **Tools to install:**
 
 ```bash
 # All you need is the requests library and Ollama (already installed if you did the earlier labs)
 
-> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab](https://www.billmongan.com/Ursinus-CS357/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
+> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab]({{ site.baseurl }}/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
 
 
 pip install requests
@@ -846,8 +846,8 @@ Because this direction is graded under the same 100-point rubric as the core lab
 
 Before beginning, make sure you have completed both of the following activities (linked in the readings above):
 
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
+- [Coding Agents Activity]({{ site.activity_url }}liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
+- [The Local Agent Stack Activity]({{ site.activity_url }}liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
 
 If you have not done both activities, do them now before reading further. The concepts introduced there are assumed throughout this direction.
 

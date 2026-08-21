@@ -30,8 +30,8 @@ To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agr
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md)
-- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
+- [LLM-as-Judge Activity]({{ site.activity_url }}liascript-llmasjudge.md)
+- [Evaluating Outputs Activity]({{ site.activity_url }}liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
 This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives: batch rubric scoring, human-agreement validation, bias measurement, and regression testing, by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
