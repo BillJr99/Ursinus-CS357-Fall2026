@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Evaluating Agents: LLM-as-Judge and Rubric Pipelines
 
-Exact-match accuracy — our metric since the *Hallucinations and Evaluating Agent Outputs* activity — served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment — which is the architecture of the Rubric Pipeline Lab and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
+Exact-match accuracy (our metric since the *Hallucinations and Evaluating Agent Outputs* activity) served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**. Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment, which is the architecture of the Rubric Pipeline Lab and a live research problem in AI for education. The arc: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
 
 ---
 
@@ -28,11 +28,11 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **LLM-as-judge (Large Language Model as judge)** | Using an AI model as an automated grader that reads an artifact, applies a rubric, and outputs a structured score — the same role a human grader plays, but executable thousands of times per minute. | The `judge()` function calls `llama3.2` with a rubric and an essay, and the model returns JSON scores with quoted evidence. |
+| **LLM-as-judge (Large Language Model as judge)** | Using an AI model as an automated grader that reads an artifact, applies a rubric, and outputs a structured score, the same role a human grader plays, but executable thousands of times per minute. | The `judge()` function calls `llama3.2` with a rubric and an essay, and the model returns JSON scores with quoted evidence. |
 | **Rubric** | A scoring guide that lists each quality criterion, describes what each level of performance looks like in observable, verifiable terms, and assigns a weight to each criterion. | The rubric in the code has three criteria: `claims_cited` (50%), `directness` (30%), `counterargument` (20%). |
-| **Observable descriptor** | A level description that refers to something you can actually see in the text — not a judgment of quality, but a factual statement about what is or is not present. | "Every claim cites a source" is observable (you can count claims and citations). "Is insightful" is not observable (it is a judgment). |
-| **Position bias** | The tendency of an LLM judge to rate the first answer in an A/B comparison higher than the second, regardless of which answer is actually better. | If you always put the AI-generated essay first and the human essay second, your judge may systematically favor the AI — not because it is better, but because it came first. |
-| **Verbosity bias** | The tendency of an LLM judge to rate longer answers as higher quality, even when the extra length adds no meaningful content. | Adding two empty filler sentences to an essay before submitting it to the judge — and watching the score go up. |
+| **Observable descriptor** | A level description that refers to something you can actually see in the text, not a judgment of quality, but a factual statement about what is or is not present. | "Every claim cites a source" is observable (you can count claims and citations). "Is insightful" is not observable (it is a judgment). |
+| **Position bias** | The tendency of an LLM judge to rate the first answer in an A/B comparison higher than the second, regardless of which answer is actually better. | If you always put the AI-generated essay first and the human essay second, your judge may systematically favor the AI, not because it is better, but because it came first. |
+| **Verbosity bias** | The tendency of an LLM judge to rate longer answers as higher quality, even when the extra length adds no meaningful content. | Adding two empty filler sentences to an essay before submitting it to the judge, and watching the score go up. |
 | **Calibration set** | A small collection of artifacts that have already been scored by humans, used to check whether the LLM judge agrees with human judgment before trusting it on new artifacts. | Ten essays scored by your team and by the judge; if they disagree on criterion 2 consistently, that criterion needs better descriptors. |
 
 ---
@@ -53,7 +53,7 @@ $$
 \text{score} = \sum_{c} w_c \cdot \frac{\ell_c}{L}
 $$
 
-where $w_c$ is criterion $c$'s weight, $\ell_c$ the awarded level, and $L$ the top level. Observable descriptors ("cites a source for each claim") judge reliably; aesthetic ones ("is insightful") do not — the same lesson the critique-refine module taught about actionable feedback.
+where $w_c$ is criterion $c$'s weight, $\ell_c$ the awarded level, and $L$ the top level. Observable descriptors ("cites a source for each claim") judge reliably; aesthetic ones ("is insightful") do not, the same lesson the critique-refine module taught about actionable feedback.
 
 **Known judge pathologies (systematic errors the judge makes consistently, not randomly).** *Position bias*: in A/B comparisons, judges favor the first-presented response. *Verbosity bias*: longer answers score higher at equal quality. *Self-preference*: models rate their own outputs more generously than outputs from other models. *Leniency drift*: scores compress toward the top of the scale over many judgments, making it hard to distinguish good from excellent.
 
@@ -63,13 +63,13 @@ A draft rubric for short essays: (1) "Well written, 40 percent"; (2) "Good use o
 
 | Criterion (draft) | Problem with this version | Improved version |
 |---|---|---|
-| "Well written, 40 percent" | "Well written" is not observable — different judges will disagree on what it means, making scores unreliable. | Split into two observable criteria: "Each sentence expresses exactly one idea (no run-ons)" and "Position is stated in the first paragraph." |
+| "Well written, 40 percent" | "Well written" is not observable; different judges will disagree on what it means, making scores unreliable. | Split into two observable criteria: "Each sentence expresses exactly one idea (no run-ons)" and "Position is stated in the first paragraph." |
 | "Good use of evidence, 40 percent" | "Good use" is a judgment, not a description. Vulnerable to verbosity bias: a judge may reward quantity of citations over quality. | "Every factual claim is followed by a parenthetical source. Sources are cited in the text, not only in a bibliography." |
 | "Proper length, 20 percent" | Length is trivially machine-checkable with `len(text.split())`. Sending it to an LLM judge wastes tokens and adds noise. | Replace with a programmatic check: `assert 150 <= word_count <= 300`. Save the LLM for criteria that require reading comprehension. |
 
 ### Critical Thinking Questions
 
-1. Rewrite criterion 1 ("Well written") with four observable levels labeled preemerging, beginning, progressing, and proficient. What changed about *verifiability* — meaning, could two different people independently arrive at the same level?
+1. Rewrite criterion 1 ("Well written") with four observable levels labeled preemerging, beginning, progressing, and proficient. What changed about *verifiability*, meaning, could two different people independently arrive at the same level?
 
    *Hint:* Preemerging might be "no clear thesis statement anywhere in the essay." Proficient might be "thesis stated in the first sentence of the first paragraph, consistent throughout." Check each level: could you identify it by reading the first sentence only, without making a judgment call?
 
@@ -79,17 +79,17 @@ A draft rubric for short essays: (1) "Well written, 40 percent"; (2) "Good use o
 
 3. Which judge pathology (position bias, verbosity bias, self-preference, or leniency drift) threatens criterion 2 ("Good use of evidence") most, and which countermeasure from Section 1 do you prescribe?
 
-   *Hint:* Criterion 2 asks about citations. A longer essay has more opportunities to include citations — even superficial ones. Which pathology does that suggest? How would you rewrite the descriptor to be length-neutral?
+   *Hint:* Criterion 2 asks about citations. A longer essay has more opportunities to include citations, even superficial ones. Which pathology does that suggest? How would you rewrite the descriptor to be length-neutral?
 
 ---
 
 # Part II: The Pipeline
 
-In this part, you will turn the rubric you analyzed in Part I into working code — a `judge()` function that sends an essay and the rubric to your local model and gets back a structured score with quoted evidence. Run the code yourself, then answer the questions to understand what the judge is doing and where it can go wrong.
+In this part, you will turn the rubric you analyzed in Part I into working code: a `judge()` function that sends an essay and the rubric to your local model and gets back a structured score with quoted evidence. Run the code yourself, then answer the questions to understand what the judge is doing and where it can go wrong.
 
 ## Model 2: Rubric In, JSON Out, CSV Forever
 
-The function below sends an essay to your local Ollama model along with a rubric and receives a JSON-formatted score (a structured text format using `{key: value}` pairs) with one entry per criterion. Setting `temperature=0.0` and `seed=42` makes the judge give the same score every time for the same input — important for fairness, as you'll explore in Question 5.
+The function below sends an essay to your local Ollama model along with a rubric and receives a JSON-formatted score (a structured text format using `{key: value}` pairs) with one entry per criterion. Setting `temperature=0.0` and `seed=42` makes the judge give the same score every time for the same input, important for fairness, as you'll explore in Question 5.
 
 ---
 
@@ -167,19 +167,19 @@ The most important safeguard before trusting an LLM judge's scores on real stude
 [(X)] Validating the judge's scores against human scores on a labeled calibration set before using it on new work
 [( )] Asking the judge to be fair in the system prompt, so it knows to ignore its biases
 
-> **Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* — it will give the same score every time for the same input — but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
+> **Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* (it will give the same score every time for the same input), but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
 
 ---
 
 # Part III: Auditing the Judge
 
-Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks — measuring human agreement, quantifying position bias, and building the batch infrastructure for the Rubric Pipeline Lab.
+Now that you have a working judge and understand its failure modes, this part asks you to stress-test it in ways that mirror real deployment risks: measuring human agreement, quantifying position bias, and building the batch infrastructure for the Rubric Pipeline Lab.
 
 ## Exercises
 
 1. *Human agreement.*
 
-   *What to do:* Each teammate independently hand-scores the sample essay and two more essays you write yourself, using only the rubric — without seeing the judge's output first. Then reveal the judge's scores and compute: (a) agreement between humans, and (b) agreement between each human and the judge. Report which criterion shows the worst machine-human gap.
+   *What to do:* Each teammate independently hand-scores the sample essay and two more essays you write yourself, using only the rubric, without seeing the judge's output first. Then reveal the judge's scores and compute: (a) agreement between humans, and (b) agreement between each human and the judge. Report which criterion shows the worst machine-human gap.
 
    *Starter hint:* "Agreement" here can be as simple as: for each criterion, how often does the human and the judge choose the same level (out of 4)? A gap of more than 1 level on a consistent basis signals a rubric descriptor that needs revision.
 
@@ -187,7 +187,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 2. *Position bias measurement.*
 
-   *What to do:* Build an A/B comparator prompt that asks "which essay better satisfies the rubric?" Feed it the same pair of essays in both orders (A then B, then B then A) for five different pairs. Report the rate at which the judge changes its answer when the order flips — your first directly measured bias.
+   *What to do:* Build an A/B comparator prompt that asks "which essay better satisfies the rubric?" Feed it the same pair of essays in both orders (A then B, then B then A) for five different pairs. Report the rate at which the judge changes its answer when the order flips, your first directly measured bias.
 
    *Starter hint:* The comparator prompt should be: "Given these two essays and the rubric below, which essay scores higher overall? Answer only 'ESSAY_A' or 'ESSAY_B'." Run it twice per pair, swapping positions. If the answer changes when you swap, that is a position-bias instance.
 
@@ -195,7 +195,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 3. *Batch pipeline.*
 
-   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of the Rubric Pipeline Lab; save your CSV — it feeds directly into that lab.
+   *What to do:* Wrap the `judge` function in a loop over a folder of text files and emit one CSV (comma-separated values) row per artifact, with columns for filename, per-criterion level, evidence quote, and weighted total score. This is the skeleton of the Rubric Pipeline Lab; save your CSV; it feeds directly into that lab.
 
    *Starter hint:* Use `import os; os.listdir("essays/")` to get filenames, `open(filepath).read()` to load each essay, and `import csv; writer.writerow([...])` to append to the CSV. Wrap each judge call in a `try/except` so one parse error does not stop the whole batch.
 
@@ -203,9 +203,9 @@ Now that you have a working judge and understand its failure modes, this part as
 
 4. *Judge the judge's rubric.*
 
-   *What to do:* Trade rubrics with another team. Attempt to write a "reward-hacked" essay — one that maximally satisfies the letter of their rubric descriptors while being as substantively weak as possible. Report the loophole you found and propose the one-sentence patch that closes it.
+   *What to do:* Trade rubrics with another team. Attempt to write a "reward-hacked" essay, one that maximally satisfies the letter of their rubric descriptors while being as substantively weak as possible. Report the loophole you found and propose the one-sentence patch that closes it.
 
-   *Starter hint:* Reward hacking means gaming the rules. If their rubric says "cites at least one source," you can cite a source for every sentence — even the filler sentences. If it says "counterargument mentioned," one throwaway sentence ("Some disagree") might satisfy the level. Find the weakest descriptor and exploit it.
+   *Starter hint:* Reward hacking means gaming the rules. If their rubric says "cites at least one source," you can cite a source for every sentence, even the filler sentences. If it says "counterargument mentioned," one throwaway sentence ("Some disagree") might satisfy the level. Find the weakest descriptor and exploit it.
 
    *You've succeeded when:* You can show a weak essay that scores in the top level on at least two criteria under the other team's rubric, identify the specific word or phrase in the descriptor that permitted the exploit, and write a revised descriptor that would have caught it.
 
@@ -213,7 +213,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ## Reflection Prompt
 
-*Personal:* An instructor uses an LLM judge for first-pass formative feedback (feedback intended to help you improve, not to determine your grade) on drafts, with full disclosure to students. A classmate objects on principle. Write the strongest possible sentence of the objection and the strongest possible sentence of the defense, then state where you personally land today — knowing that your Rubric Pipeline Lab builds exactly this machinery.
+*Personal:* An instructor uses an LLM judge for first-pass formative feedback (feedback intended to help you improve, not to determine your grade) on drafts, with full disclosure to students. A classmate objects on principle. Write the strongest possible sentence of the objection and the strongest possible sentence of the defense, then state where you personally land today, knowing that your Rubric Pipeline Lab builds exactly this machinery.
 
 *Technical:* The rubric pipeline produces a score and a quoted evidence string for each criterion. Describe a complete audit protocol you would run before deploying this pipeline on a real class of students: what data you would collect, what agreement threshold you would require, and what you would do if the judge fails the audit on one criterion but passes on others.
 
