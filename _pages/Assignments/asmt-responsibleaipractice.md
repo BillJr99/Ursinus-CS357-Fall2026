@@ -50,6 +50,8 @@ info:
       rlink: "https://archive.org/details/computerpowerhum00weiz"
     - rtitle: "Mitchell, Artificial Intelligence: A Guide for Thinking Humans (2019), Chapter 8"
       rlink: "https://melaniemitchell.me/aibook/"
+    - rtitle: "The Philosophy and Psychology of Artificial Intelligence Activity (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-philosophyai.md"
     - rtitle: "Data Cards Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
     - rtitle: "Bias in Data Activity"

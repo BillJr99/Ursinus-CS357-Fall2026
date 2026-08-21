@@ -138,7 +138,6 @@ These are suggested sources. You are not limited to this list, propose others wi
 
 These are the technical books assigned across the course schedule; a chapter you present here can double as a deeper dive on a topic we cover in a lecture.
 - Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1-2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
-- Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. *(Chapter 2 on intelligent agents; later chapters by topic.)* https://aima.cs.berkeley.edu/
 - Jurafsky, D. & Martin, J. H. *Speech and Language Processing* (3rd ed. draft). *(Ch 3 on n-gram language models; later chapters on embeddings and transformers.)* https://web.stanford.edu/~jurafsky/slp3/
 - Nielsen, M. *Neural Networks and Deep Learning.* *(Chapter 1, neural nets from first principles.)* http://neuralnetworksanddeeplearning.com/
 - Sutton, R. & Barto, A. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. *(Chapters 1-6 for the RLHF thread.)*
