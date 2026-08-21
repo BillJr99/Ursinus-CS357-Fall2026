@@ -108,6 +108,8 @@ An agent must return JSON so that downstream code can parse its decision. The mo
 [(X)] Specify the exact schema in the system prompt and include a few-shot example of a valid response
 [( )] Avoid mentioning JSON so the model is not confused
 
+> *On the second option: that is the temperature dial you turned in *Running Your Own AI*, Section 3b. Recall what raising it actually did to your six answers, then ask yourself whether "explores formats" is a thing you want from a value your code has to parse.*
+
 ---
 
 ## 3. Plan Before You Prompt
@@ -209,6 +211,10 @@ The cell below defines five `(country, expected capital)` pairs, then runs the *
 ```python
 import requests
 
+# temperature=0.0 pins the wording (Running Your Own AI, Section 3b).
+# seed=42 pins the random draw itself: any fixed number works, the same one
+# every run means the same dice rolls every run. Together they make this
+# harness repeatable, which is what lets a test tell you something.
 def chat(system, user, temperature=0.0, seed=42, model="llama3.2"):
     try:
         r = requests.post("http://localhost:11434/api/chat", json={
