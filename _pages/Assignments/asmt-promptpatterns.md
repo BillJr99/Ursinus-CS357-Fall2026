@@ -66,6 +66,26 @@ In this assignment you will build a portfolio of four reusable prompt patterns a
 
 ---
 
+## Before You Start
+
+**This builds on:** the *Prompt Engineering as Agent Design* session (Parts 1 and 3), and the *Tokens, Embeddings, and Attention* session plus the printable by-hand worksheet (Part 2). Both are taught before this is due.
+
+**You need:** Ollama running with a model pulled, and either Python or a chat interface. Part 2 needs paper and a calculator, and nothing else.
+
+```bash
+curl -s http://localhost:11434/api/tags | head -c 120
+```
+
+**Time:** six to eight hours, and it splits cleanly. Part 1 is the longest because every pattern needs real runs, not one lucky output. Part 2 is arithmetic and takes as long as it takes; do it in one sitting rather than three. Part 3 is short if Part 1 went well.
+
+**Do Part 2 by hand, genuinely.** It is the one place in the course where you compute what the model computes, and doing it with a model's help defeats the entire exercise. The arithmetic is deliberately small enough to do on paper.
+
+**The protocol comes first.** Before you run a single prompt, fill in the Experimental Protocol section below: model, temperature, seed, number of runs per prompt. Everything in Part 1 is a comparison, and a comparison with a drifting protocol measures nothing. (This is the dial from *Running Your Own AI*, Section 3b, and the seed you met in the prompt-engineering eval harness.)
+
+> **On the routes:** this assignment has no code requirement. Part 1 works identically whether you run prompts in Open WebUI and paste the transcripts or drive them from a script; the grade is in the comparison and the analysis. If you run by hand, keep a run log, because "three runs per prompt" has to be verifiable.
+
+---
+
 ## What a Strong Submission Looks Like
 
 A strong submission has these qualities:
@@ -397,3 +417,17 @@ Submit a single PDF containing:
 - After computing softmax by hand, restate in your own words where the "randomness" in a language model lives.
 - If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours it took you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+- [ ] The experimental protocol is stated **at the top**: model, temperature, seed, runs per prompt.
+- [ ] Every Part 1 comparison uses the **same** protocol on both sides.
+- [ ] Each pattern shows real transcripts, not descriptions of what happened.
+- [ ] Where a pattern did **not** help, I said so; a portfolio where every pattern wins is a portfolio that was not tested.
+- [ ] Part 2 arithmetic is shown step by step, in my own hand or typed from my own paper.
+- [ ] Part 2 was done without a model's help, and my AI disclosure says so.
+- [ ] Part 3's system prompt names a persona and scope, a primary task, and an explicit refusal condition.
+- [ ] The synthesis connects Part 1's observations to Part 2's mechanism, rather than treating them as two assignments.
+- [ ] AI disclosure and hours answered.

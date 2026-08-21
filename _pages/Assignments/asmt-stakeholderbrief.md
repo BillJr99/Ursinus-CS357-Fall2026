@@ -75,6 +75,27 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 
 ---
 
+## Before You Start
+
+**This is a team assignment with one individual gate in the middle**, and the order matters more here than in anything else this term.
+
+**The sequence, and why it is this way:**
+
+1. **Speed-dating kickoff, in class.** Topics come out of conversation, not out of a solo brainstorm.
+2. **Identify a real stakeholder** and make contact early. This is the step with a lead time you do not control; a person has to answer you.
+3. **Interview them.** Not a survey. A conversation you took notes in.
+4. **Your own first draft, written individually and without AI**, due before your team drafts. Half a page. This is a gate, not a suggestion.
+5. **The team brief**, which may use whatever tools you want, with disclosure.
+6. **Peer exchange**, using SQR cards.
+
+**Time:** six to eight hours per person across two weeks, and it is spread thin on purpose. The interview scheduling is the long pole. Start on it the week it is assigned.
+
+**Start the stakeholder contact this week.** If nobody on your team knows a fitting partner, ask me: I will broker an introduction within one week of the request, and no team's brief is blocked by the roster. What blocks teams is waiting until week two to discover they have nobody.
+
+> **Why step 4 is unassisted.** Not because AI is forbidden here; it is not, and steps 5 and 6 are open. The individual draft exists so that your team's brief is a synthesis of four people's actual understanding rather than four people editing one machine's framing. You will notice the difference in the peer exchange, in both directions.
+
+---
+
 ## In-Class Kickoff: Speed-Dating Topic Generation
 
 Before any team commits to a stakeholder, we generate candidates together. In class, you will run a **speed-dating round**: pairs of students rotate every four minutes, and in each pairing both people answer, "What is a problem you have personally seen in a campus office, a local organization, or another department, and who owns it?" The Recorder from each team collects every candidate mentioned. By the end of class, your team short-lists three candidates and ranks them by (a) access; can you realistically get an interview within two weeks? (b) shape; could an agent system plausibly help? and (c) interest; does the domain match your team's survey rankings? Log the ranking and the choice in your decision log.
@@ -179,3 +200,17 @@ Answer individually in your submission, keyed to the Open Questions (Goal 15):
 - *How can we understand the world?* Name one thing the stakeholder's discipline treats as obvious evidence that CS would not, or vice versa. What would your team lose by using only one of the two lenses?
 - If collaboration beyond your team occurred, identify it. Do you certify that this submission represents your team's original work? Please identify any and all portions of your submission that were not originally written by your team.
 - Approximately how many hours did this assignment take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+- [ ] The stakeholder is a **real person or organization** we could contact, not a persona.
+- [ ] The brief reports what they said, with quotes or specific paraphrase, not what we assumed they would say.
+- [ ] Every team member's individual unassisted draft was written before team drafting began, and is included.
+- [ ] The problem is framed as **their** problem, in their terms, and would be recognizable to them.
+- [ ] Constraints they named are recorded even where they are inconvenient for the system we want to build.
+- [ ] We separated what they told us from what we inferred.
+- [ ] SQR cards given to another team: one Strength with evidence, one genuine Question, one Risk with a suggested mitigation.
+- [ ] AI disclosure states what was AI-assisted and how we verified it.
+- [ ] Contribution statement says who did what.

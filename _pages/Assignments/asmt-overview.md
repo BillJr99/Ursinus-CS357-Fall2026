@@ -38,7 +38,9 @@ info:
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
     - rtitle: "Required setup (Route A): Your Course Development Environment - Host Ollama, the Course Container, Git, and GitHub"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md"
-    - rtitle: "Required setup: Shell Fundamentals for Agent Supervision - the terminal skills every later lab assumes"
+    - rtitle: "Required setup: Your AI Workbench, Step 0 (The Shell in Ten Minutes) - the terminal skills every later lab assumes, and the read-before-you-run habit"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md"
+    - rtitle: "Going further, if the shell is new to you: The Shell, in full (pipes, redirection, background jobs, and PATH)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-shellbasics.md"
     - rtitle: "Mitchell, Prologue and Chapter 1"
 
@@ -50,6 +52,27 @@ tags:
 ---
 
 In this warmup you will install your local AI stack and write a short baseline reflection on your experiences with AI. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you will revisit at the end of the semester. (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).) There are no wrong answers in the reflection; this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
+
+---
+
+## Before You Start
+
+**This is the first thing you install for this course**, and it is deliberately front-loaded so that a broken setup costs you a low-stakes assignment rather than a lab.
+
+**Time:** two to three hours, and **most of that is downloading.** The model pull alone is about 2 GB and the container image is larger. Start the downloads on good wifi, then do the reflection while they run. Doing this the night before is the single most common way students lose points on this assignment, and it is entirely avoidable.
+
+**You need:** a laptop you can install software on, a GitHub account, and about 10 GB free disk. If any of those is a problem, say so this week rather than in week four; there is a lab-machine route and it takes scheduling.
+
+**Do it in this order:**
+
+1. Start the Ollama download (Part 1). It runs in the background.
+2. While it downloads, write the baseline reflection (Part 2). It needs no tools.
+3. Come back and finish the setup transcript.
+4. Do the command-line and git checkpoint (Part 1.5) last, since it uses what you just installed.
+
+**Two routes, both fully supported:** Route A (host Ollama plus the course container) is recommended because every later lab assumes it, and it is what the *Your AI Workbench* session builds together. Route B (native install) is complete and supported; take it if Docker will not run on your machine, and say so in your transcript. Neither route is the "real" one.
+
+> **You've succeeded when** all four boxes in the Setup Checklist are checked, all three in the Part 1.5 checklist are checked, and your reflection has four labeled sections. If a step failed, a documented failure with the verbatim error and what you tried earns full credit for that step; a vague "it worked eventually" does not.
 
 ---
 
@@ -158,6 +181,40 @@ Name one task you would happily hand to an AI agent and one you would not. For e
 ### What I Want to Build
 
 Describe one thing you hope to be able to build or do by the end of the semester that you cannot do today. Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
+
+---
+
+## Troubleshooting
+
+Work down this table before you post in the course channel; if none of it helps, post the exact command you ran and its full output.
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `ollama: command not found` after installing | The installer put the binary somewhere not on your `PATH` | Restart your terminal. If it persists, find the binary (`ls /usr/local/bin/ollama`) and add its directory to `PATH`. This is the `PATH` idea from Step 0 of the Workbench session |
+| The `curl` to `/api/tags` says connection refused | The Ollama *server* is not running, which is separate from Ollama being installed | Start the desktop app, or run `ollama serve` in its own terminal and leave it open |
+| The model download stalls or fails partway | Network interruption on a 2 GB transfer | Rerun `ollama pull llama3.2`; it resumes rather than restarting |
+| Inside the container, `localhost:11434` refuses the connection | Correct behavior: `localhost` inside a container means the container | Use `http://host.docker.internal:11434`. On Linux, start via the course compose file so that hostname resolves |
+| `Cannot connect to the Docker daemon` | Docker Desktop is installed but not running | Start the application. On Linux, `sudo systemctl start docker`, and confirm your user is in the `docker` group |
+| `git push` rejected, "authentication failed" | GitHub no longer accepts account passwords over HTTPS | Use a fine-grained personal access token scoped to that one repository, with Contents: read and write |
+| `uv: command not found` | Not installed, or not on `PATH` yet | Follow the uv install docs, restart the terminal, and if it still fails use the documented `python -m venv` fallback and say so |
+| Responses are very slow | A small model on CPU-only hardware | Expected. `llama3.2` is the right choice for that machine. Note the speed in your transcript; it is a real observation, not a failure |
+| Out of disk space partway through the build | The course image plus models is roughly 8 to 10 GB | Clear space and rerun `docker compose build`; completed layers are cached and the build resumes |
+
+---
+
+## Self-Check Before You Submit
+
+Hold your submission against the rubric's `proficient` column:
+
+- [ ] One file, PDF or Markdown, with each component **clearly labeled**.
+- [ ] Setup transcript covers all four steps, and states your **OS and version numbers**.
+- [ ] Transcript output is **copied verbatim**, not retyped or paraphrased.
+- [ ] Any failure is quoted exactly, with a hypothesis and what you tried.
+- [ ] Part 1.5: shell navigation and a search, a `git log --oneline` showing a pushed commit, and the uv (or documented fallback) output.
+- [ ] Reflection has **four** labeled sections and is about a page.
+- [ ] The reflection says what you actually think, not what you expect the course to want.
+- [ ] Which route you took (A or B) is stated.
+- [ ] Collaboration, AI-disclosure, and hours questions answered at the end.
 
 ---
 
