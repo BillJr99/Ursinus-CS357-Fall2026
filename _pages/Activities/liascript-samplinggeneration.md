@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-samplinggeneration.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-samplinggeneration.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-samplinggeneration.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,11 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Why Different Answers Every Time? Sampling, Temperature, and Generation
 
-In the *Welcome: What Is AI, and What Is an Agent?* activity we observed a deterministic computer producing different answers to identical prompts, and your teams formed hypotheses. Today we resolve the mystery: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it, rolling a weighted die at each step. We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack**, and we connect every knob to agent design.
+You have already turned this dial twice. In *Running Your Own AI* you set temperature to 0, then to 1, and watched six answers to the same prompt; in the *Agent Loop* activity you pinned it to 0 so the loop's parser would find the same strings every run. You know what it *does*. Today you find out what it *is*.
+
+The short answer, and the resolution of the mystery your teams formed hypotheses about back in *Welcome: What Is AI, and What Is an Agent?*: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it, rolling a weighted die at each step. Temperature is the number that reshapes the die before the roll.
+
+We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack**, and we connect every knob to agent design.
 
 ---
 
@@ -30,7 +34,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 |------|--------------------------|--------------------------|
 | Token | A unit of text (roughly a word, a word-part, or a punctuation mark) that the model reads and writes one at a time | The sentence "The cat sat." is four tokens: "The", " cat", " sat", "." |
 | Softmax | A mathematical function that converts raw model scores (called logits) into a probability distribution that adds up to 1.0, making the scores comparable and interpretable | Turning logits of (5, 2, -1) for (Paris, Lyon, banana) into probabilities like (0.95, 0.05, 0.001) |
-| Temperature | A number that controls how "peaked" or "flat" the probability distribution is; low temperature makes the most likely token nearly certain, high temperature makes unlikely tokens more competitive | Setting `temperature=0.0` in the agent loop to get the same tool-call format every time |
+| Temperature | The dial you turned in *Running Your Own AI*, stated precisely: a number that controls how "peaked" or "flat" the probability distribution is. Low temperature makes the most likely token nearly certain; high temperature makes unlikely tokens more competitive | The same `temperature` you passed in `options` and dragged in OpenWebUI's Advanced Params, now worked by hand in Model 1 |
 | Top-k sampling | A technique that keeps only the k highest-probability tokens before sampling, discarding the long tail of unlikely options | With k=5, only the five most probable next words are considered, even if there are 50,000 in the vocabulary |
 | Top-p (nucleus) sampling | A technique that keeps the smallest group of tokens whose combined probability reaches a threshold p, adapting to how confident the model is at each step | With p=0.9, if Paris alone has probability 0.92, only Paris is kept; if the top 10 words share 0.9 probability, all 10 are kept |
 | Greedy decoding | The strategy of always picking the single most probable next token, equivalent to temperature = 0; deterministic but sometimes repetitive or locally optimal but globally suboptimal | An agent with temperature=0.0 that always picks the same action regardless of context |

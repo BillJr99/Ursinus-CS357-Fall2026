@@ -44,7 +44,7 @@ info:
     - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
     - rtitle: "Structured Peer Review Activity (SQR protocol used at the brief exchange)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md"
     - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."
 
 tags:
@@ -72,6 +72,27 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 | **Problem statement** | One paragraph, traceable to the interview, stating the problem an agent system could address, without committing to a design yet. | Brief section 4 |
 | **Track fit** | A short argument that the problem could support any of the three final-project tracks (build, audit, or open-source), keeping your options open until the final-project tracks are handed out. | Brief section 5 |
 | **Known unknowns** | The concrete things you would need to find out before proposing anything, the edge of your understanding. | Brief section 6 |
+
+---
+
+## Before You Start
+
+**This is a team assignment with one individual gate in the middle**, and the order matters more here than in anything else this term.
+
+**The sequence, and why it is this way:**
+
+1. **Speed-dating kickoff, in class.** Topics come out of conversation, not out of a solo brainstorm.
+2. **Identify a real stakeholder** and make contact early. This is the step with a lead time you do not control; a person has to answer you.
+3. **Interview them.** Not a survey. A conversation you took notes in.
+4. **Your own first draft, written individually and without AI**, due before your team drafts. Half a page. This is a gate, not a suggestion.
+5. **The team brief**, which may use whatever tools you want, with disclosure.
+6. **Peer exchange**, using SQR cards.
+
+**Time:** six to eight hours per person across two weeks, and it is spread thin on purpose. The interview scheduling is the long pole. Start on it the week it is assigned.
+
+**Start the stakeholder contact this week.** If nobody on your team knows a fitting partner, ask me: I will broker an introduction within one week of the request, and no team's brief is blocked by the roster. What blocks teams is waiting until week two to discover they have nobody.
+
+> **Why step 4 is unassisted.** Not because AI is forbidden here; it is not, and steps 5 and 6 are open. The individual draft exists so that your team's brief is a synthesis of four people's actual understanding rather than four people editing one machine's framing. You will notice the difference in the peer exchange, in both directions.
 
 ---
 
@@ -156,7 +177,7 @@ Attach the **interview packet** as an appendix: prep questions, notes, consent r
 
 ## Peer Exchange
 
-Before the brief is due, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the due date, before it feeds the Literature Review; the cycle is *artifact -> peer review -> revise*, and it repeats at the proposal and the gallery walk.
+Before the brief is due, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md). Plan to revise the brief in response before the due date, before it feeds the Literature Review; the cycle is *artifact -> peer review -> revise*, and it repeats at the proposal and the gallery walk.
 
 ---
 
@@ -179,3 +200,17 @@ Answer individually in your submission, keyed to the Open Questions (Goal 15):
 - *How can we understand the world?* Name one thing the stakeholder's discipline treats as obvious evidence that CS would not, or vice versa. What would your team lose by using only one of the two lenses?
 - If collaboration beyond your team occurred, identify it. Do you certify that this submission represents your team's original work? Please identify any and all portions of your submission that were not originally written by your team.
 - Approximately how many hours did this assignment take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+- [ ] The stakeholder is a **real person or organization** we could contact, not a persona.
+- [ ] The brief reports what they said, with quotes or specific paraphrase, not what we assumed they would say.
+- [ ] Every team member's individual unassisted draft was written before team drafting began, and is included.
+- [ ] The problem is framed as **their** problem, in their terms, and would be recognizable to them.
+- [ ] Constraints they named are recorded even where they are inconvenient for the system we want to build.
+- [ ] We separated what they told us from what we inferred.
+- [ ] SQR cards given to another team: one Strength with evidence, one genuine Question, one Risk with a suggested mitigation.
+- [ ] AI disclosure states what was AI-assisted and how we verified it.
+- [ ] Contribution statement says who did what.

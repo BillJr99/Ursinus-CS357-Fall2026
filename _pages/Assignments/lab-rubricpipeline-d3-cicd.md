@@ -9,9 +9,9 @@ info:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: 'Publishing Activity: GHCR, Docker Hub, and npm'
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md
   - rtitle: Coding Agents Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md
   - rtitle: pytest Documentation
     rlink: https://docs.pytest.org/en/stable/
   - rtitle: Python Packaging User Guide
@@ -32,8 +32,8 @@ To earn trust in agentic software through engineering discipline: test-driven de
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Publishing Activity: GHCR, Docker Hub, and npm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md)
+- [Publishing Activity: GHCR, Docker Hub, and npm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md)
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md)
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
@@ -56,8 +56,8 @@ The core pipeline earns trust through measurement; this direction earns it throu
 
 **Prerequisite activities**: complete these before writing any code:
 
-- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md): registries, names, tags, and pip publishing
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): agent loops and CI
+- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md): registries, names, tags, and pip publishing
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md): agent loops and CI
 
 **Tools to install:**
 
@@ -644,3 +644,24 @@ Cite a specific observation from the direction (a line of code, a terminal outpu
 ---
 
 When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.
+
+---
+
+#### Self-Check Before You Submit
+
+Held against this direction's own *What proficient work looks like* list.
+
+- [ ] All five tests pass, including the three I wrote.
+- [ ] The mock fixture intercepts the Ollama HTTP call, so **no live model is required** to run the suite.
+- [ ] At least one test verifies response **format**.
+- [ ] Each test is labeled with its type: semantic, format, or safety.
+- [ ] `black` and `ruff` both exit 0.
+- [ ] `pytest --cov` reports at least 80% line coverage with **branch coverage enabled**.
+- [ ] The coverage report is pasted into the writeup, with missed lines identified.
+- [ ] Both planted style issues fixed, each fix explained.
+- [ ] `ci.yml` runs on push and pull_request, matrixes Python 3.11 and 3.12, runs all three steps, and carries my inline comment explaining the matrix choice.
+- [ ] A screenshot shows **two green jobs** in the Checks tab.
+- [ ] `pyproject.toml` builds a wheel; `dist/*.whl` exists.
+- [ ] The Dockerfile builds locally and its `CMD` invokes the agent correctly.
+- [ ] TestPyPI receipt or `twine --dry-run` output attached.
+- [ ] The writeup explains the difference between a wheel and a source distribution.

@@ -31,8 +31,8 @@ In this lab, you and your partner will take a deliberately insecure AI agent con
 
 Before beginning, make sure you have completed (or are ready to reference) both prerequisite activities:
 
-- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md): covers images, containers, volumes, and basic compose syntax
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): covers building a local LLM-calling agent and running it in Docker
+- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md): covers images, containers, volumes, and basic compose syntax
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md): covers building a local LLM-calling agent and running it in Docker
 
 If you are fuzzy on any of the following terms, re-read the relevant activity before continuing: image vs. container, bind mount vs. volume, `docker compose up`, `docker exec`, environment variable injection.
 
@@ -1006,3 +1006,19 @@ Answer each prompt in complete sentences. Answers that reference specific observ
 - The six hardening steps you applied are independent layers. If an attacker could bypass exactly one layer, which would they target first, and why?
 - If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+#### Self-Check Before You Submit
+
+- [ ] `docker-compose-insecure.yml` present, with inline comments naming each security problem.
+- [ ] `docker-compose.yml` applies **all six** hardening measures.
+- [ ] `Dockerfile` hardened, and the image builds.
+- [ ] `agent.py` reads secrets from `/run/secrets/`, **not** from the environment.
+- [ ] `baseline-notes.md` documents what the insecure agent could actually reach, from evidence rather than from reasoning.
+- [ ] `hardening-log.md` shows verification output for each of the six steps, in order.
+- [ ] `threat-model.md` complete: all four rows, all four columns.
+- [ ] `red-team-notes.md` records what I tried, what happened, and what it means, including the attempts that **failed to break anything**.
+- [ ] `RUNBOOK.md` covers all three procedures, in enough detail to follow under pressure.
+- [ ] For each hardening measure I can say which of observability, isolation, and reversibility it buys.
+- [ ] Pair log with role swaps at least every 30 minutes.

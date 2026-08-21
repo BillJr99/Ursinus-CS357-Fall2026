@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-localai.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localai.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-localai.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-localai.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Running Your Own AI: Ollama, OpenWebUI, and Private Local Models
 
-The prompts we engineered in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity have so far run against someone else's server. Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
+Every model you have talked to so far, in this course or anywhere else, has run on someone else's server. Today that stops. Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
 
 > **Before class: the 10-minute pre-install checklist**
 >
@@ -42,6 +42,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Quantization | A technique that reduces the storage size of a model by representing each number with fewer bits, trading a small amount of accuracy for the ability to run on ordinary hardware | A 4-bit quantized 8B-parameter model takes roughly 4 GB instead of 16 GB at full precision |
 | Parameter count | The number of numerical values (weights) that define a model's learned behavior, roughly correlated with capability, but also with memory and speed requirements | llama3.2 has ~3 billion parameters; larger models like llama3:70b have 70 billion |
 | Tokens per second | A measure of how fast a model generates output; each "token" is roughly a word or word-piece, so 10 tokens per second is roughly 10 words per second | You will measure this today by timing a 100-word generation against your system's hardware |
+| Temperature | A setting you control, not something baked into the model, that decides how much the model varies its wording. Near 0 it gives you nearly the same answer every time; near 1 it wanders. It is one of several *sampling parameters* (`top-p` is another) that sit between the model and the text you read | The **Advanced Params** panel in OpenWebUI, and the `options` block of your Python call. Section 3b has you turn it yourself; *Why Different Answers Every Time?* explains what it does to the math |
 
 ---
 
@@ -160,6 +161,54 @@ While a long generation runs, open your system monitor (Activity Monitor on macO
 
 ---
 
+## 3b. Turn the Dial: Temperature in Your Own Chatbot
+
+You have just run a model that is *yours*. That means the settings that shape its answers are yours too, and the most consequential one is **temperature**.
+
+Here is the whole idea in one sentence: at each step the model produces a ranked list of candidate next words, and temperature decides whether it always takes the top one or sometimes reaches further down the list. **Near 0 it always takes the top candidate**, so the same prompt gives you very nearly the same answer every time. **Near 1 it reaches down**, so the wording varies from run to run. Nothing about the model changes; only how its output is picked.
+
+You will meet the mathematics of that pick in *Why Different Answers Every Time? Sampling, Temperature, and Generation*. Today you just need to find the dial and feel what it does.
+
+### Where the dial lives
+
+You already have three places to set it, and they are all the same setting:
+
+| Where | How to set it |
+|-------|---------------|
+| **OpenWebUI**, per conversation | Open a chat, click the **controls** icon at the top right, expand **Advanced Params**, and drag **Temperature**. It applies to that chat from that point on. |
+| **OpenWebUI**, per model | **Workspace &rarr; Models &rarr;** (your model) **&rarr; Advanced Params**. This becomes the default for every new chat with that model, which is how you build a "always answers the same way" assistant. |
+| **The Ollama CLI** | Inside an `ollama run llama3.2` session, type `/set parameter temperature 0` and press Enter, then keep chatting. |
+| **Your Python code** | The `"options": {"temperature": ...}` block you already sent in the code cell above. |
+
+That last row is the point worth pausing on: the `temperature=0.7` your Python helper has been passing all along, and the slider in the OpenWebUI sidebar, are the *same knob*. The chatbot is not a different kind of thing from your script; it is a friendlier front end onto the identical API call.
+
+### Do this now (about ten minutes)
+
+1. Pick one prompt with room to vary. `"Write two sentences of advice for a first-year college student."` works well. A prompt with one right answer (`"What is 7 times 8?"`) will not show you anything.
+2. Set temperature to **0**. Send your prompt **three times**, starting a fresh chat each time so nothing carries over. The Recorder pastes all three answers into the team log.
+3. Set temperature to **1**. Send the same prompt **three more times**, fresh chat each time. Log those too.
+4. Now compare the two sets of three, on two separate questions: *how much did the **wording** change?* and *how much did the **advice itself** change?*
+
+> **You've succeeded when** your log shows six answers, and your team can state in one sentence what changed between the two groups and what stayed the same.
+
+### Critical Thinking Questions
+
+1. At temperature 0, were your three answers identical, or merely very similar? If they differed at all, what does that tell you about "deterministic" as a promise a system makes to you?
+
+   > *Hint: Other things besides temperature can move: which machine served the request, how the numbers round on your hardware. Temperature 0 buys you a great deal of repeatability, not a guarantee.*
+
+2. At temperature 1, did the model's **facts and recommendations** change, or only its phrasing? Try a prompt where you can check the facts. Which kind of change would worry you more in a system a stranger depends on?
+
+3. In the *Agent Loop* activity, `run_agent` pinned `temperature=0.0` while the plain `chat` helper defaulted to `0.7`. Now that you have watched both settings behave, restate in your own words why the loop wanted the pinned one.
+
+   > *Hint: The loop searches the model's text for the exact strings `Final Answer:` and `calc(...)`.*
+
+4. Suppose you are building the campus advising assistant your team keeps sketching. Would you ship it at 0, at 1, or somewhere between? Name the failure you are trading away, and the one you are accepting.
+
+> **Common Misconception:** Temperature is not a "creativity" slider, and it is certainly not an "accuracy" slider. A model at temperature 0 will state a wrong fact just as confidently as one at temperature 1; it will simply state the *same* wrong fact every time. Turning temperature down makes a system **repeatable**, which makes it testable. It does not make it right.
+
+---
+
 ## 4. Multi-Turn Conversations: Managing the Message List
 
 The call above sends a single message and forgets it instantly. A real conversation remembers what came before, and here is the key idea: **the Ollama server is stateless.** It does not remember your last turn. *You* remember, by keeping a running `messages` list and re-sending the whole thing on every call. Each turn you append the user's message, send the full list, then append the assistant's reply back onto it. The growing list *is* the conversation's memory.
@@ -253,7 +302,7 @@ In this part, you will probe your local model across five different task types t
 
 3. *Stack diagram.*
 
-   - *What to do*: Draw a box-and-arrow diagram showing the full data flow from OpenWebUI to Ollama to the model weights and back, plus your Python script as a separate entry point. Label which component owns the system prompt, the sampling parameters (temperature, top-p), and the model weights.
+   - *What to do*: Draw a box-and-arrow diagram showing the full data flow from OpenWebUI to Ollama to the model weights and back, plus your Python script as a separate entry point. Label which component owns the system prompt, the sampling parameters (the temperature you turned in Section 3b, plus its sibling `top-p`), and the model weights.
    - *Starter hint*: Your diagram should have at least four boxes: OpenWebUI (or your Python script), the Ollama process, the model weights file on disk, and the GPU or CPU memory where inference actually runs. Arrows should show the direction of data flow for both the input prompt and the output response.
    - *You've succeeded when*: Someone who was not in class today could read your diagram and correctly answer: "Where does the system prompt live? Where do the weights live? What does Ollama actually do?"
 
@@ -269,7 +318,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
--> Coming Up Next: Our models are running. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world, and the local stack you built today is the foundation for the Local Agent Lab. (The question of why the same prompt gives different answers gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
+-> Coming Up Next: Our models are running, and you have turned your first dial on one. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world, and the local stack you built today is the foundation for the Local Agent Lab. (*Why* the dial in Section 3b behaves the way it does gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
 
 ## 6. Further Reading
 

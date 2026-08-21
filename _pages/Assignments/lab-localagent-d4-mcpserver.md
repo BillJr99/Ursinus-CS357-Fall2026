@@ -39,8 +39,8 @@ Why does OAuth matter here? Without authentication, any process on the same mach
 
 **Complete these prerequisite activities first:**
 
-- [MCP Server Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md): introduces the MCP protocol and the Python SDK
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): walks through running a local AI agent and wiring in tools
+- [MCP Server Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-mcprestoauth.md): introduces the MCP protocol and the Python SDK
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md): walks through running a local AI agent and wiring in tools
 
 ##### Install Required Tools
 
@@ -920,3 +920,21 @@ Answer each prompt in complete sentences. Your answers should reference specific
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 - MCP is a relatively new standard. What problem would arise if every AI tool vendor invented their own proprietary tool-calling protocol instead? How does standardization (like MCP) change the security landscape; does it make security easier or harder, and for whom?
 - Imagine a malicious MCP server that lies about its tool descriptions: for example, it advertises a tool called `search_files` that actually exfiltrates data to a remote server. How could an AI agent be tricked into calling this harmful tool? What trust mechanisms (at the protocol, deployment, or organizational level) would need to exist to prevent this attack?
+
+---
+
+#### Self-Check Before You Submit
+
+- [ ] `mcp_server.py`, `oauth_middleware.py`, `server_http.py`, and both tool modules are present and runnable.
+- [ ] `requirements.txt` lists every dependency.
+- [ ] OAuth server configuration included, **secrets redacted**.
+- [ ] Agent MCP configuration included, secrets redacted.
+- [ ] `invocation_trace.txt` shows a full discovery-then-invocation round trip.
+- [ ] `error_expired_token.txt` shows the expired-token path failing the way it should.
+- [ ] `error_tool_failure.txt` shows a tool failure surfacing rather than being swallowed.
+- [ ] End-to-end data-flow diagram included.
+- [ ] Port table complete for all three services.
+- [ ] `README.md` justifies the tool schemas and explains the domain choice.
+- [ ] The writeup names what the OAuth scopes actually bound, and what an attacker holding a valid token could still do.
+- [ ] All reflection prompts answered.
+- [ ] Pair log with role swaps and the Part checkpoint answers.

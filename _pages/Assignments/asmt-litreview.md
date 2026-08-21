@@ -76,6 +76,20 @@ A literature review is not a book report and not a pile of links. It is an argum
 
 ---
 
+## Before You Start
+
+**This builds on:** your Stakeholder Brief, whose problem statement tells you what to go looking for. A literature review without a question is a reading list.
+
+**Two phases with a hard boundary between them:** everyone writes an individual annotated bibliography first, and only then does the team synthesize. The individual phase has its own due date on the schedule, and it is not a formality; a synthesis assembled from four people who each read one source is visibly thinner than one assembled from four people who each read several.
+
+**Time:** four to six hours for the individual phase, three to four for the team synthesis.
+
+**Where to search.** Start with the *Information Literacy* section below rather than with a general web search. The library's databases and Google Scholar surface different things, and the difference matters for what you are able to claim.
+
+> **On using AI here.** It is permitted, disclosed, and genuinely useful for finding and triaging sources. It is also the single most reliable way to end up citing a paper that does not exist. **Every source you cite must be one you opened.** Not one a model described to you; one you opened, with a link or DOI that resolves. Check every one before you submit, and say in your disclosure how you checked.
+
+---
+
 ## Phase 1: Individual Annotated Bibliography
 
 **Each team member, individually,** finds and annotates **2-3 sources** relevant to the team's problem statement. Requirements per person:
@@ -137,3 +151,23 @@ Answer individually in your submission, keyed to the Open Questions (Goal 15):
 - *What should matter to me?* The gap your team named is a claim about what deserves work. Whose needs does that gap center, and whose did your sources let you overlook?
 - If collaboration beyond your team occurred, identify it. Do you certify that your annotations represent your own original reading and writing, and that the synthesis represents the team's? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this assignment take you personally (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+**Individual annotated bibliography**
+
+- [ ] Every source is one I actually opened, and every link or DOI resolves.
+- [ ] Each annotation says what the source claims, how it knows, and what it means for **our** problem, rather than summarizing an abstract.
+- [ ] The sources span more than one viewpoint or discipline.
+- [ ] At least one source complicates our assumed answer rather than supporting it.
+
+**Team synthesis**
+
+- [ ] The synthesis is organized by **theme or argument**, not source by source.
+- [ ] Where sources disagree, the disagreement is stated and not smoothed over.
+- [ ] The gap our project addresses is named, and it follows from the sources rather than being asserted before them.
+- [ ] Every claim traces to a citation, and every citation traces to a source someone on the team read.
+- [ ] AI disclosure names what was AI-assisted and how citations were verified.
+- [ ] Contribution statement says who read what.

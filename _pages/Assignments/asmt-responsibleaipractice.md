@@ -50,20 +50,22 @@ info:
       rlink: "https://archive.org/details/computerpowerhum00weiz"
     - rtitle: "Mitchell, Artificial Intelligence: A Guide for Thinking Humans (2019), Chapter 8"
       rlink: "https://melaniemitchell.me/aibook/"
+    - rtitle: "The Philosophy and Psychology of Artificial Intelligence Activity (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-philosophyai.md"
     - rtitle: "Data Cards Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-datacards.md"
     - rtitle: "Bias in Data Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md"
     - rtitle: "Governance Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-governance.md"
     - rtitle: "NIST AI Risk Management Framework"
       rlink: "https://www.nist.gov/itl/ai-risk-management-framework"
     - rtitle: "EU AI Act, Annex III"
       rlink: "https://artificialintelligenceact.eu/"
     - rtitle: "AI Regulation Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-regulation.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-regulation.md"
     - rtitle: "Ethical Frameworks Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
     - rtitle: "Strubell et al., Energy and Policy Considerations for Deep Learning in NLP (2019)"
       rlink: "https://arxiv.org/abs/1906.02629"
     - rtitle: "Patterson et al., Carbon Emissions and Large Neural Network Training (2021)"
@@ -94,6 +96,28 @@ tags:
 By this point in the course you have built systems that answer questions, retrieve documents, call tools, and make or support decisions. Responsible AI is what happens when you stop asking "does it work?" and start asking "should anyone rely on it, and on what terms?" That question can be approached from five distinct angles: whether it matters that these systems genuinely understand anything; whether their data and behavior are documented honestly; whether their operation is governed by enforceable rules; whether they comply with the regulations that increasingly bind them; and what their energy and carbon cost really is. Each direction below takes one of those angles and applies it to a **concrete artifact**, an essay defending a position, a datasheet and model card for a system you have used, a governance document for your own project, a regulatory mapping of a real deployed system, or a carbon audit of your own AI use.
 
 Read all five directions before choosing, then pick **one** and carry it out in full depth. The right choice is the angle you most want to be able to defend in your future practice, or the one that most directly serves your final project. Do not attempt more than one; depth on one is worth far more than a shallow pass over several. Your single 100-point grade is assessed with the shared rubric above, whose four dimensions (analysis quality, evidence and citation, connection to course systems and concepts, and communication for audience) apply to whichever direction you choose.
+
+---
+
+## Before You Start
+
+**This builds on:** the *Training Data, Bias, and Explainability* session, *Intellectual Property, Privacy, and the Case for Local AI*, *Governance and Policy Writing*, and *The Environmental Cost of Inference*. Each direction leans on a different one, and all four are taught before this is due.
+
+**You need:** no code. Direction E needs a week of your own AI usage logged, so **start the log the day this is handed out** even if you have not chosen a direction yet; it is the only part of this assignment you cannot do retroactively.
+
+**Time:** eight to ten hours. Direction C's peer review round and Direction E's week-long audit both have calendar dependencies, not just effort.
+
+**Choosing a direction**, honestly:
+
+| Take | If |
+|---|---|
+| **A: Does It Matter If Machines Understand?** | You want to argue, you are willing to engage a position you disagree with on its own terms, and "it depends" is not where you want to end up |
+| **B: Model Cards and Datasheets** | You want to document a real system precisely, and you would rather be exact than persuasive |
+| **C: Governance and Policy** | Your final project has an agent team that will need governing anyway, and you would rather write that document once and use it twice |
+| **D: Regulatory Landscape** | You want to know how this technology is actually being regulated, and you can pick a real deployed system to classify |
+| **E: The Carbon Cost of Intelligence** | You want a number rather than an opinion, and you will actually keep the week-long log |
+
+> **The most common way each direction fails.** A: summarizing three positions and declining to hold one. B: documentation that describes the system's intended use and never its misuse. C: a policy with no enforcement path, which is a wish list. D: classifying a system you cannot get real information about. E: reconstructing the week's usage from memory at the end, which produces a number that is not a measurement.
 
 ---
 
@@ -428,3 +452,26 @@ Answer each of the following with a specific observation from this assignment (p
 3. If you used an AI tool for any part of this assignment (brainstorming, grammar checking, drafting), note it here and describe how you used it. The analysis, argument, and writing must be your own.
 4. If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
 5. Approximately how many hours did it take you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+**Every direction**
+
+- [ ] I picked one direction and went deep, rather than sampling several.
+- [ ] Every claim about a real system is sourced, and every source resolves.
+- [ ] The work is about a **specific** system, deployment, or question, not about AI in general.
+- [ ] Real names and sensitive data are redacted.
+- [ ] AI disclosure names what was AI-assisted and how I verified it.
+- [ ] Hours reported.
+
+**Direction A** — at least two named philosophical positions engaged on their own terms; a defended position, not a survey; a concrete deployment implication that would change what someone builds.
+
+**Direction B** — a real datasheet and a real model card in the established formats; a bias analysis grounded in the actual training data or its documented absence; misuse scenarios with **implementable** controls, not aspirations.
+
+**Direction C** — all eight sections present and enforceable; the NIST AI RMF and EU AI Act mappings argued rather than asserted; the peer review included **verbatim**; a revision memo saying what changed because of it.
+
+**Direction D** — a real deployed system, named; an EU AI Act classification with the argument for it; the NIST mapping; sector-specific rules identified; a structured risk register with owners.
+
+**Direction E** — a week of logged usage, logged **as it happened**; the project-at-scale analysis with its arithmetic shown; efficiency redesigns prioritized by impact; a defended position on the Jevons paradox that engages the strongest counterargument.

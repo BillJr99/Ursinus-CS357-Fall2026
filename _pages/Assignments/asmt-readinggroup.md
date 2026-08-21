@@ -97,6 +97,18 @@ Sign-up is first-come, first-served via the course sign-up sheet (link on the co
 
 ---
 
+## Before You Start
+
+**This is extra credit for the presenter and required participation for everyone else.** If you are reading this because you are thinking about leading a session, the section below is for you; if you are reading it because you are in the audience that day, read *For the Audience* above and the [reading response guide]({{ site.baseurl }}/Participation/ReadingResponses).
+
+**Time, if you lead a session:** about four hours. Two to read your source properly, one to prepare the questions, one for slides and logistics. The reading is the part people underestimate: you cannot facilitate a discussion about a text you skimmed, because the whole job is fielding a question the text half-answers.
+
+**Pick your source at least two weeks out**, and tell me what you picked. If it is not on the seed list, that is welcome; just check with me so we do not double up and so I can make sure the class has access to it.
+
+**Plan backwards from the room, not forwards from the text.** The usual failure is a well-summarized paper and a silent room. Decide first what you want the class arguing about, then work out how much of the source they need to get there. Fifteen minutes of setup and thirty of discussion beats the reverse, every time.
+
+---
+
 ## What to Present On
 
 You may choose any of the following:
@@ -138,7 +150,6 @@ These are suggested sources. You are not limited to this list, propose others wi
 
 These are the technical books assigned across the course schedule; a chapter you present here can double as a deeper dive on a topic we cover in a lecture.
 - Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1-2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
-- Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. *(Chapter 2 on intelligent agents; later chapters by topic.)* https://aima.cs.berkeley.edu/
 - Jurafsky, D. & Martin, J. H. *Speech and Language Processing* (3rd ed. draft). *(Ch 3 on n-gram language models; later chapters on embeddings and transformers.)* https://web.stanford.edu/~jurafsky/slp3/
 - Nielsen, M. *Neural Networks and Deep Learning.* *(Chapter 1, neural nets from first principles.)* http://neuralnetworksanddeeplearning.com/
 - Sutton, R. & Barto, A. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. *(Chapters 1-6 for the RLHF thread.)*
@@ -198,3 +209,16 @@ If you chose the **Competing Texts Session** format, your reflection must also i
 This assignment is scored on the rubric above. Leading a session earns a **10-point base grade**: the rubric's five criteria each contribute one-fifth, scaled by the proficiency level earned, Proficient, the top level, earns full credit (4 of 4) on that criterion. On top of the base, you earn **extra credit** equal to your slot's extra-credit maximum (see the scale above), scaled by the same rubric proficiency.
 
 **Example:** a Week-5 leader (8 extra-credit points available) earning Proficient on all five criteria receives the full **10-point base grade** *and* the full **8 extra-credit points**; one earning Progressing (3 of 4) on all five criteria receives 10 × 0.75 = 7.5 base points and 8 × 0.75 = 6 extra-credit points added to the final grade.
+
+---
+
+## Self-Check, for the Session Leader
+
+- [ ] I read the source in full, not a summary of it, and I could answer a question about a part I am not presenting.
+- [ ] I cleared my source with the instructor at least two weeks out.
+- [ ] The class can get to the source: it is free, linked, or I arranged access.
+- [ ] Setup is fifteen minutes or less. The discussion is the session.
+- [ ] I prepared the required discussion questions, and at least one has no comfortable answer.
+- [ ] At least one question connects the source to something we have actually built or read in this course.
+- [ ] I have a plan for a silent room, and a plan for a room where one person talks the whole time.
+- [ ] The reflection write-up is done, and it says what actually happened rather than what I hoped would.
