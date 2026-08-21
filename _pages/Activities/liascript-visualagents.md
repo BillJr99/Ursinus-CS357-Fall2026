@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand — through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools) — exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually — not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern we have coded by hand, through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools), exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 
@@ -29,25 +29,25 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
 | **Langflow** | A visual, drag-and-drop tool for building AI pipelines where components appear as boxes on a canvas and data flows along drawn connections between them. | You will drag an "Ollama" box onto the canvas and connect it to a "Chat Output" box instead of writing `requests.post(...)` in Python. |
-| **Dataflow graph** | A diagram where nodes represent processing steps and edges (arrows) represent data traveling from one step to the next; every flow you build today is a dataflow graph. | Your RAG pipeline becomes a graph: File Loader → Text Splitter → Embedder → Chroma → Prompt → Ollama → Output. |
+| **Dataflow graph** | A diagram where nodes represent processing steps and edges (arrows) represent data traveling from one step to the next; every flow you build today is a dataflow graph. | Your RAG pipeline becomes a graph: File Loader -> Text Splitter -> Embedder -> Chroma -> Prompt -> Ollama -> Output. |
 | **RAG (Retrieval-Augmented Generation)** | A technique where the AI looks up relevant documents from a database before answering, so its answers are grounded in real source material rather than just training data. | Your RAG Knowledge Base Lab bot that searches your uploaded corpus before answering questions. |
 | **REST API (Representational State Transfer Application Programming Interface)** | A standard way for programs to communicate over the internet by sending and receiving structured data; Langflow can turn any flow into a REST API endpoint that your Python code can call. | After building your RAG flow visually, you export it and call it from three lines of Python using the `requests` library. |
-| **Low-code** | A style of software development where most logic is assembled visually with minimal hand-written code, making it accessible to people without programming backgrounds. | Wiring a complete RAG pipeline in Langflow by dragging boxes — no Python required — so a club officer could set it up themselves. |
+| **Low-code** | A style of software development where most logic is assembled visually with minimal hand-written code, making it accessible to people without programming backgrounds. | Wiring a complete RAG pipeline in Langflow by dragging boxes (no Python required) so a club officer could set it up themselves. |
 | **Chunk size** | The number of characters or words each piece of a document is split into before being stored in the vector database; larger chunks preserve more context but cost more to embed and retrieve. | In the RAG Knowledge Base Lab you chose a chunk size (e.g., 500 characters); today you enter the same number in Langflow's Text Splitter component. |
 
 ---
 
 # Part I: The Medium and the Message
 
-In this part, you will discover that every AI pipeline you've coded this semester can be expressed visually as a drag-and-drop flow — and you will learn *when* that matters and *when* it doesn't.
+In this part, you will discover that every AI pipeline you've coded this semester can be expressed visually as a drag-and-drop flow, and you will learn *when* that matters and *when* it doesn't.
 
 ## Model 1: Translation Table
 
 Think of architectural blueprints versus a physical building. Both represent the same structure, but blueprints are easier to share with a client who has never swung a hammer, while the physical building is what actually runs. Langflow is the blueprint tool: it makes the architecture of your AI system visible and explainable to non-programmers, while the code you have been writing is the building.
 
-Today you will discover that the blueprint and the building encode exactly the same ideas — and that choosing between them depends on your audience, not on what is technically possible. Visual builders have democratized who can *assemble* AI systems; your job today is to understand what that means for who can *audit* them.
+Today you will discover that the blueprint and the building encode exactly the same ideas, and that choosing between them depends on your audience, not on what is technically possible. Visual builders have democratized who can *assemble* AI systems; your job today is to understand what that means for who can *audit* them.
 
-**A flow is a dataflow graph.** Nodes are components (prompt templates, model calls, retrievers, parsers); edges carry typed data between them. Langflow renders the graph on a canvas, executes it on demand, and exposes every intermediate value for inspection — which makes it, among other things, a *teaching and debugging instrument*: the architecture diagram and the running system are the same object.
+**A flow is a dataflow graph.** Nodes are components (prompt templates, model calls, retrievers, parsers); edges carry typed data between them. Langflow renders the graph on a canvas, executes it on demand, and exposes every intermediate value for inspection, which makes it, among other things, a *teaching and debugging instrument*: the architecture diagram and the running system are the same object.
 
 **You already know every component.** A Prompt node is your system-prompt string; an Ollama node is your `chat()` function; a Chroma node is your vector store; a chain of nodes is your pipeline. The conceptual work of weeks 1 through 10 transfers intact; only the syntax changes from Python to wiring.
 
@@ -80,23 +80,23 @@ Today you will discover that the blueprint and the building encode exactly the s
 
 # Part II: Build Sessions
 
-Now that you understand what visual flows are and how they map to code, let's build them — starting simple and adding complexity one layer at a time.
+Now that you understand what visual flows are and how they map to code, let's build them, starting simple and adding complexity one layer at a time.
 
-## Model 2: Build 1 — Chat with a Persona
+## Model 2: Build 1 - Chat with a Persona
 
-Construct the minimal flow: **Chat Input → Prompt (with your Local Agent Lab persona pasted in) → Ollama → Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
+Construct the minimal flow: **Chat Input -> Prompt (with your Local Agent Lab persona pasted in) -> Ollama -> Chat Output**. Run it in the playground and confirm the persona holds across at least three exchanges.
 
-This is the visual equivalent of the four-line `llm()` call you have been writing since *The Agent Loop: Perceive, Plan, Act* activity. Build it first because it has the fewest nodes — any wiring mistake is immediately visible.
+This is the visual equivalent of the four-line `llm()` call you have been writing since *The Agent Loop: Perceive, Plan, Act* activity. Build it first because it has the fewest nodes; any wiring mistake is immediately visible.
 
-## Model 3: Build 2 — RAG over Your RAG Knowledge Base Lab Corpus
+## Model 3: Build 2 - RAG over Your RAG Knowledge Base Lab Corpus
 
-Recreate your RAG Knowledge Base Lab pipeline visually. The ingest path is: **File Loader → Text Splitter → Ollama Embeddings → Chroma (ingest mode)**. The query path is: **Chat Input → Chroma (query mode) → Prompt (with your grounding-and-citation instructions) → Ollama → Chat Output**. Use the same chunk size you shipped in the RAG Knowledge Base Lab so you can make a fair comparison.
+Recreate your RAG Knowledge Base Lab pipeline visually. The ingest path is: **File Loader -> Text Splitter -> Ollama Embeddings -> Chroma (ingest mode)**. The query path is: **Chat Input -> Chroma (query mode) -> Prompt (with your grounding-and-citation instructions) -> Ollama -> Chat Output**. Use the same chunk size you shipped in the RAG Knowledge Base Lab so you can make a fair comparison.
 
-Note that "ingest" and "query" are the same Chroma node set to different modes — a design detail that is invisible in Python (you call different methods) but explicit on the canvas (you use different Chroma nodes or toggle a mode field).
+Note that "ingest" and "query" are the same Chroma node set to different modes, a design detail that is invisible in Python (you call different methods) but explicit on the canvas (you use different Chroma nodes or toggle a mode field).
 
-## Model 4: Build 3 — Export and Reenter Code
+## Model 4: Build 3 - Export and Reenter Code
 
-Visual flows don't have to stay visual — you can export them and call them from regular Python code, which means your existing test harnesses from earlier labs still work. The snippet below shows exactly how: Langflow runs your flow as a local web service (a **REST API**, meaning a program you talk to over HTTP, just like your Ollama calls), and you send it a question and receive the answer.
+Visual flows don't have to stay visual; you can export them and call them from regular Python code, which means your existing test harnesses from earlier labs still work. The snippet below shows exactly how: Langflow runs your flow as a local web service (a **REST API**, meaning a program you talk to over HTTP, just like your Ollama calls), and you send it a question and receive the answer.
 
 Every flow exports as JSON (a text-based data format), and Langflow can serve any flow as a REST API endpoint. Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used. Then call the flow endpoint from three lines of Python `requests`:
 
@@ -130,7 +130,7 @@ The most defensible claim about visual builders versus code for agent systems is
 [(X)] Both express the same underlying patterns; visual excels at communication and rapid wiring, code at version control, testing, and arbitrary logic
 [( )] Flows run faster because they skip the overhead of Python interpretation
 
-> **⚠️ Common Misconception:** It is tempting to conclude that visual builders are "easier" and therefore produce systems that are less capable or less rigorous than hand-written code. This is wrong in two directions. First, Langflow can express any pattern that Python can (with the exception of certain dynamic structures like runtime loops). Second, "easier to build" does not mean "easier to audit" — a visually assembled system can be harder to review for security, bias, or correctness than well-structured Python code, because the implementation details are hidden inside opaque node icons. Ease of construction and rigor of understanding are independent dimensions.
+> **Common Misconception:** It is tempting to conclude that visual builders are "easier" and therefore produce systems that are less capable or less rigorous than hand-written code. This is wrong in two directions. First, Langflow can express any pattern that Python can (with the exception of certain dynamic structures like runtime loops). Second, "easier to build" does not mean "easier to audit"; a visually assembled system can be harder to review for security, bias, or correctness than well-structured Python code, because the implementation details are hidden inside opaque node icons. Ease of construction and rigor of understanding are independent dimensions.
 
 ---
 
@@ -144,12 +144,12 @@ One team member opens `http://localhost:7860` while the Recorder keeps notes on 
 
 ### Step 1: Simple Chat (5 minutes)
 
-1. Click **New Flow** → **Blank Canvas**
+1. Click **New Flow** -> **Blank Canvas**
 2. From the left sidebar, drag onto the canvas:
    - **Chat Input** (under Helpers)
-   - **Ollama** (under Models) — set Model Name to `llama3.2`, Base URL to `http://localhost:11434`
+   - **Ollama** (under Models): set Model Name to `llama3.2`, Base URL to `http://localhost:11434`
    - **Chat Output** (under Helpers)
-3. Connect: **Chat Input → Ollama → Chat Output** (click the output port of Chat Input, drag to input port of Ollama; repeat for Ollama → Chat Output)
+3. Connect: **Chat Input -> Ollama -> Chat Output** (click the output port of Chat Input, drag to input port of Ollama; repeat for Ollama -> Chat Output)
 4. Click **Run** (play button at top right)
 5. Type a question in the Chat Input field. You should see a response in Chat Output.
 
@@ -163,7 +163,7 @@ One team member opens `http://localhost:7860` while the Recorder keeps notes on 
 
 1. Drag a **Prompt** component onto the canvas (under Prompts)
 2. In the Prompt's template field, write a system prompt of your choice (use the ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS framework from the Prompt Engineering activity)
-3. Connect: **Chat Input → Prompt → Ollama → Chat Output** (remove the direct Chat Input → Ollama connection)
+3. Connect: **Chat Input -> Prompt -> Ollama -> Chat Output** (remove the direct Chat Input -> Ollama connection)
 4. Re-run with a question and observe the difference
 
 The Prompt node in Langflow corresponds to which part of your Python agent code?
@@ -173,7 +173,7 @@ The Prompt node in Langflow corresponds to which part of your Python agent code?
 [( )] The `parse_response()` function
 [( )] The `print()` at the end
 
-> **⚠️ Common Misconception:** Students often assume adding a Prompt node changes what the model "knows." It does not — it changes what *instructions* the model receives at the start of each conversation. The model's weights (its actual knowledge) are fixed; only the prompt changes.
+> **Common Misconception:** Students often assume adding a Prompt node changes what the model "knows." It does not; it changes what *instructions* the model receives at the start of each conversation. The model's weights (its actual knowledge) are fixed; only the prompt changes.
 
 ---
 
@@ -182,14 +182,14 @@ The Prompt node in Langflow corresponds to which part of your Python agent code?
 This replicates your RAG Knowledge Base Lab RAG pipeline visually.
 
 1. Drag onto the canvas:
-   - **File** component (under Data) — click "Upload File" and upload any short text document (or create a 3-paragraph `.txt` file about any topic)
-   - **RecursiveCharacterTextSplitter** (under Processing) — set `chunk_size=500`, `chunk_overlap=50`
+   - **File** component (under Data): click "Upload File" and upload any short text document (or create a 3-paragraph `.txt` file about any topic)
+   - **RecursiveCharacterTextSplitter** (under Processing): set `chunk_size=500`, `chunk_overlap=50`
    - **Chroma** (under Vector Stores)
-   - **OllamaEmbeddings** (under Embeddings) — set Model to `nomic-embed-text`
+   - **OllamaEmbeddings** (under Embeddings): set Model to `nomic-embed-text`
    - **Retriever** (connected to Chroma)
 
-2. Connect the indexing path: **File → TextSplitter → Chroma**
-3. Connect embeddings: **OllamaEmbeddings → Chroma** (for storing) and **OllamaEmbeddings → Retriever** (for querying)
+2. Connect the indexing path: **File -> TextSplitter -> Chroma**
+3. Connect embeddings: **OllamaEmbeddings -> Chroma** (for storing) and **OllamaEmbeddings -> Retriever** (for querying)
 4. Update your Prompt template to include a `{context}` variable:
 
 ```text
@@ -199,7 +199,7 @@ If the answer is not in the context, say "I don't have that information."
 Context: {context}
 ```
 
-5. Connect: **Chat Input → Retriever** (the query path) and **Retriever output → Prompt {context} input**
+5. Connect: **Chat Input -> Retriever** (the query path) and **Retriever output -> Prompt {context} input**
 6. Test with 3 questions: one answerable from the document, one not in the document, and one where the answer is split across two chunks
 
 **Critical Thinking**:
@@ -214,7 +214,7 @@ Context: {context}
 
 ### Step 4: Export and Inspect the JSON (5 minutes)
 
-1. Click the three-dot menu (⋯) at top right → **Export Flow** → save as `rag_flow.json`
+1. Click the three-dot menu (⋯) at top right -> **Export Flow** -> save as `rag_flow.json`
 2. Open the file and find:
    - The Ollama model configuration (model name, base URL, temperature)
    - The `chunk_size` value you set
@@ -236,11 +236,11 @@ Answer these in your Recorder's notes before moving on:
 
 # Part IV: Synthesis and Practice
 
-Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits — and to practice explaining them to someone without a programming background.
+Now that you've built, tested, and exported flows, this part asks you to push those flows to their limits, and to practice explaining them to someone without a programming background.
 
 ---
 
-**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+**In-class work stops here.** The exercises below are homework and going-deeper material; attempt them before the related lab.
 
 ## Exercises
 
@@ -248,7 +248,7 @@ Now that you've built, tested, and exported flows, this part asks you to push th
 
    *What to do:* Choose one Unit 3 pattern (router, critique-refine, or a two-stage pipeline) and realize it on the Langflow canvas. Capture a screenshot of the working flow with at least one playground transcript showing the expected behavior.
 
-   *Starter hint:* A two-stage pipeline is the simplest: one Prompt+Ollama node for the first stage, whose output feeds a second Prompt+Ollama node. The "router" pattern requires a conditional — look for a "Conditional Router" component in Langflow's sidebar.
+   *Starter hint:* A two-stage pipeline is the simplest: one Prompt+Ollama node for the first stage, whose output feeds a second Prompt+Ollama node. The "router" pattern requires a conditional; look for a "Conditional Router" component in Langflow's sidebar.
 
    *You've succeeded when:* You can show the screenshot to a teammate who did not build it, and they correctly explain what the flow does without your help.
 
@@ -280,7 +280,7 @@ Now that you've built, tested, and exported flows, this part asks you to push th
 
 ---
 
-→ Coming Up Next: In the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity, we measure agent output quality at scale — which requires recruiting a model to act as the judge of other models' outputs.
+-> Coming Up Next: In the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity, we measure agent output quality at scale, which requires recruiting a model to act as the judge of other models' outputs.
 
 ## Further Reading
 

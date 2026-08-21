@@ -29,9 +29,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
 | **Copyright** | A legal right that gives the creator of an original work exclusive control over its use and distribution for a limited time. | An author owns the text of their novel; a model trained on that novel raises questions about whether that use was authorized. |
-| **Fair Use** | A legal doctrine in US copyright law that permits limited use of copyrighted material without permission, based on four factors: purpose, nature of the work, amount used, and market effect. | Courts use fair use to decide whether AI training on copyrighted books is lawful — the answer is not yet settled. |
+| **Fair Use** | A legal doctrine in US copyright law that permits limited use of copyrighted material without permission, based on four factors: purpose, nature of the work, amount used, and market effect. | Courts use fair use to decide whether AI training on copyrighted books is lawful; the answer is not yet settled. |
 | **FERPA** | The Family Educational Rights and Privacy Act, a US law that restricts who may access student educational records such as grades, transcripts, and advising notes. | Pasting a class roster with student names and grades into a consumer chatbot could violate FERPA. |
-| **Data Minimization** | The privacy engineering principle of collecting, processing, and retaining only the data actually needed for a specific task — nothing extra, nothing "just in case." | Stripping student names before running essays through an AI grading assistant is a data minimization practice. |
+| **Data Minimization** | The privacy engineering principle of collecting, processing, and retaining only the data actually needed for a specific task, nothing extra, nothing "just in case." | Stripping student names before running essays through an AI grading assistant is a data minimization practice. |
 | **Memorization** | The phenomenon where a model reproduces verbatim text from its training data in its outputs, creating potential copyright infringement risk. | Researchers have demonstrated that repeating a prompt about a specific book excerpt can cause a model to reproduce full passages. |
 | **Local Inference** | Running an AI model entirely on your own hardware so that no input data ever travels to a third-party server. | Using Ollama on your laptop to analyze sensitive documents keeps those documents off any external service's infrastructure. |
 
@@ -45,17 +45,17 @@ In this part, you will learn to separate three legally distinct questions about 
 
 Three separate questions arise at the intersection of AI and intellectual property, and conflating them produces confused reasoning. Keep them apart whenever you read news coverage, policy proposals, or vendor terms of service.
 
-**Question 1 — Input: was training a lawful use of copyrighted work?** Training corpora include books, code, journalism, and art whose creators largely did not consent. Litigation (authors, artists, and news organizations versus model vendors) turns substantially on *fair use* (a four-factor balancing test in US law: purpose and character of the use, nature of the work, amount used, and market effect). Courts are actively dividing on these questions; engineers should track outcomes, not assume them.
+**Question 1 - Input: was training a lawful use of copyrighted work?** Training corpora include books, code, journalism, and art whose creators largely did not consent. Litigation (authors, artists, and news organizations versus model vendors) turns substantially on *fair use* (a four-factor balancing test in US law: purpose and character of the use, nature of the work, amount used, and market effect). Courts are actively dividing on these questions; engineers should track outcomes, not assume them.
 
-**Question 2 — Output: who owns what the model produces?** The US Copyright Office requires human authorship; purely machine-generated material is not copyrightable, while human creative selection and arrangement can be. For your projects: your prompts, curation, code, and editorial choices are where your authorship lives, so document them.
+**Question 2 - Output: who owns what the model produces?** The US Copyright Office requires human authorship; purely machine-generated material is not copyrightable, while human creative selection and arrangement can be. For your projects: your prompts, curation, code, and editorial choices are where your authorship lives, so document them.
 
-**Question 3 — Memorization: can the model emit its training data?** Yes, occasionally and more often for text repeated frequently in the corpus; verbatim regurgitation of protected work is the cleanest infringement risk. **Memorization** (when a model reproduces word-for-word text it saw during training) is mitigated by deduplication at training time and output filters at deployment — neither is perfect.
+**Question 3 - Memorization: can the model emit its training data?** Yes, occasionally and more often for text repeated frequently in the corpus; verbatim regurgitation of protected work is the cleanest infringement risk. **Memorization** (when a model reproduces word-for-word text it saw during training) is mitigated by deduplication at training time and output filters at deployment; neither is perfect.
 
 ---
 
 ## Model 1: The Student Artist
 
-Why this matters: every time you use a generative model for a course project, a creative assignment, or a side project, you are navigating real intellectual property questions — even if no one is suing you today. Understanding where the law is unsettled helps you document your own creative contributions and avoid the practices most likely to create future liability for you or your employer.
+Why this matters: every time you use a generative model for a course project, a creative assignment, or a side project, you are navigating real intellectual property questions, even if no one is suing you today. Understanding where the law is unsettled helps you document your own creative contributions and avoid the practices most likely to create future liability for you or your employer.
 
 A student trains a small image model on 400 of their own paintings, then also fine-tunes on 50 works by a living artist they admire, and sells outputs "in the style of" that artist.
 
@@ -63,7 +63,7 @@ A student trains a small image model on 400 of their own paintings, then also fi
 
 1. Separate the three IP questions for this scenario: which use is least contested, which most, and why does "style" complicate the middle one (style is traditionally not copyrightable, but the fine-tuning *copies* the works)?
 
-   *Hint: Start with the simplest case — training on your own work you created yourself. Then consider what changes when you add someone else's work. Finally, think about what "copying" means: is imitating a style the same as copying a painting?*
+   *Hint: Start with the simplest case: training on your own work you created yourself. Then consider what changes when you add someone else's work. Finally, think about what "copying" means: is imitating a style the same as copying a painting?*
 
 2. The student argues "I learned from that artist too; the model just did it faster." Steelman this argument, then identify the strongest disanalogy between human learning and model training.
 
@@ -71,17 +71,17 @@ A student trains a small image model on 400 of their own paintings, then also fi
 
 3. What documentation would you advise the student to keep about their own contribution, given the human-authorship doctrine?
 
-   *Hint: Think about what a copyright examiner would need to see to confirm a human made creative choices — prompt text, selection decisions, editing steps, rejected outputs.*
+   *Hint: Think about what a copyright examiner would need to see to confirm a human made creative choices: prompt text, selection decisions, editing steps, rejected outputs.*
 
 ---
 
 # Part II: Privacy
 
-In this part, you will trace what actually happens to a prompt when you hit enter — legally and technically — and learn why the pipelines you've already built have different privacy implications depending on what data you run through them.
+In this part, you will trace what actually happens to a prompt when you hit enter (legally and technically) and learn why the pipelines you've already built have different privacy implications depending on what data you run through them.
 
 ## 2. Where Prompts Go, and the Special Status of Student Data
 
-Privacy is not just a personal preference — in educational and research contexts, it is a legal obligation. Understanding which laws apply to which data, and what "sending a prompt" actually means for data handling, turns you from a user who hopes for the best into an engineer who designs for compliance.
+Privacy is not just a personal preference; in educational and research contexts, it is a legal obligation. Understanding which laws apply to which data, and what "sending a prompt" actually means for data handling, turns you from a user who hopes for the best into an engineer who designs for compliance.
 
 **A prompt is a disclosure.** Text sent to a hosted service transits and rests on third-party infrastructure under that provider's terms, which may permit retention, human review, or training on your inputs. The engineering questions are always the same: what data leaves, where it is stored, for how long, who can see it, and can you delete it.
 
@@ -110,9 +110,9 @@ Consider three pipelines you have personally built this term: the RAG Knowledge 
 
 5. Your Rubric Pipeline Lab pipeline processes synthetic essays; the same code pointed at real student work changes compliance category entirely while changing zero lines of code. What does that imply about where responsibility lives: in code, or in deployment decisions?
 
-   *Hint: Consider a fire extinguisher used as a doorstop — the object did not change, but the use did. Now apply that framing to your pipeline. Is the code "responsible" for how it is deployed?*
+   *Hint: Consider a fire extinguisher used as a doorstop; the object did not change, but the use did. Now apply that framing to your pipeline. Is the code "responsible" for how it is deployed?*
 
-   > *Hint:* A law like FERPA doesn't care what language your pipeline is written in or whether you meant to violate it. It cares whether protected data was processed in an unauthorized context. Who in your pipeline decides the context — the code, or the person who runs it?
+   > *Hint:* A law like FERPA doesn't care what language your pipeline is written in or whether you meant to violate it. It cares whether protected data was processed in an unauthorized context. Who in your pipeline decides the context, the code, or the person who runs it?
 
 6. Write the three-sentence data-handling disclosure you would owe users of your final project. (This text goes directly into the Data Handling section of the Governance direction of the Responsible AI in Practice assignment, if you choose that direction.)
 
@@ -124,7 +124,7 @@ Consider three pipelines you have personally built this term: the RAG Knowledge 
 
 # Part III: Synthesis and Practice
 
-Now that you understand both IP and privacy as legal frameworks, this part asks you to apply them practically — reading real terms of service, probing memorization behavior in your local model, and writing the compliance memo your project will actually need.
+Now that you understand both IP and privacy as legal frameworks, this part asks you to apply them practically: reading real terms of service, probing memorization behavior in your local model, and writing the compliance memo your project will actually need.
 
 ## 3. Exercises
 
@@ -132,7 +132,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
    *What to do:* Each teammate reads the data-use terms of one AI service they actually use and extracts: retention period, training-on-inputs policy, and deletion rights. The Recorder builds a comparison table; the Presenter reports the most surprising finding.
 
-   *Starter hint:* Search the service's terms of service or privacy policy for the words "training," "retain," "delete," and "opt out." Many services bury opt-out options in account settings rather than the terms themselves — check both.
+   *Starter hint:* Search the service's terms of service or privacy policy for the words "training," "retain," "delete," and "opt out." Many services bury opt-out options in account settings rather than the terms themselves; check both.
 
    *You've succeeded when:* Your team has a table with at least three services compared on the same three dimensions, and the Presenter can explain in plain language what happens to a prompt after you hit enter on each service.
 
@@ -148,7 +148,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
    *What to do:* For your final project, write the half-page memo a campus IT review would want: what data the system touches, why local inference is or is not required, and what would change if the project scaled beyond the class.
 
-   *Starter hint:* Use this structure — (1) what data categories does the system process? (2) which of those categories are regulated (FERPA, IRB, HIPAA, or state privacy law)? (3) what is the strongest argument for local inference? (4) what capability tradeoff, if any, does local inference impose?
+   *Starter hint:* Use this structure: (1) what data categories does the system process? (2) which of those categories are regulated (FERPA, IRB, HIPAA, or state privacy law)? (3) what is the strongest argument for local inference? (4) what capability tradeoff, if any, does local inference impose?
 
    *You've succeeded when:* A campus IT officer unfamiliar with your project could read the memo, understand the data flows, and make an informed decision about whether to approve the system for use with real students.
 
@@ -164,17 +164,17 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 ## Reflection Prompt
 
-*Personal:* You have free, private, capable AI on your own laptop — an option most users do not know exists. When you use a local model for personal tasks that involve sensitive information (health questions, relationship problems, financial concerns), does knowing how to keep data local make you feel differently about using AI at all?
+*Personal:* You have free, private, capable AI on your own laptop, an option most users do not know exists. When you use a local model for personal tasks that involve sensitive information (health questions, relationship problems, financial concerns), does knowing how to keep data local make you feel differently about using AI at all?
 
-*Technical:* As someone who can now build both local and cloud-connected AI pipelines, what technical obligations do you think you have when building systems that other people — including people who do not understand where their data goes — will use?
+*Technical:* As someone who can now build both local and cloud-connected AI pipelines, what technical obligations do you think you have when building systems that other people (including people who do not understand where their data goes) will use?
 
 *Societal:* Most people who use AI assistants have no practical ability to run local models, cannot read terms of service, and have no visibility into how their inputs are used. Does the gap between technically informed and technically naive users create a fairness problem? Who should close it, and how?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
-In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6 — they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
+In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly. Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6; they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
 
 ## Further Reading
 

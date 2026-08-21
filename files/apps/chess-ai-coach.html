@@ -18,9 +18,9 @@
 const { useState, useEffect, useCallback, useRef } = React;
 
 /*
- * ═══════════════════════════════════════════════════════════════
- *  CHESS ENGINE — full FIDE rules, pure logic, zero dependencies
- * ═══════════════════════════════════════════════════════════════
+ * ===============================================================
+ *  CHESS ENGINE - full FIDE rules, pure logic, zero dependencies
+ * ===============================================================
  */
 
 const PIECES = {
@@ -289,7 +289,7 @@ function buildPGN(entries, result) {
   return pgn.trim();
 }
 
-/* ─── Evaluation + Computer ─── */
+/* --- Evaluation + Computer --- */
 const PST_P = [[0,0,0,0,0,0,0,0],[5,10,10,-20,-20,10,10,5],[5,-5,-10,0,0,-10,-5,5],[0,0,0,20,20,0,0,0],[5,5,10,25,25,10,5,5],[10,10,20,30,30,20,10,10],[50,50,50,50,50,50,50,50],[0,0,0,0,0,0,0,0]];
 const PST_N = [[-50,-40,-30,-30,-30,-30,-40,-50],[-40,-20,0,0,0,0,-20,-40],[-30,0,10,15,15,10,0,-30],[-30,5,15,20,20,15,5,-30],[-30,0,15,20,20,15,0,-30],[-30,5,10,15,15,10,5,-30],[-40,-20,0,5,5,0,-20,-40],[-50,-40,-30,-30,-30,-30,-40,-50]];
 const PST_B = [[-20,-10,-10,-10,-10,-10,-10,-20],[-10,0,0,0,0,0,0,-10],[-10,0,5,10,10,5,0,-10],[-10,5,5,10,10,5,5,-10],[-10,0,10,10,10,10,0,-10],[-10,10,10,10,10,10,10,-10],[-10,5,0,0,0,0,5,-10],[-20,-10,-10,-10,-10,-10,-10,-20]];
@@ -361,7 +361,7 @@ function estimatedComputerEloFromDepth(depth) {
 }
 
 
-/* ─── AI API calls ─── */
+/* --- AI API calls --- */
 const DEFAULT_MODELS = {
   anthropic: "claude-sonnet-4-5",
   openai: "gpt-4.1-mini",
@@ -540,9 +540,9 @@ async function getAIElo(providerConfig, fen, histSans) {
 }
 
 
-/* ═══════════════════════════════════════════════════════════════
+/* ===============================================================
  *  REACT COMPONENT
- * ═══════════════════════════════════════════════════════════════ */
+ * =============================================================== */
 const BOARD_PX = 440;
 const SQ = BOARD_PX / 8;
 
@@ -670,7 +670,7 @@ function ChessAICoach() {
     if (moveListRef.current) moveListRef.current.scrollLeft = moveListRef.current.scrollWidth;
   }, [history]);
 
-  // ─── Interaction helpers ───
+  // --- Interaction helpers ---
   const canPlay = !isViewing && viewIndex !== -2 && gameState.turn === "w" && !thinking && !gameOver;
 
   const showLegalFor = useCallback((r, c) => {
@@ -704,7 +704,7 @@ function ChessAICoach() {
     }
   }, [selected, canPlay, isViewing, viewIndex, showLegalFor, tryMove]);
 
-  // ─── Drag ───
+  // --- Drag ---
   const handleDragStart = useCallback((r, c, e) => {
     if (!canPlay) return;
     const piece = gameState.board[r][c];
@@ -753,7 +753,7 @@ function ChessAICoach() {
     };
   }, [dragging, tryMove]);
 
-  // ─── Execute move ───
+  // --- Execute move ---
   const executeMove = useCallback(async (move, promoPiece) => {
     const san = moveToSAN(gameState, move);
     const newState = applyMove(gameState, move, promoPiece);
@@ -916,7 +916,7 @@ function ChessAICoach() {
 
   const handlePromo = (p) => { if (promoModal) executeMove(promoModal, p); };
 
-  // ─── History nav ───
+  // --- History nav ---
   const goStart = () => { if (history.length > 0) setViewIndex(-2); };
   const goBack = () => {
     if (viewIndex === -2) return;
@@ -929,7 +929,7 @@ function ChessAICoach() {
   };
   const goLive = () => setViewIndex(-1);
 
-  // ─── PGN ───
+  // --- PGN ---
   const exportPGN = () => {
     let result = "*";
     if (gameOver) {
@@ -1007,7 +1007,7 @@ function ChessAICoach() {
     downloadTextFile("chess_ai_coach_analysis.txt", txt);
   };
 
-  // ─── Derived display ───
+  // --- Derived display ---
   const clampedEval = Math.max(-10, Math.min(10, evalScore));
   const whitePct = 50 + (clampedEval / 10) * 50;
   const viewMoveIndex = isViewing ? viewIndex : (viewIndex === -2 ? -1 : history.length - 1);
@@ -1031,11 +1031,11 @@ function ChessAICoach() {
   const computerEloColor = computerEloEstimate.elo < 1000 ? "#c06040" : computerEloEstimate.elo < 1400 ? "#c0a040" : computerEloEstimate.elo < 1800 ? "#60a040" : "#40a0c0";
   const whiteCommentaryLog = history
     .filter(entry => entry.side === "w")
-    .map((entry, idx) => `${idx + 1}. ${entry.san} — ${entry.aiCommentary || "(no commentary yet)"}`)
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
     .join("\n\n");
   const blackCommentaryLog = history
     .filter(entry => entry.side === "b")
-    .map((entry, idx) => `${idx + 1}. ${entry.san} — ${entry.aiCommentary || "(no commentary yet)"}`)
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
     .join("\n\n");
 
   return (

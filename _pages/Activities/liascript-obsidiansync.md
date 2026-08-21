@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault
 
-Your Obsidian vault contains your best thinking — class notes, project plans, decisions you've made and why. But right now it lives entirely on one machine, invisible to every agent you run. The fix is architectural: **put the vault on GitHub, write a navigation contract agents can read, give agents a write-back path so knowledge accumulates across sessions, and wire the whole loop through the local tools you already use**. This tutorial builds that system from zero: why GitHub is the right host $\rightarrow$ the Obsidian Git community plugin and its configuration $\rightarrow$ pointing agents at your vault as read context $\rightarrow$ letting agents write back to it as persistent memory.
+Your Obsidian vault contains your best thinking: class notes, project plans, decisions you've made and why. But right now it lives entirely on one machine, invisible to every agent you run. The fix is architectural: **put the vault on GitHub, write a navigation contract agents can read, give agents a write-back path so knowledge accumulates across sessions, and wire the whole loop through the local tools you already use**. This tutorial builds that system from zero: why GitHub is the right host $\rightarrow$ the Obsidian Git community plugin and its configuration $\rightarrow$ pointing agents at your vault as read context $\rightarrow$ letting agents write back to it as persistent memory.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: a GitHub account, Obsidian installed, and at least one agent CLI (OpenCode, pi.ai, or another tool from the agent CLIs module) running locally. This is a supplemental tutorial — no commercial API keys are required. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Prerequisites: a GitHub account, Obsidian installed, and at least one agent CLI (OpenCode, pi.ai, or another tool from the agent CLIs module) running locally. This is a supplemental tutorial; no commercial API keys are required. After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
@@ -28,7 +28,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text, every other tool — agents, scripts, editors — can read and write them without a special library. | Your vault might contain class notes, project decision logs, and a folder of `agent-context/` files that your local agents read before each session. |
+| **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text, every other tool (agents, scripts, editors) can read and write them without a special library. | Your vault might contain class notes, project decision logs, and a folder of `agent-context/` files that your local agents read before each session. |
 | **Community plugin** | An Obsidian extension written by the community and installed through the in-app plugin browser. Community plugins are not audited by the Obsidian team, so you review them before enabling. | Obsidian Git is the most widely used community sync plugin; it wraps standard git operations in a background process that pushes on a configurable interval. |
 | **Obsidian Git plugin** | A community plugin that runs git inside Obsidian, auto-committing and pushing your vault on a set interval without you ever touching the terminal. | Configured with a 5-minute auto-push interval, the plugin commits any changed notes and pushes them to your private GitHub repo while you keep writing. |
 | **Personal Access Token (PAT)** | A secret string that authenticates GitHub API and git-over-HTTPS operations. It grants specific permissions without sharing your full account credentials. | The Obsidian Git plugin uses your PAT as the HTTPS password when pushing to GitHub; agents use the same or a separate token to pull the vault and push session memories. |
@@ -41,44 +41,44 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Why Your Vault Needs to Be on GitHub
 
-In this part, you will understand why a local Obsidian vault is invisible to agents and what it takes to make it accessible — and you will set up the Obsidian Git plugin with a private repository so that your notes are one sync away from any tool you run.
+In this part, you will understand why a local Obsidian vault is invisible to agents and what it takes to make it accessible, and you will set up the Obsidian Git plugin with a private repository so that your notes are one sync away from any tool you run.
 
 ## Model 1: The Locality Problem and the Git Solution
 
-Agents read files. When you run OpenCode or pi.ai in a project directory, the agent can see every file in that directory tree. But your Obsidian vault is somewhere else — probably `~/Documents/Obsidian/MyVault` or a similar location — and unless you explicitly point an agent at it, the agent has no idea it exists. This is the **locality problem**: your knowledge lives in one place; your agents work in another.
+Agents read files. When you run OpenCode or pi.ai in a project directory, the agent can see every file in that directory tree. But your Obsidian vault is somewhere else (probably `~/Documents/Obsidian/MyVault` or a similar location) and unless you explicitly point an agent at it, the agent has no idea it exists. This is the **locality problem**: your knowledge lives in one place; your agents work in another.
 
-There are two ways to bridge the gap. The expensive way is a retrieval-augmented generation (RAG) pipeline — embed every note as a vector, run a similarity search on each query, and inject the top results. RAG is powerful for large vaults but requires infrastructure. The cheap, reliable alternative is **file-based context**: make the vault a git repository, push it to GitHub, and let agents clone or read it directly. Every note is already plain Markdown. No embedding pipeline required. No vector database to maintain. Agents that can read files can read your vault.
+There are two ways to bridge the gap. The expensive way is a retrieval-augmented generation (RAG) pipeline: embed every note as a vector, run a similarity search on each query, and inject the top results. RAG is powerful for large vaults but requires infrastructure. The cheap, reliable alternative is **file-based context**: make the vault a git repository, push it to GitHub, and let agents clone or read it directly. Every note is already plain Markdown. No embedding pipeline required. No vector database to maintain. Agents that can read files can read your vault.
 
 GitHub is the right host for three reasons:
 
-1. **Versioning** — every commit records what changed and when. If an agent writes something wrong, you can revert it.
-2. **Portability** — a private repo is accessible from any machine with a PAT, including containers and remote agents.
-3. **Atomic writes** — git commits bundle a file change and its associated metadata into one unit, which matters when agents need to write without corrupting the state you'll pull back into Obsidian.
+1. **Versioning**: every commit records what changed and when. If an agent writes something wrong, you can revert it.
+2. **Portability**: a private repo is accessible from any machine with a PAT, including containers and remote agents.
+3. **Atomic writes**: git commits bundle a file change and its associated metadata into one unit, which matters when agents need to write without corrupting the state you'll pull back into Obsidian.
 
 The Obsidian Git community plugin handles the sync automatically: it runs `git add`, `git commit`, and `git push` on a configurable interval in the background while you write.
 
 | Setup Step | What You Do | What the Plugin Does Afterward |
 |------------|-------------|-------------------------------|
-| Create a private GitHub repo | `New repository` on github.com; set **Private**; do not initialize with a README (you'll push from your vault) | Nothing yet — the repo is empty |
-| Generate a fine-grained PAT | GitHub Settings → Developer Settings → Fine-grained tokens → New token; set expiration; grant **Contents: Read and Write** on only this repo | Stores the token; uses it as the HTTPS password for every push |
-| Initialize git in your vault | `git init` in your vault directory; `git remote add origin https://github.com/YOURUSERNAME/obsidian-vault.git`; push the first commit | Nothing yet — the plugin reads the existing `.git` folder |
-| Install the Obsidian Git plugin | Settings → Community plugins → Browse → search "Obsidian Git" → Install → Enable | Reads `.obsidian/plugins/obsidian-git/data.json` for its own config |
+| Create a private GitHub repo | `New repository` on github.com; set **Private**; do not initialize with a README (you'll push from your vault) | Nothing yet; the repo is empty |
+| Generate a fine-grained PAT | GitHub Settings -> Developer Settings -> Fine-grained tokens -> New token; set expiration; grant **Contents: Read and Write** on only this repo | Stores the token; uses it as the HTTPS password for every push |
+| Initialize git in your vault | `git init` in your vault directory; `git remote add origin https://github.com/YOURUSERNAME/obsidian-vault.git`; push the first commit | Nothing yet; the plugin reads the existing `.git` folder |
+| Install the Obsidian Git plugin | Settings -> Community plugins -> Browse -> search "Obsidian Git" -> Install -> Enable | Reads `.obsidian/plugins/obsidian-git/data.json` for its own config |
 | Configure the plugin | Set **Auto-pull interval** and **Auto-push interval** (5 minutes is a good starting point); set **Commit message template** (see below) | Runs on a timer: pulls on the pull interval, commits any changes and pushes on the push interval |
 
 ### Installing Community Plugins in Obsidian
 
-Community plugins are disabled by default because they run arbitrary code. To enable them: **Settings → Community plugins → Turn on community plugins → Browse**. After installing Obsidian Git, review its GitHub repository before trusting it with your vault and PAT — this is the same due-diligence habit as reviewing a Docker image before running it.
+Community plugins are disabled by default because they run arbitrary code. To enable them: **Settings -> Community plugins -> Turn on community plugins -> Browse**. After installing Obsidian Git, review its GitHub repository before trusting it with your vault and PAT; this is the same due-diligence habit as reviewing a Docker image before running it.
 
 ### The `.gitignore` for Obsidian Vaults
 
 Not every file in your vault folder should go to GitHub. The workspace state and plugin caches change constantly and create noisy commits with no informational value. A minimal `.gitignore`:
 
 ```gitignore
-# Obsidian workspace state — changes on every open/close, no information value
+# Obsidian workspace state; changes on every open/close, no information value
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 
-# Graph layout cache — large, regenerated automatically
+# Graph layout cache; large, regenerated automatically
 .obsidian/graph.json
 
 # Plugin-generated caches
@@ -98,15 +98,15 @@ The plugin's commit message template controls what appears in your GitHub histor
 
 ```
 {% raw %}
-vault: {{date}} {{time}} — {{numFiles}} file(s) changed
+vault: {{date}} {{time}} - {{numFiles}} file(s) changed
 {% endraw %}
 ```
 
-{% raw %}`{{date}}` and `{{time}}`{% endraw %} are built-in template variables the plugin replaces at commit time. You will see entries like `vault: 2026-06-21 14:32 — 3 file(s) changed` in your history, which makes it easy to verify sync is working and to correlate agent commits with your own edits.
+{% raw %}`{{date}}` and `{{time}}`{% endraw %} are built-in template variables the plugin replaces at commit time. You will see entries like `vault: 2026-06-21 14:32 - 3 file(s) changed` in your history, which makes it easy to verify sync is working and to correlate agent commits with your own edits.
 
-> **⚠️ Common Misconception:** "Obsidian sync and Obsidian Git are the same thing."
+> **Common Misconception:** "Obsidian sync and Obsidian Git are the same thing."
 >
-> They are not. **Obsidian Sync** is the paid cloud service run by the Obsidian team — it stores your vault on Obsidian's servers and syncs across devices automatically. **Obsidian Git** is a free community plugin that uses git and any git host you choose. They solve the same problem (cross-device sync) by entirely different mechanisms. For this tutorial, we use Obsidian Git with a private GitHub repository because it gives you a versioned, agent-accessible copy of your vault under your own control — Obsidian Sync's servers are not accessible to agents you run locally.
+> They are not. **Obsidian Sync** is the paid cloud service run by the Obsidian team; it stores your vault on Obsidian's servers and syncs across devices automatically. **Obsidian Git** is a free community plugin that uses git and any git host you choose. They solve the same problem (cross-device sync) by entirely different mechanisms. For this tutorial, we use Obsidian Git with a private GitHub repository because it gives you a versioned, agent-accessible copy of your vault under your own control; Obsidian Sync's servers are not accessible to agents you run locally.
 
 ### Security Note: What NOT to Put in a Synced Vault
 
@@ -114,10 +114,10 @@ A private GitHub repo is protected by your account credentials, but "private" do
 
 Categories to exclude by policy:
 
-- **Credentials and API keys** — never in plaintext, anywhere, ever. Use a password manager.
-- **Legal/medical/financial records** — subject to breach notification requirements even from private repos.
-- **Information belonging to others** — private conversations, contact details, notes about third parties who did not consent.
-- **Work product with an NDA** — your employer's confidential information does not belong in your personal vault.
+- **Credentials and API keys**: never in plaintext, anywhere, ever. Use a password manager.
+- **Legal/medical/financial records**: subject to breach notification requirements even from private repos.
+- **Information belonging to others**: private conversations, contact details, notes about third parties who did not consent.
+- **Work product with an NDA**: your employer's confidential information does not belong in your personal vault.
 
 A rule of thumb: the vault is for *your knowledge about the world*, not *secrets that unlock access to the world*.
 
@@ -133,7 +133,7 @@ A rule of thumb: the vault is for *your knowledge about the world*, not *secrets
 
 3. Your `.gitignore` excludes `.obsidian/workspace.json` but a teammate's does not. After both of you push from different machines, explain the specific kind of merge conflict that will result and why the file should never have been tracked.
 
-   > *Hint:* `workspace.json` stores which panels are open and where they are positioned — it changes every time Obsidian opens or resizes a pane. Two people (or two devices) will generate different versions of this file on every session. What does git do when it sees two divergent edits to the same file?
+   > *Hint:* `workspace.json` stores which panels are open and where they are positioned; it changes every time Obsidian opens or resizes a pane. Two people (or two devices) will generate different versions of this file on every session. What does git do when it sees two divergent edits to the same file?
 
 ---
 
@@ -151,39 +151,39 @@ There are two ways to get your vault contents into an agent's context window. Un
 
 | Approach | How It Works | When to Use It | Limitation |
 |----------|-------------|----------------|------------|
-| **File-based injection** | Read specific Markdown files and prepend them to the prompt before the agent starts. | Small-to-medium vaults; notes whose topic is known in advance; standing instructions that apply every session. | You must know (or decide) which files to inject. If the vault has 500 notes, you cannot inject all of them — the context window has a limit. |
+| **File-based injection** | Read specific Markdown files and prepend them to the prompt before the agent starts. | Small-to-medium vaults; notes whose topic is known in advance; standing instructions that apply every session. | You must know (or decide) which files to inject. If the vault has 500 notes, you cannot inject all of them; the context window has a limit. |
 | **RAG (Retrieval-Augmented Generation)** | Embed every note as a vector; at query time, retrieve the top-k most similar notes and inject only those. | Large vaults (hundreds of notes) where you cannot predict which notes are relevant to any given query. | Requires a running embedding model and vector store (e.g., Chroma, Qdrant). More infrastructure, more failure modes. |
 
 For the local agents in this course (OpenCode, pi.ai, Ollama-backed tools), file-based injection is almost always the right starting point. It requires no infrastructure, it is transparent (you can see exactly what the agent sees), and it is fast.
 
 ### The Vault Index Pattern
 
-A single file — `_index.md` at the root of your vault — lists every note by topic with a one-sentence description. An agent given only this file can decide which two or three notes are relevant to the current task and read those, rather than loading the entire vault.
+A single file (`_index.md` at the root of your vault) lists every note by topic with a one-sentence description. An agent given only this file can decide which two or three notes are relevant to the current task and read those, rather than loading the entire vault.
 
 A well-structured `_index.md`:
 
 ```markdown
 # Vault Index
 
-## CS357 — Foundations of AI
-- [[CS357/lectures/agent-loops]] — Notes on the observe-plan-act cycle and how it maps to tool calls
-- [[CS357/lectures/rag]] — Retrieval-augmented generation: chunking, embedding, retrieval, injection
-- [[CS357/projects/rag-pipeline]] — My implementation plan for the RAG assignment; current status: chunking done, embedding WIP
+## CS357: Foundations of AI
+- [[CS357/lectures/agent-loops]]: Notes on the observe-plan-act cycle and how it maps to tool calls
+- [[CS357/lectures/rag]]: Retrieval-augmented generation: chunking, embedding, retrieval, injection
+- [[CS357/projects/rag-pipeline]]: My implementation plan for the RAG assignment; current status: chunking done, embedding WIP
 
 ## Personal Projects
-- [[projects/homelab-docker]] — Docker Compose setup for my home server; last updated 2026-05-10
-- [[projects/reading-tracker]] — Books I'm reading, notes on each chapter
+- [[projects/homelab-docker]]: Docker Compose setup for my home server; last updated 2026-05-10
+- [[projects/reading-tracker]]: Books I'm reading, notes on each chapter
 
 ## Agent Context Files
-- [[agent-context/standing-instructions]] — Behavioral instructions every agent should read before starting work
-- [[agent-context/project-state]] — Current state of active projects; updated after each session
-- [[agent-context/key-decisions]] — Decisions I've made about tools and approaches, with rationale
+- [[agent-context/standing-instructions]]: Behavioral instructions every agent should read before starting work
+- [[agent-context/project-state]]: Current state of active projects; updated after each session
+- [[agent-context/key-decisions]]: Decisions I've made about tools and approaches, with rationale
 
 ## Memories (Agent Write Path)
-- [[memories/session-log]] — Append-only log of agent session summaries (date, project, key decisions)
+- [[memories/session-log]]: Append-only log of agent session summaries (date, project, key decisions)
 ```
 
-The double-bracket syntax (`[[path]]`) is Obsidian's wikilink format. Agents that read the index as plain Markdown see it as a structured list of paths and descriptions — enough to navigate.
+The double-bracket syntax (`[[path]]`) is Obsidian's wikilink format. Agents that read the index as plain Markdown see it as a structured list of paths and descriptions, enough to navigate.
 
 ### The `agent-context/` Pattern
 
@@ -191,9 +191,9 @@ Create a folder called `agent-context/` in your vault. Files here are short (one
 
 ```
 agent-context/
-├── standing-instructions.md   # Behavioral rules for every agent
-├── project-state.md           # What I'm working on right now
-└── key-decisions.md           # Choices I've made + why
+|-- standing-instructions.md   # Behavioral rules for every agent
+|-- project-state.md           # What I'm working on right now
+`-- key-decisions.md           # Choices I've made + why
 ```
 
 A Python helper that injects this folder into an agent session:
@@ -245,7 +245,7 @@ Do not modify any file in the vault except under the memory write-back protocol
 described in Part III of the vault's standing-instructions.md.
 ```
 
-Because OpenCode reads and follows `AGENTS.md` at session start, this instruction is applied automatically every time you open a session in that project directory — no flags, no pasting.
+Because OpenCode reads and follows `AGENTS.md` at session start, this instruction is applied automatically every time you open a session in that project directory; no flags, no pasting.
 
 ### Pointing pi.ai at Your Vault
 
@@ -272,24 +272,24 @@ pi --context /tmp/vault_context.txt
 
 You have 400 notes in your vault. You want an agent to answer a question that may involve any of them. Which approach is most appropriate?
 
-[( )] Inject all 400 notes into the system prompt — agents can handle unlimited context
+[( )] Inject all 400 notes into the system prompt; agents can handle unlimited context
 [( )] Only use agents that have been specifically trained on your vault's content
 [(X)] Use a vault index so the agent can identify which subset of notes to read, then inject only those
 [( )] RAG is the only correct answer for vaults larger than 50 notes; file injection cannot work
 
-> **⚠️ Common Misconception:** "The agent will figure out which notes are relevant if I just give it the vault directory path."
+> **Common Misconception:** "The agent will figure out which notes are relevant if I just give it the vault directory path."
 >
-> An agent given a directory path can list the files in that directory, but listing 400 filenames tells it almost nothing about which two or three notes are relevant to your question. The vault index solves this by providing a human-curated summary of each note's topic — the agent reads the index (one file, one context window), decides which notes to request, and reads only those. Without the index, the agent must either read everything (often too much) or guess from filenames (unreliable).
+> An agent given a directory path can list the files in that directory, but listing 400 filenames tells it almost nothing about which two or three notes are relevant to your question. The vault index solves this by providing a human-curated summary of each note's topic: the agent reads the index (one file, one context window), decides which notes to request, and reads only those. Without the index, the agent must either read everything (often too much) or guess from filenames (unreliable).
 
 ### Critical Thinking Questions
 
-4. A teammate argues: "I'll just give the agent access to my entire vault directory and tell it to search for what it needs." Explain two specific failure modes this causes — one related to context window size, one related to agent decision quality — that the vault index pattern prevents.
+4. A teammate argues: "I'll just give the agent access to my entire vault directory and tell it to search for what it needs." Explain two specific failure modes this causes (one related to context window size, one related to agent decision quality) that the vault index pattern prevents.
 
-   > *Hint:* Context window limit: if the agent tries to read all 400 notes, it will hit the model's context window maximum and either fail or silently truncate the most recent notes. Decision quality: an agent searching blindly through filenames like `note-2026-03-14.md` has no information about content — it can only guess, and it will guess wrong or read irrelevant files. How does a structured index fix both of these?
+   > *Hint:* Context window limit: if the agent tries to read all 400 notes, it will hit the model's context window maximum and either fail or silently truncate the most recent notes. Decision quality: an agent searching blindly through filenames like `note-2026-03-14.md` has no information about content; it can only guess, and it will guess wrong or read irrelevant files. How does a structured index fix both of these?
 
 5. The `agent-context/` folder contains `key-decisions.md` with the entry: "Decided to use Chroma as the vector store because the team already knows Python." Explain how this single sentence changes the agent's behavior on your *next* session compared to a session where the file doesn't exist.
 
-   > *Hint:* Without the file, the agent must either ask which vector store to use (interrupting your flow) or guess (risking recommending a store that conflicts with your existing code). With the file, the agent starts already knowing the decision and its rationale, and can make recommendations consistent with it. What else might the agent do differently — for example, in which imports it writes or which documentation it looks up?
+   > *Hint:* Without the file, the agent must either ask which vector store to use (interrupting your flow) or guess (risking recommending a store that conflicts with your existing code). With the file, the agent starts already knowing the decision and its rationale, and can make recommendations consistent with it. What else might the agent do differently: for example, in which imports it writes or which documentation it looks up?
 
 6. You set up file-based injection for your vault, but your OpenCode sessions take 30 seconds longer to start than before. Diagnose the likely cause and propose a fix that preserves the benefit of vault context without the latency.
 
@@ -303,11 +303,11 @@ With your vault connected as readable context, agents can now start each session
 
 # Part III: The Vault as Agent Memory (Write Path)
 
-In this part, you will learn why agent write-back matters, design a structured memory format agents can append to reliably, and handle the one real failure mode in a bidirectional system — the simultaneous write conflict.
+In this part, you will learn why agent write-back matters, design a structured memory format agents can append to reliably, and handle the one real failure mode in a bidirectional system: the simultaneous write conflict.
 
 ## Model 3: Persistent Memory via Write-Back
 
-An agent that reads your vault but never writes to it is a student who does your homework but never updates your notes. Every insight the agent produces, every decision it makes with you, every refinement it surfaces — all of it disappears when the session ends. The next session starts from the same place as the last one. Over weeks, this is a significant waste.
+An agent that reads your vault but never writes to it is a student who does your homework but never updates your notes. Every insight the agent produces, every decision it makes with you, every refinement it surfaces: all of it disappears when the session ends. The next session starts from the same place as the last one. Over weeks, this is a significant waste.
 
 Write-back solves this: at the end of a session, the agent appends a structured summary to `memories/session-log.md`. Every future session reads that log as part of its context injection, so the accumulated record of past sessions is available as context from the start.
 
@@ -334,7 +334,7 @@ paragraph-boundary, sentence-boundary), paragraph-boundary with 512/64 token
 windows gave the best retrieval quality on the test set.
 
 Also resolved the import conflict between the local Chroma client and the
-containerized version — the fix is to always use `HttpClient` rather than
+containerized version; the fix is to always use `HttpClient` rather than
 the ephemeral client, even for local instances, so the connection string is
 configurable without code changes.
 
@@ -348,8 +348,8 @@ The YAML block lets a script extract structured data (dates, projects, decisions
 
 Agents must **never rewrite or delete** existing entries in `session-log.md`. They must always append a new dated section at the bottom. Two reasons:
 
-1. **Correctness** — older entries recorded what was true at the time. Rewriting them substitutes the agent's current understanding for the historical record, which may have been updated because a decision turned out to be wrong. The history of wrong turns is often as valuable as the history of correct ones.
-2. **Conflict safety** — if the agent rewrites the file and Obsidian Git's auto-push runs simultaneously, git will see two different versions of the same file and create a merge conflict. Appending to the bottom is almost always conflict-free because it touches only lines that did not exist in the previous commit.
+1. **Correctness**: older entries recorded what was true at the time. Rewriting them substitutes the agent's current understanding for the historical record, which may have been updated because a decision turned out to be wrong. The history of wrong turns is often as valuable as the history of correct ones.
+2. **Conflict safety**: if the agent rewrites the file and Obsidian Git's auto-push runs simultaneously, git will see two different versions of the same file and create a merge conflict. Appending to the bottom is almost always conflict-free because it touches only lines that did not exist in the previous commit.
 
 ### OpenCode Write-Back Skill
 
@@ -368,7 +368,7 @@ At the end of every session, before closing:
    key decisions were made.
 4. End with a "Next session should start with:" sentence naming the next open
    task or question.
-5. Append ONLY — do not modify any existing content above the new section.
+5. Append ONLY; do not modify any existing content above the new section.
 6. After writing, run: cd ~/Documents/Obsidian/MyVault && git add memories/session-log.md && git commit -m "memory: session $(date +%Y-%m-%d)"
 ```
 
@@ -391,7 +391,7 @@ cd ~/Documents/Obsidian/MyVault
 git pull origin main --no-rebase   # fetch the other side
 # Open memories/session-log.md in any editor
 # The conflict markers show: your version on top, remote version on bottom
-# Resolution: keep BOTH sections — remove the markers, keep all content
+# Resolution: keep BOTH sections; remove the markers, keep all content
 git add memories/session-log.md
 git commit -m "memory: merge conflict resolved (kept both sections)"
 git push
@@ -406,7 +406,7 @@ An agent finishes a session and wants to update `memories/session-log.md`. Which
 [(X)] Add a new section with today's date at the bottom of the file, below all existing content
 [( )] Create a new file (e.g., `session-log-2026-06-21.md`) for each session to avoid any possibility of conflict
 
-> **⚠️ Common Misconception:** "Creating a new file per session avoids all conflict issues, so it's safer than appending."
+> **Common Misconception:** "Creating a new file per session avoids all conflict issues, so it's safer than appending."
 >
 > Separate files avoid write conflicts but create a different problem: the vault index must be updated every time a new session file is created, or the agent won't know the file exists. Worse, an agent reading context must now decide how many session files to read and which ones are most relevant. The append-only log in a single file is searchable, readable top-to-bottom, and requires only one index entry. A one-line git conflict in an append-only file is trivially resolved; a vault with 300 individual session files and a stale index is not.
 
@@ -418,11 +418,11 @@ An agent finishes a session and wants to update `memories/session-log.md`. Which
 
 8. An agent rewrites `session-log.md` instead of appending. You don't notice for three weeks. Describe the specific data loss that occurred and explain why git history does not fully protect you from this mistake.
 
-   > *Hint:* The data loss is the content that existed before the rewrite — the agent replaced it with its own summary. Git history *does* contain the old content in previous commits, but recovering it requires: (a) knowing which commit was the last good one, (b) running `git show <commit>:memories/session-log.md` or a similar command, and (c) manually re-integrating the recovered content. If you didn't notice for three weeks, there are also three weeks of *new* sessions that were appended to the wrong file. What would the recovery actually look like?
+   > *Hint:* The data loss is the content that existed before the rewrite; the agent replaced it with its own summary. Git history *does* contain the old content in previous commits, but recovering it requires: (a) knowing which commit was the last good one, (b) running `git show <commit>:memories/session-log.md` or a similar command, and (c) manually re-integrating the recovered content. If you didn't notice for three weeks, there are also three weeks of *new* sessions that were appended to the wrong file. What would the recovery actually look like?
 
-9. Design a canary check — a simple script or scheduled command — that detects within 24 hours if the vault's auto-push has silently stopped working (e.g., because the PAT expired). Describe what the check does, how it is triggered, and what alert it produces.
+9. Design a canary check (a simple script or scheduled command) that detects within 24 hours if the vault's auto-push has silently stopped working (e.g., because the PAT expired). Describe what the check does, how it is triggered, and what alert it produces.
 
-   > *Hint:* One approach: a cron job that runs daily, clones (or pulls) the vault repo, checks the timestamp of the most recent commit, and prints a warning if it is more than 25 hours old. Another approach: a "canary note" (`agent-context/sync-canary.md`) that the agent updates with today's date at the start of every session — if the canary date is stale by more than one day, sync has stopped. Which approach is cheaper? Which catches more failure modes?
+   > *Hint:* One approach: a cron job that runs daily, clones (or pulls) the vault repo, checks the timestamp of the most recent commit, and prints a warning if it is more than 25 hours old. Another approach: a "canary note" (`agent-context/sync-canary.md`) that the agent updates with today's date at the start of every session; if the canary date is stale by more than one day, sync has stopped. Which approach is cheaper? Which catches more failure modes?
 
 ---
 
@@ -445,7 +445,7 @@ When all four pieces are working, the session rhythm looks like this:
 5. You open Obsidian, sync once, and the session memory is visible as a note.
 6. The next session reads the updated log and starts more informed than the last.
 
-Each session compounds. Over a semester, the vault becomes a persistent, versioned record of every decision you made and why — readable by you, readable by any agent you run, and recoverable from any mistake via git history.
+Each session compounds. Over a semester, the vault becomes a persistent, versioned record of every decision you made and why, readable by you, readable by any agent you run, and recoverable from any mistake via git history.
 
 ### Reference Folder Structure
 
@@ -453,27 +453,27 @@ A vault designed to serve both personal knowledge and AI project memory:
 
 ```
 MyVault/
-├── _index.md                   # Navigation hub: all notes by topic, one sentence each
-├── AGENTS.md                   # Agent contract: read this before acting in the vault
-├── .gitignore                  # Exclude workspace state, caches
-│
-├── agent-context/              # Always-inject context (read at session start)
-│   ├── standing-instructions.md
-│   ├── project-state.md
-│   └── key-decisions.md
-│
-├── memories/                   # Agent write-back (append-only)
-│   └── session-log.md
-│
-├── CS357/                      # Course notes (human-authored, agent-readable)
-│   ├── lectures/
-│   ├── projects/
-│   └── reflections/
-│
-├── personal-projects/          # Project notes (agent-assisted authorship)
-│   └── rag-pipeline/
-│
-└── raw/                        # Read-only inbox: PDFs, exports, transcripts
+|-- _index.md                   # Navigation hub: all notes by topic, one sentence each
+|-- AGENTS.md                   # Agent contract: read this before acting in the vault
+|-- .gitignore                  # Exclude workspace state, caches
+|
+|-- agent-context/              # Always-inject context (read at session start)
+|   |-- standing-instructions.md
+|   |-- project-state.md
+|   `-- key-decisions.md
+|
+|-- memories/                   # Agent write-back (append-only)
+|   `-- session-log.md
+|
+|-- CS357/                      # Course notes (human-authored, agent-readable)
+|   |-- lectures/
+|   |-- projects/
+|   `-- reflections/
+|
+|-- personal-projects/          # Project notes (agent-assisted authorship)
+|   `-- rag-pipeline/
+|
+`-- raw/                        # Read-only inbox: PDFs, exports, transcripts
                                 # Agents read from here; never write here
 ```
 
@@ -487,7 +487,7 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 
    *What to do:* Complete the five-step setup from Model 1 (create private repo, generate fine-grained PAT, initialize git in vault, install Obsidian Git plugin, configure auto-push). Create one new note titled `test-sync.md`, wait for the auto-push interval, and verify the note appears in your GitHub repository. Submit a screenshot of the GitHub repository showing `test-sync.md` in the commit history, with your PAT redacted from any settings screenshots.
 
-   *Starter hint:* If auto-push does not fire, check the plugin's status bar icon in Obsidian (bottom right) — it shows sync status. You can also trigger a manual push with the command palette (`Ctrl+P` or `Cmd+P`): search for "Obsidian Git: Commit and push all changes".
+   *Starter hint:* If auto-push does not fire, check the plugin's status bar icon in Obsidian (bottom right); it shows sync status. You can also trigger a manual push with the command palette (`Ctrl+P` or `Cmd+P`): search for "Obsidian Git: Commit and push all changes".
 
    *You've succeeded when:* The GitHub repository shows at least one commit from the Obsidian Git plugin (the commit message will follow your configured template), and `test-sync.md` appears in the file listing.
 
@@ -497,13 +497,13 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 
    *Starter hint:* Ask the agent something specific: "Based on my vault index at `~/Documents/Obsidian/MyVault/_index.md`, which note should I look at for information about [topic]? Read that note and summarize its key point." This forces the agent to use the index rather than guessing.
 
-   *You've succeeded when:* The agent reads `_index.md`, identifies the correct note from it, reads that note, and produces a summary that accurately reflects the note's content — without reading any other vault files.
+   *You've succeeded when:* The agent reads `_index.md`, identifies the correct note from it, reads that note, and produces a summary that accurately reflects the note's content, without reading any other vault files.
 
 3. **Write a session memory entry by hand, then script it so OpenCode does it automatically.**
 
    *What to do:* First, manually write one well-formed memory entry in `memories/session-log.md`, following the YAML frontmatter format from Model 3. Commit and push it. Then add the Memory Write-Back Protocol to your project's `AGENTS.md` and start an OpenCode session. After completing any small task, verify that OpenCode appended a new entry at the bottom of `session-log.md` without modifying your hand-written entry. Submit: the file content after the agent's write, with both entries visible.
 
-   *Starter hint:* After adding the protocol to `AGENTS.md`, tell OpenCode explicitly at the end of the session: "We're done — please write the session memory entry now." Review the result before committing. Check that the YAML frontmatter is well-formed (valid YAML, no tab characters), and that the `## 2026-XX-XX` heading is at the bottom.
+   *Starter hint:* After adding the protocol to `AGENTS.md`, tell OpenCode explicitly at the end of the session: "We're done; please write the session memory entry now." Review the result before committing. Check that the YAML frontmatter is well-formed (valid YAML, no tab characters), and that the `## 2026-XX-XX` heading is at the bottom.
 
    *You've succeeded when:* `session-log.md` contains your hand-written entry unchanged at the top, and the agent's new entry below it, separated by the correct heading and frontmatter.
 
@@ -519,11 +519,11 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 
 ## Reflection Prompt
 
-**Personal level:** After completing Exercise 3, you have both a hand-written memory entry and an agent-written one in the same file. Compare them: which one is more useful to you as a future reader? Which is more useful to a future agent? What does the difference reveal about who you are writing the vault for — yourself or your agents — and does the answer change depending on which section of the file you are looking at?
+**Personal level:** After completing Exercise 3, you have both a hand-written memory entry and an agent-written one in the same file. Compare them: which one is more useful to you as a future reader? Which is more useful to a future agent? What does the difference reveal about who you are writing the vault for (yourself or your agents) and does the answer change depending on which section of the file you are looking at?
 
 **Technical level:** The append-only memory log depends on two separate systems (Obsidian Git auto-push and the agent's manual commit) writing to the same file without stepping on each other. Describe the full causal chain of a simultaneous-write conflict: what triggers it, what the conflicting commits contain, what git does when they arrive, and what the merge looks like. Then explain why the append-only rule makes the resolution trivial in this case but would make it impossible if agents were allowed to rewrite earlier entries.
 
-**Societal level:** This vault accumulates, over time, a detailed and searchable record of every decision you made, every question you asked an agent, and every insight the agent helped you reach. This record is stored in a private GitHub repository, accessible to anyone with your PAT. Describe three distinct ways this accumulated personal record could cause harm — to you, to others, or to the integrity of the work itself — and identify one structural safeguard for each that goes beyond "keep the repo private."
+**Societal level:** This vault accumulates, over time, a detailed and searchable record of every decision you made, every question you asked an agent, and every insight the agent helped you reach. This record is stored in a private GitHub repository, accessible to anyone with your PAT. Describe three distinct ways this accumulated personal record could cause harm (to you, to others, or to the integrity of the work itself) and identify one structural safeguard for each that goes beyond "keep the repo private."
 
 ---
 
@@ -536,7 +536,7 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 | **Community plugin** | An Obsidian extension written by the community; requires deliberate opt-in because it runs arbitrary code. |
 | **Vault index (`_index.md`)** | A curated file listing all vault notes by topic and description, enabling agents to navigate without reading everything. |
 | **`agent-context/` folder** | A designated folder of short, always-injected files that establish standing instructions and current project state for every agent session. |
-| **File-based context injection** | Prepending relevant Markdown file contents to an agent's context window before it starts work — the low-infrastructure alternative to RAG. |
+| **File-based context injection** | Prepending relevant Markdown file contents to an agent's context window before it starts work, the low-infrastructure alternative to RAG. |
 | **Write-back / agent memory** | An agent appending a structured summary entry to a persistent vault file at session end, so future sessions inherit what past sessions learned. |
 | **Append-only rule** | The convention that agents add new dated sections at the bottom of a memory file and never modify existing content above. |
 | **YAML frontmatter** | Structured key-value metadata at the top of a Markdown file, delimited by `---`, parseable by scripts while remaining human-readable. |

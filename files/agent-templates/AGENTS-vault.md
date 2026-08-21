@@ -1,7 +1,7 @@
 # AGENT INSTRUCTIONS (MANDATORY)
 
 <!-- The vault-as-agent-memory contract. Lives at the ROOT of your knowledge vault
-     repository. Its authority claim is absolute and stated first — an agent that has
+     repository. Its authority claim is absolute and stated first: an agent that has
      not read it may not act. This template hardens the basic three-zone contract from
      the Second Brain activity into a production version. -->
 
@@ -20,7 +20,7 @@ This repository is a personal knowledge vault ("second brain"). It is the durabl
 
 ## Sync Metadata Protocol (CRITICAL)
 
-Any time you create, modify, rename, or delete a file **outside of the note-taking app** — via Git, GitHub, or API calls — you must also update the sync tool's metadata file in the **same commit**, computing file hashes exactly the way the sync tool computes them. Commit the file change and the metadata update together, atomically. (See the Second Brain / vault-sync activity for the mechanics.)
+Any time you create, modify, rename, or delete a file **outside of the note-taking app** (via Git, GitHub, or API calls) you must also update the sync tool's metadata file in the **same commit**, computing file hashes exactly the way the sync tool computes them. Commit the file change and the metadata update together, atomically. (See the Second Brain / vault-sync activity for the mechanics.)
 
 ## Organization Requirements
 

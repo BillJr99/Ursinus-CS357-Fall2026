@@ -28,8 +28,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Parametric Memory** | Facts the model "knows" because they were baked into its weights (numerical parameters) during training — vast but frozen. Like a student who memorized the textbook but cannot look anything up mid-exam. | The model knows general facts about parking regulations but not Ursinus's specific policy |
-| **Contextual Memory** | Whatever text is currently in the model's prompt — small but precise and up-to-date. Like an open-book exam where you can read the exact policy. | The parking policy chunk we paste into the prompt before asking the question |
+| **Parametric Memory** | Facts the model "knows" because they were baked into its weights (numerical parameters) during training: vast but frozen. Like a student who memorized the textbook but cannot look anything up mid-exam. | The model knows general facts about parking regulations but not Ursinus's specific policy |
+| **Contextual Memory** | Whatever text is currently in the model's prompt: small but precise and up-to-date. Like an open-book exam where you can read the exact policy. | The parking policy chunk we paste into the prompt before asking the question |
 | **RAG (Retrieval-Augmented Generation)** | A technique that fetches the most relevant document chunks at query time and places them in the prompt, converting a closed-book question into an open-book one. | Our `rag_answer()` function retrieves the parking policy chunk before asking the model |
 | **Vector Database** | A database specialized for storing and searching embeddings (meaning-vectors). It can find the most similar vectors to a query extremely fast, even across millions of documents. | Chroma (`chromadb`) stores our campus FAQ embeddings and finds the nearest match |
 | **Indexing Phase** | The one-time setup work: split documents into chunks, embed each chunk, and store the vectors. Done once; the index is reused for every query. | `col.add(documents=docs, embeddings=..., ids=...)` in the code below |
@@ -41,9 +41,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## 1. Parameters Versus Context
 
-In this Part you will distinguish the two kinds of memory a language model has — the knowledge baked into its parameters during training versus the text currently in its prompt — and understand why RAG (Retrieval-Augmented Generation) turns a hard "closed-book" question into a much easier "open-book" one.
+In this Part you will distinguish the two kinds of memory a language model has (the knowledge baked into its parameters during training versus the text currently in its prompt) and understand why RAG (Retrieval-Augmented Generation) turns a hard "closed-book" question into a much easier "open-book" one.
 
-**Why this matters:** Imagine asking someone a trivia question about an obscure historical event. If they do not know it, they will either admit ignorance or make something up — and AI models tend to make something up convincingly. RAG is the equivalent of saying "here, look it up in the encyclopedia first, then answer." The model goes from guessing to reading and summarizing, which is a job it is much better at. This single insight is why RAG has become the most widely deployed AI engineering technique of the past three years.
+**Why this matters:** Imagine asking someone a trivia question about an obscure historical event. If they do not know it, they will either admit ignorance or make something up, and AI models tend to make something up convincingly. RAG is the equivalent of saying "here, look it up in the encyclopedia first, then answer." The model goes from guessing to reading and summarizing, which is a job it is much better at. This single insight is why RAG has become the most widely deployed AI engineering technique of the past three years.
 
 **A model has two memories.** *Parametric memory* (from "parameters," the numbers learned during training) is whatever was baked into the weights during training: vast, fuzzy, frozen in time. *Contextual memory* is whatever sits in the prompt right now: small, precise, current. Hallucination (the model confidently stating something false) is what happens when we ask parametric memory for precision it does not have. RAG converts the question from a closed-book exam into an open-book one:
 
@@ -51,9 +51,9 @@ $$
 \text{answer} = \text{LLM}(\text{query} + \text{retrieve}(\text{query}, \mathcal{D}))
 $$
 
-where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity — exactly the cosine machinery from the tokens and embeddings module.
+where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity, exactly the cosine machinery from the tokens and embeddings module.
 
-> **⚠️ Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity. Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt. Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
+> **Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity. Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt. Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
 
 **The pipeline has two phases.** *Indexing* (once): split documents into chunks, embed each chunk, store vectors in a vector database. *Query* (every question): embed the question, find nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
 
@@ -67,11 +67,11 @@ A student asks a campus RAG system, "Can first-year students bring cars?" The sy
 
 1. Walk the question through both phases: which steps happened months ago at indexing time, and which steps happen right now at query time?
 
-   > *Hint: Indexing steps involve reading documents and storing vectors — work done once before any user ever asks a question. Query steps happen in real time after the user sends their message. Sort each step: (a) embed the parking policy, (b) embed the user's question, (c) run cosine similarity search, (d) paste chunks into a prompt, (e) split the handbook into chunks, (f) generate the answer.*
+   > *Hint: Indexing steps involve reading documents and storing vectors: work done once before any user ever asks a question. Query steps happen in real time after the user sends their message. Sort each step: (a) embed the parking policy, (b) embed the user's question, (c) run cosine similarity search, (d) paste chunks into a prompt, (e) split the handbook into chunks, (f) generate the answer.*
 
 2. The model answers correctly, citing the parking chunk. Is this *parametric* or *contextual* memory at work? How can you tell from the citation?
 
-   > *Hint: If the answer came from parametric memory, would the model be able to cite a specific numbered source? Citations in RAG point to retrieved text that was placed in the prompt — which type of memory is that?*
+   > *Hint: If the answer came from parametric memory, would the model be able to cite a specific numbered source? Citations in RAG point to retrieved text that was placed in the prompt; which type of memory is that?*
 
 3. Suppose the policy changed last week and the index is stale (out of date). Where exactly does the wrong answer enter the pipeline, and which component is at fault: the model, the retriever, or the index?
 
@@ -83,7 +83,7 @@ A student asks a campus RAG system, "Can first-year students bring cars?" The sy
 
 ## 2. A Complete Local RAG System
 
-In this Part you will implement the two-phase RAG pipeline in Python using Chroma as the vector database and Ollama as the language model. You will see exactly how the indexing phase and query phase from Part I map onto real function calls — and you will test what happens when the answer is not in the index.
+In this Part you will implement the two-phase RAG pipeline in Python using Chroma as the vector database and Ollama as the language model. You will see exactly how the indexing phase and query phase from Part I map onto real function calls, and you will test what happens when the answer is not in the index.
 
 Chroma is an embeddable vector database (a library that stores embeddings and performs nearest-neighbor search, installable as a Python package). Install with `pip install chromadb`. Everything below runs on your laptop; no data leaves the room.
 
@@ -154,13 +154,13 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 ## Model 2: Grounding in Action
 
-**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer simply is not in the index? A bare language model will often invent a plausible-sounding answer ("The bookstore closes at 5pm on weekdays"). RAG, if designed well, will say it does not know. That difference — between confident invention and abstention — is the core of what makes RAG trustworthy for high-stakes applications like medical information, legal research, or campus policy.
+**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer simply is not in the index? A bare language model will often invent a plausible-sounding answer ("The bookstore closes at 5pm on weekdays"). RAG, if designed well, will say it does not know. That difference (between confident invention and abstention) is the core of what makes RAG trustworthy for high-stakes applications like medical information, legal research, or campus policy.
 
 ### Critical Thinking Questions
 
 4. The second question has no answer in the index. Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly). Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions just convert into abstention?
 
-   > *Hint: Run `chat("What time does the bookstore close?")` without any context and observe the response. Then look at the line in `rag_answer` that contains the phrase "not in my documents" — what instruction creates the abstention behavior?*
+   > *Hint: Run `chat("What time does the bookstore close?")` without any context and observe the response. Then look at the line in `rag_answer` that contains the phrase "not in my documents"; what instruction creates the abstention behavior?*
 
 5. Identify the precise line of the prompt that creates that abstention behavior. What happens if you delete it? Test and report.
 
@@ -168,9 +168,9 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 6. Set `k=1` and ask a question whose answer spans two documents. What failure occurs, and what does it suggest about choosing $k$?
 
-   > *Hint: Create a question like "Can I get food after working out at the gym?" — the answer involves both the dining hours doc and the athletics doc. With `k=1`, only one chunk fits in the prompt. What does the model say?*
+   > *Hint: Create a question like "Can I get food after working out at the gym?"; the answer involves both the dining hours doc and the athletics doc. With `k=1`, only one chunk fits in the prompt. What does the model say?*
 
-> **⚠️ Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way. The model's weights are completely unchanged. RAG simply places text in the prompt that the model then reads and summarizes — the same way you could hand a book to someone who has never seen it and ask them to answer questions from it. The intelligence is in the language model; the facts come from your documents. This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
+> **Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way. The model's weights are completely unchanged. RAG simply places text in the prompt that the model then reads and summarizes, the same way you could hand a book to someone who has never seen it and ask them to answer questions from it. The intelligence is in the language model; the facts come from your documents. This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
 
 The single most important reason RAG reduces factual hallucination is that it:
 
@@ -189,8 +189,8 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 1. *Your own corpus.* Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing. Demonstrate one question answered correctly with citation and one abstention.
 
-   - *What to do:* Find a real document (your CS357 syllabus, a club's bylaws, the college's honor code). Extract 10 meaningful sentences. Index them in Chroma. Ask five questions — at least two should be unanswerable from your documents.
-   - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ. Make sure each sentence is self-contained (contains enough context to be understood in isolation — avoid sentences like "As stated above, the deadline is...").
+   - *What to do:* Find a real document (your CS357 syllabus, a club's bylaws, the college's honor code). Extract 10 meaningful sentences. Index them in Chroma. Ask five questions; at least two should be unanswerable from your documents.
+   - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ. Make sure each sentence is self-contained (contains enough context to be understood in isolation; avoid sentences like "As stated above, the deadline is...").
    - *You've succeeded when:* You can show one output where the model correctly cites a source number, and one output where it says "not in my documents" for a question whose answer genuinely does not appear in your ten sentences.
 
 2. *Eval rematch.* Rerun the evaluation harness you built in the *Hallucinations and Evaluating Agent Outputs* activity, now routed through `rag_answer`, after adding documents containing the answers. Report accuracy before and after; quantify the lift.
@@ -223,9 +223,9 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
-Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality — the same levers you will tune in the RAG Knowledge Base Lab.
+Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy: long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality, the same levers you will tune in the RAG Knowledge Base Lab.
 
 ---
 

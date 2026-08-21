@@ -23,7 +23,7 @@ Avoid using the bare assistant name when the distinction between instances affec
 | Topic | Page | Read or update when... |
 |---|---|---|
 | Conventions and policies | `<Assistant>/Conventions-and-Policies.md` | any cross-instance rule changes |
-| Environment variables | `<Assistant>/Env-Reference.md` | a credential or setting is added (names and purposes ONLY — never values) |
+| Environment variables | `<Assistant>/Env-Reference.md` | a credential or setting is added (names and purposes ONLY, never values) |
 | Known issues | `<Assistant>/Known-Issues.md` | a defect is verified or a workaround applied (use stable KI-NN ids) |
 | Skills inventory | `<Assistant>/Skills-Inventory.md` | a skill is added, renamed, or retired (keep the reconstruction manifest current) |
 | Scheduled routines | `<Assistant>/Routines.md` | a cron job is added or its policy changes |
@@ -37,7 +37,7 @@ Avoid using the bare assistant name when the distinction between instances affec
 |---|---|---|---|---|
 | <capability> | <instance> | <instance> | <verified how, when> | |
 
-Cutover gate for any owner change of a user-facing capability — all boxes checked before the old owner is disabled:
+Cutover gate for any owner change of a user-facing capability, all boxes checked before the old owner is disabled:
 
 - [ ] New owner starts successfully
 - [ ] Receives a real input
@@ -49,4 +49,4 @@ Cutover gate for any owner change of a user-facing capability — all boxes chec
 
 ## Maintenance Directive
 
-Keep these pages current whenever the setup changes. Make each update in the topic page that owns the subject. Never record secret values — variable names, file paths, ownership, and purpose only. Commit durable changes (with sync metadata) when made.
+Keep these pages current whenever the setup changes. Make each update in the topic page that owns the subject. Never record secret values: variable names, file paths, ownership, and purpose only. Commit durable changes (with sync metadata) when made.

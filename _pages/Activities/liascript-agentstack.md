@@ -14,9 +14,9 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Local Agent Stack: Wiring Containers into a System
 
-> **Supplemental — required prep only for the Local Agent Lab Directions 2–3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
+> **Supplemental: required prep only for the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
 
-The *Docker from Zero: Containers for Agent Builders* supplemental activity gave you one container — and one container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
+The *Docker from Zero: Containers for Agent Builders* supplemental activity gave you one container, and one container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
 
 ---
 
@@ -30,7 +30,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Container** | A self-contained, isolated software environment — like a shipping container that carries everything a program needs to run, so it works identically on any machine. | Each service (Ollama, Open WebUI, etc.) runs in its own container |
+| **Container** | A self-contained, isolated software environment, like a shipping container that carries everything a program needs to run, so it works identically on any machine. | Each service (Ollama, Open WebUI, etc.) runs in its own container |
 | **Tier** | A layer in a system where every component in that layer has the same job. Grouping by tier makes it easy to reason about which piece does what. | The Inference tier runs models; the Gateway tier routes requests to them |
 | **Gateway** | A single entry point that routes incoming requests to the right backend service. Like a hotel switchboard: you call one number, and it connects you to housekeeping or room service. | `llmproxy` on port 4000 routes to Ollama, LocalAI, or cloud models |
 | **Port** | A numbered "door" on a computer through which one specific service listens for connections. Two services cannot share the same port number on the same machine. | Ollama listens on port 11434; Open WebUI on port 3000 |
@@ -41,11 +41,11 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Architecture Before Containers
 
-In this part, you will learn the five-tier mental model that organizes every service in our stack — so that instead of memorizing twenty container names, you can place any new service by asking "what job does it do?" This mental model is the same one professional engineers use to design and debug complex distributed systems.
+In this part, you will learn the five-tier mental model that organizes every service in our stack, so that instead of memorizing twenty container names, you can place any new service by asking "what job does it do?" This mental model is the same one professional engineers use to design and debug complex distributed systems.
 
 ## 1. The Tier Model
 
-**Why this matters:** When you first see a list of twenty container names, it looks overwhelming — like being handed a car's parts list before you have seen a car. The tier model is the map that organizes all those parts. Instead of memorizing twenty names, you memorize five jobs, and every container slots into one. This is the same principle engineers use to design any complex system: layer it so each layer has one responsibility, and components in different layers communicate through clean interfaces. Think of it like a restaurant: the kitchen (inference) prepares food, the server (gateway) carries it to tables, the dining room (frontend) is where guests sit, and the delivery app (agent tier) places orders automatically.
+**Why this matters:** When you first see a list of twenty container names, it looks overwhelming, like being handed a car's parts list before you have seen a car. The tier model is the map that organizes all those parts. Instead of memorizing twenty names, you memorize five jobs, and every container slots into one. This is the same principle engineers use to design any complex system: layer it so each layer has one responsibility, and components in different layers communicate through clean interfaces. Think of it like a restaurant: the kitchen (inference) prepares food, the server (gateway) carries it to tables, the dining room (frontend) is where guests sit, and the delivery app (agent tier) places orders automatically.
 
 Memorizing two dozen container names is hopeless; memorizing **five tiers** is easy, and every container in our stack slots into one:
 
@@ -53,7 +53,7 @@ Memorizing two dozen container names is hopeless; memorizing **five tiers** is e
 |------|-----|----------------|-------------------------|
 | Inference | Run AI models and expose them through a standard API that other software can call | `ollama`, `lmstudio`, `local-ai`, `longcat-video` | Ollama on port 11434 answers questions like "summarize this document" |
 | Gateway | Provide one stable endpoint that hides which backend model is actually running, so swapping models requires only one config change | `llmproxy` | LiteLLM on port 4000 routes your request to whichever model you configured |
-| Tools | Give agents capabilities beyond text generation — web search, databases, external APIs | `mcpproxy`, `searxng`, `surrealdb` | SearXNG lets agents search the web privately; SurrealDB stores results persistently |
+| Tools | Give agents capabilities beyond text generation: web search, databases, external APIs | `mcpproxy`, `searxng`, `surrealdb` | SearXNG lets agents search the web privately; SurrealDB stores results persistently |
 | Frontends | Provide human-facing interfaces (chat UIs, notebooks, voice, slides) that talk to the gateway | `open-webui`, `open-terminal`, `open-design`, `open-notebook`, `voicebox`, `presenton`, `calibre-web` | Open WebUI at port 3000 gives you a ChatGPT-style chat interface connected to your local models |
 | Agents | Run autonomous or task-bounded workers that can take multi-step actions without human input at each step | `hermes`, `freebuff`, `agent0`, `openhands-server`/`openhands`, `nanoclaw`, `nanoclaw-dind`, `zeroclaw`, `openclaw-gateway`, `n8n` | n8n at port 5678 runs scheduled workflows; Hermes handles tool-calling tasks |
 
@@ -61,7 +61,7 @@ Two structural principles govern everything. First, **all inference flows throug
 
 ## 2. The Port Plan
 
-**Why this matters:** Port conflicts are the most common reason a new service silently fails to start — it tries to claim a port that is already taken, crashes quietly, and you spend an hour debugging what looks like a network problem. The discipline here is simple: write down every port assignment before you run anything. It takes two minutes and prevents hours of frustration. Think of ports like parking spaces in a lot: each car (service) needs its own assigned spot, and two cars cannot share one spot.
+**Why this matters:** Port conflicts are the most common reason a new service silently fails to start: it tries to claim a port that is already taken, crashes quietly, and you spend an hour debugging what looks like a network problem. The discipline here is simple: write down every port assignment before you run anything. It takes two minutes and prevents hours of frustration. Think of ports like parking spaces in a lot: each car (service) needs its own assigned spot, and two cars cannot share one spot.
 
 Containers collide on ports before they collide on anything else, so the plan comes first. The well-known defaults anchor the table; every other service is assigned a host port in its `run.sh`, and the table (kept in your stack repository) is the single source of truth:
 
@@ -73,7 +73,7 @@ Containers collide on ports before they collide on anything else, so the plan co
 | `llmproxy` | 4000 | The gateway; every frontend and agent points here instead of directly at models | All your apps use `http://localhost:4000/v1` as their "OpenAI" base URL |
 | `open-webui` | 3000 | Browser-based chat frontend resembling ChatGPT | Point your browser to `http://localhost:3000` for a full chat UI |
 | `searxng` | 8081 | Private metasearch engine; default image port 8080 is remapped to avoid collision with local-ai | Agents call this to search the web without sending queries to Google |
-| `n8n` | 5678 | Visual workflow automation — build pipelines with a drag-and-drop canvas | "Every morning at 7am, summarize new emails and save to workspace" |
+| `n8n` | 5678 | Visual workflow automation, build pipelines with a drag-and-drop canvas | "Every morning at 7am, summarize new emails and save to workspace" |
 | `surrealdb` | 8000 | Multi-model database for persistent agent storage | Agents write facts here and retrieve them across sessions |
 | `calibre-web` | 8083 | E-book library management with a web interface | Index your PDF collection and let agents search it |
 | `agent0` | 8082 | Autonomous agent with a full web UI for monitoring its actions | Watch Agent Zero plan and execute multi-step tasks in real time |
@@ -99,17 +99,17 @@ Notice the `searxng` row: its image default (8080) collides with `local-ai`, so 
 
 3. Assign host ports to three unassigned services from the table, checking your choices against every existing row. State the collision you avoided.
 
-   > *Hint: List all reserved ports first: 11434, 1234, 8080, 4000, 3000, 8081, 5678, 8000, 8083, 8082. Your three new services must pick ports not in that list. Common safe ranges: 8084–8099, 7000–7999, 9000–9099.*
+   > *Hint: List all reserved ports first: 11434, 1234, 8080, 4000, 3000, 8081, 5678, 8000, 8083, 8082. Your three new services must pick ports not in that list. Common safe ranges: 8084-8099, 7000-7999, 9000-9099.*
 
 ---
 
 # Part II: Standing Up the Core
 
-In this part, you will bring up the stack tier by tier — inference first, then gateway, then frontends and tools, then agents. Each tier must be working before the next one is added. This incremental approach is the professional practice: it isolates failures and makes debugging tractable.
+In this part, you will bring up the stack tier by tier: inference first, then gateway, then frontends and tools, then agents. Each tier must be working before the next one is added. This incremental approach is the professional practice: it isolates failures and makes debugging tractable.
 
 ## 3. Inference: Ollama First
 
-Ollama is the inference foundation — the service that downloads model files and answers requests. Everything else can be added incrementally once it answers:
+Ollama is the inference foundation, the service that downloads model files and answers requests. Everything else can be added incrementally once it answers:
 
 ```bash
 # Native install (preferred: keeps model I/O off the Docker path)
@@ -122,9 +122,9 @@ curl http://localhost:11434/api/tags        # verify: lists your models
 
 ## 4. The Gateway: llmproxy
 
-The gateway (a LiteLLM-style router — a program that receives requests in the standard OpenAI format and forwards them to whichever local or cloud model you have configured) is one Compose service plus one routing file. Pay attention to the `api_base` field: this is where the `host.docker.internal` hostname (the special address that lets a container reach the host machine) becomes critical.
+The gateway (a LiteLLM-style router, a program that receives requests in the standard OpenAI format and forwards them to whichever local or cloud model you have configured) is one Compose service plus one routing file. Pay attention to the `api_base` field: this is where the `host.docker.internal` hostname (the special address that lets a container reach the host machine) becomes critical.
 
-Build it as a numbered checklist — complete and verify each step before starting the next:
+Build it as a numbered checklist; complete and verify each step before starting the next:
 
 1. **Create the routing file** at `llmproxy/litellm_config.yaml`. This maps each public model name to a backend:
 
@@ -161,12 +161,12 @@ Build it as a numbered checklist — complete and verify each step before starti
    docker compose up -d
    ```
 
-   ✅ **Checkpoint:** what should `docker compose ps` show now?
+   **Checkpoint:** what should `docker compose ps` show now?
 
    <details>
    <summary>Expected answer</summary>
 
-   Exactly one service, `llmproxy`, with status `Up` (or `running`) and the ports column showing `0.0.0.0:4000->4000/tcp`. If the status is `Restarting`, run `docker logs llmproxy` — the usual culprit is a typo in the mounted config path or invalid YAML in the routing file.
+   Exactly one service, `llmproxy`, with status `Up` (or `running`) and the ports column showing `0.0.0.0:4000->4000/tcp`. If the status is `Restarting`, run `docker logs llmproxy`; the usual culprit is a typo in the mounted config path or invalid YAML in the routing file.
 
    </details>
 
@@ -176,12 +176,12 @@ Build it as a numbered checklist — complete and verify each step before starti
    curl -s http://localhost:4000/models -H "Authorization: Bearer sk-litellm-local"
    ```
 
-   ✅ **Checkpoint:** what should this `curl` return?
+   **Checkpoint:** what should this `curl` return?
 
    <details>
    <summary>Expected answer</summary>
 
-   A JSON object whose `data` array lists the two configured model names, `llama3` and `qwen2.5-3b`. An empty list means the routing file did not mount into the container; `connection refused` means the container is not running — go back to the step 3 checkpoint.
+   A JSON object whose `data` array lists the two configured model names, `llama3` and `qwen2.5-3b`. An empty list means the routing file did not mount into the container; `connection refused` means the container is not running; go back to the step 3 checkpoint.
 
    </details>
 
@@ -189,7 +189,7 @@ Read the config's `api_base` carefully: the gateway is *itself a container*, so 
 
 ## 5. Frontends and Tools
 
-> **Second half of today's session: build one visually.** Once the stack is up, we move to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas — same concepts, no Python authorship. Part IV of that deck is the hands-on build.
+> **Second half of today's session: build one visually.** Once the stack is up, we move to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas, same concepts, no Python authorship. Part IV of that deck is the hands-on build.
 
 With the gateway answering, frontends attach by URL. Open WebUI:
 
@@ -207,7 +207,7 @@ docker run -d --name open-webui -p 3000:8080 \
 
 ## 6. The Agent Tier
 
-Agents are where the stack earns its name — they are the autonomous workers that use the inference, gateway, frontend, and tool tiers as their instruments. Each agent has a distinct personality and capability level, but they all deploy the same way: a port row, an identity directory, and a gateway URL in their config. The code below shows the pattern for `hermes`, a tool-calling agent; the others follow the same template.
+Agents are where the stack earns its name; they are the autonomous workers that use the inference, gateway, frontend, and tool tiers as their instruments. Each agent has a distinct personality and capability level, but they all deploy the same way: a port row, an identity directory, and a gateway URL in their config. The code below shows the pattern for `hermes`, a tool-calling agent; the others follow the same template.
 
 ```bash
 docker pull nousresearch/hermes-agent:latest
@@ -249,7 +249,7 @@ When a cell of the matrix fails, the diagnostic ladder from the *Docker from Zer
 
 # Part III: Practice
 
-In this part, you will build and verify a working minimal stack, extend it with a tool and an agent, and deliberately break and fix a common networking issue — so that when something goes wrong in your project work, you have already seen and diagnosed it.
+In this part, you will build and verify a working minimal stack, extend it with a tool and an agent, and deliberately break and fix a common networking issue, so that when something goes wrong in your project work, you have already seen and diagnosed it.
 
 ## 8. Exercises
 
@@ -295,9 +295,9 @@ In this part, you will build and verify a working minimal stack, extend it with 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
-Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into the Local Agent Lab Directions 2–3 (the Compose-stack and container-hardening directions).
+Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).
 
 ---
 

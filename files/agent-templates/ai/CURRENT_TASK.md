@@ -5,7 +5,7 @@
 
 ## Active Milestone
 
-Milestone <N> — <name>
+Milestone <N>: <name>
 
 ## Active Subtask
 
@@ -16,7 +16,7 @@ Milestone <N> — <name>
 - [x] <prior step that this task depends on>
 - [x] <prior step>
 
-## Reality Check — what is NOT done
+## Reality Check: what is NOT done
 
 <!-- Anti-overclaiming section. List what a hopeful reader might assume is finished
      but is not, with evidence. Cite the authoritative artifact (test output, audit
@@ -33,7 +33,7 @@ Milestone <N> — <name>
 
 ## Safe Handoff Point
 
-<the last known-good state a new agent can trust — e.g., "all tests green as of commit <sha>">
+<the last known-good state a new agent can trust, e.g., "all tests green as of commit <sha>">
 
 ## Next Immediate Action
 

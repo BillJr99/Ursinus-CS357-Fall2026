@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Traditional Machine Learning Foundations
 
-The agents, RAG pipelines, and embedding models we have built so far all rest on a foundation of **traditional machine learning** — the supervised and unsupervised techniques, evaluation frameworks, and statistical thinking that the field developed long before transformers, and that still drive many production systems today.
+The agents, RAG pipelines, and embedding models we have built so far all rest on a foundation of **traditional machine learning**: the supervised and unsupervised techniques, evaluation frameworks, and statistical thinking that the field developed long before transformers, and that still drive many production systems today.
 
 ---
 
@@ -35,8 +35,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Course-Context Example |
 |------|--------------------------|------------------------|
-| **Supervised Learning** | Learning a mapping from inputs to outputs using labeled training examples — the right answers are provided in advance | Training a model on (email text → spam/not-spam) labels; similar to how we fine-tuned a classifier in the embeddings unit |
-| **Regression** | A supervised task where the output is a continuous number | Predicting the relevance score of a retrieved document given a query — a number, not a category |
+| **Supervised Learning** | Learning a mapping from inputs to outputs using labeled training examples; the right answers are provided in advance | Training a model on (email text -> spam/not-spam) labels; similar to how we fine-tuned a classifier in the embeddings unit |
+| **Regression** | A supervised task where the output is a continuous number | Predicting the relevance score of a retrieved document given a query, a number, not a category |
 | **Classification** | A supervised task where the output is one of a fixed set of categories | Routing an agent's incoming message to the correct tool: "arithmetic", "search", or "none" |
 | **Bias-Variance Tradeoff** | The tension between a model that is too simple (high bias, misses real patterns) and one that memorizes training data (high variance, fails on new inputs) | An agent planner that always recommends the same tool is high-bias; one that changes plan every run is high-variance |
 | **Cross-Validation** | A technique for estimating how well a model generalizes, by repeatedly training on one part of the data and testing on a held-out part | Before deploying a retrieval ranker, we estimate its precision/recall on data it has never seen |
@@ -56,7 +56,7 @@ $$
 \mathcal{D} = \{(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\}
 $$
 
-where each $x_i$ is an **input** (a feature vector) and each $y_i$ is the corresponding **label** (what we want to predict). The algorithm searches for a function $f$ such that $f(x) \approx y$ on new, unseen inputs — not just on the training data. Doing well only on training data is called **overfitting**.
+where each $x_i$ is an **input** (a feature vector) and each $y_i$ is the corresponding **label** (what we want to predict). The algorithm searches for a function $f$ such that $f(x) \approx y$ on new, unseen inputs, not just on the training data. Doing well only on training data is called **overfitting**.
 
 Two broad families of supervised tasks:
 
@@ -67,7 +67,7 @@ The **hypothesis class** (the family of functions we search over) determines wha
 
 ### Critical Thinking Questions
 
-1. We said the goal is to do well on *new, unseen* inputs — not just on the training set. Why is performance on the training set an unreliable guide to real-world usefulness?
+1. We said the goal is to do well on *new, unseen* inputs, not just on the training set. Why is performance on the training set an unreliable guide to real-world usefulness?
 
    > *Hint: Think about what the model can do during training that it cannot do at deployment. If the model simply memorizes every $(x_i, y_i)$ pair, what does it do when it sees an $x$ that was not in the training set?*
 
@@ -108,7 +108,7 @@ $$
 
 - **Bias** is systematic error: the model's assumptions prevent it from fitting the true pattern, even with infinite data. A linear model fit to a curved relationship has high bias.
 - **Variance** is sensitivity to the specific training set: small changes in which examples you train on produce large changes in the model. A deep decision tree that memorizes training examples has high variance.
-- **Irreducible noise** is the part of the error that no model can remove — inherent randomness or missing information in the data.
+- **Irreducible noise** is the part of the error that no model can remove: inherent randomness or missing information in the data.
 
 The tradeoff: increasing model complexity tends to decrease bias but increase variance. Regularization, pruning, and ensemble methods are all techniques for finding a better operating point on this tradeoff.
 
@@ -126,7 +126,7 @@ The tradeoff: increasing model complexity tends to decrease bias but increase va
 
    > *Hint: If each tree makes a different random error, what happens to those errors when you average many trees together? Think about what averaging does to random noise.*
 
-> **Common Misconception:** It is tempting to think that a model with higher training accuracy is always better. In practice, a model that achieves 99% training accuracy and 65% test accuracy has **overfit** — it learned the noise in the training data rather than the true pattern. Always report test or cross-validation accuracy when comparing models. Training accuracy alone tells you almost nothing about real-world performance.
+> **Common Misconception:** It is tempting to think that a model with higher training accuracy is always better. In practice, a model that achieves 99% training accuracy and 65% test accuracy has **overfit**; it learned the noise in the training data rather than the true pattern. Always report test or cross-validation accuracy when comparing models. Training accuracy alone tells you almost nothing about real-world performance.
 
 ## 3. Cross-Validation and Ensemble Methods in Practice
 
@@ -183,7 +183,7 @@ print()
 
 # Detailed report on the test set for the random forest
 y_pred = rf.predict(X_test)
-print("=== Random Forest — Test Set Classification Report ===")
+print("=== Random Forest: Test Set Classification Report ===")
 print(classification_report(y_test, y_pred, target_names=class_names))
 
 # Feature importances from the forest
@@ -198,13 +198,13 @@ for i in ranked:
 
 1. The code uses `stratify=y` in `train_test_split`. Look up or reason about what this does. Why is stratification important when one class has fewer examples than the others?
 
-   > *Hint: Iris has 50 examples per class, so stratification matters less here — but imagine a fraud-detection dataset where 98% of examples are "not fraud." Without stratification, what might your test set accidentally contain?*
+   > *Hint: Iris has 50 examples per class, so stratification matters less here, but imagine a fraud-detection dataset where 98% of examples are "not fraud." Without stratification, what might your test set accidentally contain?*
 
 2. Cross-validation reports a mean accuracy **and** a standard deviation. The decision tree's standard deviation is typically higher than the random forest's. What does a high standard deviation across folds tell you about the model's variance?
 
    > *Hint: Each fold uses a slightly different subset of training data. If the model's score swings widely between folds, what does that tell you about how sensitive it is to which examples it trains on?*
 
-3. The random forest exposes `feature_importances_`. If `petal length (cm)` ranks highest, what does that mean in plain English — and why might that be more useful than the model's accuracy number alone?
+3. The random forest exposes `feature_importances_`. If `petal length (cm)` ranks highest, what does that mean in plain English, and why might that be more useful than the model's accuracy number alone?
 
    > *Hint: Feature importance tells you which inputs the model is actually using to make decisions. How might a teacher or scientist use this information differently from a software engineer?*
 
@@ -238,7 +238,7 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
    You are building a classifier that, given a user message, predicts whether an agent should call a web-search tool, a calculator tool, or no tool at all. The message is plain text.
 
    - List at least five features you would extract from the message text (e.g., presence of a question mark, average word length). For each, explain why it might be predictive.
-   - Identify one feature that could introduce **demographic bias** — systematically performing worse for some groups of users — and explain the mechanism.
+   - Identify one feature that could introduce **demographic bias** (systematically performing worse for some groups of users) and explain the mechanism.
    - Describe how you would use a held-out evaluation set to detect that bias before deployment.
 
 ---
@@ -247,7 +247,7 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
 
 *Personal*: Before this activity, did you think of "machine learning" and "AI" as the same thing? After seeing how much of RAG, embeddings, and agent routing reduces to supervised classification or regression, has your mental model changed? Describe one concrete thing that shifted.
 
-*Technical*: Cross-validation gave us an accurate estimate of model performance without wasting data on a fixed test set. Describe one situation where cross-validation would give an *overly optimistic* estimate — that is, where even CV accuracy would not reliably predict real-world performance.
+*Technical*: Cross-validation gave us an accurate estimate of model performance without wasting data on a fixed test set. Describe one situation where cross-validation would give an *overly optimistic* estimate: that is, where even CV accuracy would not reliably predict real-world performance.
 
 > *Hint: Think about what assumption cross-validation makes about the relationship between your training data and the data you will see at deployment. What could violate that assumption?*
 
@@ -255,20 +255,20 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
 
 ---
 
-→ **Coming Up Next:** Now that we understand how models learn from labeled data, we turn to what happens when labels are absent — in the next activity we explore **unsupervised learning**: clustering, dimensionality reduction, and how embedding spaces (which we built from scratch in an earlier unit) are trained without explicit labels.
+-> **Coming Up Next:** Now that we understand how models learn from labeled data, we turn to what happens when labels are absent; in the next activity we explore **unsupervised learning**: clustering, dimensionality reduction, and how embedding spaces (which we built from scratch in an earlier unit) are trained without explicit labels.
 
 ## 5. Further Reading
 
-- James, Witten, Hastie, and Tibshirani. *An Introduction to Statistical Learning* (2nd ed.), Chapters 2–8. The standard graduate reference for supervised ML; freely available online.
+- James, Witten, Hastie, and Tibshirani. *An Introduction to Statistical Learning* (2nd ed.), Chapters 2-8. The standard graduate reference for supervised ML; freely available online.
 - Hastie, Tibshirani, and Friedman. *The Elements of Statistical Learning* (2nd ed.), Chapter 7 (Model Assessment and Selection). The theoretical grounding for bias-variance and cross-validation.
-- Breiman, Leo. "Random Forests." *Machine Learning* 45 (2001): 5–32. The original paper; remarkably readable.
-- Google Machine Learning Crash Course — [Overfitting](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting). Short, visual introduction to the bias-variance tradeoff.
+- Breiman, Leo. "Random Forests." *Machine Learning* 45 (2001): 5-32. The original paper; remarkably readable.
+- Google Machine Learning Crash Course: [Overfitting](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting). Short, visual introduction to the bias-variance tradeoff.
 - Sculley et al. "Hidden Technical Debt in Machine Learning Systems." *NeurIPS* (2015). Why clean evaluation pipelines matter in production.
 
 ---
 
 > **Acknowledgment:** Concepts in this activity were adapted from the following open-source educational resources (not reproduced verbatim):
 > - [ML Course](https://github.com/ML-course/master), CC0 License
-> - [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch), MIT License — Phase 2 (ML Fundamentals)
+> - [AI Engineering from Scratch](https://github.com/rohitg00/ai-engineering-from-scratch), MIT License, Phase 2 (ML Fundamentals)
 >
 > All text, questions, and exercises are original course materials.
