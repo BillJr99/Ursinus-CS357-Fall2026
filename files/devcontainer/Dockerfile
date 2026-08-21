@@ -20,7 +20,7 @@ FROM python:3.11-slim
 LABEL org.opencontainers.image.title="CS357 course development environment" \
       org.opencontainers.image.description="Python 3.11 with the CS357 lab libraries (requests, chromadb, sentence-transformers, scikit-learn, spacy, shap, lime, flask, ...) plus Node.js and promptfoo; talks to host Ollama via host.docker.internal" \
       org.opencontainers.image.authors="CS357 course staff" \
-      org.opencontainers.image.url="https://www.billmongan.com/Ursinus-CS357-Fall2026/"
+      org.opencontainers.image.url="https://www.billmongan.com/Ursinus-CS357/"
 
 # System packages:
 #   git    -- commit and push your work from inside the container

@@ -42,7 +42,7 @@ info:
       proficient: The 2-3 page brief contains all required sections including a candidate track fit that works for all three final-project tracks; every section names its primary author and every member is primary author of at least one section; the submission carries all members' signatures and an AI-use disclosure stating what was AI-assisted and how it was verified (Goals 13, 14)
   readings:
     - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread"
+      rlink: "../Projects/PBLThread"
     - rtitle: "Structured Peer Review Activity (SQR protocol used at the brief exchange)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md"
     - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."
@@ -55,7 +55,7 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners (campus offices and local organizations who have agreed to talk with student teams) and shares the roster in class before the kickoff (it is not published on the website); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks: this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The milestone runs in four steps: an in-class kickoff when the assignment is handed out; a short unassisted problem statement each member writes individually; a structured peer-review exchange of draft briefs in class; and the revised brief. See the [course schedule](/) for the dates.
+In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science** and learns about a problem *they* have, in *their* words. The instructor identifies community partners (campus offices and local organizations who have agreed to talk with student teams) and shares the roster in class before the kickoff (it is not published on the website); your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves). The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks: this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person. The milestone runs in four steps: an in-class kickoff when the assignment is handed out; a short unassisted problem statement each member writes individually; a structured peer-review exchange of draft briefs in class; and the revised brief. See the [course schedule]({{ site.baseurl }}/) for the dates.
 
 The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**. Real problems do not arrive as specs. They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated. Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty, and it is the difference between building something and building something *useful*.
 
@@ -147,7 +147,7 @@ The protocol has four phases. Your interview packet (an appendix to the brief) d
 
 > **Bring to class.** Your half-page unassisted problem statement comes with you to the *Connecting Agents to the World* session, written individually and without AI **before** your team drafts the brief. It is a calibration baseline, not a test, completion credit only. Your team's brief draft then travels to the *RAG Quality* session for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
 
-Due individually, after your interview and before your team begins drafting Part 3; see the [course schedule](/) for the date. **3 points, assessed within Class Activities and Participation, on completion only.**
+Due individually, after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date. **3 points, assessed within Class Activities and Participation, on completion only.**
 
 After your interview and before your team writes anything together, write **half a page, by yourself, with no AI assistance of any kind**: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about. No sources, no polish, no rewriting it later, a first honest attempt.
 
@@ -183,7 +183,7 @@ Before the brief is due, draft briefs are exchanged across teams in class for st
 
 ## Deliverables
 
-**Individually,** by the date on the [course schedule](/): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
+**Individually,** by the date on the [course schedule]({{ site.baseurl }}/): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
 
 **As a team,** submit one PDF via the LMS by the brief's due date containing:
 
