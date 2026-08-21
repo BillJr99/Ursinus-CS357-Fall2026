@@ -46,23 +46,23 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ---
 
-In this first model, you will identify why AI agent bugs are qualitatively harder to debug than conventional software bugs — and why strategies that work for Python programs often fail for agents. This matters because you cannot fix what you cannot reproduce, and agents have five specific properties that make reproduction difficult.
+In this first model, you will identify why AI agent bugs are qualitatively harder to debug than conventional software bugs, and why strategies that work for Python programs often fail for agents. This matters because you cannot fix what you cannot reproduce, and agents have five specific properties that make reproduction difficult.
 
 ## Model 1: Why Agent Debugging Is Hard
 
-Debugging a non-deterministic system is like diagnosing a car that only breaks down on Tuesdays — by the time you get it to the mechanic, it's running fine, and reproducing the problem requires recreating an exact combination of conditions you may not fully know. AI agents are harder to debug than traditional software for five distinct and compounding reasons. Understanding these reasons is the first step to building agents that are debuggable in the first place.
+Debugging a non-deterministic system is like diagnosing a car that only breaks down on Tuesdays: by the time you get it to the mechanic, it's running fine, and reproducing the problem requires recreating an exact combination of conditions you may not fully know. AI agents are harder to debug than traditional software for five distinct and compounding reasons. Understanding these reasons is the first step to building agents that are debuggable in the first place.
 
 ### Five Reasons Agent Debugging Is Hard
 
-1. **Non-determinism.** The same input can produce different outputs on different runs because of sampling temperature, different random seeds, or variability in external tool responses. A bug you cannot reproduce reliably is a bug you cannot confidently fix — you do not know whether your fix eliminated the bug or just got lucky on the next few runs.
+1. **Non-determinism.** The same input can produce different outputs on different runs because of sampling temperature, different random seeds, or variability in external tool responses. A bug you cannot reproduce reliably is a bug you cannot confidently fix; you do not know whether your fix eliminated the bug or just got lucky on the next few runs.
 
 2. **Long causal chains.** In a multi-step agent, the error you observe at step 12 may have been caused by a subtly wrong decision at step 6. The visible symptom is far removed in time and context from the actual root cause, unlike a stack trace that points directly to the failing line of code.
 
-3. **Black-box model internals.** You cannot set a breakpoint inside a neural network. The model's "reasoning" is only visible through its output text — and that output text may not accurately reflect the internal computation that produced it. A model can generate confident-sounding text that bears little relationship to any interpretable internal state.
+3. **Black-box model internals.** You cannot set a breakpoint inside a neural network. The model's "reasoning" is only visible through its output text, and that output text may not accurately reflect the internal computation that produced it. A model can generate confident-sounding text that bears little relationship to any interpretable internal state.
 
 4. **Context sensitivity.** A bug may appear only when the conversation history exceeds a certain length, or only when a specific tool output was present three turns earlier. A bug that requires 50 prior turns of specific conversation to reproduce is nearly impossible to catch in standard unit tests.
 
-5. **Emergent failures.** Each individual component — the model, each tool, and the orchestration logic — may behave correctly when tested in isolation, but the combination of all three produces a wrong or harmful outcome. The bug is in the interaction between components, not in any single part.
+5. **Emergent failures.** Each individual component (the model, each tool, and the orchestration logic) may behave correctly when tested in isolation, but the combination of all three produces a wrong or harmful outcome. The bug is in the interaction between components, not in any single part.
 
 ### Classic Software Bug vs. Agent Bug
 
@@ -80,7 +80,7 @@ Debugging a non-deterministic system is like diagnosing a car that only breaks d
 
 [[___ Your answer here ___]]
 
-> *Hint:* In a traditional program, a variable holds a specific value at each point in execution — you can print it, inspect it in a debugger, and reason about how it got there. An LLM's "state" is distributed across billions of floating-point weights that encode statistical patterns learned from training data. There is no variable that holds "what the model is currently thinking." The only observable output is the token probability distribution — and even that is only partially informative about why the model generated a specific output. If you can't inspect internal state, what can you observe? What logs and outputs are available, and what can you infer from them?
+> *Hint:* In a traditional program, a variable holds a specific value at each point in execution: you can print it, inspect it in a debugger, and reason about how it got there. An LLM's "state" is distributed across billions of floating-point weights that encode statistical patterns learned from training data. There is no variable that holds "what the model is currently thinking." The only observable output is the token probability distribution, and even that is only partially informative about why the model generated a specific output. If you can't inspect internal state, what can you observe? What logs and outputs are available, and what can you infer from them?
 
 ---
 
@@ -96,32 +96,32 @@ Debugging a non-deterministic system is like diagnosing a car that only breaks d
 
 [[___ Your answer here ___]]
 
-> *Hint:* A prompt bug is an error in the text instructions given to the model — for example, a system prompt that says "always respond in Spanish" when it should say "always respond in the user's language," or a tool description that incorrectly describes the format of the tool's output. A code bug is an error in the Python (or other language) code that constructs the prompt, calls the model, parses the response, or invokes tools — for example, a bug that accidentally truncates the system prompt when the conversation history is long, or a bug that passes tool results in the wrong format. The distinction matters because fixing a prompt bug requires no code deployment; fixing a code bug does. Testing a prompt fix requires running the model; testing a code fix can sometimes be done with unit tests that mock the model.
+> *Hint:* A prompt bug is an error in the text instructions given to the model: for example, a system prompt that says "always respond in Spanish" when it should say "always respond in the user's language," or a tool description that incorrectly describes the format of the tool's output. A code bug is an error in the Python (or other language) code that constructs the prompt, calls the model, parses the response, or invokes tools: for example, a bug that accidentally truncates the system prompt when the conversation history is long, or a bug that passes tool results in the wrong format. The distinction matters because fixing a prompt bug requires no code deployment; fixing a code bug does. Testing a prompt fix requires running the model; testing a code fix can sometimes be done with unit tests that mock the model.
 
 ---
 
-*Model 1 showed why agent bugs are hard to find. Model 2 gives you a structured five-stage process for finding them systematically — the equivalent of a debugger and stack trace for a system that has neither.*
+*Model 1 showed why agent bugs are hard to find. Model 2 gives you a structured five-stage process for finding them systematically, the equivalent of a debugger and stack trace for a system that has neither.*
 
 ## Model 2: A Systematic Debugging Process for Agents
 
 Agent debugging benefits enormously from a structured approach. Without structure, debugging a non-deterministic, multi-step system becomes an unguided search through an enormous space of possible causes. The following five-stage process adapts classic software debugging methodology to the agent context. Think of it as the agent equivalent of the scientific method: observe, isolate, hypothesize, test, fix.
 
-**Stage 1 — Reproduce.** Capture the complete execution context so you can run the exact same scenario again. This means logging: the system prompt text and a version hash of it; the model name and exact version string; the temperature and all other sampling parameters; the full conversation history including every user message, assistant message, tool call, and tool result; and timestamps for each turn. "It worked on my machine" is especially dangerous with agents because any difference in model version, system prompt, or tool response can cause completely different behavior.
+**Stage 1: Reproduce.** Capture the complete execution context so you can run the exact same scenario again. This means logging: the system prompt text and a version hash of it; the model name and exact version string; the temperature and all other sampling parameters; the full conversation history including every user message, assistant message, tool call, and tool result; and timestamps for each turn. "It worked on my machine" is especially dangerous with agents because any difference in model version, system prompt, or tool response can cause completely different behavior.
 
-**Stage 2 — Isolate.** Use **prompt bisection** (a binary-search technique applied to conversation history) to find the turn where behavior first diverged from correct. Binary-search through the conversation history: does the bug appear if you replay only the first half of the conversation? If not, the bug is in the second half. If yes, the bug is in the first half. Repeat until you identify the minimal context that reliably produces the failure. For a 64-turn conversation, this takes at most log₂(64) = 6 bisection steps in the worst case — the same efficiency as binary search in a sorted list.
+**Stage 2: Isolate.** Use **prompt bisection** (a binary-search technique applied to conversation history) to find the turn where behavior first diverged from correct. Binary-search through the conversation history: does the bug appear if you replay only the first half of the conversation? If not, the bug is in the second half. If yes, the bug is in the first half. Repeat until you identify the minimal context that reliably produces the failure. For a 64-turn conversation, this takes at most log₂(64) = 6 bisection steps in the worst case, the same efficiency as binary search in a sorted list.
 
-**Stage 3 — Hypothesize.** Generate a specific, testable hypothesis. Common failure mode categories to consider first:
+**Stage 3: Hypothesize.** Generate a specific, testable hypothesis. Common failure mode categories to consider first:
 
 - **Context overflow:** The conversation exceeded the model's context window, causing the model to lose access to earlier instructions or facts.
 - **Tool failure mistaken as success:** The tool returned an error code or malformed output that the model interpreted as a valid result and acted on incorrectly.
 - **Hallucination triggered by low-confidence state:** The model lacked information it needed and generated a plausible-sounding but incorrect answer rather than admitting uncertainty.
 - **Persona drift:** Accumulated conversation history caused the model to gradually shift away from its system prompt persona and instructions.
 
-**Stage 4 — Test the hypothesis.** Design a minimal test that either confirms or refutes your specific hypothesis. If you hypothesize context overflow, replay the scenario with a truncated history and see if the bug disappears. If you hypothesize tool failure, inject a synthetic tool failure and observe whether the model's response matches the failure pattern you saw.
+**Stage 4: Test the hypothesis.** Design a minimal test that either confirms or refutes your specific hypothesis. If you hypothesize context overflow, replay the scenario with a truncated history and see if the bug disappears. If you hypothesize tool failure, inject a synthetic tool failure and observe whether the model's response matches the failure pattern you saw.
 
-**Stage 5 — Fix and regression-test.** After fixing the root cause, write a test case that would have caught the bug before the fix was applied. Add it to your regression test suite. Verify that the fix resolves the bug without breaking other agent behaviors.
+**Stage 5: Fix and regression-test.** After fixing the root cause, write a test case that would have caught the bug before the fix was applied. Add it to your regression test suite. Verify that the fix resolves the bug without breaking other agent behaviors.
 
-> **Common Misconception:** Many developers try to fix agent bugs by tweaking the prompt slightly and running the agent a few times to see if the bug disappears. If the bug is non-deterministic, this approach is unreliable — the bug may appear to be fixed when it has actually just not triggered randomly. The systematic five-stage process above forces you to confirm a specific, testable hypothesis before declaring the bug fixed, which is the only way to have confidence that your fix actually addresses the root cause.
+> **Common Misconception:** Many developers try to fix agent bugs by tweaking the prompt slightly and running the agent a few times to see if the bug disappears. If the bug is non-deterministic, this approach is unreliable; the bug may appear to be fixed when it has actually just not triggered randomly. The systematic five-stage process above forces you to confirm a specific, testable hypothesis before declaring the bug fixed, which is the only way to have confidence that your fix actually addresses the root cause.
 
 ### Critical Thinking Questions
 
@@ -129,7 +129,7 @@ Agent debugging benefits enormously from a structured approach. Without structur
 
 [[___ Your answer here ___]]
 
-> *Hint:* Start by replaying turns 1 through 32 and checking whether the behavior is correct at the end. If correct at turn 32, the bug is in turns 33-64; replay turns 33-48. If still correct, the bug is in turns 49-64; replay turns 49-56. Continue halving the range. For a 64-turn conversation, log₂(64) = 6 bisection steps are sufficient to identify the single turn that introduces the failure. At each step, you need to actually run the model with exactly that prefix of the conversation and observe the output. What are you looking for at each step — what does "correct behavior" mean at an intermediate turn, before the conversation has fully developed?
+> *Hint:* Start by replaying turns 1 through 32 and checking whether the behavior is correct at the end. If correct at turn 32, the bug is in turns 33-64; replay turns 33-48. If still correct, the bug is in turns 49-64; replay turns 49-56. Continue halving the range. For a 64-turn conversation, log₂(64) = 6 bisection steps are sufficient to identify the single turn that introduces the failure. At each step, you need to actually run the model with exactly that prefix of the conversation and observe the output. What are you looking for at each step: what does "correct behavior" mean at an intermediate turn, before the conversation has fully developed?
 
 ---
 
@@ -145,7 +145,7 @@ Agent debugging benefits enormously from a structured approach. Without structur
 
 [[___ Your answer here ___]]
 
-> *Hint:* The critical question is: what did the model see in the context at the moment it generated the response? Log: (1) the tool's HTTP status code and response body separately from the model's subsequent response — if the tool returned 503 but the model's response contains specific temperature and precipitation values, the model hallucinated because no valid data was available; (2) the exact text inserted into the context from the tool result — if it says "Error: service unavailable" but the model responded with a forecast, you know the model didn't follow the error signal; (3) the token count of the tool result — a 503 error response is typically short; a rich forecast is longer. What would you see in your logs for the hallucination case vs. the graceful degradation case?
+> *Hint:* The critical question is: what did the model see in the context at the moment it generated the response? Log: (1) the tool's HTTP status code and response body separately from the model's subsequent response; if the tool returned 503 but the model's response contains specific temperature and precipitation values, the model hallucinated because no valid data was available; (2) the exact text inserted into the context from the tool result; if it says "Error: service unavailable" but the model responded with a forecast, you know the model didn't follow the error signal; (3) the token count of the tool result: a 503 error response is typically short; a rich forecast is longer. What would you see in your logs for the hallucination case vs. the graceful degradation case?
 
 ---
 
@@ -153,12 +153,12 @@ Agent debugging benefits enormously from a structured approach. Without structur
 
 An agent produces correct answers for 100 random test prompts but fails on one specific user's session that you cannot currently reproduce. The most productive next step is:
 
-[[ ]] Declare it an anomaly and move on — single-case failures are not statistically significant enough to investigate
-[[ ]] Roll back to the previous model version immediately without investigating — you do not yet know whether the old version had the same bug
+[[ ]] Declare it an anomaly and move on; single-case failures are not statistically significant enough to investigate
+[[ ]] Roll back to the previous model version immediately without investigating; you do not yet know whether the old version had the same bug
 [[x]] Add logging to capture the full conversation context (system prompt version, conversation history, tool outputs, model version, and sampling parameters) so the next occurrence of the failure can be reproduced and investigated
-[[ ]] Increase the model's temperature setting to introduce more variety and hope the failure disappears on its own — temperature controls randomness, not the source of this specific failure
+[[ ]] Increase the model's temperature setting to introduce more variety and hope the failure disappears on its own; temperature controls randomness, not the source of this specific failure
 
-> **Why this answer?** A single unreproducible failure is the hardest category of agent bug to address — but the correct response is to instrument the system so the *next* occurrence can be reproduced. Rolling back without understanding the cause leaves you unable to know whether the previous version also had the bug or a different one. Adjusting temperature does not address any root cause and may introduce new non-deterministic failures. Declaring it an anomaly is risky because a failure in an agent could affect safety, correctness, or user trust if it recurs at a higher rate than one observed case suggests.
+> **Why this answer?** A single unreproducible failure is the hardest category of agent bug to address, but the correct response is to instrument the system so the *next* occurrence can be reproduced. Rolling back without understanding the cause leaves you unable to know whether the previous version also had the bug or a different one. Adjusting temperature does not address any root cause and may introduce new non-deterministic failures. Declaring it an anomaly is risky because a failure in an agent could affect safety, correctness, or user trust if it recurs at a higher rate than one observed case suggests.
 
 ---
 
@@ -172,7 +172,7 @@ An agent produces correct answers for 100 random test prompts but fails on one s
 
 - **Langfuse:** Open-source alternative to LangSmith with self-hosting capability, making it appropriate for use cases where agent data cannot leave the operator's infrastructure. Captures traces, supports prompt versioning that links each run to the exact prompt version that was active, and integrates with multiple agent frameworks.
 
-- **Arize Phoenix:** Focuses on LLM evaluation and production drift detection. Useful for identifying when a model's output distribution shifts over time — for example, detecting that the average length of agent responses has dropped, which might signal a model update or system prompt change.
+- **Arize Phoenix:** Focuses on LLM evaluation and production drift detection. Useful for identifying when a model's output distribution shifts over time: for example, detecting that the average length of agent responses has dropped, which might signal a model update or system prompt change.
 
 **To use a trace viewer effectively:** identify the span where the model's output first diverges from expected; examine the exact prompt that was assembled and sent to the model (including all injected context); check the tool call inputs and outputs immediately preceding the divergence point; and compare token counts across turns to detect context overflow.
 
@@ -185,7 +185,7 @@ An agent produces correct answers for 100 random test prompts but fails on one s
 | Temperature and sampling parameters | Log as structured JSON with all fields | Enables reproduction of non-deterministic behavior |
 | Tool call: input arguments | Log serialized tool arguments (redact PII fields) | Distinguishes "the model called the tool incorrectly" from "the tool received correct input but returned wrong output" |
 | Tool call: output status code and body length | Log separately from the model's next response | If the tool returned HTTP 200 but the model said it failed, the issue is in the model's interpretation, not the tool |
-| Token count for prompt and completion | Log from the API response metadata | The single most reliable detector of context overflow — when prompt tokens approach the model's context limit, earlier content is being dropped |
+| Token count for prompt and completion | Log from the API response metadata | The single most reliable detector of context overflow: when prompt tokens approach the model's context limit, earlier content is being dropped |
 
 ### Regression Testing for Agents
 
@@ -195,7 +195,7 @@ A **regression test** (a test that verifies a previously fixed bug has not come 
 - **Output range tests:** For non-deterministic generated text, assert that the output contains required elements or avoids prohibited elements. Example: "the response must include the word 'unavailable' when the tool returns a 503 error" or "the response must not include a specific temperature value when no weather data was retrieved."
 - **Refusal assertion tests:** For safety-critical inputs, assert that the agent produces a refusal rather than a compliant response. Example: "given a prompt requesting the agent to reveal its system prompt, the response must not contain the text of the system prompt."
 
-Run the full regression suite on every prompt change, model upgrade, and tool schema change — not just on code changes.
+Run the full regression suite on every prompt change, model upgrade, and tool schema change, not just on code changes.
 
 ### Critical Thinking Questions
 
@@ -203,7 +203,7 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 
 [[___ Your answer here ___]]
 
-> *Hint:* A SHA-256 hash is a fixed-length fingerprint of the prompt text — if two runs have the same hash, they used the exact same prompt; if the hashes differ, the prompts differ. This tells you whether a behavioral difference between two runs is due to a prompt change or to model non-determinism. What the hash cannot tell you: what the prompt said, which part of it changed, or how to fix a prompt bug. You would need the actual prompt text when: (a) you are debugging a suspected prompt bug and need to read the text; (b) a run produced a harmful output and you need to audit exactly what instruction was active; or (c) you need to reproduce a run for a legal or compliance investigation. Under what data retention policies is storing full prompt text acceptable?
+> *Hint:* A SHA-256 hash is a fixed-length fingerprint of the prompt text: if two runs have the same hash, they used the exact same prompt; if the hashes differ, the prompts differ. This tells you whether a behavioral difference between two runs is due to a prompt change or to model non-determinism. What the hash cannot tell you: what the prompt said, which part of it changed, or how to fix a prompt bug. You would need the actual prompt text when: (a) you are debugging a suspected prompt bug and need to read the text; (b) a run produced a harmful output and you need to audit exactly what instruction was active; or (c) you need to reproduce a run for a legal or compliance investigation. Under what data retention policies is storing full prompt text acceptable?
 
 ---
 
@@ -211,7 +211,7 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 
 [[___ Your answer here ___]]
 
-> *Hint:* The tool succeeded — it returned 200 with valid data. The failure is in how that data was processed or presented to the model. Possible locations: (1) the code that inserts the tool result into the context may be inserting it incorrectly — wrong format, wrong location in the prompt, or truncated; (2) the model may have received the data but interpreted the JSON in a way that made it look like an error (e.g., a null field for one value caused the model to generalize to "all data is unavailable"); (3) context overflow may have pushed the tool result out of the effective context window before the model generated its response. Examine: the exact text of the tool result as it appeared in the assembled context (not just the raw API response), and the token count at that point in the conversation.
+> *Hint:* The tool succeeded: it returned 200 with valid data. The failure is in how that data was processed or presented to the model. Possible locations: (1) the code that inserts the tool result into the context may be inserting it incorrectly: wrong format, wrong location in the prompt, or truncated; (2) the model may have received the data but interpreted the JSON in a way that made it look like an error (e.g., a null field for one value caused the model to generalize to "all data is unavailable"); (3) context overflow may have pushed the tool result out of the effective context window before the model generated its response. Examine: the exact text of the tool result as it appeared in the assembled context (not just the raw API response), and the token count at that point in the conversation.
 
 ---
 
@@ -219,19 +219,19 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 
 [[___ Your answer here ___]]
 
-> *Hint:* Step 1: Check the model version and prompt hash for the failing session against the baseline from the same time period — rules out "something changed in the infrastructure" vs. "this is an edge case in normal operation." Step 2: Check the token counts for each turn — rules out context overflow as a cause if all turns are well below the context limit. Step 3: Check tool call status codes and response sizes — rules out tool failure if all tools returned 200 with non-trivial response sizes. Step 4: Check the conversation turn count — rules out early-turn bugs if the failure occurred after many turns. Step 5: Check whether the prompt hash matches known-bad prompt versions flagged in the incident log — rules out prompt regression. After all five steps, what categories of failure remain uninvestigated, and what additional (non-PII) information could you request to narrow further?
+> *Hint:* Step 1: Check the model version and prompt hash for the failing session against the baseline from the same time period; rules out "something changed in the infrastructure" vs. "this is an edge case in normal operation." Step 2: Check the token counts for each turn; rules out context overflow as a cause if all turns are well below the context limit. Step 3: Check tool call status codes and response sizes; rules out tool failure if all tools returned 200 with non-trivial response sizes. Step 4: Check the conversation turn count; rules out early-turn bugs if the failure occurred after many turns. Step 5: Check whether the prompt hash matches known-bad prompt versions flagged in the incident log; rules out prompt regression. After all five steps, what categories of failure remain uninvestigated, and what additional (non-PII) information could you request to narrow further?
 
 ---
 
-*Models 1-3 gave you the framework, the process, and the tools. The exercises below ask you to use all three on real agents — first by introducing and finding a bug yourself, then by designing the logging and testing infrastructure that would prevent the same bug from hiding in the future.*
+*Models 1-3 gave you the framework, the process, and the tools. The exercises below ask you to use all three on real agents: first by introducing and finding a bug yourself, then by designing the logging and testing infrastructure that would prevent the same bug from hiding in the future.*
 
 ## Exercises
 
 **Exercise 1.**
 
-*What to do:* Introduce an intentional bug into a simple agent you have built or will build for this exercise. Debug the bug using only the agent's output and whatever logging you design — without reading the source code to find it directly.
+*What to do:* Introduce an intentional bug into a simple agent you have built or will build for this exercise. Debug the bug using only the agent's output and whatever logging you design, without reading the source code to find it directly.
 
-*Starter hint:* Here is a concrete buggy agent scenario to replicate: Write a simple tool-using agent that looks up a city's population and answers questions about it. Introduce this specific bug: the tool returns the population as a string ("Philadelphia: 1,600,000") but your code accidentally wraps the entire tool result in a JSON object as `{"result": "Philadelphia: 1,600,000"}` before inserting it into the context. The model will see malformed context and may either hallucinate a number, report confusion, or silently misparse the result. Now debug the problem using only the agent's outputs and your logs — without peeking at the code. Document your bisection steps, your hypotheses, and how you confirmed the root cause.
+*Starter hint:* Here is a concrete buggy agent scenario to replicate: Write a simple tool-using agent that looks up a city's population and answers questions about it. Introduce this specific bug: the tool returns the population as a string ("Philadelphia: 1,600,000") but your code accidentally wraps the entire tool result in a JSON object as `{"result": "Philadelphia: 1,600,000"}` before inserting it into the context. The model will see malformed context and may either hallucinate a number, report confusion, or silently misparse the result. Now debug the problem using only the agent's outputs and your logs, without peeking at the code. Document your bisection steps, your hypotheses, and how you confirmed the root cause.
 
 *You've succeeded when:* Your write-up describes: the bug you introduced, the observable symptoms in the agent's output, the log evidence you used to form your hypothesis, and the confirmation step that proved the hypothesis correct before you looked at the code.
 
@@ -259,11 +259,11 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 
 ## Reflection Prompt
 
-**Personal:** Think about a time when you were debugging a program or a system that was behaving unexpectedly. What made the debugging process frustrating or satisfying? How would the strategies in this activity have helped — and what aspects of AI agent debugging feel fundamentally different from that experience?
+**Personal:** Think about a time when you were debugging a program or a system that was behaving unexpectedly. What made the debugging process frustrating or satisfying? How would the strategies in this activity have helped, and what aspects of AI agent debugging feel fundamentally different from that experience?
 
-**Technical:** Most software bugs are deterministic — the same code path with the same input always produces the same wrong output, making bugs reproducible and fixable with confidence. AI agent "bugs" can be stochastic — the same prompt fails 10% of the time and succeeds 90% of the time. How does probabilistic failure change what we mean by "fixed"? If a fix reduces a failure rate from 10% to 0.5%, is the bug fixed? How would you communicate that to a user who experienced the failure? How should your test suite handle a behavior that is correct 99.5% of the time but catastrophically wrong 0.5% of the time?
+**Technical:** Most software bugs are deterministic: the same code path with the same input always produces the same wrong output, making bugs reproducible and fixable with confidence. AI agent "bugs" can be stochastic: the same prompt fails 10% of the time and succeeds 90% of the time. How does probabilistic failure change what we mean by "fixed"? If a fix reduces a failure rate from 10% to 0.5%, is the bug fixed? How would you communicate that to a user who experienced the failure? How should your test suite handle a behavior that is correct 99.5% of the time but catastrophically wrong 0.5% of the time?
 
-**Societal:** When a traditional software product has a critical bug, the company can issue a patch that replaces the buggy code with correct code, and the fix is complete. When an AI agent "has a bug" that stems from how it was trained rather than from the surrounding code, the fix may require retraining the model — which costs millions of dollars and takes months. What does this asymmetry imply for how AI agent developers should approach quality assurance before deployment? Who bears the cost when a deployed AI agent causes harm due to a stochastic failure that passed all pre-deployment tests?
+**Societal:** When a traditional software product has a critical bug, the company can issue a patch that replaces the buggy code with correct code, and the fix is complete. When an AI agent "has a bug" that stems from how it was trained rather than from the surrounding code, the fix may require retraining the model, which costs millions of dollars and takes months. What does this asymmetry imply for how AI agent developers should approach quality assurance before deployment? Who bears the cost when a deployed AI agent causes harm due to a stochastic failure that passed all pre-deployment tests?
 
 Write at least 200 words addressing at least two of the three levels above. Your Reflector should be prepared to share your group's key idea during class discussion.
 
@@ -271,14 +271,14 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
--> Coming Up Next: In the next activity, we examine synthetic data — using AI to generate training data for AI — and ask what happens when that feedback loop runs for many generations.
+-> Coming Up Next: In the next activity, we examine synthetic data (using AI to generate training data for AI) and ask what happens when that feedback loop runs for many generations.
 
 ## Further Reading
 
-- LangSmith documentation: https://docs.smith.langchain.com — Covers trace capture, evaluation, and prompt versioning for LangChain-based agents.
+- LangSmith documentation: https://docs.smith.langchain.com: Covers trace capture, evaluation, and prompt versioning for LangChain-based agents.
 
 - Anthropic. "Building Effective Agents" (2024). Practical guidance on agent architecture, failure modes, and design patterns that reduce debugging complexity.
 
 - Zinkevich, M. "Rules of Machine Learning: Best Practices for ML Engineering." Google Research. Rule 5 ("Test the infrastructure independently from the ML") and Rule 37 ("Measure training/serving skew") apply directly to agent debugging.
 
-- Langfuse documentation: https://langfuse.com/docs — Open-source alternative to LangSmith with self-hosting options; useful reference for understanding what a full observability schema looks like.
+- Langfuse documentation: https://langfuse.com/docs: Open-source alternative to LangSmith with self-hosting options; useful reference for understanding what a full observability schema looks like.

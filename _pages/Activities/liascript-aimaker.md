@@ -30,18 +30,18 @@ Before diving in, keep this reference table handy. Every term below appears in t
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Maker mindset** | The orientation of someone who builds things to solve real problems for real people — not just to demonstrate that something is technically possible, but to deliver something trustworthy and useful | Choosing a simple, reliable tip calculator over a flashy app that crashes on edge cases, because the person using it is standing at a restaurant |
-| **Rapid prototyping** | Building the smallest possible working version of something quickly, then iterating based on what you learn — the goal is to fail fast and cheaply rather than late and expensively | Asking an agent to generate a first draft of a web page so you can see what is wrong with your spec before investing hours of refinement |
-| **Minimum Viable Agent (MVA)** | The simplest agent that actually does the job reliably: one clear task, one tool, well-defined input and output, tested against real inputs — no more moving parts than the problem requires | A single-tool agent that scrubs PII from text, tested on 20 sentences, is more production-ready than a six-tool orchestration that has never been tested on bad input |
-| **Scope creep** | The tendency for a project to grow beyond its original intent as new features are added without removing corresponding complexity — especially dangerous when an agent can generate new capabilities in seconds | Starting with "write a tip calculator" and ending up with a multi-currency restaurant booking assistant because each agent response suggested a new feature |
-| **API integration** | Connecting your agent or application to an external service through its published interface — the point where your code sends a request and someone else's service responds | Calling a weather API to retrieve real forecast data for Collegeville rather than having the agent hallucinate weather information |
-| **"Hello World" equivalent for AI systems** | The simplest possible working AI pipeline that proves your environment is set up correctly and your mental model of the system is right — before adding any real complexity | An agent that reads one file, summarizes it in one sentence, and prints the result: if this works, your model, your tools, and your permissions are all configured correctly |
+| **Maker mindset** | The orientation of someone who builds things to solve real problems for real people, not just to demonstrate that something is technically possible, but to deliver something trustworthy and useful | Choosing a simple, reliable tip calculator over a flashy app that crashes on edge cases, because the person using it is standing at a restaurant |
+| **Rapid prototyping** | Building the smallest possible working version of something quickly, then iterating based on what you learn; the goal is to fail fast and cheaply rather than late and expensively | Asking an agent to generate a first draft of a web page so you can see what is wrong with your spec before investing hours of refinement |
+| **Minimum Viable Agent (MVA)** | The simplest agent that actually does the job reliably: one clear task, one tool, well-defined input and output, tested against real inputs, no more moving parts than the problem requires | A single-tool agent that scrubs PII from text, tested on 20 sentences, is more production-ready than a six-tool orchestration that has never been tested on bad input |
+| **Scope creep** | The tendency for a project to grow beyond its original intent as new features are added without removing corresponding complexity, especially dangerous when an agent can generate new capabilities in seconds | Starting with "write a tip calculator" and ending up with a multi-currency restaurant booking assistant because each agent response suggested a new feature |
+| **API integration** | Connecting your agent or application to an external service through its published interface, the point where your code sends a request and someone else's service responds | Calling a weather API to retrieve real forecast data for Collegeville rather than having the agent hallucinate weather information |
+| **"Hello World" equivalent for AI systems** | The simplest possible working AI pipeline that proves your environment is set up correctly and your mental model of the system is right, before adding any real complexity | An agent that reads one file, summarizes it in one sentence, and prints the result: if this works, your model, your tools, and your permissions are all configured correctly |
 
 ---
 
 # Part I: The Trust Gap
 
-In this part, you will examine the gap between a working demo and a trustworthy artifact — the central challenge of AI-assisted making. Understanding this gap is what separates someone who ran a demo from someone who built something worth trusting.
+In this part, you will examine the gap between a working demo and a trustworthy artifact, the central challenge of AI-assisted making. Understanding this gap is what separates someone who ran a demo from someone who built something worth trusting.
 
 ## 1. Generation Is Cheap; Verification Is the Product
 
@@ -51,7 +51,7 @@ Think of the difference between a draft email and a sent email. Your email clien
 
 ## Model 1: The Demo That Lied Politely
 
-**Why this matters:** Every project has a demo moment and a real-use moment, and the distance between them is where failures live. Think of a map app that works perfectly on the highway but routes you into a one-way street in an unfamiliar city. The app was not wrong in its own testing; it just was not tested on your city. An agent-generated artifact has exactly this property: it works on the examples the developer tried, and fails on the inputs the developer did not imagine. Understanding this gap — and taking responsibility for closing it — is what separates a maker from someone who ran a demo.
+**Why this matters:** Every project has a demo moment and a real-use moment, and the distance between them is where failures live. Think of a map app that works perfectly on the highway but routes you into a one-way street in an unfamiliar city. The app was not wrong in its own testing; it just was not tested on your city. An agent-generated artifact has exactly this property: it works on the examples the developer tried, and fails on the inputs the developer did not imagine. Understanding this gap (and taking responsibility for closing it) is what separates a maker from someone who ran a demo.
 
 A student asks an agent for a unit-converter web page; it works beautifully in the demo. Later: entering `-40` crashes it, pasting `1,000` (with the comma) silently converts the wrong number, and a screen-reader user cannot operate it at all.
 
@@ -59,31 +59,31 @@ A student asks an agent for a unit-converter web page; it works beautifully in t
 
 1. Classify each failure: which is a specification gap, which a missing test, and which a design failure? Defend the classifications; they overlap, and the overlap is the point.
 
-   > *Hint: A specification gap means the maker's original request did not address this case — if you never said "handle negative numbers," the agent had no reason to. A missing test means the case was implied or obvious but no check was written to catch it before shipping. A design failure means the artifact does not serve all intended users — accessibility is not an edge case, it is a requirement for any public-facing tool. For the comma bug, ask: whose job was it to think of "what if the user types a comma"? The answer tells you which category it falls in.*
+   > *Hint: A specification gap means the maker's original request did not address this case: if you never said "handle negative numbers," the agent had no reason to. A missing test means the case was implied or obvious but no check was written to catch it before shipping. A design failure means the artifact does not serve all intended users; accessibility is not an edge case, it is a requirement for any public-facing tool. For the comma bug, ask: whose job was it to think of "what if the user types a comma"? The answer tells you which category it falls in.*
 
 2. Write the three sentences the student *should* have included in the original request to prevent each failure. Notice which sentence required no technical knowledge whatsoever.
 
-   > *Hint: For the crash on negative numbers: one sentence about valid input range and what to do when input is out of range. For the comma bug: one sentence about what input formats are expected and what to do with unexpected formats. For the accessibility failure: one sentence about who will use this tool and on what devices — you do not need to know what ARIA labels are to say "a screen-reader user should be able to operate every control." Which of those three required the most technical knowledge to write?*
+   > *Hint: For the crash on negative numbers: one sentence about valid input range and what to do when input is out of range. For the comma bug: one sentence about what input formats are expected and what to do with unexpected formats. For the accessibility failure: one sentence about who will use this tool and on what devices; you do not need to know what ARIA labels are to say "a screen-reader user should be able to operate every control." Which of those three required the most technical knowledge to write?*
 
 3. The agent was never wrong by its own lights. Whose job was each failure, in the maker identity from Section 1?
 
-   > *Hint: The maker identity from Section 1 assigns three responsibilities: specifying what "correct" means, verifying that the artifact meets that specification, and owning the consequences. Map each failure to one of these responsibilities. The agent produced what you asked for — the question is whether you asked for the right thing and checked that you got it. If you did not specify negative-number handling, whose job was it to know that a unit converter might receive negative temperatures?*
+   > *Hint: The maker identity from Section 1 assigns three responsibilities: specifying what "correct" means, verifying that the artifact meets that specification, and owning the consequences. Map each failure to one of these responsibilities. The agent produced what you asked for; the question is whether you asked for the right thing and checked that you got it. If you did not specify negative-number handling, whose job was it to know that a unit converter might receive negative temperatures?*
 
-The trust gap is the same regardless of your background — the next two tracks show what closing it looks like in practice, from two different starting points.
+The trust gap is the same regardless of your background; the next two tracks show what closing it looks like in practice, from two different starting points.
 
 ---
 
 # Part II: Track A, for Software Engineers
 
-In this part, you will apply software-engineering discipline — tests, small diffs, and CI — to agent-generated code. These habits are what prevent the "it worked in the demo" failure from reaching real users.
+In this part, you will apply software-engineering discipline (tests, small diffs, and CI) to agent-generated code. These habits are what prevent the "it worked in the demo" failure from reaching real users.
 
 ## 2. The Agent as a Junior Colleague with Infinite Stamina
 
-**Why this matters:** Imagine hiring someone who can write code faster than you can read it, never gets tired, and has read every Stack Overflow answer ever posted — but has never shipped anything to real users and does not know your codebase's conventions. That is the agent. The question is not whether to use it; the question is what review discipline you apply to its output. The same discipline you would apply to a junior colleague's pull request applies here, and skipping it because "the agent is smart" is the same mistake as merging without reviewing because "the contributor is experienced." Speed of generation does not substitute for correctness of review.
+**Why this matters:** Imagine hiring someone who can write code faster than you can read it, never gets tired, and has read every Stack Overflow answer ever posted, but has never shipped anything to real users and does not know your codebase's conventions. That is the agent. The question is not whether to use it; the question is what review discipline you apply to its output. The same discipline you would apply to a junior colleague's pull request applies here, and skipping it because "the agent is smart" is the same mistake as merging without reviewing because "the contributor is experienced." Speed of generation does not substitute for correctness of review.
 
 Treat agent output exactly as you would a pull request from a bright, fast, context-poor new hire, which yields the working rules. **Small diffs only**: ask for one function, one fix, one test at a time, because review quality collapses with diff size, and your review *is* the safety system. **Tests precede or accompany every change**: the strongest pattern is writing (or having the agent write, then you verifying) the failing test first, so the specification exists in executable form before the implementation does; an agent aimed at a failing test cannot reward-hack you nearly as easily as an agent aimed at prose. **Read every line before it merges**: the permission gate taught you to read commands; this is the same discipline for diffs, and "it passed the tests" does not excuse you, because the tests are also under review. **Pin everything**: dependency versions, model versions, seeds; an unpinned project is an unreproducible one, and you have a lab rubric line that already says so.
 
-The code below illustrates the "test first" pattern: notice that the tests exist before any implementation does, and each test case is a precise contract the agent must satisfy — look for how the `test_rejects_nonnumeric` test pre-decides the comma-bug behavior that would otherwise be a specification gap.
+The code below illustrates the "test first" pattern: notice that the tests exist before any implementation does, and each test case is a precise contract the agent must satisfy; look for how the `test_rejects_nonnumeric` test pre-decides the comma-bug behavior that would otherwise be a specification gap.
 
 ```python
 # The pattern in miniature: the spec exists as a failing test first.
@@ -111,23 +111,23 @@ Hand the agent *this file* and the request "make these pass without modifying th
 
 Steer the horsepower toward its best uses: generating test cases you would not have bothered writing (edge cases, property-based sketches, regression tests from bug reports); mechanical refactors under test protection; reading unfamiliar codebases and drafting the documentation nobody wrote; and first drafts of CI configuration, which Part IV shows. The common thread is work where verification is cheap relative to generation, which is precisely where the new economics pay you instead of ambushing you.
 
-The same rigor applies when you are not writing tests at all — Part III shows the equivalent discipline for makers who work without code.
+The same rigor applies when you are not writing tests at all; Part III shows the equivalent discipline for makers who work without code.
 
 ---
 
 # Part III: Track B, for Makers Who Do Not Code
 
-In this part, you will practice the two core non-coder skills — writing concrete specifications and systematically verifying the result — that turn AI generation from guesswork into a reliable process. These same skills underpin professional product development at every level.
+In this part, you will practice the two core non-coder skills (writing concrete specifications and systematically verifying the result) that turn AI generation from guesswork into a reliable process. These same skills underpin professional product development at every level.
 
 ## 4. You Are Not "Using AI Instead of Coding"; You Are Specifying and Verifying
 
-**Why this matters:** Think of the difference between telling a contractor "make my kitchen nice" and handing them a blueprint with exact measurements, materials, and a list of what you will inspect before you pay. The contractor can do excellent work either way, but only one of those instructions makes you a client with leverage and the other makes you someone who hopes for the best. The non-coder's relationship with an agent is exactly the same: the quality of your specification is the quality of your outcome, and systematic verification is how you know you got what you asked for — not hope, not re-running until it looks right.
+**Why this matters:** Think of the difference between telling a contractor "make my kitchen nice" and handing them a blueprint with exact measurements, materials, and a list of what you will inspect before you pay. The contractor can do excellent work either way, but only one of those instructions makes you a client with leverage and the other makes you someone who hopes for the best. The non-coder's relationship with an agent is exactly the same: the quality of your specification is the quality of your outcome, and systematic verification is how you know you got what you asked for, not hope, not re-running until it looks right.
 
 The non-coder's track is not a lesser version of Track A; it is the same two skills with different instruments. **Specification** for you means writing what you want with the concreteness of a recipe: who the user is, what they see first, what every button does, what happens when input is empty or wrong or hostile, and what "done" looks like as a checklist you could hand a stranger. The single most powerful sentence available to you is: *"Before writing anything, ask me five questions about what I have not specified."* It converts the agent from a guesser into an interviewer and surfaces the gaps while they are still free to fix.
 
 **Verification** for you means systematic trying, not coding: maintain a checklist of behaviors (drawn from your spec) and walk it after every change; deliberately misuse your artifact (empty inputs, absurd inputs, the back button, a phone screen); and recruit one person who was not in the room to attempt the main task while you watch silently, which will teach you more in five minutes than an afternoon of self-testing. When something breaks, your bug report is itself a specification act: *what I did, what I expected, what happened instead*, pasted verbatim to the agent, which fixes from that triplet far better than from "it's broken."
 
-The checklist below is a real engineering artifact — notice that every item is binary (pass/fail), concrete enough for a stranger to test, and grounded in the actual user experience rather than the developer's intent:
+The checklist below is a real engineering artifact; notice that every item is binary (pass/fail), concrete enough for a stranger to test, and grounded in the actual user experience rather than the developer's intent:
 
 ```markdown
 ## Acceptance checklist: tip calculator (v0.2)     <- this artifact IS engineering
@@ -142,10 +142,10 @@ One boundary completes the track: know what you are accountable for shipping. A 
 
 A non-coding maker's strongest defense against an agent's specification gaps is:
 
-[( )] Asking the agent to double-check its own work — a model that made a specification error will typically affirm the same error when asked to review its own output
-[( )] Choosing the largest available model — a bigger model follows the same ambiguous specification more fluently, but fluentness is not correctness
+[( )] Asking the agent to double-check its own work; a model that made a specification error will typically affirm the same error when asked to review its own output
+[( )] Choosing the largest available model; a bigger model follows the same ambiguous specification more fluently, but fluentness is not correctness
 [(X)] Writing concrete acceptance criteria first and instructing the agent to ask clarifying questions before generating, then verifying against the criteria after every change
-[( )] Regenerating until the output looks right — if the specification is ambiguous, regenerating produces different plausible-looking artifacts, not a correct one
+[( )] Regenerating until the output looks right; if the specification is ambiguous, regenerating produces different plausible-looking artifacts, not a correct one
 
 Both tracks now converge on the same institutional mechanism: a system that runs every check automatically, every time, so that verification does not depend on anyone remembering to do it.
 
@@ -153,7 +153,7 @@ Both tracks now converge on the same institutional mechanism: a system that runs
 
 # Part IV: The Shared Discipline of CI
 
-In this part, you will set up Continuous Integration — the mechanism that runs your checks automatically on every change so that verification never depends on human memory or goodwill. CI is the referee that no agent can charm.
+In this part, you will set up Continuous Integration, the mechanism that runs your checks automatically on every change so that verification never depends on human memory or goodwill. CI is the referee that no agent can charm.
 
 ## 5. Continuous Integration: Your Standards, Running While You Sleep
 

@@ -28,10 +28,10 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **Agentic engagement** | A real deployment where an AI agent takes a sequence of actions over time on behalf of a human, as opposed to answering a single question in isolation. | The instructor asks an agent to migrate a course website — not one question, but hundreds of sequential file-read, file-write, and verify actions over hours. |
-| **Perception** | Everything the agent can observe about its environment at a given moment, which is always incomplete — the agent cannot see what is not in its context window or returned by its tools. | The browsing agent can read a rendered web page's visible text but cannot see the JavaScript state or the reservation database behind it. |
+| **Agentic engagement** | A real deployment where an AI agent takes a sequence of actions over time on behalf of a human, as opposed to answering a single question in isolation. | The instructor asks an agent to migrate a course website: not one question, but hundreds of sequential file-read, file-write, and verify actions over hours. |
+| **Perception** | Everything the agent can observe about its environment at a given moment, which is always incomplete; the agent cannot see what is not in its context window or returned by its tools. | The browsing agent can read a rendered web page's visible text but cannot see the JavaScript state or the reservation database behind it. |
 | **Irreversible action** | An action whose consequences cannot be undone after the fact, requiring a human confirmation gate before execution. | Clicking "Confirm Reservation" on a campsite booking site: once clicked, a credit card is charged and a site is held. |
-| **Global invariant** | A constraint that must remain true across the entire document or system, not just locally — meaning fixing one place can break another place. | In a conference proceedings, every table-of-contents page number must match where that paper actually starts; changing any paper's length breaks all subsequent entries. |
+| **Global invariant** | A constraint that must remain true across the entire document or system, not just locally, meaning fixing one place can break another place. | In a conference proceedings, every table-of-contents page number must match where that paper actually starts; changing any paper's length breaks all subsequent entries. |
 | **Human-in-the-loop** | A system design where a human must approve certain actions before the agent proceeds, trading autonomy for safety on high-stakes or irreversible steps. | The instructor reviewing every file diff before the agent commits it to the repository during the website migration. |
 | **MCP (Model Context Protocol)** | A standard interface that allows AI agents to interact with tools and services through structured, typed function calls rather than by scraping visual interfaces designed for humans. | An agent using an MCP-style "check availability" function call instead of visually navigating a reservation website's calendar widget. |
 
@@ -47,27 +47,27 @@ The discipline of asking *the same* five questions is what turns anecdotes into 
 |---|---|---|
 | **Goal** | The human's actual success criterion, which is often broader or different from the literal task prompt they gave the agent. | The agent completed the literal task but missed an unstated requirement (e.g., "move the files" but break all internal links). |
 | **Architecture** | Which agent patterns were in use: single agent with tools, multi-step pipeline, planner-executor, human-in-the-loop gates, or a combination. | The task required a pattern (e.g., human gate on irreversible actions) that was not included in the architecture. |
-| **Perception** | Everything the agent could observe — files, web pages, API responses — and everything it could not see: implicit conventions, off-screen state, database contents behind a rendered page. | The agent acted on incomplete information and could not have known it was incomplete. |
+| **Perception** | Everything the agent could observe (files, web pages, API responses) and everything it could not see: implicit conventions, off-screen state, database contents behind a rendered page. | The agent acted on incomplete information and could not have known it was incomplete. |
 | **Failure or friction** | The specific moment where the agent's behavior diverged from what was needed, and the underlying cause (specification gap, context limit, perception gap, global invariant violation). | The agent produced output that looked correct but was not (done-looking vs. done). |
-| **Repair** | A concrete design change that addresses the failure: a specification artifact, an external state representation, a deterministic verifier, or a human gate — with an assessment of what the repair costs. | The proposed repair either does not address the root cause or is so expensive that it changes the cost-benefit calculation of using an agent at all. |
+| **Repair** | A concrete design change that addresses the failure: a specification artifact, an external state representation, a deterministic verifier, or a human gate, with an assessment of what the repair costs. | The proposed repair either does not address the root cause or is so expensive that it changes the cost-benefit calculation of using an agent at all. |
 
 ---
 
 # Part I: The Cases
 
-In this part, you will apply the autopsy protocol to three real deployments — one case per team — and then share your findings across groups. As you read your case, fill in the five autopsy questions before looking at the table; the tables show what actually happened, which is most useful *after* you've made your own predictions.
+In this part, you will apply the autopsy protocol to three real deployments (one case per team) and then share your findings across groups. As you read your case, fill in the five autopsy questions before looking at the table; the tables show what actually happened, which is most useful *after* you've made your own predictions.
 
-## Model 1: Case A — Migrating a Course Website
+## Model 1: Case A, Migrating a Course Website
 
-Think of delegating the relocation of an office to a moving company. You tell them "move everything from room 101 to room 205." They execute perfectly — every box is moved — but your filing system relied on a drawer-numbering convention you never wrote down, the movers used a different system, and now you cannot find anything. The agent is not at fault; the specification is. Case A is exactly this scenario, scaled to dozens of markdown files and an implicit naming convention no one thought to document.
+Think of delegating the relocation of an office to a moving company. You tell them "move everything from room 101 to room 205." They execute perfectly (every box is moved) but your filing system relied on a drawer-numbering convention you never wrote down, the movers used a different system, and now you cannot find anything. The agent is not at fault; the specification is. Case A is exactly this scenario, scaled to dozens of markdown files and an implicit naming convention no one thought to document.
 
 **The engagement.** An instructor delegates to an agentic desktop coworker: migrate an introductory course's site (dozens of markdown activity files, a syllabus with structured frontmatter, image assets) from one repository format to a new one, preserving meaning while transforming structure. The agent can read files, write files, and run commands, with the human reviewing diffs before anything is committed.
 
-**What happened at the seams.** The bulk transformations went fast; the instructive frictions were that (1) implicit conventions — an unstated frontmatter field order (the metadata block at the top of each markdown file), naming idioms like `liascript-` prefixes — were nowhere written down, so the agent inferred them, sometimes wrongly, from examples; (2) long-running work hit **context limits** (the maximum amount of text a model can hold in memory at once), so the agent had to summarize its own progress and re-derive state, occasionally redoing or skipping a file; and (3) verification was the bottleneck: every file *looked* plausible, and only systematic checks (does every page render, does every internal link resolve) separated done from done-looking.
+**What happened at the seams.** The bulk transformations went fast; the instructive frictions were that (1) implicit conventions, an unstated frontmatter field order (the metadata block at the top of each markdown file), naming idioms like `liascript-` prefixes, were nowhere written down, so the agent inferred them, sometimes wrongly, from examples; (2) long-running work hit **context limits** (the maximum amount of text a model can hold in memory at once), so the agent had to summarize its own progress and re-derive state, occasionally redoing or skipping a file; and (3) verification was the bottleneck: every file *looked* plausible, and only systematic checks (does every page render, does every internal link resolve) separated done from done-looking.
 
 | Autopsy question | Answer for Case A |
 |---|---|
-| **Goal** | Move files AND preserve all meaning, rendering, internal links, and naming conventions — not just copy bytes from one place to another. |
+| **Goal** | Move files AND preserve all meaning, rendering, internal links, and naming conventions, not just copy bytes from one place to another. |
 | **Architecture** | Single agent with file-read, file-write, and shell-command tools; human-in-the-loop gate on every commit via diff review. |
 | **Perception** | The agent could read file contents and directory listings, but could NOT see the implicit naming convention, the rendering output in a browser, or whether internal links resolved to real pages. |
 | **Failure or friction** | (1) Inferred conventions incorrectly from examples; (2) context limit forced re-derivation of progress state; (3) output looked plausible but systematic verification was missing. |
@@ -75,7 +75,7 @@ Think of delegating the relocation of an office to a moving company. You tell th
 
 ### Critical Thinking Questions
 
-1. Apply the full autopsy protocol to Case A. Identify the goal beyond "move the files" — what would a human course instructor consider a failed migration even if every file was copied correctly?
+1. Apply the full autopsy protocol to Case A. Identify the goal beyond "move the files": what would a human course instructor consider a failed migration even if every file was copied correctly?
 
    *Hint:* Think about what a student experiences when visiting the site. Does the page load? Do the links work? Does the navigation make sense? Does the LiaScript rendering produce a readable activity? Any of these failing = the migration failed, even if all bytes were copied.
 
@@ -83,7 +83,7 @@ Think of delegating the relocation of an office to a moving company. You tell th
 
    *Hint:* The artifact is something like a style guide or specification document: "all activity files must be named `liascript-<topic>.md`, frontmatter fields must appear in this order: title, author, date, layout." Which course assignment asks you to write exactly this kind of technical specification?
 
-3. Friction (2) is the memory problem made concrete. When the agent hits a context limit, it must summarize its own progress — and summaries lose detail. Prescribe a concrete external state representation that the agent should have maintained from the start: what fields, in what format, stored where?
+3. Friction (2) is the memory problem made concrete. When the agent hits a context limit, it must summarize its own progress, and summaries lose detail. Prescribe a concrete external state representation that the agent should have maintained from the start: what fields, in what format, stored where?
 
    *Hint:* Think of a structured JSON or CSV file the agent writes after processing each file: `{"filename": "liascript-consensus.md", "status": "done", "output_path": "_pages/Activities/liascript-consensus.md", "checks_passed": ["renders", "links_valid"]}`. Where should this file live so the agent can read it after a context reset?
 
@@ -93,9 +93,9 @@ Think of delegating the relocation of an office to a moving company. You tell th
 
 ---
 
-## Model 2: Case B — The Browsing Agent and the Campsite
+## Model 2: Case B, The Browsing Agent and the Campsite
 
-Think of hiring a personal assistant to book a campsite for you. You give them dates, a preferred region, and amenity requirements. They can read the reservation website perfectly well — but you tell them not to click "Confirm" without calling you first, because that charges your card and commits your vacation dates. The assistant's reading ability is fine; the human gate exists because the consequence of a wrong click is irreversible. Case B shows why every browsing agent needs a taxonomy of action reversibility, not just a capability list.
+Think of hiring a personal assistant to book a campsite for you. You give them dates, a preferred region, and amenity requirements. They can read the reservation website perfectly well, but you tell them not to click "Confirm" without calling you first, because that charges your card and commits your vacation dates. The assistant's reading ability is fine; the human gate exists because the consequence of a wrong click is irreversible. Case B shows why every browsing agent needs a taxonomy of action reversibility, not just a capability list.
 
 **The engagement.** A browsing agent is asked to find and hold a reservable campsite meeting constraints (dates, region, amenities) on a public reservation site, navigating search forms, result pages, and availability calendars rendered for human eyes.
 
@@ -103,9 +103,9 @@ Think of hiring a personal assistant to book a campsite for you. You give them d
 
 | Action type | Definition | Example from Case B | Requires human gate? |
 |---|---|---|---|
-| **Read-only** | Observes state without changing it; can be repeated safely as many times as needed. | Loading a search results page to see which campsites have availability on given dates. | No — the agent can do this freely. |
-| **Reversible write** | Changes state in a way that can be undone by a subsequent action. | Adding a campsite to a shopping cart or a "watch list" — this can be removed before payment. | Depends on cost of reversal; usually no gate needed. |
-| **Irreversible write** | Changes state permanently or with significant cost to reverse; cannot be safely undone. | Clicking "Confirm Reservation" — charges a credit card, holds a campsite, sends a confirmation email. | Yes — mandatory human confirmation gate required. |
+| **Read-only** | Observes state without changing it; can be repeated safely as many times as needed. | Loading a search results page to see which campsites have availability on given dates. | No; the agent can do this freely. |
+| **Reversible write** | Changes state in a way that can be undone by a subsequent action. | Adding a campsite to a shopping cart or a "watch list"; this can be removed before payment. | Depends on cost of reversal; usually no gate needed. |
+| **Irreversible write** | Changes state permanently or with significant cost to reverse; cannot be safely undone. | Clicking "Confirm Reservation": charges a credit card, holds a campsite, sends a confirmation email. | Yes: mandatory human confirmation gate required. |
 
 ### Critical Thinking Questions
 
@@ -113,19 +113,19 @@ Think of hiring a personal assistant to book a campsite for you. You give them d
 
    Actions to classify: (a) loading the search form, (b) entering search criteria, (c) reading availability calendar, (d) adding to a cart, (e) entering credit card details, (f) clicking "Confirm Reservation."
 
-   *Hint:* "Gate everything" fails because it eliminates the value of the agent — you might as well do it yourself. Gates should sit immediately before actions whose consequences are both irreversible and high-stakes. What makes an action high-stakes vs. merely irreversible?
+   *Hint:* "Gate everything" fails because it eliminates the value of the agent; you might as well do it yourself. Gates should sit immediately before actions whose consequences are both irreversible and high-stakes. What makes an action high-stakes vs. merely irreversible?
 
-6. The agent perceives a rendered web page (what a human would see in a browser), not the reservation site's database. Give one concrete misperception this gap permits — a case where what the agent reads on the page does not match the actual state of the database.
+6. The agent perceives a rendered web page (what a human would see in a browser), not the reservation site's database. Give one concrete misperception this gap permits: a case where what the agent reads on the page does not match the actual state of the database.
 
    *Hint:* Imagine the site shows "3 sites available" but between the agent reading the page and the agent clicking "Reserve," another user booked one of those sites. The page did not refresh. What does the agent believe, and what is actually true?
 
 7. The site updates its visual layout overnight (buttons move, menus rename). Which agent architecture survives this change better: one that navigates by visual instruction ("click the green button in the top right") or one that navigates semantically ("activate the control with accessibility label 'Check Availability'")?
 
-   *Hint:* Connect this to why MCP-style (Model Context Protocol) structured interfaces — where the site exposes typed function calls like `check_availability(dates, region)` — are fundamentally more robust than screen-scraping. What would need to change in an MCP interface for the same update to break the agent?
+   *Hint:* Connect this to why MCP-style (Model Context Protocol) structured interfaces (where the site exposes typed function calls like `check_availability(dates, region)`) are fundamentally more robust than screen-scraping. What would need to change in an MCP interface for the same update to break the agent?
 
 ---
 
-After reading Case B, notice how the action-reversibility taxonomy you built earlier in the semester reappears here as safety infrastructure — not abstract theory, but a concrete design requirement.
+After reading Case B, notice how the action-reversibility taxonomy you built earlier in the semester reappears here as safety infrastructure, not abstract theory, but a concrete design requirement.
 
 # Part II: Cross-Case Synthesis
 
@@ -136,7 +136,7 @@ Across all three cases, the single most recurrent engineering lesson is:
 [( )] Browsing agents should never be used because the web is too unpredictable for automation
 [( )] Humans should review every individual model call to prevent any errors from reaching users
 
-> **Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model — however capable — can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model -> better output quality; better surrounding structure -> better reliability. Both matter, but only one of them is under your control as a system designer.
+> **Common Misconception:** Students often conclude from cases like these that the agent "wasn't smart enough" and that a more powerful model would have avoided the friction. This is almost never the right diagnosis. In Case A, no model (however capable) can infer a naming convention that was never written down. In Case B, no model can safely decide whether to charge your credit card without human authorization. In Case C, no model can maintain a global mathematical invariant through probabilistic text generation. The frictions in all three cases are structural, not capability failures. Better model -> better output quality; better surrounding structure -> better reliability. Both matter, but only one of them is under your control as a system designer.
 
 ---
 
@@ -144,11 +144,11 @@ Across all three cases, the single most recurrent engineering lesson is:
 
 > **A third case, for teams who want it.** Two cases carry the session; this one is here for anyone whose project involves paginated or rate-limited sources.
 
-## Model 3 (At Home, Optional): Case C — Pagination and the Proceedings
+## Model 3 (At Home, Optional): Case C, Pagination and the Proceedings
 
-Think of editing a printed book where every chapter references page numbers in the table of contents. You add one paragraph to chapter 3, pushing every subsequent chapter back by a page. Now the entire table of contents is wrong. You could fix each entry manually — but fixing entry 5 does not know that you already "fixed" entry 4, and your fixes might cascade into new errors. The only robust solution is to freeze the content first, then compute all page numbers in one deterministic pass, then generate the table of contents from that computed result. Case C shows why some problems require restructuring the *order of operations*, not improving the *quality of operations*.
+Think of editing a printed book where every chapter references page numbers in the table of contents. You add one paragraph to chapter 3, pushing every subsequent chapter back by a page. Now the entire table of contents is wrong. You could fix each entry manually, but fixing entry 5 does not know that you already "fixed" entry 4, and your fixes might cascade into new errors. The only robust solution is to freeze the content first, then compute all page numbers in one deterministic pass, then generate the table of contents from that computed result. Case C shows why some problems require restructuring the *order of operations*, not improving the *quality of operations*.
 
-**The engagement.** A document agent assembles and repaginates a large conference proceedings: hundreds of papers, front matter, and a table of contents whose page numbers must match where papers actually land — a global constraint over a long document.
+**The engagement.** A document agent assembles and repaginates a large conference proceedings: hundreds of papers, front matter, and a table of contents whose page numbers must match where papers actually land, a global constraint over a long document.
 
 **What happened at the seams.** Local edits have global consequences: inserting one paper shifts every subsequent page number, so the table of contents is stale the moment anything moves. An agent fixing entries one at a time chased its own tail; the durable solution was to change the *order of operations*: freeze content first, compute pagination once as a deterministic pass, then generate the table of contents from the computed result. The general lesson: when a task has a global invariant, do not ask a stochastic local editor to maintain it; restructure the workflow so a deterministic tool enforces it.
 
@@ -161,13 +161,13 @@ Think of editing a printed book where every chapter references page numbers in t
 
 ### Critical Thinking Questions
 
-8. State the global invariant of the proceedings document as a formal sentence with a universal quantifier (a statement that begins with "for every" or "for all"). A global invariant is a condition that must be true across the entire document simultaneously — not just for one paper at a time.
+8. State the global invariant of the proceedings document as a formal sentence with a universal quantifier (a statement that begins with "for every" or "for all"). A global invariant is a condition that must be true across the entire document simultaneously, not just for one paper at a time.
 
    *Hint:* A universal quantifier means the statement must be true for every paper in the proceedings, without exception. "For every paper P in the proceedings, the page number listed in the table of contents for P equals the actual page on which P begins in the assembled document."
 
-9. Why is an LLM, however capable, the wrong instrument for *maintaining* this invariant — even if it is excellent at other parts of the task? Which parts of the proceedings assembly task is the LLM genuinely the right tool for?
+9. Why is an LLM, however capable, the wrong instrument for *maintaining* this invariant, even if it is excellent at other parts of the task? Which parts of the proceedings assembly task is the LLM genuinely the right tool for?
 
-   *Hint:* The invariant is a mathematical constraint that must be exactly true for every element. LLMs generate text probabilistically — they can be correct most of the time but not all of the time. What are the consequences of being wrong on even one entry? What parts of assembly require language understanding rather than mathematical precision?
+   *Hint:* The invariant is a mathematical constraint that must be exactly true for every element. LLMs generate text probabilistically; they can be correct most of the time but not all of the time. What are the consequences of being wrong on even one entry? What parts of assembly require language understanding rather than mathematical precision?
 
 10. Generalize: identify one global invariant in *your* final project (e.g., a citation that must match a real source, a budget that must sum to a correct total, a generated schedule with no time conflicts). Specify the deterministic checker you will build to own and enforce it.
 
@@ -198,21 +198,21 @@ Think of editing a printed book where every chapter references page numbers in t
 
    *Starter hint:* For the specification gap: what assumption are you making about your data format, naming convention, or user behavior that you have not written down? For the irreversible action: what is the worst thing your agent could do if it misunderstands a user request? For the global invariant: what constraint must be true across your entire output, not just locally?
 
-   *You've succeeded when:* Your pre-mortem identifies a real risk in each of the three categories — not a hypothetical risk you invented for the exercise — and proposes a concrete mitigation for each one that you will actually implement.
+   *You've succeeded when:* Your pre-mortem identifies a real risk in each of the three categories (not a hypothetical risk you invented for the exercise) and proposes a concrete mitigation for each one that you will actually implement.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* In each case, the human's judgment moved *up* a level — from doing the task directly to specifying, gating, and verifying work done by an agent. Which of these three higher-level roles (specifier, gatekeeper, verifier) comes most naturally to you, and which would require the most deliberate practice to develop?
+*Personal:* In each case, the human's judgment moved *up* a level: from doing the task directly to specifying, gating, and verifying work done by an agent. Which of these three higher-level roles (specifier, gatekeeper, verifier) comes most naturally to you, and which would require the most deliberate practice to develop?
 
-*Technical:* The autopsy protocol asks five questions in a fixed order. Design a sixth question that you believe is missing — one that would have surfaced an additional important lesson from at least one of the three cases. Justify your addition.
+*Technical:* The autopsy protocol asks five questions in a fixed order. Design a sixth question that you believe is missing: one that would have surfaced an additional important lesson from at least one of the three cases. Justify your addition.
 
-*Societal:* In each case, the human retained meaningful control — reviewing diffs, confirming reservations, restructuring the pagination workflow. As agentic systems become faster and more capable, the economic incentive will be to remove those human gates. For each case, state the minimum level of human oversight you would require if the stakes were higher (the migration is for a medical records system, the booking is for a charter flight, the document is a legal brief). Does your answer change based on the stakes, and if so, what principle underlies that change?
+*Societal:* In each case, the human retained meaningful control: reviewing diffs, confirming reservations, restructuring the pagination workflow. As agentic systems become faster and more capable, the economic incentive will be to remove those human gates. For each case, state the minimum level of human oversight you would require if the stakes were higher (the migration is for a medical records system, the booking is for a charter flight, the document is a legal brief). Does your answer change based on the stakes, and if so, what principle underlies that change?
 
 ---
 
--> Coming Up Next: In the *Training Data and Bias* activity, we zoom out from individual agent systems to the training data and design choices that shape every model's behavior — and examine how bias enters the pipeline at every stage, from data collection through deployment.
+-> Coming Up Next: In the *Training Data and Bias* activity, we zoom out from individual agent systems to the training data and design choices that shape every model's behavior, and examine how bias enters the pipeline at every stage, from data collection through deployment.
 
 ## Further Reading
 
