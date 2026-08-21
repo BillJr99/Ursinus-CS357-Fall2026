@@ -481,7 +481,7 @@ Answer these as part of your self-assessment before your project's publish gate:
 ### Background Reading and References
 
 - [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md)
-- [Final Project](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject)
+- [Final Project](https://www.billmongan.com/Ursinus-CS357/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 
 This guide is not separately graded; the presentation is assessed within the Final Project's **Product** dimension, and the mock-interview rehearsal is credited as **class participation**.

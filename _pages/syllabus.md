@@ -302,7 +302,7 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 2"
   - rtitle: "Going further, interactive: The Token Prediction Playground, an unplugged in-browser simulator showing what next-token prediction can and cannot do"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/TokenPredictor"
+    rlink: "https://www.billmongan.com/Ursinus-CS357/TokenPredictor"
 - week: "1"
   date: "0"
   title: "Your AI Workbench: Shell, Git, Containers, and Your First Coding Agent"
@@ -382,7 +382,7 @@ schedule:
     rlink: "http://neuralnetworksanddeeplearning.com/"
   - rtitle: "AI by Hand (Yeh): the attention worksheets - today's worked example in Model 3 follows this style"
   - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
-    rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
+    rlink: "https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
   - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand. Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
   - rtitle: "Going further, synthesis: Anatomy of an LLM Request, one prompt end to end by hand (tokenize, embed, attend, feed-forward, sample, loss, update)"

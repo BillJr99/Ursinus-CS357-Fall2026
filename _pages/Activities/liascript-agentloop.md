@@ -219,7 +219,7 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
 ## 3b. From Scratch: Driving the Loop Yourself
 
-We build the *minimal* tool-using agent together above. The **from-scratch version** (you own the loop, the tool registry, and the message list, driving the OpenWebUI API directly) moved to the **[Local Agent lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent)**, where you build it for credit.
+We build the *minimal* tool-using agent together above. The **from-scratch version** (you own the loop, the tool registry, and the message list, driving the OpenWebUI API directly) moved to the **[Local Agent lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent)**, where you build it for credit.
 
 Doing it twice in one session was the crunch; doing it once here and once for real in the lab is the same learning with room to breathe.
 

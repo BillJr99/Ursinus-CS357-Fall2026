@@ -42,9 +42,9 @@ info:
       proficient: Every source has a complete, consistently formatted citation; each annotation notes how the source was found (database, search terms, or citation chain); the submission carries all members' signatures, names the synthesis's primary author, and includes an AI-use disclosure stating what was AI-assisted (including any AI-assisted search or summarization) and how it was verified against the actual sources
   readings:
     - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread"
     - rtitle: "Your team's Stakeholder Brief (the problem statement this review serves)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/StakeholderBrief"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/StakeholderBrief"
     - rtitle: "AAC&U VALUE Rubrics: Information Literacy and Integrative Learning (calibration for what strong source work looks like)"
       rlink: "https://www.aacu.org/initiatives/value"
 
