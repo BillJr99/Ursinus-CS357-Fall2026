@@ -97,6 +97,18 @@ Sign-up is first-come, first-served via the course sign-up sheet (link on the co
 
 ---
 
+## Before You Start
+
+**This is extra credit for the presenter and required participation for everyone else.** If you are reading this because you are thinking about leading a session, the section below is for you; if you are reading it because you are in the audience that day, read *For the Audience* above and the [reading response guide]({{ site.baseurl }}/Participation/ReadingResponses).
+
+**Time, if you lead a session:** about four hours. Two to read your source properly, one to prepare the questions, one for slides and logistics. The reading is the part people underestimate: you cannot facilitate a discussion about a text you skimmed, because the whole job is fielding a question the text half-answers.
+
+**Pick your source at least two weeks out**, and tell me what you picked. If it is not on the seed list, that is welcome; just check with me so we do not double up and so I can make sure the class has access to it.
+
+**Plan backwards from the room, not forwards from the text.** The usual failure is a well-summarized paper and a silent room. Decide first what you want the class arguing about, then work out how much of the source they need to get there. Fifteen minutes of setup and thirty of discussion beats the reverse, every time.
+
+---
+
 ## What to Present On
 
 You may choose any of the following:
