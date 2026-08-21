@@ -69,7 +69,7 @@ Look each service up rather than guessing; the answer keeps changing as vendors 
 
 In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol, a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
 
-**Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client — any agent application anywhere — can use it. Integration cost drops from multiplicative to additive.
+**Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client (any agent application anywhere) can use it. Integration cost drops from multiplicative to additive.
 
 **An API is a published contract for calling someone else's functions over the network.** REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request. Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
 
@@ -103,9 +103,9 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 ## 2. Speaking the Pattern in Code
 
-**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable. The server below is not production MCP — it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name. Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
+**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable. The server below is not production MCP; it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name. Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
 
-In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints — URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name. You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
+In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints, URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name. You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
 
 Full MCP runs over JSON-RPC (a protocol for making remote function calls by sending JSON messages) with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask. We build the essence.
 
@@ -160,7 +160,7 @@ TOOLS = {
 
 @app.get("/tools/list")
 def tools_list():
-    # Returns only the schemas (not the functions) — clients learn what exists here
+    # Returns only the schemas (not the functions); clients learn what exists here
     return jsonify([t["schema"] for t in TOOLS.values()])
 
 @app.post("/tools/call")
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 
 ---
 
-The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools. Notice that the client never imports or defines `room_lookup` or `hours` — it learns they exist at runtime from the server's response.
+The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools. Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
 
 ## Code Cell
 
@@ -194,7 +194,7 @@ import requests
 
 SERVER = "http://localhost:8765"
 
-# Step 1: Discover what tools exist — no hard-coding required
+# Step 1: Discover what tools exist, no hard-coding required
 discovered = requests.get(f"{SERVER}/tools/list", timeout=10).json()
 print("discovered tools:", [t["name"] for t in discovered])
 # Output: discovered tools: ['room_lookup', 'hours']
@@ -205,7 +205,7 @@ def call_remote(name, arguments):
                       json={"name": name, "arguments": arguments}, timeout=10)
     return r.json()
 
-# Step 3: Use the tools — the client never needed to know these existed at startup
+# Step 3: Use the tools; the client never needed to know these existed at startup
 print(call_remote("hours", {"facility": "library"}))
 # Output: {'result': '8am-midnight M-R'}
 
@@ -225,13 +225,13 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
 5. Convert your agent from the *Tool Use and Function Calling* activity to use `discovered` schemas (sketch the three changed lines). What stays identical? What does that invariance tell you about good layering?
 
-   > *Hint: The agent loop — perceive, plan, act, observe — does not need to know whether tools came from discovery or hard-coding. What does this tell you about the value of keeping layers separate?*
+   > *Hint: The agent loop (perceive, plan, act, observe) does not need to know whether tools came from discovery or hard-coding. What does this tell you about the value of keeping layers separate?*
 
 6. A malicious server could describe a tool as "harmless lookup" while its implementation deletes files. Which side of the protocol can lie, and what defenses (allowlists, sandboxes, human gates, audits) operate at which layer?
 
    > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food? Who provides each kind of protection?*
 
-> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools — it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited — not by assuming the protocol protects you.
+> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools; it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited, not by assuming the protocol protects you.
 
 The primary value MCP adds over each team writing custom tool integrations is:
 
@@ -296,13 +296,13 @@ In this Part you extend the server with a new tool to confirm that discovery is 
    # Ursinus College: lat=40.1914, lon=-75.4532
    ```
 
-   *You've succeeded when:* Your agent produces a sentence like "You should wear a jacket — the forecast is partly cloudy with a high of 58°F" and that answer is demonstrably sourced from the live NWS API, not the model's training data.
+   *You've succeeded when:* Your agent produces a sentence like "You should wear a jacket; the forecast is partly cloudy with a high of 58°F" and that answer is demonstrably sourced from the live NWS API, not the model's training data.
 
 3. **Write a Trust Memo for your final project.**
 
    *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server. Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.
 
-   *Starter hint:* Your memo should have sections for (a) Source Verification — how do you confirm who wrote the server and whether it has been reviewed?, (b) Permission Scope — what is the minimum set of capabilities the server needs?, (c) Audit Logging — how will you record every call made through the server so you can reconstruct what happened?
+   *Starter hint:* Your memo should have sections for (a) Source Verification, how do you confirm who wrote the server and whether it has been reviewed?, (b) Permission Scope, what is the minimum set of capabilities the server needs?, (c) Audit Logging, how will you record every call made through the server so you can reconstruct what happened?
 
    *You've succeeded when:* Your memo gives a concrete yes/no checklist (not vague guidelines) that a teammate could apply in five minutes to a new MCP server they have never seen before.
 
@@ -312,15 +312,15 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
 In your notebook, respond to all three levels:
 
-**Personal:** Think of a time you used a standard that made your life easier — perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs. How did having that standard change what you did or built? Would you have worked differently without it?
+**Personal:** Think of a time you used a standard that made your life easier: perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs. How did having that standard change what you did or built? Would you have worked differently without it?
 
 **Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate. As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years? Consider: what new kinds of services will appear that could not exist before MCP? What new security risks emerge?
 
-**Societal:** Interoperability standards create network effects — the more people adopt them, the more valuable they become for everyone. But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it. Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
+**Societal:** Interoperability standards create network effects: the more people adopt them, the more valuable they become for everyone. But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it. Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
 
 ---
 
--> **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning — the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
+-> **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning, the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
 
 ---
 
