@@ -9,11 +9,11 @@ libraries (`requests`, `chromadb`, `sentence-transformers`, `scikit-learn`,
 **Ollama is the one thing that stays on your host.** It runs natively for
 model performance; code inside the container reaches it at
 `http://host.docker.internal:11434`, the host-bridge pattern from the
-[Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
+[Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md).
 
 The full walk-through (Ollama first, then Docker, then GitHub setup,
 credential options, practice steps, and troubleshooting) is the
-[Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md).
+[Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md).
 This README is the quickstart version.
 
 ## Files
@@ -98,4 +98,4 @@ and `npm install -g promptfoo` for the evaluation lab, and use
 - Slow first build: normal (the ML libraries are large); later builds reuse
   cached layers.
 - Push rejected / authentication failures: see the credential section of the
-  [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md).
+  [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md).

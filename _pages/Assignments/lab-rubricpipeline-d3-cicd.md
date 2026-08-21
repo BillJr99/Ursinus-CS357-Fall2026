@@ -9,9 +9,9 @@ info:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: 'Publishing Activity: GHCR, Docker Hub, and npm'
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md
   - rtitle: Coding Agents Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md
   - rtitle: pytest Documentation
     rlink: https://docs.pytest.org/en/stable/
   - rtitle: Python Packaging User Guide
@@ -32,8 +32,8 @@ To earn trust in agentic software through engineering discipline: test-driven de
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Publishing Activity: GHCR, Docker Hub, and npm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md)
+- [Publishing Activity: GHCR, Docker Hub, and npm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md)
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md)
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
@@ -56,8 +56,8 @@ The core pipeline earns trust through measurement; this direction earns it throu
 
 **Prerequisite activities**: complete these before writing any code:
 
-- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md): registries, names, tags, and pip publishing
-- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md): agent loops and CI
+- [Publishing Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md): registries, names, tags, and pip publishing
+- [Coding Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md): agent loops and CI
 
 **Tools to install:**
 

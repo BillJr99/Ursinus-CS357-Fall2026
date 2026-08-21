@@ -30,11 +30,11 @@ info:
       proficient: The harness (plain Python built on the class evaluation harness, or declarative promptfoo YAML, student's choice) pins a golden set (seeded from the Golden-Set Benchmark lab, extended with corpus-specific items) and a fixed protocol; two runs are shown to agree; and the harness lives in the RAG Knowledge Base Lab repository where the Rubric Pipeline Lab's pipeline work can pick it up
   readings:
     - rtitle: "Hallucinations and Evaluating Agent Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
     - rtitle: "RAG Quality: Chunking, Clustering, and Reranking Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ragquality.md"
     - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents, Evaluation, Regression, and the Non-Determinism Problem"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-testingagents.md"
     - rtitle: "Reference: promptfoo, declarative LLM/agent eval and red-teaming (harness option, runs against Ollama)"
       rlink: "https://www.promptfoo.dev/"
 
