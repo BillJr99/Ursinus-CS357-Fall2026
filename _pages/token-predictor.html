@@ -10,7 +10,7 @@ sitemap: false
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Token Prediction Playground — CS357</title>
+<title>The Token Prediction Playground (CS357)</title>
 <style>
   :root{
     --bg:#faf9f6; --fg:#1c1c1a; --muted:#6b6b63; --card:#ffffff; --line:#e6e4dc;
@@ -64,7 +64,7 @@ sitemap: false
 <div class="wrap">
   <h1>The Token Prediction Playground</h1>
   <p class="lede">A language model has one job: look at the text so far and guess the next
-  <em>token</em> (here, a word). It does this by counting patterns it saw in its training data —
+  <em>token</em> (here, a word). It does this by counting patterns it saw in its training data,
   nothing more. Play with the tiny model below to see where that works beautifully, and where it
   falls apart.</p>
 
@@ -88,7 +88,7 @@ sitemap: false
   </div>
 
   <div class="card">
-    <h2 style="margin:0 0 .5rem">Try these — capability vs. limitation</h2>
+    <h2 style="margin:0 0 .5rem">Try these: capability vs. limitation</h2>
     <div class="row presets" id="presets"></div>
     <small class="hint">Click a starter, then press <b>Predict</b> a few times and watch the confidence
     bars.</small>
@@ -98,21 +98,21 @@ sitemap: false
   <ul>
     <li><b>Capability (green bars, high confidence).</b> On common phrases the model has seen
       thousands of times (<code>once upon a ___</code>), one word dominates. This is what LLMs are
-      great at: well-worn paths — summarizing, reformatting, finishing familiar patterns.</li>
-    <li><b>Limitation — sparse data (orange bars, flat/low confidence).</b> Feed it rare or novel
+      great at: well-worn paths such as summarizing, reformatting, and finishing familiar patterns.</li>
+    <li><b>Limitation: sparse data (orange bars, flat/low confidence).</b> Feed it rare or novel
       words it barely saw and the guesses spread out or collapse to a fallback. A real LLM does the
-      same on niche, post-cutoff, or obscure topics — it still answers, just less reliably.</li>
-    <li><b>Limitation — "sounds true" ≠ "is true".</b> The model picks the word that <em>fits the
+      same on niche, post-cutoff, or obscure topics. It still answers, just less reliably.</li>
+    <li><b>Limitation: "sounds true" ≠ "is true".</b> The model picks the word that <em>fits the
       pattern</em>, not the word that is <em>correct</em>. It will happily complete a plausible-sounding
       but wrong sentence. Prediction is about fluency, not facts.</li>
-    <li><b>Limitation — repetition.</b> Set temperature to 0 and auto-write: the model often loops.
+    <li><b>Limitation: repetition.</b> Set temperature to 0 and auto-write: the model often loops.
       Real decoders add penalties to fight this (you'll meet <code>repeat_penalty</code> later).</li>
   </ul>
 
   <div class="foot">
     An unplugged-style, in-browser demo for CS357: Foundations of Artificial Intelligence.
     It trains a small <b>trigram</b> word model (with bigram/unigram back-off) entirely in your
-    browser on the short sample text below — no network, no real LLM. The point is the
+    browser on the short sample text below: no network, no real LLM. The point is the
     <em>mechanism</em>, not the scale. View source to read the ~60 lines of model code.
     Released under CC BY-NC-SA 4.0.
   </div>
@@ -177,7 +177,7 @@ function counts(context){
   const t=tokenize(context);
   if(t.length>=2){ const c=tri.get(t[t.length-2]+' '+t[t.length-1]); if(c&&c.size) return {c,level:'trigram'};}
   if(t.length>=1){ const c=bi.get(t[t.length-1]); if(c&&c.size) return {c,level:'bigram'};}
-  return {c:uni,level:'unigram (no context match — fell back to overall word frequency)'};
+  return {c:uni,level:'unigram (no context match, fell back to overall word frequency)'};
 }
 function distribution(context, temperature){
   const {c,level}=counts(context);
@@ -215,11 +215,11 @@ function render(){
   let v;
   if(fallback){
     v=`<span class="pill warn">limitation</span> The model has <b>no memory</b> of this exact
-       phrase, so it fell back to raw word frequency — the guesses are basically a shrug. This is
+       phrase, so it fell back to raw word frequency: the guesses are basically a shrug. This is
        what "novel territory / sparse data" looks like.`;
   } else if(topProb>0.6){
     v=`<span class="pill ok">capability</span> One word dominates (${(topProb*100).toFixed(0)}%):
-       a well-worn pattern the model has seen many times. Confident and usually right — for this
+       a well-worn pattern the model has seen many times. Confident and usually right, for this
        kind of common continuation.`;
   } else {
     v=`<span class="pill">in between</span> Several words are plausible. The model is genuinely
@@ -250,10 +250,10 @@ $('temp').oninput=render;
 
 // preset starters chosen to contrast capability vs. limitation
 const PRESETS=[
-  ['"once upon a"  (common — watch it get confident)', ['once','upon','a']],
+  ['"once upon a"  (common: watch it get confident)', ['once','upon','a']],
   ['"the quick brown"  (a memorized phrase)', ['the','quick','brown']],
   ['"i think therefore"  (a famous line)', ['i','think','therefore']],
-  ['"photosynthesis mitochondria"  (rare — watch it shrug)', ['photosynthesis','mitochondria']],
+  ['"photosynthesis mitochondria"  (rare: watch it shrug)', ['photosynthesis','mitochondria']],
   ['"the president signed"  (plausible but ungrounded)', ['the','president','signed']],
 ];
 const pc=$('presets');
