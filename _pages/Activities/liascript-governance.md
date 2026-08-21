@@ -28,7 +28,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **Governance** | The set of written rules, structures, and processes that decide what an AI system may do, who is accountable for its behavior, and how problems are detected and fixed — before harm occurs. | A university's policy stating that an AI advising tool may suggest course plans but may not register students for classes is a governance document. |
+| **Governance** | The set of written rules, structures, and processes that decide what an AI system may do, who is accountable for its behavior, and how problems are detected and fixed, before harm occurs. | A university's policy stating that an AI advising tool may suggest course plans but may not register students for classes is a governance document. |
 | **EU AI Act** | A 2024 European Union law that classifies AI systems by risk level and imposes different obligations depending on how much harm a system could cause, from bans on the most dangerous uses to transparency requirements for lower-risk ones. | An AI system used in college admissions falls in the Act's "high-risk" category and requires detailed documentation, human oversight, and accuracy testing. |
 | **NIST AI RMF** | The National Institute of Standards and Technology AI Risk Management Framework, a voluntary US guideline that organizes AI risk work into four functions: Govern, Map, Measure, and Manage. | A team completing a pre-mortem (Map), running disaggregated evaluations (Measure), and assigning a named project owner (Govern) is implementing the NIST framework. |
 | **Third-Party Test** | A practical check for whether a policy clause is real: could an independent outside party examine evidence and determine whether the clause was actually followed? If not, the clause is decoration, not policy. | "We will be fair" fails the test. "Every Friday the evaluation harness runs 40 tasks and any group accuracy gap above 5 points opens an incident" passes the test. |
@@ -39,7 +39,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: From Values to Mechanisms
 
-In this part, you will learn to distinguish policy language that merely sounds good from policy language that actually commits someone to a specific, checkable action. This is the single most important skill in this activity — everything else builds on it.
+In this part, you will learn to distinguish policy language that merely sounds good from policy language that actually commits someone to a specific, checkable action. This is the single most important skill in this activity; everything else builds on it.
 
 ## 1. Governance Is Engineering with Words
 
@@ -55,7 +55,7 @@ A value statement like "our system is fair and transparent" sounds meaningful bu
 
 ## Model 1: Toothless Versus Enforceable
 
-Why this matters: when you build a real AI system — even a class project — someone will eventually ask "who is accountable if this produces a harmful output?" Learning to write clauses that survive the third-party test now prepares you to answer that question with documentation rather than apologies.
+Why this matters: when you build a real AI system (even a class project) someone will eventually ask "who is accountable if this produces a harmful output?" Learning to write clauses that survive the third-party test now prepares you to answer that question with documentation rather than apologies.
 
 Clause A: "The advising agent should be used responsibly and its suggestions taken with appropriate caution."
 
@@ -83,7 +83,7 @@ Now that you can distinguish real policy from decoration, this part gives you th
 
 ## 2. The Eight Sections
 
-A governance document is not a formality — it is an engineering artifact that specifies what your system does, who is accountable for it, and what happens when things go wrong. Every section below earns its place because it answers a question that cannot be answered any other way. If you cannot fill a section, that gap is itself a finding: something about your system is unspecified.
+A governance document is not a formality; it is an engineering artifact that specifies what your system does, who is accountable for it, and what happens when things go wrong. Every section below earns its place because it answers a question that cannot be answered any other way. If you cannot fill a section, that gap is itself a finding: something about your system is unspecified.
 
 Your governance document (for the written assignment and your project) uses this skeleton, each section earning its place by the third-party test:
 
@@ -111,7 +111,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 4. Map your project onto NIST's four functions: for each of Govern, Map, Measure, and Manage, name the artifact you have already produced this semester that does that work, and the one artifact still missing.
 
-   > *Hint:* Govern = who owns this and what are they accountable for? Map = what does the system do and who is affected? Measure = how do you know if it's working or failing? Manage = what do you do when something goes wrong? Match each function to something you have actually built, written, or run this semester — your rubric pipeline, your pre-mortem, your data flow diagram, your test harness all count.
+   > *Hint:* Govern = who owns this and what are they accountable for? Map = what does the system do and who is affected? Measure = how do you know if it's working or failing? Manage = what do you do when something goes wrong? Match each function to something you have actually built, written, or run this semester: your rubric pipeline, your pre-mortem, your data flow diagram, your test harness all count.
 
 5. Would your project be "high-risk" under the EU AI Act's education provisions if deployed for real students rather than a class demo? What single design change most reduces its tier?
 
@@ -121,7 +121,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
    *Hint: A specification-gap clause should say what happens when the agent encounters a request it was not designed to handle. An irreversible-action clause should name the action, require human confirmation, and name the confirming party. A global-invariant clause should specify what the system must always do (or never do) regardless of user instruction.*
 
-> **Common Misconception:** "Governance is something we add after the system works." Many teams treat governance documentation as a final step before submission — something to write once the code is done. In practice, writing a governance document *first* surfaces design requirements you would otherwise miss: who is accountable forces you to define ownership; what is prohibited forces you to define scope; how you audit forces you to build the logging infrastructure. Teams that write governance last typically discover they built an unsupervised, unauditable system.
+> **Common Misconception:** "Governance is something we add after the system works." Many teams treat governance documentation as a final step before submission, something to write once the code is done. In practice, writing a governance document *first* surfaces design requirements you would otherwise miss: who is accountable forces you to define ownership; what is prohibited forces you to define scope; how you audit forces you to build the logging infrastructure. Teams that write governance last typically discover they built an unsupervised, unauditable system.
 
 ---
 
@@ -129,7 +129,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 > **Second half of today's session.** After the drafting workshop we take up **[Environmental Impact and the Carbon Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md)**, which supplies the numbers your policy's sustainability section has to answer to.
 
-Now that your policy has a structure and you've mapped your project onto real frameworks, this workshop turns those materials into actual written policy — and then tests it against peer review and adversarial reading.
+Now that your policy has a structure and you've mapped your project onto real frameworks, this workshop turns those materials into actual written policy, and then tests it against peer review and adversarial reading.
 
 ## 3. Exercises
 
@@ -139,7 +139,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
    *Starter hint:* For permitted uses, list specific tasks the system was designed for (e.g., "The agent may draft feedback comments on student code submissions"). For prohibited uses, be equally specific (e.g., "The agent may not assign grades, submit grades to the registrar, or send emails to students directly"). For human oversight, name every action that requires a human to see evidence and click confirm before proceeding.
 
-   *You've succeeded when:* An outside auditor could read sections 3 and 4 and determine, from your system's logs, whether any violation occurred — without having to ask you what you meant.
+   *You've succeeded when:* An outside auditor could read sections 3 and 4 and determine, from your system's logs, whether any violation occurred, without having to ask you what you meant.
 
 2. *Structured peer review.*
 
@@ -147,7 +147,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
    *Starter hint:* Mark every sentence that contains the words "we will," "the team," "regularly," "appropriately," or "as needed" as a likely failure. These words almost always indicate that a specific actor, schedule, or threshold has been omitted.
 
-   *You've succeeded when:* You return a draft with every vague clause flagged and a specific suggested revision for at least three of them — not just criticism but a concrete alternative.
+   *You've succeeded when:* You return a draft with every vague clause flagged and a specific suggested revision for at least three of them, not just criticism but a concrete alternative.
 
 3. *Red-team the prohibition list.*
 
@@ -163,7 +163,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
    *Starter hint:* Step 1 should include who receives the report and within what time window they must acknowledge it. Step 2 should specify what they do immediately (disable the system? preserve logs? notify a supervisor?). Step 3 should specify what analysis is required and when it must be completed. If you cannot name the owner, your section 7 is not done.
 
-   *You've succeeded when:* A new team member who has never seen your project could read your three steps and execute them correctly in a real incident — without asking anyone for clarification.
+   *You've succeeded when:* A new team member who has never seen your project could read your three steps and execute them correctly in a real incident, without asking anyone for clarification.
 
 ---
 
@@ -179,7 +179,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
 ## -> Coming Up Next
 
-In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable* — how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
+In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable*: how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
 
 ## Further Reading
 
