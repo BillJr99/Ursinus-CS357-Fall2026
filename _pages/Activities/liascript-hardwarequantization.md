@@ -37,10 +37,10 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **VRAM (Video RAM)** | The dedicated memory on a GPU that must hold the entire model during inference — if the model does not fit, it cannot run at full speed | A 70B parameter model at FP16 requires 140 GB of VRAM; a single RTX 4090 has only 24 GB |
-| **Memory Bandwidth** | How fast data can be moved from VRAM into the GPU's compute cores — often the actual bottleneck during token generation, not raw compute speed | An H100 has ~3.35 TB/s bandwidth; an RTX 4090 has ~1 TB/s |
+| **VRAM (Video RAM)** | The dedicated memory on a GPU that must hold the entire model during inference; if the model does not fit, it cannot run at full speed | A 70B parameter model at FP16 requires 140 GB of VRAM; a single RTX 4090 has only 24 GB |
+| **Memory Bandwidth** | How fast data can be moved from VRAM into the GPU's compute cores; often the actual bottleneck during token generation, not raw compute speed | An H100 has ~3.35 TB/s bandwidth; an RTX 4090 has ~1 TB/s |
 | **Quantization** | Reducing the number of bits used to store each model weight, shrinking the model in exchange for a small accuracy penalty | Quantizing from FP16 (2 bytes/weight) to Q4 (0.5 bytes/weight) cuts a 70B model from 140 GB to ~35 GB |
-| **Perplexity** | A measure of how "surprised" a language model is when it reads a test document — lower means better; used to quantify quality loss from quantization | A Q4_K_M model has roughly 1.5% higher perplexity than the FP16 baseline for a 7B model |
+| **Perplexity** | A measure of how "surprised" a language model is when it reads a test document; lower means better; used to quantify quality loss from quantization | A Q4_K_M model has roughly 1.5% higher perplexity than the FP16 baseline for a 7B model |
 | **Unified Memory** | An architecture (used by Apple Silicon) where the CPU, GPU, and Neural Engine all share the same physical RAM pool, so there is no separate VRAM limit | An M3 Ultra with 192 GB of RAM can load a 70B model at Q4 that would be impossible on any single NVIDIA consumer GPU |
 | **Edge Inference** | Running an AI model locally on a device (laptop, workstation, embedded system) rather than sending queries to a remote cloud server | A rural clinic running a clinical documentation assistant on a local Mac Mini because there is no reliable internet connection |
 
@@ -48,9 +48,9 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ## Model 1: Why Hardware Matters for AI Agents
 
-Every transformer forward pass is essentially one massive matrix multiplication after another. The hardware underneath determines not just how fast that runs, but whether it runs at all. Quantization is like compressing a photo from RAW to JPEG — you lose a little quality, but the file is 8-16× smaller and loads instantly in a browser where the RAW file would time out. Understanding these hardware constraints is not optional trivia: it is what lets you decide whether your agent can run offline on a Raspberry Pi, on a laptop at a clinic without internet, or only on a rented GPU in a data center.
+Every transformer forward pass is essentially one massive matrix multiplication after another. The hardware underneath determines not just how fast that runs, but whether it runs at all. Quantization is like compressing a photo from RAW to JPEG: you lose a little quality, but the file is 8-16× smaller and loads instantly in a browser where the RAW file would time out. Understanding these hardware constraints is not optional trivia: it is what lets you decide whether your agent can run offline on a Raspberry Pi, on a laptop at a clinic without internet, or only on a rented GPU in a data center.
 
-The following section explains why GPUs dominate AI inference and what the actual bottleneck is during token generation — the answer is more subtle than "GPUs are faster."
+The following section explains why GPUs dominate AI inference and what the actual bottleneck is during token generation; the answer is more subtle than "GPUs are faster."
 
 ### GPU vs. CPU for Matrix Multiplication
 
@@ -59,10 +59,10 @@ Neural network inference is dominated by one operation: **matrix multiplication*
 **Why GPUs win at this:**
 
 - A modern CPU has 8-32 cores optimized for sequential, branching tasks such as database queries or operating system scheduling
-- A modern GPU has thousands of simpler cores optimized for massively parallel arithmetic — exactly what matrix multiplication requires
+- A modern GPU has thousands of simpler cores optimized for massively parallel arithmetic, exactly what matrix multiplication requires
 - For a matrix multiply of dimension N×N, the GPU can compute many products simultaneously, while the CPU must handle far fewer in parallel
 
-However, **raw FLOPS (floating-point operations per second) is often not the bottleneck**. The real constraint during token generation is **memory bandwidth** — the rate at which model weights can be streamed from VRAM into the compute cores. A GPU may be rated at 312 TFLOPS but can only feed data at 2 TB/s, creating a bandwidth wall. Most LLM inference runs at only 5-15% of peak FLOPS utilization for exactly this reason.
+However, **raw FLOPS (floating-point operations per second) is often not the bottleneck**. The real constraint during token generation is **memory bandwidth**, the rate at which model weights can be streamed from VRAM into the compute cores. A GPU may be rated at 312 TFLOPS but can only feed data at 2 TB/s, creating a bandwidth wall. Most LLM inference runs at only 5-15% of peak FLOPS utilization for exactly this reason.
 
 **VRAM is a hard limit.** The entire model must fit in GPU VRAM (or be offloaded across multiple devices, at a significant latency penalty). A model with P parameters stored at FP16 (2 bytes per parameter) requires exactly 2×P bytes of VRAM:
 
@@ -70,11 +70,11 @@ However, **raw FLOPS (floating-point operations per second) is often not the bot
 - 13B parameters × 2 bytes = **26 GB VRAM** (exceeds a single RTX 4090; requires an A100 or Apple Silicon with enough unified memory)
 - 70B parameters × 2 bytes = **140 GB VRAM** (requires multiple A100s, an H100 with NVLink, or quantization to fit on consumer hardware)
 
-Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10-20% higher than the weight-only calculation. That KV-cache overhead is not a fixed 10-20% — it grows with every concurrent request and every token of context, and it is where most serving inefficiency hides. For *how* the non-weight VRAM is actually managed (fragmentation, PagedAttention, and the tuning knobs that decide how many users a card can serve), see Part IV of the companion activity *Serving LLMs in Production* (`liascript-llmserving.md`).
+Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10-20% higher than the weight-only calculation. That KV-cache overhead is not a fixed 10-20%; it grows with every concurrent request and every token of context, and it is where most serving inefficiency hides. For *how* the non-weight VRAM is actually managed (fragmentation, PagedAttention, and the tuning knobs that decide how many users a card can serve), see Part IV of the companion activity *Serving LLMs in Production* (`liascript-llmserving.md`).
 
 ### Hardware Landscape
 
-Use the table below to determine which hardware tier can run which model sizes. The "Models That Fit at FP16" column assumes no quantization — with Q4 quantization, each model fits on hardware with roughly one-quarter the VRAM listed.
+Use the table below to determine which hardware tier can run which model sizes. The "Models That Fit at FP16" column assumes no quantization; with Q4 quantization, each model fits on hardware with roughly one-quarter the VRAM listed.
 
 | Hardware | VRAM | Peak FLOPS (FP16) | Approximate Cost | Models That Fit at FP16 |
 |----------|------|-------------------|------------------|-------------------------|
@@ -84,7 +84,7 @@ Use the table below to determine which hardware tier can run which model sizes. 
 | Apple Silicon (M3 Ultra) | 192 GB unified memory | ~17 TFLOPS GPU core (Neural Engine: ~60 TOPS) | ~$5,000-$10,000 | 70B+ at FP16; entire system memory is available to the GPU |
 | TPU v4 (Google Cloud) | 32 GB per chip in multi-chip pods | ~275 TFLOPS (bfloat16) | Variable pod pricing | Large models via multi-chip pods; primarily for training |
 
-**Unified memory (Apple Silicon):** Apple's M-series chips use a shared memory architecture where the CPU, GPU, and Neural Engine all access the same physical DRAM pool. There is no separate VRAM limit — the entire system memory (up to 192 GB on an M3 Ultra) is available to the GPU. This fundamentally changes what is runnable on consumer hardware: a 70B model that is impossible on any single NVIDIA consumer GPU can run on a Mac Studio.
+**Unified memory (Apple Silicon):** Apple's M-series chips use a shared memory architecture where the CPU, GPU, and Neural Engine all access the same physical DRAM pool. There is no separate VRAM limit; the entire system memory (up to 192 GB on an M3 Ultra) is available to the GPU. This fundamentally changes what is runnable on consumer hardware: a 70B model that is impossible on any single NVIDIA consumer GPU can run on a Mac Studio.
 
 ### Critical Thinking Questions
 
@@ -92,7 +92,7 @@ Use the table below to determine which hardware tier can run which model sizes. 
 
 [[___ Your answer here ___]]
 
-> *Hint:* During generation, the model weights must be streamed through the compute units for every single token — this is a bandwidth-bound operation because the GPU keeps re-reading all those weights. But before generation can even begin, the weights must fit in VRAM at all — this is a capacity constraint. FLOPS become the dominant limit when you batch many users' queries together (large batch size), so the GPU is doing more work per memory read. What batch size makes a GPU "compute-bound" rather than "memory-bound," and why does a single-user local deployment almost never reach that threshold?
+> *Hint:* During generation, the model weights must be streamed through the compute units for every single token; this is a bandwidth-bound operation because the GPU keeps re-reading all those weights. But before generation can even begin, the weights must fit in VRAM at all; this is a capacity constraint. FLOPS become the dominant limit when you batch many users' queries together (large batch size), so the GPU is doing more work per memory read. What batch size makes a GPU "compute-bound" rather than "memory-bound," and why does a single-user local deployment almost never reach that threshold?
 
 ---
 
@@ -110,7 +110,7 @@ Use the table below to determine which hardware tier can run which model sizes. 
 
 [[___ Your answer here ___]]
 
-> *Hint:* At FP16: 7B × 2 bytes = 14 GB weights + 1.5 GB KV cache = 15.5 GB total. With 16 GB VRAM, this is technically possible but dangerously tight — any additional overhead from the runtime or a longer context will cause out-of-memory errors. At Q4: 7B × 0.5 bytes = 3.5 GB weights + 1.5 GB KV cache = 5 GB total. This fits comfortably with room to spare for longer contexts or runtime buffers.
+> *Hint:* At FP16: 7B × 2 bytes = 14 GB weights + 1.5 GB KV cache = 15.5 GB total. With 16 GB VRAM, this is technically possible but dangerously tight; any additional overhead from the runtime or a longer context will cause out-of-memory errors. At Q4: 7B × 0.5 bytes = 3.5 GB weights + 1.5 GB KV cache = 5 GB total. This fits comfortably with room to spare for longer contexts or runtime buffers.
 
 ---
 
@@ -118,15 +118,15 @@ Use the table below to determine which hardware tier can run which model sizes. 
 
 [[___ Your answer here ___]]
 
-> *Hint:* The M3 Ultra wins decisively for any model between about 12 GB and 192 GB in size — models that simply do not fit on the RTX 4090 at all. The RTX 4090 wins for smaller models (7B at Q4 or FP16) that fit comfortably in 24 GB, because its CUDA compute and bandwidth are faster than Apple's GPU cores for that workload. The H100 wins for everything involving large batch sizes, training, or multi-user throughput at scale. When does each choice make sense in practice?
+> *Hint:* The M3 Ultra wins decisively for any model between about 12 GB and 192 GB in size, models that simply do not fit on the RTX 4090 at all. The RTX 4090 wins for smaller models (7B at Q4 or FP16) that fit comfortably in 24 GB, because its CUDA compute and bandwidth are faster than Apple's GPU cores for that workload. The H100 wins for everything involving large batch sizes, training, or multi-user throughput at scale. When does each choice make sense in practice?
 
 ---
 
-## Model 2: Quantization — Getting More from Less
+## Model 2: Quantization - Getting More from Less
 
 ### Number Format Basics
 
-The table below lists every precision format you will encounter in this course. The key column is "Bytes per Weight" — multiply it by the number of model parameters to get the minimum VRAM required to load the model.
+The table below lists every precision format you will encounter in this course. The key column is "Bytes per Weight"; multiply it by the number of model parameters to get the minimum VRAM required to load the model.
 
 Neural networks store weights as floating-point or integer numbers. The precision of the format determines both the memory footprint and the computational cost:
 
@@ -142,15 +142,15 @@ Neural networks store weights as floating-point or integer numbers. The precisio
 
 **The core math you need to know:**
 
-- 70B model at FP16: 70,000,000,000 × 2 bytes = **140 GB** — requires multiple data center GPUs
-- 70B model at Q4: 70,000,000,000 × 0.5 bytes = **35 GB** — fits on an M3 Ultra (192 GB unified memory)
-- 70B model at Q3: 70,000,000,000 × 0.375 bytes = **26 GB** — fits on a Mac Studio M3 Ultra with 32 GB RAM
+- 70B model at FP16: 70,000,000,000 × 2 bytes = **140 GB**, requires multiple data center GPUs
+- 70B model at Q4: 70,000,000,000 × 0.5 bytes = **35 GB**, fits on an M3 Ultra (192 GB unified memory)
+- 70B model at Q3: 70,000,000,000 × 0.375 bytes = **26 GB**, fits on a Mac Studio M3 Ultra with 32 GB RAM
 
 ### GGUF Format and Practical Quantization
 
-The **GGUF format** (used by llama.cpp and Ollama — the tools you use in this course) is the dominant format for local inference. It supports:
+The **GGUF format** (used by llama.cpp and Ollama, the tools you use in this course) is the dominant format for local inference. It supports:
 
-- **Mixed precision**: different layers can use different quantization levels — important layers such as attention can remain at higher precision while less critical layers are quantized more aggressively
+- **Mixed precision**: different layers can use different quantization levels; important layers such as attention can remain at higher precision while less critical layers are quantized more aggressively
 - **GPU offloading**: model layers can be split between CPU RAM and VRAM, enabling models larger than VRAM alone could hold (at the cost of slower token generation)
 - **Named quantization variants**: Q4_K_M, Q5_K_M, etc., where K means key-layers (attention) are kept at higher precision, and M/S indicate medium/small variant within that tier
 
