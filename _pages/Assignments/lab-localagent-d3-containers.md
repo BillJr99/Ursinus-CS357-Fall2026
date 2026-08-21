@@ -1006,3 +1006,19 @@ Answer each prompt in complete sentences. Answers that reference specific observ
 - The six hardening steps you applied are independent layers. If an attacker could bypass exactly one layer, which would they target first, and why?
 - If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+#### Self-Check Before You Submit
+
+- [ ] `docker-compose-insecure.yml` present, with inline comments naming each security problem.
+- [ ] `docker-compose.yml` applies **all six** hardening measures.
+- [ ] `Dockerfile` hardened, and the image builds.
+- [ ] `agent.py` reads secrets from `/run/secrets/`, **not** from the environment.
+- [ ] `baseline-notes.md` documents what the insecure agent could actually reach, from evidence rather than from reasoning.
+- [ ] `hardening-log.md` shows verification output for each of the six steps, in order.
+- [ ] `threat-model.md` complete: all four rows, all four columns.
+- [ ] `red-team-notes.md` records what I tried, what happened, and what it means, including the attempts that **failed to break anything**.
+- [ ] `RUNBOOK.md` covers all three procedures, in enough detail to follow under pressure.
+- [ ] For each hardening measure I can say which of observability, isolation, and reversibility it buys.
+- [ ] Pair log with role swaps at least every 30 minutes.
