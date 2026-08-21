@@ -11,7 +11,7 @@ info:
     criteria: "Assessed on one shared rubric across all five directions, analysis quality, evidence and citation, connection to course systems and concepts, and communication for your audience; see the rubric below for the full breakdown."
   points: 100
   goals:
-    - To analyze an AI system, practice, or question through a responsible-AI lens: philosophical, documentary, governance, regulatory, or environmental (at a depth a practitioner could act on
+    - "To analyze an AI system, practice, or question through a responsible-AI lens: philosophical, documentary, governance, regulatory, or environmental (at a depth a practitioner could act on"
     - To ground every claim in specific evidence) cited passages, published research, framework provisions with article numbers, reference values with visible arithmetic, or empirical observations of real systems, deployed at the point in the argument where it is needed, not decoratively
     - To engage honestly with the strongest counterargument, unknown, loophole, or trade-off rather than dismissing it, and to arrive at a defended position or an enforceable, implementable artifact
     - To connect the analysis concretely to the systems and concepts of this course, the agents you have built, your final project design, and the frameworks studied in class

@@ -15,7 +15,7 @@ info:
     - To justify every major methodological and design decision (architectural choices, framework selection, or scoping) by naming the course pattern, principle, or evidence that motivated it
     - To produce direction-appropriate evidence of rigor - a baseline-compared evaluation with documented failure modes (Direction A), a systematic framework application with mechanistic failure modes and adoptable governance (Direction B), or a verified ecosystem gap with property tests, publication, and community engagement, or a verified issue in an existing project carried to a submitted, reviewed contribution (Direction C)
     - To practice visible, professional team process (meeting agendas and notes, a decision log, role rotation, all-member signatures, intra-team check-ins, and charter adherence) throughout the project
-    - To engage a community partner: grounding the proposal in stakeholder needs, incorporating a partner feedback pass during the sprint window, and delivering a partner-facing artifact at Demo Day
+    - "To engage a community partner: grounding the proposal in stakeholder needs, incorporating a partner feedback pass during the sprint window, and delivering a partner-facing artifact at Demo Day"
     - To communicate the result to a multi-audience of technical peers and community stakeholders, and to disclose honestly how and why AI tools were used at the proposal and at the final submission
     - To ground the project in the team's Stakeholder Brief and Literature Review and use the Open Questions to assess growth (Goals 11, 12, 13, 14, 15)
   rubric:
