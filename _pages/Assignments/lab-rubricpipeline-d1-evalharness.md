@@ -558,3 +558,20 @@ Fold the following into your single lab submission:
 ---
 
 When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.
+
+---
+
+#### Self-Check Before You Submit
+
+Held against this direction's own *What proficient work looks like* list.
+
+- [ ] `eval_dataset.json` has 20 questions across all three categories, with documented selection criteria.
+- [ ] Golden answers are checkable by **at least one automated metric**.
+- [ ] Adversarial prompts cover **at least two distinct** failure modes.
+- [ ] Three or more metrics implemented, including G-Eval with a documented judge prompt.
+- [ ] Results table has question, expected, actual, score, and pass/fail columns.
+- [ ] Refusal rate on adversarial prompts is reported **separately**.
+- [ ] A single documented change was tested; the diff table shows score_before, score_after, and delta for all 20.
+- [ ] At least one regression **and** one improvement identified and interpreted.
+- [ ] `.github/workflows/eval.yml` runs on push, fails the build below an 80% pass rate, and posts the score table to the PR.
+- [ ] Writeup covers dataset rationale per category, the full judge prompt, and threshold justifications.
