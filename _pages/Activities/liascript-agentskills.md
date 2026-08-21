@@ -24,7 +24,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
-## Key Terms
+## Key Concepts
 
 Before diving in, anchor the vocabulary. You will encounter all of these terms in today's work; return to this table whenever a term appears unfamiliar.
 
@@ -587,7 +587,7 @@ In your notebook, respond at three levels:
 
 ---
 
-## Key Terms Summary
+## Key Concepts Summary
 
 | Term | Definition |
 |------|------------|

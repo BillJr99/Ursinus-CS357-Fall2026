@@ -258,7 +258,7 @@ Before your Presenter shares with the class, agree on answers to the following a
 
 ---
 
-## Key Terms
+## Key Concepts
 
 | Term | Definition |
 |---|---|

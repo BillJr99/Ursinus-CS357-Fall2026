@@ -20,7 +20,7 @@ The bench has four parts, and we build them in order: **the shell** (Step 0, the
 
 This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
-One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. If that hostname looks familiar, it should; it is exactly the pattern you studied in the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*). That activity explains how everything here works under the hood; this one just puts it to work. When any step below feels like magic, that is the page to reread.
+One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name. The [Docker from Zero tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work. When a step below feels like magic, that is the page to read.
 
 Two ideas carry the whole design:
 
@@ -28,6 +28,37 @@ Two ideas carry the whole design:
 2. **The mount is the only door.** The container can see exactly one directory of your machine: the workspace you mount into it. For a course where you *run agent code that takes actions*, that boundary is not a nicety; it is the blast-radius principle, enforced by architecture.
 
 Work through the steps in order. Each practice step shows the command *and* the output you should expect. If Docker cannot run on your machine, Step 10 (the native fallback) is a complete, fully supported route.
+
+---
+
+## Directions and Group Roles
+
+Today is a hands-on build day rather than a discussion, so the POGIL roles work a little differently. Keep them, and rotate them at Step 5.
+
+- **Manager**: keeps the build moving and makes the call to skip ahead. Nobody should be stuck on one step while the room moves on; a blocked machine goes to the native route in Step 10 and catches up later.
+- **Recorder**: logs every command and every error *verbatim*, including the ones that got fixed. That log is most of what the Overview assignment asks you to submit, and a transcript reconstructed from memory is worth much less than one captured as it happened.
+- **Presenter**: at the end, demos the team's working stack, including the coding-agent run in Step 8, and reports the one thing that took longest.
+- **Reflector**: watches for friction the rest of the team stops noticing, and notes which failures were *environment* problems versus *instruction* problems. That distinction is worth more than it sounds.
+
+Help each other. This session is graded through the Overview assignment, not through who finishes first, and an install that fails in an interesting way is a better class artifact than one that just works.
+
+---
+
+## Key Concepts
+
+Step 0 defines the shell vocabulary. These are the terms the rest of the page assumes.
+
+| Term | Plain-English Definition | Where You'll Meet It |
+|------|--------------------------|----------------------|
+| **Image** | A frozen, read-only snapshot of an entire environment: an operating system, the installed packages, the settings. Built once from a recipe, then reused | The course image, built from the `Dockerfile` in Step 4. Everyone's is byte-for-byte identical, which is the point |
+| **Container** | A running instance of an image, isolated from the rest of your machine. Disposable: deleting one costs you nothing, because the image can make another | What you enter at Step 4 and leave with `exit`. `--rm` deletes it on the way out |
+| **Mount** | A directory of your real machine deliberately made visible inside the container. The container sees nothing else of yours | `/workspace`, which *is* your `cs357-work` folder. The one door in an otherwise closed box |
+| **Host** | Your actual machine, as seen from inside a container. Worth naming because inside the container, `localhost` means the container, not you | `host.docker.internal`, the address your containerized code uses to reach Ollama running natively |
+| **Repository (repo)** | A folder whose entire history git tracks, so any past state can be restored and any change can be undone | `cs357-work`, created in Step 3 and pushed to GitHub in Step 7 |
+| **Commit** | A saved point in that history, with a message saying what changed and why | Step 7.4. Commit at every working stopping point, not at the end of the day |
+| **Coding agent** | A program that takes a goal in plain English, reads your files, proposes edits and commands, and loops until it is done or you stop it. The agent loop from *The Agent Loop*, pointed at your file system | `opencode`, installed in Step 8 and given one small job |
+| **Diff** | The exact lines added and removed by a change, shown side by side. What you review instead of re-reading the whole file | `git diff` after the agent edits `hello_agent.py`. Reading this is the skill, not a formality |
+| **`AGENTS.md`** | A file of standing instructions an agent reads automatically, so you stop retyping context. A system prompt you keep in version control | Written in Step 8.4, and grown for the rest of the semester |
 
 ---
 

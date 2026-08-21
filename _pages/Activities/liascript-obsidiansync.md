@@ -527,7 +527,7 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 
 ---
 
-## Key Terms
+## Key Concepts
 
 | Term | Definition |
 |------|------------|
