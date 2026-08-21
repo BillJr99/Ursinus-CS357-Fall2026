@@ -474,6 +474,38 @@ git add AGENTS.md hello_agent.py && git commit -m "First coding-agent session"
 
 That file is a **system prompt you keep in version control**. The connection is exact: the `SYSTEM` string in the *Agent Loop* activity told a calculator agent what its job was and how to format its answers; `AGENTS.md` tells a coding agent what your project is and what "good work" means in it. You will refine it all semester.
 
+### 8.5: Three Properties to Insist On
+
+Look back at what just happened. You gave a program permission to change files on your computer, and it did. The reason that was a reasonable thing to do is not that you trusted the model. It is that the bench you built in Steps 1 through 7 gives you three specific properties, and they are the vocabulary for the rest of this course.
+
+| Property | The question it answers | What gave it to you today | What its absence looks like |
+|---|---|---|---|
+| **Observability** | *What did it actually do?* | The proposed diff before the change, then `git diff` after it | An agent that reports "done, I fixed the bug" and you have no independent way to check |
+| **Isolation** | *What could it have reached?* | The container: one mount, `/workspace`, and nothing else of yours | An agent running on your host with your credentials, one bad path away from your documents |
+| **Reversibility** | *Can I undo it?* | `git checkout .`, because you started from a clean tree | An afternoon's work quietly overwritten with no version history to restore from |
+
+Three things worth noticing about that table.
+
+**They are independent.** You can have any two without the third, and each combination fails differently. Observability without reversibility means you get to watch the damage in detail. Isolation without observability means the agent can only wreck the sandbox, but you will not know what it did in there or why the result is wrong. Reversibility without isolation means you can restore the repository and not the credential that leaked out of it.
+
+**None of them come from the model.** They are properties of the *environment* you put the model in. A more capable model does not give you any of the three, and a less capable one does not take them away. This is why we spent a session on the bench before we spent one on the agent.
+
+**They are what "trust" actually decomposes into.** When someone asks whether you would let an agent do X, the useful reply is not yes or no. It is: can I see what it did, can I bound what it touches, and can I put it back?
+
+You will meet all three again, made much more serious: **observability** as tracing and structured logs in the evaluation labs, **isolation** as non-root containers, read-only mounts, and OAuth scopes in the Local Agent Lab's containerization and MCP directions, and **reversibility** as branch discipline, rollback, and the governance question of who is accountable when an autonomous system errs.
+
+A student runs a coding agent directly in their home directory, outside any container, on a folder that is not a git repository, and carefully reads every diff before approving it. Which of the three properties do they have?
+
+[( )] All three; reading the diffs covers it
+[(X)] Observability only. Nothing bounds what the agent can reach, and nothing can restore a file it overwrote
+[( )] Observability and reversibility, since they could retype anything lost
+[( )] None; reading a diff is not real observability
+
+    --{{0}}--
+Reading the diff is genuine observability and it is worth something. The trap is believing it is worth everything. Careful review catches a bad change you are shown; it does nothing about a file the agent touched outside the change it described, and it gives you no way back once the write has landed.
+
+---
+
 ### Model: What Did You Just Delegate?
 
 Look back at the session you just ran, with your team.
@@ -510,7 +542,7 @@ Everything after today is this loop:
 >
 > The container is disposable; the workspace is not. And whenever a step above is tedious, `opencode` is sitting in that same container, one `AGENTS.md` better informed than it was yesterday.
 
-Now the *why*, in this course's own terms. Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries. Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week. Inside the course container, the worst any runaway script can touch is `/workspace`; this is the **blast-radius idea** from our containerization-safety discussions, enforced by the mount rather than by hope. And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored. Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
+Now the *why*, in this course's own terms. Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries. Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week. Inside the course container, the worst any runaway script can touch is `/workspace`; that is **isolation** from Step 8.5, enforced by the mount rather than by hope. And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored: that is **reversibility**, and it is the reason the daily loop above insists on committing at every working stopping point rather than at the end. Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
 
 The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace. If the bug survives, it is yours. For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md).
 

@@ -509,7 +509,7 @@ schedule:
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-syntheticdata.md"
 - week: "7"
   date: "1"
-  title: "How I AI: A Vault, a Contract, and Agents That Talk Through GitHub (plus open studio)"
+  title: "How I AI: A Vault, a Charter, and Agents That Talk Through GitHub (plus open studio)"
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-howiai.md"
   deliverables:
   - dtitle: "Project: Intra-Team Check-In (Storming into Norming) Due"
