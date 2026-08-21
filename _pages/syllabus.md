@@ -302,7 +302,7 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 2"
   - rtitle: "Going further, interactive: The Token Prediction Playground, an unplugged in-browser simulator showing what next-token prediction can and cannot do"
-    rlink: "https://www.billmongan.com/Ursinus-CS357/TokenPredictor"
+    rlink: "TokenPredictor"
 - week: "1"
   date: "0"
   title: "Your AI Workbench: Shell, Git, Containers, and Your First Coding Agent"
@@ -382,7 +382,7 @@ schedule:
     rlink: "http://neuralnetworksanddeeplearning.com/"
   - rtitle: "AI by Hand (Yeh): the attention worksheets - today's worked example in Model 3 follows this style"
   - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
-    rlink: "https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
+    rlink: "files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
   - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand. Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md"
   - rtitle: "Going further, synthesis: Anatomy of an LLM Request, one prompt end to end by hand (tokenize, embed, attend, feed-forward, sample, loss, update)"
@@ -816,7 +816,7 @@ This is a course you do, not one you watch. This component values the daily work
 
 - **In-class activities.** Your team rotates the POGIL roles (**Manager, Recorder, Presenter, and Reflector**) so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
 - **Reading responses and discussion.** From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand. These are marked on the schedule.
-- **The student-led Reading Group.** When a classmate leads a [Reading Group](Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it. (Leading a session remains separately available for extra credit.)
+- **The student-led Reading Group.** When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it. (Leading a session remains separately available for extra credit.)
 - **Project-Thread peer review.** The structured **SQR** peer reviews (one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation) that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
 
 The first-week onboarding assignments (the **Overview**, the **Warmup**, and the **Team Formation Survey**) are assessed within this Class Activities and Participation category.

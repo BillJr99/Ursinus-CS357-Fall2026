@@ -105,7 +105,7 @@ This page is the hub for the **Project Thread**: a semester-long, project-based 
 | **Primary Author** | The named team member responsible for drafting and defending one section of a team document. Every student is primary author of at least one section of every team document. | Every team deliverable |
 | **AI-Use Disclosure** | A short statement, attached to every milestone, of what (if anything) was AI-assisted, with what tool, and how the team verified it. | Every milestone submission |
 
-*Dates live in one place.* This page gives the **order** of the milestones; the [course schedule](/) gives the **dates**. When the two ever seem to disagree, the schedule is right.
+*Dates live in one place.* This page gives the **order** of the milestones; the [course schedule]({{ site.baseurl }}/) gives the **dates**. When the two ever seem to disagree, the schedule is right.
 
 ---
 
@@ -131,7 +131,7 @@ This is the longest page in the course and you do not need all of it today. It d
 
 ## The Semester Map
 
-Two views of the same thread: a table for scanning, then a narrative for reading. Every artifact below has its own assignment or activity page; this table is the authoritative *sequence*, and the [course schedule](/) carries the dates.
+Two views of the same thread: a table for scanning, then a narrative for reading. Every artifact below has its own assignment or activity page; this table is the authoritative *sequence*, and the [course schedule]({{ site.baseurl }}/) carries the dates.
 
 | Step | Milestone | What Happens | Where |
 |---|---|---|---|
@@ -161,7 +161,7 @@ Two views of the same thread: a table for scanning, then a narrative for reading
 
 ## Step 1: The Team Formation Survey
 
-This survey is **not in the LMS**: it lives here, on this page. Read the questions below, write your answers, and submit them **individually** to the **Team Formation Survey** assignment in Canvas (a text entry or an uploaded document is fine; there is no form to fill in). Do not email your answers. The [assignment page]({{ site.baseurl }}/Assignments/TeamSurvey) carries the rubric and the reflection prompts; the [course schedule](/) carries the dates.
+This survey is **not in the LMS**: it lives here, on this page. Read the questions below, write your answers, and submit them **individually** to the **Team Formation Survey** assignment in Canvas (a text entry or an uploaded document is fine; there is no form to fill in). Do not email your answers. The [assignment page]({{ site.baseurl }}/Assignments/TeamSurvey) carries the rubric and the reflection prompts; the [course schedule]({{ site.baseurl }}/) carries the dates.
 
 Your answers are the data used to form the standing teams you will work with all semester. Teams are *homogenized* on logistics (availability windows and deadline styles) while interests and perspectives are allowed to vary, following the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)). You will not self-select teams. Accurate answers serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
