@@ -102,7 +102,7 @@ In this lab, you and your partner will build a question-answering system over a 
 
 ## Before You Start
 
-> **Choose your route first.** [Direction 0, the Langflow route]({{ site.baseurl }}/Assignments/RAGKnowledgeBase/Direction0), is the low-code path through the middle of this lab: it **replaces the coding of core Parts 2-3** with a visual build meeting the same requirements (two chunking configurations compared, recall@k, citations, abstention), for equal credit. Core Part 1 (corpus curation and the datasheet) and core Part 4 (the citation audit by hand) are required on every route, and between them they carry most of the judgment this lab is about. Decide before you install anything.
+> **Choose your route first.** Direction 0, the Langflow route, is the low-code path through the middle of this lab: it **replaces the coding of core Parts 2-3** with a visual build meeting the same requirements (two chunking configurations compared, recall@k, citations, abstention), for equal credit. Core Part 1 (corpus curation and the datasheet) and core Part 4 (the citation audit by hand) are required on every route, and between them they carry most of the judgment this lab is about. Decide before you install anything.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
