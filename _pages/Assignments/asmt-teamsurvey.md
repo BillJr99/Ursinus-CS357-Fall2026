@@ -28,7 +28,7 @@ info:
       proficient: The free-response items are specific and self-aware, the challenges and pet-peeve answers describe real situations rather than abstractions, the "what matters most" answer takes a position, and the whole survey would let a stranger predict what you are like to work with (Goal 13)
   readings:
     - rtitle: "The Project Thread (semester map and team playbook)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread"
+      rlink: "../Projects/PBLThread"
     - rtitle: "CATME Smarter Teamwork: research basis for criteria-based team formation"
       rlink: "https://www.catme.org/"
 
@@ -39,7 +39,7 @@ tags:
 
 ---
 
-This short, individually submitted survey is the first milestone of the [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the second class meeting and due at the following class meeting; teams are announced the session after that. See the [course schedule](/) for the dates.
+This short, individually submitted survey is the first milestone of the [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the second class meeting and due at the following class meeting; teams are announced the session after that. See the [course schedule]({{ site.baseurl }}/) for the dates.
 
 **How teams are formed, full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics: members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict, while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Accurate answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
@@ -114,7 +114,7 @@ This short, individually submitted survey is the first milestone of the [Project
 
 ## Deliverables
 
-- Your completed answers to the questionnaire on the [Project Thread page]({{ site.baseurl }}/Projects/PBLThread#step-1-the-team-formation-survey), submitted individually to this assignment in Canvas (text entry or an uploaded document) by the due date on the [course schedule](/).
+- Your completed answers to the questionnaire on the [Project Thread page]({{ site.baseurl }}/Projects/PBLThread#step-1-the-team-formation-survey), submitted individually to this assignment in Canvas (text entry or an uploaded document) by the due date on the [course schedule]({{ site.baseurl }}/).
 
 ## Reflection Prompts
 

@@ -58,7 +58,7 @@ info:
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md"
+      rlink: "../files/agent-templates/README.md"
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
 
