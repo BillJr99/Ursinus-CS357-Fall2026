@@ -231,7 +231,7 @@ Record your responses to all three levels in your reflection:
 
 ## -> Coming Up Next
 
-The *Explainability and Human-Centric Design* activity is next: how systems earn justified trust from the humans who use them. The carbon analysis you practiced today feeds directly into Written Assignment 3's Direction E, where you quantify and defend the environmental posture of a deployment.
+Next session, *Agentic Case Studies*, is the last new material of the term: migration, browsing, and research agents as they were actually deployed, including what they cost to run. Bring today's numbers to it, because the cheapest design in that session is rarely the one that looks most impressive. The carbon analysis you practiced today feeds directly into Written Assignment 3's Direction E, where you quantify and defend the environmental posture of a deployment.
 
 ## Further Reading
 

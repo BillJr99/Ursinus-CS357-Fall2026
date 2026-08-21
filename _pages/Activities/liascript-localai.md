@@ -318,7 +318,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
--> Coming Up Next: Our models are running, and you have turned your first dial on one. In the *Tool Use and Function Calling* activity we give them structured, machine-readable ways to act on the world, and the local stack you built today is the foundation for the Local Agent Lab. (*Why* the dial in Section 3b behaves the way it does gets its full treatment in the *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity.)
+-> Coming Up Next: Your model is running and you have turned your first dial on it. Next, in *Prompt Engineering as Agent Design*, we work on the other half of the control surface: the words. Bring this stack, because that session edits system prompts against a live model and the temperature slider from Section 3b is one of the things we vary. (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time? Sampling, Temperature, and Generation*.)
 
 ## 6. Further Reading
 

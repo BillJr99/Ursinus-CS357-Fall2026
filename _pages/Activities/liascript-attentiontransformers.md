@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Attention and Transformers, Conceptually and by Hand
 
-The embeddings from the *Tokens and Embeddings: How Agents Represent Meaning* activity give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
+The embeddings from the *Tokens, Embeddings, and Attention* activity give each token a meaning vector, and its Model 3 works one attention step by hand; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
 
 ---
 

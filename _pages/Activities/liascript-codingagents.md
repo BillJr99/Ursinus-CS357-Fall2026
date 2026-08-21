@@ -581,13 +581,11 @@ A coding agent produces an implementation that passes all five acceptance-criter
 
 ---
 
--> Coming Up Next: We will zoom in on one of the most consequential actions a coding agent can take: writing to and reading from the filesystem. The next activity examines how to constrain that access so that a mistake stays recoverable.
-
 ---
 
 ---
 
--> Coming Up Next: You can now delegate a coding task and audit what came back. In *Hallucinations and Evaluating Agent Outputs* we turn the same skeptical eye on a model's *claims* rather than its code, and build the golden set that becomes your regression harness for the rest of the semester. Keep `spec_search_memory.py`; the habit of writing the check before the work is the through-line of the next several weeks.
+-> Coming Up Next: You watched the agent produce a different plan each time you asked, and you pinned `temperature` in Week 1 to stop exactly that. Next session, *Why Different Answers Every Time? Sampling, Temperature, and Generation*, explains where the variation comes from, which is also the reason a schema your parser depends on has to be constrained rather than requested. Keep `spec_search_memory.py`: writing the check before the work is the through-line of the next several weeks.
 
 
 # Part V: Going Further (self-paced)

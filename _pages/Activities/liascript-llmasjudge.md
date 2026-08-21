@@ -221,7 +221,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ---
 
--> Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
+-> Coming Up Next: You just built a machine that assigns grades, and then found the biases in it. Next session, *Training Data and Bias*, follows that thread all the way down: where the judge's preferences came from in the first place, and what it means to deploy a scoring system on people. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
 
 ## Further Reading
 

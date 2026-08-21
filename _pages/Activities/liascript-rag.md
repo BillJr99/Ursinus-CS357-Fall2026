@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Retrieval-Augmented Generation with Chroma
 
-The evaluation harness from the *Hallucinations and Evaluating Agent Outputs* activity showed that local models hallucinate (confidently make up facts) where their training data is thin, and the *Tokens and Embeddings: How Agents Represent Meaning* activity gave us semantic search; **retrieval-augmented generation (RAG)** combines the two, handing the model the right evidence at the right moment. We move from **the open-book insight $\rightarrow$ the RAG pipeline $\rightarrow$ a working pipeline with Chroma and Ollama $\rightarrow$ grounded answers with citations**.
+The evaluation harness from the *Hallucinations and Evaluating Agent Outputs* activity showed that local models hallucinate (confidently make up facts) where their training data is thin, and the *Tokens, Embeddings, and Attention* activity gave us semantic search; **retrieval-augmented generation (RAG)** combines the two, handing the model the right evidence at the right moment. We move from **the open-book insight $\rightarrow$ the RAG pipeline $\rightarrow$ a working pipeline with Chroma and Ollama $\rightarrow$ grounded answers with citations**.
 
 ---
 
