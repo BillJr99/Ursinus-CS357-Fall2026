@@ -34,6 +34,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Step budget | A hard limit on how many loop iterations an agent may take, preventing infinite loops when a goal is never satisfied | `max_steps=5` in the `run_agent` function |
 | Memory (context) | The running list of everything the agent has seen and said so far, passed to the model at each step so it can build on prior work | The `memory` list that grows with each assistant message and observation |
 | Tool | A function in the surrounding program that the agent can invoke by name to interact with the world; the model cannot run code itself | The `eval()` call that executes arithmetic when the model outputs `calc(...)` |
+| System prompt | A block of standing instructions sent ahead of the user's message, setting the agent's job, its output format, and its limits. The user never sees it; the model treats it as the rules of the room | The `SYSTEM` string in Part II, which tells the agent it may call `calc(...)` and exactly how to format `Thought:` / `Action:` lines. Writing good ones is the whole subject of *Prompt Engineering as Agent Design* |
+| Model | The specific trained language model doing the generating, named like a package version. Different models have different sizes, speeds, and habits | `MODEL = "llama3.2"` in the code cell below; you install and run this one yourself in the *Running Your Own AI* activity |
+| Temperature | A setting between 0 and about 2 that controls how much the model varies its wording. Near 0 it picks its single most likely next word every time, so the same prompt gives you nearly the same answer; higher values let it wander. Today you only need to know that **0 means repeatable**; you will turn this dial yourself in *Running Your Own AI* and learn what it is actually doing to the math in *Why Different Answers Every Time? Sampling, Temperature, and Generation* | `temperature=0.0` in `run_agent`, chosen so a trace you record today reproduces tomorrow |
 
 ---
 
@@ -196,9 +199,11 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
    > *Hint: "Perceive" happens when the agent reads something new. "Plan" happens when the language model generates text. "Act" happens when the code calls `eval`. "Remember" happens when something is appended to `memory`.*
 
-2. We set `temperature=0.0` for the agent's reasoning. Why might determinism (getting the same output every time) matter more inside a loop than in open conversation?
+2. Notice the one setting we changed: `temperature=0.0` in `run_agent`, where the helper's default was `0.7`. As the Key Concepts table says, **temperature near 0 makes the model repeat itself**: the same input produces very nearly the same output every run. Higher values let its wording vary.
 
-   > *Hint: If the agent's tool call string changes randomly between runs, what happens to reproducibility? What happens if a malformed tool call lands in the middle of a multi-step chain?*
+   Given only that, why would you want the repeatable setting *inside a loop*, when a chatbot answering one question might be better off varying? Answer in terms of what the surrounding program has to do with the model's text.
+
+   > *Hint: Your code does not read the model's answer the way a person does; it searches for the exact strings `Final Answer:` and `calc(...)`. What happens to that search if the wording drifts between runs? And if step 2's output is garbled, what does step 3 build on?*
 
 3. The `eval` call is sandboxed but still risky. List two ways a confused or adversarial model output could cause harm here, and one mitigation for each.
 
@@ -265,5 +270,4 @@ In this part, you will extend and stress-test the agent you just built (changing
 ## 5. Further Reading
 
 - Shunyu Yao et al. "ReAct: Synergizing Reasoning and Acting in Language Models." *ICLR* (2023). The pattern implemented today.
-- Stuart Russell and Peter Norvig. *Artificial Intelligence: A Modern Approach* (4th ed.), Chapter 2. Agent architectures from simple reflex to utility-based.
 - Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 2.
