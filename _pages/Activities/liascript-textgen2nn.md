@@ -401,7 +401,7 @@ Which statement best captures the "bridge" of Part IV?
 4. *Notebook scale-up.*
 
    - *What to do:* Run [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb) end to end. Find the line(s) implementing the forward pass and annotate (in a Markdown cell) which line corresponds to each row of your Model 2 trace table.
-   - *Starter hint:* Look for a matrix multiplication followed by a ReLU (or similar) function — that is $h = \text{ReLU}(W x + b)$ vectorized. The 2-2-1 structure becomes 784-10-10, but the rows of your trace table map one-to-one onto lines of code.
+   - *Starter hint:* Look for a matrix multiplication followed by a ReLU (or similar) function; that is $h = \text{ReLU}(W x + b)$ vectorized. The 2-2-1 structure becomes 784-10-10, but the rows of your trace table map one-to-one onto lines of code.
    - *You've succeeded when:* Your annotated notebook identifies the pre-activation, activation, and output computations, and the model trains to above 80% accuracy.
 
 ---
@@ -410,7 +410,7 @@ Which statement best captures the "bridge" of Part IV?
 
 *Personal:* Today a "language model" resolved into arithmetic you can do by hand. Did opening the box make the technology feel more trustworthy to you, less, or differently trustworthy? Name one belief about AI you held two weeks ago that a trace table would have corrected.
 
-*Technical:* Where does the randomness enter the generation pipeline, and — just as importantly — where does it NOT? List every stage from Part I's diagram in two columns (deterministic / random), and explain why setting temperature to zero changes the *sampling* column but leaves every weight, embedding, and logit untouched.
+*Technical:* Where does the randomness enter the generation pipeline, and (just as importantly) where does it NOT? List every stage from Part I's diagram in two columns (deterministic / random), and explain why setting temperature to zero changes the *sampling* column but leaves every weight, embedding, and logit untouched.
 
 *Societal:* An embedding is a learned representation, and it is learned from human-written text. If the training text associates certain occupations more often with certain groups of people, where in today's pipeline does that association come to live, and why won't adjusting temperature remove it? (We will measure exactly this in the bias unit.)
 
@@ -418,7 +418,7 @@ Which statement best captures the "bridge" of Part IV?
 
 ## -> Coming Up Next
 
-You can now trace a forward pass and point to where representations live. Next we ask what happens *between* the embedding lookup and the logits at scale: attention, the mechanism that lets every token's vector consult every other token's vector — and later, how those millions of weights get their values in the first place (training).
+You can now trace a forward pass and point to where representations live. Next we ask what happens *between* the embedding lookup and the logits at scale: attention, the mechanism that lets every token's vector consult every other token's vector, and later, how those millions of weights get their values in the first place (training).
 
 ---
 
