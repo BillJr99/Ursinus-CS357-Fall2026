@@ -19,7 +19,7 @@ const { useState, useEffect, useCallback, useRef } = React;
 
 /*
  * ===============================================================
- *  CHESS ENGINE — full FIDE rules, pure logic, zero dependencies
+ *  CHESS ENGINE - full FIDE rules, pure logic, zero dependencies
  * ===============================================================
  */
 
@@ -1031,11 +1031,11 @@ function ChessAICoach() {
   const computerEloColor = computerEloEstimate.elo < 1000 ? "#c06040" : computerEloEstimate.elo < 1400 ? "#c0a040" : computerEloEstimate.elo < 1800 ? "#60a040" : "#40a0c0";
   const whiteCommentaryLog = history
     .filter(entry => entry.side === "w")
-    .map((entry, idx) => `${idx + 1}. ${entry.san} — ${entry.aiCommentary || "(no commentary yet)"}`)
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
     .join("\n\n");
   const blackCommentaryLog = history
     .filter(entry => entry.side === "b")
-    .map((entry, idx) => `${idx + 1}. ${entry.san} — ${entry.aiCommentary || "(no commentary yet)"}`)
+    .map((entry, idx) => `${idx + 1}. ${entry.san} - ${entry.aiCommentary || "(no commentary yet)"}`)
     .join("\n\n");
 
   return (
