@@ -106,7 +106,7 @@ Then pick **one** of the four directions below and carry it out in depth. Each d
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
-**Prep deck for Direction 1.** [Prompt Injection: Attacks and Defenses](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate. Work through it before the warm-up if you are taking the security direction.
+**Prep deck for Direction 1.** [Prompt Injection: Attacks and Defenses]({{ site.activity_url }}liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate. Work through it before the warm-up if you are taking the security direction.
 
 Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like, from both sides of it. This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist. Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
 
@@ -267,7 +267,7 @@ The Responsible AI **lab** and the Responsible AI in Practice **written assignme
 
 **Component 1 - Build (100 points).** The audit, red-team, and mitigation work specified on this page. You produce evidence about a system's behavior.
 
-**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice](https://www.billmongan.com/Ursinus-CS357/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
+**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice]({{ site.baseurl }}/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
 
 Submit both together. The rubric below covers Component 1; the rubric on the Practice page covers Component 2, and the two are averaged into one 200-point grade.
 
@@ -1854,9 +1854,9 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Explainability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md): what explainability means and when it matters
-- [Explainability in Depth Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainabilitydeep.md): SHAP and LIME mechanics
-- [Bias in Data Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md): proxy variables and disparate impact
+- [Explainability Activity]({{ site.activity_url }}liascript-explainability.md): what explainability means and when it matters
+- [Explainability in Depth Activity]({{ site.activity_url }}liascript-explainabilitydeep.md): SHAP and LIME mechanics
+- [Bias in Data Activity]({{ site.activity_url }}liascript-biasdata.md): proxy variables and disparate impact
 
 **Tools to install:**
 

@@ -33,7 +33,7 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 
 **Prerequisite concepts**: complete these before writing any code:
 
-- [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md): the perceive/plan/act/remember cycle
+- [Agent Loop Activity]({{ site.activity_url }}liascript-agentloop.md): the perceive/plan/act/remember cycle
 - The Local Agent Lab, or working familiarity with the Ollama `/api/chat` endpoint and the `requests` library
 
 **Tools to install:**

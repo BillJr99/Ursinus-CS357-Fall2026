@@ -106,8 +106,8 @@ In this lab, you and your partner will build a question-answering system over a 
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [RAG Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md): the index/retrieve/generate pipeline
-- [RAG Quality Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md): recall@k, faithfulness, and abstention
+- [RAG Activity]({{ site.activity_url }}liascript-rag.md): the index/retrieve/generate pipeline
+- [RAG Quality Activity]({{ site.activity_url }}liascript-ragquality.md): recall@k, faithfulness, and abstention
 
 **Tools to install:**
 
@@ -969,7 +969,7 @@ This direction is the low-code route through the heart of the lab. You will buil
 
 **Estimated time: 7-9 hours** (in place of core Parts 2-3, so the lab total stays ≈ 8-10 hours).
 
-Background material: the [Visual Agent Building with Langflow activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
+Background material: the [Visual Agent Building with Langflow activity]({{ site.activity_url }}liascript-visualagents.md), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
 
 #### Part A: Install and Launch Langflow
 
@@ -1747,9 +1747,9 @@ This direction is completed in **pairs using driver/navigator roles**: the drive
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Sampling, Temperature, and Generation Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
-- [Evaluating Agent Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
-- [Multimodal Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md): sending images to local vision models
+- [Sampling, Temperature, and Generation Activity]({{ site.activity_url }}liascript-samplinggeneration.md): stochastic sampling and output distributions
+- [Evaluating Agent Outputs Activity]({{ site.activity_url }}liascript-evaluatingoutputs.md): how to critically assess AI-generated content
+- [Multimodal Agents Activity]({{ site.activity_url }}liascript-multimodalagents.md): sending images to local vision models
 
 **Tools to install:**
 
