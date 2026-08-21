@@ -1,7 +1,7 @@
 # Cold-start kickoff prompt
 #
 # Version: 1  (bump this in-file marker as you refine the prompt; iterate the
-# file through normal Git commits — per the charter's git policy, never by
+# file through normal Git commits, per the charter's git policy, never by
 # creating _v1/_v2 filename variants)
 #
 # Paste into a fresh agent to boot the very first session of a project that

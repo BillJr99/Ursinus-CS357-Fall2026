@@ -1,6 +1,6 @@
 # Known Issues
 
-<!-- Verified defects and constraints only — not suspicions. Each entry gets a stable
+<!-- Verified defects and constraints only, not suspicions. Each entry gets a stable
      ID so session logs and commits can reference it. Record how the issue is currently
      handled, and require re-verification before reapplying an old workaround. -->
 
@@ -8,7 +8,7 @@ No project-specific issues have been verified yet. Populate this file as they ar
 
 <!-- Entry template:
 
-## KI-01 — <short title>
+## KI-01: <short title>
 
 - **Status:** open | mitigated | resolved
 - **Environment:** <where it occurs>

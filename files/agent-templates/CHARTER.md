@@ -14,7 +14,7 @@
 
 Every engineering decision should prioritize, in order:
 
-1. <Highest-ranked value — e.g., Correctness / Preservation / Safety>
+1. <Highest-ranked value, e.g., Correctness / Preservation / Safety>
 2. Reproducibility
 3. Maintainability
 4. Automation
@@ -31,7 +31,7 @@ standing test gate.">
 
 # Long-Term Architecture
 
-<The one durable design idea that survives individual tasks — the seam you refuse to
+<The one durable design idea that survives individual tasks: the seam you refuse to
 blur. Example: "a generic engine plus swappable configuration profiles.">
 
 # Repository Layout
@@ -42,7 +42,7 @@ blur. Example: "a generic engine plus swappable configuration profiles.">
 |-- CHARTER.md             # this file
 |-- .ai/                   # agent handoff state (see .ai/ templates)
 |-- docs/                  # roadmap, decisions, rfcs, build/test guides
-|-- sources/               # IMMUTABLE inputs — never edited, only read
+|-- sources/               # IMMUTABLE inputs - never edited, only read
 `-- work/                  # all development happens here
 ```
 
@@ -90,7 +90,7 @@ Testing infrastructure is part of the project; the project should become increas
 <!-- Milestone 0 is always initialization: scaffolding, docs, and inventory only.
      No feature work. This gate is what makes everything else recoverable. -->
 
-## Milestone 0 — Project Initialization
+## Milestone 0: Project Initialization
 
 Objectives:
 - Create the repository scaffolding, documentation set, and input inventory.
@@ -102,7 +102,7 @@ Success Criteria: a new agent reading only this repository can state the mission
 
 **Stop after Milestone 0 is complete. Do not begin Milestone 1 until explicitly directed.**
 
-## Milestone 1 — <Name>
+## Milestone 1: <Name>
 
 Objectives:
 - <objective>

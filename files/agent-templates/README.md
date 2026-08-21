@@ -4,11 +4,11 @@ Copy-paste skeletons for governing AI agents in real, long-running work. These t
 
 > **The repository is the durable memory for the project. Conversation history is not durable project state.**
 
-Every file here exists so that an agent can be reset, swapped for a different agent, or interrupted mid-task — and the *next* agent (or the next you) can continue safely by reading documents instead of remembering conversations.
+Every file here exists so that an agent can be reset, swapped for a different agent, or interrupted mid-task, and the *next* agent (or the next you) can continue safely by reading documents instead of remembering conversations.
 
 ## Two layers
 
-**Layer 1 — Project governance** (for coding agents working on a repository):
+**Layer 1: Project governance** (for coding agents working on a repository):
 
 | Template | Deploy as | Role |
 |---|---|---|
@@ -24,7 +24,7 @@ Every file here exists so that an agent can be reset, swapped for a different ag
 | `RFC-template.md` | `/docs/rfcs/0000-template.md` | Proposal / design record |
 | `DECISION_LOG.md` | `/docs/DECISION_LOG.md` | Running record of decisions, rationale, and alternatives |
 
-**Layer 2 — Personal assistant governance** (for a standing agent with tool access to your life/work systems):
+**Layer 2: Personal assistant governance** (for a standing agent with tool access to your life/work systems):
 
 | Template | Deploy as | Role |
 |---|---|---|
@@ -38,7 +38,7 @@ The `ai/` folder here is deployed as `.ai/` in your repository (it is unhidden i
 ## How to adopt
 
 1. Copy the layer you need into your repository or vault.
-2. Replace every `<angle-bracket placeholder>` with your project's reality. Delete sections that do not apply — a rule nobody enforces is worse than no rule.
+2. Replace every `<angle-bracket placeholder>` with your project's reality. Delete sections that do not apply; a rule nobody enforces is worse than no rule.
 3. Point your agent at `START_HERE.md` (projects) or `AGENTS.md` (vaults) as its first read, every session.
 4. Keep the documents current: **updating these files is part of every task, not an afterthought.**
 
