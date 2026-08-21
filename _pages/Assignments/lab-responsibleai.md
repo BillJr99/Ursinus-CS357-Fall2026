@@ -75,7 +75,7 @@ info:
     - rtitle: "Bias in Data Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
     - rtitle: "Responsible AI in Practice Assignment (Model Cards and Datasheets direction)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAIPractice"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/ResponsibleAIPractice"
 
 tags:
   - security
@@ -267,7 +267,7 @@ The Responsible AI **lab** and the Responsible AI in Practice **written assignme
 
 **Component 1 - Build (100 points).** The audit, red-team, and mitigation work specified on this page. You produce evidence about a system's behavior.
 
-**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
+**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice](https://www.billmongan.com/Ursinus-CS357/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
 
 Submit both together. The rubric below covers Component 1; the rubric on the Practice page covers Component 2, and the two are averaged into one 200-point grade.
 

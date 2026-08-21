@@ -18,8 +18,6 @@ So far the model has been a box you send text to. Today we open it, and we open 
 
 Three ideas, each built on the one before it: **tokens** (how text is cut into pieces a model can read), **embeddings** (how a piece of text becomes a point in space, so that closeness means similarity), and **attention** (how a token's meaning is adjusted by the tokens around it, which is what makes a modern language model modern). We do all three with arithmetic small enough to check by hand, then use the result to build a working search engine in twenty lines.
 
-Bring the printed *Neural Network by Hand* worksheet, or a tablet you can write on.
-
 ---
 
 ## Directions and Group Roles
@@ -41,6 +39,24 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Attention** | The mechanism that lets each token's meaning be adjusted by the tokens around it, instead of being fixed by a lookup table. Each token asks every other token "how relevant are you to me?" and blends in a share of their meaning accordingly | Section 2b: watching the vector for "bank" move toward the financial sense when "loan" is standing next to it |
 | **Query, key, value** | The three roles every token plays in attention. The **query** is what this token is looking for, the **key** is what it offers as a match, and the **value** is the content it contributes if it is selected. A library search: your search term, the index cards, and the books | The three columns of the toy table in Model 3 |
 | **Transformer** | The neural-network architecture that stacks attention many times over, and the thing the "T" in GPT stands for. Every model you have talked to this semester is one | The thing the by-hand arithmetic in Section 2b does once and a real model does billions of times a second |
+
+---
+
+## How Today Runs
+
+This is the densest session of the term, and saying so is more useful than pretending otherwise. Three ideas, each built on the one before it, each worked by hand before any code runs.
+
+| | What you do | Roughly |
+|---|---|---|
+| **Part I** | Cut text into tokens by hand with real merge rules, then check yourself against a real tokenizer | 20 min |
+| **&sect;2 and Model 2** | Turn meaning into geometry, and compute cosine similarity on paper | 15 min |
+| **&sect;2b and Model 3** | The idea attention exists to solve, then one full attention step by hand | 25 min |
+| **Part II** | A twenty-line semantic search engine, and probing where it fails | 15 min |
+| **Part III** | Exercises and reflection | take-home |
+
+**If the room runs long, Part II is the part to finish on your own.** It is the least by-hand of the four and the most self-explanatory from the code, and its questions are answerable from a run you do at home. **Do not skip Model 3.** Everything after this session that involves a language model rests on the arithmetic in it, and it is the one piece you will not reconstruct from reading later.
+
+Bring the printed *Neural Network by Hand* worksheet, or a tablet you can write on.
 
 ---
 
@@ -421,7 +437,7 @@ The geometry itself returns in *Retrieval-Augmented Generation with Chroma*, whe
 
 ## 5. Further Reading
 
-- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
+- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
 - Tom Yeh. *AI by Hand*, embedding and dot-product worksheets.
 - Jay Alammar. "The Illustrated Word2Vec" (online). A visual introduction to embedding geometry.
 - Reimers and Gurevych. "Sentence-BERT." *EMNLP* (2019). How sentence-level embeddings are trained.

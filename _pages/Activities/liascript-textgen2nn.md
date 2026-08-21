@@ -161,7 +161,7 @@ In this Part you will compute every number in a tiny neural network (two inputs,
 
 ## 2. The Tiny Network
 
-**Why this matters:** "The model computed logits" is only meaningful if you know what computing means here: multiply inputs by weights, add a bias, apply a non-linearity, repeat per layer. Doing it by hand once (every multiplication visible) is the difference between believing this and knowing it. The extended by-hand practice for this skill (a full network fitting a quadratic, with more neurons and a backward pass) is on the printable worksheet: [Neural Network by Hand worksheet (PDF)](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
+**Why this matters:** "The model computed logits" is only meaningful if you know what computing means here: multiply inputs by weights, add a bias, apply a non-linearity, repeat per layer. Doing it by hand once (every multiplication visible) is the difference between believing this and knowing it. The extended by-hand practice for this skill (a full network fitting a quadratic, with more neurons and a backward pass) is on the printable worksheet: [Neural Network by Hand worksheet (PDF)](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
 
 Here is the network, in both picture and formula form (two representations of one object; check each against the other):
 
@@ -261,7 +261,7 @@ for x in [(1.0, 2.0), (2.0, 1.0), (0.0, 0.0)]:
 
 If any line disagrees with your hand trace, find the first row where they diverge; that row contains the arithmetic slip. This is exactly how you will debug real models later: compare expected and actual values layer by layer, top to bottom.
 
-For extended by-hand practice (a wider network approximating $y = x^2$, including the training (backward) pass) work through the printable worksheet: [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
+For extended by-hand practice (a wider network approximating $y = x^2$, including the training (backward) pass) work through the printable worksheet: [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
 
 ---
 
@@ -326,10 +326,10 @@ print("wrote tiny_net_viz.png -- open it and compare each cell to your trace tab
 
 Hands-on follow-ups (each opens in Google Colab; run top to bottom and watch the loss curves and weight visualizations evolve):
 
-- [LinearFunctionEstimatorNN.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/LinearFunctionEstimatorNN.ipynb), a single neuron learns a line; watch the weight and bias converge.
-- [LinearFunctionEstimatorMultiLayerNN.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/LinearFunctionEstimatorMultiLayerNN.ipynb), the same task with a hidden layer, like today's 2-2-1 network.
-- [NonLinearFunctionEstimatorMultiLayerNN.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/NonLinearFunctionEstimatorMultiLayerNN.ipynb), why the hidden layer plus ReLU matters: fitting a curve a single neuron cannot.
-- [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb), the same forward-pass arithmetic, scaled to 784 inputs, recognizing handwritten digits with no ML library.
+- [LinearFunctionEstimatorNN.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/LinearFunctionEstimatorNN.ipynb), a single neuron learns a line; watch the weight and bias converge.
+- [LinearFunctionEstimatorMultiLayerNN.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/LinearFunctionEstimatorMultiLayerNN.ipynb), the same task with a hidden layer, like today's 2-2-1 network.
+- [NonLinearFunctionEstimatorMultiLayerNN.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/NonLinearFunctionEstimatorMultiLayerNN.ipynb), why the hidden layer plus ReLU matters: fitting a curve a single neuron cannot.
+- [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb), the same forward-pass arithmetic, scaled to 784 inputs, recognizing handwritten digits with no ML library.
 
 ---
 
@@ -382,7 +382,7 @@ Which statement best captures the "bridge" of Part IV?
 
 1. *Complete forward-pass practice.*
 
-   - *What to do:* Work at least the first forward-pass problem of the printable worksheet [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) by hand, showing a trace table in exactly the Model 2 format. Then adapt today's code cell to verify it.
+   - *What to do:* Work at least the first forward-pass problem of the printable worksheet [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) by hand, showing a trace table in exactly the Model 2 format. Then adapt today's code cell to verify it.
    - *Starter hint:* Copy the `forward` function and replace `W1`, `b1`, `V`, and `c` with the worksheet's values; add a loop over the worksheet's inputs.
    - *You've succeeded when:* Every row of your hand table matches the printed verification to two decimal places, and any discrepancy you found is annotated with the arithmetic slip that caused it.
 
@@ -400,7 +400,7 @@ Which statement best captures the "bridge" of Part IV?
 
 4. *Notebook scale-up.*
 
-   - *What to do:* Run [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb) end to end. Find the line(s) implementing the forward pass and annotate (in a Markdown cell) which line corresponds to each row of your Model 2 trace table.
+   - *What to do:* Run [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb) end to end. Find the line(s) implementing the forward pass and annotate (in a Markdown cell) which line corresponds to each row of your Model 2 trace table.
    - *Starter hint:* Look for a matrix multiplication followed by a ReLU (or similar) function; that is $h = \text{ReLU}(W x + b)$ vectorized. The 2-2-1 structure becomes 784-10-10, but the rows of your trace table map one-to-one onto lines of code.
    - *You've succeeded when:* Your annotated notebook identifies the pre-activation, activation, and output computations, and the model trains to above 80% accuracy.
 
