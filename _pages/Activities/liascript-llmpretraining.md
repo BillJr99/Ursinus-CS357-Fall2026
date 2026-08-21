@@ -308,7 +308,7 @@ for t in range(1, min(11, len(tokens))):
 
 print()
 print("=== STUDENT EXERCISES ===")
-print("1. The frequency model does NOT use the context — it just uses global token frequency.")
+print("1. The frequency model does NOT use the context; it just uses global token frequency.")
 print("   A real LM would use context. How would 'the' in 'on the' vs 'sat the' differ?")
 print()
 print("2. Modify the corpus string above and re-run. How does a repeated pattern")
@@ -324,9 +324,9 @@ print("   correct token. What is -log(1.0)? What is e^0? What does perfect perpl
 
 ### Critical Thinking Questions
 
-**Q8.** In the code output, the "frequency model" achieves lower loss than the "uniform model" even though neither model uses the actual preceding context. What does this tell you about what a language model learns in the very early stages of pre-training — before it has learned any syntax or semantics — just from the token frequency distribution?
+**Q8.** In the code output, the "frequency model" achieves lower loss than the "uniform model" even though neither model uses the actual preceding context. What does this tell you about what a language model learns in the very early stages of pre-training (before it has learned any syntax or semantics) just from the token frequency distribution?
 
-> *Hint: The frequency model is essentially learning "some characters appear more often than others" — the unigram distribution of the language. This alone gives lower perplexity than random. Real language models progress through stages: first they learn unigram frequencies (the most common characters/words), then bigram patterns (common two-token sequences), then longer-range dependencies (grammar, facts, reasoning). Each stage corresponds to a reduction in training loss.*
+> *Hint: The frequency model is essentially learning "some characters appear more often than others", the unigram distribution of the language. This alone gives lower perplexity than random. Real language models progress through stages: first they learn unigram frequencies (the most common characters/words), then bigram patterns (common two-token sequences), then longer-range dependencies (grammar, facts, reasoning). Each stage corresponds to a reduction in training loss.*
 
 **Q9.** A student runs the code on a corpus consisting entirely of the repeated string "ababababab". Predict (without running it): what perplexity does the frequency model achieve on this corpus, and what perplexity would a perfect context-aware model achieve? What is the ratio?
 
@@ -334,36 +334,36 @@ print("   correct token. What is -log(1.0)? What is e^0? What does perfect perpl
 
 **Q10.** The training loss computed by the code is an average over all positions in the sequence. During actual LLM pre-training on trillions of tokens, the gradient of this loss with respect to model weights is computed and used to update the weights. What would you expect to observe if you plotted training loss vs. training step for a real LLM? Specifically, where does the loss decrease fastest, where does it plateau, and what does "overfitting" look like for a model trained on a fixed dataset?
 
-> *Hint: Loss decreases rapidly at first as the model learns basic patterns (token frequencies, common bigrams), then more slowly as it learns grammar and common phrases, then very slowly as it learns rare facts and precise reasoning. Overfitting looks like: training loss continues decreasing while validation loss (on held-out text) stops decreasing or increases. For LLMs trained on datasets of hundreds of billions of tokens, overfitting is rare — the model never sees each example more than once.*
+> *Hint: Loss decreases rapidly at first as the model learns basic patterns (token frequencies, common bigrams), then more slowly as it learns grammar and common phrases, then very slowly as it learns rare facts and precise reasoning. Overfitting looks like: training loss continues decreasing while validation loss (on held-out text) stops decreasing or increases. For LLMs trained on datasets of hundreds of billions of tokens, overfitting is rare; the model never sees each example more than once.*
 
 **Which of the following is the pre-training objective used by GPT-style (autoregressive) language models like GPT-4 and LLaMA?**
 
-[( )] Masked Language Modeling — randomly masking 15% of tokens and predicting them from bidirectional context
-[( )] Sequence-to-sequence with encoder-decoder attention — mapping an input sentence to an output sentence
-[(X)] Causal Language Modeling — predicting the next token given all previous tokens, with a causal attention mask preventing access to future positions
-[( )] Contrastive learning — training the model to assign similar embeddings to semantically related text pairs
+[( )] Masked Language Modeling, randomly masking 15% of tokens and predicting them from bidirectional context
+[( )] Sequence-to-sequence with encoder-decoder attention, mapping an input sentence to an output sentence
+[(X)] Causal Language Modeling, predicting the next token given all previous tokens, with a causal attention mask preventing access to future positions
+[( )] Contrastive learning, training the model to assign similar embeddings to semantically related text pairs
 
 ---
 
 ## 4. Chinchilla Scaling Laws and Quantization
 
-**Why this matters:** The decision of how large a model to train and how much data to train it on is one of the most consequential engineering decisions in LLM development — it determines cost, capability, and deployment requirements. Chinchilla scaling laws give a principled answer to "how much data per parameter?" And quantization determines whether the resulting model can run on your hardware at all. Both topics directly affect practical choices you will make when selecting or deploying models for course projects.
+**Why this matters:** The decision of how large a model to train and how much data to train it on is one of the most consequential engineering decisions in LLM development; it determines cost, capability, and deployment requirements. Chinchilla scaling laws give a principled answer to "how much data per parameter?" And quantization determines whether the resulting model can run on your hardware at all. Both topics directly affect practical choices you will make when selecting or deploying models for course projects.
 
 **Chinchilla Scaling Laws.** In 2022, DeepMind published a landmark study (Hoffmann et al., "Training Compute-Optimal Large Language Models") that found previous large models (including GPT-3) were significantly *undertrained*. The study varied model size and training data volume while holding total compute constant, and found that model performance depends roughly equally on model size $N$ (parameters) and training data $D$ (tokens):
 
 $$N_{\text{optimal}} \approx \frac{C}{2 \cdot 20}$$, $$D_{\text{optimal}} \approx 20 \cdot N$$
 
-where $C$ is the total compute budget. The rule of thumb: **train on approximately 20 tokens of data per model parameter**. A model with 7 billion parameters is "Chinchilla optimal" when trained on roughly 140 billion tokens. GPT-3 (175B parameters) was trained on ~300B tokens — far fewer than the Chinchilla-optimal ~3.5 trillion tokens.
+where $C$ is the total compute budget. The rule of thumb: **train on approximately 20 tokens of data per model parameter**. A model with 7 billion parameters is "Chinchilla optimal" when trained on roughly 140 billion tokens. GPT-3 (175B parameters) was trained on ~300B tokens, far fewer than the Chinchilla-optimal ~3.5 trillion tokens.
 
-The practical implication: many modern open-source models (LLaMA-2, Mistral, Gemma) are trained on 2-6 trillion tokens despite having only 7B-13B parameters — they are intentionally "overtrained" relative to the original Chinchilla formulas, because smaller well-trained models are cheaper to deploy even if training is more expensive.
+The practical implication: many modern open-source models (LLaMA-2, Mistral, Gemma) are trained on 2-6 trillion tokens despite having only 7B-13B parameters; they are intentionally "overtrained" relative to the original Chinchilla formulas, because smaller well-trained models are cheaper to deploy even if training is more expensive.
 
-**Quantization.** Full-precision models store each weight as a 32-bit floating-point number (float32). Running a 70B-parameter model in float32 requires 70B × 4 bytes = 280 GB of GPU memory — far beyond any single consumer GPU (which typically has 8-24 GB). Quantization maps float32 values to lower-precision integers:
+**Quantization.** Full-precision models store each weight as a 32-bit floating-point number (float32). Running a 70B-parameter model in float32 requires 70B × 4 bytes = 280 GB of GPU memory, far beyond any single consumer GPU (which typically has 8-24 GB). Quantization maps float32 values to lower-precision integers:
 
 - **float16 / bfloat16** (16 bits): halves memory; negligible accuracy loss; widely supported
 - **int8** (8 bits): quarters memory; small accuracy loss on most tasks; requires calibration
 - **int4** (4 bits): reduces memory by 8×; more accuracy loss, especially for smaller models; enables running 7B models on laptops
 
-The intuition: float32 can represent values between roughly $-3.4 \times 10^{38}$ and $3.4 \times 10^{38}$ with fine precision. int8 maps this range to just 256 discrete values. For LLM weights, most weight values cluster near zero and vary smoothly — the "rounding" from float32 to int8 or int4 loses precision but usually preserves the relative ordering of weights that matters for model output. The exception: very small models and outlier weights (which exist in larger models) are more sensitive to quantization.
+The intuition: float32 can represent values between roughly $-3.4 \times 10^{38}$ and $3.4 \times 10^{38}$ with fine precision. int8 maps this range to just 256 discrete values. For LLM weights, most weight values cluster near zero and vary smoothly; the "rounding" from float32 to int8 or int4 loses precision but usually preserves the relative ordering of weights that matters for model output. The exception: very small models and outlier weights (which exist in larger models) are more sensitive to quantization.
 
 ---
 
@@ -372,15 +372,15 @@ The intuition: float32 can represent values between roughly $-3.4 \times 10^{38}
 | Situation | Model Parameters | Training Tokens | Chinchilla Verdict | Deployment Format | Reason |
 |-----------|-----------------|-----------------|--------------------|--------------------|--------|
 | Pre-2022 LLMs (GPT-3) | 175B | 300B | Severely undertrained (optimal: ~3.5T tokens) | float16, multi-GPU | Large N, not enough D |
-| LLaMA-3 8B | 8B | 15T | Overtrained for inference efficiency (optimal: ~160B tokens) | int4, single GPU | Small N, massive D — great for deployment |
+| LLaMA-3 8B | 8B | 15T | Overtrained for inference efficiency (optimal: ~160B tokens) | int4, single GPU | Small N, massive D: great for deployment |
 | BERT-base | 110M | 16B | Well-trained for era | float32, CPU feasible | Smaller model, lower data era |
 | Chinchilla (original) | 70B | 1.4T | Exactly optimal | float16, multi-GPU | Reference point for scaling law |
 
 ### Critical Thinking Questions
 
-**Q11.** A research team has a compute budget equivalent to training a 10B-parameter model on 500B tokens. Using the Chinchilla rule of thumb ($D_{\text{optimal}} = 20 \times N$), is this training run compute-optimal? If not, what should they change — reduce model size to fit more training, or increase model size and train on fewer tokens?
+**Q11.** A research team has a compute budget equivalent to training a 10B-parameter model on 500B tokens. Using the Chinchilla rule of thumb ($D_{\text{optimal}} = 20 \times N$), is this training run compute-optimal? If not, what should they change: reduce model size to fit more training, or increase model size and train on fewer tokens?
 
-> *Hint: Chinchilla optimal for 10B parameters requires 10B × 20 = 200B tokens. The team plans to use 500B tokens — they are training on 2.5× more tokens than Chinchilla optimal for this model size. The model is being "overtrained" for Chinchilla optimality, but as the LLaMA example shows, this is often intentional to get a smaller, faster inference model. Alternatively: what size model would be Chinchilla optimal for 500B tokens? $N = 500B / 20 = 25B$ parameters. So a 25B model trained on 500B tokens would be compute-optimal.*
+> *Hint: Chinchilla optimal for 10B parameters requires 10B × 20 = 200B tokens. The team plans to use 500B tokens; they are training on 2.5× more tokens than Chinchilla optimal for this model size. The model is being "overtrained" for Chinchilla optimality, but as the LLaMA example shows, this is often intentional to get a smaller, faster inference model. Alternatively: what size model would be Chinchilla optimal for 500B tokens? $N = 500B / 20 = 25B$ parameters. So a 25B model trained on 500B tokens would be compute-optimal.*
 
 **Q12.** A student wants to run a 13B-parameter model locally on a laptop with 16 GB of unified memory. Calculate the memory required in float32, float16, and int4. Which format(s) fit in 16 GB? State any approximation you use.
 
@@ -388,11 +388,11 @@ The intuition: float32 can represent values between roughly $-3.4 \times 10^{38}
 
 **Q13.** Why do larger models tend to be *more* robust to quantization than smaller models? Hint: consider what happens to the relative importance of any single weight when there are 70B weights versus 7B weights.
 
-> *Hint: In a 70B-parameter model, each individual weight has a smaller fractional influence on the output — the computation is distributed across many more parameters. Rounding a weight from its float32 value to the nearest int4 value introduces absolute error of at most $\approx \Delta/2$ where $\Delta$ is the quantization step size, but the relative effect on the output scales with $1/N$. Additionally, redundancy in large models means the network can "compensate" for rounding errors in some weights using other weights. Tiny models (1B-3B) have less redundancy and are more sensitive to quantization-induced errors.*
+> *Hint: In a 70B-parameter model, each individual weight has a smaller fractional influence on the output; the computation is distributed across many more parameters. Rounding a weight from its float32 value to the nearest int4 value introduces absolute error of at most $\approx \Delta/2$ where $\Delta$ is the quantization step size, but the relative effect on the output scales with $1/N$. Additionally, redundancy in large models means the network can "compensate" for rounding errors in some weights using other weights. Tiny models (1B-3B) have less redundancy and are more sensitive to quantization-induced errors.*
 
 ---
 
-# Part III: Synthesis — Connecting Tokenization, Pre-Training, and Scaling to Course Concepts
+# Part III: Synthesis - Connecting Tokenization, Pre-Training, and Scaling to Course Concepts
 
 In this part, you will apply the technical concepts from Parts I and II to concrete decisions you will face when building AI applications: how tokenization affects RAG chunk sizing, how scaling laws inform the choice between hosted and local models, and how quantization changes the accessibility of LLMs across hardware tiers. These connections bridge the "how LLMs are built" material to the "how to use them wisely" practice that runs throughout this course.
 
@@ -402,23 +402,23 @@ In this part, you will apply the technical concepts from Parts I and II to concr
 
 *What to do:* In RAG (Retrieval-Augmented Generation), a document is split into chunks, each chunk is embedded, and the most relevant chunks are retrieved for each query. Tokenization directly affects optimal chunk size and retrieval quality. Your task: (a) using the rule of thumb that 1 token ≈ 4 characters ≈ 0.75 words, estimate the token count for a chunk of 512 characters. (b) A RAG system is configured with a chunk size of 512 characters. Describe one failure mode caused by splitting on character count (rather than token count or sentence boundaries). (c) Explain how tokenizer behavior for a non-English language (e.g., Chinese characters, which have no spaces) affects the choice of chunk size for a multilingual RAG system. (d) Propose a chunking strategy that is robust to these issues.
 
-*Starter hint:* For (a): 512 characters / 4 characters per token ≈ 128 tokens per chunk. For (b): splitting at exactly 512 characters might split a sentence in the middle of a word, producing a broken token at the chunk boundary that gets a different embedding than it would have in complete context. For (c): Chinese text has no spaces, so character count is a poor proxy for semantic content — a 512-character Chinese chunk might contain 512 complete words, while a 512-character English chunk contains ~85 words. For (d): consider splitting on sentence boundaries detected by a tokenizer-aware splitter, with a maximum token count rather than character count.
+*Starter hint:* For (a): 512 characters / 4 characters per token ≈ 128 tokens per chunk. For (b): splitting at exactly 512 characters might split a sentence in the middle of a word, producing a broken token at the chunk boundary that gets a different embedding than it would have in complete context. For (c): Chinese text has no spaces, so character count is a poor proxy for semantic content; a 512-character Chinese chunk might contain 512 complete words, while a 512-character English chunk contains ~85 words. For (d): consider splitting on sentence boundaries detected by a tokenizer-aware splitter, with a maximum token count rather than character count.
 
 *You've succeeded when:* Your answer gives a numerical token estimate for (a), identifies a specific downstream effect on retrieval quality for (b), explains the specific mechanism by which non-English tokenization differs for (c), and proposes a chunking strategy for (d) that names a specific splitting strategy (not just "split better") and explains which tokenization failure mode it addresses.
 
 **2. Scaling Laws and the Hosted vs. Local Model Decision**
 
-*What to do:* You are advising a small nonprofit that wants to deploy an AI assistant to help with grant writing. They have a budget of $200/month for API costs and one developer with a laptop (16 GB RAM). Using Chinchilla scaling intuition and quantization knowledge from this activity, walk through the following: (a) what does the Chinchilla result imply about the relative capability of a 7B model trained on 2T tokens versus a 70B model trained on 200B tokens — which should perform better on general tasks? (b) if the hosted API option is GPT-4o-mini at $0.15/million input tokens and the local option is a Llama-3-8B model in int4, estimate how many grant-writing queries (average 2,000 input tokens) they can afford per month via API vs. local (unlimited, but constrained by laptop RAM and speed). (c) which option do you recommend and why — what factors beyond raw cost matter for their use case?
+*What to do:* You are advising a small nonprofit that wants to deploy an AI assistant to help with grant writing. They have a budget of $200/month for API costs and one developer with a laptop (16 GB RAM). Using Chinchilla scaling intuition and quantization knowledge from this activity, walk through the following: (a) what does the Chinchilla result imply about the relative capability of a 7B model trained on 2T tokens versus a 70B model trained on 200B tokens, which should perform better on general tasks? (b) if the hosted API option is GPT-4o-mini at $0.15/million input tokens and the local option is a Llama-3-8B model in int4, estimate how many grant-writing queries (average 2,000 input tokens) they can afford per month via API vs. local (unlimited, but constrained by laptop RAM and speed). (c) which option do you recommend and why, what factors beyond raw cost matter for their use case?
 
-*Starter hint:* For (a): Chinchilla says the 7B model trained on 2T tokens (= 285 tokens per parameter) is much better-trained than the 70B model on 200B tokens (= 2.9 tokens per parameter, massively undertrained). For (b): $200 at $0.15/M tokens = 1.33 billion input tokens / 2,000 tokens per query ≈ 665,000 queries — far more than a small nonprofit needs. The local 8B int4 model requires 4 GB, fits in 16 GB RAM, but runs at perhaps 10-30 tokens/second on a laptop CPU — viable for a low-throughput use case. For (c): consider data privacy (grant data may be confidential), reliability (API has uptime guarantees; local requires maintenance), and latency.
+*Starter hint:* For (a): Chinchilla says the 7B model trained on 2T tokens (= 285 tokens per parameter) is much better-trained than the 70B model on 200B tokens (= 2.9 tokens per parameter, massively undertrained). For (b): $200 at $0.15/M tokens = 1.33 billion input tokens / 2,000 tokens per query ≈ 665,000 queries, far more than a small nonprofit needs. The local 8B int4 model requires 4 GB, fits in 16 GB RAM, but runs at perhaps 10-30 tokens/second on a laptop CPU, viable for a low-throughput use case. For (c): consider data privacy (grant data may be confidential), reliability (API has uptime guarantees; local requires maintenance), and latency.
 
 *You've succeeded when:* Your answer includes a correct Chinchilla-based capability comparison for (a), specific numerical estimates with arithmetic shown for (b), and a recommendation for (c) that addresses at least three factors (cost, privacy, reliability, latency, or capability).
 
 **3. Quantization, Accessibility, and AI Equity**
 
-*What to do:* The ability to run LLMs locally depends on hardware — specifically GPU memory and CPU speed. Quantization has dramatically lowered the hardware requirements for running frontier-adjacent models. Analyze the following: (a) a 7B model in float32 requires ~28 GB of VRAM; the same model in int4 requires ~4 GB. What percentage of consumer laptops sold in the past two years can run the float32 version? The int4 version? (Research or estimate based on typical integrated graphics memory.) (b) a researcher in a country with unreliable internet and no access to cloud GPU credits needs to use an LLM for medical literature summarization. What deployment strategy (model size, quantization, pre-training data) would you recommend, and why does the tokenizer choice matter for this use case? (c) a company argues that releasing only quantized open-source models (not float32 weights) is good because it lowers the barrier to use. A critic argues it is bad because it limits what researchers can do with the weights. Adjudicate this debate by identifying one specific research or application capability that requires float32 weights and one that int4 fully enables.
+*What to do:* The ability to run LLMs locally depends on hardware, specifically GPU memory and CPU speed. Quantization has dramatically lowered the hardware requirements for running frontier-adjacent models. Analyze the following: (a) a 7B model in float32 requires ~28 GB of VRAM; the same model in int4 requires ~4 GB. What percentage of consumer laptops sold in the past two years can run the float32 version? The int4 version? (Research or estimate based on typical integrated graphics memory.) (b) a researcher in a country with unreliable internet and no access to cloud GPU credits needs to use an LLM for medical literature summarization. What deployment strategy (model size, quantization, pre-training data) would you recommend, and why does the tokenizer choice matter for this use case? (c) a company argues that releasing only quantized open-source models (not float32 weights) is good because it lowers the barrier to use. A critic argues it is bad because it limits what researchers can do with the weights. Adjudicate this debate by identifying one specific research or application capability that requires float32 weights and one that int4 fully enables.
 
-*Starter hint:* For (a): most consumer laptops with integrated graphics have 0 GB of dedicated VRAM — they use shared system RAM. A MacBook Pro M3 has 16-96 GB of unified memory that can be used for models; a Windows laptop with a dedicated GPU typically has 4-8 GB VRAM, plus system RAM for CPU inference. For (b): consider models with strong multilingual coverage trained on diverse data (e.g., a model with a 250K-vocabulary multilingual tokenizer), and int4 quantization for local inference. For (c): float32 is needed for fine-tuning (gradients need full precision); int4 is sufficient for inference on standard tasks.
+*Starter hint:* For (a): most consumer laptops with integrated graphics have 0 GB of dedicated VRAM; they use shared system RAM. A MacBook Pro M3 has 16-96 GB of unified memory that can be used for models; a Windows laptop with a dedicated GPU typically has 4-8 GB VRAM, plus system RAM for CPU inference. For (b): consider models with strong multilingual coverage trained on diverse data (e.g., a model with a 250K-vocabulary multilingual tokenizer), and int4 quantization for local inference. For (c): float32 is needed for fine-tuning (gradients need full precision); int4 is sufficient for inference on standard tasks.
 
 *You've succeeded when:* Your answer gives a specific (even if estimated) percentage for (a) with a stated assumption about typical hardware, recommends a specific model family or tokenizer property for (b) rather than a generic "multilingual model," and identifies a concrete research capability for the float32 case and a concrete application for the int4 case in (c).
 
@@ -428,15 +428,15 @@ In this part, you will apply the technical concepts from Parts I and II to concr
 
 **Personal:** Think about a text you have written in a language other than English, or a domain with unusual vocabulary (chemistry, legal language, music notation, code). Based on what you now know about BPE and vocabulary building from web text, predict how a standard English-trained LLM would likely tokenize a sentence from that domain. Would the tokenization be efficient (few tokens per word) or inefficient (many tokens per word)? What does this predict about that LLM's performance on tasks in that domain?
 
-**Technical:** The cross-entropy loss function treats every token position equally — predicting "the" correctly at position 47 earns the same reward as predicting a rare technical term correctly at position 48. Some researchers argue that LLMs should be trained with higher loss weights on informative tokens (named entities, numbers, domain terms) and lower weights on common function words. In your notebook: design a simple re-weighting scheme — how would you decide which tokens are "more important," and what training challenges would your scheme introduce?
+**Technical:** The cross-entropy loss function treats every token position equally: predicting "the" correctly at position 47 earns the same reward as predicting a rare technical term correctly at position 48. Some researchers argue that LLMs should be trained with higher loss weights on informative tokens (named entities, numbers, domain terms) and lower weights on common function words. In your notebook: design a simple re-weighting scheme: how would you decide which tokens are "more important," and what training challenges would your scheme introduce?
 
-**Societal:** The Chinchilla scaling laws imply that models trained on more data are more capable. Most of that data comes from the internet — disproportionately English, disproportionately from wealthy countries, and disproportionately from text-producing activities (social media, news, academia) rather than from oral traditions, local languages, or under-resourced communities. Who benefits most from the capabilities unlocked by Chinchilla-scale training, and who is most likely to receive worse model performance due to being underrepresented in the training corpus? What would a training data collection strategy that took equity seriously look like?
+**Societal:** The Chinchilla scaling laws imply that models trained on more data are more capable. Most of that data comes from the internet: disproportionately English, disproportionately from wealthy countries, and disproportionately from text-producing activities (social media, news, academia) rather than from oral traditions, local languages, or under-resourced communities. Who benefits most from the capabilities unlocked by Chinchilla-scale training, and who is most likely to receive worse model performance due to being underrepresented in the training corpus? What would a training data collection strategy that took equity seriously look like?
 
 ---
 
 ## -> Coming Up Next
 
-In the next activity we look inside the transformer itself — how the attention mechanism learns to route information between tokens, why deeper models learn different things than shallower ones, and how the architecture choices made during pre-training shape which capabilities emerge and which remain out of reach.
+In the next activity we look inside the transformer itself: how the attention mechanism learns to route information between tokens, why deeper models learn different things than shallower ones, and how the architecture choices made during pre-training shape which capabilities emerge and which remain out of reach.
 
 ---
 

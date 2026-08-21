@@ -35,7 +35,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Tool Discovery** | The ability of an agent to ask a server at runtime "what can you do?" rather than having the tool list hard-coded in the agent's source code. | `requests.get("http://localhost:8765/tools/list")` returns the current tool menu dynamically. |
 | **JSON-RPC** | A protocol for making remote function calls by sending JSON messages. MCP's full specification is built on top of JSON-RPC. | `{"method": "tools/call", "params": {"name": "hours", "arguments": {"facility": "library"}}}` |
 | **OAuth 2.0** | An authorization standard that lets a user grant an app limited, revocable access to their account on another service without sharing their password; the app receives a scoped token instead. | Clicking "Allow this app to read my Google Calendar" issues a token, not your password. |
-| **No-code automation / connector** | A platform that builds service-to-service workflows by configuring pre-built "connectors" — each wrapping a service's OAuth/REST API — instead of writing integration code. | Power Automate, Zapier, Make, and IFTTT expose Google, Asana, and hundreds of services as ready-made connectors. |
+| **No-code automation / connector** | A platform that builds service-to-service workflows by configuring pre-built "connectors" (each wrapping a service's OAuth/REST API) instead of writing integration code. | Power Automate, Zapier, Make, and IFTTT expose Google, Asana, and hundreds of services as ready-made connectors. |
 
 ---
 
@@ -43,31 +43,31 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## Warm-Up: The Services You Already Use
 
-Before we study the integration problem in the abstract, make it personal. As a team, brainstorm the online services and apps each of you relies on in a typical week — email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
+Before we study the integration problem in the abstract, make it personal. As a team, brainstorm the online services and apps each of you relies on in a typical week: email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
 
 For every service someone names, ask the question this entire unit turns on: **could an agent reach it, and how?** Investigate whether each service exposes:
 
-- an **MCP server** — an agent can discover and call its tools directly through the protocol we study today;
-- an **OAuth 2.0 / REST API** — an agent can call it over HTTP with the user's delegated, revocable permission; or
-- **neither** — no public programmatic access, so a human (or brittle screen-scraping) is the only way in.
+- an **MCP server**, an agent can discover and call its tools directly through the protocol we study today;
+- an **OAuth 2.0 / REST API**, an agent can call it over HTTP with the user's delegated, revocable permission; or
+- **neither**, no public programmatic access, so a human (or brittle screen-scraping) is the only way in.
 
-Look each service up rather than guessing — the answer keeps changing as vendors ship new APIs and MCP servers. A few examples to prime the conversation:
+Look each service up rather than guessing; the answer keeps changing as vendors ship new APIs and MCP servers. A few examples to prime the conversation:
 
 | Service | What people use it for | Programmatic access to investigate |
 |---|---|---|
 | **Google** (Gmail, Calendar, Drive) | Email, scheduling, documents, storage | Mature OAuth 2.0 REST APIs per product; a fast-growing set of MCP servers wraps them |
 | **Asana** | Team task and project tracking | Documented OAuth 2.0 REST API for tasks and projects; MCP servers are available |
-| **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API — a good example of a service that is *not* openly agent-reachable, where access means unofficial scraping or a third-party data aggregator |
+| **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API, a good example of a service that is *not* openly agent-reachable, where access means unofficial scraping or a third-party data aggregator |
 
 [[___ List 3-5 services your team uses. For each, mark MCP? / OAuth-REST? / neither, and note how you found out. ___]]
 
-> **Talking point:** A pattern is already forming. Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all. That split — a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks — is exactly the fragmentation the rest of this activity is about. Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
+> **Talking point:** A pattern is already forming. Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all. That split (a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks) is exactly the fragmentation the rest of this activity is about. Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
 
 ---
 
 ## 1. APIs, Then the N-by-M Problem
 
-In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol — a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
+In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol, a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
 
 **Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client — any agent application anywhere — can use it. Integration cost drops from multiplicative to additive.
 
