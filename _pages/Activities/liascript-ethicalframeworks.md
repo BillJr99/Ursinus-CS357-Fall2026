@@ -155,17 +155,17 @@ The Code clauses pointed to specific engineering choices; Part III takes that id
 
 # Part III: Minimal Footprint, Alignment, and Corrigibility
 
-In this part, you will compare two agent design philosophies — minimal footprint versus maximum capability — and see how corrigibility (the property of being correctable by humans) is an engineering constraint, not just an aspiration.
+In this part, you will compare two agent design philosophies (minimal footprint versus maximum capability) and see how corrigibility (the property of being correctable by humans) is an engineering constraint, not just an aspiration.
 
 ## 3. The Architecture of a Well-Behaved Agent
 
-The minimal footprint principle is not a limitation on what you can build — it is a design specification for how you build it. A minimal-footprint agent can do everything a maximum-capability agent does; it just does it with the least possible autonomy, the narrowest necessary permissions, and the most reversible possible actions. That is not a constraint on capability; it is a constraint on risk. Learning to build that way now prepares you to work in contexts — healthcare, finance, education, government — where the cost of getting it wrong is not a bug report but a human harmed.
+The minimal footprint principle is not a limitation on what you can build; it is a design specification for how you build it. A minimal-footprint agent can do everything a maximum-capability agent does; it just does it with the least possible autonomy, the narrowest necessary permissions, and the most reversible possible actions. That is not a constraint on capability; it is a constraint on risk. Learning to build that way now prepares you to work in contexts (healthcare, finance, education, government) where the cost of getting it wrong is not a bug report but a human harmed.
 
-**The minimal footprint principle** holds that an autonomous agent should: request only the permissions necessary for the current task; prefer reversible actions over irreversible ones when both achieve the goal; and escalate to a human when uncertain rather than taking a low-confidence autonomous action. The principle operationalizes corrigibility — the property of being correctable — as an engineering constraint rather than a post-hoc aspiration.
+**The minimal footprint principle** holds that an autonomous agent should: request only the permissions necessary for the current task; prefer reversible actions over irreversible ones when both achieve the goal; and escalate to a human when uncertain rather than taking a low-confidence autonomous action. The principle operationalizes corrigibility (the property of being correctable) as an engineering constraint rather than a post-hoc aspiration.
 
 The contrast case is a **maximum-capability agent**: one designed to request all permissions it might ever need, act on low-confidence judgments to maintain throughput, and avoid escalation because escalation is treated as a failure mode rather than a feature. Maximum-capability agents are built under time pressure, by teams that treat human oversight as friction, and in competitive environments where the first agent to act wins. They also cause the most harm at scale.
 
-**Alignment** refers to the correspondence between an agent's operational objective and the values of its principals. A misaligned agent pursues a proxy objective that diverges from principal intent under distribution shift — the conditions not represented in training or specification. Value-sensitive design is the practice of eliciting stakeholder values *before* constructing the objective, to reduce the gap between what the agent optimizes and what its principals actually want.
+**Alignment** refers to the correspondence between an agent's operational objective and the values of its principals. A misaligned agent pursues a proxy objective that diverges from principal intent under distribution shift, the conditions not represented in training or specification. Value-sensitive design is the practice of eliciting stakeholder values *before* constructing the objective, to reduce the gap between what the agent optimizes and what its principals actually want.
 
 **The dual newspaper test** (a practical heuristic): before deploying an agent action, ask two questions. (1) Would this action, if described accurately in a technology journalist's story about AI harm, embarrass the organization? (2) Would *refusing* to take this action, if described in a civil liberties reporter's story about paternalistic AI, embarrass the organization? Both failure modes are real; the test guards against both.
 
@@ -177,7 +177,7 @@ Two agents are given the same task: "Help a user manage their email inbox." Cons
 
 | Design Dimension | Minimal Footprint Agent | Maximum Capability Agent | What This Difference Means in Practice |
 |---|---|---|---|
-| Permissions requested at setup | Read-only access to inbox; write access only to the draft folder — no delete, no send, no contacts | Full read, write, delete access to inbox, contacts, calendar, and sent mail — everything available | A compromised minimal agent can draft emails you must review; a compromised maximum agent can send, delete, and forward everything immediately |
+| Permissions requested at setup | Read-only access to inbox; write access only to the draft folder; no delete, no send, no contacts | Full read, write, delete access to inbox, contacts, calendar, and sent mail; everything available | A compromised minimal agent can draft emails you must review; a compromised maximum agent can send, delete, and forward everything immediately |
 | Action on uncertain email classification | Flags the email for human review with an explanation of the uncertainty; does not archive or delete | Archives or deletes based on best-guess classification; logs the action but does not notify the user | A miscalibrated classifier in the minimal design costs a moment of human attention; the same error in the maximum design causes unrecoverable data loss |
 | Escalation policy | Escalates any action affecting more than 10 emails, any irreversible delete, or any action the user has not previously confirmed | Never escalates; treats autonomy as a feature and interruption as failure | Occasional interruptions in the minimal design are the cost of preventing catastrophic batch errors; the maximum design optimizes for throughput at the cost of correctability |
 | Response to ambiguous instruction | Requests clarification before proceeding; presents two interpretations and asks which the user intended | Infers the most likely intent and proceeds immediately; may be systematically wrong for an entire category of instructions | Ambiguity resolution is cheap when it is a conversation; it is expensive when it has already acted on thousands of emails |
@@ -198,9 +198,9 @@ Two agents are given the same task: "Help a user manage their email inbox." Cons
 
    *Hint: Harm story opening: "An AI email agent autonomously deleted thousands of messages..." Paternalism story opening: "An AI email agent requires user confirmation for every action, making..." Now ask: does one of these stories feel much more likely to be written? If so, that asymmetry is informative. If both feel equally likely, you have found a genuine design tension that the test cannot resolve on its own.*
 
-> **Common Misconception:** "Ethics review is something you do at the end, before shipping." This belief produces a specific failure mode: the ethics review occurs when it is too late to change the architecture, the training data, the objective function, or the permission model. Changes at that stage cost too much or break the system, so the review becomes perfunctory. Ethics review that happens at design time — when the agent's scope, permissions, and objective are being specified — can actually change outcomes. The frameworks in this activity are meant to be applied at the moment when a blank design document is on the table, not at the moment when the ship date is tomorrow.
+> **Common Misconception:** "Ethics review is something you do at the end, before shipping." This belief produces a specific failure mode: the ethics review occurs when it is too late to change the architecture, the training data, the objective function, or the permission model. Changes at that stage cost too much or break the system, so the review becomes perfunctory. Ethics review that happens at design time (when the agent's scope, permissions, and objective are being specified) can actually change outcomes. The frameworks in this activity are meant to be applied at the moment when a blank design document is on the table, not at the moment when the ship date is tomorrow.
 
-Having applied frameworks, codes, and design principles to constructed scenarios, Part IV asks you to bring the same rigor to your own project — where the design decisions are real and the stakes belong to you.
+Having applied frameworks, codes, and design principles to constructed scenarios, Part IV asks you to bring the same rigor to your own project, where the design decisions are real and the stakes belong to you.
 
 ---
 
@@ -216,15 +216,15 @@ In this final part, you will apply the frameworks and principles from Parts I th
 
    *Starter hint:* Be specific about design choices, not values. Instead of "our system is fair" (a value), write "our system shows the retrieved source for every answer" (a design choice). Instead of "the utilitarian framework endorses helpfulness," write "the utilitarian framework endorses our choice to include an abstention option, because confidently wrong answers cause more aggregate harm than acknowledged uncertainty." The more concrete, the more useful the review.
 
-   *You've succeeded when:* Each paragraph identifies a specific design choice (something you did or could do), applies one framework explicitly, and produces either a defense or a constraint recommendation — not a general statement of values.
+   *You've succeeded when:* Each paragraph identifies a specific design choice (something you did or could do), applies one framework explicitly, and produces either a defense or a constraint recommendation, not a general statement of values.
 
 2. *Footprint audit.*
 
    *What to do:* List every permission, API scope, and data access your project agent currently requests. For each, classify it as: (a) necessary for current functionality, (b) useful but not necessary, or (c) requested as a precaution for future features. Propose the reduced permission set that retains (a) only, and describe what you would need to add back and why if you retained any (b) items.
 
-   *Starter hint:* Look at every API call, file read, environment variable, and network request in your codebase. For each, ask: what feature breaks if I remove this permission? If nothing breaks, it is (b) or (c). If the feature it enables is live and used, it is (a). The goal is not to break your project — it is to understand what you actually need and eliminate everything else.
+   *Starter hint:* Look at every API call, file read, environment variable, and network request in your codebase. For each, ask: what feature breaks if I remove this permission? If nothing breaks, it is (b) or (c). If the feature it enables is live and used, it is (a). The goal is not to break your project; it is to understand what you actually need and eliminate everything else.
 
-   *You've succeeded when:* You have a specific list of permissions in each category, a proposed reduced set, and at least one sentence explaining the security or privacy benefit of the reduction — not just the list itself.
+   *You've succeeded when:* You have a specific list of permissions in each category, a proposed reduced set, and at least one sentence explaining the security or privacy benefit of the reduction, not just the list itself.
 
 3. *Stakeholder map.*
 
@@ -232,23 +232,23 @@ In this final part, you will apply the frameworks and principles from Parts I th
 
    *Starter hint:* Direct users are the obvious starting point. Then ask: who else is affected? If your system grades work, the graded students are subjects, not users. If your system retrieves information, the authors of that information are stakeholders. If your system makes recommendations, the people those recommendations affect are stakeholders. For each group, the constraint should be specific: not "respect their privacy" but "do not store their name in association with their submission."
 
-   *You've succeeded when:* You have five groups, each with a named value and a specific design constraint — and at least two of the constraints conflict with each other in a way that your current design does or does not resolve.
+   *You've succeeded when:* You have five groups, each with a named value and a specific design constraint, and at least two of the constraints conflict with each other in a way that your current design does or does not resolve.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Vallor (2016) argues that technology shapes character — habitual use of tools trains dispositions, and dispositions determine how we respond to situations that rules and calculations cannot anticipate. Reflect on this semester: has any of your habitual ways of working, thinking about problems, or evaluating your own judgment changed through building and using AI systems?
+*Personal:* Vallor (2016) argues that technology shapes character: habitual use of tools trains dispositions, and dispositions determine how we respond to situations that rules and calculations cannot anticipate. Reflect on this semester: has any of your habitual ways of working, thinking about problems, or evaluating your own judgment changed through building and using AI systems?
 
 *Technical:* The minimal footprint principle asks you to build agents that are capable but deliberately limited in autonomy. Where in your course project did you make a choice between autonomy and caution? Looking back, would you make the same choice? What information would change your answer?
 
-*Societal:* The ACM Code of Ethics requires computing professionals to act in the public interest even when that conflicts with organizational pressure. What professional infrastructure — legal protections, union representation, ethics boards, disclosure requirements — would make it practically possible for individual engineers to honor that obligation? What is missing from that infrastructure today?
+*Societal:* The ACM Code of Ethics requires computing professionals to act in the public interest even when that conflicts with organizational pressure. What professional infrastructure (legal protections, union representation, ethics boards, disclosure requirements) would make it practically possible for individual engineers to honor that obligation? What is missing from that infrastructure today?
 
 ---
 
 ## -> Coming Up Next
 
-This activity completes the ethics and philosophy arc of the course. The frameworks you applied today — utilitarian, deontological, virtue-based, design justice — are not final answers; they are instruments for reasoning in public about decisions that affect people. Your final project governance document should reflect the application of at least two of these frameworks to your specific design choices.
+This activity completes the ethics and philosophy arc of the course. The frameworks you applied today (utilitarian, deontological, virtue-based, design justice) are not final answers; they are instruments for reasoning in public about decisions that affect people. Your final project governance document should reflect the application of at least two of these frameworks to your specific design choices.
 
 ## Further Reading
 

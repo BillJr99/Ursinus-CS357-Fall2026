@@ -29,7 +29,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Domain swap** | Replacing `github.com` in a repo URL with a different domain to activate a specialized tool on that same repo | `github.com/owner/repo` -> `gitingest.com/owner/repo` |
-| **Token budget** | The maximum amount of text (measured in tokens) a model can process in one call; large repos may exceed it | A 50,000-line codebase flattened to text may be 200 000+ tokens — more than most local models can handle at once |
+| **Token budget** | The maximum amount of text (measured in tokens) a model can process in one call; large repos may exceed it | A 50,000-line codebase flattened to text may be 200 000+ tokens, more than most local models can handle at once |
 | **MCP server** | A running process that exposes resources and tools to an AI agent via the Model Context Protocol; the agent queries it instead of guessing from training data | `getmcp.io` wraps a GitHub repo as a live MCP server the agent can query at runtime |
 | **Architecture diagram** | A visual map of a codebase's modules, their responsibilities, and how data flows between them | `gdagram.com` generates one automatically from a repo URL |
 | **Hallucination** | A model generating plausible-sounding but factually incorrect output, often about APIs it learned about during training but that have since changed | A model inventing a method name that never existed in the `requests` library |
@@ -39,35 +39,35 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Big Idea
 
-In this part, you will learn how swapping a single domain in a GitHub URL unlocks six different power tools — from in-browser editors to instant MCP servers — turning any public repo into an AI-ready resource without cloning anything.
+In this part, you will learn how swapping a single domain in a GitHub URL unlocks six different power tools (from in-browser editors to instant MCP servers) turning any public repo into an AI-ready resource without cloning anything.
 
 ## 1. Domain Swapping
 
-You already know that pressing the `.` key on any GitHub repository opens `github.dev` — a full VS Code editor in the browser, no installation required. That one-key trick is a domain swap in disguise: the browser replaces `github.com` with `github.dev` and GitHub serves a different application. Five specialized services have extended this pattern to deliver capabilities that matter specifically for AI-assisted development.
+You already know that pressing the `.` key on any GitHub repository opens `github.dev`, a full VS Code editor in the browser, no installation required. That one-key trick is a domain swap in disguise: the browser replaces `github.com` with `github.dev` and GitHub serves a different application. Five specialized services have extended this pattern to deliver capabilities that matter specifically for AI-assisted development.
 
-**Every tool in this activity works on public repositories only.** Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo. These tools are designed for reading and understanding open-source code — treat them as read-only research instruments.
+**Every tool in this activity works on public repositories only.** Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo. These tools are designed for reading and understanding open-source code; treat them as read-only research instruments.
 
-The table below maps each tool to its purpose. Some tools belong in your daily workflow; others are situational — you reach for them when a specific problem appears.
+The table below maps each tool to its purpose. Some tools belong in your daily workflow; others are situational; you reach for them when a specific problem appears.
 
 | Domain swap | What it does | Use case | Daily or situational? | Public only? |
 |---|---|---|---|---|
 | `github.dev` (`.` key) | In-browser VS Code editor for any repo | Explore code before forking; read an agent framework | Daily | No (works with private repos you have access to) |
-| `gitingest.com` | Flattens a repo into one AI-readable text block with token count | Feed a whole codebase to a coding agent in one paste | Situational | Yes — public repos only |
-| `getmcp.io` | Turns a repo into a live MCP server | Ground an agent in real, current API code | Situational | Yes — public repos only |
-| `deepwiki.com` | Auto-generates Wikipedia-style docs + Q&A for any repo | Understand a framework you've never seen before | Situational | Yes — public repos only |
-| `gdagram.com` | Generates an interactive architecture diagram | See module structure and data flow before reading code | Situational | Yes — public repos only |
+| `gitingest.com` | Flattens a repo into one AI-readable text block with token count | Feed a whole codebase to a coding agent in one paste | Situational | Yes, public repos only |
+| `getmcp.io` | Turns a repo into a live MCP server | Ground an agent in real, current API code | Situational | Yes, public repos only |
+| `deepwiki.com` | Auto-generates Wikipedia-style docs + Q&A for any repo | Understand a framework you've never seen before | Situational | Yes, public repos only |
+| `gdagram.com` | Generates an interactive architecture diagram | See module structure and data flow before reading code | Situational | Yes, public repos only |
 
 ---
 
 # Part II: Feeding Code to AI
 
-In this part, you will practice two complementary techniques for getting code into an AI context window — browsing it interactively with `github.dev` before committing to a fork, and ingesting an entire repo as a single prompt-ready block with `gitingest.com`.
+In this part, you will practice two complementary techniques for getting code into an AI context window: browsing it interactively with `github.dev` before committing to a fork, and ingesting an entire repo as a single prompt-ready block with `gitingest.com`.
 
 ## 2. Reading Before Forking (`github.dev`)
 
-When you discover an agent framework on GitHub — say, a RAG pipeline or a multi-tool orchestrator — your first instinct might be to clone it and start reading locally. But cloning takes time, requires git configured on your machine, and can fill your disk with large model checkpoints or datasets. The `.` trick solves all three problems: press `.` on any GitHub repository page and the URL changes from `github.com` to `github.dev`, opening a full VS Code instance in your browser within seconds.
+When you discover an agent framework on GitHub (say, a RAG pipeline or a multi-tool orchestrator) your first instinct might be to clone it and start reading locally. But cloning takes time, requires git configured on your machine, and can fill your disk with large model checkpoints or datasets. The `.` trick solves all three problems: press `.` on any GitHub repository page and the URL changes from `github.com` to `github.dev`, opening a full VS Code instance in your browser within seconds.
 
-**The in-browser editor is not just a viewer.** You can open the built-in terminal (if the repository has a `devcontainer.json`), use the file explorer to navigate the directory tree, and search across all files with `Ctrl+Shift+F` exactly as you would in a local editor. For AI developers, the most valuable use is reading the agent scaffolding — the entry point, the tool definitions, the memory management — before deciding whether this is the right framework to build on.
+**The in-browser editor is not just a viewer.** You can open the built-in terminal (if the repository has a `devcontainer.json`), use the file explorer to navigate the directory tree, and search across all files with `Ctrl+Shift+F` exactly as you would in a local editor. For AI developers, the most valuable use is reading the agent scaffolding (the entry point, the tool definitions, the memory management) before deciding whether this is the right framework to build on.
 
 ---
 
@@ -88,7 +88,7 @@ gitingest https://github.com/owner/repo --output repo_context.txt
 
 ## Model 1: Hands-On Ingestion Workflow
 
-Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target — a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity). If that repo is too large, your instructor will direct you to a smaller example.
+Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target, a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity). If that repo is too large, your instructor will direct you to a smaller example.
 
 **Step 1**: Navigate to `github.com/BerriAI/litellm` and press `.`. Locate the main entry point (`__main__.py` or equivalent) and the directory where provider adapters live.
 
@@ -104,27 +104,27 @@ Your team will work through the following steps using the `litellm` repository (
 
 2. A teammate suggests using `gitingest.com` on a private company repository that contains database credentials in a `.env.example` file. What is the specific risk, and what would you tell them?
 
-   > *Hint: "Public only" is not just a terms-of-service issue — consider where the text block ends up, who processes it, and whether it can be logged by a third-party service.*
+   > *Hint: "Public only" is not just a terms-of-service issue; consider where the text block ends up, who processes it, and whether it can be logged by a third-party service.*
 
 3. Compare the experience of finding the entry point via `github.dev` (keyboard shortcuts, file explorer) versus scanning the `gitingest.com` text dump. For which task is each approach faster? Is there a task where you would use both together?
 
    > *Hint: The gitingest text dump preserves file boundaries but loses the IDE's navigation features. The browser editor preserves navigation but requires you to open files one at a time.*
 
-> **Common Misconception:** Students often assume that pasting a codebase into a model's context gives the model "access" to the code in the way a compiler has access — allowing it to run the code or verify that it compiles. The model only reads the text. It cannot execute the code, check for import errors, or confirm that dependencies are installed. It will reason about the code as text, which means it can misinterpret dynamic behavior, miss runtime configuration, and confidently describe code paths that are never actually reached.
+> **Common Misconception:** Students often assume that pasting a codebase into a model's context gives the model "access" to the code in the way a compiler has access, allowing it to run the code or verify that it compiles. The model only reads the text. It cannot execute the code, check for import errors, or confirm that dependencies are installed. It will reason about the code as text, which means it can misinterpret dynamic behavior, miss runtime configuration, and confidently describe code paths that are never actually reached.
 
 ---
 
 # Part III: Real-Time AI Grounding
 
-In this part, you will turn any GitHub repo into a live MCP server via `getmcp.io` — giving a coding agent real-time access to a library's source instead of relying on potentially stale training data.
+In this part, you will turn any GitHub repo into a live MCP server via `getmcp.io`, giving a coding agent real-time access to a library's source instead of relying on potentially stale training data.
 
 ## 4. MCP Servers from Repos (`getmcp.io`)
 
-When a model generates code that calls a library, it draws on patterns it saw during training. If that library's API has changed since the model's training cutoff — a new method name, a renamed parameter, a deprecated class — the model will use the old API confidently and produce broken code. This is one of the most common sources of agent failures in practice.
+When a model generates code that calls a library, it draws on patterns it saw during training. If that library's API has changed since the model's training cutoff (a new method name, a renamed parameter, a deprecated class) the model will use the old API confidently and produce broken code. This is one of the most common sources of agent failures in practice.
 
 **`getmcp.io` attacks this problem at the source.** You give it a GitHub repository URL; it reads the current code and spins up a live MCP server that your agent can query at runtime. Instead of the model guessing what `chromadb.Client()` accepts as parameters, the agent calls the MCP server and gets the actual current signature from the actual current source. Hallucinated method names become impossible when the model can check.
 
-The workflow has three steps: (1) paste the repo URL into `getmcp.io` and copy the server address it gives you, (2) add that server address to your agent's MCP configuration, (3) run your agent — it will query the server before generating any code that touches that library.
+The workflow has three steps: (1) paste the repo URL into `getmcp.io` and copy the server address it gives you, (2) add that server address to your agent's MCP configuration, (3) run your agent; it will query the server before generating any code that touches that library.
 
 ---
 
@@ -178,7 +178,7 @@ For this model, your instructor will demonstrate the same request sent to a loca
 
 4. In the un-grounded response, identify any method names or parameter names that do not appear in the current `chromadb` documentation. What is the most likely explanation for the discrepancy?
 
-   > *Hint: The model's training data has a cutoff date. Libraries that move fast — particularly in the AI ecosystem — may have changed their public API after that cutoff. The model has no way to know this unless it is given current information.*
+   > *Hint: The model's training data has a cutoff date. Libraries that move fast (particularly in the AI ecosystem) may have changed their public API after that cutoff. The model has no way to know this unless it is given current information.*
 
 5. MCP grounding adds a network call at agent runtime. Describe one scenario where this latency cost is worth paying and one scenario where you would skip MCP grounding and use `gitingest.com` instead.
 
@@ -191,17 +191,17 @@ Why does connecting an agent to a live MCP server reduce hallucinated API calls,
 [(X)] The agent can query the MCP server for current method signatures and include that verified information in its context before generating code
 [( )] MCP servers patch the model's training data in memory at runtime
 
-> **Common Misconception:** "Grounding" does not change the model itself — no weights are updated, and the model does not "learn" the library. It is simply given accurate, current text in its context window at the moment it needs to generate API calls. Remove the MCP server from the configuration and the hallucinations return, because the underlying model still only knows what was in its training data.
+> **Common Misconception:** "Grounding" does not change the model itself; no weights are updated, and the model does not "learn" the library. It is simply given accurate, current text in its context window at the moment it needs to generate API calls. Remove the MCP server from the configuration and the hallucinations return, because the underlying model still only knows what was in its training data.
 
 ---
 
 # Part IV: Understanding Unfamiliar Codebases
 
-In this part, you will use `deepwiki.com` and `gdagram.com` to generate instant documentation and architecture diagrams for any repo — the fastest way to orient yourself in an unfamiliar codebase before you start modifying it.
+In this part, you will use `deepwiki.com` and `gdagram.com` to generate instant documentation and architecture diagrams for any repo, the fastest way to orient yourself in an unfamiliar codebase before you start modifying it.
 
 ## 5. Auto-Documentation (`deepwiki.com`)
 
-When you encounter an agent framework for the first time, the README rarely answers the question you actually have: "Where does the agent decide to call a tool versus answer directly?" `deepwiki.com` addresses this by reading the repository and generating a structured, Wikipedia-style explanation of the project, with a Q&A interface for follow-up questions. It is not a search engine — it synthesizes an explanation of the code's design.
+When you encounter an agent framework for the first time, the README rarely answers the question you actually have: "Where does the agent decide to call a tool versus answer directly?" `deepwiki.com` addresses this by reading the repository and generating a structured, Wikipedia-style explanation of the project, with a Q&A interface for follow-up questions. It is not a search engine; it synthesizes an explanation of the code's design.
 
 **Use `deepwiki.com` when you need to understand the *intent* behind a codebase**, not just its file structure. Ask it questions like "What is the agent's decision-making loop?" or "Where is memory managed?" and it will point you to the relevant modules. Then use `github.dev` or `gitingest.com` to read those specific files in full.
 
@@ -247,19 +247,19 @@ A teammate wants to use `gdagram.com` to verify that a dependency they plan to r
 [(X)] This is a useful starting point but should be verified with a code search, because generated diagrams may miss dynamic imports and optional dependencies
 [( )] This is unreliable in all cases; the only correct approach is to read every file manually
 
-> **Common Misconception:** Automatically generated architecture diagrams show the relationships that are visible through static analysis of import statements and class definitions. They typically miss plugins loaded at runtime, modules imported conditionally based on configuration, and monkey-patching. Treat the diagram as a hypothesis about the structure — a helpful starting point — and confirm any dependency you plan to remove with a full-text search (`Ctrl+Shift+F` in `github.dev`).
+> **Common Misconception:** Automatically generated architecture diagrams show the relationships that are visible through static analysis of import statements and class definitions. They typically miss plugins loaded at runtime, modules imported conditionally based on configuration, and monkey-patching. Treat the diagram as a hypothesis about the structure (a helpful starting point) and confirm any dependency you plan to remove with a full-text search (`Ctrl+Shift+F` in `github.dev`).
 
 ---
 
 # Part V: Synthesis and Practice
 
-In this part, you will combine the tools from Parts I-IV in a real codebase sprint: orient, ingest, ground, and extend — the complete GitHub power-user workflow.
+In this part, you will combine the tools from Parts I-IV in a real codebase sprint: orient, ingest, ground, and extend: the complete GitHub power-user workflow.
 
 ## 7. Exercises
 
 1. *Domain-swap scavenger hunt.*
 
-   - *What to do*: Choose any open-source agent project from GitHub (not one used in today's examples). Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity — domain swap, what it revealed, whether it was useful for this particular repo.
+   - *What to do*: Choose any open-source agent project from GitHub (not one used in today's examples). Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity: domain swap, what it revealed, whether it was useful for this particular repo.
    - *Starter hint*: Start with `github.dev` (press `.`) to orient yourself, then `gdagram.com` for the diagram, then `deepwiki.com` for the explanation. Use `gitingest.com` last so you know which subdirectory to filter to. Save `getmcp.io` for a library you actually plan to use in code.
    - *You've succeeded when*: You can answer the five codebase-orientation questions from Model 3 for your chosen repo, citing which tool gave you each answer.
 
@@ -278,24 +278,24 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 4. *Security audit of the workflow.*
 
    - *What to do*: Write a one-page team policy for using the five tools in this activity safely. Cover: which tools are appropriate for which types of repositories, what to check before pasting a URL into any external service, and what to do if a teammate accidentally exposes a private URL.
-   - *Starter hint*: Consider the data flow for each tool: where does the repo content go, who processes it, and is it stored? The answers differ by tool — some process client-side, some send repo content to external servers.
+   - *Starter hint*: Consider the data flow for each tool: where does the repo content go, who processes it, and is it stored? The answers differ by tool; some process client-side, some send repo content to external servers.
    - *You've succeeded when*: Your policy covers all five tools, addresses both public and private repo scenarios, and includes at least one concrete "red line" action that is never acceptable (for example: "Never paste a URL containing credentials into any external tool").
 
 ---
 
 ## Reflection Prompt
 
-*Personal*: Before today, how did you typically explore an unfamiliar codebase? Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before? How do the five tools today compare to your existing approach — and which one would you actually add to your personal workflow?
+*Personal*: Before today, how did you typically explore an unfamiliar codebase? Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before? How do the five tools today compare to your existing approach, and which one would you actually add to your personal workflow?
 
 *Technical*: In your notebook: You are building an agent that generates database queries using `psycopg2`. The library has been updated twice since your local model was trained. Design a grounding strategy using the tools from today. Which tool(s) would you use, at what stage of development (prototyping vs. production), and what would you do differently for each stage?
 
-*Societal*: Services like `gitingest.com`, `deepwiki.com`, and `gdagram.com` process public open-source code to provide their services. Open-source licenses require attribution and impose conditions on how code can be used. Does automatically ingesting a repository and feeding it to an AI model comply with typical open-source licenses (MIT, Apache 2.0, GPL)? Who is responsible for checking — the tool provider, the developer using the tool, or both?
+*Societal*: Services like `gitingest.com`, `deepwiki.com`, and `gdagram.com` process public open-source code to provide their services. Open-source licenses require attribution and impose conditions on how code can be used. Does automatically ingesting a repository and feeding it to an AI model comply with typical open-source licenses (MIT, Apache 2.0, GPL)? Who is responsible for checking: the tool provider, the developer using the tool, or both?
 
 ---
 
 ## -> Coming Up Next
 
-Now that you can efficiently read and feed any public codebase to an AI agent, the next activity asks a deeper question: how do you communicate with a local model at the protocol level, without relying on a high-level SDK? We examine the OpenAI-compatible REST API pattern — the common language spoken by Ollama, LiteLLM, and most local inference servers — so you can write agent code that works across providers without being locked into any single library.
+Now that you can efficiently read and feed any public codebase to an AI agent, the next activity asks a deeper question: how do you communicate with a local model at the protocol level, without relying on a high-level SDK? We examine the OpenAI-compatible REST API pattern (the common language spoken by Ollama, LiteLLM, and most local inference servers) so you can write agent code that works across providers without being locked into any single library.
 
 ---
 
