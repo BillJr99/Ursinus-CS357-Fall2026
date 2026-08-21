@@ -28,20 +28,20 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Cloudflare Worker** | A JavaScript (or TypeScript or Python) function that runs on Cloudflare's global network in response to HTTP requests — no server to rent or manage, no container to keep alive | `wrangler deploy` publishes your `src/index.js` as a live API endpoint at `https://hello-worker.yourname.workers.dev` |
+| **Cloudflare Worker** | A JavaScript (or TypeScript or Python) function that runs on Cloudflare's global network in response to HTTP requests: no server to rent or manage, no container to keep alive | `wrangler deploy` publishes your `src/index.js` as a live API endpoint at `https://hello-worker.yourname.workers.dev` |
 | **Cloudflare Pages** | A hosting service for static websites (HTML, CSS, JavaScript) that deploys instantly from a directory or a GitHub repository | `wrangler pages deploy ./dist` publishes your built project at `https://cs357-demo.pages.dev` |
-| **Wrangler** | The official CLI tool for working with Cloudflare Workers and Pages — it scaffolds projects, runs them locally, deploys them, and manages secrets | `npx wrangler dev` starts a local version of your Worker at `localhost:8787` |
-| **`wrangler.toml`** | The configuration file for a Cloudflare Worker project — sets the Worker's name, entry point, and pinned runtime version | `name = "hello-worker"` sets the subdomain; `compatibility_date` pins runtime behavior |
-| **Worker secret** | A sensitive value (API key, token) stored on Cloudflare's servers and injected into the Worker at runtime — never written to any file or repository | `npx wrangler secret put UPSTREAM_API_KEY` — the value is entered interactively and stored server-side only |
-| **Edge network** | Cloudflare's globally distributed set of data centers that run Workers close to whoever is making the request — reducing latency by running code near the user rather than in one central location | A request from a user in Tokyo is handled by a Cloudflare data center in Asia, not by a server in Virginia |
-| **CI/CD pipeline** | Continuous Integration / Continuous Deployment — an automated sequence (build, test, deploy) that a service like **GitHub Actions** runs whenever code changes, so shipping is a repeatable pipeline rather than a person typing commands | A push to `main` triggers a workflow that runs your tests and then calls your deploy script — no human retyping `wrangler deploy` |
-| **Deploy script vs. workflow** | The **workflow** (YAML) *orchestrates*: it says when to run and in what order. The **deploy script** (`deploy.sh`) holds the actual deploy *logic*, so it is testable and runnable locally — not trapped inside CI-only YAML | `deploy.yml` checks out the code and runs `./deploy.sh`; `deploy.sh` is the same script you can run on your laptop |
+| **Wrangler** | The official CLI tool for working with Cloudflare Workers and Pages; it scaffolds projects, runs them locally, deploys them, and manages secrets | `npx wrangler dev` starts a local version of your Worker at `localhost:8787` |
+| **`wrangler.toml`** | The configuration file for a Cloudflare Worker project; sets the Worker's name, entry point, and pinned runtime version | `name = "hello-worker"` sets the subdomain; `compatibility_date` pins runtime behavior |
+| **Worker secret** | A sensitive value (API key, token) stored on Cloudflare's servers and injected into the Worker at runtime, never written to any file or repository | `npx wrangler secret put UPSTREAM_API_KEY`, the value is entered interactively and stored server-side only |
+| **Edge network** | Cloudflare's globally distributed set of data centers that run Workers close to whoever is making the request, reducing latency by running code near the user rather than in one central location | A request from a user in Tokyo is handled by a Cloudflare data center in Asia, not by a server in Virginia |
+| **CI/CD pipeline** | Continuous Integration / Continuous Deployment, an automated sequence (build, test, deploy) that a service like **GitHub Actions** runs whenever code changes, so shipping is a repeatable pipeline rather than a person typing commands | A push to `main` triggers a workflow that runs your tests and then calls your deploy script, no human retyping `wrangler deploy` |
+| **Deploy script vs. workflow** | The **workflow** (YAML) *orchestrates*: it says when to run and in what order. The **deploy script** (`deploy.sh`) holds the actual deploy *logic*, so it is testable and runnable locally, not trapped inside CI-only YAML | `deploy.yml` checks out the code and runs `./deploy.sh`; `deploy.sh` is the same script you can run on your laptop |
 | **GitHub secret vs. variable** | A **secret** is an encrypted value (a token) that CI injects into the run and masks in logs; a **variable** is a plain, non-sensitive value visible in the UI. Secrets can be scoped to a repository or, more tightly, to an **environment** | `CLOUDFLARE_API_TOKEN` is an environment secret; `WORKER_NAME` is a plain variable |
-| **Log masking** | CI automatically replaces any registered secret value with `***` in the log output — but only if you never deliberately print it. `echo "$TOKEN"` or `set -x` can still leak it around the mask | The token appears as `***` in the Actions log unless a careless `echo` reveals its characters |
-| **OIDC / federated token** | A short-lived, per-run identity token the CI provider mints and signs. The cloud trusts it by verifying the **signature** against the provider's **public keys**, plus the **`audience`** and **`subject`** claims — no long-lived key is ever stored | GitHub issues a token whose `subject` says "repo X, branch `main`, environment `production`"; AWS verifies it and hands back credentials that expire in minutes |
-| **Least privilege** | Grant an identity exactly the permissions it needs and no more — a deploy token scoped to "edit Workers on this one account," never an all-powerful Global API Key | A scoped Cloudflare API token can deploy a Worker but cannot read your billing or delete your DNS |
-| **Deployment guardrail** | A control that governs *who* can deploy, *from where*, and *with whose approval* — environment protection with required reviewers, an actor allowlist, a branch restriction, or a concurrency/rate limit | The workflow refuses to deploy unless the actor is on the allowlist, the branch is `main`, and a reviewer approves the `production` environment |
-| **Idempotent / non-interactive script** | A script that produces the same end state whether run once or five times, and that never pauses for keyboard input — mandatory in CI, where there is no human to answer a prompt | `deploy.sh` creates the KV namespace only if it does not already exist, and passes assume-yes flags so nothing waits on `read` |
+| **Log masking** | CI automatically replaces any registered secret value with `***` in the log output, but only if you never deliberately print it. `echo "$TOKEN"` or `set -x` can still leak it around the mask | The token appears as `***` in the Actions log unless a careless `echo` reveals its characters |
+| **OIDC / federated token** | A short-lived, per-run identity token the CI provider mints and signs. The cloud trusts it by verifying the **signature** against the provider's **public keys**, plus the **`audience`** and **`subject`** claims; no long-lived key is ever stored | GitHub issues a token whose `subject` says "repo X, branch `main`, environment `production`"; AWS verifies it and hands back credentials that expire in minutes |
+| **Least privilege** | Grant an identity exactly the permissions it needs and no more: a deploy token scoped to "edit Workers on this one account," never an all-powerful Global API Key | A scoped Cloudflare API token can deploy a Worker but cannot read your billing or delete your DNS |
+| **Deployment guardrail** | A control that governs *who* can deploy, *from where*, and *with whose approval*: environment protection with required reviewers, an actor allowlist, a branch restriction, or a concurrency/rate limit | The workflow refuses to deploy unless the actor is on the allowlist, the branch is `main`, and a reviewer approves the `production` environment |
+| **Idempotent / non-interactive script** | A script that produces the same end state whether run once or five times, and that never pauses for keyboard input, mandatory in CI, where there is no human to answer a prompt | `deploy.sh` creates the KV namespace only if it does not already exist, and passes assume-yes flags so nothing waits on `read` |
 
 ---
 
@@ -51,17 +51,17 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **What you will have at the end:** a Worker and a Pages site deployed to a public URL you own.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
 # Part I: The Platform and the Tool
 
-In this part, you will map the three nouns that make up Cloudflare's developer platform and install Wrangler, the CLI that drives all of them — because understanding what each service does and does not do is the prerequisite for placing the right thing in the right place.
+In this part, you will map the three nouns that make up Cloudflare's developer platform and install Wrangler, the CLI that drives all of them, because understanding what each service does and does not do is the prerequisite for placing the right thing in the right place.
 
 ## 1. The Map
 
-Workers are like serverless microwave ovens — they heat your code on demand, you do not manage the kitchen. When a request comes in, Cloudflare runs your function on the nearest server, returns the result, and the function stops running. You pay nothing for idle time, you never SSH into a machine, and Cloudflare handles TLS certificates, load balancing, and global distribution automatically. The free tier handles enough requests per day to cover any course project comfortably.
+Workers are like serverless microwave ovens: they heat your code on demand, you do not manage the kitchen. When a request comes in, Cloudflare runs your function on the nearest server, returns the result, and the function stops running. You pay nothing for idle time, you never SSH into a machine, and Cloudflare handles TLS certificates, load balancing, and global distribution automatically. The free tier handles enough requests per day to cover any course project comfortably.
 
 Three nouns cover the platform for our purposes:
 
@@ -75,7 +75,7 @@ Around them sit storage primitives you may eventually want, of which **KV** (a k
 
 ## 2. Wrangler from Zero
 
-The following commands install Wrangler, connect it to your Cloudflare account, and confirm the connection. Run them in order — `wrangler login` will open a browser tab to complete authorization.
+The following commands install Wrangler, connect it to your Cloudflare account, and confirm the connection. Run them in order; `wrangler login` will open a browser tab to complete authorization.
 
 ```bash
 # Install Wrangler globally (or use npx wrangler to run without installing)
@@ -84,22 +84,22 @@ npm install -g wrangler
 # Confirm it is installed
 wrangler --version
 
-# Log in — this opens a browser tab; authorize Cloudflare to connect to your account
+# Log in - this opens a browser tab; authorize Cloudflare to connect to your account
 wrangler login
 
 # Confirm your account is connected
 wrangler whoami
 ```
 
-`wrangler login` stores an OAuth credential on your machine, scoped to your Cloudflare account. On shared machines (like a lab computer), run `wrangler logout` when you are finished — the same hygiene rule as any other credential.
+`wrangler login` stores an OAuth credential on your machine, scoped to your Cloudflare account. On shared machines (like a lab computer), run `wrangler logout` when you are finished, the same hygiene rule as any other credential.
 
-With the platform map clear and Wrangler installed, Part II walks you from zero to a deployed Worker — a complete round trip from laptop to public URL in under ten minutes.
+With the platform map clear and Wrangler installed, Part II walks you from zero to a deployed Worker, a complete round trip from laptop to public URL in under ten minutes.
 
 ---
 
 # Part II: Your First Worker
 
-In this part, you will scaffold, run locally, and deploy a JSON API Worker, then add secrets using the pattern that keeps keys out of your repository — so you understand both what a Worker is and how to keep it secure before you build anything real.
+In this part, you will scaffold, run locally, and deploy a JSON API Worker, then add secrets using the pattern that keeps keys out of your repository, so you understand both what a Worker is and how to keep it secure before you build anything real.
 
 ## 3. Scaffold, Run Locally, Read the Config
 
@@ -115,10 +115,10 @@ cd hello-worker
 
 # Start the local development server (hot-reload: edit, save, test, repeat)
 npx wrangler dev
-# Your Worker runs at http://localhost:8787 — open it in a browser or use curl
+# Your Worker runs at http://localhost:8787 - open it in a browser or use curl
 ```
 
-`wrangler dev` runs your Worker in a faithful local simulation with live reload: edit, save, curl, repeat — the same inner loop as everything else this semester. The project's identity lives in its configuration file (`wrangler.toml`, or `wrangler.jsonc` in newer scaffolds — same keys, different syntax):
+`wrangler dev` runs your Worker in a faithful local simulation with live reload: edit, save, curl, repeat, the same inner loop as everything else this semester. The project's identity lives in its configuration file (`wrangler.toml`, or `wrangler.jsonc` in newer scaffolds; same keys, different syntax):
 
 ```toml
 name = "hello-worker"            # becomes the subdomain: hello-worker.<you>.workers.dev
@@ -126,13 +126,13 @@ main = "src/index.js"            # the entry point file that Cloudflare runs
 compatibility_date = "2026-06-01"  # pins runtime behavior to a specific date
 ```
 
-That `compatibility_date` line deserves a pause: it is the platform's version-pinning mechanism, freezing runtime semantics as of a specific date so future Cloudflare platform updates cannot silently change your deployed behavior. This is the same reproducibility instinct as pinning an image tag — you are saying "run my code against the platform as it existed on this date."
+That `compatibility_date` line deserves a pause: it is the platform's version-pinning mechanism, freezing runtime semantics as of a specific date so future Cloudflare platform updates cannot silently change your deployed behavior. This is the same reproducibility instinct as pinning an image tag; you are saying "run my code against the platform as it existed on this date."
 
 ## 4. The Code Shape, and a Real Example
 
 A Worker exports a `fetch` handler: an HTTP request comes in, your function runs, an HTTP response goes out. Everything else is your logic. Here is a complete, production-quality example with routing and error handling:
 
-The following Worker exports a `fetch` handler with three routes and error handling. Read the comments inside the code — they explain what each piece does and why it is structured this way.
+The following Worker exports a `fetch` handler with three routes and error handling. Read the comments inside the code; they explain what each piece does and why it is structured this way.
 
 ```javascript
 // src/index.js: a tiny JSON API with three routes and error handling
@@ -142,12 +142,12 @@ export default {
       // Parse the incoming request URL to check the path
       const url = new URL(request.url);
 
-      // Route 1: health check — useful for confirming the Worker is running
+      // Route 1: health check, useful for confirming the Worker is running
       if (url.pathname === "/health") {
         return Response.json({ ok: true, at: new Date().toISOString() });
       }
 
-      // Route 2: greeting — reads a query parameter (?name=Alice)
+      // Route 2: greeting, reads a query parameter (?name=Alice)
       if (url.pathname === "/greet") {
         const name = url.searchParams.get("name") || "world";
         return Response.json({ greeting: `hello, ${name}`, course: "CS357" });
@@ -165,11 +165,11 @@ export default {
 };
 ```
 
-Note the `env` parameter: this is where secrets and configuration variables arrive from Cloudflare — covered in the next section. The `ctx` parameter provides lifecycle hooks for advanced patterns like waiting for a background task to finish before the Worker shuts down.
+Note the `env` parameter: this is where secrets and configuration variables arrive from Cloudflare, covered in the next section. The `ctx` parameter provides lifecycle hooks for advanced patterns like waiting for a background task to finish before the Worker shuts down.
 
 ## 5. Deploy, Then Secrets
 
-The following commands deploy your Worker to Cloudflare's global network and immediately test all three routes. The first `wrangler deploy` command may prompt you to confirm — this is the human gate before publishing to a public URL.
+The following commands deploy your Worker to Cloudflare's global network and immediately test all three routes. The first `wrangler deploy` command may prompt you to confirm; this is the human gate before publishing to a public URL.
 
 ```bash
 # Deploy to Cloudflare's network (prompts to confirm, then shows the live URL)
@@ -189,7 +189,7 @@ curl https://hello-worker.<your-subdomain>.workers.dev/anything-else
 
 That is the entire distance from laptop to public URL. Now the part everyone gets wrong without instruction:
 
-**Configuration that is not secret** (model names, feature flags, environment names) goes in the config file's `[vars]` table. This is visible in your repository and committed to version control — intentionally, since it is not sensitive.
+**Configuration that is not secret** (model names, feature flags, environment names) goes in the config file's `[vars]` table. This is visible in your repository and committed to version control, intentionally, since it is not sensitive.
 
 **Secrets** (API keys, tokens, passwords) go through Wrangler's secret store and *never* touch any file:
 
@@ -200,14 +200,14 @@ npx wrangler secret put UPSTREAM_API_KEY
 ```
 
 ```toml
-# wrangler.toml (committed to your repository — only non-sensitive values here)
+# wrangler.toml (committed to your repository; only non-sensitive values here)
 [vars]
 MODEL_NAME = "claude-3-5-sonnet-20241022"    # safe to commit: not a secret
 ENVIRONMENT = "production"                    # safe to commit: not a secret
 ```
 
 ```javascript
-// In the handler, secrets and vars both arrive on the env object — same syntax, different storage
+// In the handler, secrets and vars both arrive on the env object, same syntax, different storage
 const key = env.UPSTREAM_API_KEY;            // secret: stored by wrangler secret put, never in files
 const model = env.MODEL_NAME;                // plain var: stored in wrangler.toml, committed to repo
 ```
@@ -222,12 +222,12 @@ npx wrangler tail    # streams live log output from your deployed Worker
 
 A teammate puts an API key in the [vars] section of wrangler.toml "because env reads both the same way." The flaw is:
 
-[( )] Workers cannot read vars at runtime — only secrets injected at deploy time are accessible via the `env` object
+[( )] Workers cannot read vars at runtime; only secrets injected at deploy time are accessible via the `env` object
 [(X)] wrangler.toml is committed to the repository, so the key becomes part of the project's public record; secrets must go through wrangler secret put, which stores them server-side only
 [( )] vars and secrets are both stored server-side by Cloudflare, so committing the key to `wrangler.toml` has no security implication
 [( )] Secrets are faster to read than vars because they are stored in Cloudflare's KV store with lower latency
 
-With a live Worker API deployed and secrets stored correctly, Part III shows how to host your static frontend on Pages and — most importantly — draw the line between what belongs at the edge and what must stay on localhost.
+With a live Worker API deployed and secrets stored correctly, Part III shows how to host your static frontend on Pages and (most importantly) draw the line between what belongs at the edge and what must stay on localhost.
 
 ---
 
@@ -237,7 +237,7 @@ In this part, you will deploy a static site to Pages and apply the governance pr
 
 ## 6. A Pages Site in Two Commands
 
-Anything static — a project landing page, a built React artifact, your team's demo write-up, a visualization — deploys to Pages directly from a local directory:
+Anything static (a project landing page, a built React artifact, your team's demo write-up, a visualization) deploys to Pages directly from a local directory:
 
 ```bash
 # Build your static site first (if needed), then deploy the output directory
@@ -249,15 +249,15 @@ npx wrangler pages deploy ./dist --project-name=cs357-demo
 # -> https://cs357-demo.pages.dev         (stable production URL, always latest)
 ```
 
-The first run creates the project on Cloudflare; later runs create new deployments, each with a unique preview URL alongside the stable production URL. This gives you free per-version review links — share the preview URL with a teammate to get feedback before promoting to production.
+The first run creates the project on Cloudflare; later runs create new deployments, each with a unique preview URL alongside the stable production URL. This gives you free per-version review links; share the preview URL with a teammate to get feedback before promoting to production.
 
-The alternative, equally legitimate path is Git integration through the Cloudflare dashboard: connect your repository, set the build command (`npm run build` or similar), and every push to `main` triggers a new deployment — with the human gate moving to the merge decision.
+The alternative, equally legitimate path is Git integration through the Cloudflare dashboard: connect your repository, set the build command (`npm run build` or similar), and every push to `main` triggers a new deployment, with the human gate moving to the merge decision.
 
 Custom domains, if you have one, attach to either Workers or Pages through the Cloudflare dashboard in a few clicks, TLS included and automatic.
 
 ## 7. What Belongs at the Edge
 
-Workers are like serverless microwave ovens — fast, on-demand, zero management — but you would not try to bake a roast in a microwave. The edge is the right place for fast, stateless, public-facing code; it is the wrong place for heavy computation, large files, or anything subject to your data-handling agreements.
+Workers are like serverless microwave ovens: fast, on-demand, zero management — but you would not try to bake a roast in a microwave. The edge is the right place for fast, stateless, public-facing code; it is the wrong place for heavy computation, large files, or anything subject to your data-handling agreements.
 
 The edge is the right home for the **shareable shell**:
 - Demo frontends and project documentation pages
