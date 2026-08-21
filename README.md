@@ -2,7 +2,7 @@
 
 This repository contains the course website and materials for **CS357: Foundations of Artificial Intelligence** at Ursinus College. The course explores how modern AI systems are built, from traditional machine learning and deep learning through large language models, retrieval-augmented generation, and autonomous agents, with sustained attention to ethics, safety, and societal impact.
 
-**Course Website:** [https://BillJr99.github.io/Ursinus-CS357-Fall2026/](https://BillJr99.github.io/Ursinus-CS357-Fall2026/)
+**Course Website:** [https://www.billmongan.com/Ursinus-CS357/](https://www.billmongan.com/Ursinus-CS357/)
 
 ---
 

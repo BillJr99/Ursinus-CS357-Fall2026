@@ -71,7 +71,7 @@ Keep it to three or four sentences, posted to the discussion board before the ma
 
 ## Reading Responses for Student-Led Reading Group Sessions
 
-When a classmate leads a [Reading Group](Assignments/ReadingGroup) discussion, the audience has a defined job, and doing it earns participation. Before the session, post a brief response to the presenter's source (or, if it is circulated same-day, come with one genuine question ready). During the session, engage: build on the presenter's framing, offer a counter-view, or connect their source to something we have built. Leading a session remains separately available for extra credit; being a strong audience member is ordinary, expected participation, and it is what makes the student-led sessions worth holding.
+When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the audience has a defined job, and doing it earns participation. Before the session, post a brief response to the presenter's source (or, if it is circulated same-day, come with one genuine question ready). During the session, engage: build on the presenter's framing, offer a counter-view, or connect their source to something we have built. Leading a session remains separately available for extra credit; being a strong audience member is ordinary, expected participation, and it is what makes the student-led sessions worth holding.
 
 ## Reading-Linked Prompts, by Unit
 

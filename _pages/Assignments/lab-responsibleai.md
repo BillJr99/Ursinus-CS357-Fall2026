@@ -75,7 +75,7 @@ info:
     - rtitle: "Bias in Data Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
     - rtitle: "Responsible AI in Practice Assignment (Model Cards and Datasheets direction)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357/Assignments/ResponsibleAIPractice"
+      rlink: "../Assignments/ResponsibleAIPractice"
 
 tags:
   - security
