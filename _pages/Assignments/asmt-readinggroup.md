@@ -113,7 +113,7 @@ You may choose any of the following:
 
 Any of the options above may instead be led as a **Competing Texts Session**: rather than presenting a single source, you stage **two opposing sources on the same AI question**: for example, an optimist piece and a skeptic piece on the same capability, risk, or policy. If you choose this format, your session must include:
 
-1. **A steelman summary of each source:** present each author's argument in its strongest form: the version its author would endorse (not a caricature.
+1. **A steelman summary of each source:** present each author's argument in its strongest form, the version its author would endorse, not a caricature.
 2. **One probing question per side:** one question that presses on the optimist source's weakest assumption, and one that presses on the skeptic source's weakest assumption.
 3. **A closing reflection on which claims survive:** close by identifying which claims from each text survive contact with the other text, and which do not.
 
@@ -123,7 +123,7 @@ The session structure and timing are unchanged: within the ten-minute session, y
 
 ## Seed Reading List
 
-These are suggested sources. You are not limited to this list), propose others with instructor approval.
+These are suggested sources. You are not limited to this list, propose others with instructor approval.
 
 ### Foundational Books (chapters or excerpts)
 
@@ -174,9 +174,9 @@ Prepare exactly **three to five** discussion questions. They should progress in 
 2. **Analysis**: What does this imply? What are the assumptions behind it?
 3. **Synthesis or Position**: What should we do, or what do you now believe? (At least one question must be at this level.)
 
-At least one question should connect to something specific from the course: a lab, a reading, a lecture concept (and you should call that connection out explicitly.
+At least one question should connect to something specific from the course (a lab, a reading, a lecture concept) and you should call that connection out explicitly.
 
-If you chose the **Competing Texts Session** format, two of your questions must be the required probing questions) one per side.
+If you chose the **Competing Texts Session** format, two of your questions must be the required probing questions, one per side.
 
 ---
 

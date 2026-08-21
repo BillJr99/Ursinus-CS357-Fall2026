@@ -110,7 +110,7 @@ An AI caption generator achieves 98% word accuracy across all test speakers. A d
 
    *Hint:* Consider who you would need to partner with, how you would compensate participants fairly, how you would handle the extra annotation time required for atypical speech, and how you would ensure participants retain rights over their voice data.
 
-6. The principle "nothing about us without us" originates in disability justice advocacy. It demands that disabled people be included as decision-makers, not just as test subjects (in the design of tools intended to serve them. What would this require of a team building a new captioning AI? Name two specific decisions in the design process where inclusion of users with disabilities would change the outcome.
+6. The principle "nothing about us without us" originates in disability justice advocacy. It demands that disabled people be included as decision-makers, not just as test subjects, in the design of tools intended to serve them. What would this require of a team building a new captioning AI? Name two specific decisions in the design process where inclusion of users with disabilities would change the outcome.
 
    *Hint:* Think about decisions made early in a project) what to optimize for, how to define "good enough," which error types to prioritize reducing (and how those decisions might differ if disabled users were in the room when they were made.
 
@@ -118,7 +118,7 @@ An AI caption generator achieves 98% word accuracy across all test speakers. A d
 
 > **Common Misconception:** "A high accuracy number means the system works well for everyone."
 >
-> Aggregate accuracy metrics can be mathematically accurate and deeply misleading at the same time. If 78% of your test set performs at 99.5% accuracy, that group will dominate any weighted average) even if a minority group experiences 84% accuracy. In accessibility contexts, the groups with the worst performance are often the groups with the fewest alternatives. Reporting only the aggregate number is not just a statistical oversight; it is a choice about whose experience counts.
+> Aggregate accuracy metrics can be mathematically accurate and deeply misleading at the same time. If 78% of your test set performs at 99.5% accuracy, that group will dominate any weighted average, even if a minority group experiences 84% accuracy. In accessibility contexts, the groups with the worst performance are often the groups with the fewest alternatives. Reporting only the aggregate number is not just a statistical oversight; it is a choice about whose experience counts.
 
 Understanding who gets left out by training data gaps sets up the design question in Part III: how do we build AI interfaces that do not recreate those gaps by accident?
 
@@ -156,7 +156,7 @@ Below are five concrete design choices in a typical AI chatbot interface, evalua
 
    *Hint:* Think about who made each decision: who chose the training data? Who chose to deploy without testing with disabled users? Who controls the API's output quality? Does responsibility depend on who had the most information and the most power to change the outcome?
 
-10. The concept of *ableism* refers to discrimination and social prejudice against people with disabilities, including the assumption that a non-disabled way of interacting with the world is the natural default. Identify one design decision in a typical AI system: not necessarily one listed in Model 3 (that reflects an ableist assumption. Propose a concrete alternative design that does not make that assumption.
+10. The concept of *ableism* refers to discrimination and social prejudice against people with disabilities, including the assumption that a non-disabled way of interacting with the world is the natural default. Identify one design decision in a typical AI system (not necessarily one listed in Model 3) that reflects an ableist assumption. Propose a concrete alternative design that does not make that assumption.
 
     *Hint:* Think about defaults: what does the system assume about how fast a user reads, how a user inputs text, or what a "normal" interaction looks like? Any default that works for a non-disabled user but creates friction for a disabled user is worth examining.
 
@@ -174,7 +174,7 @@ Below are five concrete design choices in a typical AI chatbot interface, evalua
 
 2. *Disaggregated evaluation design.*
 
-   *What to do:* Design an evaluation protocol for a reading-assistance AI that simplifies complex text for users with cognitive disabilities or dyslexia. Specify: (a) how you would recruit a representative sample of participants, (b) what metrics you would collect beyond aggregate accuracy, (c) how you would structure and report results so that subgroup differences are visible rather than averaged away, and (d) what threshold would constitute "good enough" performance) and who should have the authority to decide that threshold.
+   *What to do:* Design an evaluation protocol for a reading-assistance AI that simplifies complex text for users with cognitive disabilities or dyslexia. Specify: (a) how you would recruit a representative sample of participants, (b) what metrics you would collect beyond aggregate accuracy, (c) how you would structure and report results so that subgroup differences are visible rather than averaged away, and (d) what threshold would constitute "good enough" performance, and who should have the authority to decide that threshold.
 
    *Starter hint:* Think about recruiting through disability advocacy organizations, university disability services offices, and community groups, not just general survey platforms. For metrics, consider comprehension scores (did users understand the simplified text?), preference ratings (did it feel natural?), and error rates by user subgroup. For reporting, sketch a table with one row per subgroup, not just an overall average.
 
