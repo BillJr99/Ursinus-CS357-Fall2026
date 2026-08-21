@@ -151,7 +151,7 @@ Incomplete proposals are returned ungraded; proposals whose scope is too generic
 
 ## Stage 2: Sprints
 
-Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule](/) for the boundaries. Each sprint produces: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective. Roles rotate at each boundary so every member holds every role.
+Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule]({{ site.baseurl }}/) for the boundaries. Each sprint produces: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective. Roles rotate at each boundary so every member holds every role.
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
