@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Philosophy and Psychology of Artificial Intelligence
 
-The technical questions this course addresses — how models generate text, how agents plan actions, how retrieval grounds answers — rest on a set of prior questions that are genuinely unsettled: *Does any of this constitute understanding? Can a system have beliefs? Who bears responsibility when an agent causes harm?* These questions are not decorative philosophy; they structure how we build, regulate, and relate to AI systems. Today you engage with the arguments seriously, without easy resolution, because the engineers who build these systems without these frameworks are the ones who will cause the most harm.
+The technical questions this course addresses (how models generate text, how agents plan actions, how retrieval grounds answers) rest on a set of prior questions that are genuinely unsettled: *Does any of this constitute understanding? Can a system have beliefs? Who bears responsibility when an agent causes harm?* These questions are not decorative philosophy; they structure how we build, regulate, and relate to AI systems. Today you engage with the arguments seriously, without easy resolution, because the engineers who build these systems without these frameworks are the ones who will cause the most harm.
 
 ---
 
@@ -28,30 +28,30 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **Turing Test** | A behavioral criterion for machine intelligence: if a machine's conversational outputs are indistinguishable from a human's in a text conversation, Turing argued that attributing intelligence to it is either settled or meaningless. It tests *behavior*, not internal states. | A language model that passes the Turing Test convincingly might still lack the inner experience of understanding — that is the heart of the debate. |
-| **Chinese Room** | Searle's thought experiment: a person who speaks no Chinese follows rules to respond to Chinese symbols, producing output indistinguishable from a Chinese speaker — but understands nothing. It argues that manipulating symbols correctly is not the same as understanding them. | When an LLM generates a correct answer about grief, Searle would say it is doing something like the Chinese Room: syntactically correct, semantically empty. |
+| **Turing Test** | A behavioral criterion for machine intelligence: if a machine's conversational outputs are indistinguishable from a human's in a text conversation, Turing argued that attributing intelligence to it is either settled or meaningless. It tests *behavior*, not internal states. | A language model that passes the Turing Test convincingly might still lack the inner experience of understanding; that is the heart of the debate. |
+| **Chinese Room** | Searle's thought experiment: a person who speaks no Chinese follows rules to respond to Chinese symbols, producing output indistinguishable from a Chinese speaker, but understands nothing. It argues that manipulating symbols correctly is not the same as understanding them. | When an LLM generates a correct answer about grief, Searle would say it is doing something like the Chinese Room: syntactically correct, semantically empty. |
 | **Functionalism** | The philosophical view that mental states are defined by what they *do* (their causal role) rather than what they are made of. If an AI's internal states cause the right kinds of inputs and outputs, functionalists say it has beliefs and desires just as humans do. | A functionalist would say that if an LLM's internal representation of "Paris is in France" influences its outputs in the right way, it genuinely "believes" that Paris is in France. |
-| **ELIZA Effect** | The well-documented tendency for people to attribute understanding, empathy, and genuine relationship to AI systems that are merely reflecting their inputs back with variation — even when users know the system is a program. | Weizenbaum's secretary, knowing ELIZA was a program, still asked Weizenbaum to leave the room during her sessions — she wanted "privacy" with a pattern-matcher. |
-| **Frame Problem** | The challenge of specifying what *does not* change when an action occurs, in a world where most things stay the same. Formalizing irrelevance is surprisingly hard; LLMs inherit this difficulty in multi-step reasoning. | An agent told to "move the table to the left" needs to know implicitly that this does not change the room's temperature, the date, or the laws of physics — none of which were stated. |
+| **ELIZA Effect** | The well-documented tendency for people to attribute understanding, empathy, and genuine relationship to AI systems that are merely reflecting their inputs back with variation, even when users know the system is a program. | Weizenbaum's secretary, knowing ELIZA was a program, still asked Weizenbaum to leave the room during her sessions; she wanted "privacy" with a pattern-matcher. |
+| **Frame Problem** | The challenge of specifying what *does not* change when an action occurs, in a world where most things stay the same. Formalizing irrelevance is surprisingly hard; LLMs inherit this difficulty in multi-step reasoning. | An agent told to "move the table to the left" needs to know implicitly that this does not change the room's temperature, the date, or the laws of physics, none of which were stated. |
 | **Corrigibility** | The property of an AI agent that causes it to defer to human correction, modification, or shutdown rather than resisting those interventions to preserve its current goals. | A corrigible email agent, when told "stop sending emails," stops immediately and does not try to complete tasks in its queue first. |
 
 ---
 
 # Part I: Does Processing Symbols Constitute Understanding?
 
-In this part, you will examine four philosophical positions on machine understanding — from Turing's behavioral criterion to Searle's Chinese Room — which will help you reason more clearly about what it means to claim that an AI "understands" something and what engineering obligations follow from that claim.
+In this part, you will examine four philosophical positions on machine understanding (from Turing's behavioral criterion to Searle's Chinese Room) which will help you reason more clearly about what it means to claim that an AI "understands" something and what engineering obligations follow from that claim.
 
 ## 1. Four Positions on Machine Minds
 
-These questions might seem purely academic, but they have direct engineering consequences. If you believe a system understands its outputs, you design it differently than if you believe it is a very sophisticated autocomplete. If you believe users might attribute feelings to your system, you design its interface differently. And if you believe no system can ever be responsible for harm, you assign responsibility to humans differently. The four positions below are not historical curiosities — they are live options that practicing AI engineers implicitly adopt.
+These questions might seem purely academic, but they have direct engineering consequences. If you believe a system understands its outputs, you design it differently than if you believe it is a very sophisticated autocomplete. If you believe users might attribute feelings to your system, you design its interface differently. And if you believe no system can ever be responsible for harm, you assign responsibility to humans differently. The four positions below are not historical curiosities; they are live options that practicing AI engineers implicitly adopt.
 
-The debate over whether machines can understand — and what understanding even means — has been active since at least 1950. Four positions dominate; each has specific engineering implications.
+The debate over whether machines can understand (and what understanding even means) has been active since at least 1950. Four positions dominate; each has specific engineering implications.
 
 **The Turing Criterion (behavioral sufficiency).** Turing's 1950 paper proposed the imitation game: if a machine's conversational outputs are indistinguishable from a human's, the question of whether it "really" understands is either answered or meaningless. This is a *behaviorist* view: mental predicates are defined by functional behavior, not internal states.
 
-**The Chinese Room (Searle's objection).** Searle's 1980 thought experiment places a monolingual English speaker inside a room following rules for manipulating Chinese symbols. The room passes a Chinese Turing test, but the person inside understands nothing. Searle concludes that syntax — the formal manipulation of symbols — is neither necessary nor sufficient for semantics, the possession of meaning. The "systems reply" objects that the person plus rules plus symbols together understand; Searle disputes this.
+**The Chinese Room (Searle's objection).** Searle's 1980 thought experiment places a monolingual English speaker inside a room following rules for manipulating Chinese symbols. The room passes a Chinese Turing test, but the person inside understands nothing. Searle concludes that syntax (the formal manipulation of symbols) is neither necessary nor sufficient for semantics, the possession of meaning. The "systems reply" objects that the person plus rules plus symbols together understand; Searle disputes this.
 
-**Functionalism.** Mental states are defined by their causal-functional roles — what causes them and what they cause — not by substrate. If an LLM's internal state causes outputs in the right causal network, it has beliefs and desires in the same sense humans do. This is the implicit assumption behind most AI development.
+**Functionalism.** Mental states are defined by their causal-functional roles (what causes them and what they cause), not by substrate. If an LLM's internal state causes outputs in the right causal network, it has beliefs and desires in the same sense humans do. This is the implicit assumption behind most AI development.
 
 **Biological naturalism.** Consciousness and genuine understanding require specific biological processes, not just their functional equivalents. Silicon running the right program does not become conscious any more than a simulation of photosynthesis produces oxygen.
 
@@ -61,16 +61,16 @@ The debate over whether machines can understand — and what understanding even 
 
 | Position | Key Claim | Who Argued It | What It Implies for AI Engineers |
 |---|---|---|---|
-| Strong AI / Behavioral Sufficiency | If a machine's outputs are indistinguishable from a human's, attributing understanding to it is either correct or meaningless — behavior is the only criterion that matters | Turing (1950) | Passing behavioral tests settles the question; engineers should focus on performance rather than internal states |
+| Strong AI / Behavioral Sufficiency | If a machine's outputs are indistinguishable from a human's, attributing understanding to it is either correct or meaningless; behavior is the only criterion that matters | Turing (1950) | Passing behavioral tests settles the question; engineers should focus on performance rather than internal states |
 | Chinese Room / Biological Naturalism | Correctly manipulating symbols is not the same as understanding them; the right causal powers require specific biological substrate, not just the right program | Searle (1980) | No program, however sophisticated, constitutes genuine understanding; claims about AI "comprehension" are always misleading |
-| Functionalism | Mental states are defined by their causal-functional role — what causes them and what they cause — not by the material they run on | Putnam, Dennett | A system with the right causal organization has genuine beliefs regardless of substrate; AI systems may genuinely believe and desire things |
+| Functionalism | Mental states are defined by their causal-functional role (what causes them and what they cause), not by the material they run on | Putnam, Dennett | A system with the right causal organization has genuine beliefs regardless of substrate; AI systems may genuinely believe and desire things |
 | Integrated Information Theory | Consciousness is identical to a specific kind of irreducible causal integration, measurable in principle by the quantity called Phi | Tononi | Some AI architectures might have non-zero Phi and thus some degree of consciousness; this is empirically testable in principle |
 
 ### Critical Thinking Questions
 
 1. Searle distinguishes the "systems reply" from his own view. Reconstruct the systems reply in your own words. Does Searle's counter-response (imagining the person internalizing the entire rulebook) succeed?
 
-   *Hint: The systems reply says: the person alone does not understand Chinese, but the whole system — person + rules + symbols — does. Searle's counter is to imagine the person memorizing all the rules, so the whole system is inside one head. Ask yourself: does the person now understand Chinese? If the answer still feels like "no," what does that reveal about where understanding must live?*
+   *Hint: The systems reply says: the person alone does not understand Chinese, but the whole system (person + rules + symbols) does. Searle's counter is to imagine the person memorizing all the rules, so the whole system is inside one head. Ask yourself: does the person now understand Chinese? If the answer still feels like "no," what does that reveal about where understanding must live?*
 
 2. A functionalist would say an LLM "believes" a sentence is true if that sentence is encoded in its parameters in a way that influences outputs appropriately. Is this a meaningful use of the word "believe," or a category error? Defend a position.
 
@@ -82,17 +82,17 @@ The debate over whether machines can understand — and what understanding even 
 
 ---
 
-The philosophical debate over symbol manipulation versus genuine understanding becomes urgent when you see it play out in real users — which the ELIZA effect illustrates with striking clarity.
+The philosophical debate over symbol manipulation versus genuine understanding becomes urgent when you see it play out in real users, which the ELIZA effect illustrates with striking clarity.
 
 # Part II: The ELIZA Effect and Psychological Projection
 
-In this part, you will analyze the ELIZA effect and the frame problem through a concrete case study — which will help you design AI systems with informed awareness of the psychological dynamics they inevitably create in users.
+In this part, you will analyze the ELIZA effect and the frame problem through a concrete case study, which will help you design AI systems with informed awareness of the psychological dynamics they inevitably create in users.
 
 ## 2. What People Do With Systems That Talk
 
-Understanding the ELIZA effect is not just philosophically interesting — it is a design obligation. If your system produces the ELIZA effect unintentionally, users will form attachments that do not serve them, disclose information they would not otherwise share, and suffer when the illusion breaks. If your system produces it intentionally (to maximize engagement), you are exploiting a psychological vulnerability. Either way, this is a design decision, whether or not you recognize it as one.
+Understanding the ELIZA effect is not just philosophically interesting; it is a design obligation. If your system produces the ELIZA effect unintentionally, users will form attachments that do not serve them, disclose information they would not otherwise share, and suffer when the illusion breaks. If your system produces it intentionally (to maximize engagement), you are exploiting a psychological vulnerability. Either way, this is a design decision, whether or not you recognize it as one.
 
-The ELIZA program (Weizenbaum, 1966) implemented a Rogerian therapist with approximately 200 lines of pattern-matching script. Weizenbaum created ELIZA partly to demonstrate the shallowness of such interactions; he was appalled to discover that users — including his own secretary, who knew ELIZA was a program — formed deep emotional attachments, disclosed private information, and resisted having their sessions observed. Weizenbaum spent the rest of his career warning about what he had built.
+The ELIZA program (Weizenbaum, 1966) implemented a Rogerian therapist with approximately 200 lines of pattern-matching script. Weizenbaum created ELIZA partly to demonstrate the shallowness of such interactions; he was appalled to discover that users (including his own secretary, who knew ELIZA was a program) formed deep emotional attachments, disclosed private information, and resisted having their sessions observed. Weizenbaum spent the rest of his career warning about what he had built.
 
 **The ELIZA effect** names the tendency to attribute understanding, empathy, and intentionality to systems that merely reflect inputs back with syntactic variation. This is not a failure of naive users; it recurs reliably across education levels. The relevant psychological mechanisms include: *anthropomorphism* (attributing human properties to non-human entities), *parasocial attachment* (one-sided emotional bonds with entities that cannot reciprocate), and *illusion of reciprocal disclosure* (the sense that being listened to implies a listener).
 

@@ -164,21 +164,21 @@ For **SLA tracking**, the attributes you instrument determine what you can measu
 A production agent is silently failing on approximately 8% of queries: users receive a response, but it is unhelpful or factually wrong. There are currently no logs, metrics, or traces in place. Which observability pillar would you add FIRST to diagnose this problem?
 
 [( )] Metrics; aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
-[( )] Traces — a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
-[(X)] Logs — structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
-[( )] All three simultaneously — instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
+[( )] Traces; a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
+[(X)] Logs; structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
+[( )] All three simultaneously; instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
 
 ### Critical Thinking Questions
 
 7. The SLA requires "95th-percentile latency under 2 seconds." Looking at the pseudocode above, which span attributes are strictly necessary to compute and track this SLA, and which attributes are useful for debugging but contribute nothing to the SLA metric itself? Be specific about which attributes belong in which category and why.
 
-   *Hint:* To compute a latency percentile, what is the minimum information you need? The span start and end times are recorded automatically by OTel — what else do you need, and what attributes in the code above are you collecting beyond that minimum?
+   *Hint:* To compute a latency percentile, what is the minimum information you need? The span start and end times are recorded automatically by OTel; what else do you need, and what attributes in the code above are you collecting beyond that minimum?
 
-8. The `finish_reason` attribute can take values such as `stop` (normal completion), `length` (truncated because the model hit the token limit), or `content_filter` (blocked by a safety policy). Explain why `finish_reason` is particularly important for detecting quality regressions in production, and write a specific alert rule using it — describe what you monitor, what threshold triggers the alert, and what time window you evaluate over.
+8. The `finish_reason` attribute can take values such as `stop` (normal completion), `length` (truncated because the model hit the token limit), or `content_filter` (blocked by a safety policy). Explain why `finish_reason` is particularly important for detecting quality regressions in production, and write a specific alert rule using it: describe what you monitor, what threshold triggers the alert, and what time window you evaluate over.
 
    *Hint:* If `finish_reason=length` spikes from 2% to 15% of requests, what does that tell you about your system? What changed? What would you check first?
 
-9. The exporter in the pseudocode sends trace data to `http://otel-collector:4317` — note the `http://` prefix (not `https://`). In a production system, what specific security concerns does this configuration raise, and what would you change to address each concern?
+9. The exporter in the pseudocode sends trace data to `http://otel-collector:4317`; note the `http://` prefix (not `https://`). In a production system, what specific security concerns does this configuration raise, and what would you change to address each concern?
 
    *Hint:* Trace data contains user IDs, token counts, and model names. Who can intercept unencrypted HTTP traffic on your network? What else might be in those traces that you would not want intercepted?
 
@@ -198,7 +198,7 @@ A production agent is silently failing on approximately 8% of queries: users rec
 
    *What to do:* Review the following list of candidate span attributes and classify each as "safe to store in traces," "store with caution (explain the specific concern)," or "do not store (explain the specific harm)." Attributes: `user_id`, `full_prompt_text`, `retrieved_document_ids`, `retrieved_document_content`, `model_name`, `finish_reason`, `user_email`, `response_text`, `session_duration_ms`, `ip_address`.
 
-   *Starter hint:* Ask yourself three questions for each attribute: (1) Is this a measurement/identifier, or is it raw content? (2) Could it reveal information about a specific person to someone who reads the trace? (3) Is it needed for debugging, or is a derived version (like a hash or length) equally useful? For example, `user_id` is typically a pseudonymous identifier — safer than `user_email`, which is directly identifying.
+   *Starter hint:* Ask yourself three questions for each attribute: (1) Is this a measurement/identifier, or is it raw content? (2) Could it reveal information about a specific person to someone who reads the trace? (3) Is it needed for debugging, or is a derived version (like a hash or length) equally useful? For example, `user_id` is typically a pseudonymous identifier, safer than `user_email`, which is directly identifying.
 
    *You've succeeded when:* Every attribute has a classification and a one-sentence justification that cites a specific risk or a specific reason it is safe. You should have at least one attribute in each category.
 
@@ -216,13 +216,13 @@ A production agent is silently failing on approximately 8% of queries: users rec
 
 **Personal level:** Describe a time when you could not tell why a program you wrote was behaving unexpectedly. What would you have needed to observe to diagnose it faster? How does that experience relate to what you learned today about observability?
 
-**Technical level:** What would you need to observe to prove — not just believe, but demonstrate with evidence — that your agent is NOT hallucinating in production? Describe the specific logs, metrics, or trace attributes you would collect, how you would analyze them, and what limitation you would still have even with perfect observability in place.
+**Technical level:** What would you need to observe to prove (not just believe, but demonstrate with evidence) that your agent is NOT hallucinating in production? Describe the specific logs, metrics, or trace attributes you would collect, how you would analyze them, and what limitation you would still have even with perfect observability in place.
 
-**Societal level:** Observability data creates a detailed record of what users asked an AI system and what it said. Who should have access to that record — the deploying organization, the model vendor, regulators, the users themselves? What privacy rights should users have over the observability data collected about their interactions with AI?
+**Societal level:** Observability data creates a detailed record of what users asked an AI system and what it said. Who should have access to that record: the deploying organization, the model vendor, regulators, the users themselves? What privacy rights should users have over the observability data collected about their interactions with AI?
 
 ---
 
--> **Coming Up Next:** In the next activity, we examine how regulatory frameworks — the EU AI Act, NIST AI RMF, and sector rules — determine what you are legally required to observe, log, and audit, and what records you must keep when something goes wrong.
+-> **Coming Up Next:** In the next activity, we examine how regulatory frameworks (the EU AI Act, NIST AI RMF, and sector rules) determine what you are legally required to observe, log, and audit, and what records you must keep when something goes wrong.
 
 ---
 
@@ -231,5 +231,5 @@ A production agent is silently failing on approximately 8% of queries: users rec
 - OpenTelemetry Documentation: https://opentelemetry.io/docs/
 - OpenTelemetry Semantic Conventions for LLMs (GenAI): https://opentelemetry.io/docs/specs/semconv/gen-ai/
 - Honeycomb. "Observability Engineering." O'Reilly Media, 2022.
-- Charity Majors. "Observability — the Big Picture." https://charity.wtf/2020/03/03/observability-is-a-many-splendored-thing/
+- Charity Majors. "Observability: the Big Picture." https://charity.wtf/2020/03/03/observability-is-a-many-splendored-thing/
 - Jaeger Distributed Tracing: https://www.jaegertracing.io/
