@@ -289,9 +289,9 @@ Answer individually in your final submission:
 
 ### Background Reading and References
 
-- [The AI Maker Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aimaker.md)
-- [Publishing Your Work Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
-- [Hosting with Cloudflare Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md)
+- [The AI Maker Activity]({{ site.activity_url }}liascript-aimaker.md)
+- [Publishing Your Work Activity]({{ site.activity_url }}liascript-publishing.md)
+- [Hosting with Cloudflare Activity]({{ site.activity_url }}liascript-cloudflare.md)
 
 This guide is not separately graded; its checklist is assessed within the Final Project rubric.
 
@@ -480,8 +480,8 @@ Answer these as part of your self-assessment before your project's publish gate:
 
 ### Background Reading and References
 
-- [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md)
-- [Final Project](https://www.billmongan.com/Ursinus-CS357/Projects/FinalProject)
+- [Project Studio Protocol]({{ site.activity_url }}liascript-projectstudio.md)
+- [Final Project]({{ site.baseurl }}/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 
 This guide is not separately graded; the presentation is assessed within the Final Project's **Product** dimension, and the mock-interview rehearsal is credited as **class participation**.

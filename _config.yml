@@ -20,3 +20,17 @@ include:
   - _pages
   - files
 
+# Where LiaScript activity decks are fetched from.
+#
+# Decks render from the PARENT repository so that every section and every term
+# shares one copy. Change this one line to render them from somewhere else.
+#
+# Usable only in page BODIES ({{ site.activity_url }}liascript-agentloop.md).
+# Jekyll does not evaluate Liquid inside front matter, and the deck files
+# themselves are not Jekyll-processed at all -- LiaScript fetches them straight
+# from GitHub raw -- so links in those two places are hardcoded on purpose.
+# `python3 retarget-links.py <owner/repo>` rewrites all of them in one command.
+activity_url             : "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/"
+
+exclude:
+  - retarget-links.py

@@ -116,12 +116,12 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 ## Before You Start
 
-**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md) sets up the judge-calibration work this lab grades.
+**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.activity_url }}liascript-testingagents.md) sets up the judge-calibration work this lab grades.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
-- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
+- [LLM-as-Judge Activity]({{ site.activity_url }}liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
+- [Evaluating Outputs Activity]({{ site.activity_url }}liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
 
 **Tools to install:**
 
