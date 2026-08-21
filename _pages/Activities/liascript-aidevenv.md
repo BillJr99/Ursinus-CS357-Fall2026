@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-aidevenv.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aidevenv.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-aidevenv.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-aidevenv.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -307,4 +307,4 @@ Your agent environment is version-controlled, your skills are shareable, and you
 - obra. "Superpowers plugin for OpenCode." https://github.com/obra/superpowers, the plugin used in Part III; source is instructive for writing your own skills.
 - OWASP. "OWASP Top 10 for Large Language Model Applications." https://owasp.org/www-project-top-10-for-large-language-model-applications/, the risk framework referenced in the security-review skill.
 - Simon Willison. "Prompt injection explained." https://simonwillison.net/2023/Apr/14/prompt-injection/, on why "do not use user input in prompts without sanitization" is a project invariant worth encoding.
-- This course: [Governing Coding Agents: Charters, Handoffs, and Durable Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md), the layer above `AGENTS.md`: the charter, handoff protocol, and decision records that keep many sessions pointed at one goal.
+- This course: [Governing Coding Agents: Charters, Handoffs, and Durable Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md), the layer above `AGENTS.md`: the charter, handoff protocol, and decision records that keep many sessions pointed at one goal.
