@@ -49,6 +49,18 @@ An agent you have only read about is one you cannot yet debug, and a paper you h
 
 Reading responses do two things. They make you an active reader (turning a passive skim into a takeaway, a question, and a connection) and they make you a good audience, which is half of what a seminar-style discussion needs. When a classmate leads a Reading Group session, their session is only as good as the room; your response is how you hold up your end, and it is part of your participation grade.
 
+## Before You Start
+
+**Time:** fifteen to twenty minutes, and it should stay that way. A reading response is not an essay; it is evidence that you arrived with something to say. If yours regularly takes an hour, you are writing the wrong thing.
+
+**When they are due:** before the class session they attach to. The sessions with a reading response are marked on the schedule, and "before" is load-bearing: several sessions start from the positions people staked out beforehand, so a response posted afterwards cannot do its job.
+
+**What earns credit:** engagement, not agreement, and specificity, not length. A response that says "I did not follow the argument on page 40, and here is where I lost it" is worth more than one that summarizes the whole chapter competently.
+
+> **The most useful thing you can bring is a stuck point.** Something you tried on your own machine that did not behave, or a claim in the reading you do not believe. Both are better class discussions than a well-organized summary, and both are easier to write.
+
+---
+
 ## How to Write a Reading Response
 
 Keep it to three or four sentences, posted to the discussion board before the marked session. A strong response has three moves:
@@ -98,3 +110,13 @@ Use these when a reading response is due, or any time you want to prepare a unit
 ## See also
 
 - [Reading Group Discussion Leader]({{ site.baseurl }}/Assignments/ReadingGroup): leading a session, and the audience's role.
+
+---
+
+## Self-Check
+
+- [ ] Posted **before** the session, not after.
+- [ ] It engages one specific thing: a claim, a passage, a result, rather than the reading as a whole.
+- [ ] It says what I think, including where I disagree or did not follow.
+- [ ] It gives the class something to start from: a question, a position, or a stuck point.
+- [ ] It is short. Fifteen to twenty minutes of work, not an essay.

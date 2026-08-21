@@ -29,8 +29,8 @@ In this lab, you and your partner will stand up a working local AI stack: one se
 
 Complete both prerequisite activities before lab day. These are not optional warm-ups; the lab builds directly on them.
 
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): introduces each tier of the stack and how they connect
-- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md): covers containers, images, compose files, volumes, and networks
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md): introduces each tier of the stack and how they connect
+- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md): covers containers, images, compose files, volumes, and networks
 
 ##### Tools to Install
 
@@ -811,3 +811,21 @@ The `host.docker.internal` pattern is a workaround for the fact that containers 
 
 **Prompt 6**
 You deployed five services in this lab. In a real production AI system, you might have fifty. What would need to be different about how you manage ports, secrets, health checks, and restarts at that scale? Name at least two things that do not scale from this lab's approach and explain specifically why they break down.
+
+---
+
+#### Self-Check Before You Submit
+
+- [ ] Port table complete: all five rows, with assigned ports, image names, and any collisions and how they were resolved.
+- [ ] `docker-compose.yml` includes every service (gateway, frontend, tool, agent at minimum).
+- [ ] Image tags are **pinned**, not `:latest` where something more specific exists.
+- [ ] **No secrets** anywhere in the file: placeholders or environment references only.
+- [ ] Bind mounts use `$HOME/agents/...` paths.
+- [ ] `restart` policy set explicitly on every service.
+- [ ] `extra_hosts` present on every service that reaches the host.
+- [ ] Supporting configuration files included, with tokens redacted.
+- [ ] `README.md` written for a classmate who has not done this lab: prerequisites, numbered setup, how to verify, how to stop cleanly.
+- [ ] Someone else followed that README successfully, or I followed it from a clean state myself.
+- [ ] Wiring matrix complete, with the **actual commands and actual outputs** pasted, not summaries.
+- [ ] Postmortem written.
+- [ ] Pair log with timestamped swaps.

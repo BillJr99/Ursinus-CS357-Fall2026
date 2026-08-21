@@ -9,7 +9,7 @@ info:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: Observability Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-observability.md
 tags:
 - observability
 - opentelemetry
@@ -25,7 +25,7 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Observability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md)
+- [Observability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-observability.md)
 
 This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
@@ -479,3 +479,21 @@ Fold the following into your single lab submission:
 ---
 
 When you finish, fold the deliverables above into your single Rubric Pipeline Lab submission and return to the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline) for the submission checklist.
+
+---
+
+#### Self-Check Before You Submit
+
+Held against this direction's own *What proficient work looks like* list.
+
+- [ ] Root span, LLM child spans, tool-call child spans, and retrieval spans are all present and **correctly nested**.
+- [ ] The full required attribute set exports to a running Jaeger or Zipkin instance.
+- [ ] `trace_schema.md` documents each span type with naming rationale and **cardinality justification**.
+- [ ] At least one attribute is explicitly identified as removed or redacted for PII or cardinality reasons.
+- [ ] The p95 latency span is identified, with the supporting data.
+- [ ] A failure trace is compared against a success trace, with the **divergence point named**.
+- [ ] One concrete optimization proposed and justified **from trace evidence**.
+- [ ] `trace_fast.png` and `trace_slow.png` are annotated, not raw screenshots.
+- [ ] Three alert rules with justified thresholds, in valid YAML or pseudocode.
+- [ ] `runbook.md` covers all three, naming specific span names, attribute values to inspect, and escalation criteria.
+- [ ] `baseline_results.csv` and `prompts.json` included.

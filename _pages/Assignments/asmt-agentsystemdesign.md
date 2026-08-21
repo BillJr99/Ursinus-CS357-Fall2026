@@ -50,17 +50,17 @@ info:
       proficient: The reflection names a specific assumption that changed, a specific surprise or leak surfaced by the pre-mortem or walkthrough, and the concrete revision each motivates; the submission is professionally formatted, internally consistent, fully anonymized where the domain involves real people or data, and answers every reflection prompt with a specific observation from this assignment
   readings:
     - rtitle: "Agent Design Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-designfirst.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-designfirst.md"
     - rtitle: "Pre-mortem Technique (Klein, 2007)"
       rlink: "https://hbr.org/2007/09/performing-a-project-premortem"
     - rtitle: "Case Study: Governing Coding Agents - Charters, Handoffs, and Durable Memory"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md"
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md"
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-humanintheloop.md"
 
 tags:
   - design
@@ -76,6 +76,25 @@ tags:
 Every trustworthy agent system exists twice: once as running code, and once on paper: as the specification, contract, and gates that say what it is supposed to do, what it must never do, and how anyone would know the difference. This assignment asks you to produce that paper system. Both directions below build the same skill: designing an agent system in writing, before or alongside building it, so that ambiguity and risk surface while they are still cheap to fix. Direction A designs a system that does not exist yet: a spec-first design document of the kind engineering teams call a design proposal, system spec, or RFC. Direction B designs the operating system *around* an agent: the charter, contract, gates, and handoff state that make it trustworthy, interruptible, and independent of any single model or vendor, and then proves it works by interrupting a session mid-task. In both, the document *is* the deliverable, and polish matters exactly as much as it would in production, because in Direction B these documents are the production system.
 
 Read both directions before choosing. Pick the one that best fits where you are: if you are still shaping what your system should be, Direction A forces the clarity; if you already have an agent (or a domain with real work in it), Direction B forces the accountability. Complete **one** direction in full depth; depth on one is worth far more than a shallow pass over both.
+
+---
+
+## Before You Start
+
+**This builds on:** the *Design First* session, whose agent table and pre-mortem are the backbone of Direction A, and *How I AI*, whose charter, contract, and handoff documents are the backbone of Direction B. Both are taught before this is due.
+
+**You need:** no code and no running system. Direction B's walkthrough needs an agent you can actually interrupt, so if you take it, use a real project (your Project Thread repository, or your `cs357-work`).
+
+**Time:** eight to ten hours, nearly all of it thinking and writing. The pre-mortem in Direction A and the interruption walkthrough in Direction B are the parts that take longest and carry the most points; do not leave either for the last evening.
+
+**Choosing a direction.** Read both. Then:
+
+- Take **Direction A** if your system does not exist yet, or exists only as an idea you keep re-explaining differently each time. The document is what forces one version of it.
+- Take **Direction B** if you already have an agent doing real work, or a domain with real work in it. The interruption walkthrough is unforgiving in a useful way: it tells you exactly which of your beliefs about the project were written down and which were only in your head.
+
+**Carry three columns into your design.** From the *Design First* session: for every agent and every action, be able to say **how it is observed**, **what it can reach**, and **how it is undone**. Direction A's agent table and Direction B's action classification are both places those answers belong, and a design that cannot answer them for some component has found its own weakest point.
+
+> **The single most common way this assignment loses points** is writing constraints that sound like values. "The system should handle sensitive data responsibly" cannot be checked by anyone. "The agent may read `students.csv` and may never write to it or transmit it off the machine" can. Apply the stranger test to every constraint and every rule before you submit: could someone who has never met you determine, from evidence, whether it held?
 
 ---
 
@@ -267,3 +286,41 @@ Answer each of the following with a specific observation from this assignment:
 3. **How would you know the design is actually working?** For Direction A: one week after deployment, what data would you collect, who would collect it, and what would you do if a criterion was not being met? For Direction B: which document do you predict would rot first under a month of real use, and what revision or automation would prevent it?
 4. If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you, including any text drafted or revised with an AI tool, with a brief note on how the tool was used.
 5. Approximately how many hours did it take you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. Skip the rows for the direction you did not take.
+
+**Both directions**
+
+- [ ] Every constraint or rule passes the stranger test: someone who has never met me could determine from evidence whether it held.
+- [ ] Nothing in the document is a template section I left unadapted; every retained section is unmistakably about my domain.
+- [ ] The token ledger questions are answered with arithmetic **shown**, grounded in my own tool count and prompt sizes.
+- [ ] The reflection names a specific assumption that changed, a specific leak or surprise, and the revision each motivates.
+- [ ] Real names and sensitive data are redacted.
+
+**Direction A**
+
+- [ ] The problem statement answers all four questions: what, for whom, in what context, under what constraints.
+- [ ] At least two constraints **limit the system's behavior or data access** rather than describing a desired quality.
+- [ ] Every agent row has a distinct role, a three-sentence prompt skeleton (persona and scope, primary task, explicit refusal condition), inputs, outputs, a justified decimal temperature, and tools.
+- [ ] The data-flow diagram shows every agent, every handoff **with its data format**, every external call, and every branch labeled with what triggers it.
+- [ ] Six or more risks, each naming the agent, the input type, and the output fault; each with an observable detection signal and an action the team could actually take.
+- [ ] At least one risk is about contradictory outputs between two agents, and at least one is about user data or privacy.
+- [ ] Three to five success criteria, all four columns filled, covering functional correctness plus at least one safety or quality dimension.
+- [ ] The reflection says how the data would be collected one week after deployment, by whom, and what happens if a criterion fails.
+
+**Direction B**
+
+- [ ] The charter has a one-sentence mission, a **ranked** priority list, a definition of success, and rules I could actually enforce.
+- [ ] The ranking is demonstrated with a concrete conflict it resolves, not merely asserted.
+- [ ] Every deleted template section is listed with a one-line reason.
+- [ ] Ten or more realistic domain actions classified autorun, queue, or forbidden, with explicit reversibility reasoning.
+- [ ] Every gate is justified by a concrete failure scenario: the action, the harm, and why recovery afterwards is impossible or expensive.
+- [ ] At least one forbidden item argues why **no** approval could make it safe.
+- [ ] The walkthrough interrupts a genuine mid-task moment, not a convenient boundary.
+- [ ] `SESSION` and `CURRENT_TASK` are included verbatim, each ending with a next safe action and an evidence-cited reality check.
+- [ ] The second session resumed **from the written state alone** and did not redo completed work.
+- [ ] Every question the second session had to ask a human is named, along with the document revision that now answers it.

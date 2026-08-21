@@ -67,19 +67,19 @@ info:
       proficient: The work is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, all human score sheets, and reflection answers that each cite a specific agreement figure (kappa or percent agreement), bias effect size, or evidence-faithfulness finding from the lab rather than restating the prompt
   readings:
     - rtitle: "LLM-as-Judge Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmasjudge.md"
     - rtitle: "Evaluating Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
     - rtitle: "Testing Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-testingagents.md"
     - rtitle: "LLM as Judge Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmasjudge.md"
     - rtitle: "Observability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-observability.md"
     - rtitle: "Publishing Activity: GHCR, Docker Hub, and npm"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md"
     - rtitle: "Coding Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md"
     - rtitle: "Ollama API Documentation"
       rlink: "https://github.com/ollama/ollama/blob/main/docs/api.md"
     - rtitle: "promptfoo Documentation (Part 5, Option A)"
@@ -116,12 +116,12 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 ## Before You Start
 
-**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md) sets up the judge-calibration work this lab grades.
+**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-testingagents.md) sets up the judge-calibration work this lab grades.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
-- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
+- [LLM-as-Judge Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
+- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
 
 **Tools to install:**
 
@@ -892,6 +892,27 @@ Reuse the fail-closed JSON parsing lesson from the core pipeline: assert on the 
 Check that your scorer compares the parsed level as the same type (int vs string) as the target. Inspect's log viewer (`inspect view`) shows the raw model output per sample, which usually reveals the mismatch immediately.
 
 ---
+
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. Direction 0 requirements are given in parentheses where they differ.
+
+- [ ] The batch scorer processes the **full** synthetic corpus end to end, one result row per artifact.
+- [ ] Per-criterion outcomes and an overall result, with quoted evidence strings and a weighted total (Direction 0: per-criterion judge verdicts across all items).
+- [ ] Malformed judge output is **surfaced**, not guessed at: a `REVIEW_NEEDED` flag rather than a silent default.
+- [ ] **Both partners** scored the calibration set independently and **blind to the judge** (at least eight artifacts; Direction 0, all fifteen).
+- [ ] Agreement quantified per criterion, as percent agreement or Cohen's kappa.
+- [ ] The criterion with the worst human-to-judge gap is identified, a rubric revision is tested, and the change in agreement is reported.
+- [ ] **At least one judge bias** measured with a controlled experiment (at least four matched pairs; Direction 0, the reordered and padded variants).
+- [ ] The effect is **quantified with a number**, not described.
+- [ ] A countermeasure is implemented or prescribed concretely enough to build.
+- [ ] **Evidence verification:** quotes checked against the source artifacts, hallucinated quotes flagged, and the hallucinated-evidence rate reported as a fraction and a percentage.
+- [ ] A versioned eval configuration (promptfoo YAML or an Inspect AI task) with **at least one assertion per case**, committed.
+- [ ] A **before-and-after regression run** shows a deliberate judge-prompt or rubric change being caught, with both result sets and an interpretation.
+- [ ] All human score sheets included.
+- [ ] Pair log with at least two timestamped role swaps.
+- [ ] Every reflection answer cites a specific agreement figure, bias effect size, or evidence-faithfulness finding.
+- [ ] The pathway I took is named at the top of the readme.
 
 ## Deliverables
 
