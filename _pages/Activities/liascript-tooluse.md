@@ -363,7 +363,7 @@ If your team finishes the Models early, open the lab and start the walkthrough.
 
 ## -> Coming Up Next
 
-Our agents can now call tools reliably, but why does the same tool-calling agent sometimes phrase its answers differently on identical inputs? The *Why Different Answers Every Time? Sampling, Temperature, and Generation* activity answers that next. The tool schemas you wrote today feed directly into the Local Agent Lab.
+Our agents can now call tools reliably. Notice that the wobble you studied in *Why Different Answers Every Time? Sampling, Temperature, and Generation* is exactly what makes a tool call risky: a schema the model fills in slightly differently each run is a schema your parser has to survive, which is why we pinned the temperature. Next, in *Connecting Agents to the World: MCP and APIs*, we stop hand-wiring each tool and adopt the protocol that lets an agent discover them. The tool schemas you wrote today feed directly into the Local Agent Lab.
 
 ---
 

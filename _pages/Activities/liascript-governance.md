@@ -179,7 +179,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
 ## -> Coming Up Next
 
-In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable*: how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
+Next session, *The Environmental Cost of Inference*, supplies a section your governance document does not yet have: what the system costs to run, in energy and water, and what you are willing to commit to about it. A policy that governs an agent's behavior and says nothing about its footprint is incomplete, and the numbers you work out next session are the ones that section needs. Today's drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
 
 ## Further Reading
 

@@ -264,7 +264,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ## -> Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation, and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
+We now have a RAG system that can find and deliver relevant information. Next session, *How I AI*, turns that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there. Its Part III is an open studio, so bring your pipeline-in-progress and your stuck points. The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
 
 ---
 

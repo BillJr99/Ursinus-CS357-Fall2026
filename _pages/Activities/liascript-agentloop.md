@@ -265,7 +265,7 @@ In this part, you will extend and stress-test the agent you just built (changing
 
 ---
 
--> Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it; in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity we learn to write system prompts that function like a job description for an agent.
+-> Coming Up Next: You traced this loop on paper because none of it runs on your machine yet. That changes next session: in *Your AI Workbench* we build the bench, install a model server, and hand a real coding agent a real task, so that from then on every activity is something you can run rather than read. Bring a laptop with Docker Desktop already installed.
 
 ## 5. Further Reading
 

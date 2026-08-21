@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design: how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
+-> **Coming Up Next:** Debate and consensus both need something to score the answers they produce, and today you did that scoring by hand. Next session, *Evaluating Agents: LLM-as-Judge and Rubric Pipelines*, automates it, and then asks the harder question of who audits the judge. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
 
 ---
 
