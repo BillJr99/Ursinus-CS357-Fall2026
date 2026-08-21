@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-containerizationsafety.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-containerizationsafety.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-containerizationsafety.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -358,7 +358,7 @@ Which change *reduces* an agent's blast radius?
 
 ---
 
-> **In-studio scope stops here.** The three containers above (Ollama, `llmproxy`, and Open WebUI) plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for the Local Agent Lab Directions 2-3, not as in-studio work.
+> **The required scope stops here.** The three containers above (Ollama, `llmproxy`, and Open WebUI) plus the Isolation and Trust Boundaries model are the whole minimal build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). If you are taking Local Agent Lab Direction 2 or 3, that is your target. Everything from this point down expands the stack into the full multi-service catalog: reference material, not required work.
 
 ---
 

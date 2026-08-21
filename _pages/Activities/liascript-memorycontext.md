@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-memorycontext.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-memorycontext.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-memorycontext.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorycontext.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -78,7 +78,7 @@ An agent has run 30 steps. Its prompt now contains: the system prompt (300 token
 # Part II: Memory Architectures
 
 
-> **The vocabulary of memory types** - working, episodic, semantic, and procedural - is laid out in the optional activity [Types of Agent Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-memorytypes.md). For today it is enough to know that an agent's memory is always, in the end, text placed into the prompt.
+> **The vocabulary of memory types** - working, episodic, semantic, and procedural - is laid out in the optional activity [Types of Agent Memory](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-memorytypes.md). For today it is enough to know that an agent's memory is always, in the end, text placed into the prompt.
 
 ## 3. Memory Is Just Prompt-Building
 
@@ -313,7 +313,7 @@ In this Part you quantify the memory savings from summarization, stress-test the
 
 ## -> Coming Up Next
 
-We now have agents that can manage their own memory. The *Studio: Local Agent Stack Clinic* session comes next on the schedule; bring your full local stack, because we will wire everything you have built into one system. The memory principles from today feed directly into your Final Project's context design.
+We now have agents that can manage their own memory. Last session, in *How I AI*, you built external memory by hand as a vault and a session log; today gave that practice its theory, and the two are the same idea at different scales. Next, in *Design First*, we plan a whole agent system on paper before building it, and the context budget you reasoned about today becomes one of the columns in that design. The memory principles from today feed directly into your Final Project's context design.
 
 ---
 

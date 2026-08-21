@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-ragquality.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ragquality.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-ragquality.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -224,7 +224,7 @@ With the theory of recall and reranking established, this hands-on section puts 
 
 ## Hands-On: Chunking Strategy Comparison
 
-The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
+The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
 
 Today we stay on the *judgment*: where a chunk boundary belongs, and what recall@k does and does not tell you.
 
@@ -264,7 +264,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ## -> Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information. The next challenge is that agents need to *remember* context across many turns of a conversation, and the context window is not infinite. The *Memory and the Small Context Window Principle* activity addresses this next: how agents manage, compress, and retrieve their own history without drowning in their past.
+We now have a RAG system that can find and deliver relevant information. Next session, *How I AI*, turns that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there. Its Part III is an open studio, so bring your pipeline-in-progress and your stuck points. The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
 
 ---
 

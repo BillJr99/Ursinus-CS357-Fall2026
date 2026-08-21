@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-modeltypes.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-modeltypes.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-modeltypes.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-modeltypes.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -281,7 +281,7 @@ The decision, in one line: **default to a fast instruct model; escalate to a rea
 
 These four activities are the deep dives this hub connects. Open any of them when you need the mechanics behind a stage of the lifecycle:
 
-- [How LLMs Are Built: Tokenization, Pre-Training, and Scaling](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmpretraining.md), the *pretraining -> base model* stage in full.
-- [From Rewards to Preferences: Reinforcement Learning and RLHF](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rlhf.md), RL, RLHF, and DPO, the machinery behind *alignment* and *reasoning* training.
-- [Fine-Tuning, RAG, and Prompting: Choosing the Right Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-finetuningvsrag.md), how to specialize any model type, including the LoRA shortcut.
-- [Multimodal Agents: Vision, Documents, and Code as First-Class Inputs](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multimodalagents.md), the deep dive on *vision/multimodal* models, the modality bottleneck, and grounding.
+- [How LLMs Are Built: Tokenization, Pre-Training, and Scaling](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmpretraining.md), the *pretraining -> base model* stage in full.
+- [From Rewards to Preferences: Reinforcement Learning and RLHF](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rlhf.md), RL, RLHF, and DPO, the machinery behind *alignment* and *reasoning* training.
+- [Fine-Tuning, RAG, and Prompting: Choosing the Right Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md), how to specialize any model type, including the LoRA shortcut.
+- [Multimodal Agents: Vision, Documents, and Code as First-Class Inputs](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md), the deep dive on *vision/multimodal* models, the modality bottleneck, and grounding.

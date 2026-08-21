@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-governance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-governance.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-governance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -127,7 +127,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 # Part III: Drafting Workshop
 
-> **Second half of today's session.** After the drafting workshop we take up **[Environmental Impact and the Carbon Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-environmentalai.md)**, which supplies the numbers your policy's sustainability section has to answer to.
+> **Second half of today's session.** After the drafting workshop we take up **[Environmental Impact and the Carbon Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md)**, which supplies the numbers your policy's sustainability section has to answer to.
 
 Now that your policy has a structure and you've mapped your project onto real frameworks, this workshop turns those materials into actual written policy, and then tests it against peer review and adversarial reading.
 
@@ -179,7 +179,7 @@ Now that your policy has a structure and you've mapped your project onto real fr
 
 ## -> Coming Up Next
 
-In the *Explainability and Human-Centric Design* activity, you will examine what it means for an AI system to be *explainable*: how a system earns justified trust rather than assumed trust. The governance document you are drafting today will need an explainability section, and that activity's design heuristics will tell you how to write it. Today's policy drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
+Next session, *The Environmental Cost of Inference*, supplies a section your governance document does not yet have: what the system costs to run, in energy and water, and what you are willing to commit to about it. A policy that governs an agent's behavior and says nothing about its footprint is incomplete, and the numbers you work out next session are the ones that section needs. Today's drafting also feeds Written Assignment 3 and the Responsible AI Capstone.
 
 ## Further Reading
 

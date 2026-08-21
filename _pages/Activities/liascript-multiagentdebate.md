@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-multiagentdebate.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-multiagentdebate.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design: how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
+-> **Coming Up Next:** Debate and consensus both need something to score the answers they produce, and today you did that scoring by hand. Next session, *Evaluating Agents: LLM-as-Judge and Rubric Pipelines*, automates it, and then asks the harder question of who audits the judge. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
 
 ---
 

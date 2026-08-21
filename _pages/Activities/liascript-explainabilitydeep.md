@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?... or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainabilitydeep.md
+comment: Render with https://liascript.github.io/course/?... or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainabilitydeep.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -319,7 +319,7 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 ## Further Reading
 
-- [Credit Score Feature Weight Estimator notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/CreditScoreFeatureWeightEstimator.ipynb), a runnable companion that trains a fully transparent linear credit-scoring model and reads its feature weights out as an equation, the baseline against which SHAP and LIME explanations are judged.
+- [Credit Score Feature Weight Estimator notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/CreditScoreFeatureWeightEstimator.ipynb), a runnable companion that trains a fully transparent linear credit-scoring model and reads its feature weights out as an equation, the baseline against which SHAP and LIME explanations are judged.
 - Ribeiro, M. T., Singh, S., and Guestrin, C. (2016). "'Why Should I Trust You?': Explaining the Predictions of Any Classifier." *KDD 2016*. [LIME paper]
 - Lundberg, S. M., and Lee, S.-I. (2017). "A Unified Approach to Interpreting Model Predictions." *NeurIPS 2017*. [SHAP paper]
 - Jain, S., and Wallace, B. C. (2019). "Attention is not Explanation." *NAACL 2019*.
