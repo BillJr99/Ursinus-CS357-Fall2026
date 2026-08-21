@@ -28,20 +28,20 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Stand-up** | A brief, structured team status check — each person answers the same fixed questions in two minutes or less — designed to surface blockers and share numbers, not to impress anyone | "The evaluation harness reports 73% tool-call accuracy on our test set. The riskiest unfinished piece is the citation pane." |
-| **Gallery walk** | A peer review format where teams rotate between each other's live demos and leave structured written feedback — the academic equivalent of a design critique or code review | Walkers leave one index card per station with exactly three fields: Strength, Question, Risk |
-| **Triage** | Sorting all feedback into exactly three buckets based on severity and scope — the discipline of deciding what must be fixed, what must be disclosed, and what must be deferred | Feedback: "The retrieval returns empty results for short queries" -> Fix before demo |
-| **Release-readiness checklist** | A concrete, signed-off list of verifiable conditions that must be true before a system is shown publicly — borrowed from software engineering's definition-of-done practice | Six items, each checkable with a yes/no answer, signed off by the Evaluator |
-| **Known failure case** | A defect or limitation that the team has identified, documented, and can demonstrate on demand — as opposed to a hidden failure discovered by someone else during the demo | "When the knowledge base has fewer than three documents, the system returns a hallucinated citation" |
-| **Reproducibility** | The property that another person following your written setup steps, on a fresh machine, gets the same results you do — requires fixed seeds, pinned model versions, and documented steps | Teammate who did not write the setup document successfully runs the system from scratch using only the README |
+| **Stand-up** | A brief, structured team status check (each person answers the same fixed questions in two minutes or less) designed to surface blockers and share numbers, not to impress anyone | "The evaluation harness reports 73% tool-call accuracy on our test set. The riskiest unfinished piece is the citation pane." |
+| **Gallery walk** | A peer review format where teams rotate between each other's live demos and leave structured written feedback, the academic equivalent of a design critique or code review | Walkers leave one index card per station with exactly three fields: Strength, Question, Risk |
+| **Triage** | Sorting all feedback into exactly three buckets based on severity and scope: the discipline of deciding what must be fixed, what must be disclosed, and what must be deferred | Feedback: "The retrieval returns empty results for short queries" -> Fix before demo |
+| **Release-readiness checklist** | A concrete, signed-off list of verifiable conditions that must be true before a system is shown publicly, borrowed from software engineering's definition-of-done practice | Six items, each checkable with a yes/no answer, signed off by the Evaluator |
+| **Known failure case** | A defect or limitation that the team has identified, documented, and can demonstrate on demand, as opposed to a hidden failure discovered by someone else during the demo | "When the knowledge base has fewer than three documents, the system returns a hallucinated citation" |
+| **Reproducibility** | The property that another person following your written setup steps, on a fresh machine, gets the same results you do; requires fixed seeds, pinned model versions, and documented steps | Teammate who did not write the setup document successfully runs the system from scratch using only the README |
 
 ---
 
-In this first section, each team answers four fixed questions in two minutes — no more. You will use the stand-up to surface the current state of your project: real metrics, real blockers, and the single riskiest unfinished piece. Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
+In this first section, each team answers four fixed questions in two minutes, no more. You will use the stand-up to surface the current state of your project: real metrics, real blockers, and the single riskiest unfinished piece. Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
 
 ## Model 1: Stand-Up and Readiness Assessment
 
-Stand-ups exist to surface the truth quickly. The instinct to say "it's going pretty well" instead of "the evaluation harness reports 41%" is understandable but counterproductive — the whole point of a stand-up is to get the real number into the room so the team and instructor can help. Think of it as a 120-second system health check: inputs (what you did), outputs (what the numbers say), and blockers (what is in the way).
+Stand-ups exist to surface the truth quickly. The instinct to say "it's going pretty well" instead of "the evaluation harness reports 41%" is understandable but counterproductive; the whole point of a stand-up is to get the real number into the room so the team and instructor can help. Think of it as a 120-second system health check: inputs (what you did), outputs (what the numbers say), and blockers (what is in the way).
 
 ### 1. Stand-Up (10 minutes)
 
@@ -49,11 +49,11 @@ Each team answers, in two minutes at the board, exactly four questions: What wor
 
 ### Critical Thinking Questions
 
-**Question 1.** Your team's evaluation harness reports a metric (e.g., 68% retrieval precision, 3.2/5 average response quality). Before the stand-up, your Coordinator says "let's say it's around 70% — sounds better." What is wrong with this approach, and what is the actual function of reporting the exact number?
+**Question 1.** Your team's evaluation harness reports a metric (e.g., 68% retrieval precision, 3.2/5 average response quality). Before the stand-up, your Coordinator says "let's say it's around 70%; sounds better." What is wrong with this approach, and what is the actual function of reporting the exact number?
 
 [[___ Your answer here ___]]
 
-*Hint:* Who else in the room might be able to help your team improve that metric if they know the exact number? What decisions — about where to spend the final sprint — depend on the accurate number? Consider also: if the number is 68% and the threshold for a good demo is 75%, rounding to "around 70%" hides the gap that needs to be closed.
+*Hint:* Who else in the room might be able to help your team improve that metric if they know the exact number? What decisions (about where to spend the final sprint) depend on the accurate number? Consider also: if the number is 68% and the threshold for a good demo is 75%, rounding to "around 70%" hides the gap that needs to be closed.
 
 **Question 2.** "The riskiest unfinished piece" requires the team to have already thought about failure modes. List three categories of risk that are common in AI systems but often go unmentioned in student project stand-ups, and explain why each one is hard to surface without explicitly asking for it.
 
@@ -63,7 +63,7 @@ Each team answers, in two minutes at the board, exactly four questions: What wor
 
 ---
 
-*You have surfaced your team's blockers and metrics in the stand-up. Now it is time to leave your station and critically evaluate other teams' work — and to host visitors to your own. The gallery walk format gives everyone structured roles and a specific three-field card to fill out, so no feedback is wasted on vague praise.*
+*You have surfaced your team's blockers and metrics in the stand-up. Now it is time to leave your station and critically evaluate other teams' work, and to host visitors to your own. The gallery walk format gives everyone structured roles and a specific three-field card to fill out, so no feedback is wasted on vague praise.*
 
 ## Model 2: Gallery Walk Protocol
 
@@ -79,7 +79,7 @@ Walkers leave structured feedback on cards, one card per station, with exactly t
 - **Question**: one genuine question the demo raised, ideally about a seam, a failure mode, or governance ("what happens when retrieval returns nothing?").
 - **Risk**: the one thing most likely to fail on demo day, stated kindly and concretely.
 
-Hosts demonstrate honestly: at least one *known failure case* (a defect or limitation your team has already identified, documented, and can reproduce on demand — the opposite of a surprise discovered mid-demo) must be shown at every station. A demo that hides its failure modes is rehearsing a deception, and your governance documents say otherwise.
+Hosts demonstrate honestly: at least one *known failure case* (a defect or limitation your team has already identified, documented, and can reproduce on demand, the opposite of a surprise discovered mid-demo) must be shown at every station. A demo that hides its failure modes is rehearsing a deception, and your governance documents say otherwise.
 
 ### Critical Thinking Questions
 
@@ -87,7 +87,7 @@ Hosts demonstrate honestly: at least one *known failure case* (a defect or limit
 
 [[___ Your answer here ___]]
 
-*Hint:* Recall the patterns from Unit 3: pipeline, planner, parallel specialist, self-critique, and human-in-the-loop. A "planner where a pipeline would do" means a team added dynamic task-planning overhead to a sequence of steps that is always the same — the planner adds cost and complexity without adding flexibility. Look for systems where the agents always take the same steps in the same order: that is a pipeline, not a planner problem.
+*Hint:* Recall the patterns from Unit 3: pipeline, planner, parallel specialist, self-critique, and human-in-the-loop. A "planner where a pipeline would do" means a team added dynamic task-planning overhead to a sequence of steps that is always the same; the planner adds cost and complexity without adding flexibility. Look for systems where the agents always take the same steps in the same order: that is a pipeline, not a planner problem.
 
 **Question 4.** As a host: which visitor question exposed something your team had not considered? The Scribe records it verbatim; it likely belongs in your report's limitations section.
 
@@ -103,11 +103,11 @@ Hosts demonstrate honestly: at least one *known failure case* (a defect or limit
 
 ---
 
-> **Common Misconception:** Students sometimes treat the gallery walk card format as a formality and write vague feedback ("nice work," "interesting approach") to avoid seeming critical. This defeats the purpose of the exercise. Vague positive feedback gives the receiving team nothing to act on. The most useful feedback you can give is a concrete risk or a genuine question — something the team can investigate and either fix or explicitly disclose. Kindness and specificity are not opposites.
+> **Common Misconception:** Students sometimes treat the gallery walk card format as a formality and write vague feedback ("nice work," "interesting approach") to avoid seeming critical. This defeats the purpose of the exercise. Vague positive feedback gives the receiving team nothing to act on. The most useful feedback you can give is a concrete risk or a genuine question, something the team can investigate and either fix or explicitly disclose. Kindness and specificity are not opposites.
 
 ---
 
-*You have collected feedback cards from every station. Triage is the step where raw feedback becomes a concrete action plan — which feedback demands a fix, which demands a disclosure, and which can safely wait.*
+*You have collected feedback cards from every station. Triage is the step where raw feedback becomes a concrete action plan: which feedback demands a fix, which demands a disclosure, and which can safely wait.*
 
 ## 3. Triage (20 minutes)
 
@@ -127,11 +127,11 @@ For each piece of feedback your team received, the Coordinator calls it out, the
 
 ---
 
-*With your backlog triaged and your disclosures drafted, the final step is a formal readiness check. The Evaluator's sign-off is only valid if each "Yes" comes with evidence — a time, a link, a run result — not just confidence.*
+*With your backlog triaged and your disclosures drafted, the final step is a formal readiness check. The Evaluator's sign-off is only valid if each "Yes" comes with evidence (a time, a link, a run result), not just confidence.*
 
 ## 4. Release Readiness Checklist
 
-Before demo day, every team verifies and the Evaluator signs off on each item. "Yes" requires evidence — a number, a transcript, a test run — not just belief.
+Before demo day, every team verifies and the Evaluator signs off on each item. "Yes" requires evidence (a number, a transcript, a test run), not just belief.
 
 | Item | Check | Evidence Required |
 |------|-------|-------------------|
@@ -156,11 +156,11 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 *Starter hint:* A well-formed stand-up answer for question 3 ("what did your evaluation harness report?") looks like: "Our harness evaluated 50 test queries. Tool-call accuracy was 74%. Citation accuracy was 61%. Both are lower than our target of 80%." Not: "The results were okay, around 70% or so."
 
-*You've succeeded when:* All four questions have written answers with specific numbers or named artifacts — no adjectives substituting for measurements.
+*You've succeeded when:* All four questions have written answers with specific numbers or named artifacts; no adjectives substituting for measurements.
 
 [[___ Your stand-up answers here ___]]
 
-**Exercise 2.** Write the one-sentence disclosure for each item in your "Disclose at demo" bucket. The sentence must be honest, specific, and kind — it should prepare the audience for the limitation without apologizing for the entire system.
+**Exercise 2.** Write the one-sentence disclosure for each item in your "Disclose at demo" bucket. The sentence must be honest, specific, and kind; it should prepare the audience for the limitation without apologizing for the entire system.
 
 *What to do:* For each Disclose item from the triage, draft one sentence in this form: "This system [does X well] but [does not handle Y because Z], and we plan to [address it / leave it as future work]."
 
@@ -174,7 +174,7 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 *What to do:* Set a timer for 90 seconds. Each teammate delivers the story individually. After each delivery, the Reflector gives one piece of specific feedback on the three criteria.
 
-*Starter hint:* A well-structured 90-second story: (1) What does the system do, in one sentence? (2) Here is a concrete example — [show it]. (3) Here is how you can tell whether its answer is reliable — [show the explainability affordance]. (4) Here is one thing it does not do well — [state the disclosure].
+*Starter hint:* A well-structured 90-second story: (1) What does the system do, in one sentence? (2) Here is a concrete example: [show it]. (3) Here is how you can tell whether its answer is reliable: [show the explainability affordance]. (4) Here is one thing it does not do well: [state the disclosure].
 
 *You've succeeded when:* Every teammate can deliver all four components in 90 seconds or less, and the team agrees that the disclosure and the trust affordance both come across clearly.
 
@@ -184,15 +184,15 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 ## Reflection Prompt
 
-**Personal level:** Compare the feedback you received today with the feedback your own critique agents give in your system. Which was more actionable — human peer feedback or automated evaluation? What does that comparison teach you about what human judgment adds that automated metrics cannot capture?
+**Personal level:** Compare the feedback you received today with the feedback your own critique agents give in your system. Which was more actionable, human peer feedback or automated evaluation? What does that comparison teach you about what human judgment adds that automated metrics cannot capture?
 
 > *Hint:* Think about the kinds of feedback a gallery walker might give that your automated evaluation harness cannot: "I didn't understand what I was supposed to do with this interface" or "the failure case you showed made me trust the system more, not less." What category of signal is that, and can it be quantified? How would you even design an automated test for it?
 
 **Technical level:** The release-readiness checklist asks you to test your own setup steps using the teammate who did not write them. Why is this the right person to run the test? What category of errors does this catch that the author of the steps cannot catch?
 
-**Societal level:** The gallery walk requires showing a known failure case at every station. In commercial AI deployments, failure cases are rarely demonstrated publicly. What are the incentives that lead companies to hide failure modes, and what would it take — regulation, liability, cultural norms — to make candid failure disclosure the default rather than the exception?
+**Societal level:** The gallery walk requires showing a known failure case at every station. In commercial AI deployments, failure cases are rarely demonstrated publicly. What are the incentives that lead companies to hide failure modes, and what would it take (regulation, liability, cultural norms) to make candid failure disclosure the default rather than the exception?
 
-> *Hint:* Consider the analogy to drug side-effect disclosures, which are now legally required on packaging and in ads. Before that regulation, pharmaceutical companies also had strong incentives to minimize discussion of side effects. What changed? Was it a high-profile failure, regulatory action, litigation, or cultural pressure? Which of those vectors seems most plausible for AI — and which actor (government, courts, journalists, or the public) would most likely trigger it?
+> *Hint:* Consider the analogy to drug side-effect disclosures, which are now legally required on packaging and in ads. Before that regulation, pharmaceutical companies also had strong incentives to minimize discussion of side effects. What changed? Was it a high-profile failure, regulatory action, litigation, or cultural pressure? Which of those vectors seems most plausible for AI, and which actor (government, courts, journalists, or the public) would most likely trigger it?
 
 Write a combined reflection of 150-200 words addressing at least two of the three levels. The Reflector should be prepared to share the team's most surprising piece of gallery feedback with the class.
 
@@ -200,7 +200,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team — it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
+-> Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team; it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 

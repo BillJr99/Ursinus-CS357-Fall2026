@@ -96,7 +96,7 @@ The ELIZA program (Weizenbaum, 1966) implemented a Rogerian therapist with appro
 
 **The ELIZA effect** names the tendency to attribute understanding, empathy, and intentionality to systems that merely reflect inputs back with syntactic variation. This is not a failure of naive users; it recurs reliably across education levels. The relevant psychological mechanisms include: *anthropomorphism* (attributing human properties to non-human entities), *parasocial attachment* (one-sided emotional bonds with entities that cannot reciprocate), and *illusion of reciprocal disclosure* (the sense that being listened to implies a listener).
 
-**The frame problem** (McCarthy and Hayes, 1969) arises when an agent must act in a world where only some things change. A robot instructed to move a wagon must know implicitly that moving the wagon does not change the room's temperature, the day of the week, or the existence of gravity — but these facts were never stated. Formalizing what does *not* change when an action occurs requires reasoning over an infinite set of irrelevant propositions. The frame problem is why commonsense reasoning remains hard and why LLMs that appear to reason sometimes fail on trivially obvious world-state questions.
+**The frame problem** (McCarthy and Hayes, 1969) arises when an agent must act in a world where only some things change. A robot instructed to move a wagon must know implicitly that moving the wagon does not change the room's temperature, the day of the week, or the existence of gravity, but these facts were never stated. Formalizing what does *not* change when an action occurs requires reasoning over an infinite set of irrelevant propositions. The frame problem is why commonsense reasoning remains hard and why LLMs that appear to reason sometimes fail on trivially obvious world-state questions.
 
 ---
 
@@ -106,11 +106,11 @@ Mary is a seventy-three-year-old widow whose adult children have suggested she t
 
 ### Critical Thinking Questions
 
-4. Identify at least three specific psychological mechanisms operating in Mary's case. For each, explain what the AI system did (or appeared to do) that triggered the mechanism — and note whether the trigger was intentional design.
+4. Identify at least three specific psychological mechanisms operating in Mary's case. For each, explain what the AI system did (or appeared to do) that triggered the mechanism, and note whether the trigger was intentional design.
 
    *Hint: Start with the three mechanisms named in the reading (anthropomorphism, parasocial attachment, illusion of reciprocal disclosure). For each, identify the specific feature of the AI's behavior that activated it. Then ask: was that feature deliberately engineered to produce attachment, or is it a side effect of making the system responsive and fluent?*
 
-5. Weizenbaum argued that some tasks should *never* be delegated to machines because the relationship between human and human in performing them is itself the point — therapy, care, grief counseling. Do you find this argument compelling or paternalistic? What principle would you use to distinguish delegable from non-delegable tasks?
+5. Weizenbaum argued that some tasks should *never* be delegated to machines because the relationship between human and human in performing them is itself the point: therapy, care, grief counseling. Do you find this argument compelling or paternalistic? What principle would you use to distinguish delegable from non-delegable tasks?
 
    *Hint: Consider what makes a therapy relationship valuable: is it the cognitive content (the insights produced), the emotional experience (feeling heard), or the moral relationship (being cared for by another person who could choose not to)? Which of those does an AI system provide, and which is it incapable of providing in principle?*
 
@@ -118,7 +118,7 @@ Mary is a seventy-three-year-old widow whose adult children have suggested she t
 
    *Hint: Consider what it would take for a human's interest in another person to be "genuine." Does it require consciousness? Does it require the capacity to be harmed by the other's suffering? Does it require that caring was chosen rather than designed? Now ask: does an AI system satisfy any of those criteria?*
 
-> **Common Misconception:** "Users who form emotional attachments to AI are naive or confused." Research consistently shows that the ELIZA effect operates across education levels, age groups, and even among people who know they are talking to a program. It is a feature of human social cognition, not a failure of intelligence. This means that designing an AI to be responsive, warm, and attentive will produce emotional attachment in many users regardless of disclosure — and that disclosure alone ("this is an AI") does not prevent the effect. Engineers have a responsibility to design with this knowledge, not to assume users will simply "be rational."
+> **Common Misconception:** "Users who form emotional attachments to AI are naive or confused." Research consistently shows that the ELIZA effect operates across education levels, age groups, and even among people who know they are talking to a program. It is a feature of human social cognition, not a failure of intelligence. This means that designing an AI to be responsive, warm, and attentive will produce emotional attachment in many users regardless of disclosure, and that disclosure alone ("this is an AI") does not prevent the effect. Engineers have a responsibility to design with this knowledge, not to assume users will simply "be rational."
 
 Which of the following most accurately describes the frame problem as it applies to language models?
 
@@ -133,15 +133,15 @@ Once you see how readily users project understanding and care onto AI systems, t
 
 # Part III: Responsibility and the Principal-Agent Problem
 
-In this part, you will map how responsibility for AI harm is distributed across developers, deployers, users, and affected third parties — which is essential preparation for making defensible engineering choices in your own projects.
+In this part, you will map how responsibility for AI harm is distributed across developers, deployers, users, and affected third parties, which is essential preparation for making defensible engineering choices in your own projects.
 
 ## 3. When an Agent Causes Harm, Who Answers?
 
-As you build your course project, you are creating a system that will act in the world — retrieving information, generating text, potentially affecting real decisions. The responsibility questions in this section are not hypothetical: they describe the actual legal and professional landscape you will navigate in your career. Understanding who bears responsibility for AI harm before you deploy a system is part of responsible engineering, not an afterthought.
+As you build your course project, you are creating a system that will act in the world: retrieving information, generating text, potentially affecting real decisions. The responsibility questions in this section are not hypothetical: they describe the actual legal and professional landscape you will navigate in your career. Understanding who bears responsibility for AI harm before you deploy a system is part of responsible engineering, not an afterthought.
 
 The **principal-agent problem** from economics and contract law describes any relationship in which one party (the agent) acts on behalf of another (the principal) with some degree of discretionary authority. The agent may have interests misaligned with the principal's, incomplete information, or both. Legal and organizational systems manage this through incentive design, monitoring, and liability allocation.
 
-Autonomous AI agents introduce a novel version: the agent has no interests in the conventional sense, cannot be sanctioned, and may act in ways its designers neither intended nor foresaw. The question of who bears responsibility distributes across at least four parties: the model developer, the deploying organization, the user who issued the instruction, and — in some moral frameworks — no one (because the agent had no moral standing to transfer).
+Autonomous AI agents introduce a novel version: the agent has no interests in the conventional sense, cannot be sanctioned, and may act in ways its designers neither intended nor foresaw. The question of who bears responsibility distributes across at least four parties: the model developer, the deploying organization, the user who issued the instruction, and (in some moral frameworks) no one (because the agent had no moral standing to transfer).
 
 ---
 
@@ -162,7 +162,7 @@ Autonomous AI agents introduce a novel version: the agent has no interests in th
 
 8. The **free will** question intersects here: an agent cannot be held morally responsible unless it could have done otherwise. Does an AI agent lack moral responsibility because it cannot do otherwise, or because it cannot have intentions, or for some other reason?
 
-   *Hint: A thermostat cannot do otherwise than respond to temperature, but we do not hold it morally responsible. A human who acts under severe coercion arguably "could not do otherwise" — but we still debate whether they bear responsibility. Where does an AI agent fall on this spectrum? Does the answer change if the agent learned its behavior from human feedback rather than being explicitly programmed?*
+   *Hint: A thermostat cannot do otherwise than respond to temperature, but we do not hold it morally responsible. A human who acts under severe coercion arguably "could not do otherwise", but we still debate whether they bear responsibility. Where does an AI agent fall on this spectrum? Does the answer change if the agent learned its behavior from human feedback rather than being explicitly programmed?*
 
 9. One proposed principle is **corrigibility**: an agent should always defer to its principal rather than pursue goals autonomously. Is a fully corrigible agent desirable? What happens when the principal's instructions are themselves harmful?
 
@@ -182,7 +182,7 @@ In this final part, you will apply the philosophical tools from Parts I-III to y
 
    *What to do:* Extend Searle's Chinese Room to the case of an LLM fine-tuned on a specific person's writing. Does the argument change? Argue both for the extension holding and for it breaking down, then state which you find more persuasive and why.
 
-   *Starter hint:* The original Chinese Room processes symbols according to a fixed rulebook. Fine-tuning on a person's writing means the model's parameters now encode patterns from that specific individual's language use. Does this change the "understanding" question? Consider: a very detailed rulebook derived from one person's writing is still a rulebook — or is something different happening in parameter space?*
+   *Starter hint:* The original Chinese Room processes symbols according to a fixed rulebook. Fine-tuning on a person's writing means the model's parameters now encode patterns from that specific individual's language use. Does this change the "understanding" question? Consider: a very detailed rulebook derived from one person's writing is still a rulebook, or is something different happening in parameter space?*
 
    *You've succeeded when:* You have a written argument for both positions (holding and breaking down) that is at least two sentences each, and a clear statement of which you find more persuasive with a specific reason that addresses the strongest counterargument.*
 
@@ -200,23 +200,23 @@ In this final part, you will apply the philosophical tools from Parts I-III to y
 
    *Starter hint:* Start with four parties: you (the developer), the instructor or institution deploying the project, any user who interacts with it, and any third party affected by its outputs. For each, ask: what do they know about the system's capabilities and limitations? What could they do to reduce the probability of harm? What information would they need to do that?*
 
-   *You've succeeded when:* Every party on your map has at least one named pre-harm obligation — something specific they could do or check before harm occurs, not just "respond after something goes wrong."*
+   *You've succeeded when:* Every party on your map has at least one named pre-harm obligation: something specific they could do or check before harm occurs, not just "respond after something goes wrong."*
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Weizenbaum (1976) wrote that the danger of AI is not that machines will think like people, but that people will think like machines — narrowing their conception of what thought, care, and relationship require until machines appear to satisfy them. Do you notice any version of this in your own relationship to AI tools you use regularly?
+*Personal:* Weizenbaum (1976) wrote that the danger of AI is not that machines will think like people, but that people will think like machines, narrowing their conception of what thought, care, and relationship require until machines appear to satisfy them. Do you notice any version of this in your own relationship to AI tools you use regularly?
 
-*Technical:* In your course project, what design choices did you make about how the system presents itself — its tone, its first-person or third-person framing, whether it acknowledges uncertainty, whether it discloses its nature? Now that you know about the ELIZA effect, would you change any of those choices?
+*Technical:* In your course project, what design choices did you make about how the system presents itself: its tone, its first-person or third-person framing, whether it acknowledges uncertainty, whether it discloses its nature? Now that you know about the ELIZA effect, would you change any of those choices?
 
-*Societal:* The responsibility map you drew for your project has clear gaps — parties who bear some moral responsibility but no formal legal accountability. Is this a feature or a bug of the current AI regulatory landscape? What governance change would close the most important gap?
+*Societal:* The responsibility map you drew for your project has clear gaps: parties who bear some moral responsibility but no formal legal accountability. Is this a feature or a bug of the current AI regulatory landscape? What governance change would close the most important gap?
 
 ---
 
 ## -> Coming Up Next
 
-The next activity introduces the formal ethical frameworks — utilitarian, deontological, virtue-based, and justice-based — that give you structured vocabulary for the responsibility and design questions you encountered today. You will apply those frameworks directly to the scenarios you analyzed in Model 3.
+The next activity introduces the formal ethical frameworks (utilitarian, deontological, virtue-based, and justice-based) that give you structured vocabulary for the responsibility and design questions you encountered today. You will apply those frameworks directly to the scenarios you analyzed in Model 3.
 
 ## Further Reading
 
