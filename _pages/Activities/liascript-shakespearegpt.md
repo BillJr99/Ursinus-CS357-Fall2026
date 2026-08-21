@@ -62,7 +62,7 @@ Think of building the model like a scribe who reads a book while keeping a tally
 | (space) | o | 1 | 1/4 = 0.25 |
 | (space) | n | 1 | 1/4 = 0.25 |
 
-Notice that every "b" in the training phrase is followed by "e," so the model is completely certain that "e" must come after "b" — a consequence of the tiny training set. On Shakespeare's full works this certainty evaporates because "b" appears in many more contexts ("by", "brave", "blood", …).
+Notice that every "b" in the training phrase is followed by "e," so the model is completely certain that "e" must come after "b" — a consequence of the tiny training set. On Shakespeare's full works this certainty evaporates because "b" appears in many more contexts ("by", "brave", "blood", ...).
 
 ---
 

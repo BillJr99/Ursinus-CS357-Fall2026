@@ -10,7 +10,7 @@ title: "CS357 Lab: Local Agent, Direction 0: The OpenWebUI Route (low-code)"
 >
 > - **Accounts:** none — the OpenWebUI login you create at first launch is stored locally on your own machine.
 > - **API costs:** none — everything runs against your local Ollama server.
-> - **Installs / disk:** Ollama with `llama3.2` (~2 GB, already done in the core lab's Before You Start), plus OpenWebUI via either the Docker one-liner (image around 4 GB) or `pip install open-webui` (roughly 1–2 GB of Python dependencies; Python 3.11 recommended).
+> - **Installs / disk:** Ollama with `llama3.2` (~2 GB, already done in the core lab's Before You Start), plus OpenWebUI via either the Docker one-liner (image around 4 GB) or `pip install open-webui` (roughly 1-2 GB of Python dependencies; Python 3.11 recommended).
 > - **Hardware:** any machine that runs the core lab; 8 GB of RAM is recommended.
 > - **No-cost fallback:** this *is* the no-cost, low-code route.
 
@@ -18,20 +18,20 @@ title: "CS357 Lab: Local Agent, Direction 0: The OpenWebUI Route (low-code)"
 
 ## Who this direction is for
 
-Direction 0 is the **low-code route through the entire lab**. Instead of authoring Python for core Parts 1–3, you will build the *same* agent — a persona, two working tools, guaranteed-parseable structured output, and an empirical evaluation — entirely through OpenWebUI's configuration surface. You configure and **test** tools; you do not code them.
+Direction 0 is the **low-code route through the entire lab**. Instead of authoring Python for core Parts 1-3, you will build the *same* agent — a persona, two working tools, guaranteed-parseable structured output, and an empirical evaluation — entirely through OpenWebUI's configuration surface. You configure and **test** tools; you do not code them.
 
 This route delivers the same learning objectives as the core lab: you will still design a complete system prompt, still watch an agent decide when to invoke a tool, still force a model to emit structured JSON and verify that it parses, and still run a fixed evaluation set and analyze the failures. What changes is the medium: where a core-route student writes a `parse_response` function, you will read the tool schema OpenWebUI generates and document what it tells the model; where they write an evaluation loop, you will run the queries through the UI and audit the exported transcripts.
 
-**What Direction 0 replaces and what it does not.** Parts A–E below replace core Parts 1–3 and the coding halves of the Required Explorations. Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline. Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration serve as the "from a framework / served model" flavor — note this explicitly in your writeup.
+**What Direction 0 replaces and what it does not.** Parts A–E below replace core Parts 1-3 and the coding halves of the Required Explorations. Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline. Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration serve as the "from a framework / served model" flavor — note this explicitly in your writeup.
 
-**Estimated time: 8–10 hours** across the lab window. Part A is quick; Parts B and D are where the hours go.
+**Estimated time: 8-10 hours** across the lab window. Part A is quick; Parts B and D are where the hours go.
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part A | Install and launch OpenWebUI over Ollama | 45–60 min |
-| Part B | Persona agent as a custom Model + two tested tools | 2–3 h |
-| Part C | Structured output: forced JSON, 5 validated runs | 1–1.5 h |
-| Part D | Evaluation: 10-query set, exported transcripts, results table | 2–3 h |
+| Part A | Install and launch OpenWebUI over Ollama | 45-60 min |
+| Part B | Persona agent as a custom Model + two tested tools | 2-3 h |
+| Part C | Structured output: forced JSON, 5 validated runs | 1-1.5 h |
+| Part D | Evaluation: 10-query set, exported transcripts, results table | 2-3 h |
 | Part E | Writeup (identical to core) | 1 h |
 
 ---

@@ -57,18 +57,18 @@ When an MCP client connects, it follows a three-step handshake before it can do 
 
 ```
 User Prompt
-    │
-    ▼
+    |
+    v
 Agent Process (MCP Client)
-    │  JSON-RPC over stdio or SSE
-    │  Example request: {"jsonrpc":"2.0","id":1,"method":"tools/call",
-    │                    "params":{"name":"search_kb","arguments":{"query":"RAG"}}}
-    ▼
+    |  JSON-RPC over stdio or SSE
+    |  Example request: {"jsonrpc":"2.0","id":1,"method":"tools/call",
+    |                    "params":{"name":"search_kb","arguments":{"query":"RAG"}}}
+    v
 MCP Server Process
-    │  HTTP / SDK calls to external services
-    │  Example: searches a vector database, returns matching documents
-    ▼
-External Service (GitHub, Weather API, Vector DB, …)
+    |  HTTP / SDK calls to external services
+    |  Example: searches a vector database, returns matching documents
+    v
+External Service (GitHub, Weather API, Vector DB, ...)
 ```
 
 The three MCP primitives are distinct in *who initiates* and *what is returned*:

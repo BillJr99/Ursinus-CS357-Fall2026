@@ -158,17 +158,17 @@ In this Part you will trace the planner/worker/critic loop as a sequence of API 
 The workflow pattern from Notebook 2, reduced to its skeleton:
 
 ```text
-            ┌──────────────────────────── orchestrator (your Python) ───────────────────────────┐
-            │                                                                                    │
- goal ──▶ [call 1: PLANNER]                [call 2..k: WORKER]                [call k+1: CRITIC] │
-            │ system: "Decompose the        │ system: "Execute exactly        │ system: "Judge   │
-            │ goal into numbered steps"     │ one step; use the context       │ the results      │
-            │                               │ provided"                       │ against the goal"│
-            ▼                               ▼                                 ▼                  │
-          plan  ────▶ blackboard ────▶ step results ────▶ blackboard ────▶ verdict ─────────────┘
-                                                                             │
-                                             "revise" ──▶ loop back to WORKER with critique
-                                             "done"   ──▶ final answer assembled from blackboard
+            +---------------------------- orchestrator (your Python) ---------------------------+
+            |                                                                                    |
+ goal --> [call 1: PLANNER]                [call 2..k: WORKER]                [call k+1: CRITIC] |
+            | system: "Decompose the        | system: "Execute exactly        | system: "Judge   |
+            | goal into numbered steps"     | one step; use the context       | the results      |
+            |                               | provided"                       | against the goal"|
+            v                               v                                 v                  |
+          plan  ----> blackboard ----> step results ----> blackboard ----> verdict -------------+
+                                                                             |
+                                             "revise" --> loop back to WORKER with critique
+                                             "done"   --> final answer assembled from blackboard
 ```
 
 A compact implementation — three roles, one endpoint, the loop visible:
@@ -283,7 +283,7 @@ You just built an integration in **code** — a Flask server plus a Python clien
 
 - **Trigger** — the event that starts the flow: a schedule, a new email, a new Asana task, a submitted form, or a manual button.
 - **Connector actions** — the steps that follow ("Create a Google Calendar event," "Add a task in Asana," "Post to Teams"). Each connector authenticates once with **OAuth 2.0** and the platform stores the token, so the flow itself never contains a password or key.
-- **Conditions and loops** — no-code control flow ("if the email has an attachment, then…").
+- **Conditions and loops** — no-code control flow ("if the email has an attachment, then...").
 - **HTTP action** *(premium)* — call any REST endpoint the built-in connectors do not cover, including a language-model API or one of your own services.
 - **AI Builder / Copilot** — Microsoft's built-in AI steps: prompt a model, summarize, extract fields, or classify, dragged in like any other action.
 
@@ -300,7 +300,7 @@ Flow A fires first, the moment the confirmation email lands in the inbox. Flow B
 
 1. Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
 2. Choose **Create → Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
-3. Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, …). The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
+3. Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, ...). The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
 4. Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
 5. To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint — the same request body you have used all unit.
 6. **Test** with the built-in run panel, inspect each step's inputs and outputs, then **turn the flow on** so its trigger runs it automatically.

@@ -298,7 +298,7 @@ CMD ["python", "/app/agent.py"]
 
 *What to do:* An agent runs on a machine with 16 GB of RAM. You set `--memory 2g` and allow up to 6 concurrent agent containers. Each container's LLM inference library loads a 1.5 GB model into memory when it starts. Calculate: (1) how much RAM is available for actual agent work per container, (2) what the total RAM committed across all six containers is, and (3) whether this configuration is safe given the host's 16 GB.
 
-*Starter hint:* The total memory per container = model size + agent work memory. If the Docker limit is 2 GB and the model takes 1.5 GB, the agent only has 0.5 GB for its actual work. Total committed = (memory limit per container) × (number of containers). The host OS itself needs memory too — typically 1–2 GB for the kernel and system processes.
+*Starter hint:* The total memory per container = model size + agent work memory. If the Docker limit is 2 GB and the model takes 1.5 GB, the agent only has 0.5 GB for its actual work. Total committed = (memory limit per container) × (number of containers). The host OS itself needs memory too — typically 1-2 GB for the kernel and system processes.
 
 *You've succeeded when* you have a clear arithmetic answer to all three questions and a one-sentence recommendation: is this configuration safe, and if not, what would you change?
 
@@ -358,7 +358,7 @@ Which change *reduces* an agent's blast radius?
 
 ---
 
-> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for the Local Agent Lab Directions 2–3, not as in-studio work.
+> **🛑 In-studio scope stops here.** The three containers above — Ollama, `llmproxy`, and Open WebUI — plus the Isolation and Trust Boundaries model are the entire *Studio: Local Agent Stack Clinic* build, verified with the end-to-end checks in Section 7 (the Wiring Matrix). Everything from this point down expands the stack into the full multi-service catalog: read it as reference material for the Local Agent Lab Directions 2-3, not as in-studio work.
 
 ---
 

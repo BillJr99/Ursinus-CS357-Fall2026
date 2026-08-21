@@ -37,13 +37,13 @@ To earn trust in agentic software through engineering discipline: test-driven de
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
-This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
 > **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
-> - **A GitHub repository you can push to, with GitHub Actions enabled** (Parts 3–4)
+> - **A GitHub repository you can push to, with GitHub Actions enabled** (Parts 3-4)
 > - **A TestPyPI account and API token** ([https://test.pypi.org](https://test.pypi.org) — free; if you cannot create one, the `--dry-run` alternative in Part 4 is acceptable)
 > - **Docker Desktop (or Docker Engine)** to build and run the container image in Part 4
 > - **A GitHub Personal Access Token with the `write:packages` scope** for the optional-but-encouraged push to the GitHub Container Registry (GHCR)

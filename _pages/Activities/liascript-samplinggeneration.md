@@ -106,7 +106,7 @@ Temperature, top-k, and top-p decide *which* token to pick. A few other paramete
 | `stop` | `stop` | A list of strings that, when generated, immediately end the response. | You want the model to halt at a delimiter — e.g. `"\n\n"`, `"</answer>"`, or a role tag. |
 | `seed` | `seed` | Fixes the random draw so a given prompt + settings reproduces the same output (see Exercise 1). | You need reproducible experiments or tests. |
 
-Two notes on the penalties: Ollama exposes a single `repeat_penalty` (a multiplier, typically 1.0–1.3), while the OpenAI API splits the idea into `frequency_penalty` (scales with how *often* a token has appeared) and `presence_penalty` (a flat penalty once a token appears *at all*). Both attack the same failure — degenerate repetition — from slightly different angles.
+Two notes on the penalties: Ollama exposes a single `repeat_penalty` (a multiplier, typically 1.0-1.3), while the OpenAI API splits the idea into `frequency_penalty` (scales with how *often* a token has appeared) and `presence_penalty` (a flat penalty once a token appears *at all*). Both attack the same failure — degenerate repetition — from slightly different angles.
 
 The cell below exercises three of these knobs: a short `num_predict` cap, a `repeat_penalty` to break loops, and a `stop` sequence.
 

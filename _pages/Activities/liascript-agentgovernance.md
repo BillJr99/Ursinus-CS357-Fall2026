@@ -122,7 +122,7 @@ A community template known as the "Karpathy `CLAUDE.md`," distilled from Andrej 
 
 | Karpathy-style rule | What it demands of the agent | Where the charter encodes the same idea |
 |---|---|---|
-| **Think before coding** | State assumptions, surface multiple interpretations, push back when the request seems wrong, stop when confused | Task-loop steps 1–5 (investigate, read, document findings, plan) come *before* any code |
+| **Think before coding** | State assumptions, surface multiple interpretations, push back when the request seems wrong, stop when confused | Task-loop steps 1-5 (investigate, read, document findings, plan) come *before* any code |
 | **Simplicity first** | The minimum code that solves the problem; nothing speculative | "Implement the smallest useful change"; the `FUTURE_WORK.md` parking lot keeps speculation out of the diff |
 | **Surgical changes** | Touch only what needs to change | "One logical engineering change" per commit; the git policy against duplicate/backup files |
 | **Goal-driven execution** | Verifiable success criteria, tests-first | Completion criteria in `CURRENT_TASK.md`; the regression rule; milestone success criteria |

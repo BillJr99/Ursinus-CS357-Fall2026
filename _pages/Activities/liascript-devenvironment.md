@@ -55,7 +55,7 @@ Note the address you just used: `localhost:11434`. Hold that thought — in Step
 
 Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux). If you completed the Docker from Zero activity you already did this; skip to the verification.
 
-**Disk note:** Docker Desktop plus the course image (the ML libraries are hefty) needs roughly **8–10 GB** free, on top of Ollama's models. Clear space now, not mid-download.
+**Disk note:** Docker Desktop plus the course image (the ML libraries are hefty) needs roughly **8-10 GB** free, on top of Ollama's models. Clear space now, not mid-download.
 
 Verify:
 

@@ -83,11 +83,11 @@ The context window is the agent's "desk": everything on the desk is immediately 
 
 ```
 Total budget: 8,192 tokens
-  ├── [system prompt]         ~800 tokens   (10%)
-  ├── [tool definitions]      ~400 tokens   (5%)
-  ├── [conversation history] ~5,600 tokens  (68%)
-  ├── [new user message]      ~100 tokens   (1%)
-  └── [response space]      ~1,100 tokens  (13%)
+  |-- [system prompt]         ~800 tokens   (10%)
+  |-- [tool definitions]      ~400 tokens   (5%)
+  |-- [conversation history] ~5,600 tokens  (68%)
+  |-- [new user message]      ~100 tokens   (1%)
+  `-- [response space]      ~1,100 tokens  (13%)
 
 When does the context fill up?
   After budget is assigned to system prompt + tools: 8,192 - 800 - 400 = 6,992 tokens remain
@@ -134,7 +134,7 @@ When conversations outlast the context window, the system must choose what to ke
 |:---------|:------------|:--------------------|:---------------------------|:--------------------------|:-------------|
 | **Full history** | Store every turn in a database; load all of it into the context window on every request | Very high — grows linearly with conversation length; a 100-turn conversation costs 100x more per turn than a 1-turn conversation | Perfect — nothing is lost | Low — just append to a database and load everything | Eventually hits context limit regardless; query latency grows with history length |
 | **Sliding window** | Keep only the most recent N turns in the context; older turns are dropped permanently | Low and constant — the cost is the same on turn 1 and turn 1,000 | Lossy for anything discussed more than N turns ago | Low — trivial to implement with a fixed deque | Forgets important early context — the user's name, their stated preferences, the problem they are working on — once it scrolls out of the window |
-| **Summary compression** | Use an LLM to summarize old turns into a compact representation; keep the summary in the context instead of the raw turns | Medium — the summary is typically 5–10x smaller than the original turns it replaces | Moderate — summaries capture gist but lose detail; the LLM may hallucinate facts it did not actually see | Medium — requires a summarization step with its own prompt and latency | The summarization LLM may hallucinate or omit important details; the original turns are gone once summarized |
+| **Summary compression** | Use an LLM to summarize old turns into a compact representation; keep the summary in the context instead of the raw turns | Medium — the summary is typically 5-10x smaller than the original turns it replaces | Moderate — summaries capture gist but lose detail; the LLM may hallucinate facts it did not actually see | Medium — requires a summarization step with its own prompt and latency | The summarization LLM may hallucinate or omit important details; the original turns are gone once summarized |
 | **Vector store retrieval** | Embed all turns as vectors; at each new turn, retrieve the K most semantically relevant prior turns and include only those | Medium-high — embedding cost plus vector search cost; pay only for what is retrieved | High if retrieved — but misses are invisible (the relevant turn may not be retrieved if the query does not match well) | High — requires embedding infrastructure, vector database, relevance tuning, and retrieval quality evaluation | Retrieval misses: a turn from two weeks ago that is highly relevant to today's question may not be retrieved because today's phrasing does not match the original embedding |
 
 Long-term user preference memory can be maintained in a vector store: after each session, key facts (user preferences, progress milestones, important decisions) are extracted by an LLM and stored as structured embeddings. At the start of the next session, these facts are retrieved and injected at the top of the context window as a "user profile" — before the conversation history begins.
@@ -220,7 +220,7 @@ $$
 
 | Memory Type | What It Stores | Where It Lives | When It's Accessed | Example / In Our Course |
 |-------------|---------------|-----------------|-------------------|-------------------------|
-| Working memory | The last 3–5 turns verbatim | In the prompt, always present | Every turn | The 4 most recent messages in `self.turns` |
+| Working memory | The last 3-5 turns verbatim | In the prompt, always present | Every turn | The 4 most recent messages in `self.turns` |
 | Episodic summary | A bullet-point compression of older turns, written by the model | In the prompt, always present | Every turn, replacing old verbatim turns | `self.summary`: "Chemistry exam Dec 14; user is weaker in chemistry" |
 | Long-term memory | Persistent user preferences, past decisions, reference facts | External file or vector database | On demand, when the current question seems relevant | A Chroma collection of user facts retrieved by similarity to the current question |
 

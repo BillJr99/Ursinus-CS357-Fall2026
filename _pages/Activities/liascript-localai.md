@@ -217,7 +217,7 @@ Everything else — append the user turn, resend the whole list, append the repl
 
 ### Critical Thinking Questions
 
-5. Every turn resends the *entire* history, so a 20-turn chat re-sends turns 1–19 again on turn 20. As the conversation grows, what happens to the number of tokens processed — and therefore the time and cost — per turn?
+5. Every turn resends the *entire* history, so a 20-turn chat re-sends turns 1-19 again on turn 20. As the conversation grows, what happens to the number of tokens processed — and therefore the time and cost — per turn?
 
    > *Hint: If each turn adds roughly the same number of tokens, the total sent by turn $N$ grows like $1 + 2 + \dots + N$. Is that linear or quadratic in $N$?*
 

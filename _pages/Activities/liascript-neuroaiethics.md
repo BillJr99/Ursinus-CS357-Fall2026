@@ -45,7 +45,7 @@ In this part, you will trace how major AI architectural ideas borrowed their con
 
 AI systems were not built from scratch. Almost every major architectural idea in modern AI has a cognitive science story behind it. But borrowing a metaphor from the brain is not the same as copying the brain — and the places where the analogy fails are exactly where AI systems produce unexpected failures.
 
-The McCulloch-Pitts neuron (1943) was the original metaphor: a biological neuron either fires or does not, so they modeled computation as a weighted threshold function. Hebb's rule (1949) — "neurons that fire together wire together" — became the conceptual ancestor of backpropagation: connections that contribute to correct outcomes are strengthened. Convolutional neural networks were directly inspired by Hubel and Wiesel's discovery (1959–1968) that visual cortex neurons respond to edges at specific orientations and locations before combining into higher-order features.
+The McCulloch-Pitts neuron (1943) was the original metaphor: a biological neuron either fires or does not, so they modeled computation as a weighted threshold function. Hebb's rule (1949) — "neurons that fire together wire together" — became the conceptual ancestor of backpropagation: connections that contribute to correct outcomes are strengthened. Convolutional neural networks were directly inspired by Hubel and Wiesel's discovery (1959-1968) that visual cortex neurons respond to edges at specific orientations and locations before combining into higher-order features.
 
 The transformer's **attention mechanism** borrows the vocabulary of the *attentional spotlight*: the idea from cognitive psychology that perception is not passive but directed — the mind selects and amplifies certain stimuli. In transformers, attention weights determine which parts of the input most influence each output token. The analogy is suggestive but inexact: biological attention is selective suppression and amplification implemented in prefrontal-parietal circuits, not a dot-product similarity score over a flat token sequence.
 
@@ -221,5 +221,5 @@ Human cognitive biases emerged from an evolutionary history of heuristics that w
 - Kahneman, Daniel. *Thinking, Fast and Slow*. Farrar, Straus and Giroux, 2011.
 - Lakoff, George, and Mark Johnson. *Philosophy in the Flesh: The Embodied Mind and Its Challenge to Western Thought*. Basic Books, 1999.
 - Lake, Brenden M., et al. "Building Machines That Learn and Think Like People." *Behavioral and Brain Sciences* 40 (2017): e253.
-- Liu, Nelson F., et al. "Lost in the Middle: How Language Models Use Long Contexts." *Transactions of the Association for Computational Linguistics* 12 (2024): 157–173.
+- Liu, Nelson F., et al. "Lost in the Middle: How Language Models Use Long Contexts." *Transactions of the Association for Computational Linguistics* 12 (2024): 157-173.
 - McClelland, James L. "Exploiting the Shape of Natural Language." *Trends in Cognitive Sciences* (2020).

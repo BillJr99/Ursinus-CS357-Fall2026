@@ -132,11 +132,11 @@ Cosine similarity (should be ~0.7 for similar sentences):
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part 1 | Debate | 60–90 min |
-| Part 2 | Consensus | 60–75 min |
-| Part 3 | The Shootout | 60–75 min |
-| Part 4 | Threshold Sensitivity | 30–45 min |
-| Writeup | Readme and reflection | 30–45 min |
+| Part 1 | Debate | 60-90 min |
+| Part 2 | Consensus | 60-75 min |
+| Part 3 | The Shootout | 60-75 min |
+| Part 4 | Threshold Sensitivity | 30-45 min |
+| Writeup | Readme and reflection | 30-45 min |
 
 ---
 
@@ -374,21 +374,21 @@ The grouping step is where embeddings come in. An embedding model maps each draf
 The whole pipeline looks like this:
 
 ```
-question ──> sample k drafts at high temperature      (k model calls)
-                    │
-                    ▼
-             embed each draft ──> normalize vectors
-                    │
-                    ▼
+question --> sample k drafts at high temperature      (k model calls)
+                    |
+                    v
+             embed each draft --> normalize vectors
+                    |
+                    v
              cluster by cosine distance (threshold)
-                    │
-                    ▼
+                    |
+                    v
       one representative per cluster + support count
-                    │
-                    ▼
+                    |
+                    v
              synthesizer at low temperature            (1 model call)
-                    │
-                    ▼
+                    |
+                    v
    single answer, majority-following, close-disagreement disclosed
 ```
 

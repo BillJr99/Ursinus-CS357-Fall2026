@@ -294,12 +294,12 @@ A publishable skill is a Git repository with a predictable layout. When someone 
 
 ```
 your-skills/                    ← repository root
-├── SKILL.md                    ← manifest: name, description, author, version
-├── instructions/               ← one .md file per skill in this bundle
-│   ├── safety-check.md
-│   ├── code-review.md
-│   └── obsidian-memory.md
-└── package.json                ← optional: enables npm install as alternative
+|-- SKILL.md                    ← manifest: name, description, author, version
+|-- instructions/               ← one .md file per skill in this bundle
+|   |-- safety-check.md
+|   |-- code-review.md
+|   `-- obsidian-memory.md
+`-- package.json                ← optional: enables npm install as alternative
 ```
 
 The `SKILL.md` manifest file with frontmatter:
@@ -627,7 +627,7 @@ Source: https://github.com/mattpocock/skills — MIT License.
 
 ### caveman (JuliusBrussee/caveman, MIT)
 
-**What it does:** `caveman` compresses the agent's output by 65–75% by forcing terse, article-free responses ("No articles. Short. Cave-style."). It drops filler words and pleasantries while preserving all technical terms, code, and precision. Three intensity levels (lite, full, ultra) let you tune verbosity to your task — `full` for interactive sessions where you want fast scanning; `lite` for when you still want some prose; `ultra` for token-budget-constrained pipelines. It automatically reverts to normal communication for security warnings and irreversible actions.
+**What it does:** `caveman` compresses the agent's output by 65-75% by forcing terse, article-free responses ("No articles. Short. Cave-style."). It drops filler words and pleasantries while preserving all technical terms, code, and precision. Three intensity levels (lite, full, ultra) let you tune verbosity to your task — `full` for interactive sessions where you want fast scanning; `lite` for when you still want some prose; `ultra` for token-budget-constrained pipelines. It automatically reverts to normal communication for security warnings and irreversible actions.
 
 **Why it is a good skill example:** It demonstrates scoped behavior with explicit safety overrides — the instruction to revert to normal prose for warnings is a concrete constraint that prevents the compression from obscuring critical information. It also shows how to implement multiple intensity modes within a single skill by name-parameterizing invocations.
 

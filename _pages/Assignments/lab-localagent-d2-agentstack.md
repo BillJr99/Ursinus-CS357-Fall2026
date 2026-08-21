@@ -72,15 +72,15 @@ Before writing a single config file, internalize this distinction. It is the sou
 
 ```
 Your Machine (host)
-├── Terminal: curl localhost:11434  →  hits Ollama running on host
-│
-├── Container A (open-webui)
-│   ├── curl localhost:3000         →  hits itself (useless)
-│   ├── curl host.docker.internal:11434  →  hits Ollama on host
-│   └── curl ollama:11434           →  hits Ollama container (if same network)
-│
-└── Container B (gateway)
-    └── curl host.docker.internal:11434  →  hits Ollama on host
+|-- Terminal: curl localhost:11434  →  hits Ollama running on host
+|
+|-- Container A (open-webui)
+|   |-- curl localhost:3000         →  hits itself (useless)
+|   |-- curl host.docker.internal:11434  →  hits Ollama on host
+|   `-- curl ollama:11434           →  hits Ollama container (if same network)
+|
+`-- Container B (gateway)
+    `-- curl host.docker.internal:11434  →  hits Ollama on host
 ```
 
 ##### Linux-Specific Note
@@ -161,12 +161,12 @@ Before writing any compose file, draw (or copy and annotate) this wiring diagram
 
 ```
 Agent (hermes)
-  └─── via host.docker.internal ───► Gateway (llmproxy :4000)
-                                          └──► Inference Backend (ollama :11434)
+  `--- via host.docker.internal ---> Gateway (llmproxy :4000)
+                                          `--> Inference Backend (ollama :11434)
 Frontend (open-webui :3000)
-  └─── via host.docker.internal ───► Gateway (llmproxy :4000)
+  `--- via host.docker.internal ---> Gateway (llmproxy :4000)
 Tool (searxng :8081)
-  └─── (agent calls this directly via host.docker.internal)
+  `--- (agent calls this directly via host.docker.internal)
 ```
 
 This diagram tells you exactly which `extra_hosts` stanzas you will need. Any arrow that crosses from a container to the host requires `host.docker.internal` and, on Linux, the `extra_hosts` declaration.
@@ -642,7 +642,7 @@ docker compose down
 docker compose up -d
 ```
 
-Wait for services to start (about 10–15 seconds), then verify data persistence:
+Wait for services to start (about 10-15 seconds), then verify data persistence:
 
 ```bash
 curl http://localhost:4000/models

@@ -273,7 +273,7 @@ shap.plots.text(shap_values[0])  # display explanation for first sentence
 
 [[___ Your answer here ___]]
 
-**Exercise 2.** Find a published paper, blog post, or news article that cites attention maps or attention weights as evidence that a model is interpretable, has learned meaningful structure, or can be trusted. Evaluate the claim against the Jain & Wallace (2019) critique. Is the cited use of attention weights justified? What alternative evidence of meaningful learned structure would be more convincing? Write 150–200 words.
+**Exercise 2.** Find a published paper, blog post, or news article that cites attention maps or attention weights as evidence that a model is interpretable, has learned meaningful structure, or can be trusted. Evaluate the claim against the Jain & Wallace (2019) critique. Is the cited use of attention weights justified? What alternative evidence of meaningful learned structure would be more convincing? Write 150-200 words.
 
 *What to do:* Search Google Scholar or a general web search for "attention visualization model interpretability" and find a concrete example that makes a specific claim about what the attention weights prove. Then apply the Jain & Wallace critique directly: does the article distinguish between "high attention" and "causal importance"?
 
@@ -307,7 +307,7 @@ But this activity has shown that explanations can be **unfaithful** (LIME instab
 
 **Societal level:** Who benefits if explanation requirements are easy to satisfy with plausible-but-unfaithful explanations? What incentives do companies face, and how might the law need to evolve to create the right incentives?
 
-Write a combined reflection of 150–250 words addressing at least two of the three levels. The Reflector should be prepared to share the team's position on whether current explanation requirements provide genuine protection.
+Write a combined reflection of 150-250 words addressing at least two of the three levels. The Reflector should be prepared to share the team's position on whether current explanation requirements provide genuine protection.
 
 [[___ Your reflection here ___]]
 

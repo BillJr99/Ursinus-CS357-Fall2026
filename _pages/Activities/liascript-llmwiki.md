@@ -250,7 +250,7 @@ Karpathy's framing puts you in the editor's chair while the model writes, which 
 
 **Societal level:** Karpathy's pattern is explicitly personal — it is a tool for individual knowledge workers who maintain their own vault. But the same pattern could be applied to organizational knowledge at scale: a company's entire institutional memory, maintained and queried by an LLM agent operating on a shared schema. What would be gained by doing that, and what would be irreversibly lost? Who holds the schema layer in an organizational setting, and what happens to the institution's knowledge when that person leaves?
 
-Write a combined reflection of 150–250 words addressing at least two of the three levels above. The Reflector should be prepared to share which pages the team agreed to keep writing by hand, and why.
+Write a combined reflection of 150-250 words addressing at least two of the three levels above. The Reflector should be prepared to share which pages the team agreed to keep writing by hand, and why.
 
 ---
 

@@ -129,7 +129,7 @@ Agent debugging benefits enormously from a structured approach. Without structur
 
 [[___ Your answer here ___]]
 
-> *Hint:* Start by replaying turns 1 through 32 and checking whether the behavior is correct at the end. If correct at turn 32, the bug is in turns 33–64; replay turns 33–48. If still correct, the bug is in turns 49–64; replay turns 49–56. Continue halving the range. For a 64-turn conversation, log₂(64) = 6 bisection steps are sufficient to identify the single turn that introduces the failure. At each step, you need to actually run the model with exactly that prefix of the conversation and observe the output. What are you looking for at each step — what does "correct behavior" mean at an intermediate turn, before the conversation has fully developed?
+> *Hint:* Start by replaying turns 1 through 32 and checking whether the behavior is correct at the end. If correct at turn 32, the bug is in turns 33-64; replay turns 33-48. If still correct, the bug is in turns 49-64; replay turns 49-56. Continue halving the range. For a 64-turn conversation, log₂(64) = 6 bisection steps are sufficient to identify the single turn that introduces the failure. At each step, you need to actually run the model with exactly that prefix of the conversation and observe the output. What are you looking for at each step — what does "correct behavior" mean at an intermediate turn, before the conversation has fully developed?
 
 ---
 
@@ -223,7 +223,7 @@ Run the full regression suite on every prompt change, model upgrade, and tool sc
 
 ---
 
-*Models 1–3 gave you the framework, the process, and the tools. The exercises below ask you to use all three on real agents — first by introducing and finding a bug yourself, then by designing the logging and testing infrastructure that would prevent the same bug from hiding in the future.*
+*Models 1-3 gave you the framework, the process, and the tools. The exercises below ask you to use all three on real agents — first by introducing and finding a bug yourself, then by designing the logging and testing infrastructure that would prevent the same bug from hiding in the future.*
 
 ## Exercises
 

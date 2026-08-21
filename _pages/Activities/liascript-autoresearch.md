@@ -63,15 +63,15 @@ In this Part you will map the pipeline's four stages and identify which stages r
 
 ```text
                          FAN-OUT                              FAN-IN
-              ┌────────────────────────────┐        ┌──────────────────────┐
-              │                            │        │                      │
-topics.txt ───┤  dispatcher (xargs -P 3)   │        │   merge.py           │
- topic A  ────┼──▶ worker.py A ──▶ Ollama ─┼─▶ summaries/a.md ─┐           │
- topic B  ────┼──▶ worker.py B ──▶ Ollama ─┼─▶ summaries/b.md ─┼─▶ Ollama ─┼─▶ digest.md
- topic C  ────┼──▶ worker.py C ──▶ Ollama ─┼─▶ summaries/c.md ─┘           │
-              │        │                   │        │                      │
-              │        └──(optional)──▶ SearXNG     └──────────────────────┘
-              └────────────────────────────┘
+              +----------------------------+        +----------------------+
+              |                            |        |                      |
+topics.txt ---+  dispatcher (xargs -P 3)   |        |   merge.py           |
+ topic A  ----+--> worker.py A --> Ollama -+-> summaries/a.md -+           |
+ topic B  ----+--> worker.py B --> Ollama -+-> summaries/b.md -+-> Ollama -+-> digest.md
+ topic C  ----+--> worker.py C --> Ollama -+-> summaries/c.md -+           |
+              |        |                   |        |                      |
+              |        `--(optional)--> SearXNG     `----------------------+
+              `----------------------------+
 ```
 
 Four stages, four different responsibilities:
@@ -162,8 +162,8 @@ Assume `topics.txt` contains the script's three starter topics, `PARALLELISM=3`,
 | t=0 | `bash threaded-autoresearch-setup.sh` checks `ollama` on PATH, then `curl`s `$OLLAMA_URL/api/tags` | If either fails, the script exits with install/start instructions — nothing else runs |
 | t=0 | Probe `GET $SEARXNG_URL/search?q=test&format=json` succeeds | `[setup] SearXNG detected ...` printed; `SEARXNG_URL` stays set |
 | t=1 | `xargs -0 -n 1 -P 3` launches three `worker.py` processes, one per topic | `ps aux \| grep worker.py` shows three separate PIDs |
-| t=1–2 | Each worker queries SearXNG for *its* topic, gets ≤5 snippets | Worker prompt = 1 topic + its snippets; the other two topics appear nowhere in it |
-| t=2–40 | Each worker POSTs to `$OLLAMA_URL/api/generate` with `{"model": $MODEL, "options": {"temperature": $TEMPERATURE}, "stream": false}` | Ollama serves the three requests; each returns a 150–250-word summary |
+| t=1-2 | Each worker queries SearXNG for *its* topic, gets ≤5 snippets | Worker prompt = 1 topic + its snippets; the other two topics appear nowhere in it |
+| t=2-40 | Each worker POSTs to `$OLLAMA_URL/api/generate` with `{"model": $MODEL, "options": {"temperature": $TEMPERATURE}, "stream": false}` | Ollama serves the three requests; each returns a 150-250-word summary |
 | t≈40 | Workers write `summaries/retrieval-augmented-generation-....md`, `...prompt-injection....md`, `...quantization....md` and exit | Three files exist; `[worker] '<topic>' -> summaries/<slug>.md` printed per worker |
 | t≈40 | `xargs` returns only after all three workers exit — this is the fan-in barrier | The shell line after `xargs` has not printed yet until now |
 | t≈41 | `merge.py summaries/*.md` concatenates the three summaries with `---` separators and sends **one** synthesis prompt | The merge prompt contains all three summaries but none of the raw search snippets |

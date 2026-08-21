@@ -65,7 +65,7 @@ An unattended agent needs exactly one new ingredient over the agents we have alr
 The classic `cron` line is five fields and a command. This one runs a script every day at 2:00 a.m.:
 
 ```text
-# ┌ minute  ┌ hour  ┌ day-of-month  ┌ month  ┌ day-of-week
+# + minute  + hour  + day-of-month  + month  + day-of-week
   0         2       *               *        *        /home/agent/nightly_review.sh
 ```
 

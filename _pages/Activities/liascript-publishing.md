@@ -556,7 +556,7 @@ Publishing converts your work from something you control into something the worl
 
 **Societal level:** The free tier of GHCR and npm makes publishing essentially zero-cost for anyone with an internet connection. What does it mean for software quality — and software safety — that publishing barriers are now this low? Who benefits, and who bears the risk?
 
-Write a combined reflection of 150–200 words addressing at least two of the three levels.
+Write a combined reflection of 150-200 words addressing at least two of the three levels.
 
 [[___ Your reflection here ___]]
 

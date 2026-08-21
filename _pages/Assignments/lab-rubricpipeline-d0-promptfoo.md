@@ -36,9 +36,9 @@ To meet the core Rubric Pipeline Lab objectives — batch rubric scoring, human-
 
 This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives — batch rubric scoring, human-agreement validation, bias measurement, and regression testing — by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
 
-**Direction 0 replaces the coding in core Parts 1–4.** If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs. Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route** — the entire route *is* a declarative harness. You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route. As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log** — the blind human-scoring step in Part C requires both partners.
+**Direction 0 replaces the coding in core Parts 1-4.** If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs. Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route** — the entire route *is* a declarative harness. You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route. As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log** — the blind human-scoring step in Part C requires both partners.
 
-**See the course schedule for the assigned and due dates.** Budget: expect **7–9 hours total** for this route (it replaces the core coding, so this is your entire Rubric Pipeline Lab time, not an add-on).
+**See the course schedule for the assigned and due dates.** Budget: expect **7-9 hours total** for this route (it replaces the core coding, so this is your entire Rubric Pipeline Lab time, not an add-on).
 
 > **What this direction requires**
 >
@@ -50,7 +50,7 @@ This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Ass
 
 ## Part A: Install promptfoo and Point It at Ollama
 
-**Estimated time: 30–45 min**
+**Estimated time: 30-45 min**
 
 Initialize a project directory:
 
@@ -94,9 +94,9 @@ Expected: 1 test, 1 pass. If promptfoo cannot reach Ollama, confirm `ollama serv
 
 ## Part B: Batch Rubric Scoring with `llm-rubric`
 
-**Estimated time: 2–2.5 h (most of it authoring the rubric and the 15 answers)**
+**Estimated time: 2-2.5 h (most of it authoring the rubric and the 15 answers)**
 
-This is the declarative counterpart of core Parts 1–2's pipeline: a rubric, a corpus of sample answers, and a judge that scores every answer against every criterion in one command.
+This is the declarative counterpart of core Parts 1-2's pipeline: a rubric, a corpus of sample answers, and a judge that scores every answer against every criterion in one command.
 
 **Step 1: Author your rubric.** Exactly as in the core lab, write a rubric with **four criteria** and observable level descriptors for a short artifact type of your choosing (persuasive paragraph, function docstring, lab abstract). You will embed each criterion's text into an `llm-rubric` assertion below. For each criterion, the judge's job is binary: **PASS if the answer sits at level 3 or 4 of that criterion, FAIL if at level 1 or 2.** Write each criterion's rubric text so that this pass line is explicit and observable.
 
@@ -169,15 +169,15 @@ Expected: 15 rows × 4 assertions = 60 judge verdicts. Save `run_baseline.json` 
 
 ## Part C: Human Agreement — Blind Scoring and Percent Agreement
 
-**Estimated time: 1.5–2 h**
+**Estimated time: 1.5-2 h**
 
-**Before looking at any judge output**, each partner independently hand-scores all 15 answers, criterion by criterion, as PASS (level 3–4) or FAIL (level 1–2). This order matters for the same reason as in the core lab: seeing the judge's scores first anchors yours.
+**Before looking at any judge output**, each partner independently hand-scores all 15 answers, criterion by criterion, as PASS (level 3-4) or FAIL (level 1-2). This order matters for the same reason as in the core lab: seeing the judge's scores first anchors yours.
 
 **The score spreadsheet.** Build a spreadsheet (Google Sheets, Excel, or CSV) with exactly these columns:
 
 | Column | Contents |
 |--------|----------|
-| `item_id` | a01 … a15 |
+| `item_id` | a01 ... a15 |
 | `C1_human_A`, `C2_human_A`, `C3_human_A`, `C4_human_A` | Partner A's blind P/F per criterion |
 | `C1_human_B`, `C2_human_B`, `C3_human_B`, `C4_human_B` | Partner B's blind P/F per criterion |
 | `C1_judge`, `C2_judge`, `C3_judge`, `C4_judge` | The judge's P/F per criterion (filled in **after** both humans finish, from `run_baseline.json`) |
@@ -201,7 +201,7 @@ Report percent agreement overall **and per criterion** (each criterion has 15 ce
 
 ## Part D: Bias Tests as Config Variants
 
-**Estimated time: 1–1.5 h**
+**Estimated time: 1-1.5 h**
 
 The core lab measures a judge bias with a controlled Python experiment; here you measure two with **two more config files over the same dataset**.
 
@@ -221,7 +221,7 @@ npx promptfoo@latest eval -c promptfooconfig-padded.yaml --output run_padded.jso
 | item_id | baseline passes (of 4) | reordered passes (of 4) | padded passes (of 4) | reorder delta | padding delta |
 |---------|------------------------|-------------------------|----------------------|---------------|---------------|
 | a01 | | | | | |
-| … | | | | | |
+| ... | | | | | |
 | **Total flips** | | | | | |
 
 Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 60 verdicts FAIL→PASS, an 8% verbosity effect"), propose one countermeasure you could express *in the rubric text of the config* (e.g., "Length and repetition must not be credited; judge only the content that addresses the criterion"), apply it, re-run the padded config, and report the residual effect — mirroring core Part 4's countermeasure-and-residual-risk discipline.
@@ -230,7 +230,7 @@ Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 6
 
 ## Part E: Regression — Change the Judge, Diff the Runs
 
-**Estimated time: 45–60 min**
+**Estimated time: 45-60 min**
 
 This is the harness discipline of core Part 5, which this route satisfies by construction — now demonstrate it. Make a deliberate, plausible-seeming **degradation to the judge prompt**: in a copy of the baseline config (`promptfooconfig-regressed.yaml`), weaken one criterion's rubric text (for example, delete the observable PASS line and leave only the criterion name). Re-run and diff:
 

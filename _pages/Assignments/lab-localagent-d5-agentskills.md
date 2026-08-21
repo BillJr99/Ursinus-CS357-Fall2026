@@ -77,10 +77,10 @@ Create a directory `agent-safety-skill/` in your repo with this structure:
 
 ```
 agent-safety-skill/
-├── SKILL.md          # Skill manifest and instructions
-├── README.md         # Installation and usage guide
-└── examples/
-    └── example-session.md   # A sample confirmation dialogue
+|-- SKILL.md          # Skill manifest and instructions
+|-- README.md         # Installation and usage guide
+`-- examples/
+    `-- example-session.md   # A sample confirmation dialogue
 ```
 
 **`SKILL.md`** format:
@@ -172,13 +172,13 @@ Set up the following directories in your Obsidian vault (these will sync to your
 
 ```
 vault/
-├── _index.md               # Navigation index: topic → file list
-├── context/
-│   ├── project-overview.md # What this project is about
-│   ├── conventions.md      # Coding conventions the agent should follow
-│   └── decisions.md        # Key decisions already made
-└── memories/
-    └── session-log.md      # Append-only dated session summaries
+|-- _index.md               # Navigation index: topic → file list
+|-- context/
+|   |-- project-overview.md # What this project is about
+|   |-- conventions.md      # Coding conventions the agent should follow
+|   `-- decisions.md        # Key decisions already made
+`-- memories/
+    `-- session-log.md      # Append-only dated session summaries
 ```
 
 **`vault/_index.md`** is a simple table that lets the agent navigate without reading every file:
@@ -302,15 +302,15 @@ Document results in `test-results/vault-skill-results.md`.
 
 ```
 cs357-agent-skills/
-├── agent-safety-skill/
-│   ├── SKILL.md
-│   └── README.md
-├── agent-vault-skill/
-│   ├── SKILL.md
-│   └── README.md
-├── examples/
-│   └── example-session.md
-└── README.md
+|-- agent-safety-skill/
+|   |-- SKILL.md
+|   `-- README.md
+|-- agent-vault-skill/
+|   |-- SKILL.md
+|   `-- README.md
+|-- examples/
+|   `-- example-session.md
+`-- README.md
 ```
 
 2. Exchange your repo URL with a classmate. Install their skills in your OpenCode using:
@@ -353,21 +353,21 @@ Submit a `.zip` or GitHub repo link containing:
 
 ```
 submission/
-├── agent-safety-skill/
-│   ├── SKILL.md
-│   └── README.md
-├── agent-vault-skill/
-│   ├── SKILL.md
-│   └── README.md
-├── vault/                  (snapshot of your vault structure)
-│   ├── _index.md
-│   ├── context/*.md
-│   └── memories/session-log.md   (must contain at least 2 entries)
-├── test-results/
-│   ├── safety-skill-results.md
-│   └── vault-skill-results.md
-├── opencode.json           (showing both skills loaded)
-└── reflection.md
+|-- agent-safety-skill/
+|   |-- SKILL.md
+|   `-- README.md
+|-- agent-vault-skill/
+|   |-- SKILL.md
+|   `-- README.md
+|-- vault/                  (snapshot of your vault structure)
+|   |-- _index.md
+|   |-- context/*.md
+|   `-- memories/session-log.md   (must contain at least 2 entries)
+|-- test-results/
+|   |-- safety-skill-results.md
+|   `-- vault-skill-results.md
+|-- opencode.json           (showing both skills loaded)
+`-- reflection.md
 ```
 
 **Due:** See course schedule.

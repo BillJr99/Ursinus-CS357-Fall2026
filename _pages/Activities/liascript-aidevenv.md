@@ -115,7 +115,7 @@ In this part, you will write and critique `AGENTS.md` project instruction files 
 
 **What belongs in a project instructions file:**
 
-- **Architecture overview** (2–3 sentences per component, not per file): "The ingestion pipeline reads from `data/`, embeds with Ollama, and writes to Chroma. The query path reads from Chroma only — it never writes."
+- **Architecture overview** (2-3 sentences per component, not per file): "The ingestion pipeline reads from `data/`, embeds with Ollama, and writes to Chroma. The query path reads from Chroma only — it never writes."
 - **Key invariants the agent must not violate**: "Do not modify the Chroma collection schema. Do not add new dependencies without updating `requirements.txt`."
 - **What is out of scope**: "Do not add a web UI. Do not add authentication. Do not change the embedding model without a lab-wide discussion."
 - **Where the tests are and how to run them**: "Tests live in `tests/`. Run with `pytest -q`. All tests must pass before committing."

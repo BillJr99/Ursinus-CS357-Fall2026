@@ -357,19 +357,19 @@ A push (or a manual dispatch) sets off a chain of steps. The security of the who
 
 ```text
    Developer                         GitHub Actions runner                    Cloudflare
-   ─────────                         ─────────────────────                    ──────────
-   git push  ──────────────►  ┌───────────────────────────────┐
-   (or manual  workflow_      │  GATE 1: branch == main?       │  no ─► ✗ stop
-    dispatch)                 │  GATE 2: actor on allowlist?   │  no ─► ✗ stop
-                              │  GATE 3: environment reviewer  │  no ─► ⏸ wait for approval
-                              │          approved "production"?│
-                              └───────────────┬───────────────┘
-                                              │ all gates pass
-                                              ▼
-                              ┌───────────────────────────────┐
-                              │  inject CLOUDFLARE_API_TOKEN   │   (masked as *** in logs)
-                              │  run ./deploy.sh               │ ───────────► wrangler deploy ─► ✓ live Worker
-                              └───────────────────────────────┘
+   ---------                         ---------------------                    ----------
+   git push  -------------->  +-------------------------------+
+   (or manual  workflow_      |  GATE 1: branch == main?       |  no -> ✗ stop
+    dispatch)                 |  GATE 2: actor on allowlist?   |  no -> ✗ stop
+                              |  GATE 3: environment reviewer  |  no -> ⏸ wait for approval
+                              |          approved "production"?|
+                              `---------------+---------------+
+                                              | all gates pass
+                                              v
+                              +-------------------------------+
+                              |  inject CLOUDFLARE_API_TOKEN   |   (masked as *** in logs)
+                              |  run ./deploy.sh               | -----------> wrangler deploy -> ✓ live Worker
+                              `-------------------------------+
 ```
 
 The deploy step at the bottom is trivial — it is one script call. Everything valuable is the three gates above it, and each is a separate control you configure once and the pipeline enforces forever.
@@ -447,21 +447,21 @@ A deploy identity should be able to do exactly one thing: deploy. The classic fa
 
 ```text
   GitHub Actions run                          Identity Provider          Cloud (AWS STS)
-  ──────────────────                          (token.actions.           ───────────────
+  ------------------                          (token.actions.           ---------------
                                                githubusercontent.com)
-  1. job requests an OIDC token  ───────────►  mints + SIGNS a token
+  1. job requests an OIDC token  ----------->  mints + SIGNS a token
      (id-token: write)                          with claims:
                                                   aud = sts.amazonaws.com
                                                   sub = repo:ORG/REPO:
                                                         environment:production
-  2. present signed token  ─────────────────────────────────────────►  a) fetch provider PUBLIC KEYS (JWKS)
-                                                                        b) verify SIGNATURE  ─► forged? ✗
+  2. present signed token  ----------------------------------------->  a) fetch provider PUBLIC KEYS (JWKS)
+                                                                        b) verify SIGNATURE  -> forged? ✗
                                                                         c) check AUDIENCE matches      ✗ if not
                                                                         d) check SUBJECT matches the
                                                                            role's trust policy         ✗ if not
-                                                                              │ all checks pass
-                                                                              ▼
-  3. ◄─────────────────────  short-lived credentials (expire in minutes) ◄─ assume-role
+                                                                              | all checks pass
+                                                                              v
+  3. <---------------------  short-lived credentials (expire in minutes) <- assume-role
 ```
 
 Three claims do the security work, and **the identity provider — not your workflow — stamps them**, which is why they cannot be forged:
@@ -683,7 +683,7 @@ Your team's full deploy workflow is burning the month's Actions minutes because 
 
 **Exercise 1.** Hello, edge. Scaffold, run locally, and deploy the JSON Worker from Section 4. Submit the public URL and the `curl` outputs for all three routes, including the 404.
 
-*What to do:* Follow Sections 3–5 exactly. After `wrangler deploy`, test all three routes with `curl` and copy the outputs.
+*What to do:* Follow Sections 3-5 exactly. After `wrangler deploy`, test all three routes with `curl` and copy the outputs.
 
 *Starter hint:*
 
@@ -863,7 +863,7 @@ Deployment used to be the moat that separated people with servers from everyone 
 
 **Societal level:** What does it mean for who gets to ship software that deploying a live global API now costs nothing and takes one command? What new bottleneck — skill, judgment, trust, governance — replaces the old bottleneck of "do you have a server"? Where does this course sit relative to that new bottleneck?
 
-Write a combined reflection of 150–200 words addressing at least two of the three levels.
+Write a combined reflection of 150-200 words addressing at least two of the three levels.
 
 [[___ Your reflection here ___]]
 

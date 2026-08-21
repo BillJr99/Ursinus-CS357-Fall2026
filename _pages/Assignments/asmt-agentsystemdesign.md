@@ -125,7 +125,7 @@ Write one paragraph — no more, no less — that answers all four questions:
 A good constraint limits what the system may do, what data it may use, or how it may behave when uncertain. Vague constraints ("the system should be safe and helpful") do not count — name the specific boundary, for example: "The system may only use documents the user has explicitly uploaded in the current session and must not retrieve information from the open internet."
 
 **Example problem statement (meeting summarizer):**
-> This system processes audio transcripts of team meetings and produces structured summaries for remote employees who were unable to attend. It is used within a corporate Slack workspace by teams of 5–20 people conducting 30–90 minute project syncs. Constraints: the system must never include names or identifying information in summaries without the speaker's prior consent; it must complete processing within two minutes of transcript submission; and it must abstain from summarizing any segment it cannot parse with at least 80% word-recognition confidence, flagging those segments for human review instead.
+> This system processes audio transcripts of team meetings and produces structured summaries for remote employees who were unable to attend. It is used within a corporate Slack workspace by teams of 5-20 people conducting 30-90 minute project syncs. Constraints: the system must never include names or identifying information in summaries without the speaker's prior consent; it must complete processing within two minutes of transcript submission; and it must abstain from summarizing any segment it cannot parse with at least 80% word-recognition confidence, flagging those segments for human review instead.
 
 #### Component 2: Agent Design Table
 

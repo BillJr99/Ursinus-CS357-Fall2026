@@ -259,9 +259,9 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
 
 ## 5. Further Reading
 
-- James, Witten, Hastie, and Tibshirani. *An Introduction to Statistical Learning* (2nd ed.), Chapters 2–8. The standard graduate reference for supervised ML; freely available online.
+- James, Witten, Hastie, and Tibshirani. *An Introduction to Statistical Learning* (2nd ed.), Chapters 2-8. The standard graduate reference for supervised ML; freely available online.
 - Hastie, Tibshirani, and Friedman. *The Elements of Statistical Learning* (2nd ed.), Chapter 7 (Model Assessment and Selection). The theoretical grounding for bias-variance and cross-validation.
-- Breiman, Leo. "Random Forests." *Machine Learning* 45 (2001): 5–32. The original paper; remarkably readable.
+- Breiman, Leo. "Random Forests." *Machine Learning* 45 (2001): 5-32. The original paper; remarkably readable.
 - Google Machine Learning Crash Course — [Overfitting](https://developers.google.com/machine-learning/crash-course/overfitting/overfitting). Short, visual introduction to the bias-variance tradeoff.
 - Sculley et al. "Hidden Technical Debt in Machine Learning Systems." *NeurIPS* (2015). Why clean evaluation pipelines matter in production.
 

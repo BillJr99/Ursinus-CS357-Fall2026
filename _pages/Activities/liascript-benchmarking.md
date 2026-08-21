@@ -67,7 +67,7 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 | **ImageNet** | Visual object classification across 1,000 categories | 2009 | 99%+ accuracy on the standard test set | Effectively solved; top models have surpassed human-level performance for years |
 | **MMLU** | Multidisciplinary knowledge spanning 57 academic subjects from medicine to law to history | 2020 | Above 90% for leading models | Near-saturation and suspected training contamination make it unreliable for distinguishing top systems |
 | **HumanEval** | Python code generation from function docstrings, verified by running test cases | 2021 | Above 95% for leading code models | Examples appear in pretraining corpora; scores likely inflated by memorization |
-| **MATH** | Competition-level mathematics problems requiring multi-step symbolic reasoning | 2021 | 70–90% for leading models | Partial saturation; the hardest problems remain challenging but easier problems are saturated |
+| **MATH** | Competition-level mathematics problems requiring multi-step symbolic reasoning | 2021 | 70-90% for leading models | Partial saturation; the hardest problems remain challenging but easier problems are saturated |
 | **BIG-Bench** | Over 200 diverse tasks designed to exceed model capabilities at release time | 2022 | Mixed — hardest tasks remain; many easier tasks saturated | Designed as a "living" benchmark but still subject to contamination as corpora grow |
 
 ### Critical Thinking Questions
@@ -106,7 +106,7 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 
 **Step 3 — Write instances with known answers:** Every item needs a ground-truth answer that does not depend on the model's output. For subjective items, collect independent human judgments and use majority vote or expert review.
 
-**Step 4 — Calibrate difficulty:** Aim for a spread of difficulty: approximately 20–30% easy items, 40–50% medium items, and 20–30% hard items. Pilot with human participants to calibrate before finalizing — what feels hard to the researcher may be trivial to the model or vice versa.
+**Step 4 — Calibrate difficulty:** Aim for a spread of difficulty: approximately 20-30% easy items, 40-50% medium items, and 20-30% hard items. Pilot with human participants to calibrate before finalizing — what feels hard to the researcher may be trivial to the model or vice versa.
 
 **Step 5 — Establish inter-rater reliability:** Have multiple independent humans answer every item. If humans disagree frequently on a given item, the item is ambiguous and should be revised or removed. Inter-rater agreement is typically measured with Cohen's kappa (κ) or percent agreement; κ below 0.6 is generally considered insufficient for a published benchmark.
 
@@ -168,12 +168,12 @@ Accuracy on a benchmark is one signal, but it is rarely sufficient on its own fo
 Human evaluators assess model outputs directly. Common formats:
 
 - **Pairwise preference:** Show two model responses side by side; ask a human evaluator which is better. Used extensively in RLHF training and in platforms like Chatbot Arena (lmsys.org). Pairwise judgments are more reliable than absolute ratings because they avoid the anchoring effects of rating scales.
-- **Likert scales:** Rate output on a 1–5 scale across multiple dimensions such as helpfulness, safety, and fluency. Useful for profiling multiple quality dimensions at once.
+- **Likert scales:** Rate output on a 1-5 scale across multiple dimensions such as helpfulness, safety, and fluency. Useful for profiling multiple quality dimensions at once.
 - **Task completion rate:** Give a human evaluator a goal and have them use the agent to achieve it; measure whether they succeed within a given number of turns. High ecological validity.
 
 **Strengths:** Captures qualities that automatic metrics miss — tone, appropriateness, safety edge cases that don't trigger keyword filters, and the genuine usefulness of an answer in context.
 
-**Limitations:** Expensive (professional evaluators cost $10–50 per hour), slow (days to weeks for large-scale studies), subject to annotator bias, and inconsistent across annotators and over time as annotator pools and guidelines evolve.
+**Limitations:** Expensive (professional evaluators cost $10-50 per hour), slow (days to weeks for large-scale studies), subject to annotator bias, and inconsistent across annotators and over time as annotator pools and guidelines evolve.
 
 ### Automatic Evaluation Metrics
 

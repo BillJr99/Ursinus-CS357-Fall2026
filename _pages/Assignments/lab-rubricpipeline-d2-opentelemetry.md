@@ -27,7 +27,7 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Observability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md)
 
-This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
 > **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
@@ -208,7 +208,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.trace import StatusCode
 
-# ── Configure the tracer to export to local Jaeger ──────────────────────────
+# -- Configure the tracer to export to local Jaeger --------------------------
 provider = TracerProvider()
 exporter = OTLPSpanExporter(endpoint="http://localhost:4317", insecure=True)
 provider.add_span_processor(BatchSpanProcessor(exporter))
@@ -328,10 +328,10 @@ Expected output in Jaeger: A trace with an `agent.run` root span containing nest
 
 ```
 agent.run (total: ~2000ms)
-  ├─ llm.call (800ms)
-  ├─ tool.call [web_search] (600ms)
-  ├─ llm.call (400ms)
-  └─ tool.call [fetch_url] (200ms)
+  |- llm.call (800ms)
+  |- tool.call [web_search] (600ms)
+  |- llm.call (400ms)
+  `- tool.call [fetch_url] (200ms)
 ```
 
 If all spans show at the same level (no nesting), the child spans are not being created inside a `with tracer.start_as_current_span(...)` block under the parent. Fix the nesting.

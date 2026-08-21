@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Frameworks: LangChain, CrewAI, AutoGen, Agno, and DeepAgents
 
-Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.* When the wager pays off, you write a research agent in twenty lines instead of two hundred. When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system. This activity examines what the major 2024–2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project. The arc: **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama $\rightarrow$ raising the ceiling: a deep agent**.
+Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.* When the wager pays off, you write a research agent in twenty lines instead of two hundred. When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system. This activity examines what the major 2024-2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project. The arc: **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama $\rightarrow$ raising the ceiling: a deep agent**.
 
 ---
 
@@ -350,14 +350,14 @@ In Step 2 you kept the loop; in Step 3 you wrote the handoff by hand. **DeepAgen
 - a **virtual filesystem** — it offloads long intermediate results to files (`write_file` / `read_file`) instead of carrying them in the prompt;
 - a **detailed built-in system prompt** — a long instruction set (modeled on Claude Code) that tells the model *how* to plan, delegate, and use the filesystem.
 
-You supply the tools and the instructions; the loop, the planning, and the delegation are the framework's. This tutorial builds one up in four small steps — run each cell against the same local Ollama server from Steps 1–3.
+You supply the tools and the instructions; the loop, the planning, and the delegation are the framework's. This tutorial builds one up in four small steps — run each cell against the same local Ollama server from Steps 1-3.
 
 > **A note on versions (again):** DeepAgents is young and its API moves — the top-level prompt argument has changed name (`instructions` → `system_prompt`), a sub-agent's prompt key appears in the docs as both `prompt` and `system_prompt` across releases, and sub-agents can be passed either as these dictionaries or as compiled LangGraph graphs. The code below is pinned to *conceptual clarity*, not to an exact signature. If an import or keyword fails, check the current reference at https://docs.langchain.com/oss/python/deepagents/subagents and the README at https://github.com/langchain-ai/deepagents rather than fighting the error.
 
 **Step 4a — the minimal deep agent.** One call, one tool, no loop. Notice that you never write a `for` loop or a stopping condition — the harness owns both:
 
 ```python
-# pip install deepagents   (talks to your local Ollama, same as Steps 1–3)
+# pip install deepagents   (talks to your local Ollama, same as Steps 1-3)
 from deepagents import create_deep_agent
 from langchain_core.tools import tool
 

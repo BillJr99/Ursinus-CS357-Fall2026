@@ -29,7 +29,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
 | **Token** | The basic unit an LLM reads and writes — roughly equivalent to about 3/4 of an English word on average. "Hello, world!" is approximately 4 tokens. | A 200-word response costs roughly 270 output tokens, which is the most expensive kind. |
-| **Input tokens vs. output tokens** | Input tokens are everything the model reads (your system prompt, the user's message, retrieved documents). Output tokens are everything the model generates (its response). Output tokens cost 2–4x more per token. | A 500-token system prompt sent with every request costs you input-token prices each time; a 200-token response costs output-token prices, which are higher. |
+| **Input tokens vs. output tokens** | Input tokens are everything the model reads (your system prompt, the user's message, retrieved documents). Output tokens are everything the model generates (its response). Output tokens cost 2-4x more per token. | A 500-token system prompt sent with every request costs you input-token prices each time; a 200-token response costs output-token prices, which are higher. |
 | **Prompt caching** | A provider feature that stores a static prefix of your prompt on their servers, so repeated requests that share that prefix are charged at a deeply discounted "cache read" rate instead of full input price. | Your 2,000-token system prompt, sent once and cached, costs ~10% as much on every subsequent request. |
 | **Semantic caching** | Caching AI responses by meaning rather than exact text, so that "What is the capital of France?" and "Which city is France's capital?" return the same stored answer without calling the LLM again. | A tool like GPTCache embeds incoming queries and retrieves a cached response if the similarity score is high enough. |
 | **Model routing** | Automatically directing each incoming query to the cheapest model tier capable of answering it correctly, rather than always using the most powerful (and most expensive) model. | Sending "What is 2+2?" to a tiny local model, and sending "Debug this 500-line Python traceback" to a large frontier model. |
@@ -63,7 +63,7 @@ The table below uses approximate 2025 prices for reference. Actual prices vary b
 
 ### Critical Thinking Questions
 
-1. The 10-turn conversation charges input tokens for the entire conversation history on every turn. If turn 10 includes turns 1–9 as history, how many times does turn 1's content get charged as an input token over the course of the full conversation? Generalize this to $n$ turns and explain why this pattern makes long conversations disproportionately expensive.
+1. The 10-turn conversation charges input tokens for the entire conversation history on every turn. If turn 10 includes turns 1-9 as history, how many times does turn 1's content get charged as an input token over the course of the full conversation? Generalize this to $n$ turns and explain why this pattern makes long conversations disproportionately expensive.
 
    *Hint:* On turn 2, turn 1 is in the history. On turn 3, turns 1 and 2 are in the history. Keep going. How many times total does turn 1 appear across all 10 turns?
 
@@ -134,7 +134,7 @@ Routing architectures take several forms:
 |---|---|---|---|
 | "What is the capital of France?" | Fast or tiny model (e.g., Phi-4 running locally) | Pure factual retrieval — no multi-step reasoning required; any model with basic world knowledge can answer correctly. | ~99% savings — a tiny model costs almost nothing per query. |
 | "Debug this 500-line Python traceback" | Large frontier model (e.g., Claude Opus, GPT-4) | Requires multi-step reasoning over long context; understanding of the full call stack and interaction between modules. | No savings — this query genuinely requires frontier capability. |
-| "Is this email spam?" | Dedicated binary classifier, not an LLM at all | A fine-tuned classifier is 100–1000x cheaper than an LLM and often more accurate for this single-purpose task. | ~99.9% savings — LLMs are dramatically over-engineered for binary classification at scale. |
+| "Is this email spam?" | Dedicated binary classifier, not an LLM at all | A fine-tuned classifier is 100-1000x cheaper than an LLM and often more accurate for this single-purpose task. | ~99.9% savings — LLMs are dramatically over-engineered for binary classification at scale. |
 | "Write a technical specification for a microservices API" | Large frontier model | Open-ended generation requiring coherent, technically accurate long-form structure; small models produce vague or incomplete specs. | No savings — frontier quality is genuinely needed. |
 | "Translate this sentence to Spanish" | Medium model or specialized translation model | Translation does not require frontier-level reasoning; specialized translation models (e.g., NLLB) often outperform general LLMs at lower cost. | ~80% savings depending on translation volume. |
 | "What year was Lincoln born?" | Retrieval + tiny model | The answer lives in a lookup table; generation is effectively one token; retrieval is faster and more reliable than LLM recall. | ~95% savings — retrieval is cheap; generation is minimal. |

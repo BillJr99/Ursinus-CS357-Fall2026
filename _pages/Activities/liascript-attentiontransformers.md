@@ -194,7 +194,7 @@ $$
 
 4. Suppose the sentence were "bank loan" without "river." Recompute the weights over just two tokens. Does "bank" now lean differently? This is contextualization in action.
 
-   *Hint:* Repeat Steps 1–3 from the Worked Example, but only include $j \in \{\text{bank}, \text{loan}\}$. Raw scores are still $\mathbf{q}_{\text{bank}} \cdot \mathbf{k}_j$; there are now only two softmax inputs, so the weights must sum to 1 over two tokens instead of three.
+   *Hint:* Repeat Steps 1-3 from the Worked Example, but only include $j \in \{\text{bank}, \text{loan}\}$. Raw scores are still $\mathbf{q}_{\text{bank}} \cdot \mathbf{k}_j$; there are now only two softmax inputs, so the weights must sum to 1 over two tokens instead of three.
 
 ---
 

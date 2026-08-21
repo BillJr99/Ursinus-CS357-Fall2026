@@ -144,12 +144,12 @@ This lab runs across a multi-week window (see the course schedule for the assign
 
 | Component | Estimated time |
 |-----------|----------------|
-| Core Parts 1–4 (corpus and datasheet; indexing; grounded generation; citation audit) | 4–5 hours |
-| Your chosen direction (see Choose Your Direction below) | 3–5 hours |
+| Core Parts 1-4 (corpus and datasheet; indexing; grounded generation; citation audit) | 4-5 hours |
+| Your chosen direction (see Choose Your Direction below) | 3-5 hours |
 | Writeup, learning log, and packaging | included above |
-| **Total** | **≈ 8–10 hours** |
+| **Total** | **≈ 8-10 hours** |
 
-(Direction 0, the low-code Langflow route, is estimated at 7–9 hours on its own — but it *replaces* the coding of core Parts 2–3 rather than adding to it, so the lab total stays ≈ 8–10 hours.)
+(Direction 0, the low-code Langflow route, is estimated at 7-9 hours on its own — but it *replaces* the coding of core Parts 2-3 rather than adding to it, so the lab total stays ≈ 8-10 hours.)
 
 ---
 
@@ -920,13 +920,13 @@ Add a `last_modified` timestamp to each chunk's metadata (from the file's `mtime
 
 Everyone completes core Part 1 (corpus and datasheet) and core Part 4 (citation audit). Beyond that, you choose **one** direction below. You do not do more than one. Pick the direction that most interests you, and carry your RAG Knowledge Base Lab corpus, config discipline, and evaluation habits into it.
 
-**Direction 0 is different in kind from the other two.** It is the low-code route through the middle of the lab itself: it **replaces the coding of core Parts 2–3** (indexing and grounded generation) with a visual Langflow build that meets the same requirements — two compared chunking configurations, recall@k, citations, and abstention. Core Part 1 (corpus curation + datasheet) and core Part 4 (citation audit) remain required for everyone, whichever direction you choose. Directions 1 and 2, by contrast, are extensions you complete **after** finishing core Parts 1–4 in code.
+**Direction 0 is different in kind from the other two.** It is the low-code route through the middle of the lab itself: it **replaces the coding of core Parts 2-3** (indexing and grounded generation) with a visual Langflow build that meets the same requirements — two compared chunking configurations, recall@k, citations, and abstention. Core Part 1 (corpus curation + datasheet) and core Part 4 (citation audit) remain required for everyone, whichever direction you choose. Directions 1 and 2, by contrast, are extensions you complete **after** finishing core Parts 1-4 in code.
 
 The **single 100-point grade for this lab covers your core RAG work plus your chosen direction together** — the graded rubric above still governs your score, and its rows credit a pipeline whether it is hand-coded or built as a flow. Treat the "What proficient work looks like" bullets (or the deliverables list, for Direction 0) in your chosen direction as the standard your work should meet, and fold your direction's deliverables into the same submission ZIP and readme as the core lab.
 
 Choose one:
 
-- **Direction 0: The Langflow Route (low-code)** — build the same RAG pipeline visually on a Langflow canvas over your own corpus: two chunking configurations compared by recall@k, grounded and abstaining answers, no pipeline code authorship. Estimated 7–9 hours (replacing core Parts 2–3, not adding to them).
+- **Direction 0: The Langflow Route (low-code)** — build the same RAG pipeline visually on a Langflow canvas over your own corpus: two chunking configurations compared by recall@k, grounded and abstaining answers, no pipeline code authorship. Estimated 7-9 hours (replacing core Parts 2-3, not adding to them).
 - **Direction 1: Hands-On Fine-Tuning with LoRA and QLoRA** — instead of retrieving knowledge at query time, bake domain knowledge into the weights, and decide from evidence whether that was worth it compared to your RAG pipeline. GPU or free-Colab or provided-adapter paths available — see the requirements box at its top.
 - **Direction 2: Multimodal AI and Monte Carlo Simulation** — turn from text retrieval to images, and probe where a multimodal model reads a chart confidently but wrongly, using a simulation you build as ground truth. Fully local and free (~4.7 GB model pull).
 
@@ -937,7 +937,7 @@ Choose one:
 
 This direction is the low-code route through the heart of the lab. You will build the same retrieval-augmented pipeline the core lab specifies — your corpus, chunked and embedded into Chroma, retrieved and answered with citations and abstention — but you will build it **visually in Langflow**, wiring components on a canvas instead of authoring Python. The requirements do not soften: you still compare two chunking configurations empirically, still report recall@k, still force grounding and abstention, and still audit your citations by hand. What changes is the medium.
 
-**What this replaces and what it does not.** Direction 0 replaces the *coding* of core Parts 2–3 (indexing and grounded generation). Core Part 1 — corpus curation and the datasheet — and core Part 4 — the citation audit — remain required and unchanged; you complete them exactly as written, using your Langflow pipeline's answers as the audit material. The writeup expectations are the core lab's.
+**What this replaces and what it does not.** Direction 0 replaces the *coding* of core Parts 2-3 (indexing and grounded generation). Core Part 1 — corpus curation and the datasheet — and core Part 4 — the citation audit — remain required and unchanged; you complete them exactly as written, using your Langflow pipeline's answers as the audit material. The writeup expectations are the core lab's.
 
 > **What this direction requires**
 >
@@ -947,7 +947,7 @@ This direction is the low-code route through the heart of the lab. You will buil
 > - **Hardware:** any machine that runs the core lab.
 > - **No-cost fallback:** this *is* the no-cost, low-code route.
 
-**Estimated time: 7–9 hours** (in place of core Parts 2–3, so the lab total stays ≈ 8–10 hours).
+**Estimated time: 7-9 hours** (in place of core Parts 2-3, so the lab total stays ≈ 8-10 hours).
 
 Background material: the [Visual Agent Building with Langflow activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md), especially Part IV's hands-on build — this direction extends that 30-minute build to the full lab standard.
 
@@ -1036,14 +1036,14 @@ This direction takes the opposite approach to knowledge injection from the one y
 > - **Accounts:** a free Hugging Face account. If you use a gated Llama base model, you must also accept the model license on its Hugging Face page and log in with `huggingface-cli`; the non-gated bases in the table below need no license step. A Google account if you take the free Colab path.
 > - **API costs:** none — training runs on your own GPU or on Google Colab's free tier; nothing is billed.
 > - **Installs / disk:** the training toolchain (`unsloth`, or `transformers`+`peft`+`trl`) in Colab or locally, plus a few GB of disk for model weights and the exported GGUF.
-> - **Hardware:** a CUDA GPU with roughly 6–8 GB of VRAM — **or no GPU at all**, using one of the two no-GPU paths below.
+> - **Hardware:** a CUDA GPU with roughly 6-8 GB of VRAM — **or no GPU at all**, using one of the two no-GPU paths below.
 > - **No-cost fallback:** Google Colab's free T4 tier runs every step of this direction; if Colab is unavailable to you, the provided-artifact variant below skips training entirely and still earns full credit.
 
-**Time budget:** expect 2–3 hours of active work, with training running in the background (or none at all on the provided-artifact variant).
+**Time budget:** expect 2-3 hours of active work, with training running in the background (or none at all on the provided-artifact variant).
 
 ##### No GPU? Two paths, both full credit
 
-1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A–D exactly as written in the notebook. A 3.8B–8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15–60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
+1. **Colab path (the default no-GPU route).** Everything in this direction runs on Google Colab's free T4 GPU: follow the "If using Google Colab with Unsloth (recommended)" setup cell below, then work through Steps A–D exactly as written in the notebook. A 3.8B–8B model with QLoRA fits comfortably in the free tier's ~15 GB of VRAM in a 15-60 minute training run. Download the exported GGUF at the end of Step C.5 and finish the Ollama deployment on your own machine.
 
 2. **Provided-artifact variant (only if Colab is unavailable to you).** Skip training and start from a published adapter: search the Hugging Face Hub for a public LoRA adapter for `llama3.2` — any published llama3.2 LoRA adapter works; pick one whose model card describes its training domain, and cite it — and download it. Then perform **only the deployment and evaluation half** of this direction: the GGUF merge (Step C.5, merging the downloaded adapter instead of one you trained), the `Modelfile`, the `ollama create` / `ollama run` deployment, and the full before/after evaluation of Step C comparing the base model against the adapted model. **This variant earns full credit, with the evaluation weighted more heavily** in place of the training run: extend your before/after comparison to at least 15 prompts (rather than 10), and include the regression analysis, since the evaluation is your primary evidence. The model card (Step D) is still required — document the adapter's provenance, dataset, and license in place of your own training details. This path preserves the direction's deployment and evaluation learning objectives; the loss-curve deliverable is waived for it.
 
@@ -1060,7 +1060,7 @@ This direction takes the opposite approach to knowledge injection from the one y
 
 You have a choice of training toolchain within this direction — both are acceptable, and you must pick one:
 
-- **Toolchain A (recommended default): [Unsloth](https://unsloth.ai/).** Unsloth wraps `transformers`/`peft`/`trl` with a faster, lower-memory training path (a 7B model fits comfortably on a free Colab T4 in a 15–60 minute run) and — crucially for this course — exports your fine-tuned model **directly to GGUF so it runs in Ollama**, closing the local-first loop you have used all semester. Start from an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model and adapt it.
+- **Toolchain A (recommended default): [Unsloth](https://unsloth.ai/).** Unsloth wraps `transformers`/`peft`/`trl` with a faster, lower-memory training path (a 7B model fits comfortably on a free Colab T4 in a 15-60 minute run) and — crucially for this course — exports your fine-tuned model **directly to GGUF so it runs in Ollama**, closing the local-first loop you have used all semester. Start from an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model and adapt it.
 - **Toolchain B (see-the-internals alternative): raw `transformers` + `peft` + `trl`.** If you would rather wire the `LoraConfig`, `BitsAndBytesConfig`, and `SFTTrainer` by hand to see exactly what Unsloth abstracts, use the hand-rolled script in Step B. You then convert to GGUF with `llama.cpp` at the end (Step C.5).
 
 Whichever toolchain you pick, the graded work is identical: a converging training run, a before/after evaluation, a model card, **and your fine-tuned model answering a prompt from inside Ollama.**
@@ -1223,7 +1223,7 @@ print(f"\nFormatted example:\n{train_data[0]['text'][:300]}")
 
 #### Step B: Fine-Tune with LoRA / QLoRA
 
-**Why this matters:** LoRA does not modify the original model weights at all — it learns two small matrices (called A and B, with rank `r`) that approximate the weight update. This means you can fine-tune a 7B model on a consumer GPU with 8–16 GB of VRAM. **QLoRA** adds 4-bit quantization on top, cutting VRAM usage roughly in half again.
+**Why this matters:** LoRA does not modify the original model weights at all — it learns two small matrices (called A and B, with rank `r`) that approximate the weight update. This means you can fine-tune a 7B model on a consumer GPU with 8-16 GB of VRAM. **QLoRA** adds 4-bit quantization on top, cutting VRAM usage roughly in half again.
 
 **Toolchain A (Unsloth, recommended).** Adapt an official [Unsloth notebook](https://unsloth.ai/docs/get-started/unsloth-notebooks) for your base model. The core is only a few lines — Unsloth loads the model already 4-bit-quantized and attaches the LoRA adapters for you:
 
@@ -1277,7 +1277,7 @@ from peft import LoraConfig, get_peft_model, TaskType
 from trl import SFTTrainer
 from datasets import load_dataset
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# -- Configuration -------------------------------------------------------------
 # TODO: set to your chosen model
 MODEL_ID = "microsoft/phi-3-mini-4k-instruct"
 # TODO: set to your chosen dataset (or "local" if you saved it)
@@ -1292,7 +1292,7 @@ LORA_DROPOUT = 0.05  # regularization
 # Phi-3 / LLaMA family: ["q_proj", "v_proj"] or ["q_proj", "k_proj", "v_proj", "o_proj"]
 TARGET_MODULES = ["q_proj", "v_proj"]
 
-# ── 4-bit Quantization (QLoRA) — comment out if you have enough VRAM ─────────
+# -- 4-bit Quantization (QLoRA) — comment out if you have enough VRAM ---------
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
@@ -1300,7 +1300,7 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=True,
 )
 
-# ── Load model and tokenizer ──────────────────────────────────────────────────
+# -- Load model and tokenizer --------------------------------------------------
 print(f"Loading {MODEL_ID}...")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token  # required for batch training
@@ -1312,7 +1312,7 @@ model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True,
 )
 
-# ── Apply LoRA adapters ───────────────────────────────────────────────────────
+# -- Apply LoRA adapters -------------------------------------------------------
 lora_config = LoraConfig(
     r=LORA_R,
     lora_alpha=LORA_ALPHA,
@@ -1324,7 +1324,7 @@ lora_config = LoraConfig(
 model = get_peft_model(model, lora_config)
 model.print_trainable_parameters()
 
-# ── Load and format dataset ───────────────────────────────────────────────────
+# -- Load and format dataset ---------------------------------------------------
 # TODO: replace with your formatted dataset loading
 # If you saved it locally: dataset = load_from_disk("./formatted_dataset")
 dataset = load_dataset(DATASET_ID)
@@ -1338,7 +1338,7 @@ def format_example(example):
 train_data = dataset["train"].map(format_example)
 val_data = dataset.get("validation", dataset["train"].select(range(500))).map(format_example)
 
-# ── Training arguments ────────────────────────────────────────────────────────
+# -- Training arguments --------------------------------------------------------
 training_args = TrainingArguments(
     output_dir=OUTPUT_DIR,
     num_train_epochs=1,          # TODO: increase to 2-3 if you have time/VRAM
@@ -1355,7 +1355,7 @@ training_args = TrainingArguments(
     report_to="none",            # change to "wandb" if you want W&B tracking
 )
 
-# ── Train ─────────────────────────────────────────────────────────────────────
+# -- Train ---------------------------------------------------------------------
 trainer = SFTTrainer(
     model=model,
     args=training_args,
@@ -1555,7 +1555,7 @@ print("Saved eval_comparison.csv — open it and fill in the improvement and not
    # TODO: implement for your dataset
    ```
 
-   **Option C — LLM-as-judge score (1–5):**
+   **Option C — LLM-as-judge score (1-5):**
    ```python
    # Use an LLM-as-judge, or write a simple one here
    # TODO: call your judge on each of the 10 test prompts
@@ -1769,11 +1769,11 @@ Expected output (abbreviated):
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Step A | Simulation Engine | 50–70 min |
-| Step B | Multimodal Integration | 40–60 min |
-| Step C | Parameter Sensitivity | 25–35 min |
-| Step D | Critical Analysis | 20–30 min |
-| Writeup | Readme and reflection | 30–45 min |
+| Step A | Simulation Engine | 50-70 min |
+| Step B | Multimodal Integration | 40-60 min |
+| Step C | Parameter Sensitivity | 25-35 min |
+| Step D | Critical Analysis | 20-30 min |
+| Writeup | Readme and reflection | 30-45 min |
 
 #### Step A: The Simulation Engine
 
@@ -2267,7 +2267,7 @@ Useful strategies to try:
 
 ##### Step D.4: Address the deployment question.
 
-Write a 2–3 sentence **guardrail statement** you would add to a financial planning tool that uses this AI chart interpretation feature. The statement should appear to the user before they see the AI's analysis, and should protect against over-reliance on numerical claims that the AI cannot read precisely.
+Write a 2-3 sentence **guardrail statement** you would add to a financial planning tool that uses this AI chart interpretation feature. The statement should appear to the user before they see the AI's analysis, and should protect against over-reliance on numerical claims that the AI cannot read precisely.
 
 > **Checkpoint: You have succeeded at this direction when:**
 > - Your simulation produces a labeled two-panel PNG and a statistics text file
@@ -2367,7 +2367,7 @@ The agent has now done two things a human analyst would do: chosen the experimen
 
 1. **Parameter choices.** The user said "$500 a month" and "retire at 65" starting at 25. Did the model's `annual_contribution` equal $500 × 12? Did `years` equal 40? Is the chosen `stock_allocation` a defensible reading of "fairly aggressive," and did the model justify it anywhere? Record each as correct, approximately correct, or wrong, quoting the tool call verbatim from `tool_call_transcript.txt`.
 2. **Interpretation.** Compare the model's narrative to the tool's exact `prob_million` and to the ground truth in `simulation_stats.txt`. Does its qualitative language ("roughly three-quarters," "more likely than not") match the actual number? Quote the exact sentence and the exact statistic side by side, exactly as you did in Step D.
-3. **Compounding risk.** In 2–3 sentences: when the same agent both picks the parameters and interprets the results, how can an early mistranslation (a wrong contribution, an unjustified allocation) compound into a confident but misleading recommendation — and which single check from steps 1–2 would you automate as a guardrail?
+3. **Compounding risk.** In 2-3 sentences: when the same agent both picks the parameters and interprets the results, how can an early mistranslation (a wrong contribution, an unjustified allocation) compound into a confident but misleading recommendation — and which single check from steps 1-2 would you automate as a guardrail?
 
 > **Checkpoint: You have completed Step E when:**
 > - Your `run_retirement_sim` tool runs from a single call and returns the stats dict plus a chart path
@@ -2394,7 +2394,7 @@ Fold these into your RAG Knowledge Base Lab submission ZIP and readme:
 - The simulation is configurable via a JSON config file; the visualization includes the median, 10th and 90th percentile bands, and the final-balance histogram, with a text summary of key statistics saved alongside the image, and edge cases are handled.
 - The multimodal integration sends a valid base64-encoded PNG in the `images` array to `/api/generate`, parses the response from `response.json()["response"]`, runs a structured Turn 1 (role, four numbered sections, audience) plus a Turn 2 that presses a specific quantitative claim, and saves both turns.
 - The comparative analysis names three specific AI-versus-human differences, with at least one showing a wrong or imprecise number backed by a verbatim AI excerpt alongside the true value from `simulation_stats.txt`, tests one prompt-engineering change and reports whether it helped, and (if the tool-calling extension is attempted) audits both the agent's parameter choices and its interpretation.
-- The writeup tabulates the four statistics for all three sensitivity scenarios, states which parameter change moved the median more, judges AI interpretation quality with a verbatim excerpt, and delivers a 2–3 sentence plain-language user-facing guardrail.
+- The writeup tabulates the four statistics for all three sensitivity scenarios, states which parameter change moved the median more, judges AI interpretation quality with a verbatim excerpt, and delivers a 2-3 sentence plain-language user-facing guardrail.
 
 #### Direction 2 Reflection Prompts
 

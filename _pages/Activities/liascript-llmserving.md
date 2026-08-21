@@ -123,9 +123,9 @@ The following simulation models a queue of requests with different prompt length
 import math
 import random
 
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 # Simulation parameters — adjust these to model your hardware
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 
 # Empirical estimates for a mid-range GPU (e.g., RTX 3090) with a ~7B model at 4-bit
 PREFILL_MS_PER_TOKEN = 0.25    # ms per input token during prefill (parallel, fast)
@@ -144,10 +144,10 @@ for i in range(32):
 
 total_output_tokens = sum(r["output"] for r in requests)
 
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 # Static batching: process requests in fixed-size batches.
 # Each batch runs until the *slowest* request finishes.
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 def static_batching(requests, batch_size, decode_speedup):
     total_ms = 0.0
     for batch_start in range(0, len(requests), batch_size):
@@ -161,11 +161,11 @@ def static_batching(requests, batch_size, decode_speedup):
         total_ms += prefill_ms + decode_ms
     return total_ms
 
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 # Continuous batching: model each forward pass as a scheduling
 # event. Finished requests free their slot immediately.
 # This is a simplified token-step simulation.
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 def continuous_batching(requests, batch_size, decode_speedup):
     queue = list(requests)          # waiting to start
     active = []                     # currently in a batch slot
@@ -200,9 +200,9 @@ def continuous_batching(requests, batch_size, decode_speedup):
 
     return total_ms
 
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 # Run and report
-# ──────────────────────────────────────────────────────────────
+# --------------------------------------------------------------
 print(f"{'Strategy':<25} {'Batch':>5} {'Time (s)':>10} {'Throughput (tok/s)':>20}")
 print("-" * 65)
 
@@ -319,7 +319,7 @@ Traditional serving systems manage that 35% badly, in three distinct ways:
 | **External** | Requests of different lengths finish and free their blocks, leaving gaps too small or too scattered to reuse | 500 tokens of free memory exists in total, but no single contiguous 500-token region → a new request cannot be admitted |
 | **Redundant duplication** | The same system prompt is prefilled and cached separately for every concurrent request | 100 requests sharing one 400-token system prompt store 100 copies of its KV cache |
 
-The published PagedAttention research measured the result: traditional systems waste roughly **60–80% of the KV-cache memory** — the very memory that determines how many users you can serve at once. The pattern should feel familiar: it is exactly the internal/external fragmentation that motivated paged virtual memory in operating systems half a century ago.
+The published PagedAttention research measured the result: traditional systems waste roughly **60-80% of the KV-cache memory** — the very memory that determines how many users you can serve at once. The pattern should feel familiar: it is exactly the internal/external fragmentation that motivated paged virtual memory in operating systems half a century ago.
 
 ### Critical Thinking Questions
 
@@ -377,7 +377,7 @@ In PagedAttention, what does the block table map?
 [(X)] A request's logical block addresses to the physical block addresses in VRAM where the KV data actually sits
 [( )] Prompts to cached responses
 
-> **⚠️ Common Misconception:** Students often conclude that PagedAttention makes token generation *faster*. It does not speed up the per-token math at all — attention over a paged cache runs at essentially the same speed as over a contiguous one. What PagedAttention removes is *wasted memory*. By reclaiming the 60–80% of KV-cache memory lost to fragmentation, it lets you fit far more concurrent requests on the same GPU. Higher throughput comes from **serving more requests at once**, not from any individual request running faster. Memory efficiency is the lever; concurrency is the payoff.
+> **⚠️ Common Misconception:** Students often conclude that PagedAttention makes token generation *faster*. It does not speed up the per-token math at all — attention over a paged cache runs at essentially the same speed as over a contiguous one. What PagedAttention removes is *wasted memory*. By reclaiming the 60-80% of KV-cache memory lost to fragmentation, it lets you fit far more concurrent requests on the same GPU. Higher throughput comes from **serving more requests at once**, not from any individual request running faster. Memory efficiency is the lever; concurrency is the payoff.
 
 ## Model 8: Four Knobs You Actually Tune
 
@@ -386,7 +386,7 @@ PagedAttention and continuous batching are built into modern serving engines (vL
 | Knob | What it does | Default & guidance |
 |---|---|---|
 | **`gpu_memory_utilization`** | The fraction of remaining VRAM (after weights) handed to the KV cache | Default **0.9**. Push toward **0.95** on stable, predictable workloads to pack in more concurrent requests; pull back to **0.8** if you see out-of-memory errors under bursty load. Benchmark before committing. |
-| **Prefix caching** | Hashes each KV block by its token content so requests that share a prefix (system prompt, RAG boilerplate, few-shot examples) point to the same cached blocks — prefill is computed once | Enable for RAG pipelines, multi-turn chat, and coding agents, where **75–95%** prefix-hit rates are common. Time-to-first-token drops sharply because the shared prefill is skipped entirely. This is the fragmentation-fix from Model 7 turned into a feature. |
+| **Prefix caching** | Hashes each KV block by its token content so requests that share a prefix (system prompt, RAG boilerplate, few-shot examples) point to the same cached blocks — prefill is computed once | Enable for RAG pipelines, multi-turn chat, and coding agents, where **75-95%** prefix-hit rates are common. Time-to-first-token drops sharply because the shared prefill is skipped entirely. This is the fragmentation-fix from Model 7 turned into a feature. |
 | **Chunked prefill** | Breaks a long prefill into chunks and interleaves them with ongoing decode steps, so a big incoming prompt does not stall everyone else's streaming | Enable for throughput-heavy, mixed workloads; production reports cite **~50%** throughput gains. Tune `max_num_batched_tokens` upward alongside it. |
 | **Speculative decoding** | A small draft model proposes several tokens; the large model verifies them in one forward pass. Output is *mathematically identical* to the large model alone | Reach for it when **interactive latency matters more than raw throughput**. The gains shrink at very high concurrency, because a full batch already keeps the GPU busy — there is no idle compute for the draft model to exploit. |
 

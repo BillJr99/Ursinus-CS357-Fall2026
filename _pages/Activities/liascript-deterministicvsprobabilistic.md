@@ -24,7 +24,7 @@ Most software you have used behaves predictably: the same input always produces 
 
 This activity connects to the **sampling and generation** material from earlier in the term. You will classify computing systems as deterministic or probabilistic, examine the cognitive trap called *automation bias*, and reason about the specific dangers that arise when people treat probabilistic AI outputs as reliable ground truth.
 
-**Estimated time:** 45–60 minutes
+**Estimated time:** 45-60 minutes
 
 **Team roles (rotate for each Part):**
 
@@ -272,8 +272,8 @@ Before your Presenter shares with the class, agree on answers to the following a
 
 ## Further Reading
 
-- Parasuraman, R. & Manzey, D. H. (2010). Complacency and bias in human use of automation. *Human Factors, 52*(3), 381–410.
-- Skitka, L. J., Mosier, K. L., & Burdick, M. (1999). Does automation bias decision-making? *International Journal of Human-Computer Studies, 51*(5), 991–1006.
+- Parasuraman, R. & Manzey, D. H. (2010). Complacency and bias in human use of automation. *Human Factors, 52*(3), 381-410.
+- Skitka, L. J., Mosier, K. L., & Burdick, M. (1999). Does automation bias decision-making? *International Journal of Human-Computer Studies, 51*(5), 991-1006.
 - Bender, E. M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2021). On the dangers of stochastic parrots: Can language models be too big? *FAccT 2021.*
 - Carr, N. (2014). *The Glass Cage: How Our Computers Are Changing Us.* W. W. Norton.
 - Marcus, G. & Davis, E. (2019). *Rebooting AI: Building Artificial Intelligence We Can Trust.* Pantheon.

@@ -63,11 +63,11 @@ An agent has run 30 steps. Its prompt now contains: the system prompt (300 token
 
 1. Where in this prompt does the system prompt sit positionally, and what does the lost-in-the-middle effect predict about the agent's continued obedience to it?
 
-   > *Hint: The system prompt is at the very beginning (tokens 1–300). The current question is at the very end. The 30 historical triples are in the middle (tokens 301–4,800). The lost-in-the-middle effect says attention is strongest at the beginning and end and weakest in the middle. So which parts of the prompt does the model "read most carefully"? What does that imply for the 30 historical triples?*
+   > *Hint: The system prompt is at the very beginning (tokens 1-300). The current question is at the very end. The 30 historical triples are in the middle (tokens 301-4,800). The lost-in-the-middle effect says attention is strongest at the beginning and end and weakest in the middle. So which parts of the prompt does the model "read most carefully"? What does that imply for the 30 historical triples?*
 
 2. Which of the 30 triples does the *current* decision actually need? Propose a rule for what to keep verbatim, what to summarize, and what to discard.
 
-   > *Hint: Consider three categories of past steps: (a) the most recent 3–4 steps, which give immediate context; (b) steps that established a fact or decision still relevant now; (c) steps that were tried and failed, or were intermediate steps to a completed sub-task. Which category needs verbatim text? Which needs a bullet-point summary? Which can be discarded entirely?*
+   > *Hint: Consider three categories of past steps: (a) the most recent 3-4 steps, which give immediate context; (b) steps that established a fact or decision still relevant now; (c) steps that were tried and failed, or were intermediate steps to a completed sub-task. Which category needs verbatim text? Which needs a bullet-point summary? Which can be discarded entirely?*
 
 3. Estimate the cost ratio of step 31's attention computation relative to step 1's (treat prompt length as 4,840 versus 340 tokens). Show the arithmetic.
 

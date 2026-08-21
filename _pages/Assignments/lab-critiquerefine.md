@@ -123,13 +123,13 @@ If you see a connection error, start Ollama with `ollama serve` in a separate te
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part 1 | The Loop | 60–90 min |
-| Part 2 | Calibrate the Critic | 45–60 min |
-| Part 3 | Reward Hack Your Rubric | 30–45 min |
-| Part 4 | Comparative Evaluation | 45–60 min |
-| Writeup | Readme and reflection | 30–45 min |
+| Part 1 | The Loop | 60-90 min |
+| Part 2 | Calibrate the Critic | 45-60 min |
+| Part 3 | Reward Hack Your Rubric | 30-45 min |
+| Part 4 | Comparative Evaluation | 45-60 min |
+| Writeup | Readme and reflection | 30-45 min |
 
-**Total:** plan on roughly **3.5–4.5 hours for the core lab** (Parts 1–4 plus the writeup), plus roughly **2.5–3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
+**Total:** plan on roughly **3.5-4.5 hours for the core lab** (Parts 1-4 plus the writeup), plus roughly **2.5-3 hours for the direction** if you choose to extend. Budget your pair sessions accordingly — this is not a single-sitting lab.
 
 ---
 
@@ -802,7 +802,7 @@ You may then **extend** the core in the direction below. The direction is not a 
 > - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
 > - **An API key** for the provider your agent uses (roughly $5 of credit is more than enough for this direction, or use the instructor-provided key if one is announced in class)
 >
-> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1–4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
+> **The API key is required for this direction** — the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1-4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after — do not let a missing key silently eat your time budget.
 
 In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt — one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 
@@ -830,7 +830,7 @@ If you have not done both activities, do them now before reading further. The co
 
 ##### Install required tools
 
-Run the following commands in your terminal to install the Python packages needed for Parts 2–4:
+Run the following commands in your terminal to install the Python packages needed for Parts 2-4:
 
 ```bash
 pip install openai anthropic flake8 bandit
@@ -962,7 +962,7 @@ The request body must be valid JSON with the following fields:
 
 | Field   | Type   | Required | Description                              |
 |---------|--------|----------|------------------------------------------|
-| query   | string | yes      | The search string (1–200 characters)     |
+| query   | string | yes      | The search string (1-200 characters)     |
 | max_results | int | no   | Max entries to return (default 5, max 20)|
 
 ## Outputs
@@ -1293,7 +1293,7 @@ the following issues that must be corrected before I can accept the changes:
    response. This leaks internal error details to the client. Replace it with
    a generic message: "an unexpected error occurred".
 
-4. [TODO: Add one entry for each finding in your critique's Categories 2–4]
+4. [TODO: Add one entry for each finding in your critique's Categories 2-4]
 
 Do not change anything else. Do not touch spec.md, system_prompt.txt,
 critique.md, or pair_log.md.

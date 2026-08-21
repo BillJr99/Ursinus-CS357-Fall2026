@@ -40,7 +40,7 @@ info:
       preemerging: No working intervention is implemented or concretely specified, or the code does not run as submitted.
       beginning: A partial intervention — implemented in code, or (on Direction 0) concretely specified as a defense design — addresses only a small slice of the chosen direction, or is done incorrectly (e.g., a control so weak it is ineffective).
       progressing: The chosen direction's required components are all implemented or concretely specified and function as described, but one or more are weak or not fully connected to the agent's real input/output/decision path (on Direction 0, not clearly mapped to a logged attack).
-      proficient: The chosen direction is realized completely, correctly, and multi-layered where the direction calls for it — as implemented controls or explanations integrated into the agent's real path and clearly marked in the code (Directions 1–3), OR as concretely specified defenses (Direction 0) where each mechanism is named, mapped to a specific logged attack, and precise enough that an engineer could build it from the description; the work would run or be actionable from a clean environment following only the provided instructions.
+      proficient: The chosen direction is realized completely, correctly, and multi-layered where the direction calls for it — as implemented controls or explanations integrated into the agent's real path and clearly marked in the code (Directions 1-3), OR as concretely specified defenses (Direction 0) where each mechanism is named, mapped to a specific logged attack, and precise enough that an engineer could build it from the description; the work would run or be actionable from a clean environment following only the provided instructions.
     - weight: 25
       description: Evaluation and Evidence
       preemerging: No evaluation is provided, or claims are asserted without evidence.
@@ -98,7 +98,7 @@ By this point in the course you have built at least one working agent — a loca
 
 **See the course schedule for the assigned and due dates.**
 
-**Time budget:** the shared warm-up and threat model take **1.5–2 hours**; your chosen direction takes **3–4 hours**; the writeup takes about **1 hour**.
+**Time budget:** the shared warm-up and threat model take **1.5-2 hours**; your chosen direction takes **3-4 hours**; the writeup takes about **1 hour**.
 
 Everyone starts the same way. Choose one agent you have already built and put it on the examination table. Write a short **threat and risk model**: name the agent, describe what it does and who would use it, and trace its data and decision flow from the moment input arrives to the moment a result leaves. At each boundary — user input, system prompt, retrieved or tool-supplied content, logs, and the final output or decision — ask what could go wrong if an adversary, a careless user, or a regulator were on the other side. This shared framing step is required of every submission regardless of which direction you choose, because you cannot harden what you have not honestly mapped.
 
@@ -140,7 +140,7 @@ All four are graded under the same direction-agnostic 100-point rubric at the to
 
 This is the **low-code route** through the Responsible AI Capstone. Instead of instrumenting a codebase, you turn the hands-on attack experience from the shared warm-up into a rigorous, defensible **defense design** and stress-test it against another team. You still complete the shared warm-up and the shared threat model like everyone else; here those become graded artifacts rather than scaffolding. Direction 0 is assessed under the **same direction-agnostic rubric** as the other three: Threat and Risk Analysis (25), Implementation (35) — where "implementation" here means the **concrete mechanisms of your defense design**, not running code — Evaluation and Evidence (25), and Writeup and Reflection (15). The Implementation row explicitly credits "implemented OR concretely specified defenses (Direction 0)," so your points come from how specific, layered, and attack-mapped your defense design is.
 
-Estimated time: about 3–4 hours for the direction, on top of the shared warm-up and threat model.
+Estimated time: about 3-4 hours for the direction, on top of the shared warm-up and threat model.
 
 #### Part A: Escalate the Warm-Up into a Structured Escalation Log
 
@@ -169,7 +169,7 @@ For **each successful attack in your escalation log**, design a layered defense 
 - **Output filtering** — checking the model's output before it is returned or acted upon.
 - **Human confirmation** — requiring a person in the loop before a consequential action.
 
-Produce a **2–3 page defense-design document** that maps each logged successful attack to the specific layer(s) that would blunt it, names the concrete mechanism (not just "add validation" but *what* validation, checking *what*, and what it does on a match), and justifies the choice. Reference **OWASP LLM01 (Prompt Injection)** explicitly: for each attack, state which class of LLM01 defense your mechanism corresponds to. The grade on the Implementation dimension comes from how concrete and attack-mapped these mechanisms are — an engineer should be able to build from your description.
+Produce a **2-3 page defense-design document** that maps each logged successful attack to the specific layer(s) that would blunt it, names the concrete mechanism (not just "add validation" but *what* validation, checking *what*, and what it does on a match), and justifies the choice. Reference **OWASP LLM01 (Prompt Injection)** explicitly: for each attack, state which class of LLM01 defense your mechanism corresponds to. The grade on the Implementation dimension comes from how concrete and attack-mapped these mechanisms are — an engineer should be able to build from your description.
 
 #### Part D: Red-Team Exchange
 
@@ -189,7 +189,7 @@ Complete the same writeup and reflection required of all directions (see "Delive
 
 - **Escalation log** (Gandalf through at least level 7, plus the Tensor Trust round), with the assumption-analysis columns filled in
 - **Shared threat model** (as required of all submissions)
-- **Defense-design document** (2–3 pages), each successful attack mapped to concrete, layered defenses referencing OWASP LLM01
+- **Defense-design document** (2-3 pages), each successful attack mapped to concrete, layered defenses referencing OWASP LLM01
 - **Red-team exchange log** (your three attacks-on-paper against the partner team's design, plus their attacks on yours) and your **revision notes**
 - **Writeup and reflection** answering every prompt in the shared reflection section
 
@@ -1772,7 +1772,7 @@ For each data type above, state the specific purpose. If you cannot state a purp
 
    > **Feature:** Conversation continuity across sessions (remembering what the user said last week)
    > **Privacy control:** Deleting conversation logs after 24 hours
-   > **How it degrades utility:** Users must re-explain their context on every new session. In user testing, this typically adds 2–4 follow-up messages before the agent can respond usefully.
+   > **How it degrades utility:** Users must re-explain their context on every new session. In user testing, this typically adds 2-4 follow-up messages before the agent can respond usefully.
    > **Quantified degradation:** ~150 extra tokens per conversation = ~$0.001 per session in API costs, plus user frustration
    > **Recommendation:** Implement the control. The privacy benefit (no long-term behavioral profile) outweighs the utility cost, especially since the agent can ask the user to re-summarize context.
 
@@ -1891,12 +1891,12 @@ pip install shap --no-binary shap
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part 1 | Train the Model | 20–30 min |
-| Part 2 | SHAP Global and Local Explanations | 50–70 min |
-| Part 3 | LIME Local Explanation | 30–40 min |
-| Part 4 | Side-by-Side Comparison | 20–30 min |
-| Part 5 | Ethical and Regulatory Analysis | 30–40 min |
-| Writeup | Readme and reflection | 30–45 min |
+| Part 1 | Train the Model | 20-30 min |
+| Part 2 | SHAP Global and Local Explanations | 50-70 min |
+| Part 3 | LIME Local Explanation | 30-40 min |
+| Part 4 | Side-by-Side Comparison | 20-30 min |
+| Part 5 | Ethical and Regulatory Analysis | 30-40 min |
+| Writeup | Readme and reflection | 30-45 min |
 
 ---
 
@@ -1984,7 +1984,7 @@ Training set size:      1500
 Test set size:          500
 ```
 
-Your accuracy may vary slightly depending on library versions, but should be in the 0.76–0.82 range. If it falls below 0.70, check that `np.random.seed(42)` appears before the dataset generation block.
+Your accuracy may vary slightly depending on library versions, but should be in the 0.76-0.82 range. If it falls below 0.70, check that `np.random.seed(42)` appears before the dataset generation block.
 
 ##### Troubleshooting — Part 1
 
@@ -2357,7 +2357,7 @@ A mechanistic explanation is one that traces the disagreement to a property of h
 
 ##### Step 3: Choose which explanation you would present to the applicant.
 
-You are a loan officer. The applicant was denied and is asking why. Write one paragraph (5–8 sentences) answering:
+You are a loan officer. The applicant was denied and is asking why. Write one paragraph (5-8 sentences) answering:
 
 - Which method's output — SHAP or LIME — would you use as the basis for your explanation to the applicant, and why?
 - What would you leave out, and why?
@@ -2380,7 +2380,7 @@ This part asks you to apply what you have learned about explainability to the ha
 
 ##### Step 1: Analyze three features for regulatory concern.
 
-For each of the three features below, write a 3–5 sentence analysis covering: (a) whether it is a legitimate predictor of credit risk, (b) whether it could function as a proxy for a protected characteristic, and (c) what additional investigation you would need to confirm or rule out disparate impact.
+For each of the three features below, write a 3-5 sentence analysis covering: (a) whether it is a legitimate predictor of credit risk, (b) whether it could function as a proxy for a protected characteristic, and (c) what additional investigation you would need to confirm or rule out disparate impact.
 
 **Feature 1: `zip_code_income_percentile`**
 
@@ -2390,7 +2390,7 @@ Look at your SHAP beeswarm plot and your bar plot. How important is this feature
 
 **Feature 2: `age`**
 
-The score function includes a penalty for applicants outside the 25–55 age range. Age is a protected characteristic under ECOA for applicants over 40. Consider: does SHAP show age as a high-importance feature? In which direction does it push predictions for older applicants?
+The score function includes a penalty for applicants outside the 25-55 age range. Age is a protected characteristic under ECOA for applicants over 40. Consider: does SHAP show age as a high-importance feature? In which direction does it push predictions for older applicants?
 
 **Feature 3: `num_late_payments`**
 
@@ -2398,7 +2398,7 @@ This is a legitimate predictor — late payments are a direct signal of credit b
 
 ##### Step 2: Identify one counterintuitive direction of influence.
 
-Look at your global beeswarm plot. Find one feature where the direction of influence (red = high feature value pushing right = toward approval) is the **opposite** of what you would naively expect, and write a 3–5 sentence explanation of why the model might have learned that relationship from this data.
+Look at your global beeswarm plot. Find one feature where the direction of influence (red = high feature value pushing right = toward approval) is the **opposite** of what you would naively expect, and write a 3-5 sentence explanation of why the model might have learned that relationship from this data.
 
 For example: you might expect `loan_amount_requested` to always push toward denial (larger loans are riskier), but the model might approve larger loan requests from applicants with strong credit histories because those applicants self-select. This is a spurious correlation in the training data, not a causal relationship.
 

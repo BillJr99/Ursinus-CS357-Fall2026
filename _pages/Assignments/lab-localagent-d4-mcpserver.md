@@ -277,19 +277,19 @@ Create the following directory layout before writing any code. Having a clear st
 
 ```
 cs357-mcp-lab/
-├── mcp_server.py          # MCP server (this part)
-├── oauth_middleware.py    # OAuth validation helpers (Part 3)
-├── tools/
-│   ├── __init__.py
-│   ├── tool_one.py        # Your first tool's implementation
-│   └── tool_two.py        # Your second tool's implementation
-├── tests/
-│   ├── test_tools.py      # Unit tests for tool logic
-│   └── test_oauth.py      # Tests for token validation (Part 3)
-├── data/                  # Any local data files your tools read
-├── logs/                  # Structured log output
-├── requirements.txt
-└── README.md
+|-- mcp_server.py          # MCP server (this part)
+|-- oauth_middleware.py    # OAuth validation helpers (Part 3)
+|-- tools/
+|   |-- __init__.py
+|   |-- tool_one.py        # Your first tool's implementation
+|   `-- tool_two.py        # Your second tool's implementation
+|-- tests/
+|   |-- test_tools.py      # Unit tests for tool logic
+|   `-- test_oauth.py      # Tests for token validation (Part 3)
+|-- data/                  # Any local data files your tools read
+|-- logs/                  # Structured log output
+|-- requirements.txt
+`-- README.md
 ```
 
 Initialize the project:

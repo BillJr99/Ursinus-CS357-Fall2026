@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Local Agent Stack: Wiring Containers into a System
 
-> **Supplemental — required prep only for the Local Agent Lab Directions 2–3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
+> **Supplemental — required prep only for the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
 
 The *Docker from Zero: Containers for Agent Builders* supplemental activity gave you one container — and one container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
 
@@ -99,7 +99,7 @@ Notice the `searxng` row: its image default (8080) collides with `local-ai`, so 
 
 3. Assign host ports to three unassigned services from the table, checking your choices against every existing row. State the collision you avoided.
 
-   > *Hint: List all reserved ports first: 11434, 1234, 8080, 4000, 3000, 8081, 5678, 8000, 8083, 8082. Your three new services must pick ports not in that list. Common safe ranges: 8084–8099, 7000–7999, 9000–9099.*
+   > *Hint: List all reserved ports first: 11434, 1234, 8080, 4000, 3000, 8081, 5678, 8000, 8083, 8082. Your three new services must pick ports not in that list. Common safe ranges: 8084-8099, 7000-7999, 9000-9099.*
 
 ---
 
@@ -297,7 +297,7 @@ In this part, you will build and verify a working minimal stack, extend it with 
 
 ## → Coming Up Next
 
-Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into the Local Agent Lab Directions 2–3 (the Compose-stack and container-hardening directions).
+Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).
 
 ---
 

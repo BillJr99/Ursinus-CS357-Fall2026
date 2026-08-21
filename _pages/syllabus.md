@@ -680,7 +680,7 @@ schedule:
   - rtitle: "Coded Bias (film), watch before class"
     rlink: "https://www.codedbias.com/"
   - rtitle: "O'Neil, Weapons of Math Destruction — the chapter on predictive models in education"
-  - rtitle: "Carr, The Glass Cage, Chapters 2–3 — automation, deskilling, and automation bias"
+  - rtitle: "Carr, The Glass Cage, Chapters 2-3 — automation, deskilling, and automation bias"
   - rtitle: "Optional depth — interactive: Gandalf (Lakera) — prompt-injection game (Responsible AI Capstone shared warm-up)"
     rlink: "https://gandalf.lakera.ai/"
   - rtitle: "Optional depth — interactive: Tensor Trust — attack-and-defend prompt-injection game (Responsible AI Capstone shared warm-up)"
@@ -744,7 +744,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
-  - rtitle: "Benjamin, Race After Technology, Chapters 1–2 — case studies in discriminatory design (read before Thursday's bias session)"
+  - rtitle: "Benjamin, Race After Technology, Chapters 1-2 — case studies in discriminatory design (read before Thursday's bias session)"
   - rtitle: "Optional depth — tutorial: Agent Security — Threat Modeling and the OWASP LLM Top 10"
     rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentsecurity.md"
   - rtitle: "Optional depth — tutorial: Prompt Injection — Attacks and Defenses"

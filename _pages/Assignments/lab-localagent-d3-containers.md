@@ -97,13 +97,13 @@ Your directory should look like this when you are done with Part 1:
 
 ```
 cs357-containerlab/
-├── agent.py
-├── docker-compose-insecure.yml
-├── docker-compose.yml          # (created in Part 2)
-├── Dockerfile                  # (created in Part 2)
-├── workspace/                  # the only directory the agent should legitimately access
-│   └── sample.txt
-└── secrets/                    # (created in Part 2, step f)
+|-- agent.py
+|-- docker-compose-insecure.yml
+|-- docker-compose.yml          # (created in Part 2)
+|-- Dockerfile                  # (created in Part 2)
+|-- workspace/                  # the only directory the agent should legitimately access
+|   `-- sample.txt
+`-- secrets/                    # (created in Part 2, step f)
 ```
 
 Create a sample file for the agent to read:

@@ -484,7 +484,7 @@ You are White. You play `Nf3`. Walk the sequence the app performs (see `executeM
 
 ### Critical Thinking Questions
 
-7. Steps 1–2 (engine + UI) finish in well under a millisecond; steps 3–5 (AI) can take several seconds. The app updates the board *before* awaiting the AI. Why is that ordering a deliberate UX decision, not an accident?
+7. Steps 1-2 (engine + UI) finish in well under a millisecond; steps 3-5 (AI) can take several seconds. The app updates the board *before* awaiting the AI. Why is that ordering a deliberate UX decision, not an accident?
 
    > *Hint: The move is already legal and known — there is no reason to make the human wait on a network call to see their own move. Render the certain, cheap result immediately; stream in the slow, uncertain AI result when it arrives. Never block a deterministic UI update on a probabilistic network call.*
 
@@ -541,10 +541,10 @@ For any app real users will touch, the key belongs on a **server you control**, 
 
 ```
    Browser (no key)            Your backend (holds key)          Provider
-  ┌───────────────┐   POST    ┌──────────────────────┐  POST   ┌──────────┐
-  │  chess UI     │ ────────► │  /api/coach          │ ──────► │ Anthropic│
-  │  fetch("/api")│           │  key = os.environ[…] │         │ / OpenAI │
-  └───────────────┘ ◄──────── └──────────────────────┘ ◄────── └──────────┘
+  +---------------+   POST    +----------------------+  POST   +----------+
+  |  chess UI     | --------> |  /api/coach          | ------> | Anthropic|
+  |  fetch("/api")|           |  key = os.environ[...] |         | / OpenAI |
+  `---------------+ <-------- `----------------------+ <------ `----------+
         reply                        reply
 ```
 
