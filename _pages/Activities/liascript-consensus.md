@@ -39,11 +39,11 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: From Voting to Synthesis
 
-In this section you will move from the simple majority vote from the debate activity to a more powerful idea: clustering answers by meaning and synthesizing a merged result. The tomatillo salsa example makes this concrete — you will see why exact-match voting fails on paragraph answers and how embedding similarity solves that problem.
+In this section you will move from the simple majority vote from the debate activity to a more powerful idea: clustering answers by meaning and synthesizing a merged result. The tomatillo salsa example makes this concrete: you will see why exact-match voting fails on paragraph answers and how embedding similarity solves that problem.
 
 ## Model 1: The Tomatillo Question
 
-Think of a jury deliberation. Twelve jurors each hear the same evidence and independently form an opinion; the jury room is where they find the shared view. Today's agents play the same role: each starts from the same question, produces a different answer because of temperature-driven randomness, and then a synthesizer finds the shared position — except our "jury room" is an algorithm, not a room. This matters because the same technique can be applied to any question where multiple independent drafts are better than one: code review, medical triage summaries, or research literature.
+Think of a jury deliberation. Twelve jurors each hear the same evidence and independently form an opinion; the jury room is where they find the shared view. Today's agents play the same role: each starts from the same question, produces a different answer because of temperature-driven randomness, and then a synthesizer finds the shared position, except our "jury room" is an algorithm, not a room. This matters because the same technique can be applied to any question where multiple independent drafts are better than one: code review, medical triage summaries, or research literature.
 
 **Self-consistency (vote on the answer).** Sample $k$ independent chains at moderate temperature, extract each final answer, return the mode. For questions with short checkable answers, accuracy rises with $k$ because the correct answer tends to be reached by *many distinct reasoning paths* while errors scatter:
 
@@ -51,7 +51,7 @@ $$
 \hat{y} = \arg\max_{y} \sum_{i=1}^{k} \mathbb{1}[y_i = y]
 $$
 
-**Clustered consensus (vote on the meaning).** When answers are paragraphs rather than tokens, exact-match voting fails ("simmer the tomatillos" and "boil them briefly" should count together). Embed the $k$ drafts, cluster by cosine similarity, and treat the largest cluster as the consensus *position* — the same machinery as our RAG-quality clustering, now aimed at agent outputs.
+**Clustered consensus (vote on the meaning).** When answers are paragraphs rather than tokens, exact-match voting fails ("simmer the tomatillos" and "boil them briefly" should count together). Embed the $k$ drafts, cluster by cosine similarity, and treat the largest cluster as the consensus *position*, the same machinery as our RAG-quality clustering, now aimed at agent outputs.
 
 **Synthesis (write the merged view).** A synthesizer agent receives the cluster representatives, with their support counts, and drafts a single output that preserves majority positions while noting genuine disagreements. Crucially, the synthesizer's context is *small*: cluster summaries, not all $k$ transcripts.
 
@@ -67,7 +67,7 @@ Five agents at temperature 1.0 propose tomatillo salsa recipes. Three roast the 
 
 ### Critical Thinking Questions
 
-1. Group the five recipes into clusters by their *load-bearing* choice (the one that fundamentally changes the dish). Which choice is load-bearing and which is garnish-level, and how would embeddings see the difference — or fail to?
+1. Group the five recipes into clusters by their *load-bearing* choice (the one that fundamentally changes the dish). Which choice is load-bearing and which is garnish-level, and how would embeddings see the difference, or fail to?
 
    > *Hint: Ask yourself: if you swapped jalapeño for serrano, would the dish taste radically different? What if you swapped raw for roasted? The answer tells you which dimension is load-bearing.*
 
@@ -85,17 +85,17 @@ With the conceptual case for clustering established, Part II shows the implement
 
 # Part II: Implementation
 
-In this section you will read the full sample-cluster-synthesize pipeline and run it on the tomatillo question. The questions that follow ask you to connect the code's design choices — especially the temperature settings and the distance threshold — back to the theory from Part I.
+In this section you will read the full sample-cluster-synthesize pipeline and run it on the tomatillo question. The questions that follow ask you to connect the code's design choices (especially the temperature settings and the distance threshold) back to the theory from Part I.
 
 ## Model 2: Sample, Cluster, Synthesize
 
-In a courtroom, the bailiff does not ask jurors to write identical sentences — the foreperson synthesizes a verdict that reflects where the group actually landed. The code below does the same: it collects $k$ drafts (the "testimony"), groups them by semantic similarity (the "deliberation"), and has a synthesizer agent write the verdict. Pay attention to the two different temperature settings — they encode the explore-versus-exploit logic we saw in the debate module.
+In a courtroom, the bailiff does not ask jurors to write identical sentences; the foreperson synthesizes a verdict that reflects where the group actually landed. The code below does the same: it collects $k$ drafts (the "testimony"), groups them by semantic similarity (the "deliberation"), and has a synthesizer agent write the verdict. Pay attention to the two different temperature settings; they encode the explore-versus-exploit logic we saw in the debate module.
 
 ---
 
 ## Code Cell
 
-The code below runs in three stages: (1) it samples six diverse recipe drafts at high temperature, (2) it converts each draft to an embedding vector and groups similar drafts into clusters using agglomerative clustering (which builds groups bottom-up by merging the most similar pairs first), and (3) it passes the cluster summaries to a synthesizer that writes a single merged recipe. Notice that the synthesizer's context is small — it never sees all six original drafts, only the cluster representatives.
+The code below runs in three stages: (1) it samples six diverse recipe drafts at high temperature, (2) it converts each draft to an embedding vector and groups similar drafts into clusters using agglomerative clustering (which builds groups bottom-up by merging the most similar pairs first), and (3) it passes the cluster summaries to a synthesizer that writes a single merged recipe. Notice that the synthesizer's context is small; it never sees all six original drafts, only the cluster representatives.
 
 ```python
 import numpy as np
@@ -166,7 +166,7 @@ print("=== CONSENSUS ===\n", consensus)
 
 6. The `distance_threshold=0.45` silently decides what counts as "the same opinion." Lower it to 0.25 and raise it to 0.7; report how the cluster structure, and therefore the consensus, changes. Who, in a deployed system, should own that number?
 
-   > *Hint: A lower threshold is stricter — only very similar texts merge. A higher threshold is looser — nearly anything merges. Think about who is harmed if the threshold is set wrong: whose minority opinion gets absorbed into the majority?*
+   > *Hint: A lower threshold is stricter; only very similar texts merge. A higher threshold is looser; nearly anything merges. Think about who is harmed if the threshold is set wrong: whose minority opinion gets absorbed into the majority?*
 
 Compared with simple majority voting, embedding-clustered consensus is principally designed to handle:
 
@@ -175,7 +175,7 @@ Compared with simple majority voting, embedding-clustered consensus is principal
 [( )] Models that cannot follow JSON formats
 [( )] Deterministic generation at temperature 0
 
-> **Common Misconception:** Many students assume that more agents always means better answers. In reality, consensus amplifies whatever the model already believes most often. If the underlying model has a systematic bias — for example, always preferring certain cooking techniques that are over-represented in its training data — running more agents just makes that bias louder, not quieter. Consensus is a tool for aggregating diverse *reasoning paths* toward a correct answer, not for discovering truths the model does not already know.
+> **Common Misconception:** Many students assume that more agents always means better answers. In reality, consensus amplifies whatever the model already believes most often. If the underlying model has a systematic bias (for example, always preferring certain cooking techniques that are over-represented in its training data), running more agents just makes that bias louder, not quieter. Consensus is a tool for aggregating diverse *reasoning paths* toward a correct answer, not for discovering truths the model does not already know.
 
 Part III builds on this misconception warning by examining the conditions under which consensus actively misleads, and what to do about it in your own systems.
 
@@ -187,7 +187,7 @@ In this section you will examine the situations where consensus makes results wo
 
 ## Model 3: When Consensus Misleads
 
-Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions — a theme we take up squarely in the *Training Data and Bias* activity. A candid synthesis discloses dissent rather than dissolving it.
+Consensus aggregates the model's *distribution*, so it amplifies whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities. For factual questions this is usually a feature; for questions of taste, values, or contested policy, "the average of six samples" can erase legitimate minority positions, a theme we take up squarely in the *Training Data and Bias* activity. A candid synthesis discloses dissent rather than dissolving it.
 
 ---
 
@@ -231,13 +231,13 @@ Consensus aggregates the model's *distribution*, so it amplifies whatever that d
 
 *Personal:* Committees, juries, and peer review all aggregate noisy human judgments. Which of today's three strategies (vote, cluster, synthesize) does each most closely resemble, and what does that comparison reveal about how much you would trust each process with a decision affecting you personally?
 
-*Technical:* The `distance_threshold` parameter is a design decision with real consequences for whose opinions get merged and whose get preserved. Describe the technical steps you would take to choose this threshold responsibly for a deployed system — what data would you need, and how would you validate your choice?
+*Technical:* The `distance_threshold` parameter is a design decision with real consequences for whose opinions get merged and whose get preserved. Describe the technical steps you would take to choose this threshold responsibly for a deployed system: what data would you need, and how would you validate your choice?
 
 *Societal:* Consensus systems used in hiring, lending, or criminal justice would amplify whatever majority opinion exists in training data. Name a specific domain where you would argue consensus-based AI should be prohibited entirely, and explain what human institution should replace it.
 
 ---
 
--> Coming Up Next: We move from aggregating agent *outputs* to organizing agents into deliberate *teams* — assigning roles, managing shared state, and designing the handoffs between specialists.
+-> Coming Up Next: We move from aggregating agent *outputs* to organizing agents into deliberate *teams*: assigning roles, managing shared state, and designing the handoffs between specialists.
 
 ## Further Reading
 
