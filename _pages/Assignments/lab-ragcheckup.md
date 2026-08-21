@@ -21,7 +21,7 @@ info:
       preemerging: The worksheet is empty or filled with invented numbers not produced by the student's pipeline
       beginning: Some measurements exist but only one chunking configuration was tested, or the citation audit is missing
       progressing: recall@k for both configurations and a five-row citation audit are complete, but the failure case is missing or has no hypothesis
-      proficient: recall@k is measured for both chunking configurations on the student's own corpus with the winner identified; the five-row citation audit classifies each claim as supported or unsupported with chunk references; and one observed failure is recorded with a plausible hypothesis and a planned fix. The medium does not matter: measurements taken by hand in Open WebUI's knowledge-base view earn this row on the same terms as measurements printed by a script, provided the numbers came from the student's own pipeline
+      proficient: "recall@k is measured for both chunking configurations on the student's own corpus with the winner identified; the five-row citation audit classifies each claim as supported or unsupported with chunk references; and one observed failure is recorded with a plausible hypothesis and a planned fix. The medium does not matter: measurements taken by hand in Open WebUI's knowledge-base view earn this row on the same terms as measurements printed by a script, provided the numbers came from the student's own pipeline"
     - weight: 40
       description: "The Regression Harness (Goal 4)"
       preemerging: No harness exists, or it cannot be rerun
