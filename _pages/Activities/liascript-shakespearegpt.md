@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Shakespeare GPT: How Language Models Learn to Write
 
-Every time a language model generates a word, it is doing something your phone's autocomplete has done for years — but at a scale and depth that produces startlingly human-like text. Today we build a character-level language model from scratch in Python, poke at the mechanisms that make it work and fail, and then compare it to a real local LLM running on your machine. The arc: **n-gram intuition -> building the model -> experimenting with temperature -> comparing outputs with a local model -> what "learning" actually means**.
+Every time a language model generates a word, it is doing something your phone's autocomplete has done for years, but at a scale and depth that produces startlingly human-like text. Today we build a character-level language model from scratch in Python, poke at the mechanisms that make it work and fail, and then compare it to a real local LLM running on your machine. The arc: **n-gram intuition -> building the model -> experimenting with temperature -> comparing outputs with a local model -> what "learning" actually means**.
 
 ---
 
@@ -32,9 +32,9 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 |------|--------------------------|--------------------------|
 | **n-gram** | A sequence of n items (characters, words) used to predict the next item based on what came before. A bigram uses the previous 1 item; a trigram uses the previous 2. | In "ROMEO", a bigram model records "R->O" once; a trigram records "RO->M" once. |
 | **Character-level model** | A language model that treats individual characters (not words) as its basic units, allowing it to generate any text including made-up words. | Our Python model treats "R", "O", "M", "E", "O", ":" each as separate tokens. |
-| **Probability distribution** | A set of probabilities over all possible next tokens that sum to 1.0 — the model's "belief" about what comes next. | After "th", the model might assign: "e"->0.55, "a"->0.18, "i"->0.14, others->0.13. |
+| **Probability distribution** | A set of probabilities over all possible next tokens that sum to 1.0, the model's "belief" about what comes next. | After "th", the model might assign: "e"->0.55, "a"->0.18, "i"->0.14, others->0.13. |
 | **Temperature** | A parameter that controls how peaked or flat the probability distribution is before sampling; low temperature = more predictable, high temperature = more random. | At T=0.3 the model almost always picks "e" after "th"; at T=2.0 it sometimes picks "x". |
-| **Backoff** | When a model can't find the exact context in its training data, it "backs off" to a shorter context — e.g., falling back from trigram to bigram to unigram. | If "ZOM" never appears in the training text, the model falls back to any key ending in "M". |
+| **Backoff** | When a model can't find the exact context in its training data, it "backs off" to a shorter context, e.g., falling back from trigram to bigram to unigram. | If "ZOM" never appears in the training text, the model falls back to any key ending in "M". |
 | **Perplexity** | A measure of how surprised the model is by test data; lower perplexity = better predictions. | A trigram model trained on Shakespeare should have lower perplexity on Shakespeare than a bigram model does. |
 | **Token** | The basic unit a model reads and writes; in a character-level model, every letter, space, and punctuation mark is a separate token. | The 10-character string "soft! wha" contains 10 tokens in a character-level model. |
 | **Logit** | The raw score the model assigns to each possible next token before converting to probabilities with softmax. | A neural LM's output layer might produce logit 4.5 for "e" and -0.5 for "z" after "th". |
@@ -45,7 +45,7 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 
 ## 1. Autocomplete by Counting
 
-The simplest possible language model is a lookup table: scan through the training text, count which characters follow which character sequences, and store the counts. At generation time, look up the current context, turn the counts into probabilities, and sample the next character. This is an **n-gram model** — "n" refers to the total window size including the character you are predicting.
+The simplest possible language model is a lookup table: scan through the training text, count which characters follow which character sequences, and store the counts. At generation time, look up the current context, turn the counts into probabilities, and sample the next character. This is an **n-gram model**; "n" refers to the total window size including the character you are predicting.
 
 Think of building the model like a scribe who reads a book while keeping a tally sheet. Every time they see the letter "R" followed by "O" they make a tally mark in the "R -> O" column. When asked to generate text, they roll a weighted die whose faces are labeled with all the characters they have seen after "R", with the most-tallied characters on the bigger faces.
 
@@ -62,7 +62,7 @@ Think of building the model like a scribe who reads a book while keeping a tally
 | (space) | o | 1 | 1/4 = 0.25 |
 | (space) | n | 1 | 1/4 = 0.25 |
 
-Notice that every "b" in the training phrase is followed by "e," so the model is completely certain that "e" must come after "b" — a consequence of the tiny training set. On Shakespeare's full works this certainty evaporates because "b" appears in many more contexts ("by", "brave", "blood", ...).
+Notice that every "b" in the training phrase is followed by "e," so the model is completely certain that "e" must come after "b", a consequence of the tiny training set. On Shakespeare's full works this certainty evaporates because "b" appears in many more contexts ("by", "brave", "blood", ...).
 
 ---
 
@@ -78,7 +78,7 @@ Notice that every "b" in the training phrase is followed by "e," so the model is
    [( )] It generates "ounds" because it learned "Z" is usually followed by sounds
    [( )] It refuses to generate anything
 
-   > **Common Misconception:** Students often assume the model has "knowledge" that lets it handle unseen inputs gracefully. An n-gram model is a lookup table — if the key doesn't exist, there is no entry. This is why modern neural language models vastly outperform n-gram models on rare or unseen contexts: they can *interpolate* from learned representations rather than failing on a lookup miss. The neural model has seen every character; the n-gram model has only seen the specific sequences that appeared in training.
+   > **Common Misconception:** Students often assume the model has "knowledge" that lets it handle unseen inputs gracefully. An n-gram model is a lookup table; if the key doesn't exist, there is no entry. This is why modern neural language models vastly outperform n-gram models on rare or unseen contexts: they can *interpolate* from learned representations rather than failing on a lookup miss. The neural model has seen every character; the n-gram model has only seen the specific sequences that appeared in training.
 
 3. The phrase "ROMEO:" appears many times in *Romeo and Juliet*. Would a bigram model trained only on that play generate "ROMEO:" correctly? What would it need to generate the word "JULIET" correctly, and why does the answer differ?
 
@@ -172,15 +172,15 @@ print(generate_text(trigram_model, "ROM", temperature=2.0))
 
 5. At T=0.3, the trigram model generates very similar text on every run. At T=2.0, it generates different text each time, often nonsensical. Explain the mechanism: what changes in the probability distribution when you raise or lower the temperature?
 
-   > *Hint: Look at the temperature scaling step: `counts[i] ** (1/T)`. At T=0.3, the exponent is 1/0.3 ≈ 3.3 — raising counts to the 3rd power makes the winner MUCH more dominant over second place. If "e" has count 10 and "a" has count 2, at T=0.3 their scaled values are 10^3.3 ≈ 2000 vs. 2^3.3 ≈ 10. At T=2.0, the exponent is 0.5 — taking the square root of 10 gives 3.16 and of 2 gives 1.41, much closer together.*
+   > *Hint: Look at the temperature scaling step: `counts[i] ** (1/T)`. At T=0.3, the exponent is 1/0.3 ≈ 3.3; raising counts to the 3rd power makes the winner MUCH more dominant over second place. If "e" has count 10 and "a" has count 2, at T=0.3 their scaled values are 10^3.3 ≈ 2000 vs. 2^3.3 ≈ 10. At T=2.0, the exponent is 0.5; taking the square root of 10 gives 3.16 and of 2 gives 1.41, much closer together.*
 
 6. Increasing n (from bigram to trigram to 10-gram) always improves the quality of generated text.
-   [( )] True — more context is always better
-   [(X)] False — at very high n, the model memorizes training examples and can't generalize
+   [( )] True; more context is always better
+   [(X)] False; at very high n, the model memorizes training examples and can't generalize
    [( )] True, but only up to n=5
-   [( )] False — n-gram models always generate random text regardless of n
+   [( )] False; n-gram models always generate random text regardless of n
 
-   > **Common Misconception:** Students often expect that "more context" monotonically improves a statistical model. At very high n, most contexts appear only once or zero times in training data — the model has essentially memorized the training text verbatim. Generation then either exactly reproduces training sequences (when a context was seen) or breaks immediately into the backoff case (when it was not). The sweet spot for character-level n-gram models on literary text is typically n=4 to n=6.
+   > **Common Misconception:** Students often expect that "more context" monotonically improves a statistical model. At very high n, most contexts appear only once or zero times in training data; the model has essentially memorized the training text verbatim. Generation then either exactly reproduces training sequences (when a context was seen) or breaks immediately into the backoff case (when it was not). The sweet spot for character-level n-gram models on literary text is typically n=4 to n=6.
 
 7. Our backoff strategy chooses a random key that ends with the same last character. This is a crude approximation of what more sophisticated language models do. What information does this strategy throw away, and what would a smarter backoff do instead?
 
@@ -192,7 +192,7 @@ print(generate_text(trigram_model, "ROM", temperature=2.0))
 
 ## 3. What a Million Parameters Buys You
 
-Our n-gram model required no training — just counting. Its "knowledge" is entirely contained in the frequency tables, which can be inspected and modified directly. A local LLM like `llama3.2` or `mistral` encodes the same basic idea (predict the next token) but with hundreds of millions of parameters that were adjusted over billions of training examples.
+Our n-gram model required no training, just counting. Its "knowledge" is entirely contained in the frequency tables, which can be inspected and modified directly. A local LLM like `llama3.2` or `mistral` encodes the same basic idea (predict the next token) but with hundreds of millions of parameters that were adjusted over billions of training examples.
 
 Run the Shakespeare continuation prompt below through a local model via Ollama. Compare the outputs carefully.
 
@@ -276,11 +276,11 @@ print(generate_text(trigram_model, "Ari", temperature=1.0))
 
 ### Critical Thinking Questions
 
-8. Compare the vocabulary of the n-gram output to the local model output. The local model can generate words that never appeared in the small training excerpt — the n-gram model cannot. Where does the local model's broader vocabulary come from?
+8. Compare the vocabulary of the n-gram output to the local model output. The local model can generate words that never appeared in the small training excerpt; the n-gram model cannot. Where does the local model's broader vocabulary come from?
 
-   > *Hint: Our n-gram model was trained on the 8× repeated excerpt above — about 1,600 characters. The local model was trained on billions of tokens from books, web pages, and other sources. The n-gram model's vocabulary is physically bounded by the characters and sequences in those 1,600 characters.*
+   > *Hint: Our n-gram model was trained on the 8× repeated excerpt above, about 1,600 characters. The local model was trained on billions of tokens from books, web pages, and other sources. The n-gram model's vocabulary is physically bounded by the characters and sequences in those 1,600 characters.*
 
-9. The local model maintains pronouns, verb tense, and iambic rhythm across multiple lines. The n-gram model breaks down after one or two "words" (which it does not even represent as words — just character sequences). What structural information does the n-gram model entirely lack?
+9. The local model maintains pronouns, verb tense, and iambic rhythm across multiple lines. The n-gram model breaks down after one or two "words" (which it does not even represent as words, just character sequences). What structural information does the n-gram model entirely lack?
 
    > *Hint: Our model has no concept of "word", "sentence", "line", or "speaker turn." It sees characters. The local model was trained to predict tokens (subwords) and learned from countless examples of dialogue, poetry, and plays that certain patterns follow certain others at the word and sentence level.*
 
@@ -288,11 +288,11 @@ print(generate_text(trigram_model, "Ari", temperature=1.0))
    [( )] The LLM uses higher n (longer context) but the same counting approach
    [( )] The LLM uses a different sampling method (beam search instead of random sampling)
    [(X)] The LLM uses learned neural network weights that can interpolate over unseen contexts; the n-gram model uses a lookup table that fails on unseen keys
-   [( )] There is no meaningful difference — they are the same algorithm at different scales
+   [( )] There is no meaningful difference; they are the same algorithm at different scales
 
-11. Give the n-gram model the seed "ZZZ" — three characters that almost certainly never appear in Shakespeare. What happens? Then give the local model the prompt "Continue this Shakespearean text: ZZZ". What does the local model do, and why can it handle this where the n-gram model cannot?
+11. Give the n-gram model the seed "ZZZ", three characters that almost certainly never appear in Shakespeare. What happens? Then give the local model the prompt "Continue this Shakespearean text: ZZZ". What does the local model do, and why can it handle this where the n-gram model cannot?
 
-    > *Hint: The n-gram model's backoff will fire immediately, since "ZZ" has no entry. The local model maps every possible sequence of characters to a position in its embedding space, and that space was learned from a huge corpus — so even "ZZZ" gets a representation it can reason from, even if it has never seen that exact sequence.*
+    > *Hint: The n-gram model's backoff will fire immediately, since "ZZ" has no entry. The local model maps every possible sequence of characters to a position in its embedding space, and that space was learned from a huge corpus, so even "ZZZ" gets a representation it can reason from, even if it has never seen that exact sequence.*
 
 ---
 
@@ -306,15 +306,15 @@ Both models convert context into a probability distribution over next tokens. Th
 
 12. A 5-gram model trained on Romeo and Juliet has a fixed character vocabulary drawn entirely from that play. What would happen if you gave it the prompt "Write a Python function"? What specifically would break first?
 
-    > *Hint: The backtick character ` does not appear in Shakespeare. Neither does the underscore _. What happens in the `generate_text` function when the backoff fires and also fails — i.e., when even the fallback set is empty? Trace through the code.*
+    > *Hint: The backtick character ` does not appear in Shakespeare. Neither does the underscore _. What happens in the `generate_text` function when the backoff fires and also fails, i.e., when even the fallback set is empty? Trace through the code.*
 
 13. We used `random.choices(chars, weights=probs)` to sample the next character. If instead you always chose the character with the highest probability (greedy decoding), how would the generated text differ? Under what circumstances might greedy decoding produce worse text than temperature sampling?
 
-    > *Hint: Greedy decoding is equivalent to T->0. The model always picks the single most probable character. In a small training corpus, one character might dominate every context because it appeared there most often — not because it is linguistically correct in all cases. What happens when the greedy choice locks the model into a repetitive loop?*
+    > *Hint: Greedy decoding is equivalent to T->0. The model always picks the single most probable character. In a small training corpus, one character might dominate every context because it appeared there most often, not because it is linguistically correct in all cases. What happens when the greedy choice locks the model into a repetitive loop?*
 
-14. Perplexity is defined as $e^{-\frac{1}{N}\sum_{i} \log P(\text{char}_i)}$ — roughly, how surprised the model is by each character in a test text, on average. Without computing exact numbers, predict: would a trigram model have lower or higher perplexity than a bigram model on a held-out Shakespeare passage? What about a 20-gram model on the same passage?
+14. Perplexity is defined as $e^{-\frac{1}{N}\sum_{i} \log P(\text{char}_i)}$: roughly, how surprised the model is by each character in a test text, on average. Without computing exact numbers, predict: would a trigram model have lower or higher perplexity than a bigram model on a held-out Shakespeare passage? What about a 20-gram model on the same passage?
 
-    > *Hint: The trigram has more context and should predict more accurately on passages similar to its training data (lower perplexity). The 20-gram model has so much context that it can't find many matches in training — it will frequently hit the backoff case or fail entirely, making it worse on held-out data even though it performs perfectly on training data. This is the classic overfitting story.*
+    > *Hint: The trigram has more context and should predict more accurately on passages similar to its training data (lower perplexity). The 20-gram model has so much context that it can't find many matches in training; it will frequently hit the backoff case or fail entirely, making it worse on held-out data even though it performs perfectly on training data. This is the classic overfitting story.*
 
 ---
 
@@ -322,19 +322,19 @@ Both models convert context into a probability distribution over next tokens. Th
 
 **Personal:** Did building this model change how you think about what it means to "learn" from text? Before today, would you have said our n-gram model "understands" Shakespeare? Would you say it now? What criterion would you use to decide?
 
-**Technical:** A 5-gram character model trained on Romeo and Juliet has a fixed vocabulary of the characters Shakespeare used. If you gave it the prompt "Write a Python function to sort a list", what would happen at each step — from the first character through the first backoff failure? Be specific about which line of `generate_text` would be responsible for each behavior.
+**Technical:** A 5-gram character model trained on Romeo and Juliet has a fixed vocabulary of the characters Shakespeare used. If you gave it the prompt "Write a Python function to sort a list", what would happen at each step, from the first character through the first backoff failure? Be specific about which line of `generate_text` would be responsible for each behavior.
 
-**Societal:** Character-level language models are the conceptual ancestor of modern LLMs. Knowing that a modern LLM is "just" a much larger, more sophisticated version of the same next-token prediction mechanism — does this change how much you trust its outputs? What does the n-gram model's brittleness on unseen inputs tell you about risks in the LLM case, even though the LLM is far more capable?
+**Societal:** Character-level language models are the conceptual ancestor of modern LLMs. Knowing that a modern LLM is "just" a much larger, more sophisticated version of the same next-token prediction mechanism, does this change how much you trust its outputs? What does the n-gram model's brittleness on unseen inputs tell you about risks in the LLM case, even though the LLM is far more capable?
 
 ---
 
--> **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance — not just the last n-1 characters. In the *Attention and the Transformer* session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
+-> **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance, not just the last n-1 characters. In the *Attention and the Transformer* session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
 
 ---
 
 ## Further Reading
 
-- [Bigram Word Generator notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Bigram_Word_Generator.ipynb) — a runnable companion that builds a word-level bigram model, plots next-word histograms, and generates text by sampling or argmax.
+- [Bigram Word Generator notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Bigram_Word_Generator.ipynb), a runnable companion that builds a word-level bigram model, plots next-word histograms, and generates text by sampling or argmax.
 - Jurafsky and Martin. *Speech and Language Processing*, Chapter 3 (n-gram language models). Available free online at web.stanford.edu/~jurafsky/slp3/.
 - Andrej Karpathy. "The Unreasonable Effectiveness of Recurrent Neural Networks" (blog post, 2015). Shows character-level LM outputs at various training stages.
 - Andrej Karpathy. *makemore* (GitHub). A step-by-step series building exactly this kind of character-level model up to a full transformer.
