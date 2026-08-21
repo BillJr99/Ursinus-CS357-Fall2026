@@ -64,7 +64,7 @@ Step 0 defines the shell vocabulary. These are the terms the rest of the page as
 
 ## Step 0: The Shell in Ten Minutes
 
-Every step below, and every lab this semester, is typed into a **shell**. If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1. If they are not, this section is the ten minutes that make the other nine steps make sense instead of feeling like incantation.
+Every step below, and every lab this semester, is typed into a **shell**. If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1. If they are not, this section is the ten minutes that make everything after it make sense instead of feeling like incantation.
 
 A shell is not complicated. It reads one line of text, runs the command named at the front of it, and prints what comes back. That is the entire contract. Everything else is vocabulary.
 
@@ -139,7 +139,7 @@ ollama --version
 curl http://localhost:11434/api/tags
 ```
 
-Expected: a version string, then a JSON blob whose `"models"` list includes `llama3.2`. (This is the same pre-class checklist as the Overview assignment's tool setup; if you already completed it there, just rerun the `curl` to confirm Ollama is currently running, and move on.)
+Expected: a version string, then a JSON blob whose `"models"` list includes `llama3.2`. (The Overview assignment, handed out today, asks you to submit a transcript of exactly this. Capture your output as you go and you will not have to redo it. If you installed Ollama before class, just rerun the `curl` to confirm it is running now, and move on.)
 
 Note the address you just used: `localhost:11434`. Hold that thought: in Step 5 the *same server* will need a *different name*, and knowing why is the point of this whole architecture.
 
@@ -147,7 +147,7 @@ Note the address you just used: `localhost:11434`. Hold that thought: in Step 5 
 
 ## Step 2: Install Docker Desktop
 
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux). If you completed the Docker from Zero activity you already did this; skip to the verification.
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux). If Docker is already on your machine from another course or project, skip to the verification.
 
 **Disk note:** Docker Desktop plus the course image (the ML libraries are hefty) needs roughly **8-10 GB** free, on top of Ollama's models. Clear space now, not mid-download.
 

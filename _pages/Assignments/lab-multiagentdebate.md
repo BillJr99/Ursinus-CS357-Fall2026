@@ -89,7 +89,7 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 
 Critique-and-refine and debate-and-consensus used to be two separate 100-point labs due eight days apart. They are the same family of idea - *use more than one model call to get a better answer* - so they are now **one lab with one grade**.
 
-**Part A - Critique and Refine.** Build the generator/critic/refine loop and its stopping rule. The full step-by-step specification lives on its own page so this one stays readable: **[Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/CritiqueRefine)**. Do Part A first; the debate work in Part B reuses its scaffolding, and a critic you can already trust is what makes a debate round worth reading.
+**Part A - Critique and Refine.** Build the generator/critic/refine loop and its stopping rule. The full step-by-step specification lives on its own page so this one stays readable: **[Critique and Refine](https://www.billmongan.com/Ursinus-CS357/Assignments/CritiqueRefine)**. Do Part A first; the debate work in Part B reuses its scaffolding, and a critic you can already trust is what makes a debate round worth reading.
 
 **Part B - Debate and Consensus.** Everything below on this page.
 

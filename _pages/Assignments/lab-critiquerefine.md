@@ -90,7 +90,7 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 ```bash
 # All you need is the requests library and Ollama (already installed if you did the earlier labs)
 
-> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
+> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab](https://www.billmongan.com/Ursinus-CS357/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
 
 
 pip install requests

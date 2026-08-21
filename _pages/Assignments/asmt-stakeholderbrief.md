@@ -42,7 +42,7 @@ info:
       proficient: The 2-3 page brief contains all required sections including a candidate track fit that works for all three final-project tracks; every section names its primary author and every member is primary author of at least one section; the submission carries all members' signatures and an AI-use disclosure stating what was AI-assisted and how it was verified (Goals 13, 14)
   readings:
     - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread"
     - rtitle: "Structured Peer Review Activity (SQR protocol used at the brief exchange)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md"
     - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."

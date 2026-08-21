@@ -28,7 +28,7 @@ info:
       proficient: The free-response items are specific and self-aware, the challenges and pet-peeve answers describe real situations rather than abstractions, the "what matters most" answer takes a position, and the whole survey would let a stranger predict what you are like to work with (Goal 13)
   readings:
     - rtitle: "The Project Thread (semester map and team playbook)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread"
     - rtitle: "CATME Smarter Teamwork: research basis for criteria-based team formation"
       rlink: "https://www.catme.org/"
 

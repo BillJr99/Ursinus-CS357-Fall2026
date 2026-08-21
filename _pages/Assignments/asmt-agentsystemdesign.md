@@ -58,7 +58,7 @@ info:
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
-      rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md"
+      rlink: "https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md"
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
 
@@ -230,7 +230,7 @@ Any domain with real work and at least one genuinely irreversible action qualifi
 
 #### Step 2: Author the document set
 
-Starting from the [course templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md), produce:
+Starting from the [course templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md), produce:
 
 1. **A charter** (`CHARTER.md`): mission (one sentence), a **ranked** priority list (demonstrate the ranking with one concrete conflict it resolves), definition of success, the rules you will actually enforce, at least one milestone with a gate.
 2. **An agent contract** (`AGENTS.md` style): the zones of your workspace (what is read-only, what is writable, what is off-limits), write protocols, and maintenance behavior.
