@@ -60,27 +60,27 @@ info:
       proficient: The program is submitted according to the directions, including a readme writeup, a pair programming log with at least two timestamped role swaps, a corpus datasheet covering sources, time range, representation gaps, and known limitations, and reflection answers that each cite a specific experimental result from the lab rather than restating the prompt
   readings:
     - rtitle: "RAG Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rag.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md"
     - rtitle: "RAG Quality Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ragquality.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
     - rtitle: "Chroma Documentation"
       rlink: "https://docs.trychroma.com"
     - rtitle: "Fine-Tuning vs. RAG"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-finetuningvsrag.md"
     - rtitle: "Unsloth: Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
       rlink: "https://unsloth.ai/docs/get-started/unsloth-notebooks"
     - rtitle: "Unsloth: Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
       rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-localmodels.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-localmodels.md"
     - rtitle: "Data Cards and Model Cards"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-datacards.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
     - rtitle: "Sampling, Temperature, and Generation Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-samplinggeneration.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md"
     - rtitle: "Evaluating Agent Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
     - rtitle: "Multimodal Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multimodalagents.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md"
 
 tags:
   - rag
@@ -106,8 +106,8 @@ In this lab, you and your partner will build a question-answering system over a 
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [RAG Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rag.md): the index/retrieve/generate pipeline
-- [RAG Quality Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ragquality.md): recall@k, faithfulness, and abstention
+- [RAG Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-rag.md): the index/retrieve/generate pipeline
+- [RAG Quality Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md): recall@k, faithfulness, and abstention
 
 **Tools to install:**
 
@@ -969,7 +969,7 @@ This direction is the low-code route through the heart of the lab. You will buil
 
 **Estimated time: 7-9 hours** (in place of core Parts 2-3, so the lab total stays ≈ 8-10 hours).
 
-Background material: the [Visual Agent Building with Langflow activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-visualagents.md), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
+Background material: the [Visual Agent Building with Langflow activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
 
 #### Part A: Install and Launch Langflow
 
@@ -1747,9 +1747,9 @@ This direction is completed in **pairs using driver/navigator roles**: the drive
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Sampling, Temperature, and Generation Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
-- [Evaluating Agent Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
-- [Multimodal Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multimodalagents.md): sending images to local vision models
+- [Sampling, Temperature, and Generation Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
+- [Evaluating Agent Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
+- [Multimodal Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multimodalagents.md): sending images to local vision models
 
 **Tools to install:**
 

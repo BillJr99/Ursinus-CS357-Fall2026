@@ -39,11 +39,11 @@ info:
       proficient: "The core artifact fully meets its direction's requirements and is honest about its limits. Direction A: the system runs from a fresh start following the README; configuration and seeds are externalized and pinned; CI passes on the submission SHA; evidence is surfaced to the user with a confirmation gate on consequential actions; and the committed GOVERNANCE.md matches deployed behavior. Direction B: the artifact package (risk analysis with at least 8 citations; governance document with monitoring plan, incident response, communication plan, and appeal process) could be handed to a regulator without modification. Direction C: the artifact is live and installable from a public registry with green CI, a stranger-tested quickstart, CONTRIBUTING.md and GOVERNANCE.md, and a documented substantive community exchange. All directions: the Demo Day presentation serves the multi-audience: a live technical segment with a rehearsed failure or limitation disclosure and a plain-language stakeholder segment, with every teammate speaking substantively and every teammate able to present any part; the partner-facing artifact (one-page brief, demo video, or deployed tool) is something the community partner can actually use, presented at Demo Day and included in the submission; and the project leaves a public, recruiter-legible trace, a public repository (Directions A and C) or a public write-up or portfolio page (Direction B) whose README or summary answers what it is, why it matters, and how to run or read it in thirty seconds, names each member's contribution, and is suitable for linking from a resume (Goal 14)"
   readings:
     - rtitle: "Agent Teams Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentteams.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
     - rtitle: "Project Studio Protocol"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
     - rtitle: "Explainability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainability.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
 
 tags:
   - final-project
@@ -289,9 +289,9 @@ Answer individually in your final submission:
 
 ### Background Reading and References
 
-- [The AI Maker Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-aimaker.md)
-- [Publishing Your Work Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md)
-- [Hosting with Cloudflare Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-cloudflare.md)
+- [The AI Maker Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aimaker.md)
+- [Publishing Your Work Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
+- [Hosting with Cloudflare Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md)
 
 This guide is not separately graded; its checklist is assessed within the Final Project rubric.
 
@@ -480,7 +480,7 @@ Answer these as part of your self-assessment before your project's publish gate:
 
 ### Background Reading and References
 
-- [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md)
+- [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md)
 - [Final Project](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 

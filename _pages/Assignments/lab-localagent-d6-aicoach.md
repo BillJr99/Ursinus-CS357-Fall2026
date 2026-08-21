@@ -68,7 +68,7 @@ Your core must:
 
 Write **one** function that every AI feature calls, the equivalent of `callTextModel` in the tutorial. It takes a prompt (and options) and returns the model's text. Internally it selects the provider and knows each one's URL, auth header, and response path.
 
-At minimum, support **one** provider end to end; structure the function so a second provider is a small addition. A recommended, keyless starting point is a **local OpenAI-compatible server** (Ollama or Open WebUI), exactly as in the [REST activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md):
+At minimum, support **one** provider end to end; structure the function so a second provider is a small addition. A recommended, keyless starting point is a **local OpenAI-compatible server** (Ollama or Open WebUI), exactly as in the [REST activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md):
 
 ```python
 import requests
