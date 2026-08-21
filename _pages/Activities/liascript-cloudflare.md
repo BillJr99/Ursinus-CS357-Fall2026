@@ -359,16 +359,16 @@ A push (or a manual dispatch) sets off a chain of steps. The security of the who
    Developer                         GitHub Actions runner                    Cloudflare
    ---------                         ---------------------                    ----------
    git push  -------------->  +-------------------------------+
-   (or manual  workflow_      |  GATE 1: branch == main?       |  no -> ✗ stop
-    dispatch)                 |  GATE 2: actor on allowlist?   |  no -> ✗ stop
-                              |  GATE 3: environment reviewer  |  no -> ⏸ wait for approval
+   (or manual  workflow_      |  GATE 1: branch == main?       |  no -> stop
+    dispatch)                 |  GATE 2: actor on allowlist?   |  no -> stop
+                              |  GATE 3: environment reviewer  |  no -> wait for approval
                               |          approved "production"?|
                               `---------------+---------------+
                                               | all gates pass
                                               v
                               +-------------------------------+
                               |  inject CLOUDFLARE_API_TOKEN   |   (masked as *** in logs)
-                              |  run ./deploy.sh               | -----------> wrangler deploy -> ✓ live Worker
+                              |  run ./deploy.sh               | -----------> wrangler deploy -> live Worker
                               `-------------------------------+
 ```
 
@@ -405,15 +405,15 @@ GitHub gives you three places to put values, and choosing correctly is the whole
 **The one rule that prevents most leaks:** a registered secret is automatically masked as `***` in logs, *unless you print it yourself*. These two lines defeat the mask and leak the token into a world-readable log:
 
 ```bash
-echo "Deploying with token $CLOUDFLARE_API_TOKEN"   # ✗ NEVER - prints the secret verbatim
-set -x                                               # ✗ DANGEROUS in a script that touches secrets:
+echo "Deploying with token $CLOUDFLARE_API_TOKEN"   # NEVER - prints the secret verbatim
+set -x                                               # DANGEROUS in a script that touches secrets:
                                                      #    it echoes every command with its expanded values
 ```
 
 Instead, prove a secret arrived without revealing it, the same discipline as Exercise 2, now for CI:
 
 ```bash
-# ✓ Confirms the token is present without exposing a single character of it
+# Confirms the token is present without exposing a single character of it
 if [ -n "${CLOUDFLARE_API_TOKEN:-}" ]; then
   echo "CLOUDFLARE_API_TOKEN is set (length ${#CLOUDFLARE_API_TOKEN})."
 else
@@ -455,10 +455,10 @@ A deploy identity should be able to do exactly one thing: deploy. The classic fa
                                                   sub = repo:ORG/REPO:
                                                         environment:production
   2. present signed token  ----------------------------------------->  a) fetch provider PUBLIC KEYS (JWKS)
-                                                                        b) verify SIGNATURE  -> forged? ✗
-                                                                        c) check AUDIENCE matches      ✗ if not
+                                                                        b) verify SIGNATURE  -> forged? reject
+                                                                        c) check AUDIENCE matches      reject if not
                                                                         d) check SUBJECT matches the
-                                                                           role's trust policy         ✗ if not
+                                                                           role's trust policy         reject if not
                                                                               | all checks pass
                                                                               v
   3. <---------------------  short-lived credentials (expire in minutes) <- assume-role
@@ -581,13 +581,13 @@ Two rules make a script CI-safe:
 - **Be idempotent.** Running the script twice must reach the same end state: create-if-not-exists, not create-and-crash-if-it-exists. A re-run after a flaky network should be harmless.
 
 ```bash
-# ✗ Hangs forever in CI; there is no one to press a key:
+# Hangs forever in CI; there is no one to press a key:
 read -p "Deploy to production? [y/N] " ok      # blocks on stdin; the runner waits, then times out
 
-# ✓ Non-interactive and idempotent:
+# Non-interactive and idempotent:
 npx wrangler deploy --name "$WORKER_NAME" </dev/null   # </dev/null => any stray prompt gets EOF
 
-# ✓ Idempotent setup, create the KV namespace only if it is absent:
+# Idempotent setup, create the KV namespace only if it is absent:
 if ! npx wrangler kv namespace list </dev/null | grep -q "$KV_TITLE"; then
   npx wrangler kv namespace create "$KV_TITLE" </dev/null
 fi
