@@ -29,9 +29,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Debate Protocol** | A structured format for multi-agent disagreement: agents first answer independently, then each agent sees the others' answers and has the opportunity to revise or rebut, and finally a judge or majority vote settles the question. | Round 1: three agents answer the water bottle problem independently; Round 2: each agent reads the others' answers and revises; final: majority vote picks the winner. |
-| **Independent Errors** | Two agents make independent errors when the probability that they both make the same mistake is lower than the probability that either makes it alone. Debate is most valuable when agent errors are independent — so that one agent's wrong answer is challenged by another's correct reasoning. | At temperature 0.9, each agent explores a different reasoning path, so errors from one agent need not be shared by all. |
-| **Correlated Errors** | When multiple agents share the same training data and similar biases, they may all make the same mistake regardless of how many there are. Debate cannot fix correlated errors — all agents will agree on the same wrong answer. | If all agents were trained on data that systematically misrepresents a historical event, no amount of debate between them will surface the correct information. |
-| **Majority Vote** | An aggregation method where the most common answer among debating agents is taken as the final answer, treating all agents as equals regardless of their reasoning quality. | Three agents answer "10", "15", "10" — majority vote returns "10" (correct answer in the water bottle problem). |
+| **Independent Errors** | Two agents make independent errors when the probability that they both make the same mistake is lower than the probability that either makes it alone. Debate is most valuable when agent errors are independent, so that one agent's wrong answer is challenged by another's correct reasoning. | At temperature 0.9, each agent explores a different reasoning path, so errors from one agent need not be shared by all. |
+| **Correlated Errors** | When multiple agents share the same training data and similar biases, they may all make the same mistake regardless of how many there are. Debate cannot fix correlated errors; all agents will agree on the same wrong answer. | If all agents were trained on data that systematically misrepresents a historical event, no amount of debate between them will surface the correct information. |
+| **Majority Vote** | An aggregation method where the most common answer among debating agents is taken as the final answer, treating all agents as equals regardless of their reasoning quality. | Three agents answer "10", "15", "10"; majority vote returns "10" (correct answer in the water bottle problem). |
 | **Judge Agent** | An alternative to majority vote: a separate agent that reads all agents' final answers and reasoning, then selects or synthesizes the best answer based on argument quality rather than counting votes. | A judge agent with prompt "Read these three answers and their reasoning. Identify which reasoning is most rigorous." |
 | **Explore-Then-Commit** | A temperature scheduling strategy where early rounds use high temperature (diverse initial answers) and later rounds use lower temperature (converging toward a well-supported conclusion). | Round 1 at temperature 0.9 for diversity; Round 2 at temperature 0.5 for more considered revision. |
 
@@ -43,13 +43,13 @@ In this section you will examine when multi-agent debate adds value and when it 
 
 ## 1. Independent Errors and Structured Conflict
 
-**Why this matters:** When you are unsure of an answer, it helps to get a second opinion — especially from someone who reasoned about the problem independently. If your friend arrived at the same answer by a different route, you are more confident. If they arrived at a different answer, that disagreement is valuable information. Multi-agent debate formalizes this intuition: by forcing agents to independently generate answers and then critique each other's reasoning, the debate exposes flaws that no single agent would catch on its own. The key word is "independently" — if all agents read each other's answers before forming their own, the diversity that makes debate valuable disappears.
+**Why this matters:** When you are unsure of an answer, it helps to get a second opinion, especially from someone who reasoned about the problem independently. If your friend arrived at the same answer by a different route, you are more confident. If they arrived at a different answer, that disagreement is valuable information. Multi-agent debate formalizes this intuition: by forcing agents to independently generate answers and then critique each other's reasoning, the debate exposes flaws that no single agent would catch on its own. The key word is "independently": if all agents read each other's answers before forming their own, the diversity that makes debate valuable disappears.
 
 **Why should two copies of the same model disagree usefully?** Sampling. At nonzero temperature, independent runs explore different reasoning paths, and their *errors are partially independent* even though their training is identical. Debate adds structure to that diversity: each agent must *see* the others' answers and either rebut or concede with reasons, forcing errors into the open where they can be attacked.
 
 **A canonical protocol** (Du et al., 2023): in round 1, $n$ agents answer independently; in each subsequent round, every agent receives all other agents' latest answers and produces a revised answer; after $R$ rounds, aggregate by majority vote or by a judge agent. Variants assign *adversarial roles* (advocate versus skeptic), which is especially effective for decisions with stakes on both sides.
 
-**Honesty about costs.** Debate multiplies inference cost by roughly $n \times R$. A 3-agent, 2-round debate costs approximately 6× as many LLM calls as a single-shot answer. Additionally, debate can converge on a *confidently shared mistake* if the agents' errors correlate — all three agents can agree on the wrong answer, and the majority vote will report it with false confidence. Debate is a tool for questions where verification is easier than generation, not a universal accuracy upgrade. Today we will *measure* rather than assume its benefit.
+**Honesty about costs.** Debate multiplies inference cost by roughly $n \times R$. A 3-agent, 2-round debate costs approximately 6× as many LLM calls as a single-shot answer. Additionally, debate can converge on a *confidently shared mistake* if the agents' errors correlate: all three agents can agree on the wrong answer, and the majority vote will report it with false confidence. Debate is a tool for questions where verification is easier than generation, not a universal accuracy upgrade. Today we will *measure* rather than assume its benefit.
 
 ---
 
@@ -68,7 +68,7 @@ In this section you will examine when multi-agent debate adds value and when it 
 
    > *Hint: Debate adds value when there is genuine ambiguity and independent reasoning can catch errors. A tool call is better when there is a ground truth that can be computed or retrieved exactly. A single model call is fine when the task is simple and errors are unlikely. Which category does each question fall into?*
 
-2. The fundraiser question has no ground truth — there is no objectively correct month. What does "debate improved the answer" even mean in that case? Propose a measurable proxy for "improvement" that does not require a ground truth.
+2. The fundraiser question has no ground truth; there is no objectively correct month. What does "debate improved the answer" even mean in that case? Propose a measurable proxy for "improvement" that does not require a ground truth.
 
    > *Hint: Even without a correct answer, you can measure whether the debate surfaced more relevant considerations (count distinct factors raised), whether the final recommendation was better justified (count supporting reasons), or whether participants were more confident in the final answer. Pick one and explain how you would measure it.*
 
@@ -86,7 +86,7 @@ In this section you will read the complete debate implementation and run it on a
 
 ## 2. Three Agents, Two Rounds, One Vote
 
-**Why this matters:** The code below implements the full Du et al. (2023) protocol (a published research recipe for multi-agent debate: independent answers, then peer review, then a vote) in about 30 lines. The most important design choice is the temperature schedule: round 1 uses temperature 0.9 (high diversity — we want agents to explore different reasoning paths) and round 2 uses temperature 0.5 (lower — agents are now refining rather than exploring, anchored by the debate). The seed is intentionally absent in round 1 so that each agent's run is genuinely random and independent. This is the opposite of our usual practice of seeding for reproducibility, and it is intentional: without diversity in round 1, there is nothing useful to debate in round 2.
+**Why this matters:** The code below implements the full Du et al. (2023) protocol (a published research recipe for multi-agent debate: independent answers, then peer review, then a vote) in about 30 lines. The most important design choice is the temperature schedule: round 1 uses temperature 0.9 (high diversity; we want agents to explore different reasoning paths) and round 2 uses temperature 0.5 (lower; agents are now refining rather than exploring, anchored by the debate). The seed is intentionally absent in round 1 so that each agent's run is genuinely random and independent. This is the opposite of our usual practice of seeding for reproducibility, and it is intentional: without diversity in round 1, there is nothing useful to debate in round 2.
 
 Run this locally with:
 
@@ -106,7 +106,7 @@ from collections import Counter
 def llm(system, user, temperature=0.9):
     """
     Call the local LLM. Note: no seed is set here.
-    This is intentional — we want genuine randomness for debate diversity.
+    This is intentional; we want genuine randomness for debate diversity.
     The caller controls temperature per round.
     """
     try:
@@ -178,7 +178,7 @@ print("Correct answer: 10 dollars")
 
 ## Model 2: Autopsy of a Debate
 
-Run the debate on this question. The correct answer is **10 dollars** (if the water bottle costs $x$ and the backpack costs $x + 10$, then $x + (x+10) = 30$, giving $x = 10$). The common wrong answer is **15 dollars** (from the intuition "they cost 30 together and differ by 10, so each is 15" — but this ignores the $10 difference).
+Run the debate on this question. The correct answer is **10 dollars** (if the water bottle costs $x$ and the backpack costs $x + 10$, then $x + (x+10) = 30$, giving $x = 10$). The common wrong answer is **15 dollars** (from the intuition "they cost 30 together and differ by 10, so each is 15", but this ignores the $10 difference).
 
 ### Critical Thinking Questions
 
@@ -194,7 +194,7 @@ Run the debate on this question. The correct answer is **10 dollars** (if the wa
 
    > *Hint: The judge reads everyone's reasoning, not just their final answers. A judge that can explain why it chose one answer over another is more useful than a vote counter. Which agent role from the critique-and-refine activity does this most closely resemble?*
 
-> **Common Misconception:** Many students assume that more agents and more rounds always produce more accurate results. This is only true if (a) the agents' errors are independent and (b) the question has a verifiable ground truth that correct reasoning can converge toward. For questions with correlated errors (all agents have the same bias) or no ground truth (matters of opinion), more debate may only produce more confident wrong answers. The research paper that introduced this protocol (Du et al., 2023) reports accuracy gains on specific benchmark tasks — those gains do not automatically transfer to every question type. Always measure, do not assume.
+> **Common Misconception:** Many students assume that more agents and more rounds always produce more accurate results. This is only true if (a) the agents' errors are independent and (b) the question has a verifiable ground truth that correct reasoning can converge toward. For questions with correlated errors (all agents have the same bias) or no ground truth (matters of opinion), more debate may only produce more confident wrong answers. The research paper that introduced this protocol (Du et al., 2023) reports accuracy gains on specific benchmark tasks; those gains do not automatically transfer to every question type. Always measure, do not assume.
 
 Part III gives you the structured experiments to generate those measurements yourself, replacing claims about debate with data.
 
@@ -215,7 +215,7 @@ In this section you will run controlled experiments to quantify exactly when deb
 
 1. **Debate versus single-shot: a controlled experiment.**
 
-   *What to do:* Build a set of 10 arithmetic word problems with known correct answers (vary the difficulty — some easy single-step, some harder two-step). Measure accuracy for three conditions: (a) one agent, one call; (b) three agents, majority vote with no debate round (just round 1); (c) full two-round debate with three agents. Report accuracy for each condition and attribute any accuracy lift to diversity (more agents) versus deliberation (the debate round).
+   *What to do:* Build a set of 10 arithmetic word problems with known correct answers (vary the difficulty: some easy single-step, some harder two-step). Measure accuracy for three conditions: (a) one agent, one call; (b) three agents, majority vote with no debate round (just round 1); (c) full two-round debate with three agents. Report accuracy for each condition and attribute any accuracy lift to diversity (more agents) versus deliberation (the debate round).
 
    *Starter hint:*
    ```python
@@ -239,7 +239,7 @@ In this section you will run controlled experiments to quantify exactly when deb
 
 2. **Adversarial roles: advocate and skeptic.**
 
-   *What to do:* For an open-ended question like "Should our club hold its fundraiser in October or February?", run two versions: (a) the standard protocol with three neutral agents, and (b) one advocate (assigned to argue for October), one skeptic (assigned to argue against October), and one judge that reads both and decides. Compare the two versions on "coverage of considerations" — count the number of distinct relevant factors (cost, weather, student availability, competition with other events, etc.) mentioned across all agents.
+   *What to do:* For an open-ended question like "Should our club hold its fundraiser in October or February?", run two versions: (a) the standard protocol with three neutral agents, and (b) one advocate (assigned to argue for October), one skeptic (assigned to argue against October), and one judge that reads both and decides. Compare the two versions on "coverage of considerations": count the number of distinct relevant factors (cost, weather, student availability, competition with other events, etc.) mentioned across all agents.
 
    *Starter hint:*
    ```python
@@ -264,7 +264,7 @@ In this section you will run controlled experiments to quantify exactly when deb
 
 3. **Correlated failure hunt: finding what debate cannot fix.**
 
-   *What to do:* Design a question where you predict all three agents will agree on the same wrong answer — because the correct answer contradicts a widespread misconception that appears in training data. Run the debate and verify. Then explain, using the concept of correlated errors from Part I, why the debate could not help. Finally, identify what non-LLM addition (a specific tool call, a retrieval source) would provide the information needed to correct the error.
+   *What to do:* Design a question where you predict all three agents will agree on the same wrong answer, because the correct answer contradicts a widespread misconception that appears in training data. Run the debate and verify. Then explain, using the concept of correlated errors from Part I, why the debate could not help. Finally, identify what non-LLM addition (a specific tool call, a retrieval source) would provide the information needed to correct the error.
 
    *Starter hint:* Common LLM misconceptions include: facts that changed recently (a country's capital that moved, a record that was broken), statistics from training data that are now outdated, or common wisdom that is scientifically contested. Pick one you are confident about, state the correct answer and why you believe agents will get it wrong, then run the debate to verify your prediction.
 
@@ -288,7 +288,7 @@ In this section you will run controlled experiments to quantify exactly when deb
 
 Respond to all three levels in your notebook:
 
-**Personal:** In your own group work this semester — or in any team context — when has disagreement improved the outcome, and when has it merely consumed time without adding value? Identify one feature of *productive* human disagreement that today's protocol captures (such as structured rounds, explicit rebuttal, or a deciding vote), and one feature of productive human disagreement that today's protocol misses (such as building on others' ideas, acknowledging uncertainty, or changing your mind for social rather than logical reasons).
+**Personal:** In your own group work this semester (or in any team context) when has disagreement improved the outcome, and when has it merely consumed time without adding value? Identify one feature of *productive* human disagreement that today's protocol captures (such as structured rounds, explicit rebuttal, or a deciding vote), and one feature of productive human disagreement that today's protocol misses (such as building on others' ideas, acknowledging uncertainty, or changing your mind for social rather than logical reasons).
 
 **Technical:** Today's debate protocol aggregates by majority vote or by a judge agent. Neither approach is perfect. Majority vote can be fooled by a coordinated wrong answer; a judge agent introduces another LLM call with its own failure modes. Design a hybrid: propose a protocol that uses majority vote as the primary signal but escalates to a judge agent only when the vote is not unanimous. Write out the decision logic in pseudocode.
 
@@ -296,7 +296,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design — how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
+-> **Coming Up Next:** The *Agent Teams: Specialists over Monoliths* activity moves from individual patterns to system design: how to combine pipelines, debate, and critique-refine into a complete multi-agent application. The debate protocol you implemented today is the core of the Multi-Agent Patterns Lab.
 
 ---
 
