@@ -320,7 +320,7 @@ In your notebook, respond to all three levels:
 
 ---
 
--> **Coming Up Next:** In the *Tokens and Embeddings: How Agents Represent Meaning* activity, we open the hood on how agents represent meaning, the foundation for retrieval and semantic search. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
+-> **Coming Up Next:** Your agent can now reach tools. Next it needs to reach *documents*. In the *Retrieval-Augmented Generation with Chroma* activity we put the semantic search you built by hand in *Tokens, Embeddings, and Attention* to work at scale, so the model answers from your corpus instead of from memory. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
 
 ---
 

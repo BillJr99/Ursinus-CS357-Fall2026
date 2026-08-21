@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Local Agent Stack: Wiring Containers into a System
 
-> **Supplemental: required prep only for the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).** Do the installs and image pulls at home before the *Studio: Local Agent Stack Clinic* session: Docker Desktop plus roughly 6 GB of images. In the studio we build only the 3-container minimal stack; the full 20-service tour below is reference material.
+> **Supplemental: required prep only for the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).** This is self-paced reference material rather than a class session. Do the installs and image pulls before you start the direction that needs them: Docker Desktop plus roughly 6 GB of images. Build the **3-container minimal stack** first (Ollama, `llmproxy`, Open WebUI); the full 20-service tour below is reference. Bring what will not start to the open studio in *How I AI*, Part III.
 
 The *Docker from Zero: Containers for Agent Builders* supplemental activity gave you one container, and one container is a demo; a *stack* of containers that talk to each other is infrastructure. This module deploys the course's local AI ecosystem (model servers, a unifying gateway, tool servers, web frontends, and autonomous agents) and teaches the wiring discipline that makes two dozen services coexist: tiered roles, a port plan, per-service identity directories, and `host.docker.internal` as the connective tissue. The arc: **the tier model $\rightarrow$ the inference foundation $\rightarrow$ the gateway $\rightarrow$ frontends and tools $\rightarrow$ agents $\rightarrow$ wiring and verification**.
 

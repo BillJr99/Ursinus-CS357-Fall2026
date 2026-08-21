@@ -186,7 +186,7 @@ In this part, you will build your own benchmark, a domain-specific task set your
 3. *Mitigation preview.*
 
    - *What to do*: For each of the three hallucination taxonomy categories (factual, faithfulness, reasoning error), name the course topic that most directly addresses it, and write one sentence explaining the connection.
-   - *Starter hint*: The three topics to match are: retrieval-augmented generation (the *Retrieval-Augmented Generation with Chroma* activity), tool use / external APIs (the *Tool Use and Function Calling* activity), and critique agents / multi-agent debate (the *Critique and Refine* and *Multi-Agent Debate* activities). Match each to the hallucination type it addresses most directly.
+   - *Starter hint*: You have not built any of these yet; this is a prediction, and one sentence each is all you need to make it. **Retrieval-augmented generation** hands the model the relevant source text before it answers, so it can quote instead of recall (the *Retrieval-Augmented Generation with Chroma* activity, in two weeks). **Tool use** lets the model call a real function for facts it should not be recalling at all, like today's date or an arithmetic result (*Tool Use and Function Calling*, next session). **Critique agents and debate** put a second model, or several, in the path to challenge the first one's answer before you see it (*Critique and Refine* and *Multi-Agent Debate*, later in the term). Match each to the hallucination type it addresses most directly, and say what it does *not* fix.
    - *You've succeeded when*: You have three pairings, each with a one-sentence justification that explains the *mechanism* of why that technique addresses that hallucination type, not just that they are both in the course.
 
 ---
@@ -201,7 +201,7 @@ In this part, you will build your own benchmark, a domain-specific task set your
 
 ---
 
--> Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools, one of the mitigations previewed today. The evaluation harness pattern you built here returns in the RAG Knowledge Base Lab's retrieval evaluation and the Rubric Pipeline Lab's rubric pipeline.
+-> Coming Up Next: You just predicted which techniques fix which hallucinations. Next session we build the first one: in *Tool Use and Function Calling*, the agent stops recalling facts it should be looking up and calls a real function instead, which is the mitigation your Exercise 3 matched to fabricated specifics. The evaluation harness pattern you built here returns in the RAG Knowledge Base Lab's retrieval evaluation and the Rubric Pipeline Lab's rubric pipeline.
 
 ## 5. Further Reading
 
