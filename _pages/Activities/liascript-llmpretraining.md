@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # How LLMs Are Built: Tokenization, Pre-Training, and Scaling
 
-The LLMs powering today's AI applications are not magic — they are the result of well-understood engineering decisions made during construction: how text is cut into pieces, what objective the model is trained to optimize, how many parameters and how much data are needed, and how weights are compressed for deployment. This activity traces the full construction path from **tokenization $\rightarrow$ byte-pair encoding by hand $\rightarrow$ causal vs. masked language modeling $\rightarrow$ cross-entropy loss in code $\rightarrow$ Chinchilla scaling laws $\rightarrow$ quantization for deployment**, building enough mechanical understanding to make informed choices about which models to use and how.
+The LLMs powering today's AI applications are not magic; they are the result of well-understood engineering decisions made during construction: how text is cut into pieces, what objective the model is trained to optimize, how many parameters and how much data are needed, and how weights are compressed for deployment. This activity traces the full construction path from **tokenization $\rightarrow$ byte-pair encoding by hand $\rightarrow$ causal vs. masked language modeling $\rightarrow$ cross-entropy loss in code $\rightarrow$ Chinchilla scaling laws $\rightarrow$ quantization for deployment**, building enough mechanical understanding to make informed choices about which models to use and how.
 
 ---
 
@@ -35,46 +35,46 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Tokenization** | The process of splitting raw text into discrete units (tokens) that a model can process — neither individual characters nor whole words, but learned subword units | "unhappiness" -> `un` + `happiness` (2 tokens); "the" -> `the` (1 token) |
-| **Byte-Pair Encoding (BPE)** | A tokenization algorithm that starts with individual characters and repeatedly merges the most frequently occurring adjacent pair into a single new token — a compression algorithm applied to language | Starting with `l o w e r`, if `e r` is the most frequent pair, merge to `l o w er`; repeat until vocabulary reaches target size |
-| **Vocabulary** | The fixed set of tokens a model knows — typically 30,000 to 200,000 entries; any text in the world can be encoded using these tokens (unknown characters fall back to byte-level tokens) | GPT-4 uses a vocabulary of ~100,000 tokens built by BPE on web text |
-| **Causal Language Modeling (CLM)** | The GPT-style pre-training objective: given all previous tokens, predict the next token. Called "causal" because each token can only attend to tokens before it | Given "The cat sat on the", predict "mat" — each position predicts its successor |
+| **Tokenization** | The process of splitting raw text into discrete units (tokens) that a model can process: neither individual characters nor whole words, but learned subword units | "unhappiness" -> `un` + `happiness` (2 tokens); "the" -> `the` (1 token) |
+| **Byte-Pair Encoding (BPE)** | A tokenization algorithm that starts with individual characters and repeatedly merges the most frequently occurring adjacent pair into a single new token, a compression algorithm applied to language | Starting with `l o w e r`, if `e r` is the most frequent pair, merge to `l o w er`; repeat until vocabulary reaches target size |
+| **Vocabulary** | The fixed set of tokens a model knows: typically 30,000 to 200,000 entries; any text in the world can be encoded using these tokens (unknown characters fall back to byte-level tokens) | GPT-4 uses a vocabulary of ~100,000 tokens built by BPE on web text |
+| **Causal Language Modeling (CLM)** | The GPT-style pre-training objective: given all previous tokens, predict the next token. Called "causal" because each token can only attend to tokens before it | Given "The cat sat on the", predict "mat"; each position predicts its successor |
 | **Masked Language Modeling (MLM)** | The BERT-style pre-training objective: randomly mask 15% of tokens and predict the masked tokens from surrounding context in both directions | "The [MASK] sat on the mat" -> predict "cat" using both left and right context |
-| **Cross-Entropy Loss** | The standard loss function for next-token prediction: measures how surprised the model was by the actual next token — lower is better, zero would mean perfect prediction with 100% confidence | If the model assigned 1% probability to the correct next token, cross-entropy = −log(0.01) ≈ 4.6; if it assigned 90%, cross-entropy = −log(0.9) ≈ 0.1 |
-| **Chinchilla Scaling Laws** | Empirical findings from DeepMind (2022) showing that model size (parameters) and training data (tokens) should scale together at roughly a 1:20 ratio — training a model on 20× tokens per parameter maximizes performance for a given compute budget | A 7B-parameter model is "Chinchilla optimal" when trained on ~140B tokens; training it on only 1B tokens wastes the model's capacity |
-| **Quantization** | Compressing model weights from high-precision floating-point (float32, 32 bits per number) to lower-precision integers (int8 or int4, 8 or 4 bits per number) — trading a small accuracy loss for a large reduction in memory and inference speed | A 7B model in float32 requires ~28 GB of GPU memory; in int4 it requires ~4 GB — small enough to run on a laptop GPU |
-| **Perplexity** | A measurement of how well a language model predicts a test set — the geometric mean of the inverse probability the model assigns to each token; lower is better | A perplexity of 10 means the model is, on average, as confused as if it had to choose uniformly among 10 equally likely options at each step |
-| **Bits per Parameter** | The number of bits used to store each model weight — float32 = 32 bits, float16 = 16 bits, int8 = 8 bits, int4 = 4 bits; lower bits per parameter = smaller model file but potentially lower quality | A 7B int4 model uses 4 × 7,000,000,000 = 28 billion bits = ~3.5 GB; the same model in float32 uses 28 GB |
+| **Cross-Entropy Loss** | The standard loss function for next-token prediction: measures how surprised the model was by the actual next token; lower is better, zero would mean perfect prediction with 100% confidence | If the model assigned 1% probability to the correct next token, cross-entropy = −log(0.01) ≈ 4.6; if it assigned 90%, cross-entropy = −log(0.9) ≈ 0.1 |
+| **Chinchilla Scaling Laws** | Empirical findings from DeepMind (2022) showing that model size (parameters) and training data (tokens) should scale together at roughly a 1:20 ratio; training a model on 20× tokens per parameter maximizes performance for a given compute budget | A 7B-parameter model is "Chinchilla optimal" when trained on ~140B tokens; training it on only 1B tokens wastes the model's capacity |
+| **Quantization** | Compressing model weights from high-precision floating-point (float32, 32 bits per number) to lower-precision integers (int8 or int4, 8 or 4 bits per number), trading a small accuracy loss for a large reduction in memory and inference speed | A 7B model in float32 requires ~28 GB of GPU memory; in int4 it requires ~4 GB, small enough to run on a laptop GPU |
+| **Perplexity** | A measurement of how well a language model predicts a test set: the geometric mean of the inverse probability the model assigns to each token; lower is better | A perplexity of 10 means the model is, on average, as confused as if it had to choose uniformly among 10 equally likely options at each step |
+| **Bits per Parameter** | The number of bits used to store each model weight: float32 = 32 bits, float16 = 16 bits, int8 = 8 bits, int4 = 4 bits; lower bits per parameter = smaller model file but potentially lower quality | A 7B int4 model uses 4 × 7,000,000,000 = 28 billion bits = ~3.5 GB; the same model in float32 uses 28 GB |
 
 ---
 
 ### Before You Start
 
-**What you need:** Python 3.10+. No GPU, no training run — everything here is small enough to watch.
+**What you need:** Python 3.10+. No GPU, no training run; everything here is small enough to watch.
 
 **What you will have at the end:** a tokenizer you built by hand and a concrete sense of what pre-training actually optimizes.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
-# Part I: Tokenization — Why We Don't Just Split on Spaces
+# Part I: Tokenization - Why We Don't Just Split on Spaces
 
 In this part, you will work through the BPE algorithm by hand on a small example, understand why vocabulary size is a fundamental design tradeoff, and see concretely why tokenization causes models to struggle with letter-counting, arithmetic, and non-English text. These limitations directly affect how you design prompts, structure RAG chunks, and choose which model to use for a given task.
 
 ## 1. The Limits of Naive Tokenization
 
-**Why this matters:** Tokenization is the first thing that happens to any text you send to an LLM, and it shapes everything downstream: what patterns the model can recognize, how long your context window actually is in practice, why the model cannot spell words reliably, and why languages with different scripts receive worse service from models trained primarily on English. Understanding tokenization is not a detour into implementation details — it is essential context for making good decisions about model selection, prompt design, and RAG chunk sizing.
+**Why this matters:** Tokenization is the first thing that happens to any text you send to an LLM, and it shapes everything downstream: what patterns the model can recognize, how long your context window actually is in practice, why the model cannot spell words reliably, and why languages with different scripts receive worse service from models trained primarily on English. Understanding tokenization is not a detour into implementation details; it is essential context for making good decisions about model selection, prompt design, and RAG chunk sizing.
 
 Why not just split text on spaces? Three problems:
 
-**Rare words explode the vocabulary.** If each unique word in the training corpus gets its own token, a vocabulary trained on Wikipedia alone would need over a million entries. This makes the embedding table enormous and forces the model to learn a separate representation for every inflected form of every word — "walk", "walks", "walked", "walking" all get separate tokens with no shared structure.
+**Rare words explode the vocabulary.** If each unique word in the training corpus gets its own token, a vocabulary trained on Wikipedia alone would need over a million entries. This makes the embedding table enormous and forces the model to learn a separate representation for every inflected form of every word: "walk", "walks", "walked", "walking" all get separate tokens with no shared structure.
 
 **Out-of-vocabulary (OOV) words become impossible.** In a word-level vocabulary, any word not seen during training cannot be represented at all. A model trained on English Wikipedia has no token for a company name coined in 2024, a user's misspelling, or text in another language.
 
-**Character-level tokenization solves OOV but creates other problems.** With character-level tokens, every string is representable — but the sequence length explodes (the sentence "Hello!" becomes six tokens instead of one or two), the model must learn to model long-range dependencies across hundreds of characters, and the vocabulary must include every possible Unicode character.
+**Character-level tokenization solves OOV but creates other problems.** With character-level tokens, every string is representable, but the sequence length explodes (the sentence "Hello!" becomes six tokens instead of one or two), the model must learn to model long-range dependencies across hundreds of characters, and the vocabulary must include every possible Unicode character.
 
-**Subword tokenization** — the approach used by BPE, WordPiece, and Unigram — strikes a balance: frequent words get their own token; rare words are split into recognizable subword pieces; and the vocabulary stays manageable (typically 30,000-200,000 entries). The tradeoff is that the model's "view" of text is neither character-level nor word-level, causing surprising behaviors: "9.11 > 9.9" may confuse the model because "9", ".", "11" and "9", ".", "9" are processed as separate tokens with no inherent numeric magnitude.
+**Subword tokenization** (the approach used by BPE, WordPiece, and Unigram) strikes a balance: frequent words get their own token; rare words are split into recognizable subword pieces; and the vocabulary stays manageable (typically 30,000-200,000 entries). The tradeoff is that the model's "view" of text is neither character-level nor word-level, causing surprising behaviors: "9.11 > 9.9" may confuse the model because "9", ".", "11" and "9", ".", "9" are processed as separate tokens with no inherent numeric magnitude.
 
 ---
 
@@ -103,7 +103,7 @@ w i d e s t </w>    × 3
 ```
 
 **BPE Iteration 1:** Count all adjacent pairs across all occurrences:
-- `e s` appears in "newest" (×6) + "widest" (×3) = 9 times — most frequent
+- `e s` appears in "newest" (×6) + "widest" (×3) = 9 times, most frequent
 - Merge `e s` -> `es`. New sequences:
 
 ```
@@ -114,7 +114,7 @@ w i d es t </w>     × 3
 ```
 
 **BPE Iteration 2:** Count again:
-- `es t` appears in "newest" (×6) + "widest" (×3) = 9 times — most frequent
+- `es t` appears in "newest" (×6) + "widest" (×3) = 9 times, most frequent
 - Merge `es t` -> `est`. New sequences:
 
 ```
@@ -125,26 +125,26 @@ w i d est </w>      × 3
 ```
 
 **BPE Iteration 3:** Count again:
-- `l o` appears in "low" (×5) + "lower" (×2) = 7 times — most frequent
+- `l o` appears in "low" (×5) + "lower" (×2) = 7 times, most frequent
 - Merge `l o` -> `lo`. Continue until vocabulary reaches target size.
 
 ### Critical Thinking Questions
 
 **Q1.** After Iteration 3, what is the token sequence for "lowest" if it appears in the corpus? Using the merged pairs computed above, apply them in order: first check if `es` can be merged, then `est`, then `lo`. Show the full merge sequence step by step.
 
-> *Hint: Start with `l o w e s t </w>`. Check: is `e s` a merged pair? Yes — merge to get `l o w es t </w>`. Is `es t` a merged pair? Yes — merge to get `l o w est </w>`. Is `l o` a merged pair? Yes — merge to get `lo w est </w>`. Final sequence: `lo`, `w`, `est`, `</w>` — four tokens.*
+> *Hint: Start with `l o w e s t </w>`. Check: is `e s` a merged pair? Yes, merge to get `l o w es t </w>`. Is `es t` a merged pair? Yes, merge to get `l o w est </w>`. Is `l o` a merged pair? Yes, merge to get `lo w est </w>`. Final sequence: `lo`, `w`, `est`, `</w>`, four tokens.*
 
 **Q2.** The word "Collegeville" does not appear in the training corpus. Walk through how BPE would tokenize it using only the character vocabulary defined above plus any merges computed so far. What happens to characters like capital "C" that were never in the training vocabulary at all?
 
-> *Hint: BPE tokenizers handle unseen characters by falling back to byte-level representations — every byte (0x00 through 0xFF) is in the vocabulary, so any Unicode character can be encoded as one or more byte tokens. For "C", the tokenizer would likely emit the byte for the ASCII code 67. What does this mean for the model's ability to reason about proper nouns?*
+> *Hint: BPE tokenizers handle unseen characters by falling back to byte-level representations: every byte (0x00 through 0xFF) is in the vocabulary, so any Unicode character can be encoded as one or more byte tokens. For "C", the tokenizer would likely emit the byte for the ASCII code 67. What does this mean for the model's ability to reason about proper nouns?*
 
 **Q3.** A vocabulary size of 32,000 is common for English-only models; multilingual models often use 250,000 or more. Explain the two competing pressures that determine the "right" vocabulary size, and predict what happens to non-English languages when a large model trained primarily on English uses a 32,000-token vocabulary built from English text.
 
-> *Hint: Pressure 1 toward larger vocabulary: more tokens means each token corresponds to a longer, more meaningful text unit, reducing sequence length and the model's memory burden for long-range dependencies. Pressure 2 toward smaller vocabulary: each vocabulary entry requires a row in the embedding table — a larger vocabulary means more parameters and more training data needed per entry to learn a good representation. For non-English: if your 32,000-token vocabulary was built from English BPE merges, a Korean or Arabic sentence of 10 characters might require 30+ tokens because no Korean merges were learned.*
+> *Hint: Pressure 1 toward larger vocabulary: more tokens means each token corresponds to a longer, more meaningful text unit, reducing sequence length and the model's memory burden for long-range dependencies. Pressure 2 toward smaller vocabulary: each vocabulary entry requires a row in the embedding table; a larger vocabulary means more parameters and more training data needed per entry to learn a good representation. For non-English: if your 32,000-token vocabulary was built from English BPE merges, a Korean or Arabic sentence of 10 characters might require 30+ tokens because no Korean merges were learned.*
 
-**Q4.** A student claims: "The tokenizer is just a preprocessing step — once the model is trained, tokenization doesn't affect model behavior, only input format." Identify two concrete model behaviors that are directly caused by tokenization choices, not by the model architecture or training data.
+**Q4.** A student claims: "The tokenizer is just a preprocessing step; once the model is trained, tokenization doesn't affect model behavior, only input format." Identify two concrete model behaviors that are directly caused by tokenization choices, not by the model architecture or training data.
 
-> *Hint: Think about (1) the model's ability to count letters in a word — if "strawberry" is tokenized as `straw` + `berry`, the model never sees the individual letters, making "how many r's are in strawberry?" hard to answer by inspection. (2) Think about arithmetic: "123456789" might be tokenized as "123" + "456" + "789" — three tokens — so adding two large numbers requires the model to reason across token boundaries in a non-obvious way.*
+> *Hint: Think about (1) the model's ability to count letters in a word: if "strawberry" is tokenized as `straw` + `berry`, the model never sees the individual letters, making "how many r's are in strawberry?" hard to answer by inspection. (2) Think about arithmetic: "123456789" might be tokenized as "123" + "456" + "789" (three tokens), so adding two large numbers requires the model to reason across token boundaries in a non-obvious way.*
 
 **Which of the following correctly describes what BPE merges at each step?**
 
@@ -157,11 +157,11 @@ w i d est </w>      × 3
 
 # Part II: Pre-Training Objectives and Scaling
 
-In this part, you will understand the two dominant pre-training objectives for large language models — causal language modeling (GPT-style) and masked language modeling (BERT-style) — implement the CLM cross-entropy loss by hand in code, and learn how Chinchilla scaling laws and quantization shape real decisions about which models to train and how to deploy them.
+In this part, you will understand the two dominant pre-training objectives for large language models, causal language modeling (GPT-style) and masked language modeling (BERT-style), implement the CLM cross-entropy loss by hand in code, and learn how Chinchilla scaling laws and quantization shape real decisions about which models to train and how to deploy them.
 
 ## 2. What the Model is Trained to Do
 
-**Why this matters:** The pre-training objective determines what the model is good at by default. CLM models (GPT, LLaMA, Claude's base) are trained to generate — to complete text forward in time — which makes them naturally suited to dialogue, code generation, and open-ended text tasks. MLM models (BERT, RoBERTa) are trained to fill gaps — to predict masked content from bidirectional context — which makes them suited to classification, named entity recognition, and sentence-level understanding tasks where the full sentence is known at inference time. Choosing the wrong model family for a task is one of the most common architecture mistakes in applied AI projects.
+**Why this matters:** The pre-training objective determines what the model is good at by default. CLM models (GPT, LLaMA, Claude's base) are trained to generate (to complete text forward in time) which makes them naturally suited to dialogue, code generation, and open-ended text tasks. MLM models (BERT, RoBERTa) are trained to fill gaps (to predict masked content from bidirectional context) which makes them suited to classification, named entity recognition, and sentence-level understanding tasks where the full sentence is known at inference time. Choosing the wrong model family for a task is one of the most common architecture mistakes in applied AI projects.
 
 **Causal Language Modeling (CLM)** trains the model to predict the next token given all previous tokens. For a sequence of tokens $x_1, x_2, \ldots, x_T$, the training loss is:
 
@@ -171,7 +171,7 @@ This is a sum of cross-entropy losses at each position: how surprised was the mo
 
 A key property of CLM: each token can only "see" tokens before it (this is enforced by a **causal attention mask** in the transformer). This is why CLM is well-suited to generation: at inference time, the model generates one token at a time, left to right, exactly as it was trained.
 
-**Masked Language Modeling (MLM)** randomly masks a fraction (typically 15%) of input tokens and trains the model to reconstruct them from the surrounding context in *both* directions. Because MLM uses bidirectional context, MLM models (like BERT) cannot straightforwardly generate text — they see the whole sequence during training, so at inference time they cannot generate one token at a time without seeing future tokens they are supposed to generate.
+**Masked Language Modeling (MLM)** randomly masks a fraction (typically 15%) of input tokens and trains the model to reconstruct them from the surrounding context in *both* directions. Because MLM uses bidirectional context, MLM models (like BERT) cannot straightforwardly generate text; they see the whole sequence during training, so at inference time they cannot generate one token at a time without seeing future tokens they are supposed to generate.
 
 MLM models excel at tasks where the full input is known: classifying whether an email is spam (the full email is available), finding the named entities in a sentence (the full sentence is available), or scoring a sentence's grammatical acceptability.
 
@@ -190,7 +190,7 @@ Given the four-character sequence "abbc" tokenized at the character level (token
 
 ### Critical Thinking Questions
 
-**Q5.** Compute the average cross-entropy loss for this sequence by summing the $-\log P$ column and dividing by 4. Show your arithmetic. Then compute the **perplexity** as $e^{\mathcal{L}}$ where $\mathcal{L}$ is the average loss. What does this perplexity value mean intuitively — how many equally likely choices is the model effectively considering at each step?
+**Q5.** Compute the average cross-entropy loss for this sequence by summing the $-\log P$ column and dividing by 4. Show your arithmetic. Then compute the **perplexity** as $e^{\mathcal{L}}$ where $\mathcal{L}$ is the average loss. What does this perplexity value mean intuitively: how many equally likely choices is the model effectively considering at each step?
 
 > *Hint: Sum the four values in the $-\log P$ column: $0.693 + 0.511 + 0.916 + 0.357 = 2.477$. Divide by 4: $\mathcal{L} = 0.619$. Perplexity = $e^{0.619} \approx 1.86$. Intuitively: at each step, the model is as uncertain as if choosing uniformly among 1.86 equally likely options. For a model with random chance over 256 characters, perplexity would be 256. Lower = better.*
 
@@ -200,20 +200,20 @@ Given the four-character sequence "abbc" tokenized at the character level (token
 
 **Q7.** Compare CLM and MLM training objectives: which one can be used to generate new text, and why can the other one not? Use the mechanics of the attention mask to explain your answer, not just "CLM is generative."
 
-> *Hint: CLM uses a causal attention mask — position $t$ can only attend to positions $\leq t$. At inference time, you have positions 1 through $t-1$ and want to predict position $t$ — the mask exactly matches this setup, so CLM can generate autoregressively. MLM has no causal mask — position $t$ attends to all positions including $t+1, t+2, ..., T$. At inference time, if you want to generate position $t$, you do not yet have positions $t+1$ through $T$ — the MLM training setup assumed you did.*
+> *Hint: CLM uses a causal attention mask: position $t$ can only attend to positions $\leq t$. At inference time, you have positions 1 through $t-1$ and want to predict position $t$; the mask exactly matches this setup, so CLM can generate autoregressively. MLM has no causal mask: position $t$ attends to all positions including $t+1, t+2, ..., T$. At inference time, if you want to generate position $t$, you do not yet have positions $t+1$ through $T$; the MLM training setup assumed you did.*
 
 ---
 
 ## 3. Cross-Entropy Loss in Code
 
-**Why this matters:** The cross-entropy loss function is the engine of pre-training — it is the single number that gradient descent minimizes across trillions of tokens, and every capability an LLM develops is a side effect of minimizing this loss. Implementing it from scratch on a small character-level corpus makes the training loop demystified: there is no magic, only a repeated computation of "how surprised was the model by the actual next token, and which direction should we nudge the weights to be less surprised?"
+**Why this matters:** The cross-entropy loss function is the engine of pre-training; it is the single number that gradient descent minimizes across trillions of tokens, and every capability an LLM develops is a side effect of minimizing this loss. Implementing it from scratch on a small character-level corpus makes the training loop demystified: there is no magic, only a repeated computation of "how surprised was the model by the actual next token, and which direction should we nudge the weights to be less surprised?"
 
-The code below implements a character-level tokenizer and computes the CLM cross-entropy loss manually — no neural network, just the loss function itself applied to random "model probabilities" to illustrate the mechanics.
+The code below implements a character-level tokenizer and computes the CLM cross-entropy loss manually: no neural network, just the loss function itself applied to random "model probabilities" to illustrate the mechanics.
 
 ## Code Cell
 
 ```python
-# Character-level CLM cross-entropy loss — manual implementation
+# Character-level CLM cross-entropy loss, manual implementation
 # This shows exactly what a language model's training objective computes
 # No neural network needed: we use random "model probabilities" to illustrate
 
