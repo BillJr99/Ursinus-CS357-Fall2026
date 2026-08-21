@@ -253,7 +253,7 @@ def analyze_article(article_text: str, llm, max_repair_attempts: int = 2) -> Bia
     # Try up to max_repair_attempts + 1 times (first attempt + repairs)
     for attempt in range(max_repair_attempts + 1):
         raw = llm.generate(prompt, response_format=BiasAnalysis)
-        # raw is a string containing JSON — we have not validated it yet
+        # raw is a string containing JSON; we have not validated it yet
 
         try:
             # model_validate_json parses the JSON AND validates against the schema
@@ -261,9 +261,9 @@ def analyze_article(article_text: str, llm, max_repair_attempts: int = 2) -> Bia
             return BiasAnalysis.model_validate_json(raw)
 
         except ValidationError as e:
-            # Validation failed — either JSON is malformed or values violate the schema
+            # Validation failed; either JSON is malformed or values violate the schema
             if attempt == max_repair_attempts:
-                # We've used all our repair attempts — fail loudly, do not silently return garbage
+                # We've used all our repair attempts; fail loudly, do not silently return garbage
                 raise RuntimeError(
                     f"Schema validation failed after {max_repair_attempts} repair attempts. "
                     f"Last error: {e}"
@@ -281,7 +281,7 @@ Validation errors:
 
 Please output only corrected JSON that fixes these specific errors.
 Do not change any values that were already valid."""
-            # Loop continues — next iteration will try again with the repair prompt
+            # Loop continues; next iteration will try again with the repair prompt
 
     raise RuntimeError("Unreachable")    # Should never get here (loop always returns or raises)
 ```
@@ -319,30 +319,30 @@ Key properties of this pipeline:
 - **Parse first, use second**: `model_validate_json` raises an exception before any downstream code touches potentially invalid data.
 - **Targeted repair**: The repair prompt includes the *specific* validation error with the actual bad value, not just "try again." This gives the model actionable information about exactly what to fix.
 - **Bounded retries**: The loop has a hard limit. Without it, an unfixable validation error (like a model that consistently outputs the wrong type) becomes an infinite loop and unbounded API cost.
-- **Fail loudly**: When repair is exhausted, the exception propagates to the caller. Silent failures — returning `None` or default values — hide the problem and allow bad data to flow downstream.
+- **Fail loudly**: When repair is exhausted, the exception propagates to the caller. Silent failures (returning `None` or default values) hide the problem and allow bad data to flow downstream.
 
-> **Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema. It does not. JSON mode is a *suggestion* — the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals). The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level. The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
+> **Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema. It does not. JSON mode is a *suggestion*; the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals). The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level. The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
 
 ### Critical Thinking Questions
 
 7. The repair prompt says "Do not change any values that were already valid." Why is this specific constraint important? Describe a concrete scenario where a repair prompt that just said "output the correct JSON" could accidentally make the response worse, not better.
 
-   *Hint: Consider a case where the model correctly identified `political_lean` as "center_right" but had an invalid `evidence_quality` of 1.5. If the repair prompt just says "output correct JSON," the model might re-evaluate the article from scratch and now classify `political_lean` as "right" — changing a valid field while fixing the invalid one. What does the more constrained repair prompt do differently?*
+   *Hint: Consider a case where the model correctly identified `political_lean` as "center_right" but had an invalid `evidence_quality` of 1.5. If the repair prompt just says "output correct JSON," the model might re-evaluate the article from scratch and now classify `political_lean` as "right", changing a valid field while fixing the invalid one. What does the more constrained repair prompt do differently?*
 
-8. Pydantic's `Field(ge=0.0, le=1.0)` on `evidence_quality` catches the case where the model outputs `1.5` (a range violation). But it does not catch the case where the model outputs `0.9` for an article that cites zero sources and makes no verifiable claims — semantically, `0.9` is wildly wrong here, but it is structurally valid. What layer of the system is responsible for catching semantic errors like this, and describe what that layer would concretely look like?
+8. Pydantic's `Field(ge=0.0, le=1.0)` on `evidence_quality` catches the case where the model outputs `1.5` (a range violation). But it does not catch the case where the model outputs `0.9` for an article that cites zero sources and makes no verifiable claims; semantically, `0.9` is wildly wrong here, but it is structurally valid. What layer of the system is responsible for catching semantic errors like this, and describe what that layer would concretely look like?
 
    *Hint: One approach is a separate "quality check" LLM call that reads both the original article and the BiasAnalysis output and asks "is this analysis consistent with the article?" Another approach is statistical: track the distribution of `evidence_quality` scores across thousands of articles and flag outliers. Which approach is more scalable?*
 
-9. The function raises `RuntimeError` after exhausting `max_repair_attempts`. The caller must handle this exception. Propose a **graceful degradation** strategy for a system that is analyzing news articles and must always return *something* to the user — even if validation fails after all repair attempts. What should be returned, and what metadata should accompany the degraded response to make its limitations clear to downstream consumers?
+9. The function raises `RuntimeError` after exhausting `max_repair_attempts`. The caller must handle this exception. Propose a **graceful degradation** strategy for a system that is analyzing news articles and must always return *something* to the user, even if validation fails after all repair attempts. What should be returned, and what metadata should accompany the degraded response to make its limitations clear to downstream consumers?
 
-   *Starter hint: One option is to return a partially valid response — the fields that passed validation — alongside an explicit `is_degraded: True` flag and a `validation_errors` field listing what failed. Another option is to return a "manual review required" placeholder. Which is more useful to a downstream system? What does a system that relies on this output need to know to handle both cases correctly?*
+   *Starter hint: One option is to return a partially valid response (the fields that passed validation) alongside an explicit `is_degraded: True` flag and a `validation_errors` field listing what failed. Another option is to return a "manual review required" placeholder. Which is more useful to a downstream system? What does a system that relies on this output need to know to handle both cases correctly?*
 
 You ask an LLM to output a JSON object with a field `"confidence": float` constrained to values between 0 and 1. The model outputs `{"confidence": "high"}`. The most likely root cause of this failure is:
 
 [(X)] The JSON schema or response format was not provided to the model (or was provided only as a natural language instruction), so the model produced a plausible English description instead of a number
-[( )] The model does not understand the concept of numbers and cannot generate them — LLMs routinely generate numbers in other contexts; the issue here is that the model defaulted to natural language because no format constraint forced it to use a float
-[( )] The schema definition contained a syntax error that caused it to be silently ignored — a schema syntax error would typically surface as an API error before any response is generated, not as a silently mis-formatted output
-[( )] The model is malfunctioning and needs to be restarted — "high" is a coherent, plausible response to a confidence question; this is normal behavior when format constraints are absent, not a model failure
+[( )] The model does not understand the concept of numbers and cannot generate them; LLMs routinely generate numbers in other contexts; the issue here is that the model defaulted to natural language because no format constraint forced it to use a float
+[( )] The schema definition contained a syntax error that caused it to be silently ignored; a schema syntax error would typically surface as an API error before any response is generated, not as a silently mis-formatted output
+[( )] The model is malfunctioning and needs to be restarted; "high" is a coherent, plausible response to a confidence question; this is normal behavior when format constraints are absent, not a model failure
 
 ---
 
@@ -352,7 +352,7 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *What to do:* The `BiasAnalysis` Pydantic model in Model 3 omits `citations` (which is present in the Version B schema from Model 2). Add `citations` as a nested Pydantic model. Write the complete class definition, then write a unit test that creates a `BiasAnalysis` from a JSON string where `verifiable` is a string instead of a boolean, and confirm that a `ValidationError` is raised.
 
-   *Starter hint:* The code below provides the `Citation` nested model and the updated `BiasAnalysis` class — notice how `verifiable: bool` will reject the string `"yes"` automatically, which is the exact behavior the unit test is checking:
+   *Starter hint:* The code below provides the `Citation` nested model and the updated `BiasAnalysis` class; notice how `verifiable: bool` will reject the string `"yes"` automatically, which is the exact behavior the unit test is checking:
 
    ```python
    from pydantic import BaseModel, Field, ValidationError
@@ -369,7 +369,7 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
                                "center_right", "right", "far_right", "not_applicable"]
        evidence_quality: float = Field(ge=0.0, le=1.0)
        missing_perspectives: list[str]
-       citations: list[Citation]   # Add this field — a list of Citation objects
+       citations: list[Citation]   # Add this field, a list of Citation objects
        confidence: float = Field(ge=0.0, le=1.0)
 
    def test_citation_verifiable_must_be_bool():
@@ -377,7 +377,7 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
                       "evidence_quality": 0.5, "missing_perspectives": [],
                       "citations": [{"text": "some source", "verifiable": "yes"}],
                       "confidence": 0.7}'''
-       # "verifiable": "yes" is a string, not a boolean — this should raise ValidationError
+       # "verifiable": "yes" is a string, not a boolean; this should raise ValidationError
        with pytest.raises(ValidationError):
            BiasAnalysis.model_validate_json(bad_json)
    ```
@@ -388,7 +388,7 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *What to do:* Using a local LLM (Ollama with `ollama run llama3` or similar), run the same bias-analysis prompt 10 times with (a) a plain text instruction to output JSON and (b) `response_format` set to your schema if your library supports it. Record how many times each mode produces parseable output. Report the failure modes you observe.
 
-   *Starter hint:* The code below runs the same prompt 10 times and categorizes each result as success, JSON parse error, or schema error — the distribution of these categories is the key finding; a high `json_parse_error` count points to instruction-only mode failing, while a high `schema_error` count suggests the model understood JSON but not the specific field requirements:
+   *Starter hint:* The code below runs the same prompt 10 times and categorizes each result as success, JSON parse error, or schema error; the distribution of these categories is the key finding; a high `json_parse_error` count points to instruction-only mode failing, while a high `schema_error` count suggests the model understood JSON but not the specific field requirements:
 
    ```python
    import ollama
@@ -420,9 +420,9 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
 3. **Repair prompt design.**
 
-   *What to do:* Consider the specific case where the model outputs `{"evidence_quality": null}` — the field is present but its value is `null` (Python `None`) instead of a float. Write the exact repair prompt you would generate from the `ValidationError` that Pydantic produces for this input, following the targeted-repair pattern from Model 3. Then explain in two sentences why a generic "please try again" repair prompt would likely perform worse on this specific error.
+   *What to do:* Consider the specific case where the model outputs `{"evidence_quality": null}`: the field is present but its value is `null` (Python `None`) instead of a float. Write the exact repair prompt you would generate from the `ValidationError` that Pydantic produces for this input, following the targeted-repair pattern from Model 3. Then explain in two sentences why a generic "please try again" repair prompt would likely perform worse on this specific error.
 
-   *Starter hint:* Run this in Python to see what error Pydantic actually generates — copy the exact error message (the `type=`, `input_value=`, and constraint fields) into your repair prompt, because giving the model this specific information is what makes targeted repair more effective than "please try again":
+   *Starter hint:* Run this in Python to see what error Pydantic actually generates; copy the exact error message (the `type=`, `input_value=`, and constraint fields) into your repair prompt, because giving the model this specific information is what makes targeted repair more effective than "please try again":
 
    ```python
    from pydantic import BaseModel, Field, ValidationError
@@ -444,21 +444,21 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
    *Starter hint:* You need a dataset of news articles with ground-truth political lean labels (e.g., from a media bias rating service like AllSides). Your metric for accuracy is whether the model's `political_lean` output matches the ground-truth label. The control condition uses a schema without a `confidence` field; the experimental condition adds the `confidence` field. Run both conditions on the same 100 articles and compare accuracy rates. What result would confirm that confidence improves accuracy? What alternative explanation would you need to rule out?
 
-   *You've succeeded when* your experiment design is specific enough that another student could run it independently and produce comparable results — the dataset source, sample size, metric definition, and analysis method are all specified.
+   *You've succeeded when* your experiment design is specific enough that another student could run it independently and produce comparable results: the dataset source, sample size, metric definition, and analysis method are all specified.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Structured outputs are a form of specification — you write a schema encoding what you believe a good answer looks like. Think of a time in everyday life when you specified the format of an answer and the person (or system) you were asking gave you something that met the format but missed the point entirely. What was the gap between your specification and your intent? How did you discover it, and what would a better specification have said?
+*Personal:* Structured outputs are a form of specification: you write a schema encoding what you believe a good answer looks like. Think of a time in everyday life when you specified the format of an answer and the person (or system) you were asking gave you something that met the format but missed the point entirely. What was the gap between your specification and your intent? How did you discover it, and what would a better specification have said?
 
-*Technical:* The repair loop in Model 3 has a hard limit on retries to avoid infinite loops. But the right number of retries depends on how often the model fails and how valuable each successful validation is. Describe a principled method for choosing `max_repair_attempts` — what data would you collect, what tradeoffs would you weigh, and how would you know when to raise or lower the limit?
+*Technical:* The repair loop in Model 3 has a hard limit on retries to avoid infinite loops. But the right number of retries depends on how often the model fails and how valuable each successful validation is. Describe a principled method for choosing `max_repair_attempts`: what data would you collect, what tradeoffs would you weigh, and how would you know when to raise or lower the limit?
 
-*Societal:* Structured outputs make LLM behavior more predictable and auditable — you can inspect the JSON fields and verify that the output conforms to expectations. But this auditability is only as good as the schema. If an AI system is making consequential decisions (approving loans, triaging medical cases, screening job applications) and the schema captures the wrong things, structured outputs create an illusion of rigor without the substance. What governance process should exist around schema design for high-stakes AI applications? Who should be involved in designing, reviewing, and updating the schema?
+*Societal:* Structured outputs make LLM behavior more predictable and auditable: you can inspect the JSON fields and verify that the output conforms to expectations. But this auditability is only as good as the schema. If an AI system is making consequential decisions (approving loans, triaging medical cases, screening job applications) and the schema captures the wrong things, structured outputs create an illusion of rigor without the substance. What governance process should exist around schema design for high-stakes AI applications? Who should be involved in designing, reviewing, and updating the schema?
 
 ---
 
--> Coming Up Next: You have now seen how to make agents produce structured, validatable outputs. The next module brings together the full agent stack — filesystem isolation, container security, authentication, human oversight, and structured outputs — to examine end-to-end agentic pipeline design and the failure modes that only emerge when all the components interact.
+-> Coming Up Next: You have now seen how to make agents produce structured, validatable outputs. The next module brings together the full agent stack (filesystem isolation, container security, authentication, human oversight, and structured outputs) to examine end-to-end agentic pipeline design and the failure modes that only emerge when all the components interact.
 
 ---
 
