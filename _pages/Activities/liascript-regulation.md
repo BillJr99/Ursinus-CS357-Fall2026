@@ -119,14 +119,14 @@ General frameworks like the EU AI Act and NIST RMF establish broad principles, b
 | **Healthcare** | HIPAA (U.S.); FDA Software as a Medical Device (SaMD) guidance; EU Medical Device Regulation (MDR) | Any AI system that processes individually identifiable health information is subject to HIPAA, even if it just reads a patient's name and diagnosis to answer a scheduling question. Any AI that diagnoses, treats, or prevents disease functions as a medical device and requires FDA clearance or approval before patients can use it. | Before launch: sign Business Associate Agreements (BAA, a contract required under HIPAA that obligates a vendor to protect any health data they access on your behalf) with every AI vendor; de-identify or obtain consent for any PHI used in training; obtain FDA 510(k) clearance for diagnostic functions; implement post-market surveillance to monitor the AI's clinical performance over time |
 | **Finance** | Federal Reserve SR 11-7 Model Risk Management guidance; EU AI Act (credit scoring is explicitly High Risk) | Every model used to make or support credit decisions must be validated by an independent team, not the team that built it. Black-box models face heightened scrutiny and must provide explainable reasoning for adverse decisions so applicants can contest them. | Build and maintain a model inventory; conduct independent validation by a separate team; run champion/challenger testing where the new model competes against the old one on live traffic; document all model limitations explicitly in the model card |
 | **Education** | FERPA (U.S.); state student privacy laws (e.g., California SOPIPA); proposed NIST AI in Education guidance | Student education records (grades, transcripts, disciplinary actions, course enrollment) are protected and cannot be accessed or shared without student consent. Any AI vendor that accesses student data must sign a data sharing agreement and is limited in how it can use that data. | Sign data processing agreements with all AI vendors before granting data access; implement consent workflows for students who are minors; maintain audit trails for any automated decision that could affect a grade or academic standing |
-| **Law Enforcement** | EU AI Act Unacceptable Risk tier (real-time remote biometric ID in public spaces); ACLU litigation risk in U.S.; state-level bans in some U.S. cities | Real-time facial recognition in public spaces — like scanning a crowd at a train station to identify wanted persons — is banned in the EU. Predictive policing systems that rely solely on AI profiling (without individualized suspicion) are also banned in the EU. The U.S. has no federal ban but faces significant civil rights litigation risk. | In the EU: do not deploy these systems, period. In the U.S.: require legal review before any deployment; mandate a human decision-maker who can override any AI flag; conduct disparate impact testing disaggregated by race; publish public disclosure policies describing how the system is used |
+| **Law Enforcement** | EU AI Act Unacceptable Risk tier (real-time remote biometric ID in public spaces); ACLU litigation risk in U.S.; state-level bans in some U.S. cities | Real-time facial recognition in public spaces (like scanning a crowd at a train station to identify wanted persons) is banned in the EU. Predictive policing systems that rely solely on AI profiling (without individualized suspicion) are also banned in the EU. The U.S. has no federal ban but faces significant civil rights litigation risk. | In the EU: do not deploy these systems, period. In the U.S.: require legal review before any deployment; mandate a human decision-maker who can override any AI flag; conduct disparate impact testing disaggregated by race; publish public disclosure policies describing how the system is used |
 
 A startup builds a chatbot that screens job applications by analyzing resumes and ranking candidates before a human recruiter reviews the shortlist. Under the EU AI Act, this system is most accurately classified as:
 
-[( )] Minimal risk — because a human reviews the shortlist, the AI is only a tool assisting a human decision, which removes it from higher risk tiers
-[( )] Limited risk — the system only needs a transparency disclosure telling applicants an AI was involved, since the recruiter makes the final decision
-[(X)] High risk — AI systems used in employment and worker management, including CV-screening and candidate ranking, are explicitly listed in Annex III of the EU AI Act as High Risk, regardless of whether a human reviews the output
-[( )] Unacceptable risk — any automated screening that affects employment decisions without individual consent is banned under the manipulation provisions
+[( )] Minimal risk; because a human reviews the shortlist, the AI is only a tool assisting a human decision, which removes it from higher risk tiers
+[( )] Limited risk; the system only needs a transparency disclosure telling applicants an AI was involved, since the recruiter makes the final decision
+[(X)] High risk; AI systems used in employment and worker management, including CV-screening and candidate ranking, are explicitly listed in Annex III of the EU AI Act as High Risk, regardless of whether a human reviews the output
+[( )] Unacceptable risk; any automated screening that affects employment decisions without individual consent is banned under the manipulation provisions
 
 ### Critical Thinking Questions
 
@@ -134,13 +134,13 @@ A startup builds a chatbot that screens job applications by analyzing resumes an
 
    *Hint:* Does the chatbot process Protected Health Information? Even general health questions from identifiable students could constitute PHI if the responses are tied to a specific person's health inquiry. Does the chatbot "diagnose" anything, or does it only provide general information? Where is the line between health information and medical advice, and why does that line matter for FDA regulation?
 
-8. The finance sector's SR 11-7 guidance requires "independent model validation" — the team that validates a model must be organizationally separate from the team that built it. Explain why this principle might be valuable for AI agents in any sector, not just finance. Then describe what independent validation would look like for a student-built academic advising agent at Ursinus.
+8. The finance sector's SR 11-7 guidance requires "independent model validation": the team that validates a model must be organizationally separate from the team that built it. Explain why this principle might be valuable for AI agents in any sector, not just finance. Then describe what independent validation would look like for a student-built academic advising agent at Ursinus.
 
-   *Hint:* Why might the team that built a system be poorly positioned to find its flaws? Think about cognitive bias, incentives, and what "independent" actually requires — does it mean a different student, a different class, or a different institution?
+   *Hint:* Why might the team that built a system be poorly positioned to find its flaws? Think about cognitive bias, incentives, and what "independent" actually requires: does it mean a different student, a different class, or a different institution?
 
 9. FERPA protects student education records. If a course agent is given read access to a grade database to answer student questions about their own grades, identify two specific FERPA obligations the deployment must satisfy. Then describe one concrete scenario in which the agent could inadvertently violate FERPA even with good intentions and even if the code appears correct.
 
-   *Hint:* FERPA violations often happen at the boundaries of legitimate use — not from malicious access, but from a student asking a question that sounds innocent but causes the system to return information about someone else. Can you construct a natural-sounding question that might trick a naive agent into doing this?
+   *Hint:* FERPA violations often happen at the boundaries of legitimate use, not from malicious access, but from a student asking a question that sounds innocent but causes the system to return information about someone else. Can you construct a natural-sounding question that might trick a naive agent into doing this?
 
 ---
 
@@ -150,7 +150,7 @@ A startup builds a chatbot that screens job applications by analyzing resumes an
 
    *What to do:* For each of the following agent systems from the course, assign an EU AI Act risk tier (Unacceptable / High / Limited / Minimal) and write a one-paragraph justification citing specific tier criteria: (a) the RAG agent that answers questions about course readings, (b) the coding agent that reviews student code and gives feedback, (c) a hypothetical agent that recommends mental health resources based on student chat patterns, (d) an agent that schedules campus events based on historical attendance data, (e) an agent that predicts which students are at risk of dropping a course.
 
-   *Starter hint:* For each system, ask yourself: (1) Does it make a consequential decision about an individual person — one that affects their rights, opportunities, or wellbeing? (2) Is it in a sector explicitly listed in Annex III (the EU AI Act's enumerated list of High Risk application domains, including employment, education, healthcare, law enforcement, critical infrastructure)? (3) Does it deploy any manipulation technique? Systems (c) and (e) are the most complex cases — work through those carefully. For (c), consider whether recommending mental health resources constitutes providing medical advice.
+   *Starter hint:* For each system, ask yourself: (1) Does it make a consequential decision about an individual person, one that affects their rights, opportunities, or wellbeing? (2) Is it in a sector explicitly listed in Annex III (the EU AI Act's enumerated list of High Risk application domains, including employment, education, healthcare, law enforcement, critical infrastructure)? (3) Does it deploy any manipulation technique? Systems (c) and (e) are the most complex cases; work through those carefully. For (c), consider whether recommending mental health resources constitutes providing medical advice.
 
    *You've succeeded when:* Each classification is supported by at least one specific criterion from the EU AI Act text, and the justifications for borderline cases (b), (c), and (e) acknowledge the arguments on both sides before reaching a conclusion.
 
@@ -158,15 +158,15 @@ A startup builds a chatbot that screens job applications by analyzing resumes an
 
    *What to do:* Using the four NIST RMF functions as column headers (Govern / Map / Measure / Manage), create a one-page risk register for the course RAG agent. For each function column, identify one specific risk, one activity to address it, and one artifact that would document the team's response.
 
-   *Starter hint:* Here is a starter row to show the format — fill in the remaining three columns with different risks: **Govern** | Risk: No one is accountable if the agent produces harmful output | Activity: Assign a named "AI owner" who reviews all deployment decisions | Artifact: Roles and responsibilities document signed by the team. Now complete Map, Measure, and Manage with distinct risks specific to a RAG agent (think about retrieval quality, hallucination, and data freshness as potential risk sources).
+   *Starter hint:* Here is a starter row to show the format; fill in the remaining three columns with different risks: **Govern** | Risk: No one is accountable if the agent produces harmful output | Activity: Assign a named "AI owner" who reviews all deployment decisions | Artifact: Roles and responsibilities document signed by the team. Now complete Map, Measure, and Manage with distinct risks specific to a RAG agent (think about retrieval quality, hallucination, and data freshness as potential risk sources).
 
-   *You've succeeded when:* Each cell contains a specific, concrete entry — not a generic statement like "check for bias" but a specific risk (e.g., "the retrieval corpus contains outdated advising policies from 2019") and a specific artifact (e.g., "corpus freshness audit report with dates of all source documents").
+   *You've succeeded when:* Each cell contains a specific, concrete entry, not a generic statement like "check for bias" but a specific risk (e.g., "the retrieval corpus contains outdated advising policies from 2019") and a specific artifact (e.g., "corpus freshness audit report with dates of all source documents").
 
 3. **GDPR enforcement research.**
 
    *What to do:* Find one real enforcement action taken by a European data protection authority (DPA) under GDPR that involved AI, automated decision-making, or algorithmic profiling. Write a one-paragraph summary covering: what the company did, which GDPR article was violated, what the fine or remedy was, and what lesson the enforcement action carries for developers building agents today.
 
-   *Starter hint:* Search the GDPR Enforcement Tracker at https://www.enforcementtracker.com/ — filter by "automated decision-making" or "profiling" to find relevant cases. Notable cases have involved credit scoring algorithms, behavioral advertising profiles, and AI hiring tools. Pick a case you find genuinely interesting rather than the most famous one.
+   *Starter hint:* Search the GDPR Enforcement Tracker at https://www.enforcementtracker.com/; filter by "automated decision-making" or "profiling" to find relevant cases. Notable cases have involved credit scoring algorithms, behavioral advertising profiles, and AI hiring tools. Pick a case you find genuinely interesting rather than the most famous one.
 
    *You've succeeded when:* Your paragraph identifies the specific GDPR article violated (e.g., Article 22 on automated individual decision-making, or Article 5 on data minimization), gives the actual fine amount, and draws a specific lesson that applies to one of the agent systems you have built this semester.
 
@@ -174,15 +174,15 @@ A startup builds a chatbot that screens job applications by analyzing resumes an
 
 ## Reflection Prompt
 
-**Personal level:** Have you ever interacted with an automated decision-making system — a scholarship algorithm, a loan application screener, a social media content ranker — without knowing it was AI? How did you feel when you learned (or imagined learning) that a machine was making a consequential decision about you? How does that experience change how you think about building AI systems for others?
+**Personal level:** Have you ever interacted with an automated decision-making system (a scholarship algorithm, a loan application screener, a social media content ranker) without knowing it was AI? How did you feel when you learned (or imagined learning) that a machine was making a consequential decision about you? How does that experience change how you think about building AI systems for others?
 
-**Technical level:** If you publish an open-source agent on GitHub and someone else later deploys it in a high-risk context you never intended — say, screening job applications at a Fortune 500 company — who bears legal and moral responsibility for compliance failures? Consider the roles of: the original developer, the company deploying it, the vendor providing the underlying LLM, and the regulatory framework that governs the deployment context.
+**Technical level:** If you publish an open-source agent on GitHub and someone else later deploys it in a high-risk context you never intended (say, screening job applications at a Fortune 500 company) who bears legal and moral responsibility for compliance failures? Consider the roles of: the original developer, the company deploying it, the vendor providing the underlying LLM, and the regulatory framework that governs the deployment context.
 
 **Societal level:** The EU AI Act bans certain AI applications outright (social scoring, real-time biometric surveillance in public spaces). The United States has no equivalent federal ban. What values are expressed by each approach? Which approach do you think better serves the public, and what evidence would change your mind?
 
 ---
 
--> **Coming Up Next:** In the next activity, we examine how to document the data and models that power agents — using Datasheets for Datasets and Model Cards — so that regulators, auditors, and future developers can verify that compliance obligations were met.
+-> **Coming Up Next:** In the next activity, we examine how to document the data and models that power agents (using Datasheets for Datasets and Model Cards) so that regulators, auditors, and future developers can verify that compliance obligations were met.
 
 ---
 
