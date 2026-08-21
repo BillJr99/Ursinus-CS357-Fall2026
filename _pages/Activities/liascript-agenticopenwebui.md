@@ -215,7 +215,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
    > *Hint: Which text becomes each call's context; how the plan is split into steps; how many steps run; when the loop terminates; what "begins with REVISE" means. These are deterministic and inspectable, unlike the model's generations. Recall the debugging module: check the deterministic scaffolding before blaming the stochastic component.*
 
-8. The Worker's system prompt says "Execute exactly the step you are given; do not do other steps." Connect this instruction to the small-context-window principle from the auto-research pipeline tutorial: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
+8. The Worker's system prompt says "Execute exactly the step you are given; do not do other steps." Connect this instruction to the small-context-window principle from *Memory and the Small Context Window Principle*: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
 
    > *Hint: With the whole plan in context, the model tends to do a shallow pass over everything, the same dilution as one-big-prompt research. One step per call keeps each generation focused and makes the blackboard entries attributable to a step.*
 
@@ -261,7 +261,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
 ## -> Coming Up Next
 
-You now have two complementary orchestration substrates: shell pipelines over raw Ollama (the auto-research tutorial) and Python workflows over an agent frontend. The agent frameworks module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
+You now have an orchestration substrate that is neither raw shell nor a framework: Python workflows driving an agent frontend, with every step visible in a chat transcript. The *Agent Frameworks* module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
 
 ---
 

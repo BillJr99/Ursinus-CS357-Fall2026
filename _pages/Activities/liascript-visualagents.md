@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand, through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools), exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern coded by hand up through *Orchestration and Agent Teams* (pipelines, RAG, routers, specialists, agents with tools), exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 
