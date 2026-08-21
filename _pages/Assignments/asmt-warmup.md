@@ -21,6 +21,16 @@ tags:
 
 The purpose of this assignment is to get us set up for the course, both by getting to know each other better and by getting you connected to the tools we will use all semester.  This onboarding assignment is assessed within the Class Activities and Participation category.
 
+## Before You Start
+
+**Time:** about twenty minutes, and none of it is hard. There is nothing to install, nothing to write up, and nothing to submit to Canvas.
+
+**You need:** a browser and a Microsoft Teams account (your Ursinus login works).
+
+**Do it in this order**, because two of the steps unlock the others: join the class team first, then send the two messages, then the poll and the notebook.
+
+> **The honest version of question 5 is the useful one.** "I have never written a line of code" and "I have shipped things" are both completely normal starting points in this course, and I use the answers to form teams that are not all beginners or all experts. Guessing high does not help you; it just puts you on a team that assumes you already know something.
+
 ## Personal Survey (5 Pts)
 
 I gave a couple of fun facts about myself in class, but I want to get to know you all better.  First, join our class team on [{{ page.info.chatname }}]({{ page.info.class_team }}).  Then please submit answers to the following questions as a private message to me on {{ page.info.chatname }}.
@@ -55,3 +65,13 @@ Please take a moment to familiarize yourself with [the course syllabus]({{ site.
 3.  When and where are my office hours, and how can you sign up for a one-on-one appointment?
 4.  Where on {{ page.info.chatname }} can you go to ask questions about the course?
 5.  How many classes may you miss before it affects your grade, according to the attendance policy?
+
+## Self-Check
+
+- [ ] I joined the class team.
+- [ ] I sent the personal-survey message, with all twelve items answered.
+- [ ] A headshot is attached to that message.
+- [ ] I posted a hello on the Canvas Introductions forum.
+- [ ] I sent the **separate** syllabus message, with all five answers.
+- [ ] I filled in the office-hours poll.
+- [ ] I can open the class notebook (or I told you I cannot).

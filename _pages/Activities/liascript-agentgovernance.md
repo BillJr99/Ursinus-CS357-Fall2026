@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agentgovernance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentgovernance.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -346,4 +346,4 @@ The charter governs agents working on a *repository*. The companion case study, 
 - Andrej Karpathy. "Software 2.0." *Medium* (2017). The framing that motivates treating specs and docs as the durable program.
 - The Menon Lab. "The Karpathy CLAUDE.md: Four Rules That Fix AI Coding Agents." https://themenonlab.blog/blog/karpathy-claude-md-four-rules-ai-coding-agents: the community distillation compared in Model 2.
 - AI Builder Club. "Karpathy's agents.md: What It Is and Why It Matters." https://www.aibuilderclub.com/blog/karpathy-agents-md-framework: on instruction files as the control layer for coding agents.
-- This course: [The Karpathy Coding Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-karpathycoding.md) (the workflow this activity governs), [Designing Your AI Development Environment](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aidevenv.md) (the `AGENTS.md` layer beneath the charter), and [Terminal and Filesystem Isolation for Agent Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-terminalfilesystem.md) (the sandbox layer beneath the devbox).
+- This course: [The Karpathy Coding Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-karpathycoding.md) (the workflow this activity governs), [Designing Your AI Development Environment](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-aidevenv.md) (the `AGENTS.md` layer beneath the charter), and [Terminal and Filesystem Isolation for Agent Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-terminalfilesystem.md) (the sandbox layer beneath the devbox).

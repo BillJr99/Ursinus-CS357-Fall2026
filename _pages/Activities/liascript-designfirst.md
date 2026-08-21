@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-designfirst.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-designfirst.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-designfirst.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-designfirst.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Design First: Plan Before You Build
 
-In the *Studio: Local Agent Stack Clinic* session you stood up a working local stack; before we build anything more ambitious on top of it, we learn to plan on paper. In traditional software engineering, the cost of a mistake scales with how late it is discovered: a bug found in code review is cheaper to fix than one found in production. Agentic systems amplify this principle dramatically. An agent that sends emails, modifies databases, or calls external APIs can produce **irreversible side effects** within seconds of starting. If the design was wrong, you may not be able to undo what the agent did.
+In *How I AI* you wrote a charter and reviewed a plan before letting an agent act on a single task. Today we scale both of those to a whole system, and we do it on paper. In traditional software engineering, the cost of a mistake scales with how late it is discovered: a bug found in code review is cheaper to fix than one found in production. Agentic systems amplify this principle dramatically. An agent that sends emails, modifies databases, or calls external APIs can produce **irreversible side effects** within seconds of starting. If the design was wrong, you may not be able to undo what the agent did.
 
 The **design-first** practice insists that before any code is written or any agent is deployed, you produce a written artifact that answers: *What is each agent trying to do? What can it touch? How will we know if it succeeded? How will we know if it failed?* This is not bureaucracy - it is the minimum viable protection against an agent that is confidently wrong at scale.
 
@@ -38,6 +38,39 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Pre-Mortem** | A technique where a team imagines, before starting work, that the project has already failed, then identifies the most plausible causes of that failure. The goal is to find and fix risks while the cost of changing course is still low. | The six-row table in Model 2 listing component failures and their mitigations. |
 | **Adversarial Test Case** | A deliberately flawed or tricky input designed to expose weaknesses in a system, written before the system is built, not after a real failure occurs. | Injecting a draft with known fabricated citations to verify the CriticAgent catches them. |
 | **Irreversible Side Effect** | An action taken by an agent that cannot be undone after the fact, such as sending an email, deleting a record, or posting to a public API. | An agent that emails 500 students with incorrect course information; you cannot un-send those emails. |
+| **Charter** | The document that decides a project's recurring questions once: mission, **ranked** values, definition of done, and the guardrails no agent may cross. Written from *How I AI*; the agent table below implements it | A charter ranking correctness above speed, which settles "may an agent loosen a test to go faster" without anyone asking |
+| **Reversibility Class** | A label on each agent action saying how hard it is to undo: **free** (a file in git), **costly** (a database write with a backup), or **irreversible** (an email, a payment, a public post). Assigned at design time, because you cannot assign it afterwards | The Reversibility column you add to the agent table in Model 1 |
+| **Observability, isolation, reversibility** | The three properties that make delegating safe: can I see what it did, can I bound what it reaches, can I undo it. Named in *Your AI Workbench*, applied to notes and projects in *How I AI*, and designed in on purpose today | Every row of the agent table should let you answer all three for that agent |
+
+---
+
+## Designing for Observability, Isolation, and Reversibility
+
+The agent table below is a good design artifact and it is missing three columns that this course keeps insisting on. Add them, and the table stops describing what each agent *does* and starts describing what happens when it is wrong.
+
+For **every agent** in your system, before it exists, answer:
+
+| Column | The question | Why it belongs at design time |
+|---|---|---|
+| **Observed how** | When this agent acts, what record is left, and who reads it? | You cannot bolt logging onto a decision that was never written down. If the answer is "the model explains itself in chat," you have no record |
+| **Reaches what** | Exactly which files, services, credentials, and network destinations can this agent touch? | The honest answer is usually wider than the intended answer. Narrowing it costs nothing on paper and is a rewrite once it ships |
+| **Undone how** | If this action was wrong, what is the exact undo, and who can perform it? | This is the column that turns "irreversible side effect" from a vocabulary word into a design constraint |
+
+That last column is the one that changes designs. Work through your system and label each action **free** to undo (a commit in a repository you control), **costly** (a database write you have a backup for, restorable in an hour), or **irreversible** (an email sent, a payment made, a message posted, a record deleted from a system you do not own).
+
+Then apply the rule that follows from the labels: **every irreversible action gets a human gate, and the gate goes in the design, not in a later hardening pass.** Not because agents are unusually careless, but because "confidently wrong at scale, quickly" is the specific failure mode of this technology, and the only defense that survives contact with a real deployment is that the irreversible step could not happen without someone approving it.
+
+There is a design move worth knowing here: **convert irreversible into reversible before you gate it.** An agent that sends email is irreversible. An agent that *drafts* email into a folder, with a human pressing send, is free to undo, and it keeps almost all of the value. Most irreversible agent actions have a draft-shaped version, and finding it is usually a better answer than adding a confirmation dialog.
+
+Your team designs an agent that files issues in your project's GitHub repository when it finds a bug. Classify its reversibility and decide whether it needs a gate.
+
+[( )] Irreversible, so it needs a human gate before every filing
+[(X)] Costly rather than irreversible: an issue can be closed and edited, but it notified everyone watching the repository and that notification cannot be recalled. A gate is optional; a rate limit and a label marking it agent-filed are not
+[( )] Free, since issues can be deleted
+[( )] It depends entirely on how good the model is
+
+    --{{0}}--
+The interesting part of this question is the notification. The artifact is editable, so the state is recoverable; the side effect on other people's attention is not. A great many agent actions look free when you consider only the data and turn out to be costly when you consider who got pinged. Ask about both.
 
 ---
 
@@ -48,6 +81,8 @@ In this model you will read a completed agent table for a three-agent research p
 **Why this matters:** "Measure twice, cut once" is the carpenter's version of design-first. In carpentry, cutting a board too short means buying new wood. In agentic AI, deploying an agent with a poorly defined role can mean sending incorrect information to thousands of users, corrupting a database, or spending hundreds of dollars on API calls that accomplished nothing useful. The agent table forces you to articulate every important decision about each agent in writing, before any of those decisions have real consequences. Empty cells in the table are not gaps in the document; they are unresolved risks in your system.
 
 The **agent table** is the core design artifact for a multi-agent system. One row per agent. Before you write a single line of code, you should be able to fill in every cell. Empty cells are design gaps - risks waiting to become bugs.
+
+The table below carries the original six columns. When you build your own for the *Design Your Agent System* assignment, add the three from the section above: **observed how**, **reaches what**, and **undone how**.
 
 | Agent Name | Role and Goal | System Prompt Skeleton | Inputs | Outputs | Temperature | Tools Available | Failure Mode |
 |---|---|---|---|---|---|---|---|

@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agentstack.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentstack.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -189,7 +189,7 @@ Read the config's `api_base` carefully: the gateway is *itself a container*, so 
 
 ## 5. Frontends and Tools
 
-> **Second half of today's session: build one visually.** Once the stack is up, we move to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas, same concepts, no Python authorship. Part IV of that deck is the hands-on build.
+> **Second half of today's session: build one visually.** Once the stack is up, we move to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas, same concepts, no Python authorship. Part IV of that deck is the hands-on build.
 
 With the gateway answering, frontends attach by URL. Open WebUI:
 
@@ -203,7 +203,7 @@ docker run -d --name open-webui -p 3000:8080 \
 ```
 
 
-> **Isolation and trust boundaries** - which tier may talk to which, and what a container actually isolates - are worked through in the optional activity [Containerization and Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-containerizationsafety.md).
+> **Isolation and trust boundaries** - which tier may talk to which, and what a container actually isolates - are worked through in the optional activity [Containerization and Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-containerizationsafety.md).
 
 ## 6. The Agent Tier
 

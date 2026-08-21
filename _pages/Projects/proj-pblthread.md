@@ -109,6 +109,26 @@ This page is the hub for the **Project Thread**: a semester-long, project-based 
 
 ---
 
+## How to Read This Page
+
+This is the longest page in the course and you do not need all of it today. It describes a semester-long structure, and the parts become relevant at different times.
+
+| Read now | Read when |
+|---|---|
+| **The Semester Map**, so you know what is coming and when | Week 1 |
+| **The Team Formation Survey** | The week it is assigned |
+| **The Team Charter**, and write it with your team | The week teams are announced |
+| **The Tuckman Map** and **Psychological Safety** | With the charter, then again before each check-in |
+| **The Team Playbook** | As you need it: it is a reference, not a reading |
+| **Intra-Team Check-Ins 1-3** | Before each check-in, which is three times across the term |
+| **Assessment Philosophy** and the **rubric** | Before your first milestone, then before each one |
+
+**The one thing worth internalizing now:** the graded emphasis in this thread falls on **process** as much as product. How your team frames a problem, works with a stakeholder, manages itself, and communicates is not the soft part around the real work. It is a substantial share of the grade, and it is the part that a strong technical result cannot rescue.
+
+> **If your team is struggling, say so early.** The confidential pulse in any check-in works, and so does office hours. Every team hits the storming stage; the ones that come out of it well are the ones that named it while it was happening rather than at the post-mortem.
+
+---
+
 ## The Semester Map
 
 Two views of the same thread: a table for scanning, then a narrative for reading. Every artifact below has its own assignment or activity page; this table is the authoritative *sequence*, and the [course schedule](/) carries the dates.
@@ -117,19 +137,19 @@ Two views of the same thread: a table for scanning, then a narrative for reading
 |---|---|---|---|
 | 1 | **Team Formation Survey** (individual) | You tell the instructor your availability, deadline style, energy patterns, and interests. Teams are formed from this data. | [On this page](#step-1-the-team-formation-survey); see also the [assignment page]({{ site.baseurl }}/Assignments/TeamSurvey) |
 | 2 | **Teams announced** | Standing POGIL teams for the semester are posted. | In class |
-| 3 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft), then the signed charter. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
+| 3 | **Team Charter** | In-class charter activity (building on the Overview assignment's pre-draft), then the signed charter. All members sign. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-groupcharter.md) |
 | 4 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
 | 5 | **Unassisted problem statement** (individual) | Half a page, written alone and without AI, on what you now believe the stakeholder's real problem is. Completion credit; a calibration baseline, not a test. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
-| 6 | **Peer review round 1** | Brief drafts are exchanged across teams in class for SQR review. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
+| 6 | **Peer review round 1** | Brief drafts are exchanged across teams in class for SQR review. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md) |
 | 7 | **Stakeholder Brief due** | 2-3 page brief, revised after peer review: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. The Literature Review is handed out the same session. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
 | 8 | **Intra-team check-in 1** | Signed team progress report, plus the first confidential individual pulse to the instructor. | [Check-Ins](#intra-team-check-ins-1-3) |
 | 9 | **Literature Review, Phase 1** (individual) | Each member builds an annotated bibliography of 2-3 sources, alone, before the team synthesizes anything. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
-| 10 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md) |
+| 10 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-groupcharter.md) |
 | 11 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team]({{ site.baseurl }}/Projects/FinalProject), [Responsible AI Audit]({{ site.baseurl }}/Projects/FinalProject), or [Open-Source Agent]({{ site.baseurl }}/Projects/FinalProject). | Track pages |
 | 12 | **Intra-team check-in 2** | Second signed progress report and confidential pulse, now with the peer-evaluation section (below). | [Check-Ins](#intra-team-check-ins-1-3) |
 | 13 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
 | 14 | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review. | Track pages |
-| 15 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md) |
+| 15 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class. | [Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md) |
 | 16 | **Sprints 1-3** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, and evaluation updates. Sprint 2 spans the Thanksgiving break; plan for it in your charter's cadence. | Track pages |
 | 17 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
 | 18 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
@@ -216,7 +236,7 @@ Use this template as a starting point; the format is flexible, but every row has
 
 Submit one charter per team; each member includes it with their own submission. Typed names at the bottom serve as signatures.
 
-Work through the **[Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md)** together when teams are announced; it walks the seven required elements and gives you the language for the harder ones. Revisit it at the midpoint charter check.
+Work through the **[Team Charter and Norms activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-groupcharter.md)** together when teams are announced; it walks the seven required elements and gives you the language for the harder ones. Revisit it at the midpoint charter check.
 
 
 Your team's first deliverable is not technical: it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the in-class charter activity and signed by every member within the following week, that turns "we'll figure it out" into commitments you can point to later. The charter must cover seven things:
@@ -279,7 +299,7 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 
 > **Bring to class.** Each review round runs on real artifacts: the Stakeholder Brief draft at the *RAG Quality* session, the proposal at *Agentic Case Studies*, and your gallery-walk artifact plus SQR cards at *Project Studio and Gallery Walk*. A round with nothing to review is a round wasted.
 
-The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol**: one Strength with evidence, one genuine Question, one Risk with a mitigation. The **[Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md)** carries the protocol card; bring it to each review round.
+The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol**: one Strength with evidence, one genuine Question, one Risk with a mitigation. The **[Structured Peer Review activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md)** carries the protocol card; bring it to each review round.
 
 Three times in the semester (with the Stakeholder Brief, between the project tracks and the proposal, and after the gallery walk) your team pauses for a structured check-in. Each check-in carries **3 points, assessed within Class Activities and Participation**: enough to make it a real commitment, small enough that the check-in itself, not the score, is the point. Every check-in has the same two parts:
 

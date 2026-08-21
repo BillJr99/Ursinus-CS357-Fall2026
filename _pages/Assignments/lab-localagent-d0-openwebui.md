@@ -255,3 +255,22 @@ Fold these into the standard Local Agent Lab submission ZIP, alongside the share
 - **Results table**: the ten-row evaluation table plus the before/after mitigation table (Part D).
 - **Writeup**: identical scope to the core lab, with the two route-specific additions (Part E).
 - **Setup notes**: which install route you used, every non-default setting, and the versions involved (OpenWebUI version from Settings -> About, Ollama version, model tag), sufficient for another student to reproduce your agent exactly.
+
+---
+
+## Self-Check Before You Submit
+
+The core lab's rubric grades this route on equal terms; here is what each row asks for in this medium.
+
+- [ ] **Both** custom Models exported as JSON: the persona model and the JSON-format model.
+- [ ] The agent completes **at least three distinct goals**, with each tool invocation visible in the exported transcript.
+- [ ] `tool-config-notes.md` records each tool's name, description, parameter schema **as shown in the UI**, valve settings, and search-engine choice.
+- [ ] The system prompt specifies all five elements: role, goal, tools, format, guardrails, and the writeup quotes each one.
+- [ ] Each guardrail is explained in terms of what it prevents.
+- [ ] `structured-output-runs.json` holds five runs, each annotated.
+- [ ] `transcripts/` holds all ten evaluation chats.
+- [ ] The ten-row evaluation table is present, plus the before-and-after mitigation table.
+- [ ] Two failure modes shown with full transcript excerpts, one mitigated, with the accuracy delta and the mechanism explained.
+- [ ] Setup notes name the install route, **every** non-default setting, and the OpenWebUI, Ollama, and model versions, in enough detail for a classmate to reproduce the agent exactly.
+- [ ] Pair log with two timestamped role swaps.
+- [ ] Every reflection answer cites a specific line from my own transcript.

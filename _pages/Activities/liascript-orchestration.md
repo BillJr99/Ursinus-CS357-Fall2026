@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-orchestration.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-orchestration.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -366,7 +366,7 @@ Respond to all three levels in your notebook:
 
 # Going Deeper (at home): Fixed Pipelines vs. Dynamic Orchestration
 
-> **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md), read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
+> **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md), read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
 
 Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class. Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code. This section steps back to the single decision that sits *above* all of them: **who decides the control flow, you, in advance, or a model, at runtime?** Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task genuinely needs. We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
 
@@ -439,7 +439,7 @@ The subtasks share no context (that independence is what lets them run in parall
 input --> [ Generate ] --> draft <==> [ Critique ] --> (revise until pass OR budget) --> output
 ```
 
-The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates. This is the subject of its own activity: [Critique-and-Refine](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md).
+The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates. This is the subject of its own activity: [Critique-and-Refine](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md).
 
 ### 4e. Debate / Stochastic Consensus (many agents, vote or cluster)
 
@@ -451,7 +451,7 @@ input --> +--> [ Agent B ] --+--> [ Vote / Cluster ] --> consensus
           '--> [ Agent C ] --'
 ```
 
-The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result. Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-consensus.md).
+The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result. Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-consensus.md).
 
 Every shape above is *fixed*: even the critique loop and the debate vote follow a control flow you authored and can draw on a whiteboard before running. What changes in the next section is who draws that diagram.
 
@@ -459,7 +459,7 @@ Every shape above is *fixed*: even the critique loop and the debate vote follow 
 
 ## 5. Dynamic Orchestration: the Supervisor Loop
 
-When you *cannot* draw the diagram in advance (the task is open-ended, and which sub-agents are needed depends on what earlier ones discover) you promote the orchestrator itself to an LLM. This is the pattern behind LangGraph's **supervisor** and behind LangChain **DeepAgents**, which you meet hands-on in the [Agent Frameworks](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentframeworks.md) activity.
+When you *cannot* draw the diagram in advance (the task is open-ended, and which sub-agents are needed depends on what earlier ones discover) you promote the orchestrator itself to an LLM. This is the pattern behind LangGraph's **supervisor** and behind LangChain **DeepAgents**, which you meet hands-on in the [Agent Frameworks](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentframeworks.md) activity.
 
 The mechanism is a loop. You give the supervisor the task and a **roster**: a menu of sub-agents (and the tools each may use). Then, each turn, the supervisor model reads the task, the roster, and the transcript so far, and emits one *action*: "call sub-agent X on this input," "spawn a new researcher for this newly-discovered subtask," or "STOP, here is the answer." Your code dispatches the chosen action, appends the result to the transcript, and asks the supervisor again. DeepAgents dresses this loop in extra machinery (a planning tool that writes a todo list, sub-agents that run in *isolated context windows* so their scratch work never pollutes the main thread, and a synthesis step at the end), but underneath, it is the same "model decides the next move" loop.
 

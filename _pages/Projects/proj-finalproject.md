@@ -39,11 +39,11 @@ info:
       proficient: "The core artifact fully meets its direction's requirements and is honest about its limits. Direction A: the system runs from a fresh start following the README; configuration and seeds are externalized and pinned; CI passes on the submission SHA; evidence is surfaced to the user with a confirmation gate on consequential actions; and the committed GOVERNANCE.md matches deployed behavior. Direction B: the artifact package (risk analysis with at least 8 citations; governance document with monitoring plan, incident response, communication plan, and appeal process) could be handed to a regulator without modification. Direction C: the artifact is live and installable from a public registry with green CI, a stranger-tested quickstart, CONTRIBUTING.md and GOVERNANCE.md, and a documented substantive community exchange. All directions: the Demo Day presentation serves the multi-audience: a live technical segment with a rehearsed failure or limitation disclosure and a plain-language stakeholder segment, with every teammate speaking substantively and every teammate able to present any part; the partner-facing artifact (one-page brief, demo video, or deployed tool) is something the community partner can actually use, presented at Demo Day and included in the submission; and the project leaves a public, recruiter-legible trace, a public repository (Directions A and C) or a public write-up or portfolio page (Direction B) whose README or summary answers what it is, why it matters, and how to run or read it in thirty seconds, names each member's contribution, and is suitable for linking from a resume (Goal 14)"
   readings:
     - rtitle: "Agent Teams Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentteams.md"
     - rtitle: "Project Studio Protocol"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md"
     - rtitle: "Explainability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainability.md"
 
 tags:
   - final-project
@@ -71,6 +71,26 @@ These are directions within the one project, not separate assignments: your team
 **The project is the vehicle, not the destination.** The graded emphasis falls on your *process* as much as your *product*: how you decided, how you worked together, how you engaged your community partner, and how honestly you disclosed what worked and what did not. A team that meets on schedule, logs its decisions, checks in candidly, and reports a limitation honestly will outscore a team with a slicker artifact and no visible process.
 
 **There is no final exam in this course.** Demo Day presentations (plus the registrar's final-exam slot if needed for presentation overflow) are the terminal event of the semester.
+
+---
+
+## Before You Start
+
+**This is not a new assignment.** It is the point every Project-Thread milestone has been building toward, and almost everything it asks for already exists somewhere in your team's work: the stakeholder you interviewed, the literature you synthesized, the agent system you designed, and the labs you built. Read the timeline below as an assembly plan, not a fresh start.
+
+**Time:** the largest single commitment of the term, spread across the back half of the semester. The proposal is due in week 12 and Demo Day is week 15, so the sprints are where the work lives; a team that starts building in week 14 will demo something that does not run.
+
+**Choosing a direction** is the one decision worth making slowly, because all three are real and they suit genuinely different teams:
+
+| Take | If your team |
+|---|---|
+| **A: Custom Agent Team** | Wants to build. You have people who enjoy making things run, and a stakeholder problem a multi-agent system actually fits |
+| **B: Responsible AI Audit** | Wants to investigate. This is a **fully non-programming** direction and it is not the lesser one; a good audit is harder than a mediocre build |
+| **C: Open-Source Agent** | Wants what you make to outlive the semester, and is willing to take documentation, packaging, and licensing as seriously as the code |
+
+> **The thing that most often goes wrong**, and it is almost never technical: teams build the system they find interesting and present it to an audience that includes the stakeholder they interviewed in week 5. Demo Day is a **multi-audience** presentation. Keep the stakeholder's problem visible in every sprint, or you will discover in week 14 that you built something impressive that answers a different question.
+
+> **Whatever you build, it must run at the start of week 14.** The second studio session is a rehearsal, not a work session. That is not a scheduling preference; it is the difference between a demo and an apology.
 
 ---
 
@@ -269,9 +289,9 @@ Answer individually in your final submission:
 
 ### Background Reading and References
 
-- [The AI Maker Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-aimaker.md)
-- [Publishing Your Work Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md)
-- [Hosting with Cloudflare Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-cloudflare.md)
+- [The AI Maker Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-aimaker.md)
+- [Publishing Your Work Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-publishing.md)
+- [Hosting with Cloudflare Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-cloudflare.md)
 
 This guide is not separately graded; its checklist is assessed within the Final Project rubric.
 
@@ -460,7 +480,7 @@ Answer these as part of your self-assessment before your project's publish gate:
 
 ### Background Reading and References
 
-- [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md)
+- [Project Studio Protocol](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md)
 - [Final Project](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 
@@ -554,3 +574,35 @@ Answer individually after the mock-interview rehearsal, connecting to the course
 | Self-Check: Mock Technical Interview | I skipped the rehearsal or could not explain my own part of the system | I explained my component but not how it connects to the rest of the system, or I could not tell a single concrete failure story | I walked my partner through the architecture, defended one design decision, and told one failure story with its mitigation, though I leaned on notes or slides | Without slides, I explained the system end to end, defended a design decision by naming the alternative we rejected and why, told a failure story with its measured mitigation (or a finding with its evidence, for audit teams), and asked my partner at least one probing question about their project when roles reversed |
 | Self-Check: Portfolio Story | I have no way to show this project to anyone outside the course | I can point at the repository or write-up but cannot yet tell its story in a way a recruiter would follow | My 200-word project story exists and names my contribution, though it is not yet linked from anywhere or rehearsed aloud | My project story is written, linked from my profile or portfolio per the ShipIt guide, rehearsed aloud as a two-minute narrative, a drafted (publication-optional) LinkedIn-style post exists, and I can produce the evidence behind every claim in it on request |
 
+---
+
+## Self-Check Before Demo Day
+
+**The system**
+
+- [ ] It runs, end to end, from a clean checkout, following only our own written instructions.
+- [ ] Someone who did not build it has followed those instructions successfully.
+- [ ] We know which parts are fragile, and the demo does not depend on them.
+- [ ] For every agent or automated action: we can say how it is **observed**, what it can **reach**, and how it is **undone**.
+
+**The evidence**
+
+- [ ] Claims about how well it works are backed by an evaluation we ran, with numbers, not by the demo going well once.
+- [ ] At least one honest failure or limitation is documented, and we can talk about it without defensiveness.
+
+**The audience**
+
+- [ ] The stakeholder's problem is recognizable in the first two minutes.
+- [ ] There is a version of the explanation that works for a non-technical listener, and we have practiced it out loud.
+- [ ] The partner-facing artifact is something they could actually use after we graduate.
+
+**The paperwork**
+
+- [ ] Governance one-pager.
+- [ ] Contribution statements naming who did what.
+- [ ] AI-use disclosure for the team's work.
+- [ ] The ShipIt checklist completed.
+
+**The rehearsal**
+
+- [ ] We have run the whole demo on the clock, on the machine we will use, on the network we will have.

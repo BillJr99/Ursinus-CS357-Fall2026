@@ -62,6 +62,21 @@ This short, individually submitted survey is the first milestone of the [Project
 
 ---
 
+## Before You Start
+
+**Time:** fifteen to twenty minutes. There is nothing to install and nothing to prepare.
+
+**Why the honest answer beats the impressive one.** I build the teams from these answers, balancing schedules, working styles, and how people handle deadlines. Every question here is a question I will actually use. Overstating your availability produces a team that plans around hours you do not have; understating your interest produces a team working on something you do not care about. Neither is a good semester.
+
+**Two questions worth thinking about before you type:**
+
+- *When do you actually work?* Not when you intend to. Look at last week.
+- *What happens when you fall behind?* Everyone does at some point. Teams work when people know in advance how their teammates behave under pressure, and charter around it.
+
+> **You've succeeded when** every question is answered, and you would not wince if a future teammate read your answers. They are confidential to me, but write them as though the person you will be paired with is going to have to live with them, because they are.
+
+---
+
 ## Part 1: The Survey
 
 **The survey is not in the LMS.** The questionnaire lives on the [Project Thread page]({{ site.baseurl }}/Projects/PBLThread#step-1-the-team-formation-survey). Write your answers and submit them **individually to this assignment** in Canvas; a text entry or an uploaded document is fine. Do not email your answers. The questions are reproduced below so you can think before you type:
@@ -108,3 +123,13 @@ Answer briefly in your submission (not in the survey answers themselves):
 - *How should we live together?* Which of your survey answers do you most hope your future teammates take seriously, and why?
 - If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours it took you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
+
+---
+
+## Self-Check Before You Submit
+
+- [ ] Every question answered, including the ones about availability and about how I work under pressure.
+- [ ] My availability reflects last week's reality, not this week's intentions.
+- [ ] I named at least one topic or problem domain I would genuinely want to spend a semester on.
+- [ ] I flagged anything that would make a particular pairing hard, if there is anything.
+- [ ] Submitted before the deadline, since teams are formed from the submissions I have.
