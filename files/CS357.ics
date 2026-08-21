@@ -193,7 +193,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f412
 DTSTAMP:20260929T000000Z
 DTSTART;VALUE=DATE:20260929
-SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Stakeholder Brief — Individual Unassisted Problem Statement Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Stakeholder Brief, Individual Unassisted Problem Statement Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -292,7 +292,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f41d
 DTSTAMP:20261029T000000Z
 DTSTART;VALUE=DATE:20261029
-SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review — Individual Annotated Bibliographies Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review, Individual Annotated Bibliographies Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
@@ -364,7 +364,7 @@ BEGIN:VEVENT
 UID:00000000-0000-0000-0000-033f3494f425
 DTSTAMP:20261112T000000Z
 DTSTART;VALUE=DATE:20261112
-SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review — Team Synthesis Due
+SUMMARY:CS357 Foundations of Artificial Intelligence: Project: Literature Review, Team Synthesis Due
 LOCATION:
 DESCRIPTION:
 PRIORITY:3
