@@ -12,9 +12,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# Tokens and Embeddings: How Agents Represent Meaning
+# Tokens, Embeddings, and Attention: How Agents Represent and Mix Meaning
 
-In the *Connecting Agents to the World: MCP and APIs* activity our agents learned to reach external tools; now we open the hood for the first time, on demand: our agents will soon need to *search* documents by meaning, and that requires understanding **tokens** (how text becomes numbers) and **embeddings** (how meaning becomes geometry). We move from **tokenization $\rightarrow$ vectors $\rightarrow$ cosine similarity $\rightarrow$ computing semantic search by hand and in code**.
+So far the model has been a box you send text to. Today we open it, and we open it in the one place that pays off soonest: **how text becomes numbers, and how those numbers carry meaning**. Your agents will shortly need to *search* documents by meaning rather than by keyword, and everything that makes that possible is here.
+
+Three ideas, each built on the one before it: **tokens** (how text is cut into pieces a model can read), **embeddings** (how a piece of text becomes a point in space, so that closeness means similarity), and **attention** (how a token's meaning is adjusted by the tokens around it, which is what makes a modern language model modern). We do all three with arithmetic small enough to check by hand, then use the result to build a working search engine in twenty lines.
+
+Bring the printed *Neural Network by Hand* worksheet, or a tablet you can write on.
 
 ---
 
@@ -34,6 +38,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Cosine Similarity** | A score from −1 to 1 measuring how similar two meaning-vectors are; specifically, the cosine of the angle between them. A score of 1 means "same direction = same meaning"; 0 means "unrelated." | `cos(a, b) = 1.0` when `b` is just a scaled copy of `a` |
 | **Context Window** | The maximum number of tokens a model can read at once: its "working memory." A 4,000-token window holds roughly 3,000 English words. | A 4,000-token budget ≈ a 6-page double-spaced essay |
 | **Semantic Search** | Finding documents by *meaning* rather than exact keyword match. Powered by comparing embedding vectors. | Querying "when can I get help from my professor" finds "Office hours for CS357 are Tuesday and Thursday mornings" |
+| **Attention** | The mechanism that lets each token's meaning be adjusted by the tokens around it, instead of being fixed by a lookup table. Each token asks every other token "how relevant are you to me?" and blends in a share of their meaning accordingly | Section 2b: watching the vector for "bank" move toward the financial sense when "loan" is standing next to it |
+| **Query, key, value** | The three roles every token plays in attention. The **query** is what this token is looking for, the **key** is what it offers as a match, and the **value** is the content it contributes if it is selected. A library search: your search term, the index cards, and the books | The three columns of the toy table in Model 3 |
+| **Transformer** | The neural-network architecture that stacks attention many times over, and the thing the "T" in GPT stands for. Every model you have talked to this semester is one | The thing the by-hand arithmetic in Section 2b does once and a real model does billions of times a second |
 
 ---
 
@@ -205,6 +212,100 @@ Two sentences receive embeddings with cosine similarity 0.92. The best interpret
 
 ---
 
+## 2b. When One Vector Is Not Enough: Attention
+
+Everything in Section 2 rests on an assumption worth challenging: that a word *has* an embedding. One word, one vector, looked up in a table.
+
+Consider "bank."
+
+> The **bank** was steep and muddy.
+> The **bank** approved the loan.
+
+Same five letters, two unrelated meanings. A lookup table gives them one vector, which must therefore be wrong at least half the time. Something has to let the surrounding words change what a word means, and that something is **attention**. It is the single idea that separates the models you are using this semester from the word-vector methods that came before them.
+
+### The idea, before the arithmetic
+
+Each token gets three vectors instead of one, playing three roles:
+
+- a **query** $\mathbf{q}$: *what am I looking for?*
+- a **key** $\mathbf{k}$: *what do I offer as a match?*
+- a **value** $\mathbf{v}$: *what content do I contribute if I am chosen?*
+
+Think of a library search. Your search term is the query. The index cards are the keys. The books are the values. To find out how relevant token $j$ is to token $i$, take the **dot product** $\mathbf{q}_i \cdot \mathbf{k}_j$ (the same operation from the numerator of cosine similarity in Section 2, one line of arithmetic you already know). Run those relevance scores through **softmax** so they become weights that sum to 1, then build the token's new meaning as a weighted blend of everyone's values.
+
+That is the whole mechanism, and it is written compactly as:
+
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
+$$
+
+where $Q$, $K$, and $V$ stack every token's query, key, and value into matrices, and $\sqrt{d_k}$ (the square root of the vector length) divides the scores to keep them from growing large enough to make softmax saturate. A **transformer** stacks this operation dozens of times, in parallel "heads," with small neural networks in between. That is the architecture; you are about to do one layer of it by hand.
+
+---
+
+## Model 3: Attention by Hand
+
+Three tokens, two dimensions, all arithmetic visible. The vectors below are already projected into their three roles:
+
+| token | $\mathbf{q}$ | $\mathbf{k}$ | $\mathbf{v}$ |
+|-------|------|------|------|
+| river | (1, 0) | (1, 0) | (1, 1) |
+| bank  | (1, 1) | (0, 1) | (2, 0) |
+| loan  | (0, 1) | (1, 1) | (0, 2) |
+
+We compute the new representation of **bank**, using $\mathbf{q}_{\text{bank}} = (1,1)$ and $d_k = 2$, so $\sqrt{d_k} \approx 1.41$.
+
+**Step 1, relevance: dot the query against every key.**
+
+- vs. river, $\mathbf{k} = (1,0)$: $\;1{\times}1 + 1{\times}0 = \mathbf{1}$
+- vs. bank, $\mathbf{k} = (0,1)$: $\;1{\times}0 + 1{\times}1 = \mathbf{1}$
+- vs. loan, $\mathbf{k} = (1,1)$: $\;1{\times}1 + 1{\times}1 = \mathbf{2}$
+
+Raw scores $[1, 1, 2]$. "loan" is already the most relevant, and we have done nothing but multiply and add.
+
+**Step 2, scale.** Divide each by $\sqrt{2} \approx 1.41$: $[0.71,\; 0.71,\; 1.41]$.
+
+**Step 3, softmax.** Raise $e \approx 2.718$ to each score, then divide by the total:
+
+$e^{0.71} \approx 2.03$, $e^{0.71} \approx 2.03$, $e^{1.41} \approx 4.10$; total $8.16$.
+
+Weights: $[\,0.25,\; 0.25,\; 0.50\,]$. "bank" gives half its attention to "loan" and a quarter each to "river" and itself.
+
+**Step 4, blend the values.**
+
+$$
+\text{new\_bank} = 0.25(1,1) + 0.25(2,0) + 0.50(0,2) = (0.25,0.25) + (0.50,0) + (0,1.00) = (0.75,\; 1.25)
+$$
+
+**Read the result.** Without context, `bank` was $(2, 0)$: all first-dimension, no second. After one layer of attention it is $(0.75, 1.25)$: the second dimension, contributed almost entirely by `loan`, now dominates. Context *moved the meaning*, and it moved it by arithmetic you just did on paper.
+
+### Critical Thinking Questions
+
+6. Redo Steps 1 through 3 for the sentence **"bank loan"**, with `river` removed entirely. There are now two softmax inputs instead of three, so the weights must sum to 1 over two tokens. Does "bank" lean differently?
+
+   > *Hint: The raw scores are the same two numbers as before; only the denominator of the softmax changes. Predict the direction of the change before you compute it.*
+
+7. In Step 1, `bank`'s query scored 1 against its own key, the same score it gave `river`. Why is it useful for a token to attend to itself at all, rather than only to its neighbors?
+
+8. Look at Section 2's cosine-similarity formula and Step 1 here. Both start with a dot product. Name the one thing cosine does that attention's relevance score does not, and suggest why attention might not want it.
+
+   > *Hint: Cosine divides by the two norms. What is that division for, and what would you lose if a token's "loudness" could no longer affect how much others attend to it?*
+
+9. The context window from the Key Concepts table is bounded by this arithmetic. Every token computes a score against every other token, so $n$ tokens cost $n^2$ scores. If you grow a prompt from 2,000 tokens to 8,000, by what factor does the attention work grow? Connect that number to a cost or latency you have already noticed on your own machine.
+
+> **Common Misconception:** "Attention means the model is focusing, or paying attention, the way a person does." The name is a metaphor for a weighted average, nothing more. Every token attends to every other token every time, with a weight; none of them is ignored, and none of them is being concentrated on. What you computed above is the entire phenomenon: dot products, a softmax, and a weighted sum.
+
+In the calculation above, which quantity decided *how much* `bank` was influenced by `loan`?
+
+[( )] The value vector $\mathbf{v}_{\text{loan}} = (0,2)$
+[(X)] The softmax weight 0.50, computed from the dot product of `bank`'s query with `loan`'s key
+[( )] The order of the tokens in the sentence
+[( )] The dimension $d_k = 2$
+
+> **Going deeper.** Multi-head attention, causal masking, the full $QK^\top$ matrix for all three tokens at once, and a runnable implementation are in the attention deep-dive linked from today's schedule entry. Everything above is what the rest of this course actually depends on.
+
+---
+
 # Part II: Semantic Search in Code
 
 In this part, you will use a real embedding model (a neural network that converts text to vectors) to build a tiny search engine that finds documents by meaning rather than by matching exact words. This is the retrieval foundation that your agents will use in the next module to access documents they were never trained on.
@@ -256,19 +357,19 @@ search("where do I leave my car")
 
 ---
 
-## Model 3: Probing the Geometry
+## Model 4: Probing the Geometry
 
 ### Critical Thinking Questions
 
-6. Neither query shares a single content word with its best match. Identify exactly which line of code performed the "understanding," and what it computes mathematically.
+10. Neither query shares a single content word with its best match. Identify exactly which line of code performed the "understanding," and what it computes mathematically.
 
    > *Hint: Look at the line `sims = D @ q / ...`. `D @ q` is a matrix-vector product; what does each entry of the result represent? Which earlier formula from Model 2 does this implement?*
 
-7. Craft a query that retrieves the *wrong* document with high confidence. What does the failure reveal about what embeddings capture and what they miss (negation, numbers, proper names)?
+11. Craft a query that retrieves the *wrong* document with high confidence. What does the failure reveal about what embeddings capture and what they miss (negation, numbers, proper names)?
 
    > *Hint: Try something like "the library is NOT open on weekends"; does the negation change the retrieved document? Try a query with a specific number that doesn't appear in any document. What does that tell you about what the embedding "remembers"?*
 
-8. The matrix-vector product `D @ q` computes all similarities at once. For one million documents, what becomes expensive, and what data structure might help? (This previews vector databases.)
+12. The matrix-vector product `D @ q` computes all similarities at once. For one million documents, what becomes expensive, and what data structure might help? (This previews vector databases.)
 
    > *Hint: With 1 million documents each having 768 numbers, how many multiplications does one search require? (Multiply 1,000,000 × 768.) What if you could organize the vectors spatially so you only had to check a fraction of them?*
 
@@ -312,7 +413,9 @@ In this part, you will extend the search engine to reveal the geometry of meanin
 
 ## -> Coming Up Next
 
-In the *Retrieval-Augmented Generation with Chroma* activity, we put embeddings to work at scale: instead of searching five sentences, we will index thousands of document chunks in a **vector database** (Chroma) and use that index to give our agents access to up-to-date information they were never trained on, a technique called Retrieval-Augmented Generation (RAG).
+Next session hands the workbench to a coding agent in *Coding Agents: OpenCode, Spec-First Development, and Reading the Diff*, and the session after that asks why a model gives a different answer every time, which is a question about the *last* step of the pipeline you started tracing today.
+
+The geometry itself returns in *Retrieval-Augmented Generation with Chroma*, where instead of searching five sentences we index thousands of document chunks in a **vector database** and use that index to give agents access to information they were never trained on.
 
 ---
 
