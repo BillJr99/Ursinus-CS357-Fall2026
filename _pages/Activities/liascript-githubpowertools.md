@@ -266,7 +266,7 @@ In this part, you will combine the tools from Parts I–IV in a real codebase sp
 2. *Token budget math.*
 
    - *What to do*: Use `gitingest.com` on a repo of your choice. Record the full-repo token count. Then apply at least two filters (subdirectory, file extension) and record the reduced counts. Calculate the percentage reduction each filter achieves.
-   - *Starter hint*: A token is approximately 3–4 characters of English text or code. If the full repo is 500 000 tokens and your local model has a 128k context window, what fraction of the repo can you fit? Which subdirectory contains the most tokens? (gitingest shows a breakdown by directory.)
+   - *Starter hint*: A token is approximately 3-4 characters of English text or code. If the full repo is 500 000 tokens and your local model has a 128k context window, what fraction of the repo can you fit? Which subdirectory contains the most tokens? (gitingest shows a breakdown by directory.)
    - *You've succeeded when*: You have a table showing full-repo token count, at least two filtered counts, percentage reductions, and a written recommendation: which filter strategy would you use to prepare this repo for a coding agent, and why?
 
 3. *Grounding comparison.*

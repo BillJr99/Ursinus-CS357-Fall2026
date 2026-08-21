@@ -275,7 +275,7 @@ Distributed systems researchers spent decades — from Lamport's work in the 197
 
 **Societal level:** Multi-agent systems are increasingly making decisions that affect real people — approving loans, routing emergency services, flagging content. If a race condition or consensus failure causes an incorrect outcome, who is responsible? How should accountability be assigned when the failure is an emergent property of agent interaction rather than a bug in any single agent?
 
-Write a combined reflection of 150–250 words addressing at least two of the three levels. The Reflector should be prepared to share one specific distributed systems concept the team thinks is most directly applicable to multi-agent LLMs.
+Write a combined reflection of 150-250 words addressing at least two of the three levels. The Reflector should be prepared to share one specific distributed systems concept the team thinks is most directly applicable to multi-agent LLMs.
 
 [[___ Your reflection here ___]]
 
@@ -290,6 +290,6 @@ Write a combined reflection of 150–250 words addressing at least two of the th
 - FIPA ACL (Foundation for Intelligent Physical Agents Agent Communication Language) Specification. Available at: http://www.fipa.org/specs/fipa00061/
 - Google. (2025). "Agent-to-Agent (A2A) Protocol." *Google Developers Blog*. https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/
 - Anthropic. (2024). "Model Context Protocol (MCP) Documentation." https://modelcontextprotocol.io/
-- Lamport, L. (1978). "Time, Clocks, and the Ordering of Events in a Distributed System." *Communications of the ACM*, 21(7), 558–565.
+- Lamport, L. (1978). "Time, Clocks, and the Ordering of Events in a Distributed System." *Communications of the ACM*, 21(7), 558-565.
 - Gray, J., and Reuter, A. (1992). *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann. [Chapter on two-phase commit]
 - Brewer, E. A. (2000). "Towards Robust Distributed Systems." *PODC Keynote*. [CAP theorem]

@@ -70,7 +70,7 @@ Complete this part by **one of two routes** — the four verification steps and 
 
 ### Route A (recommended): host Ollama + the course dev container
 
-Set up the full course environment by following the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1–3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted — include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+Set up the full course environment by following the [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1-3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted — include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
 
 ### Route B: native install
 
@@ -127,7 +127,7 @@ Complete each step and capture the terminal output:
 - [tldr pages](https://tldr.sh/) — plain-language example-first cheat sheets for any command (`tldr tar`).
 - [explainshell](https://explainshell.com/) — paste any command line and see each flag explained.
 - [ShellCheck](https://www.shellcheck.net/) — catches bugs in shell scripts before they bite.
-- `curl` and [HTTPie](https://httpie.io/) plus [jq](https://jqlang.github.io/jq/) — you will hit JSON APIs (Ollama, MCP) all semester; `curl … | jq` is your friend.
+- `curl` and [HTTPie](https://httpie.io/) plus [jq](https://jqlang.github.io/jq/) — you will hit JSON APIs (Ollama, MCP) all semester; `curl ... | jq` is your friend.
 
 ### Part 1.5 Checklist
 

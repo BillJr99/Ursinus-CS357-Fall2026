@@ -84,18 +84,18 @@ Read the pipeline top to bottom. Each row is a training stage; the "Model type p
 | Multimodal training (encoder + projection) | Aligning image tokens with text on image–text pairs | **Vision / multimodal** model | *Multimodal Agents* |
 
 ```text
-                    ┌─────────────┐
-   huge text corpus │ PRETRAINING │──▶ base model (autocomplete)
-                    └─────────────┘
-                           │  supervised fine-tuning
-                           ▼
+                    +-------------+
+   huge text corpus | PRETRAINING |--> base model (autocomplete)
+                    `-------------+
+                           |  supervised fine-tuning
+                           v
                      instruct / chat model
-                           │  RLHF / DPO
-                           ▼
-                   aligned instruct model ───────┐
-                     │                            │  + vision encoder
-   RL on checkable   │                            │  + projection layer
-   answers           ▼                            ▼
+                           |  RLHF / DPO
+                           v
+                   aligned instruct model -------+
+                     |                            |  + vision encoder
+   RL on checkable   |                            |  + projection layer
+   answers           v                            v
               reasoning model              vision / multimodal model
 ```
 

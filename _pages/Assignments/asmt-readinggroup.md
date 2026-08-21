@@ -43,7 +43,7 @@ info:
       progressing: "The student draws out quieter participants, redirects off-topic contributions, connects two or more student responses to each other, and closes the discussion with a one-sentence synthesis."
       proficient: "The student demonstrates active listening throughout, explicitly builds on prior student contributions ('Building on what X said...'), and the closing synthesis captures genuine tension or insight from the discussion, not just a restatement of the source."
     - weight: 20
-      description: "Reflection Write-Up — quality of the 300–500 word post-discussion reflection"
+      description: "Reflection Write-Up — quality of the 300-500 word post-discussion reflection"
       preemerging: "The reflection is a plot summary of the source or missing."
       beginning: "The reflection describes what happened but does not analyze why the discussion went the way it did."
       progressing: "The reflection identifies one thing that went well, one thing to do differently, and connects the discussion's main insight to a specific concept from the course (naming the lecture, activity, or reading it connects to)."
@@ -59,7 +59,7 @@ The session is a **ten-minute presentation and discussion**:
 - **~6 minutes:** Class discussion, facilitated by the student presenter.
 - **~1 minute:** Student closes with a one-sentence synthesis of what the class concluded.
 
-After your session, you submit a 300–500 word reflection write-up within one week.
+After your session, you submit a 300-500 word reflection write-up within one week.
 
 ---
 
@@ -128,20 +128,20 @@ These are suggested sources. You are not limited to this list — propose others
 ### Foundational Books (chapters or excerpts)
 
 - Crawford, K. (2021). *Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence.* Yale University Press. *(Chapters 1, 6, or 7)*
-- Benjamin, R. (2019). *Race After Technology: Abolitionist Tools for the New Jim Code.* Polity. *(Chapters 1–2)*
-- Carr, N. (2014). *The Glass Cage: How Our Computers Are Changing Us.* W. W. Norton. *(Chapters 2–3 on automation bias)*
+- Benjamin, R. (2019). *Race After Technology: Abolitionist Tools for the New Jim Code.* Polity. *(Chapters 1-2)*
+- Carr, N. (2014). *The Glass Cage: How Our Computers Are Changing Us.* W. W. Norton. *(Chapters 2-3 on automation bias)*
 - Christian, B. (2020). *The Alignment Problem.* W. W. Norton. *(Any chapter)*
-- Marcus, G. & Davis, E. (2019). *Rebooting AI.* Pantheon. *(Chapters 3–4)*
+- Marcus, G. & Davis, E. (2019). *Rebooting AI.* Pantheon. *(Chapters 3-4)*
 - Wooldridge, M. (2021). *A Brief History of Artificial Intelligence.* Flatiron Books. *(Any chapter)*
 
 ### Core and Technical Textbooks (chapters or excerpts)
 
 These are the technical books assigned across the course schedule — a chapter you present here can double as a deeper dive on a topic we cover in a lecture.
-- Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1–2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
+- Mitchell, M. (2019). *Artificial Intelligence: A Guide for Thinking Humans.* Farrar, Straus and Giroux. *(Any chapter; e.g. Ch 1-2 on agents and history, Ch 3 on how models "understand," Ch 4 on knowledge and reasoning, Ch 8 on meaning.)* https://melaniemitchell.me/aibook/
 - Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson. *(Chapter 2 on intelligent agents; later chapters by topic.)* https://aima.cs.berkeley.edu/
 - Jurafsky, D. & Martin, J. H. *Speech and Language Processing* (3rd ed. draft). *(Ch 3 on n-gram language models; later chapters on embeddings and transformers.)* https://web.stanford.edu/~jurafsky/slp3/
 - Nielsen, M. *Neural Networks and Deep Learning.* *(Chapter 1, neural nets from first principles.)* http://neuralnetworksanddeeplearning.com/
-- Sutton, R. & Barto, A. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. *(Chapters 1–6 for the RLHF thread.)*
+- Sutton, R. & Barto, A. (2018). *Reinforcement Learning: An Introduction* (2nd ed.). MIT Press. *(Chapters 1-6 for the RLHF thread.)*
 - Huyen, C. (2022). *Designing Machine Learning Systems.* O'Reilly. *(Chapter 7 on model deployment and prediction services.)*
 
 ### Seminal Papers
@@ -182,7 +182,7 @@ If you chose the **Competing Texts Session** format, two of your questions must 
 
 ## Reflection Write-Up
 
-Submit a 300–500 word reflection within **one week** of your discussion date, via the course LMS. Your reflection must address:
+Submit a 300-500 word reflection within **one week** of your discussion date, via the course LMS. Your reflection must address:
 
 1. **What worked:** One specific moment in the discussion that you are proud of.
 2. **What to improve:** One thing you would do differently if leading this discussion again.

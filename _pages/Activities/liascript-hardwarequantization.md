@@ -48,7 +48,7 @@ This activity uses the **POGIL** (Process Oriented Guided Inquiry Learning) stru
 
 ## Model 1: Why Hardware Matters for AI Agents
 
-Every transformer forward pass is essentially one massive matrix multiplication after another. The hardware underneath determines not just how fast that runs, but whether it runs at all. Quantization is like compressing a photo from RAW to JPEG — you lose a little quality, but the file is 8–16× smaller and loads instantly in a browser where the RAW file would time out. Understanding these hardware constraints is not optional trivia: it is what lets you decide whether your agent can run offline on a Raspberry Pi, on a laptop at a clinic without internet, or only on a rented GPU in a data center.
+Every transformer forward pass is essentially one massive matrix multiplication after another. The hardware underneath determines not just how fast that runs, but whether it runs at all. Quantization is like compressing a photo from RAW to JPEG — you lose a little quality, but the file is 8-16× smaller and loads instantly in a browser where the RAW file would time out. Understanding these hardware constraints is not optional trivia: it is what lets you decide whether your agent can run offline on a Raspberry Pi, on a laptop at a clinic without internet, or only on a rented GPU in a data center.
 
 The following section explains why GPUs dominate AI inference and what the actual bottleneck is during token generation — the answer is more subtle than "GPUs are faster."
 
@@ -58,11 +58,11 @@ Neural network inference is dominated by one operation: **matrix multiplication*
 
 **Why GPUs win at this:**
 
-- A modern CPU has 8–32 cores optimized for sequential, branching tasks such as database queries or operating system scheduling
+- A modern CPU has 8-32 cores optimized for sequential, branching tasks such as database queries or operating system scheduling
 - A modern GPU has thousands of simpler cores optimized for massively parallel arithmetic — exactly what matrix multiplication requires
 - For a matrix multiply of dimension N×N, the GPU can compute many products simultaneously, while the CPU must handle far fewer in parallel
 
-However, **raw FLOPS (floating-point operations per second) is often not the bottleneck**. The real constraint during token generation is **memory bandwidth** — the rate at which model weights can be streamed from VRAM into the compute cores. A GPU may be rated at 312 TFLOPS but can only feed data at 2 TB/s, creating a bandwidth wall. Most LLM inference runs at only 5–15% of peak FLOPS utilization for exactly this reason.
+However, **raw FLOPS (floating-point operations per second) is often not the bottleneck**. The real constraint during token generation is **memory bandwidth** — the rate at which model weights can be streamed from VRAM into the compute cores. A GPU may be rated at 312 TFLOPS but can only feed data at 2 TB/s, creating a bandwidth wall. Most LLM inference runs at only 5-15% of peak FLOPS utilization for exactly this reason.
 
 **VRAM is a hard limit.** The entire model must fit in GPU VRAM (or be offloaded across multiple devices, at a significant latency penalty). A model with P parameters stored at FP16 (2 bytes per parameter) requires exactly 2×P bytes of VRAM:
 
@@ -70,7 +70,7 @@ However, **raw FLOPS (floating-point operations per second) is often not the bot
 - 13B parameters × 2 bytes = **26 GB VRAM** (exceeds a single RTX 4090; requires an A100 or Apple Silicon with enough unified memory)
 - 70B parameters × 2 bytes = **140 GB VRAM** (requires multiple A100s, an H100 with NVLink, or quantization to fit on consumer hardware)
 
-Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10–20% higher than the weight-only calculation. That KV-cache overhead is not a fixed 10–20% — it grows with every concurrent request and every token of context, and it is where most serving inefficiency hides. For *how* the non-weight VRAM is actually managed (fragmentation, PagedAttention, and the tuning knobs that decide how many users a card can serve), see Part IV of the companion activity *Serving LLMs in Production* (`liascript-llmserving.md`).
+Plus overhead for the KV cache (key-value cache for attention), activations, and runtime buffers, the actual requirement is typically 10-20% higher than the weight-only calculation. That KV-cache overhead is not a fixed 10-20% — it grows with every concurrent request and every token of context, and it is where most serving inefficiency hides. For *how* the non-weight VRAM is actually managed (fragmentation, PagedAttention, and the tuning knobs that decide how many users a card can serve), see Part IV of the companion activity *Serving LLMs in Production* (`liascript-llmserving.md`).
 
 ### Hardware Landscape
 
@@ -80,7 +80,7 @@ Use the table below to determine which hardware tier can run which model sizes. 
 |----------|------|-------------------|------------------|-------------------------|
 | Consumer GPU (RTX 4090) | 24 GB | ~82 TFLOPS | ~$1,600 retail | 7B (tight with KV cache), 13B (does not fit) |
 | Workstation GPU (A100 80 GB SXM) | 80 GB | ~312 TFLOPS | ~$10,000–$15,000 | Up to ~40B parameters (tight); 70B requires multi-GPU |
-| Cloud (H100 SXM) | 80 GB | ~989 TFLOPS (FP8 mode) | ~$2–4/hour cloud rental | Up to ~40B single GPU; 70B+ via NVLink multi-GPU |
+| Cloud (H100 SXM) | 80 GB | ~989 TFLOPS (FP8 mode) | ~$2-4/hour cloud rental | Up to ~40B single GPU; 70B+ via NVLink multi-GPU |
 | Apple Silicon (M3 Ultra) | 192 GB unified memory | ~17 TFLOPS GPU core (Neural Engine: ~60 TOPS) | ~$5,000–$10,000 | 70B+ at FP16; entire system memory is available to the GPU |
 | TPU v4 (Google Cloud) | 32 GB per chip in multi-chip pods | ~275 TFLOPS (bfloat16) | Variable pod pricing | Large models via multi-chip pods; primarily for training |
 
@@ -167,9 +167,9 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 | Q8_0 | 8 | ~7 GB | ~0.1% increase | Nearly lossless; recommended if VRAM allows |
 | Q6_K | 6 | ~5.5 GB | ~0.3% increase | Excellent quality with meaningful size reduction |
 | Q5_K_M | 5 | ~4.8 GB | ~0.6% increase | Very good quality; a strong choice when 8 GB of VRAM is available |
-| Q4_K_M | 4 | ~4.1 GB | ~1.5% increase | **The practical sweet spot**: good quality, fits in 6–8 GB VRAM, used in most course labs |
-| Q3_K_M | 3 | ~3.3 GB | ~4–6% increase | Noticeable quality loss on complex multi-step reasoning and code generation |
-| Q2_K | 2 | ~2.7 GB | ~15–30% increase | Significant degradation; only use when no better option exists |
+| Q4_K_M | 4 | ~4.1 GB | ~1.5% increase | **The practical sweet spot**: good quality, fits in 6-8 GB VRAM, used in most course labs |
+| Q3_K_M | 3 | ~3.3 GB | ~4-6% increase | Noticeable quality loss on complex multi-step reasoning and code generation |
+| Q2_K | 2 | ~2.7 GB | ~15-30% increase | Significant degradation; only use when no better option exists |
 
 ### Quantization-Aware Training vs. Post-Training Quantization
 
@@ -193,11 +193,11 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 [[___ Your answer here ___]]
 
-> *Hint:* Q8: 13B × 1 byte = 13 GB × 1.15 overhead = **14.95 GB** — does not fit in 8 GB. Q4_K_M: 13B × 0.5 bytes = 6.5 GB × 1.15 = **7.47 GB** — fits, with about 500 MB to spare for a modest context. Q3_K_M: 13B × 0.375 bytes = 4.875 GB × 1.15 = **5.6 GB** — fits comfortably with room for a larger context. Q4_K_M is the sweet spot: it fits in 8 GB and accepts only ~1.5% perplexity increase. Q3_K_M fits more comfortably but costs 4–6% perplexity.
+> *Hint:* Q8: 13B × 1 byte = 13 GB × 1.15 overhead = **14.95 GB** — does not fit in 8 GB. Q4_K_M: 13B × 0.5 bytes = 6.5 GB × 1.15 = **7.47 GB** — fits, with about 500 MB to spare for a modest context. Q3_K_M: 13B × 0.375 bytes = 4.875 GB × 1.15 = **5.6 GB** — fits comfortably with room for a larger context. Q4_K_M is the sweet spot: it fits in 8 GB and accepts only ~1.5% perplexity increase. Q3_K_M fits more comfortably but costs 4-6% perplexity.
 
 ---
 
-**Question 5.** Q2 quantization reduces a 70B model's VRAM requirement from 140 GB (FP16) to approximately 17.5 GB — an 8× reduction. However, it increases perplexity by roughly 15–30%. Identify two specific use cases where this trade-off is acceptable, and two where it is not. For each case, identify what the task requires that either tolerates or cannot tolerate the perplexity increase.
+**Question 5.** Q2 quantization reduces a 70B model's VRAM requirement from 140 GB (FP16) to approximately 17.5 GB — an 8× reduction. However, it increases perplexity by roughly 15-30%. Identify two specific use cases where this trade-off is acceptable, and two where it is not. For each case, identify what the task requires that either tolerates or cannot tolerate the perplexity increase.
 
 [[___ Your answer here ___]]
 
@@ -234,7 +234,7 @@ The table below compares edge and cloud inference across six dimensions. As you 
 
 | Dimension | Edge (Local Device) | Cloud (Remote Server) |
 |-----------|---------------------|-----------------------|
-| Latency | Sub-millisecond network overhead; first token appears almost immediately | 50–500 ms network round-trip minimum; longer under high server load |
+| Latency | Sub-millisecond network overhead; first token appears almost immediately | 50-500 ms network round-trip minimum; longer under high server load |
 | Privacy | All data stays on the local device; no transmission to third parties | User data is transmitted to the cloud provider's servers for each query |
 | Connectivity | Works completely offline with no internet connection required | Requires a reliable internet connection for every query |
 | Cost at scale | Hardware cost is amortized over time; ongoing cost is electricity only | Per-query pricing that can add up significantly at volume |

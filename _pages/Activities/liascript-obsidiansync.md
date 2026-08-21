@@ -191,9 +191,9 @@ Create a folder called `agent-context/` in your vault. Files here are short (one
 
 ```
 agent-context/
-├── standing-instructions.md   # Behavioral rules for every agent
-├── project-state.md           # What I'm working on right now
-└── key-decisions.md           # Choices I've made + why
+|-- standing-instructions.md   # Behavioral rules for every agent
+|-- project-state.md           # What I'm working on right now
+`-- key-decisions.md           # Choices I've made + why
 ```
 
 A Python helper that injects this folder into an agent session:
@@ -453,27 +453,27 @@ A vault designed to serve both personal knowledge and AI project memory:
 
 ```
 MyVault/
-├── _index.md                   # Navigation hub: all notes by topic, one sentence each
-├── AGENTS.md                   # Agent contract: read this before acting in the vault
-├── .gitignore                  # Exclude workspace state, caches
-│
-├── agent-context/              # Always-inject context (read at session start)
-│   ├── standing-instructions.md
-│   ├── project-state.md
-│   └── key-decisions.md
-│
-├── memories/                   # Agent write-back (append-only)
-│   └── session-log.md
-│
-├── CS357/                      # Course notes (human-authored, agent-readable)
-│   ├── lectures/
-│   ├── projects/
-│   └── reflections/
-│
-├── personal-projects/          # Project notes (agent-assisted authorship)
-│   └── rag-pipeline/
-│
-└── raw/                        # Read-only inbox: PDFs, exports, transcripts
+|-- _index.md                   # Navigation hub: all notes by topic, one sentence each
+|-- AGENTS.md                   # Agent contract: read this before acting in the vault
+|-- .gitignore                  # Exclude workspace state, caches
+|
+|-- agent-context/              # Always-inject context (read at session start)
+|   |-- standing-instructions.md
+|   |-- project-state.md
+|   `-- key-decisions.md
+|
+|-- memories/                   # Agent write-back (append-only)
+|   `-- session-log.md
+|
+|-- CS357/                      # Course notes (human-authored, agent-readable)
+|   |-- lectures/
+|   |-- projects/
+|   `-- reflections/
+|
+|-- personal-projects/          # Project notes (agent-assisted authorship)
+|   `-- rag-pipeline/
+|
+`-- raw/                        # Read-only inbox: PDFs, exports, transcripts
                                 # Agents read from here; never write here
 ```
 

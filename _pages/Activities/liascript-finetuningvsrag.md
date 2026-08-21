@@ -32,7 +32,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | RAG (Retrieval-Augmented Generation) | Connecting the AI to an external knowledge source (like a document database) so it can look up relevant information before answering — the model's weights never change. | Before answering "What is our PTO policy?", the system fetches the relevant section of the employee handbook and includes it in the prompt. |
 | Fine-Tuning | Continuing the model's training on your own data so the model's internal weights permanently change — it behaves differently on every future call, even without special prompts. | Training `llama3.1:8b` on 800 examples of correctly formatted legal contract summaries so it always produces that format. |
 | LoRA (Low-Rank Adaptation) | A parameter-efficient fine-tuning method that trains only tiny "adapter" matrices (about 0.1% of the total parameters) instead of updating the entire model — dramatically reducing GPU cost. | Fine-tuning a 7B model with LoRA requires a single A100 GPU for a few hours instead of a multi-GPU cluster for days. |
-| QLoRA | LoRA combined with 4-bit quantization of the frozen base model weights — enables fine-tuning 7B models on a single consumer GPU with 24 GB of VRAM. | Students at Ursinus can run QLoRA fine-tuning on a rented Lambda Labs A100 instance for roughly $3–5. |
+| QLoRA | LoRA combined with 4-bit quantization of the frozen base model weights — enables fine-tuning 7B models on a single consumer GPU with 24 GB of VRAM. | Students at Ursinus can run QLoRA fine-tuning on a rented Lambda Labs A100 instance for roughly $3-5. |
 | Context Window | The maximum amount of text (measured in tokens, where 1 token ≈ 0.75 words) that a model can read in a single request — determines whether "just paste the whole document in" is even possible. | GPT-4o has a 128K token context window — about 96,000 words. A 500-page policy manual (~200,000 words) still exceeds it. |
 
 ---
@@ -47,7 +47,7 @@ This is the "hire an expert vs. give your generalist a textbook" decision — an
 
 The three approaches differ in *where the specialization lives* — in the prompt at inference time, in retrieved text at inference time, or in the model weights permanently.
 
-**Prompting** gives the model instructions, examples, and context within a single call. Zero-shot prompting provides instructions only; few-shot adds 2–10 worked examples; chain-of-thought prompts the model to reason step by step before answering. Prompting is free, instant, and reversible — but is bounded by the context window and by what the base model already knows. A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
+**Prompting** gives the model instructions, examples, and context within a single call. Zero-shot prompting provides instructions only; few-shot adds 2-10 worked examples; chain-of-thought prompts the model to reason step by step before answering. Prompting is free, instant, and reversible — but is bounded by the context window and by what the base model already knows. A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
 
 **RAG** injects retrieved information at inference time. The model receives the same prompt, but now the prompt includes relevant documents fetched from an external index. The model's weights never change. RAG excels when knowledge is dynamic (daily news, live databases), external (proprietary documents the base model never saw), or too large for any context window. Its costs are operational: embedding, indexing, retrieval latency, and the complexity of the pipeline.
 
@@ -78,7 +78,7 @@ Use this table as a diagnostic. Each row is a question to ask before choosing an
 
 2. A legal firm wants every contract summary the model produces to follow a precise seven-section structure with mandatory fields. They have 2,000 existing human-written summaries in that format. Walk through the decision table for this case. Does the answer change if they only have 50 examples? Why?
 
-   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable. With 50 examples, few-shot prompting (including 3–5 examples directly in the prompt) may actually outperform a poorly-fitted fine-tuned model.
+   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable. With 50 examples, few-shot prompting (including 3-5 examples directly in the prompt) may actually outperform a poorly-fitted fine-tuned model.
 
 3. "The model already knows how to write code, so we just need to prompt it." A team makes this argument to avoid fine-tuning their coding assistant. Describe a concrete scenario where this reasoning fails — where the gap between base model behavior and desired behavior is too large for prompting to close.
 
@@ -98,7 +98,7 @@ The order-of-magnitude cost differences between approaches are often underapprec
 |---|---|---|---|---|
 | Prompting (API call to GPT-4o or Claude) | $0.003–$0.05 per 1,000-token call depending on model | None beyond prompt engineering time | None — uses a managed API | None — just write better instructions |
 | RAG (API + Chroma/Qdrant vector DB) | $0.001–$0.02 per query (embedding + retrieval + smaller LLM call) | Hours to days of pipeline engineering | Vector DB (free locally, ~$50/mo cloud for small scale), embedding service | Source documents only — no labeled pairs needed |
-| Fine-tuning (small model, LoRA on `llama3.1:8b`) | $0.0001–$0.001 per call after training (self-hosted inference) | $10–$200 per training run on a rented A100 GPU | GPU for training (A100/H100 rented on Lambda Labs), storage for weights | 200–2,000 labeled input-output pairs |
+| Fine-tuning (small model, LoRA on `llama3.1:8b`) | $0.0001–$0.001 per call after training (self-hosted inference) | $10–$200 per training run on a rented A100 GPU | GPU for training (A100/H100 rented on Lambda Labs), storage for weights | 200-2,000 labeled input-output pairs |
 | Fine-tuning (large model, full weight update) | $0.0001–$0.001 per call after training (self-hosted inference) | $1,000–$50,000 per training run on multi-GPU cluster | Multi-GPU cluster, distributed training framework (DeepSpeed, FSDP) | Thousands to millions of labeled pairs |
 | Pre-training from scratch | Fractions of a cent per call after training | $1,000,000+ for a competitive model | Massive GPU cluster, months of compute | Billions of tokens of curated text |
 
@@ -112,8 +112,8 @@ Consider a concrete deployment: **an HR policy assistant that answers questions 
 |---|---|---|---|
 | Implementation effort | Include entire policy in the system prompt — takes minutes to set up | Index policy chunks in a vector DB; retrieve on each query — takes hours to set up (`pip install chromadb`, embed chunks, build query pipeline) | Generate Q&A pairs from the doc, fine-tune a base model like `llama3.1:8b` with LoRA — takes days |
 | How it handles policy updates | Immediately — just update the prompt text with the new policy content | With re-indexing, which takes minutes to hours depending on document size | Must retrain, which takes hours to days and costs GPU compute |
-| Cost per user query | Higher token cost because the entire policy is in every prompt (e.g., a 50-page doc = ~25,000 tokens × $0.005/1K = $0.125 per call) | Moderate: retrieval + smaller context (typically 1,000–3,000 tokens per call) | Very low per call after training, but training itself costs $20–$200 upfront |
-| Can handle 500-page policy? | No — a 500-page document exceeds even 128K-token context windows | Yes — only the relevant 3–5 chunks are retrieved per query | Yes — but generating Q&A pairs for 500 pages and training costs significant time and money |
+| Cost per user query | Higher token cost because the entire policy is in every prompt (e.g., a 50-page doc = ~25,000 tokens × $0.005/1K = $0.125 per call) | Moderate: retrieval + smaller context (typically 1,000-3,000 tokens per call) | Very low per call after training, but training itself costs $20–$200 upfront |
+| Can handle 500-page policy? | No — a 500-page document exceeds even 128K-token context windows | Yes — only the relevant 3-5 chunks are retrieved per query | Yes — but generating Q&A pairs for 500 pages and training costs significant time and money |
 | Provides citations? | Possible with careful prompting ("Always cite the section number") but not guaranteed | Natural — the retrieved chunk itself is the citation and can be shown to the user | Generally not — knowledge is embedded opaquely in weights, so the model cannot point to its source |
 | Output style consistency | Moderate — varies with how the user phrases their question | Moderate — same retrieval quality, but LLM generation still varies | High — style, format, and phrasing learned during training appear consistently in every response |
 
@@ -147,16 +147,16 @@ The diagram below shows how LoRA adds two tiny matrices (A and B) alongside the 
 
 ```
 Original Layer (frozen):          LoRA Correction (trained):
-┌─────────────────────┐           ┌───┐   ┌─────────────────────┐
-│                     │           │ A │   │                     │
-│   W  (d × k)        │    +      │   │ × │   B  (r × k)        │
-│   7B total params   │           │d×r│   │   r << d            │
-└─────────────────────┘           └───┘   └─────────────────────┘
++---------------------+           +---+   +---------------------+
+|                     |           | A |   |                     |
+|   W  (d × k)        |    +      |   | × |   B  (r × k)        |
+|   7B total params   |           |d×r|   |   r << d            |
+`---------------------+           `---+   `---------------------+
   Gradient: not computed             Gradient: computed for A, B only
   Storage: unchanged                 Storage: ~0.1% of original
 ```
 
-At rank $r = 8$ for a 7B model, LoRA trains roughly 4–8 million parameters instead of 7 billion — a 99.9% reduction in trainable parameters. **QLoRA** combines LoRA with 4-bit quantization of the frozen base weights, enabling fine-tuning of 7B models on a single consumer GPU with 24 GB of VRAM.
+At rank $r = 8$ for a 7B model, LoRA trains roughly 4-8 million parameters instead of 7 billion — a 99.9% reduction in trainable parameters. **QLoRA** combines LoRA with 4-bit quantization of the frozen base weights, enabling fine-tuning of 7B models on a single consumer GPU with 24 GB of VRAM.
 
 **Real cost example:** Fine-tuning `llama3.1:8b` with QLoRA on 800 JSON-formatting examples using a rented Lambda Labs A100 instance costs approximately $1.60 (0.8 hours × $2/hour). The resulting adapter file (the A and B matrices) is roughly 40 MB, compared to the 16 GB base model.
 

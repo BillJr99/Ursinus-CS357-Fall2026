@@ -194,13 +194,13 @@ This is a multi-week lab, not a single-evening one. Across the lab's window (see
 
 | Component | Estimated **total** time |
 |-----------|----------------|
-| Core Parts 1–3 (the loop; persona and two tools; evaluation) | 4–5 hours |
-| Your chosen direction, **on top of** the core | +4–8 hours |
+| Core Parts 1-3 (the loop; persona and two tools; evaluation) | 4-5 hours |
+| Your chosen direction, **on top of** the core | +4-8 hours |
 | Writeup, learning log, and packaging | 1 hour |
-| **Total for Directions 1–6** | **≈ 9–14 hours** |
-| **Total for Direction 0** (replaces Parts 1–3 rather than extending them) | **≈ 8–10 hours** |
+| **Total for Directions 1-6** | **≈ 9-14 hours** |
+| **Total for Direction 0** (replaces Parts 1-3 rather than extending them) | **≈ 8-10 hours** |
 
-Read that last row carefully: **Direction 0's 8–10 hours is the whole lab**, not an addition to it. Comparing "8–10" against a direction's "+4–8" is comparing a total to an increment — Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
+Read that last row carefully: **Direction 0's 8-10 hours is the whole lab**, not an addition to it. Comparing "8-10" against a direction's "+4-8" is comparing a total to an increment — Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
 
 Budget your weeks accordingly: the direction work goes far better when the core parts are finished in the first week, and the large image pulls some directions require should happen before the day you need them.
 
@@ -796,21 +796,21 @@ This lab stops at a working agent loop with reliable structured output. Making t
 
 ## Choose Your Direction
 
-Pick **one** direction below — the single 100-point grade covers the core work plus your chosen direction. For Directions 1–6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
+Pick **one** direction below — the single 100-point grade covers the core work plus your chosen direction. For Directions 1-6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
 
-- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1–3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A–E **in place of** core Parts 1–3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
-- **Directions 1–6 build on top of** the core lab: complete Parts 1–3 first, then extend in your chosen direction.
+- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A–E **in place of** core Parts 1-3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
+- **Directions 1-6 build on top of** the core lab: complete Parts 1-3 first, then extend in your chosen direction.
 
 Each direction now lives on its own page. The table below summarizes what each one asks of you — read the "What this direction requires" box at the top of a direction's page before committing to it.
 
 | Direction | What you build | Requirements summary | Est. hours |
 |-----------|----------------|----------------------|------------|
-| [Direction 0](LocalAgent/Direction0): The OpenWebUI Route (low-code) | The same persona agent, two tested tools, structured JSON output, and the full evaluation — built entirely in OpenWebUI, with no Python authorship; replaces core Parts 1–3 | Ollama + OpenWebUI (Docker one-liner or pip install); no accounts, no API costs | 8–10 |
-| [Direction 1](LocalAgent/Direction1): Debugging a Broken Agent | Find, fix, and explain five planted bugs in a research agent, then add structured logging and a regression suite so they can never hide again | Nothing beyond the core lab setup; fully local and free | 4–5 |
-| [Direction 2](LocalAgent/Direction2): Composing the Local Agent Stack | A five-tier local AI stack — inference, gateway, frontend, tool, and agent — wired with Docker Compose and a verified wiring matrix | Docker Desktop + roughly 6 GB of image pulls; no accounts or API costs | 4–6 |
-| [Direction 3](LocalAgent/Direction3): Containerizing an AI System Safely | A deliberately insecure agent container hardened step by step to least privilege, with a documented and tested threat model | Docker Desktop + roughly 6 GB of disk; an Anthropic API key (small usage cost); a test VM is strongly recommended | 5–7 |
-| [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free — a local Ollama-based agent fallback is built in | 5–7 |
-| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill and an Obsidian-vault memory skill, loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model | 4–6 |
-| [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5–8 |
+| [Direction 0](LocalAgent/Direction0): The OpenWebUI Route (low-code) | The same persona agent, two tested tools, structured JSON output, and the full evaluation — built entirely in OpenWebUI, with no Python authorship; replaces core Parts 1-3 | Ollama + OpenWebUI (Docker one-liner or pip install); no accounts, no API costs | 8-10 |
+| [Direction 1](LocalAgent/Direction1): Debugging a Broken Agent | Find, fix, and explain five planted bugs in a research agent, then add structured logging and a regression suite so they can never hide again | Nothing beyond the core lab setup; fully local and free | 4-5 |
+| [Direction 2](LocalAgent/Direction2): Composing the Local Agent Stack | A five-tier local AI stack — inference, gateway, frontend, tool, and agent — wired with Docker Compose and a verified wiring matrix | Docker Desktop + roughly 6 GB of image pulls; no accounts or API costs | 4-6 |
+| [Direction 3](LocalAgent/Direction3): Containerizing an AI System Safely | A deliberately insecure agent container hardened step by step to least privilege, with a documented and tested threat model | Docker Desktop + roughly 6 GB of disk; an Anthropic API key (small usage cost); a test VM is strongly recommended | 5-7 |
+| [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free — a local Ollama-based agent fallback is built in | 5-7 |
+| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill and an Obsidian-vault memory skill, loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model | 4-6 |
+| [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5-8 |
 
 Whichever direction you choose, fold its deliverables into the same submission ZIP and readme as the core lab, and treat its stated expectations as the standard your direction work must meet.

@@ -69,7 +69,7 @@ Sending text to a commercial API means your text leaves your machine, traverses 
 
 ---
 
-## 2. The Major Model Families (2024–2025)
+## 2. The Major Model Families (2024-2025)
 
 "Open-weight" means the model weights are publicly downloadable; the training code and data may or may not be open. This is distinct from "open source" in the traditional sense. Licensing varies: Llama 3 permits commercial use with restrictions (no using Meta's models to improve competing foundation models); Mistral models use Apache 2.0; Phi-4 uses MIT. Always check the license for your use case.
 
@@ -95,7 +95,7 @@ A model stored in 32-bit (F32) floating point uses 4 bytes per parameter. A 7B-p
 - **Q8:** 8 bits per weight. Roughly 7 GB for a 7B model. Quality loss is minimal and generally imperceptible on standard benchmarks. Good choice when you have the RAM.
 - **Q5 / Q5_K_M:** 5 bits per weight. Roughly 4.5 GB for 7B. Small but measurable quality reduction on difficult reasoning tasks. Good balance for systems with 8 GB RAM.
 - **Q4 / Q4_K_M:** 4 bits per weight. Roughly 4 GB for 7B. Perceptible quality loss on multi-step reasoning and math; often acceptable for summarization, Q&A, and chat. The most common format for laptop deployment.
-- **Q2 / Q3:** 2–3 bits per weight. Significant quality degradation; use only when memory is severely constrained and the task is simple.
+- **Q2 / Q3:** 2-3 bits per weight. Significant quality degradation; use only when memory is severely constrained and the task is simple.
 
 The suffix `_K_M` in GGUF quantization names (used by Ollama and llama.cpp) refers to a mixed-precision scheme: some layers (particularly attention) are kept at higher precision, while feed-forward layers are quantized more aggressively. This recovers quality compared to uniform quantization at the same average bit count.
 
@@ -113,11 +113,11 @@ These are practical minimums for comfortable (not just technically possible) inf
 
 | Model Size | Min RAM (CPU inference) | Min VRAM (GPU inference) | Approx. Speed (tokens/s, CPU) | Approx. GGUF File Size (Q4) | Who Can Run This |
 |---|---|---|---|---|---|
-| 1–3B params | 4 GB RAM | 2–3 GB VRAM | 20–60 tok/s (fast enough for real-time chat) | 1–2 GB | Any student laptop made after 2018 |
-| 7–8B params | 8 GB RAM | 5–6 GB VRAM | 8–20 tok/s (slightly slower than human reading speed) | 4–5 GB | Most student laptops; MacBook with M-series chip runs this well |
-| 13–14B params | 16 GB RAM | 8–10 GB VRAM | 4–10 tok/s (usable for non-interactive tasks) | 8–9 GB | Higher-end laptops and desktops with dedicated GPU |
-| 30–34B params | 32 GB RAM | 20–24 GB VRAM | 1–4 tok/s (slow for interactive use) | 18–20 GB | Workstations with RTX 3090/4090 |
-| 70B params | 64 GB RAM | 40–48 GB VRAM | 0.5–2 tok/s (batch processing only) | 38–42 GB | Servers with dual A100s or large unified-memory Macs (M2 Ultra) |
+| 1-3B params | 4 GB RAM | 2-3 GB VRAM | 20-60 tok/s (fast enough for real-time chat) | 1-2 GB | Any student laptop made after 2018 |
+| 7-8B params | 8 GB RAM | 5-6 GB VRAM | 8-20 tok/s (slightly slower than human reading speed) | 4-5 GB | Most student laptops; MacBook with M-series chip runs this well |
+| 13-14B params | 16 GB RAM | 8-10 GB VRAM | 4-10 tok/s (usable for non-interactive tasks) | 8-9 GB | Higher-end laptops and desktops with dedicated GPU |
+| 30-34B params | 32 GB RAM | 20-24 GB VRAM | 1-4 tok/s (slow for interactive use) | 18-20 GB | Workstations with RTX 3090/4090 |
+| 70B params | 64 GB RAM | 40-48 GB VRAM | 0.5-2 tok/s (batch processing only) | 38-42 GB | Servers with dual A100s or large unified-memory Macs (M2 Ultra) |
 
 Ollama manages model download, quantization selection, and GPU/CPU layer splitting automatically. Common commands:
 
@@ -147,9 +147,9 @@ ollama ps                         # shows currently running models
 
 2. A 7B model running on a CPU at 10 tokens/second takes roughly 30 seconds to generate a 300-token response. A 70B model accessed via API generates the same response in 3 seconds. For an interactive chat application, which is preferable? Does the answer change for a batch processing pipeline running overnight?
 
-   *Hint:* Interactive chat users typically abandon after 15–20 seconds of waiting. Batch processing doesn't have a human waiting — it just runs overnight. Consider both speed and cost (API charges per token; local runs free after hardware is paid for).
+   *Hint:* Interactive chat users typically abandon after 15-20 seconds of waiting. Batch processing doesn't have a human waiting — it just runs overnight. Consider both speed and cost (API charges per token; local runs free after hardware is paid for).
 
-3. Mixtral 8×7B has 46.7B total parameters but activates only ~12.9B per token. Does it fit in the "7–8B" hardware row or the "30–34B" row of the table above? Justify your answer by thinking about what hardware operation determines memory requirements versus compute requirements.
+3. Mixtral 8×7B has 46.7B total parameters but activates only ~12.9B per token. Does it fit in the "7-8B" hardware row or the "30-34B" row of the table above? Justify your answer by thinking about what hardware operation determines memory requirements versus compute requirements.
 
    *Hint:* Memory requirements are set by how much you need to *store* (all 46.7B parameters must be loaded into RAM). Compute requirements are set by how much you need to *calculate* per token (~12.9B active parameters). Which row is about storage and which is about speed?
 
@@ -163,7 +163,7 @@ The table below maps task categories to recommended models. Use it as a starting
 
 | Task | Recommended Model | Why | Alternative | How to Start |
 |---|---|---|---|---|
-| Quick factual Q&A on a known domain | Llama 3.2 3B (with RAG) | Low latency at 30–60 tok/s; RAG compensates for small model's limited parametric knowledge; fits on any laptop | Phi-4 mini (even stronger reasoning at similar size) | `ollama pull llama3.2:3b` |
+| Quick factual Q&A on a known domain | Llama 3.2 3B (with RAG) | Low latency at 30-60 tok/s; RAG compensates for small model's limited parametric knowledge; fits on any laptop | Phi-4 mini (even stronger reasoning at similar size) | `ollama pull llama3.2:3b` |
 | Code generation (Python, JavaScript) | Qwen2.5-Coder 7B | Specialized code training; top HumanEval benchmarks at 7B size; fits in 8 GB RAM | DeepSeek-Coder-V2-Lite (fast, Apache 2.0) | `ollama pull qwen2.5-coder:7b` |
 | Multi-step mathematical reasoning | DeepSeek-R1 distill (7B or 14B) | Explicit chain-of-thought reasoning traces visible in output; significantly outperforms general models of same size on math | Phi-4 14B (strong math, no visible reasoning) | `ollama pull deepseek-r1:14b` |
 | Function calling / tool use for agents | Hermes-3-Llama-3.1-8B | Fine-tuned specifically for JSON function call output format; reliable schema adherence in agentic pipelines | Qwen2.5 7B (has native tool calling built in) | `ollama pull hermes3:8b` |
@@ -227,7 +227,7 @@ This is valid JSON conforming to the tool schema. The agent framework can parse,
 
 Q4 quantization of a 7B language model means:
 
-[(X)] Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4–8x with modest quality loss on complex tasks
+[(X)] Each model weight is stored using 4 bits instead of 16 or 32 bits, reducing file size by roughly 4-8x with modest quality loss on complex tasks
 [( )] The model has been trained on a dataset where only 4 quantiles (25th, 50th, 75th, 100th percentile) of examples are included — "Q4" refers to a training data selection strategy
 [( )] The model runs exactly 4 times faster and outputs identical results — lower precision removes rounding errors that slow down computation without affecting outputs
 [( )] Only the 4 outermost transformer layers are quantized to 1-bit precision; the inner layers remain at full FP16 — this is how mixed-precision quantization works
@@ -242,7 +242,7 @@ In this part, you will pull and compare real models on your own hardware, test t
 
 ## Exercises
 
-1. *Model selection audit.* Using `ollama list` and `ollama pull`, download two models you can run on your available hardware. For the same five prompts (one factual, one creative, one code, one reasoning, one multilingual), run both models and rate the outputs on a 1–5 scale. Report which model wins each task and whether the result matches the recommendations in Model 2.
+1. *Model selection audit.* Using `ollama list` and `ollama pull`, download two models you can run on your available hardware. For the same five prompts (one factual, one creative, one code, one reasoning, one multilingual), run both models and rate the outputs on a 1-5 scale. Report which model wins each task and whether the result matches the recommendations in Model 2.
 
    *What to do:* Choose two models that fit your RAM (use the hardware table). Run each model with `ollama run <model>` and type the same five prompts. Use the same prompt text for both models — do not rephrase.
 
@@ -274,7 +274,7 @@ In this part, you will pull and compare real models on your own hardware, test t
        print(response.choices[0].message.content)
    ```
 
-   *You've succeeded when:* You have a 5×2 comparison table (5 tasks × 2 models) with a 1–5 rating and a one-sentence justification for each cell. Discuss whether the results surprised you.
+   *You've succeeded when:* You have a 5×2 comparison table (5 tasks × 2 models) with a 1-5 rating and a one-sentence justification for each cell. Discuss whether the results surprised you.
 
 2. *Quantization comparison.* Pull the same base model at two quantization levels (e.g., `qwen2.5:7b-instruct-q4_K_M` and `qwen2.5:7b-instruct-q8_0`). Ask a math reasoning problem that requires multi-step arithmetic. Report the answer, any visible reasoning errors, and the generation speed in tokens/second for each quantization. Does the quality difference justify the memory difference for this task?
 
@@ -304,7 +304,7 @@ In this part, you will pull and compare real models on your own hardware, test t
        print(f"Speed: {tokens/elapsed:.1f} tok/s, Total tokens: {tokens}")
    ```
 
-   *You've succeeded when:* You can report the correct answer ($7.60 change), identify whether either model made an arithmetic error, and state whether the speed difference (typically 1.5–2x) justifies the memory difference (7 GB vs. 4 GB) for this task.
+   *You've succeeded when:* You can report the correct answer ($7.60 change), identify whether either model made an arithmetic error, and state whether the speed difference (typically 1.5-2x) justifies the memory difference (7 GB vs. 4 GB) for this task.
 
 3. *Function calling stress test.* Using `hermes3:8b` or a Qwen2.5 model with tool-calling support (`ollama pull qwen2.5:7b`), define a tool with three parameters (one optional). Send 10 queries: 5 that should trigger the tool and 5 that should not. Report the success rate of (a) correct tool invocation when appropriate, (b) correct abstention when the tool is not needed, and (c) schema conformance on successful calls.
 
@@ -339,7 +339,7 @@ In this part, you will pull and compare real models on your own hardware, test t
    ]
    ```
 
-   *You've succeeded when:* You have a 10-row result table showing each query, whether the model called the tool or not, whether that was correct, and (for tool calls) whether the JSON was valid and schema-conformant. A good function-calling model should score 8–10/10.
+   *You've succeeded when:* You have a 10-row result table showing each query, whether the model called the tool or not, whether that was correct, and (for tool calls) whether the JSON was valid and schema-conformant. A good function-calling model should score 8-10/10.
 
 4. *Privacy scenario analysis.* Your institution wants to use an AI assistant to help staff draft responses to student FERPA requests. The assistant must read student record excerpts. Identify every point in a cloud-API-based pipeline where student data would leave institutional control, and describe how a local model deployment with Ollama changes the data flow diagram.
 

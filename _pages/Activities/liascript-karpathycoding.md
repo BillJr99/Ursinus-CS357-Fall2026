@@ -314,7 +314,7 @@ When a human wrote every line, code review, tests, and architecture reviews were
 - **Charter-first architecting.** Fixing the architecture, invariants, and interfaces *before* generation constrains what the agent is even able to build. How does deciding the design up front reduce the blast radius of an AI error, compared to letting the agent invent structure as it goes? (Connect to the charter in `liascript-agentgovernance.md`.)
 - **Verification vs. trust, and accountability.** You will approve a diff you did not fully read. What is the minimum you must verify yourself for that approval to be responsible — and if a defect ships anyway, who is accountable: the person who wrote the spec, the agent, the reviewer who approved, or the team that deployed?
 
-**Deliverable.** Produce a short "quality checklist" (5–7 items) your team would actually apply to an AI-generated pull request, and mark each item as a gate that runs *before* generation, *during* review, or *after* merge.
+**Deliverable.** Produce a short "quality checklist" (5-7 items) your team would actually apply to an AI-generated pull request, and mark each item as a gate that runs *before* generation, *during* review, or *after* merge.
 
 > *Hint: The strongest regimes combine all three levers rather than relying on one. A held-out test the agent cannot see is uncheatable; a charter written first bounds what can go wrong; and a human who verifies the security-critical and irreversible paths — even without reading every line — catches what tests miss. Ask which lever catches which category of failure.*
 

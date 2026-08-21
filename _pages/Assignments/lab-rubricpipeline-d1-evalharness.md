@@ -30,7 +30,7 @@ To generalize the judge validation from the core rubric-pipeline lab into a stan
 - [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
 - [Testing Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md)
 
-This page is **Direction 1** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3–6 hours**.
+This page is **Direction 1** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
 > **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
@@ -168,7 +168,7 @@ import re
 import os
 from typing import Optional
 
-# ── Dependencies ─────────────────────────────────────────────────────────────
+# -- Dependencies -------------------------------------------------------------
 from sentence_transformers import SentenceTransformer, util
 # TODO: import your LLM client for G-Eval judging
 # from openai import OpenAI
@@ -179,7 +179,7 @@ from sentence_transformers import SentenceTransformer, util
 
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# ── Judge prompt template ─────────────────────────────────────────────────────
+# -- Judge prompt template -----------------------------------------------------
 JUDGE_PROMPT = """You are an impartial evaluator for an AI agent's responses.
 
 Score the following response on three dimensions, each from 1 to 5:
@@ -199,7 +199,7 @@ Reply ONLY with a JSON object in this exact format (no other text):
 # Explain your choices in writeup.md.
 
 
-# ── Metric implementations ────────────────────────────────────────────────────
+# -- Metric implementations ----------------------------------------------------
 
 def normalize(text: str) -> str:
     """Lowercase and strip punctuation for exact match / F1."""
@@ -225,7 +225,7 @@ def exact_match(expected: str, actual: str) -> bool:
 
 
 def semantic_similarity(expected: str, actual: str) -> float:
-    """Cosine similarity between sentence embeddings. Returns 0.0–1.0."""
+    """Cosine similarity between sentence embeddings. Returns 0.0-1.0."""
     vecs = embedding_model.encode([expected, actual])
     return float(util.cos_sim(vecs[0], vecs[1]))
 
@@ -256,7 +256,7 @@ def is_refusal(actual: str) -> bool:
     return any(phrase in lower for phrase in refusal_phrases)
 
 
-# ── Main evaluation loop ──────────────────────────────────────────────────────
+# -- Main evaluation loop ------------------------------------------------------
 
 def run_evaluation(dataset_path: str, output_csv: str) -> float:
     with open(dataset_path) as f:

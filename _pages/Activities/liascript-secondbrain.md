@@ -89,14 +89,14 @@ Structure is what turns a pile of notes into a system agents can be trusted insi
 
 ```
 vault/
-├── AGENTS.md           # The agent contract: read completely before acting
-├── LLMMEMORIES.md      # Persistent user context every AI session should know
-├── SYSTEMPROMPT.md     # Standing behavioral and style instructions
-├── raw/                # READ-ONLY inbox: PDFs, transcripts, exports; never modified
-├── wiki/               # The curated, cross-linked knowledge base agents WRITE
-│   └── index.md        # The hub page: links to all topical sections
-└── .obsidian/
-    └── github-sync-metadata.json   # Sync state: plugin-managed, agent-updated
+|-- AGENTS.md           # The agent contract: read completely before acting
+|-- LLMMEMORIES.md      # Persistent user context every AI session should know
+|-- SYSTEMPROMPT.md     # Standing behavioral and style instructions
+|-- raw/                # READ-ONLY inbox: PDFs, transcripts, exports; never modified
+|-- wiki/               # The curated, cross-linked knowledge base agents WRITE
+|   `-- index.md        # The hub page: links to all topical sections
+`-- .obsidian/
+    `-- github-sync-metadata.json   # Sync state: plugin-managed, agent-updated
 ```
 
 The boundaries are the design. `raw/` is a one-way inbox: humans and automations drop source material there and *nobody* ever modifies it, so sources stay pristine and reprocessable. `wiki/` is where all authored knowledge lives, organized into topical subdirectories with wikilinks, and **agents are its primary authors**: their job is synthesis from `raw/` into `wiki/`, not transcription. The three root files are the only files at the root:

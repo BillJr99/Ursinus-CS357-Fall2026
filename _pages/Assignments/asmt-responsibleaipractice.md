@@ -112,7 +112,7 @@ A strong submission, in any direction, has these qualities:
 
 Complete **one** of the five directions below in full. Expand your chosen direction for the full instructions.
 
-- **Direction A: Does It Matter If Machines Understand?** — a 1000–1500 word argumentative essay engaging at least two named philosophical positions and arriving at a defended position with a concrete deployment implication.
+- **Direction A: Does It Matter If Machines Understand?** — a 1000-1500 word argumentative essay engaging at least two named philosophical positions and arriving at a defended position with a concrete deployment implication.
 - **Direction B: Model Cards and Datasheets** — real documentation (a Gebru et al. datasheet and a Mitchell et al. model card) for a system you have used in this course, plus a bias analysis and misuse scenarios with implementable controls.
 - **Direction C: Governance and Policy** — an enforceable eight-section governance document for your final project's agent team, mapped onto the NIST AI RMF and the EU AI Act, and hardened by adversarial peer review. Includes the Policy Clause Workshop used in the Governance and Policy Writing class session.
 - **Direction D: Mapping a Real AI System to the Regulatory Landscape** — classify a real deployed AI system under the EU AI Act, map it onto the NIST AI RMF, identify the sector-specific rules it triggers, and build a structured risk register.
@@ -121,7 +121,7 @@ Complete **one** of the five directions below in full. Expand your chosen direct
 <details markdown="1">
 <summary><strong>Direction A: Does It Matter If Machines Understand?</strong></summary>
 
-Long before large language models existed, philosophers argued over whether any machine could genuinely understand language, experience consciousness, or be held accountable for its actions. Those arguments are no longer merely academic: whether or not the systems you build in this course "really" understand turns out to matter — for how we design them, deploy them, and what obligations we take on when we do. Write a 1000–1500 word essay (excluding references) on **one** of the four prompts below. Choose the prompt you find most genuinely interesting; the best essays come from writers who actually want to answer the question.
+Long before large language models existed, philosophers argued over whether any machine could genuinely understand language, experience consciousness, or be held accountable for its actions. Those arguments are no longer merely academic: whether or not the systems you build in this course "really" understand turns out to matter — for how we design them, deploy them, and what obligations we take on when we do. Write a 1000-1500 word essay (excluding references) on **one** of the four prompts below. Choose the prompt you find most genuinely interesting; the best essays come from writers who actually want to answer the question.
 
 #### The Philosophers in Three Sentences Each
 
@@ -166,7 +166,7 @@ Documentation is not bureaucracy — it is the primary mechanism by which future
 
 #### Part 1: Choose Your Subject (setup)
 
-Select one documentation subject and state your choice in a one-paragraph subject description (100–150 words, naming the specific dataset and model, with one sentence on why you chose it):
+Select one documentation subject and state your choice in a one-paragraph subject description (100-150 words, naming the specific dataset and model, with one sentence on why you chose it):
 
 1. **A pretrained model you ran locally** (Llama 3, Mistral, Hermes, Phi-3, Gemma): write the datasheet for a training dataset it likely used (The Pile, RedPajama, Common Crawl) and the model card for the model itself. Best if you can write from firsthand experience and cite the dataset's published research.
 2. **An agent you built in the course** (coding agent, MCP agent, RAG agent): write the datasheet for the data your agent accesses and a model card treating your agent system as the "model."
@@ -176,7 +176,7 @@ Avoid a subject where you cannot answer at least 5 of the 7 datasheet sections w
 
 #### Part 2: Datasheet for Datasets (Gebru et al.)
 
-Write a datasheet addressing at least **6 of the 7 sections** below, answering the key Gebru et al. (2021) questions for each. Minimum 500 words total; 2–4 substantive sentences per section, not one-line bullets.
+Write a datasheet addressing at least **6 of the 7 sections** below, answering the key Gebru et al. (2021) questions for each. Minimum 500 words total; 2-4 substantive sentences per section, not one-line bullets.
 
 - **Motivation:** For what purpose was the dataset created? Who created it, and on whose behalf? Who funded it?
 - **Composition:** What do the instances represent? How many are there? Is there a label or target? Does it contain data that might be considered confidential or sensitive?
@@ -209,7 +209,7 @@ Do not start by asking "is this model biased?" Start with: "Who uses this model,
 
 #### Part 4: Unintended Use Analysis
 
-Write approximately one page (400–500 words) identifying **3 realistic misuse scenarios**. For each:
+Write approximately one page (400-500 words) identifying **3 realistic misuse scenarios**. For each:
 
 1. **Describe the misuse:** who is the bad actor, what do they want, how do they use your model/agent? Realistic beats theatrical: "a hiring manager deploys the model to screen resumes without disclosing AI use, violating state transparency laws" is more useful than a nation-state supervillain.
 2. **What in the documentation alerts a careful deployer:** point to the specific section and quote or paraphrase the warning.
@@ -314,7 +314,7 @@ In this direction you take the regulatory frameworks from class and apply them t
 
 Choose one real AI system currently deployed. Good choices make or significantly influence decisions about employment, credit, education, healthcare, or justice (Annex III categories); are deployed in or by companies with EU operations; or use a foundation model that might qualify as GPAI. Rich examples: GitHub Copilot, Google Health AI / Med-PaLM, Workday Skills Cloud, COMPAS, ChatGPT Enterprise, an AI hiring screener (HireVue, Pymetrics). A system with interesting regulatory ambiguity beats both the obviously high-risk and the obviously minimal-risk case; "a chatbot on a retail website" is hard to write 400 words about.
 
-Write **two paragraphs** (200–250 words total): (a) what the system does and who the end users are; (b) what data it processes and what decisions it influences or makes. Cite at least one primary source (company documentation, research paper, or investigative reporting).
+Write **two paragraphs** (200-250 words total): (a) what the system does and who the end users are; (b) what data it processes and what decisions it influences or makes. Cite at least one primary source (company documentation, research paper, or investigative reporting).
 
 #### Part 2: EU AI Act Classification
 
@@ -324,7 +324,7 @@ Classify the system using the risk pyramid, completing a tier table (Unacceptabl
 2. An explanation if the system spans multiple tiers
 3. **Three specific compliance obligations** that would apply, with article citations (e.g., "Article 13 transparency: users must be informed they are interacting with an AI system")
 
-If your system is a GPAI model, address the GPAI-tier obligations separately. Approximately 350–450 words including the table.
+If your system is a GPAI model, address the GPAI-tier obligations separately. Approximately 350-450 words including the table.
 
 #### Part 3: NIST AI RMF Mapping
 
@@ -337,7 +337,7 @@ Complete the following table for all four functions, basing the "likely does" co
 | Measure | Define, collect, and interpret risk metrics | | | |
 | Manage | Prioritize and act on risks | | | |
 
-Example row (hypothetical customer-service chatbot): *Govern — has a published responsible-AI policy and a Chief AI Officer; gap — the policy does not specify who is accountable when the chatbot gives incorrect legal or medical information; artifact — a RACI chart naming the team responsible for flagging and reviewing high-stakes outputs.* Plan 3–5 substantive sentences per row across the last three columns (400–500 words total).
+Example row (hypothetical customer-service chatbot): *Govern — has a published responsible-AI policy and a Chief AI Officer; gap — the policy does not specify who is accountable when the chatbot gives incorrect legal or medical information; artifact — a RACI chart naming the team responsible for flagging and reviewing high-stakes outputs.* Plan 3-5 substantive sentences per row across the last three columns (400-500 words total).
 
 #### Part 4: Risk Register
 
@@ -352,7 +352,7 @@ For each row, ask in order: What could go wrong? Who is harmed and how seriously
 
 #### Direction D Deliverable
 
-A single PDF or markdown document containing all four parts, clearly labeled, with citations. In your reflection, also address: if your system is deployed globally, which jurisdiction's rules govern it and how do conflicts get resolved (2–3 sentences)? And: the NIST AI RMF is voluntary in the US — what market incentives (enterprise procurement, liability exposure, reputation) might cause a company to adopt it anyway, and what might cause them to ignore it (1 paragraph)?
+A single PDF or markdown document containing all four parts, clearly labeled, with citations. In your reflection, also address: if your system is deployed globally, which jurisdiction's rules govern it and how do conflicts get resolved (2-3 sentences)? And: the NIST AI RMF is voluntary in the US — what market incentives (enterprise procurement, liability exposure, reputation) might cause a company to adopt it anyway, and what might cause them to ignore it (1 paragraph)?
 
 </details>
 
@@ -365,9 +365,9 @@ Every query you send to a language model consumes electricity, and electricity h
 
 | Operation | Approximate CO2eq |
 |---|---|
-| Single GPT-4-class query (cloud) | 0.001 – 0.01 g CO2eq |
-| Single 7B local model query | 0.0001 – 0.001 g CO2eq |
-| Training a large LLM (one run) | 280 – 550 tonnes CO2eq |
+| Single GPT-4-class query (cloud) | 0.001-0.01 g CO2eq |
+| Single 7B local model query | 0.0001-0.001 g CO2eq |
+| Training a large LLM (one run) | 280-550 tonnes CO2eq |
 | Streaming video, 1 hour | 36 g CO2eq |
 | Driving a gasoline car, 1 mile | 400 g CO2eq |
 | A beef hamburger | 2,500 g CO2eq |
@@ -378,13 +378,13 @@ Pick a value within each range that matches your best estimate of model size and
 
 #### Part 1: Personal Carbon Audit (one week)
 
-**Start logging on Day 1 of the assignment week** — real-time logs beat memory reconstruction, and a gap honestly acknowledged beats reconstructed data presented as complete. For one full week, record every AI interaction: tool and model (if known), one-sentence task description, approximate prompt length (short: <50 words; medium: 50–200; long: >200), approximate response length, and cloud-hosted vs. local. Expect 10–30 rows.
+**Start logging on Day 1 of the assignment week** — real-time logs beat memory reconstruction, and a gap honestly acknowledged beats reconstructed data presented as complete. For one full week, record every AI interaction: tool and model (if known), one-sentence task description, approximate prompt length (short: <50 words; medium: 50-200; long: >200), approximate response length, and cloud-hosted vs. local. Expect 10-30 rows.
 
-At the end of the week, estimate your total CO2eq using the reference values, **showing every conversion step**: "50 medium prompts × 0.005 g/query (GPT-4 midpoint, cloud) = 0.25 g CO2eq" earns proficient; "my AI use produced 2 g" earns beginning. Then compute the CO2eq of three other activities from that same week that are genuinely comparable in frequency (commuting, streaming, meals) and write a one-paragraph reflection on what surprised you most. Analysis and reflection: approximately 250–350 words, plus the log table as an appendix.
+At the end of the week, estimate your total CO2eq using the reference values, **showing every conversion step**: "50 medium prompts × 0.005 g/query (GPT-4 midpoint, cloud) = 0.25 g CO2eq" earns proficient; "my AI use produced 2 g" earns beginning. Then compute the CO2eq of three other activities from that same week that are genuinely comparable in frequency (commuting, streaming, meals) and write a one-paragraph reflection on what surprised you most. Analysis and reflection: approximately 250-350 words, plus the log table as an appendix.
 
 #### Part 2: Project Environmental Analysis
 
-Analyze your final project agent team design through an environmental lens (approximately 400–500 words with visible arithmetic):
+Analyze your final project agent team design through an environmental lens (approximately 400-500 words with visible arithmetic):
 
 1. **Per-session call count:** walk through a typical session step by step as if you were a user — every LLM call for routing, tool use, synthesis, or final response counts; estimate averages for conditional calls; note anything parallelized or cached.
 2. **Per-session CO2eq:** estimate using the reference values, stating every assumption (model size, provider, grid mix).
@@ -393,13 +393,13 @@ Analyze your final project agent team design through an environmental lens (appr
 
 #### Part 3: Redesign for Efficiency
 
-Propose **three concrete, project-specific design changes** that reduce your project's footprint (approximately 350–450 words). For each: name the change precisely ("cache the retrieval agent's output for identical queries within a 30-minute window" — not "use a smaller model," which is a category, not a recommendation); estimate the percentage reduction in CO2eq per session with reasoning; and analyze honestly what capability is sacrificed — if the answer is "none," explain why. At least one change must involve model selection (a specific smaller model for a specific subtask) and at least one must involve system architecture (eliminating or batching calls). Prioritize the three. Start from your Part 2 hot spots and ask: "What would I give up by cutting this?"
+Propose **three concrete, project-specific design changes** that reduce your project's footprint (approximately 350-450 words). For each: name the change precisely ("cache the retrieval agent's output for identical queries within a 30-minute window" — not "use a smaller model," which is a category, not a recommendation); estimate the percentage reduction in CO2eq per session with reasoning; and analyze honestly what capability is sacrificed — if the answer is "none," explain why. At least one change must involve model selection (a specific smaller model for a specific subtask) and at least one must involve system architecture (eliminating or batching calls). Prioritize the three. Start from your Part 2 hot spots and ask: "What would I give up by cutting this?"
 
 #### Part 4: Jevons Paradox Analysis
 
 In 1865, Jevons observed that more efficient steam engines did not reduce Britain's coal consumption — they increased it, because cheaper steam power grew demand faster than efficiency improved. The pattern recurs: fuel-efficient cars led to more driving; efficient bulbs to more lighting. The question for AI: if inference becomes more energy-efficient, does total AI energy use fall (each query costs less) or rise (cheaper queries mean more queries)? Note the paradox is a claim about efficiency, price, and demand — market dynamics, not a moral argument — so state it precisely before arguing about it.
 
-Write a structured analysis (approximately 500–600 words total):
+Write a structured analysis (approximately 500-600 words total):
 
 - **For:** argue that efficiency gains *will* reduce total energy use. This is harder than it looks — the naive version ignores demand. Look for mechanisms that genuinely constrain total demand: regulatory caps, market saturation, substitution effects.
 - **Against:** argue that rebound effects will consume the gains. AI-specific evidence is abundant: inference costs have dropped dramatically since 2020, yet total AI energy use has grown substantially.

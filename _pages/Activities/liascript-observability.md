@@ -84,16 +84,16 @@ Below is the span tree for an agent handling a Retrieval-Augmented Generation (R
 
 ```
 [root span] handle_query   duration: 2340ms
-│   attributes: user_id=u-42, query_hash=a3f9...
-│
-├── [child] retrieve       duration: 410ms
-│       attributes: vector_db=pinecone, top_k=5, db_latency_ms=388
-│
-├── [child] llm_generate   duration: 1710ms
-│       attributes: model=hermes-3, prompt_tokens=1842,
-│                  completion_tokens=317, finish_reason=stop
-│
-└── [child] tool_call      duration: 180ms
+|   attributes: user_id=u-42, query_hash=a3f9...
+|
+|-- [child] retrieve       duration: 410ms
+|       attributes: vector_db=pinecone, top_k=5, db_latency_ms=388
+|
+|-- [child] llm_generate   duration: 1710ms
+|       attributes: model=hermes-3, prompt_tokens=1842,
+|                  completion_tokens=317, finish_reason=stop
+|
+`-- [child] tool_call      duration: 180ms
         attributes: tool_name=search_web, success=true,
                    result_chars=4200
 ```

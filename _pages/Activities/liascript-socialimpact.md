@@ -57,9 +57,9 @@ The table below summarizes four historical automation eras:
 
 | Era | Representative Technology | Jobs Displaced | Jobs Created | Net Effect | Speed of Transition |
 |-----|--------------------------|----------------|--------------|------------|---------------------|
-| **Mechanization** (1760–1850) | Steam power, textile mills | Hand-weavers, artisan crafts who made goods by hand in small workshops | Factory operatives, mechanics, engineers who maintained and operated the new machines | Positive long-run; severe short-run dislocation — entire communities lost their livelihoods over one generation | Slow by modern standards; took decades to diffuse across regions |
-| **Electrification** (1880–1940) | Electric motors, assembly lines | General laborers doing low-skill tasks that electric motors could power more cheaply | Machine operators, electricians, logistics workers coordinating faster supply chains | Broadly positive; but geographically uneven — rural areas and some industrial cities lagged | Moderate; infrastructure buildout took 30–40 years to reach most workers |
-| **Computerization** (1960–2000) | Mainframes, PCs, industrial robots | Bookkeepers, typists, routine manufacturing workers on assembly lines | Software engineers, data analysts, IT support, and new categories of knowledge work that didn't exist before | Positive overall; but hollowed out middle-skill jobs — created a "barbell" labor market with high-skill and low-skill work but fewer middle-wage jobs | Moderate to fast; PC adoption by firms took about 20 years |
+| **Mechanization** (1760-1850) | Steam power, textile mills | Hand-weavers, artisan crafts who made goods by hand in small workshops | Factory operatives, mechanics, engineers who maintained and operated the new machines | Positive long-run; severe short-run dislocation — entire communities lost their livelihoods over one generation | Slow by modern standards; took decades to diffuse across regions |
+| **Electrification** (1880-1940) | Electric motors, assembly lines | General laborers doing low-skill tasks that electric motors could power more cheaply | Machine operators, electricians, logistics workers coordinating faster supply chains | Broadly positive; but geographically uneven — rural areas and some industrial cities lagged | Moderate; infrastructure buildout took 30-40 years to reach most workers |
+| **Computerization** (1960-2000) | Mainframes, PCs, industrial robots | Bookkeepers, typists, routine manufacturing workers on assembly lines | Software engineers, data analysts, IT support, and new categories of knowledge work that didn't exist before | Positive overall; but hollowed out middle-skill jobs — created a "barbell" labor market with high-skill and low-skill work but fewer middle-wage jobs | Moderate to fast; PC adoption by firms took about 20 years |
 | **AI / ML** (2010–present) | LLMs, computer vision, generative AI | Radiologists (some diagnostic tasks), paralegals (document review), coders (boilerplate generation), graphic designers (image generation), customer service agents | Prompt engineers, AI trainers, AI oversight roles, AI product managers, new roles we haven't named yet | Uncertain; early signs suggest faster disruption of white-collar work than prior waves | Potentially very fast — GPT-3 to GPT-4 in two years; firms are adopting at record speed |
 
 ### Critical Thinking Questions
@@ -156,11 +156,11 @@ Governments, firms, and individuals have several tools to respond to labor displ
 
 **Exercise 1: BLS and AI Exposure Research**
 
-*What to do:* Using the Bureau of Labor Statistics Occupational Outlook Handbook (bls.gov/ooh), look up employment projections for three careers you have personally considered. Then find their AI exposure scores on the Felten, Raj, and Seamans (2023) occupational exposure scale or a comparable index. For each occupation, write 2–3 sentences comparing the BLS projection with the AI exposure rating.
+*What to do:* Using the Bureau of Labor Statistics Occupational Outlook Handbook (bls.gov/ooh), look up employment projections for three careers you have personally considered. Then find their AI exposure scores on the Felten, Raj, and Seamans (2023) occupational exposure scale or a comparable index. For each occupation, write 2-3 sentences comparing the BLS projection with the AI exposure rating.
 
 *Starter hint:* Go to bls.gov/ooh and search for careers like "software developer," "data scientist," or "healthcare administrator." For the AI exposure index, search for "Felten Raj Seamans occupational exposure AI" or look for the O*NET-based AI exposure datasets at aiindex.stanford.edu. You are looking for a mismatch: occupations where BLS projects growth but AI exposure is high are the most interesting to analyze.
 
-*You've succeeded when:* You have three occupations, each with a BLS projected growth rate, a reported AI exposure score, and a 2–3 sentence synthesis that identifies whether the BLS projection seems to account for AI exposure or not.
+*You've succeeded when:* You have three occupations, each with a BLS projected growth rate, a reported AI exposure score, and a 2-3 sentence synthesis that identifies whether the BLS projection seems to account for AI exposure or not.
 
 **Exercise 2: Agent Design and Human Judgment Audit**
 
@@ -172,9 +172,9 @@ Governments, firms, and individuals have several tools to respond to labor displ
 
 **Exercise 3: Automation Layoff Case Study**
 
-*What to do:* Research one real company that has publicly attributed layoffs — at least partially — to the adoption of AI automation (examples exist in customer service, media, and financial services sectors). Evaluate the credibility of the claim: Is the timing consistent? Did the company provide data? Are there alternative explanations for the layoffs? Write a 150–200 word assessment.
+*What to do:* Research one real company that has publicly attributed layoffs — at least partially — to the adoption of AI automation (examples exist in customer service, media, and financial services sectors). Evaluate the credibility of the claim: Is the timing consistent? Did the company provide data? Are there alternative explanations for the layoffs? Write a 150-200 word assessment.
 
-*Starter hint:* Look for documented examples: Chegg (online tutoring company) lost significant revenue after ChatGPT launched and cited AI competition in their 2023 earnings calls; IBM announced pausing hiring for roles "that could be replaced by AI" in 2023; Dropbox, Google, and Meta all announced layoffs in 2023–2024 while simultaneously increasing AI investment. For each, ask: Did they say AI caused the layoffs, or did a journalist infer the connection? Is there financial data showing the link? Were there also broader economic factors like rising interest rates or post-pandemic normalization?
+*Starter hint:* Look for documented examples: Chegg (online tutoring company) lost significant revenue after ChatGPT launched and cited AI competition in their 2023 earnings calls; IBM announced pausing hiring for roles "that could be replaced by AI" in 2023; Dropbox, Google, and Meta all announced layoffs in 2023-2024 while simultaneously increasing AI investment. For each, ask: Did they say AI caused the layoffs, or did a journalist infer the connection? Is there financial data showing the link? Were there also broader economic factors like rising interest rates or post-pandemic normalization?
 
 *You've succeeded when:* Your assessment names the company and the specific claim, evaluates at least two pieces of evidence for the claim, identifies at least one alternative explanation, and reaches a reasoned conclusion about the claim's credibility.
 
@@ -194,8 +194,8 @@ Governments, firms, and individuals have several tools to respond to labor displ
 
 ## Further Reading
 
-- Acemoglu, D., and Restrepo, P. (2019). "Automation and New Tasks: How Technology Displaces and Reinstates Labor." *Journal of Economic Perspectives*, 33(2), 3–30.
+- Acemoglu, D., and Restrepo, P. (2019). "Automation and New Tasks: How Technology Displaces and Reinstates Labor." *Journal of Economic Perspectives*, 33(2), 3-30.
 - Felten, E., Raj, M., and Seamans, R. (2023). "Occupational Heterogeneity in Exposure to Generative AI." *SSRN Working Paper*.
 - Acemoglu, D. (2024). "The Simple Macroeconomics of AI." *NBER Working Paper No. 32122*.
-- Autor, D. (2015). "Why Are There Still So Many Jobs? The History and Future of Workplace Automation." *Journal of Economic Perspectives*, 29(3), 3–30.
+- Autor, D. (2015). "Why Are There Still So Many Jobs? The History and Future of Workplace Automation." *Journal of Economic Perspectives*, 29(3), 3-30.
 - Brynjolfsson, E., and McAfee, A. (2014). *The Second Machine Age*. W. W. Norton.

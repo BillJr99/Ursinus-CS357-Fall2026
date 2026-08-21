@@ -38,12 +38,12 @@ blur. Example: "a generic engine plus swappable configuration profiles.">
 
 ```
 <ProjectName>/
-├── START_HERE.md          # entry funnel
-├── CHARTER.md             # this file
-├── .ai/                   # agent handoff state (see .ai/ templates)
-├── docs/                  # roadmap, decisions, rfcs, build/test guides
-├── sources/               # IMMUTABLE inputs — never edited, only read
-└── work/                  # all development happens here
+|-- START_HERE.md          # entry funnel
+|-- CHARTER.md             # this file
+|-- .ai/                   # agent handoff state (see .ai/ templates)
+|-- docs/                  # roadmap, decisions, rfcs, build/test guides
+|-- sources/               # IMMUTABLE inputs — never edited, only read
+`-- work/                  # all development happens here
 ```
 
 Everything under `sources/` is immutable. Development occurs only inside `work/`.
@@ -77,7 +77,7 @@ Every task follows this loop:
 # Autonomous Operation Rules
 
 - Verify state before asserting it. Do not claim an artifact is missing or present without checking the current repository/runtime state first. Treat prior logs and memory as hints only; repository state and fresh command output are authoritative.
-- Long-running builds and CI wrappers must be polled sparingly. Prefer 60–120 second polling intervals unless a command is near its timeout or the user explicitly asks for a status update.
+- Long-running builds and CI wrappers must be polled sparingly. Prefer 60-120 second polling intervals unless a command is near its timeout or the user explicitly asks for a status update.
 - When a session window, context limit, quota limit, or time limit is approaching, stop new work and prepare a clean handoff before failure.
 - Whenever a bug is fixed, create a regression test that would have detected it.
 

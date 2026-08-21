@@ -33,7 +33,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Top-p (nucleus) sampling** | Keeps the smallest set of tokens that together account for at least p of the total probability mass — adapting the candidate set size to the model's confidence at each step. | With p=0.90 and Paris having probability 0.92, only Paris is kept; if the top five tokens are each 0.18, all five are kept. |
 | **Entropy** | A measure of uncertainty in the distribution; high entropy = flat distribution = unpredictable outputs; low entropy = peaked distribution = predictable outputs. | At T=0.1 the entropy is near 0 (nearly certain); at T=2.0 the entropy is high (many tokens are competitive). |
 | **Greedy decoding** | Always picking the single most probable token; equivalent to T=0; deterministic but can produce repetitive or locally-optimal-but-globally-suboptimal outputs. | Setting temperature=0 and getting the same "Paris" every time for the capital-of-France question. |
-| **Repetition penalty** | A technique that reduces the probability of tokens that have already appeared in the output, preventing the model from looping endlessly on common phrases. | Without a repetition penalty, some models at T=0 produce "the the the the…"; a penalty of 1.1 suppresses this. |
+| **Repetition penalty** | A technique that reduces the probability of tokens that have already appeared in the output, preventing the model from looping endlessly on common phrases. | Without a repetition penalty, some models at T=0 produce "the the the the..."; a penalty of 1.1 suppresses this. |
 
 ---
 
@@ -228,8 +228,8 @@ Now that you have empirical data, use it to build a principled parameter guide. 
 
 | Task | Recommended Temperature | Recommended top_p | Recommended top_k | Reasoning |
 |------|------------------------|-------------------|-------------------|-----------|
-| Legal document summarization | 0.1–0.2 | 0.85 | 20 | Faithfulness to source is paramount; variation is a liability. Low T keeps output close to the most-probable (most-supported) summary; tight top_p and top_k prevent hallucinated details. |
-| Marketing tagline generation (10 options) | 1.0–1.3 | 0.95 | 50 | We *want* diverse, creative outputs — the whole point is to explore many options. High T and wide nucleus give the model room to be surprising. We will pick the best option ourselves. |
+| Legal document summarization | 0.1-0.2 | 0.85 | 20 | Faithfulness to source is paramount; variation is a liability. Low T keeps output close to the most-probable (most-supported) summary; tight top_p and top_k prevent hallucinated details. |
+| Marketing tagline generation (10 options) | 1.0-1.3 | 0.95 | 50 | We *want* diverse, creative outputs — the whole point is to explore many options. High T and wide nucleus give the model room to be surprising. We will pick the best option ourselves. |
 | Extracting JSON fields from a form | | | | |
 | Writing a first-draft blog post intro | | | | |
 | Answering student quiz questions with explanation | | | | |
@@ -242,13 +242,13 @@ Now that you have empirical data, use it to build a principled parameter guide. 
 
    > *Hint: With top_p=0.50, if the model is uncertain between two valid JSON field names (e.g., "first_name" vs. "firstName"), one of them might be excluded from the nucleus. The model is forced to pick from the remaining tokens, which might be syntactically invalid. A slightly wider nucleus keeps both plausible options available. The risk of going too narrow is that you exclude correct options when the model is genuinely uncertain about the right answer.*
 
-10. A team member proposes using temperature=0 for *all* tasks in a production agent to ensure reproducibility. What two specific failure modes does this introduce that a moderate temperature (T=0.3–0.5) would mitigate?
+10. A team member proposes using temperature=0 for *all* tasks in a production agent to ensure reproducibility. What two specific failure modes does this introduce that a moderate temperature (T=0.3-0.5) would mitigate?
 
     > *Hint: (1) Repetition loops: at T=0 without a repetition penalty, the model can get stuck generating the same token forever because the highest-probability token never changes. (2) Failure to rephrase: if the exact highest-probability phrasing is ambiguous or does not match the user's context, the model cannot adapt — it always produces the same phrasing. A small temperature allows the model to occasionally deviate from the single most likely token and avoid both of these traps.*
 
 11. You are running a Q&A system over a medical reference database. The system retrieves relevant passages (RAG) and asks the model to answer based only on those passages. For the generation step, you should:
    [( )] Use high temperature (T=1.5) to ensure creative, comprehensive answers
-   [(X)] Use low temperature (T=0.1–0.3) and low top_p to keep the answer close to the retrieved evidence
+   [(X)] Use low temperature (T=0.1-0.3) and low top_p to keep the answer close to the retrieved evidence
    [( )] Use top_k=1 to guarantee the model only repeats the retrieved text verbatim
    [( )] Temperature does not matter when using RAG, since the retrieved context constrains the answer
 
@@ -268,7 +268,7 @@ Your team's final deliverable for today is a one-page parameter guide for three 
 
 For each persona, fill in:
 
-- Temperature range (e.g., 0.8–1.2)
+- Temperature range (e.g., 0.8-1.2)
 - top_p setting
 - top_k setting
 - One scenario where you would go toward the *lower* bound of your temperature range

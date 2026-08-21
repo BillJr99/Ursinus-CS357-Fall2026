@@ -137,7 +137,7 @@ Before demo day, every team verifies and the Evaluator signs off on each item. "
 |------|-------|-------------------|
 | 1. The end-to-end happy path runs from a fresh start in under 3 minutes | Yes / No | Time it, with a teammate watching the clock |
 | 2. The evaluation table (harness, metrics, monolith baseline comparison) is current and in the repository | Yes / No | Link to the file in the repository; confirm the date on the most recent run |
-| 3. The governance document's sections 3 through 7 match what the system actually does today | Yes / No | Read sections 3–7 aloud and check each claim against the current system |
+| 3. The governance document's sections 3 through 7 match what the system actually does today | Yes / No | Read sections 3-7 aloud and check each claim against the current system |
 | 4. One failure case is rehearsed and its disclosure is worded | Yes / No | The Scribe can read the disclosure wording from the triage table |
 | 5. Every teammate can deliver the 90-second explainability story solo | Yes / No | Each teammate delivers it once to the rest of the team before leaving today |
 | 6. Reproducibility: seeds fixed, model versions pinned and listed, setup steps tested by the teammate who did not write them | Yes / No | The teammate who did not write the README has successfully set up the system from scratch |
@@ -194,7 +194,7 @@ The Evaluator signs off only when all six items are Yes with evidence. Partial c
 
 > *Hint:* Consider the analogy to drug side-effect disclosures, which are now legally required on packaging and in ads. Before that regulation, pharmaceutical companies also had strong incentives to minimize discussion of side effects. What changed? Was it a high-profile failure, regulatory action, litigation, or cultural pressure? Which of those vectors seems most plausible for AI — and which actor (government, courts, journalists, or the public) would most likely trigger it?
 
-Write a combined reflection of 150–200 words addressing at least two of the three levels. The Reflector should be prepared to share the team's most surprising piece of gallery feedback with the class.
+Write a combined reflection of 150-200 words addressing at least two of the three levels. The Reflector should be prepared to share the team's most surprising piece of gallery feedback with the class.
 
 [[___ Your reflection here ___]]
 

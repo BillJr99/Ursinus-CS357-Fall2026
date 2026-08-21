@@ -67,10 +67,10 @@ Keep a log file called `pair_log.txt` in your project folder. Each entry looks l
 
 | Part | Task | Estimated time |
 |------|------|----------------|
-| Part 1 | Reproduce and Diagnose | 30–45 min |
-| Part 2 | Fix All Five Bugs | 45–60 min |
-| Part 3 | Add Structured Logging | 30–45 min |
-| Part 4 | Write the Test Suite | 30–45 min |
+| Part 1 | Reproduce and Diagnose | 30-45 min |
+| Part 2 | Fix All Five Bugs | 45-60 min |
+| Part 3 | Add Structured Logging | 30-45 min |
+| Part 4 | Write the Test Suite | 30-45 min |
 | Writeup | Readme and reflection | 30 min |
 
 ---
@@ -628,7 +628,7 @@ Answer these in your writeup (`readme.md`), approximately one paragraph each:
 
 1. **Crash vs. silent failure.** Bug 3 caused a crash. Bugs 1, 2, 4, and 5 caused wrong or missing answers without raising an exception. Which type is harder to debug in a deployed system and why? What instrumentation would catch silent failures automatically?
 
-2. **Role confusion.** Bug 4 caused the model to attribute the tool result to itself. What behavior did you observe in the message history? Write 2–3 sentences explaining why this confused the model's subsequent responses — refer to how the model uses conversational role context to determine what to generate next.
+2. **Role confusion.** Bug 4 caused the model to attribute the tool result to itself. What behavior did you observe in the message history? Write 2-3 sentences explaining why this confused the model's subsequent responses — refer to how the model uses conversational role context to determine what to generate next.
 
 3. **Hardest bug.** Which bug was hardest to find, and what made it hard? Was it the distance between cause and symptom, the absence of a crash, or something else?
 

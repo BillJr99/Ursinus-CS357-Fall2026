@@ -138,7 +138,7 @@ Even a well-architected loop can fail. These controls are not optional — they 
 
    > *Hint: What distinguishes a legitimate re-query from an oscillation loop? Is it the time elapsed? The number of intervening actions? The agent's stated reason for repeating the call? Which of these can be checked programmatically?*
 
-8. A checkpointed agent resumes at step 7 after a crash. Steps 1–6 included writing a file to a cloud storage bucket. When the agent resumes, should it re-verify that the file exists before proceeding, or should it trust the checkpoint's record of what was done? Construct the strongest argument for one approach.
+8. A checkpointed agent resumes at step 7 after a crash. Steps 1-6 included writing a file to a cloud storage bucket. When the agent resumes, should it re-verify that the file exists before proceeding, or should it trust the checkpoint's record of what was done? Construct the strongest argument for one approach.
 
    > *Hint: Consider two scenarios: (a) the file write succeeded and the crash happened after; (b) the file write appeared to succeed but silently failed due to a network issue. Which scenario is more dangerous to assume incorrectly, and does that change your answer?*
 

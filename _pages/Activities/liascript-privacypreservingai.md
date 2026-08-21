@@ -192,7 +192,7 @@ Three approaches to removing PII from text before training or inference:
 
 ---
 
-**Question 6.** You are scrubbing PII from a dataset of customer support chat transcripts before using them for fine-tuning. A customer's message says: "I've been dealing with this since my surgery last March, and my doctor at Phoenixville Hospital said…". A regex for names and Social Security numbers does not flag this message at all. What categories of PII does this sentence contain, and what scrubbing approach would catch them?
+**Question 6.** You are scrubbing PII from a dataset of customer support chat transcripts before using them for fine-tuning. A customer's message says: "I've been dealing with this since my surgery last March, and my doctor at Phoenixville Hospital said...". A regex for names and Social Security numbers does not flag this message at all. What categories of PII does this sentence contain, and what scrubbing approach would catch them?
 
 [[___ Your answer here ___]]
 

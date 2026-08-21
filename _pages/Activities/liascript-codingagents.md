@@ -322,7 +322,7 @@ The paradigm shift raises the stakes on everything this module taught about revi
 
 1. **Design an agent brief.**
 
-   *What to do:* Write a 3–5 sentence task description for a coding agent that is specific enough to be verifiable. Then write an acceptance criteria checklist of at least 4 items the agent's Verify stage could use to determine "done." Trade your brief with another team and critique their criteria for testability.
+   *What to do:* Write a 3-5 sentence task description for a coding agent that is specific enough to be verifiable. Then write an acceptance criteria checklist of at least 4 items the agent's Verify stage could use to determine "done." Trade your brief with another team and critique their criteria for testability.
 
    *Starter hint:* A good task description names the framework, the specific feature, and the expected behavior. For example: "This is a Flask app using SQLAlchemy for the database. Add a password-reset-by-email feature. Users should be able to request a reset link on `/forgot-password`, click the link in email, and set a new password on `/reset-password/<token>`."
 

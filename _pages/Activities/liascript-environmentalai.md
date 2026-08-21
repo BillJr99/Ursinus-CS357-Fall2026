@@ -94,7 +94,7 @@ The central proportional insight of Model 1 is that:
 
 A campus helpdesk deploys a cloud chatbot that handles **3,000 queries per day, every day of a 30-day month**. Using only your intuition first — no arithmetic yet — each team writes down an estimate of the deployment's **monthly electricity use (in kWh)** and **monthly cooling-water use (in liters)**. The Recorder logs both estimates before anyone opens the worked numbers.
 
-Then compute it properly from the figures in this Part: take a ChatGPT-style query at roughly **3 Wh** (about ten times a ~0.3 Wh web search) and cooling water at roughly **1.7 liters per 35 prompts** (the midpoint of the reported 20–50 prompt range). Compare against the worked numbers below.
+Then compute it properly from the figures in this Part: take a ChatGPT-style query at roughly **3 Wh** (about ten times a ~0.3 Wh web search) and cooling water at roughly **1.7 liters per 35 prompts** (the midpoint of the reported 20-50 prompt range). Compare against the worked numbers below.
 
 <details>
 <summary>Worked numbers (open only after both estimates are recorded)</summary>

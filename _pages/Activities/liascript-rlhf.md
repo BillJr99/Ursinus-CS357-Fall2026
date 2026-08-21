@@ -392,6 +392,6 @@ In the next activity we examine how the transformer architecture and attention m
 - Bai et al. "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback." Anthropic (2022).
 - Bai et al. "Constitutional AI: Harmlessness from AI Feedback." Anthropic (2022).
 - Rafailov et al. "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." *NeurIPS* (2023). The DPO paper.
-- Sutton and Barto. *Reinforcement Learning: An Introduction* (2nd ed., 2018). Chapters 1–6 cover MDP, Q-learning, and the exploration-exploitation tradeoff.
+- Sutton and Barto. *Reinforcement Learning: An Introduction* (2nd ed., 2018). Chapters 1-6 cover MDP, Q-learning, and the exploration-exploitation tradeoff.
 
 > **Sources:** This activity draws on material from *AI Engineering from Scratch* (Phases 9, 10, and 18) and the "ML Animated" YouTube series (Reinforcement Learning chapters), supplemented by the primary papers listed above.

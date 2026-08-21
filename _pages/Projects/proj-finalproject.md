@@ -117,7 +117,7 @@ Your final-project grade combines **team output**, **individual contribution**, 
 
 ## Stage 1: Proposal (25 points)
 
-Every proposal (2–3 pages), regardless of direction, must include:
+Every proposal (2-3 pages), regardless of direction, must include:
 
 - **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion.
 - **Stakeholder grounding** integrating your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
@@ -136,7 +136,7 @@ Build in three sprints between the proposal and Demo Day, aligned with in-class 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
 | Sprint 1 (proposal submitted → cross-team proposal critique) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
-| Sprint 2 (proposal critique → gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4–6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
+| Sprint 2 (proposal critique → gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
 | Sprint 3 (gallery walk → Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
 **Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
@@ -182,7 +182,7 @@ Design, build, evaluate, and present a **custom agent team**: cooperating, speci
 
 **Direction A final deliverables:**
 1. **The system:** a repository that runs from a fresh start following the README in under 3 minutes on a machine the team has not configured — configuration externalized to `config.json`, model versions and seeds pinned, exceptions handled with located messages, a test suite with at least one end-to-end test, CI on every push, and a publish step (triggered by the `submission` tag) pushing the artifact to GHCR, Docker Hub, or npm
-2. **The report** (6–8 pages): design rationale tied to named course patterns; evaluation results with the baseline comparison table, failure analysis with transcripts, and re-measurement after mitigation; explainability design; limitations (your "disclose" bucket from the gallery walk, verbatim); a governance summary referencing the committed GOVERNANCE.md; and individual contribution statements documenting the role rotation
+2. **The report** (6-8 pages): design rationale tied to named course patterns; evaluation results with the baseline comparison table, failure analysis with transcripts, and re-measurement after mitigation; explainability design; limitations (your "disclose" bucket from the gallery walk, verbatim); a governance summary referencing the committed GOVERNANCE.md; and individual contribution statements documenting the role rotation
 3. **The presentation** (12 minutes plus questions), meeting the shared Demo Day requirements, plus: the evaluation table (baseline vs. multi-agent, side by side) and the 90-second explainability story (what does a user see when the system makes a decision?)
 4. **The artifacts folder:** final agent design table, final pre-mortem with binding governance clauses noted, all sprint notes, gallery-walk cards received with your triage, and a release-readiness checklist signed by the Evaluator confirming CI passes on the submission SHA, the artifact is live at its published URL, and the README was tested by a stranger
 
@@ -202,9 +202,9 @@ The system must be **specific**: a named, deployed product with a defined purpos
 - Evidence that enough public information exists (at least two independent sources from an initial search)
 
 **Direction B build requirements (the audit):**
-- **Systematic risk analysis** (4–6 pages, at least 8 citations): apply the chosen framework in full — all four NIST functions (GOVERN, MAP, MEASURE, MANAGE), an argued EU AI Act risk-tier classification with applicable obligations, or all ten Montreal Declaration principles each with an evidentiary basis. Every major framework step produces a specific, evidenced finding
+- **Systematic risk analysis** (4-6 pages, at least 8 citations): apply the chosen framework in full — all four NIST functions (GOVERN, MAP, MEASURE, MANAGE), an argued EU AI Act risk-tier classification with applicable obligations, or all ten Montreal Declaration principles each with an evidentiary basis. Every major framework step produces a specific, evidenced finding
 - At least **three failure modes with named mechanisms** — each naming the affected group or input type, the specific erroneous output, and the mechanism — distinguishing risks that have materialized from risks that are foreseeable, and naming accountability gaps specifically (what role is absent, and what decision cannot be made without it)
-- **Governance document** (3–5 pages) a real organization could adopt, passing the third-party test (could an outside auditor verify compliance from evidence?): a **monitoring plan** (each metric with data source, frequency, review threshold, and named owner), an **incident response procedure** (specific incident definition, notification order and timeframes, suspension authority), a **stakeholder communication table** (general public, affected individuals, regulators), and an **appeal process** navigable without a lawyer (initiation, reviewer, evidence, remedies, timeline). Every recommendation must trace to a specific risk finding
+- **Governance document** (3-5 pages) a real organization could adopt, passing the third-party test (could an outside auditor verify compliance from evidence?): a **monitoring plan** (each metric with data source, frequency, review threshold, and named owner), an **incident response procedure** (specific incident definition, notification order and timeframes, suspension authority), a **stakeholder communication table** (general public, affected individuals, regulators), and an **appeal process** navigable without a lawyer (initiation, reviewer, evidence, remedies, timeline). Every recommendation must trace to a specific risk finding
 
 **Direction B final deliverables:**
 1. **The artifact package**, organized so it could be handed to a regulator without modification: the approved proposal, the risk analysis report, the governance document, and the presentation materials
@@ -238,7 +238,7 @@ Build something that outlasts the semester: a published, documented, reusable ag
 
 **Direction C final deliverables:**
 1. **The repository and the published package**: public GitHub repo running from a fresh start, CI green on the submission SHA, and a live registry URL where the artifact is installable
-2. **The report** (3–5 pages): the gap and how it was verified; key design decisions and tradeoffs; property-test results; documentation strategy and the classmate quickstart-test result; license justification; governance rationale; the community engagement summary with evidence; and individual contribution statements
+2. **The report** (3-5 pages): the gap and how it was verified; key design decisions and tradeoffs; property-test results; documentation strategy and the classmate quickstart-test result; license justification; governance rationale; the community engagement summary with evidence; and individual contribution statements
 3. **The presentation** (8 minutes plus questions), meeting the shared Demo Day requirements, plus: property-test results and a 60-second governance statement addressed to the audience as potential users; the partner-facing artifact may be a well-crafted public project page presenting the stakeholder context, what the artifact does, its limits, and how to get it
 
 ---
@@ -286,7 +286,7 @@ Strong work has these qualities:
 - **The specification preceded the artifact — with a timestamp to prove it.** The dated specification file is preserved in its original form, before any agent-generated code touches it. The self-assessment values the original spec even if it was imperfect; discovering and documenting a spec gap is part of the discipline, not a failure.
 - **CI is wired to reality, not a placeholder.** The GitHub Actions workflow runs the project's actual tests (or actual accessibility/content checks for Track B), not `echo "tests pass"`. The evidence portfolio includes links or screenshots of one red run and one green run — the red run proves the CI was not trivially passing before the code worked.
 - **A classmate confirmed it works cold.** The "stranger test" is documented: a classmate's GitHub username or name, what they installed or visited, and their one-line confirmation that it worked from the public record alone. This is not optional — it is what "published" means.
-- **The AI contribution statement is honest and specific.** A weak statement says "I used AI to help build this." A strong statement says: "The agent generated the initial `handler.js` function and all three test files. I wrote the `config.json` schema and the README, and I rewrote the error handling in lines 44–62 of `handler.js` after the agent's version silently swallowed exceptions. I verified every test manually before pushing."
+- **The AI contribution statement is honest and specific.** A weak statement says "I used AI to help build this." A strong statement says: "The agent generated the initial `handler.js` function and all three test files. I wrote the `config.json` schema and the README, and I rewrote the error handling in lines 44-62 of `handler.js` after the agent's version silently swallowed exceptions. I verified every test manually before pushing."
 
 Weak work has CI that passes immediately with no red run, a readme that only an author could follow, and an AI contribution statement that could apply to any project.
 
