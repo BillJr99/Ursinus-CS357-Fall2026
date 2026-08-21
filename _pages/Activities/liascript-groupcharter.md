@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-groupcharter.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-groupcharter.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-groupcharter.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-groupcharter.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -143,7 +143,7 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 
 **Required sections (your charter must have all six):**
 
-1. **Norms**: observable behaviors: communication channel and response-time expectation, meeting cadence and preparation, standup rhythm, agenda/notes discipline (see the [Team Playbook](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread)).
+1. **Norms**: observable behaviors: communication channel and response-time expectation, meeting cadence and preparation, standup rhythm, agenda/notes discipline (see the [Team Playbook](https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread)).
 2. **Decision rules**: how technical and non-technical decisions get made when consensus does not appear: the timebox, the tiebreaker, and where the decision is logged.
 3. **Conflict protocol with named repair moves**: what any member does when frustrated with another (step 1 is never "post sarcasm to the channel"), the four repair moves your team commits to (*name it, own your part, restate the other side, propose a next step*), and who convenes the repair conversation.
 4. **Accountability**: the missed-deadline procedure (what a member does, and by when, if they will miss a commitment), the definition of "done," and how work is rebalanced without takeovers.
@@ -213,4 +213,4 @@ Your team exists and has a constitution. Next on the Project Thread, you point i
 - Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams." *Administrative Science Quarterly*, 44(2), 350-383.
 - CATME Smarter Teamwork: https://www.catme.org/
 - Lave, J., & Wenger, E. (1991). *Situated Learning: Legitimate Peripheral Participation.* Cambridge University Press.
-- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread
+- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread

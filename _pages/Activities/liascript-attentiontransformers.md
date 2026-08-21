@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-attentiontransformers.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-attentiontransformers.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-attentiontransformers.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-attentiontransformers.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Attention and Transformers, Conceptually and by Hand
 
-The embeddings from the *Tokens and Embeddings: How Agents Represent Meaning* activity give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
+The embeddings from the *Tokens, Embeddings, and Attention* activity give each token a meaning vector, and its Model 3 works one attention step by hand; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
 
 ---
 
@@ -261,7 +261,7 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 ## Worked Example: the full $QK^\top$ matrix
 
-We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace. Work through it at home if the single row left you wanting the whole picture.
+We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace. Work through it at home if the single row left you wanting the whole picture.
 
 ## 3. Exercises
 
@@ -311,13 +311,13 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ---
 
--> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+-> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
 
 ---
 
 ## 4. Further Reading
 
-- [Attention notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Attention.ipynb), a runnable companion that computes dot-product attention by hand on a sentence with an ambiguous word, mirroring today's worked example.
+- [Attention notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Attention.ipynb), a runnable companion that computes dot-product attention by hand on a sentence with an ambiguous word, mirroring today's worked example.
 - Vaswani et al. "Attention Is All You Need." *NeurIPS* (2017). The transformer paper.
 - Tom Yeh. *AI by Hand*, attention worksheets (today's models follow this style).
 - Jay Alammar. "The Illustrated Transformer" (online).

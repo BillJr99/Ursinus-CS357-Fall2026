@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agenticopenwebui.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agenticopenwebui.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenticopenwebui.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -16,7 +16,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 You already run OpenWebUI as a chat window over Ollama. Today we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive. The arc: **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
 
-This is a **supplemental tutorial**: it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction2).
+This is a **supplemental tutorial**: it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2).
 
 ---
 
@@ -122,9 +122,9 @@ Note the shape: it is the OpenAI `/v1/chat/completions` request format you met i
 
 The hands-on core of this tutorial is two Colab-ready notebooks from the course repository. Work through them in order; each is fully commented and runs against your local stack (or any OpenAI-compatible endpoint you point it at).
 
-**Notebook 1: [OpenWebUI API Client with Upload](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb):** the single-agent plumbing. It builds an OpenAI-compatible client in plain `requests`, configures a system prompt and user query, uploads a document via the `/v1/files` endpoint *with a graceful fallback* (if the server does not accept the upload, the notebook parses the document to text locally and injects it into the prompt as context instead), then invokes `/v1/chat/completions` and saves the response artifacts. The engineering lesson is the fallback pattern: the notebook degrades from server-side RAG to client-side context injection without changing the rest of the pipeline.
+**Notebook 1: [OpenWebUI API Client with Upload](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb):** the single-agent plumbing. It builds an OpenAI-compatible client in plain `requests`, configures a system prompt and user query, uploads a document via the `/v1/files` endpoint *with a graceful fallback* (if the server does not accept the upload, the notebook parses the document to text locally and injects it into the prompt as context instead), then invokes `/v1/chat/completions` and saves the response artifacts. The engineering lesson is the fallback pattern: the notebook degrades from server-side RAG to client-side context injection without changing the rest of the pipeline.
 
-**Notebook 2: [OpenWebUI Multi-Agent Goal Workflow](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb):** the multi-agent orchestration. It defines agent *roles* as system prompts, a **blackboard** dictionary as shared memory, and an **orchestrator** loop that pursues a goal by making successive chat-completion calls (planning, executing steps, recording results on the blackboard, and critiquing), then exports the full run for inspection. Every "agent" is the same OpenWebUI endpoint wearing a different system prompt; the intelligence of the *system* lives in the Python routing loop.
+**Notebook 2: [OpenWebUI Multi-Agent Goal Workflow](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb):** the multi-agent orchestration. It defines agent *roles* as system prompts, a **blackboard** dictionary as shared memory, and an **orchestrator** loop that pursues a goal by making successive chat-completion calls (planning, executing steps, recording results on the blackboard, and critiquing), then exports the full run for inspection. Every "agent" is the same OpenWebUI endpoint wearing a different system prompt; the intelligence of the *system* lives in the Python routing loop.
 
 ### Critical Thinking Questions
 
@@ -215,7 +215,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
    > *Hint: Which text becomes each call's context; how the plan is split into steps; how many steps run; when the loop terminates; what "begins with REVISE" means. These are deterministic and inspectable, unlike the model's generations. Recall the debugging module: check the deterministic scaffolding before blaming the stochastic component.*
 
-8. The Worker's system prompt says "Execute exactly the step you are given; do not do other steps." Connect this instruction to the small-context-window principle from the auto-research pipeline tutorial: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
+8. The Worker's system prompt says "Execute exactly the step you are given; do not do other steps." Connect this instruction to the small-context-window principle from *Memory and the Small Context Window Principle*: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
 
    > *Hint: With the whole plan in context, the model tends to do a shallow pass over everything, the same dilution as one-big-prompt research. One step per call keeps each generation focused and makes the blackboard entries attributable to a step.*
 
@@ -234,11 +234,11 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
    - *What to do:* Make each mistake deliberately and capture status codes and bodies. Build yourself a one-paragraph troubleshooting table.
    - *You've succeeded when:* You can identify from an error response alone which of the three mistakes a classmate made.
 
-2. *Notebook run-through.* Complete [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) with a document of your own (a course reading, a README). Force the fallback path by pointing the upload at a bad endpoint, and compare the two answers you get for the same question about the document.
+2. *Notebook run-through.* Complete [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) with a document of your own (a course reading, a README). Force the fallback path by pointing the upload at a bad endpoint, and compare the two answers you get for the same question about the document.
 
    - *You've succeeded when:* You can state one concrete difference between the server-RAG answer and the context-injection answer, and explain it using CTQ 4.
 
-3. *Tool + workflow integration.* Register a simple tool in OpenWebUI (e.g., a `get_current_time` or a word-count tool from the Tool Use activity), enable it for your model, then extend the Part III skeleton (or [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)) with a goal that requires the tool.
+3. *Tool + workflow integration.* Register a simple tool in OpenWebUI (e.g., a `get_current_time` or a word-count tool from the Tool Use activity), enable it for your model, then extend the Part III skeleton (or [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)) with a goal that requires the tool.
 
    - *Starter hint:* In OpenWebUI, a tool is a Python class whose typed methods and docstrings become the schema. Whether tools fire on API calls depends on the model's tool support and the server's function-calling settings; observing *whether and when* the tool fires is the point of the exercise.
    - *You've succeeded when:* You can show one workflow run where the tool executed (visible in the response or server logs) and state which tier executed it.
@@ -261,7 +261,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
 ## -> Coming Up Next
 
-You now have two complementary orchestration substrates: shell pipelines over raw Ollama (the auto-research tutorial) and Python workflows over an agent frontend. The agent frameworks module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
+You now have an orchestration substrate that is neither raw shell nor a framework: Python workflows driving an agent frontend, with every step visible in a chat transcript. The *Agent Frameworks* module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
 
 ---
 
@@ -270,8 +270,8 @@ You now have two complementary orchestration substrates: shell pipelines over ra
 - OpenWebUI documentation: Tools, Functions (pipes and filters), and Knowledge: https://docs.openwebui.com
 - OpenWebUI API reference (OpenAI-compatible endpoints, files, and RAG): https://docs.openwebui.com/getting-started/api-endpoints
 - Ollama OpenAI compatibility documentation: https://github.com/ollama/ollama/blob/main/docs/openai.md
-- Hands-on notebooks from this tutorial: [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) and [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)
-- Course lab: [Compose and Verify a Local Agent Stack](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction2)
+- Hands-on notebooks from this tutorial: [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) and [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)
+- Course lab: [Compose and Verify a Local Agent Stack](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2)
 
 > **From the MCP and APIs session.** Power Automate is a second, no-code route to the same integration problem MCP solves; it was moved here so the MCP session could stay on the protocol itself.
 

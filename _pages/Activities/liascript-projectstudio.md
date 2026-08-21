@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-projectstudio.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-projectstudio.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Project Studio and Gallery Walk
 
-With the *Explainability and Human-Centric Design* heuristics fresh, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
+With the bias, explainability, and governance work of the last three weeks behind you, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog. The arc: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
 
 ---
 
@@ -200,7 +200,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team; it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
+-> Coming Up Next: Demo Day. Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team; it turns today's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 

@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-codingagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-codingagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -86,50 +86,66 @@ In this part you get your agent running against a real repository, and then lear
 
 ## 1. Recap and Recovery: Install, Configure, Run
 
-You did this in *Your AI Workbench*. This section is here so that a broken setup costs you two minutes today instead of the session. If `opencode --version` answered, skim to *Run: the loop that actually works* and start there; the habits in that subsection are the part of this section that is new.
-
-### Install one (not all)
+You did this in *Your AI Workbench*, Step 8. This section exists so a broken setup costs you two minutes rather than the session. Run the check; if it passes, skip to *The habits that make this work*, which is the part that is new.
 
 ```bash
-# Pick ONE to start.
-npm install -g @anthropic-ai/claude-code    # Claude Code
-npm install -g opencode-ai                  # opencode
-npm install -g @openai/codex                # Codex CLI
-pip install aider-chat                      # Aider (Python)
+opencode --version
+git -C ~/cs357-work status
+curl -s http://localhost:11434/api/tags | head -c 80
 ```
 
-Prefer not to install anything on your laptop? The **[Docker module](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md)** builds a `course-agent` image that carries the CLI, so your host stays clean and the agent's blast radius is one mounted folder.
-
-### Configure: point it somewhere, tell it the rules
+**If `opencode` is missing**, reinstall and put it on your `PATH`:
 
 ```bash
-export ANTHROPIC_API_KEY="sk-ant-..."     # or OPENAI_API_KEY / GEMINI_API_KEY
-# or route everything through the local gateway instead:
-export ANTHROPIC_BASE_URL="http://localhost:4000"
+curl -fsSL https://opencode.ai/install | bash
+export PATH="$HOME/.local/bin:$PATH"
 ```
 
-Then write the project instruction file (`CLAUDE.md`, `AGENTS.md`, or `opencode.json`) with the test command and the off-limits paths. An agent that knows how to verify its own work is a different tool from one that does not.
-
-### Run: the loop that actually works
+**If it starts but finds no model**, the config did not survive. Rewrite it:
 
 ```bash
-cd ~/projects/mylang        # the working directory IS the agent's world
-git status                  # start clean, so the diff at the end is only the agent's work
-claude                      # or: opencode / codex / aider
+mkdir -p ~/.config/opencode
+cat > ~/.config/opencode/config.json <<'JSON'
+{
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": { "baseURL": "http://host.docker.internal:11434/v1" },
+      "models": { "llama3.2": { "name": "llama3.2" } }
+    }
+  }
+}
+JSON
 ```
 
-Give it something small and checkable first:
+Outside the container, use `http://localhost:11434/v1`. **No API key anywhere**: everything today runs against the model on your own machine, which is why this session costs nothing and works offline.
 
-> "Add a `--verbose` flag to `cli.py` that prints each token as it is scanned. Run `pytest -q` and make sure it still passes."
+> **Other tools in this family** (Claude Code, Codex CLI, Gemini CLI, Aider, pi) install differently and mostly want a provider key. The going-further tutorial on agentic CLIs compares them. Today we all drive the same one so that when something breaks, the person next to you can help.
 
-Then **read the diff**. Not the summary, the diff:
+### The habits that make this work
+
+Three, and they matter more than the tool:
 
 ```bash
-git diff                    # what actually changed
-git add -p                  # stage it hunk by hunk, rejecting what you did not want
+cd ~/cs357-work        # the working directory IS the agent's world
+git status             # start clean, so the diff at the end is only the agent's work
+opencode
 ```
 
-If the change is wrong, `git checkout -- .` costs you nothing. This is why we start every agent session from a clean git tree: it converts "did the agent break something?" from an act of faith into a two-second check.
+**Start from a clean tree.** This is what converts "did the agent break something?" from an act of faith into a two-second check.
+
+**Give it something small and checkable first.** Not "improve my code." Something with a done condition you could verify yourself:
+
+> "Add a `--verbose` flag to `hello_agent.py` that prints the full request body before sending it. Do not change anything else."
+
+**Read the diff, not the summary.** The agent's prose describes what it believes it changed. `git diff` shows what it changed. Those are different documents.
+
+```bash
+git diff               # what actually changed
+git add -p             # stage it hunk by hunk, rejecting what you did not want
+```
+
+If the change is wrong, `git checkout -- .` costs you nothing, which is the whole reason for the clean tree.
 
 You started a coding agent from your home directory instead of the project folder. What is the practical consequence?
 
@@ -160,8 +176,11 @@ Here is the working pattern I use daily, and it is worth adopting early because 
 
 ```bash
 # 1. The task becomes an issue (agents can read it by number)
-gh issue create --title "Lexer drops trailing newline" \
-  --body "Repro: echo 'x' | ./mylang. Expected NEWLINE token; got EOF. Acceptance: test added."
+gh issue create --title "Agent loop ignores the step budget on a malformed action" \
+  --body "Repro: give agent.py a goal that makes the model emit calc( with no closing paren.
+Expected: the parse fails, the step counter still increments, the budget stops it.
+Actual: the regex misses, nothing is appended to memory, and it spins until killed.
+Acceptance: a test asserting the loop exits at max_steps on unparseable output."
 
 # 2. Point the agent at the issue
 claude "Fix issue #42. Read it with 'gh issue view 42', write a failing test first, then fix it."
@@ -384,7 +403,9 @@ Read what comes back. If the plan proposes editing the tests, or inventing a cor
 Good. Implement it. Do not modify the tests. Do not modify CORPUS.
 ```
 
-> **You've succeeded when** you have a plan you approved in your scrollback, `pytest` is green, you did not touch the tests, and `git diff` shows changes confined to the body of `search_memory` and any helpers it needed. If you had to reject a plan first, say so in your notes; that rejection is the most valuable thing that happened in this exercise.
+> **You've succeeded when** you have a plan you approved in your scrollback, `pytest` is green, you did not touch the tests, and `git diff` shows changes confined to the body of `search_memory` and any helpers it needed.
+
+> **Start the run, then keep reading.** `llama3.2` is a 3-billion-parameter model on your laptop, and implementing five tests' worth of behavior may take it several minutes and more than one attempt. That is the honest capability of a small local model, not a broken setup. Kick off the implementation, then read Part III while it works, and come back to the result. If it is still flailing after two attempts, shrink the ask to one failing test and write down what you changed: *the size of instruction this model can actually follow* is a real finding, and it is worth more than a green test suite you got by luck. If you had to reject a plan first, say so in your notes; that rejection is the most valuable thing that happened in this exercise.
 
 ### Critical Thinking Questions
 
@@ -581,13 +602,11 @@ A coding agent produces an implementation that passes all five acceptance-criter
 
 ---
 
--> Coming Up Next: We will zoom in on one of the most consequential actions a coding agent can take: writing to and reading from the filesystem. The next activity examines how to constrain that access so that a mistake stays recoverable.
-
 ---
 
 ---
 
--> Coming Up Next: You can now delegate a coding task and audit what came back. In *Hallucinations and Evaluating Agent Outputs* we turn the same skeptical eye on a model's *claims* rather than its code, and build the golden set that becomes your regression harness for the rest of the semester. Keep `spec_search_memory.py`; the habit of writing the check before the work is the through-line of the next several weeks.
+-> Coming Up Next: You watched the agent produce a different plan each time you asked, and you pinned `temperature` in Week 1 to stop exactly that. Next session, *Why Different Answers Every Time? Sampling, Temperature, and Generation*, explains where the variation comes from, which is also the reason a schema your parser depends on has to be constrained rather than requested. Keep `spec_search_memory.py`: writing the check before the work is the through-line of the next several weeks.
 
 
 # Part V: Going Further (self-paced)

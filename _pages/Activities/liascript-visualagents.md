@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-visualagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-visualagents.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-visualagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-visualagents.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Visual Agent Building with Langflow
 
-Every pattern we have coded by hand, through the *Agent Teams: Specialists over Monoliths* activity and everything before it (pipelines, RAG, routers, agents with tools), exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
+Every pattern coded by hand up through *Orchestration and Agent Teams* (pipelines, RAG, routers, specialists, agents with tools), exists as a **drag-and-drop component** in visual builders such as **Langflow**. Today we rebuild a known system visually, not to abandon code, but to learn when each medium wins, and to gain a shared vocabulary for collaborating with non-programmers, which your project presentations will require. The arc: **why visual builders exist $\rightarrow$ rebuilding our RAG bot in Langflow $\rightarrow$ reading a flow as an architecture diagram $\rightarrow$ the limits of low-code**.
 
 ---
 

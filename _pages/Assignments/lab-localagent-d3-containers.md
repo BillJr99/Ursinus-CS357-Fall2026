@@ -31,8 +31,8 @@ In this lab, you and your partner will take a deliberately insecure AI agent con
 
 Before beginning, make sure you have completed (or are ready to reference) both prerequisite activities:
 
-- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md): covers images, containers, volumes, and basic compose syntax
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md): covers building a local LLM-calling agent and running it in Docker
+- [Docker from Zero Activity]({{ site.activity_url }}liascript-docker.md): covers images, containers, volumes, and basic compose syntax
+- [The Local Agent Stack Activity]({{ site.activity_url }}liascript-agentstack.md): covers building a local LLM-calling agent and running it in Docker
 
 If you are fuzzy on any of the following terms, re-read the relevant activity before continuing: image vs. container, bind mount vs. volume, `docker compose up`, `docker exec`, environment variable injection.
 

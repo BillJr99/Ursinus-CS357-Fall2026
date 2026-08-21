@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-promptengineering.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-promptengineering.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-promptengineering.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -332,7 +332,7 @@ In this part, you will write and red-team real system prompts: first designing o
 
 ---
 
--> Coming Up Next: We have been calling a model running somewhere on a server. In the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity, we take full control by installing and running AI models entirely on our own hardware: no cloud, no per-token fees, and no data leaving our machines.
+-> Coming Up Next: You have been writing instructions for a model whose insides are still a black box. In the *Tokens, Embeddings, and Attention* activity we open it: how your prompt becomes numbers, how those numbers carry meaning, and how each word's meaning is bent by the words around it. Everything you tuned by feel today has a mechanism underneath, and next session is where you meet it.
 
 ## 7. Further Reading
 

@@ -51,21 +51,21 @@ info:
     - rtitle: "Mitchell, Artificial Intelligence: A Guide for Thinking Humans (2019), Chapter 8"
       rlink: "https://melaniemitchell.me/aibook/"
     - rtitle: "The Philosophy and Psychology of Artificial Intelligence Activity (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-philosophyai.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-philosophyai.md"
     - rtitle: "Data Cards Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-datacards.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
     - rtitle: "Bias in Data Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
     - rtitle: "Governance Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-governance.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
     - rtitle: "NIST AI Risk Management Framework"
       rlink: "https://www.nist.gov/itl/ai-risk-management-framework"
     - rtitle: "EU AI Act, Annex III"
       rlink: "https://artificialintelligenceact.eu/"
     - rtitle: "AI Regulation Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-regulation.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-regulation.md"
     - rtitle: "Ethical Frameworks Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
     - rtitle: "Strubell et al., Energy and Policy Considerations for Deep Learning in NLP (2019)"
       rlink: "https://arxiv.org/abs/1906.02629"
     - rtitle: "Patterson et al., Carbon Emissions and Large Neural Network Training (2021)"
@@ -293,7 +293,7 @@ Use this structural skeleton (you may add subsections but may not omit a numbere
 ```
 # Governance Document: [System Name]
 
-> **This page is Component 2 of the Responsible AI Capstone, not a separate assignment.** It has no deadline of its own. Its rubric contributes 100 of the capstone's 200 points, and it is submitted together with Component 1. See **[Responsible AI Capstone](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAI)** for the due date and the submission instructions.
+> **This page is Component 2 of the Responsible AI Capstone, not a separate assignment.** It has no deadline of its own. Its rubric contributes 100 of the capstone's 200 points, and it is submitted together with Component 1. See **[Responsible AI Capstone]({{ site.baseurl }}/Assignments/ResponsibleAI)** for the due date and the submission instructions.
 >
 > Your argument here must be grounded in the findings you produced in Component 1 - the audit you ran, not a study you read.
 

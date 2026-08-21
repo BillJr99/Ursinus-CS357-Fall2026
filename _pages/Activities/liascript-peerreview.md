@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-peerreview.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-peerreview.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-peerreview.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Structured Peer Review: SQR Cards and Team Check-Ins
 
-Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process. Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*. We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
+Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process. Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*. We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
 
 ---
 
@@ -208,4 +208,4 @@ You will use SQR cards for real at the Stakeholder Brief exchange on the course 
 - Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams." *Administrative Science Quarterly*, 44(2), 350-383.
 - AAC&U VALUE Rubrics (Teamwork; Written Communication): https://www.aacu.org/initiatives/value
 - WPI SWEET Center Team Contract Exercise, Worcester Polytechnic Institute (companion protocol from the Team Charter activity)
-- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread
+- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread

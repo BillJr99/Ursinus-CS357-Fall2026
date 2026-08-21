@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentcasestudies.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentcasestudies.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agentcasestudies.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentcasestudies.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -212,7 +212,7 @@ Think of editing a printed book where every chapter references page numbers in t
 
 ---
 
--> Coming Up Next: In the *Training Data and Bias* activity, we zoom out from individual agent systems to the training data and design choices that shape every model's behavior, and examine how bias enters the pipeline at every stage, from data collection through deployment.
+-> Coming Up Next: The cases above are the last new material of the semester. From here the schedule turns to your own system: *Project Studio and Gallery Walk*, then final integration and demo rehearsal. Bring the failure mode from today that most resembles something your own project could do, because the gallery walk is where another team gets to spot it before Demo Day does.
 
 ## Further Reading
 

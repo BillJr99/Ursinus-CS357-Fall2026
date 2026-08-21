@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-humanintheloop.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-humanintheloop.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-humanintheloop.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -286,4 +286,4 @@ An agent is given a task that runs overnight as a batch job: process 1,000 custo
 - Anthropic. "Constitutional AI: Harmlessness from AI Feedback." https://arxiv.org/abs/2212.08073
 - Ouyang et al. "Training Language Models to Follow Instructions with Human Feedback." *NeurIPS* (2022). https://arxiv.org/abs/2203.02155
 - Shneiderman, B. "Human-Centered AI." Oxford University Press (2022). Chapter 4: Trust and Oversight.
-- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md), a production implementation of the gates, escalation, and governed autonomy this activity introduces.
+- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md), a production implementation of the gates, escalation, and governed autonomy this activity introduces.
