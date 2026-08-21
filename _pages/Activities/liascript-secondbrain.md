@@ -28,38 +28,38 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text files, they work with any other tool — no proprietary format lock-in. | Your vault might contain notes from class, links between ideas, summaries of papers, and context files that agents read before working with your data. |
+| **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text files, they work with any other tool; no proprietary format lock-in. | Your vault might contain notes from class, links between ideas, summaries of papers, and context files that agents read before working with your data. |
 | **Personal Access Token (PAT)** | A secret string that acts as a password for GitHub API calls. It grants specific permissions (like reading and writing a single repository) without sharing your full GitHub account credentials. | Your sync plugin uses the PAT to push note changes to GitHub; your agent uses it to pull the vault and write new wiki pages. |
-| **Gitless sync** | A sync mechanism that uses the GitHub REST API directly to push and pull files, rather than running `git` commands locally. No `.git` folder, no merge conflicts, one consistent state machine. | The GitHub Gitless Sync Obsidian plugin translates every file save into an API call — your phone and your laptop sync the same vault without ever needing git installed. |
+| **Gitless sync** | A sync mechanism that uses the GitHub REST API directly to push and pull files, rather than running `git` commands locally. No `.git` folder, no merge conflicts, one consistent state machine. | The GitHub Gitless Sync Obsidian plugin translates every file save into an API call; your phone and your laptop sync the same vault without ever needing git installed. |
 | **AGENTS.md contract** | A file at the root of the vault that tells any agent exactly how to behave: which folders it can read, which it can write, how to handle sources, and what metadata to update. Because the file travels inside the repo, every agent reads it automatically. | An agent that reads AGENTS.md learns that `raw/` is read-only, that `wiki/` is where it should write, and that it must update `github-sync-metadata.json` in the same commit as any file it creates. |
-| **Blob SHA** | The specific hash value Git uses to uniquely identify file contents. It is computed differently from a plain SHA-1 hash — Git prefixes the content with `blob {bytecount}\0` before hashing. | When an agent writes a file to the vault, it may need to compute the blob SHA to correctly update the sync metadata file. |
+| **Blob SHA** | The specific hash value Git uses to uniquely identify file contents. It is computed differently from a plain SHA-1 hash; Git prefixes the content with `blob {bytecount}\0` before hashing. | When an agent writes a file to the vault, it may need to compute the blob SHA to correctly update the sync metadata file. |
 | **Zone boundary** | A deliberate structural rule about which areas of the vault serve which purpose and who is allowed to write to them. Zone boundaries are what make the vault safe to open to agents. | The `raw/` zone is read-only for everyone including agents; the `wiki/` zone is write-enabled for agents; the `.obsidian/` zone is off-limits except for the specific metadata file. |
 
 ---
 
 # Part I: The Architecture
 
-In this part, you will understand why a single versioned vault — rather than five disconnected tool silos — is the right architectural choice for persistent AI context, and what each component of the system contributes to that goal.
+In this part, you will understand why a single versioned vault (rather than five disconnected tool silos) is the right architectural choice for persistent AI context, and what each component of the system contributes to that goal.
 
-## Model 1: Why This Architecture — and What Each Piece Does
+## Model 1: Why This Architecture, and What Each Piece Does
 
-Every AI tool you use today maintains its own context about you. Your coding assistant knows your recent files. Your chat AI knows this conversation. Your email AI knows your last few messages. None of them know what the others know, and none of them persist that knowledge reliably across sessions. The result is that you re-explain yourself constantly — to tools that could, in principle, already know.
+Every AI tool you use today maintains its own context about you. Your coding assistant knows your recent files. Your chat AI knows this conversation. Your email AI knows your last few messages. None of them know what the others know, and none of them persist that knowledge reliably across sessions. The result is that you re-explain yourself constantly, to tools that could, in principle, already know.
 
-The second-brain architecture solves this by making your accumulated context a first-class, versioned artifact that any agent can read and write. Think of it the way a new doctor reviews your full medical history before your appointment — you don't have to explain everything from scratch because your record travels with you and is maintained by every provider who sees you.
+The second-brain architecture solves this by making your accumulated context a first-class, versioned artifact that any agent can read and write. Think of it the way a new doctor reviews your full medical history before your appointment; you don't have to explain everything from scratch because your record travels with you and is maintained by every provider who sees you.
 
 The design has four pieces, each independently replaceable:
 
-- **Obsidian** is a free note application that edits a folder of plain Markdown files (a *vault*) with wikilinks, graph view, and mobile apps. Crucially, it imposes no proprietary format — the vault is just files, so any other tool can read and write them too.
+- **Obsidian** is a free note application that edits a folder of plain Markdown files (a *vault*) with wikilinks, graph view, and mobile apps. Crucially, it imposes no proprietary format; the vault is just files, so any other tool can read and write them too.
 - **GitHub** hosts the vault as a private repository, providing versioning (you can see what changed and when), an API surface agents can reach from anywhere, and a webhook surface for automation.
 - **The GitHub Gitless Sync plugin** (a community Obsidian plugin) bridges the two *without git*: it translates every file operation into GitHub REST API calls, so there is no `.git` directory, no merge conflicts from stray command-line operations, and identical behavior on desktop and phone.
 - **Your agents** complete the loop: they read the vault for context and, following a contract you will write, push changes that appear in Obsidian on the next sync.
 
 | System Component | What It Replaces | Why This Choice | What You Lose If You Skip It |
 |---|---|---|---|
-| **Obsidian as editor** | Five different note apps, each in a different format that agents can't read. | Plain Markdown is universal — any agent, any language, any tool can read and write it without a special library. | Interoperability — your notes are locked in a proprietary format that agents cannot access. |
-| **GitHub as host** | Local storage that agents can only reach if they're on the same machine. | GitHub provides a versioned REST API that agents on any machine, in any container, can reach with a token. | Portability and versioning — no history, no access from remote agents, no audit trail of changes. |
-| **Gitless sync plugin** | Running `git` commands on every device and handling merge conflicts manually. | One sync mechanism, owned by one plugin, means one consistent state machine instead of three fighting ones. | Simplicity — without the plugin, every device needs git installed and you'll deal with merge conflicts between your phone and laptop. |
-| **AGENTS.md contract** | Per-tool configuration of what each agent is allowed to do. | The contract travels inside the repository — every agent reads it automatically, requiring zero per-tool configuration. | Safety and consistency — without a contract, agents may write anywhere in the vault, including overwriting your source files. |
+| **Obsidian as editor** | Five different note apps, each in a different format that agents can't read. | Plain Markdown is universal: any agent, any language, any tool can read and write it without a special library. | Interoperability: your notes are locked in a proprietary format that agents cannot access. |
+| **GitHub as host** | Local storage that agents can only reach if they're on the same machine. | GitHub provides a versioned REST API that agents on any machine, in any container, can reach with a token. | Portability and versioning: no history, no access from remote agents, no audit trail of changes. |
+| **Gitless sync plugin** | Running `git` commands on every device and handling merge conflicts manually. | One sync mechanism, owned by one plugin, means one consistent state machine instead of three fighting ones. | Simplicity: without the plugin, every device needs git installed and you'll deal with merge conflicts between your phone and laptop. |
+| **AGENTS.md contract** | Per-tool configuration of what each agent is allowed to do. | The contract travels inside the repository; every agent reads it automatically, requiring zero per-tool configuration. | Safety and consistency — without a contract, agents may write anywhere in the vault, including overwriting your source files. |
 
 ### Critical Thinking Questions
 
