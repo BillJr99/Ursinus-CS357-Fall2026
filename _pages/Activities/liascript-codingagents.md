@@ -18,7 +18,7 @@ In *Your AI Workbench* you installed **opencode**, pointed it at the model on yo
 
 A **coding agent** is not a smarter autocomplete. When an editor suggests the next line, it reads your cursor position and offers a completion you accept or reject. A coding agent reads your repository, takes a goal ("add OAuth2 login"), decomposes it into file-level tasks, edits several files, runs your test suite, interprets the failures, and iterates until the goal is met or its budget runs out. The difference is agency: a persistent goal, world-affecting actions, and a loop that continues until done. It is the same perceive-plan-act loop you built by hand in *The Agent Loop*, with your file system as the world.
 
-That changes where your judgment goes. You are no longer reviewing keystrokes. You are reviewing a **plan** before the agent acts and a **diff** before you keep it, and the quality of your work now depends almost entirely on two skills that have nothing to do with typing code: **writing a specification precise enough to be checked**, and **reading a diff adversarially**. Those are the two skills today builds.
+That changes where your judgment goes. You are no longer reviewing keystrokes. You are reviewing a **plan** before the agent acts and a **diff** before you keep it, and the quality of your work now depends on three skills that have nothing to do with typing code: **writing a specification precise enough to be checked**, **reading a plan and rejecting it while rejection is still cheap**, and **reading a diff adversarially**. Those are the three skills today builds, in that order, because that is the order in which they save you time.
 
 ---
 
@@ -42,6 +42,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Test-Driven Development (TDD)** | The discipline of defining every new behavior with a failing test first, writing the least code that makes it pass, then cleaning up. **Red -> green -> refactor** | `pytest` showing five `FAILED` lines (red), then the agent's implementation turning them `PASSED` (green) |
 | **Supervision Level** | How closely you watch: **autocomplete** (every token), **pair** (every changed line), or **vibe** (only the diff and the test results). Chosen to match the task's stakes, not your mood | Section 3: choosing "pair" for a security-sensitive module and "vibe" for well-tested utility code |
 | **Diff Review** | Reading the exact lines an agent added and removed, rather than reading the finished file, so you see what it *changed* instead of what it left alone | Model 3: spotting `eval(query)` in an implementation that passes every test |
+| **Plan** | A written statement of what the agent intends to do, produced *before* it touches anything: the files it will change, the order, and why. The cheapest artifact to reject | Section 2b: rejecting a four-file plan in ten seconds instead of reviewing a four-file diff in ten minutes |
+| **Thinking / reasoning trace** | The agent's written-out deliberation before it commits to an action. Text you can read, not a window into the model's mind | The `Thought:` lines from *The Agent Loop*, now produced by a tool you did not write |
+| **Observability, isolation, reversibility** | The three properties that make delegating safe: can I see what it did, can I bound what it reaches, can I undo it. Named in *Your AI Workbench*, Step 8.5 | The plan and the diff, the container mount, and `git checkout .` |
 
 ---
 
@@ -67,7 +70,7 @@ Today has three parts and a going-deeper section you take home.
 | | What you do | Roughly |
 |---|---|---|
 | **Part I** | Get your agent driving again, and learn the pattern that lets agents hand work to each other through GitHub instead of a chat window | 25 min |
-| **Part II** | Write a specification and its failing tests *before* any code exists, then let the agent implement against them | 25 min |
+| **Part II** | Write a specification and its failing tests *before* any code exists, review the agent's **plan** before it acts, then let it implement against them | 25 min |
 | **Part III** | Read a diff that passes every test and is still dangerous | 20 min |
 | **Part IV** | Exercises and reflection | take-home |
 | **Part V** | Going further: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
@@ -182,6 +185,50 @@ Step 5 is the interesting one: **the review comment is the inter-agent message.*
 
 ---
 
+## 2b. Read the Plan Before You Read the Diff
+
+The review discipline in Part III is about the diff, and by then the work is done. There is a cheaper place to catch a mistake, and every serious coding agent gives it to you: **the plan**.
+
+Before an agent edits anything, it can be made to write down what it intends to do. Which files, in what order, and why. That artifact costs one screen to read and is free to reject. A diff costs ten minutes to review and, if you reject it, the agent's work is thrown away and yours was too.
+
+| | Plan review | Diff review |
+|---|---|---|
+| **What you are reading** | Intent: files, order, rationale | Consequence: exact lines added and removed |
+| **Catches** | Wrong file, wrong layer, missing dependency, scope creep, a misunderstanding of the goal | Security holes, hidden assumptions, resource problems, spec drift |
+| **Cost to reject** | Seconds. Nothing has happened yet | The agent's whole run, and your review time |
+| **Cannot catch** | Anything about the code that does not exist yet | A plan that was wrong in a way the code faithfully implemented |
+
+Neither replaces the other. The plan catches "you are about to edit the generated file instead of the generator"; only the diff catches `eval(query)`.
+
+### Getting a plan out of your agent
+
+Every tool in this family exposes some version of it, and the labels differ more than the idea does. **Claude Code** has an explicit plan mode you cycle to with Shift+Tab. **opencode** offers a plan-style review before it applies a change. **Plandex** is built around the separation: it emits a full diff plan as a reviewable document, and no file changes until you approve it. **pi** deliberately has none of this, which is exactly why the course reserves it for throwaway work.
+
+If your tool has no mode for it, ask for one in words. This works everywhere:
+
+```text
+Before you change anything: list the files you intend to modify, in the order you
+will touch them, with one sentence each on why. Then stop and wait. Do not edit.
+```
+
+### The trace, and what it is not
+
+Many agents also show you their **thinking**: the deliberation they write out before choosing an action. Read it. It is genuinely useful, and it is the same `Thought:` line you built by hand in *The Agent Loop*, produced by a tool you did not write.
+
+Read it for what it is, though. The trace is *text the model generated because we asked it to*, not a recording of a hidden reasoning process. It can be perfectly coherent and describe a step the agent then does not take. It can rationalize an action rather than explain it. Treat it as the agent's stated intent, useful for spotting a misunderstanding early and worthless as proof that the code is right. That is why you still read the diff.
+
+Your agent's plan says it will modify `parser.py`, `parser_test.py`, and `build/generated_tokens.py`. You know `build/` is regenerated by a script on every build. What is the correct response, and at what cost?
+
+[( )] Approve the plan; the generated file will be overwritten anyway, so it is harmless
+[(X)] Reject the plan now and say the token list is generated from `tokens.yaml`. Cost: about fifteen seconds
+[( )] Approve it, review the diff, and revert the `build/` hunk afterwards
+[( )] Approve it and add `build/` to `.gitignore` so the change stops showing up
+
+    --{{0}}--
+The third option gets to the same end state and pays for it with a full agent run and a full diff review. The fourth hides the symptom and leaves the agent believing the generated file is where token definitions live, so it will do the same thing next time. Rejecting at the plan stage is cheaper than both, and it corrects the agent's model of the project rather than the file.
+
+---
+
 ## Model 1: The Coding Agent Loop
 
 The agent loop for coding tasks is an instance of the general perceive-think-act cycle, specialized for a software development environment. Each stage produces artifacts the next stage depends on.
@@ -238,6 +285,8 @@ The three levels sit on a continuum, and the right choice depends on the stakes,
 | **Autocomplete** | Agent suggests the next token, line, or block; you accept or reject inline | Boilerplate, well-understood APIs, single-function completions | Low | Every token as it is accepted |
 | **Pair** | You describe a task; the agent produces a full file or function; you read every line before accepting | New features in production code, security-sensitive modules | Medium | Every changed file, every line |
 | **Vibe** | You write a spec and tests; the agent implements the whole feature; you review only the diff | Well-tested utility code, prototypes, features with complete acceptance criteria | High without tests, medium with them | The diff against the spec, and the test results |
+
+One column is missing from that table on purpose, and Section 2b supplied it: **at every level, you can also review the plan before the agent acts.** Plan review is not a fourth supervision level; it is a discount available at all three. It is what makes the third row survivable on a task where the tests are thinner than you would like.
 
 Notice what the third row actually requires. "Vibe" is only the low-risk option **when the tests exist first.** Without them it is not a supervision level at all; it is hoping. Your Week 1 session was closest to "pair": you read every line of a three-line change. Today we earn our way to the third row by building the thing that makes it safe.
 
@@ -320,14 +369,22 @@ Running `pytest` on this file before any implementation shows five `FAILED` line
 
 ### Do this now
 
-Save the file above as `spec_search_memory.py` in your `cs357-work` repo, run `pytest spec_search_memory.py` and confirm five failures, commit it, and only then start `opencode` and say:
+Save the file above as `spec_search_memory.py` in your `cs357-work` repo, run `pytest spec_search_memory.py` and confirm five failures, then **commit the failing tests before any implementation exists**. That commit is your reversibility line: whatever the agent does next, `git checkout .` returns you to a known state with the spec intact.
+
+Now start `opencode` and ask for the **plan** first, exactly as in Section 2b:
 
 ```text
-Implement search_memory in spec_search_memory.py so that all five tests pass.
-Do not modify the tests. Do not modify CORPUS.
+Read spec_search_memory.py. Before you change anything, tell me which functions you
+will add and what each one will do. One sentence each. Then stop and wait.
 ```
 
-> **You've succeeded when** `pytest` is green, you did not touch the tests, and `git diff` shows changes confined to the body of `search_memory` and any helpers it needed.
+Read what comes back. If the plan proposes editing the tests, or inventing a corpus, or reaching for a library you did not ask for, **say no now**, while saying no is free. Only when the plan is right:
+
+```text
+Good. Implement it. Do not modify the tests. Do not modify CORPUS.
+```
+
+> **You've succeeded when** you have a plan you approved in your scrollback, `pytest` is green, you did not touch the tests, and `git diff` shows changes confined to the body of `search_memory` and any helpers it needed. If you had to reject a plan first, say so in your notes; that rejection is the most valuable thing that happened in this exercise.
 
 ### Critical Thinking Questions
 

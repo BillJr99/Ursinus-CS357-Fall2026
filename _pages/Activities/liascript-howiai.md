@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# How I AI: A Vault, a Contract, and Agents That Talk Through GitHub
+# How I AI: A Vault, a Charter, and Agents That Talk Through GitHub
 
 You have spent seven weeks learning how agents work. Today is about how a person actually *lives* with them.
 
@@ -21,7 +21,7 @@ Here is the problem this session solves. Every AI tool you use keeps its own pri
 The fix is not a better tool. It is a **place**: a folder of plain Markdown files that you own, that any agent can read, that lives under version control, and that agents write back into under rules you wrote down. Two moves make it work, and they are the two parts of today.
 
 1. **Your notes become memory agents can read.** A vault of plain files, organized into zones, with a contract at the root saying what may be touched.
-2. **Your repository becomes the channel agents talk through.** Not a chat window: issues, pull requests, review comments, and a small set of handoff documents that let one agent stop and another pick the work up without either of them sharing a thought.
+2. **Your repository becomes the channel agents talk through, and the record of why.** Not a chat window: a charter that states what the project is for, plans written before work starts, issues and pull requests as the medium, and a small set of handoff documents that let one agent stop and another pick the work up without either of them sharing a thought.
 
 Then the room is yours for the rest of the session: bring what is stuck.
 
@@ -43,6 +43,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Durable memory** | Project state that lives in files under version control rather than in a conversation, so it survives the session, the tool, and the model | `.ai/SESSION.md` and `.ai/CURRENT_TASK.md` in Part II |
 | **Handoff** | A deliberate stop in which an agent writes down enough state that a *different* agent can continue safely | The kickoff prompt in Model 4, pasted into a fresh session |
 | **Read-only mount** | Giving a program access to a directory it can read but not change, enforced by the operating system rather than by instructions | `-v "$HOME/vault:/reference:ro"` when you run an agent in a container |
+| **Charter** | The constitution of a project: mission, ranked values, definition of done, and the guardrails an agent may never cross. Written once, amended deliberately, reread at the start of every session | `CHARTER.md` in Model 3, and the ranked-values list that resolves conflicts without asking you |
+| **Traceability** | Being able to answer, weeks later, *why* something is the way it is: which goal it served, what was decided, who or what did it, and what was rejected | A wiki page, a decision log entry, a session entry, and a commit that all point at each other |
+| **Observability, isolation, reversibility** | The three properties that make delegating safe: can I see what it did, can I bound what it reaches, can I undo it. Named in *Your AI Workbench*, Step 8.5, and applied to your own notes today | The session log, the `:ro` mount, and `git revert` |
 
 ---
 
@@ -178,7 +181,7 @@ The `:ro` is the whole difference between a rule the agent is asked to follow an
 
 # Part II: The Repository as the Channel Agents Talk Through
 
-In this part you build the write side, and the collaboration side. In *Coding Agents* you saw the basic pattern: an issue is the task, a pull request is one agent's attempt, and a review comment is an instruction a *second* agent can pick up without ever sharing the first one's context. Today we make that survive a long project.
+In this part you build the write side, and the collaboration side. In *Coding Agents* you saw the basic pattern: an issue is the task, a pull request is one agent's attempt, and a review comment is an instruction a *second* agent can pick up without ever sharing the first one's context. Today we make that survive a long project, which takes three things a chat window cannot give you: a **charter** that decides the recurring questions once, **plans** reviewed before work starts, and a **written record** that lets anyone reconstruct why the project is the way it is.
 
 ## 3. Conversation Is Not Project State
 
@@ -203,6 +206,104 @@ Two design choices are worth naming because they are not obvious.
 **`SESSION.md` is append-only.** Old entries are never deleted, only annotated ("superseded by the entry below"). A journal you can rewrite is a journal that cannot tell you what you used to believe, and *what you used to believe* is exactly what you need when a decision turns out wrong.
 
 **Every session entry ends with a Next Safe Action.** Not "next steps," which is a wish list. One concrete action that is safe to take with no further context. It is the handoff, written before it is needed.
+
+---
+
+## 3b. The Charter: Deciding Once Instead of Every Time
+
+`AGENTS.md` told an agent what it may *touch*. A **charter** tells it what the project is *for*, and that turns out to answer a different and harder class of question.
+
+Watch the difference. Halfway through a task an agent notices that making the tests pass quickly would mean loosening an assertion. Nothing in `AGENTS.md` forbids editing a test. So it either stops and asks you (interrupting, and it will ask again tomorrow) or it guesses. A charter that ranks **correctness above speed** answers the question without either.
+
+That is the whole trick: a charter is where you make a decision **once**, in writing, so that neither you nor any agent has to relitigate it at three in the afternoon.
+
+The course template at [`files/agent-templates/CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) has six sections that earn their place:
+
+| Section | The question it settles in advance |
+|---|---|
+| **Mission** | What is being built, and for whom. One or two sentences, product not technology |
+| **Ranked values** | When two goods conflict mid-task, which one wins. The *ranking* matters more than the list |
+| **Definition of success** | A concrete, observable test for "done," so nobody has to have an opinion about it |
+| **Long-term architecture** | The one design seam you refuse to blur, however convenient blurring it would be |
+| **Repository layout** | Which directories are immutable sources and which are workspace. Zones again, one level up |
+| **Git policy** | That history lives in git, and never in `file_old.py`, `file_v2.py`, or `file_final_FIXED.py` |
+
+Two of those deserve a second look.
+
+**Ranked values, not listed values.** "We value correctness, speed, and maintainability" resolves nothing, because every conflict is between two things on that list. Ranking them is what makes the document operational:
+
+```markdown
+# Engineering Philosophy
+
+Every engineering decision prioritizes, in order:
+
+1. Correctness
+2. Reproducibility
+3. Maintainability
+4. Automation
+5. Documentation
+```
+
+Now "loosen the assertion to go faster" resolves itself: correctness outranks everything, so no.
+
+**The documentation authority rule**, which is the sentence that makes long-running agent work possible at all:
+
+> The agent shall never work from memory when project documentation exists. Before every session, reread the charter, the current task, and the session log. If project documentation conflicts with remembered context, prior chat context, or assumptions, **the documentation wins.** If the documentation is incomplete, update it rather than relying on memory.
+
+Read that as a policy about **context drift**. Over a long project an agent (or a person) accumulates half-remembered decisions, some of which were reversed. The rule says the file is the truth and the memory is a rumor. It is the same instinct as `raw/` being read-only, aimed at beliefs instead of files.
+
+### Plan, then act, then record
+
+Your charter, your plans, and your session log form one loop, and each piece is doing a job the others cannot:
+
+```text
+CHARTER.md          why this project exists, and what always wins   (rarely changes)
+   |
+   v
+.ai/CURRENT_TASK.md what we are doing now, and what "done" means    (per milestone)
+   |
+   v
+the plan            what the agent intends to do about it, before   (per task)
+   |                it touches anything -- reject it here
+   v
+the diff / the PR   what it actually did                            (per change)
+   |
+   v
+.ai/SESSION.md      what happened, what did not, what is next       (per session)
+docs/DECISION_LOG   what we decided and what we rejected, and why   (when it matters)
+```
+
+Read that column top to bottom and you have **traceability**: six weeks from now, a line of code traces back to a diff, which traces to a session entry, which traces to a task, which traces to the charter. Nobody has to remember anything, and "why is it like this?" has a written answer instead of an argument.
+
+The [decision log](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/DECISION_LOG.md) is the one people skip, and it is the one that pays. It records not only what you chose but **what you rejected and why**, which is the only thing that stops a project from re-proposing the same bad idea every three weeks, whether the proposer is a teammate or an agent starting from a fresh context.
+
+Your team's charter ranks **reproducibility above automation**. An agent proposes replacing your pinned dependency versions with floating ones so that upgrades happen automatically. Under the charter, what happens?
+
+[( )] The agent asks you, because the charter does not mention dependencies
+[(X)] The proposal is rejected without asking: floating versions trade reproducibility for automation, and the charter already ranked those
+[( )] The agent implements it, because automation is on the list of values
+[( )] The charter needs a new section on dependency management before this can be resolved
+
+    --{{0}}--
+The charter never mentions dependencies, and it does not need to. That is exactly what ranking buys you: it resolves cases the author never anticipated. A charter that had to enumerate every decision would be a rulebook, and it would be out of date the day after you wrote it.
+
+---
+
+## 3c. Observability, Isolation, Reversibility, Applied to Your Own Work
+
+You met these three in *Your AI Workbench*, Step 8.5, as properties of a container and a git repository. Everything in today's session is those same three properties, applied to your notes and your projects instead of to one afternoon's code.
+
+| Property | In the vault (Part I) | In the repository (Part II) | The failure it prevents |
+|---|---|---|---|
+| **Observability** | `git log` on the vault shows every agent write, with a diff. The wiki cites `raw/`, so a claim traces to a source | `SESSION.md` says what was done and *not* done; the PR shows the change; the decision log says why | "Something in my notes is wrong and I have no idea when it got there or what it was based on" |
+| **Isolation** | Zones, plus `:ro` on the `raw/` mount. An agent authoring the wiki cannot corrupt the sources it is summarizing | A scoped token for one repository; a branch per attempt; an agent that can open a PR and cannot merge it | "The agent asked to tidy my notes and rewrote a source I can no longer recover" |
+| **Reversibility** | Every vault write is a commit. `git revert` puts a bad synthesis back | Every change arrives as a reviewable, revertible commit on a branch, not as an edit to `main` | "The agent's cleanup pass was wrong and there is no earlier version" |
+
+The pattern is worth naming because it generalizes past this course. Each property is bought the same way in both columns: **observability by writing things down in files**, **isolation by boundaries the system enforces rather than boundaries you ask for**, and **reversibility by never having exactly one copy of anything that matters.**
+
+And notice which one is most often missing in practice. Isolation is the one people think of, because it sounds like security. Reversibility is the one that actually saves the semester, and it is nearly free: it is a commit before you start.
+
+> **Common Misconception:** "Reversibility means I can undo anything, so I can be less careful about the other two." Reversibility is bounded by observability. You can only revert a change you *noticed*, and the dangerous agent failure is not the dramatic one; it is the small wrong edit that lands in a wiki page you do not reread for a month, by which time you have written three things on top of it. Git will happily let you undo it; nothing will tell you that you should.
 
 ---
 
@@ -250,17 +351,19 @@ Nothing was remembered. Everything was **read**.
 
 ---
 
-## 4. Do This Now (about twenty minutes)
+## 4. Do This Now (about thirty minutes)
 
 Pick **one** of your own repositories: `cs357-work`, or your Project Thread repository if your team is ready to adopt this together.
 
-1. Create `.ai/` and copy in `CONTEXT.md`, `CURRENT_TASK.md`, and `SESSION.md` from the [course templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md). Fill in `CONTEXT.md` with one real sentence about your project.
-2. Write `AGENTS.md` (or extend the one you already have) with a **Stop and ask** section of at least three items that are true for your project.
-3. Start `opencode`, and give it a small, real task from your actual backlog. Before it starts, tell it: *read `AGENTS.md` and `.ai/CURRENT_TASK.md` first.*
-4. When it finishes, ask it to write a session entry: *append a dated entry to `.ai/SESSION.md` describing what you changed, what you did not do, and one Next Safe Action.*
-5. Read what it wrote. **Correct it.** Then commit everything.
+1. **Charter.** Copy [`CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) into the repository root and fill in three sections for real: the mission in one sentence, **five ranked values**, and a definition of success someone else could check. Leave the rest as template for now. Ranking the values is the part that takes the longest and the part that is worth doing.
+2. **Handoff state.** Create `.ai/` and copy in `CONTEXT.md`, `CURRENT_TASK.md`, and `SESSION.md`. Fill in `CONTEXT.md` with one true sentence about your project.
+3. **Contract.** Write `AGENTS.md` (or extend the one you already have) with a **Stop and ask** section of at least three items that are true for your project, and one line pointing at the charter.
+4. **Commit all of it before the agent runs.** This is your reversibility line, and it takes ten seconds.
+5. **Plan first.** Start `opencode` with a small, real task from your backlog, and open with: *read `CHARTER.md`, `AGENTS.md`, and `.ai/CURRENT_TASK.md`. Then tell me what you intend to do and stop.* Read the plan. Reject it if it conflicts with your ranked values, and note which value caught it.
+6. **Then let it work**, and when it finishes: *append a dated entry to `.ai/SESSION.md` describing what you changed, what you did not do, and one Next Safe Action.*
+7. **Read what it wrote. Correct it.** Then commit.
 
-> **You've succeeded when** your repository has a session entry an agent wrote and you edited, and you can point to one sentence in it that you had to fix. That sentence is the reason step 5 exists.
+> **You've succeeded when** your repository has a charter with ranked values, a session entry an agent wrote and you edited, and you can point to one sentence in that entry you had to fix. That sentence is the reason step 7 exists. Bonus, and it is the real one: if a plan got rejected in step 5, write down which ranked value did the rejecting.
 
 ---
 
@@ -293,13 +396,25 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
    - *Starter hint*: Look for adjectives. "Concise," "relevant," "appropriate," and "clean" are where the gaps live.
    - *You've succeeded when*: The other team agrees your counterexample is real, and their revised sentence closes it.
 
-3. *Cold-start test.*
+3. *Rank your values, and find where it hurts.*
+
+   - *What to do*: Write the five ranked values for your Project Thread as a team, then find a real decision your team has already made that the ranking would have *reversed*. If you cannot find one, your ranking is probably too agreeable to be useful; try again with a harder pair.
+   - *Starter hint*: The productive conflicts are the ones you actually feel: correctness against shipping by Thursday, reproducibility against convenience, thoroughness against the number of hours you have.
+   - *You've succeeded when*: Your team can name one past decision the ranking contradicts, and has decided out loud whether to change the decision or change the ranking.
+
+4. *Traceability drill.*
+
+   - *What to do*: Pick one file in your project and trace it upward: which commit last changed it, which session entry or PR describes that change, which task it served, and which charter goal that task served. Write the chain.
+   - *Starter hint*: Expect the chain to break. Note the exact link that is missing; that missing link is the document you are not keeping.
+   - *You've succeeded when*: You have either a complete four-link chain, or a precise statement of which link broke and what you would have had to write down to keep it.
+
+5. *Cold-start test.*
 
    - *What to do*: Hand your `.ai/` documents to a teammate who has never seen your project, and ask them to state, in one minute and without asking you anything, what the project is and what they would do next.
    - *Starter hint*: If they need to ask you a question, the answer to that question belongs in a file. Add it.
    - *You've succeeded when*: A teammate outside your project can name your Next Safe Action after reading only your files.
 
-4. *Read-only proof.*
+6. *Read-only proof.*
 
    - *What to do*: Run an agent in a container with your `raw/` mounted `:ro`, and explicitly instruct it to modify a file there. Capture the error.
    - *Starter hint*: The point is to see the operating system refuse, not the model refuse. Note which one of the two you would rather rely on.
@@ -311,7 +426,7 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
 
 *Personal*: You just built a place where a machine can read your notes. Sit with that for a moment. What did you decide to keep out, and was that decision about risk, about privacy, or about something harder to name? Did writing the contract change what you were willing to store?
 
-*Technical*: Compare the two memory mechanisms in this session: the vault (durable, semantic, human-authored) and the session journal (append-only, procedural, agent-authored). For a system you would actually run, which one would you build first, and what does the other one buy you that the first cannot?
+*Technical*: Compare the two memory mechanisms in this session: the vault (durable, semantic, human-authored) and the session journal (append-only, procedural, agent-authored). For a system you would actually run, which one would you build first, and what does the other one buy you that the first cannot? Then take the three properties from Section 3c and rank *them* for your own project: if you could only have two of observability, isolation, and reversibility, which do you give up, and what goes wrong the first time you need it?
 
 *Societal*: The argument for this architecture is autonomy: your context lives in files you own rather than inside a company's product. But it also means a very complete record of your thinking exists in one place, readable by any agent you point at it. Who else could want that folder, under what circumstances, and does "it is private" mean what you would want it to mean? Compare the risk you are accepting here against the risk of leaving the same context scattered across five vendors' servers.
 
