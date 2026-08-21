@@ -28,24 +28,24 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Generator** | The agent role responsible for producing the initial draft or creative output. The generator explores possibilities and does not apply the evaluation criteria — that is the critic's job. | The agent with system prompt "You draft short announcements for a college class" that produces the first version of the text. |
+| **Generator** | The agent role responsible for producing the initial draft or creative output. The generator explores possibilities and does not apply the evaluation criteria; that is the critic's job. | The agent with system prompt "You draft short announcements for a college class" that produces the first version of the text. |
 | **Critic** | The agent role responsible for evaluating a draft against an explicit rubric and returning a structured verdict. The critic judges; it does not create. | The agent that checks whether an announcement has exactly 3 sentences, mentions a specific date, and contains no exclamation points. |
 | **Rubric** | A written list of specific, machine-checkable criteria that the critic uses to evaluate the draft. A rubric replaces vague instructions like "make it better" with concrete, objective tests. | `{"verdict": "revise", "issues": ["word count 142 exceeds 100", "claim 2 has no citation"]}` |
-| **Convergence** | The property of the critique-refine loop where each revision brings the draft closer to passing all criteria, so the loop terminates in a reasonable number of rounds. A good rubric with actionable feedback produces convergence; vague feedback produces oscillation. | A loop that starts with 3 issues, then 2 issues, then 0 issues and accepts — that is convergence. |
+| **Convergence** | The property of the critique-refine loop where each revision brings the draft closer to passing all criteria, so the loop terminates in a reasonable number of rounds. A good rubric with actionable feedback produces convergence; vague feedback produces oscillation. | A loop that starts with 3 issues, then 2 issues, then 0 issues and accepts; that is convergence. |
 | **Oscillation** | A failure mode where the loop never converges: fixing one issue reintroduces a previous issue, and the draft bounces back and forth between failing states without making net progress. | Round 1: too long; Round 2: too short but now missing a date; Round 3: has date but too long again. |
-| **Reward Hacking** | A failure mode where the generator satisfies the literal text of the rubric criteria while violating their intent — for example, achieving "exactly 3 sentences" by stuffing three ideas into one sentence using semicolons. | A draft that technically has 3 sentences but each sentence is 80 words long and impossible to read. |
+| **Reward Hacking** | A failure mode where the generator satisfies the literal text of the rubric criteria while violating their intent, for example, achieving "exactly 3 sentences" by stuffing three ideas into one sentence using semicolons. | A draft that technically has 3 sentences but each sentence is 80 words long and impossible to read. |
 
 ---
 
 # Part I: Why a Separate Critic?
 
-In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both. You will analyze two real critique transcripts and practice writing structured, actionable feedback — skills you will need when designing your own critic agents in the Critique and Refine.
+In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both. You will analyze two real critique transcripts and practice writing structured, actionable feedback, skills you will need when designing your own critic agents in the Critique and Refine.
 
 ## 1. Generation and Evaluation Are Different Jobs
 
-**Why this matters:** Think about the best feedback you have ever received on a piece of writing. It probably did not come from the person who wrote it — it came from someone reading it fresh, applying standards you had already agreed on. When the same person both writes and evaluates in the same sitting, they tend to approve their own work because they remember what they meant to say. The same problem applies to LLMs: a model asked to "write it and make sure it's good" conflates two tasks that need different mental stances. Separating the generator and the critic — giving them different system prompts and different information — forces genuinely independent evaluation.
+**Why this matters:** Think about the best feedback you have ever received on a piece of writing. It probably did not come from the person who wrote it; it came from someone reading it fresh, applying standards you had already agreed on. When the same person both writes and evaluates in the same sitting, they tend to approve their own work because they remember what they meant to say. The same problem applies to LLMs: a model asked to "write it and make sure it's good" conflates two tasks that need different mental stances. Separating the generator and the critic (giving them different system prompts and different information) forces genuinely independent evaluation.
 
-**Asking one prompt to "write it well" conflates two tasks.** Generation explores; evaluation judges against criteria. When the same context does both simultaneously, neither gets the model's full attention — a small context window argument again. Separating roles also lets us give the critic what the generator should not have: a **rubric**.
+**Asking one prompt to "write it well" conflates two tasks.** Generation explores; evaluation judges against criteria. When the same context does both simultaneously, neither gets the model's full attention, a small context window argument again. Separating roles also lets us give the critic what the generator should not have: a **rubric**.
 
 **The critic needs criteria, not vibes.** "Make it better" produces drift; "Check: (1) under 100 words, (2) cites a source for each claim, (3) reading level appropriate for first-years" produces convergence. The critic returns structured output so the generator knows exactly what to fix:
 
@@ -53,7 +53,7 @@ In this section you will examine why separating generation from evaluation produ
 {"verdict": "revise", "issues": ["word count is 142, must be under 100", "claim 2 has no citation"]}
 ```
 
-**Stopping rules prevent infinite polishing.** Loop until `verdict == "accept"`, with a maximum of $R$ rounds. On budget exhaustion, return the best draft *with the outstanding critique attached* — disclosure of known defects rather than silent confidence.
+**Stopping rules prevent infinite polishing.** Loop until `verdict == "accept"`, with a maximum of $R$ rounds. On budget exhaustion, return the best draft *with the outstanding critique attached*, disclosure of known defects rather than silent confidence.
 
 The following equation summarizes this loop compactly: at each round $t$, the critic $C$ evaluates the current draft against the rubric and returns a list of issues, and the generator $G$ produces an improved draft using those issues. The loop runs until the critic accepts or round $R-1$ is reached.
 
@@ -95,7 +95,7 @@ In this section you will read the full working implementation of the critique-re
 
 ## 2. The Loop in Forty Lines
 
-**Why this matters:** The code below implements the entire critique-refine loop. Notice three design decisions that directly implement the principles from Part I: (1) the generator and critic are separate `llm` calls with different system prompts, (2) the critic receives the RUBRIC but the generator does not — the generator only receives the issues list from the critic's output, and (3) the loop has a hard maximum of `rounds` iterations so it cannot run forever. The temperature settings encode a meaningful choice: the generator runs warm (temperature 0.8 for exploration, then 0.3 for disciplined revision), while the critic runs cold (0.0 for deterministic evaluation).
+**Why this matters:** The code below implements the entire critique-refine loop. Notice three design decisions that directly implement the principles from Part I: (1) the generator and critic are separate `llm` calls with different system prompts, (2) the critic receives the RUBRIC but the generator does not; the generator only receives the issues list from the critic's output, and (3) the loop has a hard maximum of `rounds` iterations so it cannot run forever. The temperature settings encode a meaningful choice: the generator runs warm (temperature 0.8 for exploration, then 0.3 for disciplined revision), while the critic runs cold (0.0 for deterministic evaluation).
 
 You can run this locally with `ollama run llama3.2` in one terminal and then run the script in another:
 
@@ -126,7 +126,7 @@ def llm(system, user, temperature=0.3):
         import traceback; traceback.print_exc()
         return ""
 
-# The RUBRIC is the critic's instructions — specific, checkable criteria.
+# The RUBRIC is the critic's instructions, specific, checkable criteria.
 # Crucially, the GENERATOR never sees this rubric directly.
 # It only sees the list of issues the critic identified.
 RUBRIC = """Evaluate the draft against ALL of these criteria:
@@ -149,7 +149,7 @@ def critique(draft):
         import traceback; traceback.print_exc()
         # Fail closed: if we cannot parse the verdict, assume "revise"
         # This is safer than failing open (assuming "accept") for most use cases
-        return {"verdict": "revise", "issues": ["critic output was not valid JSON — treating as revise"]}
+        return {"verdict": "revise", "issues": ["critic output was not valid JSON; treating as revise"]}
 
 def critique_refine(task, rounds=3):
     """
@@ -171,7 +171,7 @@ def critique_refine(task, rounds=3):
         if verdict["verdict"] == "accept":
             return draft, verdict, r  # success: return before budget is exhausted
 
-        # Pass only the issues list to the generator — not the rubric itself
+        # Pass only the issues list to the generator, not the rubric itself
         draft = llm(
             "Revise the draft to fix EXACTLY the listed issues, changing nothing else.",
             f"Draft:\n{draft}\n\nIssues to fix:\n{json.dumps(verdict['issues'], indent=2)}",
@@ -197,19 +197,19 @@ if verdict["verdict"] != "accept":
 
 4. The code runs the generator warm (temperature 0.8 for the first draft, then 0.3 for revisions) and the critic cold (temperature 0.0). Justify each specific choice: what would go wrong if the critic ran at 0.8? What would go wrong if the first draft ran at 0.0?
 
-   > *Hint: A critic at 0.8 might flag different issues each time it evaluates the same unchanged draft — what would that do to the convergence of the loop? A generator at 0.0 produces the same draft every time — if the first draft fails, what happens when you try to revise it?*
+   > *Hint: A critic at 0.8 might flag different issues each time it evaluates the same unchanged draft; what would that do to the convergence of the loop? A generator at 0.0 produces the same draft every time; if the first draft fails, what happens when you try to revise it?*
 
 5. The fallback when the critic emits invalid JSON is to demand revision (failing *closed*). The alternative is to assume the draft is acceptable (failing *open*). Argue which default is correct for (a) a class announcement and (b) a medical summary, explaining what goes wrong in each case if you choose the wrong default.
 
    > *Hint: Failing closed means "when uncertain, reject and retry." Failing open means "when uncertain, pass." For a class announcement, what is the cost of a false rejection? For a medical summary, what is the cost of a false approval?*
 
-6. Run the loop three times on the same task and record the rounds-to-accept for each run. Is the variance coming from the generator (different drafts), the critic (different verdicts on the same draft), or both? Design a one-variable experiment — changing exactly one thing — that would let you tell which source of variance is larger.
+6. Run the loop three times on the same task and record the rounds-to-accept for each run. Is the variance coming from the generator (different drafts), the critic (different verdicts on the same draft), or both? Design a one-variable experiment (changing exactly one thing) that would let you tell which source of variance is larger.
 
    > *Hint: To isolate generator variance, fix the seed of the critic and vary the generator's seed. To isolate critic variance, fix the draft (use the same input every time) and run the critic multiple times. Which experiment is easier to set up with the code above?*
 
-> **Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement — run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
+> **Common Misconception:** Students often assume that more revision rounds always produce better output. This is not true. After the loop converges (all criteria met), additional rounds do nothing useful. And if the loop oscillates, more rounds only waste time and tokens without improving the draft. The number of rounds to budget should be set based on empirical measurement: run the loop on 20 representative tasks, plot rounds-to-accept, and set your budget at the 90th percentile. Setting it at 10 "to be safe" often means 9 wasted rounds on tasks that converge in 1.
 
-Now that you can read and run the loop, Part III examines the three ways it commonly fails — so you can detect and fix these problems in your own Critique and Refine implementation.
+Now that you can read and run the loop, Part III examines the three ways it commonly fails, so you can detect and fix these problems in your own Critique and Refine implementation.
 
 The principal reason the critic receives a rubric while the generator does not is:
 
@@ -222,17 +222,17 @@ The principal reason the critic receives a rubric while the generator does not i
 
 # Part III: When Refinement Fails
 
-In this section you will study three failure modes that can make the critique-refine loop produce worse results than a single-shot approach. Knowing these failure signatures — and how to measure them — is what separates a loop that works in a demo from one that works reliably in production.
+In this section you will study three failure modes that can make the critique-refine loop produce worse results than a single-shot approach. Knowing these failure signatures (and how to measure them) is what separates a loop that works in a demo from one that works reliably in production.
 
 ## 3. Failure Modes to Hunt in Critique and Refine
 
-**Why this matters:** Understanding how the critique-refine loop fails is as important as knowing how it works. Each of the three failure modes below has a measurable signature — you can detect them by instrumenting the loop rather than only checking the final output. Building this measurement into Critique and Refine from the start (rather than discovering failures at submission time) is the application of the design-first principle from the earlier activity.
+**Why this matters:** Understanding how the critique-refine loop fails is as important as knowing how it works. Each of the three failure modes below has a measurable signature; you can detect them by instrumenting the loop rather than only checking the final output. Building this measurement into Critique and Refine from the start (rather than discovering failures at submission time) is the application of the design-first principle from the earlier activity.
 
-**Rubber-stamping:** The critic accepts everything — often because the criteria are vague, because the critic sees the generator's reasoning and is anchored by it, or because the model is trained to be agreeable. You can detect this by measuring the acceptance rate on deliberately flawed drafts: if the critic accepts a draft with a known planted defect, it is rubber-stamping.
+**Rubber-stamping:** The critic accepts everything, often because the criteria are vague, because the critic sees the generator's reasoning and is anchored by it, or because the model is trained to be agreeable. You can detect this by measuring the acceptance rate on deliberately flawed drafts: if the critic accepts a draft with a known planted defect, it is rubber-stamping.
 
-**Oscillation:** Fixing issue 1 reintroduces issue 2, and the loop cycles without net progress. You can detect this by tracking the set of issues across rounds — if the same issue appears in round 1, disappears in round 2, and reappears in round 3, you have oscillation.
+**Oscillation:** Fixing issue 1 reintroduces issue 2, and the loop cycles without net progress. You can detect this by tracking the set of issues across rounds: if the same issue appears in round 1, disappears in round 2, and reappears in round 3, you have oscillation.
 
-**Reward hacking:** The generator satisfies the letter of the rubric while betraying its intent. Example: "exactly 3 sentences" achieved by connecting three ideas with semicolons into one grammatical but unreadable run-on. You can detect this with a human spot-audit of "accepted" outputs — look specifically for drafts that passed all criteria but that a human would rate as poor quality.
+**Reward hacking:** The generator satisfies the letter of the rubric while betraying its intent. Example: "exactly 3 sentences" achieved by connecting three ideas with semicolons into one grammatical but unreadable run-on. You can detect this with a human spot-audit of "accepted" outputs: look specifically for drafts that passed all criteria but that a human would rate as poor quality.
 
 Each failure has a measurement:
 - Rubber-stamping -> acceptance rate on known-flawed drafts (should be 0%, high rate = failure)
@@ -251,7 +251,7 @@ Each failure has a measurement:
 
    *You've succeeded when:* You have a per-criterion detection rate and a revised rubric wording that improves the weakest criterion's detection rate by at least 20 percentage points in a re-run.
 
-2. **Adversarial generator — reward hacking.**
+2. **Adversarial generator: reward hacking.**
 
    *What to do:* Try to manually reward-hack your own rubric: write a draft that passes all three criteria checks (exactly 3 sentences, mentions a specific date, no exclamation points) while being a bad announcement by any human standard. Then add a fourth criterion to the rubric that closes the loophole you exploited, and verify that the critic now flags your hacked draft.
 
@@ -310,15 +310,15 @@ Each failure has a measurement:
 
 Respond to all three levels in your notebook:
 
-**Personal:** Think of the best piece of feedback you ever received on your own work — a paper, a project, a presentation. Did it resemble Transcript A (vague, general) or Transcript B (specific, criterion-based)? What rubric was your reviewer implicitly using? Would you hand that rubric to an AI critic reviewing your work today, and what would you need to add or clarify to make it machine-usable?
+**Personal:** Think of the best piece of feedback you ever received on your own work: a paper, a project, a presentation. Did it resemble Transcript A (vague, general) or Transcript B (specific, criterion-based)? What rubric was your reviewer implicitly using? Would you hand that rubric to an AI critic reviewing your work today, and what would you need to add or clarify to make it machine-usable?
 
 **Technical:** The critique-refine pattern adds latency proportional to the number of revision rounds. For a system that serves 1,000 requests per day, each request taking an average of 2 revision rounds at 3 seconds per LLM call, compute the total additional time per day spent on revision versus a zero-round baseline. At what scale does this latency cost justify investing in a better generator (fewer revision rounds needed) rather than a better critic (more accurate first-pass evaluation)?
 
-**Societal:** The critic in today's loop applies a human-written rubric mechanically. In journalism, academic publishing, and legal review, human editors and peer reviewers apply judgment that goes beyond any written rubric — they know context, they catch implications, they apply community standards that are not fully articulable. What kinds of evaluation should not be delegated to an automated critic, even a well-calibrated one? What criteria would you use to decide?
+**Societal:** The critic in today's loop applies a human-written rubric mechanically. In journalism, academic publishing, and legal review, human editors and peer reviewers apply judgment that goes beyond any written rubric; they know context, they catch implications, they apply community standards that are not fully articulable. What kinds of evaluation should not be delegated to an automated critic, even a well-calibrated one? What criteria would you use to decide?
 
 ---
 
--> **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea — instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of the Critique and Refine, *Critique and Refine*.
+-> **Coming Up Next:** The *Multi-Agent Debate* activity extends the critique-refine idea: instead of one critic evaluating one generator's output, multiple agents argue different positions before a judge resolves the disagreement. The generator-critic loop you built today is the heart of the Critique and Refine, *Critique and Refine*.
 
 ---
 
