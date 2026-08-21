@@ -65,15 +65,15 @@ info:
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
     - rtitle: "Privacy-Preserving AI"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-privacypreservingai.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-privacypreservingai.md"
     - rtitle: "Intellectual Property and Privacy"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ipprivacy.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ipprivacy.md"
     - rtitle: "Explainability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainability.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
     - rtitle: "Explainability in Depth Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainabilitydeep.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainabilitydeep.md"
     - rtitle: "Bias in Data Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md"
+      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
     - rtitle: "Responsible AI in Practice Assignment (Model Cards and Datasheets direction)"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ResponsibleAIPractice"
 
@@ -106,7 +106,7 @@ Then pick **one** of the four directions below and carry it out in depth. Each d
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
-**Prep deck for Direction 1.** [Prompt Injection: Attacks and Defenses](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate. Work through it before the warm-up if you are taking the security direction.
+**Prep deck for Direction 1.** [Prompt Injection: Attacks and Defenses](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate. Work through it before the warm-up if you are taking the security direction.
 
 Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like, from both sides of it. This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist. Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
 
@@ -1854,9 +1854,9 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Explainability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainability.md): what explainability means and when it matters
-- [Explainability in Depth Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainabilitydeep.md): SHAP and LIME mechanics
-- [Bias in Data Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md): proxy variables and disparate impact
+- [Explainability Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md): what explainability means and when it matters
+- [Explainability in Depth Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainabilitydeep.md): SHAP and LIME mechanics
+- [Bias in Data Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md): proxy variables and disparate impact
 
 **Tools to install:**
 
