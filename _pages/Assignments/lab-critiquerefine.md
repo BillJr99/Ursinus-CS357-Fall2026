@@ -78,6 +78,8 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 ## Before You Start
 
+> **Choose your route first.** This lab has a full **no-code and low-code route** (near the end of this page) that carries equal credit: three saved Open WebUI presets with text moved by hand, or a Langflow canvas, instead of orchestration code. Parts 2 and 3 (calibrating the critic, and building a working reward hack) are prompt-and-analysis work on every route, and they carry 45 of the 100 points. Decide before you start.
+
 **Prerequisite concepts**: complete these activities before writing any code:
 
 - [Critique and Refine Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
@@ -735,9 +737,9 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 ---
 
-## Low-Code Route (equal credit)
+## The No-Code and Low-Code Routes (equal credit)
 
-You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow.
+You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow. The Open WebUI version is genuinely no-code: three saved model presets and text you move between them by hand. It is slower per round, and the seams (where the critic's words become the reviser's instructions) are far more visible, which is where the learning is.
 
 1. **Two roles, one canvas.** In Langflow, chain **Generator -> Critic -> Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand; slower, but the loop is identical and the seams are more visible.
 2. **Calibrate the critic the same way.** Part 2's work (checking whether the critic's criticism actually tracks quality) is prompt work and analysis, not code. Run your calibration cases through the critic and record agreement.
@@ -745,6 +747,27 @@ You may run the full critique-and-refine loop **without writing the orchestratio
 4. **Latency and worth.** Time one pass versus three by the clock, and answer Part 4's question with your own measurements.
 
 **What you submit instead of code:** the exported flow (or your preset prompts), the transcript of at least three refine rounds, your calibration table, your successful reward hack, and the identical written analysis.
+
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. On the no-code or low-code route, read "code" as "presets or flow" and "log" as "transcript".
+
+- [ ] Every round produces a verdict of **accept** or **revise** as valid JSON.
+- [ ] Invalid JSON is logged and treated as **revise**, failing closed rather than open.
+- [ ] On budget exhaustion the system returns the last draft **with the outstanding critique attached**.
+- [ ] At least two complete generate, critique, refine cycles are shown.
+- [ ] **Calibration:** at least ten drafts with planted defects spanning **every** rubric criterion, plus at least two defect-free drafts.
+- [ ] Detection rate and **false positive** rate reported per criterion, in a table.
+- [ ] The weakest criterion is named, its descriptors rewritten, and re-test results show before and after for that criterion.
+- [ ] **Reward hack:** a working one, shown verbatim, with the critic's "accept" next to my own judgment that the draft is poor.
+- [ ] The rubric patch that closes it is shown as a **diff**.
+- [ ] A second transcript shows the patched rubric rejects the hack **and still accepts a defect-free draft**.
+- [ ] **Comparison:** at least eight fixed tasks, the same scoring instrument on both sides, quality score and call count per condition.
+- [ ] The conclusion is specific and defensible, naming when the latency is earned.
+- [ ] Configuration is externalized; located exception handling with tracebacks on model calls.
+- [ ] Pair log with at least two timestamped role swaps.
+- [ ] Every reflection answer cites a specific numeric result or transcript excerpt.
+- [ ] The route I took is named at the top of the writeup.
 
 ## Deliverables
 

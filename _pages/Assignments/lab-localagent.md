@@ -746,6 +746,26 @@ Trace the run as a team. Expect two round-trips to the model: on step 0 the mode
 ---
 
 
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. On Direction 0, read "log" as "exported chat transcript" and "code" as "configuration" throughout.
+
+- [ ] The loop completes **at least three distinct goals**, with the step count and final answer visible in a log or transcript.
+- [ ] A step budget is enforced, and I have seen it fire.
+- [ ] Action parsing survives a malformed response rather than crashing.
+- [ ] The system prompt specifies all five elements: **role, goal, tools, format, guardrails**.
+- [ ] The writeup quotes each of the five, and cites the transcript line where the model used each tool correctly.
+- [ ] Each guardrail is explained in terms of what it prevents.
+- [ ] The task set has **at least eight** goals, run at fixed temperature and seed.
+- [ ] Accuracy is reported as a fraction.
+- [ ] **Two** failure modes, each with a full transcript excerpt.
+- [ ] A mitigation is implemented for one of them, with the accuracy delta and a sentence on the mechanism.
+- [ ] Model name, temperature, seed, and step budget live in a **config file**, not in the source (Direction 0: exported model JSON and documented settings).
+- [ ] Network and parsing operations have located exception handlers, e.g. `[lab1:run_agent]`, printing a traceback.
+- [ ] Pair log with at least two timestamped role swaps and names.
+- [ ] Every reflection answer cites a specific observation from my own transcript.
+- [ ] The route I took is named at the top of the writeup.
+
 ## Deliverables
 
 Submit a ZIP containing your code, your JSON configuration file, your task set and results (CSV or markdown table), transcripts for the documented failures, your pair programming log, and a readme writeup (approximately two pages) describing your design, your evaluation, and your findings. Ensure reproducibility by fixing random seeds and listing software version information.

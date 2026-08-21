@@ -2518,6 +2518,24 @@ Submit a ZIP file containing all of the following. Items marked with a checkbox 
 
 </details>
 
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column, which is shared across all directions.
+
+- [ ] The threat model traces the agent's **full** data and decision flow, not just the part my direction addresses.
+- [ ] Risks are enumerated **at every boundary**, prioritized, with likelihood and impact.
+- [ ] The chosen direction is motivated by a **specific scenario** in which this agent would cause harm if nothing were done.
+- [ ] The direction is realized completely, and multi-layered where it calls for it.
+- [ ] Controls or explanations are integrated into the agent's **real** path and clearly marked (Directions 1-3), or specified precisely enough that an engineer could build them, each mapped to a specific logged attack (Direction 0).
+- [ ] The evaluation is **reproducible**: exact inputs and recorded outputs, not a summary of what happened.
+- [ ] Results are tabulated against the direction's own success criteria.
+- [ ] At least one failure, disagreement, false positive or negative, or **surviving risk** is documented verbatim and analyzed mechanistically.
+- [ ] Where the direction calls for it, a before-and-after comparison quantifies the intervention's effect.
+- [ ] The writeup states what the intervention **does not** accomplish, and names the residual risk honestly.
+- [ ] Every reflection prompt answered with a specific observation from this lab.
+- [ ] Any required certification or governance statement is included.
+- [ ] Real names and sensitive data redacted.
+
 ## Deliverables and Reflection (All Directions)
 
 Every submission includes:

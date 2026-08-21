@@ -73,6 +73,8 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 
 ## Before You Start
 
+> **Choose your route first.** This lab has a full **no-code and low-code route** (near the end of this page) that carries equal credit: two chat windows and a spreadsheet, or a Langflow canvas, instead of Python. The judgment this lab grades (whether the extra rounds bought anything, and why a correlated failure could not be repaired by aggregation) is identical either way. Decide before you start rather than after Part 1.
+
 **Prerequisite concepts**: complete these activities before writing any code:
 
 - [Multi-Agent Debate Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md): independent rounds, peer-informed revision, majority vote
@@ -823,9 +825,9 @@ This is unexpected: a lower threshold should produce more (tighter) clusters. Ch
 
 ---
 
-## Low-Code Route (equal credit)
+## The No-Code and Low-Code Routes (equal credit)
 
-Multi-agent debate is a *protocol*, and you can run the protocol by hand or on a canvas rather than in Python.
+Multi-agent debate is a *protocol*, and you can run the protocol by hand or on a canvas rather than in Python. Step 1 and step 2 below are genuinely no-code: two chat windows and a spreadsheet. Doing the clustering by hand is not a concession; it is the version where the ambiguous cases cannot hide behind a distance threshold you picked without looking.
 
 1. **Debate without code.** Open two Open WebUI chats with different system prompts (for example, an advocate and a skeptic), give both the same question, then paste each one's answer to the other for a rebuttal round. Two rounds is enough to see the dynamic. In Langflow, the same thing is two Agent nodes and a loop.
 2. **Consensus without code.** Ask the same question *n* times at a temperature above zero, record the answers in a spreadsheet, and cluster them by hand. The clustering judgment is the actual skill; doing it manually makes the ambiguous cases impossible to hide from.
@@ -833,6 +835,29 @@ Multi-agent debate is a *protocol*, and you can run the protocol by hand or on a
 4. **Threshold sensitivity.** Vary the agreement threshold you would accept and show, from your own data, where the answer flips.
 
 **What you submit instead of code:** the exported flow or chat transcripts, the spreadsheet of runs and clusters, and the identical written analysis, including the honest verdict on whether the extra rounds bought you anything.
+
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. On the no-code or low-code route, read "code" as "flow or preset configuration".
+
+- [ ] **Part A:** a case where the critic was **wrong**, plus how I could tell, plus what the loop cost in extra calls for the quality it bought.
+- [ ] **Debate:** agents, rounds, and temperature schedule are configurable.
+- [ ] Answer extraction anchors on a required `ANSWER:` line, and a missing one produces a located error rather than a silent wrong answer.
+- [ ] Both **majority-vote** and **judge-agent** aggregation are available.
+- [ ] A complete **3-agent, 2-round** debate transcript is included.
+- [ ] **Consensus:** k high-temperature drafts, clustered with a **justified** threshold.
+- [ ] The synthesizer receives **cluster summaries with support counts**, not all k transcripts.
+- [ ] Close disagreements are disclosed in one line of the output.
+- [ ] A long-form demonstration is included.
+- [ ] **Comparison:** all conditions at **matched call budgets**, on a labeled set of at least ten items.
+- [ ] Accuracy and model-call count reported per condition, in a table.
+- [ ] At least one **correlated failure** documented with all agents' verbatim responses agreeing on the wrong answer.
+- [ ] The writeup explains why no aggregation could have repaired it, and names one **non-LLM** addition that would.
+- [ ] Agent count, rounds, temperature schedule, and distance threshold live in a config file.
+- [ ] Located exception handlers with tracebacks on model and embedding calls.
+- [ ] Pair log with at least two timestamped role swaps.
+- [ ] Every reflection answer cites a specific accuracy figure, transcript excerpt, or named failure mode.
+- [ ] The route I took is named at the top of the writeup.
 
 ## Deliverables
 

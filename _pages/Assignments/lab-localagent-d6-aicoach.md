@@ -15,6 +15,7 @@ title: "CS357 Lab: Local Agent, Direction 6: Build Your Own AI Coach"
 > - **Installs / disk:** nothing beyond the core lab for a Python app (`requests`); a single-file browser app needs no installs at all.
 > - **Hardware:** any machine that runs the core lab.
 > - **No-cost fallback:** built in; Part 2 recommends the keyless local-server route as the starting point.
+> - **Time:** about 8 to 10 hours on top of the core lab. Budget more than half of it for the non-AI core: the app has to genuinely work before the model is added, and that ordering is the point of the direction rather than a suggestion.
 
 ---
 
@@ -159,3 +160,28 @@ Answer these in your write-up:
 - [ ] **No API key committed anywhere**, a `.gitignore` covering any secrets, and keys sourced from user input or an environment variable.
 - [ ] A short write-up answering every reflection prompt above, including the security explanation and both closing questions.
 - [ ] Instructions to run your app (commands, and which provider/model you tested against).
+
+---
+
+#### Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| The model's JSON will not parse | You asked for JSON in prose and hoped | Use the provider's structured-output mode, or a schema plus a few-shot example. Then still parse defensively: this is the *Tools and MCP* lesson, applied |
+| Occasionally the JSON parses and the value is nonsense (a score of 47 out of 5) | Parsing is not validation | Range-check every parsed value before it drives anything. A badge driven by an unvalidated number is a bug waiting for a demo |
+| The app breaks when the model is slow or unreachable | The AI layer is load-bearing rather than additive | Fix the architecture, not the timeout: the core must remain usable with the model off. Test by pointing the dispatch function at nothing |
+| Switching providers means editing several files | More than one place makes model calls | Consolidate into the single dispatch function. This is the requirement, and it is worth doing before you go further |
+| The API key ends up in the repository | It was inlined for testing and committed | Rotate the key immediately, then remove it from history. Prefer the keyless local-server route, which is why it is recommended |
+| The commentary is bland and identical every turn | The prompt gets the state but not the *situation* | Pass what changed and why it matters, not just the current state. Compare a prompt with and without it and keep both in your writeup |
+
+#### Self-Check Before You Submit
+
+- [ ] The interactive core is correct and **usable with the AI turned off**, and I have run it that way.
+- [ ] Invalid user actions are rejected by the core, not by the model.
+- [ ] **Exactly one** function makes every model call.
+- [ ] Pointing it at a different provider is a one-line change or a config edit; I can say what that line is.
+- [ ] At least one feature asks for **JSON** and uses the parsed value to drive something visible.
+- [ ] Parsed values are **validated**, not merely parsed.
+- [ ] There is **no API key** anywhere in the repository, and the writeup explains why my key handling is safe.
+- [ ] The writeup shows a before-and-after of one prompt change that improved the coaching.
+- [ ] The writeup names one thing the coach gets confidently wrong, and how a user would notice.

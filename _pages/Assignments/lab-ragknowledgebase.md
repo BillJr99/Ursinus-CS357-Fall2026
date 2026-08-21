@@ -102,6 +102,8 @@ In this lab, you and your partner will build a question-answering system over a 
 
 ## Before You Start
 
+> **Choose your route first.** [Direction 0, the Langflow route]({{ site.baseurl }}/Assignments/RAGKnowledgeBase/Direction0), is the low-code path through the middle of this lab: it **replaces the coding of core Parts 2-3** with a visual build meeting the same requirements (two chunking configurations compared, recall@k, citations, abstention), for equal credit. Core Part 1 (corpus curation and the datasheet) and core Part 4 (the citation audit by hand) are required on every route, and between them they carry most of the judgment this lab is about. Decide before you install anything.
+
 **Prerequisite concepts**: complete these activities before writing any code:
 
 - [RAG Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rag.md): the index/retrieve/generate pipeline
@@ -874,6 +876,24 @@ Larger chunks improve the chance that a multi-sentence answer is intact in one c
 
 **In-class work stops here.** The exercises below are homework and going-deeper material; attempt them before the related lab.
 
+
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. On Direction 0 (Langflow), read "code" as "flow configuration" and "log" as "screenshot of the run".
+
+- [ ] All three behaviors are demonstrated: **answer with citation**, **abstention with the designated phrase**, and the **bare-model hallucination contrast**.
+- [ ] Two chunking strategies compared on a defined question set.
+- [ ] recall@k reported for **k in {1, 3, 5}** for each strategy, in a table.
+- [ ] The shipped choice is defended with a **specific numeric comparison**, not a preference.
+- [ ] The question set has **at least ten** questions, with recall@k and answer accuracy.
+- [ ] At least ten citations audited **by hand** for faithfulness, with a faithfulness rate reported.
+- [ ] Every failure shown verbatim and classified with the class hallucination taxonomy.
+- [ ] Chunk size, overlap, top-k, abstention threshold, and model name are in a **config file** (or in the exported flow JSON).
+- [ ] Located exception handlers with tracebacks on network, embedding, and database calls.
+- [ ] Corpus **datasheet** covers sources, time range, representation gaps, and known limitations.
+- [ ] Pair log with at least two timestamped role swaps.
+- [ ] Every reflection answer cites a specific experimental result of mine.
+- [ ] The route I took is named at the top of the writeup.
 
 ## Deliverables
 
