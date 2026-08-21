@@ -15,6 +15,7 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 > - **Installs / disk:** OpenCode (free) configured with your local Ollama model, and Obsidian (free) with the Git/Gitless Sync community plugin; negligible disk beyond the core lab.
 > - **Hardware:** any machine that runs the core lab.
 > - **No-cost fallback:** not needed; every tool in this direction is free.
+> - **Time:** about 8 to 10 hours on top of the core lab. The safety-guardrail skill is the shorter half; the vault skill takes longer because the write path has to be tested against a real sync.
 
 ---
 
@@ -371,3 +372,27 @@ submission/
 ```
 
 **Due:** See course schedule.
+
+---
+
+#### Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| The agent ignores the skill entirely | The skill was never loaded, or `SKILL.md`'s front matter is malformed | Confirm the skill is installed and listed. Validate the YAML front matter separately; a bare colon inside an unquoted `description` will silently break it |
+| The guardrail fires on everything | The trigger condition is written as a topic ("anything about files") rather than as a set of operations | Enumerate the actual destructive operations by name. Broad triggers train you to click through the prompt, which is worse than no guardrail |
+| The guardrail never fires on a genuinely destructive command | The agent phrased the operation in a way your trigger does not match | Log every operation the agent proposes for one session, then compare that log against your trigger list. The gap is the finding |
+| Vault writes vanish, or Obsidian shows stale content | A sync conflict resolved by discarding one side | Check the sync plugin's log. Append-only files avoid nearly all of this: never rewrite an existing entry, only add |
+| The agent writes into the wrong part of the vault | The zone boundaries are described in prose but not enforced | State them as explicit paths in the skill, and, where you can, mount the read-only zones `:ro` |
+
+#### Self-Check Before You Submit
+
+- [ ] Both skills exist as installable directories with a valid `SKILL.md`, a `README.md`, and an example session.
+- [ ] The safety skill names the guarded operations **explicitly**, rather than describing a topic.
+- [ ] Every guarded operation produces a confirmation prompt **and** an audit-log entry.
+- [ ] The scripted prompt sequence is included, with the agent's actual responses, not a summary.
+- [ ] At least one test shows the guardrail **firing**, and at least one shows it correctly **not** firing.
+- [ ] The vault skill reads context at session start and writes a dated summary at session end.
+- [ ] Vault writes are **append-only**; nothing overwrites an existing entry.
+- [ ] Zone boundaries are stated as paths, and the writeup says which are enforced by the filesystem and which only by instruction.
+- [ ] The writeup names one thing the skill failed to catch, and what it would take to catch it.

@@ -893,6 +893,27 @@ Check that your scorer compares the parsed level as the same type (int vs string
 
 ---
 
+## Self-Check Before You Submit
+
+Held against the rubric's `proficient` column. Direction 0 requirements are given in parentheses where they differ.
+
+- [ ] The batch scorer processes the **full** synthetic corpus end to end, one result row per artifact.
+- [ ] Per-criterion outcomes and an overall result, with quoted evidence strings and a weighted total (Direction 0: per-criterion judge verdicts across all items).
+- [ ] Malformed judge output is **surfaced**, not guessed at: a `REVIEW_NEEDED` flag rather than a silent default.
+- [ ] **Both partners** scored the calibration set independently and **blind to the judge** (at least eight artifacts; Direction 0, all fifteen).
+- [ ] Agreement quantified per criterion, as percent agreement or Cohen's kappa.
+- [ ] The criterion with the worst human-to-judge gap is identified, a rubric revision is tested, and the change in agreement is reported.
+- [ ] **At least one judge bias** measured with a controlled experiment (at least four matched pairs; Direction 0, the reordered and padded variants).
+- [ ] The effect is **quantified with a number**, not described.
+- [ ] A countermeasure is implemented or prescribed concretely enough to build.
+- [ ] **Evidence verification:** quotes checked against the source artifacts, hallucinated quotes flagged, and the hallucinated-evidence rate reported as a fraction and a percentage.
+- [ ] A versioned eval configuration (promptfoo YAML or an Inspect AI task) with **at least one assertion per case**, committed.
+- [ ] A **before-and-after regression run** shows a deliberate judge-prompt or rubric change being caught, with both result sets and an interpretation.
+- [ ] All human score sheets included.
+- [ ] Pair log with at least two timestamped role swaps.
+- [ ] Every reflection answer cites a specific agreement figure, bias effect size, or evidence-faithfulness finding.
+- [ ] The pathway I took is named at the top of the readme.
+
 ## Deliverables
 
 Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, your Part 5 eval harness configuration with both regression result sets, pair log, and a readme writeup of approximately two pages. Ensure reproducibility by fixing random seeds and listing software version information.

@@ -109,6 +109,26 @@ This page is the hub for the **Project Thread**: a semester-long, project-based 
 
 ---
 
+## How to Read This Page
+
+This is the longest page in the course and you do not need all of it today. It describes a semester-long structure, and the parts become relevant at different times.
+
+| Read now | Read when |
+|---|---|
+| **The Semester Map**, so you know what is coming and when | Week 1 |
+| **The Team Formation Survey** | The week it is assigned |
+| **The Team Charter**, and write it with your team | The week teams are announced |
+| **The Tuckman Map** and **Psychological Safety** | With the charter, then again before each check-in |
+| **The Team Playbook** | As you need it: it is a reference, not a reading |
+| **Intra-Team Check-Ins 1-3** | Before each check-in, which is three times across the term |
+| **Assessment Philosophy** and the **rubric** | Before your first milestone, then before each one |
+
+**The one thing worth internalizing now:** the graded emphasis in this thread falls on **process** as much as product. How your team frames a problem, works with a stakeholder, manages itself, and communicates is not the soft part around the real work. It is a substantial share of the grade, and it is the part that a strong technical result cannot rescue.
+
+> **If your team is struggling, say so early.** The confidential pulse in any check-in works, and so does office hours. Every team hits the storming stage; the ones that come out of it well are the ones that named it while it was happening rather than at the post-mortem.
+
+---
+
 ## The Semester Map
 
 Two views of the same thread: a table for scanning, then a narrative for reading. Every artifact below has its own assignment or activity page; this table is the authoritative *sequence*, and the [course schedule](/) carries the dates.
