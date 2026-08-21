@@ -4,24 +4,24 @@ permalink: /Assignments/LocalAgent/Direction2
 title: "CS357 Lab: Local Agent, Direction 2: Composing the Local Agent Stack"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own — your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own; your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
 
-> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author — you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
 >
-> - **Accounts:** none — the OpenWebUI login you create is stored locally on your own machine.
-> - **API costs:** none — the stack uses placeholder API keys and your local Ollama server.
-> - **Installs / disk:** Docker Desktop (Mac/Windows) or Docker Engine with Compose v2 (Linux), plus roughly 6 GB of image pulls (`llama3.2` ~2 GB, the open-webui image, and the searxng image). **Pull the images before lab day** — they are large.
+> - **Accounts:** none; the OpenWebUI login you create is stored locally on your own machine.
+> - **API costs:** none; the stack uses placeholder API keys and your local Ollama server.
+> - **Installs / disk:** Docker Desktop (Mac/Windows) or Docker Engine with Compose v2 (Linux), plus roughly 6 GB of image pulls (`llama3.2` ~2 GB, the open-webui image, and the searxng image). **Pull the images before lab day**; they are large.
 > - **Hardware:** 8 GB of RAM or more is recommended to run five services at once.
-> - **No-cost fallback:** not needed — fully local and free.
+> - **No-cost fallback:** not needed; fully local and free.
 
 ---
 
 
-Take the local agent you built in the core lab and give it a home: a full five-tier local AI stack — one service from every tier of the course architecture — wired together correctly, verified systematically, and reproducible from a single Docker Compose file. The skill being developed is wiring discipline: knowing which address to use from which location, and documenting your choices so another person can reproduce the result from scratch.
+Take the local agent you built in the core lab and give it a home: a full five-tier local AI stack (one service from every tier of the course architecture), wired together correctly, verified systematically, and reproducible from a single Docker Compose file. The skill being developed is wiring discipline: knowing which address to use from which location, and documenting your choices so another person can reproduce the result from scratch.
 
-In this lab, you and your partner will stand up a working local AI stack: one service from every tier of the course architecture, wired together correctly, verified systematically, and reproducible from a compose file. This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**. The skill being graded is not typing commands — it is the wiring discipline that makes two dozen services coexist, demonstrated on five.
+In this lab, you and your partner will stand up a working local AI stack: one service from every tier of the course architecture, wired together correctly, verified systematically, and reproducible from a compose file. This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**. The skill being graded is not typing commands; it is the wiring discipline that makes two dozen services coexist, demonstrated on five.
 
 ---
 
@@ -29,8 +29,8 @@ In this lab, you and your partner will stand up a working local AI stack: one se
 
 Complete both prerequisite activities before lab day. These are not optional warm-ups; the lab builds directly on them.
 
-- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) — introduces each tier of the stack and how they connect
-- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) — covers containers, images, compose files, volumes, and networks
+- [The Local Agent Stack Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md): introduces each tier of the stack and how they connect
+- [Docker from Zero Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md): covers containers, images, compose files, volumes, and networks
 
 ##### Tools to Install
 
@@ -41,7 +41,7 @@ Run these commands before lab day. The image pulls are large and will consume ti
 docker --version          # Need 24.0+
 docker compose version    # Need 2.x
 
-# Pull the images you'll need (do this before lab day — these are large)
+# Pull the images you'll need (do this before lab day - these are large)
 ollama pull llama3.2      # ~2 GB inference model
 docker pull ghcr.io/open-webui/open-webui:main    # frontend
 docker pull searxng/searxng     # tool service
@@ -66,8 +66,8 @@ If `ollama list` shows no models, the pull did not complete. Re-run `ollama pull
 
 Before writing a single config file, internalize this distinction. It is the source of the majority of failures in this lab.
 
-- **`localhost`** inside a container refers to that container itself — not the host machine, not any other container. A process inside `open-webui` hitting `http://localhost:11434` is trying to reach port 11434 inside the `open-webui` container, where nothing is listening.
-- **`host.docker.internal`** inside a container refers to the Docker host machine — the laptop or server running Docker. Use this when a container needs to reach a process running directly on the host (such as Ollama running natively).
+- **`localhost`** inside a container refers to that container itself, not the host machine, not any other container. A process inside `open-webui` hitting `http://localhost:11434` is trying to reach port 11434 inside the `open-webui` container, where nothing is listening.
+- **`host.docker.internal`** inside a container refers to the Docker host machine, the laptop or server running Docker. Use this when a container needs to reach a process running directly on the host (such as Ollama running natively).
 - **A service name like `ollama`** inside a container refers to another container on the same Docker network. This only works when both containers are declared in the same compose file and Docker has created a shared network for them.
 
 ```
@@ -92,20 +92,20 @@ extra_hosts:
   - "host.docker.internal:host-gateway"
 ```
 
-This is safe to include on Mac and Windows too — it is a no-op there. Include it everywhere for portability.
+This is safe to include on Mac and Windows too; it is a no-op there. Include it everywhere for portability.
 
 ##### Estimated Time
 
-- Part 1 — Plan Before Pulling: ~30 minutes
-- Part 2 — The Core Chain: ~60 minutes
-- Part 3 — Tool and Agent: ~45 minutes
-- Part 4 — Verify, Break, and Declare: ~30 minutes
+- Part 1, Plan Before Pulling: ~30 minutes
+- Part 2, The Core Chain: ~60 minutes
+- Part 3, Tool and Agent: ~45 minutes
+- Part 4, Verify, Break, and Declare: ~30 minutes
 
 ---
 
 #### Overview
 
-In this lab you will stand up a local AI stack with one service per tier, wired together correctly, verified systematically, and reproducible from a compose file. The five tiers are: an inference backend (the model engine), a unified gateway (a single URL that routes to the backend), a frontend (the user-facing chat interface), a tool service (something the agent can call), and an agent (an autonomous loop that uses the other services). The skill being developed is wiring discipline — understanding which address to use from which location, and documenting your choices so that another person (or your future self) can reproduce the result from scratch.
+In this lab you will stand up a local AI stack with one service per tier, wired together correctly, verified systematically, and reproducible from a compose file. The five tiers are: an inference backend (the model engine), a unified gateway (a single URL that routes to the backend), a frontend (the user-facing chat interface), a tool service (something the agent can call), and an agent (an autonomous loop that uses the other services). The skill being developed is wiring discipline: understanding which address to use from which location, and documenting your choices so that another person (or your future self) can reproduce the result from scratch.
 
 ---
 
@@ -129,14 +129,14 @@ Write your choices down before moving on. Every subsequent step refers to your f
 
 ##### Step 2: Create the Port Table
 
-Fill in this table before starting any container. Look up each image's default port in its documentation. Resolve every collision by assigning a different host port — you cannot have two services on the same host port.
+Fill in this table before starting any container. Look up each image's default port in its documentation. Resolve every collision by assigning a different host port; you cannot have two services on the same host port.
 
 | Tier | Service | Image | Default Port | Assigned Port | Notes |
 |------|---------|-------|-------------|---------------|-------|
 | Inference | ollama | ollama/ollama | 11434 | 11434 | No conflict |
 | Gateway | llmproxy | (see llmproxy docs) | 4000 | 4000 | |
 | Frontend | open-webui | ghcr.io/open-webui/open-webui:main | 8080 | 3000 | Remapped to avoid conflict |
-| Tool | searxng | searxng/searxng | 8080 | 8081 | Conflict with frontend — must remap |
+| Tool | searxng | searxng/searxng | 8080 | 8081 | Conflict with frontend, must remap |
 | Agent | hermes | (see hermes docs) | TBD | TBD | |
 
 **The "Assigned Port" column is your contract with yourself.** Every config file you write in Parts 2 and 3 must use the assigned ports from this table, not the image defaults.
@@ -171,7 +171,7 @@ Tool (searxng :8081)
 
 This diagram tells you exactly which `extra_hosts` stanzas you will need. Any arrow that crosses from a container to the host requires `host.docker.internal` and, on Linux, the `extra_hosts` declaration.
 
-##### Troubleshooting — Part 1
+##### Troubleshooting, Part 1
 
 **Port 8080 is already in use before you even start.**
 Run `docker ps` and `lsof -i :8080` (or `netstat -tulpn | grep 8080` on Linux) to find the occupant. Either stop that process or assign a different port in your table.
@@ -198,7 +198,7 @@ Build the stack one link at a time. **Verify each link before adding the next.**
 
 ##### Step 2a: Stand Up the Inference Backend (Ollama)
 
-Ollama runs directly on the host — not in Docker. This is intentional: GPU access from within a container requires additional configuration, and simplicity is the goal here.
+Ollama runs directly on the host, not in Docker. This is intentional: GPU access from within a container requires additional configuration, and simplicity is the goal here.
 
 ```bash
 ollama serve &
@@ -217,7 +217,7 @@ curl http://localhost:11434/api/tags
 > {"models":[{"name":"llama3.2:latest","model":"llama3.2:latest","modified_at":"...","size":2019700992,...}]}
 > ```
 
-If you see `connection refused`, Ollama is not running. Check whether the background process exited: `jobs` (bash) or check `ollama.log`. If you see an empty models list, the pull did not complete — run `ollama pull llama3.2` again.
+If you see `connection refused`, Ollama is not running. Check whether the background process exited: `jobs` (bash) or check `ollama.log`. If you see an empty models list, the pull did not complete; run `ollama pull llama3.2` again.
 
 Run one inference to confirm the model responds before proceeding:
 
@@ -242,7 +242,7 @@ mkdir -p $HOME/stack
 cd $HOME/stack
 ```
 
-Create `llmproxy-config.yaml` in that directory. This file tells llmproxy where to find the inference backend. Use `host.docker.internal` — not `localhost` — because llmproxy will be running inside a container, not on the host.
+Create `llmproxy-config.yaml` in that directory. This file tells llmproxy where to find the inference backend. Use `host.docker.internal` (not `localhost`) because llmproxy will be running inside a container, not on the host.
 
 ```yaml
 # llmproxy-config.yaml
@@ -317,7 +317,7 @@ docker compose up -d open-webui
 docker compose logs open-webui
 ```
 
-Open a browser to `http://localhost:3000`. Create an account when prompted (this is local-only — the credentials are stored in your bind-mounted data directory).
+Open a browser to `http://localhost:3000`. Create an account when prompted (this is local-only; the credentials are stored in your bind-mounted data directory).
 
 > **What you should see:** The open-webui chat interface loads. Select `llama3.2` from the model dropdown at the top. Type a message and press enter. The response should arrive within a few seconds.
 
@@ -325,7 +325,7 @@ If the model dropdown is empty, open-webui cannot reach llmproxy. Check the `OPE
 
 Complete a chat message that gets a response. **This is your first end-to-end verification of the core chain.** Do not proceed to Part 3 until a chat completes successfully.
 
-##### Troubleshooting — Part 2
+##### Troubleshooting, Part 2
 
 **llmproxy starts but cannot reach Ollama (Linux).**
 The log will show something like `Connection refused` or `Failed to connect to host.docker.internal port 11434`. The fix is to add `extra_hosts: ["host.docker.internal:host-gateway"]` to the llmproxy service and run `docker compose up -d --force-recreate llmproxy`.
@@ -340,7 +340,7 @@ The llmproxy container has not finished starting. Run `docker compose ps` and ch
 
 Before moving to Part 3, confirm you can answer all three questions:
 
-1. You ran `curl http://localhost:11434/api/generate` from the host terminal, and the same URL appears in `llmproxy-config.yaml` — but it will not work there. Why? What URL does the config file use instead?
+1. You ran `curl http://localhost:11434/api/generate` from the host terminal, and the same URL appears in `llmproxy-config.yaml`, but it will not work there. Why? What URL does the config file use instead?
 2. open-webui is published on host port 3000 but listens on container port 8080. Why is this remapping necessary?
 3. What does `restart: unless-stopped` mean? When would `always` be a better choice, and when would `no` be better?
 
@@ -447,7 +447,7 @@ ls $HOME/agents/hermes/
 
 > **Expected output:** The identity files that existed before the container was destroyed are still present. The agent resumes with the same identity rather than starting fresh.
 
-##### Troubleshooting — Part 3
+##### Troubleshooting, Part 3
 
 **The agent starts but cannot reach the search tool.**
 Check the `TOOL_SEARCH_URL` environment variable. It must use `host.docker.internal`, not `localhost`. Also confirm SearXNG is running: `docker compose ps searxng`.
@@ -480,7 +480,7 @@ The wiring matrix is your systematic proof that the stack works. Fill in every c
 | Container-to-host (host.docker.internal) | | | | | |
 | End-to-end chat completion | | | | | |
 
-**Host-side liveness checks** — run these from your terminal, not from inside a container:
+**Host-side liveness checks**: run these from your terminal, not from inside a container:
 
 ```bash
 # Ollama
@@ -499,7 +499,7 @@ curl "http://localhost:8081/search?q=test&format=json"
 curl http://localhost:TBD/health
 ```
 
-**Container-side reachability checks** — run these from inside containers:
+**Container-side reachability checks**: run these from inside containers:
 
 ```bash
 # From llmproxy container, reach Ollama on the host
@@ -531,7 +531,7 @@ curl http://localhost:4000/v1/chat/completions \
 
 This step builds diagnostic intuition. You will introduce a known failure, observe the symptom, fix it, and write the postmortem.
 
-**The break:** In `docker-compose.yml`, remove the `extra_hosts` stanza from one service that reaches the host — for example, `llmproxy`. Then restart that service:
+**The break:** In `docker-compose.yml`, remove the `extra_hosts` stanza from one service that reaches the host: for example, `llmproxy`. Then restart that service:
 
 ```bash
 docker compose up -d --force-recreate llmproxy
@@ -570,7 +570,7 @@ Write the postmortem using this template:
 ```
 Postmortem: llmproxy could not reach Ollama on the host
 Symptom:  [paste the exact error message or behavior you observed]
-Cause:    [the specific misconfiguration — what was missing or wrong]
+Cause:    [the specific misconfiguration - what was missing or wrong]
 Fix:      [the exact change that resolved it]
 ```
 
@@ -578,7 +578,7 @@ If you encountered a **real unplanned failure** during the lab, you may substitu
 
 ##### Step 4c: Final Compose File and Down/Up Test
 
-Your complete `docker-compose.yml` for the core stack (gateway, frontend, and tool at minimum — all five services if you have them working) should look like this structure. Fill in your actual image names, ports, and paths:
+Your complete `docker-compose.yml` for the core stack (gateway, frontend, and tool at minimum, all five services if you have them working) should look like this structure. Fill in your actual image names, ports, and paths:
 
 ```yaml
 services:
@@ -651,7 +651,7 @@ curl http://localhost:4000/models
 
 Open a browser to `http://localhost:3000` and confirm your chat history is still present.
 
-##### Troubleshooting — Part 4
+##### Troubleshooting, Part 4
 
 **`docker compose down` removed your data.**
 If you accidentally ran `docker compose down --volumes`, named volumes were deleted. Bind mounts (paths like `$HOME/agents/...`) are unaffected by `--volumes`. If you used named volumes instead of bind mounts and lost data, this is a learning moment: prefer bind mounts for data you want to keep across `down` commands.
@@ -693,13 +693,13 @@ Before writing up your deliverables, confirm you can answer all three questions:
 Submit a ZIP file containing the following items. Everything must be present for the submission to be considered complete.
 
 **Port table (filled in)**
-The table from Part 1, Step 2 with all five rows complete — assigned ports, image names, and notes on any collisions resolved.
+The table from Part 1, Step 2 with all five rows complete: assigned ports, image names, and notes on any collisions resolved.
 
 **`docker-compose.yml`**
 The compose file that reproduces your running stack. Requirements:
 - All services present (gateway, frontend, tool, agent at minimum)
 - Image tags pinned (e.g., `:main-latest`, not `:latest` if there is a more specific tag)
-- No hardcoded secrets — use `sk-placeholder` or environment variable references
+- No hardcoded secrets: use `sk-placeholder` or environment variable references
 - Bind mounts using `$HOME/agents/...` paths
 - `restart` policies explicitly set for every service
 - `extra_hosts` stanza on every service that reaches the host
@@ -715,13 +715,13 @@ Written for a classmate who has not done this lab. Must include:
 - How to stop the stack cleanly
 
 **Wiring matrix with outputs**
-The completed table from Part 4, Step 4a. Every cell must contain the command run and whether it passed or failed. Do not summarize — paste the actual commands and actual outputs (truncated if long).
+The completed table from Part 4, Step 4a. Every cell must contain the command run and whether it passed or failed. Do not summarize; paste the actual commands and actual outputs (truncated if long).
 
 **Postmortem**
 Either the intentional break from Part 4, Step 4b or a real failure encountered during the lab. Must follow the three-line template: symptom, cause, fix.
 
 **Pair log**
-A timestamped record of driver/navigator swaps. Minimum three swaps. Format: `HH:MM — [name] takes driver`, alternating.
+A timestamped record of driver/navigator swaps. Minimum three swaps. Format: `HH:MM - [name] takes driver`, alternating.
 
 **Answers to reflection prompts**
 See the Reflection Prompts section below.
@@ -747,7 +747,7 @@ healthcheck:
 
 **Challenge 2: Monitoring Stack**
 
-Add a sixth service — a monitoring stack using Prometheus and Grafana, or Netdata — that displays CPU and memory usage per container in real time. Create a dashboard showing at least: CPU usage per service, memory usage per service, and one application-level metric (such as llmproxy request count). Document the Grafana URL and how to access the dashboard in your README.
+Add a sixth service (a monitoring stack using Prometheus and Grafana, or Netdata) that displays CPU and memory usage per container in real time. Create a dashboard showing at least: CPU usage per service, memory usage per service, and one application-level metric (such as llmproxy request count). Document the Grafana URL and how to access the dashboard in your README.
 
 **Challenge 3: Automated Verification Script**
 
@@ -759,7 +759,7 @@ Write a shell script `verify_stack.sh` that automatically runs every check in yo
 
 ```bash
 #!/bin/bash
-# verify_stack.sh — automated wiring matrix
+# verify_stack.sh - automated wiring matrix
 set -euo pipefail
 
 PASS=0
@@ -807,7 +807,7 @@ If collaboration beyond your pair occurred, identify it. Do you certify that thi
 Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
 **Prompt 5**
-The `host.docker.internal` pattern is a workaround for the fact that containers have their own network namespace. What would a cleaner architectural solution look like — one that did not require this workaround? What trade-offs would it introduce? (Hint: think about what would need to change about where Ollama runs, or how Docker networking is configured.)
+The `host.docker.internal` pattern is a workaround for the fact that containers have their own network namespace. What would a cleaner architectural solution look like: one that did not require this workaround? What trade-offs would it introduce? (Hint: think about what would need to change about where Ollama runs, or how Docker networking is configured.)
 
 **Prompt 6**
 You deployed five services in this lab. In a real production AI system, you might have fifty. What would need to be different about how you manage ports, secrets, health checks, and restarts at that scale? Name at least two things that do not scale from this lab's approach and explain specifically why they break down.
