@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RESTful LLM Access: The api/v1 Paradigm
 
-This module develops the mechanics of talking to a language model over HTTP — the protocol that all provider-agnostic AI code uses under the hood. We move from **what REST is $\rightarrow$ the two key LLM endpoints $\rightarrow$ writing the same request three ways $\rightarrow$ tool calling over the API $\rightarrow$ switching providers by changing one line $\rightarrow$ building prompts from templates, voting for consensus, and chaining stages with JSON**.
+This module develops the mechanics of talking to a language model over HTTP, the protocol that all provider-agnostic AI code uses under the hood. We move from **what REST is $\rightarrow$ the two key LLM endpoints $\rightarrow$ writing the same request three ways $\rightarrow$ tool calling over the API $\rightarrow$ switching providers by changing one line $\rightarrow$ building prompts from templates, voting for consensus, and chaining stages with JSON**.
 
 ---
 
@@ -36,8 +36,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Streaming** | Sending the model's response one token at a time as it is generated, rather than waiting for the full response | `"stream": true` in the request body; response arrives as a series of `data: {...}` lines |
 | **LiteLLM** | A proxy server and Python library that accepts OpenAI-format requests and translates them to the format required by 100+ different providers | `litellm.completion(model="ollama/llama3.2", messages=[...])` |
 | **Prompt Template** | A string with named `{}` blanks that you fill at call time; the model sees only the rendered result | `"Context:\n{context}\n\nQuestion: {question}".format(...)` |
-| **Consensus / Self-Consistency** | Sampling the same prompt several times at nonzero temperature and aggregating (e.g., majority vote) to reduce variance | 5 samples of a sentiment label → `Counter` majority vote |
-| **Pipeline / Chaining** | Feeding one prompt's structured (JSON) output into the blanks of the next prompt's template | Stage 1 emits `{"topic": "billing", "urgent": true}` → fills Stage 2's `{topic}` blank |
+| **Consensus / Self-Consistency** | Sampling the same prompt several times at nonzero temperature and aggregating (e.g., majority vote) to reduce variance | 5 samples of a sentiment label -> `Counter` majority vote |
+| **Pipeline / Chaining** | Feeding one prompt's structured (JSON) output into the blanks of the next prompt's template | Stage 1 emits `{"topic": "billing", "urgent": true}` -> fills Stage 2's `{topic}` blank |
 
 ---
 
@@ -47,7 +47,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 **What you will have at the end:** the ability to call any OpenAI-compatible endpoint by hand, and to read the errors when it fails.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
@@ -81,20 +81,20 @@ check_ollama()
 
 # Part I: REST Fundamentals for LLMs
 
-In this part, you will map the REST paradigm onto LLM APIs — learning the specific endpoints, headers, and JSON fields that every OpenAI-compatible server (including Ollama) shares. This gives you a transferable mental model that works across providers.
+In this part, you will map the REST paradigm onto LLM APIs, learning the specific endpoints, headers, and JSON fields that every OpenAI-compatible server (including Ollama) shares. This gives you a transferable mental model that works across providers.
 
 ## 1. What REST Means in Practice
 
-You have used websites and mobile apps your whole life without knowing they communicate over REST. When your browser loads a page or an app fetches your feed, it sends an HTTP request to a URL, the server processes it and sends back structured data, and the client displays the result. Language model inference works exactly the same way — the "page" being returned is the model's response, encoded as JSON.
+You have used websites and mobile apps your whole life without knowing they communicate over REST. When your browser loads a page or an app fetches your feed, it sends an HTTP request to a URL, the server processes it and sends back structured data, and the client displays the result. Language model inference works exactly the same way; the "page" being returned is the model's response, encoded as JSON.
 
-**A REST request has four components that you control:** the URL (which server and which action), the HTTP method (`GET` for reading, `POST` for creating or computing), the request body (a JSON object with your inputs), and the response body (a JSON object with the server's output). Every local inference server — Ollama, vLLM, llama.cpp — exposes at least two endpoints. Knowing just these two lets you talk to any of them.
+**A REST request has four components that you control:** the URL (which server and which action), the HTTP method (`GET` for reading, `POST` for creating or computing), the request body (a JSON object with your inputs), and the response body (a JSON object with the server's output). Every local inference server (Ollama, vLLM, llama.cpp) exposes at least two endpoints. Knowing just these two lets you talk to any of them.
 
 | Endpoint | Method | Purpose | When you use it |
 |---|---|---|---|
 | `/v1/models` | `GET` | List all models currently loaded on the server | Before sending a chat request, to confirm the model name |
 | `/v1/chat/completions` | `POST` | Send a conversation and receive the model's reply | Every inference call in your agent |
 
-The `/v1/` prefix is the **version marker** — it signals that this is the first stable version of the API. If the API changes incompatibly in the future, a new `/v2/` prefix can coexist. This versioning pattern is standard REST design.
+The `/v1/` prefix is the **version marker**: it signals that this is the first stable version of the API. If the API changes incompatibly in the future, a new `/v2/` prefix can coexist. This versioning pattern is standard REST design.
 
 ---
 
@@ -121,13 +121,13 @@ In a response from `POST /v1/chat/completions`, which JSON path contains the mod
 [(X)] `response["choices"][0]["message"]["content"]`
 [( )] `response["data"]["text"]`
 
-> **⚠️ Common Misconception:** "The OpenAI Python SDK only works if you have an OpenAI account and API key." This is false. The SDK's `OpenAI` client accepts a `base_url` parameter that redirects every call to any server that speaks the same protocol. You still need to pass an `api_key` argument, but the server ignores it — Ollama accepts any string, including `"ollama"` or `"not-a-real-key"`. The SDK is a convenience wrapper around HTTP; it does not enforce which server you talk to.
+> **Common Misconception:** "The OpenAI Python SDK only works if you have an OpenAI account and API key." This is false. The SDK's `OpenAI` client accepts a `base_url` parameter that redirects every call to any server that speaks the same protocol. You still need to pass an `api_key` argument, but the server ignores it; Ollama accepts any string, including `"ollama"` or `"not-a-real-key"`. The SDK is a convenience wrapper around HTTP; it does not enforce which server you talk to.
 
 ---
 
 # Part II: Raw HTTP vs. SDK
 
-In this part, you will send the same chat request three ways — raw `curl`, the `requests` library, and the OpenAI Python SDK — so you understand exactly what the SDK is doing for you and when going lower-level is worth it.
+In this part, you will send the same chat request three ways (raw `curl`, the `requests` library, and the OpenAI Python SDK) so you understand exactly what the SDK is doing for you and when going lower-level is worth it.
 
 ## 3. Three Ways to Write the Same Request
 
@@ -209,11 +209,11 @@ After running (or reviewing the projected run of) the code above, examine the th
 
 2. The `requests` version calls `r.raise_for_status()` before reading the response. What does this line do, and what would happen if you omitted it and the server returned an HTTP 500 error?
 
-   > *Hint: HTTP status codes communicate success (2xx) and failure (4xx, 5xx). Without `raise_for_status()`, a 500 response still has a body — but that body is an error message, not a model reply. Reading `r.json()["choices"][0]` from an error body raises a `KeyError`, which is a confusing error to debug.*
+   > *Hint: HTTP status codes communicate success (2xx) and failure (4xx, 5xx). Without `raise_for_status()`, a 500 response still has a body, but that body is an error message, not a model reply. Reading `r.json()["choices"][0]` from an error body raises a `KeyError`, which is a confusing error to debug.*
 
 3. When would you choose the raw `requests` approach over the OpenAI SDK? Give a specific scenario where the SDK would actually get in your way.
 
-   > *Hint: Think about environments where you cannot install packages (a locked-down server, a browser-based runtime, a very small container image). Also think about custom endpoints that return non-standard response shapes — the SDK validates the response structure and will raise errors if the server returns something unexpected.*
+   > *Hint: Think about environments where you cannot install packages (a locked-down server, a browser-based runtime, a very small container image). Also think about custom endpoints that return non-standard response shapes; the SDK validates the response structure and will raise errors if the server returns something unexpected.*
 
 What does setting `"stream": false` in the request body change at the HTTP protocol level?
 
@@ -222,13 +222,13 @@ What does setting `"stream": false` in the request body change at the HTTP proto
 [(X)] The server sends the complete response in a single HTTP response body instead of as a sequence of server-sent event lines
 [( )] The client receives the response faster because streaming has overhead
 
-> **⚠️ Common Misconception:** "Streaming makes the model generate faster." The model generates tokens at the same rate regardless of whether streaming is enabled. Streaming changes how the tokens are *delivered* — in chunks as they are produced versus all at once at the end. For a user watching a chat interface, streaming feels faster because text appears immediately. For a program that processes the final answer, non-streaming is simpler because the full JSON arrives in one piece.
+> **Common Misconception:** "Streaming makes the model generate faster." The model generates tokens at the same rate regardless of whether streaming is enabled. Streaming changes how the tokens are *delivered*: in chunks as they are produced versus all at once at the end. For a user watching a chat interface, streaming feels faster because text appears immediately. For a program that processes the final answer, non-streaming is simpler because the full JSON arrives in one piece.
 
 ---
 
 # Part III: Request Construction Deep Dive
 
-In this part, you will dissect the full `/v1/chat/completions` payload field by field and trace a complete tool-calling round-trip — the skill needed to integrate any LLM into a real application.
+In this part, you will dissect the full `/v1/chat/completions` payload field by field and trace a complete tool-calling round-trip, the skill needed to integrate any LLM into a real application.
 
 ## 4. Anatomy of a Chat Completions Payload
 
@@ -256,7 +256,7 @@ $$
 
 Tool calling is how agents use the REST API to act on the world. Instead of returning plain text, the model returns a `tool_calls` array containing a function name and a JSON-encoded argument string. The surrounding program executes the function, then sends the result back as a new message with `role: "tool"`. This exchange repeats until the model returns a final plain-text reply instead of a tool call.
 
-**The model does not execute the function.** The model only decides *which* function to call and *what arguments* to pass. The program is responsible for everything that actually happens — the network request, the database query, the file write. This is the same separation we saw in the agent loop activity.
+**The model does not execute the function.** The model only decides *which* function to call and *what arguments* to pass. The program is responsible for everything that actually happens: the network request, the database query, the file write. This is the same separation we saw in the agent loop activity.
 
 ---
 
@@ -365,17 +365,17 @@ Examine the printed trace from the tool loop above, or walk through it with your
 
    > *Hint: `tool_choice: "auto"` means the model decides whether a tool call is appropriate. A math question does not match the description of `get_weather`, so the model should return plain text with `tool_calls` absent or `None` from the response.*
 
-> **⚠️ Common Misconception:** Setting `tool_choice: "auto"` does not guarantee the model will always call a tool. It means the model may call a tool if it judges one to be appropriate. The model will return plain text when it believes it can answer without using a tool. If you need to force a tool call (for testing, or to guarantee structured output), set `tool_choice: {"type": "function", "function": {"name": "your_tool_name"}}`.
+> **Common Misconception:** Setting `tool_choice: "auto"` does not guarantee the model will always call a tool. It means the model may call a tool if it judges one to be appropriate. The model will return plain text when it believes it can answer without using a tool. If you need to force a tool call (for testing, or to guarantee structured output), set `tool_choice: {"type": "function", "function": {"name": "your_tool_name"}}`.
 
 ---
 
 # Part IV: Provider Portability
 
-In this part, you will use LiteLLM as a universal proxy so that the same code can target Ollama, any OpenAI-compatible server, or a cloud provider by changing one environment variable — the key to building provider-agnostic agents.
+In this part, you will use LiteLLM as a universal proxy so that the same code can target Ollama, any OpenAI-compatible server, or a cloud provider by changing one environment variable, the key to building provider-agnostic agents.
 
 ## 6. LiteLLM as a Universal Proxy
 
-Once you understand the `/v1/chat/completions` protocol, you can write agent code that works against any compliant server by changing two variables: `base_url` and `model`. LiteLLM formalizes this pattern into a library and proxy server that accepts OpenAI-format requests and translates them internally to whatever format the target provider requires — whether that is Ollama locally, a cloud inference API, or a self-hosted vLLM cluster.
+Once you understand the `/v1/chat/completions` protocol, you can write agent code that works against any compliant server by changing two variables: `base_url` and `model`. LiteLLM formalizes this pattern into a library and proxy server that accepts OpenAI-format requests and translates them internally to whatever format the target provider requires, whether that is Ollama locally, a cloud inference API, or a self-hosted vLLM cluster.
 
 **The developer experience is identical across providers.** You write the request once in OpenAI format. LiteLLM handles the translation. If you switch providers, you update a configuration file; your agent code is untouched. This portability has a cost: LiteLLM adds a small latency overhead and may not expose every provider-specific parameter. For most applications, the portability benefit outweighs the cost.
 
@@ -442,7 +442,7 @@ print(result_b)
 
 ## Model 3: Portability and Its Limits
 
-The `chat_completion` function above sends the same payload to two different models. Notice that only `base_url` and `model` change between the two calls — the request construction code is identical.
+The `chat_completion` function above sends the same payload to two different models. Notice that only `base_url` and `model` change between the two calls; the request construction code is identical.
 
 ### Critical Thinking Questions
 
@@ -465,21 +465,21 @@ What is the minimum change needed to point an OpenAI Python SDK call at a local 
 [( )] Set the `OPENAI_API_KEY` environment variable to `"ollama"`
 [(X)] Instantiate the `OpenAI` client with `base_url="http://localhost:11434/v1"` and `api_key="ollama"`
 
-> **⚠️ Common Misconception:** Switching providers is not always as simple as changing `base_url` and `model`. The OpenAI-compatible specification defines a common *structure*, but not every optional field is supported by every server. Features like `logprobs`, `response_format`, `parallel_tool_calls`, and streaming with tool calls are implemented inconsistently. Always test a new provider with the specific features your agent relies on before treating portability as guaranteed.
+> **Common Misconception:** Switching providers is not always as simple as changing `base_url` and `model`. The OpenAI-compatible specification defines a common *structure*, but not every optional field is supported by every server. Features like `logprobs`, `response_format`, `parallel_tool_calls`, and streaming with tool calls are implemented inconsistently. Always test a new provider with the specific features your agent relies on before treating portability as guaranteed.
 
 ---
 
 # Part V: Prompt Templating, Consensus, and Pipelines
 
-Every request so far sent a hand-written `messages` array. Real systems rarely hand-write the `content` field — they **generate it from a template**, filling `{}` blanks with data that changes each call. In this part you will build prompts from templates, run the *same* template many times and take a **consensus** vote, and **chain stages** so that one prompt's structured JSON output becomes the next prompt's input. These three moves — fill, vote, chain — are the backbone of every production LLM pipeline.
+Every request so far sent a hand-written `messages` array. Real systems rarely hand-write the `content` field; they **generate it from a template**, filling `{}` blanks with data that changes each call. In this part you will build prompts from templates, run the *same* template many times and take a **consensus** vote, and **chain stages** so that one prompt's structured JSON output becomes the next prompt's input. These three moves (fill, vote, chain) are the backbone of every production LLM pipeline.
 
 ## 7. Templating the Prompt: Filling `{}` Placeholders
 
-A **prompt template** is a string with named blanks you fill at call time. In Python the mechanism is `str.format()` (or an f-string): `"Answer as a {tone} expert: {question}".format(tone="terse", question=q)`. The model never sees the blanks — it sees the fully rendered string.
+A **prompt template** is a string with named blanks you fill at call time. In Python the mechanism is `str.format()` (or an f-string): `"Answer as a {tone} expert: {question}".format(tone="terse", question=q)`. The model never sees the blanks; it sees the fully rendered string.
 
 **Why this matters:** Templating is the single mechanism behind three things you have already met. **Memory** pastes prior turns into a `{history}` blank. **RAG** pastes retrieved documents into a `{context}` blank. **Few-shot prompting** pastes worked examples into an `{examples}` blank. Once you see that "context injection" is just `.format()`, the whole family collapses into one idea: *decide what text goes in the blank, then render and send.*
 
-The clearest demonstration is a **before/after** contrast on a `{context}` blank. With the blank empty, the model must guess; with the blank filled from a knowledge source, it answers from the injected facts — the exact mechanism of RAG and of memory, made visible.
+The clearest demonstration is a **before/after** contrast on a `{context}` blank. With the blank empty, the model must guess; with the blank filled from a knowledge source, it answers from the injected facts, the exact mechanism of RAG and of memory, made visible.
 
 ---
 
@@ -517,7 +517,7 @@ Answer:"""
 
 question = "What port does our local Ollama server listen on?"
 
-# Pretend this came from a vector store / notes file — the 'retrieved' knowledge.
+# Pretend this came from a vector store / notes file, the 'retrieved' knowledge.
 retrieved = "Our lab's Ollama instance is reachable at http://localhost:11434 (port 11434)."
 
 # --- BEFORE: empty {context}. The model has no grounded source. ---
@@ -539,7 +539,7 @@ The two calls above differ only in what got pasted into `{context}`. The "after"
 
 10. The template instructs the model to answer "I don't know" when the context is insufficient. Why is that instruction *in the template itself* rather than a separate rule enforced by your code? What failure does it guard against when `{context}` is empty or irrelevant?
 
-    > *Hint: The model only obeys text it can see. Putting the abstention rule inside the rendered string is the only way the model knows the rule exists. It guards against confident hallucination — without it, an empty `{context}` invites the model to invent a plausible-sounding port number.*
+    > *Hint: The model only obeys text it can see. Putting the abstention rule inside the rendered string is the only way the model knows the rule exists. It guards against confident hallucination; without it, an empty `{context}` invites the model to invent a plausible-sounding port number.*
 
 11. Suppose `{question}` is filled with untrusted user text that itself contains the substring `{context}` or a stray `}`. Explain how naive `.format()` could break or be abused, and name one safer way to build the string.
 
@@ -547,7 +547,7 @@ The two calls above differ only in what got pasted into `{context}`. The "after"
 
 12. A JSON example inside a template (for instance, showing the model the shape `{"topic": "..."}`) collides with `.format()` because the braces are interpreted as fields. What is the fix, and why does this collision push many teams toward f-strings or dedicated template engines?
 
-    > *Hint: In `.format()` you must double every literal brace — `{{` and `}}` — so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*
+    > *Hint: In `.format()` you must double every literal brace (`{{` and `}}`) so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*
 
 In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the model actually receive when you call `.format(context=docs, question=q)`?
 
@@ -556,15 +556,15 @@ In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the m
 [(X)] A single fully rendered string with `docs` and `q` substituted in place of the blanks
 [( )] A structured object where `context` and `question` remain separate fields the model can query
 
-> **⚠️ Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again — if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
+> **Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again; if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
 
 ---
 
 ## 8. Multi-Prompting and Consensus (Self-Consistency)
 
-A single sample from a model is a roll of the dice: at `temperature > 0` the same prompt can yield different answers. **Consensus** (also called *self-consistency*, Wang et al. 2022) turns that variance into a strength — run the *same* filled template several times, then aggregate. For a question with a discrete answer, take the **majority vote**; for open-ended text, pass the candidates to an *aggregator* prompt that reconciles them.
+A single sample from a model is a roll of the dice: at `temperature > 0` the same prompt can yield different answers. **Consensus** (also called *self-consistency*, Wang et al. 2022) turns that variance into a strength: run the *same* filled template several times, then aggregate. For a question with a discrete answer, take the **majority vote**; for open-ended text, pass the candidates to an *aggregator* prompt that reconciles them.
 
-**Why this matters:** Voting is cheap reliability. One sample at `temperature=0.7` might slip; five samples where four agree is a far stronger signal, and the disagreement rate itself tells you how confident the model is. This is the same "sample-and-reduce" pattern behind ensemble methods in classical ML — applied to prompts instead of classifiers.
+**Why this matters:** Voting is cheap reliability. One sample at `temperature=0.7` might slip; five samples where four agree is a far stronger signal, and the disagreement rate itself tells you how confident the model is. This is the same "sample-and-reduce" pattern behind ensemble methods in classical ML, applied to prompts instead of classifiers.
 
 ---
 
@@ -626,7 +626,7 @@ The tally reports both a winner *and* an agreement fraction. A 5/5 sweep and a 2
 
 13. The classification template ends with `Sentiment:` and demands a single word. Why does forcing a constrained output format matter *specifically* for consensus voting? What breaks if each sample returns a free-form paragraph instead?
 
-    > *Hint: Votes are only comparable if they are the same *kind* of token. Free-form paragraphs cannot be tallied by `Counter` — "mostly positive with caveats" and "leans positive" are the same vote but count as different strings. Constraining the output to a fixed label set makes aggregation a simple exact-match count.*
+    > *Hint: Votes are only comparable if they are the same *kind* of token. Free-form paragraphs cannot be tallied by `Counter`; "mostly positive with caveats" and "leans positive" are the same vote but count as different strings. Constraining the output to a fixed label set makes aggregation a simple exact-match count.*
 
 14. Consensus at `temperature=0.8` costs `N`× the tokens of a single call. Give one scenario where that cost is clearly worth it and one where a single `temperature=0` call is the better engineering choice.
 
@@ -636,15 +636,15 @@ The tally reports both a winner *and* an agreement fraction. A 5/5 sweep and a 2
 
     > *Hint: The current `next(..., ans)` fallback stuffs the raw model text in as a "vote," which can create spurious singleton labels. Mapping unrecognized output to `ABSTAIN` keeps the denominator honest: `3 POSITIVE / 1 NEGATIVE / 1 ABSTAIN` truthfully reports that one sample failed, rather than hiding it or inflating a real label's count.*
 
-> **⚠️ Common Misconception:** "More samples always means a more correct answer." Voting reduces *variance*, not *bias*. If the model is systematically wrong about something (it consistently misreads a domain term), all five samples will agree on the wrong answer and consensus will report high confidence in a mistake. Self-consistency improves reliability only when the correct answer is the single most likely one and errors are scattered — it cannot fix a model that is confidently and consistently wrong.
+> **Common Misconception:** "More samples always means a more correct answer." Voting reduces *variance*, not *bias*. If the model is systematically wrong about something (it consistently misreads a domain term), all five samples will agree on the wrong answer and consensus will report high confidence in a mistake. Self-consistency improves reliability only when the correct answer is the single most likely one and errors are scattered; it cannot fix a model that is confidently and consistently wrong.
 
 ---
 
 ## 9. Chaining Stages: Templated JSON Hand-Off
 
-The most powerful use of templates is **pipelining**: the output of one prompt becomes the input that fills the *next* prompt's blanks. To make the hand-off reliable, an early stage emits **structured JSON** — a small object of "flags" and extracted fields — which your program parses and injects into the next template. This is how routing, extraction-then-generation, and multi-step agents are built.
+The most powerful use of templates is **pipelining**: the output of one prompt becomes the input that fills the *next* prompt's blanks. To make the hand-off reliable, an early stage emits **structured JSON** (a small object of "flags" and extracted fields) which your program parses and injects into the next template. This is how routing, extraction-then-generation, and multi-step agents are built.
 
-**Why this matters:** Free text is hard for a program to branch on; JSON is trivial. When stage 1 returns `{"topic": "billing", "urgent": true, "needs_calc": false}`, your code can *route* on `topic`, *escalate* on `urgent`, and *skip* a calculator call when `needs_calc` is false — then fill only the relevant fields into stage 2's template. The model does the understanding; your code does the control flow. This is the same "structured outputs" idea you will formalize elsewhere, applied as the glue between pipeline stages.
+**Why this matters:** Free text is hard for a program to branch on; JSON is trivial. When stage 1 returns `{"topic": "billing", "urgent": true, "needs_calc": false}`, your code can *route* on `topic`, *escalate* on `urgent`, and *skip* a calculator call when `needs_calc` is false, then fill only the relevant fields into stage 2's template. The model does the understanding; your code does the control flow. This is the same "structured outputs" idea you will formalize elsewhere, applied as the glue between pipeline stages.
 
 Note the templating subtlety: because stage 1's instruction *shows* the model a literal JSON shape, the braces in that example must be **doubled** (`{{ }}`) if you build the instruction with `.format()`. Below we sidestep the collision by keeping stage 1 as a plain string (no `.format()` needed) and using `.format()` only in stage 2, where the blanks are ours.
 
@@ -683,7 +683,7 @@ raw = complete(STAGE1, temperature=0.0)
 print("=== Stage 1 raw output ===")
 print(raw)
 
-# Parse defensively — models sometimes wrap JSON in prose or fences.
+# Parse defensively; models sometimes wrap JSON in prose or fences.
 def parse_flags(text):
     start, end = text.find("{"), text.rfind("}")
     try:
@@ -720,21 +720,21 @@ print(complete(resolved, temperature=0.3))
 
 ## Model 6: The JSON Seam Between Stages
 
-Stage 1's job is *not* to answer the customer — it is to produce machine-readable flags. Stage 2 does the answering, but only after your code has read those flags and chosen what to inject. The JSON object is the **seam**: a typed contract between two prompts that your program can inspect, log, and branch on.
+Stage 1's job is *not* to answer the customer; it is to produce machine-readable flags. Stage 2 does the answering, but only after your code has read those flags and chosen what to inject. The JSON object is the **seam**: a typed contract between two prompts that your program can inspect, log, and branch on.
 
 ### Critical Thinking Questions
 
 16. Stage 1 is asked for JSON only, yet `parse_flags` still searches for the first `{` and last `}` and falls back to a default on failure. Why is defensive parsing mandatory rather than optional when a model produces the JSON that drives your control flow?
 
-    > *Hint: Models are probabilistic — they may wrap JSON in ```` ```json ```` fences, add "Here you go:", or emit malformed JSON. If your pipeline does `json.loads(raw)` directly and stage 1 adds one word of prose, the whole pipeline crashes. Slicing between the outer braces and falling back to a safe default keeps stage 2 running even when stage 1 misbehaves.*
+    > *Hint: Models are probabilistic; they may wrap JSON in ```` ```json ```` fences, add "Here you go:", or emit malformed JSON. If your pipeline does `json.loads(raw)` directly and stage 1 adds one word of prose, the whole pipeline crashes. Slicing between the outer braces and falling back to a safe default keeps stage 2 running even when stage 1 misbehaves.*
 
 17. The `needs_calc` flag lets your program *skip* work (the calculation note) when it is not needed. Explain how this flag-driven branching keeps each stage's prompt smaller and more focused, connecting it to the small-context-window principle from the *Memory* activity.
 
-    > *Hint: Instead of one giant prompt that handles every possible case, each stage receives only the instructions relevant to *this* ticket. When `needs_calc` is false, the arithmetic instruction is never injected, so the model is not distracted by an irrelevant task. Flags let you assemble the minimum sufficient prompt per call — the same principle as keeping working memory small.*
+    > *Hint: Instead of one giant prompt that handles every possible case, each stage receives only the instructions relevant to *this* ticket. When `needs_calc` is false, the arithmetic instruction is never injected, so the model is not distracted by an irrelevant task. Flags let you assemble the minimum sufficient prompt per call, the same principle as keeping working memory small.*
 
 18. Design a third stage that consumes stage 2's reply and emits a JSON `{"resolved": true|false, "escalate": true|false}` verdict. What template blanks would it need, and how would your program act on each flag?
 
-    > *Hint: Stage 3's template needs an `{original_ticket}` blank and a `{draft_reply}` blank so it can judge whether the reply actually addresses the ticket. Your program would send the reply to the customer when `resolved` is true, and route to a human queue when `escalate` is true — a classic generate-then-check loop where each seam is a small JSON contract.*
+    > *Hint: Stage 3's template needs an `{original_ticket}` blank and a `{draft_reply}` blank so it can judge whether the reply actually addresses the ticket. Your program would send the reply to the customer when `resolved` is true, and route to a human queue when `escalate` is true, a classic generate-then-check loop where each seam is a small JSON contract.*
 
 Why does an early pipeline stage emit JSON flags instead of a plain-English summary for the next stage to read?
 
@@ -743,13 +743,13 @@ Why does an early pipeline stage emit JSON flags instead of a plain-English summ
 [(X)] JSON is machine-parseable, so the program can branch, route, and fill later templates deterministically instead of re-interpreting free text
 [( )] Plain-English summaries cannot be passed between `/v1/chat/completions` calls
 
-> **⚠️ Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
+> **Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
 
 ---
 
 # Part VI: Synthesis and Practice
 
-In this part, you will apply everything from Parts I–V in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
+In this part, you will apply everything from Parts I-V in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
 
 ## 10. Exercises
 
@@ -762,7 +762,7 @@ In this part, you will apply everything from Parts I–V in open-ended exercises
 2. *Multi-turn conversation.*
 
    - *What to do*: Write a Python function `multi_turn_chat(turns)` that accepts a list of `(role, content)` tuples and sends them as a single `messages` array to `/v1/chat/completions`. Test it with a 3-turn conversation where the user refers back to something said in turn 1 in turn 3 (for example, asking the model to elaborate on its earlier answer).
-   - *Starter hint*: Build the messages list as `[{"role": r, "content": c} for r, c in turns]`. The model can only "remember" previous turns because they are included in the `messages` array — there is no hidden memory in the server.
+   - *Starter hint*: Build the messages list as `[{"role": r, "content": c} for r, c in turns]`. The model can only "remember" previous turns because they are included in the `messages` array; there is no hidden memory in the server.
    - *You've succeeded when*: The model's third response correctly references content from turn 1, demonstrating that context is carried through the `messages` array.
 
 3. *Tool calling from scratch.*
@@ -774,14 +774,14 @@ In this part, you will apply everything from Parts I–V in open-ended exercises
 4. *Provider switch.*
 
    - *What to do*: Modify the `chat_completion` function to accept a `provider` argument (`"ollama_llama"` or `"ollama_mistral"`) and look up `base_url` and `model` from a configuration dictionary defined at the top of the file. Send the same user message to both providers and print the results side by side.
-   - *Starter hint*: `PROVIDERS = {"ollama_llama": {"base_url": "http://localhost:11434/v1", "model": "llama3.2"}, "ollama_mistral": {"base_url": "http://localhost:11434/v1", "model": "mistral"}}`. This pattern scales to real provider switching — just add entries to the dictionary.
+   - *Starter hint*: `PROVIDERS = {"ollama_llama": {"base_url": "http://localhost:11434/v1", "model": "llama3.2"}, "ollama_mistral": {"base_url": "http://localhost:11434/v1", "model": "mistral"}}`. This pattern scales to real provider switching; just add entries to the dictionary.
    - *You've succeeded when*: Adding a new provider requires only a new dictionary entry, and the request-sending code is untouched.
 
 5. *Template-to-pipeline.*
 
    - *What to do*: Combine all three Part V ideas into one script. Stage 1 fills a `{ticket}` blank and returns JSON flags. Take a **consensus** over 3 samples of stage 1 (majority vote on the `topic` field so a single misclassification cannot mis-route). Then fill stage 2's template from the voted flags and generate the reply.
    - *Starter hint*: Reuse `parse_flags` from Section 9 and the `Counter` majority-vote pattern from Section 8. Vote only on the discrete `topic` field; for boolean flags like `urgent`, you can take the majority of `True`/`False` across the 3 samples.
-   - *You've succeeded when*: Running the script prints the 3 stage-1 votes, the consensus flags, the rendered stage-2 prompt, and the final reply — and mis-routing no longer happens when one stage-1 sample disagrees.
+   - *You've succeeded when*: Running the script prints the 3 stage-1 votes, the consensus flags, the rendered stage-2 prompt, and the final reply, and mis-routing no longer happens when one stage-1 sample disagrees.
 
 ---
 
@@ -789,13 +789,13 @@ In this part, you will apply everything from Parts I–V in open-ended exercises
 
 *Personal*: Before this activity, when you interacted with an AI assistant through a web interface, did you think of it as "magic" or as a program making HTTP requests to a server? Has seeing the raw curl and JSON changed how you think about those interactions? What surprised you most about how simple the protocol is at the lowest level?
 
-*Technical*: In your notebook: You are building a coding agent that will run in a production environment where model providers may change (budget, availability, policy). Design a configuration system — a dictionary, a config file, or environment variables — that lets you switch the `base_url`, `model`, and `api_key` without touching any agent logic code. What are the tradeoffs of each approach (hardcoded dict vs. `.env` file vs. config YAML)?
+*Technical*: In your notebook: You are building a coding agent that will run in a production environment where model providers may change (budget, availability, policy). Design a configuration system (a dictionary, a config file, or environment variables) that lets you switch the `base_url`, `model`, and `api_key` without touching any agent logic code. What are the tradeoffs of each approach (hardcoded dict vs. `.env` file vs. config YAML)?
 
 *Societal*: The OpenAI-compatible API standard means that a developer can write code once and run it against many different model providers, including local models that never send data to a third-party server. What are the privacy implications of this portability? Who benefits from the ability to run inference entirely locally, and are there groups who cannot access that option? What responsibilities does this create for developers who build tools that default to cloud inference?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Now that you can speak the REST protocol fluently, the next activity takes the `tools` array to its logical conclusion: the Model Context Protocol (MCP), a formal specification for how agents discover, negotiate, and call tools across process boundaries. We will see how `getmcp.io` (from the GitHub Superpowers activity) implements exactly the patterns you built by hand today, and we will connect a live MCP server to the tool loop you wrote in Part III.
 

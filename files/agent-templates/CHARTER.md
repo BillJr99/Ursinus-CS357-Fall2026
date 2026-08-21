@@ -14,7 +14,7 @@
 
 Every engineering decision should prioritize, in order:
 
-1. <Highest-ranked value — e.g., Correctness / Preservation / Safety>
+1. <Highest-ranked value, e.g., Correctness / Preservation / Safety>
 2. Reproducibility
 3. Maintainability
 4. Automation
@@ -31,19 +31,19 @@ standing test gate.">
 
 # Long-Term Architecture
 
-<The one durable design idea that survives individual tasks — the seam you refuse to
+<The one durable design idea that survives individual tasks: the seam you refuse to
 blur. Example: "a generic engine plus swappable configuration profiles.">
 
 # Repository Layout
 
 ```
 <ProjectName>/
-├── START_HERE.md          # entry funnel
-├── CHARTER.md             # this file
-├── .ai/                   # agent handoff state (see .ai/ templates)
-├── docs/                  # roadmap, decisions, rfcs, build/test guides
-├── sources/               # IMMUTABLE inputs — never edited, only read
-└── work/                  # all development happens here
+|-- START_HERE.md          # entry funnel
+|-- CHARTER.md             # this file
+|-- .ai/                   # agent handoff state (see .ai/ templates)
+|-- docs/                  # roadmap, decisions, rfcs, build/test guides
+|-- sources/               # IMMUTABLE inputs - never edited, only read
+`-- work/                  # all development happens here
 ```
 
 Everything under `sources/` is immutable. Development occurs only inside `work/`.
@@ -77,7 +77,7 @@ Every task follows this loop:
 # Autonomous Operation Rules
 
 - Verify state before asserting it. Do not claim an artifact is missing or present without checking the current repository/runtime state first. Treat prior logs and memory as hints only; repository state and fresh command output are authoritative.
-- Long-running builds and CI wrappers must be polled sparingly. Prefer 60–120 second polling intervals unless a command is near its timeout or the user explicitly asks for a status update.
+- Long-running builds and CI wrappers must be polled sparingly. Prefer 60-120 second polling intervals unless a command is near its timeout or the user explicitly asks for a status update.
 - When a session window, context limit, quota limit, or time limit is approaching, stop new work and prepare a clean handoff before failure.
 - Whenever a bug is fixed, create a regression test that would have detected it.
 
@@ -90,7 +90,7 @@ Testing infrastructure is part of the project; the project should become increas
 <!-- Milestone 0 is always initialization: scaffolding, docs, and inventory only.
      No feature work. This gate is what makes everything else recoverable. -->
 
-## Milestone 0 — Project Initialization
+## Milestone 0: Project Initialization
 
 Objectives:
 - Create the repository scaffolding, documentation set, and input inventory.
@@ -102,7 +102,7 @@ Success Criteria: a new agent reading only this repository can state the mission
 
 **Stop after Milestone 0 is complete. Do not begin Milestone 1 until explicitly directed.**
 
-## Milestone 1 — <Name>
+## Milestone 1: <Name>
 
 Objectives:
 - <objective>

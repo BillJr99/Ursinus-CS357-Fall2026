@@ -61,13 +61,13 @@ info:
       preemerging: No evaluation is provided
       beginning: A few informal trials are described without a protocol
       progressing: A small task set with a defined metric is evaluated, with limited failure analysis
-      proficient: A task set of at least eight goals is evaluated at fixed temperature and seed; accuracy is reported as a fraction; at least two failure modes are each shown with a full transcript excerpt (from terminal logs or exported chat transcripts); a mitigation is implemented — in code or in configuration — for one, and the accuracy delta is reported with a sentence explaining the mechanism
+      proficient: A task set of at least eight goals is evaluated at fixed temperature and seed; accuracy is reported as a fraction; at least two failure modes are each shown with a full transcript excerpt (from terminal logs or exported chat transcripts); a mitigation is implemented (in code or in configuration) for one, and the accuracy delta is reported with a sentence explaining the mechanism
     - weight: 15
       description: Code Quality and Documentation
       preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from best practice
       beginning: Code or configuration documentation is limited in ways that reduce the readability and reproducibility of the work
       progressing: Documentation is present that re-states the explicit code or configuration definitions
-      proficient: Every non-trivial function has a docstring; all network and parsing operations are wrapped in exception handlers that print a located message (e.g., [lab1:run_agent]) followed by a traceback; model name, temperature, seed, and step budget are read from a JSON config file rather than hardcoded; on the Direction 0 route this row is earned by configuration quality — exported model JSON, documented tool schemas and settings, and setup notes sufficient for another student to reproduce the agent exactly
+      proficient: Every non-trivial function has a docstring; all network and parsing operations are wrapped in exception handlers that print a located message (e.g., [lab1:run_agent]) followed by a traceback; model name, temperature, seed, and step budget are read from a JSON config file rather than hardcoded; on the Direction 0 route this row is earned by configuration quality, exported model JSON, documented tool schemas and settings, and setup notes sufficient for another student to reproduce the agent exactly
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
@@ -99,9 +99,9 @@ info:
       rlink: "https://huggingface.co/learn/agents-course/en/unit2/smolagents/introduction"
     - rtitle: "Ollama Structured Outputs (required structured-output segment)"
       rlink: "https://docs.ollama.com/capabilities/structured-outputs"
-    - rtitle: "Instructor — Structured Output with Pydantic and Ollama"
+    - rtitle: "Instructor: Structured Output with Pydantic and Ollama"
       rlink: "https://python.useinstructor.com/integrations/ollama/"
-    - rtitle: "Outlines — Grammar-Constrained Generation"
+    - rtitle: "Outlines: Grammar-Constrained Generation"
       rlink: "https://github.com/dottxt-ai/outlines"
     - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
@@ -128,7 +128,7 @@ tags:
 
 In this lab, you and a partner will build a working agent from first principles: a loop, a prompt, a tool, and an evaluation. This lab is completed in **pairs using driver/navigator roles**: the driver types while the navigator reviews, questions, and consults documentation, and you must **swap roles at least every 30 minutes**, keeping a brief log of swap times and who held each role.
 
-**Prefer a low-code path?** [Direction 0: The OpenWebUI Route](LocalAgent/Direction0) delivers the same learning objectives — the persona, two tested tools, structured output, and the full evaluation — through OpenWebUI configuration instead of Python authorship. See the Choose Your Direction section below before you start Part 1.
+**Prefer a low-code path?** [Direction 0: The OpenWebUI Route](LocalAgent/Direction0) delivers the same learning objectives (the persona, two tested tools, structured output, and the full evaluation) through OpenWebUI configuration instead of Python authorship. See the Choose Your Direction section below before you start Part 1.
 
 ---
 
@@ -138,15 +138,15 @@ In this lab, you and a partner will build a working agent from first principles:
 
 **Prep decks this lab assumes.** Work through whichever apply to your direction before you start:
 
-- [Structured Outputs — JSON Mode, Tool Schemas, and Output Validation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md) — all directions.
-- [RESTful LLM Access — the /v1/chat/completions paradigm, curl, and the OpenAI SDK](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md) — all directions.
-- [Docker from First Principles](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) — Directions 2 and 3 only; do the installs at home first.
-- [MCP Deep Dive — REST APIs, OAuth 2.0 flows, and secure tool invocation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md) — Direction 4 only.
+- [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-structuredoutputs.md): all directions.
+- [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md): all directions.
+- [Docker from First Principles](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md): Directions 2 and 3 only; do the installs at home first.
+- [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md): Direction 4 only.
 
-**Prerequisite concepts** — make sure you have completed these activities before writing any code:
+**Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) — the perceive/plan/act/remember cycle
-- [Prompt Engineering Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md) — ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
+- [Agent Loop Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md): the perceive/plan/act/remember cycle
+- [Prompt Engineering Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md): ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
 
 **Tools to install:**
 
@@ -161,7 +161,7 @@ ollama pull llama3.2
 pip install requests
 ```
 
-**Health check** — run this before writing any lab code. You should see the model name listed:
+**Health check**: run this before writing any lab code. You should see the model name listed:
 
 ```bash
 ollama list
@@ -194,13 +194,13 @@ This is a multi-week lab, not a single-evening one. Across the lab's window (see
 
 | Component | Estimated **total** time |
 |-----------|----------------|
-| Core Parts 1–3 (the loop; persona and two tools; evaluation) | 4–5 hours |
-| Your chosen direction, **on top of** the core | +4–8 hours |
+| Core Parts 1-3 (the loop; persona and two tools; evaluation) | 4-5 hours |
+| Your chosen direction, **on top of** the core | +4-8 hours |
 | Writeup, learning log, and packaging | 1 hour |
-| **Total for Directions 1–6** | **≈ 9–14 hours** |
-| **Total for Direction 0** (replaces Parts 1–3 rather than extending them) | **≈ 8–10 hours** |
+| **Total for Directions 1-6** | **≈ 9-14 hours** |
+| **Total for Direction 0** (replaces Parts 1-3 rather than extending them) | **≈ 8-10 hours** |
 
-Read that last row carefully: **Direction 0's 8–10 hours is the whole lab**, not an addition to it. Comparing "8–10" against a direction's "+4–8" is comparing a total to an increment — Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
+Read that last row carefully: **Direction 0's 8-10 hours is the whole lab**, not an addition to it. Comparing "8-10" against a direction's "+4-8" is comparing a total to an increment; Direction 0 is the *cheaper* path in total time, not the more expensive one. The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
 
 Budget your weeks accordingly: the direction work goes far better when the core parts are finished in the first week, and the large image pulls some directions require should happen before the day you need them.
 
@@ -349,7 +349,7 @@ def run_agent(goal, config, tools):
             print(f"Observation: {observation}")
             messages.append({"role": "user", "content": f"Observation: {observation}"})
         else:
-            # Unrecognized format — ask the model to reformat
+            # Unrecognized format - ask the model to reformat
             messages.append({"role": "user", "content": "Please respond with either 'Action: tool(arg)' or 'Final Answer: ...'."})
 
     # Budget exhausted
@@ -381,13 +381,13 @@ Result: The capital of France is Paris.
 Steps used: 1 | Reason: final_answer
 ```
 
-### Troubleshooting — Part 1
+### Troubleshooting, Part 1
 
 **Error: `ConnectionRefusedError: [Errno 111] Connection refused`**
 The Ollama server is not running. Open a second terminal and run `ollama serve`, then retry.
 
 **Error: `KeyError: 'message'` in call_model**
-The API response format differs between Ollama versions. Print `response.json()` to inspect the raw response, then adjust the key path. With stream mode, the key is `response` not `message["content"]` — make sure `"stream": False` is in your payload.
+The API response format differs between Ollama versions. Print `response.json()` to inspect the raw response, then adjust the key path. With stream mode, the key is `response` not `message["content"]`; make sure `"stream": False` is in your payload.
 
 **The model never emits `Action:` or `Final Answer:`**
 Your system prompt does not yet tell the model about the required format. Jump to Part 2 and write `build_system_prompt`, then re-run. Until then you can expect `("unknown", None, ...)` from the parser.
@@ -396,7 +396,7 @@ Your system prompt does not yet tell the model about the required format. Jump t
 
 > **Checkpoint: Before moving to Part 2, make sure you can answer:**
 > 1. What are the four phases of the perceive-plan-act-remember cycle, and which line(s) in your code implement each one?
-> 2. What happens in your loop when the model exhausts the step budget — what does the caller receive?
+> 2. What happens in your loop when the model exhausts the step budget; what does the caller receive?
 > 3. What is the purpose of appending `{"role": "user", "content": "Observation: ..."}` to the message history after a tool runs?
 
 ---
@@ -517,7 +517,7 @@ Your final exam is in 177 days. Studying 3 hours per day, you will accumulate 53
 Steps: 3 | Termination: final_answer
 ```
 
-### Troubleshooting — Part 2
+### Troubleshooting, Part 2
 
 **The model invokes a tool but uses the wrong name (e.g., `calc` instead of `calculator`)**
 The system prompt must list the exact tool name as it appears in your `TOOLS` dict. Check for typos and ensure the name in the FORMAT section matches the dictionary key exactly.
@@ -623,10 +623,10 @@ Accuracy: 7/8 = 87.5%
 
 For each task that `passed == False`, copy the full printed step-by-step output into your readme and label the failure type:
 
-- `PARSE_FAIL` — the model output a malformed Action line
-- `TOOL_MISUSE` — the model called the wrong tool or passed a bad argument
-- `HALLUCINATION` — the model gave a Final Answer that contradicts the Observation
-- `BUDGET_EXHAUSTED` — the loop hit the step limit without converging
+- `PARSE_FAIL`: the model output a malformed Action line
+- `TOOL_MISUSE`: the model called the wrong tool or passed a bad argument
+- `HALLUCINATION`: the model gave a Final Answer that contradicts the Observation
+- `BUDGET_EXHAUSTED`: the loop hit the step limit without converging
 
 **Step 4: Implement and re-run one mitigation.**
 
@@ -637,13 +637,13 @@ Document the before/after accuracy in your readme in a table:
 | Baseline | 7 | 8 | 87.5% |
 | After mitigation (describe change) | ? | 8 | ?% |
 
-### Troubleshooting — Part 3
+### Troubleshooting, Part 3
 
 **All 8 tasks pass but on inspection the agent hallucinated an answer that happened to match**
 Your `correct_answer_check` lambda is too loose. For arithmetic tasks, parse the number from the answer and compare with `abs(parsed - expected) < 0.01` rather than string matching.
 
 **The agent passes every task on re-runs at the same seed but fails on new runs**
-Check that `"seed"` is actually being sent to Ollama — some model versions ignore it. Add `print(config["seed"])` before the loop to confirm the value is non-None.
+Check that `"seed"` is actually being sent to Ollama; some model versions ignore it. Add `print(config["seed"])` before the loop to confirm the value is non-None.
 
 **budget_exhausted appears frequently**
 The model may be stuck in a tool-call loop. Increase `step_budget` temporarily to see the full transcript, then diagnose whether the loop is: (a) getting no Observation, (b) ignoring the Observation, or (c) re-calling the same tool repeatedly.
@@ -659,9 +659,9 @@ The model may be stuck in a tool-call loop. Increase `step_budget` temporarily t
 
 ## From Scratch: Driving the Loop with the OpenWebUI API
 
-The `chat()` helper above hid the one piece that makes the loop *real*: the network call to a model. Here we open that box. An agent, stripped to its core, is a single primitive — send the running conversation to a model endpoint, read one reply back — wrapped in a loop that **you**, not the model, control. The model only ever produces text; your program decides what that text *means* and what happens next.
+The `chat()` helper above hid the one piece that makes the loop *real*: the network call to a model. Here we open that box. An agent, stripped to its core, is a single primitive (send the running conversation to a model endpoint, read one reply back) wrapped in a loop that **you**, not the model, control. The model only ever produces text; your program decides what that text *means* and what happens next.
 
-OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer. Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings → Account → API Keys*, and name a model you have pulled. Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended — the model's own tool requests and the observations we hand back — not a new human turn.
+OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer. Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings -> Account -> API Keys*, and name a model you have pulled. Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended (the model's own tool requests and the observations we hand back), not a new human turn.
 
 > This cell talks to your local OpenWebUI over the network, so run it on your own machine rather than in the browser cell above.
 
@@ -739,9 +739,9 @@ Trace the run as a team. Expect two round-trips to the model: on step 0 the mode
 
 2. The `Observation:` is appended with `"role": "user"`, even though no human typed it. Why does the loop impersonate the user here, and what would break if you used `"role": "assistant"` instead?
 
-3. This loop grows `messages` by two entries every step. Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost? (We name this problem — and its fix — in the *Memory and the Small Context Window Principle* activity.)
+3. This loop grows `messages` by two entries every step. Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost? (We name this problem, and its fix, in the *Memory and the Small Context Window Principle* activity.)
 
-4. Replace the mock `get_weather` with a real tool of your choice (a search call, a file read, a database lookup). What in the loop has to change, and what stays exactly the same? *(Almost nothing changes — that is the point: the shape of the loop is independent of the tools.)*
+4. Replace the mock `get_weather` with a real tool of your choice (a search call, a file read, a database lookup). What in the loop has to change, and what stays exactly the same? *(Almost nothing changes; that is the point: the shape of the loop is independent of the tools.)*
 
 ---
 
@@ -752,7 +752,7 @@ Submit a ZIP containing your code, your JSON configuration file, your task set a
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram — whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking. (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
 1. **What I built.** One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
 2. **What surprised me.**
@@ -785,32 +785,32 @@ Network calls can fail transiently. Wrap `call_model` so that on `requests.Timeo
 Run your full 8-task evaluation against both `llama3.2` and a second model available via `ollama pull` (e.g., `mistral`). Hold temperature and seed fixed. Report the accuracy delta, the average step count, and any qualitative differences in how each model formats its Thought lines. Hypothesize why the models differ.
 
 **Challenge 4 (wiring it to a server): Drive the loop over the OpenWebUI API.**
-Your agent so far calls a local model directly. Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model. Keep everything else — the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list — identical. The worked example is in the [Agent Loop activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."* In your writeup, note which lines changed (only the transport) and which did not (the whole loop) — that invariance is the lesson.
+Your agent so far calls a local model directly. Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model. Keep everything else (the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list) identical. The worked example is in the [Agent Loop activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."* In your writeup, note which lines changed (only the transport) and which did not (the whole loop); that invariance is the lesson.
 
 ---
 
 ## Looking Ahead: Tools, Reasoning, and MCP
 
-This lab stops at a working agent loop with reliable structured output. Making that agent **use tools**, **reason**, and speak **MCP** is the subject of the **Tools and MCP Lab**, handed out the day we cover tool use — so those capabilities arrive *after* the sessions that teach them rather than before. Nothing in this lab requires them.
+This lab stops at a working agent loop with reliable structured output. Making that agent **use tools**, **reason**, and speak **MCP** is the subject of the **Tools and MCP Lab**, handed out the day we cover tool use, so those capabilities arrive *after* the sessions that teach them rather than before. Nothing in this lab requires them.
 
 
 ## Choose Your Direction
 
-Pick **one** direction below — the single 100-point grade covers the core work plus your chosen direction. For Directions 1–6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
+Pick **one** direction below; the single 100-point grade covers the core work plus your chosen direction. For Directions 1-6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
 
-- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1–3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A–E **in place of** core Parts 1–3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
-- **Directions 1–6 build on top of** the core lab: complete Parts 1–3 first, then extend in your chosen direction.
+- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A-E **in place of** core Parts 1-3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
+- **Directions 1-6 build on top of** the core lab: complete Parts 1-3 first, then extend in your chosen direction.
 
-Each direction now lives on its own page. The table below summarizes what each one asks of you — read the "What this direction requires" box at the top of a direction's page before committing to it.
+Each direction now lives on its own page. The table below summarizes what each one asks of you; read the "What this direction requires" box at the top of a direction's page before committing to it.
 
 | Direction | What you build | Requirements summary | Est. hours |
 |-----------|----------------|----------------------|------------|
-| [Direction 0](LocalAgent/Direction0): The OpenWebUI Route (low-code) | The same persona agent, two tested tools, structured JSON output, and the full evaluation — built entirely in OpenWebUI, with no Python authorship; replaces core Parts 1–3 | Ollama + OpenWebUI (Docker one-liner or pip install); no accounts, no API costs | 8–10 |
-| [Direction 1](LocalAgent/Direction1): Debugging a Broken Agent | Find, fix, and explain five planted bugs in a research agent, then add structured logging and a regression suite so they can never hide again | Nothing beyond the core lab setup; fully local and free | 4–5 |
-| [Direction 2](LocalAgent/Direction2): Composing the Local Agent Stack | A five-tier local AI stack — inference, gateway, frontend, tool, and agent — wired with Docker Compose and a verified wiring matrix | Docker Desktop + roughly 6 GB of image pulls; no accounts or API costs | 4–6 |
-| [Direction 3](LocalAgent/Direction3): Containerizing an AI System Safely | A deliberately insecure agent container hardened step by step to least privilege, with a documented and tested threat model | Docker Desktop + roughly 6 GB of disk; an Anthropic API key (small usage cost); a test VM is strongly recommended | 5–7 |
-| [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free — a local Ollama-based agent fallback is built in | 5–7 |
-| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill and an Obsidian-vault memory skill, loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model | 4–6 |
-| [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5–8 |
+| [Direction 0](LocalAgent/Direction0): The OpenWebUI Route (low-code) | The same persona agent, two tested tools, structured JSON output, and the full evaluation, built entirely in OpenWebUI, with no Python authorship; replaces core Parts 1-3 | Ollama + OpenWebUI (Docker one-liner or pip install); no accounts, no API costs | 8-10 |
+| [Direction 1](LocalAgent/Direction1): Debugging a Broken Agent | Find, fix, and explain five planted bugs in a research agent, then add structured logging and a regression suite so they can never hide again | Nothing beyond the core lab setup; fully local and free | 4-5 |
+| [Direction 2](LocalAgent/Direction2): Composing the Local Agent Stack | A five-tier local AI stack (inference, gateway, frontend, tool, and agent) wired with Docker Compose and a verified wiring matrix | Docker Desktop + roughly 6 GB of image pulls; no accounts or API costs | 4-6 |
+| [Direction 3](LocalAgent/Direction3): Containerizing an AI System Safely | A deliberately insecure agent container hardened step by step to least privilege, with a documented and tested threat model | Docker Desktop + roughly 6 GB of disk; an Anthropic API key (small usage cost); a test VM is strongly recommended | 5-7 |
+| [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free; a local Ollama-based agent fallback is built in | 5-7 |
+| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill and an Obsidian-vault memory skill, loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model | 4-6 |
+| [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5-8 |
 
 Whichever direction you choose, fold its deliverables into the same submission ZIP and readme as the core lab, and treat its stated expectations as the standard your direction work must meet.
