@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-productionassistant.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-productionassistant.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -307,7 +307,7 @@ The service-ownership table exists primarily to prevent:
 
 ## 7. Exercises
 
-Copy-paste starting points (the vault contract, standing prompt, memory file, and runbook) are in the course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).
+Copy-paste starting points (the vault contract, standing prompt, memory file, and runbook) are in the course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
 
 1. *Write your own gates.*
 
@@ -347,7 +347,7 @@ You now have both halves of the governance story: charters and handoffs for agen
 
 ## 8. Further Reading
 
-- The course template set for this activity: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).
-- This course: [The Second Brain](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-secondbrain.md) (the foundation this activity builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-humanintheloop.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentskills.md) (the skill format this system's inventory manages).
+- The course template set for this activity: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
+- This course: [The Second Brain](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-secondbrain.md) (the foundation this activity builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentskills.md) (the skill format this system's inventory manages).
 - Model Context Protocol documentation. https://modelcontextprotocol.io, the integration layer behind the tool connections in Part III.
 - Atul Gawande. *The Checklist Manifesto*. Metropolitan Books (2009). Why written procedure outperforms expert memory in high-stakes operations, the human-institutions version of everything in this activity.

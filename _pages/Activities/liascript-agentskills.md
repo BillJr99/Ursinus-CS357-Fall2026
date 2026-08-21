@@ -3,7 +3,7 @@ author:   Prof. Bill Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentskills.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentskills.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agentskills.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentskills.md
 
 import: https://raw.githubusercontent.com/liaScript/coderunner/master/README.md
 
@@ -24,7 +24,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ---
 
-## Key Terms
+## Key Concepts
 
 Before diving in, anchor the vocabulary. You will encounter all of these terms in today's work; return to this table whenever a term appears unfamiliar.
 
@@ -587,7 +587,7 @@ In your notebook, respond at three levels:
 
 ---
 
-## Key Terms Summary
+## Key Concepts Summary
 
 | Term | Definition |
 |------|------------|

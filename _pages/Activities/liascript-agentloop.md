@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentloop.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentloop.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agentloop.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -219,7 +219,7 @@ Run (or examine the projected run of) the agent above as a team. Pay attention n
 
 ## 3b. From Scratch: Driving the Loop Yourself
 
-We build the *minimal* tool-using agent together above. The **from-scratch version** (you own the loop, the tool registry, and the message list, driving the OpenWebUI API directly) moved to the **[Local Agent lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent)**, where you build it for credit.
+We build the *minimal* tool-using agent together above. The **from-scratch version** (you own the loop, the tool registry, and the message list, driving the OpenWebUI API directly) moved to the **[Local Agent lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent)**, where you build it for credit.
 
 Doing it twice in one session was the crunch; doing it once here and once for real in the lab is the same learning with room to breathe.
 
@@ -265,7 +265,7 @@ In this part, you will extend and stress-test the agent you just built (changing
 
 ---
 
--> Coming Up Next: Now that we understand the loop, we turn to the instructions that drive it; in the *Prompt Engineering as Agent Design: Personas and System Prompts* activity we learn to write system prompts that function like a job description for an agent.
+-> Coming Up Next: You traced this loop on paper because none of it runs on your machine yet. That changes next session: in *Your AI Workbench* we build the bench, install a model server, and hand a real coding agent a real task, so that from then on every activity is something you can run rather than read. Bring a laptop with Docker Desktop already installed.
 
 ## 5. Further Reading
 

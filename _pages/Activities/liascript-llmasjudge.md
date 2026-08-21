@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-llmasjudge.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmasjudge.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-llmasjudge.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -221,7 +221,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ---
 
--> Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
+-> Coming Up Next: You just built a machine that assigns grades, and then found the biases in it. Next session, *Training Data and Bias*, follows that thread all the way down: where the judge's preferences came from in the first place, and what it means to deploy a scoring system on people. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
 
 ## Further Reading
 

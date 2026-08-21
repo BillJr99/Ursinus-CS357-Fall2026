@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-secondbrain.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-secondbrain.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-secondbrain.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-secondbrain.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -237,7 +237,7 @@ Treat them as authoritative for all decisions this session.
 
 The session rhythm that results: you drop a PDF into `raw/` from your phone and sync; hermes runs (manually or on an n8n schedule from the stack module), reads the contract, synthesizes wiki pages, updates the metadata, and commits; you open Obsidian, sync, and the new cross-linked pages are simply *there*. The question-answering direction is one more prompt: *"Using the vault per AGENTS.md, what do my notes say about X? Update the wiki first if raw/ has newer material."*
 
-Obsidian becomes the comfortable viewer onto a knowledge base your agents largely maintain, and the next module (the LLM Wiki) is devoted to what becomes possible once that loop is running.
+Obsidian becomes the comfortable viewer onto a knowledge base your agents largely maintain. What becomes possible once that loop is running, a living wiki that grows more useful each session rather than a folder that grows larger, is the argument the *How I AI* session makes; this page is the deeper build behind it.
 
 ### Critical Thinking Questions
 
@@ -299,7 +299,7 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 
 ---
 
--> Coming Up Next: The LLM Wiki module explores what becomes possible once the vault loop is running: using agents to maintain a living knowledge base that grows more useful with each session, and connecting it to the broader agent stack. Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
+-> Coming Up Next: This page is the deep version of Part I of the *How I AI* session; if you arrived here from that session, its Part II is where the same instinct gets applied to a project repository rather than to your notes. Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
 
 ## Reflection Prompt
 
@@ -316,4 +316,4 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 - W. Mongan, "A Private AI Knowledge Base: Obsidian, GitHub Sync, and Cross-Platform AI Context" (billmongan.com, May 2026): the full architecture this module teaches, including the complete AGENTS.md specification and SHA protocol.
 - The GitHub Gitless Sync plugin repository and README: settings, conflict resolution, and the config-sync caution.
 - GitHub Docs, "Managing your personal access tokens": fine-grained tokens and scoping.
-- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md), the production case study of the vault contract you built here.
+- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md), the production case study of the vault contract you built here.

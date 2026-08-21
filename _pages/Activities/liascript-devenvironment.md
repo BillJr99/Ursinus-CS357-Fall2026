@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-devenvironment.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-devenvironment.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -20,7 +20,7 @@ The bench has four parts, and we build them in order: **the shell** (Step 0, the
 
 This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
-One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. If that hostname looks familiar, it should; it is exactly the pattern you studied in the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*). That activity explains how everything here works under the hood; this one just puts it to work. When any step below feels like magic, that is the page to reread.
+One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name. The [Docker from Zero tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work. When a step below feels like magic, that is the page to read.
 
 Two ideas carry the whole design:
 
@@ -31,9 +31,40 @@ Work through the steps in order. Each practice step shows the command *and* the 
 
 ---
 
+## Directions and Group Roles
+
+Today is a hands-on build day rather than a discussion, so the POGIL roles work a little differently. Keep them, and rotate them at Step 5.
+
+- **Manager**: keeps the build moving and makes the call to skip ahead. Nobody should be stuck on one step while the room moves on; a blocked machine goes to the native route in Step 10 and catches up later.
+- **Recorder**: logs every command and every error *verbatim*, including the ones that got fixed. That log is most of what the Overview assignment asks you to submit, and a transcript reconstructed from memory is worth much less than one captured as it happened.
+- **Presenter**: at the end, demos the team's working stack, including the coding-agent run in Step 8, and reports the one thing that took longest.
+- **Reflector**: watches for friction the rest of the team stops noticing, and notes which failures were *environment* problems versus *instruction* problems. That distinction is worth more than it sounds.
+
+Help each other. This session is graded through the Overview assignment, not through who finishes first, and an install that fails in an interesting way is a better class artifact than one that just works.
+
+---
+
+## Key Concepts
+
+Step 0 defines the shell vocabulary. These are the terms the rest of the page assumes.
+
+| Term | Plain-English Definition | Where You'll Meet It |
+|------|--------------------------|----------------------|
+| **Image** | A frozen, read-only snapshot of an entire environment: an operating system, the installed packages, the settings. Built once from a recipe, then reused | The course image, built from the `Dockerfile` in Step 4. Everyone's is byte-for-byte identical, which is the point |
+| **Container** | A running instance of an image, isolated from the rest of your machine. Disposable: deleting one costs you nothing, because the image can make another | What you enter at Step 4 and leave with `exit`. `--rm` deletes it on the way out |
+| **Mount** | A directory of your real machine deliberately made visible inside the container. The container sees nothing else of yours | `/workspace`, which *is* your `cs357-work` folder. The one door in an otherwise closed box |
+| **Host** | Your actual machine, as seen from inside a container. Worth naming because inside the container, `localhost` means the container, not you | `host.docker.internal`, the address your containerized code uses to reach Ollama running natively |
+| **Repository (repo)** | A folder whose entire history git tracks, so any past state can be restored and any change can be undone | `cs357-work`, created in Step 3 and pushed to GitHub in Step 7 |
+| **Commit** | A saved point in that history, with a message saying what changed and why | Step 7.4. Commit at every working stopping point, not at the end of the day |
+| **Coding agent** | A program that takes a goal in plain English, reads your files, proposes edits and commands, and loops until it is done or you stop it. The agent loop from *The Agent Loop*, pointed at your file system | `opencode`, installed in Step 8 and given one small job |
+| **Diff** | The exact lines added and removed by a change, shown side by side. What you review instead of re-reading the whole file | `git diff` after the agent edits `hello_agent.py`. Reading this is the skill, not a formality |
+| **`AGENTS.md`** | A file of standing instructions an agent reads automatically, so you stop retyping context. A system prompt you keep in version control | Written in Step 8.4, and grown for the rest of the semester |
+
+---
+
 ## Step 0: The Shell in Ten Minutes
 
-Every step below, and every lab this semester, is typed into a **shell**. If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1. If they are not, this section is the ten minutes that make the other nine steps make sense instead of feeling like incantation.
+Every step below, and every lab this semester, is typed into a **shell**. If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1. If they are not, this section is the ten minutes that make everything after it make sense instead of feeling like incantation.
 
 A shell is not complicated. It reads one line of text, runs the command named at the front of it, and prints what comes back. That is the entire contract. Everything else is vocabulary.
 
@@ -108,7 +139,7 @@ ollama --version
 curl http://localhost:11434/api/tags
 ```
 
-Expected: a version string, then a JSON blob whose `"models"` list includes `llama3.2`. (This is the same pre-class checklist as the Overview assignment's tool setup; if you already completed it there, just rerun the `curl` to confirm Ollama is currently running, and move on.)
+Expected: a version string, then a JSON blob whose `"models"` list includes `llama3.2`. (The Overview assignment, handed out today, asks you to submit a transcript of exactly this. Capture your output as you go and you will not have to redo it. If you installed Ollama before class, just rerun the `curl` to confirm it is running now, and move on.)
 
 Note the address you just used: `localhost:11434`. Hold that thought: in Step 5 the *same server* will need a *different name*, and knowing why is the point of this whole architecture.
 
@@ -116,7 +147,7 @@ Note the address you just used: `localhost:11434`. Hold that thought: in Step 5 
 
 ## Step 2: Install Docker Desktop
 
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux). If you completed the Docker from Zero activity you already did this; skip to the verification.
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) (macOS/Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux). If Docker is already on your machine from another course or project, skip to the verification.
 
 **Disk note:** Docker Desktop plus the course image (the ML libraries are hefty) needs roughly **8-10 GB** free, on top of Ollama's models. Clear space now, not mid-download.
 
@@ -166,10 +197,10 @@ The clone is a git repository that already knows its GitHub remote, the versione
 
 Download the three course container files and place them in a `.devcontainer/` folder inside your clone:
 
-- [Dockerfile](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/Dockerfile), the recipe for the course image; every package is commented with the lab that uses it
-- [docker-compose.yml](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/docker-compose.yml), one-command build/run, the workspace bind mount, and the Linux `host.docker.internal` fix
-- [devcontainer.json](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/devcontainer.json), VS Code Dev Containers configuration
-- (optional) [README.md](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/README.md), the quickstart version of this activity
+- [Dockerfile](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/Dockerfile), the recipe for the course image; every package is commented with the lab that uses it
+- [docker-compose.yml](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/docker-compose.yml), one-command build/run, the workspace bind mount, and the Linux `host.docker.internal` fix
+- [devcontainer.json](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/devcontainer.json), VS Code Dev Containers configuration
+- (optional) [README.md](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/README.md), the quickstart version of this activity
 
 ```text
 cs357-work/
@@ -544,7 +575,7 @@ Everything after today is this loop:
 
 Now the *why*, in this course's own terms. Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries. Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week. Inside the course container, the worst any runaway script can touch is `/workspace`; that is **isolation** from Step 8.5, enforced by the mount rather than by hope. And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored: that is **reversibility**, and it is the reason the daily loop above insists on committing at every working stopping point rather than at the end. Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
 
-The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace. If the bug survives, it is yours. For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md).
+The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace. If the bug survives, it is yours. For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
 
 ---
 
@@ -601,4 +632,4 @@ If your machine cannot run Docker (unsupported hardware, administrator locks, di
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
-| How it all works | [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md) |
+| How it all works | [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) |
