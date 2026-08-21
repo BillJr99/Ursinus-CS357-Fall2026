@@ -89,7 +89,7 @@ A red-teamer discovers that an AI shopping assistant can be made to recommend a 
 [(X)] Indirect prompt injection via tool/RAG — the attacker planted instructions in external content that the model reads during retrieval
 [( )] Many-shot escalation — the attack relies on a long conversation history to lower the model's resistance
 
-> **⚠️ Common Misconception:** Many practitioners assume that only user-controlled inputs are attack surfaces for prompt injection. In reality, any text that an LLM reads and acts on is a potential injection surface — retrieved documents, web search results, tool return values, database entries, email bodies, PDF contents, calendar events. In agentic systems where the model reads from and writes to many external sources, the indirect injection surface is often larger than the direct input surface. Securing an LLM agent means auditing *every source of text* the model ingests.
+> **Common Misconception:** Many practitioners assume that only user-controlled inputs are attack surfaces for prompt injection. In reality, any text that an LLM reads and acts on is a potential injection surface — retrieved documents, web search results, tool return values, database entries, email bodies, PDF contents, calendar events. In agentic systems where the model reads from and writes to many external sources, the indirect injection surface is often larger than the direct input surface. Securing an LLM agent means auditing *every source of text* the model ingests.
 
 ---
 
@@ -287,7 +287,7 @@ A red-team runs PAIR for 50 iterations and finds no successful attack against a 
 [(X)] The conclusion is premature — 50 iterations explores only a small fraction of the possible attack space, and PAIR's attacker model may not cover attack strategies outside its training distribution
 [( )] The conclusion is invalid because PAIR can only find capability failures, not safety failures
 
-> **⚠️ Common Misconception:** Red-teaming is not about making harmful content — it is a defensive discipline. Professional red-teamers document findings and propose mitigations; they do not deploy attacks. The goal of a PAIR exercise is not to produce a working jailbreak and distribute it — it is to identify whether a vulnerability exists and to inform the engineering team so they can close it. In industry, findings from red-team exercises are typically handled under responsible disclosure protocols: documented internally, addressed in model updates or system mitigations, and disclosed publicly only after a fix is in place.
+> **Common Misconception:** Red-teaming is not about making harmful content — it is a defensive discipline. Professional red-teamers document findings and propose mitigations; they do not deploy attacks. The goal of a PAIR exercise is not to produce a working jailbreak and distribute it — it is to identify whether a vulnerability exists and to inform the engineering team so they can close it. In industry, findings from red-team exercises are typically handled under responsible disclosure protocols: documented internally, addressed in model updates or system mitigations, and disclosed publicly only after a fix is in place.
 
 ---
 
@@ -347,7 +347,7 @@ You are building a news summarization agent that retrieves recent articles from 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 We know how to serve models efficiently and test their failure modes. The next activities turn toward the team-level question: how do multiple AI agents coordinate their work, share memory, and resolve disagreements — and how do you build and debug those multi-agent architectures?
 

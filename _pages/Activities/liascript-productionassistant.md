@@ -93,7 +93,7 @@ For each scenario, decide which of the three files the assistant should be obeyi
 
    > *Hint: Think about what one uninvited irreversible action does to the owner's willingness to delegate the next hundred reversible ones. Trust is the budget; what spends it?*
 
-> **⚠️ Common Misconception:** "The system prompt is where you make the assistant smart." Nothing in the standing prompt improves the model's intelligence. Every section either *routes* intelligence (read the vault, lead with the outcome) or *bounds* it (gates, escalation). Capability comes from the model and its tools; a production standing prompt is how capability becomes trustworthy.
+> **Common Misconception:** "The system prompt is where you make the assistant smart." Nothing in the standing prompt improves the model's intelligence. Every section either *routes* intelligence (read the vault, lead with the outcome) or *bounds* it (gates, escalation). Capability comes from the model and its tools; a production standing prompt is how capability becomes trustworthy.
 
 Under the production `AGENTS.md`, when the assistant finds `/wiki/` outdated relative to `/raw/` while answering a question, it should:
 
@@ -164,7 +164,7 @@ Classify each action into **Autorun**, **Queue**, or **Forbidden** under the pol
 
    > *Hint: The gate governs who decides, not how fast. What properties would an escalation channel need — and who defines "urgent," the policy or the agent?*
 
-> **⚠️ Common Misconception:** "Approval gates don't scale — you end up approving hundreds of things a day." In the production system the opposite happened, because the *classification* did the scaling: routine actions were deliberately moved into Autorun **with an audit row**, so the queue stayed short enough that each item got real attention. The failure mode to fear is not too many gates — it is gates so numerous and noisy that approval becomes a reflex. (You saw this as *approval fatigue* in the Human-in-the-Loop module.)
+> **Common Misconception:** "Approval gates don't scale — you end up approving hundreds of things a day." In the production system the opposite happened, because the *classification* did the scaling: routine actions were deliberately moved into Autorun **with an audit row**, so the queue stayed short enough that each item got real attention. The failure mode to fear is not too many gates — it is gates so numerous and noisy that approval becomes a reflex. (You saw this as *approval fatigue* in the Human-in-the-Loop module.)
 
 Under the umbrella rule, the owner says: "I trust you — just handle my inbox this week." The assistant may:
 
@@ -226,7 +226,7 @@ In this part, you will find the missing verification in a flawed transcript, usi
 
 - **Role routing:** distinct model tiers for Executor, Planner, Verifier, and Fallback — the verifier is never the executor.
 - **The two-gate protocol:** Gate 1 — restate the goal as *intent-level success criteria* and stop for approval. Gate 2 — present a plan with **a concrete, verifiable check for every criterion** and stop for approval. After approval, the criteria are **frozen**: "you may not edit, relax, reinterpret, or override" them mid-task.
-- **The coverage matrix:** a table of requirement → criterion → plan step → check → status (open / passed / failed / deferred), maintained on disk, so nothing silently drops.
+- **The coverage matrix:** a table of requirement -> criterion -> plan step -> check -> status (open / passed / failed / deferred), maintained on disk, so nothing silently drops.
 - **Verification dialects** by domain: *code* verifies with exit codes and test runs; *operations* verifies by re-reading live state after the change (and knowing the reversal path); *research* verifies with a provenance ledger and an adversarial pass.
 - **Blind cross-check:** a fresh sub-agent, given only the frozen criteria and the artifact — not the transcript — judges whether the work satisfies the criteria.
 - **The final reconciliation gate:** before delivery, scan for stubs and TODOs and tag every element by *how it was confirmed*.
@@ -277,7 +277,7 @@ In this part, you will see the move that completes the "second brain" idea: the 
 **Why this matters:** After a year, the production assistant is *itself* a system: two deployments (a containerized worker and an always-on control-plane instance on a small headless machine), sidecar services, dozens of skills, scheduled jobs, credentials. Where does the knowledge of *that* live? In the vault, of course — maintained by the assistant, under the same contract as everything else:
 
 - **A living runbook** page indexes the setup: an environment-topology table naming each instance precisely ("avoid the bare assistant name when the distinction affects paths, credentials, service ownership, or uptime assumptions"), and a topic page per subject with a "read or update when..." routing table. Its maintenance directive: every setup change is recorded *in the topic page that owns the subject*, at the time it happens.
-- **A service-ownership and cutover table** prevents the two instances from silently duplicating or disabling one another — every capability has exactly one current owner, and *transferring* ownership requires a staged checklist (starts successfully → handles a real input → responds on the right channel → survives restart → survives reboot → documented → owner explicitly confirms the old instance may be disabled).
+- **A service-ownership and cutover table** prevents the two instances from silently duplicating or disabling one another — every capability has exactly one current owner, and *transferring* ownership requires a staged checklist (starts successfully -> handles a real input -> responds on the right channel -> survives restart -> survives reboot -> documented -> owner explicitly confirms the old instance may be disabled).
 - **A known-issues ledger** with stable IDs (`KI-01`, `KI-02`...): status, environment, evidence, current handling — plus the discipline *"verify the upstream fix is present before reapplying an old patch."*
 - **A skills inventory with a reconstruction manifest**: every skill (you wrote skills in the *Agent Skills* modules) is listed with its restore path, portability class, and a one-line verification command — so the entire skill layer can be rebuilt on a fresh host, *explicitly without copying secrets*. A provenance-naming rule keeps authorship honest: third-party skills keep their canonical names; locally authored or locally adapted skills take a personal prefix and document their inspiration "rather than presenting it as an upstream mirror."
 - **Secrets: names, never values.** Vault pages "may list variable names, credential file paths, ownership, and purpose, but never credential contents." Secrets live in the secret store; the vault stores the *map* to them.
@@ -339,7 +339,7 @@ Copy-paste starting points — the vault contract, standing prompt, memory file,
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You now have both halves of the governance story: charters and handoffs for agents that build software, and gates, routines, and self-updating memory for an agent that runs a life. The remaining modules put these to work at team scale — multi-agent debate, consensus, and agent teams — where every lesson about traceability and verification applies *between* agents, not just between an agent and you.
 

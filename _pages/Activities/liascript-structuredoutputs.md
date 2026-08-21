@@ -65,16 +65,16 @@ SAME PROMPT: "Classify the sentiment of: 'The product broke after one day.'"
 
 Plain text output:   "The sentiment of this review is clearly negative. The customer
                       is unhappy because the product failed quickly."
-                      → Cannot parse; requires fragile regex; breaks if phrasing changes
+                      -> Cannot parse; requires fragile regex; breaks if phrasing changes
 
 JSON mode output:    {"sentiment": "negative", "reasoning": "Product failure = negative"}
-                      → Usually works, but model might also output prose on a bad day
+                      -> Usually works, but model might also output prose on a bad day
 
 Tool/function call:  tool_calls=[{"name":"classify","args":{"sentiment":"negative"}}]
-                      → Structural format guaranteed; values still up to the model
+                      -> Structural format guaranteed; values still up to the model
 
 Grammar-constrained: {"sentiment": "negative"}
-                      → Mathematically guaranteed to match the schema; no other output possible
+                      -> Mathematically guaranteed to match the schema; no other output possible
 ```
 
 | Mode | How It Works | Guarantee Provided | Typical Failure Mode |
@@ -194,7 +194,7 @@ ARTICLE: "Officials respond to criticism of new highway project."
 
 Version A output:
 {"sentiment": "mixed", "bias": "somewhat political", "score": 5.2, "notes": "hard to tell"}
-→ Useless for aggregation; "score" has no unit; "somewhat political" cannot be compared across articles
+-> Useless for aggregation; "score" has no unit; "somewhat political" cannot be compared across articles
 
 Version B output:
 {"sentiment": "neutral", "political_lean": "center_right", "evidence_quality": 0.4,
@@ -202,7 +202,7 @@ Version B output:
  "citations": [{"text": "city council report", "verifiable": false},
                {"text": "state transportation department study", "verifiable": true}],
  "confidence": 0.72}
-→ Every field is comparable across articles; missing_perspectives reveals editorial gaps;
+-> Every field is comparable across articles; missing_perspectives reveals editorial gaps;
   citations are individually assessable; confidence signals where to apply extra scrutiny
 ```
 
@@ -291,7 +291,7 @@ Do not change any values that were already valid."""
 ```
 First attempt output (invalid):
 {"sentiment": "negative", "political_lean": "center_left",
- "evidence_quality": 1.5,   ← INVALID: exceeds maximum of 1.0
+ "evidence_quality": 1.5,   <- INVALID: exceeds maximum of 1.0
  "missing_perspectives": ["opposition parties"],
  "confidence": 0.8}
 
@@ -309,9 +309,9 @@ Repair prompt sent to the model:
 
 Second attempt output (valid):
 {"sentiment": "negative", "political_lean": "center_left",
- "evidence_quality": 0.9,   ← Fixed: now within [0.0, 1.0]
+ "evidence_quality": 0.9,   <- Fixed: now within [0.0, 1.0]
  "missing_perspectives": ["opposition parties"],
- "confidence": 0.8}         ← Unchanged: was already valid
+ "confidence": 0.8}         <- Unchanged: was already valid
 ```
 
 Key properties of this pipeline:
@@ -321,7 +321,7 @@ Key properties of this pipeline:
 - **Bounded retries**: The loop has a hard limit. Without it, an unfixable validation error (like a model that consistently outputs the wrong type) becomes an infinite loop and unbounded API cost.
 - **Fail loudly**: When repair is exhausted, the exception propagates to the caller. Silent failures — returning `None` or default values — hide the problem and allow bad data to flow downstream.
 
-> **⚠️ Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema. It does not. JSON mode is a *suggestion* — the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals). The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level. The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
+> **Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema. It does not. JSON mode is a *suggestion* — the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals). The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level. The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
 
 ### Critical Thinking Questions
 
@@ -458,7 +458,7 @@ You ask an LLM to output a JSON object with a field `"confidence": float` constr
 
 ---
 
-→ Coming Up Next: You have now seen how to make agents produce structured, validatable outputs. The next module brings together the full agent stack — filesystem isolation, container security, authentication, human oversight, and structured outputs — to examine end-to-end agentic pipeline design and the failure modes that only emerge when all the components interact.
+-> Coming Up Next: You have now seen how to make agents produce structured, validatable outputs. The next module brings together the full agent stack — filesystem isolation, container security, authentication, human oversight, and structured outputs — to examine end-to-end agentic pipeline design and the failure modes that only emerge when all the components interact.
 
 ---
 

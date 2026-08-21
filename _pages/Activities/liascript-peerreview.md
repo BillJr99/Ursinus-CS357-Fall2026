@@ -56,7 +56,7 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **SQR Card** | A structured peer-review card with exactly three parts: one concrete **S**trength with evidence, one genuine **Q**uestion, one **R**isk with a suggested mitigation. | Model 1, and the Exercises |
-| **Review cycle** | The repeating Project Thread pattern: *artifact → peer review → revise → present*. Feedback arrives while revision is still possible. | The stakeholder-brief exchange, proposal critique, and gallery walk — the review milestones on the course schedule |
+| **Review cycle** | The repeating Project Thread pattern: *artifact -> peer review -> revise -> present*. Feedback arrives while revision is still possible. | The stakeholder-brief exchange, proposal critique, and gallery walk — the review milestones on the course schedule |
 | **Check-in** | A short, private, structured form about your own team — contribution, reliability, communication, one appreciation, one request — submitted to the instructor only. | Model 2; due at the stakeholder-brief exchange, proposal review, and gallery-walk milestones on the course schedule |
 | **CATME-informed feedback** | Feedback dimensions drawn from the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): behaviorally anchored ratings of how teammates contribute, not personality judgments. | The check-in form's categories |
 | **Genuine question** | A question you actually do not know the answer to — as opposed to criticism wearing a question mark ("did you even consider...?"). | Model 1, question 2 |
@@ -77,7 +77,7 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 | **Question** | One **genuine** question — something you actually wondered while reading, whose answer would improve the work. | Criticism disguised as a question |
 | **Risk** | One way this could fail or mislead, **with a suggested mitigation** — you may not name a risk without offering a way out. | A complaint with no exit |
 
-The card travels through the Project Thread's standing **review cycle** — *artifact → peer review → revise → present* — at three scheduled moments:
+The card travels through the Project Thread's standing **review cycle** — *artifact -> peer review -> revise -> present* — at three scheduled moments:
 
 1. **Stakeholder Brief exchange (see the course schedule):** teams swap briefs; each team writes SQR cards on the brief it receives; authors revise before the brief feeds the Literature Review.
 2. **Proposal cross-team critique (see the course schedule):** final-project proposals are exchanged the same way, while there is still time to change course.
@@ -196,7 +196,7 @@ And three norms that keep the room safe for candid review, whichever side of it 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You will use SQR cards for real at the Stakeholder Brief exchange on the course schedule, and your first private check-in is due at the same milestone. The cycle — artifact, review, revise, present — then repeats at the proposal critique and the gallery walk, all the way to Demo Day.
 

@@ -200,7 +200,7 @@ print(r.json()["response"])
 
    > *Hint: `xargs -P 3` keeps at most three workers alive at once; as each exits, xargs launches the next topic from stdin. The line is the `xargs -0 -n 1 -P "${PARALLELISM}" python3 worker.py` pipeline. The OS, not your code, does the scheduling.*
 
-> **⚠️ Common Misconception:** Students often assume that running three workers in parallel means the model generates three answers three times faster. On a single local GPU (or CPU), Ollama largely *serializes or shares* the underlying computation — parallel workers overlap network waits, search calls, and file I/O, but the token generation itself competes for the same hardware. Fan-out buys you *pipeline* concurrency and *isolation*, not free inference speedup. Measure it (Exercise 3) rather than assuming it.
+> **Common Misconception:** Students often assume that running three workers in parallel means the model generates three answers three times faster. On a single local GPU (or CPU), Ollama largely *serializes or shares* the underlying computation — parallel workers overlap network waits, search calls, and file I/O, but the token generation itself competes for the same hardware. Fan-out buys you *pipeline* concurrency and *isolation*, not free inference speedup. Measure it (Exercise 3) rather than assuming it.
 
 After the fan-out stage completes, the merge step's prompt contains:
 
@@ -247,7 +247,7 @@ After the fan-out stage completes, the merge step's prompt contains:
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 The pipeline you built fans work out to identical workers. The RAG modules ahead give each call something better than parametric memory to work with — retrieved passages from your own document collection — and the agent-teams material replaces identical workers with *specialized* roles that plan, execute, and critique.
 

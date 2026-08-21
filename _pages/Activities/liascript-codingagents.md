@@ -31,7 +31,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Coding Agent** | An AI system that reads a codebase, makes a plan, edits files, runs commands, and loops until a programming goal is met — without you steering each step | An agent that adds GitHub login to a Flask app by editing five files and running tests on its own |
-| **Agent Loop** | The repeated cycle of Perceive → Plan → Act → Verify that an agent runs until its goal is achieved or its budget runs out | The agent reading test output (Verify) and going back to fix the code (Plan → Act) when a test fails |
+| **Agent Loop** | The repeated cycle of Perceive -> Plan -> Act -> Verify that an agent runs until its goal is achieved or its budget runs out | The agent reading test output (Verify) and going back to fix the code (Plan -> Act) when a test fails |
 | **Context Window** | The fixed-size "working memory" an LLM can read at one time; older information scrolls out as new information is added | A large codebase has millions of tokens — the agent must choose which files to load and which to skip |
 | **Diff / Patch** | A file showing exactly which lines were removed (marked −) and which were added (marked +) when a file is changed | The agent's changes to `app.py` shown as a diff before you decide whether to merge them |
 | **Step Budget** | A maximum number of actions or loop iterations the agent is allowed to take before it must stop, preventing runaway cost | Setting `MAX_ITERATIONS = 25` so a stuck agent cannot loop forever and run up API bills |
@@ -210,7 +210,7 @@ The table below traces a coding agent through its five stages. As you read each 
 
    *Hint: Estimate the number of distinct files that probably need to change, multiply by the number of verify-and-fix cycles you'd expect, and add a buffer. What information would you want to collect from past runs to refine this estimate?*
 
-> **⚠️ Common Misconception:** Many students assume that a coding agent "understands" the codebase the way a senior developer does — holding a mental model of every function, every dependency, and every implicit assumption. It does not. The agent only knows what it has loaded into its context window during the current run. If a critical convention (like "never use raw SQL strings — always use the ORM") was established in a file the agent did not load, the agent will happily violate it. This is why human diff review remains essential even when the test suite passes: tests verify behavior, not design adherence.
+> **Common Misconception:** Many students assume that a coding agent "understands" the codebase the way a senior developer does — holding a mental model of every function, every dependency, and every implicit assumption. It does not. The agent only knows what it has loaded into its context window during the current run. If a critical convention (like "never use raw SQL strings — always use the ORM") was established in a file the agent did not load, the agent will happily violate it. This is why human diff review remains essential even when the test suite passes: tests verify behavior, not design adherence.
 
 In the coding agent loop, the *Verify* stage fails silently when:
 
@@ -268,7 +268,7 @@ Study the Safety Model column below the way you did in Model 1: when the loop ru
 |---|---|---|---|---|
 | **Ralph loop** (Geoffrey Huntley) | A brute-force `while` loop that re-runs the *same prompt file* against the agent, iteration after iteration | The codebase, a `TODO` file, and `git` history — each iteration starts with a fresh context and re-reads them | A human stops it, or a "task complete" check written into the prompt trips | Deliberately minimal — relies entirely on the test suite plus the ability to `git revert` a bad iteration |
 | **autoresearch** (Karpathy's variant) | The *same* loop pointed at ML research instead of code | Model checkpoints and metrics logs on disk | A target validation-loss or metric is reached | The success *metric* is the guardrail — you iterate on model quality, and a worse score is simply discarded |
-| **gnhf** ("good night, have fun") | An overnight orchestrator that splits a goal into small steps, each run in a fresh context seeded with a base context plus prior learnings | Each successful step is a commit on a dedicated `gnhf/<slug>` branch | A step budget, or the goal's acceptance check, is met | Success ⇒ commit; failure ⇒ `git reset --hard` and exponential backoff; `git` worktrees isolate parallel agents; agent-agnostic (Claude Code, Codex, opencode, Copilot, pi, ACP targets) |
+| **gnhf** ("good night, have fun") | An overnight orchestrator that splits a goal into small steps, each run in a fresh context seeded with a base context plus prior learnings | Each successful step is a commit on a dedicated `gnhf/<slug>` branch | A step budget, or the goal's acceptance check, is met | Success => commit; failure => `git reset --hard` and exponential backoff; `git` worktrees isolate parallel agents; agent-agnostic (Claude Code, Codex, opencode, Copilot, pi, ACP targets) |
 | **firstmate** (a "crew") | An agent *distro* — a portable directory of instructions, skills, tooling, policies, and state that turns one general agent into a coordinated crew | Shared distro state plus the repository | You end the primary session | "Talk to one agent, ship with a crew" — one primary session delegates to specialized sub-agents, each with a narrower, safer scope |
 
 Notice what these share: they are the **Step Budget** and **Acceptance Criteria** from the Key Concepts table, scaled up. In an interactive session you are the stopping condition and the final judge. In an unattended loop you are asleep — so the *step budget* is the only thing preventing a runaway bill, and the *acceptance check* (usually the test suite) is the only thing preventing a tidy commit of broken code. Model 2's Verify stage is no longer one step among five; when the loop runs itself, **Verify is the whole game**.
@@ -287,7 +287,7 @@ Notice what these share: they are the **Step Budget** and **Acceptance Criteria*
 
     *Hint: A sub-agent that can only edit tests cannot also `git push`. But now two sub-agents share one repository — what goes wrong if both edit the same file, or if one's idea of "done" contradicts another's?*
 
-> **⚠️ Common Misconception:** Students often assume that "fresh context each iteration" means the agent forgets everything and cannot make real progress — that it must be flailing in circles. The opposite is true, *and it is the whole point*: the loop deliberately externalizes memory to the filesystem and `git` so that no single context window has to hold the entire task. The agent is not remembering less; it is remembering *on disk*, where memory is durable, inspectable, and does not decay as the window fills. The real risk is not amnesia — it is an unattended loop with a weak Verify stage happily committing work that passes thin tests but violates a requirement no test encodes.
+> **Common Misconception:** Students often assume that "fresh context each iteration" means the agent forgets everything and cannot make real progress — that it must be flailing in circles. The opposite is true, *and it is the whole point*: the loop deliberately externalizes memory to the filesystem and `git` so that no single context window has to hold the entire task. The agent is not remembering less; it is remembering *on disk*, where memory is durable, inspectable, and does not decay as the window fills. The real risk is not amnesia — it is an unattended loop with a weak Verify stage happily committing work that passes thin tests but violates a requirement no test encodes.
 
 Why does a Ralph loop start each iteration with a *fresh* context window instead of carrying the full conversation forward?
 
@@ -509,7 +509,7 @@ Two instructions are being considered for `opencode.json` in a project's reposit
 
 ---
 
-→ Coming Up Next: We will zoom in on one of the most consequential actions a coding agent can take — writing to and reading from the filesystem. The next activity examines how to constrain that access so that a mistake stays recoverable.
+-> Coming Up Next: We will zoom in on one of the most consequential actions a coding agent can take — writing to and reading from the filesystem. The next activity examines how to constrain that access so that a mistake stays recoverable.
 
 ---
 

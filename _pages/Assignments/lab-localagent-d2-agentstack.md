@@ -72,15 +72,15 @@ Before writing a single config file, internalize this distinction. It is the sou
 
 ```
 Your Machine (host)
-|-- Terminal: curl localhost:11434  →  hits Ollama running on host
+|-- Terminal: curl localhost:11434  ->  hits Ollama running on host
 |
 |-- Container A (open-webui)
-|   |-- curl localhost:3000         →  hits itself (useless)
-|   |-- curl host.docker.internal:11434  →  hits Ollama on host
-|   `-- curl ollama:11434           →  hits Ollama container (if same network)
+|   |-- curl localhost:3000         ->  hits itself (useless)
+|   |-- curl host.docker.internal:11434  ->  hits Ollama on host
+|   `-- curl ollama:11434           ->  hits Ollama container (if same network)
 |
 `-- Container B (gateway)
-    `-- curl host.docker.internal:11434  →  hits Ollama on host
+    `-- curl host.docker.internal:11434  ->  hits Ollama on host
 ```
 
 ##### Linux-Specific Note
@@ -182,7 +182,7 @@ If you are redoing the lab from scratch, remove the old data first: `rm -rf $HOM
 **Confusion about which tier a service belongs to.**
 If you are unsure, ask: does the service run the model weights (inference), route API calls (gateway), present a UI (frontend), give the agent external information (tool), or autonomously loop and call other services (agent)? A service belongs to exactly one tier.
 
-##### ✅ Part 1 Checkpoint
+##### Part 1 Checkpoint
 
 Before moving to Part 2, confirm you can answer all three questions:
 
@@ -336,7 +336,7 @@ The `OPENAI_API_BASE_URL` environment variable is wrong. Common mistake: using `
 **`curl http://localhost:4000/models` returns "connection refused" immediately.**
 The llmproxy container has not finished starting. Run `docker compose ps` and check the `STATUS` column. If it says `Restarting`, run `docker compose logs llmproxy` to see the startup error.
 
-##### ✅ Part 2 Checkpoint
+##### Part 2 Checkpoint
 
 Before moving to Part 3, confirm you can answer all three questions:
 
@@ -458,7 +458,7 @@ Docker will create the directory if it does not exist, but it will be empty. If 
 **The agent restarts in a loop.**
 Run `docker compose logs hermes` to see the error before the restart. Common causes: the gateway URL is unreachable at startup (add `depends_on` and a `healthcheck` to llmproxy), or the agent binary is not found in the image (wrong image or wrong command).
 
-##### ✅ Part 3 Checkpoint
+##### Part 3 Checkpoint
 
 Before moving to Part 4, confirm you can answer all three questions:
 
@@ -678,7 +678,7 @@ Run `docker compose logs <service>` to see the error. The most common cause afte
         condition: service_healthy
 ```
 
-##### ✅ Part 4 Checkpoint
+##### Part 4 Checkpoint
 
 Before writing up your deliverables, confirm you can answer all three questions:
 

@@ -161,7 +161,7 @@ Build it as a numbered checklist — complete and verify each step before starti
    docker compose up -d
    ```
 
-   ✅ **Checkpoint:** what should `docker compose ps` show now?
+   **Checkpoint:** what should `docker compose ps` show now?
 
    <details>
    <summary>Expected answer</summary>
@@ -176,7 +176,7 @@ Build it as a numbered checklist — complete and verify each step before starti
    curl -s http://localhost:4000/models -H "Authorization: Bearer sk-litellm-local"
    ```
 
-   ✅ **Checkpoint:** what should this `curl` return?
+   **Checkpoint:** what should this `curl` return?
 
    <details>
    <summary>Expected answer</summary>
@@ -295,7 +295,7 @@ In this part, you will build and verify a working minimal stack, extend it with 
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Now that the stack is running, the *Design First: Plan Before You Build* activity follows the studio: before wiring more services together, we learn to plan a multi-agent system on paper. The stack knowledge from today feeds directly into the Local Agent Lab Directions 2-3 (the Compose-stack and container-hardening directions).
 

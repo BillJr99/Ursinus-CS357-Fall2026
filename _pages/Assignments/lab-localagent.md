@@ -99,9 +99,9 @@ info:
       rlink: "https://huggingface.co/learn/agents-course/en/unit2/smolagents/introduction"
     - rtitle: "Ollama Structured Outputs (required structured-output segment)"
       rlink: "https://docs.ollama.com/capabilities/structured-outputs"
-    - rtitle: "Instructor — Structured Output with Pydantic and Ollama"
+    - rtitle: "Instructor: Structured Output with Pydantic and Ollama"
       rlink: "https://python.useinstructor.com/integrations/ollama/"
-    - rtitle: "Outlines — Grammar-Constrained Generation"
+    - rtitle: "Outlines: Grammar-Constrained Generation"
       rlink: "https://github.com/dottxt-ai/outlines"
     - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
@@ -661,7 +661,7 @@ The model may be stuck in a tool-call loop. Increase `step_budget` temporarily t
 
 The `chat()` helper above hid the one piece that makes the loop *real*: the network call to a model. Here we open that box. An agent, stripped to its core, is a single primitive — send the running conversation to a model endpoint, read one reply back — wrapped in a loop that **you**, not the model, control. The model only ever produces text; your program decides what that text *means* and what happens next.
 
-OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer. Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings → Account → API Keys*, and name a model you have pulled. Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended — the model's own tool requests and the observations we hand back — not a new human turn.
+OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer. Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings -> Account -> API Keys*, and name a model you have pulled. Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended — the model's own tool requests and the observations we hand back — not a new human turn.
 
 > This cell talks to your local OpenWebUI over the network, so run it on your own machine rather than in the browser cell above.
 
@@ -798,7 +798,7 @@ This lab stops at a working agent loop with reliable structured output. Making t
 
 Pick **one** direction below — the single 100-point grade covers the core work plus your chosen direction. For Directions 1-6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
 
-- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A–E **in place of** core Parts 1-3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
+- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration. Students who choose Direction 0 complete its Parts A-E **in place of** core Parts 1-3; the Before You Start setup, the evaluation protocol, and the writeup expectations are shared with everyone else.
 - **Directions 1-6 build on top of** the core lab: complete Parts 1-3 first, then extend in your chosen direction.
 
 Each direction now lives on its own page. The table below summarizes what each one asks of you — read the "What this direction requires" box at the top of a direction's page before committing to it.

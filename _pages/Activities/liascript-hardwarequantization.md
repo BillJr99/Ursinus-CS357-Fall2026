@@ -79,9 +79,9 @@ Use the table below to determine which hardware tier can run which model sizes. 
 | Hardware | VRAM | Peak FLOPS (FP16) | Approximate Cost | Models That Fit at FP16 |
 |----------|------|-------------------|------------------|-------------------------|
 | Consumer GPU (RTX 4090) | 24 GB | ~82 TFLOPS | ~$1,600 retail | 7B (tight with KV cache), 13B (does not fit) |
-| Workstation GPU (A100 80 GB SXM) | 80 GB | ~312 TFLOPS | ~$10,000–$15,000 | Up to ~40B parameters (tight); 70B requires multi-GPU |
+| Workstation GPU (A100 80 GB SXM) | 80 GB | ~312 TFLOPS | ~$10,000-$15,000 | Up to ~40B parameters (tight); 70B requires multi-GPU |
 | Cloud (H100 SXM) | 80 GB | ~989 TFLOPS (FP8 mode) | ~$2-4/hour cloud rental | Up to ~40B single GPU; 70B+ via NVLink multi-GPU |
-| Apple Silicon (M3 Ultra) | 192 GB unified memory | ~17 TFLOPS GPU core (Neural Engine: ~60 TOPS) | ~$5,000–$10,000 | 70B+ at FP16; entire system memory is available to the GPU |
+| Apple Silicon (M3 Ultra) | 192 GB unified memory | ~17 TFLOPS GPU core (Neural Engine: ~60 TOPS) | ~$5,000-$10,000 | 70B+ at FP16; entire system memory is available to the GPU |
 | TPU v4 (Google Cloud) | 32 GB per chip in multi-chip pods | ~275 TFLOPS (bfloat16) | Variable pod pricing | Large models via multi-chip pods; primarily for training |
 
 **Unified memory (Apple Silicon):** Apple's M-series chips use a shared memory architecture where the CPU, GPU, and Neural Engine all access the same physical DRAM pool. There is no separate VRAM limit — the entire system memory (up to 192 GB on an M3 Ultra) is available to the GPU. This fundamentally changes what is runnable on consumer hardware: a 70B model that is impossible on any single NVIDIA consumer GPU can run on a Mac Studio.
@@ -177,7 +177,7 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 - **Quantization-Aware Training (QAT)**: Simulate quantization noise *during* training, so the model learns to compensate for the precision loss while still at full precision. Produces significantly better accuracy at very low bit depths (INT4, INT2). Requires access to training infrastructure and significant compute — used in techniques like QLoRA that allow fine-tuning quantized models.
 
-> ⚠️ **Common Misconception:** Many students assume that quantization always makes models noticeably worse. In practice, Q4_K_M gives roughly 1.5% higher perplexity than the FP16 baseline for a 7B model — a difference that is often imperceptible in conversation, coding assistance, and most practical tasks. The sharp quality cliff only occurs at Q2 and below. For most use cases in this course, Q4_K_M is the correct starting point: it cuts memory requirements by 4× compared to FP16 while preserving the vast majority of model quality.
+> **Common Misconception:** Many students assume that quantization always makes models noticeably worse. In practice, Q4_K_M gives roughly 1.5% higher perplexity than the FP16 baseline for a 7B model — a difference that is often imperceptible in conversation, coding assistance, and most practical tasks. The sharp quality cliff only occurs at Q2 and below. For most use cases in this course, Q4_K_M is the correct starting point: it cuts memory requirements by 4× compared to FP16 while preserving the vast majority of model quality.
 
 ### Critical Thinking Questions
 
@@ -273,7 +273,7 @@ All three tools load GGUF models, handle GPU offloading of as many layers as fit
 
 [[___ Your answer here ___]]
 
-> *Hint:* 40 patients per day is a sequential, latency-sensitive workload — the bottleneck is response quality and speed for one user at a time, not throughput for many simultaneous users. For clinical documentation, you likely need a model with strong instruction-following and medical domain knowledge — probably 7B–13B at minimum, ideally larger. Consider a Mac Mini M2 Pro (32 GB unified memory, ~$1,300) running a 13B Q4_K_M model (~7.5 GB footprint). How does HIPAA interact with your hardware choice — can data ever leave the device? Is a Mac Mini a defensible clinical edge device, or does it need to be a specialized medical-grade computer?
+> *Hint:* 40 patients per day is a sequential, latency-sensitive workload — the bottleneck is response quality and speed for one user at a time, not throughput for many simultaneous users. For clinical documentation, you likely need a model with strong instruction-following and medical domain knowledge — probably 7B-13B at minimum, ideally larger. Consider a Mac Mini M2 Pro (32 GB unified memory, ~$1,300) running a 13B Q4_K_M model (~7.5 GB footprint). How does HIPAA interact with your hardware choice — can data ever leave the device? Is a Mac Mini a defensible clinical edge device, or does it need to be a specialized medical-grade computer?
 
 ---
 
@@ -354,11 +354,11 @@ Write at least 200 words addressing at least two of the three levels above.
 
 ---
 
-→ Coming Up Next: In the next activity, we examine how we know whether an AI system is actually good at what it claims to do — the science and politics of benchmarking.
+-> Coming Up Next: In the next activity, we examine how we know whether an AI system is actually good at what it claims to do — the science and politics of benchmarking.
 
 ## Further Reading
 
-- llama.cpp GitHub Repository. (2023–present). *High-performance LLM inference in C/C++.* https://github.com/ggerganov/llama.cpp
+- llama.cpp GitHub Repository. (2023-present). *High-performance LLM inference in C/C++.* https://github.com/ggerganov/llama.cpp
 
 - Dettmers, T. et al. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs.* NeurIPS 2023. https://arxiv.org/abs/2305.14314
 

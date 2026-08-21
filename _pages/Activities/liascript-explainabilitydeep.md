@@ -169,7 +169,7 @@ The limitations of SHAP, LIME, and attention weights become even more pronounced
 
 ---
 
-> **⚠️ Common Misconception:** Students often assume that because attention weights are produced by the model itself — not by an external approximation method like LIME — they must be more faithful to the model's true reasoning than SHAP or LIME. This is backwards. SHAP and LIME, despite being external approximations, are specifically designed and evaluated for faithfulness. Attention weights were designed for the model to function correctly, not to explain itself to humans. The fact that a mechanism is internal to the model does not make it a reliable explanation of the model's decisions.
+> **Common Misconception:** Students often assume that because attention weights are produced by the model itself — not by an external approximation method like LIME — they must be more faithful to the model's true reasoning than SHAP or LIME. This is backwards. SHAP and LIME, despite being external approximations, are specifically designed and evaluated for faithfulness. Attention weights were designed for the model to function correctly, not to explain itself to humans. The fact that a mechanism is internal to the model does not make it a reliable explanation of the model's decisions.
 
 ---
 
@@ -313,7 +313,7 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: Now that we understand how to explain individual decisions, we turn to publishing and deploying AI systems — which raises its own set of accountability questions about what it means to put an AI system into the world where others will use it.
+-> Coming Up Next: Now that we understand how to explain individual decisions, we turn to publishing and deploying AI systems — which raises its own set of accountability questions about what it means to put an AI system into the world where others will use it.
 
 ---
 

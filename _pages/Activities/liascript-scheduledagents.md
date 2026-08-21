@@ -90,7 +90,7 @@ on:
   workflow_dispatch: {}       # ...and a manual "run now" button
 ```
 
-> **⚠️ Common Misconception:** Students often think "autonomous agent" names a special kind of AI. It does not. The **model is identical** to the one you call by hand; autonomy is entirely about *who pulls the trigger*. Swap your keyboard for a `cron` line and the same agent is now "autonomous." That reframing is the whole lesson — and it is why the hard part is governance, not intelligence.
+> **Common Misconception:** Students often think "autonomous agent" names a special kind of AI. It does not. The **model is identical** to the one you call by hand; autonomy is entirely about *who pulls the trigger*. Swap your keyboard for a `cron` line and the same agent is now "autonomous." That reframing is the whole lesson — and it is why the hard part is governance, not intelligence.
 
 ---
 
@@ -124,8 +124,8 @@ The core pattern (borrowed from the *Personal Agent in Production* case study) i
 
 | Lane | Policy | Examples |
 |------|--------|----------|
-| **Autorun** | Safe + reversible → execute immediately, log it | Read files, run tests, open a *draft* PR, write to a scratch dir |
-| **Queue** | Consequential → hold as a proposal for human approval | Merge a PR, send an email, delete data, spend money |
+| **Autorun** | Safe + reversible -> execute immediately, log it | Read files, run tests, open a *draft* PR, write to a scratch dir |
+| **Queue** | Consequential -> hold as a proposal for human approval | Merge a PR, send an email, delete data, spend money |
 | **Forbidden** | Never, regardless of reasoning | Push to `main`, rotate credentials, touch production data |
 
 Two properties make an unattended job trustworthy. **Idempotency**: running it twice must not double-act — so before opening a PR the job checks whether one already exists for this commit. And a **silent-on-success** habit: routines that succeed say nothing, so that the *only* messages you get are the ones that need you.
@@ -137,17 +137,17 @@ An unattended nightly agent is about to take an action. Which action belongs in 
 [(X)] Opening a **draft** pull request with its proposed changes
 [( )] Force-pushing a rebased branch to `main`
 
-> **⚠️ Common Misconception:** "If the tests pass, the agent should just merge." Passing tests mean the change is *plausibly* correct, not that it is *wanted* — the same "sounds right ≠ is right" gap we saw with token prediction. Opening a draft PR (Autorun) keeps a human as the one who clicks merge (Queue). Autonomy is about removing toil, not removing accountability.
+> **Common Misconception:** "If the tests pass, the agent should just merge." Passing tests mean the change is *plausibly* correct, not that it is *wanted* — the same "sounds right ≠ is right" gap we saw with token prediction. Opening a draft PR (Autorun) keeps a human as the one who clicks merge (Queue). Autonomy is about removing toil, not removing accountability.
 
 ---
 
-## Model 2: Anatomy of a "Clone → Review → Open a PR" Run
+## Model 2: Anatomy of a "Clone -> Review -> Open a PR" Run
 
 Here is the run the whole module builds toward, traced stage by stage. A scheduler fires nightly; the agent reviews a repository and proposes changes as a draft PR — never merging.
 
 | Stage | What happens | Lane |
 |-------|--------------|------|
-| 1. Trigger | `cron` / GitHub Actions `schedule:` fires at 02:00 | — |
+| 1. Trigger | `cron` / GitHub Actions `schedule:` fires at 02:00 | - |
 | 2. Clone | `git clone` the repo into a throwaway working directory | Autorun |
 | 3. Read | The agent reads changed files / the diff and any `AGENTS.md` house rules | Autorun |
 | 4. Review | A local model produces structured review comments and a suggested patch | Autorun (proposes) |
@@ -271,7 +271,7 @@ A student says "I'll make OpenWebUI run my agent every night." The most accurate
 
 Everyone completes the **core**: a script that runs one useful agent task, wired to a real scheduler (a local `cron`/`systemd` timer, an n8n schedule node, or a GitHub Actions `schedule:`), that logs each run and is safe to run twice. Once it runs end-to-end on a timer for two consecutive fires, extend it in **one** direction below. This is offered as a lab-scale build; check with your instructor about submitting it for lab credit.
 
-<details markdown="1"><summary><strong>Direction A: The Nightly Repo Reviewer (clone → review → draft PR)</strong></summary>
+<details markdown="1"><summary><strong>Direction A: The Nightly Repo Reviewer (clone -> review -> draft PR)</strong></summary>
 
 Build the Model 2 pipeline against a repository you own. A scheduler clones the repo, runs `review_diff()` (from the Code Cell) on the latest diff, opens a **draft** PR on a new branch if and only if the tests pass and no PR already exists for that commit — and never merges.
 
@@ -279,7 +279,7 @@ Build the Model 2 pipeline against a repository you own. A scheduler clones the 
 
 </details>
 
-<details markdown="1"><summary><strong>Direction B: The Directory Organizer (timer → tidy a folder)</strong></summary>
+<details markdown="1"><summary><strong>Direction B: The Directory Organizer (timer -> tidy a folder)</strong></summary>
 
 Build a scheduled agent that organizes a messy directory (e.g., `downloads/`): it proposes a tidy structure (by type/date/topic), and — under the gate — *moves* files in the Autorun lane while *queuing* any deletion or overwrite for human approval. Use a local model to suggest categories from filenames.
 
@@ -299,12 +299,12 @@ Build a scheduled agent that organizes a messy directory (e.g., `downloads/`): i
 
 ---
 
-→ Coming Up Next: We have let an agent act on a clock. Next we widen the lens to full production deployment — packaging, monitoring, and the governance policy you will write for the agent team you ship as your final project.
+-> Coming Up Next: We have let an agent act on a clock. Next we widen the lens to full production deployment — packaging, monitoring, and the governance policy you will write for the agent team you ship as your final project.
 
 ## 5. Further Reading
 
 - crontab and `systemd.timer` manual pages (`man 5 crontab`, `man 5 systemd.timer`).
 - GitHub Actions — Events that trigger workflows: the `schedule` trigger. https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#schedule
-- This course's *From Second Brain to Chief of Staff — A Personal Agent in Production* (governed autonomy, scheduled/no-agent routines, catch-up policy) and *The LLM Wiki Pattern* (an n8n nightly clone→process→commit agent).
+- This course's *From Second Brain to Chief of Staff — A Personal Agent in Production* (governed autonomy, scheduled/no-agent routines, catch-up policy) and *The LLM Wiki Pattern* (an n8n nightly clone->process->commit agent).
 - This course's *Human-in-the-Loop — Oversight, Escalation, and Appropriate Autonomy* and *Agentic OpenWebUI* (why OpenWebUI is stateless-per-request and orchestration lives in your code).
 - Ollama API (`/api/chat`) and OpenWebUI (`/api/chat/completions`) docs, for the model call a scheduler drives.

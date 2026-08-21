@@ -82,7 +82,7 @@ A developer is working on the RAG lab from earlier in the course. They have accu
 
 ### Critical Thinking Questions
 
-1. For each context item A–E, decide which layer (Global, Project, Skill) is most appropriate. Justify your answer in one sentence each.
+1. For each context item A-E, decide which layer (Global, Project, Skill) is most appropriate. Justify your answer in one sentence each.
 
    > *Hint: Ask yourself: would this context apply to a completely different project the developer works on next semester? If yes, it is global. If it is specific to this RAG project, it is project-level. If it describes a repeatable multi-step workflow rather than a fact, it might be a skill.*
 
@@ -94,7 +94,7 @@ A developer is working on the RAG lab from earlier in the course. They have accu
 
    > *Hint: Only files that are version-controlled in the repository are shared when the repo is cloned. Which of the three layers lives inside the repository?*
 
-> **⚠️ Common Misconception:** "More context is always better — fill the instructions file with everything you know about the project." Context window space is finite and shared with the actual task. An instructions file that lists every class name, every function signature, and the history of every decision crowds out the agent's working space for the current prompt. Effective instructions describe *constraints and invariants* — what the agent must not do, where things are, and what the conventions are — not a narration of the code.
+> **Common Misconception:** "More context is always better — fill the instructions file with everything you know about the project." Context window space is finite and shared with the actual task. An instructions file that lists every class name, every function signature, and the history of every decision crowds out the agent's working space for the current prompt. Effective instructions describe *constraints and invariants* — what the agent must not do, where things are, and what the conventions are — not a narration of the code.
 
 A developer always wants their coding agent to use Black for Python formatting, regardless of which project they are working on. Which layer is most appropriate for this instruction?
 
@@ -172,7 +172,7 @@ Both are served by Ollama at `http://localhost:11434`.
 
    > *Hint: You do not need to trust the agent's output — you can check the code directly. The `grep` command can search for patterns in files: `grep -r "eval(" .` returns any line containing `eval(`. How would you turn this into a `pytest` test using Python's `subprocess.run`?*
 
-> **⚠️ Common Misconception:** "Project instructions are like a README — describe what the code does." A README is for humans orienting themselves to a project. An instructions file is for constraining agent behavior. The distinction: a README says "this module handles embeddings"; an instructions file says "do not change the embedding model without updating this file." One describes; the other constrains. Descriptions help humans understand; constraints prevent agent errors.
+> **Common Misconception:** "Project instructions are like a README — describe what the code does." A README is for humans orienting themselves to a project. An instructions file is for constraining agent behavior. The distinction: a README says "this module handles embeddings"; an instructions file says "do not change the embedding model without updating this file." One describes; the other constrains. Descriptions help humans understand; constraints prevent agent errors.
 
 Which of the following best belongs in a project instructions file rather than in the source code itself?
 
@@ -246,7 +246,7 @@ Review the most recent diff provided by the user.
 
    > *Hint: The first sentence should tell the agent what role it is playing and what it is about to review. Look at the security-review skill above — it opens with "You are performing a security review of the diff provided." What is the analogous opening for a skill that reviews a RAG system's retrieval quality?*
 
-> **⚠️ Common Misconception:** "A skill is just a shortcut for typing a long prompt." A skill is a *reusable contract*: it defines what the agent will examine, what it will report, and in what format. Because it is version-controlled and shared with the team, everyone's agent invokes the same workflow. The reproducibility is the value — not just the typing saved.
+> **Common Misconception:** "A skill is just a shortcut for typing a long prompt." A skill is a *reusable contract*: it defines what the agent will examine, what it will report, and in what format. Because it is version-controlled and shared with the team, everyone's agent invokes the same workflow. The reproducibility is the value — not just the typing saved.
 
 Why is it preferable to install a project-specific plugin in `./opencode.json` rather than the global agent configuration?
 
@@ -295,7 +295,7 @@ Why is it preferable to install a project-specific plugin in `./opencode.json` r
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Your agent environment is version-controlled, your skills are shareable, and your project instructions run automatically. The next challenge is making this reproducible across the whole team and across deployments. The next module introduces **CI/CD and Publishing**: wiring a pipeline that installs your agent environment, runs the test suite, and publishes a working artifact — so the environment you designed today is the environment that ships.
 

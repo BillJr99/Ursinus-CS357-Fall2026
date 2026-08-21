@@ -30,7 +30,7 @@
 
 ## Ongoing Projects and Recurring Threads
 
-<project name → one-paragraph durable context each>
+<project name -> one-paragraph durable context each>
 
 ## Assistant Operational Preferences
 

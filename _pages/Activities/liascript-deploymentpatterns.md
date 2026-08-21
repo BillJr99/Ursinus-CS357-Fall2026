@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Deploying Agents: From Laptop to Production
 
-A working agent on a developer's laptop is not a deployed agent. This module closes the gap between a prototype and a production system: **how agents are packaged, where they run, how they survive being killed and restarted, and how you ship a new version without breaking the users who depend on the old one.** The arc: **deployment tiers → stateful agents in a stateless world → CI/CD pipelines for non-deterministic software**.
+A working agent on a developer's laptop is not a deployed agent. This module closes the gap between a prototype and a production system: **how agents are packaged, where they run, how they survive being killed and restarted, and how you ship a new version without breaking the users who depend on the old one.** The arc: **deployment tiers -> stateful agents in a stateless world -> CI/CD pipelines for non-deterministic software**.
 
 ---
 
@@ -220,7 +220,7 @@ Stage 2:  Prompt regression suite
           (golden dataset of (input, expected behavior) pairs;
            judged by LLM-as-judge or embedding similarity, not exact match)
 
-Stage 3:  Canary deploy (5% of production traffic → new version)
+Stage 3:  Canary deploy (5% of production traffic -> new version)
           (monitor latency, error rate, user satisfaction signal for 24-48 h)
 
 Stage 4:  Shadow mode comparison
@@ -277,7 +277,7 @@ In this part, you will design a complete deployment architecture, write a canary
 
    *What to do:* A campus course chatbot must handle 1,000 concurrent students during a midterm exam (a 2-hour burst window) and fewer than 10 users during the remaining 22 hours of the day. Design a complete deployment architecture: which tier(s) to use, how conversation state is persisted across the burst period, how you handle the traffic spike at exam start, and what the estimated cost difference is between always-on bare metal and a burst-capable serverless or Kubernetes approach. Produce a labeled architecture diagram (boxes and arrows are fine) and a one-paragraph rationale.
 
-   *Starter hint:* Consider a hybrid approach: a small always-warm fleet handles baseline traffic cheaply, while an auto-scaling group or serverless overflow handles the burst. Draw the request flow: student browser → load balancer → agent instance → external session database → LLM API. Label each arrow with what travels across it (HTTP request, session ID, conversation history, LLM response). For cost estimation, assume a small VPS costs $50/month and serverless costs $0.0001 per request-second.
+   *Starter hint:* Consider a hybrid approach: a small always-warm fleet handles baseline traffic cheaply, while an auto-scaling group or serverless overflow handles the burst. Draw the request flow: student browser -> load balancer -> agent instance -> external session database -> LLM API. Label each arrow with what travels across it (HTTP request, session ID, conversation history, LLM response). For cost estimation, assume a small VPS costs $50/month and serverless costs $0.0001 per request-second.
 
    *You've succeeded when:* Your diagram shows state persistence explicitly (not just "the agent"), your cost estimate makes a specific numerical argument for the hybrid approach over always-on, and your rationale addresses what happens to users who start a conversation at minute 118 of the 2-hour exam window.
 
@@ -309,7 +309,7 @@ In this part, you will design a complete deployment architecture, write a canary
 
 ---
 
-→ **Coming Up Next:** In the next activity, we examine adversarial robustness and red-teaming — the discipline of systematically trying to break your own agent before malicious users do, and building the test infrastructure to detect regressions in safety as you ship updates.
+-> **Coming Up Next:** In the next activity, we examine adversarial robustness and red-teaming — the discipline of systematically trying to break your own agent before malicious users do, and building the test infrastructure to detect regressions in safety as you ship updates.
 
 ---
 

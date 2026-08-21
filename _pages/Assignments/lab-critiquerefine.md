@@ -739,7 +739,7 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow.
 
-1. **Two roles, one canvas.** In Langflow, chain **Generator → Critic → Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand — slower, but the loop is identical and the seams are more visible.
+1. **Two roles, one canvas.** In Langflow, chain **Generator -> Critic -> Reviser** as three prompt nodes, feeding the critic's output back into the reviser. In Open WebUI, do it as three saved model presets and pass the text between them by hand — slower, but the loop is identical and the seams are more visible.
 2. **Calibrate the critic the same way.** Part 2's work — checking whether the critic's criticism actually tracks quality — is prompt work and analysis, not code. Run your calibration cases through the critic and record agreement.
 3. **Reward-hack it the same way.** Part 3 asks you to write something that scores well and is bad. That is a writing exercise; the route you used to run the rubric does not change it.
 4. **Latency and worth.** Time one pass versus three by the clock, and answer Part 4's question with your own measurements.
@@ -1062,7 +1062,7 @@ When you are done, print a one-paragraph summary of what you changed and why.
 
 Save `system_prompt.txt`.
 
-##### ✅ Checkpoint 1 — Answer these questions before moving to Part 2
+##### Checkpoint 1 — Answer these questions before moving to Part 2
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 1`.
 
@@ -1178,7 +1178,7 @@ Then rerun the agent command. If you do not have an API key, ask your instructor
 
 Do not accept the change. Note the violation in `pair_log.md` with the exact file name and the line in your system prompt that prohibits it. Then try again with a stronger prompt — rewrite the prohibition to include the exact file path and add the phrase "under no circumstances."
 
-##### ✅ Checkpoint 2 — Answer these questions before moving to Part 3
+##### Checkpoint 2 — Answer these questions before moving to Part 3
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 2`.
 
@@ -1348,7 +1348,7 @@ git checkout -- spec.md   # replace with the prohibited filename
 ```
 Document the violation in `critique.md` under "System prompt compliance check."
 
-##### ✅ Checkpoint 3 — Answer these questions before moving to Part 4
+##### Checkpoint 3 — Answer these questions before moving to Part 4
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 3`.
 
@@ -1550,7 +1550,7 @@ def client():
 
 Check `app.py` for a line like `app.run(debug=True)`. Change `debug=True` to `debug=False`, or remove the `app.run()` call entirely if it is inside an `if __name__ == "__main__":` block that is not needed for testing.
 
-##### ✅ Checkpoint 4 — Answer these questions as part of your reflection
+##### Checkpoint 4 — Answer these questions as part of your reflection
 
 Write your answers in `pair_log.md` under a heading `## Checkpoint 4`.
 

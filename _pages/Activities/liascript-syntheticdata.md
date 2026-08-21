@@ -117,8 +117,8 @@ Stanford's **Alpaca** model (2023) applied this pipeline: it used GPT-3.5 to gen
 
 Evol-Instruct takes a different approach: rather than generating new instructions from scratch, it **evolves** existing simple instructions into progressively harder ones through iterative rewriting. Each evolution step applies one of several transformations:
 
-- **Add constraints:** "Write a function that sorts a list" → "Write a function that sorts a list without using any built-in sorting functions or the sorted() built-in, in O(n log n) time."
-- **Deepen complexity:** "Explain photosynthesis" → "Explain photosynthesis at the biochemical level, addressing specifically whether recent research on quantum coherence in light-harvesting complexes changes the classical explanation."
+- **Add constraints:** "Write a function that sorts a list" -> "Write a function that sorts a list without using any built-in sorting functions or the sorted() built-in, in O(n log n) time."
+- **Deepen complexity:** "Explain photosynthesis" -> "Explain photosynthesis at the biochemical level, addressing specifically whether recent research on quantum coherence in light-harvesting complexes changes the classical explanation."
 - **Require multi-step reasoning:** Single-step questions become chains of reasoning with explicit intermediate conclusions required.
 
 The result is a dataset with a natural difficulty gradient, which is particularly valuable for training models to handle challenging queries rather than just easy ones.
@@ -129,12 +129,12 @@ The diagram below shows how raw generated pairs flow through a series of filters
 
 ```
 seed_instructions
-    → generate_variants(LLM)
-    → filter_quality(judge_LLM_or_rules)
-    → deduplicate(exact + semantic_similarity)
-    → measure_diversity(embedding_spread)
-    → add_to_dataset
-    → loop
+    -> generate_variants(LLM)
+    -> filter_quality(judge_LLM_or_rules)
+    -> deduplicate(exact + semantic_similarity)
+    -> measure_diversity(embedding_spread)
+    -> add_to_dataset
+    -> loop
 ```
 
 **Quality filter criteria — each generated pair must pass all of these:**
@@ -144,7 +144,7 @@ seed_instructions
 - **Non-duplication check:** Cosine similarity (a number between 0 and 1 measuring how semantically similar two pieces of text are — values above 0.9 mean the texts are nearly identical in meaning) to existing dataset items is below a threshold (typically 0.7-0.8) so the dataset remains diverse.
 - **Safety check:** The instruction and response do not contain toxic, harmful, or inappropriate content.
 
-> ⚠️ **Common Misconception:** Generating more synthetic data is not the same as generating *better* synthetic data. A common error is to generate enormous quantities of synthetic instruction data and assume that more is always better. In practice, quality filters are more important than quantity: a dataset of 10,000 high-quality, diverse, well-filtered examples typically produces better fine-tuning results than 100,000 low-quality or highly redundant examples. The Alpaca model demonstrated this: 52,000 carefully generated examples from a seed of 175 produced a capable model. Simply running the generation loop for 10 more hours to produce 500,000 examples would not have produced a model 10× better — and might have introduced more mode collapse.
+> **Common Misconception:** Generating more synthetic data is not the same as generating *better* synthetic data. A common error is to generate enormous quantities of synthetic instruction data and assume that more is always better. In practice, quality filters are more important than quantity: a dataset of 10,000 high-quality, diverse, well-filtered examples typically produces better fine-tuning results than 100,000 low-quality or highly redundant examples. The Alpaca model demonstrated this: 52,000 carefully generated examples from a seed of 175 produced a capable model. Simply running the generation loop for 10 more hours to produce 500,000 examples would not have produced a model 10× better — and might have introduced more mode collapse.
 
 ### Critical Thinking Questions
 
@@ -281,7 +281,7 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
-→ Coming Up Next: In the next activity, we examine what it means for AI to be "creative" — and whether creativity requires something that generative models fundamentally cannot have.
+-> Coming Up Next: In the next activity, we examine what it means for AI to be "creative" — and whether creativity requires something that generative models fundamentally cannot have.
 
 ## Further Reading
 

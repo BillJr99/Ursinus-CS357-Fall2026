@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Shakespeare GPT: How Language Models Learn to Write
 
-Every time a language model generates a word, it is doing something your phone's autocomplete has done for years — but at a scale and depth that produces startlingly human-like text. Today we build a character-level language model from scratch in Python, poke at the mechanisms that make it work and fail, and then compare it to a real local LLM running on your machine. The arc: **n-gram intuition → building the model → experimenting with temperature → comparing outputs with a local model → what "learning" actually means**.
+Every time a language model generates a word, it is doing something your phone's autocomplete has done for years — but at a scale and depth that produces startlingly human-like text. Today we build a character-level language model from scratch in Python, poke at the mechanisms that make it work and fail, and then compare it to a real local LLM running on your machine. The arc: **n-gram intuition -> building the model -> experimenting with temperature -> comparing outputs with a local model -> what "learning" actually means**.
 
 ---
 
@@ -30,9 +30,9 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **n-gram** | A sequence of n items (characters, words) used to predict the next item based on what came before. A bigram uses the previous 1 item; a trigram uses the previous 2. | In "ROMEO", a bigram model records "R→O" once; a trigram records "RO→M" once. |
+| **n-gram** | A sequence of n items (characters, words) used to predict the next item based on what came before. A bigram uses the previous 1 item; a trigram uses the previous 2. | In "ROMEO", a bigram model records "R->O" once; a trigram records "RO->M" once. |
 | **Character-level model** | A language model that treats individual characters (not words) as its basic units, allowing it to generate any text including made-up words. | Our Python model treats "R", "O", "M", "E", "O", ":" each as separate tokens. |
-| **Probability distribution** | A set of probabilities over all possible next tokens that sum to 1.0 — the model's "belief" about what comes next. | After "th", the model might assign: "e"→0.55, "a"→0.18, "i"→0.14, others→0.13. |
+| **Probability distribution** | A set of probabilities over all possible next tokens that sum to 1.0 — the model's "belief" about what comes next. | After "th", the model might assign: "e"->0.55, "a"->0.18, "i"->0.14, others->0.13. |
 | **Temperature** | A parameter that controls how peaked or flat the probability distribution is before sampling; low temperature = more predictable, high temperature = more random. | At T=0.3 the model almost always picks "e" after "th"; at T=2.0 it sometimes picks "x". |
 | **Backoff** | When a model can't find the exact context in its training data, it "backs off" to a shorter context — e.g., falling back from trigram to bigram to unigram. | If "ZOM" never appears in the training text, the model falls back to any key ending in "M". |
 | **Perplexity** | A measure of how surprised the model is by test data; lower perplexity = better predictions. | A trigram model trained on Shakespeare should have lower perplexity on Shakespeare than a bigram model does. |
@@ -47,7 +47,7 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 
 The simplest possible language model is a lookup table: scan through the training text, count which characters follow which character sequences, and store the counts. At generation time, look up the current context, turn the counts into probabilities, and sample the next character. This is an **n-gram model** — "n" refers to the total window size including the character you are predicting.
 
-Think of building the model like a scribe who reads a book while keeping a tally sheet. Every time they see the letter "R" followed by "O" they make a tally mark in the "R → O" column. When asked to generate text, they roll a weighted die whose faces are labeled with all the characters they have seen after "R", with the most-tallied characters on the bigger faces.
+Think of building the model like a scribe who reads a book while keeping a tally sheet. Every time they see the letter "R" followed by "O" they make a tally mark in the "R -> O" column. When asked to generate text, they roll a weighted die whose faces are labeled with all the characters they have seen after "R", with the most-tallied characters on the bigger faces.
 
 **A concrete bigram table for "to be or not to be":**
 
@@ -68,7 +68,7 @@ Notice that every "b" in the training phrase is followed by "e," so the model is
 
 ### Critical Thinking Questions
 
-1. A bigram table for "to be or not to be" records contexts of length 1. A **trigram** table records contexts of length 2 (e.g., "to" → " ", "o " → "b", " b" → "e"). What does the trigram table add that the bigram table does not have? Why does this matter for generating coherent text?
+1. A bigram table for "to be or not to be" records contexts of length 1. A **trigram** table records contexts of length 2 (e.g., "to" -> " ", "o " -> "b", " b" -> "e"). What does the trigram table add that the bigram table does not have? Why does this matter for generating coherent text?
 
    > *Hint: Trigrams track 2-character contexts instead of 1. In "to be or not to be", the trigram "to" appears before " " (a space) each time it appears. Track what comes after 2-character pairs vs. 1-character ones. Consider how knowing the previous two characters helps you predict whether a "t" is the start of "to" vs. the end of "not".*
 
@@ -78,11 +78,11 @@ Notice that every "b" in the training phrase is followed by "e," so the model is
    [( )] It generates "ounds" because it learned "Z" is usually followed by sounds
    [( )] It refuses to generate anything
 
-   > **⚠️ Common Misconception:** Students often assume the model has "knowledge" that lets it handle unseen inputs gracefully. An n-gram model is a lookup table — if the key doesn't exist, there is no entry. This is why modern neural language models vastly outperform n-gram models on rare or unseen contexts: they can *interpolate* from learned representations rather than failing on a lookup miss. The neural model has seen every character; the n-gram model has only seen the specific sequences that appeared in training.
+   > **Common Misconception:** Students often assume the model has "knowledge" that lets it handle unseen inputs gracefully. An n-gram model is a lookup table — if the key doesn't exist, there is no entry. This is why modern neural language models vastly outperform n-gram models on rare or unseen contexts: they can *interpolate* from learned representations rather than failing on a lookup miss. The neural model has seen every character; the n-gram model has only seen the specific sequences that appeared in training.
 
 3. The phrase "ROMEO:" appears many times in *Romeo and Juliet*. Would a bigram model trained only on that play generate "ROMEO:" correctly? What would it need to generate the word "JULIET" correctly, and why does the answer differ?
 
-   > *Hint: "ROMEO:" requires the model to learn the 6 bigram transitions R→O, O→M, M→E, E→O, O→:. Each of these transitions must appear in training. "JULIET" requires J→U, U→L, L→I, I→E, E→T. Does the letter "J" appear frequently enough in Shakespeare's text that these transitions are well-estimated?*
+   > *Hint: "ROMEO:" requires the model to learn the 6 bigram transitions R->O, O->M, M->E, E->O, O->:. Each of these transitions must appear in training. "JULIET" requires J->U, U->L, L->I, I->E, E->T. Does the letter "J" appear frequently enough in Shakespeare's text that these transitions are well-estimated?*
 
 ---
 
@@ -168,7 +168,7 @@ print(generate_text(trigram_model, "ROM", temperature=2.0))
 
 4. Run the bigram and trigram generators at T=1.0. The trigram output looks more "Shakespearean." Why? What does having a longer context (n=3 vs. n=2) allow the model to capture?
 
-   > *Hint: A bigram model of "is the sun" sees "i→s", "s→ ", " →t", "t→h", "h→e", "e→ ", " →s", "s→u", "u→n". A trigram model sees "is→ ", "s →t", " t→h", "th→e", "he→ ", "e →s", " s→u", "su→n". How does tracking two-character contexts reduce the chance of generating nonsense sequences like "sts" or "ehe"?*
+   > *Hint: A bigram model of "is the sun" sees "i->s", "s-> ", " ->t", "t->h", "h->e", "e-> ", " ->s", "s->u", "u->n". A trigram model sees "is-> ", "s ->t", " t->h", "th->e", "he-> ", "e ->s", " s->u", "su->n". How does tracking two-character contexts reduce the chance of generating nonsense sequences like "sts" or "ehe"?*
 
 5. At T=0.3, the trigram model generates very similar text on every run. At T=2.0, it generates different text each time, often nonsensical. Explain the mechanism: what changes in the probability distribution when you raise or lower the temperature?
 
@@ -180,7 +180,7 @@ print(generate_text(trigram_model, "ROM", temperature=2.0))
    [( )] True, but only up to n=5
    [( )] False — n-gram models always generate random text regardless of n
 
-   > **⚠️ Common Misconception:** Students often expect that "more context" monotonically improves a statistical model. At very high n, most contexts appear only once or zero times in training data — the model has essentially memorized the training text verbatim. Generation then either exactly reproduces training sequences (when a context was seen) or breaks immediately into the backoff case (when it was not). The sweet spot for character-level n-gram models on literary text is typically n=4 to n=6.
+   > **Common Misconception:** Students often expect that "more context" monotonically improves a statistical model. At very high n, most contexts appear only once or zero times in training data — the model has essentially memorized the training text verbatim. Generation then either exactly reproduces training sequences (when a context was seen) or breaks immediately into the backoff case (when it was not). The sweet spot for character-level n-gram models on literary text is typically n=4 to n=6.
 
 7. Our backoff strategy chooses a random key that ends with the same last character. This is a crude approximation of what more sophisticated language models do. What information does this strategy throw away, and what would a smarter backoff do instead?
 
@@ -310,7 +310,7 @@ Both models convert context into a probability distribution over next tokens. Th
 
 13. We used `random.choices(chars, weights=probs)` to sample the next character. If instead you always chose the character with the highest probability (greedy decoding), how would the generated text differ? Under what circumstances might greedy decoding produce worse text than temperature sampling?
 
-    > *Hint: Greedy decoding is equivalent to T→0. The model always picks the single most probable character. In a small training corpus, one character might dominate every context because it appeared there most often — not because it is linguistically correct in all cases. What happens when the greedy choice locks the model into a repetitive loop?*
+    > *Hint: Greedy decoding is equivalent to T->0. The model always picks the single most probable character. In a small training corpus, one character might dominate every context because it appeared there most often — not because it is linguistically correct in all cases. What happens when the greedy choice locks the model into a repetitive loop?*
 
 14. Perplexity is defined as $e^{-\frac{1}{N}\sum_{i} \log P(\text{char}_i)}$ — roughly, how surprised the model is by each character in a test text, on average. Without computing exact numbers, predict: would a trigram model have lower or higher perplexity than a bigram model on a held-out Shakespeare passage? What about a 20-gram model on the same passage?
 
@@ -328,7 +328,7 @@ Both models convert context into a probability distribution over next tokens. Th
 
 ---
 
-→ **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance — not just the last n-1 characters. In the *Attention and the Transformer* session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
+-> **Coming Up Next:** Our n-gram model predicts the next character by looking at a fixed-size window. Transformers replaced this by learning to attend to *any* previous position in the input, weighted by relevance — not just the last n-1 characters. In the *Attention and the Transformer* session we compute attention by hand and see exactly why this makes the model so much better at long-range dependencies like matching "Arise" with "sun" two lines later.
 
 ---
 

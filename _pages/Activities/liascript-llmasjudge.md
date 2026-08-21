@@ -167,7 +167,7 @@ The most important safeguard before trusting an LLM judge's scores on real stude
 [(X)] Validating the judge's scores against human scores on a labeled calibration set before using it on new work
 [( )] Asking the judge to be fair in the system prompt, so it knows to ignore its biases
 
-> **⚠️ Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* — it will give the same score every time for the same input — but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
+> **Common Misconception:** A very common mistake is to believe that setting the judge's temperature to 0 guarantees fair, unbiased grading. Temperature 0 makes the judge *consistent* — it will give the same score every time for the same input — but consistency is not the same as accuracy. A consistently biased judge that always over-scores verbose essays is worse than a slightly inconsistent but well-calibrated one, because the bias is systematic and invisible. The only way to catch systematic bias is to compare judge scores to human scores on a set of pre-graded examples (a calibration set) before using the judge on new work.
 
 ---
 
@@ -221,7 +221,7 @@ Now that you have a working judge and understand its failure modes, this part as
 
 ---
 
-→ Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
+-> Coming Up Next: In the *Agentic Case Studies: Migration, Browsing, and Research Agents* activity, we move from evaluating individual outputs to studying complete real-world agentic systems. The rubric pipeline you built today is the architecture of the Rubric Pipeline Lab.
 
 ## Further Reading
 

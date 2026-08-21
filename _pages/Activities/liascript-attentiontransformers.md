@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Attention and Transformers, Conceptually and by Hand
 
-The embeddings from the *Tokens and Embeddings: How Agents Represent Meaning* activity give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem → queries, keys, values → a worked 3-token example → what this explains about context windows**.
+The embeddings from the *Tokens and Embeddings: How Agents Represent Meaning* activity give each token a meaning vector; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
 
 ---
 
@@ -245,7 +245,7 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 [(X)] 16 — because 8,000² ÷ 2,000² = 64,000,000 ÷ 4,000,000 = 16; the cost is quadratic ($O(n^2)$)
 [( )] It does not grow; attention is constant-time
 
-> **⚠️ Common Misconception: "More context is always better"**
+> **Common Misconception: "More context is always better"**
 >
 > It is tempting to assume that giving a model a longer context — more background, more examples, more retrieved documents — always improves its answers. The attention mechanism reveals why this is not true. First, the computational cost grows as $O(n^2)$: quadrupling the context length multiplies the attention work by 16×. Second, the "lost in the middle" effect shows that models reliably extract information from the *beginning* and *end* of long prompts but often miss material buried in the middle. Third, every extra token competes for the finite "attention budget" of each query token, potentially diluting the signal from the most relevant parts of the prompt. The practical lesson: be selective. Retrieve only what is relevant, place it strategically, and keep prompts as short as the task allows.
 
@@ -283,7 +283,7 @@ We do the single-row arithmetic together in Part I. The **full matrix** version 
 
 3. **Scaling sketch.** Tabulate $n^2$ for $n \in \{1\text{k}, 4\text{k}, 32\text{k}, 128\text{k}\}$ tokens, and use the table to argue, in three sentences, why retrieval (fetching only relevant text) beats ever-longer contexts for an agent searching a large document base.
 
-   *What to do:* Fill in a four-row table with columns $n$ and $n^2$. Express $n^2$ in millions or billions for readability (e.g., 1 k tokens → $10^6$ pairs). Then write three sentences connecting the numbers to the retrieval argument.
+   *What to do:* Fill in a four-row table with columns $n$ and $n^2$. Express $n^2$ in millions or billions for readability (e.g., 1 k tokens -> $10^6$ pairs). Then write three sentences connecting the numbers to the retrieval argument.
 
    *Starter hint:* $1\text{k}^2 = 1{,}000{,}000$; $4\text{k}^2 = 16{,}000{,}000$; $32\text{k}^2 = 1{,}024{,}000{,}000$; $128\text{k}^2 = 16{,}384{,}000{,}000$. The ratio between consecutive rows is 16× each time you double twice. Retrieval lets you reduce $n$ to only the relevant chunk before the model ever sees it.
 
@@ -291,11 +291,11 @@ We do the single-row arithmetic together in Part I. The **full matrix** version 
 
 4. **Head hypothesis.** Real models use many attention heads in parallel. Propose two different relations (for example, syntax vs. coreference) that separate heads might specialize in, and design a sentence that would distinguish them.
 
-   *What to do:* Choose two linguistic relationships (e.g., subject–verb agreement; pronoun–antecedent coreference; modifier–noun attachment; temporal ordering). For each, describe what pattern an attention head specializing in that relationship would show — which tokens would have high attention weights to which. Then write a single English sentence where the two patterns point to *different* pairs of tokens.
+   *What to do:* Choose two linguistic relationships (e.g., subject-verb agreement; pronoun-antecedent coreference; modifier-noun attachment; temporal ordering). For each, describe what pattern an attention head specializing in that relationship would show — which tokens would have high attention weights to which. Then write a single English sentence where the two patterns point to *different* pairs of tokens.
 
-   *Starter hint:* In a sentence like "The tall woman who won the race finished first," subject–verb agreement links "woman" ↔ "finished," while coreference links "who" ↔ "woman." A head tracking agreement would show "finished" attending strongly to "woman"; a head tracking coreference would show "who" attending strongly to "woman." Design a sentence where those two target tokens are as far apart as possible to make the distinction clear.
+   *Starter hint:* In a sentence like "The tall woman who won the race finished first," subject-verb agreement links "woman" <-> "finished," while coreference links "who" <-> "woman." A head tracking agreement would show "finished" attending strongly to "woman"; a head tracking coreference would show "who" attending strongly to "woman." Design a sentence where those two target tokens are as far apart as possible to make the distinction clear.
 
-   *You've succeeded when:* You have named two distinct linguistic relations, described the expected attention pattern for each, and provided a sentence where the two patterns visibly diverge (different source–target token pairs).
+   *You've succeeded when:* You have named two distinct linguistic relations, described the expected attention pattern for each, and provided a sentence where the two patterns visibly diverge (different source-target token pairs).
 
 ---
 
@@ -311,7 +311,7 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ---
 
-→ **Coming Up Next:** The next session turns to sampling — how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+-> **Coming Up Next:** The next session turns to sampling — how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
 
 ---
 

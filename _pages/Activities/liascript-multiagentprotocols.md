@@ -129,7 +129,7 @@ These coordination problems are not hypothetical — they motivated the developm
 
 ---
 
-> **⚠️ Common Misconception:** Students often assume that if agents each have their own context window and their own prompt, they cannot interfere with each other. This is only true if agents never share state. The moment two agents read from and write to the same resource — a file, a database record, a task queue — all the classical coordination problems apply, regardless of how sophisticated the agents are. The problem is not in the agents' "minds"; it is in the shared resource they both touch.
+> **Common Misconception:** Students often assume that if agents each have their own context window and their own prompt, they cannot interfere with each other. This is only true if agents never share state. The moment two agents read from and write to the same resource — a file, a database record, a task queue — all the classical coordination problems apply, regardless of how sophisticated the agents are. The problem is not in the agents' "minds"; it is in the shared resource they both touch.
 
 ---
 
@@ -281,7 +281,7 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: In the next activity, we look inside the agents themselves — specifically at how we can explain *why* an agent made the decision it did, and why that turns out to be much harder than it sounds.
+-> Coming Up Next: In the next activity, we look inside the agents themselves — specifically at how we can explain *why* an agent made the decision it did, and why that turns out to be much harder than it sounds.
 
 ---
 

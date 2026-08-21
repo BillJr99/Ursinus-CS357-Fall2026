@@ -142,7 +142,7 @@ def execute_action(action, context, confidence):
 
 In **asynchronous HITL**, the agent saves a complete state snapshot before raising `EscalationPending`. The human reviews the checkpoint — potentially hours later — approves, rejects, or modifies the action, and the agent reloads the snapshot and continues. The human's response must be cryptographically tied to the specific checkpoint (not just "approve the last thing") to prevent replay attacks where an old approval is reused for a new action.
 
-> **⚠️ Common Misconception:** Many students assume that "human-in-the-loop" means a human watches every single action the agent takes. This is not scalable and, paradoxically, produces worse oversight — humans who must approve hundreds of actions per day stop reading them carefully. Good HITL design is *selective*: humans review the actions that most need their judgment, and the agent handles everything else autonomously. The goal is quality of oversight, not quantity of approvals.
+> **Common Misconception:** Many students assume that "human-in-the-loop" means a human watches every single action the agent takes. This is not scalable and, paradoxically, produces worse oversight — humans who must approve hundreds of actions per day stop reading them carefully. Good HITL design is *selective*: humans review the actions that most need their judgment, and the agent handles everything else autonomously. The goal is quality of oversight, not quantity of approvals.
 
 ### Critical Thinking Questions
 
@@ -260,7 +260,7 @@ An agent is given a task that runs overnight as a batch job: process 1,000 custo
 
    *What to do:* Design a state diagram for an agent task that supports asynchronous HITL. Represent it as a table showing all states and the transitions between them, with the event or condition that triggers each transition.
 
-   *Starter hint:* Minimum states to include: Running, Escalated, AwaitingApproval, Approved, Rejected, Resumed, Completed, Aborted. For each transition, name the event: for example, "Running → Escalated" is triggered by "trigger condition fires." Some states should have timeout transitions — what happens if a checkpoint sits in AwaitingApproval for 48 hours with no response?
+   *Starter hint:* Minimum states to include: Running, Escalated, AwaitingApproval, Approved, Rejected, Resumed, Completed, Aborted. For each transition, name the event: for example, "Running -> Escalated" is triggered by "trigger condition fires." Some states should have timeout transitions — what happens if a checkpoint sits in AwaitingApproval for 48 hours with no response?
 
    *You've succeeded when* your state diagram is complete enough that a developer could implement it directly — every state has at least one incoming transition and at least one outgoing transition, and there are no dead ends except Completed and Aborted.
 
@@ -276,7 +276,7 @@ An agent is given a task that runs overnight as a batch job: process 1,000 custo
 
 ---
 
-→ Coming Up Next: Human-in-the-loop oversight relies on the agent communicating clearly about what it wants to do and why. The next activity examines how to make agent outputs structured and machine-readable — so that downstream systems can validate what the agent produces before acting on it.
+-> Coming Up Next: Human-in-the-loop oversight relies on the agent communicating clearly about what it wants to do and why. The next activity examines how to make agent outputs structured and machine-readable — so that downstream systems can validate what the agent produces before acting on it.
 
 ---
 

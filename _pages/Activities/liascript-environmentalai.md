@@ -185,7 +185,7 @@ According to Jevons paradox, a 10x improvement in model inference efficiency wil
 
 # Part IV: Synthesis
 
-In this Part, you will apply the proportional reasoning, design vocabulary, and systemic thinking from Parts I–III to your own project and practice context. The goal is to leave with a concrete number, a specific substitution proposal, and a policy recommendation you could actually hand to an engineering team.
+In this Part, you will apply the proportional reasoning, design vocabulary, and systemic thinking from Parts I-III to your own project and practice context. The goal is to leave with a concrete number, a specific substitution proposal, and a policy recommendation you could actually hand to an engineering team.
 
 ## Exercises
 
@@ -229,7 +229,7 @@ Record your responses to all three levels in your reflection:
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 The *Explainability and Human-Centric Design* activity is next: how systems earn justified trust from the humans who use them. The carbon analysis you practiced today feeds directly into Written Assignment 3's Direction E, where you quantify and defend the environmental posture of a deployment.
 

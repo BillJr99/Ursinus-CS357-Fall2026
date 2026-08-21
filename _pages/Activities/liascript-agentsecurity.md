@@ -106,7 +106,7 @@ The Open Web Application Security Project (OWASP) publishes an annually updated 
 | LLM09 | Overreliance | Users or downstream systems trust the agent's output without independent verification; hallucinations or injected content propagate into decisions | Legal documents cite cases that don't exist; financial reports contain fabricated figures; medical recommendations contradict established guidelines | Human-in-the-loop review for high-stakes outputs; output confidence scoring; downstream validation against authoritative sources |
 | LLM10 | Model Theft | The model's weights or learned behavior are extracted through repeated querying, enabling reproduction without training cost or the application of adversarial fine-tuning | Unusually large numbers of systematically varied queries from a single IP; queries that appear designed to probe the model's decision boundary | Rate limiting; anomaly detection on query patterns; watermarking of model outputs |
 
-> **⚠️ Common Misconception:** Many developers focus almost exclusively on LLM01 (Prompt Injection) and treat the other nine risks as secondary. In practice, **LLM08 (Excessive Agency) is responsible for some of the most severe real-world incidents** because it multiplies the impact of every other attack. A prompt injection into an agent with read-only access causes information disclosure; the same injection into an agent with delete access causes data loss. Defense starts with LLM08.
+> **Common Misconception:** Many developers focus almost exclusively on LLM01 (Prompt Injection) and treat the other nine risks as secondary. In practice, **LLM08 (Excessive Agency) is responsible for some of the most severe real-world incidents** because it multiplies the impact of every other attack. A prompt injection into an agent with read-only access causes information disclosure; the same injection into an agent with delete access causes data loss. Defense starts with LLM08.
 
 The OWASP taxonomy names the broad categories; Part III drills into the patterns specific to multi-agent and memory-enabled systems that the Top 10 does not fully capture.
 
@@ -351,7 +351,7 @@ In this final part, you will apply everything from Parts I through V to your own
 
 ---
 
-→ Coming Up Next: Now that you understand how to secure an agent, the next module examines multimodal agents — systems that can see images, read PDFs, and process audio — and the new attack surfaces and failure modes these capabilities introduce.
+-> Coming Up Next: Now that you understand how to secure an agent, the next module examines multimodal agents — systems that can see images, read PDFs, and process audio — and the new attack surfaces and failure modes these capabilities introduce.
 
 ---
 

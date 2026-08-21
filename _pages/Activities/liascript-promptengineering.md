@@ -30,7 +30,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 |------|--------------------------|--------------------------|
 | System prompt | The standing instructions given to a model before any user message — it sets the agent's role, allowed actions, output format, and limits | The ROLE / GOAL / TOOLS / FORMAT / GUARDRAILS template used in Exercise 1 |
 | Persona | A named identity and expertise frame assigned to the model via the system prompt, which shifts the style and tone of its outputs without changing its underlying knowledge | The "patient tutor," "careful fact-checker," and "json_bot" identities compared in Model 2 |
-| Few-shot example | One or more sample input-output pairs included in the prompt to show the model exactly what the desired format looks like, rather than only describing it in words | Showing the model two examples of "date inside a sentence → ISO 8601 string" so it learns the pattern from demonstration |
+| Few-shot example | One or more sample input-output pairs included in the prompt to show the model exactly what the desired format looks like, rather than only describing it in words | Showing the model two examples of "date inside a sentence -> ISO 8601 string" so it learns the pattern from demonstration |
 | Chain-of-thought | A prompting technique that asks the model to write out intermediate reasoning steps before giving a final answer, which often improves accuracy on multi-step problems | Adding "think step by step" to a math prompt and observing whether accuracy improves |
 | Output structuring | Specifying a machine-readable format (such as JSON) in the prompt so that downstream code can parse and act on the model's response reliably | The `json_bot` persona that returns `{"answer": ..., "confidence": ...}` |
 | Guardrail | An explicit instruction in the system prompt telling the agent what topics to refuse, escalate to a human, or handle with extra caution | "If asked for medical advice, always recommend consulting a licensed professional" |
@@ -120,7 +120,7 @@ The fastest way to a bad output is a rushed prompt. Before you write the *final*
 
 This is the Delegation competency from the Welcome activity's at-home AI Fluency reading, put into practice: converse to define success, then plan the work before executing it.
 
-> **Tip:** Plan → describe success → iterate. Ask the model what it needs to know, tell it what "done" looks like, and refine both the plan and the prompt before you commit to a full run.
+> **Tip:** Plan -> describe success -> iterate. Ask the model what it needs to know, tell it what "done" looks like, and refine both the plan and the prompt before you commit to a full run.
 
 *This plan-first, describe-success, iterate practice draws on the Description competency of The AI Fluency Framework. Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license.*
 
@@ -192,13 +192,13 @@ Run the cell (or examine projected outputs) and compare the three responses to t
 
    > *Hint: Think about a persona that would make the model systematically overconfident, systematically misleading about a specific domain, or unwilling to express any uncertainty.*
 
-> **⚠️ Common Misconception:** A common assumption is that giving the model a more authoritative persona (for example, "You are a world-leading expert") makes its answers more accurate. In reality, authority personas tend to increase the model's *confidence* in its phrasing without improving the underlying facts — and they often suppress the model's natural hedging, making it harder to detect when it is wrong. More authority in the persona can mean less useful uncertainty signals in the output.
+> **Common Misconception:** A common assumption is that giving the model a more authoritative persona (for example, "You are a world-leading expert") makes its answers more accurate. In reality, authority personas tend to increase the model's *confidence* in its phrasing without improving the underlying facts — and they often suppress the model's natural hedging, making it harder to detect when it is wrong. More authority in the persona can mean less useful uncertainty signals in the output.
 
 ---
 
 ## 5. Eval-Driven Prompt Development
 
-Model 1 argued that Prompt B is easier to *evaluate* than Prompt A. Now we make that concrete: we **measure** a prompt against a small set of known-answer examples, then change the prompt and watch the number move. This is how prompts are improved in practice — not by taste, but by a **golden test set**: a fixed list of `input → expected-output` pairs you score automatically.
+Model 1 argued that Prompt B is easier to *evaluate* than Prompt A. Now we make that concrete: we **measure** a prompt against a small set of known-answer examples, then change the prompt and watch the number move. This is how prompts are improved in practice — not by taste, but by a **golden test set**: a fixed list of `input -> expected-output` pairs you score automatically.
 
 The cell below defines five `(country, expected capital)` pairs, then runs the *same* test set through two different system prompts — a vague one and a specific, format-constrained one. Because the score uses exact match, the vague prompt's full-sentence answers fail while the specific prompt's one-word answers pass. That accuracy gap is the *evidence* that one prompt is better for this task.
 
@@ -326,7 +326,7 @@ In this part, you will write and red-team real system prompts — first designin
 
 ---
 
-→ Coming Up Next: We have been calling a model running somewhere on a server. In the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity, we take full control by installing and running AI models entirely on our own hardware — no cloud, no per-token fees, and no data leaving our machines.
+-> Coming Up Next: We have been calling a model running somewhere on a server. In the *Running Your Own AI: Ollama, OpenWebUI, and Private Local Models* activity, we take full control by installing and running AI models entirely on our own hardware — no cloud, no per-token fees, and no data leaving our machines.
 
 ## 7. Further Reading
 

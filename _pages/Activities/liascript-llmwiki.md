@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The LLM Wiki: Karpathy's Pattern and a Vault Full of Use Cases
 
-In April 2026, Andrej Karpathy published a short gist describing how he uses LLMs to build and maintain **personal knowledge bases**: not a product, not a framework, just a pattern, and one that lands squarely on the vault you built in the second brain module. His one-line summary of the division of labor: *the editor is the IDE, the LLM is the programmer, and the wiki is the codebase.* This module studies the pattern, contrasts it with the RAG architecture you built earlier this semester, and then tours the use cases that make the system earn its keep daily (a research wiki, journaling, meeting notes, raw paper summaries, and more), ending with the complete technical setup wired to hermes. The arc: **the pattern and its three layers → wiki versus RAG → the use-case tour → the full setup, end to end**.
+In April 2026, Andrej Karpathy published a short gist describing how he uses LLMs to build and maintain **personal knowledge bases**: not a product, not a framework, just a pattern, and one that lands squarely on the vault you built in the second brain module. His one-line summary of the division of labor: *the editor is the IDE, the LLM is the programmer, and the wiki is the codebase.* This module studies the pattern, contrasts it with the RAG architecture you built earlier this semester, and then tours the use cases that make the system earn its keep daily (a research wiki, journaling, meeting notes, raw paper summaries, and more), ending with the complete technical setup wired to hermes. The arc: **the pattern and its three layers -> wiki versus RAG -> the use-case tour -> the full setup, end to end**.
 
 ---
 
@@ -137,7 +137,7 @@ Each teammate picks one use case from the tour (no duplicates within a team). Th
 
 ---
 
-> **⚠️ Common Misconception:** Many students assume that adding more sources to the vault automatically makes it more useful and reliable. This is only true if the agent synthesizes them faithfully and the lint pass catches errors promptly. A wiki maintained by a model that is not well-prompted, or one that runs without a lint pass, can actually become *less* reliable as sources accumulate — because each synthesis error gets cross-linked into more and more pages, making the error harder to trace and correct. The discipline is not in adding sources. The discipline is in writing a precise schema (the `AGENTS.md` contract) and running lint regularly to keep the synthesis honest. More sources with a weak schema is worse than fewer sources with a strong one.
+> **Common Misconception:** Many students assume that adding more sources to the vault automatically makes it more useful and reliable. This is only true if the agent synthesizes them faithfully and the lint pass catches errors promptly. A wiki maintained by a model that is not well-prompted, or one that runs without a lint pass, can actually become *less* reliable as sources accumulate — because each synthesis error gets cross-linked into more and more pages, making the error harder to trace and correct. The discipline is not in adding sources. The discipline is in writing a precise schema (the `AGENTS.md` contract) and running lint regularly to keep the synthesis honest. More sources with a weak schema is worse than fewer sources with a strong one.
 
 ---
 
@@ -254,7 +254,7 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation. Carry your `AGENTS.md` schema, your first lint report, and the answer from Exercise 2 into that project work as evidence of a living system.
+-> Coming Up Next: This is the final activity in the sequence. Return to your project repository and apply what you have built — the vault, the wiki, the published artifacts, and the deployed services — to your final project report and demo preparation. Carry your `AGENTS.md` schema, your first lint report, and the answer from Exercise 2 into that project work as evidence of a living system.
 
 ---
 

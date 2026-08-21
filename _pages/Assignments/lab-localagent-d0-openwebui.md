@@ -22,7 +22,7 @@ Direction 0 is the **low-code route through the entire lab**. Instead of authori
 
 This route delivers the same learning objectives as the core lab: you will still design a complete system prompt, still watch an agent decide when to invoke a tool, still force a model to emit structured JSON and verify that it parses, and still run a fixed evaluation set and analyze the failures. What changes is the medium: where a core-route student writes a `parse_response` function, you will read the tool schema OpenWebUI generates and document what it tells the model; where they write an evaluation loop, you will run the queries through the UI and audit the exported transcripts.
 
-**What Direction 0 replaces and what it does not.** Parts A–E below replace core Parts 1-3 and the coding halves of the Required Explorations. Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline. Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration serve as the "from a framework / served model" flavor — note this explicitly in your writeup.
+**What Direction 0 replaces and what it does not.** Parts A-E below replace core Parts 1-3 and the coding halves of the Required Explorations. Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline. Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration serve as the "from a framework / served model" flavor — note this explicitly in your writeup.
 
 **Estimated time: 8-10 hours** across the lab window. Part A is quick; Parts B and D are where the hours go.
 
@@ -75,7 +75,7 @@ The first command downloads a large dependency set — expect several minutes. T
 1. The first screen asks you to **create an admin account** (name, email, password). This account exists only in your local OpenWebUI database — nothing is sent anywhere. Use any email; it is a local username.
 2. After login you land in a chat view. In the **model selector at the top left** of the chat pane, you should see `llama3.2:latest`. OpenWebUI auto-detects a local Ollama server; if the dropdown is empty, see the troubleshooting box below.
 3. Send a test message ("Say hello in one sentence."). You should get a reply within a few seconds. Save a copy of this first exchange — it is your Part A health-check evidence.
-4. Create an **API key** for later: click your initials (bottom left) → **Settings** → **Account** → **API Keys** → **Create new key**. Record it in your notes file (this stays local too; it authenticates requests to *your own* server).
+4. Create an **API key** for later: click your initials (bottom left) -> **Settings** -> **Account** -> **API Keys** -> **Create new key**. Record it in your notes file (this stays local too; it authenticates requests to *your own* server).
 
 > **Checkpoint A:** Before moving on, you can: (1) log in, (2) see `llama3.2` in the model dropdown, (3) get a chat reply, and (4) state — in one sentence for your writeup — which port is OpenWebUI and which is Ollama, and why a request to each behaves differently.
 
@@ -97,7 +97,7 @@ The TOOLS and FORMAT elements of the five-part framework are handled differently
 
 ### B2: Create the custom Model
 
-1. Go to **Workspace** (left sidebar) → **Models** → **+ Create a model** (or **New Model**).
+1. Go to **Workspace** (left sidebar) -> **Models** -> **+ Create a model** (or **New Model**).
 2. **Name** it after your persona (e.g., `study-coach`).
 3. **Base model:** select `llama3.2:latest`.
 4. Paste your ROLE/GOAL/GUARDRAILS prompt into the **System Prompt** field.
@@ -110,20 +110,20 @@ Test the persona before adding tools: open a new chat with your custom model and
 
 Equip the agent with **two tools**, at least one of which takes an argument the model must construct — the same requirement as core Part 2. On this route you do not write the tool code; you install, configure, and **test** tools:
 
-- **A calculator** — available as a built-in/community tool. In **Workspace → Tools**, either import a calculator tool from OpenWebUI's community tool library (Workspace → Tools → **Discover a tool** / community import) or use the built-in one if your version ships it.
-- **Web search** — configured rather than installed: an admin setting, not a Tools-panel entry. Go to **Admin Panel → Settings → Web Search**, enable it, and choose a search engine integration (a free, keyless option such as `duckduckgo` works; if you already run SearXNG from another direction, that works too). Once enabled, the search toggle appears in the chat input's **+** controls.
+- **A calculator** — available as a built-in/community tool. In **Workspace -> Tools**, either import a calculator tool from OpenWebUI's community tool library (Workspace -> Tools -> **Discover a tool** / community import) or use the built-in one if your version ships it.
+- **Web search** — configured rather than installed: an admin setting, not a Tools-panel entry. Go to **Admin Panel -> Settings -> Web Search**, enable it, and choose a search engine integration (a free, keyless option such as `duckduckgo` works; if you already run SearXNG from another direction, that works too). Once enabled, the search toggle appears in the chat input's **+** controls.
 
 Any two tools of comparable substance are acceptable (a date/time tool, a unit converter, a Wikipedia lookup from the community library) — the calculator + web search pair is the recommended default. **Do not install a community tool without reading its source in the import preview first**: tools execute as Python on your OpenWebUI server, with whatever access that server has. Skim the code, confirm it does what its description claims, and note in your writeup that you did — this is the trust question the core route students meet when parsing actions, in its low-code form.
 
 Then wire the tools to your model:
 
-1. **Workspace → Models →** edit your custom model.
+1. **Workspace -> Models ->** edit your custom model.
 2. In the **Tools** section of the model editor, check the calculator tool so it is enabled for this model.
 3. Save. In a new chat with your model, verify the tool appears (a tools icon / plug icon near the chat input shows enabled tools; web search has its own toggle).
 
 ### B4: Document each tool's schema as the UI shows it
 
-For **each** tool, open its entry in Workspace → Tools (or the admin web-search settings page) and record in a file called `tool-config-notes.md`:
+For **each** tool, open its entry in Workspace -> Tools (or the admin web-search settings page) and record in a file called `tool-config-notes.md`:
 
 - The tool's **name and description** exactly as displayed — this text is what the model reads when deciding whether to call it.
 - Each **parameter**: name, type, and description as shown in the tool's code/schema view (for an OpenWebUI tool, the method signature and docstring *are* the schema — quote them).
@@ -163,7 +163,7 @@ Alternatively (and worth a sentence of comparison in your writeup if you try it)
 ### C2: Run five queries and export the chats
 
 1. In a fresh chat with `study-coach-json`, run **five different queries** from your domain (include at least one that should trigger a refusal and one that needs a tool).
-2. Export the evidence: per chat, the **⋮ menu → Download → Export as JSON** (or **Settings → Chats → Export all chats** for one bundle). Save as `structured-output-runs.json`.
+2. Export the evidence: per chat, the **⋮ menu -> Download -> Export as JSON** (or **Settings -> Chats -> Export all chats** for one bundle). Save as `structured-output-runs.json`.
 
 ### C3: Validate and annotate
 
@@ -203,7 +203,7 @@ Export all ten chats (Export as JSON, as in Part C) into a `transcripts/` folder
 
 | ID | Query | Expected | Tool expected | Tool fired? | Pass? | Failure type |
 |----|-------|----------|---------------|-------------|-------|--------------|
-| T01 | ... | ... | calculator | yes | yes | — |
+| T01 | ... | ... | calculator | yes | yes | - |
 | ... | | | | | | |
 
 Report **accuracy as a fraction** (e.g., 8/10). Classify each failure with the core lab's taxonomy — `TOOL_MISUSE`, `HALLUCINATION`, `REFUSAL_FAIL` (guardrail did not hold), or `FORMAT_FAIL` — and paste the full transcript excerpt for at least **two** distinct failure modes.
@@ -226,7 +226,7 @@ Identical to the core lab: an approximately two-page readme covering your design
 ## Troubleshooting
 
 > **The model dropdown is empty after login.**
-> OpenWebUI cannot reach Ollama. Docker route: confirm the `--add-host=host.docker.internal:host-gateway` flag was present, and in **Admin Panel → Settings → Connections** confirm the Ollama URL is `http://host.docker.internal:11434` (not `localhost`, which inside the container means the container itself). Pip route: the URL should be `http://localhost:11434`; confirm `ollama serve` is running.
+> OpenWebUI cannot reach Ollama. Docker route: confirm the `--add-host=host.docker.internal:host-gateway` flag was present, and in **Admin Panel -> Settings -> Connections** confirm the Ollama URL is `http://host.docker.internal:11434` (not `localhost`, which inside the container means the container itself). Pip route: the URL should be `http://localhost:11434`; confirm `ollama serve` is running.
 >
 > **`http://localhost:3000` refuses to connect (Docker route).**
 > Run `docker ps` — if the container is not listed, run `docker logs open-webui` and read the last lines. A port conflict means something else owns 3000; re-run with `-p 3001:8080` and browse to 3001.
@@ -238,7 +238,7 @@ Identical to the core lab: an approximately two-page readme covering your design
 > Check, in order: (1) the tool is enabled *for your custom model* in the model editor — enabling it globally is not enough; (2) you are chatting with the custom model, not raw `llama3.2`; (3) the tool's description actually tells the model when to use it — vague descriptions are the top cause of never-firing tools (edit the description and retest; this is legitimate prompt engineering, document it); (4) small models fail to call tools intermittently — retry once before concluding it is broken, and report intermittency honestly in Part D.
 >
 > **Web search returns nothing or errors.**
-> Confirm the engine is set in Admin Panel → Settings → Web Search and the search toggle is on *in the chat input* for that conversation. Keyless engines are rate-limited; wait a minute and retry.
+> Confirm the engine is set in Admin Panel -> Settings -> Web Search and the search toggle is on *in the chat input* for that conversation. Keyless engines are rate-limited; wait a minute and retry.
 >
 > **Responses are extremely slow.**
 > Same model, same hardware as the core route — the UI adds little. If chats hang, check whether Ollama is swapping (`ollama ps`); close other memory-heavy applications.
@@ -249,9 +249,9 @@ Identical to the core lab: an approximately two-page readme covering your design
 
 Fold these into the standard Local Agent Lab submission ZIP, alongside the shared pair log and writeup:
 
-- **Exported model JSON** for both custom Models (Workspace → Models → ⋮ → Export): the persona model and the JSON-format model.
+- **Exported model JSON** for both custom Models (Workspace -> Models -> ⋮ -> Export): the persona model and the JSON-format model.
 - **`tool-config-notes.md`** — each tool's name, description, parameter schema as shown in the UI, valve settings, and search-engine choice (Part B4).
 - **Transcripts**: the Part B tool-firing chats, `structured-output-runs.json` with the five annotated runs (Part C), and the `transcripts/` folder of ten evaluation chats (Part D).
 - **Results table** — the ten-row evaluation table plus the before/after mitigation table (Part D).
 - **Writeup** — identical scope to the core lab, with the two route-specific additions (Part E).
-- **Setup notes** — which install route you used, every non-default setting, and the versions involved (OpenWebUI version from Settings → About, Ollama version, model tag), sufficient for another student to reproduce your agent exactly.
+- **Setup notes** — which install route you used, every non-default setting, and the versions involved (OpenWebUI version from Settings -> About, Ollama version, model tag), sufficient for another student to reproduce your agent exactly.

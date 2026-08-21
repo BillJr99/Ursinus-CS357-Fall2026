@@ -102,7 +102,7 @@ Every RAG query traverses a fixed sequence of steps — like an assembly line wh
 | 5. Top-$k$ documents returned | Vector database | Filtered IDs | Document text + metadata | If chunks are too long, they waste context window space; if too short, they lack the context the LLM needs to answer. |
 | 6. LLM generates with docs in context | Language model (e.g., `claude-sonnet-4-5`, `llama3.1:8b`) | Prompt = system instructions + retrieved chunks + user question | Answer string | LLM ignores the retrieved text and hallucinates from parametric memory; "lost in the middle" effect buries the relevant chunk. |
 
-> **⚠️ Common Misconception:** Many beginners assume that if the LLM gives a wrong answer, the problem must be with the LLM itself. In practice, **the retrieval step fails far more often than the generation step**. A perfect LLM cannot produce a correct answer if Step 3 or 4 returned the wrong documents. Always check what was actually retrieved (Step 5's output) before debugging the LLM.
+> **Common Misconception:** Many beginners assume that if the LLM gives a wrong answer, the problem must be with the LLM itself. In practice, **the retrieval step fails far more often than the generation step**. A perfect LLM cannot produce a correct answer if Step 3 or 4 returned the wrong documents. Always check what was actually retrieved (Step 5's output) before debugging the LLM.
 
 ### Critical Thinking Questions
 
@@ -278,7 +278,7 @@ In this part, you will apply everything from the previous parts through four han
 
 ---
 
-→ Coming Up Next: Now that you understand how agents store and retrieve information from vector databases, the next module examines how you decide *which* approach to use for specializing a model: fine-tuning (changing model weights), RAG (adding a retrieval pipeline), or prompting (giving the model better instructions).
+-> Coming Up Next: Now that you understand how agents store and retrieve information from vector databases, the next module examines how you decide *which* approach to use for specializing a model: fine-tuning (changing model weights), RAG (adding a retrieval pipeline), or prompting (giving the model better instructions).
 
 ---
 

@@ -35,11 +35,11 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Tokenization** | The process of splitting raw text into discrete units (tokens) that a model can process — neither individual characters nor whole words, but learned subword units | "unhappiness" → `un` + `happiness` (2 tokens); "the" → `the` (1 token) |
+| **Tokenization** | The process of splitting raw text into discrete units (tokens) that a model can process — neither individual characters nor whole words, but learned subword units | "unhappiness" -> `un` + `happiness` (2 tokens); "the" -> `the` (1 token) |
 | **Byte-Pair Encoding (BPE)** | A tokenization algorithm that starts with individual characters and repeatedly merges the most frequently occurring adjacent pair into a single new token — a compression algorithm applied to language | Starting with `l o w e r`, if `e r` is the most frequent pair, merge to `l o w er`; repeat until vocabulary reaches target size |
 | **Vocabulary** | The fixed set of tokens a model knows — typically 30,000 to 200,000 entries; any text in the world can be encoded using these tokens (unknown characters fall back to byte-level tokens) | GPT-4 uses a vocabulary of ~100,000 tokens built by BPE on web text |
 | **Causal Language Modeling (CLM)** | The GPT-style pre-training objective: given all previous tokens, predict the next token. Called "causal" because each token can only attend to tokens before it | Given "The cat sat on the", predict "mat" — each position predicts its successor |
-| **Masked Language Modeling (MLM)** | The BERT-style pre-training objective: randomly mask 15% of tokens and predict the masked tokens from surrounding context in both directions | "The [MASK] sat on the mat" → predict "cat" using both left and right context |
+| **Masked Language Modeling (MLM)** | The BERT-style pre-training objective: randomly mask 15% of tokens and predict the masked tokens from surrounding context in both directions | "The [MASK] sat on the mat" -> predict "cat" using both left and right context |
 | **Cross-Entropy Loss** | The standard loss function for next-token prediction: measures how surprised the model was by the actual next token — lower is better, zero would mean perfect prediction with 100% confidence | If the model assigned 1% probability to the correct next token, cross-entropy = −log(0.01) ≈ 4.6; if it assigned 90%, cross-entropy = −log(0.9) ≈ 0.1 |
 | **Chinchilla Scaling Laws** | Empirical findings from DeepMind (2022) showing that model size (parameters) and training data (tokens) should scale together at roughly a 1:20 ratio — training a model on 20× tokens per parameter maximizes performance for a given compute budget | A 7B-parameter model is "Chinchilla optimal" when trained on ~140B tokens; training it on only 1B tokens wastes the model's capacity |
 | **Quantization** | Compressing model weights from high-precision floating-point (float32, 32 bits per number) to lower-precision integers (int8 or int4, 8 or 4 bits per number) — trading a small accuracy loss for a large reduction in memory and inference speed | A 7B model in float32 requires ~28 GB of GPU memory; in int4 it requires ~4 GB — small enough to run on a laptop GPU |
@@ -104,7 +104,7 @@ w i d e s t </w>    × 3
 
 **BPE Iteration 1:** Count all adjacent pairs across all occurrences:
 - `e s` appears in "newest" (×6) + "widest" (×3) = 9 times — most frequent
-- Merge `e s` → `es`. New sequences:
+- Merge `e s` -> `es`. New sequences:
 
 ```
 l o w </w>          × 5
@@ -115,7 +115,7 @@ w i d es t </w>     × 3
 
 **BPE Iteration 2:** Count again:
 - `es t` appears in "newest" (×6) + "widest" (×3) = 9 times — most frequent
-- Merge `es t` → `est`. New sequences:
+- Merge `es t` -> `est`. New sequences:
 
 ```
 l o w </w>          × 5
@@ -126,7 +126,7 @@ w i d est </w>      × 3
 
 **BPE Iteration 3:** Count again:
 - `l o` appears in "low" (×5) + "lower" (×2) = 7 times — most frequent
-- Merge `l o` → `lo`. Continue until vocabulary reaches target size.
+- Merge `l o` -> `lo`. Continue until vocabulary reaches target size.
 
 ### Critical Thinking Questions
 
@@ -355,7 +355,7 @@ $$N_{\text{optimal}} \approx \frac{C}{2 \cdot 20}$$, $$D_{\text{optimal}} \appro
 
 where $C$ is the total compute budget. The rule of thumb: **train on approximately 20 tokens of data per model parameter**. A model with 7 billion parameters is "Chinchilla optimal" when trained on roughly 140 billion tokens. GPT-3 (175B parameters) was trained on ~300B tokens — far fewer than the Chinchilla-optimal ~3.5 trillion tokens.
 
-The practical implication: many modern open-source models (LLaMA-2, Mistral, Gemma) are trained on 2-6 trillion tokens despite having only 7B–13B parameters — they are intentionally "overtrained" relative to the original Chinchilla formulas, because smaller well-trained models are cheaper to deploy even if training is more expensive.
+The practical implication: many modern open-source models (LLaMA-2, Mistral, Gemma) are trained on 2-6 trillion tokens despite having only 7B-13B parameters — they are intentionally "overtrained" relative to the original Chinchilla formulas, because smaller well-trained models are cheaper to deploy even if training is more expensive.
 
 **Quantization.** Full-precision models store each weight as a 32-bit floating-point number (float32). Running a 70B-parameter model in float32 requires 70B × 4 bytes = 280 GB of GPU memory — far beyond any single consumer GPU (which typically has 8-24 GB). Quantization maps float32 values to lower-precision integers:
 
@@ -388,7 +388,7 @@ The intuition: float32 can represent values between roughly $-3.4 \times 10^{38}
 
 **Q13.** Why do larger models tend to be *more* robust to quantization than smaller models? Hint: consider what happens to the relative importance of any single weight when there are 70B weights versus 7B weights.
 
-> *Hint: In a 70B-parameter model, each individual weight has a smaller fractional influence on the output — the computation is distributed across many more parameters. Rounding a weight from its float32 value to the nearest int4 value introduces absolute error of at most $\approx \Delta/2$ where $\Delta$ is the quantization step size, but the relative effect on the output scales with $1/N$. Additionally, redundancy in large models means the network can "compensate" for rounding errors in some weights using other weights. Tiny models (1B–3B) have less redundancy and are more sensitive to quantization-induced errors.*
+> *Hint: In a 70B-parameter model, each individual weight has a smaller fractional influence on the output — the computation is distributed across many more parameters. Rounding a weight from its float32 value to the nearest int4 value introduces absolute error of at most $\approx \Delta/2$ where $\Delta$ is the quantization step size, but the relative effect on the output scales with $1/N$. Additionally, redundancy in large models means the network can "compensate" for rounding errors in some weights using other weights. Tiny models (1B-3B) have less redundancy and are more sensitive to quantization-induced errors.*
 
 ---
 
@@ -434,7 +434,7 @@ In this part, you will apply the technical concepts from Parts I and II to concr
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the next activity we look inside the transformer itself — how the attention mechanism learns to route information between tokens, why deeper models learn different things than shallower ones, and how the architecture choices made during pre-training shape which capabilities emerge and which remain out of reach.
 

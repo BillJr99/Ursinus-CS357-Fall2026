@@ -161,7 +161,7 @@ Examine the PASS/FAIL output line by line. Before discussing with your group, fo
 
    > *Hint: A grader needs it so that "running the eval again" gives the same score. A scientist needs it so that a published result can be independently replicated. A debugger needs it so that a bug observed in one run will appear again in the next run.*
 
-> **⚠️ Common Misconception:** Many students assume that if a model gives a wrong answer on a factual question, it "does not know" the answer and will always fail that question. In reality, the same model with the same weights can answer the same question correctly at one temperature setting and fail it at another, or answer it differently in different phrasings of the same question. This is why evaluation requires a *fixed protocol* — not because we distrust the model, but because the model's behavior is genuinely sensitive to parameters and phrasing, and we need to hold those constant to learn anything meaningful.
+> **Common Misconception:** Many students assume that if a model gives a wrong answer on a factual question, it "does not know" the answer and will always fail that question. In reality, the same model with the same weights can answer the same question correctly at one temperature setting and fail it at another, or answer it differently in different phrasings of the same question. This is why evaluation requires a *fixed protocol* — not because we distrust the model, but because the model's behavior is genuinely sensitive to parameters and phrasing, and we need to hold those constant to learn anything meaningful.
 
 ---
 
@@ -201,7 +201,7 @@ In this part, you will build your own benchmark — a domain-specific task set y
 
 ---
 
-→ Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools — one of the mitigations previewed today. The evaluation harness pattern you built here returns in the RAG Knowledge Base Lab's retrieval evaluation and the Rubric Pipeline Lab's rubric pipeline.
+-> Coming Up Next: In the *Connecting Agents to the World: MCP and APIs* activity we give agents a standard way to discover and call external tools — one of the mitigations previewed today. The evaluation harness pattern you built here returns in the RAG Knowledge Base Lab's retrieval evaluation and the Rubric Pipeline Lab's rubric pipeline.
 
 ## 5. Further Reading
 

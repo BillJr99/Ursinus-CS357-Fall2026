@@ -182,7 +182,7 @@ A startup builds a chatbot that screens job applications by analyzing resumes an
 
 ---
 
-→ **Coming Up Next:** In the next activity, we examine how to document the data and models that power agents — using Datasheets for Datasets and Model Cards — so that regulators, auditors, and future developers can verify that compliance obligations were met.
+-> **Coming Up Next:** In the next activity, we examine how to document the data and models that power agents — using Datasheets for Datasets and Model Cards — so that regulators, auditors, and future developers can verify that compliance obligations were met.
 
 ---
 

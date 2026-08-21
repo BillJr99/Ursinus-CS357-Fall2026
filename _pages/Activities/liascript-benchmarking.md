@@ -118,7 +118,7 @@ Creating a valid benchmark requires more than writing a list of questions. The f
 - **Cultural specificity:** Correct answers assume cultural knowledge or social norms that are not universal across the populations that will use the AI system.
 - **Language complexity confound:** Items that test reading difficulty rather than the target capability — a model that fails a medical knowledge question because of complex sentence structure, not because it lacks medical knowledge, is telling you something about language processing, not domain knowledge.
 
-> ⚠️ **Common Misconception:** Many people treat published leaderboard rankings as objective ground truth about which AI system is "best." In practice, every benchmark embeds assumptions about what matters, what counts as correct, and whose knowledge and values define the right answer. A model that ranks first on HumanEval may rank fifth on a benchmark of multi-turn agent behavior. A model that aces MMLU may be significantly outperformed on tasks requiring careful uncertainty calibration. Benchmark rankings tell you about performance on *that specific benchmark under those specific conditions* — not about general intelligence or real-world usefulness.
+> **Common Misconception:** Many people treat published leaderboard rankings as objective ground truth about which AI system is "best." In practice, every benchmark embeds assumptions about what matters, what counts as correct, and whose knowledge and values define the right answer. A model that ranks first on HumanEval may rank fifth on a benchmark of multi-turn agent behavior. A model that aces MMLU may be significantly outperformed on tasks requiring careful uncertainty calibration. Benchmark rankings tell you about performance on *that specific benchmark under those specific conditions* — not about general intelligence or real-world usefulness.
 
 ### Critical Thinking Questions
 
@@ -261,7 +261,7 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
-→ Coming Up Next: In the next activity, we move from evaluating agents in controlled tests to debugging them when they fail in the wild — a very different and more difficult problem.
+-> Coming Up Next: In the next activity, we move from evaluating agents in controlled tests to debugging them when they fail in the wild — a very different and more difficult problem.
 
 ## Further Reading
 

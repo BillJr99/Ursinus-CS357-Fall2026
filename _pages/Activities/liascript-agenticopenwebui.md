@@ -22,7 +22,7 @@ This is a **supplemental tutorial** — it is not graded and no commercial API k
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. Because this tutorial is supplemental, there is nothing to submit for a grade. Prerequisites: OpenWebUI running locally over Ollama (from the agent stack lab) and an OpenWebUI API key (Settings → Account → API Keys). After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. Because this tutorial is supplemental, there is nothing to submit for a grade. Prerequisites: OpenWebUI running locally over Ollama (from the agent stack lab) and an OpenWebUI API key (Settings -> Account -> API Keys). After class, respond to the reflective prompt individually in your notebook.
 
 ---
 
@@ -31,7 +31,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Agent Frontend** | A server that sits between users (or programs) and a model backend, adding capabilities the raw model lacks: tool registration, document knowledge, users and permissions, and an API. | OpenWebUI in front of Ollama: the model generates text; OpenWebUI supplies tools, uploads, and access control. |
-| **OpenWebUI Tool** | A Python class you register in OpenWebUI's Workspace → Tools panel. Its method signatures and docstrings become tool schemas the model can call during chat, with OpenWebUI executing the Python server-side. | A `get_current_time()` tool whose docstring ("Returns the current time...") is the only thing the model reads when deciding to call it. |
+| **OpenWebUI Tool** | A Python class you register in OpenWebUI's Workspace -> Tools panel. Its method signatures and docstrings become tool schemas the model can call during chat, with OpenWebUI executing the Python server-side. | A `get_current_time()` tool whose docstring ("Returns the current time...") is the only thing the model reads when deciding to call it. |
 | **OpenWebUI Function (Pipe/Filter)** | An extension point that modifies the request/response pipeline itself. A *pipe* acts like a custom model in the model list; a *filter* rewrites messages before (inlet) or after (outlet) the model sees them. | A filter that appends "Answer in one paragraph" to every user message; a pipe that routes requests to two models and merges the answers. |
 | **Knowledge Collection** | A set of uploaded documents that OpenWebUI chunks, embeds, and retrieves from — RAG managed by the frontend rather than by your code. | Uploading the course syllabus into a "CS357" collection, then referencing it with `#CS357` in chat so answers cite the syllabus. |
 | **OpenAI-Compatible API** | OpenWebUI re-exposes its models at `/api/chat/completions` (and files at `/api/v1/files/`) using the same request shape as OpenAI's API, authenticated by a Bearer API key. Any OpenAI client library or plain `requests` code works against it. | `POST http://localhost:3000/api/chat/completions` with `{"model": "llama3.2", "messages": [...]}` and an `Authorization: Bearer sk-...` header. |
@@ -54,11 +54,11 @@ A bare Ollama server answers `POST /api/generate` and `POST /api/chat` — text 
 | Layer | What you do | What OpenWebUI does | Where it lives |
 |-------|-------------|---------------------|----------------|
 | **Chat UI** | Type in a browser at `http://localhost:3000` | Manages conversations, history, model switching | Frontend container |
-| **Tool registration** | Paste a Python class into Workspace → Tools; enable it for a model | Turns docstrings into tool schemas, offers them to the model, executes the Python when the model calls, feeds results back | Frontend container (server-side execution) |
+| **Tool registration** | Paste a Python class into Workspace -> Tools; enable it for a model | Turns docstrings into tool schemas, offers them to the model, executes the Python when the model calls, feeds results back | Frontend container (server-side execution) |
 | **Functions (pipes/filters)** | Install or write inlet/outlet code | Rewrites requests and responses in flight; pipes appear as new "models" | Frontend container |
-| **Knowledge uploads** | Drag documents into Workspace → Knowledge | Chunks, embeds, stores, and retrieves per query; injects passages into the prompt | Frontend container + its vector store |
+| **Knowledge uploads** | Drag documents into Workspace -> Knowledge | Chunks, embeds, stores, and retrieves per query; injects passages into the prompt | Frontend container + its vector store |
 | **Users and keys** | Create accounts and API keys | Authenticates every request; scopes history and permissions per user | Frontend container |
-| **OpenAI-compatible API** | Point any script at `/api/chat/completions` with a Bearer key | Routes to Ollama, *applying the tools, knowledge, and filters configured for that model* | Frontend container → Ollama container |
+| **OpenAI-compatible API** | Point any script at `/api/chat/completions` with a Bearer key | Routes to Ollama, *applying the tools, knowledge, and filters configured for that model* | Frontend container -> Ollama container |
 
 The last row is the pivot of this tutorial: a script that calls **OpenWebUI's** API gets the whole agentic layer; a script that calls **Ollama** directly on port 11434 gets none of it.
 
@@ -76,7 +76,7 @@ The last row is the pivot of this tutorial: a script that calls **OpenWebUI's** 
 
    > *Hint: What you lose is visibility and control: chunk size, embedding model, top-k, and the exact injected passages are the frontend's decisions (though some are configurable in Admin Settings). When is "good defaults, zero code, shared with every user of the server" worth more than that control?*
 
-A tool registered in OpenWebUI's Workspace → Tools panel will be available to:
+A tool registered in OpenWebUI's Workspace -> Tools panel will be available to:
 
 [( )] Any program that queries the Ollama server directly on port 11434
 [(X)] Chats and API calls that go through OpenWebUI with a model for which the tool is enabled
@@ -153,7 +153,7 @@ In the multi-agent notebook, the Planner, Worker, and Critic are implemented as:
 
 In this Part you will trace the planner/worker/critic loop as a sequence of API calls, and decide where in that sequence control, memory, and governance live.
 
-## Model 3: Planner → Worker → Critic via Successive API Calls
+## Model 3: Planner -> Worker -> Critic via Successive API Calls
 
 The workflow pattern from Notebook 2, reduced to its skeleton:
 
@@ -223,7 +223,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
    > *Hint: The gate belongs in the orchestrator, around the `ask(...)` call (or around the tool-enabled step), where Python can block until a human confirms. A prompt instruction is a request to a stochastic system; a code gate is enforcement. This is the same argument as the tool-registry boundary in the Tool Use activity.*
 
-> **⚠️ Common Misconception:** Students often expect OpenWebUI to "run the multi-agent workflow" once the roles are defined. OpenWebUI executes *one completion per request* — it has no idea your Planner and Critic are related calls. The workflow (sequencing, memory, revision loops, stopping) exists only in your orchestrator code. The frontend supplies completions, tools, and knowledge; *you* supply the agency.
+> **Common Misconception:** Students often expect OpenWebUI to "run the multi-agent workflow" once the roles are defined. OpenWebUI executes *one completion per request* — it has no idea your Planner and Critic are related calls. The workflow (sequencing, memory, revision loops, stopping) exists only in your orchestrator code. The frontend supplies completions, tools, and knowledge; *you* supply the agency.
 
 ---
 
@@ -259,7 +259,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You now have two complementary orchestration substrates: shell pipelines over raw Ollama (the auto-research tutorial) and Python workflows over an agent frontend. The agent frameworks module shows what LangChain, CrewAI, and AutoGen add — and hide — on top of exactly the loops you just wrote by hand.
 
@@ -299,7 +299,7 @@ Flow A fires first, the moment the confirmation email lands in the inbox. Flow B
 **How to build one, end to end:**
 
 1. Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
-2. Choose **Create → Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
+2. Choose **Create -> Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
 3. Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, ...). The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
 4. Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
 5. To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint — the same request body you have used all unit.
@@ -331,7 +331,7 @@ Compared with writing an MCP server, a no-code platform like Power Automate prim
 [( )] security for convenience — flows cannot use OAuth
 [( )] nothing; it is strictly better in every way
 
-> **⚠️ Common Misconception:** "No-code means there is no security to think about." Often the opposite: one flow can hold OAuth tokens to your email, files, and calendar at once and run unattended. The connector hides the *plumbing*, not the *risk* — least-privilege scopes, controlling who can edit the flow, and keeping model keys out of the flow body all still matter.
+> **Common Misconception:** "No-code means there is no security to think about." Often the opposite: one flow can hold OAuth tokens to your email, files, and calendar at once and run unattended. The connector hides the *plumbing*, not the *risk* — least-privilege scopes, controlling who can edit the flow, and keeping model keys out of the flow body all still matter.
 
 ---
 

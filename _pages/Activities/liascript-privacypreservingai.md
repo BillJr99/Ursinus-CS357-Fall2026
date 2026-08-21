@@ -172,7 +172,7 @@ Three approaches to removing PII from text before training or inference:
 | Federated Learning | Raw data leaving the client's premises or network | High — requires distributed infrastructure, an aggregation protocol, and synchronization across clients | Low to moderate — non-IID data distributions across clients can harm model quality | Gradient inversion attacks undermine privacy guarantees; communication overhead slows training; client dropout creates uneven updates |
 | PII Scrubbing | Verbatim PII appearing in training data or in real-time prompts and responses | Low to medium — regex is easy to implement; NER models require setup; LLM-based scrubbing requires an additional model call | Low if recall is high — scrubbing accurate PII tokens does not degrade model utility | Cannot remove all forms of re-identifiable information; implicit PII conveyed through context requires semantic understanding to detect |
 
-> ⚠️ **Common Misconception:** Many people assume that "anonymizing" a dataset before training fully protects privacy. In practice, anonymization is nearly impossible to achieve for rich text data. Clinical notes, support tickets, and personal narratives contain combinations of rare details — unusual diagnoses, specific events, distinctive writing styles — that remain re-identifiable even after named entities are removed. Differential privacy is the only technique that provides a *formal* guarantee, and even then, the guarantee's strength depends entirely on the ε value chosen and the size of the dataset.
+> **Common Misconception:** Many people assume that "anonymizing" a dataset before training fully protects privacy. In practice, anonymization is nearly impossible to achieve for rich text data. Clinical notes, support tickets, and personal narratives contain combinations of rare details — unusual diagnoses, specific events, distinctive writing styles — that remain re-identifiable even after named entities are removed. Differential privacy is the only technique that provides a *formal* guarantee, and even then, the guarantee's strength depends entirely on the ε value chosen and the size of the dataset.
 
 ### Critical Thinking Questions
 
@@ -318,7 +318,7 @@ Write at least 200 words addressing at least two of the three levels above.
 
 ---
 
-→ Coming Up Next: In the next activity, we examine how models are deployed on real hardware — including the tradeoffs between running AI in the cloud versus running it locally on devices that never connect to the internet at all.
+-> Coming Up Next: In the next activity, we examine how models are deployed on real hardware — including the tradeoffs between running AI in the cloud versus running it locally on devices that never connect to the internet at all.
 
 ## Further Reading
 

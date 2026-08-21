@@ -79,8 +79,8 @@ Sending text to a commercial API means your text leaves your machine, traverses 
 | Mistral 7B / Mixtral | Mistral AI | 7B; 8×7B MoE; 8×22B MoE | Apache 2.0 (fully permissive, including commercial use) | Mistral 7B punches above its weight class on benchmarks; Mixtral uses sparse MoE so only 2 of 8 experts activate per token, giving large-model quality at smaller inference cost | `ollama pull mistral:7b` or `ollama pull mixtral:8x7b` |
 | Phi-3 / Phi-4 | Microsoft | 3.8B, 7B, 14B | MIT (fully permissive) | Exceptional reasoning capability per parameter; trained on high-quality "textbook-like" synthetic data; strongest small model for math and logic tasks | `ollama pull phi4` or `ollama pull phi3:mini` |
 | Gemma 3 | Google DeepMind | 1B, 4B, 12B, 27B | Gemma Terms of Use (free for research and commercial use with attribution) | Strong multilingual performance; vision-capable variants; 128K context window for long-document tasks | `ollama pull gemma3:4b` or `ollama pull gemma3:12b` |
-| Qwen 2.5 | Alibaba | 0.5B–72B | Apache 2.0 for most sizes | Strongest multilingual performance across East Asian, Arabic, and European languages; specialized Qwen2.5-Coder and Qwen2.5-Math variants exceed general models on those tasks | `ollama pull qwen2.5:7b` or `ollama pull qwen2.5-coder:7b` |
-| DeepSeek-R1 | DeepSeek AI | 1.5B–671B (distilled: 7B, 14B, 70B) | MIT | Explicit chain-of-thought reasoning in output; competitive with proprietary reasoning models; distilled versions run locally and are significantly better at multi-step math than same-size general models | `ollama pull deepseek-r1:7b` or `ollama pull deepseek-r1:14b` |
+| Qwen 2.5 | Alibaba | 0.5B-72B | Apache 2.0 for most sizes | Strongest multilingual performance across East Asian, Arabic, and European languages; specialized Qwen2.5-Coder and Qwen2.5-Math variants exceed general models on those tasks | `ollama pull qwen2.5:7b` or `ollama pull qwen2.5-coder:7b` |
+| DeepSeek-R1 | DeepSeek AI | 1.5B-671B (distilled: 7B, 14B, 70B) | MIT | Explicit chain-of-thought reasoning in output; competitive with proprietary reasoning models; distilled versions run locally and are significantly better at multi-step math than same-size general models | `ollama pull deepseek-r1:7b` or `ollama pull deepseek-r1:14b` |
 | Hermes series | Nous Research | Varies (built on Llama/Mistral base) | Inherits base model license | Fine-tuned specifically for function calling, tool use, and structured JSON outputs; widely used in production agentic pipelines where schema adherence is critical | `ollama pull hermes3:8b` |
 
 **Sparse Mixture of Experts (MoE):** Mixtral's architecture routes each token through only 2 of 8 expert feed-forward networks. The model has 46.7B total parameters but uses only ~12.9B per token. This gives large-model quality at small-model inference cost — but requires loading all 46.7B parameters into memory.
@@ -223,7 +223,7 @@ This is prose *describing* a function call. An agent framework trying to parse t
 
 This is valid JSON conforming to the tool schema. The agent framework can parse, validate, and execute it directly. The difference is not intelligence — it is format training. Hermes-3 was explicitly fine-tuned on thousands of examples of correct tool-call JSON so the output format is highly reliable.
 
-> **⚠️ Common Misconception:** Many beginners assume that a more capable (larger) general model will automatically be better at function calling than a smaller specialized model. In practice, **a 7B model fine-tuned for function calling (like Hermes-3) reliably outperforms a 70B general model** on structured tool-call tasks. The 70B model is smarter but doesn't reliably produce the right JSON structure. Use the right tool for the job.
+> **Common Misconception:** Many beginners assume that a more capable (larger) general model will automatically be better at function calling than a smaller specialized model. In practice, **a 7B model fine-tuned for function calling (like Hermes-3) reliably outperforms a 70B general model** on structured tool-call tasks. The 70B model is smarter but doesn't reliably produce the right JSON structure. Use the right tool for the job.
 
 Q4 quantization of a 7B language model means:
 
@@ -361,7 +361,7 @@ In this part, you will pull and compare real models on your own hardware, test t
 
 ---
 
-→ Coming Up Next: Now that you can run models locally, the next module examines the security implications of deploying AI agents — what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
+-> Coming Up Next: Now that you can run models locally, the next module examines the security implications of deploying AI agents — what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
 
 ---
 

@@ -37,7 +37,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Structured output** | Asking the model to answer as parseable JSON instead of prose, so the program can use the value | `{"eval": 0.5}` for the evaluation bar; `{"elo": 1200, "label": "Intermediate"}` |
 | **FEN / SAN** | Standard text encodings of a chess **position** (FEN) and a single **move** (SAN) — the tokens we hand the model | `rnbqkbnr/pppppppp/... w KQkq - 0 1`; `Nf3`, `O-O`, `exd5` |
 | **Client-side key exposure** | The risk that an API key placed in browser code is visible to anyone using or inspecting that browser | The key shows up in the browser's Network tab on every request |
-| **Backend proxy** | A small server you own that holds the secret key and forwards browser requests to the provider | Browser → your `/api/coach` endpoint → provider; the key never leaves your server |
+| **Backend proxy** | A small server you own that holds the secret key and forwards browser requests to the provider | Browser -> your `/api/coach` endpoint -> provider; the key never leaves your server |
 | **Graceful degradation** | The app stays fully usable when the optional AI is unavailable | With no provider configured, the board still plays against a local engine |
 
 ---
@@ -129,7 +129,7 @@ Which group of functions makes the HTTP requests to a language-model provider?
 [(X)] `callTextModel`, `getAICommentary`, `getAIEvaluation`
 [( )] `handleSquareClick`, `handleDragStart`
 
-> **⚠️ Common Misconception:** "The AI plays the chess." It does not. The **computer opponent** is the local `minimax` search in the engine layer — pure code, no network. The **language model** only *comments on* moves and *estimates* numbers. You could delete every AI function and still have a working chess game. Conflating "the program that plays" with "the model that talks" is the first confusion to clear up.
+> **Common Misconception:** "The AI plays the chess." It does not. The **computer opponent** is the local `minimax` search in the engine layer — pure code, no network. The **language model** only *comments on* moves and *estimates* numbers. You could delete every AI function and still have a working chess game. Conflating "the program that plays" with "the model that talks" is the first confusion to clear up.
 
 ---
 
@@ -342,7 +342,7 @@ In a response from `POST https://api.anthropic.com/v1/messages`, where is the mo
 [( )] `data.output_text` only
 [( )] `data.message.content`
 
-> **⚠️ Common Misconception:** "If it's the same prompt, it's the same response object." No. Providers agree on very little beyond "send messages, get a completion." The **request** can look almost identical while the **response shape** and the **auth headers** differ. Write one small parse function per response family (OpenAI-style, Anthropic-style) and route to the right one — never assume `choices[0]` exists.
+> **Common Misconception:** "If it's the same prompt, it's the same response object." No. Providers agree on very little beyond "send messages, get a completion." The **request** can look almost identical while the **response shape** and the **auth headers** differ. Write one small parse function per response family (OpenAI-style, Anthropic-style) and route to the right one — never assume `choices[0]` exists.
 
 ---
 
@@ -478,7 +478,7 @@ You are White. You play `Nf3`. Walk the sequence the app performs (see `executeM
 | 1 | `moveToSAN` names the move `"Nf3"`; `applyMove` produces the new state | Engine |
 | 2 | UI updates instantly: piece moves, move list appends | React UI |
 | 3 | If AI is enabled: `Promise.all` fires `getAICommentary` **and** `getAIElo` | AI layer |
-| 4 | Each builds a prompt (FEN + SAN + PGN), calls `callTextModel` → `fetch` | AI layer |
+| 4 | Each builds a prompt (FEN + SAN + PGN), calls `callTextModel` -> `fetch` | AI layer |
 | 5 | Replies parsed (prose as text; Elo as JSON) and shown | AI layer |
 | 6 | The **local** `minimax` picks Black's reply and the board updates | Engine |
 
@@ -503,7 +503,7 @@ Why does `getAIEvaluation` call `safeJsonParse` instead of `JSON.parse` directly
 [( )] Because the model can only output JavaScript objects, never strings
 [( )] To convert the number from pawns to centipawns
 
-> **⚠️ Common Misconception:** "If I ask for JSON, I get JSON." Language models are *usually* obedient but never guaranteed. They add prose, wrap output in code fences, or drop a field. Treat every structured reply as untrusted input: constrain the prompt, strip known wrappers, parse defensively, and default every field. Robust structured output is 20% prompt and 80% parsing discipline.
+> **Common Misconception:** "If I ask for JSON, I get JSON." Language models are *usually* obedient but never guaranteed. They add prose, wrap output in code fences, or drop a field. Treat every structured reply as untrusted input: constrain the prompt, strip known wrappers, parse defensively, and default every field. Robust structured output is 20% prompt and 80% parsing discipline.
 
 ---
 
@@ -528,7 +528,7 @@ Here is the uncomfortable truth about the app's Anthropic branch. It calls `api.
 anthropic-dangerous-direct-browser-access: true
 ```
 
-The word "dangerous" is doing real work. When the browser makes the call, **the key travels from the user's browser and is visible in that browser's DevTools → Network tab** on every request. Think about who can see it in each situation:
+The word "dangerous" is doing real work. When the browser makes the call, **the key travels from the user's browser and is visible in that browser's DevTools -> Network tab** on every request. Think about who can see it in each situation:
 
 - **You, running the app locally, typing your own key**: fine. The key stays on your machine, in your browser, used only by you. This is the app's intended use.
 - **You deploy the app to a public URL and hardcode your key so visitors don't need one**: a disaster. Every visitor can open DevTools and copy your key, then spend your money. **Never do this.**
@@ -610,7 +610,7 @@ In a safe public deployment, where does the provider API key live?
 [(X)] On a backend server you control, read from an environment variable
 [( )] In a hidden HTML input with `type="password"`
 
-> **⚠️ Common Misconception:** "`type='password'` protects the key." It only masks the characters on screen. The key is still in memory, still sent over the network in plain view of the Network tab, and still readable by any script on the page. Masking ≠ protecting. The real protections are: keep the key off the client entirely (backend proxy) or use a provider that needs no key (local model).
+> **Common Misconception:** "`type='password'` protects the key." It only masks the characters on screen. The key is still in memory, still sent over the network in plain view of the Network tab, and still readable by any script on the page. Masking ≠ protecting. The real protections are: keep the key off the client entirely (backend proxy) or use a provider that needs no key (local model).
 
 ---
 
@@ -685,7 +685,7 @@ This is the template for adding AI to *any* existing app: **make the app fully w
 4. *Move the key server-side.*
 
    - *What to do*: Stand up the `minimal_proxy.py` from Part IV (or a Node equivalent), set the key in an environment variable, and add a fifth provider branch whose base URL is your proxy — so the browser sends **no key at all**.
-   - *Starter hint*: The browser branch becomes `fetch("http://localhost:5000/api/coach", { method: "POST", body: JSON.stringify({ prompt }) })`. Confirm in DevTools → Network that no key appears on the browser request.
+   - *Starter hint*: The browser branch becomes `fetch("http://localhost:5000/api/coach", { method: "POST", body: JSON.stringify({ prompt }) })`. Confirm in DevTools -> Network that no key appears on the browser request.
    - *You've succeeded when*: Commentary works, and inspecting the browser's outgoing request shows a prompt but **no API key** anywhere.
 
 ---
@@ -700,7 +700,7 @@ This is the template for adding AI to *any* existing app: **make the app fully w
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You now have the full pattern for adding a language model to real software: isolate the AI layer, dispatch across providers, engineer prompts for prose and for structured JSON, parse defensively, and keep secrets off the client. In the **Build Your Own AI Coach** lab you will apply exactly this pattern to a domain of your choosing — a simpler game, a writing tutor, a code reviewer — reusing the provider-agnostic call, the structured-output discipline, and the key-security rules you practiced here.
 

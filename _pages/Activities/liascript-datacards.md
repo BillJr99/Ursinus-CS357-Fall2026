@@ -191,7 +191,7 @@ Mitchell et al. (2019) proposed **Model Cards** as the model-level analogue to D
 
 ---
 
-→ **Coming Up Next:** In the next activity, we look at how to take an agent from a developer's laptop to a production deployment — examining the infrastructure choices, state persistence patterns, and CI/CD pipelines that keep agents running reliably at scale.
+-> **Coming Up Next:** In the next activity, we look at how to take an agent from a developer's laptop to a production deployment — examining the infrastructure choices, state persistence patterns, and CI/CD pipelines that keep agents running reliably at scale.
 
 ---
 

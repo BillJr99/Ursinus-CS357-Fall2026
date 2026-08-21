@@ -161,7 +161,7 @@ Long-term user preference memory can be maintained in a vector store: after each
 
    *What to do:* Read the abstract of the MemGPT paper (Packer et al., 2023 — linked in Further Reading) and map each component of the MemGPT architecture to one of the four memory types from Model 1. The four MemGPT components are: main context (the active context window), archival storage (a persistent external database for long-term facts), recall storage (a searchable log of prior conversation turns), and the memory management functions (the agent's ability to move content between tiers). For each mapping, write one sentence explaining why that component corresponds to that memory type.
 
-   *Starter hint:* Main context → working memory is straightforward. For the others, ask: does archival storage store time-indexed events (episodic) or general facts (semantic)? Does recall storage store what happened in past conversations (episodic) or how to perform tasks (procedural)? The memory management functions are trickier — they are more like metacognition than a memory type. How would you handle a component that does not fit neatly into one category?
+   *Starter hint:* Main context -> working memory is straightforward. For the others, ask: does archival storage store time-indexed events (episodic) or general facts (semantic)? Does recall storage store what happened in past conversations (episodic) or how to perform tasks (procedural)? The memory management functions are trickier — they are more like metacognition than a memory type. How would you handle a component that does not fit neatly into one category?
 
    *You've succeeded when:* Each of the four MemGPT components has a clear mapping with a one-sentence justification, and you explicitly acknowledge any components that are ambiguous between types rather than forcing a clean mapping.
 
@@ -193,7 +193,7 @@ Long-term user preference memory can be maintained in a vector store: after each
 
 ---
 
-→ **Coming Up Next:** This is the final activity in the CS357 sequence. In the semester synthesis, you will integrate memory, observability, robustness, deployment, documentation, and regulation into a complete design review of your capstone agent project.
+-> **Coming Up Next:** This is the final activity in the CS357 sequence. In the semester synthesis, you will integrate memory, observability, robustness, deployment, documentation, and regulation into a complete design review of your capstone agent project.
 
 ---
 

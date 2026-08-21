@@ -46,7 +46,7 @@ Before you install a single tool, it helps to know *which kind* of tool you are 
 | Paradigm | What you do | Who runs the actions | Primarily for | Autonomy | Example tools |
 |----------|-------------|----------------------|---------------|----------|---------------|
 | **Chat** | Converse in a window; copy answers and code out yourself | **You** are the runtime — you paste and run the code by hand | Anyone; ideation, explanation, quick snippets | None (no file or shell access) | ChatGPT, Claude.ai, **LM Studio** (chat mode), Ollama chat |
-| **Code** | Give a goal in your terminal or IDE; the agent reads files, edits them, runs commands and tests, and loops | **The agent** acts on your repository, behind permission gates | Developers working inside a codebase | Medium–high, but gated | **Claude Code**, **opencode**, Codex CLI, Gemini CLI, pi — and, at scale, managed by **herdr** |
+| **Code** | Give a goal in your terminal or IDE; the agent reads files, edits them, runs commands and tests, and loops | **The agent** acts on your repository, behind permission gates | Developers working inside a codebase | Medium-high, but gated | **Claude Code**, **opencode**, Codex CLI, Gemini CLI, pi — and, at scale, managed by **herdr** |
 | **Cowork** | Delegate general computer and document tasks on a desktop | The agent drives apps, files, and the desktop directly | **Non-developers** and knowledge work beyond code | High, task-scoped | **Claude Cowork**, **OpenWork** (open-source, opencode-powered) |
 
 The whole of this tutorial lives in the **code** column: an agent scoped to a project directory, acting through gates. But the paradigms are worth holding in your head together for two reasons. First, they mark a ladder of blast radius: chat can only mislead you, code can change your repository, and cowork can touch anything on your machine — so the human-oversight lessons in Parts II and III matter *more* as you climb, not less. Second, the boundaries are blurring. **LM Studio Bionic** is a case in point: it began as a chat app for open, local models and grew a code-project mode (point it at a folder and it investigates, edits, and debugs) plus local voice input — one tool spanning chat and code, run entirely on models you host yourself.
@@ -72,7 +72,7 @@ Think of these tools the way you think about web browsers: Chrome, Firefox, and 
 |------|-------|---------|--------------|-------------|
 | Claude Code | Anthropic | `npm install -g @anthropic-ai/claude-code` — installs the `claude` binary globally via npm; requires Node 20+ | `CLAUDE.md` in your project root | The most fully-featured of the five: supports autonomous subagents that spawn their own loops, a rich MCP tool ecosystem, and the finest-grained permission gates (allow once / allow for session / allow always, per command pattern) |
 | Codex CLI | OpenAI | `npm install -g @openai/codex` — installs the `codex` binary; the core is written in Rust for speed, wrapped in a Node package for distribution | `AGENTS.md` in your project root | Configured via a TOML file that names multiple model providers; you can point it at OpenAI, Azure, or any compatible endpoint in the same config block |
-| Gemini CLI | Google | `npm install -g @google/gemini-cli` — installs the `gemini` binary; authenticate with `gemini auth login` the first time | `GEMINI.md` in your project root | Comes with the most generous free tier of the commercial tools; uses a three-tier skill discovery system (local → project → global) to find custom capabilities |
+| Gemini CLI | Google | `npm install -g @google/gemini-cli` — installs the `gemini` binary; authenticate with `gemini auth login` the first time | `GEMINI.md` in your project root | Comes with the most generous free tier of the commercial tools; uses a three-tier skill discovery system (local -> project -> global) to find custom capabilities |
 | opencode | opencode.ai | `curl -fsSL https://opencode.ai/install \| bash` — a single-line installer that detects your OS and places the binary on your PATH | `AGENTS.md` in your project root (same spec as Codex) | The most provider-flexible of the group: it speaks to any OpenAI-compatible backend, which means you can point it at Claude, Gemini, local Ollama, or any API that follows the spec, all via a small JSON config file |
 | pi | pi.dev | `npm install -g @mariozechner/pi-coding-agent` — installs the `pi` binary; no gate configuration needed because there are no gates | Minimal — reads a small `pi.md` if present but does not require it | Deliberately stripped down: no permission gates, no plan mode, no subagents. This is not a limitation to fix; it is a design choice that makes pi fast and low-ceremony for quick experiments. Use it for low-stakes exploration where speed matters more than oversight |
 
@@ -247,7 +247,7 @@ Four postures have converged across the tools, ordered here from most supervised
 | **Auto-accept edits** | File edits apply without a per-edit prompt; shell commands and irreversible actions *still* gate | Shell commands, network calls, `rm`, `git push` | A well-scoped task where you trust the edits but not the side effects — e.g., renaming a symbol across many files in a git repo you can `reset` |
 | **Full-auto / bypass** ("YOLO") | No gates at all; the agent reads, writes, and runs commands unattended | None | Almost never for coursework — only inside a throwaway container with no network and no credentials |
 
-The labels differ by tool, but it is the same dial. In **Claude Code** you cycle modes with **Shift+Tab** (default → auto-accept edits → plan), and the fully ungated mode is the `--dangerously-skip-permissions` flag, whose name is itself the warning. **Codex** exposes approval modes plus a `--full-auto` flag; **Gemini CLI** has a `--yolo` flag; **opencode** offers a plan-style review before it applies a change. **pi**, true to its personality in the Part I table, effectively has *only* the last row — it is always full-auto, which is exactly why the course reserves it for low-stakes throwaway work.
+The labels differ by tool, but it is the same dial. In **Claude Code** you cycle modes with **Shift+Tab** (default -> auto-accept edits -> plan), and the fully ungated mode is the `--dangerously-skip-permissions` flag, whose name is itself the warning. **Codex** exposes approval modes plus a `--full-auto` flag; **Gemini CLI** has a `--yolo` flag; **opencode** offers a plan-style review before it applies a change. **pi**, true to its personality in the Part I table, effectively has *only* the last row — it is always full-auto, which is exactly why the course reserves it for low-stakes throwaway work.
 
 The connection to the human-in-the-loop principle is direct: a mode is how you *spend your oversight budget*. Plan mode spends it all up front — you review one plan instead of twenty gates. Full-auto spends none, and inherits all the risk. Auto-accept edits is the deliberate middle: it aims your attention at the actions that can actually leave your machine or destroy data, which is precisely where the governance module argues a human's judgment is worth the interruption. The mistake is never simply "picking a permissive mode"; it is picking one *without matching it to the task's blast radius*. Auto-accept edits inside a git repo you can roll back is prudent; the same mode on files with no version control is how an afternoon's work quietly disappears.
 
@@ -351,11 +351,11 @@ That one addition changes the job from *babysitting one agent* to *supervising a
 
 | Capability | `tmux` / `screen` | **herdr** |
 |------------|-------------------|-----------|
-| Persistent, detachable server | ✅ | ✅ |
-| Reattach over SSH / from a phone | ✅ | ✅ |
-| Split panes for many agents at once | ✅ | ✅ |
-| **Knows which agent is blocked / working / done** | ❌ (just panes of text) | ✅ |
-| Purpose-built for coding-agent workflows | ❌ | ✅ |
+| Persistent, detachable server | yes | yes |
+| Reattach over SSH / from a phone | yes | yes |
+| Split panes for many agents at once | yes | yes |
+| **Knows which agent is blocked / working / done** | no (just panes of text) | yes |
+| Purpose-built for coding-agent workflows | no | yes |
 
 The relationship is not "herdr *versus* `tmux`" — it is `tmux`'s persistence *plus* the observability an agent workflow needs. Learn the plain multiplexer first (it is everywhere, on every server); reach for herdr when you are running enough agents that "which one needs me?" becomes the real question.
 
@@ -385,7 +385,7 @@ This same idea — an agent that keeps working while you are away — scales up 
 
    *Hint:* Walk the blast radius. What can the agent reach (the `-v` mounts and `-w` working dir)? What can it do without asking (the permission mode)? What credentials are within reach if it goes wrong (what did you *not* mount)? How do you undo an hour of bad edits (what makes the workspace reversible)?
 
-> **⚠️ Common Misconception:** Many students believe that detaching from a multiplexer *pauses* the agent, the way closing a laptop lid sleeps a machine — so "I'll detach to stop it for a bit" feels safe. It does the opposite: detaching only removes your *view*. The agent keeps running at full speed on the persistent server, reading files, executing commands, and spending tokens with no one watching the gates. Persistence is the feature you came for and the risk you must plan around — which is why the permission mode and the container boundary are set *before* you walk away, not after you come back.
+> **Common Misconception:** Many students believe that detaching from a multiplexer *pauses* the agent, the way closing a laptop lid sleeps a machine — so "I'll detach to stop it for a bit" feels safe. It does the opposite: detaching only removes your *view*. The agent keeps running at full speed on the persistent server, reading files, executing commands, and spending tokens with no one watching the gates. Persistence is the feature you came for and the risk you must plan around — which is why the permission mode and the container boundary are set *before* you walk away, not after you come back.
 
 You start a long agent task inside `tmux`, press `Ctrl-b d`, and close your SSH connection. Thirty minutes later you `tmux attach` from a different machine. What do you find?
 
@@ -516,7 +516,7 @@ In your notebook, respond at three levels:
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 In the *The Local Agent Stack: Wiring Containers into a System* activity you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically. The containerized invocation pattern you saw in Section 8 is the building block — next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares. Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before you take on that activity. The *Coding Agents* activity then takes the "walk away and come back" idea from Part IV one step further — into **loops that restart themselves and crews that coordinate** (the Ralph loop, `gnhf`, and `firstmate`).
 

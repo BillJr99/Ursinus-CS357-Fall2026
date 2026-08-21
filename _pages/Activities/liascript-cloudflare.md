@@ -301,7 +301,7 @@ Before ruling, the Manager ensures the team has named the deciding principle for
 
 ---
 
-> **⚠️ Common Misconception:** Students often assume that because a Worker is serverless — no server to manage, no container to maintain — it is also stateless in the sense that nothing persists between users or between requests. This is true for in-memory variables (each request gets a fresh execution context), but Cloudflare provides persistent storage primitives like KV that Workers can bind to. More importantly, the distinction between "does not persist" and "does not store" is crucial for governance: a Worker that forwards data to a third-party LLM provider does not store data itself, but it does transmit data to a service that may log, train on, or retain it. "We use a Worker, so we don't store data" is not a complete data-handling answer — it is the beginning of one.
+> **Common Misconception:** Students often assume that because a Worker is serverless — no server to manage, no container to maintain — it is also stateless in the sense that nothing persists between users or between requests. This is true for in-memory variables (each request gets a fresh execution context), but Cloudflare provides persistent storage primitives like KV that Workers can bind to. More importantly, the distinction between "does not persist" and "does not store" is crucial for governance: a Worker that forwards data to a third-party LLM provider does not store data itself, but it does transmit data to a service that may log, train on, or retain it. "We use a Worker, so we don't store data" is not a complete data-handling answer — it is the beginning of one.
 
 ---
 
@@ -309,7 +309,7 @@ Before ruling, the Manager ensures the team has named the deciding principle for
 
 In this part, you will turn the manual `wrangler deploy` from Part II into an automated CI/CD pipeline — and, more importantly, keep it *safe*: deploy logic in a script rather than trapped in YAML, cloud credentials that are scoped and short-lived, and guardrails that decide who may deploy, from which branch, with whose approval. Everything here is vendor-neutral in principle; we use **GitHub Actions + Cloudflare** as the concrete example, and note where a cloud like AWS does it differently.
 
-> **⚠️ Before you begin:** everything in this part uses **your own sandbox account** and throwaway projects. **Never commit a token, API key, or password to a repository** — not even in a branch, not even briefly. If you create any `.env`, `.dev.vars`, or credentials file while following along, add it to `.gitignore` *before* you `git add` anything. A real secret in git history is compromised even after you delete it.
+> **Before you begin:** everything in this part uses **your own sandbox account** and throwaway projects. **Never commit a token, API key, or password to a repository** — not even in a branch, not even briefly. If you create any `.env`, `.dev.vars`, or credentials file while following along, add it to `.gitignore` *before* you `git add` anything. A real secret in git history is compromised even after you delete it.
 
 ## 8. The Human Gate Moves Into the Pipeline
 
@@ -441,7 +441,7 @@ Your deploy script needs the Cloudflare token, and you want a required reviewer 
 
 A deploy identity should be able to do exactly one thing: deploy. The classic failure is using an all-powerful credential — Cloudflare's **Global API Key** or an AWS root/administrator key — "just to get it working," and never tightening it. If that credential leaks from a CI log or a compromised dependency, the blast radius is your entire account.
 
-**Cloudflare, concretely:** create a **scoped API token** (dashboard → My Profile → API Tokens) from a template limited to *Edit Cloudflare Workers*, restricted to the one account you deploy to. It can publish your Worker; it cannot read billing, touch DNS, or delete other projects. A practical workflow is **verify-broad-then-tighten**: if you are unsure which permissions a deploy needs, start slightly broad, confirm the deploy works, then remove permissions until it *just* stops working and add the last one back.
+**Cloudflare, concretely:** create a **scoped API token** (dashboard -> My Profile -> API Tokens) from a template limited to *Edit Cloudflare Workers*, restricted to the one account you deploy to. It can publish your Worker; it cannot read billing, touch DNS, or delete other projects. A practical workflow is **verify-broad-then-tighten**: if you are unsure which permissions a deploy needs, start slightly broad, confirm the deploy works, then remove permissions until it *just* stops working and add the last one back.
 
 **The transferable principle — short-lived beats long-lived.** A scoped token is still a *long-lived* secret sitting in a store. The stronger pattern, supported by clouds like AWS, is **OIDC federation**: the CI provider mints a fresh, signed identity token *for that one run*, and the cloud exchanges it for credentials that expire in minutes. **No key is ever stored.** Here is how the trust actually works:
 
@@ -503,7 +503,7 @@ And the *permission* policy the role grants should be least-privilege too — on
 }
 ```
 
-> **⚠️ Common Misconception:** "OIDC is complicated, so a stored token must be the simpler and therefore safer choice." The opposite is usually true. A stored long-lived token is a standing liability — it can leak, and until someone notices and rotates it, an attacker has your access. An OIDC token is minted per run, expires in minutes, and is bound by its subject to one repository and branch. The *setup* is a bit more involved; the *ongoing risk* is far lower. Cloudflare's Wrangler flow uses a scoped API token today, so you still hold one carefully-scoped secret — but the direction every mature pipeline moves is: smallest scope, shortest life, no key at rest.
+> **Common Misconception:** "OIDC is complicated, so a stored token must be the simpler and therefore safer choice." The opposite is usually true. A stored long-lived token is a standing liability — it can leak, and until someone notices and rotates it, an attacker has your access. An OIDC token is minted per run, expires in minutes, and is bound by its subject to one repository and branch. The *setup* is a bit more involved; the *ongoing risk* is far lower. Cloudflare's Wrangler flow uses a scoped API token today, so you still hold one carefully-scoped secret — but the direction every mature pipeline moves is: smallest scope, shortest life, no key at rest.
 
 ### Critical Thinking Questions
 
@@ -734,7 +734,7 @@ npx wrangler pages deploy ./my-site --project-name=cs357-yourname
 
 **Exercise 4.** The facade. Build a gateway-facade Worker: it accepts a prompt as a query parameter or POST body, calls an LLM provider's free tier using a key held as a Worker secret, and returns the completion. Demonstrate that the browser-visible network requests contain no API key.
 
-*What to do:* Store your LLM provider's API key with `wrangler secret put`. In the Worker, use `fetch()` to call the provider API with `env.YOUR_API_KEY`. Use browser DevTools → Network tab to show that the key does not appear in any outgoing or incoming request visible to the browser.
+*What to do:* Store your LLM provider's API key with `wrangler secret put`. In the Worker, use `fetch()` to call the provider API with `env.YOUR_API_KEY`. Use browser DevTools -> Network tab to show that the key does not appear in any outgoing or incoming request visible to the browser.
 
 *Starter hint:*
 
@@ -840,16 +840,16 @@ npx wrangler deploy --api-token GLOBAL_KEY # (over-broad: a global key, not a sc
 
 Run this checklist against your pipeline before you call it done. Every box should be checked.
 
-| ✓ | Check | Why it matters |
+| yes | Check | Why it matters |
 |---|-------|----------------|
-| ☐ | No secret, token, or key appears anywhere in the repo (or its git history) | A committed secret is compromised even after deletion |
-| ☐ | The deploy credential is a **scoped** token (or OIDC role), never a Global/root key | Limits the blast radius if it ever leaks |
-| ☐ | The token is stored as a GitHub **secret** (ideally environment-scoped), not a variable or a file | Encrypted, masked in logs, gated by the environment |
-| ☐ | No `echo` of the secret and no `set -x` in scripts that touch it | Both defeat automatic log masking |
-| ☐ | At least one guardrail is active: branch restriction, actor allowlist, or reviewer approval | Constrains who deploys, from where, with whose sign-off |
-| ☐ | The deploy script is **non-interactive** (assume-yes / `</dev/null`) and **idempotent** | It cannot hang the runner, and a re-run is harmless |
-| ☐ | Deploy logic lives in a **script** the workflow calls, runnable and testable locally | Not trapped in CI-only YAML |
-| ☐ | `.dev.vars` / `.env` are in `.gitignore` | Local secrets never reach the repo |
+| [ ] | No secret, token, or key appears anywhere in the repo (or its git history) | A committed secret is compromised even after deletion |
+| [ ] | The deploy credential is a **scoped** token (or OIDC role), never a Global/root key | Limits the blast radius if it ever leaks |
+| [ ] | The token is stored as a GitHub **secret** (ideally environment-scoped), not a variable or a file | Encrypted, masked in logs, gated by the environment |
+| [ ] | No `echo` of the secret and no `set -x` in scripts that touch it | Both defeat automatic log masking |
+| [ ] | At least one guardrail is active: branch restriction, actor allowlist, or reviewer approval | Constrains who deploys, from where, with whose sign-off |
+| [ ] | The deploy script is **non-interactive** (assume-yes / `</dev/null`) and **idempotent** | It cannot hang the runner, and a re-run is harmless |
+| [ ] | Deploy logic lives in a **script** the workflow calls, runnable and testable locally | Not trapped in CI-only YAML |
+| [ ] | `.dev.vars` / `.env` are in `.gitignore` | Local secrets never reach the repo |
 
 ---
 
@@ -869,7 +869,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: In the Project Studio, you will take everything built and published this semester and prepare it for the final gallery walk — including rehearsing failure cases and triaging feedback into your final sprint.
+-> Coming Up Next: In the Project Studio, you will take everything built and published this semester and prepare it for the final gallery walk — including rehearsing failure cases and triaging feedback into your final sprint.
 
 ---
 
@@ -878,7 +878,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 - Cloudflare Workers documentation (developers.cloudflare.com/workers): the Get Started path and the `fetch` handler reference.
 - Cloudflare Pages documentation: direct upload versus Git integration.
 - The Wrangler command reference: `dev`, `deploy`, `secret`, `tail`, `pages deploy`, `delete`.
-- Cloudflare CI/CD with GitHub Actions and scoped API tokens (developers.cloudflare.com/workers → "CI/CD" and "Create API token"): the concrete deploy-from-Actions path used in Part IV.
+- Cloudflare CI/CD with GitHub Actions and scoped API tokens (developers.cloudflare.com/workers -> "CI/CD" and "Create API token"): the concrete deploy-from-Actions path used in Part IV.
 - GitHub Actions — "Security hardening for GitHub Actions" (docs.github.com): using secrets, avoiding secret leakage in logs, and pinning action versions.
 - GitHub Actions — "About security hardening with OpenID Connect" and "Configuring OIDC in AWS" (docs.github.com): how the signed per-run token, `audience`, and `subject` claims work, and how to pin the `sub` to your repo/branch/environment.
 - GitHub — "Using environments for deployment" and "Reviewing deployments" (docs.github.com): environment protection rules and required reviewers (availability varies by repository visibility and plan tier — check what applies to yours).

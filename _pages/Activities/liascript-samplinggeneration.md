@@ -142,7 +142,7 @@ print(generate("Write a numbered list of three fruits.", temperature=0.0, stop=[
 
 > **Note:** On an OpenAI-compatible endpoint (including OpenWebUI's `/api/chat/completions`), these move out of the `options` dict to the top level of the request body, and `num_predict` becomes `max_tokens`.
 
-> **⚠️ Common Misconception:** The `top_k` in this activity is a **sampling** parameter — it limits which *next tokens* the model may choose from. It is a completely different knob from the `top_k` (often written `k` or `n_results`) you will meet in **Retrieval-Augmented Generation**, where it means "how many *document chunks* to retrieve." Same name, different layer of the system: one truncates a probability distribution over the vocabulary; the other sets the size of a search result set. See the *Retrieval-Augmented Generation with Chroma* activity, where retrieval `k` is tuned.
+> **Common Misconception:** The `top_k` in this activity is a **sampling** parameter — it limits which *next tokens* the model may choose from. It is a completely different knob from the `top_k` (often written `k` or `n_results`) you will meet in **Retrieval-Augmented Generation**, where it means "how many *document chunks* to retrieve." Same name, different layer of the system: one truncates a probability distribution over the vocabulary; the other sets the size of a search result set. See the *Retrieval-Augmented Generation with Chroma* activity, where retrieval `k` is tuned.
 
 ---
 
@@ -234,7 +234,7 @@ Surviving mass: $0.9007 + 0.0448 = 0.9455$. **This is not 1, so it is not yet a 
 |---|---|---|
 | Paris | 0.9007 | $0.9007 / 0.9455 = $ **0.9526** |
 | Lyon | 0.0448 | $0.0448 / 0.9455 = $ **0.0474** |
-| | | sum = **1.0000** ✓ |
+| | | sum = **1.0000** yes |
 
 Notice Paris's probability *went up* — from 0.9007 to 0.9526 — without its logit changing at all. Truncation is not a neutral filter; it redistributes the discarded mass onto the survivors, proportionally. Every token you cut makes the leaders more likely.
 
@@ -243,7 +243,7 @@ Notice Paris's probability *went up* — from 0.9007 to 0.9526 — without its l
 | Token | $P$ | Running total | In the nucleus? |
 |---|---|---|---|
 | Paris | 0.9007 | 0.9007 | yes — and 0.9007 ≥ 0.9, so we stop |
-| Lyon | 0.0448 | — | no |
+| Lyon | 0.0448 | - | no |
 
 The nucleus is **Paris alone**. Renormalizing a single survivor gives $0.9007 / 0.9007 = 1.0$ — the sampler is now deterministic, at a temperature you never set to zero.
 
@@ -259,7 +259,7 @@ On the distribution above, you set top-p = 0.95 instead of 0.9. What is Lyon's p
 > **Watch out!** Because truncation renormalizes, **top-k and top-p interact with temperature in ways that are easy to get backwards.** Raising temperature flattens the distribution, which *widens* the top-p nucleus (more tokens are needed to reach $p$) — so turning temperature up while leaving top-p fixed increases randomness twice over. For an agent that must emit an exact tool call, this compounding is exactly what you do not want.
 
 
-> **⚠️ Common Misconception:** Students often assume that top-p = 0.9 means "keep the top 90% of tokens by count" — for example, keeping 45,000 out of 50,000 vocabulary entries. In reality, top-p keeps the *smallest set of tokens* needed to reach 90% of the *total probability mass*. Because probability mass is extremely concentrated in the top few tokens, top-p = 0.9 typically keeps only 5-50 tokens, not thousands. The long tail of the vocabulary collectively holds very little probability.
+> **Common Misconception:** Students often assume that top-p = 0.9 means "keep the top 90% of tokens by count" — for example, keeping 45,000 out of 50,000 vocabulary entries. In reality, top-p keeps the *smallest set of tokens* needed to reach 90% of the *total probability mass*. Because probability mass is extremely concentrated in the top few tokens, top-p = 0.9 typically keeps only 5-50 tokens, not thousands. The long tail of the vocabulary collectively holds very little probability.
 
 ---
 
@@ -298,7 +298,7 @@ In this part, you will apply the sampling vocabulary to real design decisions �
 
 ---
 
-→ Coming Up Next: We know how models generate text — but how do we know whether what they generate is *correct*? In the *Hallucinations and Evaluating Agent Outputs* activity we build our first evaluation harness, measure hallucination rates, and learn why "it seems pretty good" is not good enough.
+-> Coming Up Next: We know how models generate text — but how do we know whether what they generate is *correct*? In the *Hallucinations and Evaluating Agent Outputs* activity we build our first evaluation harness, measure hallucination rates, and learn why "it seems pretty good" is not good enough.
 
 ## 6. Further Reading
 

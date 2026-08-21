@@ -134,7 +134,7 @@ In this part, you will examine the research on *automation bias* — the tendenc
 
 Automation bias arises even among trained experts, even when the automated system has a known error rate, and even when stakes are high. In a landmark study, Skitka et al. (1999) found that experienced pilots failed to detect autopilot errors at significantly higher rates when an automation aid was present — *even after being explicitly warned that the aid was imperfect*.
 
-> **⚠️ Common Misconception:** Automation bias is a problem only for non-technical or "tech-naive" users. Research consistently shows that trained professionals — pilots, radiologists, financial analysts, software engineers — exhibit automation bias at similar or higher rates than non-experts, precisely because their professional workflow incorporates these tools and they have learned to trust them.
+> **Common Misconception:** Automation bias is a problem only for non-technical or "tech-naive" users. Research consistently shows that trained professionals — pilots, radiologists, financial analysts, software engineers — exhibit automation bias at similar or higher rates than non-experts, precisely because their professional workflow incorporates these tools and they have learned to trust them.
 
 ---
 
@@ -201,7 +201,7 @@ AI:   The 1987 Ursinus College intramural chess tournament was won by
 
 The first answer is verifiable and correct. The second is almost certainly fabricated — but the model delivers both in identical, authoritative prose with no hedging, no uncertainty signal, and no difference in tone.
 
-> **⚠️ Common Misconception:** If an AI "sounds confident," it probably is correct. In fact, the fluency and grammatical correctness of an LLM's output are driven by the language modeling objective — predict the next plausible token — not by the accuracy of the underlying claim. A model can generate a perfectly grammatical, confidently phrased, completely false sentence.
+> **Common Misconception:** If an AI "sounds confident," it probably is correct. In fact, the fluency and grammatical correctness of an LLM's output are driven by the language modeling objective — predict the next plausible token — not by the accuracy of the underlying claim. A model can generate a perfectly grammatical, confidently phrased, completely false sentence.
 
 ---
 

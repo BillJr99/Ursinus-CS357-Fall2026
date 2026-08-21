@@ -30,14 +30,14 @@ This activity is a **synthesis**. Each stage has a deeper standalone activity �
 
 | Term | Plain-English Definition | Where It Appears Today |
 |------|--------------------------|------------------------|
-| **Token** | A chunk of text mapped to an integer id from a fixed vocabulary | "the" → id 0, "cat" → id 1 |
-| **Embedding** | The learned vector a token id looks up — the model's numeric "meaning" for that token | id 1 ("cat") → $(0, 1)$ |
+| **Token** | A chunk of text mapped to an integer id from a fixed vocabulary | "the" -> id 0, "cat" -> id 1 |
+| **Embedding** | The learned vector a token id looks up — the model's numeric "meaning" for that token | id 1 ("cat") -> $(0, 1)$ |
 | **Positional encoding** | A vector added to an embedding to tell the model *where* in the sequence the token sits | position 1 adds $(1, 0)$ |
 | **Q/K/V projection** | Three learned matrices $W_Q, W_K, W_V$ that turn each token vector into a **query**, a **key**, and a **value** | $q = x\,W_Q$, and $q,k,v$ all differ from $x$ |
 | **Attention score** | The dot product of one token's query with another token's key — "how relevant is that token to me?" | key·query $= 2$ and $3$ |
 | **Softmax** | Turns a vector of scores into a probability distribution (positive, sums to 1) | scores $\to (0.3302, 0.6698)$ |
 | **Context vector** | The attention-weighted sum of value vectors — one token's view of the whole sequence so far | $(0.6698, 1.0)$ |
-| **Feed-forward network (FFN)** | A small per-token neural network (linear → ReLU) applied after attention | $(0.6698,1.0) \to (1.6698, 1.0)$ |
+| **Feed-forward network (FFN)** | A small per-token neural network (linear -> ReLU) applied after attention | $(0.6698,1.0) \to (1.6698, 1.0)$ |
 | **Unembedding / logits** | A matrix that scores the final vector against every vocabulary token, producing one **logit** per token | 5 logits, one per word |
 | **Cross-entropy loss** | How surprised the model is by the correct next token: $-\log p(\text{target})$ | $-\log(0.5791) = 0.5464$ |
 | **Gradient descent step** | Nudge a weight opposite its gradient so the loss goes down | one entry of $W_U$: $1.0 \to 1.3514$ |
@@ -203,7 +203,7 @@ The sum is $24.9313$, giving:
 |---|---|---|---|---|
 | $0.2130$ | $0.1090$ | $\mathbf{0.5791}$ | $0.0205$ | $0.0784$ |
 
-**Step 4 — Sample.** At temperature 0 (greedy) the model emits the argmax: **"sat."** The full request "the cat" → "sat" is complete. (Temperature and top-p reshape this distribution before sampling — see `liascript-samplinggeneration.md`.)
+**Step 4 — Sample.** At temperature 0 (greedy) the model emits the argmax: **"sat."** The full request "the cat" -> "sat" is complete. (Temperature and top-p reshape this distribution before sampling — see `liascript-samplinggeneration.md`.)
 
 ### Critical Thinking Questions
 
@@ -222,7 +222,7 @@ The five logits are converted into the five next-token probabilities by:
 [( )] Keeping only the largest logit and setting the rest to 0
 [( )] Multiplying each logit by its embedding
 
-> **⚠️ Common Misconception:** It is tempting to picture the model "looking up" the answer to "the cat" in some stored table of sentences. It does no such thing. There is no sentence "the cat sat" stored anywhere. The model holds only **weights** — the embedding rows, the projection matrices $W_Q, W_K, W_V$, the FFN weights, and the unembedding $W_U$. Given "the cat," it *computes* a fresh probability distribution over its entire vocabulary every single time, through exactly the matrix operations above. "sat" is not retrieved; it is the token that wins an arithmetic competition.
+> **Common Misconception:** It is tempting to picture the model "looking up" the answer to "the cat" in some stored table of sentences. It does no such thing. There is no sentence "the cat sat" stored anywhere. The model holds only **weights** — the embedding rows, the projection matrices $W_Q, W_K, W_V$, the FFN weights, and the unembedding $W_U$. Given "the cat," it *computes* a fresh probability distribution over its entire vocabulary every single time, through exactly the matrix operations above. "sat" is not retrieved; it is the token that wins an arithmetic competition.
 
 ---
 
@@ -353,7 +353,7 @@ print("numerical grad = %.4f   analytic grad = %.4f  (match!)" % (num, grad))
 **Exercise 1: Change the prompt to "the mat."**
 
 - *What to do*: Keep every matrix the same, but start from "the mat" instead of "the cat." Recompute $x_{\text{mat}}$ (remember position 1 adds $(1,0)$), then $q_{\text{mat}}, k$, the attention scores against both tokens, the context vector, the FFN output, and the five logits. Which token does the model predict now?
-- *Starter hint*: $x_{\text{mat}} = (1,-1) + (1,0) = (2,-1)$. Push it through exactly the steps in Parts II–III. You can check yourself by editing `E`/the input in the code cell.
+- *Starter hint*: $x_{\text{mat}} = (1,-1) + (1,0) = (2,-1)$. Push it through exactly the steps in Parts II-III. You can check yourself by editing `E`/the input in the code cell.
 - *You've succeeded when*: You have a full by-hand trace ending in a predicted token, and the code cell confirms your logits.
 
 **Exercise 2: Make the model *more* confident in "sat."**
@@ -380,7 +380,7 @@ print("numerical grad = %.4f   analytic grad = %.4f  (match!)" % (num, grad))
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 You now understand a single forward pass and a single training step. Two threads open from here. First: *why does the same prompt sometimes give different answers?* — that is sampling and temperature (`liascript-samplinggeneration.md`), acting on the very probability distribution you just computed. Second: *how is this pass run efficiently for thousands of users at once?* — that is KV caching, batching, and PagedAttention (`liascript-llmserving.md`), which optimize exactly the attention computation from Part II.
 
@@ -412,7 +412,7 @@ Values $\mathbf{v}$: river $(1,1)$, bank $(2,0)$, loan $(0,2)$.
 
 **Softmax, row by row** (each row sums to 1 — that is what makes it a distribution over "where do I look"):
 
-| | river | bank | loan | → new vector |
+| | river | bank | loan | -> new vector |
 |---|---|---|---|---|
 | **river** | 0.40 | 0.20 | 0.40 | $(0.80,\; 1.20)$ |
 | **bank** | 0.25 | 0.25 | 0.50 | $(0.74,\; 1.26)$ |
@@ -434,4 +434,4 @@ Check the "river" row against Exercise 1: $e^{0.71} = 2.03$, $e^{0} = 1.00$, $e^
 - This activity synthesizes five companions, each going deeper on one stage: `liascript-tokensembeddings.md`, `liascript-attentiontransformers.md`, `liascript-textgen2nn.md`, `liascript-samplinggeneration.md`, and `liascript-llmpretraining.md`.
 - Vaswani et al. "Attention Is All You Need." NeurIPS 2017. The paper that introduced the transformer architecture whose forward pass you just traced.
 - Tom Yeh. *AI by Hand.* Worksheets that compute attention, feed-forward layers, and softmax by hand at the same scale used here.
-- 3Blue1Brown, "But what is a GPT? / Attention in transformers" (video series). Visual, animated companions to the matrix operations in Parts II–III.
+- 3Blue1Brown, "But what is a GPT? / Attention in transformers" (video series). Visual, animated companions to the matrix operations in Parts II-III.

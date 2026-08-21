@@ -131,7 +131,7 @@ According to Tuckman (1965), a team having its first serious disagreement in wee
 [( )] A sign that the team skipped the forming stage
 [( )] Rare — most teams never experience conflict
 
-> **⚠️ Common Misconception:** Psychological safety does *not* mean "niceness" or the absence of disagreement. Edmondson (1999) is explicit that psychologically safe teams disagree *more* openly, not less — safety is what makes candid disagreement survivable. A team that never argues is usually a team in which people have stopped saying what they think. The goal of your charter is not to prevent storms; it is to make storms informative.
+> **Common Misconception:** Psychological safety does *not* mean "niceness" or the absence of disagreement. Edmondson (1999) is explicit that psychologically safe teams disagree *more* openly, not less — safety is what makes candid disagreement survivable. A team that never argues is usually a team in which people have stopped saying what they think. The goal of your charter is not to prevent storms; it is to make storms informative.
 
 ---
 
@@ -200,7 +200,7 @@ Which of the following charter clauses passes the enforceability test?
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Your team exists and has a constitution. Next on the Project Thread, you point it outward: identifying a real stakeholder outside computer science and writing the Stakeholder Brief — the problem your whole semester will orbit.
 

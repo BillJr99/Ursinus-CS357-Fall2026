@@ -35,7 +35,7 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Course-Context Example |
 |------|--------------------------|------------------------|
-| **Supervised Learning** | Learning a mapping from inputs to outputs using labeled training examples — the right answers are provided in advance | Training a model on (email text → spam/not-spam) labels; similar to how we fine-tuned a classifier in the embeddings unit |
+| **Supervised Learning** | Learning a mapping from inputs to outputs using labeled training examples — the right answers are provided in advance | Training a model on (email text -> spam/not-spam) labels; similar to how we fine-tuned a classifier in the embeddings unit |
 | **Regression** | A supervised task where the output is a continuous number | Predicting the relevance score of a retrieved document given a query — a number, not a category |
 | **Classification** | A supervised task where the output is one of a fixed set of categories | Routing an agent's incoming message to the correct tool: "arithmetic", "search", or "none" |
 | **Bias-Variance Tradeoff** | The tension between a model that is too simple (high bias, misses real patterns) and one that memorizes training data (high variance, fails on new inputs) | An agent planner that always recommends the same tool is high-bias; one that changes plan every run is high-variance |
@@ -255,7 +255,7 @@ In this part, you will connect the ML concepts from Parts I and II to the AI sys
 
 ---
 
-→ **Coming Up Next:** Now that we understand how models learn from labeled data, we turn to what happens when labels are absent — in the next activity we explore **unsupervised learning**: clustering, dimensionality reduction, and how embedding spaces (which we built from scratch in an earlier unit) are trained without explicit labels.
+-> **Coming Up Next:** Now that we understand how models learn from labeled data, we turn to what happens when labels are absent — in the next activity we explore **unsupervised learning**: clustering, dimensionality reduction, and how embedding spaces (which we built from scratch in an earlier unit) are trained without explicit labels.
 
 ## 5. Further Reading
 

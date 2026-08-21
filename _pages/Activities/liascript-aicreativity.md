@@ -121,7 +121,7 @@ AI systems can generate output explicitly "in the style of" a named living artis
 | **Journalism** | Draft articles; summarize and paraphrase sources | Factual accuracy responsibility; disclosure of AI's role in production | Major news outlets have varying and evolving disclosure policies |
 | **Film and TV** | Generate scripts; de-age or digitally resurrect actors | SAG-AFTRA consent and compensation protections; estates' control over deceased performers' likenesses | Under active negotiation since the 2023 strikes; some protections now in contracts |
 
-> ⚠️ **Common Misconception:** Many students assume that "AI-generated content cannot be copyrighted" or "AI-generated content is always in the public domain." The legal reality is more complex. In the US, the Copyright Office has stated that purely AI-generated content with no human creative input is not copyrightable. But work where a human makes specific creative choices — selecting, arranging, editing, and directing AI outputs — may be protectable to the extent of the human creative contribution. The exact threshold of human involvement required for copyright protection is actively being litigated and determined through Copyright Office guidance as of 2025.
+> **Common Misconception:** Many students assume that "AI-generated content cannot be copyrighted" or "AI-generated content is always in the public domain." The legal reality is more complex. In the US, the Copyright Office has stated that purely AI-generated content with no human creative input is not copyrightable. But work where a human makes specific creative choices — selecting, arranging, editing, and directing AI outputs — may be protectable to the extent of the human creative contribution. The exact threshold of human involvement required for copyright protection is actively being litigated and determined through Copyright Office guidance as of 2025.
 
 ### Critical Thinking Questions
 
@@ -261,7 +261,7 @@ Write at least 200 words addressing at least two of the three levels above. Your
 
 ---
 
-→ Coming Up Next: This was the final activity in the series. Bring your reflections to the course's final discussion: what does it mean to build AI systems responsibly, and what role do you want to play in that work?
+-> Coming Up Next: This was the final activity in the series. Bring your reflections to the course's final discussion: what does it mean to build AI systems responsibly, and what role do you want to play in that work?
 
 ## Further Reading
 

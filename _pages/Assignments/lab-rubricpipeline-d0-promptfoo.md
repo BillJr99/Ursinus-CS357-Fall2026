@@ -207,7 +207,7 @@ The core lab measures a judge bias with a controlled Python experiment; here you
 
 **Variant (i) — reordering (position/order effects).** Create `dataset_reordered.csv`: the same 15 answers with the row order reversed (a15 first, a01 last). Copy the baseline config to `promptfooconfig-reordered.yaml`, changing only the last line to `tests: file://dataset_reordered.csv`. Since each answer is judged in isolation, a trustworthy judge should give **identical verdicts regardless of order** — any per-item verdict that flips between runs is evidence of order sensitivity or judge instability, which in a real grading deployment amounts to position bias against whoever gets graded late.
 
-**Variant (ii) — padding (verbosity bias).** Create `dataset_padded.csv`: the same 15 answers, each with three filler sentences appended (substantive-sounding but vacuous, e.g., "Furthermore, it is important to consider the various aspects of this topic from multiple perspectives."). Copy the baseline config to `promptfooconfig-padded.yaml`, changing only the tests line. Padding adds no rubric-relevant content, so verdicts should not improve; any criterion that flips FAIL→PASS under padding is verbosity bias.
+**Variant (ii) — padding (verbosity bias).** Create `dataset_padded.csv`: the same 15 answers, each with three filler sentences appended (substantive-sounding but vacuous, e.g., "Furthermore, it is important to consider the various aspects of this topic from multiple perspectives."). Copy the baseline config to `promptfooconfig-padded.yaml`, changing only the tests line. Padding adds no rubric-relevant content, so verdicts should not improve; any criterion that flips FAIL->PASS under padding is verbosity bias.
 
 Run both and keep the outputs:
 
@@ -224,7 +224,7 @@ npx promptfoo@latest eval -c promptfooconfig-padded.yaml --output run_padded.jso
 | ... | | | | | |
 | **Total flips** | | | | | |
 
-Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 60 verdicts FAIL→PASS, an 8% verbosity effect"), propose one countermeasure you could express *in the rubric text of the config* (e.g., "Length and repetition must not be credited; judge only the content that addresses the criterion"), apply it, re-run the padded config, and report the residual effect — mirroring core Part 4's countermeasure-and-residual-risk discipline.
+Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 60 verdicts FAIL->PASS, an 8% verbosity effect"), propose one countermeasure you could express *in the rubric text of the config* (e.g., "Length and repetition must not be credited; judge only the content that addresses the criterion"), apply it, re-run the padded config, and report the residual effect — mirroring core Part 4's countermeasure-and-residual-risk discipline.
 
 ---
 

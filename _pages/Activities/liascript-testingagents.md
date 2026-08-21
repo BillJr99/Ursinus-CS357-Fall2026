@@ -157,7 +157,7 @@ Think of it like editing a recipe: you adjusted the salt because last week's sou
 
 ---
 
-> ⚠️ **Common Misconception:** "Setting temperature to 0 makes an LLM deterministic, so I can compare exact output strings."
+> **Common Misconception:** "Setting temperature to 0 makes an LLM deterministic, so I can compare exact output strings."
 >
 > Temperature = 0 makes the model *more* consistent, but does not guarantee identical outputs across different API calls, different hardware, or different model versions. Even at temperature 0, floating-point arithmetic differences between GPU runs can produce different tokens. More importantly, when your model version is updated by the provider, your "exact match" tests will break immediately — even though nothing in your code changed. Property-based tests are resilient to these variations; exact string comparison is not.
 
@@ -231,7 +231,7 @@ Think of it like editing a recipe: you adjusted the salt because last week's sou
 
 ---
 
-→ Coming Up Next: With a working eval harness, the next module explores how to integrate it into a continuous integration pipeline so quality gates run automatically on every code change — before anything reaches your users.
+-> Coming Up Next: With a working eval harness, the next module explores how to integrate it into a continuous integration pipeline so quality gates run automatically on every code change — before anything reaches your users.
 
 ## Further Reading
 

@@ -259,7 +259,7 @@ In the OAuth 2.0 client credentials flow: the **AI agent** is the client (it req
 
 ---
 
-##### ✅ Part 1 Checkpoint
+##### Part 1 Checkpoint
 
 Answer these three questions in your pair log before moving to Part 2:
 
@@ -487,7 +487,7 @@ The MCP SDK does not automatically enforce your `inputSchema`. You must validate
 
 ---
 
-##### ✅ Part 2 Checkpoint
+##### Part 2 Checkpoint
 
 Answer these three questions in your pair log before moving to Part 3:
 
@@ -749,7 +749,7 @@ The OAuth Docker container may not have finished starting. Run `docker logs oaut
 
 ---
 
-##### ✅ Part 3 Checkpoint
+##### Part 3 Checkpoint
 
 Answer these three questions in your pair log before moving to Part 4:
 
@@ -857,7 +857,7 @@ The MCP SDK requires that `call_tool` return a `list[types.TextContent]`. If you
 
 ---
 
-##### ✅ Part 4 Checkpoint
+##### Part 4 Checkpoint
 
 Answer these three questions in your pair log before writing up your documentation:
 

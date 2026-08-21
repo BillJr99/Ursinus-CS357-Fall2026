@@ -53,7 +53,7 @@ $$
 
 where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity — exactly the cosine machinery from the tokens and embeddings module.
 
-> **⚠️ Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity. Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt. Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
+> **Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity. Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt. Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
 
 **The pipeline has two phases.** *Indexing* (once): split documents into chunks, embed each chunk, store vectors in a vector database. *Query* (every question): embed the question, find nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
 
@@ -170,7 +170,7 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
    > *Hint: Create a question like "Can I get food after working out at the gym?" — the answer involves both the dining hours doc and the athletics doc. With `k=1`, only one chunk fits in the prompt. What does the model say?*
 
-> **⚠️ Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way. The model's weights are completely unchanged. RAG simply places text in the prompt that the model then reads and summarizes — the same way you could hand a book to someone who has never seen it and ask them to answer questions from it. The intelligence is in the language model; the facts come from your documents. This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
+> **Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way. The model's weights are completely unchanged. RAG simply places text in the prompt that the model then reads and summarizes — the same way you could hand a book to someone who has never seen it and ask them to answer questions from it. The intelligence is in the language model; the facts come from your documents. This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
 
 The single most important reason RAG reduces factual hallucination is that it:
 
@@ -223,7 +223,7 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Our RAG system worked because our "documents" were clean, single-sentence facts. Real documents are messy — long, overlapping, poorly organized. The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality — the same levers you will tune in the RAG Knowledge Base Lab.
 

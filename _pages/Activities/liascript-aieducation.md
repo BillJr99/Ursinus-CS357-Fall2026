@@ -100,7 +100,7 @@ Rather than investing in detection (which is losing the arms race), many educato
 | Lab report | Partially — structure and prose are easy; data analysis requires data | Process log with timestamped notes and documentation of failed attempts, submitted alongside the final report | Scientific reasoning and experimental process, not just clean final results |
 | Research paper | Yes — LLMs can produce structured academic arguments | Annotated bibliography with recorded literature discussion — student explains source selection and synthesis choices | Source evaluation, synthesis judgment, ability to explain why each source was chosen and what it contributes |
 
-> ⚠️ **Common Misconception:** Many students (and some instructors) assume that "AI detection = proof of AI use" and "passing detection = proof of human writing." Neither is true. AI detectors have significant false positive rates (accusing humans) and significant false negative rates (missing AI output that has been lightly edited). Using detection results as conclusive evidence — in either direction — is not supported by the tools' own accuracy claims. Detection results are evidence to investigate, not verdicts to enforce.
+> **Common Misconception:** Many students (and some instructors) assume that "AI detection = proof of AI use" and "passing detection = proof of human writing." Neither is true. AI detectors have significant false positive rates (accusing humans) and significant false negative rates (missing AI output that has been lightly edited). Using detection results as conclusive evidence — in either direction — is not supported by the tools' own accuracy claims. Detection results are evidence to investigate, not verdicts to enforce.
 
 ### Critical Thinking Questions
 
@@ -137,7 +137,7 @@ The detection arms race shows why purely reactive integrity policies fail — th
 
 Bloom's Revised Taxonomy (Anderson & Krathwohl, 2001) arranges cognitive tasks from lower-order to higher-order:
 
-**Remember → Understand → Apply → Analyze → Evaluate → Create**
+**Remember -> Understand -> Apply -> Analyze -> Evaluate -> Create**
 
 A common argument is: "AI can handle the lower levels, so education should focus on the higher levels." But this argument collapses quickly on inspection: current LLMs can Analyze, Evaluate, and Create competently in many domains. What does that leave?
 
@@ -216,7 +216,7 @@ Learning to use AI well is itself a skill — and it is increasingly a professio
 
 **Societal level:** This course's AI use policies, your college's academic integrity framework, and national accreditation standards are all lagging behind the pace of AI capability development. Who should be responsible for keeping educational policy current? What would a well-governed, adaptive AI-in-education policy framework look like — one that doesn't freeze practices in 2024 or leave students and teachers without guidance for years at a time?
 
-→ Coming Up Next: In the Agent Economics activity, we will examine how the financial incentives behind AI tools shape what gets built, how it's priced, and who benefits — connecting the educational choices we've discussed today to the market forces that produce the tools.
+-> Coming Up Next: In the Agent Economics activity, we will examine how the financial incentives behind AI tools shape what gets built, how it's priced, and who benefits — connecting the educational choices we've discussed today to the market forces that produce the tools.
 
 ---
 

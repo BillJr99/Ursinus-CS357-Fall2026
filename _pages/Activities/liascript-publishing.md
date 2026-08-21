@@ -68,7 +68,7 @@ The **tag** after the colon is a version label, and `latest` is just a tag like 
 
 ## 2. Authentication: Tokens, Not Passwords
 
-Every registry authenticates with **tokens** you generate, scope, and can revoke — never your account password. For GHCR, create a GitHub Personal Access Token with the `write:packages` scope (Settings → Developer settings → Personal access tokens); for Docker Hub, an access token from Account Settings → Security; for npm, `npm login` handles it interactively (with publish requiring a one-time password if you enable 2FA, which you should). The handling rules from the shell module apply with full force: tokens live in environment variables or password managers, never in code, never in Dockerfiles, never in anything committed to a repository.
+Every registry authenticates with **tokens** you generate, scope, and can revoke — never your account password. For GHCR, create a GitHub Personal Access Token with the `write:packages` scope (Settings -> Developer settings -> Personal access tokens); for Docker Hub, an access token from Account Settings -> Security; for npm, `npm login` handles it interactively (with publish requiring a one-time password if you enable 2FA, which you should). The handling rules from the shell module apply with full force: tokens live in environment variables or password managers, never in code, never in Dockerfiles, never in anything committed to a repository.
 
 ---
 
@@ -127,7 +127,7 @@ docker rmi ghcr.io/yourusername/agent-eval:0.1.0   # remove local copy
 docker pull ghcr.io/yourusername/agent-eval:0.1.0   # pull as a stranger would
 ```
 
-One GHCR-specific step trips everyone the first time: new packages default to **private**. Visit the package's page on GitHub (your profile → Packages tab), open Package settings, and change visibility to public if you intend `docker pull` to work without authentication. While you are there, link the package to its source repository; consumers deserve to find your Dockerfile and understand what they are running.
+One GHCR-specific step trips everyone the first time: new packages default to **private**. Visit the package's page on GitHub (your profile -> Packages tab), open Package settings, and change visibility to public if you intend `docker pull` to work without authentication. While you are there, link the package to its source repository; consumers deserve to find your Dockerfile and understand what they are running.
 
 ## 4. To Docker Hub
 
@@ -294,7 +294,7 @@ The pre-publish review mindset — audit before you ship, not after — applies 
 
 ---
 
-> **⚠️ Common Misconception:** Students often assume that because a file is listed in `.npmignore`, it is definitely excluded from the published package. The safer mental model is the reverse: use the `"files"` allowlist in `package.json` to explicitly declare what *is* included, and treat everything else as excluded. With an allowlist, a new file you add to the directory is excluded by default — you must consciously add it. With an ignore-list, a new file is included by default — you must consciously exclude it. The allowlist is safer precisely because the default is to exclude rather than to include, which means the cost of forgetting is "file is missing from the package" rather than "credential is published to npm."
+> **Common Misconception:** Students often assume that because a file is listed in `.npmignore`, it is definitely excluded from the published package. The safer mental model is the reverse: use the `"files"` allowlist in `package.json` to explicitly declare what *is* included, and treat everything else as excluded. With an allowlist, a new file you add to the directory is excluded by default — you must consciously add it. With an ignore-list, a new file is included by default — you must consciously exclude it. The allowlist is safer precisely because the default is to exclude rather than to include, which means the cost of forgetting is "file is missing from the package" rather than "credential is published to npm."
 
 ---
 
@@ -489,7 +489,7 @@ pip install \
 
 The choice of versioning scheme communicates promises to your users.
 
-**Semantic versioning (SemVer)** uses `MAJOR.MINOR.PATCH` and encodes a compatibility promise: patch bumps (`0.1.0` → `0.1.1`) fix bugs without changing the public API; minor bumps (`0.1.0` → `0.2.0`) add features while staying backward-compatible; major bumps (`0.1.0` → `1.0.0`) may break consumers who depend on the previous behavior. SemVer is the right choice for a stable library used by other code.
+**Semantic versioning (SemVer)** uses `MAJOR.MINOR.PATCH` and encodes a compatibility promise: patch bumps (`0.1.0` -> `0.1.1`) fix bugs without changing the public API; minor bumps (`0.1.0` -> `0.2.0`) add features while staying backward-compatible; major bumps (`0.1.0` -> `1.0.0`) may break consumers who depend on the previous behavior. SemVer is the right choice for a stable library used by other code.
 
 **Date-based versioning** (e.g., `2026.06.1`) encodes the release date rather than a compatibility promise. It is common for agent tooling that iterates rapidly and does not yet have a stable API — it tells users "this was released on this date" without implying backward compatibility. The tradeoff is that users cannot tell from the version number alone whether a new release will break their code.
 
@@ -539,10 +539,10 @@ ls dist/
 
 A project's API changes in a way that breaks all existing callers — for example, a function that previously returned a string now returns a list. Which version bump is appropriate under SemVer?
 
-[( )] Patch: `0.1.0` → `0.1.1` — a patch bump signals "bug fix with no behavior change"; using it for a breaking change tells consumers their code is safe to upgrade when it is not
-[( )] Minor: `0.1.0` → `0.2.0` — a minor bump signals "new feature, backward-compatible"; using it for a breaking change violates the compatibility promise consumers rely on to safely run `npm update`
-[(X)] Major: `0.1.0` → `1.0.0`
-[( )] Date-based: `0.1.0` → `2026.06.1` — date-based versioning communicates when the release happened, not what kind of change it contains; a consumer cannot tell from the version number alone whether upgrading will break their code
+[( )] Patch: `0.1.0` -> `0.1.1` — a patch bump signals "bug fix with no behavior change"; using it for a breaking change tells consumers their code is safe to upgrade when it is not
+[( )] Minor: `0.1.0` -> `0.2.0` — a minor bump signals "new feature, backward-compatible"; using it for a breaking change violates the compatibility promise consumers rely on to safely run `npm update`
+[(X)] Major: `0.1.0` -> `1.0.0`
+[( )] Date-based: `0.1.0` -> `2026.06.1` — date-based versioning communicates when the release happened, not what kind of change it contains; a consumer cannot tell from the version number alone whether upgrading will break their code
 
 ---
 
@@ -562,7 +562,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
-→ Coming Up Next: Now that you can publish artifacts, the next activity looks at deploying them as live services — specifically using Cloudflare Workers and Pages to host your AI tools at a public URL without managing any servers.
+-> Coming Up Next: Now that you can publish artifacts, the next activity looks at deploying them as live services — specifically using Cloudflare Workers and Pages to host your AI tools at a public URL without managing any servers.
 
 ---
 

@@ -36,8 +36,8 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Streaming** | Sending the model's response one token at a time as it is generated, rather than waiting for the full response | `"stream": true` in the request body; response arrives as a series of `data: {...}` lines |
 | **LiteLLM** | A proxy server and Python library that accepts OpenAI-format requests and translates them to the format required by 100+ different providers | `litellm.completion(model="ollama/llama3.2", messages=[...])` |
 | **Prompt Template** | A string with named `{}` blanks that you fill at call time; the model sees only the rendered result | `"Context:\n{context}\n\nQuestion: {question}".format(...)` |
-| **Consensus / Self-Consistency** | Sampling the same prompt several times at nonzero temperature and aggregating (e.g., majority vote) to reduce variance | 5 samples of a sentiment label → `Counter` majority vote |
-| **Pipeline / Chaining** | Feeding one prompt's structured (JSON) output into the blanks of the next prompt's template | Stage 1 emits `{"topic": "billing", "urgent": true}` → fills Stage 2's `{topic}` blank |
+| **Consensus / Self-Consistency** | Sampling the same prompt several times at nonzero temperature and aggregating (e.g., majority vote) to reduce variance | 5 samples of a sentiment label -> `Counter` majority vote |
+| **Pipeline / Chaining** | Feeding one prompt's structured (JSON) output into the blanks of the next prompt's template | Stage 1 emits `{"topic": "billing", "urgent": true}` -> fills Stage 2's `{topic}` blank |
 
 ---
 
@@ -121,7 +121,7 @@ In a response from `POST /v1/chat/completions`, which JSON path contains the mod
 [(X)] `response["choices"][0]["message"]["content"]`
 [( )] `response["data"]["text"]`
 
-> **⚠️ Common Misconception:** "The OpenAI Python SDK only works if you have an OpenAI account and API key." This is false. The SDK's `OpenAI` client accepts a `base_url` parameter that redirects every call to any server that speaks the same protocol. You still need to pass an `api_key` argument, but the server ignores it — Ollama accepts any string, including `"ollama"` or `"not-a-real-key"`. The SDK is a convenience wrapper around HTTP; it does not enforce which server you talk to.
+> **Common Misconception:** "The OpenAI Python SDK only works if you have an OpenAI account and API key." This is false. The SDK's `OpenAI` client accepts a `base_url` parameter that redirects every call to any server that speaks the same protocol. You still need to pass an `api_key` argument, but the server ignores it — Ollama accepts any string, including `"ollama"` or `"not-a-real-key"`. The SDK is a convenience wrapper around HTTP; it does not enforce which server you talk to.
 
 ---
 
@@ -222,7 +222,7 @@ What does setting `"stream": false` in the request body change at the HTTP proto
 [(X)] The server sends the complete response in a single HTTP response body instead of as a sequence of server-sent event lines
 [( )] The client receives the response faster because streaming has overhead
 
-> **⚠️ Common Misconception:** "Streaming makes the model generate faster." The model generates tokens at the same rate regardless of whether streaming is enabled. Streaming changes how the tokens are *delivered* — in chunks as they are produced versus all at once at the end. For a user watching a chat interface, streaming feels faster because text appears immediately. For a program that processes the final answer, non-streaming is simpler because the full JSON arrives in one piece.
+> **Common Misconception:** "Streaming makes the model generate faster." The model generates tokens at the same rate regardless of whether streaming is enabled. Streaming changes how the tokens are *delivered* — in chunks as they are produced versus all at once at the end. For a user watching a chat interface, streaming feels faster because text appears immediately. For a program that processes the final answer, non-streaming is simpler because the full JSON arrives in one piece.
 
 ---
 
@@ -365,7 +365,7 @@ Examine the printed trace from the tool loop above, or walk through it with your
 
    > *Hint: `tool_choice: "auto"` means the model decides whether a tool call is appropriate. A math question does not match the description of `get_weather`, so the model should return plain text with `tool_calls` absent or `None` from the response.*
 
-> **⚠️ Common Misconception:** Setting `tool_choice: "auto"` does not guarantee the model will always call a tool. It means the model may call a tool if it judges one to be appropriate. The model will return plain text when it believes it can answer without using a tool. If you need to force a tool call (for testing, or to guarantee structured output), set `tool_choice: {"type": "function", "function": {"name": "your_tool_name"}}`.
+> **Common Misconception:** Setting `tool_choice: "auto"` does not guarantee the model will always call a tool. It means the model may call a tool if it judges one to be appropriate. The model will return plain text when it believes it can answer without using a tool. If you need to force a tool call (for testing, or to guarantee structured output), set `tool_choice: {"type": "function", "function": {"name": "your_tool_name"}}`.
 
 ---
 
@@ -465,7 +465,7 @@ What is the minimum change needed to point an OpenAI Python SDK call at a local 
 [( )] Set the `OPENAI_API_KEY` environment variable to `"ollama"`
 [(X)] Instantiate the `OpenAI` client with `base_url="http://localhost:11434/v1"` and `api_key="ollama"`
 
-> **⚠️ Common Misconception:** Switching providers is not always as simple as changing `base_url` and `model`. The OpenAI-compatible specification defines a common *structure*, but not every optional field is supported by every server. Features like `logprobs`, `response_format`, `parallel_tool_calls`, and streaming with tool calls are implemented inconsistently. Always test a new provider with the specific features your agent relies on before treating portability as guaranteed.
+> **Common Misconception:** Switching providers is not always as simple as changing `base_url` and `model`. The OpenAI-compatible specification defines a common *structure*, but not every optional field is supported by every server. Features like `logprobs`, `response_format`, `parallel_tool_calls`, and streaming with tool calls are implemented inconsistently. Always test a new provider with the specific features your agent relies on before treating portability as guaranteed.
 
 ---
 
@@ -556,7 +556,7 @@ In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the m
 [(X)] A single fully rendered string with `docs` and `q` substituted in place of the blanks
 [( )] A structured object where `context` and `question` remain separate fields the model can query
 
-> **⚠️ Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again — if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
+> **Common Misconception:** "Injecting context into a template gives the model a persistent knowledge base." It does not. The injected text lives only in *this one request*. The next call starts from a blank template again — if you want the model to still "know" the fact, you must fill the blank again. Templating is stateless by construction; persistence is your program's job (re-fill from memory or re-retrieve from a store every call).
 
 ---
 
@@ -636,7 +636,7 @@ The tally reports both a winner *and* an agreement fraction. A 5/5 sweep and a 2
 
     > *Hint: The current `next(..., ans)` fallback stuffs the raw model text in as a "vote," which can create spurious singleton labels. Mapping unrecognized output to `ABSTAIN` keeps the denominator honest: `3 POSITIVE / 1 NEGATIVE / 1 ABSTAIN` truthfully reports that one sample failed, rather than hiding it or inflating a real label's count.*
 
-> **⚠️ Common Misconception:** "More samples always means a more correct answer." Voting reduces *variance*, not *bias*. If the model is systematically wrong about something (it consistently misreads a domain term), all five samples will agree on the wrong answer and consensus will report high confidence in a mistake. Self-consistency improves reliability only when the correct answer is the single most likely one and errors are scattered — it cannot fix a model that is confidently and consistently wrong.
+> **Common Misconception:** "More samples always means a more correct answer." Voting reduces *variance*, not *bias*. If the model is systematically wrong about something (it consistently misreads a domain term), all five samples will agree on the wrong answer and consensus will report high confidence in a mistake. Self-consistency improves reliability only when the correct answer is the single most likely one and errors are scattered — it cannot fix a model that is confidently and consistently wrong.
 
 ---
 
@@ -743,13 +743,13 @@ Why does an early pipeline stage emit JSON flags instead of a plain-English summ
 [(X)] JSON is machine-parseable, so the program can branch, route, and fill later templates deterministically instead of re-interpreting free text
 [( )] Plain-English summaries cannot be passed between `/v1/chat/completions` calls
 
-> **⚠️ Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
+> **Common Misconception:** "If I ask for JSON, I will always get valid JSON." Local models frequently return JSON wrapped in Markdown fences, prefaced with prose, or subtly malformed (trailing commas, single quotes). A production pipeline treats stage output as *untrusted* until parsed: extract the brace-delimited span, `json.loads` inside a `try`, validate the expected keys, and fall back to a safe default or a re-ask. Never let a downstream stage assume the upstream JSON was well-formed.
 
 ---
 
 # Part VI: Synthesis and Practice
 
-In this part, you will apply everything from Parts I–V in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
+In this part, you will apply everything from Parts I-V in open-ended exercises: building a streaming client, implementing tool calling end-to-end, and writing a provider-swap test.
 
 ## 10. Exercises
 
@@ -795,7 +795,7 @@ In this part, you will apply everything from Parts I–V in open-ended exercises
 
 ---
 
-## → Coming Up Next
+## -> Coming Up Next
 
 Now that you can speak the REST protocol fluently, the next activity takes the `tools` array to its logical conclusion: the Model Context Protocol (MCP), a formal specification for how agents discover, negotiate, and call tools across process boundaries. We will see how `getmcp.io` (from the GitHub Superpowers activity) implements exactly the patterns you built by hand today, and we will connect a live MCP server to the tool loop you wrote in Part III.
 

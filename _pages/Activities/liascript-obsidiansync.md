@@ -60,14 +60,14 @@ The Obsidian Git community plugin handles the sync automatically: it runs `git a
 | Setup Step | What You Do | What the Plugin Does Afterward |
 |------------|-------------|-------------------------------|
 | Create a private GitHub repo | `New repository` on github.com; set **Private**; do not initialize with a README (you'll push from your vault) | Nothing yet — the repo is empty |
-| Generate a fine-grained PAT | GitHub Settings → Developer Settings → Fine-grained tokens → New token; set expiration; grant **Contents: Read and Write** on only this repo | Stores the token; uses it as the HTTPS password for every push |
+| Generate a fine-grained PAT | GitHub Settings -> Developer Settings -> Fine-grained tokens -> New token; set expiration; grant **Contents: Read and Write** on only this repo | Stores the token; uses it as the HTTPS password for every push |
 | Initialize git in your vault | `git init` in your vault directory; `git remote add origin https://github.com/YOURUSERNAME/obsidian-vault.git`; push the first commit | Nothing yet — the plugin reads the existing `.git` folder |
-| Install the Obsidian Git plugin | Settings → Community plugins → Browse → search "Obsidian Git" → Install → Enable | Reads `.obsidian/plugins/obsidian-git/data.json` for its own config |
+| Install the Obsidian Git plugin | Settings -> Community plugins -> Browse -> search "Obsidian Git" -> Install -> Enable | Reads `.obsidian/plugins/obsidian-git/data.json` for its own config |
 | Configure the plugin | Set **Auto-pull interval** and **Auto-push interval** (5 minutes is a good starting point); set **Commit message template** (see below) | Runs on a timer: pulls on the pull interval, commits any changes and pushes on the push interval |
 
 ### Installing Community Plugins in Obsidian
 
-Community plugins are disabled by default because they run arbitrary code. To enable them: **Settings → Community plugins → Turn on community plugins → Browse**. After installing Obsidian Git, review its GitHub repository before trusting it with your vault and PAT — this is the same due-diligence habit as reviewing a Docker image before running it.
+Community plugins are disabled by default because they run arbitrary code. To enable them: **Settings -> Community plugins -> Turn on community plugins -> Browse**. After installing Obsidian Git, review its GitHub repository before trusting it with your vault and PAT — this is the same due-diligence habit as reviewing a Docker image before running it.
 
 ### The `.gitignore` for Obsidian Vaults
 
@@ -104,7 +104,7 @@ vault: {{date}} {{time}} — {{numFiles}} file(s) changed
 
 {% raw %}`{{date}}` and `{{time}}`{% endraw %} are built-in template variables the plugin replaces at commit time. You will see entries like `vault: 2026-06-21 14:32 — 3 file(s) changed` in your history, which makes it easy to verify sync is working and to correlate agent commits with your own edits.
 
-> **⚠️ Common Misconception:** "Obsidian sync and Obsidian Git are the same thing."
+> **Common Misconception:** "Obsidian sync and Obsidian Git are the same thing."
 >
 > They are not. **Obsidian Sync** is the paid cloud service run by the Obsidian team — it stores your vault on Obsidian's servers and syncs across devices automatically. **Obsidian Git** is a free community plugin that uses git and any git host you choose. They solve the same problem (cross-device sync) by entirely different mechanisms. For this tutorial, we use Obsidian Git with a private GitHub repository because it gives you a versioned, agent-accessible copy of your vault under your own control — Obsidian Sync's servers are not accessible to agents you run locally.
 
@@ -277,7 +277,7 @@ You have 400 notes in your vault. You want an agent to answer a question that ma
 [(X)] Use a vault index so the agent can identify which subset of notes to read, then inject only those
 [( )] RAG is the only correct answer for vaults larger than 50 notes; file injection cannot work
 
-> **⚠️ Common Misconception:** "The agent will figure out which notes are relevant if I just give it the vault directory path."
+> **Common Misconception:** "The agent will figure out which notes are relevant if I just give it the vault directory path."
 >
 > An agent given a directory path can list the files in that directory, but listing 400 filenames tells it almost nothing about which two or three notes are relevant to your question. The vault index solves this by providing a human-curated summary of each note's topic — the agent reads the index (one file, one context window), decides which notes to request, and reads only those. Without the index, the agent must either read everything (often too much) or guess from filenames (unreliable).
 
@@ -406,7 +406,7 @@ An agent finishes a session and wants to update `memories/session-log.md`. Which
 [(X)] Add a new section with today's date at the bottom of the file, below all existing content
 [( )] Create a new file (e.g., `session-log-2026-06-21.md`) for each session to avoid any possibility of conflict
 
-> **⚠️ Common Misconception:** "Creating a new file per session avoids all conflict issues, so it's safer than appending."
+> **Common Misconception:** "Creating a new file per session avoids all conflict issues, so it's safer than appending."
 >
 > Separate files avoid write conflicts but create a different problem: the vault index must be updated every time a new session file is created, or the agent won't know the file exists. Worse, an agent reading context must now decide how many session files to read and which ones are most relevant. The append-only log in a single file is searchable, readable top-to-bottom, and requires only one index entry. A one-line git conflict in an append-only file is trivially resolved; a vault with 300 individual session files and a stale index is not.
 

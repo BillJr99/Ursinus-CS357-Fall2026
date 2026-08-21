@@ -72,7 +72,7 @@ Every submission must show that you can make an agent **use a tool**, make an ag
 <details markdown="1">
 <summary><strong>Tool Use · From Scratch — expose a function to the model</strong></summary>
 
-Give your agent a real, typed tool using **native function calling** (not the week-1 regex parse). Define a Python function, describe it as a JSON schema in a `tools` list, and let the model emit a structured `tool_calls` request that your code executes and feeds back as a `tool`-role message. Do this against Ollama's `/api/chat` *or* OpenWebUI's OpenAI-compatible `/api/chat/completions` — the schema is identical across both (see the [Tool Use and Function Calling activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md), Parts II–2b). Deliver: your tool schema, a transcript showing the model requesting the tool and your program executing it, and one sentence on what your code — not the model — is responsible for.
+Give your agent a real, typed tool using **native function calling** (not the week-1 regex parse). Define a Python function, describe it as a JSON schema in a `tools` list, and let the model emit a structured `tool_calls` request that your code executes and feeds back as a `tool`-role message. Do this against Ollama's `/api/chat` *or* OpenWebUI's OpenAI-compatible `/api/chat/completions` — the schema is identical across both (see the [Tool Use and Function Calling activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-tooluse.md), Parts II-2b). Deliver: your tool schema, a transcript showing the model requesting the tool and your program executing it, and one sentence on what your code — not the model — is responsible for.
 
 </details>
 
@@ -104,7 +104,7 @@ Drive reasoning by *choosing the model* rather than building the loop. Run a rea
 <details markdown="1">
 <summary><strong>MCP · Create — stand up your own MCP server</strong></summary>
 
-Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover → invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)* Background: the [MCP activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
+Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover -> invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)* Background: the [MCP activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
 
 </details>
 
@@ -339,13 +339,13 @@ When the agent loop appends a tool result back into the conversation, what `role
 
    > *Hint: Think about what happens when the model (prompted by a malicious user) supplies the path `/etc/passwd`, `~/.ssh/id_rsa`, or `../../config/secrets.json`. The mitigation involves restricting which directories the tool is allowed to read from — for example, only allowing paths that begin with an approved prefix such as `/home/user/documents/`. You might also check that the resolved absolute path (after following symlinks with `os.path.realpath`) still begins with that prefix, to prevent path traversal attacks.*
 
-> **⚠️ Common Misconception:** Students often assume `tool_choice="auto"` means the model will always call a tool. In reality, it means the model *may* call a tool if it decides one is needed — but it can also answer from memory without calling any tool at all. If you need a specific tool to be invoked for every request (for safety, auditing, or consistency), set `tool_choice={"type": "function", "function": {"name": "tool_name"}}` to force it. The difference matters for tools like `log_query` that you want called every time regardless of the model's judgment.
+> **Common Misconception:** Students often assume `tool_choice="auto"` means the model will always call a tool. In reality, it means the model *may* call a tool if it decides one is needed — but it can also answer from memory without calling any tool at all. If you need a specific tool to be invoked for every request (for safety, auditing, or consistency), set `tool_choice={"type": "function", "function": {"name": "tool_name"}}` to force it. The difference matters for tools like `log_query` that you want called every time regardless of the model's judgment.
 
 ---
 
 ---
 
-**🛑 In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
+**In-class work stops here.** The exercises below are homework and going-deeper material — attempt them before the related lab.
 
 
 ## Low-Code Route (equal credit)

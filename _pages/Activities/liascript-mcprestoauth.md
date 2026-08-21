@@ -112,7 +112,7 @@ The valet parking analogy extends to each OAuth flow: Authorization Code is givi
 
 The **Implicit flow** was deprecated because tokens in URL fragments appear in browser history, server logs, and referrer headers. Never implement it for new agents.
 
-> **⚠️ Common Misconception:** Many students assume that having an OAuth token means the agent can do anything the user can do. This is only true if the token was issued with maximum scope. In practice, tokens should be issued with the *minimum scope* needed for the task. A token with `calendar.readonly` scope literally cannot create calendar events, even if the agent asks it to — the API will return a 403 Forbidden error. Scope is enforced by the external service, not just by convention.
+> **Common Misconception:** Many students assume that having an OAuth token means the agent can do anything the user can do. This is only true if the token was issued with maximum scope. In practice, tokens should be issued with the *minimum scope* needed for the task. A token with `calendar.readonly` scope literally cannot create calendar events, even if the agent asks it to — the API will return a 403 Forbidden error. Scope is enforced by the external service, not just by convention.
 
 ### Critical Thinking Questions
 
@@ -124,11 +124,11 @@ The **Implicit flow** was deprecated because tokens in URL fragments appear in b
 
    *Starter hint:*
    ```
-   Agent → Provider: POST /oauth/token
+   Agent -> Provider: POST /oauth/token
      Body: grant_type=refresh_token
            refresh_token=<the_refresh_token>
            client_id=<the_agent_client_id>
-   Provider → Agent: {"access_token": "new_token", "expires_in": 3600, "refresh_token": "maybe_new_refresh_token"}
+   Provider -> Agent: {"access_token": "new_token", "expires_in": 3600, "refresh_token": "maybe_new_refresh_token"}
    ```
    *What would be the consequence if refresh tokens never expired?*
 
@@ -347,7 +347,7 @@ echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"list_topic
 
 ---
 
-→ Coming Up Next: Agents that hold OAuth tokens can act on users' behalf continuously. The next activity examines how to design human-in-the-loop checkpoints that interrupt agent action at the right moments — preventing harm without creating so many interruptions that humans stop paying attention.
+-> Coming Up Next: Agents that hold OAuth tokens can act on users' behalf continuously. The next activity examines how to design human-in-the-loop checkpoints that interrupt agent action at the right moments — preventing harm without creating so many interruptions that humans stop paying attention.
 
 ---
 
