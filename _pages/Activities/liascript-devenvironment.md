@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-devenvironment.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-devenvironment.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -20,7 +20,7 @@ The bench has four parts, and we build them in order: **the shell** (Step 0, the
 
 This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
-One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. If that hostname looks familiar, it should; it is exactly the pattern you studied in the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*). That activity explains how everything here works under the hood; this one just puts it to work. When any step below feels like magic, that is the page to reread.
+One deliberate exception: **Ollama stays on your host.** Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`. If that hostname looks familiar, it should; it is exactly the pattern you studied in the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md) (Section 7, *host.docker.internal: Talking to the Host*). That activity explains how everything here works under the hood; this one just puts it to work. When any step below feels like magic, that is the page to reread.
 
 Two ideas carry the whole design:
 
@@ -166,10 +166,10 @@ The clone is a git repository that already knows its GitHub remote, the versione
 
 Download the three course container files and place them in a `.devcontainer/` folder inside your clone:
 
-- [Dockerfile](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/Dockerfile), the recipe for the course image; every package is commented with the lab that uses it
-- [docker-compose.yml](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/docker-compose.yml), one-command build/run, the workspace bind mount, and the Linux `host.docker.internal` fix
-- [devcontainer.json](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/devcontainer.json), VS Code Dev Containers configuration
-- (optional) [README.md](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/files/devcontainer/README.md), the quickstart version of this activity
+- [Dockerfile](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/Dockerfile), the recipe for the course image; every package is commented with the lab that uses it
+- [docker-compose.yml](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/docker-compose.yml), one-command build/run, the workspace bind mount, and the Linux `host.docker.internal` fix
+- [devcontainer.json](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/devcontainer.json), VS Code Dev Containers configuration
+- (optional) [README.md](https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/files/devcontainer/README.md), the quickstart version of this activity
 
 ```text
 cs357-work/
@@ -512,7 +512,7 @@ Everything after today is this loop:
 
 Now the *why*, in this course's own terms. Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries. Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week. Inside the course container, the worst any runaway script can touch is `/workspace`; this is the **blast-radius idea** from our containerization-safety discussions, enforced by the mount rather than by hope. And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored. Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
 
-The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace. If the bug survives, it is yours. For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
+The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace. If the bug survives, it is yours. For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md).
 
 ---
 
@@ -569,4 +569,4 @@ If your machine cannot run Docker (unsupported hardware, administrator locks, di
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
-| How it all works | [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md) |
+| How it all works | [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md) |

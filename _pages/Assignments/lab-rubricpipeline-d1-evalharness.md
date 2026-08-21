@@ -9,9 +9,9 @@ info:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: Evaluating Outputs Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md
   - rtitle: Testing Agents Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md
+    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-testingagents.md
 tags:
 - evaluation
 - testing
@@ -27,8 +27,8 @@ To generalize the judge validation from the core rubric-pipeline lab into a stan
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
-- [Testing Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md)
+- [Evaluating Outputs Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md)
+- [Testing Agents Activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-testingagents.md)
 
 This page is **Direction 1** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
 
