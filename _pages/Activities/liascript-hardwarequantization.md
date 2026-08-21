@@ -154,7 +154,7 @@ The **GGUF format** (used by llama.cpp and Ollama, the tools you use in this cou
 - **GPU offloading**: model layers can be split between CPU RAM and VRAM, enabling models larger than VRAM alone could hold (at the cost of slower token generation)
 - **Named quantization variants**: Q4_K_M, Q5_K_M, etc., where K means key-layers (attention) are kept at higher precision, and M/S indicate medium/small variant within that tier
 
-**Perplexity** measures how "surprised" a language model is when reading a held-out text corpus — lower perplexity means better predictions, closer to the original model quality. It is the standard metric for quantization quality loss.
+**Perplexity** measures how "surprised" a language model is when reading a held-out text corpus; lower perplexity means better predictions, closer to the original model quality. It is the standard metric for quantization quality loss.
 
 **VRAM Requirements and Quality for a 7B Model**
 
@@ -162,7 +162,7 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 | Format | Bits/Weight | Model Size (7B) | Perplexity Increase vs. FP16 | Notes |
 |--------|------------|-----------------|------------------------------|-------|
-| FP16 | 16 | ~14 GB | Baseline (0%) | Reference quality — what "full precision" means |
+| FP16 | 16 | ~14 GB | Baseline (0%) | Reference quality: what "full precision" means |
 | BF16 | 16 | ~14 GB | ~0% | Equivalent to FP16 for inference purposes |
 | Q8_0 | 8 | ~7 GB | ~0.1% increase | Nearly lossless; recommended if VRAM allows |
 | Q6_K | 6 | ~5.5 GB | ~0.3% increase | Excellent quality with meaningful size reduction |
@@ -173,11 +173,11 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 ### Quantization-Aware Training vs. Post-Training Quantization
 
-- **Post-Training Quantization (PTQ)**: Apply quantization to an already-trained FP16 or FP32 model after training is complete. Fast and cheap — this is exactly what GGUF/llama.cpp quantization does to the models you pull with Ollama. Accuracy loss grows as you push to lower bit depths.
+- **Post-Training Quantization (PTQ)**: Apply quantization to an already-trained FP16 or FP32 model after training is complete. Fast and cheap; this is exactly what GGUF/llama.cpp quantization does to the models you pull with Ollama. Accuracy loss grows as you push to lower bit depths.
 
-- **Quantization-Aware Training (QAT)**: Simulate quantization noise *during* training, so the model learns to compensate for the precision loss while still at full precision. Produces significantly better accuracy at very low bit depths (INT4, INT2). Requires access to training infrastructure and significant compute — used in techniques like QLoRA that allow fine-tuning quantized models.
+- **Quantization-Aware Training (QAT)**: Simulate quantization noise *during* training, so the model learns to compensate for the precision loss while still at full precision. Produces significantly better accuracy at very low bit depths (INT4, INT2). Requires access to training infrastructure and significant compute; used in techniques like QLoRA that allow fine-tuning quantized models.
 
-> **Common Misconception:** Many students assume that quantization always makes models noticeably worse. In practice, Q4_K_M gives roughly 1.5% higher perplexity than the FP16 baseline for a 7B model — a difference that is often imperceptible in conversation, coding assistance, and most practical tasks. The sharp quality cliff only occurs at Q2 and below. For most use cases in this course, Q4_K_M is the correct starting point: it cuts memory requirements by 4× compared to FP16 while preserving the vast majority of model quality.
+> **Common Misconception:** Many students assume that quantization always makes models noticeably worse. In practice, Q4_K_M gives roughly 1.5% higher perplexity than the FP16 baseline for a 7B model, a difference that is often imperceptible in conversation, coding assistance, and most practical tasks. The sharp quality cliff only occurs at Q2 and below. For most use cases in this course, Q4_K_M is the correct starting point: it cuts memory requirements by 4× compared to FP16 while preserving the vast majority of model quality.
 
 ### Critical Thinking Questions
 
@@ -193,23 +193,23 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 [[___ Your answer here ___]]
 
-> *Hint:* Q8: 13B × 1 byte = 13 GB × 1.15 overhead = **14.95 GB** — does not fit in 8 GB. Q4_K_M: 13B × 0.5 bytes = 6.5 GB × 1.15 = **7.47 GB** — fits, with about 500 MB to spare for a modest context. Q3_K_M: 13B × 0.375 bytes = 4.875 GB × 1.15 = **5.6 GB** — fits comfortably with room for a larger context. Q4_K_M is the sweet spot: it fits in 8 GB and accepts only ~1.5% perplexity increase. Q3_K_M fits more comfortably but costs 4-6% perplexity.
+> *Hint:* Q8: 13B × 1 byte = 13 GB × 1.15 overhead = **14.95 GB**, does not fit in 8 GB. Q4_K_M: 13B × 0.5 bytes = 6.5 GB × 1.15 = **7.47 GB**, fits, with about 500 MB to spare for a modest context. Q3_K_M: 13B × 0.375 bytes = 4.875 GB × 1.15 = **5.6 GB**, fits comfortably with room for a larger context. Q4_K_M is the sweet spot: it fits in 8 GB and accepts only ~1.5% perplexity increase. Q3_K_M fits more comfortably but costs 4-6% perplexity.
 
 ---
 
-**Question 5.** Q2 quantization reduces a 70B model's VRAM requirement from 140 GB (FP16) to approximately 17.5 GB — an 8× reduction. However, it increases perplexity by roughly 15-30%. Identify two specific use cases where this trade-off is acceptable, and two where it is not. For each case, identify what the task requires that either tolerates or cannot tolerate the perplexity increase.
+**Question 5.** Q2 quantization reduces a 70B model's VRAM requirement from 140 GB (FP16) to approximately 17.5 GB, an 8× reduction. However, it increases perplexity by roughly 15-30%. Identify two specific use cases where this trade-off is acceptable, and two where it is not. For each case, identify what the task requires that either tolerates or cannot tolerate the perplexity increase.
 
 [[___ Your answer here ___]]
 
-> *Hint:* Acceptable: (1) A retrieval-augmented search interface where the model only needs to select which retrieved passage is most relevant — this is a classification-like task where the exact wording of the output matters less than the selection decision. (2) An extremely resource-constrained embedded device where Q2 is the only way to run any LLM at all, and even a degraded model is more useful than no model. Not acceptable: (1) Medical question-answering where a confidently stated but subtly wrong answer could lead to patient harm. (2) Code generation where subtle logic errors are difficult for a non-expert user to detect and could introduce security vulnerabilities.
+> *Hint:* Acceptable: (1) A retrieval-augmented search interface where the model only needs to select which retrieved passage is most relevant; this is a classification-like task where the exact wording of the output matters less than the selection decision. (2) An extremely resource-constrained embedded device where Q2 is the only way to run any LLM at all, and even a degraded model is more useful than no model. Not acceptable: (1) Medical question-answering where a confidently stated but subtly wrong answer could lead to patient harm. (2) Code generation where subtle logic errors are difficult for a non-expert user to detect and could introduce security vulnerabilities.
 
 ---
 
-**Question 6.** Perplexity is the standard benchmark for quantization quality, but it is a proxy metric — it measures how well the model predicts tokens in a reference corpus, not how well it performs on actual tasks. Name two tasks where a model with higher perplexity might actually perform better than a lower-perplexity model on real benchmarks. What does this suggest about using perplexity as the sole quality criterion for quantization decisions?
+**Question 6.** Perplexity is the standard benchmark for quantization quality, but it is a proxy metric: it measures how well the model predicts tokens in a reference corpus, not how well it performs on actual tasks. Name two tasks where a model with higher perplexity might actually perform better than a lower-perplexity model on real benchmarks. What does this suggest about using perplexity as the sole quality criterion for quantization decisions?
 
 [[___ Your answer here ___]]
 
-> *Hint:* A model fine-tuned to be more decisive and direct (such as an instruction-tuned assistant) may have higher perplexity on a general text corpus because it assigns high probability to one specific answer rather than spreading probability across many plausible completions — but it performs better on instruction-following tasks. A coding model fine-tuned on Python code will have higher perplexity on a natural language benchmark but dramatically better performance on HumanEval. What should you measure instead of, or in addition to, perplexity when making quantization decisions for a specific deployment?
+> *Hint:* A model fine-tuned to be more decisive and direct (such as an instruction-tuned assistant) may have higher perplexity on a general text corpus because it assigns high probability to one specific answer rather than spreading probability across many plausible completions, but it performs better on instruction-following tasks. A coding model fine-tuned on Python code will have higher perplexity on a natural language benchmark but dramatically better performance on HumanEval. What should you measure instead of, or in addition to, perplexity when making quantization decisions for a specific deployment?
 
 ---
 
@@ -217,12 +217,12 @@ The table below shows the quality-versus-size tradeoff for a 7B model at each qu
 
 A research team wants to deploy a 70B parameter model for offline inference on a MacBook Pro with Apple Silicon and 32 GB of unified memory. The full FP16 model requires approximately 140 GB. The team's best option is:
 
-[[ ]] Run it at FP32 precision — the 32 GB unified memory is ample for a 32-bit 70B model since Apple Silicon shares all system memory with the GPU
-[[ ]] It is impossible to run a 70B parameter model on consumer hardware — only data center GPUs with 80+ GB of dedicated VRAM can load models this size
+[[ ]] Run it at FP32 precision; the 32 GB unified memory is ample for a 32-bit 70B model since Apple Silicon shares all system memory with the GPU
+[[ ]] It is impossible to run a 70B parameter model on consumer hardware; only data center GPUs with 80+ GB of dedicated VRAM can load models this size
 [[x]] Quantize to Q4 (approximately 0.5 bytes/parameter, yielding ~35 GB) or Q3 (~26 GB), which fits within 32 GB unified memory with acceptable quality for most use cases
-[[ ]] Run FP16 on the CPU only — on Apple Silicon, CPU inference bypasses the VRAM limitation because the CPU accesses system memory directly
+[[ ]] Run FP16 on the CPU only; on Apple Silicon, CPU inference bypasses the VRAM limitation because the CPU accesses system memory directly
 
-> **Why this answer?** At Q4, 70B × 0.5 bytes = 35 GB — slightly over the 32 GB limit, so Q3_K_M at approximately 26 GB is the better choice. Apple Silicon's unified memory architecture means the GPU accesses all system memory, so the 32 GB applies to the combined model and KV cache budget. FP32 would require 280 GB — nearly 9× the available memory. CPU-only inference is technically possible but produces token generation rates often below 1 token per second, making it impractical for interactive use.
+> **Why this answer?** At Q4, 70B × 0.5 bytes = 35 GB, slightly over the 32 GB limit, so Q3_K_M at approximately 26 GB is the better choice. Apple Silicon's unified memory architecture means the GPU accesses all system memory, so the 32 GB applies to the combined model and KV cache budget. FP32 would require 280 GB, nearly 9× the available memory. CPU-only inference is technically possible but produces token generation rates often below 1 token per second, making it impractical for interactive use.
 
 ---
 
@@ -230,7 +230,7 @@ A research team wants to deploy a 70B parameter model for offline inference on a
 
 ### Edge vs. Cloud Inference
 
-The table below compares edge and cloud inference across six dimensions. As you read it, identify which dimension matters most for the rural clinic scenario in Question 7 — not every row is equally important for every deployment.
+The table below compares edge and cloud inference across six dimensions. As you read it, identify which dimension matters most for the rural clinic scenario in Question 7; not every row is equally important for every deployment.
 
 | Dimension | Edge (Local Device) | Cloud (Remote Server) |
 |-----------|---------------------|-----------------------|
@@ -238,7 +238,7 @@ The table below compares edge and cloud inference across six dimensions. As you 
 | Privacy | All data stays on the local device; no transmission to third parties | User data is transmitted to the cloud provider's servers for each query |
 | Connectivity | Works completely offline with no internet connection required | Requires a reliable internet connection for every query |
 | Cost at scale | Hardware cost is amortized over time; ongoing cost is electricity only | Per-query pricing that can add up significantly at volume |
-| Model size | Constrained by local hardware — VRAM or unified memory sets a hard ceiling | Effectively unlimited; providers run multi-GPU clusters for very large models |
+| Model size | Constrained by local hardware; VRAM or unified memory sets a hard ceiling | Effectively unlimited; providers run multi-GPU clusters for very large models |
 | Updates | Requires manual model download and update by the operator | Model upgrades happen transparently on the provider's side |
 
 **Use cases where edge deployment is the correct architectural choice:**
@@ -246,7 +246,7 @@ The table below compares edge and cloud inference across six dimensions. As you 
 - **Medical devices** in operating rooms or ambulances where network reliability cannot be guaranteed and patient data cannot leave the facility under HIPAA constraints
 - **Field robotics** operating in connectivity-denied environments such as deep mining operations, ocean floor surveys, or disaster response zones
 - **Offline enterprise** in manufacturing facilities with air-gapped industrial networks where connecting to the internet would create unacceptable security exposure
-- **Air-gapped classified environments** where regulatory requirements explicitly prohibit external network connections — the exact scenario the containerization lab in this course targeted
+- **Air-gapped classified environments** where regulatory requirements explicitly prohibit external network connections, the exact scenario the containerization lab in this course targeted
 
 ### Hardware-Aware Agent Design
 
@@ -254,7 +254,7 @@ Deploying an agent to edge hardware requires making explicit hardware-aware desi
 
 1. **Model selection**: Choose the largest model that fits within VRAM or unified memory at an acceptable quantization level, for the target hardware. Do not assume you can run the same model that works in cloud development.
 2. **Context management**: Long contexts consume large KV caches. If the hardware cannot fit a 32K context at the target model size and quantization level, the agent must implement context compression, conversation summarization, or a sliding window approach.
-3. **Streaming**: For user-facing applications, streaming tokens as they are generated dramatically reduces *perceived* latency even when raw throughput is low — the user sees the first words almost immediately rather than waiting for the full response.
+3. **Streaming**: For user-facing applications, streaming tokens as they are generated dramatically reduces *perceived* latency even when raw throughput is low; the user sees the first words almost immediately rather than waiting for the full response.
 4. **Batching**: For non-interactive background workloads such as document processing, batching multiple queries improves GPU utilization and throughput.
 
 ### The Local Inference Stack
@@ -262,7 +262,7 @@ Deploying an agent to edge hardware requires making explicit hardware-aware desi
 Three tools dominate local LLM inference, and you have used at least one of them in this course:
 
 - **llama.cpp**: A C++ inference engine for GGUF models. Handles mixed-precision loading, CPU+GPU layer offloading, and Metal (Apple), CUDA, and ROCm hardware backends. The foundation underlying most local inference tools.
-- **Ollama**: A wrapper around llama.cpp providing a simple REST API, model management, and model pulls similar to Docker image pulls. Used in this course's agent lab — when you run `ollama run llama3`, you are using this stack.
+- **Ollama**: A wrapper around llama.cpp providing a simple REST API, model management, and model pulls similar to Docker image pulls. Used in this course's agent lab; when you run `ollama run llama3`, you are using this stack.
 - **LM Studio**: A GUI frontend for llama.cpp providing a chat interface and an OpenAI-compatible API endpoint. Useful for non-technical users and rapid experimentation without command-line interaction.
 
 All three tools load GGUF models, handle GPU offloading of as many layers as fit in VRAM (leaving the rest on CPU RAM), and manage the context buffer automatically.
@@ -273,7 +273,7 @@ All three tools load GGUF models, handle GPU offloading of as many layers as fit
 
 [[___ Your answer here ___]]
 
-> *Hint:* 40 patients per day is a sequential, latency-sensitive workload — the bottleneck is response quality and speed for one user at a time, not throughput for many simultaneous users. For clinical documentation, you likely need a model with strong instruction-following and medical domain knowledge — probably 7B-13B at minimum, ideally larger. Consider a Mac Mini M2 Pro (32 GB unified memory, ~$1,300) running a 13B Q4_K_M model (~7.5 GB footprint). How does HIPAA interact with your hardware choice — can data ever leave the device? Is a Mac Mini a defensible clinical edge device, or does it need to be a specialized medical-grade computer?
+> *Hint:* 40 patients per day is a sequential, latency-sensitive workload; the bottleneck is response quality and speed for one user at a time, not throughput for many simultaneous users. For clinical documentation, you likely need a model with strong instruction-following and medical domain knowledge, probably 7B-13B at minimum, ideally larger. Consider a Mac Mini M2 Pro (32 GB unified memory, ~$1,300) running a 13B Q4_K_M model (~7.5 GB footprint). How does HIPAA interact with your hardware choice: can data ever leave the device? Is a Mac Mini a defensible clinical edge device, or does it need to be a specialized medical-grade computer?
 
 ---
 
@@ -281,15 +281,15 @@ All three tools load GGUF models, handle GPU offloading of as many layers as fit
 
 [[___ Your answer here ___]]
 
-> *Hint:* (1) **Context compression and summarization**: periodically summarize earlier conversation turns and replace them with a compact summary, then truncate the full history. Trade-off: the agent loses verbatim access to specific details from earlier in the conversation. (2) **RAG (Retrieval-Augmented Generation) instead of long context**: chunk the document into passages, embed them, and retrieve the most relevant passages for each query. Trade-off: retrieval quality determines what the model "sees" — relevant passages may be missed. (3) **CPU offloading**: load the layers that don't fit in VRAM into CPU RAM, processing them on the CPU. Trade-off: significant latency increase because CPU-to-GPU data transfer is slow. (4) Use a smaller model that fits within 8 GB at 32K context. Trade-off: lower reasoning capability across all tasks.
+> *Hint:* (1) **Context compression and summarization**: periodically summarize earlier conversation turns and replace them with a compact summary, then truncate the full history. Trade-off: the agent loses verbatim access to specific details from earlier in the conversation. (2) **RAG (Retrieval-Augmented Generation) instead of long context**: chunk the document into passages, embed them, and retrieve the most relevant passages for each query. Trade-off: retrieval quality determines what the model "sees"; relevant passages may be missed. (3) **CPU offloading**: load the layers that don't fit in VRAM into CPU RAM, processing them on the CPU. Trade-off: significant latency increase because CPU-to-GPU data transfer is slow. (4) Use a smaller model that fits within 8 GB at 32K context. Trade-off: lower reasoning capability across all tasks.
 
 ---
 
-**Question 9.** Running a Q4 70B model on a 150W Apple Silicon system for 8 hours per day consumes about 1.2 kWh daily. A cloud API call offloads the energy cost — but to a large data center that may or may not run on renewable energy. Compare the environmental impact of these two deployment strategies. What information would you need to make this comparison accurately, and what does your analysis suggest for sustainable AI agent deployment?
+**Question 9.** Running a Q4 70B model on a 150W Apple Silicon system for 8 hours per day consumes about 1.2 kWh daily. A cloud API call offloads the energy cost, but to a large data center that may or may not run on renewable energy. Compare the environmental impact of these two deployment strategies. What information would you need to make this comparison accurately, and what does your analysis suggest for sustainable AI agent deployment?
 
 [[___ Your answer here ___]]
 
-> *Hint:* To compare fairly, you need: the local power grid's carbon intensity (g CO₂ per kWh) for your region, the cloud provider's reported Power Usage Effectiveness (PUE — a measure of how efficiently the data center uses energy) and their renewable energy percentage, the number of tokens generated per hour for each option, and whether the local device is otherwise idle (in which case the inference is a marginal cost on top of base power draw). There is no universal answer: running a model on solar-powered local hardware in a sunny region may have lower carbon footprint than a coal-powered data center, or vice versa. What does this imply for where AI inference workloads should physically be located?
+> *Hint:* To compare fairly, you need: the local power grid's carbon intensity (g CO₂ per kWh) for your region, the cloud provider's reported Power Usage Effectiveness (PUE, a measure of how efficiently the data center uses energy) and their renewable energy percentage, the number of tokens generated per hour for each option, and whether the local device is otherwise idle (in which case the inference is a marginal cost on top of base power draw). There is no universal answer: running a model on solar-powered local hardware in a sunny region may have lower carbon footprint than a coal-powered data center, or vice versa. What does this imply for where AI inference workloads should physically be located?
 
 ---
 
@@ -340,13 +340,13 @@ If you do not have Ollama access, find two published model cards that report bot
 
 ## Reflection Prompt
 
-**Personal:** Think about the AI tools you use day-to-day — voice assistants on your phone, code completion in your editor, chatbots in your browser. Do you know whether those models run locally on your device or remotely in a data center? Does it matter to you, and would it change how you use them if you knew?
+**Personal:** Think about the AI tools you use day-to-day: voice assistants on your phone, code completion in your editor, chatbots in your browser. Do you know whether those models run locally on your device or remotely in a data center? Does it matter to you, and would it change how you use them if you knew?
 
-**Technical:** One of the central tensions in AI deployment is between **centralization and decentralization**. Cloud AI concentrates compute, data, and capability in the hands of a small number of large companies. Edge AI distributes that capability outward to individuals and organizations. Does widespread local model inference democratize AI, or does it just shift the dependency — from cloud providers to GPU manufacturers and open-weight model developers?
+**Technical:** One of the central tensions in AI deployment is between **centralization and decentralization**. Cloud AI concentrates compute, data, and capability in the hands of a small number of large companies. Edge AI distributes that capability outward to individuals and organizations. Does widespread local model inference democratize AI, or does it just shift the dependency, from cloud providers to GPU manufacturers and open-weight model developers?
 
 > *Hint:* Consider who manufactures the GPUs running Ollama, who trained the open-weight models you download, and whether the open-weight license gives you the right to modify the model weights or just to use them.
 
-**Societal:** A rural clinic with a local model is less dependent on OpenAI — but is now dependent on NVIDIA for GPUs, Qualcomm or Apple for edge chips, and Meta or another organization for open model weights. Is that a meaningful improvement? And at the individual level: if a CS graduate can deploy a capable 70B model on a $2,000 workstation, what does that mean for who can build AI-powered products and who can afford to?
+**Societal:** A rural clinic with a local model is less dependent on OpenAI, but is now dependent on NVIDIA for GPUs, Qualcomm or Apple for edge chips, and Meta or another organization for open model weights. Is that a meaningful improvement? And at the individual level: if a CS graduate can deploy a capable 70B model on a $2,000 workstation, what does that mean for who can build AI-powered products and who can afford to?
 
 Write at least 200 words addressing at least two of the three levels above.
 
@@ -354,7 +354,7 @@ Write at least 200 words addressing at least two of the three levels above.
 
 ---
 
--> Coming Up Next: In the next activity, we examine how we know whether an AI system is actually good at what it claims to do — the science and politics of benchmarking.
+-> Coming Up Next: In the next activity, we examine how we know whether an AI system is actually good at what it claims to do: the science and politics of benchmarking.
 
 ## Further Reading
 
