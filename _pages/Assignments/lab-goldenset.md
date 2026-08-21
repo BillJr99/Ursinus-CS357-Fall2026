@@ -20,7 +20,7 @@ info:
       preemerging: Fewer than ten items exist, or items lack expected answers
       beginning: Ten items exist with expected answers, but the set does not deliberately mix reliable and hallucination-prone territory, or rationales are missing
       progressing: The set mixes five expected-reliable and five expected-fragile items with rationales, but several rationales do not connect to why model training data would be thick or thin there
-      proficient: Ten items (five expected-reliable, five expected-fragile) each with an expected answer, a scoring rule the harness can apply, and a one-sentence rationale grounded in training-data reasoning (recency, locality, specificity, or citation-shaped risk). This row is about judgment, not medium: it is earned identically whether the set is a JSON file, a promptfoo YAML case list, or a spreadsheet
+      proficient: "Ten items (five expected-reliable, five expected-fragile) each with an expected answer, a scoring rule the harness can apply, and a one-sentence rationale grounded in training-data reasoning (recency, locality, specificity, or citation-shaped risk). This row is about judgment, not medium: it is earned identically whether the set is a JSON file, a promptfoo YAML case list, or a spreadsheet"
     - weight: 50
       description: "Run and Analysis (Goal 3)"
       preemerging: The benchmark was never run, or results are reported without the protocol
