@@ -74,6 +74,26 @@ These are directions within the one project, not separate assignments: your team
 
 ---
 
+## Before You Start
+
+**This is not a new assignment.** It is the point every Project-Thread milestone has been building toward, and almost everything it asks for already exists somewhere in your team's work: the stakeholder you interviewed, the literature you synthesized, the agent system you designed, and the labs you built. Read the timeline below as an assembly plan, not a fresh start.
+
+**Time:** the largest single commitment of the term, spread across the back half of the semester. The proposal is due in week 12 and Demo Day is week 15, so the sprints are where the work lives; a team that starts building in week 14 will demo something that does not run.
+
+**Choosing a direction** is the one decision worth making slowly, because all three are real and they suit genuinely different teams:
+
+| Take | If your team |
+|---|---|
+| **A: Custom Agent Team** | Wants to build. You have people who enjoy making things run, and a stakeholder problem a multi-agent system actually fits |
+| **B: Responsible AI Audit** | Wants to investigate. This is a **fully non-programming** direction and it is not the lesser one; a good audit is harder than a mediocre build |
+| **C: Open-Source Agent** | Wants what you make to outlive the semester, and is willing to take documentation, packaging, and licensing as seriously as the code |
+
+> **The thing that most often goes wrong**, and it is almost never technical: teams build the system they find interesting and present it to an audience that includes the stakeholder they interviewed in week 5. Demo Day is a **multi-audience** presentation. Keep the stakeholder's problem visible in every sprint, or you will discover in week 14 that you built something impressive that answers a different question.
+
+> **Whatever you build, it must run at the start of week 14.** The second studio session is a rehearsal, not a work session. That is not a scheduling preference; it is the difference between a demo and an apology.
+
+---
+
 ## The Unified Timeline
 
 The Final Project's milestones run in the sequence below; see the course schedule in the syllabus for the dates. **No work is accepted after the last class meeting.**
@@ -554,3 +574,35 @@ Answer individually after the mock-interview rehearsal, connecting to the course
 | Self-Check: Mock Technical Interview | I skipped the rehearsal or could not explain my own part of the system | I explained my component but not how it connects to the rest of the system, or I could not tell a single concrete failure story | I walked my partner through the architecture, defended one design decision, and told one failure story with its mitigation, though I leaned on notes or slides | Without slides, I explained the system end to end, defended a design decision by naming the alternative we rejected and why, told a failure story with its measured mitigation (or a finding with its evidence, for audit teams), and asked my partner at least one probing question about their project when roles reversed |
 | Self-Check: Portfolio Story | I have no way to show this project to anyone outside the course | I can point at the repository or write-up but cannot yet tell its story in a way a recruiter would follow | My 200-word project story exists and names my contribution, though it is not yet linked from anywhere or rehearsed aloud | My project story is written, linked from my profile or portfolio per the ShipIt guide, rehearsed aloud as a two-minute narrative, a drafted (publication-optional) LinkedIn-style post exists, and I can produce the evidence behind every claim in it on request |
 
+---
+
+## Self-Check Before Demo Day
+
+**The system**
+
+- [ ] It runs, end to end, from a clean checkout, following only our own written instructions.
+- [ ] Someone who did not build it has followed those instructions successfully.
+- [ ] We know which parts are fragile, and the demo does not depend on them.
+- [ ] For every agent or automated action: we can say how it is **observed**, what it can **reach**, and how it is **undone**.
+
+**The evidence**
+
+- [ ] Claims about how well it works are backed by an evaluation we ran, with numbers, not by the demo going well once.
+- [ ] At least one honest failure or limitation is documented, and we can talk about it without defensiveness.
+
+**The audience**
+
+- [ ] The stakeholder's problem is recognizable in the first two minutes.
+- [ ] There is a version of the explanation that works for a non-technical listener, and we have practiced it out loud.
+- [ ] The partner-facing artifact is something they could actually use after we graduate.
+
+**The paperwork**
+
+- [ ] Governance one-pager.
+- [ ] Contribution statements naming who did what.
+- [ ] AI-use disclosure for the team's work.
+- [ ] The ShipIt checklist completed.
+
+**The rehearsal**
+
+- [ ] We have run the whole demo on the clock, on the machine we will use, on the network we will have.

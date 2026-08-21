@@ -261,3 +261,36 @@ Submit a ZIP containing:
 ## How the rubric reads on this route
 
 You are graded under the same rubric as everyone else, on the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline). On this route: *Pipeline Implementation* is your baseline config scoring all 15 items end-to-end; *Human Agreement Validation* is the blind spreadsheet plus percent agreement and the criterion revision; *Bias Measurement* is the two config variants with the comparison table and countermeasure; *Evidence Verification* is the judge-reasoning faithfulness check inside your 3-worst-mismatches analysis; *Reproducible Eval Harness* is the regression demonstration of Part E; *Writeup* is Part F.
+
+---
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `npx promptfoo` cannot find a provider | The provider string is wrong, or Ollama is not running | Confirm `curl -s http://localhost:11434/api/tags` answers, then use `ollama:chat:llama3.2` exactly |
+| Every case fails with an empty output | The prompt template references a variable that is not in the test case | promptfoo does not error on an unknown variable; it substitutes nothing. Check that every `{{ }}` name matches a `vars` key |
+| `llm-rubric` verdicts look random | The grading model and the model under test are the same, and the rubric is vague | Sharpen the rubric's level descriptors first. If verdicts stay unstable, say so and quantify it; that instability is a real finding about LLM-as-judge |
+| Percent agreement is suspiciously high | The partners scored together, or one saw the judge's output first | Rescore blind. The value of this part is entirely in the independence |
+| Results change between identical runs | Temperature is not pinned in the config | Set `temperature: 0` under the provider config, not only in the prompt |
+| The regression diff shows everything changed | The two runs used different datasets or provider settings | Change exactly **one** thing between runs; that is the whole method |
+| A YAML config will not load | An unquoted colon or a tab character | Run the file through a YAML validator. A bare `: ` inside an unquoted string is the usual culprit |
+
+## Self-Check Before You Submit
+
+Held against the core lab's rubric, read through this route.
+
+- [ ] The batch run covers **all** dataset items, with per-criterion verdicts.
+- [ ] Unusable judge output is **noted and re-run**, not silently accepted.
+- [ ] Rubric, model, paths, and settings live in the config files; nothing is hardcoded in a one-off command.
+- [ ] **Both partners** scored all fifteen calibration artifacts independently and blind to the judge.
+- [ ] Percent agreement is reported per criterion.
+- [ ] The three worst human-to-judge mismatches are analyzed in writing.
+- [ ] A rubric revision was tested, with before-and-after agreement reported.
+- [ ] The **reordered** and **padded** dataset variants were both run over all items.
+- [ ] The bias effect is quantified with a number, for example "padding flipped 5 of 60 verdicts".
+- [ ] A countermeasure is prescribed concretely enough for someone to implement.
+- [ ] The judge's stated reasoning for the three worst mismatches is examined against the source artifacts.
+- [ ] A before-and-after regression run shows a deliberate change being caught, with both result sets included.
+- [ ] Human score sheets, all configs, and the pair log with two timestamped swaps are in the submission.
+- [ ] Every reflection answer cites a specific number from my own run.
