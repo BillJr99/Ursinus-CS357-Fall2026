@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Structured Outputs: JSON Mode, Tool Schemas, and Output Validation
 
-When a downstream program needs to parse an LLM's response — to extract a confidence score, trigger a tool call, populate a database field — prose is a liability. A model that writes "I'm fairly confident the answer is Paris, probably around 85%" produces output that requires fragile string parsing, fails silently when the format shifts, and cannot be statically typed. **Structured outputs** solve this by constraining what the model can generate: the response is a well-typed object your code can validate before use. This activity explores the full stack, from output mode selection to schema design to validation pipelines.
+When a downstream program needs to parse an LLM's response (to extract a confidence score, trigger a tool call, populate a database field), prose is a liability. A model that writes "I'm fairly confident the answer is Paris, probably around 85%" produces output that requires fragile string parsing, fails silently when the format shifts, and cannot be statically typed. **Structured outputs** solve this by constraining what the model can generate: the response is a well-typed object your code can validate before use. This activity explores the full stack, from output mode selection to schema design to validation pipelines.
 
 ---
 
@@ -27,7 +27,7 @@ Work in your POGIL team of four with clearly assigned roles:
 - **Presenter**: Speaks for the group during debrief; articulates areas of genuine disagreement or alternative interpretations.
 - **Reflector**: Monitors group process and captures lessons learned for the reflection prompt.
 
-Consider each model and its questions individually before discussing with your group. Pay careful attention to the distinctions between output modes — the differences are subtle but consequential.
+Consider each model and its questions individually before discussing with your group. Pay careful attention to the distinctions between output modes; the differences are subtle but consequential.
 
 ---
 
@@ -35,11 +35,11 @@ Consider each model and its questions individually before discussing with your g
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
-| **Structured Output** | An LLM response that conforms to a predefined format — like a JSON object with specific fields — rather than free-form prose | `{"sentiment": "negative", "confidence": 0.87}` instead of "This article seems pretty negative, maybe around 87% confident" |
+| **Structured Output** | An LLM response that conforms to a predefined format (like a JSON object with specific fields) rather than free-form prose | `{"sentiment": "negative", "confidence": 0.87}` instead of "This article seems pretty negative, maybe around 87% confident" |
 | **JSON Schema** | A standard language for describing the shape of a JSON object: what fields exist, what types they must be, which are required, and what values are valid | `{"type": "object", "required": ["sentiment"], "properties": {"sentiment": {"type": "string", "enum": ["positive","negative","neutral"]}}}` |
-| **Syntactic Validity** | Whether the output can be parsed as valid JSON (or another format) — it opens and closes brackets correctly and uses proper quoting | `{"key": "value"}` is syntactically valid; `{"key": value}` is not (missing quotes around `value`) |
-| **Schema Validity** | Whether the output conforms to the specific schema — required fields are present, types are correct, enum values are within the allowed set | `{"sentiment": "very bad"}` is syntactically valid JSON but schema-invalid because "very bad" is not in the allowed enum |
-| **Semantic Validity** | Whether the output means what was intended — the values are not just correctly formatted but actually accurate and calibrated | `{"sentiment": "positive", "confidence": 0.99}` for an article that is clearly negative is schema-valid but semantically wrong |
+| **Syntactic Validity** | Whether the output can be parsed as valid JSON (or another format); it opens and closes brackets correctly and uses proper quoting | `{"key": "value"}` is syntactically valid; `{"key": value}` is not (missing quotes around `value`) |
+| **Schema Validity** | Whether the output conforms to the specific schema: required fields are present, types are correct, enum values are within the allowed set | `{"sentiment": "very bad"}` is syntactically valid JSON but schema-invalid because "very bad" is not in the allowed enum |
+| **Semantic Validity** | Whether the output means what was intended: the values are not just correctly formatted but actually accurate and calibrated | `{"sentiment": "positive", "confidence": 0.99}` for an article that is clearly negative is schema-valid but semantically wrong |
 | **Pydantic** | A Python library that defines data models with type annotations and validates that incoming data conforms to the model, raising a `ValidationError` with a detailed message if it does not | `class BiasAnalysis(BaseModel): confidence: float = Field(ge=0.0, le=1.0)` rejects `confidence: 1.5` automatically |
 
 ---
@@ -50,13 +50,13 @@ Consider each model and its questions individually before discussing with your g
 
 **What you will have at the end:** model output you can parse with confidence, and a fallback for when it still comes back malformed.
 
-Work through the sections in order — each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
 
 ---
 
 ## Model 1: The Four Output Modes
 
-There is not one "structured output" approach — there is a spectrum of mechanisms with different guarantees and different failure modes. Understanding what each mode actually does (not what its marketing says) determines which one to reach for in a given situation.
+There is not one "structured output" approach; there is a spectrum of mechanisms with different guarantees and different failure modes. Understanding what each mode actually does (not what its marketing says) determines which one to reach for in a given situation.
 
 **Before/After: What the output looks like in each mode**
 
@@ -79,18 +79,18 @@ Grammar-constrained: {"sentiment": "negative"}
 
 | Mode | How It Works | Guarantee Provided | Typical Failure Mode |
 |------|-------------|-------------------|---------------------|
-| **Plain text** | The model generates tokens with no format constraint at all — it produces whatever prose seems most natural | None — output may be anything; format varies based on phrasing of the question | Cannot be parsed programmatically; format changes unpredictably when the prompt is reworded or the model version changes |
-| **JSON mode** (instruction-based) | The system prompt instructs the model to output JSON; the model is free to comply or not — it is just a strong suggestion | Soft — the model usually produces valid JSON but may produce prose, truncated JSON, or JSON with extra unexpected fields on a bad day | Model ignores the instruction when the context is long, when it is uncertain, or when the question triggers a refusal; no enforcement mechanism catches this |
+| **Plain text** | The model generates tokens with no format constraint at all; it produces whatever prose seems most natural | None: output may be anything; format varies based on phrasing of the question | Cannot be parsed programmatically; format changes unpredictably when the prompt is reworded or the model version changes |
+| **JSON mode** (instruction-based) | The system prompt instructs the model to output JSON; the model is free to comply or not; it is just a strong suggestion | Soft: the model usually produces valid JSON but may produce prose, truncated JSON, or JSON with extra unexpected fields on a bad day | Model ignores the instruction when the context is long, when it is uncertain, or when the question triggers a refusal; no enforcement mechanism catches this |
 | **Function calling / tool use** | The API wraps the model's output in a structured function-call schema; the model generates a `tool_calls` field rather than prose | The format of the function call is guaranteed to be structurally valid; argument types match the declared schema | Model may call the wrong tool when multiple tools are available, omit required arguments, or pass arguments with the right type but wrong semantic content (a valid-format but wrong value) |
-| **Grammar-constrained decoding** (Outlines, LMQL, llama.cpp grammars) | At each decoding step, the token sampler masks out any token that would violate the grammar; only valid-next-token candidates can be sampled | Syntactic validity is mathematically guaranteed at the token level — the output will always parse as valid JSON matching the schema | Model may produce syntactically valid but semantically wrong output (correct format, wrong meaning); very complex required outputs can degrade overall response quality |
+| **Grammar-constrained decoding** (Outlines, LMQL, llama.cpp grammars) | At each decoding step, the token sampler masks out any token that would violate the grammar; only valid-next-token candidates can be sampled | Syntactic validity is mathematically guaranteed at the token level; the output will always parse as valid JSON matching the schema | Model may produce syntactically valid but semantically wrong output (correct format, wrong meaning); very complex required outputs can degrade overall response quality |
 
-Three properties worth separating clearly — these are the "levels" of correctness:
+Three properties worth separating clearly, these are the "levels" of correctness:
 
 - **Syntactic validity**: Is the output parseable as JSON (or another format)? Does it have matching brackets and correct quoting?
-- **Schema validity**: Does the output conform to the specific schema — required fields present, types correct, enum values within the allowed set?
-- **Semantic validity**: Does the output mean what was intended — is the confidence score actually calibrated, does the citation actually exist, is the sentiment label actually accurate?
+- **Schema validity**: Does the output conform to the specific schema: required fields present, types correct, enum values within the allowed set?
+- **Semantic validity**: Does the output mean what was intended: is the confidence score actually calibrated, does the citation actually exist, is the sentiment label actually accurate?
 
-Grammar-constrained decoding guarantees syntactic validity only. Function calling with a schema guarantees syntactic and schema validity. Nothing guarantees semantic validity — that requires evaluation, human oversight, or both.
+Grammar-constrained decoding guarantees syntactic validity only. Function calling with a schema guarantees syntactic and schema validity. Nothing guarantees semantic validity; that requires evaluation, human oversight, or both.
 
 ### Critical Thinking Questions
 
@@ -112,7 +112,7 @@ Understanding what guarantees each output mode provides sets us up for the next 
 
 ## Model 2: Schema Design as Prompt Engineering
 
-The schema you write for a structured output is not just a type annotation — it is a prompt. The field names, descriptions, and constraints communicate to the model what you want in the same way that natural language instructions do. A poorly designed schema produces valid-but-useless outputs; a well-designed schema elicits better reasoning.
+The schema you write for a structured output is not just a type annotation; it is a prompt. The field names, descriptions, and constraints communicate to the model what you want in the same way that natural language instructions do. A poorly designed schema produces valid-but-useless outputs; a well-designed schema elicits better reasoning.
 
 **Task**: Design a JSON schema for the task "analyze a news article for potential bias."
 
@@ -124,7 +124,7 @@ Consider what a thoughtful human analyst would record:
 - What sources are cited, and are they independently checkable?
 - How confident are you in your overall assessment?
 
-**Version A — poorly designed schema:**
+**Version A, poorly designed schema:**
 
 ```json
 {
@@ -135,9 +135,9 @@ Consider what a thoughtful human analyst would record:
 }
 ```
 
-Problems with Version A: `bias` is a free-form string, so 10,000 articles might produce 10,000 different bias descriptions — impossible to aggregate. `score` has no minimum, maximum, or meaning. `notes` is a catch-all that will absorb anything the model wanted to say but had no proper field for.
+Problems with Version A: `bias` is a free-form string, so 10,000 articles might produce 10,000 different bias descriptions, impossible to aggregate. `score` has no minimum, maximum, or meaning. `notes` is a catch-all that will absorb anything the model wanted to say but had no proper field for.
 
-**Version B — schema designed to elicit structured reasoning:**
+**Version B, schema designed to elicit structured reasoning:**
 
 ```json
 {
@@ -147,12 +147,12 @@ Problems with Version A: `bias` is a free-form string, so 10,000 articles might 
     "sentiment": {
       "type": "string",
       "enum": ["strongly_positive", "positive", "neutral", "negative", "strongly_negative"],
-      "description": "Overall sentiment of the article toward its primary subject — use the closest enum value"
+      "description": "Overall sentiment of the article toward its primary subject; use the closest enum value"
     },
     "political_lean": {
       "type": "string",
       "enum": ["far_left", "left", "center_left", "center", "center_right", "right", "far_right", "not_applicable"],
-      "description": "Apparent political orientation of the article's framing — assess the framing, not the subject matter"
+      "description": "Apparent political orientation of the article's framing; assess the framing, not the subject matter"
     },
     "evidence_quality": {
       "type": "number",
@@ -163,7 +163,7 @@ Problems with Version A: `bias` is a free-form string, so 10,000 articles might 
     "missing_perspectives": {
       "type": "array",
       "items": {"type": "string"},
-      "description": "List of viewpoints or stakeholders relevant to the story that are absent from the article — each item is one missing perspective"
+      "description": "List of viewpoints or stakeholders relevant to the story that are absent from the article; each item is one missing perspective"
     },
     "citations": {
       "type": "array",
@@ -181,7 +181,7 @@ Problems with Version A: `bias` is a free-form string, so 10,000 articles might 
       "type": "number",
       "minimum": 0.0,
       "maximum": 1.0,
-      "description": "Model's confidence in the overall bias assessment — use lower values when the article is ambiguous or mixed"
+      "description": "Model's confidence in the overall bias assessment; use lower values when the article is ambiguous or mixed"
     }
   }
 }
@@ -210,28 +210,28 @@ Version B output:
 
 4. Version A has a `"bias": "string"` field. Version B replaces it with `"political_lean"` as an enum. Explain two specific problems that arise when analyzing 10,000 articles using Version A's free-form bias string, and how the enum in Version B solves each problem.
 
-   *Hint: Problem 1 is about aggregation — if one article is labeled "left-leaning" and another "progressive bias" and a third "liberal slant," how do you count how many articles have a left-leaning bias? Problem 2 is about consistency across time — if the same model labels the same article as "somewhat biased" in January and "moderately biased" in March (because the model updated), how do you detect this inconsistency?*
+   *Hint: Problem 1 is about aggregation: if one article is labeled "left-leaning" and another "progressive bias" and a third "liberal slant," how do you count how many articles have a left-leaning bias? Problem 2 is about consistency across time: if the same model labels the same article as "somewhat biased" in January and "moderately biased" in March (because the model updated), how do you detect this inconsistency?*
 
 5. The `confidence` field asks the model to report its own uncertainty. Research on chain-of-thought prompting suggests that requiring a model to explain its reasoning improves the quality of its primary answer. Propose a mechanism by which requiring a `confidence` field might cause the model to reason more carefully about the `political_lean` field that comes before it.
 
-   *Hint: Token generation is sequential — the model generates the `political_lean` value before it generates the `confidence` value. If the model "knows" it will need to report a confidence score, how might that shape what it pays attention to while choosing the `political_lean` value? This is a design hypothesis — reason from what you know about sequential generation.*
+   *Hint: Token generation is sequential: the model generates the `political_lean` value before it generates the `confidence` value. If the model "knows" it will need to report a confidence score, how might that shape what it pays attention to while choosing the `political_lean` value? This is a design hypothesis; reason from what you know about sequential generation.*
 
 6. The `missing_perspectives` field is an array of strings. It can always be syntactically valid (any list of strings passes) and always be schema-valid (the schema only requires the items to be strings). But what makes this field particularly hard to validate *semantically*, even when it is perfectly formatted? What would a realistic post-hoc validation step for this field look like?
 
    *Hint: To validate that "environmental groups" is a genuinely missing perspective for a highway article, you need to know what perspectives actually exist for highway projects and which ones the article addressed. You cannot determine this from the JSON alone. What external resource or process would you need?*
 
-Even the best-designed schema cannot guarantee that the model produces valid output every time — which is why validation pipelines with repair loops are essential for any production system.
+Even the best-designed schema cannot guarantee that the model produces valid output every time, which is why validation pipelines with repair loops are essential for any production system.
 
 ---
 
 ## Model 3: The Output Validation Pipeline
 
-Never trust raw LLM output, even in JSON mode or with a schema. Always parse and validate before your code uses the data. When validation fails, you have two options: surface the error to the caller, or attempt a **repair loop** — re-prompting the model with the specific validation error and asking it to fix only that problem.
+Never trust raw LLM output, even in JSON mode or with a schema. Always parse and validate before your code uses the data. When validation fails, you have two options: surface the error to the caller, or attempt a **repair loop**: re-prompting the model with the specific validation error and asking it to fix only that problem.
 
-The code below implements a full repair loop — read the comments carefully, especially the `max_repair_attempts` limit and the `fail loudly` behavior, which prevent the two most dangerous failure modes (infinite API cost and silent bad data flowing downstream):
+The code below implements a full repair loop; read the comments carefully, especially the `max_repair_attempts` limit and the `fail loudly` behavior, which prevent the two most dangerous failure modes (infinite API cost and silent bad data flowing downstream):
 
 ```python
-# Pydantic data model — defines the expected structure and validates incoming data
+# Pydantic data model; defines the expected structure and validates incoming data
 from pydantic import BaseModel, Field, ValidationError
 from typing import Literal
 import json
@@ -244,7 +244,7 @@ class BiasAnalysis(BaseModel):
     # Field(ge=0.0, le=1.0) means: greater-than-or-equal-to 0.0 AND less-than-or-equal-to 1.0
     # Pydantic raises ValidationError if the model outputs 1.5 or -0.1
     evidence_quality: float = Field(ge=0.0, le=1.0)
-    missing_perspectives: list[str]    # List of strings — any content is schema-valid
+    missing_perspectives: list[str]    # List of strings; any content is schema-valid
     confidence: float = Field(ge=0.0, le=1.0)
 
 def analyze_article(article_text: str, llm, max_repair_attempts: int = 2) -> BiasAnalysis:
