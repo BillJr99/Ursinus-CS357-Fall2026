@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Observability and Tracing
 
-A deployed agent that silently fails is worse than one that visibly crashes. A crash produces an error message and a stack trace. Silent failure produces a wrong answer, a missed tool call, or a hallucination — and the operator has no idea it happened. **Observability** is the discipline of making the internal state of a system legible from the outside, so that you can ask arbitrary questions about its behavior without knowing in advance what questions you will need to ask. This activity introduces the three pillars of observability, distributed tracing for agent pipelines, and the OpenTelemetry standard for instrumenting LLM applications.
+A deployed agent that silently fails is worse than one that visibly crashes. A crash produces an error message and a stack trace. Silent failure produces a wrong answer, a missed tool call, or a hallucination, and the operator has no idea it happened. **Observability** is the discipline of making the internal state of a system legible from the outside, so that you can ask arbitrary questions about its behavior without knowing in advance what questions you will need to ask. This activity introduces the three pillars of observability, distributed tracing for agent pipelines, and the OpenTelemetry standard for instrumenting LLM applications.
 
 ---
 
@@ -35,10 +35,10 @@ Consider each model and its questions individually before discussing with your g
 
 | Term | Plain-English Definition | Example You'll See Today |
 |:-----|:------------------------|:------------------------|
-| **Observability** | The ability to understand what a system is doing on the inside by looking at its outputs — without having to guess or modify the code | Knowing which step of your RAG pipeline caused a slow response, just by reading the trace data |
+| **Observability** | The ability to understand what a system is doing on the inside by looking at its outputs, without having to guess or modify the code | Knowing which step of your RAG pipeline caused a slow response, just by reading the trace data |
 | **Trace** | A recording of every step a single request takes as it flows through your system, stitched together with a shared ID | One user asking your agent a question produces one trace with child spans for retrieval, LLM call, and tool use |
-| **Span** | A single timed unit of work inside a trace — like one function call — that records its start time, end time, and metadata attributes | The `llm_generate` span that records how many tokens were used and why the model stopped generating |
-| **Metric** | A number that is measured repeatedly over time and aggregated — such as a count, average, or histogram | "Error rate rose from 1% to 8% between Tuesday and Wednesday" |
+| **Span** | A single timed unit of work inside a trace (like one function call) that records its start time, end time, and metadata attributes | The `llm_generate` span that records how many tokens were used and why the model stopped generating |
+| **Metric** | A number that is measured repeatedly over time and aggregated, such as a count, average, or histogram | "Error rate rose from 1% to 8% between Tuesday and Wednesday" |
 | **Log** | A timestamped record of a specific event, written in text (structured or plain), that describes something that happened at a moment in time | "2025-09-15T14:03:22Z ERROR finish_reason=content_filter query_hash=a3f9" |
 | **OpenTelemetry (OTel)** | An open standard that defines a single API for collecting traces, metrics, and logs so you can swap backends without rewriting your instrumentation code | Instrument once with OTel; export to Jaeger, Honeycomb, or Grafana by changing one config line |
 
@@ -46,15 +46,15 @@ Consider each model and its questions individually before discussing with your g
 
 ## Model 1: The Three Pillars of Observability
 
-> **Why this matters:** Flying an agent without traces is like flying a plane with no instruments — you only know something's wrong when you crash. In production, your agent will fail in ways you did not anticipate. The three pillars below are your cockpit instruments: they let you see the problem, measure its scale, and trace it to its source before a user reports it.
+> **Why this matters:** Flying an agent without traces is like flying a plane with no instruments: you only know something's wrong when you crash. In production, your agent will fail in ways you did not anticipate. The three pillars below are your cockpit instruments: they let you see the problem, measure its scale, and trace it to its source before a user reports it.
 
 Observability in distributed systems is built on three complementary data types. No single pillar is sufficient on its own; together they provide a complete picture of system behavior.
 
 | Pillar | What It Captures | Time Granularity | Best For | Example Tool | In Our Course |
 |:-------|:-----------------|:----------------|:---------|:-------------|:--------------|
-| **Logs** | Discrete events with a timestamp, severity level, and message payload — may include structured key-value fields such as `user_id`, `finish_reason`, or `error_code` | Per-event at arbitrary resolution — every event gets its own entry the moment it happens | Debugging a specific failure after the fact; auditing exactly what the agent said or did at a given moment; investigating a complaint from a specific user | Loki, Elasticsearch, CloudWatch Logs | Printing `finish_reason` and `query_hash` to a structured log file every time your agent handles a request |
-| **Metrics** | Numeric measurements aggregated over time — counters (how many requests), gauges (current queue depth), and histograms (distribution of latencies); e.g., request rate, error rate, token consumption per minute | Aggregated over fixed time buckets, typically one second to one minute — you see trends, not individual events | Alerting when a threshold is violated (e.g., error rate > 1%); capacity planning; identifying trends over hours or days | Prometheus, Datadog, InfluxDB | Tracking "tokens used per minute" to catch runaway loops before your API bill spikes |
-| **Traces** | Causally linked spans representing the end-to-end execution of a single request through multiple services or steps — each span has a parent, a start time, an end time, and key-value attributes | Per-request at sub-millisecond resolution on individual spans — you see the full causal chain for one request | Root-cause analysis across multiple hops in a pipeline; identifying which specific step added most of the latency | Jaeger, Zipkin, Honeycomb | Visualizing that 73% of your agent's response time comes from the LLM call, not the retrieval step |
+| **Logs** | Discrete events with a timestamp, severity level, and message payload; may include structured key-value fields such as `user_id`, `finish_reason`, or `error_code` | Per-event at arbitrary resolution: every event gets its own entry the moment it happens | Debugging a specific failure after the fact; auditing exactly what the agent said or did at a given moment; investigating a complaint from a specific user | Loki, Elasticsearch, CloudWatch Logs | Printing `finish_reason` and `query_hash` to a structured log file every time your agent handles a request |
+| **Metrics** | Numeric measurements aggregated over time: counters (how many requests), gauges (current queue depth), and histograms (distribution of latencies); e.g., request rate, error rate, token consumption per minute | Aggregated over fixed time buckets, typically one second to one minute; you see trends, not individual events | Alerting when a threshold is violated (e.g., error rate > 1%); capacity planning; identifying trends over hours or days | Prometheus, Datadog, InfluxDB | Tracking "tokens used per minute" to catch runaway loops before your API bill spikes |
+| **Traces** | Causally linked spans representing the end-to-end execution of a single request through multiple services or steps; each span has a parent, a start time, an end time, and key-value attributes | Per-request at sub-millisecond resolution on individual spans; you see the full causal chain for one request | Root-cause analysis across multiple hops in a pipeline; identifying which specific step added most of the latency | Jaeger, Zipkin, Honeycomb | Visualizing that 73% of your agent's response time comes from the LLM call, not the retrieval step |
 
 **Key insight**: A metric can tell you that error rate increased at 2:00 PM; a log can tell you the exact error message for one failing request; a trace can tell you which step in the agent pipeline caused that request to fail and how long each step took.
 
@@ -64,7 +64,7 @@ Observability in distributed systems is built on three complementary data types.
 
    *Hint:* Think about what information you actually need to diagnose a bug versus what information you only think you might need "just in case." Also consider: what if a user typed their SSN into a prompt?
 
-2. A metric shows that 95th-percentile latency for your agent doubled between Tuesday and Wednesday. Explain why a metric alone cannot tell you *why* this happened, and describe the sequence of steps — which other pillars you would consult, in which order — to diagnose the root cause.
+2. A metric shows that 95th-percentile latency for your agent doubled between Tuesday and Wednesday. Explain why a metric alone cannot tell you *why* this happened, and describe the sequence of steps (which other pillars you would consult, in which order) to diagnose the root cause.
 
    *Hint:* A metric is a summary. Summaries throw away details to save space. What details were thrown away here, and which pillar preserves them?
 
@@ -76,11 +76,11 @@ Observability in distributed systems is built on three complementary data types.
 
 ## Model 2: Distributed Tracing for Agent Pipelines
 
-> **Why this matters:** An agent is not a single function — it is a pipeline with multiple steps that each take time and can each fail independently. When a user complains that your agent gave a wrong answer, you need to know *which step* failed: was it the retriever that returned irrelevant documents, the LLM that ignored those documents, or the tool call that returned bad data? Distributed tracing gives you a map of every step so you can pinpoint the failure without guessing.
+> **Why this matters:** An agent is not a single function; it is a pipeline with multiple steps that each take time and can each fail independently. When a user complains that your agent gave a wrong answer, you need to know *which step* failed: was it the retriever that returned irrelevant documents, the LLM that ignored those documents, or the tool call that returned bad data? Distributed tracing gives you a map of every step so you can pinpoint the failure without guessing.
 
-When an agent receives a query, it may invoke a retriever, call an LLM, execute a tool, and format a response — each of these is a **span** in a **trace**. A span records its start time, end time, parent span, and any attributes (key-value metadata). The spans are linked by a common trace ID, so you can visualize the entire causal chain for a single request.
+When an agent receives a query, it may invoke a retriever, call an LLM, execute a tool, and format a response; each of these is a **span** in a **trace**. A span records its start time, end time, parent span, and any attributes (key-value metadata). The spans are linked by a common trace ID, so you can visualize the entire causal chain for a single request.
 
-Below is the span tree for an agent handling a Retrieval-Augmented Generation (RAG) query. Read it top-to-bottom: the root span represents the entire request, and the indented child spans (retrieve, llm_generate, tool_call) each represent one step inside it — notice how the durations add up to reveal where time is actually being spent.
+Below is the span tree for an agent handling a Retrieval-Augmented Generation (RAG) query. Read it top-to-bottom: the root span represents the entire request, and the indented child spans (retrieve, llm_generate, tool_call) each represent one step inside it; notice how the durations add up to reveal where time is actually being spent.
 
 ```
 [root span] handle_query   duration: 2340ms
@@ -100,7 +100,7 @@ Below is the span tree for an agent handling a Retrieval-Augmented Generation (R
 
 Attributes on spans are the primary mechanism for answering questions about production behavior. They turn a timing graph into a searchable, filterable record of what the agent did. However, attributes must be chosen carefully: they are stored in your tracing backend, may be retained for weeks, and may be exported to third-party vendors.
 
-> **Common Misconception:** Many developers assume that adding more span attributes is always better — "the more data, the more observability." In practice, storing raw prompt text as a span attribute can expose private user data to your tracing vendor, violate GDPR or FERPA, and generate storage costs that make your traces unusable at scale. Good observability is about storing the *right* attributes — identifiers and measurements — not the raw content.
+> **Common Misconception:** Many developers assume that adding more span attributes is always better: "the more data, the more observability." In practice, storing raw prompt text as a span attribute can expose private user data to your tracing vendor, violate GDPR or FERPA, and generate storage costs that make your traces unusable at scale. Good observability is about storing the *right* attributes (identifiers and measurements), not the raw content.
 
 ### Critical Thinking Questions
 
@@ -124,7 +124,7 @@ Attributes on spans are the primary mechanism for answering questions about prod
 
 **OpenTelemetry** (OTel) is a vendor-neutral open standard for collecting and exporting telemetry data (traces, metrics, and logs) from applications. It provides a unified API and SDK so you can instrument your agent once and export to any compatible backend (Jaeger, Honeycomb, Grafana Tempo, etc.) by changing configuration, not code.
 
-The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python. As you read it, notice two things: (1) the setup block runs once at startup and wires up the exporter, and (2) each instrumented function uses `with tracer.start_as_current_span(...)` to create a span — look at which attributes are logged and which sensitive information (like the raw query text) is deliberately omitted.
+The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python. As you read it, notice two things: (1) the setup block runs once at startup and wires up the exporter, and (2) each instrumented function uses `with tracer.start_as_current_span(...)` to create a span; look at which attributes are logged and which sensitive information (like the raw query text) is deliberately omitted.
 
 ```python
 from opentelemetry import trace
@@ -161,9 +161,9 @@ def handle_query(user_query: str, user_id: str) -> str:
 
 For **SLA tracking**, the attributes you instrument determine what you can measure. A service level agreement (SLA) might specify: "95th-percentile latency under 2 seconds," "error rate below 0.1%," or "completion token usage under 500 per request." Each of these requires a specific attribute to be present on spans.
 
-A production agent is silently failing on approximately 8% of queries — users receive a response, but it is unhelpful or factually wrong. There are currently no logs, metrics, or traces in place. Which observability pillar would you add FIRST to diagnose this problem?
+A production agent is silently failing on approximately 8% of queries: users receive a response, but it is unhelpful or factually wrong. There are currently no logs, metrics, or traces in place. Which observability pillar would you add FIRST to diagnose this problem?
 
-[( )] Metrics — aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
+[( )] Metrics; aggregate rates tell you that 8% of requests failed but cannot tell you what went wrong in any specific request, so you still cannot diagnose the root cause
 [( )] Traces — a span tree requires knowing in advance which steps to instrument; without first understanding the failure pattern from logs, you may instrument the wrong spans
 [(X)] Logs — structured per-request logging of the input, model response, and finish reason gives you the raw evidence needed to identify patterns in the failures before you know what to measure
 [( )] All three simultaneously — instrumenting all three at once is expensive and slow to implement; start with the cheapest source of raw evidence and add the others as needed
