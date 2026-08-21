@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Environmental Impact and the Carbon Cost of Intelligence
 
-This half-session shares the day with the *Governance and Policy Writing* activity — the policies you draft there need numbers behind them, and today supplies the numbers. The discourse around AI rarely foregrounds what it costs the planet to run. Energy consumption, water usage, and embodied carbon in hardware are not edge considerations; at the scale of contemporary model training and inference, they are material. Today you develop the quantitative literacy to reason about these costs, the design vocabulary to reduce them, and the critical framework to resist the optimism that efficiency gains automatically reduce aggregate impact. The goal is not guilt but judgment: knowing when AI use is worth its cost and when a smaller or local tool would serve equally well.
+This half-session shares the day with the *Governance and Policy Writing* activity; the policies you draft there need numbers behind them, and today supplies the numbers. The discourse around AI rarely foregrounds what it costs the planet to run. Energy consumption, water usage, and embodied carbon in hardware are not edge considerations; at the scale of contemporary model training and inference, they are material. Today you develop the quantitative literacy to reason about these costs, the design vocabulary to reduce them, and the critical framework to resist the optimism that efficiency gains automatically reduce aggregate impact. The goal is not guilt but judgment: knowing when AI use is worth its cost and when a smaller or local tool would serve equally well.
 
 ---
 
@@ -28,9 +28,9 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
-| **Training Carbon Cost** | The total greenhouse gas emissions produced by running the compute needed to train a large AI model from scratch, measured in kilograms or tonnes of CO$_2$ equivalent. | Training GPT-3 once is estimated to have produced roughly 500 tonnes of CO$_2$eq — similar to five car lifetimes of emissions. |
+| **Training Carbon Cost** | The total greenhouse gas emissions produced by running the compute needed to train a large AI model from scratch, measured in kilograms or tonnes of CO$_2$ equivalent. | Training GPT-3 once is estimated to have produced roughly 500 tonnes of CO$_2$eq, similar to five car lifetimes of emissions. |
 | **Inference Carbon Cost** | The emissions produced by running a trained model to answer user queries. Because inference happens billions of times, its total impact often exceeds the one-time training cost. | A single ChatGPT-style query is estimated to use about ten times the energy of a Google search; at hundreds of millions of queries per day, inference dominates. |
-| **Embodied Carbon** | The greenhouse gas emissions produced by manufacturing the hardware (GPUs, servers, cables) that AI runs on — *before* the hardware is even switched on. | Embodied carbon may represent 50-80% of a data center's lifetime footprint for hardware-intensive workloads, but it is almost never included in AI carbon estimates. |
+| **Embodied Carbon** | The greenhouse gas emissions produced by manufacturing the hardware (GPUs, servers, cables) that AI runs on, *before* the hardware is even switched on. | Embodied carbon may represent 50-80% of a data center's lifetime footprint for hardware-intensive workloads, but it is almost never included in AI carbon estimates. |
 | **Model Right-Sizing** | Choosing the smallest model that achieves adequate accuracy for a specific task, rather than defaulting to the most capable (and most energy-intensive) model available. | Using a 7B-parameter local model to summarize documents instead of a 70B frontier API, when accuracy is comparable, reduces inference energy by roughly 10x. |
 | **Jevons Paradox** | The historical observation that improvements in the efficiency of using a resource tend to increase total resource consumption rather than decrease it, because efficiency lowers cost per use and expands the range of economically viable applications. | Fuel-efficient cars led to more total driving; energy-efficient LEDs led to more total light-hours. The same dynamic may apply to more efficient AI models. |
 | **Grid Carbon Intensity** | The amount of CO$_2$ emitted per unit of electricity in a given region at a given time, determined by the mix of energy sources (coal, gas, solar, wind, hydro, nuclear) on the local grid. | The same AI inference job run in Iceland (near-zero-carbon geothermal electricity) versus a coal-heavy region can differ by a factor of 50 in carbon impact. |
@@ -39,23 +39,23 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: Orders of Magnitude
 
-In this Part, you will build a concrete, numerical sense of how much energy and carbon different AI workloads produce — from a single query to a full model training run. The goal is not guilt but judgment: once you know the proportions, you can make smarter choices about which tools to reach for.
+In this Part, you will build a concrete, numerical sense of how much energy and carbon different AI workloads produce, from a single query to a full model training run. The goal is not guilt but judgment: once you know the proportions, you can make smarter choices about which tools to reach for.
 
 ## 1. What It Costs to Train and Infer
 
-Most people who use AI daily have a rough sense that large models require a lot of computation, but almost no intuition for what that means in carbon terms. Developing that intuition — even approximately — is what allows you to make design decisions that are grounded in reality rather than either dismissiveness ("it's just electricity") or paralysis ("AI is destroying the planet"). The goal is proportional reasoning: knowing which choices matter and which are noise.
+Most people who use AI daily have a rough sense that large models require a lot of computation, but almost no intuition for what that means in carbon terms. Developing that intuition (even approximately) is what allows you to make design decisions that are grounded in reality rather than either dismissiveness ("it's just electricity") or paralysis ("AI is destroying the planet"). The goal is proportional reasoning: knowing which choices matter and which are noise.
 
-**Training** a large language model is a one-time but enormous energy expenditure. Estimates for GPT-3 (175B parameters) place training energy at approximately 1,287 MWh and carbon emissions at roughly 500 tonnes of CO$_2$ equivalent — comparable to the lifetime emissions of five average American cars or about 125 transatlantic flights. GPT-4-scale models are estimated to require substantially more, though developers do not publish precise figures. These numbers are order-of-magnitude estimates; the actual figure depends heavily on the regional carbon intensity — the grams of CO$_2$ emitted per kilowatt-hour of electricity generated, which swings from near-zero in Iceland's geothermal grid to several hundred grams in coal-heavy regions — of the electrical grid where training runs.
+**Training** a large language model is a one-time but enormous energy expenditure. Estimates for GPT-3 (175B parameters) place training energy at approximately 1,287 MWh and carbon emissions at roughly 500 tonnes of CO$_2$ equivalent, comparable to the lifetime emissions of five average American cars or about 125 transatlantic flights. GPT-4-scale models are estimated to require substantially more, though developers do not publish precise figures. These numbers are order-of-magnitude estimates; the actual figure depends heavily on the regional carbon intensity (the grams of CO$_2$ emitted per kilowatt-hour of electricity generated, which swings from near-zero in Iceland's geothermal grid to several hundred grams in coal-heavy regions) of the electrical grid where training runs.
 
 **Inference** at scale often exceeds training in total impact because it recurs with every query. A single ChatGPT prompt is estimated to consume roughly ten times the energy of a Google search. With hundreds of millions of queries per day, inference energy becomes the dominant term. Water usage compounds this: Microsoft reported in 2023 that its data centers consumed approximately 1.7 liters of water (for cooling) per 20-50 ChatGPT prompts. Water stress in regions hosting large data centers is a real externality, not a hypothetical one.
 
-**Embodied carbon** — the emissions from manufacturing GPUs, servers, networking equipment, and undersea cables, *before* any of them are even switched on — is typically excluded from carbon accounting for AI systems. Estimates suggest embodied carbon may represent 50-80% of a data center's lifetime carbon footprint for hardware-intensive workloads. A GPU's fabrication at advanced process nodes involves energy-intensive lithography and chemical processes; the supply chain spans continents. Ignoring embodied carbon systematically understates the cost of "upgrading to a more efficient model."
+**Embodied carbon** (the emissions from manufacturing GPUs, servers, networking equipment, and undersea cables, *before* any of them are even switched on) is typically excluded from carbon accounting for AI systems. Estimates suggest embodied carbon may represent 50-80% of a data center's lifetime carbon footprint for hardware-intensive workloads. A GPU's fabrication at advanced process nodes involves energy-intensive lithography and chemical processes; the supply chain spans continents. Ignoring embodied carbon systematically understates the cost of "upgrading to a more efficient model."
 
 ---
 
 ## Model 1: Carbon Cost Comparison
 
-Why this matters: every time you choose which model to use for a task — a frontier API versus a local quantized model versus a fine-tuned small model — you are making an environmental decision, whether or not you think of it that way. The table below gives you the proportional anchors to make that choice with some quantitative grounding rather than pure convenience. As you read it, look for the ratio between the smallest and largest entries — that span of nine orders of magnitude is the key intuition to carry into the design decisions in Part II.
+Why this matters: every time you choose which model to use for a task (a frontier API versus a local quantized model versus a fine-tuned small model) you are making an environmental decision, whether or not you think of it that way. The table below gives you the proportional anchors to make that choice with some quantitative grounding rather than pure convenience. As you read it, look for the ratio between the smallest and largest entries; that span of nine orders of magnitude is the key intuition to carry into the design decisions in Part II.
 
 | Action | Estimated CO$_2$ equivalent | Approximate real-world equivalent | Engineering implication |
 |---|---|---|---|
@@ -77,7 +77,7 @@ Why this matters: every time you choose which model to use for a task — a fron
 
 2. A company argues that switching from a 70B-parameter model to a 7B-parameter model for a customer service chatbot running 10 million queries per month has a larger carbon impact than switching its data center to renewable energy. Construct a rough quantitative argument for or against this claim using the proportional reasoning the table supports.
 
-   *Hint: A 70B model uses roughly 10x the compute of a 7B model at inference. 10 million queries per month is roughly 330,000 queries per day. Use the per-query estimate from the table to compute monthly carbon for each model. Then compare to what "switching to renewable energy" would actually change — it changes the carbon intensity of the same electricity, not the amount used.*
+   *Hint: A 70B model uses roughly 10x the compute of a 7B model at inference. 10 million queries per month is roughly 330,000 queries per day. Use the per-query estimate from the table to compute monthly carbon for each model. Then compare to what "switching to renewable energy" would actually change; it changes the carbon intensity of the same electricity, not the amount used.*
 
 3. "Embodied carbon" is excluded from most AI carbon footprints. Why might organizations have an incentive to exclude it? Name two design or procurement decisions that would reduce embodied carbon and explain why they are not standard practice.
 
@@ -92,7 +92,7 @@ The central proportional insight of Model 1 is that:
 
 ### Team Exercise: Estimate, Then Check
 
-A campus helpdesk deploys a cloud chatbot that handles **3,000 queries per day, every day of a 30-day month**. Using only your intuition first — no arithmetic yet — each team writes down an estimate of the deployment's **monthly electricity use (in kWh)** and **monthly cooling-water use (in liters)**. The Recorder logs both estimates before anyone opens the worked numbers.
+A campus helpdesk deploys a cloud chatbot that handles **3,000 queries per day, every day of a 30-day month**. Using only your intuition first (no arithmetic yet) each team writes down an estimate of the deployment's **monthly electricity use (in kWh)** and **monthly cooling-water use (in liters)**. The Recorder logs both estimates before anyone opens the worked numbers.
 
 Then compute it properly from the figures in this Part: take a ChatGPT-style query at roughly **3 Wh** (about ten times a ~0.3 Wh web search) and cooling water at roughly **1.7 liters per 35 prompts** (the midpoint of the reported 20-50 prompt range). Compare against the worked numbers below.
 
@@ -105,7 +105,7 @@ Then compute it properly from the figures in this Part: take a ChatGPT-style que
 
 </details>
 
-Finally, each team identifies its **largest gap** — the quantity (energy or water) where the estimate missed by the biggest factor — and explains *why* the intuition was off: which anchor was missing, and which figure from Model 1 would have corrected it?
+Finally, each team identifies its **largest gap**, the quantity (energy or water) where the estimate missed by the biggest factor, and explains *why* the intuition was off: which anchor was missing, and which figure from Model 1 would have corrected it?
 
 ---
 
@@ -113,15 +113,15 @@ Finally, each team identifies its **largest gap** — the quantity (energy or wa
 
 # Part II: Right-Sizing and the Local-First Principle
 
-In this Part, you will apply the numbers from Part I to concrete design choices — specifically, how to match the model you use to the actual difficulty of the task. This is the single highest-leverage skill for reducing AI environmental cost in your own work.
+In this Part, you will apply the numbers from Part I to concrete design choices: specifically, how to match the model you use to the actual difficulty of the task. This is the single highest-leverage skill for reducing AI environmental cost in your own work.
 
 ## 2. Choosing the Right Tool for the Task
 
-The single most impactful design decision for reducing AI environmental cost is not caching, not scheduling, and not carbon offsets — it is choosing the right-sized model (the smallest model that does the job adequately) for the task in the first place. A frontier model applied to a task that a smaller model handles equally well is pure waste. But "right-sizing" is not something most developers learn as a skill, because it requires intentional evaluation rather than defaulting to the most capable available option.
+The single most impactful design decision for reducing AI environmental cost is not caching, not scheduling, and not carbon offsets; it is choosing the right-sized model (the smallest model that does the job adequately) for the task in the first place. A frontier model applied to a task that a smaller model handles equally well is pure waste. But "right-sizing" is not something most developers learn as a skill, because it requires intentional evaluation rather than defaulting to the most capable available option.
 
-**Model right-sizing** is the practice of matching model capability to task requirements. Using a 100B-parameter frontier model to classify whether an email is spam, when a fine-tuned 100M-parameter model achieves the same accuracy, is waste — in energy, latency, and cost. The principle sounds obvious but is routinely violated because frontier APIs are convenient, benchmarks reward capability, and the marginal cost of a larger model is invisible to the developer while the capability gain is visible.
+**Model right-sizing** is the practice of matching model capability to task requirements. Using a 100B-parameter frontier model to classify whether an email is spam, when a fine-tuned 100M-parameter model achieves the same accuracy, is waste: in energy, latency, and cost. The principle sounds obvious but is routinely violated because frontier APIs are convenient, benchmarks reward capability, and the marginal cost of a larger model is invisible to the developer while the capability gain is visible.
 
-**The local-first principle** holds that a model running on a user's device consumes no data center energy, produces no inference-time cloud emissions, and eliminates the water cost of remote cooling. For many tasks — summarization, code assistance, question answering on local documents — a 7B or 13B-parameter quantized model running on a consumer GPU or Apple Silicon chip is competitive with much larger cloud models. The choice of "local vs. cloud" is therefore not only a privacy decision but an environmental one.
+**The local-first principle** holds that a model running on a user's device consumes no data center energy, produces no inference-time cloud emissions, and eliminates the water cost of remote cooling. For many tasks (summarization, code assistance, question answering on local documents) a 7B or 13B-parameter quantized model running on a consumer GPU or Apple Silicon chip is competitive with much larger cloud models. The choice of "local vs. cloud" is therefore not only a privacy decision but an environmental one.
 
 **Caching and batching** are further levers: caching the responses to common queries eliminates redundant computation; batching multiple inference requests reduces per-query overhead. These are standard software engineering practices applied to an unusually energy-visible workload.
 
@@ -136,9 +136,9 @@ The single most impactful design decision for reducing AI environmental cost is 
 
 ## 3. Why Efficiency Gains May Not Reduce Impact
 
-Individual-level good decisions (use a smaller model, cache more queries, choose renewable energy) can add up to a collective outcome that is worse than if no one had tried to be efficient. This counterintuitive result — efficiency enables expansion — is one of the most important structural patterns in the history of technology, and there is no strong reason to expect AI to be exempt from it. The goal of this section is not pessimism but accurate forecasting: knowing that the paradox exists allows you to design interventions that guard against it.
+Individual-level good decisions (use a smaller model, cache more queries, choose renewable energy) can add up to a collective outcome that is worse than if no one had tried to be efficient. This counterintuitive result (efficiency enables expansion) is one of the most important structural patterns in the history of technology, and there is no strong reason to expect AI to be exempt from it. The goal of this section is not pessimism but accurate forecasting: knowing that the paradox exists allows you to design interventions that guard against it.
 
-**Jevons paradox** (William Stanley Jevons, 1865) observed that the introduction of more efficient steam engines in Victorian England did not reduce coal consumption — it increased it, because efficiency lowered the cost per unit of work, expanding the range of economically viable uses and the scale of deployment. The paradox is named after economist William Stanley Jevons, who documented it in *The Coal Question* (1865). It has been documented repeatedly across energy history: fuel-efficient cars increase vehicle miles traveled; LED lighting increases total light-hours consumed; efficient home appliances are purchased in larger numbers.
+**Jevons paradox** (William Stanley Jevons, 1865) observed that the introduction of more efficient steam engines in Victorian England did not reduce coal consumption; it increased it, because efficiency lowered the cost per unit of work, expanding the range of economically viable uses and the scale of deployment. The paradox is named after economist William Stanley Jevons, who documented it in *The Coal Question* (1865). It has been documented repeatedly across energy history: fuel-efficient cars increase vehicle miles traveled; LED lighting increases total light-hours consumed; efficient home appliances are purchased in larger numbers.
 
 Applied to AI: as models become more capable and cheaper to run, the range of tasks to which they are applied expands. A 10x efficiency improvement that is met with a 20x increase in use produces a net doubling of total consumption. There is no empirical reason to expect AI to be exempt from this pattern; there are strong economic incentives that push toward it.
 
@@ -146,7 +146,7 @@ Applied to AI: as models become more capable and cheaper to run, the range of ta
 
 ---
 
-## Model 3: Carbon Audit — One Student's AI Week
+## Model 3: Carbon Audit - One Student's AI Week
 
 Sofia is a CS student working on a capstone project for one week. Her AI use includes: 120 chat queries for coding assistance (frontier model API); 15 image generations for a presentation; 3 hours of code-completion suggestions via IDE plugin (frontier model); 2 documents summarized via a web interface; and one fine-tuned local model running on her laptop for 4 hours to experiment with a custom classifier.
 
@@ -172,7 +172,7 @@ Sofia is a CS student working on a capstone project for one week. Her AI use inc
 
    *Hint: The local model ran for 4 hours; the frontier queries took much less time. What drove the local cost? Now imagine Sofia ran the same experiment but used 10x more cloud queries. Which direction does the comparison shift? What variables determine the crossover point?*
 
-> **Common Misconception:** "Switching to renewable energy at the data center makes AI carbon-neutral." Renewable energy purchases do not eliminate energy consumption — they offset it with generation elsewhere on the grid. The actual energy demand, water use for cooling, and embodied carbon in hardware remain unchanged. "100% renewable" cloud providers are making a true but partial claim: they are purchasing renewable energy credits, which is better than not doing so, but it is not the same as using zero carbon. Meaningful carbon reduction requires reducing the energy consumption itself, not only changing its source on paper.
+> **Common Misconception:** "Switching to renewable energy at the data center makes AI carbon-neutral." Renewable energy purchases do not eliminate energy consumption; they offset it with generation elsewhere on the grid. The actual energy demand, water use for cooling, and embodied carbon in hardware remain unchanged. "100% renewable" cloud providers are making a true but partial claim: they are purchasing renewable energy credits, which is better than not doing so, but it is not the same as using zero carbon. Meaningful carbon reduction requires reducing the energy consumption itself, not only changing its source on paper.
 
 According to Jevons paradox, a 10x improvement in model inference efficiency will most likely:
 
@@ -219,13 +219,13 @@ In this Part, you will apply the proportional reasoning, design vocabulary, and 
 
 Record your responses to all three levels in your reflection:
 
-*Personal:* Look at your personal carbon audit results. Did the numbers change how you feel about your own AI use this semester — or did you find yourself rationalizing the usage you already had? Either answer is informative. What would it take for the numbers to actually change your behavior?
+*Personal:* Look at your personal carbon audit results. Did the numbers change how you feel about your own AI use this semester, or did you find yourself rationalizing the usage you already had? Either answer is informative. What would it take for the numbers to actually change your behavior?
 
 *Technical:* Jevons paradox suggests that the engineers most committed to efficiency may be the ones who inadvertently drive the largest increases in total consumption, because they make expansion economically rational. Is there a version of your course project that fits this pattern? What would you need to believe about how it gets deployed to conclude that it reduces, rather than increases, aggregate environmental impact?
 
-*Societal:* The organizations best positioned to reduce AI's environmental impact (large cloud providers, frontier model developers) are the same organizations with the strongest financial incentives to increase AI use. What governance mechanisms — regulatory, market-based, or professional — could align those incentives with aggregate carbon reduction? Is there a precedent from another industry that suggests such mechanisms can work?
+*Societal:* The organizations best positioned to reduce AI's environmental impact (large cloud providers, frontier model developers) are the same organizations with the strongest financial incentives to increase AI use. What governance mechanisms (regulatory, market-based, or professional) could align those incentives with aggregate carbon reduction? Is there a precedent from another industry that suggests such mechanisms can work?
 
-> *Hint:* Consider the history of automotive fuel-economy standards (CAFE standards in the US): automakers resisted, lobbied, and then ultimately innovated when the regulation held. Ask: what would the AI equivalent look like — mandatory energy-per-inference disclosure, a carbon cost embedded in API pricing, or an industry reporting standard? Which of those is most likely to survive political and market pressure, and which is most likely to trigger a Jevons rebound?
+> *Hint:* Consider the history of automotive fuel-economy standards (CAFE standards in the US): automakers resisted, lobbied, and then ultimately innovated when the regulation held. Ask: what would the AI equivalent look like: mandatory energy-per-inference disclosure, a carbon cost embedded in API pricing, or an industry reporting standard? Which of those is most likely to survive political and market pressure, and which is most likely to trigger a Jevons rebound?
 
 ---
 
