@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Connecting Agents to the World: MCP and APIs
 
-In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world. Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server. We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
+In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world.  Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server.  We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -43,15 +43,15 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ## Warm-Up: The Services You Already Use
 
-Before we study the integration problem in the abstract, make it personal. As a team, brainstorm the online services and apps each of you relies on in a typical week: email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
+Before we study the integration problem in the abstract, make it personal.  As a team, brainstorm the online services and apps each of you relies on in a typical week: email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
 
-For every service someone names, ask the question this entire unit turns on: **could an agent reach it, and how?** Investigate whether each service exposes:
+For every service someone names, ask the question this entire unit turns on: **could an agent reach it, and how?**  Investigate whether each service exposes:
 
 - an **MCP server**, an agent can discover and call its tools directly through the protocol we study today;
 - an **OAuth 2.0 / REST API**, an agent can call it over HTTP with the user's delegated, revocable permission; or
 - **neither**, no public programmatic access, so a human (or brittle screen-scraping) is the only way in.
 
-Look each service up rather than guessing; the answer keeps changing as vendors ship new APIs and MCP servers. A few examples to prime the conversation:
+Look each service up rather than guessing; the answer keeps changing as vendors ship new APIs and MCP servers.  A few examples to prime the conversation:
 
 | Service | What people use it for | Programmatic access to investigate |
 |---|---|---|
@@ -59,23 +59,23 @@ Look each service up rather than guessing; the answer keeps changing as vendors 
 | **Asana** | Team task and project tracking | Documented OAuth 2.0 REST API for tasks and projects; MCP servers are available |
 | **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API, a good example of a service that is *not* openly agent-reachable, where access means unofficial scraping or a third-party data aggregator |
 
-[[___ List 3-5 services your team uses. For each, mark MCP? / OAuth-REST? / neither, and note how you found out. ___]]
+[[___ List 3-5 services your team uses.  For each, mark MCP? / OAuth-REST? / neither, and note how you found out. ___]]
 
-> **Talking point:** A pattern is already forming. Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all. That split (a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks) is exactly the fragmentation the rest of this activity is about. Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
+> **Talking point:** A pattern is already forming.  Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all.  That split (a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks) is exactly the fragmentation the rest of this activity is about.  Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
 
 ---
 
-## 1. APIs, Then the N-by-M Problem
+## 1.  APIs, Then the N-by-M Problem
 
 In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol, a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
 
-**Why this matters:** Think about phone chargers before USB-C existed. Every phone maker had a different cable, so you needed a different charger for every device you owned. USB-C created a universal standard: one cable works with any compliant device. MCP does the same thing for AI tools. Before MCP, every agent team wrote custom glue code to connect to every service. With MCP, you write a service once as a compliant MCP server, and any MCP client (any agent application anywhere) can use it. Integration cost drops from multiplicative to additive.
+**Why this matters:** Think about phone chargers before USB-C existed.  Every phone maker had a different cable, so you needed a different charger for every device you owned.  USB-C created a universal standard: one cable works with any compliant device.  MCP does the same thing for AI tools.  Before MCP, every agent team wrote custom glue code to connect to every service.  With MCP, you write a service once as a compliant MCP server, and any MCP client (any agent application anywhere) can use it.  Integration cost drops from multiplicative to additive.
 
-**An API is a published contract for calling someone else's functions over the network.** REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request. Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
+An API is a published contract for calling someone else's functions over the network.  REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request.  Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
 
-**The problem is multiplication.** With $N$ agent applications and $M$ services, bespoke integration requires up to $N \times M$ adapters, each with its own schema conventions and auth quirks. The history of computing solves such problems with *protocols*: USB for peripherals, HTTP for documents, LSP for editors and languages.
+The problem is multiplication.  With $N$ agent applications and $M$ services, bespoke integration requires up to $N \times M$ adapters, each with its own schema conventions and auth quirks.  The history of computing solves such problems with *protocols*: USB for peripherals, HTTP for documents, LSP for editors and languages.
 
-**MCP is that protocol for tools.** A service wraps itself once as an **MCP server** exposing `tools/list` (machine-readable schemas, like the ones you wrote in the *Tool Use and Function Calling* activity, discovered at runtime) and `tools/call`. Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls. Integration cost drops from $N \times M$ to $N + M$. The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
+MCP is that protocol for tools.  A service wraps itself once as an **MCP server** exposing `tools/list` (machine-readable schemas, like the ones you wrote in the *Tool Use and Function Calling* activity, discovered at runtime) and `tools/call`.  Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls.  Integration cost drops from $N \times M$ to $N + M$. The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
 
 ---
 
@@ -85,15 +85,15 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 ### Critical Thinking Questions
 
-1. Compute the worst-case adapter count without a protocol, and the count with MCP. Show the arithmetic.
+1.  Compute the worst-case adapter count without a protocol, and the count with MCP. Show the arithmetic.
 
    > *Hint: Multiply for bespoke; add for MCP. Then ask: what happens if the campus adds a 5th service?*
 
-2. The library upgrades its catalog API. In each world (bespoke vs. MCP), who must change code, and how many codebases are touched?
+2.  The library upgrades its catalog API. In each world (bespoke vs. MCP), who must change code, and how many codebases are touched?
 
-   > *Hint: In the bespoke world, draw arrows from "catalog" to every agent that uses it. Each arrow is a codebase change.*
+   > *Hint: In the bespoke world, draw arrows from "catalog" to every agent that uses it.  Each arrow is a codebase change.*
 
-3. In the *Tool Use and Function Calling* activity you wrote tool schemas by hand. Which MCP method replaces that step, and what new *trust* question does runtime discovery create? (Hold this thought for the governance unit.)
+3.  In the *Tool Use and Function Calling* activity you wrote tool schemas by hand.  Which MCP method replaces that step, and what new *trust* question does runtime discovery create?  (Hold this thought for the governance unit.)
 
    > *Hint: If you receive a tool schema from a stranger's server, what are you agreeing to when you call it?*
 
@@ -101,13 +101,13 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 # Part II: A Tiny Tool Server
 
-## 2. Speaking the Pattern in Code
+## 2.  Speaking the Pattern in Code
 
-**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable. The server below is not production MCP; it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name. Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
+**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable.  The server below is not production MCP; it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name.  Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
 
-In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints, URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name. You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
+In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints, URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name.  You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
 
-Full MCP runs over JSON-RPC (a protocol for making remote function calls by sending JSON messages) with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask. We build the essence.
+Full MCP runs over JSON-RPC (a protocol for making remote function calls by sending JSON messages) with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask.  We build the essence.
 
 You can run the server with:
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 
 ---
 
-The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools. Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
+The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools.  Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
 
 ## Code Cell
 
@@ -219,19 +219,19 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
 ### Critical Thinking Questions
 
-4. Your client knew nothing about rooms or hours at startup, yet ended up calling both. Trace exactly where the knowledge entered the program. How does this differ from the hard-coded `TOOLS` list you built in the *Tool Use and Function Calling* activity?
+4.  Your client knew nothing about rooms or hours at startup, yet ended up calling both.  Trace exactly where the knowledge entered the program.  How does this differ from the hard-coded `TOOLS` list you built in the *Tool Use and Function Calling* activity?
 
-   > *Hint: At what line of the client code does the client first learn that "room_lookup" exists? Now compare to the Tool Use and Function Calling activity's file, where tool names appeared directly in the source.*
+   > *Hint: At what line of the client code does the client first learn that "room_lookup" exists?  Now compare to the Tool Use and Function Calling activity's file, where tool names appeared directly in the source.*
 
-5. Convert your agent from the *Tool Use and Function Calling* activity to use `discovered` schemas (sketch the three changed lines). What stays identical? What does that invariance tell you about good layering?
+5.  Convert your agent from the *Tool Use and Function Calling* activity to use `discovered` schemas (sketch the three changed lines).  What stays identical?  What does that invariance tell you about good layering?
 
-   > *Hint: The agent loop (perceive, plan, act, observe) does not need to know whether tools came from discovery or hard-coding. What does this tell you about the value of keeping layers separate?*
+   > *Hint: The agent loop (perceive, plan, act, observe) does not need to know whether tools came from discovery or hard-coding.  What does this tell you about the value of keeping layers separate?*
 
-6. A malicious server could describe a tool as "harmless lookup" while its implementation deletes files. Which side of the protocol can lie, and what defenses (allowlists, sandboxes, human gates, audits) operate at which layer?
+6.  A malicious server could describe a tool as "harmless lookup" while its implementation deletes files.  Which side of the protocol can lie, and what defenses (allowlists, sandboxes, human gates, audits) operate at which layer?
 
-   > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food? Who provides each kind of protection?*
+   > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food?  Who provides each kind of protection?*
 
-> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it. This is not true. MCP standardizes *how* you discover and call tools; it says nothing about *what those tools are allowed to do*. A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf. Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited, not by assuming the protocol protects you.
+> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it.  This is not true.  MCP standardizes *how* you discover and call tools; it says nothing about *what those tools are allowed to do*.  A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf.  Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited, not by assuming the protocol protects you.
 
 The primary value MCP adds over each team writing custom tool integrations is:
 
@@ -243,17 +243,17 @@ The primary value MCP adds over each team writing custom tool integrations is:
 ---
 
 
-> **A no-code route to the same problem.** Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP. It is covered in the optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md).
+> **A no-code route to the same problem.**  Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP. It is covered in the optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md).
 
 # Part III: Synthesis and Practice
 
-## 3. Exercises
+## 3.  Exercises
 
 In this Part you extend the server with a new tool to confirm that discovery is truly automatic, connect the server to a real-world API, and write the trust checklist your final project will use before connecting any third-party MCP server.
 
-1. **Extend the server with a new tool.**
+1.  **Extend the server with a new tool.**
 
-   *What to do:* Add a third tool, `events(day)`, that returns campus events from a small hard-coded dictionary (e.g., `{"monday": ["Chess Club 7pm Olin 107"], "tuesday": [...]}`). Restart the server and demonstrate that the client discovers the new tool automatically, with no changes to the client code.
+   *What to do:* Add a third tool, `events(day)`, that returns campus events from a small hard-coded dictionary (e.g., `{"monday": ["Chess Club 7pm Olin 107"], "tuesday": [...]}`).  Restart the server and demonstrate that the client discovers the new tool automatically, with no changes to the client code.
 
    *Starter hint:*
    ```python
@@ -275,9 +275,9 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
    *You've succeeded when:* Running `curl http://localhost:8765/tools/list` shows three tools including `events`, and calling `call_remote("events", {"day": "monday"})` from the client returns the correct list without editing the client file.
 
-2. **Wrap a real public API as an MCP tool.**
+2.  **Wrap a real public API as an MCP tool.**
 
-   *What to do:* Wrap the National Weather Service API (`https://api.weather.gov`) as a tool on your server. Add a `get_weather(lat, lon)` tool whose implementation calls the real NWS API and returns the current forecast text. Then write a short agent loop that asks "What should I wear today at Ursinus College?" and calls your tool to answer it.
+   *What to do:* Wrap the National Weather Service API (`https://api.weather.gov`) as a tool on your server.  Add a `get_weather(lat, lon)` tool whose implementation calls the real NWS API and returns the current forecast text.  Then write a short agent loop that asks "What should I wear today at Ursinus College?" and calls your tool to answer it.
 
    *Starter hint:*
    ```python
@@ -298,9 +298,9 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
    *You've succeeded when:* Your agent produces a sentence like "You should wear a jacket; the forecast is partly cloudy with a high of 58°F" and that answer is demonstrably sourced from the live NWS API, not the model's training data.
 
-3. **Write a Trust Memo for your final project.**
+3.  **Write a Trust Memo for your final project.**
 
-   *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server. Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.
+   *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server.  Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.
 
    *Starter hint:* Your memo should have sections for (a) Source Verification, how do you confirm who wrote the server and whether it has been reviewed?, (b) Permission Scope, what is the minimum set of capabilities the server needs?, (c) Audit Logging, how will you record every call made through the server so you can reconstruct what happened?
 
@@ -312,15 +312,15 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
 In your notebook, respond to all three levels:
 
-**Personal:** Think of a time you used a standard that made your life easier: perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs. How did having that standard change what you did or built? Would you have worked differently without it?
+**Personal:** Think of a time you used a standard that made your life easier: perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs.  How did having that standard change what you did or built?  Would you have worked differently without it?
 
-**Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate. As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years? Consider: what new kinds of services will appear that could not exist before MCP? What new security risks emerge?
+**Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate.  As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years?  Consider: what new kinds of services will appear that could not exist before MCP? What new security risks emerge?
 
-**Societal:** Interoperability standards create network effects: the more people adopt them, the more valuable they become for everyone. But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it. Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
+**Societal:** Interoperability standards create network effects: the more people adopt them, the more valuable they become for everyone.  But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it.  Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
 
 ---
 
--> **Coming Up Next:** Your agent can now reach tools. Next it needs to reach *documents*. In the *Retrieval-Augmented Generation with Chroma* activity we put the semantic search you built by hand in *Tokens, Embeddings, and Attention* to work at scale, so the model answers from your corpus instead of from memory. The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
+-> **Coming Up Next:** Your agent can now reach tools.  Next it needs to reach *documents*.  In the *Retrieval-Augmented Generation with Chroma* activity we put the semantic search you built by hand in *Tokens, Embeddings, and Attention* to work at scale, so the model answers from your corpus instead of from memory.  The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
 
 ---
 
@@ -328,4 +328,4 @@ In your notebook, respond to all three levels:
 
 - Model Context Protocol specification and documentation: https://modelcontextprotocol.io
 - Roy Fielding's REST dissertation, Chapter 5 (online), for the architectural style behind web APIs.
-- Anthropic. "Introducing the Model Context Protocol" (2024, online).
+- Anthropic.  "Introducing the Model Context Protocol" (2024, online).

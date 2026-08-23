@@ -1,6 +1,6 @@
 # Future Work
 
-<!-- The parking lot. Ideas and enhancements that are explicitly deferred so they stop
+<!-- The parking lot.  Ideas and enhancements that are explicitly deferred so they stop
      competing with the current milestone. An agent may ADD to this list at any time;
      it may only START an item here when the charter's milestone gate allows it. -->
 

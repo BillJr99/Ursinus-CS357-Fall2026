@@ -6,7 +6,7 @@ title: "CS357: Foundations of Artificial Intelligence - Reading Responses and Di
 info:
   coursenum: CS357
   points: 10
-  submission: "Post brief responses to the class discussion board before the marked sessions. These are low-stakes preparation, assessed as part of the 10% Class Activities and Participation component."
+  submission: "Post brief responses to the class discussion board before the marked sessions.  These are low-stakes preparation, assessed as part of the 10% Class Activities and Participation component."
   goals:
     - To engage each reading or result actively before class, connecting it to systems you run yourself
     - To arrive at discussion days and student-led Reading Group sessions ready to contribute
@@ -43,64 +43,64 @@ tags:
 
 ---
 
-An agent you have only read about is one you cannot yet debug, and a paper you have only skimmed is one you cannot yet discuss. A reading response is a short note (three or four sentences) that you write *before* a discussion day or a classmate's Reading Group session, so that you arrive with something to say and the conversation starts from real engagement rather than a cold open. This page explains how to write one, how they earn participation, and gives a bank of reading-linked prompts for each unit.
+You cannot debug an agent you have only read about, and you cannot discuss a paper you have only skimmed.  A reading response is a short note, three or four sentences, that you write *before* a discussion day or a classmate's Reading Group session.  It means you arrive with something to say, and the conversation starts from real engagement instead of a cold open.  This page explains how to write one, how they earn participation, and gives a bank of reading-linked prompts for each unit.
 
 ## Purpose
 
-Reading responses do two things. They make you an active reader (turning a passive skim into a takeaway, a question, and a connection) and they make you a good audience, which is half of what a seminar-style discussion needs. When a classmate leads a Reading Group session, their session is only as good as the room; your response is how you hold up your end, and it is part of your participation grade.
+Reading responses do two things.  They make you an active reader (turning a passive skim into a takeaway, a question, and a connection) and they make you a good audience, which is half of what a seminar-style discussion needs.  When a classmate leads a Reading Group session, their session is only as good as the room; your response is how you hold up your end, and it is part of your participation grade.
 
 ## Before You Start
 
-**Time:** fifteen to twenty minutes, and it should stay that way. A reading response is not an essay; it is evidence that you arrived with something to say. If yours regularly takes an hour, you are writing the wrong thing.
+**Keep it short**, and please keep it that way.  A reading response is not an essay.  It is evidence that you arrived with something to say.  If yours regularly takes an hour, you are writing the wrong thing.
 
-**When they are due:** before the class session they attach to. The sessions with a reading response are marked on the schedule, and "before" is load-bearing: several sessions start from the positions people staked out beforehand, so a response posted afterwards cannot do its job.
+**When they are due:** before the class session they attach to.  The sessions with a reading response are marked on the schedule, and "before" is load-bearing: several sessions start from the positions people staked out beforehand, so a response posted afterwards cannot do its job.
 
-**What earns credit:** engagement, not agreement, and specificity, not length. A response that says "I did not follow the argument on page 40, and here is where I lost it" is worth more than one that summarizes the whole chapter competently.
+**What earns credit:** engagement rather than agreement, and specificity rather than length.  A response that says "I did not follow the argument on page 40, and here is where I lost it" is worth more than one that summarizes the whole chapter competently.
 
-> **The most useful thing you can bring is a stuck point.** Something you tried on your own machine that did not behave, or a claim in the reading you do not believe. Both are better class discussions than a well-organized summary, and both are easier to write.
+> **The most useful thing you can bring is a stuck point.**  Something you tried on your own machine that did not behave, or a claim in the reading you do not believe.  Both are better class discussions than a well-organized summary, and both are easier to write.
 
 ---
 
 ## How to Write a Reading Response
 
-Keep it to three or four sentences, posted to the discussion board before the marked session. A strong response has three moves:
+Keep it to three or four sentences, posted to the discussion board before the marked session.  A strong response has three moves:
 
-1. **One takeaway.** The single most important claim or result, in your own words, not a summary of the whole thing.
-2. **One question.** A real question the reading raised for you: something you doubt, something unresolved, or something you would test.
-3. **One connection to your own system.** This is the move that matters most in this course: tie the reading to something you run or could run yourself. Does this change how you would configure your local model, chunk your RAG corpus, scope an MCP server's permissions, or evaluate an agent's output? The goal of the course is fluency operating your own AI stack, and reading responses are where reading becomes that fluency.
+1.  **One takeaway.**  The single most important claim or result, in your own words, not a summary of the whole thing.
+2.  **One question.**  A real question the reading raised for you: something you doubt, something unresolved, or something you would test.
+3.  **One connection to your own system.**  This is the move that matters most in this course: tie the reading to something you run or could run yourself.  Does this change how you would configure your local model, chunk your RAG corpus, scope an MCP server's permissions, or evaluate an agent's output?  The goal of the course is fluency operating your own AI stack, and reading responses are where reading becomes that fluency.
 
 ## Reading Responses for Student-Led Reading Group Sessions
 
-When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the audience has a defined job, and doing it earns participation. Before the session, post a brief response to the presenter's source (or, if it is circulated same-day, come with one genuine question ready). During the session, engage: build on the presenter's framing, offer a counter-view, or connect their source to something we have built. Leading a session remains separately available for extra credit; being a strong audience member is ordinary, expected participation, and it is what makes the student-led sessions worth holding.
+When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the audience has a defined job, and doing it earns participation.  Before the session, post a brief response to the presenter's source (or, if it is circulated same-day, come with one real question ready).  During the session, engage: build on the presenter's framing, offer a counter-view, or connect their source to something we have built.  Leading a session remains separately available for extra credit; being a strong audience member is ordinary, expected participation, and it is what makes the student-led sessions worth holding.
 
 ## Reading-Linked Prompts, by Unit
 
-Use these when a reading response is due, or any time you want to prepare a unit actively. Each ties the reading to a system you operate.
+Use these when a reading response is due, or any time you want to prepare a unit actively.  Each ties the reading to a system you operate.
 
 ### The Agent Loop and Local Models
 
-- After setting up a local model, write what changed in your mental model of "using AI" once the model was running on your own machine, with no network. What became possible, and what became your responsibility?
+- After setting up a local model, write what changed in your mental model of "using AI" once the model was running on your own machine, with no network.  What became possible, and what became your responsibility?
 - Name one task you would trust a local 7B model with and one you would not, and say what the difference is.
 
 ### Prompting, Sampling, and Generation
 
-- Change one sampling parameter (temperature or top-p) on a prompt you care about and report what shifted. What does the change tell you about why the model is not a database?
-- Write a system prompt that makes a local model refuse a task it should refuse. What did you have to say, and how brittle is it?
+- Change one sampling parameter (temperature or top-p) on a prompt you care about and report what shifted.  What does the change tell you about why the model is not a database?
+- Write a system prompt that makes a local model refuse a task it should refuse.  What did you have to say, and how brittle is it?
 
 ### Tokens, Embeddings, and RAG
 
-- Chunk a small corpus two different ways and describe how retrieval quality changed. Which failure did each chunking cause?
-- Find one query where your RAG pipeline retrieved the right passage but the model still answered wrongly. Whose fault was it (retrieval or generation) and how do you know?
+- Chunk a small corpus two different ways and describe how retrieval quality changed.  Which failure did each chunking cause?
+- Find one query where your RAG pipeline retrieved the right passage but the model still answered wrongly.  Whose fault was it (retrieval or generation) and how do you know?
 
 ### Memory, Tools, and MCP
 
-- For a tool or MCP server you wired up, write the smallest set of permissions it actually needs. What is the blast radius if its token leaks?
-- Describe one thing your agent got wrong because its context window was full of the wrong things. What would you evict?
+- For a tool or MCP server you wired up, write the smallest set of permissions it actually needs.  What is the blast radius if its token leaks?
+- Describe one thing your agent got wrong because its context window was full of the wrong things.  What would you evict?
 
 ### Multi-Agent Orchestration and Evaluation
 
-- Run the same task through a single agent and through a critique-and-refine pair. Where did the second design help, and where did it just cost tokens?
-- Write one rubric criterion precise enough that an LLM-as-judge and a human would grade it the same way. Why is that hard?
+- Run the same task through a single agent and through a critique-and-refine pair.  Where did the second design help, and where did it just cost tokens?
+- Write one rubric criterion precise enough that an LLM-as-judge and a human would grade it the same way.  Why is that hard?
 
 ### Responsibility, Bias, Privacy, and Environmental Impact
 
@@ -119,4 +119,4 @@ Use these when a reading response is due, or any time you want to prepare a unit
 - [ ] It engages one specific thing: a claim, a passage, a result, rather than the reading as a whole.
 - [ ] It says what I think, including where I disagree or did not follow.
 - [ ] It gives the class something to start from: a question, a position, or a stuck point.
-- [ ] It is short. Fifteen to twenty minutes of work, not an essay.
+- [ ] It is short.  Fifteen to twenty minutes of work, not an essay.

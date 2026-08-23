@@ -28,9 +28,9 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Observability Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-observability.md)
 
-This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
+This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 
-> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?**  [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work, since both earn identical credit.
 
 > **What this direction requires**
 >
@@ -42,7 +42,7 @@ This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Ass
 > If you cannot run Docker on your machine, talk to me before starting; Zipkin or a classmate-hosted Jaeger are workable substitutes, but plan it in advance.
 
 
-The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale. You will take a tool-using agent (your rubric-grading pipeline, or another agent from the course) and transform it from a black box into a system you can reason about in production. Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on. You will work individually.
+The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale.  You will take a tool-using agent (your rubric-grading pipeline, or another agent from the course) and transform it from a black box into a system you can reason about in production.  Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on.  You will work individually.
 
 #### Before You Start (Direction 2)
 
@@ -112,17 +112,17 @@ Expected output:
     "offset": 0,
 ```
 
-If you see `Connection refused`, Docker is not exposing port 16686. Check `docker ps` to confirm the container is running.
+If you see `Connection refused`, Docker is not exposing port 16686.  Check `docker ps` to confirm the container is running.
 
 #### Step-by-step guide (Direction 2)
 
 ##### Part 1: Baseline Agent (No Observability)
 
-**Why this matters:** Before adding instrumentation, you need a clear record of what you *cannot* see. This part creates the "before" picture that makes the "after" meaningful.
+**Why this matters:** Before adding instrumentation, you need a clear record of what you *cannot* see.  This part creates the "before" picture that makes the "after" meaningful.
 
 Start from the rubric-grading pipeline, the ReAct agent, or a new agent that makes at least three distinct tool calls to answer a question (for example: search, fetch, summarize; or for the pipeline: load rubric, call judge, verify evidence).
 
-1. **Create your test prompts file.** Write 10 prompts (or 10 submissions to grade) and save them to `prompts.json`:
+1.  **Create your test prompts file.**  Write 10 prompts (or 10 submissions to grade) and save them to `prompts.json`:
 
 ```json
 [
@@ -139,7 +139,7 @@ Start from the rubric-grading pipeline, the ReAct agent, or a new agent that mak
 ]
 ```
 
-2. **Run each prompt and record results manually.** Use this starter script to time your agent:
+2.  **Run each prompt and record results manually.**  Use this starter script to time your agent:
 
 ```python
 # baseline_runner.py
@@ -185,19 +185,19 @@ Expected output after running all 10 prompts:
 Saved baseline_results.csv
 ```
 
-3. **Produce your summary table.** Open `baseline_results.csv` and verify it has 10 rows with `id`, `correct`, and `latency_ms` columns.
+3.  **Produce your summary table.**  Open `baseline_results.csv` and verify it has 10 rows with `id`, `correct`, and `latency_ms` columns.
 
-4. **Write one paragraph** (in `writeup.md`) describing what you *cannot* determine from this data alone: Where is the time going? Which tool is slow? Why did run 7 fail?
+4.  **Write one paragraph** (in `writeup.md`) describing what you *cannot* determine from this data alone: Where is the time going?  Which tool is slow?  Why did run 7 fail?
 
 > **Checkpoint:** Verify that `baseline_results.csv` exists, has exactly 10 rows, and that you can answer "which of my 10 runs was the slowest?" from the data alone.
 
-> **Troubleshooting:** If your agent raises an ImportError, run from the same directory as your agent file or put it on your PYTHONPATH. If `time.perf_counter()` gives a suspiciously small number, remember it is in seconds; multiply by 1000. If `input()` hangs in a notebook, replace it with a hardcoded `"y"` and update manually.
+> **Troubleshooting:** If your agent raises an ImportError, run from the same directory as your agent file or put it on your PYTHONPATH. If `time.perf_counter()` gives a suspiciously small number, remember it is in seconds; multiply by 1000.  If `input()` hangs in a notebook, replace it with a hardcoded `"y"` and update manually.
 
 ##### Part 2: Add OpenTelemetry Instrumentation
 
-**Why this matters:** OpenTelemetry (OTel) is the industry-standard, vendor-neutral framework for adding structured observability to any application. Your agent will emit traces compatible with Jaeger, Grafana, Datadog, and dozens of other backends.
+**Why this matters:** OpenTelemetry (OTel) is the industry-standard, vendor-neutral framework for adding structured observability to any application.  Your agent will emit traces compatible with Jaeger, Grafana, Datadog, and dozens of other backends.
 
-1. **Create `agent.py`** (or adapt your existing agent/pipeline file) using this skeleton. Fill in every `# TODO` comment:
+1.  **Create `agent.py`** (or adapt your existing agent/pipeline file) using this skeleton.  Fill in every `# TODO` comment:
 
 ```python
 # agent.py  - OpenTelemetry-instrumented agent skeleton
@@ -315,17 +315,17 @@ if __name__ == "__main__":
     print(answer)
 ```
 
-2. **Run a single test prompt** and verify a trace appears in Jaeger:
+2.  **Run a single test prompt** and verify a trace appears in Jaeger:
 
 ```bash
 python agent.py
 ```
 
-3. **Open Jaeger UI** at `http://localhost:16686`. In the "Service" dropdown, select `my-agent`. Click "Find Traces". You should see one trace.
+3.  **Open Jaeger UI** at `http://localhost:16686`.  In the "Service" dropdown, select `my-agent`.  Click "Find Traces".  You should see one trace.
 
 Expected output in Jaeger: A trace with an `agent.run` root span containing nested `llm.call` and `tool.call` child spans, all with durations displayed in milliseconds.
 
-4. **Verify span nesting.** Click into the trace. The hierarchy should look like:
+4.  **Verify span nesting.**  Click into the trace.  The hierarchy should look like:
 
 ```
 agent.run (total: ~2000ms)
@@ -335,19 +335,19 @@ agent.run (total: ~2000ms)
   `- tool.call [fetch_url] (200ms)
 ```
 
-If all spans show at the same level (no nesting), the child spans are not being created inside a `with tracer.start_as_current_span(...)` block under the parent. Fix the nesting.
+If all spans show at the same level (no nesting), the child spans are not being created inside a `with tracer.start_as_current_span(...)` block under the parent.  Fix the nesting.
 
 > **Checkpoint:** Verify that the Jaeger UI shows at least one trace, that the trace has a root `agent.run` span with nested child spans, and that clicking a child span shows attributes like `llm.model` or `tool.name` in the "Tags" panel.
 
-> **Troubleshooting:** If no traces appear, run `docker ps` and `curl http://localhost:4317`. If you get `StatusCode.UNAVAILABLE`, double-check `endpoint="http://localhost:4317"` and `insecure=True`. If spans appear but are not nested, make sure `call_llm` and `call_tool` are called *inside* the `with tracer.start_as_current_span("agent.run")` block.
+> **Troubleshooting:** If no traces appear, run `docker ps` and `curl http://localhost:4317`.  If you get `StatusCode.UNAVAILABLE`, double-check `endpoint="http://localhost:4317"` and `insecure=True`.  If spans appear but are not nested, make sure `call_llm` and `call_tool` are called *inside* the `with tracer.start_as_current_span("agent.run")` block.
 
 ##### Part 3: Trace Analysis
 
-**Why this matters:** Collecting traces is only useful if you can read them. This part builds the core skill of distributed trace analysis, the same skill SREs use to diagnose production incidents in minutes rather than hours.
+**Why this matters:** Collecting traces is only useful if you can read them.  This part builds the core skill of distributed trace analysis, the same skill SREs use to diagnose production incidents in minutes rather than hours.
 
 Re-run the same 10 prompts with instrumentation active, then answer each question below in `writeup.md`, citing specific span names, attribute values, or timestamps as evidence.
 
-1. **Run all 10 prompts** with tracing active:
+1.  **Run all 10 prompts** with tracing active:
 
 ```python
 python -c "
@@ -374,25 +374,25 @@ Running p10...
 Done. Open http://localhost:16686 to inspect traces.
 ```
 
-2. **Answer the following** in your writeup, citing span names and attributes as evidence:
+2.  **Answer the following** in your writeup, citing span names and attributes as evidence:
 
-**(a) Latency hotspot:** Which span type has the highest p95 latency across your 10 runs? Report the p95 value in milliseconds. If Jaeger does not compute p95 directly, sort the 10 latency values and report the 9th-highest.
+**(a) Latency hotspot:** Which span type has the highest p95 latency across your 10 runs?  Report the p95 value in milliseconds.  If Jaeger does not compute p95 directly, sort the 10 latency values and report the 9th-highest.
 
-**(b) Failure analysis:** Identify at least one failed or degraded trace. At which span did it diverge from the pattern of successful traces (different duration, missing child span, error status)? What does this tell you about the root cause?
+**(b) Failure analysis:** Identify at least one failed or degraded trace.  At which span did it diverge from the pattern of successful traces (different duration, missing child span, error status)?  What does this tell you about the root cause?
 
-**(c) Optimization proposal:** Based on trace evidence, propose one concrete optimization (caching a recurring retrieval span, routing the first tool call to a smaller faster model, or parallelizing two independent tool calls). State the evidence and estimate the expected latency reduction.
+**(c) Optimization proposal:** Based on trace evidence, propose one concrete optimization (caching a recurring retrieval span, routing the first tool call to a smaller faster model, or parallelizing two independent tool calls).  State the evidence and estimate the expected latency reduction.
 
-3. **Take two screenshots** from the Jaeger UI: `trace_fast.png` (your fastest trace) and `trace_slow.png` (your slowest or most error-prone trace). Annotate each with callouts identifying the key spans.
+3.  **Take two screenshots** from the Jaeger UI: `trace_fast.png` (your fastest trace) and `trace_slow.png` (your slowest or most error-prone trace).  Annotate each with callouts identifying the key spans.
 
 > **Checkpoint:** Verify that you have answered all three questions (a/b/c) with specific span names or attribute values as evidence, and that both annotated screenshot files exist.
 
-> **Troubleshooting:** If you see fewer than 10 traces, some runs failed silently; check for tracebacks. If the "Service" dropdown is empty, add `Resource.create({"service.name": "my-agent"})` to your provider. If all traces look identical, add a small `time.sleep(random.uniform(0, 1))` in one tool to simulate variability.
+> **Troubleshooting:** If you see fewer than 10 traces, some runs failed silently; check for tracebacks.  If the "Service" dropdown is empty, add `Resource.create({"service.name": "my-agent"})` to your provider.  If all traces look identical, add a small `time.sleep(random.uniform(0, 1))` in one tool to simulate variability.
 
 ##### Part 4: Alerting Rules
 
 **Why this matters:** Traces you can only see in a dashboard are not enough in production; you need automated alerts that page you when something breaks at 3 AM. This part bridges observability and incident response.
 
-1. **Design three alert rules** using either pseudocode or valid Prometheus AlertManager YAML, covering:
+1.  **Design three alert rules** using either pseudocode or valid Prometheus AlertManager YAML, covering:
 
    - **Latency alert:** Agent p95 end-to-end latency exceeds 5 seconds over a 5-minute window.
    - **Error rate alert:** Agent error rate (traces ending in ERROR status) exceeds 5% in any 10-minute window.
@@ -433,21 +433,21 @@ Done. Open http://localhost:16686 to inspect traces.
              summary: "Single request exceeded 2000 prompt tokens"
    ```
 
-2. **Justify each threshold** in `writeup.md`: Why is 5 seconds the right cutoff? What would happen at 1 second (too noisy) or 30 seconds (too slow to respond)?
+2.  **Justify each threshold** in `writeup.md`: Why is 5 seconds the right cutoff?  What would happen at 1 second (too noisy) or 30 seconds (too slow to respond)?
 
-3. **Write a 1-page operations runbook** (`runbook.md`) structured as three sections, one per alert. Each section must answer: What does this alert mean? Which span or attribute do you look at first in Jaeger? What are the three most likely root causes and how do you distinguish between them? When do you escalate versus self-resolve?
+3.  **Write a 1-page operations runbook** (`runbook.md`) structured as three sections, one per alert.  Each section must answer: What does this alert mean?  Which span or attribute do you look at first in Jaeger?  What are the three most likely root causes and how do you distinguish between them?  When do you escalate versus self-resolve?
 
 > **Checkpoint:** Verify that `alert_rules.yaml` (or `alert_rules.txt`) exists and that `runbook.md` has three sections with all four questions answered for each alert.
 
-> **Troubleshooting:** If you are unsure of PromQL metric names, write pseudocode alerts using plain-English conditions; the rubric accepts both. If your thresholds feel arbitrary, look at your actual p95 latency from Part 3 and set the alert at 2x that value as a starting point.
+> **Troubleshooting:** If you are unsure of PromQL metric names, write pseudocode alerts using plain-English conditions; the rubric accepts both.  If your thresholds feel arbitrary, look at your actual p95 latency from Part 3 and set the alert at 2x that value as a starting point.
 
 #### Extension Challenges (Direction 2, optional)
 
-**Extension 1: Add a Grafana dashboard.** Add Grafana and Prometheus to `docker-compose.yml` and build a dashboard showing p50/p95/p99 latency per span type, error rate, and token count over time. Export as `grafana_dashboard.json`.
+**Extension 1: Add a Grafana dashboard.**  Add Grafana and Prometheus to `docker-compose.yml` and build a dashboard showing p50/p95/p99 latency per span type, error rate, and token count over time.  Export as `grafana_dashboard.json`.
 
-**Extension 2: Implement trace sampling.** Add a `TraceIdRatioBased` sampler that samples 50% of traces. Run 100 prompts and compare the sampled set to the full set. Does the p95 estimate change significantly?
+**Extension 2: Implement trace sampling.**  Add a `TraceIdRatioBased` sampler that samples 50% of traces.  Run 100 prompts and compare the sampled set to the full set.  Does the p95 estimate change significantly?
 
-**Extension 3: Add a Slack alert.** Write a script that polls the Jaeger API for ERROR-status traces every 60 seconds and posts a formatted message (trace ID, failing span name, error message) to a Slack webhook.
+**Extension 3: Add a Slack alert.**  Write a script that polls the Jaeger API for ERROR-status traces every 60 seconds and posts a formatted message (trace ID, failing span name, error message) to a Slack webhook.
 
 #### Deliverables (Direction 2)
 
@@ -472,9 +472,9 @@ Fold the following into your single lab submission:
 
 #### Reflection Prompts (Direction 2)
 
-- Which span attribute turned out to be the most diagnostically useful across your 10 runs? Which added the most noise without helping you understand anything? What would you remove or rename?
-- Your traces contain the character lengths of user prompts. Even without storing raw text, what inferences about user behavior could someone draw from a sequence of prompt lengths, and is that a PII risk? How would you mitigate it?
-- Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
+- Which span attribute turned out to be the most diagnostically useful across your 10 runs?  Which added the most noise without helping you understand anything?  What would you remove or rename?
+- Your traces contain the character lengths of user prompts.  Even without storing raw text, what inferences about user behavior could someone draw from a sequence of prompt lengths, and is that a PII risk?  How would you mitigate it?
+- Approximately how many hours did this direction take?  (Used only to calibrate assignment difficulty.)
 
 
 ---

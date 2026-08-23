@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Memory in Agents: What They Remember and Why It Matters
 
-An agent with no memory is like a new employee who forgets every conversation at the end of every day, technically skilled but unable to build on prior work. An agent with too much memory is a massive, expensive, privacy-sensitive data store that slows every response. This activity maps the four types of agent memory, explains the hard limits imposed by the context window, and introduces the external memory strategies that let agents serve users across sessions, weeks, and semesters.
+An agent with no memory is like a new employee who forgets every conversation at the end of every day, technically skilled but unable to build on prior work.  An agent with too much memory is a massive, expensive, privacy-sensitive data store that slows every response.  This activity maps the four types of agent memory, explains the hard limits imposed by the context window, and introduces the external memory strategies that let agents serve users across sessions, weeks, and semesters.
 
 ---
 
@@ -44,9 +44,9 @@ An agent with no memory is like a new employee who forgets every conversation at
 
 ## Model 1: Four Types of Agent Memory
 
-> **Why this matters:** An agent's context window is like working memory: finite, fast, but gone when the session closes. Just as a student can hold about 7 items in working memory at once, an LLM can only "see" whatever fits in its context window. Understanding the four memory types helps you design agents that remember the right things for the right reasons, and that fail gracefully when memory runs out instead of silently dropping critical information.
+> **Why this matters:** An agent's context window is like working memory: finite, fast, but gone when the session closes.  Just as a student can hold about 7 items in working memory at once, an LLM can only "see" whatever fits in its context window.  Understanding the four memory types helps you design agents that remember the right things for the right reasons, and that fail gracefully when memory runs out instead of silently dropping critical information.
 
-Cognitive scientists describe human memory in multiple systems (working, episodic, semantic, procedural). Agent designers have adopted the same taxonomy because these categories map cleanly onto the different storage mechanisms available in modern AI systems.
+Cognitive scientists describe human memory in multiple systems (working, episodic, semantic, procedural).  Agent designers have adopted the same taxonomy because these categories map cleanly onto the different storage mechanisms available in modern AI systems.
 
 | Memory Type | What It Stores | Where It Lives Technically | How Much It Costs | How It Fails | In Our Course |
 |:------------|:---------------|:--------------------------|:-----------------|:------------|:--------------|
@@ -57,17 +57,17 @@ Cognitive scientists describe human memory in multiple systems (working, episodi
 
 ### Critical Thinking Questions
 
-1. Which of the four memory types is the most volatile, most likely to be lost during a normal agent session without any server failure? Explain your reasoning by describing the specific mechanism that causes each type to be lost, and rank them from most to least volatile.
+1.  Which of the four memory types is the most volatile, most likely to be lost during a normal agent session without any server failure?  Explain your reasoning by describing the specific mechanism that causes each type to be lost, and rank them from most to least volatile.
 
-   *Hint:* "Volatile" means easily lost, not just eventually lost. Working memory is lost when the context fills up or the session ends. Episodic memory is lost only if the external database fails. Walk through each type and identify the specific condition that destroys it, then rank them.
+   *Hint:* "Volatile" means easily lost, not just eventually lost.  Working memory is lost when the context fills up or the session ends.  Episodic memory is lost only if the external database fails.  Walk through each type and identify the specific condition that destroys it, then rank them.
 
-2. Retrieval-Augmented Generation (RAG) retrieves relevant documents and places them in the prompt at query time. Which memory type does RAG primarily implement? Could a single RAG system implement more than one type simultaneously? Give a concrete example of a RAG configuration that implements two different memory types.
+2.  Retrieval-Augmented Generation (RAG) retrieves relevant documents and places them in the prompt at query time.  Which memory type does RAG primarily implement?  Could a single RAG system implement more than one type simultaneously?  Give a concrete example of a RAG configuration that implements two different memory types.
 
-   *Hint:* RAG retrieves "facts about the world"; that sounds like semantic memory. But what if the RAG corpus contains past conversation logs indexed by session ID? What memory type is that? A RAG system that retrieves both course policy documents (general knowledge) and the student's past question history (session records) is implementing two types simultaneously.
+   *Hint:* RAG retrieves "facts about the world"; that sounds like semantic memory.  But what if the RAG corpus contains past conversation logs indexed by session ID? What memory type is that?  A RAG system that retrieves both course policy documents (general knowledge) and the student's past question history (session records) is implementing two types simultaneously.
 
-3. When working memory is exhausted mid-conversation, the system must make a choice about what to do. Describe at least three distinct choices the system could make, explain what the user experiences in each case, and identify the trade-off each choice forces.
+3.  When working memory is exhausted mid-conversation, the system must make a choice about what to do.  Describe at least three distinct choices the system could make, explain what the user experiences in each case, and identify the trade-off each choice forces.
 
-   *Hint:* The three obvious options are: (a) stop accepting new messages (return an error), (b) drop the oldest turns silently and continue, (c) compress old turns into a summary and continue. Are there other options? For each, ask: what does the user see? What information is lost? What is the cost in latency or accuracy?
+   *Hint:* The three obvious options are: (a) stop accepting new messages (return an error), (b) drop the oldest turns silently and continue, (c) compress old turns into a summary and continue.  Are there other options?  For each, ask: what does the user see?  What information is lost?  What is the cost in latency or accuracy?
 
 Understanding the types of memory is only the starting point; the harder constraint is that working memory has a hard numerical limit that shapes every other architectural decision.
 
@@ -75,9 +75,9 @@ Understanding the types of memory is only the starting point; the harder constra
 
 ## Model 2: Context Window as Working Memory
 
-> **Why this matters:** The context window is the hardest constraint in agent design. You cannot ignore it, you cannot wish it away, and a larger window does not eliminate the problem; it changes its scale. More importantly, *where* you put things in the context window affects whether the model actually uses them. A system prompt that buries the critical safety rule on page 3 is providing less protection than one that leads with it. Context layout is a design decision, not an afterthought.
+> **Why this matters:** The context window is the hardest constraint in agent design.  You cannot ignore it, you cannot wish it away, and a larger window does not eliminate the problem; it changes its scale.  More importantly, *where* you put things in the context window affects whether the model actually uses them.  A system prompt that buries the critical safety rule on page 3 is providing less protection than one that leads with it.  Context layout is a design decision, not an afterthought.
 
-The context window is the agent's "desk": everything on the desk is immediately usable; anything not on the desk must be fetched. Modern LLMs offer context windows from 4K to 1M+ tokens, but larger windows do not eliminate the problem; they change its scale and add cost.
+The context window is the agent's "desk": everything on the desk is immediately usable; anything not on the desk must be fetched.  Modern LLMs offer context windows from 4K to 1M+ tokens, but larger windows do not eliminate the problem; they change its scale and add cost.
 
 **Token budget breakdown for an 8K context window example:** The budget breakdown below shows how quickly the usable space for conversation history fills up; notice that the combined overhead of system prompt, tool definitions, and response space leaves fewer turns than you might expect:
 
@@ -95,30 +95,30 @@ When does the context fill up?
   At ~200 tokens/turn: 5,892 / 200 ≈ 29 turns before history must be truncated
 ```
 
-**The "Lost in the Middle" Phenomenon:** Research (Liu et al., 2023) shows that facts placed in the middle of a long context are retrieved less reliably than facts at the very beginning or very end. This is not a quirk of one model; it has been replicated across multiple LLM families. It means that context *layout* (the order in which you place system prompt, retrieved documents, conversation history, and new messages) is a design decision with measurable impact on model accuracy.
+**The "Lost in the Middle" Phenomenon:** Research (Liu et al., 2023) shows that facts placed in the middle of a long context are retrieved less reliably than facts at the very beginning or very end.  This is not a quirk of one model; it has been replicated across multiple LLM families.  It means that context *layout* (the order in which you place system prompt, retrieved documents, conversation history, and new messages) is a design decision with measurable impact on model accuracy.
 
-A user has a 40-turn conversation with an agent. On turn 41, the agent addresses the user as "there" instead of by name, even though the user introduced themselves on turn 1. The most likely cause is:
+A user has a 40-turn conversation with an agent.  On turn 41, the agent addresses the user as "there" instead of by name, even though the user introduced themselves on turn 1.  The most likely cause is:
 
 [( )] The model was retrained overnight and lost the conversation; model retraining is a deployment event that takes days, not something that happens between conversational turns
 [(X)] The context window was truncated and the early turns containing the introduction were dropped
 [( )] The agent has no semantic memory module configured; semantic memory stores general world knowledge, not user-specific introductions from this session
 [( )] The system prompt is too long and overwrote the user's name; the system prompt cannot overwrite conversation history; it occupies a separate region of the context budget
 
-> **Common Misconception:** Students often assume that a larger context window eliminates the need to think carefully about memory architecture. In reality, larger context windows introduce new problems: they cost more per token (inference cost scales with context length), they are slower (attention is quadratic in sequence length for most architectures), and the "Lost in the Middle" effect becomes more pronounced as context grows. A 100K-token context window does not mean you can dump 100K tokens of information into it and trust the model to find what it needs; it means the layout and relevance of what you put in matters even more.
+> **Common Misconception:** Students often assume that a larger context window eliminates the need to think carefully about memory architecture.  In reality, larger context windows introduce new problems: they cost more per token (inference cost scales with context length), they are slower (attention is quadratic in sequence length for most architectures), and the "Lost in the Middle" effect becomes more pronounced as context grows.  A 100K-token context window does not mean you can dump 100K tokens of information into it and trust the model to find what it needs; it means the layout and relevance of what you put in matters even more.
 
 ### Critical Thinking Questions
 
-4. You have an 8,192-token context window. Your system prompt uses 2,000 tokens and tool definitions use 500 tokens. Each conversation turn averages 200 tokens (user + assistant combined). You need to reserve 1,000 tokens for the model's response. Approximately how many turns can fit before the oldest turns must be dropped? Show your arithmetic, then explain what a user experiences at exactly the moment when turn dropping begins.
+4.  You have an 8,192-token context window.  Your system prompt uses 2,000 tokens and tool definitions use 500 tokens.  Each conversation turn averages 200 tokens (user + assistant combined).  You need to reserve 1,000 tokens for the model's response.  Approximately how many turns can fit before the oldest turns must be dropped?  Show your arithmetic, then explain what a user experiences at exactly the moment when turn dropping begins.
 
-   *Hint:* Available tokens for history = total - system prompt - tool defs - response reserve = 8,192 - 2,000 - 500 - 1,000 = 4,692 tokens. At 200 tokens/turn: 4,692 / 200 = 23.46 turns. What happens on turn 24? What does the user notice, if anything?
+   *Hint:* Available tokens for history = total - system prompt - tool defs - response reserve = 8,192 - 2,000 - 500 - 1,000 = 4,692 tokens.  At 200 tokens/turn: 4,692 / 200 = 23.46 turns.  What happens on turn 24?  What does the user notice, if anything?
 
-5. A user told the agent their name on turn 1. The agent addressed them correctly through turn 34. On turn 35, the agent calls them "User" instead of their name. What is the most likely technical explanation? What specific design choice at the beginning of the project could have prevented this from happening?
+5.  A user told the agent their name on turn 1.  The agent addressed them correctly through turn 34.  On turn 35, the agent calls them "User" instead of their name.  What is the most likely technical explanation?  What specific design choice at the beginning of the project could have prevented this from happening?
 
-   *Hint:* If turn 1 was dropped from the context window at around turn 23, why did the agent remember the name through turn 34? Perhaps the name appeared in subsequent turns as well. What if the agent had been designed to extract the user's name at turn 1 and store it in a persistent profile rather than relying on the name remaining in the context window?
+   *Hint:* If turn 1 was dropped from the context window at around turn 23, why did the agent remember the name through turn 34?  Perhaps the name appeared in subsequent turns as well.  What if the agent had been designed to extract the user's name at turn 1 and store it in a persistent profile rather than relying on the name remaining in the context window?
 
-6. Given the "Lost in the Middle" effect, where in the context window would you place each of the following: (a) the most important safety constraints the agent must always follow, (b) background reference documents retrieved from a knowledge base, (c) the most recent user message? Explain each placement decision and how it relates to the empirical finding.
+6.  Given the "Lost in the Middle" effect, where in the context window would you place each of the following: (a) the most important safety constraints the agent must always follow, (b) background reference documents retrieved from a knowledge base, (c) the most recent user message?  Explain each placement decision and how it relates to the empirical finding.
 
-   *Hint:* The LiM finding says beginning and end are most reliably attended to. The most recent user message logically belongs at the end (it is the current task). Safety constraints that must never be ignored should therefore go at the beginning. What about the background documents? Placing them in the middle means they may be less reliably used; is there a better placement? What are the trade-offs?
+   *Hint:* The LiM finding says beginning and end are most reliably attended to.  The most recent user message logically belongs at the end (it is the current task).  Safety constraints that must never be ignored should therefore go at the beginning.  What about the background documents?  Placing them in the middle means they may be less reliably used; is there a better placement?  What are the trade-offs?
 
 Since no context window can hold everything forever, the next question is how to selectively preserve information across sessions, and each strategy involves a different set of tradeoffs between cost, fidelity, and failure risk.
 
@@ -126,7 +126,7 @@ Since no context window can hold everything forever, the next question is how to
 
 ## Model 3: External Memory Strategies
 
-> **Why this matters:** A study assistant that only remembers the last 23 turns of a conversation is not very useful over a 16-week semester. External memory strategies are what make long-horizon personalization possible, but they introduce their own costs, failure modes, and privacy risks. Choosing the right strategy (or combination) for your specific use case is one of the first architectural decisions you make when designing a production agent system.
+> **Why this matters:** A study assistant that only remembers the last 23 turns of a conversation is not very useful over a 16-week semester.  External memory strategies are what make long-horizon personalization possible, but they introduce their own costs, failure modes, and privacy risks.  Choosing the right strategy (or combination) for your specific use case is one of the first architectural decisions you make when designing a production agent system.
 
 When conversations outlast the context window, the system must choose what to keep in the active window, what to drop entirely, and what to store externally for potential future retrieval.
 
@@ -137,47 +137,47 @@ When conversations outlast the context window, the system must choose what to ke
 | **Summary compression** | Use an LLM to summarize old turns into a compact representation; keep the summary in the context instead of the raw turns | Medium: the summary is typically 5-10x smaller than the original turns it replaces | Moderate: summaries capture gist but lose detail; the LLM may hallucinate facts it did not actually see | Medium: requires a summarization step with its own prompt and latency | The summarization LLM may hallucinate or omit important details; the original turns are gone once summarized |
 | **Vector store retrieval** | Embed all turns as vectors; at each new turn, retrieve the K most semantically relevant prior turns and include only those | Medium-high: embedding cost plus vector search cost; pay only for what is retrieved | High if retrieved, but misses are invisible (the relevant turn may not be retrieved if the query does not match well) | High: requires embedding infrastructure, vector database, relevance tuning, and retrieval quality evaluation | Retrieval misses: a turn from two weeks ago that is highly relevant to today's question may not be retrieved because today's phrasing does not match the original embedding |
 
-Long-term user preference memory can be maintained in a vector store: after each session, key facts (user preferences, progress milestones, important decisions) are extracted by an LLM and stored as structured embeddings. At the start of the next session, these facts are retrieved and injected at the top of the context window as a "user profile", before the conversation history begins.
+Long-term user preference memory can be maintained in a vector store: after each session, key facts (user preferences, progress milestones, important decisions) are extracted by an LLM and stored as structured embeddings.  At the start of the next session, these facts are retrieved and injected at the top of the context window as a "user profile", before the conversation history begins.
 
 ### Critical Thinking Questions
 
-7. You are building a study assistant that tracks a student's progress across an entire 16-week semester, with three sessions per week (approximately 48 sessions total, each lasting 20 turns, roughly 960 total turns). Recommend a memory strategy or combination of strategies. Justify your recommendation in terms of cost (how much does it cost to run the 960th turn?), fidelity (what does the agent remember from week 1 when you are in week 16?), and failure mode (what goes wrong most often?).
+7.  You are building a study assistant that tracks a student's progress across an entire 16-week semester, with three sessions per week (approximately 48 sessions total, each lasting 20 turns, roughly 960 total turns).  Recommend a memory strategy or combination of strategies.  Justify your recommendation in terms of cost (how much does it cost to run the 960th turn?), fidelity (what does the agent remember from week 1 when you are in week 16?), and failure mode (what goes wrong most often?).
 
-   *Hint:* No single strategy from the table above is optimal for all three criteria simultaneously. Think about which combination addresses each criterion: what keeps cost bounded (sliding window or retrieval), what preserves critical long-term information (summary compression or vector store), and what provides perfect fidelity for recent context (full history for recent turns). Sketch the architecture of your hybrid approach.
+   *Hint:* No single strategy from the table above is optimal for all three criteria simultaneously.  Think about which combination addresses each criterion: what keeps cost bounded (sliding window or retrieval), what preserves critical long-term information (summary compression or vector store), and what provides perfect fidelity for recent context (full history for recent turns).  Sketch the architecture of your hybrid approach.
 
-8. Summary compression uses an LLM to compress older conversation turns into a shorter summary that is kept in the context window instead of the raw turns. Identify at least two specific risks this introduces for factual accuracy, and describe how you would detect in production if a summary had introduced errors, before a student acts on the wrong information.
+8.  Summary compression uses an LLM to compress older conversation turns into a shorter summary that is kept in the context window instead of the raw turns.  Identify at least two specific risks this introduces for factual accuracy, and describe how you would detect in production if a summary had introduced errors, before a student acts on the wrong information.
 
-   *Hint:* The compression LLM might confidently summarize "the student found integration by parts easy" when the student actually said it was difficult, a hallucinated valence flip. The compression LLM might drop specific numbers (the student's quiz score of 67%) and keep only vague descriptions ("the student performed below average"). How would you detect these errors? Can you compare the summary against the original turns automatically?
+   *Hint:* The compression LLM might confidently summarize "the student found integration by parts easy" when the student actually said it was difficult, a hallucinated valence flip.  The compression LLM might drop specific numbers (the student's quiz score of 67%) and keep only vague descriptions ("the student performed below average").  How would you detect these errors?  Can you compare the summary against the original turns automatically?
 
-9. How would you design an empirical evaluation to test whether adding long-term memory retrieval actually improves agent response quality, and not just agent response confidence? Specify the metrics you would use, what the control condition would be (the baseline), what the treatment condition would be (what you are testing), and what a statistically meaningful improvement would look like.
+9.  How would you design an empirical evaluation to test whether adding long-term memory retrieval actually improves agent response quality, and not just agent response confidence?  Specify the metrics you would use, what the control condition would be (the baseline), what the treatment condition would be (what you are testing), and what a statistically meaningful improvement would look like.
 
-   *Hint:* "Improvement" could mean many things: higher accuracy on factual questions about prior sessions, higher user satisfaction ratings, more personalized responses, or fewer "I don't remember what we discussed" failures. Choose at least two metrics, one objective (automatically measurable) and one subjective (requires human or LLM-judge evaluation). What would your control condition look like: an agent with no external memory, or an agent with a different memory strategy?
+   *Hint:* "Improvement" could mean many things: higher accuracy on factual questions about prior sessions, higher user satisfaction ratings, more personalized responses, or fewer "I don't remember what we discussed" failures.  Choose at least two metrics, one objective (automatically measurable) and one subjective (requires human or LLM-judge evaluation).  What would your control condition look like: an agent with no external memory, or an agent with a different memory strategy?
 
 ---
 
 ## Exercises
 
-1. **MemGPT Mapping.**
+1.  **MemGPT Mapping.**
 
-   *What to do:* Read the abstract of the MemGPT paper (Packer et al., 2023, linked in Further Reading) and map each component of the MemGPT architecture to one of the four memory types from Model 1. The four MemGPT components are: main context (the active context window), archival storage (a persistent external database for long-term facts), recall storage (a searchable log of prior conversation turns), and the memory management functions (the agent's ability to move content between tiers). For each mapping, write one sentence explaining why that component corresponds to that memory type.
+   *What to do:* Read the abstract of the MemGPT paper (Packer et al., 2023, linked in Further Reading) and map each component of the MemGPT architecture to one of the four memory types from Model 1.  The four MemGPT components are: main context (the active context window), archival storage (a persistent external database for long-term facts), recall storage (a searchable log of prior conversation turns), and the memory management functions (the agent's ability to move content between tiers).  For each mapping, write one sentence explaining why that component corresponds to that memory type.
 
-   *Starter hint:* Main context -> working memory is straightforward. For the others, ask: does archival storage store time-indexed events (episodic) or general facts (semantic)? Does recall storage store what happened in past conversations (episodic) or how to perform tasks (procedural)? The memory management functions are trickier; they are more like metacognition than a memory type. How would you handle a component that does not fit neatly into one category?
+   *Starter hint:* Main context -> working memory is straightforward.  For the others, ask: does archival storage store time-indexed events (episodic) or general facts (semantic)?  Does recall storage store what happened in past conversations (episodic) or how to perform tasks (procedural)?  The memory management functions are trickier; they are more like metacognition than a memory type.  How would you handle a component that does not fit neatly into one category?
 
    *You've succeeded when:* Each of the four MemGPT components has a clear mapping with a one-sentence justification, and you explicitly acknowledge any components that are ambiguous between types rather than forcing a clean mapping.
 
-2. **Study Assistant Memory Design.**
+2.  **Study Assistant Memory Design.**
 
-   *What to do:* Design the complete memory architecture for a personal study assistant that tracks a student's learning progress across a 16-week semester. Specify: which of the four memory types you use for each category of information (recent conversation, domain knowledge, student preferences, past session summaries), where each type lives technically (in-context, SQL database, vector store, model weights), how information flows between memory tiers during a session and at session end, and how you handle the end-of-semester data (retain it, archive it, or delete it?).
+   *What to do:* Design the complete memory architecture for a personal study assistant that tracks a student's learning progress across a 16-week semester.  Specify: which of the four memory types you use for each category of information (recent conversation, domain knowledge, student preferences, past session summaries), where each type lives technically (in-context, SQL database, vector store, model weights), how information flows between memory tiers during a session and at session end, and how you handle the end-of-semester data (retain it, archive it, or delete it?).
 
-   *Starter hint:* Draw a data flow diagram with four boxes: Context Window (working memory), Session Database (episodic), Knowledge Base (semantic), and System Prompt (procedural). Label each arrow with what information flows along it and when: at session start, during a turn, after a turn, and at session end. For the end-of-semester question, think about the competing interests: the student wants their progress data for future courses; the institution wants to delete it for privacy; the model provider cannot delete information baked into its training weights. How do you design for all three?
+   *Starter hint:* Draw a data flow diagram with four boxes: Context Window (working memory), Session Database (episodic), Knowledge Base (semantic), and System Prompt (procedural).  Label each arrow with what information flows along it and when: at session start, during a turn, after a turn, and at session end.  For the end-of-semester question, think about the competing interests: the student wants their progress data for future courses; the institution wants to delete it for privacy; the model provider cannot delete information baked into its training weights.  How do you design for all three?
 
    *You've succeeded when:* Your design specifies a distinct technical mechanism for each of the four memory types, shows explicit data flow at each phase of a session, and addresses the end-of-semester scenario with a concrete policy rather than "we will figure it out later."
 
-3. **Token Cost Estimation.**
+3.  **Token Cost Estimation.**
 
-   *What to do:* Estimate the total token cost for a 100-turn conversation (assume 200 tokens per turn on average, combining user and assistant messages) under three strategies: (a) full history loaded on every turn, (b) sliding window of the last 10 turns only, (c) summary compression with a 300-token rolling summary replacing all but the last 5 turns. At an API rate of $0.002 per 1,000 tokens input, calculate the total dollar cost of the 100-turn conversation for each strategy and show your work.
+   *What to do:* Estimate the total token cost for a 100-turn conversation (assume 200 tokens per turn on average, combining user and assistant messages) under three strategies: (a) full history loaded on every turn, (b) sliding window of the last 10 turns only, (c) summary compression with a 300-token rolling summary replacing all but the last 5 turns.  At an API rate of $0.002 per 1,000 tokens input, calculate the total dollar cost of the 100-turn conversation for each strategy and show your work.
 
-   *Starter hint:* For strategy (a), the input to the LLM on turn N includes N prior turns. On turn 1 you send 1 × 200 = 200 tokens; on turn 100 you send 100 × 200 = 20,000 tokens. The total input tokens is the sum of 200 + 400 + 600 + ... + 20,000 = 200 × (1 + 2 + ... + 100) = 200 × 5,050 = 1,010,000 tokens. At $0.002/1K: $2.02 for strategy (a). Now compute strategies (b) and (c) using the same approach and compare.
+   *Starter hint:* For strategy (a), the input to the LLM on turn N includes N prior turns.  On turn 1 you send 1 × 200 = 200 tokens; on turn 100 you send 100 × 200 = 20,000 tokens.  The total input tokens is the sum of 200 + 400 + 600 + ... + 20,000 = 200 × (1 + 2 + ... + 100) = 200 × 5,050 = 1,010,000 tokens.  At $0.002/1K: $2.02 for strategy (a).  Now compute strategies (b) and (c) using the same approach and compare.
 
    *You've succeeded when:* You have a correct numerical result for all three strategies, the arithmetic is shown step-by-step, and you include a one-sentence interpretation of what each cost difference means for a startup deciding which strategy to use for a product with 10,000 daily active users.
 
@@ -185,34 +185,34 @@ Long-term user preference memory can be maintained in a vector store: after each
 
 ## Reflection Prompt
 
-**Personal level:** Think about a time when you used a tool or service that "forgot" your preferences between sessions: a website that reset your settings, a voice assistant that did not remember your name. How did that feel? How does persistent agent memory change the nature of the human-AI relationship, and how does it change what you would be willing to share with an agent?
+**Personal level:** Think about a time when you used a tool or service that "forgot" your preferences between sessions: a website that reset your settings, a voice assistant that did not remember your name.  How did that feel?  How does persistent agent memory change the nature of the human-AI relationship, and how does it change what you would be willing to share with an agent?
 
-**Technical level:** An agent that remembers everything about a user across months of interactions is more useful and more personalized, but it is also a larger and more sensitive data store that becomes a high-value target for data breaches. Where should agents be designed to forget by default, and what should require explicit user action to retain? Make a technical argument, not just a policy argument.
+**Technical level:** An agent that remembers everything about a user across months of interactions is more useful and more personalized, but it is also a larger and more sensitive data store that becomes a high-value target for data breaches.  Where should agents be designed to forget by default, and what should require explicit user action to retain?  Make a technical argument, not just a policy argument.
 
-**Societal level:** Who should make the decision about how much an agent remembers about you: the developer, the deploying organization, you as the user, or a regulator? Consider a student who uses a course AI tutor for four years of college: who owns that memory? If the student transfers to another university, can they take their memory data with them? If the AI company is acquired, what rights does the student have over four years of learning data?
+**Societal level:** Who should make the decision about how much an agent remembers about you: the developer, the deploying organization, you as the user, or a regulator?  Consider a student who uses a course AI tutor for four years of college: who owns that memory?  If the student transfers to another university, can they take their memory data with them?  If the AI company is acquired, what rights does the student have over four years of learning data?
 
 ---
 
--> **Coming Up Next:** This is the final activity in the CS357 sequence. In the semester synthesis, you will integrate memory, observability, robustness, deployment, documentation, and regulation into a complete design review of your capstone agent project.
+-> **Coming Up Next:** This is the final activity in the CS357 sequence.  In the semester synthesis, you will integrate memory, observability, robustness, deployment, documentation, and regulation into a complete design review of your capstone agent project.
 
 ---
 
 ## Further Reading
 
-- Packer et al. "MemGPT: Towards LLMs as Operating Systems" (2023). The paper that formalized the OS-style memory hierarchy for LLM agents: https://arxiv.org/abs/2310.08560
-- Liu et al. "Lost in the Middle: How Language Models Use Long Contexts" (2023). The empirical study behind the layout-matters finding: https://arxiv.org/abs/2307.03172
+- Packer et al. "MemGPT: Towards LLMs as Operating Systems" (2023).  The paper that formalized the OS-style memory hierarchy for LLM agents: https://arxiv.org/abs/2310.08560
+- Liu et al. "Lost in the Middle: How Language Models Use Long Contexts" (2023).  The empirical study behind the layout-matters finding: https://arxiv.org/abs/2307.03172
 - LangChain Memory module documentation: https://python.langchain.com/docs/modules/memory/
-- Zhong et al. "MemoryBank: Enhancing Large Language Models with Long-Term Memory" (2023). An alternative architecture to MemGPT using a structured memory bank with forgetting curves.
+- Zhong et al. "MemoryBank: Enhancing Large Language Models with Long-Term Memory" (2023).  An alternative architecture to MemGPT using a structured memory bank with forgetting curves.
 
-> **From the Memory and the Small Context Window session.** The vocabulary below (working, episodic, semantic, procedural) was introduced in that session and is developed at length here.
+> **From the Memory and the Small Context Window session.**  The vocabulary below (working, episodic, semantic, procedural) was introduced in that session and is developed at length here.
 
-## 2. A Vocabulary of Memories
+## 2.  A Vocabulary of Memories
 
 In this Part you will see how professional agent systems layer three types of memory (working memory, episodic summary, and long-term retrieval) then run a Python class that automatically compresses old conversation turns into a summary, so you can observe exactly what information survives compression and what is lost.
 
-**Why this matters:** Human memory is not a single thing: we distinguish between what you are thinking about right now (working memory), your episodic memories of specific past events, and procedural knowledge like how to ride a bike. Effective agent architectures mirror this layering, assigning each type of information to the storage tier that fits its access pattern. The key insight is that an agent should never carry information it is not likely to need in its next decision.
+**Why this matters:** Human memory is not a single thing: we distinguish between what you are thinking about right now (working memory), your episodic memories of specific past events, and procedural knowledge like how to ride a bike.  Effective agent architectures mirror this layering, assigning each type of information to the storage tier that fits its access pattern.  The thing to see is that an agent should never carry information it is not likely to need in its next decision.
 
-Practical agents layer several memory types. **Working memory**: the last few turns, kept verbatim; the model needs exact wording for what was just said. **Episodic summary**: a running compressed narrative of the session (e.g., "user wants X; we tried Y, it failed because Z"), rewritten by the model itself every few turns. **Long-term memory**: facts persisted *outside* the context in files or a vector store, retrieved by similarity when relevant; this is exactly the RAG machinery repurposed as memory. The agent's prompt is assembled fresh each turn:
+Practical agents layer several memory types.  **Working memory**: the last few turns, kept verbatim; the model needs exact wording for what was just said.  **Episodic summary**: a running compressed narrative of the session (e.g., "user wants X; we tried Y, it failed because Z"), rewritten by the model itself every few turns.  **Long-term memory**: facts persisted *outside* the context in files or a vector store, retrieved by similarity when relevant; this is exactly the RAG machinery repurposed as memory.  The agent's prompt is assembled fresh each turn:
 
 $$
 \text{prompt}_t = \text{system} + \text{summary}_t + \text{retrieve}(q_t, M_{\text{long}}) + \text{recent}_t + q_t
@@ -224,7 +224,7 @@ $$
 | Episodic summary | A bullet-point compression of older turns, written by the model | In the prompt, always present | Every turn, replacing old verbatim turns | `self.summary`: "Chemistry exam Dec 14; user is weaker in chemistry" |
 | Long-term memory | Persistent user preferences, past decisions, reference facts | External file or vector database | On demand, when the current question seems relevant | A Chroma collection of user facts retrieved by similarity to the current question |
 
-An agent must recall a user preference stated 200 turns ago in a months-long relationship. The architecture that handles this *without* growing the prompt is:
+An agent must recall a user preference stated 200 turns ago in a months-long relationship.  The architecture that handles this *without* growing the prompt is:
 
 [( )] Increase the context window to one million tokens
 [( )] Keep all turns verbatim and trust attention
