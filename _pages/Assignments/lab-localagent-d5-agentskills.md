@@ -6,6 +6,8 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 
 > **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own; your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
 
+> **This direction satisfies core Part 4.** Every student in the lab has to obtain, install, and use an agent skill. Other directions reach that by having an AI tool generate one; you reach it by authoring three from scratch here, which is the deep version of the same requirement. You do still owe Part 4's last step: package one of your skills as a `.skill` archive (a zip of the skill directory, with `SKILL.md` at its top level) and post it to the course discussion on the LMS portal, so the section can install it.
+
 > **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
 
 > **What this direction requires**
