@@ -75,11 +75,14 @@ info:
       proficient: Reviews results relative to the problem defined with thorough, specific considerations of need for further work.
   readings:
     - rtitle: "Agent Teams Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
+      rlink: "Activities/liascript-agentteams.md"
+      liapage: true
     - rtitle: "Project Studio Protocol"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
+      rlink: "Activities/liascript-projectstudio.md"
+      liapage: true
     - rtitle: "Explainability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
+      rlink: "Activities/liascript-explainability.md"
+      liapage: true
     - rtitle: "Problem Solving VALUE Rubric (AAC&U); the six problem-solving criteria in the rubric below are quoted from it"
       rlink: "https://www.lamar.edu/data-analytics-reporting-analysis/_files/documents/problem_solving.pdf"
 
@@ -336,9 +339,9 @@ Answer individually in your final submission:
 
 ### Background Reading and References
 
-- [The AI Maker Activity]({{ site.activity_url }}liascript-aimaker.md)
-- [Publishing Your Work Activity]({{ site.activity_url }}liascript-publishing.md)
-- [Hosting with Cloudflare Activity]({{ site.activity_url }}liascript-cloudflare.md)
+- [The AI Maker Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-aimaker.md)
+- [Publishing Your Work Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-publishing.md)
+- [Hosting with Cloudflare Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-cloudflare.md)
 
 This guide is not separately graded; its checklist is assessed within the Final Project rubric.
 
@@ -527,7 +530,7 @@ Answer these as part of your self-assessment before your project's publish gate:
 
 ### Background Reading and References
 
-- [Project Studio Protocol]({{ site.activity_url }}liascript-projectstudio.md)
+- [Project Studio Protocol]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-projectstudio.md)
 - [Final Project]({{ site.baseurl }}/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 

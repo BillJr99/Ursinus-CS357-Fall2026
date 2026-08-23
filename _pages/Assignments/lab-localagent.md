@@ -79,23 +79,31 @@ info:
       proficient: The program is submitted according to the directions, including a readme writeup describing the solution, a pair programming log with at least two timestamped role swaps and names recorded, and reflection answers that each cite a specific observation from the lab transcript rather than restating the prompt
   readings:
     - rtitle: "Agent Loop Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloop.md"
+      rlink: "Activities/liascript-agentloop.md"
+      liapage: true
     - rtitle: "Prompt Engineering Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md"
+      rlink: "Activities/liascript-promptengineering.md"
+      liapage: true
     - rtitle: "Ollama API Documentation"
       rlink: "https://github.com/ollama/ollama/blob/main/docs/api.md"
     - rtitle: "Agent Debugging Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentdebugging.md"
+      rlink: "Activities/liascript-agentdebugging.md"
+      liapage: true
     - rtitle: "Agent Observability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md"
+      rlink: "Activities/liascript-observability.md"
+      liapage: true
     - rtitle: "Advanced Agent Loops Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md"
+      rlink: "Activities/liascript-agentloopsadvanced.md"
+      liapage: true
     - rtitle: "The Local Agent Stack Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
+      rlink: "Activities/liascript-agentstack.md"
+      liapage: true
     - rtitle: "Docker from Zero Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md"
+      rlink: "Activities/liascript-docker.md"
+      liapage: true
     - rtitle: "MCP Server Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcprestoauth.md"
+      rlink: "Activities/liascript-mcprestoauth.md"
+      liapage: true
     - rtitle: "Hugging Face MCP Course (built with Anthropic)"
       rlink: "https://huggingface.co/learn/mcp-course/"
     - rtitle: "Hugging Face Agents Course (smolagents)"
@@ -107,9 +115,11 @@ info:
     - rtitle: "Outlines: Grammar-Constrained Generation"
       rlink: "https://github.com/dottxt-ai/outlines"
     - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-chessaicoach.md"
+      rlink: "Activities/liascript-chessaicoach.md"
+      liapage: true
     - rtitle: "RESTful LLM Access: The api/v1 Paradigm (prerequisite)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-restllmapi.md"
+      rlink: "Activities/liascript-restllmapi.md"
+      liapage: true
 
 tags:
   - agents
@@ -141,15 +151,15 @@ In this lab, you and a partner will build a working agent from first principles:
 
 **Prep decks this lab assumes.** Work through whichever apply to your direction before you start:
 
-- [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.activity_url }}liascript-structuredoutputs.md): all directions.
-- [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.activity_url }}liascript-restllmapi.md): all directions.
-- [Docker from First Principles]({{ site.activity_url }}liascript-docker.md): Directions 2 and 3 only; do the installs at home first.
-- [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.activity_url }}liascript-mcprestoauth.md): Direction 4 only.
+- [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-structuredoutputs.md): all directions.
+- [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-restllmapi.md): all directions.
+- [Docker from First Principles]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-docker.md): Directions 2 and 3 only; do the installs at home first.
+- [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcprestoauth.md): Direction 4 only.
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Agent Loop Activity]({{ site.activity_url }}liascript-agentloop.md): the perceive/plan/act/remember cycle
-- [Prompt Engineering Activity]({{ site.activity_url }}liascript-promptengineering.md): ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
+- [Agent Loop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md): the perceive/plan/act/remember cycle
+- [Prompt Engineering Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-promptengineering.md): ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
 
 **Tools to install:**
 
@@ -881,7 +891,7 @@ Network calls can fail transiently. Wrap `call_model` so that on `requests.Timeo
 Run your full 8-task evaluation against both `llama3.2` and a second model available via `ollama pull` (e.g., `mistral`). Hold temperature and seed fixed. Report the accuracy delta, the average step count, and any qualitative differences in how each model formats its Thought lines. Hypothesize why the models differ.
 
 **Challenge 4 (wiring it to a server): Drive the loop over the OpenWebUI API.**
-Your agent so far calls a local model directly. Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model. Keep everything else (the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list) identical. The worked example is in the [Agent Loop activity]({{ site.activity_url }}liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."* In your writeup, note which lines changed (only the transport) and which did not (the whole loop); that invariance is the lesson.
+Your agent so far calls a local model directly. Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model. Keep everything else (the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list) identical. The worked example is in the [Agent Loop activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."* In your writeup, note which lines changed (only the transport) and which did not (the whole loop); that invariance is the lesson.
 
 ---
 

@@ -67,19 +67,26 @@ info:
       proficient: The work is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, all human score sheets, and reflection answers that each cite a specific agreement figure (kappa or percent agreement), bias effect size, or evidence-faithfulness finding from the lab rather than restating the prompt
   readings:
     - rtitle: "LLM-as-Judge Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
+      rlink: "Activities/liascript-llmasjudge.md"
+      liapage: true
     - rtitle: "Evaluating Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "Activities/liascript-evaluatingoutputs.md"
+      liapage: true
     - rtitle: "Testing Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
+      rlink: "Activities/liascript-testingagents.md"
+      liapage: true
     - rtitle: "LLM as Judge Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md"
+      rlink: "Activities/liascript-llmasjudge.md"
+      liapage: true
     - rtitle: "Observability Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-observability.md"
+      rlink: "Activities/liascript-observability.md"
+      liapage: true
     - rtitle: "Publishing Activity: GHCR, Docker Hub, and npm"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-publishing.md"
+      rlink: "Activities/liascript-publishing.md"
+      liapage: true
     - rtitle: "Coding Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
+      rlink: "Activities/liascript-codingagents.md"
+      liapage: true
     - rtitle: "Ollama API Documentation"
       rlink: "https://github.com/ollama/ollama/blob/main/docs/api.md"
     - rtitle: "promptfoo Documentation (Part 5, Option A)"
@@ -116,12 +123,12 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 ## Before You Start
 
-**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.activity_url }}liascript-testingagents.md) sets up the judge-calibration work this lab grades.
+**Prep deck.** [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-testingagents.md) sets up the judge-calibration work this lab grades.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [LLM-as-Judge Activity]({{ site.activity_url }}liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
-- [Evaluating Outputs Activity]({{ site.activity_url }}liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
+- [LLM-as-Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
+- [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
 
 **Tools to install:**
 
