@@ -8,7 +8,7 @@ info:
   purpose: "To synthesize the entire course (and the semester-long Project Thread) into one substantial, community-grounded final project: a system you build, an audit you evidence, or an artifact you publish, carried from proposal through sprints to a multi-audience Demo Day, with the process graded alongside the product."
   tilt:
     task: "With your standing team, choose one of three directions: build a custom agent team, perform a responsible AI audit, or build and publish an open-source agent, then propose it, build it in sprints with a community partner in the loop, and present it at Demo Day with a partner-facing artifact."
-    criteria: "Assessed on three families: Approach (sound methods and justified design decisions), Process and Professionalism (meeting discipline, communication, project management, check-ins, charter adherence), and Product (the working system, audit, or publication, the Demo Day presentation, and the partner-facing artifact); see the rubric below for the full breakdown."
+    criteria: "Assessed on three course families worth 60 points between them, Approach (sound methods and justified design decisions), Process and Professionalism (meeting discipline, communication, project management, check-ins, charter adherence), and Product (the working system, audit, or publication, the Demo Day presentation, and the partner-facing artifact), plus the six problem-solving criteria of the AAC&U VALUE Problem Solving Rubric worth 40; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To carry one substantial project from proposal through sprints to Demo Day, choosing the direction (build, audit, or publish) that best serves the team's stakeholder problem
@@ -19,24 +19,60 @@ info:
     - To communicate the result to a multi-audience of technical peers and community stakeholders, and to disclose honestly how and why AI tools were used at the proposal and at the final submission
     - To ground the project in the team's Stakeholder Brief and Literature Review and use the Open Questions to assess growth (Goals 11, 12, 13, 14, 15)
   rubric:
-    - weight: 30
+    - weight: 18
       description: Approach, sound methods and justified design decisions
       preemerging: The work shows no evidence of a deliberate approach, decisions are unexplained defaults, the direction's required rigor (baseline evaluation, framework application, or gap verification) is absent, and the project does not build on the Stakeholder Brief or Literature Review
       beginning: An approach is described but is generic or unjustified, design decisions are asserted rather than argued, the direction's evidence of rigor is attempted but incomplete (an evaluation without a baseline, a framework applied superficially, a gap asserted without evidence), or the connection to the stakeholder problem is nominal
       progressing: The approach is deliberate and mostly sound, major design decisions are justified with reference to course patterns or evidence, the direction's rigor requirement is substantially met (baseline comparison with metrics, systematic framework application with citations, or verified gap with linked evidence), and the proposal builds on the Stakeholder Brief and Literature Review, with minor gaps in how alternatives were considered or in the failure analysis
       proficient: The approach is deliberate, documented, and defensible, every major decision names the alternative that was rejected and the course pattern, principle, or evidence that motivated the choice; the direction's rigor requirement is fully met (Direction A - a fixed evaluation set compared against a monolith baseline with at least three failure modes documented from transcripts and at least one mitigation re-measured; Direction B - every major framework step yields a specific, cited finding with at least three mechanistic failure modes distinguishing materialized from foreseeable risks; Direction C - an independently verifiable ecosystem gap with named alternatives, a one-sentence minimum viable scope, and at least three non-trivially specified property tests); and the work is explicitly grounded in the Stakeholder Brief, Literature Review, and the partner's stated needs (Goals 11, 12)
-    - weight: 30
+    - weight: 18
       description: Process and Professionalism, meetings, communication, project management, check-ins, charter adherence
       preemerging: There is no evidence of team process, no meeting agendas or notes, no decision log, no role rotation, missing check-ins and signatures, and no AI-use disclosure on the proposal or final submission
       beginning: Some process artifacts exist but are spotty, meeting notes or the decision log have gaps, one or more intra-team check-ins are missing, the GANTT-style timeline is absent or stale, signatures are missing from a milestone, or an AI-use disclosure is absent from the proposal or the final submission
       progressing: The Team Playbook is followed with minor lapses, meeting agendas and notes, the decision log, role rotation, the project timeline, all three intra-team check-ins, all-member signatures, and AI-use disclosures on the proposal and final submission are present, but one element is thin, late, or inconsistently maintained (Goal 13)
       proficient: Team process is visible and current throughout, every meeting has a posted agenda and notes with owners and dates; the decision log records alternatives and rationale; project management is real (a maintained GANTT-style timeline with named owners, sprint boundaries honored, runnable increments at each sprint); all three intra-team check-ins are submitted on time; the team demonstrably operates under its signed charter, including its conflict protocol; roles rotate per sprint and every student is primary author of at least one section or component of every team deliverable (editable by teammates); each team document's version or commit history shows a real drafting trajectory rather than a single late paste; every milestone carries all members' signatures and an AI-use disclosure stating specifically what was AI-assisted, with what tool, why, and how it was verified (Goal 13)
-    - weight: 40
+    - weight: 24
       description: Product, the working system, audit, or publication; the Demo Day presentation; and the partner-facing artifact
       preemerging: The direction's core artifact is missing or does not function, the system does not run, the audit lacks findings and governance, or nothing was published; the Demo Day presentation is missing or covers only a happy path with no disclosed limitation; no partner-facing artifact exists
       beginning: The core artifact partially meets its direction's requirements but would not be usable by its intended audience without significant rework, the system runs but is unreproducible or unevaluated, the audit's governance recommendations lack owners, thresholds, or timelines, or the published artifact lacks working documentation, tests, or a registry presence; the presentation serves only a technical audience or omits the failure disclosure; the partner-facing artifact is missing or unusable by the partner
       progressing: The core artifact meets its direction's requirements, a running, documented, evaluated system with committed governance (A); a complete risk analysis and adoptable governance document (B); or a published, installable, tested, documented artifact with a community exchange (C), and Demo Day includes both a technical segment and a stakeholder-facing segment with a partner-facing artifact, with minor gaps in polish, accessibility, or the honesty of the limitations discussion, and a public repository or write-up exists but has gaps in recruiter-legibility (a README a stranger could not follow, or no contribution attribution) (Goal 14)
       proficient: "The core artifact fully meets its direction's requirements and is honest about its limits. Direction A: the system runs from a fresh start following the README; configuration and seeds are externalized and pinned; CI passes on the submission SHA; evidence is surfaced to the user with a confirmation gate on consequential actions; and the committed GOVERNANCE.md matches deployed behavior. Direction B: the artifact package (risk analysis with at least 8 citations; governance document with monitoring plan, incident response, communication plan, and appeal process) could be handed to a regulator without modification. Direction C: the artifact is live and installable from a public registry with green CI, a stranger-tested quickstart, CONTRIBUTING.md and GOVERNANCE.md, and a documented substantive community exchange. All directions: the Demo Day presentation serves the multi-audience: a live technical segment with a rehearsed failure or limitation disclosure and a plain-language stakeholder segment, with every teammate speaking substantively and every teammate able to present any part; the partner-facing artifact (one-page brief, demo video, or deployed tool) is something the community partner can actually use, presented at Demo Day and included in the submission; and the project leaves a public, recruiter-legible trace, a public repository (Directions A and C) or a public write-up or portfolio page (Direction B) whose README or summary answers what it is, why it matters, and how to run or read it in thirty seconds, names each member's contribution, and is suitable for linking from a resume (Goal 14)"
+    - weight: 8
+      description: "Define Problem (AAC&U VALUE Problem Solving); here, the stakeholder problem carried from your Brief"
+      preemerging: Demonstrates a limited ability in identifying a problem statement or related contextual factors.
+      beginning: Begins to demonstrate the ability to construct a problem statement with evidence of most relevant contextual factors, but problem statement is superficial.
+      progressing: Demonstrates the ability to construct a problem statement with evidence of most relevant contextual factors, and problem statement is adequately detailed.
+      proficient: Demonstrates the ability to construct a clear and insightful problem statement with evidence of all relevant contextual factors.
+    - weight: 6
+      description: "Identify Strategies (AAC&U VALUE Problem Solving); here, the directions and architectures you weighed before choosing"
+      preemerging: Identifies one or more approaches for solving the problem that do not apply within a specific context.
+      beginning: Identifies only a single approach for solving the problem that does apply within a specific context.
+      progressing: Identifies multiple approaches for solving the problem, only some of which apply within a specific context.
+      proficient: Identifies multiple approaches for solving the problem that apply within a specific context.
+    - weight: 7
+      description: "Propose Solutions/Hypotheses (AAC&U VALUE Problem Solving); here, your proposal and its design decisions"
+      preemerging: Proposes a solution/hypothesis that is difficult to evaluate because it is vague or only indirectly addresses the problem statement.
+      beginning: Proposes one solution/hypothesis that is "off the shelf" rather than individually designed to address the specific contextual factors of the problem.
+      progressing: "Proposes one or more solutions/hypotheses that indicates comprehension of the problem. Solutions/hypotheses are sensitive to contextual factors as well as the one of the following: ethical, logical, or cultural dimensions of the problem."
+      proficient: "Proposes one or more solutions/hypotheses that indicates a deep comprehension of the problem. Solution/hypotheses are sensitive to contextual factors as well as all of the following: ethical, logical, and cultural dimensions of the problem."
+    - weight: 7
+      description: "Evaluate Potential Solutions (AAC&U VALUE Problem Solving); here, your pre-mortem, decision log, and rejected alternatives"
+      preemerging: "Evaluation of solutions is superficial (for example, contains cursory, surface level explanation) and includes the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
+      beginning: "Evaluation of solutions is brief (for example, explanation lacks depth) and includes the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
+      progressing: "Evaluation of solutions is adequate (for example, contains thorough explanation) and includes the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
+      proficient: "Evaluation of solutions is deep and elegant (for example, contains thorough and insightful explanation) and includes, deeply and thoroughly, all of the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
+    - weight: 6
+      description: "Implement Solution (AAC&U VALUE Problem Solving); here, the sprints and the artifact they produced"
+      preemerging: Implements the solution in a manner that does not directly address the problem statement.
+      beginning: Implements the solution in a manner that addresses the problem statement but ignores relevant contextual factors.
+      progressing: Implements the solution in a manner that addresses multiple contextual factors of the problem in a surface manner.
+      proficient: Implements the solution in a manner that addresses thoroughly and deeply multiple contextual factors of the problem.
+    - weight: 6
+      description: "Evaluate Outcomes (AAC&U VALUE Problem Solving); here, your evaluation, limitations, and what you would do next"
+      preemerging: Reviews results superficially in terms of the problem defined with no consideration of need for further work.
+      beginning: Reviews results in terms of the problem defined with little, if any, consideration of need for further work.
+      progressing: Reviews results relative to the problem defined with some consideration of need for further work.
+      proficient: Reviews results relative to the problem defined with thorough, specific considerations of need for further work.
   readings:
     - rtitle: "Agent Teams Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
@@ -44,6 +80,8 @@ info:
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
     - rtitle: "Explainability Activity"
       rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-explainability.md"
+    - rtitle: "Problem Solving VALUE Rubric (AAC&U); the six problem-solving criteria in the rubric below are quoted from it"
+      rlink: "https://www.lamar.edu/data-analytics-reporting-analysis/_files/documents/problem_solving.pdf"
 
 tags:
   - final-project
@@ -125,9 +163,17 @@ This project is deliberately community-grounded: **every team connects its proje
 
 Your final-project grade combines **team output**, **individual contribution**, and **individual understanding**:
 
-- **Team output** is the team's score on the three rubric families below, applied to the proposal (25 points) and the final submission and Demo Day (75 points).
+- **Team output** is the team's score on the rubric below, applied to the proposal (25 points) and the final submission and Demo Day (75 points). The rubric has two halves: three **course families** (Approach, Process and Professionalism, Product) worth 60 points between them, and six **problem-solving criteria** worth 40, described next.
 - **Individual contribution**: every student must be **primary author of at least one section or component** of every team deliverable, named in the document, and editable by teammates. Your primary-author sections, check-in record, and role-rotation history are your contribution evidence. Riding along is not a strategy, and neither is doing everything yourself.
 - **Individual understanding** is assessed through the **Demo Day question-and-answer** and your **individual reflection**: can you explain and defend any part of the work, including parts you did not primarily author?
+
+### The problem-solving half of the rubric
+
+Six of the rubric's criteria (Define Problem, Identify Strategies, Propose Solutions/Hypotheses, Evaluate Potential Solutions, Implement Solution, Evaluate Outcomes) are quoted verbatim from the **Problem Solving VALUE Rubric**, published by the Association of American Colleges and Universities and reproduced here under its permission for classroom use. AAC&U's four performance levels map onto this course's four: *Benchmark 1* is read as pre-emerging, *Milestone 2* as beginning, *Milestone 3* as progressing, and *Capstone 4* as proficient. AAC&U states that its rubrics "can and should be translated into the language of individual campuses, disciplines, and even courses," and that they were designed for program-level assessment rather than for grading; the translation into a graded course rubric, and the weights, are mine.
+
+They earn their place because of what they measure. In AAC&U's words the rubric "is designed to measure the quality of a process, rather than the quality of an end-product," which is the half of this project the three course families are least able to see. That is also why AAC&U warns that "the final product of an assignment that required problem resolution is insufficient without insight into the student's problem-solving process." Your decision log, your check-ins, your pre-mortem, and your reflections are that insight, and they are where these six criteria will mostly be scored. A polished artifact with no visible record of how you got there cannot earn proficient on them.
+
+Read them as the arc you have actually walked: the Stakeholder Brief is *Define Problem*, the direction and architecture you weighed is *Identify Strategies*, the proposal is *Propose Solutions*, the pre-mortem and rejected alternatives are *Evaluate Potential Solutions*, the sprints are *Implement Solution*, and your limitations and next steps are *Evaluate Outcomes*.
 
 **AI-use disclosure:** both the proposal and the final submission must include a disclosure statement of **how and why AI tools were used**: what was AI-assisted, with what tool, why you chose to use it there, and how the output was verified. Disclosed, verified AI assistance is professional practice; undisclosed AI assistance is an integrity violation.
 
