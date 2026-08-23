@@ -271,7 +271,7 @@ You are graded under the same rubric as everyone else, on the [core lab page]({{
 | Symptom | Likely cause | Fix |
 |---|---|---|
 | `npx promptfoo` cannot find a provider | The provider string is wrong, or Ollama is not running | Confirm `curl -s http://localhost:11434/api/tags` answers, then use `ollama:chat:llama3.2` exactly |
-| Every case fails with an empty output | The prompt template references a variable that is not in the test case | promptfoo does not error on an unknown variable; it substitutes nothing. Check that every `{{ }}` name matches a `vars` key |
+| Every case fails with an empty output | The prompt template references a variable that is not in the test case | promptfoo does not error on an unknown variable; it substitutes nothing. Check that every {% raw %}`{{ }}`{% endraw %} name matches a `vars` key |
 | `llm-rubric` verdicts look random | The grading model and the model under test are the same, and the rubric is vague | Sharpen the rubric's level descriptors first. If verdicts stay unstable, say so and quantify it; that instability is a real finding about LLM-as-judge |
 | Percent agreement is suspiciously high | The partners scored together, or one saw the judge's output first | Rescore blind. The value of this part is entirely in the independence |
 | Results change between identical runs | Temperature is not pinned in the config | Set `temperature: 0` under the provider config, not only in the prompt |
