@@ -704,7 +704,6 @@ schedule:
   - dtitle: "Project: Final Project Proposal Due"
     dlink: "Projects/FinalProject"
     points: "25"
-    rubricpath: "_pages/Projects/proj-finalproject.md"
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 1 - Earth: the mineralogical and energy substrate of computation"
   - rtitle: "Going further: Cost Optimization for AI Systems, caching, batching, and choosing the smallest model that works"
