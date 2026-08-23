@@ -164,6 +164,12 @@ These are the technical books assigned across the course schedule; a chapter you
 - Bowman, S. R. (2023). Eight things to know about large language models. *arXiv:2304.00612.*
 - Chalmers, D. J. What we talk to when we talk to language models. https://philarchive.org/rec/CHAWWT-8
 
+### Ethical and Religious Perspectives
+
+- Leo XIV. (2026). *Magnifica Humanitas: On Safeguarding the Human Person in the Time of Artificial Intelligence.* Encyclical letter, 15 May 2026. *(Chapter Three, "Technology and Dominance; The Grandeur of Humanity in Light of AI," and Chapter Four, "Safeguarding Humanity at a Time of Transformation: Truth, Work, Freedom," are the chapters closest to this course.)* https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html
+
+This one rewards the **Competing Texts** format above: stage it against a techno-optimist source making a claim about the same capability, and the session writes itself. Note that it is a work of moral argument rather than a technical or empirical paper, so your questions should press on its premises and their consequences, not on its benchmarks.
+
 ### Policy and Reports
 
 - NIST AI Risk Management Framework (AI RMF 1.0), 2023.
