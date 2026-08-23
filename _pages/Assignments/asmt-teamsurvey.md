@@ -8,7 +8,7 @@ info:
   purpose: "To form semester-long teams around compatibility of schedules and working styles (the strongest predictors of team friction) so your team's energy goes into the project instead of into calendar archaeology."
   tilt:
     task: "Answer a short structured questionnaire about your availability, working style, and project interests, individually. The questionnaire is on the Project Thread page (it is not in the LMS) and you submit your answers to this assignment."
-    criteria: "Graded on completeness and thoughtfulness only, never on the content of your answers, with specific and self-aware responses scoring highest; see the rubric below for the full breakdown."
+    criteria: "I grade this on completeness and thoughtfulness only, never on the content of your answers, with specific and self-aware responses scoring highest.  The full breakdown is in the rubric below."
   points: 10
   goals:
     - To provide the structured information about availability, working style, and interests that the instructor uses to form compatible semester-long project teams, as the first step in collaborating to develop a strategic intervention (Goal 13)
@@ -24,7 +24,7 @@ info:
       description: Thoughtfulness
       preemerging: Answers are perfunctory or copied between items
       beginning: Answers are generic, they could describe any student ("I like teams that communicate well") and give the instructor nothing to match on
-      progressing: Answers are specific to you, with at least one item (challenges, energy sources, pet peeves, or what matters most) revealing something a teammate would genuinely need to know, but the free-response items are thin
+      progressing: Answers are specific to you, with at least one item (challenges, energy sources, pet peeves, or what matters most) revealing something a teammate would want to know, but the free-response items are thin
       proficient: The free-response items are specific and self-aware, the challenges and pet-peeve answers describe real situations rather than abstractions, the "what matters most" answer takes a position, and the whole survey would let a stranger predict what you are like to work with (Goal 13)
   readings:
     - rtitle: "The Project Thread (semester map and team playbook)"
@@ -39,11 +39,11 @@ tags:
 
 ---
 
-This short, individually submitted survey is the first milestone of the [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your answers are the data the instructor uses to form the standing teams you will work with all semester. It is handed out at the second class meeting and due at the following class meeting; teams are announced the session after that. See the [course schedule]({{ site.baseurl }}/) for the dates.
+This short survey, which you submit individually, is the first milestone of the [Project Thread]({{ site.baseurl }}/Projects/PBLThread).  Your answers are what I use to form the standing teams you'll work with all semester.  It is handed out at the second class meeting and due at the following class meeting; teams are announced the session after that.  See the [course schedule]({{ site.baseurl }}/) for the dates.
 
-**How teams are formed, full transparency.** Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics: members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict, while interests and perspectives are allowed to vary. In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you. You will not be asked to self-select teams, and friend requests are not part of the algorithm. Accurate answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
+**How teams are formed, full transparency.**  Teams are formed by the instructor from this survey using the practice supported by the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)): teams are *homogenized* on logistics: members are grouped so that meeting availability windows overlap and deadline styles are compatible, because mismatches there are the most common cause of avoidable team conflict, while interests and perspectives are allowed to vary.  In other words: you will be placed with people you *can meet with* and whose *clocks run at your speed*, not necessarily with people who think like you.  You will not be asked to self-select teams, and friend requests are not part of the algorithm.  Accurate answers therefore serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
-**Confidentiality.** Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else. What your future team learns about your working style, it learns from *you*, at the charter activity, where you will be invited to share whichever of these answers you want your teammates to take seriously.
+**Confidentiality.**  Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else.  What your future team learns about your working style, it learns from *you*, at the charter activity, where you will be invited to share whichever of these answers you want your teammates to take seriously.
 
 <!-- Instructor note (not rendered): when forming teams from these responses, take care not to isolate students from marginalized groups as the lone member of a team where they may be the "only one" (the only woman, the only student of color, etc.). Where numbers permit, place at least two together; where they do not, check in with the student privately before finalizing rosters. -->
 
@@ -64,40 +64,40 @@ This short, individually submitted survey is the first milestone of the [Project
 
 ## Before You Start
 
-**Time:** fifteen to twenty minutes. There is nothing to install and nothing to prepare.
+**This one is short.**  There is nothing to install and nothing to prepare.
 
-**Why the honest answer beats the impressive one.** I build the teams from these answers, balancing schedules, working styles, and how people handle deadlines. Every question here is a question I will actually use. Overstating your availability produces a team that plans around hours you do not have; understating your interest produces a team working on something you do not care about. Neither is a good semester.
+**Why the honest answer beats the impressive one.**  I build the teams from these answers, balancing schedules, working styles, and how people handle deadlines.  Every question here is a question I will actually use.  Overstating your availability produces a team that plans around hours you do not have; understating your interest produces a team working on something you do not care about.  Neither is a good semester.
 
 **Two questions worth thinking about before you type:**
 
-- *When do you actually work?* Not when you intend to. Look at last week.
-- *What happens when you fall behind?* Everyone does at some point. Teams work when people know in advance how their teammates behave under pressure, and charter around it.
+- *When do you actually work?*  Not when you intend to.  Look at last week.
+- *What happens when you fall behind?*  Everyone does at some point.  Teams work when people know in advance how their teammates behave under pressure, and charter around it.
 
-> **You've succeeded when** every question is answered, and you would not wince if a future teammate read your answers. They are confidential to me, but write them as though the person you will be paired with is going to have to live with them, because they are.
+> **You've succeeded when** every question is answered, and you would not wince if a future teammate read your answers.  They are confidential to me, but write them as though the person you will be paired with is going to have to live with them, because they are.
 
 ---
 
 ## Part 1: The Survey
 
-**The survey is not in the LMS.** The questionnaire lives on the [Project Thread page]({{ site.baseurl }}/Projects/PBLThread#step-1-the-team-formation-survey). Write your answers and submit them **individually to this assignment** in Canvas; a text entry or an uploaded document is fine. Do not email your answers. The questions are reproduced below so you can think before you type:
+The survey is not in the LMS. The questionnaire lives on the [Project Thread page]({{ site.baseurl }}/Projects/PBLThread#step-1-the-team-formation-survey).  Write your answers and submit them **individually to this assignment** in Canvas; a text entry or an uploaded document is fine.  Do not email your answers.  The questions are reproduced below so you can think before you type:
 
 **Logistics (matched on directly):**
 
-1. **Weekly schedule grid:** List every recurring window in which you could *actually* meet a team outside class: not windows you could theoretically clear, but ones you would reliably show up for, week after week. Mark at least three, and mark class times, work shifts, practices, and commutes as unavailable so the grid reflects your real week.
-2. **Deadline style:** When do you genuinely do your best work: *well before the deadline* or *at the deadline*? Choose one and add a sentence describing your last group project's rhythm.
-3. **Time and energy preferences:** When in the day do you do your best focused work? How many hours per week can you realistically commit to this course's project beyond class time?
+1.  **Weekly schedule grid:** List every recurring window in which you could *actually* meet a team outside class: not windows you could theoretically clear, but ones you would reliably show up for, week after week.  Mark at least three, and mark class times, work shifts, practices, and commutes as unavailable so the grid reflects your real week.
+2.  **Deadline style:** When do you actually do your best work: *well before the deadline* or *at the deadline*?  Choose one and add a sentence describing your last group project's rhythm.
+3.  **Time and energy preferences:** When in the day do you do your best focused work?  How many hours per week can you realistically commit to this course's project beyond class time?
 
 **Working style (confidential like everything here; you choose what to re-share at the charter activity):**
 
-4. **Challenges:** What is genuinely hard for you in team settings? (Examples: speaking up in groups, asking for help, saying no to extra work.)
-5. **Energy sources and drains:** What kinds of tasks and teamwork leave you energized, and what kinds drain you? (Examples: brainstorming energizes you but long silent work sessions drain you, or exactly the reverse; debugging alone recharges you but presenting depletes you.)
-6. **Pet peeves:** What teammate behavior reliably frustrates you? Be specific.
-7. **What matters most:** Complete the sentence: "For me, a team is working well when ______." Take a position. Then answer its mirror: what matters most to *you* in a teammate?
-8. **Role tendencies:** In past teams, which role have you naturally gravitated toward: the **facilitator** who keeps the meeting moving, the **builder** who wants to make the thing, the **writer** who shapes the words, or the **skeptic** who asks "are we sure?" Name your top one or two. (This informs team formation only: on your team, roles **rotate** on a schedule, so everyone will practice every job, including the ones they would not volunteer for.)
+4.  **Challenges:** What is hard for you in team settings?  (Examples: speaking up in groups, asking for help, saying no to extra work.)
+5.  **Energy sources and drains:** What kinds of tasks and teamwork leave you energized, and what kinds drain you?  (Examples: brainstorming energizes you but long silent work sessions drain you, or exactly the reverse; debugging alone recharges you but presenting depletes you.)
+6.  **Pet peeves:** What teammate behavior reliably frustrates you?  Be specific.
+7.  **What matters most:** Complete the sentence: "For me, a team is working well when ______." Take a position.  Then answer its mirror: what matters most to *you* in a teammate?
+8.  **Role tendencies:** In past teams, which role have you naturally gravitated toward: the **facilitator** who keeps the meeting moving, the **builder** who wants to make the thing, the **writer** who shapes the words, or the **skeptic** who asks "are we sure?"  Name your top one or two.  (This informs team formation only: on your team, roles **rotate** on a schedule, so everyone will practice every job, including the ones they would not volunteer for.)
 
 **Interests (secondary matching signal):**
 
-9. **Project-domain interests:** Rank your top two or three domains you would find meaningful for a semester-long, stakeholder-grounded project. Example multidisciplinary domains (you may propose others):
+9.  **Project-domain interests:** Rank your top two or three domains you would find meaningful for a semester-long, stakeholder-grounded project.  Example multidisciplinary domains (you may propose others):
    - **Health** (campus wellness, public health information, accessibility)
    - **Sustainability / environment** (campus energy, food systems, local conservation)
    - **Education** (tutoring, advising, K-12 outreach, study support)
@@ -107,8 +107,8 @@ This short, individually submitted survey is the first milestone of the [Project
 
 **Confidential (seen only by the instructor):**
 
-10. **(Optional, confidential)** Name **at most one** person in this course you would prefer not to work with. This field is read **only by the instructor**, is never shared or acknowledged, requires no explanation, and is a preference the instructor will try to honor, **never a guarantee**. Answering it has no effect on your grade; it exists so that a known-bad pairing never has to be explained publicly.
-11. **(Optional, confidential)** Is there anything else the instructor should know to help your team thrive? Accommodations, outside commitments, past team experiences you do not want to repeat, something you are working on as a teammate, anything at all.
+10.  **(Optional, confidential)** Name **at most one** person in this course you would prefer not to work with.  This field is read **only by the instructor**, is never shared or acknowledged, requires no explanation, and is a preference the instructor will try to honor, **never a guarantee**.  Answering it has no effect on your grade; it exists so that a known-bad pairing never has to be explained publicly.
+11.  **(Optional, confidential)** Is there anything else the instructor should know to help your team thrive?  Accommodations, outside commitments, past team experiences you do not want to repeat, something you are working on as a teammate, anything at all.
 
 ---
 
@@ -120,8 +120,8 @@ This short, individually submitted survey is the first milestone of the [Project
 
 Answer briefly in your submission (not in the survey answers themselves):
 
-- *How should we live together?* Which of your survey answers do you most hope your future teammates take seriously, and why?
-- If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
+- *How should we live together?*  Which of your survey answers do you most hope your future teammates take seriously, and why?
+- If collaboration with a buddy was permitted, did you work with a buddy on this assignment?  If so, who?  If not, do you certify that this submission represents your own original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours it took you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
 ---
@@ -130,6 +130,6 @@ Answer briefly in your submission (not in the survey answers themselves):
 
 - [ ] Every question answered, including the ones about availability and about how I work under pressure.
 - [ ] My availability reflects last week's reality, not this week's intentions.
-- [ ] I named at least one topic or problem domain I would genuinely want to spend a semester on.
+- [ ] I named at least one topic or problem domain I would want to spend a semester on.
 - [ ] I flagged anything that would make a particular pairing hard, if there is anything.
 - [ ] Submitted before the deadline, since teams are formed from the submissions I have.

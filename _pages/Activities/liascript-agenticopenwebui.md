@@ -14,15 +14,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Supplemental Tutorial: Agentic OpenWebUI, Tools, Uploads, and Multi-Agent Workflows
 
-You already run OpenWebUI as a chat window over Ollama. Today we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive. The arc: **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
+You already run OpenWebUI as a chat window over Ollama.  Today we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive.  We move today from **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
 
-This is a **supplemental tutorial**: it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2).
+This is a **supplemental tutorial**: it is not graded and no commercial API keys are required.  It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2).
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. Because this tutorial is supplemental, there is nothing to submit for a grade. Prerequisites: OpenWebUI running locally over Ollama (from the agent stack lab) and an OpenWebUI API key (Settings -> Account -> API Keys). After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  Because this tutorial is supplemental, there is nothing to submit for a grade.  Prerequisites: OpenWebUI running locally over Ollama (from the agent stack lab) and an OpenWebUI API key (Settings -> Account -> API Keys).  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -49,7 +49,7 @@ In this Part you will inventory the agentic capabilities OpenWebUI layers on top
 
 ## Model 1: What the Frontend Adds
 
-A bare Ollama server answers `POST /api/generate` and `POST /api/chat`: text in, text out, plus native function calling if you supply schemas yourself. OpenWebUI in front of it adds distinct capability layers:
+A bare Ollama server answers `POST /api/generate` and `POST /api/chat`: text in, text out, plus native function calling if you supply schemas yourself.  OpenWebUI in front of it adds distinct capability layers:
 
 | Layer | What you do | What OpenWebUI does | Where it lives |
 |-------|-------------|---------------------|----------------|
@@ -64,17 +64,17 @@ The last row is the pivot of this tutorial: a script that calls **OpenWebUI's** 
 
 ### Critical Thinking Questions
 
-1. A teammate registers a `search_catalog` tool in OpenWebUI and enables it for `llama3.2`. Their Python script then calls `http://localhost:11434/api/chat` and reports "the tool never fires." Diagnose the bug using the table, and state the one-line fix.
+1.  A teammate registers a `search_catalog` tool in OpenWebUI and enables it for `llama3.2`.  Their Python script then calls `http://localhost:11434/api/chat` and reports "the tool never fires."  Diagnose the bug using the table, and state the one-line fix.
 
-   > *Hint: Port 11434 is Ollama: the backend tier. The tool lives in the frontend tier at port 3000. Which URL (and which extra header) makes the script's requests pass through the tier where the tool is registered?*
+   > *Hint: Port 11434 is Ollama: the backend tier.  The tool lives in the frontend tier at port 3000.  Which URL (and which extra header) makes the script's requests pass through the tier where the tool is registered?*
 
-2. Tools in OpenWebUI execute *server-side*, inside the frontend container, with whatever filesystem and network access that container has. Compare this to the tool registry you built in the Tool Use activity, where *your own process* executed the function. Who controls the security boundary in each case, and which arrangement would you trust with a `read_file` tool?
+2.  Tools in OpenWebUI execute *server-side*, inside the frontend container, with whatever filesystem and network access that container has.  Compare this to the tool registry you built in the Tool Use activity, where *your own process* executed the function.  Who controls the security boundary in each case, and which arrangement would you trust with a `read_file` tool?
 
-   > *Hint: In your own agent loop, you wrote the registry and could wrap any call in a confirmation gate. In OpenWebUI, the execution environment and sandboxing policy belong to the frontend. Consider: who audits the tool code your teammates install from the community library?*
+   > *Hint: In your own agent loop, you wrote the registry and could wrap any call in a confirmation gate.  In OpenWebUI, the execution environment and sandboxing policy belong to the frontend.  Consider: who audits the tool code your teammates install from the community library?*
 
-3. Knowledge collections give you RAG without writing retrieval code. Name one thing you *lose* relative to the RAG pipeline you built yourself, and one situation where the frontend-managed version is clearly the right call.
+3.  Knowledge collections give you RAG without writing retrieval code.  Name one thing you *lose* relative to the RAG pipeline you built yourself, and one situation where the frontend-managed version is clearly the right call.
 
-   > *Hint: What you lose is visibility and control: chunk size, embedding model, top-k, and the exact injected passages are the frontend's decisions (though some are configurable in Admin Settings). When is "good defaults, zero code, shared with every user of the server" worth more than that control?*
+   > *Hint: What you lose is visibility and control: chunk size, embedding model, top-k, and the exact injected passages are the frontend's decisions (though some are configurable in Admin Settings).  When is "good defaults, zero code, shared with every user of the server" worth more than that control?*
 
 A tool registered in OpenWebUI's Workspace -> Tools panel will be available to:
 
@@ -91,7 +91,7 @@ In this Part you will move from clicking the UI to scripting it: the same chat, 
 
 **Why this matters:** Everything an agent workflow needs (send a message as a role, attach knowledge, collect the answer, decide what to do next) becomes a function call once you can hit the API. This is exactly how production teams wire frontends into pipelines, schedulers, and other agents.
 
-## 2. The Minimal Client
+## 2.  The Minimal Client
 
 Every interaction reduces to one authenticated POST. Run this against your own stack (replace the API key with yours; the default OpenWebUI port from the agent stack lab is 3000):
 
@@ -120,25 +120,25 @@ Note the shape: it is the OpenAI `/v1/chat/completions` request format you met i
 
 ## Model 2: The Two Hands-On Notebooks
 
-The hands-on core of this tutorial is two Colab-ready notebooks from the course repository. Work through them in order; each is fully commented and runs against your local stack (or any OpenAI-compatible endpoint you point it at).
+The hands-on core of this tutorial is two Colab-ready notebooks from the course repository.  Work through them in order; each is fully commented and runs against your local stack (or any OpenAI-compatible endpoint you point it at).
 
-**Notebook 1: [OpenWebUI API Client with Upload](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb):** the single-agent plumbing. It builds an OpenAI-compatible client in plain `requests`, configures a system prompt and user query, uploads a document via the `/v1/files` endpoint *with a graceful fallback* (if the server does not accept the upload, the notebook parses the document to text locally and injects it into the prompt as context instead), then invokes `/v1/chat/completions` and saves the response artifacts. The engineering lesson is the fallback pattern: the notebook degrades from server-side RAG to client-side context injection without changing the rest of the pipeline.
+**Notebook 1: [OpenWebUI API Client with Upload](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb):** the single-agent plumbing.  It builds an OpenAI-compatible client in plain `requests`, configures a system prompt and user query, uploads a document via the `/v1/files` endpoint *with a graceful fallback* (if the server does not accept the upload, the notebook parses the document to text locally and injects it into the prompt as context instead), then invokes `/v1/chat/completions` and saves the response artifacts.  The engineering lesson is the fallback pattern: the notebook degrades from server-side RAG to client-side context injection without changing the rest of the pipeline.
 
-**Notebook 2: [OpenWebUI Multi-Agent Goal Workflow](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb):** the multi-agent orchestration. It defines agent *roles* as system prompts, a **blackboard** dictionary as shared memory, and an **orchestrator** loop that pursues a goal by making successive chat-completion calls (planning, executing steps, recording results on the blackboard, and critiquing), then exports the full run for inspection. Every "agent" is the same OpenWebUI endpoint wearing a different system prompt; the intelligence of the *system* lives in the Python routing loop.
+**Notebook 2: [OpenWebUI Multi-Agent Goal Workflow](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb):** the multi-agent orchestration.  It defines agent *roles* as system prompts, a **blackboard** dictionary as shared memory, and an **orchestrator** loop that pursues a goal by making successive chat-completion calls (planning, executing steps, recording results on the blackboard, and critiquing), then exports the full run for inspection.  Every "agent" is the same OpenWebUI endpoint wearing a different system prompt; the intelligence of the *system* lives in the Python routing loop.
 
 ### Critical Thinking Questions
 
-4. Notebook 1's upload step has a fallback: if `/v1/files` fails, parse the document locally and paste its text into the prompt. Identify one way the *fallback* behavior can silently differ from the *upload* behavior for a long document, and how you would detect the difference from the response alone.
+4.  Notebook 1's upload step has a fallback: if `/v1/files` fails, parse the document locally and paste its text into the prompt.  Identify one way the *fallback* behavior can silently differ from the *upload* behavior for a long document, and how you would detect the difference from the response alone.
 
-   > *Hint: Server-side knowledge is chunked and retrieved: only relevant passages reach the prompt. Client-side injection pastes the document up to whatever fits in context. For a 100-page document, which approach risks truncation, and which risks retrieving the wrong chunk? A response that cites material from the document's final pages tells you what about the path taken?*
+   > *Hint: Server-side knowledge is chunked and retrieved: only relevant passages reach the prompt.  Client-side injection pastes the document up to whatever fits in context.  For a 100-page document, which approach risks truncation, and which risks retrieving the wrong chunk?  A response that cites material from the document's final pages tells you what about the path taken?*
 
-5. In Notebook 2, every agent is "the same model with a different system prompt." What, concretely, makes the Critic's judgment independent enough to be useful, given that it shares every parameter with the Worker it is judging? What would strengthen that independence?
+5.  In Notebook 2, every agent is "the same model with a different system prompt."  What, concretely, makes the Critic's judgment independent enough to be useful, given that it shares every parameter with the Worker it is judging?  What would strengthen that independence?
 
-   > *Hint: The system prompt changes the model's instructions and the blackboard slice it sees; a fresh call has no memory of the Worker's reasoning process, only its output. Strengthening options: a different model for the Critic, structured rubrics, or evidence requirements. Recall the LLM-as-judge module's findings on self-evaluation bias.*
+   > *Hint: The system prompt changes the model's instructions and the blackboard slice it sees; a fresh call has no memory of the Worker's reasoning process, only its output.  Strengthening options: a different model for the Critic, structured rubrics, or evidence requirements.  Recall the LLM-as-judge module's findings on self-evaluation bias.*
 
-6. The blackboard in Notebook 2 lives in a Python dictionary in the orchestrator, not in OpenWebUI. Why must it live there and not in the chat history of a single OpenWebUI conversation? What does this tell you about where the "agent system" actually resides?
+6.  The blackboard in Notebook 2 lives in a Python dictionary in the orchestrator, not in OpenWebUI. Why must it live there and not in the chat history of a single OpenWebUI conversation?  What does this tell you about where the "agent system" actually resides?
 
-   > *Hint: Each API call in the workflow is stateless; the orchestrator chooses exactly which blackboard slices to include in each call's messages. A single shared conversation would show every agent everything (recall the AutoGen group-chat leak from the frameworks activity). The system's memory and routing live in your code; OpenWebUI supplies completions.*
+   > *Hint: Each API call in the workflow is stateless; the orchestrator chooses exactly which blackboard slices to include in each call's messages.  A single shared conversation would show every agent everything (recall the AutoGen group-chat leak from the frameworks activity).  The system's memory and routing live in your code; OpenWebUI supplies completions.*
 
 In the multi-agent notebook, the Planner, Worker, and Critic are implemented as:
 
@@ -171,7 +171,7 @@ The workflow pattern from Notebook 2, reduced to its skeleton:
                                              "done"   --> final answer assembled from blackboard
 ```
 
-A compact implementation. Three roles, one endpoint, the loop visible:
+A compact implementation.  Three roles, one endpoint, the loop visible:
 
 ```python
 import requests
@@ -211,39 +211,39 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
 ### Critical Thinking Questions
 
-7. List every decision in Model 3 that is made by *Python code* rather than by a model (there are at least four). Then answer: if the workflow misbehaves, why is this list the first place to look?
+7.  List every decision in Model 3 that is made by *Python code* rather than by a model (there are at least four).  Then answer: if the workflow misbehaves, why is this list the first place to look?
 
-   > *Hint: Which text becomes each call's context; how the plan is split into steps; how many steps run; when the loop terminates; what "begins with REVISE" means. These are deterministic and inspectable, unlike the model's generations. Recall the debugging module: check the deterministic scaffolding before blaming the stochastic component.*
+   > *Hint: Which text becomes each call's context; how the plan is split into steps; how many steps run; when the loop terminates; what "begins with REVISE" means.  These are deterministic and inspectable, unlike the model's generations.  Recall the debugging module: check the deterministic scaffolding before blaming the stochastic component.*
 
-8. The Worker's system prompt says "Execute exactly the step you are given; do not do other steps." Connect this instruction to the small-context-window principle from *Memory and the Small Context Window Principle*: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
+8.  The Worker's system prompt says "Execute exactly the step you are given; do not do other steps."  Connect this instruction to the small-context-window principle from *Memory and the Small Context Window Principle*: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
 
-   > *Hint: With the whole plan in context, the model tends to do a shallow pass over everything, the same dilution as one-big-prompt research. One step per call keeps each generation focused and makes the blackboard entries attributable to a step.*
+   > *Hint: With the whole plan in context, the model tends to do a shallow pass over everything, the same dilution as one-big-prompt research.  One step per call keeps each generation focused and makes the blackboard entries attributable to a step.*
 
-9. Where would you add a human-approval gate in Model 3 if one Worker step could trigger an irreversible action (say, posting to a course forum via an OpenWebUI tool)? Identify the exact line and defend it against putting the rule in the Worker's system prompt instead.
+9.  Where would you add a human-approval gate in Model 3 if one Worker step could trigger an irreversible action (say, posting to a course forum via an OpenWebUI tool)?  Identify the exact line and defend it against putting the rule in the Worker's system prompt instead.
 
-   > *Hint: The gate belongs in the orchestrator, around the `ask(...)` call (or around the tool-enabled step), where Python can block until a human confirms. A prompt instruction is a request to a stochastic system; a code gate is enforcement. This is the same argument as the tool-registry boundary in the Tool Use activity.*
+   > *Hint: The gate belongs in the orchestrator, around the `ask(...)` call (or around the tool-enabled step), where Python can block until a human confirms.  A prompt instruction is a request to a stochastic system; a code gate is enforcement.  This is the same argument as the tool-registry boundary in the Tool Use activity.*
 
-> **Common Misconception:** Students often expect OpenWebUI to "run the multi-agent workflow" once the roles are defined. OpenWebUI executes *one completion per request*; it has no idea your Planner and Critic are related calls. The workflow (sequencing, memory, revision loops, stopping) exists only in your orchestrator code. The frontend supplies completions, tools, and knowledge; *you* supply the agency.
+> **Common Misconception:** Students often expect OpenWebUI to "run the multi-agent workflow" once the roles are defined.  OpenWebUI executes *one completion per request*; it has no idea your Planner and Critic are related calls.  The workflow (sequencing, memory, revision loops, stopping) exists only in your orchestrator code.  The frontend supplies completions, tools, and knowledge; *you* supply the agency.
 
 ---
 
 ## Exercises
 
-1. *Key in hand.* Generate an OpenWebUI API key, run the minimal client from Part II against your stack, and then break it three ways: wrong port (11434), missing Bearer header, and a model name you have not pulled. Record the three error responses.
+1.  *Key in hand.*  Generate an OpenWebUI API key, run the minimal client from Part II against your stack, and then break it three ways: wrong port (11434), missing Bearer header, and a model name you have not pulled.  Record the three error responses.
 
-   - *What to do:* Make each mistake deliberately and capture status codes and bodies. Build yourself a one-paragraph troubleshooting table.
+   - *What to do:* Make each mistake deliberately and capture status codes and bodies.  Build yourself a one-paragraph troubleshooting table.
    - *You've succeeded when:* You can identify from an error response alone which of the three mistakes a classmate made.
 
-2. *Notebook run-through.* Complete [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) with a document of your own (a course reading, a README). Force the fallback path by pointing the upload at a bad endpoint, and compare the two answers you get for the same question about the document.
+2.  *Notebook run-through.*  Complete [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) with a document of your own (a course reading, a README).  Force the fallback path by pointing the upload at a bad endpoint, and compare the two answers you get for the same question about the document.
 
    - *You've succeeded when:* You can state one concrete difference between the server-RAG answer and the context-injection answer, and explain it using CTQ 4.
 
-3. *Tool + workflow integration.* Register a simple tool in OpenWebUI (e.g., a `get_current_time` or a word-count tool from the Tool Use activity), enable it for your model, then extend the Part III skeleton (or [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)) with a goal that requires the tool.
+3.  *Tool + workflow integration.*  Register a simple tool in OpenWebUI (e.g., a `get_current_time` or a word-count tool from the Tool Use activity), enable it for your model, then extend the Part III skeleton (or [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)) with a goal that requires the tool.
 
-   - *Starter hint:* In OpenWebUI, a tool is a Python class whose typed methods and docstrings become the schema. Whether tools fire on API calls depends on the model's tool support and the server's function-calling settings; observing *whether and when* the tool fires is the point of the exercise.
+   - *Starter hint:* In OpenWebUI, a tool is a Python class whose typed methods and docstrings become the schema.  Whether tools fire on API calls depends on the model's tool support and the server's function-calling settings; observing *whether and when* the tool fires is the point of the exercise.
    - *You've succeeded when:* You can show one workflow run where the tool executed (visible in the response or server logs) and state which tier executed it.
 
-4. *Critic ablation.* Run the Part III workflow five times with the Critic enabled, then five times with the verdict hard-coded to APPROVE. Score the ten briefings (rubric of your design) without knowing which condition produced each.
+4.  *Critic ablation.*  Run the Part III workflow five times with the Critic enabled, then five times with the verdict hard-coded to APPROVE. Score the ten briefings (rubric of your design) without knowing which condition produced each.
 
    - *You've succeeded when:* You can report whether the Critic measurably improved the output on your rubric, and connect the result to the critique-refine module.
 
@@ -251,17 +251,17 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
 ## Reflection Prompt
 
-*Personal:* This tutorial moved you from *using* a chat interface to *programming* it. Recall another tool you first used through its interface and later automated (a spreadsheet, a photo editor, a grade tracker). What did automation reveal about the tool that the interface hid? What did the interface protect you from that your scripts no longer do?
+*Personal:* This tutorial moved you from *using* a chat interface to *programming* it.  Recall another tool you first used through its interface and later automated (a spreadsheet, a photo editor, a grade tracker).  What did automation reveal about the tool that the interface hid?  What did the interface protect you from that your scripts no longer do?
 
-*Technical:* The same capability (RAG over your documents) now exists in three places in your toolkit: the pipeline you wrote yourself, OpenWebUI's knowledge collections, and framework abstractions like LlamaIndex. For your final project, which do you choose and why? Name the specific visibility or control feature that decides it.
+*Technical:* The same capability (RAG over your documents) now exists in three places in your toolkit: the pipeline you wrote yourself, OpenWebUI's knowledge collections, and framework abstractions like LlamaIndex.  For your final project, which do you choose and why?  Name the specific visibility or control feature that decides it.
 
-*Societal:* An API key turns every OpenWebUI account into a programmable actor: scripts can chat, upload, and invoke tools at machine speed under a person's identity. Universities, hospitals, and companies deploying frontends like this must decide who may hold API keys and what their scripts may do. Propose one policy rule for a campus OpenWebUI deployment and identify what harm it prevents and what legitimate use it burdens.
+*Societal:* An API key turns every OpenWebUI account into a programmable actor: scripts can chat, upload, and invoke tools at machine speed under a person's identity.  Universities, hospitals, and companies deploying frontends like this must decide who may hold API keys and what their scripts may do.  Propose one policy rule for a campus OpenWebUI deployment and identify what harm it prevents and what legitimate use it burdens.
 
 ---
 
 ## -> Coming Up Next
 
-You now have an orchestration substrate that is neither raw shell nor a framework: Python workflows driving an agent frontend, with every step visible in a chat transcript. The *Agent Frameworks* module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
+You now have an orchestration substrate that is neither raw shell nor a framework: Python workflows driving an agent frontend, with every step visible in a chat transcript.  The *Agent Frameworks* module shows what LangChain, CrewAI, and AutoGen add (and hide) on top of exactly the loops you just wrote by hand.
 
 ---
 
@@ -273,37 +273,37 @@ You now have an orchestration substrate that is neither raw shell nor a framewor
 - Hands-on notebooks from this tutorial: [OpenWebUI_API_Client_With_Upload.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_API_Client_With_Upload.ipynb) and [OpenWebUI_MultiAgent_Goal_Workflow.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/OpenWebUI_MultiAgent_Goal_Workflow.ipynb)
 - Course lab: [Compose and Verify a Local Agent Stack](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2)
 
-> **From the MCP and APIs session.** Power Automate is a second, no-code route to the same integration problem MCP solves; it was moved here so the MCP session could stay on the protocol itself.
+> **From the MCP and APIs session.**  Power Automate is a second, no-code route to the same integration problem MCP solves; it was moved here so the MCP session could stay on the protocol itself.
 
 ## No-Code Integration: Microsoft Power Automate
 
-You just built an integration in **code**: a Flask server plus a Python client. Most organizations also connect services a second way: **no-code automation platforms**. Microsoft **Power Automate** is the one you are most likely to meet in a workplace (Zapier, Make, and IFTTT are close cousins). Instead of writing an MCP server, you assemble a **flow** from pre-built **connectors**, each of which already wraps a service's OAuth/REST API. It is the same "reach the world's services" goal as MCP, reached with configuration instead of code.
+You just built an integration in **code**: a Flask server plus a Python client.  Most organizations also connect services a second way: **no-code automation platforms**.  Microsoft **Power Automate** is the one you are most likely to meet in a workplace (Zapier, Make, and IFTTT are close cousins).  Instead of writing an MCP server, you assemble a **flow** from pre-built **connectors**, each of which already wraps a service's OAuth/REST API. It is the same "reach the world's services" goal as MCP, reached with configuration instead of code.
 
 **The building blocks of a flow:**
 
 - **Trigger**: the event that starts the flow: a schedule, a new email, a new Asana task, a submitted form, or a manual button.
-- **Connector actions**: the steps that follow ("Create a Google Calendar event," "Add a task in Asana," "Post to Teams"). Each connector authenticates once with **OAuth 2.0** and the platform stores the token, so the flow itself never contains a password or key.
+- **Connector actions**: the steps that follow ("Create a Google Calendar event," "Add a task in Asana," "Post to Teams").  Each connector authenticates once with **OAuth 2.0** and the platform stores the token, so the flow itself never contains a password or key.
 - **Conditions and loops**: no-code control flow ("if the email has an attachment, then...").
 - **HTTP action** *(premium)*: call any REST endpoint the built-in connectors do not cover, including a language-model API or one of your own services.
 - **AI Builder / Copilot**: Microsoft's built-in AI steps: prompt a model, summarize, extract fields, or classify, dragged in like any other action.
 
-**Predict, then read on.** Your team has two flows turned on: Flow A's trigger is "When a new email arrives" (Outlook connector); Flow B's trigger is "When a task is created" (Asana connector). A student submits a web form, the forms service sends a confirmation *email* to the team inbox, and an hour later a teammate *manually creates* an Asana task for the request. Predict which trigger(s) fire, and in what order; write your prediction down before expanding the answer.
+**Predict, then read on.**  Your team has two flows turned on: Flow A's trigger is "When a new email arrives" (Outlook connector); Flow B's trigger is "When a task is created" (Asana connector).  A student submits a web form, the forms service sends a confirmation *email* to the team inbox, and an hour later a teammate *manually creates* an Asana task for the request.  Predict which trigger(s) fire, and in what order; write your prediction down before expanding the answer.
 
 <details>
 <summary>Reveal: which triggers fire?</summary>
 
-Flow A fires first, the moment the confirmation email lands in the inbox. Flow B fires an hour later, when the teammate creates the Asana task. The form submission itself fires *nothing*; no flow is watching the forms service. A trigger responds only to the specific event its connector watches, never to the upstream cause of that event.
+Flow A fires first, the moment the confirmation email lands in the inbox.  Flow B fires an hour later, when the teammate creates the Asana task.  The form submission itself fires *nothing*; no flow is watching the forms service.  A trigger responds only to the specific event its connector watches, never to the upstream cause of that event.
 
 </details>
 
 **How to build one, end to end:**
 
-1. Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
-2. Choose **Create -> Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
-3. Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, ...). The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
-4. Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
-5. To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint, the same request body you have used all unit.
-6. **Test** with the built-in run panel, inspect each step's inputs and outputs, then **turn the flow on** so its trigger runs it automatically.
+1.  Sign in at **make.powerautomate.com** with a Microsoft account (a school or work account unlocks more connectors).
+2.  Choose **Create -> Automated cloud flow**, name it, and pick a **trigger** (for example "When a new email arrives" in Outlook, or "When a task is created" in the Asana connector).
+3.  Add a step and search for the **connector** you want (Google, Asana, Teams, SharePoint, ...).  The first time you use a connector it opens an **OAuth consent screen**; you grant scoped access once and the platform holds the token.
+4.  Map fields from the trigger into the action with the **dynamic content** picker (for example, put the email's subject into a new task's title).
+5.  To add AI, insert an **AI Builder** action (prompt a model, extract information) or an **HTTP** action that POSTs to a model's `/v1/chat/completions` endpoint, the same request body you have used all unit.
+6.  **Test** with the built-in run panel, inspect each step's inputs and outputs, then **turn the flow on** so its trigger runs it automatically.
 
 In a Power Automate flow, the OAuth 2.0 credential that lets a connector act on your account is:
 
@@ -312,17 +312,17 @@ In a Power Automate flow, the OAuth 2.0 credential that lets a connector act on 
 [( )] pasted into the flow's exported definition so teammates can reuse it
 [( )] regenerated by the AI Builder step on every run
 
-**Where it fits and where it does not.** No-code platforms are fastest when a connector already exists for both services and the logic is simple. They struggle when you need custom logic, real version control, or a portable integration you can host yourself, which is exactly when writing an MCP server or a small agent (as you did above) wins. And the trust questions do not disappear: a connector holds a real OAuth token with real scopes, so the same "who wrote it, what can it do, is it least-privilege" checklist from Model 2 still applies.
+**Where it fits and where it does not.**  No-code platforms are fastest when a connector already exists for both services and the logic is simple.  They struggle when you need custom logic, real version control, or a portable integration you can host yourself, which is exactly when writing an MCP server or a small agent (as you did above) wins.  And the trust questions do not disappear: a connector holds a real OAuth token with real scopes, so the same "who wrote it, what can it do, is it least-privilege" checklist from Model 2 still applies.
 
 ### Critical Thinking Questions
 
-7. A Power Automate connector and your Flask server both let a system "create a calendar event." Name two things the no-code connector gives you for free that you handled yourself in code, and one thing the code version gives you that the connector cannot.
+7.  A Power Automate connector and your Flask server both let a system "create a calendar event."  Name two things the no-code connector gives you for free that you handled yourself in code, and one thing the code version gives you that the connector cannot.
 
-   > *Hint: For free: the OAuth flow and token storage, plus a maintained schema/UI for the service's fields. In code you keep: custom logic, self-hosting and portability, and version-controlled review of exactly what runs.*
+   > *Hint: For free: the OAuth flow and token storage, plus a maintained schema/UI for the service's fields.  In code you keep: custom logic, self-hosting and portability, and version-controlled review of exactly what runs.*
 
-8. In step 5 you can call a model with an HTTP action whose body is a `/v1/chat/completions` payload. Where should the model's API key live so it does not end up pasted into the flow definition that teammates can open and export?
+8.  In step 5 you can call a model with an HTTP action whose body is a `/v1/chat/completions` payload.  Where should the model's API key live so it does not end up pasted into the flow definition that teammates can open and export?
 
-   > *Hint: Store it as a secure input / environment variable / connection secret (or a Key Vault reference) and reference it; never hard-code it into the HTTP action's headers, where it becomes part of the exported flow. Same rule as every other secret this term.*
+   > *Hint: Store it as a secure input / environment variable / connection secret (or a Key Vault reference) and reference it; never hard-code it into the HTTP action's headers, where it becomes part of the exported flow.  Same rule as every other secret this term.*
 
 Compared with writing an MCP server, a no-code platform like Power Automate primarily trades:
 
@@ -331,7 +331,7 @@ Compared with writing an MCP server, a no-code platform like Power Automate prim
 [( )] security for convenience: flows cannot use OAuth
 [( )] nothing; it is strictly better in every way
 
-> **Common Misconception:** "No-code means there is no security to think about." Often the opposite: one flow can hold OAuth tokens to your email, files, and calendar at once and run unattended. The connector hides the *plumbing*, not the *risk*: least-privilege scopes, controlling who can edit the flow, and keeping model keys out of the flow body all still matter.
+> **Common Misconception:** "No-code means there is no security to think about."  Often the opposite: one flow can hold OAuth tokens to your email, files, and calendar at once and run unattended.  The connector hides the *plumbing*, not the *risk*: least-privilege scopes, controlling who can edit the flow, and keeping model keys out of the flow body all still matter.
 
 ---
 

@@ -16,7 +16,7 @@ info:
   course_prerequisites: "Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor."
   course_start_date: "2026/08/24"
   course_end_date: "2026/12/08"
-  course_description: "A technical introduction to the tools and practices that have evolved from artificial intelligence (AI) and large language models that considers the role of technology through the lens of the Ursinus Questions. This course prepares students to create and interact with conversational virtual assistants and multi-agent systems that achieve goal-oriented outcomes. Students will explore the foundations and history of artificial intelligence that enabled the technical underpinnings of generative AI, with a particular emphasis on the ethical, social, and intellectual property implications of the nature of the training data sets used to form large language models. The course includes a practical discussion of responsible AI from the perspective of creators and of consumers and stakeholders. Students will apply current design patterns in AI with respect to large language models to create and present a technical project using generative AI, and will lead a discussion focused on practices for responsible AI within the context of their chosen project. Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor. Four hours per week. Four semester hours."
+  course_description: "A technical introduction to the tools and practices that have evolved from artificial intelligence (AI) and large language models that considers the role of technology through the lens of the Ursinus Questions.  This course prepares students to create and interact with conversational virtual assistants and multi-agent systems that achieve goal-oriented outcomes.  Students will explore the foundations and history of artificial intelligence that enabled the technical underpinnings of generative AI, with a particular emphasis on the ethical, social, and intellectual property implications of the nature of the training data sets used to form large language models.  The course includes a practical discussion of responsible AI from the perspective of creators and of consumers and stakeholders.  Students will apply current design patterns in AI with respect to large language models to create and present a technical project using generative AI, and will lead a discussion focused on practices for responsible AI within the context of their chosen project.  Prerequisites: CS-170 or CS-173 or DATA-201, or permission from the instructor.  Four hours per week.  Four semester hours."
   questions: |
     This semester, we organize the course around a single guiding idea: an agent is a system that perceives, plans, and acts toward a goal. We will collectively consider questions like:
     <ul>
@@ -50,8 +50,8 @@ info:
       starttime: "12:00 PM"
       endtime: "1:15 PM"
       place: "Pfahler 107"
-  # No midterm/final in this course. "TBD" dates are the sentinel that suppresses
-  # rendering and .ics events for these blocks - do not delete them.
+  # No midterm/final in this course.  "TBD" dates are the sentinel that suppresses
+  # rendering and .ics events for these blocks, so do not delete them.
   midtermexam:
     - mdate: "TBD"
       mstarttime: "N/A"
@@ -327,9 +327,9 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
-  - rtitle: "Bring a laptop with Docker Desktop already installed - the download alone can eat the session. If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
+  - rtitle: "Please bring a laptop with Docker Desktop already installed.  The download alone can eat the session.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
     rlink: false
-  - rtitle: "Going further, tutorial: The Shell, in full (pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\"). Step 0 of today's activity is the ten-minute version"
+  - rtitle: "Going further, tutorial: The Shell, in full (pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\").  Step 0 of today's activity is the ten-minute version"
     rlink: "Activities/liascript-shellbasics.md"
     liapage: true
   - rtitle: "Going further, tutorial: Docker from Zero, how containers, images, and mounts actually work underneath today's build"
@@ -395,10 +395,10 @@ schedule:
   - rtitle: "Mitchell, Chapter 2 (targeted review: revisit the representation sections with today's embeddings lens)"
   - rtitle: "Nielsen, Neural Networks and Deep Learning, Chapter 1"
     rlink: "http://neuralnetworksanddeeplearning.com/"
-  - rtitle: "AI by Hand (Yeh): the attention worksheets - today's worked example in Model 3 follows this style"
+  - rtitle: "AI by Hand (Yeh): the attention worksheets, which today's worked example in Model 3 follows"
   - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
     rlink: "files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
-  - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand. Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
+  - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand.  Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
     rlink: "Activities/liascript-attentiontransformers.md"
     liapage: true
   - rtitle: "Going further, synthesis: Anatomy of an LLM Request, one prompt end to end by hand (tokenize, embed, attend, feed-forward, sample, loss, update)"
@@ -412,13 +412,13 @@ schedule:
   link: "Activities/liascript-codingagents.md"
   liapage: true
   readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class. Describe one time you accepted AI-generated code or text without really reading it. What would you check now, and what would have caught the thing you missed?"
-  - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8). Today we drive it against a real specification, so a broken setup costs you the session."
+  - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
+  - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8).  Today we drive it against a real specification, so a broken setup costs you the session."
     rlink: false
   - rtitle: "Going further, tutorial: Agentic CLI Tools, the wider landscape (Claude Code, Codex, Gemini CLI, pi, and how they differ from opencode)"
     rlink: "Activities/liascript-agentclis.md"
     liapage: true
-  - rtitle: "Going further, tutorial: AI Coding Agent Security, poisoned repositories and the software supply chain. The risks that arrive with the convenience"
+  - rtitle: "Going further, tutorial: AI Coding Agent Security, poisoned repositories and the software supply chain.  The risks that arrive with the convenience"
     rlink: "Activities/liascript-codingagentsecurity.md"
     liapage: true
   - rtitle: "Going further, tutorial: Containerizing AI Systems, what a container actually isolates, and how to size an agent's blast radius before you hand it your machine"
@@ -426,7 +426,7 @@ schedule:
     liapage: true
 - week: "3"
   date: "1"
-  title: "Why Different Answers Every Time? Sampling, Temperature, and Generation"
+  title: "Why Different Answers Every Time?  Sampling, Temperature, and Generation"
   link: "Activities/liascript-samplinggeneration.md"
   liapage: true
   readings:
@@ -459,9 +459,9 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter, hallucination, evaluation, and what the model cannot check for itself"
-  - rtitle: "Bring three prompts where a model gave you a confidently wrong answer - we triage real examples, not invented ones."
+  - rtitle: "Please bring three prompts where a model gave you a confidently wrong answer.  We triage real examples here, not invented ones."
     rlink: false
-  - rtitle: "Going further, activity: Benchmark Design, how we know whether AI systems work. Directly useful for the Golden-Set lab handed out today"
+  - rtitle: "Going further, activity: Benchmark Design, how we know whether AI systems work.  Directly useful for the Golden-Set lab handed out today"
     rlink: "Activities/liascript-benchmarking.md"
     liapage: true
 - week: "4"
@@ -480,7 +480,7 @@ schedule:
   - rtitle: "Going further, activity: Structured Outputs in depth (JSON mode, tool schemas, and output validation)"
     rlink: "Activities/liascript-structuredoutputs.md"
     liapage: true
-  - rtitle: "Going further, reference: typed and grammar-constrained generation, Instructor with Pydantic and Ollama. Validity by construction rather than by retry"
+  - rtitle: "Going further, reference: typed and grammar-constrained generation, Instructor with Pydantic and Ollama.  Validity by construction rather than by retry"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
 - week: "5"
   date: "0"
@@ -493,7 +493,7 @@ schedule:
     points: "3"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
-  - rtitle: "Hugging Face MCP Course (built with Anthropic): protocol, building a server, connecting clients. Supports the Local Agent Lab's MCP work"
+  - rtitle: "Hugging Face MCP Course (built with Anthropic): protocol, building a server, connecting clients.  Supports the Local Agent Lab's MCP work"
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
@@ -537,7 +537,7 @@ schedule:
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
   - rtitle: "Mitchell, Chapter 4"
-  - rtitle: "Bring your team's Stakeholder Brief draft - the peer review round works on real drafts."
+  - rtitle: "Please bring your team's Stakeholder Brief draft, because the peer review round works on real drafts."
     rlink: false
   - rtitle: "Going further, tutorial: Fine-Tuning, RAG, and Prompting, choosing the right approach for a given problem"
     rlink: "Activities/liascript-finetuningvsrag.md"
@@ -568,7 +568,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
-  - rtitle: "Bring your stuck points and your pipeline-in-progress. Part III is an open studio and it is only as useful as the problems you bring to it."
+  - rtitle: "Bring your stuck points and your pipeline-in-progress.  Part III is an open studio and it is only as useful as the problems you bring to it."
   - rtitle: "Optional, five minutes: install Obsidian before class if you want to follow Part I on your own machine"
     rlink: "https://obsidian.md"
   - rtitle: "Going further, tutorial: The Second Brain in depth, Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
@@ -588,7 +588,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class. What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
+  - rtitle: "Reading Response / Discussion: post a short response before class.  What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
   - rtitle: "Going further, activity: Memory Types in Agents (working, episodic, semantic, and procedural), a taxonomy for what you built by hand in Week 7"
     rlink: "Activities/liascript-memorytypes.md"
     liapage: true
@@ -624,7 +624,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
-  - rtitle: "Going further, activity: Advanced Agent Loops, reflection, recovery, and control flow. Its two key models are folded into today's activity; this is the full version"
+  - rtitle: "Going further, activity: Advanced Agent Loops, reflection, recovery, and control flow.  Its two key models are folded into today's activity; this is the full version"
     rlink: "Activities/liascript-agentloopsadvanced.md"
     liapage: true
   - rtitle: "Going further, tutorial: Agent Frameworks (LangChain, CrewAI, AutoGen, and Agno), when a framework earns its weight"
@@ -667,9 +667,9 @@ schedule:
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class, when does a multi-agent design help, and when does it just cost tokens?"
-  - rtitle: "Post your reading response before class - the debate exercise starts from the positions you staked out."
+  - rtitle: "Please post your reading response before class, since the debate exercise starts from the positions you staked out."
     rlink: false
-  - rtitle: "Going further, activity: Stochastic Multi-Agent Consensus. Its clustering model is built step by step inside the Multi-Agent Patterns Lab Part 2; this is the full activity"
+  - rtitle: "Going further, activity: Stochastic Multi-Agent Consensus.  Its clustering model is built step by step inside the Multi-Agent Patterns Lab Part 2; this is the full activity"
     rlink: "Activities/liascript-consensus.md"
     liapage: true
   - rtitle: "Going further, activity: Multi-Agent Communication (protocols, shared state, and coordination)"
@@ -690,7 +690,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
-  - rtitle: "Reference: promptfoo, declarative LLM and agent evaluation. One of the two supported harnesses for the Rubric Pipeline Lab, and it runs against Ollama"
+  - rtitle: "Reference: promptfoo, declarative LLM and agent evaluation.  One of the two supported harnesses for the Rubric Pipeline Lab, and it runs against Ollama"
     rlink: "https://www.promptfoo.dev/docs/intro/"
   - rtitle: "Going further, methodology: Your AI Product Needs Evals (Hamel Husain), the error-analysis-first approach to evaluation"
     rlink: "https://hamel.dev/blog/posts/evals/"
@@ -720,9 +720,9 @@ schedule:
     rlink: "https://www.codedbias.com/"
   - rtitle: "O'Neil, Weapons of Math Destruction: the chapter on predictive models in education"
   - rtitle: "Carr, The Glass Cage, Chapters 2-3: automation, deskilling, and automation bias"
-  - rtitle: "Going further, interactive: Gandalf (Lakera), a prompt-injection game. Shared warm-up for the Responsible AI Capstone handed out today"
+  - rtitle: "Going further, interactive: Gandalf (Lakera), a prompt-injection game.  Shared warm-up for the Responsible AI Capstone handed out today"
     rlink: "https://gandalf.lakera.ai/"
-  - rtitle: "Going further, interactive: Tensor Trust, attack and defend prompt injection. The other capstone warm-up"
+  - rtitle: "Going further, interactive: Tensor Trust, attack and defend prompt injection.  The other capstone warm-up"
     rlink: "https://tensortrust.ai/"
 - week: "11"
   date: "1"
@@ -814,7 +814,7 @@ schedule:
     points: "3"
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
-  - rtitle: "Bring your integrated system and your demo script. Today is a rehearsal, not a work session - if it does not run end to end at the start of class, that is the thing to fix."
+  - rtitle: "Bring your integrated system and your demo script.  Today is a rehearsal rather than a work session.  If it does not run end to end at the start of class, that is the thing to fix."
 - week: "15"
   date: "0"
   title: "Demo Day: Final Project Presentations (Class Switch Day: follows a Thursday schedule)"
@@ -832,38 +832,38 @@ schedule:
     points: "10"
     rubricpath: "_pages/Participation/reading-responses.md"
   readings:
-  - rtitle: "Demo Day. Bring the running system, the governance one-pager, and the contribution statements. Nothing is due after today."
+  - rtitle: "Demo Day.  Bring the running system, the governance one-pager, and the contribution statements.  Nothing is due after today."
 ---
 
-This course is about building agents you understand and can run yourself. The sections below explain how the course gives you real choice over your path, how to read an assignment, how to prepare for each hands-on session, and how the day-to-day work of participating, including engaging with your classmates' work, is valued and evaluated. Read them now, and return to the participation and preparation guides throughout the term.
+This course is about building agents you understand and can run yourself.  The sections below explain how the course gives you real choice over your path, how to read an assignment, how to prepare for each hands-on session, and how I value and evaluate the day-to-day work of participating, including engaging with your classmates' work.  Please read them now, and come back to the participation and preparation guides throughout the term.
 
 ## How This Course Works: Choice and Universal Design
 
-This course is designed as deliberate choice architecture, in the spirit of Universal Design for Learning: there are many routes through it, several ways to demonstrate what you have learned, and no path is the "remedial" one. You have real authorship over your semester.
+I have designed this course around deliberate choices, in the spirit of Universal Design for Learning.  There are many routes through it and several ways to demonstrate what you have learned, and none of them is the "remedial" path.  You have real authorship over your semester.
 
-- **Choose your direction.** Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you. Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent). The hands-on and the analytical are equally valid ways to earn your grade; build the balance that fits how you learn.
-- **Every lab is within reach, on more than one road.** Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page. **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, and an attack-and-policy track for the Responsible AI Capstone. Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
-- **Analytical routes are real routes.** Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths; taking them is authorship, not avoidance.
-- **A shared spine.** The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone. It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
-- **Depth inside every lab.** Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more. Pick the direction that pulls you; if the one you want is not on the menu, propose it.
-- **Scaffolding you can hold your own work against.** Every lab and written assignment opens with **Before You Start** (what it builds on, what to install, an honest time budget, and the order to do things in) and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do. The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
-- **Going further, when you want it.** Each session lists at most two optional pointers, chosen as the single best next step rather than as a reading list. They are genuinely optional; nothing on the schedule depends on them.
+- **Choose your direction.**  Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
+- **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
+- **Analytical routes are real routes.**  Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths.  Taking one of them is a real choice about how you want to work, and I do not read it as avoidance.
+- **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
+- **Depth inside every lab.**  Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
+- **Scaffolding you can hold your own work against.**  Every lab and written assignment opens with **Before You Start**, which tells you what it builds on, what to install, and what order to do things in, and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do.  The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
+- **Going further, when you want it.**  Each session lists at most two optional pointers, chosen as the single best next step rather than as a reading list.  They are optional; nothing on the schedule depends on them.
 
-If a path you want is not on the menu, propose it. The point of the choices is to let you leave this course able to stand up, operate, and reason about an AI system of your own.
+If a path you want is not on the menu, please propose it.  The choices are here so you leave this course able to stand up, operate, and reason about an AI system of your own.
 
 ## A Note on the Use of Generative AI
 
-In this course we will use generative AI tools extensively, and deliberately. We will do it in the course of exploring both the capabilities and the risks of these systems, so that you leave prepared to have a highly informed conversation about their merits and their drawbacks for human flourishing, whatever your personal opinion of them turns out to be. That preparation is the point: an informed critic and an informed builder need the same working knowledge, and you cannot get it from a distance.
+In this course we will use generative AI tools extensively, and deliberately.  We will do it in the course of exploring both the capabilities and the risks of these systems, so that you leave prepared to have a highly informed conversation about their merits and their drawbacks for human flourishing, whatever your personal opinion of them turns out to be.  That preparation is the point.  An informed critic and an informed builder need the same working knowledge, and you cannot pick it up from a distance.
 
-We will seek to model best practices for using these systems through the lens of the four Ursinus Questions: *What should matter to me? How should we live together? How can we understand the world? What will I do?* Those questions are not decoration on a technical course. They are the questions that decide what you build, who you build it for, and what you refuse to build.
+We will seek to model best practices for using these systems through the lens of the four Ursinus Questions: *What should matter to me?  How should we live together?  How can we understand the world?  What will I do?*  Those questions are not decoration on a technical course.  They are the questions that decide what you build, who you build it for, and what you refuse to build.
 
-One way we will hold to that is by using AI systems to enhance and elevate our creative and critical capabilities rather than to substitute for them. Pope Leo XIV takes up exactly this question in his encyclical letter [*Magnifica Humanitas: On Safeguarding the Human Person in the Time of Artificial Intelligence*](https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html) (15 May 2026), which argues that technology "should not be considered, in itself, as a force antagonistic to humanity," that human work is where people "bring their freedom, creativity and capacity for cooperation into play, contributing to the cultural and moral elevation of society" (&para;37), and that the splendor of human dignity is something "no machine can ever replace" (&para;15). Read alongside the four Questions, that is a useful standard to hold our own work to.
+One way we will hold to that is by using AI systems to enhance and elevate our creative and critical capabilities rather than to substitute for them.  Pope Leo XIV takes up exactly this question in his encyclical letter [*Magnifica Humanitas: On Safeguarding the Human Person in the Time of Artificial Intelligence*](https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html) (15 May 2026), which argues that technology "should not be considered, in itself, as a force antagonistic to humanity," that human work is where people "bring their freedom, creativity and capacity for cooperation into play, contributing to the cultural and moral elevation of society" (&para;37), and that the splendor of human dignity is something "no machine can ever replace" (&para;15).  Read alongside the four Questions, that is a useful standard to hold our own work to.
 
-So, to avoid the risk of AI replacing the creative pursuits it should be extending, I ask that you **not use AI tools or systems to simply generate the work you do in this class**. Use them instead to execute plans that you thoughtfully designed. That distinction is not a technicality; it is most of what this course teaches. The design-first discipline running through the written assignments, and the AI-use disclosure that every assignment asks for, both exist to keep the thinking yours. We will discuss and debate these questions as a class throughout the semester, and you are not expected to arrive at my answer.
+So, to avoid the risk of AI replacing the creative pursuits it should be extending, I ask that you **not use AI tools or systems to simply generate the work you do in this class**.  Use them instead to execute plans that you thoughtfully designed.  That distinction is most of what this course teaches.  The design-first discipline running through the written assignments, and the AI-use disclosure that every assignment asks for, both exist to keep the thinking yours.  We will discuss and debate these questions as a class throughout the semester, and you are not expected to arrive at my answer.
 
 ## A Project-Based Course: Process, Teams, and Community Partners
 
-This course is deliberately **project-based**: the semester-long team project is the vehicle for the learning, not the destination. The graded emphasis falls on the *process* (how your team frames a problem, works with stakeholders, manages itself, and communicates) as much as on the product you demo. Five process goals run through every Project-Thread milestone:
+This course is **project-based** on purpose.  The semester-long team project is how the learning happens, and it is not the destination.  I put as much graded emphasis on the *process*, meaning how your team frames a problem, works with stakeholders, manages itself, and communicates, as on the product you demo.  Five process goals run through every Project-Thread milestone:
 
 - **Collaborative inquiry:** team coordination, shared decision-making, and productive disagreement.
 - **Problem framing and scoping:** defining an ill-structured problem, identifying its stakeholders, and iterating on the question.
@@ -871,37 +871,37 @@ This course is deliberately **project-based**: the semester-long team project is
 - **Structured reflection:** metacognitive awareness of your own learning and your team's dynamics.
 - **Stakeholder engagement:** grounding the work in a real community partner's needs and translating your system for them.
 
-**Community partners.** Each team anchors its project in the needs of a real community stakeholder. Your Stakeholder Brief, proposal, gallery-walk feedback pass, and Demo Day partner-facing artifact all build on that relationship. Demo Day itself is a multi-audience presentation, for your technical peers and for the stakeholders your project serves.
+**Community partners.**  Each team anchors its project in the needs of a real community stakeholder.  Your Stakeholder Brief, proposal, gallery-walk feedback pass, and Demo Day partner-facing artifact all build on that relationship.  Demo Day itself is a multi-audience presentation, for your technical peers and for the stakeholders your project serves.
 
-**Community partner roster.** Partners are confirmed each semester and shared in class before the Stakeholder Brief kickoff (week 2), rather than published on this page. If no partner fits your team's interests, ask: I will broker an introduction within one week of the request. No team's Stakeholder Brief is blocked by the roster.
+**Community partner roster.**  Partners are confirmed each semester and shared in class before the Stakeholder Brief kickoff (week 2), rather than published on this page.  If no partner fits your team's interests, ask: I will broker an introduction within one week of the request.  No team's Stakeholder Brief is blocked by the roster.
 
-This semester the section runs as **4 teams of 4 students**, so every team is large enough to rotate roles and small enough that no one can hide.
+This semester the section runs as **4 teams of 4 students**.  That is large enough to rotate roles and small enough that everyone has to carry real work.
 
-**Teams are formed, not found.** I form project teams from the Team Formation Survey (balancing schedules, work styles, and deadline habits), and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process. The intra-team check-ins are where we keep that charter honest. If your team is struggling, say so early, in the confidential pulse of any check-in or in office hours, and we will work through it together.
+I form the teams; you do not have to find each other.  I build project teams from the Team Formation Survey, balancing schedules, work styles, and deadline habits, and every team writes and signs a charter with rotating roles, psychological-safety ground rules, and a conflict repair process.  The intra-team check-ins are where we keep that charter honest.  If your team is struggling, please say so early, either in the confidential pulse of any check-in or in office hours, and we'll work through it together.
 
-**There is no midterm or final exam.** Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, and participation carry the grade. Our four teams present for about fifteen minutes each during our class meeting; guests attending CS374's Demo Day (same day) are welcome at both.
+There is no midterm or final exam.  Demo Day (Tuesday, December 8) and the registrar's final-exam slot host the final presentations; the project, labs, written assignments, and participation carry the grade.  Our four teams present for about fifteen minutes each during our class meeting; guests attending CS374's Demo Day (same day) are welcome at both.
 
 ## How Assignments Are Structured: Purpose, Task, and Criteria
 
-Every assignment is written to be transparent about three things, so you are never guessing about what is being asked or how it will be judged:
+I write every assignment to be transparent about three things, so you are never guessing about what I am asking or how I will judge it:
 
 - **Purpose:** *why* the assignment exists and what capability it builds toward.
 - **Task:** *what* you will actually do, in concrete steps.
-- **Criteria:** *how* your work will be evaluated. Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
+- **Criteria:** *how* your work will be evaluated.  Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
 
-Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended, and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work, for the reasons set out in *A Note on the Use of Generative AI* above.
+Please read the Purpose first.  It tells you what the assignment is really for, and that is the fastest way to make good decisions when the task gets open-ended.  Much of this course is open-ended on purpose, because operating real systems is.  Every assignment also asks you to reflect and to disclose your use of AI tools honestly, and I count both as part of the work, for the reasons set out in *A Note on the Use of Generative AI* above.
 
 ## Class Activities and Participation (10%)
 
-Our meetings are hands-on POGIL sessions: you work in your team through activities that build the concepts and run the systems, not lectures you passively receive. Class works best when you arrive ready: having worked through the activity, attempted the reading response, and brought a question or a stuck point, often something you tried to run on your own machine that did not behave. Bringing that is the accountability check that the preparation happened, and it is usually where the best discussion starts.
+Our meetings are hands-on POGIL sessions.  You work in your team through activities that build the concepts and run the systems, rather than sitting through lectures.  Class works best when you arrive ready, having worked through the activity, attempted the reading response, and brought a question or something you got stuck on, often something you tried to run on your own machine that did not behave.  Bringing that is how I know the preparation happened, and it is usually where the best discussion starts.
 
-This is a course you do, not one you watch. This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work. It is assessed across four dimensions: **preparation, contribution, collaboration, and reflection.** It takes several forms, by design:
+This is a course you do rather than one you watch.  This component values the daily work of showing up prepared, contributing to the shared build, and engaging seriously with your classmates' work.  I assess it across four dimensions: **preparation, contribution, collaboration, and reflection.**  It takes several forms on purpose:
 
-- **In-class activities.** Your team rotates the POGIL roles (**Manager, Recorder, Presenter, and Reflector**) so that on different days you facilitate, capture the group's thinking, report out, or synthesize. Posting your team's answers to the class discussion board is participation the whole class learns from.
-- **Reading responses and discussion.** From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand. These are marked on the schedule.
-- **The student-led Reading Group.** When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it. (Leading a session remains separately available for extra credit.)
-- **Project-Thread peer review.** The structured **SQR** peer reviews (one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation) that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
+- **In-class activities.**  Your team rotates the POGIL roles (**Manager, Recorder, Presenter, and Reflector**) so that on different days you facilitate, capture the group's thinking, report out, or synthesize.  Posting your team's answers to the class discussion board is participation the whole class learns from.
+- **Reading responses and discussion.**  From time to time the agenda sets aside time to discuss a reading or a result, prepared by a short **[reading response](Participation/ReadingResponses)** you write beforehand.  These are marked on the schedule.
+- **The student-led Reading Group.**  When a classmate leads a [Reading Group]({{ site.baseurl }}/Assignments/ReadingGroup) discussion, the *audience* has a job too: engaging with the presenter's source and question is part of your participation grade, and the [reading response](Participation/ReadingResponses) guide explains the brief pre-read note or in-session question that earns it.  (Leading a session remains separately available for extra credit.)
+- **Project-Thread peer review.**  The structured **SQR** peer reviews (one concrete Strength with evidence, one genuine Question, one Risk with a suggested mitigation) that you give other teams at the stakeholder-brief, proposal, and gallery-walk stages are participation of the most professional kind, and they count here.
 
 The first-week onboarding assignments (the **Overview**, the **Warmup**, and the **Team Formation Survey**) are assessed within this Class Activities and Participation category.
 
-Participation takes more than one form on purpose. If the spoken room is hard for you, the written channels (the discussion board, reading responses, and SQR cards) are real ways to earn this component. Being confused is part of learning this material; talk with me early and we will find the path that fits.
+Participation takes more than one form on purpose.  If the spoken room is hard for you, the written channels (the discussion board, reading responses, and SQR cards) are real ways to earn this component.  Being confused is part of learning this material, so please talk with me early and we'll find the path that fits.

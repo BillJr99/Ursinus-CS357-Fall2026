@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Structured Peer Review: SQR Cards and Team Check-Ins
 
-Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process. Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*. We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
+Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process.  Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*.  We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
 
 ---
 
@@ -35,7 +35,7 @@ This is the complete run-order for the in-class exchange, self-contained, so you
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -69,7 +69,7 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 
 ## Model 1: The Inter-Group Cycle and the SQR Card
 
-**Why this matters:** Unstructured peer feedback fails in two opposite ways: it is either too kind to be useful ("looks great!") or too vague to act on ("kind of confusing?"). The SQR card prevents both by forcing exactly three things, each with a job:
+**Why this matters:** Unstructured peer feedback fails in two opposite ways: it is either too kind to be useful ("looks great!") or too vague to act on ("kind of confusing?").  The SQR card prevents both by forcing exactly three things, each with a job:
 
 | Part | What It Must Contain | What It Must NOT Be |
 |------|----------------------|---------------------|
@@ -79,25 +79,25 @@ Following the TILT (Transparency in Learning and Teaching) framework ([tilthighe
 
 The card travels through the Project Thread's standing **review cycle** (*artifact -> peer review -> revise -> present*) at three scheduled moments:
 
-1. **Stakeholder Brief exchange (see the course schedule):** teams swap briefs; each team writes SQR cards on the brief it receives; authors revise before the brief feeds the Literature Review.
-2. **Proposal cross-team critique (see the course schedule):** final-project proposals are exchanged the same way, while there is still time to change course.
-3. **Gallery walk (see the course schedule):** every visitor fills out an SQR card for every team visited; the receiving team triages all cards into *fix before submission / disclose in the report / defer to future work*.
+1.  **Stakeholder Brief exchange (see the course schedule):** teams swap briefs; each team writes SQR cards on the brief it receives; authors revise before the brief feeds the Literature Review.
+2.  **Proposal cross-team critique (see the course schedule):** final-project proposals are exchanged the same way, while there is still time to change course.
+3.  **Gallery walk (see the course schedule):** every visitor fills out an SQR card for every team visited; the receiving team triages all cards into *fix before submission / disclose in the report / defer to future work*.
 
-The mnemonic: *host honestly, walk generously*. When you host, show the weak parts too. When you walk, an SQR card is a gift that costs you thought; give real ones.
+The mnemonic: *host honestly, walk generously*.  When you host, show the weak parts too.  When you walk, an SQR card is a gift that costs you thought; give real ones.
 
 ### Critical Thinking Questions
 
-1. Here are three "Strength" entries written about the same brief. Rank them by usefulness to the receiving team and justify your ranking: (a) "Great job, very professional!" (b) "The problem statement is strong." (c) "The problem statement (section 4) quotes the stakeholder's own words ('we lose a week every audit season') which makes the scope checkable against a real cost."
+1.  Here are three "Strength" entries written about the same brief.  Rank them by usefulness to the receiving team and justify your ranking: (a) "Great job, very professional!"  (b) "The problem statement is strong."  (c) "The problem statement (section 4) quotes the stakeholder's own words ('we lose a week every audit season') which makes the scope checkable against a real cost."
 
-   > *Hint: Ask of each: could the receiving team learn what to keep doing from this? (a) locates nothing. (b) locates a section but not what works about it. (c) names the location, the technique, and why it works; the team can now repeat the technique elsewhere.*
+   > *Hint: Ask of each: could the receiving team learn what to keep doing from this?  (a) locates nothing.  (b) locates a section but not what works about it.  (c) names the location, the technique, and why it works; the team can now repeat the technique elsewhere.*
 
-2. Rewrite this fake question as a genuine one: "Did you even think about whether the registrar's office would actually use this?" What changed, and why does the fake version damage the review relationship while the genuine version strengthens it?
+2.  Rewrite this fake question as a genuine one: "Did you even think about whether the registrar's office would actually use this?"  What changed, and why does the fake version damage the review relationship while the genuine version strengthens it?
 
-   > *Hint: A genuine version might be: "What did the registrar say when you asked how this would fit their current workflow? We couldn't find it in the brief." The fake version asserts a failure and dares the team to deny it; the genuine version admits what the reviewer doesn't know and points at a checkable gap. One produces defensiveness, the other produces a to-do item.*
+   > *Hint: A genuine version might be: "What did the registrar say when you asked how this would fit their current workflow?  We couldn't find it in the brief."  The fake version asserts a failure and dares the team to deny it; the genuine version admits what the reviewer doesn't know and points at a checkable gap.  One produces defensiveness, the other produces a to-do item.*
 
-3. Why does the SQR protocol *require* a mitigation to accompany every Risk? Consider what a review full of unmitigated risks does to the receiving team's ability to act, and what proposing a mitigation forces the *reviewer* to do first.
+3.  Why does the SQR protocol *require* a mitigation to accompany every Risk?  Consider what a review full of unmitigated risks does to the receiving team's ability to act, and what proposing a mitigation forces the *reviewer* to do first.
 
-   > *Hint: Ten risks with no exits produce paralysis and a sense of being graded rather than helped. And to propose a mitigation, the reviewer must first understand the team's constraints well enough to suggest something feasible; the requirement quietly forces the reviewer to actually read the work.*
+   > *Hint: Ten risks with no exits produce paralysis and a sense of being graded rather than helped.  And to propose a mitigation, the reviewer must first understand the team's constraints well enough to suggest something feasible; the requirement quietly forces the reviewer to actually read the work.*
 
 Which of the following is a valid Risk entry on an SQR card?
 
@@ -112,7 +112,7 @@ Which of the following is a valid Risk entry on an SQR card?
 
 ## Model 2: The Intra-Group Check-In
 
-**Why this matters:** Inter-group review keeps the *work* healthy; intra-group review keeps the *team* healthy. The check-in is a short structured form, informed by the CATME Smarter Teamwork research on behaviorally anchored peer evaluation ([catme.org](https://www.catme.org/)), that every member completes **privately, to the instructor only**, at three points in the semester (**just after the stakeholder-brief exchange, the proposal review, and the gallery walk on the course schedule**) deliberately timed after the thread's crunch points, when memories of how the team actually behaved are fresh.
+**Why this matters:** Inter-group review keeps the *work* healthy; intra-group review keeps the *team* healthy.  The check-in is a short structured form, informed by the CATME Smarter Teamwork research on behaviorally anchored peer evaluation ([catme.org](https://www.catme.org/)), that every member completes **privately, to the instructor only**, at three points in the semester (**just after the stakeholder-brief exchange, the proposal review, and the gallery walk on the course schedule**) deliberately timed after the thread's crunch points, when memories of how the team actually behaved are fresh.
 
 The form, per teammate (and for yourself):
 
@@ -126,21 +126,21 @@ The form, per teammate (and for yourself):
 
 Rules that make it work: answers describe **behaviors and artifacts, never character** ("delivered X late twice," not "is lazy"); it is **private to the instructor**; it is how the instructor sees inside teams without ambushes, and it feeds the *individual contribution* component of the final grade; and it is **not a substitute for talking to your team**; a request that appears in a check-in but has never been said aloud (kindly, via a repair move) is feedback the teammate never got a chance to act on.
 
-Alongside the private check-in, one public instrument continues: **every progress report carries all members' signatures**, re-affirming the charter each time. A member who will not sign is a signal the instructor needs *before* the deadline, not after.
+Alongside the private check-in, one public instrument continues: **every progress report carries all members' signatures**, re-affirming the charter each time.  A member who will not sign is a signal the instructor needs *before* the deadline, not after.
 
 ### Critical Thinking Questions
 
-4. The check-ins are scheduled just after the stakeholder-brief exchange, the proposal review, and the gallery walk. What would be lost if there were only one check-in, at the gallery walk? Name two distinct failure patterns the earlier check-ins can catch while they are still fixable.
+4.  The check-ins are scheduled just after the stakeholder-brief exchange, the proposal review, and the gallery walk.  What would be lost if there were only one check-in, at the gallery walk?  Name two distinct failure patterns the earlier check-ins can catch while they are still fixable.
 
-   > *Hint: Pattern one: workload asymmetry that starts small early in the project and compounds, visible at the first check-in, entrenched by the last. Pattern two: the silent member drifting away (or the dominant member crowding others out): at the first check-in this is a conversation; by the gallery walk it is a grade dispute. Feedback has a half-life; the final check-in can only document, not repair.*
+   > *Hint: Pattern one: workload asymmetry that starts small early in the project and compounds, visible at the first check-in, entrenched by the last.  Pattern two: the silent member drifting away (or the dominant member crowding others out): at the first check-in this is a conversation; by the gallery walk it is a grade dispute.  Feedback has a half-life; the final check-in can only document, not repair.*
 
-5. Why must the "one request" be a *behavior* ("post your section by Thursday standup") rather than a *trait* ("be more responsible")? Connect your answer to both Edmondson's (1999) psychological safety and to plain practicality: which of the two can a teammate actually comply with by next week?
+5.  Why must the "one request" be a *behavior* ("post your section by Thursday standup") rather than a *trait* ("be more responsible")?  Connect your answer to both Edmondson's (1999) psychological safety and to plain practicality: which of the two can a teammate actually comply with by next week?
 
-   > *Hint: A trait judgment is an attack on identity; it triggers defense, not change, and it teaches the team that check-ins are where you get character-assassinated (there goes psychological safety). A behavior request has a built-in success condition: either the section shows up Thursday or it doesn't. You can comply with a behavior; you can only argue with a verdict.*
+   > *Hint: A trait judgment is an attack on identity; it triggers defense, not change, and it teaches the team that check-ins are where you get character-assassinated (there goes psychological safety).  A behavior request has a built-in success condition: either the section shows up Thursday or it doesn't.  You can comply with a behavior; you can only argue with a verdict.*
 
-6. You are filling in the check-in and realize your answer about a teammate's reliability is negative, and you have never raised the issue with them directly. What does the charter (and Model 3's repair moves) say you should do in the week after submitting the check-in, and why does the private channel not discharge that obligation?
+6.  You are filling in the check-in and realize your answer about a teammate's reliability is negative, and you have never raised the issue with them directly.  What does the charter (and Model 3's repair moves) say you should do in the week after submitting the check-in, and why does the private channel not discharge that obligation?
 
-   > *Hint: The check-in informs the instructor; it does not inform the teammate. If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it, which is what the charter's conflict protocol exists to provide. The check-in AND the direct repair move are both required; each does a job the other cannot.*
+   > *Hint: The check-in informs the instructor; it does not inform the teammate.  If the first time they hear about the problem is in an instructor conversation, they were denied the cheap, early, face-saving chance to fix it, which is what the charter's conflict protocol exists to provide.  The check-in AND the direct repair move are both required; each does a job the other cannot.*
 
 The structured check-in at the three scheduled milestones is:
 
@@ -155,7 +155,7 @@ The structured check-in at the three scheduled milestones is:
 
 ## Model 3: Receiving Feedback Well
 
-**Why this matters:** Review protocols fail at the moment of *reception*: a defensive reaction teaches reviewers to soften future feedback, and softened feedback is useless. Receiving well is a learnable skill with a small move set: the same **repair moves** your charter names (*name it, own your part, restate the other side, propose a next step*), adapted for feedback:
+**Why this matters:** Review protocols fail at the moment of *reception*: a defensive reaction teaches reviewers to soften future feedback, and softened feedback is useless.  Receiving well is a learnable skill with a small move set: the same **repair moves** your charter names (*name it, own your part, restate the other side, propose a next step*), adapted for feedback:
 
 | Move | At the moment of feedback, it sounds like... |
 |------|----------------------------------------------|
@@ -168,44 +168,44 @@ And three norms that keep the room safe for candid review, whichever side of it 
 
 ### Critical Thinking Questions
 
-7. A team receives an SQR card whose Risk is real but whose suggested mitigation is infeasible (it assumes budget the team does not have). Walk the team's best response through the four moves. Which move is doing the most work in preventing this from becoming "reviewers just don't get our project"?
+7.  A team receives an SQR card whose Risk is real but whose suggested mitigation is infeasible (it assumes budget the team does not have).  Walk the team's best response through the four moves.  Which move is doing the most work in preventing this from becoming "reviewers just don't get our project"?
 
-   > *Hint: Restating is doing the heavy lifting: "the risk you see is X" separates the (valid) risk from the (infeasible) mitigation, so the team can accept one without the other. Teams that skip restating tend to reject the whole card because its weakest part was weak, and lose the diagnosis along with the prescription.*
+   > *Hint: Restating is doing the heavy lifting: "the risk you see is X" separates the (valid) risk from the (infeasible) mitigation, so the team can accept one without the other.  Teams that skip restating tend to reject the whole card because its weakest part was weak, and lose the diagnosis along with the prescription.*
 
 ---
 
 ## Exercises
 
-**Practice SQR on a sample brief excerpt (15 minutes).** Individually write one complete SQR card on the excerpt below; then compare cards within your team, and the Recorder posts the team's best S, best Q, and best R (they may come from different cards) to the discussion board.
+**Practice SQR on a sample brief excerpt (15 minutes).**  Individually write one complete SQR card on the excerpt below; then compare cards within your team, and the Recorder posts the team's best S, best Q, and best R (they may come from different cards) to the discussion board.
 
 > **Excerpt from a sample Stakeholder Brief (section 2 and 4, abridged):**
 >
-> *The issue in the stakeholder's own terms.* The coordinator of the campus food pantry told us the pantry "runs on one spreadsheet and whoever remembers." Donations arrive unpredictably; expiration dates are checked by hand "when someone has an hour, which is never." Their words: "Twice last year we threw out a whole shelf because nobody caught the dates. That's someone's groceries."
+> *The issue in the stakeholder's own terms.*  The coordinator of the campus food pantry told us the pantry "runs on one spreadsheet and whoever remembers."  Donations arrive unpredictably; expiration dates are checked by hand "when someone has an hour, which is never."  Their words: "Twice last year we threw out a whole shelf because nobody caught the dates.  That's someone's groceries."
 >
-> *Problem statement.* The pantry needs a way to track incoming donations and get ahead of expirations. We propose an agent system that will completely automate the pantry's inventory, ordering, and volunteer scheduling, eliminating manual work. The coordinator's spreadsheet will be replaced in the first sprint. This will solve the pantry's problems and can be reused by every pantry in the county.
+> *Problem statement.*  The pantry needs a way to track incoming donations and get ahead of expirations.  We propose an agent system that will completely automate the pantry's inventory, ordering, and volunteer scheduling, eliminating manual work.  The coordinator's spreadsheet will be replaced in the first sprint.  This will solve the pantry's problems and can be reused by every pantry in the county.
 
-*You've succeeded when:* your Strength points at a specific sentence and says what it accomplishes (there is a genuinely strong move in the excerpt's use of quotes); your Question is something you actually cannot answer from the text; and your Risk names a specific failure with a feasible mitigation. If you are stuck on R, look at the distance between what the stakeholder asked for and what the problem statement promises, and at the phrase "replaced in the first sprint."
+*You've succeeded when:* your Strength points at a specific sentence and says what it accomplishes (there is a strong move in the excerpt's use of quotes); your Question is something you actually cannot answer from the text; and your Risk names a specific failure with a feasible mitigation.  If you are stuck on R, look at the distance between what the stakeholder asked for and what the problem statement promises, and at the phrase "replaced in the first sprint."
 
-**Optional stretch:** draft the check-in you would write about *yourself* this week: contribution, reliability, communication, one appreciation, one request. Nobody sees it; the point is to notice how it feels from the other side before the first check-in.
+**Optional stretch:** draft the check-in you would write about *yourself* this week: contribution, reliability, communication, one appreciation, one request.  Nobody sees it; the point is to notice how it feels from the other side before the first check-in.
 
 ---
 
 ## Reflection Prompt
 
-*In your notebook, keyed to the Open Questions (Goal 15).* **How should we live together?** Candid review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously. Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)? Where has it broken, and which side broke first, the candor or the generosity? **What will I do?** Which is harder for you personally: writing the candid Risk, or hearing it? Name one concrete thing from Model 3 you will try at the stakeholder-brief exchange.
+*In your notebook, keyed to the Open Questions (Goal 15).*  **How should we live together?**  Candid review is a social contract: everyone's work improves only if everyone risks candor and everyone receives it generously.  Where else in your life does that contract exist (a rehearsal room, a code review, a kitchen, a team)?  Where has it broken, and which side broke first, the candor or the generosity?  **What will I do?**  Which is harder for you personally: writing the candid Risk, or hearing it?  Name one concrete thing from Model 3 you will try at the stakeholder-brief exchange.
 
 ---
 
 ## -> Coming Up Next
 
-You will use SQR cards for real at the Stakeholder Brief exchange on the course schedule, and your first private check-in is due at the same milestone. The cycle (artifact, review, revise, present) then repeats at the proposal critique and the gallery walk, all the way to Demo Day.
+You will use SQR cards for real at the Stakeholder Brief exchange on the course schedule, and your first private check-in is due at the same milestone.  The cycle (artifact, review, revise, present) then repeats at the proposal critique and the gallery walk, all the way to Demo Day.
 
 ---
 
 ## Further Reading
 
 - CATME Smarter Teamwork (research basis for behaviorally anchored peer evaluation): https://www.catme.org/
-- Edmondson, A. (1999). "Psychological Safety and Learning Behavior in Work Teams." *Administrative Science Quarterly*, 44(2), 350-383.
+- Edmondson, A. (1999).  "Psychological Safety and Learning Behavior in Work Teams."  *Administrative Science Quarterly*, 44(2), 350-383.
 - AAC&U VALUE Rubrics (Teamwork; Written Communication): https://www.aacu.org/initiatives/value
 - WPI SWEET Center Team Contract Exercise, Worcester Polytechnic Institute (companion protocol from the Team Charter activity)
 - The Project Thread hub: https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread
