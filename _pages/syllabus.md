@@ -200,6 +200,11 @@ textbooks:
   link: false
   isrequired: false
   freelyavailable: false
+- title: "Magnifica Humanitas: On Safeguarding the Human Person in the Time of Artificial Intelligence (encyclical letter, 15 May 2026)"
+  authors: "Pope Leo XIV"
+  link: "https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html"
+  isrequired: false
+  freelyavailable: "https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html"
 objectives:
 - objective: "Analyze the ethical implications of AI agents acting on behalf of people, using case studies, governance frameworks, and design justice principles."
 - objective: "Design agentic AI systems, including prompts, retrieval pipelines, tools, and multi-agent orchestrations, that augment human capabilities while adhering to ethical guidelines."
@@ -778,6 +783,16 @@ This course is designed as deliberate choice architecture, in the spirit of Univ
 
 If a path you want is not on the menu, propose it. The point of the choices is to let you leave this course able to stand up, operate, and reason about an AI system of your own.
 
+## A Note on the Use of Generative AI
+
+In this course we will use generative AI tools extensively, and deliberately. We will do it in the course of exploring both the capabilities and the risks of these systems, so that you leave prepared to have a highly informed conversation about their merits and their drawbacks for human flourishing, whatever your personal opinion of them turns out to be. That preparation is the point: an informed critic and an informed builder need the same working knowledge, and you cannot get it from a distance.
+
+We will seek to model best practices for using these systems through the lens of the four Ursinus Questions: *What should matter to me? How should we live together? How can we understand the world? What will I do?* Those questions are not decoration on a technical course. They are the questions that decide what you build, who you build it for, and what you refuse to build.
+
+One way we will hold to that is by using AI systems to enhance and elevate our creative and critical capabilities rather than to substitute for them. Pope Leo XIV takes up exactly this question in his encyclical letter [*Magnifica Humanitas: On Safeguarding the Human Person in the Time of Artificial Intelligence*](https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html) (15 May 2026), which argues that technology "should not be considered, in itself, as a force antagonistic to humanity," that human work is where people "bring their freedom, creativity and capacity for cooperation into play, contributing to the cultural and moral elevation of society" (&para;37), and that the splendor of human dignity is something "no machine can ever replace" (&para;15). Read alongside the four Questions, that is a useful standard to hold our own work to.
+
+So, to avoid the risk of AI replacing the creative pursuits it should be extending, I ask that you **not use AI tools or systems to simply generate the work you do in this class**. Use them instead to execute plans that you thoughtfully designed. That distinction is not a technicality; it is most of what this course teaches. The design-first discipline running through the written assignments, and the AI-use disclosure that every assignment asks for, both exist to keep the thinking yours. We will discuss and debate these questions as a class throughout the semester, and you are not expected to arrive at my answer.
+
 ## A Project-Based Course: Process, Teams, and Community Partners
 
 This course is deliberately **project-based**: the semester-long team project is the vehicle for the learning, not the destination. The graded emphasis falls on the *process* (how your team frames a problem, works with stakeholders, manages itself, and communicates) as much as on the product you demo. Five process goals run through every Project-Thread milestone:
@@ -806,7 +821,7 @@ Every assignment is written to be transparent about three things, so you are nev
 - **Task:** *what* you will actually do, in concrete steps.
 - **Criteria:** *how* your work will be evaluated. Every graded assignment carries a rubric with four levels (pre-emerging, beginning, progressing, proficient), so you can see what proficient work looks like before you begin, and can hold your own draft against it.
 
-Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended, and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work.
+Read the Purpose first: it tells you what the assignment is really for, which is the fastest way to make good decisions when the task gets open-ended, and much of this course is deliberately open-ended, because operating real systems is. Every assignment also asks you to reflect and to disclose your use of AI tools honestly; that reflection and that disclosure are part of the work, for the reasons set out in *A Note on the Use of Generative AI* above.
 
 ## Class Activities and Participation (10%)
 
