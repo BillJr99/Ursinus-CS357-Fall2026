@@ -22,7 +22,7 @@
 ### Runtime Facts
 
 <facts verified against the live system this session: versions, paths, ports,
-behaviors. These are hints for the next session, not authority; re-verify before
+behaviors.  These are hints for the next session, not authority; re-verify before
 relying on them.>
 
 ### Validation

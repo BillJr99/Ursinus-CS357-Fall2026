@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Fine-Tuning, RAG, and Prompting: Choosing the Right Approach
 
-Every practical AI deployment faces the same question: **how do you specialize a general-purpose model for a specific task?** There are exactly three levers (prompting, retrieval-augmented generation, and fine-tuning) and they sit on a ladder ordered by cost, complexity, and permanence. Most practitioners reach for the expensive rungs first and regret it. This module builds **the decision framework $\rightarrow$ the cost reality $\rightarrow$ parameter-efficient fine-tuning $\rightarrow$ when to combine approaches**.
+Every practical AI deployment faces the same question: **how do you specialize a general-purpose model for a specific task?**  There are exactly three levers (prompting, retrieval-augmented generation, and fine-tuning) and they sit on a ladder ordered by cost, complexity, and permanence.  Most practitioners reach for the expensive rungs first and regret it.  This module builds **the decision framework $\rightarrow$ the cost reality $\rightarrow$ parameter-efficient fine-tuning $\rightarrow$ when to combine approaches**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -39,27 +39,27 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: The Ladder
 
-In this part, you will learn the three fundamental ways to specialize a language model (prompting, RAG, and fine-tuning) and build a diagnostic framework for choosing among them. Understanding which lever to reach for first will save your team weeks of unnecessary work.
+In this part, you will learn the three fundamental ways to specialize a language model (prompting, RAG, and fine-tuning) and build a diagnostic framework for choosing among them.  Understanding which lever to reach for first will save your team weeks of unnecessary work.
 
-## 1. Three Ways to Specialize a Model
+## 1.  Three Ways to Specialize a Model
 
-This is the "hire an expert vs. give your generalist a textbook" decision, and just like in real life, hiring a full specialist is expensive, slow, and permanent. Sometimes the right answer is to give your generalist a great textbook (RAG), or better instructions (prompting), and only bring in the specialist when those genuinely cannot work.
+This is the "hire an expert vs. give your generalist a textbook" decision, and just like in real life, hiring a full specialist is expensive, slow, and permanent.  Sometimes the right answer is to give your generalist a great textbook (RAG), or better instructions (prompting), and only bring in the specialist when those cannot work.
 
 The three approaches differ in *where the specialization lives*: in the prompt at inference time, in retrieved text at inference time, or in the model weights permanently.
 
-**Prompting** gives the model instructions, examples, and context within a single call. Zero-shot prompting provides instructions only; few-shot adds 2-10 worked examples; chain-of-thought prompts the model to reason step by step before answering. Prompting is free, instant, and reversible, but is bounded by the context window and by what the base model already knows. A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
+**Prompting** gives the model instructions, examples, and context within a single call.  Zero-shot prompting provides instructions only; few-shot adds 2-10 worked examples; chain-of-thought prompts the model to reason step by step before answering.  Prompting is free, instant, and reversible, but is bounded by the context window and by what the base model already knows.  A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
 
-**RAG** injects retrieved information at inference time. The model receives the same prompt, but now the prompt includes relevant documents fetched from an external index. The model's weights never change. RAG excels when knowledge is dynamic (daily news, live databases), external (proprietary documents the base model never saw), or too large for any context window. Its costs are operational: embedding, indexing, retrieval latency, and the complexity of the pipeline.
+**RAG** injects retrieved information at inference time.  The model receives the same prompt, but now the prompt includes relevant documents fetched from an external index.  The model's weights never change.  RAG excels when knowledge is dynamic (daily news, live databases), external (proprietary documents the base model never saw), or too large for any context window.  Its costs are operational: embedding, indexing, retrieval latency, and the complexity of the pipeline.
 
-**Fine-tuning** adjusts the model's weights on a task-specific dataset. The change is permanent: a fine-tuned model behaves differently on every subsequent call, without any special prompt. Fine-tuning can teach style, format, vocabulary, and domain behavior that prompting cannot reliably achieve. It is also the most expensive and least reversible option. **PEFT (Parameter-Efficient Fine-Tuning)** methods such as LoRA and QLoRA reduce cost dramatically by freezing most weights and training only small adapter matrices; more on this below.
+**Fine-tuning** adjusts the model's weights on a task-specific dataset.  The change is permanent: a fine-tuned model behaves differently on every subsequent call, without any special prompt.  Fine-tuning can teach style, format, vocabulary, and domain behavior that prompting cannot reliably achieve.  It is also the most expensive and least reversible option.  **PEFT (Parameter-Efficient Fine-Tuning)** methods such as LoRA and QLoRA reduce cost dramatically by freezing most weights and training only small adapter matrices; more on this below.
 
-The practical rule: **start at the top of the ladder**. Reach for fine-tuning only after prompting and RAG have been genuinely tried and found insufficient.
+The practical rule: **start at the top of the ladder**.  Reach for fine-tuning only after you have really tried prompting and RAG and found them insufficient.
 
 ---
 
 ## Model 1: The Decision Framework
 
-Use this table as a diagnostic. Each row is a question to ask before choosing an approach; the answers point you toward the right rung. Work through the rows in order, like a flowchart where each answer narrows your options.
+Use this table as a diagnostic.  Each row is a question to ask before choosing an approach; the answers point you toward the right rung.  Work through the rows in order, like a flowchart where each answer narrows your options.
 
 | Diagnostic Question | If Yes | If No |
 |---|---|---|
@@ -72,17 +72,17 @@ Use this table as a diagnostic. Each row is a question to ask before choosing an
 
 ### Critical Thinking Questions
 
-1. A startup wants to build a customer support bot that answers questions about their product documentation, which is updated every sprint (roughly every two weeks). Walk through the decision table row by row and justify your final recommendation.
+1.  A startup wants to build a customer support bot that answers questions about their product documentation, which is updated every sprint (roughly every two weeks).  Walk through the decision table row by row and justify your final recommendation.
 
-   *Hint:* Pay special attention to the "Is the knowledge dynamic?" row. What does "updated every two weeks" mean for an approach that requires retraining (days of work) vs. an approach that requires re-indexing (minutes of work)?
+   *Hint:* Pay special attention to the "Is the knowledge dynamic?" row.  What does "updated every two weeks" mean for an approach that requires retraining (days of work) vs. an approach that requires re-indexing (minutes of work)?
 
-2. A legal firm wants every contract summary the model produces to follow a precise seven-section structure with mandatory fields. They have 2,000 existing human-written summaries in that format. Walk through the decision table for this case. Does the answer change if they only have 50 examples? Why?
+2.  A legal firm wants every contract summary the model produces to follow a precise seven-section structure with mandatory fields.  They have 2,000 existing human-written summaries in that format.  Walk through the decision table for this case.  Does the answer change if they only have 50 examples?  Why?
 
-   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable. With 50 examples, few-shot prompting (including 3-5 examples directly in the prompt) may actually outperform a poorly-fitted fine-tuned model.
+   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable.  With 50 examples, few-shot prompting (including 3-5 examples directly in the prompt) may actually outperform a poorly-fitted fine-tuned model.
 
-3. "The model already knows how to write code, so we just need to prompt it." A team makes this argument to avoid fine-tuning their coding assistant. Describe a concrete scenario where this reasoning fails, where the gap between base model behavior and desired behavior is too large for prompting to close.
+3.  "The model already knows how to write code, so we just need to prompt it."  A team makes this argument to avoid fine-tuning their coding assistant.  Describe a concrete scenario where this reasoning fails, where the gap between base model behavior and desired behavior is too large for prompting to close.
 
-   *Hint:* Think about a company-specific internal library with custom APIs that the base model has never seen (because it's proprietary). No amount of prompting teaches the model what `acme_corp.billing.create_invoice(customer_id, line_items)` does.
+   *Hint:* Think about a company-specific internal library with custom APIs that the base model has never seen (because it's proprietary).  No amount of prompting teaches the model what `acme_corp.billing.create_invoice(customer_id, line_items)` does.
 
 ---
 
@@ -90,9 +90,9 @@ Use this table as a diagnostic. Each row is a question to ask before choosing an
 
 In this part, you will compare the true costs of prompting, RAG, and fine-tuning, and learn how LoRA dramatically reduces the GPU memory and compute needed for fine-tuning, making it accessible for small teams and individuals.
 
-## 2. The Cost Reality
+## 2.  The Cost Reality
 
-The order-of-magnitude cost differences between approaches are often underappreciated. These figures are rough but directionally correct as of 2025. Think of it like building a house: you can rent a furnished apartment immediately (prompting), move into a place and add your own furniture (RAG), or custom-build from scratch (fine-tuning); each has very different upfront and ongoing costs.
+The order-of-magnitude cost differences between approaches are often underappreciated.  These figures are rough but directionally correct as of 2025.  Think of it like building a house: you can rent a furnished apartment immediately (prompting), move into a place and add your own furniture (RAG), or custom-build from scratch (fine-tuning); each has very different upfront and ongoing costs.
 
 | Approach | Typical Cost per Query | One-Time Setup Cost | Infrastructure Needed | Data Requirement |
 |---|---|---|---|---|
@@ -102,11 +102,11 @@ The order-of-magnitude cost differences between approaches are often underapprec
 | Fine-tuning (large model, full weight update) | $0.0001-$0.001 per call after training (self-hosted inference) | $1,000-$50,000 per training run on multi-GPU cluster | Multi-GPU cluster, distributed training framework (DeepSpeed, FSDP) | Thousands to millions of labeled pairs |
 | Pre-training from scratch | Fractions of a cent per call after training | $1,000,000+ for a competitive model | Massive GPU cluster, months of compute | Billions of tokens of curated text |
 
-The "low cost per call after training" for fine-tuning is deceptive: the inference cost is low, but the up-front training cost is paid once per model version. If the domain or data changes, you re-pay that cost.
+The "low cost per call after training" for fine-tuning is deceptive: the inference cost is low, but the up-front training cost is paid once per model version.  If the domain or data changes, you re-pay that cost.
 
 ## Model 2: Same Task, Three Approaches
 
-Consider a concrete deployment: **an HR policy assistant that answers questions about a company's internal policy document**. This is exactly the kind of task where the choice of approach has real, measurable consequences.
+Consider a concrete deployment: **an HR policy assistant that answers questions about a company's internal policy document**.  This is exactly the kind of task where the choice of approach has real, measurable consequences.
 
 | Dimension | Prompting: Paste Full Doc in Context | RAG: Chunk, Embed, Retrieve | Fine-Tuning: Train on Q&A Pairs |
 |---|---|---|---|
@@ -117,29 +117,29 @@ Consider a concrete deployment: **an HR policy assistant that answers questions 
 | Provides citations? | Possible with careful prompting ("Always cite the section number") but not guaranteed | Natural: the retrieved chunk itself is the citation and can be shown to the user | Generally not: knowledge is embedded opaquely in weights, so the model cannot point to its source |
 | Output style consistency | Moderate: varies with how the user phrases their question | Moderate: same retrieval quality, but LLM generation still varies | High: style, format, and phrasing learned during training appear consistently in every response |
 
-> **Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution. In reality, for a task like the HR policy assistant, **RAG almost always outperforms fine-tuning** because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge). Fine-tuning wins for style/format, not for factual recall of changing documents.
+> **Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution.  In reality, for a task like the HR policy assistant, **RAG almost always outperforms fine-tuning** because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge).  Fine-tuning wins for style/format, not for factual recall of changing documents.
 
 ### Critical Thinking Questions
 
-4. The HR policy document is 50 pages. Prompting is eliminated by context window limits. Between RAG and fine-tuning, which approach provides better freshness when a policy changes, and why does the answer matter operationally for an HR department?
+4.  The HR policy document is 50 pages.  Prompting is eliminated by context window limits.  Between RAG and fine-tuning, which approach provides better freshness when a policy changes, and why does the answer matter operationally for an HR department?
 
-   *Hint:* When a policy changes, which approach requires re-indexing (minutes) vs. retraining (hours/days)? Think about the HR team's perspective: if the maternity leave policy changes tomorrow, how quickly can each approach reflect that change?
+   *Hint:* When a policy changes, which approach requires re-indexing (minutes) vs. retraining (hours/days)?  Think about the HR team's perspective: if the maternity leave policy changes tomorrow, how quickly can each approach reflect that change?
 
-5. A product manager argues: "Let's fine-tune the model on HR Q&A pairs so we don't need the vector database." What hidden assumption does this argument make about the stability of the policy, and what happens at the next policy revision?
+5.  A product manager argues: "Let's fine-tune the model on HR Q&A pairs so we don't need the vector database."  What hidden assumption does this argument make about the stability of the policy, and what happens at the next policy revision?
 
-   *Hint:* The argument assumes the Q&A pairs will remain accurate indefinitely. What happens when a policy changes and the fine-tuned model confidently gives the old (now wrong) answer?
+   *Hint:* The argument assumes the Q&A pairs will remain accurate indefinitely.  What happens when a policy changes and the fine-tuned model confidently gives the old (now wrong) answer?
 
-6. Describe a hybrid approach that combines RAG *and* fine-tuning. What does each layer contribute, and what would justify the additional complexity and cost?
+6.  Describe a hybrid approach that combines RAG *and* fine-tuning.  What does each layer contribute, and what would justify the additional complexity and cost?
 
-   *Hint:* Think of RAG as responsible for "what information to use" and fine-tuning as responsible for "how to format and present the answer." A model fine-tuned on 2,000 HR Q&A pairs will always respond in the right format and tone; RAG ensures the specific policy content it uses is always current.
+   *Hint:* Think of RAG as responsible for "what information to use" and fine-tuning as responsible for "how to format and present the answer."  A model fine-tuned on 2,000 HR Q&A pairs will always respond in the right format and tone; RAG ensures the specific policy content it uses is always current.
 
 ---
 
-## 3. LoRA: Fine-Tuning Without Full Weight Updates
+## 3.  LoRA: Fine-Tuning Without Full Weight Updates
 
-Full fine-tuning updates every parameter in the model: for a 7B-parameter model, that is 7 billion floating-point numbers to store gradients for and update. LoRA (Low-Rank Adaptation) sidesteps this by observing that the *update* to each weight matrix during fine-tuning tends to be low-rank: it lives in a small subspace of the full parameter space.
+Full fine-tuning updates every parameter in the model: for a 7B-parameter model, that is 7 billion floating-point numbers to store gradients for and update.  LoRA (Low-Rank Adaptation) sidesteps this by observing that the *update* to each weight matrix during fine-tuning tends to be low-rank: it lives in a small subspace of the full parameter space.
 
-**LoRA freezes all original weights and adds two small matrices per layer.** For a weight matrix $W \in \mathbb{R}^{d \times k}$, LoRA trains $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times k}$ where $r \ll d, k$ (typically $r = 4$, $8$, or $16$). During inference, the layer computes $Wx + ABx$, the original output plus a learned correction. Installation: `pip install peft transformers` (the PEFT library from Hugging Face implements LoRA).
+LoRA freezes all original weights and adds two small matrices per layer.  For a weight matrix $W \in \mathbb{R}^{d \times k}$, LoRA trains $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times k}$ where $r \ll d, k$ (typically $r = 4$, $8$, or $16$).  During inference, the layer computes $Wx + ABx$, the original output plus a learned correction.  Installation: `pip install peft transformers` (the PEFT library from Hugging Face implements LoRA).
 
 ## Model 3: LoRA Illustrated
 
@@ -156,11 +156,11 @@ Original Layer (frozen):          LoRA Correction (trained):
   Storage: unchanged                 Storage: ~0.1% of original
 ```
 
-At rank $r = 8$ for a 7B model, LoRA trains roughly 4-8 million parameters instead of 7 billion, a 99.9% reduction in trainable parameters. **QLoRA** combines LoRA with 4-bit quantization of the frozen base weights, enabling fine-tuning of 7B models on a single consumer GPU with 24 GB of VRAM.
+At rank $r = 8$ for a 7B model, LoRA trains roughly 4-8 million parameters instead of 7 billion, a 99.9% reduction in trainable parameters.  **QLoRA** combines LoRA with 4-bit quantization of the frozen base weights, enabling fine-tuning of 7B models on a single consumer GPU with 24 GB of VRAM.
 
-**Real cost example:** Fine-tuning `llama3.1:8b` with QLoRA on 800 JSON-formatting examples using a rented Lambda Labs A100 instance costs approximately $1.60 (0.8 hours × $2/hour). The resulting adapter file (the A and B matrices) is roughly 40 MB, compared to the 16 GB base model.
+**Real cost example:** Fine-tuning `llama3.1:8b` with QLoRA on 800 JSON-formatting examples using a rented Lambda Labs A100 instance costs approximately $1.60 (0.8 hours × $2/hour).  The resulting adapter file (the A and B matrices) is roughly 40 MB, compared to the 16 GB base model.
 
-A team wants to fine-tune a 7B model to always respond in a structured JSON format for a data extraction task. They have 800 labeled examples and a single A100 GPU (40 GB). Which approach is most appropriate?
+A team wants to fine-tune a 7B model to always respond in a structured JSON format for a data extraction task.  They have 800 labeled examples and a single A100 GPU (40 GB).  Which approach is most appropriate?
 
 [( )] Full fine-tuning (update all 7B parameters), because format changes require updating every layer of the model to take effect consistently
 [(X)] LoRA or QLoRA (freeze the base weights, train small adapter matrices), sufficient for format adaptation at a fraction of the compute cost
@@ -177,35 +177,35 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
 ## Exercises
 
-1. *Approach audit.* Identify three AI products you use regularly (a search assistant, a coding tool, a customer service bot). For each, hypothesize whether the specialization is achieved via prompting, RAG, fine-tuning, or some combination. List the evidence that informs your hypothesis.
+1.  *Approach audit.*  Identify three AI products you use regularly (a search assistant, a coding tool, a customer service bot).  For each, hypothesize whether the specialization is achieved via prompting, RAG, fine-tuning, or some combination.  List the evidence that informs your hypothesis.
 
-   *What to do:* For each product, answer: Does it know about recent events? (RAG or prompting.) Does it refuse certain topics? (Prompting/fine-tuning.) Does it always output in a specific format? (Fine-tuning.) Does it cite sources? (RAG.)
+   *What to do:* For each product, answer: Does it know about recent events?  (RAG or prompting.)  Does it refuse certain topics?  (Prompting/fine-tuning.)  Does it always output in a specific format?  (Fine-tuning.)  Does it cite sources?  (RAG.)
 
-   *Starter hint:* GitHub Copilot likely uses a combination: a code-specialized base model (fine-tuning on code) plus in-context retrieval of your open files (prompting/RAG). What evidence do you see for this in its behavior?
+   *Starter hint:* GitHub Copilot likely uses a combination: a code-specialized base model (fine-tuning on code) plus in-context retrieval of your open files (prompting/RAG).  What evidence do you see for this in its behavior?
 
    *You've succeeded when:* You have a table with three products, a hypothesis for each, and at least two observable behaviors that support each hypothesis.
 
-2. *Cost model.* You process 10,000 user queries per day. Compare the monthly cost of: (a) GPT-4o via API at $5/1M input tokens with a 2,000-token average prompt vs. (b) a locally-hosted fine-tuned `llama3.1:8b` model on a rented A100 at $2/hour.
+2.  *Cost model.*  You process 10,000 user queries per day.  Compare the monthly cost of: (a) GPT-4o via API at $5/1M input tokens with a 2,000-token average prompt vs. (b) a locally-hosted fine-tuned `llama3.1:8b` model on a rented A100 at $2/hour.
 
-   *What to do:* Calculate (a) monthly API cost: 10,000 queries/day × 30 days × 2,000 tokens × ($5 / 1,000,000). Calculate (b) monthly GPU cost: 720 hours/month × $2/hour. Add the one-time training cost. Find the break-even query volume.
+   *What to do:* Calculate (a) monthly API cost: 10,000 queries/day × 30 days × 2,000 tokens × ($5 / 1,000,000).  Calculate (b) monthly GPU cost: 720 hours/month × $2/hour.  Add the one-time training cost.  Find the break-even query volume.
 
-   *Starter hint:* At 10,000 queries/day, GPT-4o API cost ≈ $3,000/month. A dedicated A100 ≈ $1,440/month. But what happens at 500 queries/day? The A100 is always on; the API charges per query. Build a simple Python calculation: `api_cost = queries_per_day * 30 * avg_tokens * price_per_token`.
+   *Starter hint:* At 10,000 queries/day, GPT-4o API cost ≈ $3,000/month.  A dedicated A100 ≈ $1,440/month.  But what happens at 500 queries/day?  The A100 is always on; the API charges per query.  Build a simple Python calculation: `api_cost = queries_per_day * 30 * avg_tokens * price_per_token`.
 
    *You've succeeded when:* You have a break-even query volume (queries/day at which the two approaches cost the same) and a recommendation for a startup with 500 queries/day vs. 50,000 queries/day.
 
-3. *LoRA parameter count.* A transformer layer has a query projection matrix $W_Q \in \mathbb{R}^{4096 \times 4096}$. If LoRA is applied with rank $r = 16$, how many parameters does LoRA add to this single matrix (count $A$ and $B$ together)? What fraction of the original matrix does this represent?
+3.  *LoRA parameter count.*  A transformer layer has a query projection matrix $W_Q \in \mathbb{R}^{4096 \times 4096}$. If LoRA is applied with rank $r = 16$, how many parameters does LoRA add to this single matrix (count $A$ and $B$ together)?  What fraction of the original matrix does this represent?
 
-   *What to do:* $A$ has shape $4096 \times 16$ and $B$ has shape $16 \times 4096$. Count total LoRA parameters. Original $W_Q$ has $4096 \times 4096 = 16{,}777{,}216$ parameters.
+   *What to do:* $A$ has shape $4096 \times 16$ and $B$ has shape $16 \times 4096$. Count total LoRA parameters.  Original $W_Q$ has $4096 \times 4096 = 16{,}777{,}216$ parameters.
 
    *Starter hint:* $|A| = 4096 \times 16 = 65{,}536$. $|B| = 16 \times 4096 = 65{,}536$. Total LoRA = $131{,}072$. Fraction = $131{,}072 / 16{,}777{,}216 \approx 0.78\%$. A real 7B model has ~32 such layers, each with multiple projection matrices (Q, K, V, O).
 
    *You've succeeded when:* You have the exact parameter counts and fractions, and you can explain why this means LoRA training needs ~100x less GPU memory than full fine-tuning.
 
-4. *Dataset construction.* You are fine-tuning a model to extract structured fields (name, date, amount, counterparty) from procurement contracts. Design a data collection strategy for 500 training examples.
+4.  *Dataset construction.*  You are fine-tuning a model to extract structured fields (name, date, amount, counterparty) from procurement contracts.  Design a data collection strategy for 500 training examples.
 
    *What to do:* Identify (a) the source of raw documents, (b) how you generate ground-truth labels, and (c) what quality checks you apply before training.
 
-   *Starter hint:* Format each training example as a JSON pair: `{"input": "<contract text>", "output": {"name": "Acme Corp", "date": "2024-03-15", "amount": 45000.00, "counterparty": "Ursinus College"}}`. Quality checks: verify all four fields are present in every example; confirm dates parse correctly; have a human review 10% of examples for accuracy.
+   *Starter hint:* Format each training example as a JSON pair: `{"input": "<contract text>", "output": {"name": "Acme Corp", "date": "2024-03-15", "amount": 45000.00, "counterparty": "Ursinus College"}}`.  Quality checks: verify all four fields are present in every example; confirm dates parse correctly; have a human review 10% of examples for accuracy.
 
    *You've succeeded when:* You have a written data collection plan with source, labeling method, quality checks, and a 5-example sample dataset in the correct format.
 
@@ -213,11 +213,11 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
 ## Reflection Prompt
 
-*Personal:* Think of a skill you had to learn from a book vs. one you learned by doing. How does that map to the RAG (look it up every time) vs. fine-tuning (internalize it permanently) distinction? When is "always looking it up" actually better than "memorizing it"?
+*Personal:* Think of a skill you had to learn from a book vs. one you learned by doing.  How does that map to the RAG (look it up every time) vs. fine-tuning (internalize it permanently) distinction?  When is "always looking it up" actually better than "memorizing it"?
 
-*Technical:* Fine-tuning bakes knowledge permanently into weights, making the model's reasoning opaque. RAG keeps knowledge external and attributable, but adds a pipeline that can fail in its own ways. As AI systems are deployed in high-stakes domains (medicine, law, finance), which property matters more (opaque internalized knowledge or transparent retrieved knowledge) and who should get to decide that for a given deployment?
+*Technical:* Fine-tuning bakes knowledge permanently into weights, making the model's reasoning opaque.  RAG keeps knowledge external and attributable, but adds a pipeline that can fail in its own ways.  As AI systems are deployed in high-stakes domains (medicine, law, finance), which property matters more (opaque internalized knowledge or transparent retrieved knowledge) and who should get to decide that for a given deployment?
 
-*Societal:* LoRA makes fine-tuning accessible to individuals and small organizations who previously could not afford it. A chemistry student can now fine-tune an open-weight model on synthesis procedures; a political campaign can fine-tune a model on persuasive messaging. What new capabilities does democratized fine-tuning enable that are beneficial, and what risks does it introduce that did not exist when fine-tuning required millions of dollars?
+*Societal:* LoRA makes fine-tuning accessible to individuals and small organizations who previously could not afford it.  A chemistry student can now fine-tune an open-weight model on synthesis procedures; a political campaign can fine-tune a model on persuasive messaging.  What new capabilities does democratized fine-tuning enable that are beneficial, and what risks does it introduce that did not exist when fine-tuning required millions of dollars?
 
 ---
 
@@ -227,7 +227,7 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
 ## Further Reading
 
-- Hu et al. "LoRA: Low-Rank Adaptation of Large Language Models." *ICLR* (2022). The original LoRA paper.
-- Dettmers et al. "QLoRA: Efficient Finetuning of Quantized LLMs." *NeurIPS* (2023). QLoRA enabling consumer-GPU fine-tuning.
-- Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks." *NeurIPS* (2020).
+- Hu et al. "LoRA: Low-Rank Adaptation of Large Language Models."  *ICLR* (2022).  The original LoRA paper.
+- Dettmers et al. "QLoRA: Efficient Finetuning of Quantized LLMs."  *NeurIPS* (2023).  QLoRA enabling consumer-GPU fine-tuning.
+- Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks."  *NeurIPS* (2020).
 - Anthropic prompt engineering guide: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview

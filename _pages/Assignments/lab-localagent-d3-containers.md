@@ -4,9 +4,9 @@ permalink: /Assignments/LocalAgent/Direction3
 title: "CS357 Lab: Local Agent, Direction 3: Containerizing an AI System Safely"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own; your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  This page carries no points on its own.  Your core plus direction work goes against the Local Agent Lab rubric on the core lab page.
 
-> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Take whichever direction appeals to you.  I give the same credit for either one.
 
 > **What this direction requires**
 >
@@ -14,14 +14,14 @@ title: "CS357 Lab: Local Agent, Direction 3: Containerizing an AI System Safely"
 > - **API costs:** small but nonzero; the agent makes short summarization calls, so expect a few cents to a few dollars of usage at this lab's scale (budget under $5).
 > - **Installs / disk:** Docker Desktop (Mac/Windows) or Docker Engine with Compose (Linux), the `anthropic` Python package, and the `trivy` image scanner; budget roughly 6 GB of free disk for images and build layers.
 > - **Hardware:** run Part 1's deliberately insecure baseline in a dedicated test VM or on a machine with no sensitive files; this is a stated requirement of the direction, not a suggestion.
-> - **No-cost fallback:** none is written into this direction's steps, but the hardening work itself is model-agnostic. If obtaining an API key is a barrier, talk to me: re-pointing the agent script at your local Ollama server (swapping the SDK call for the local `/api/chat` endpoint you used in the core lab) preserves every security step and earns full credit.
+> - **No-cost fallback:** none is written into this direction's steps, but the hardening work itself is model-agnostic.  If obtaining an API key is a barrier, talk to me: re-pointing the agent script at your local Ollama server (swapping the SDK call for the local `/api/chat` endpoint you used in the core lab) preserves every security step and earns full credit.
 
 ---
 
 
-Take the local agent you built in the core lab and put it in a box. You begin with a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege, building an explicit trust boundary between the agent and your host system. The goal is not to memorize Docker flags but to understand why each boundary exists and what specific threat it addresses.
+Take the local agent you built in the core lab and put it in a box.  You begin with a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege, building an explicit trust boundary between the agent and your host system.  You are here to understand why each boundary exists and what specific threat it addresses.
 
-In this lab, you and your partner will take a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege. The goal is not to memorize Docker flags; it is to understand *why* each boundary exists and what specific threat it addresses. By the end, you will have a concrete mental model of what a container can and cannot protect you from. This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
+In this lab, you and your partner will take a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege.  The goal is not to memorize Docker flags; it is to understand *why* each boundary exists and what specific threat it addresses.  By the end, you will have a concrete mental model of what a container can and cannot protect you from.  This one is a **pair lab**: driver and navigator, swaps at least every 30 minutes, and a swap log you turn in.
 
 ---
 
@@ -51,7 +51,7 @@ docker compose version
 > Docker Compose version v2.x.x
 > ```
 >
-> If you see `command not found`, install Docker Desktop (Mac/Windows) or Docker Engine (Linux) from [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/). Make sure the Docker daemon is running before continuing: on Linux, run `sudo systemctl start docker`; on Mac/Windows, launch Docker Desktop.
+> If you see `command not found`, install Docker Desktop (Mac/Windows) or Docker Engine (Linux) from [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).  Make sure the Docker daemon is running before continuing: on Linux, run `sudo systemctl start docker`; on Mac/Windows, launch Docker Desktop.
 
 Install the Python Anthropic SDK on your host machine (you will also install it inside the container, but having it on the host helps with local testing):
 
@@ -65,7 +65,7 @@ Verify your API key is exported in your shell:
 echo $ANTHROPIC_API_KEY
 ```
 
-> **What you should see:** A long string beginning with `sk-ant-`. If you see nothing, add `export ANTHROPIC_API_KEY=sk-ant-...` to your shell profile and reload it with `source ~/.bashrc` (or `~/.zshrc`).
+> **What you should see:** A long string beginning with `sk-ant-`.  If you see nothing, add `export ANTHROPIC_API_KEY=sk-ant-...` to your shell profile and reload it with `source ~/.bashrc` (or `~/.zshrc`).
 
 ##### Estimated Time
 
@@ -76,17 +76,17 @@ echo $ANTHROPIC_API_KEY
 | Part 3 | Threat Modeling | ~45 minutes |
 | Part 4 | Compose and Document | ~30 minutes |
 
-> **Important:** Run everything in a dedicated test VM or machine; Part 1 intentionally creates a container with dangerous access to demonstrate the threat. Do not run the insecure baseline on a machine containing sensitive files or credentials you cannot afford to expose.
+> **Important:** Run everything in a dedicated test VM or machine; Part 1 intentionally creates a container with dangerous access to demonstrate the threat.  Do not run the insecure baseline on a machine containing sensitive files or credentials you cannot afford to expose.
 
 ---
 
 #### Part 1: Baseline (Insecure) Deployment
 
-**Goal:** Deploy a minimal AI agent with no security hardening and document exactly what it can access. This serves as your "before" state. Everything you find here is what the hardening in Part 2 is designed to prevent.
+**Goal:** Deploy a minimal AI agent with no security hardening and document exactly what it can access.  This serves as your "before" state.  Everything you find here is what the hardening in Part 2 is designed to prevent.
 
 ##### Step 1: Create the Project Directory Structure
 
-On your host machine, create a workspace directory for this lab. All files in this lab live here.
+On your host machine, create a workspace directory for this lab.  All files in this lab live here.
 
 ```bash
 mkdir -p ~/cs357-containerlab/workspace
@@ -114,7 +114,7 @@ echo "This is a sample document about neural networks and gradient descent." > ~
 
 ##### Step 2: Create the Agent Script
 
-Create the file `~/cs357-containerlab/agent.py` with the following starter code. The TODOs mark the places you need to fill in; read the comments carefully before running anything.
+Create the file `~/cs357-containerlab/agent.py` with the following starter code.  The TODOs mark the places you need to fill in; read the comments carefully before running anything.
 
 ```python
 # agent.py - Minimal LLM agent for containerization lab
@@ -166,17 +166,17 @@ if __name__ == "__main__":
     main()
 ```
 
-Fill in each TODO before moving on. When the script runs on your host machine (outside Docker), you should see a one-paragraph summary of `workspace/sample.txt`.
+Fill in each TODO before moving on.  When the script runs on your host machine (outside Docker), you should see a one-paragraph summary of `workspace/sample.txt`.
 
 ```bash
 python agent.py workspace/sample.txt
 ```
 
-> **What you should see:** A short paragraph summarizing the contents of `sample.txt`. If you see an `AuthenticationError`, your `ANTHROPIC_API_KEY` is not set correctly. If you see a `ModuleNotFoundError`, run `pip install anthropic` again.
+> **What you should see:** A short paragraph summarizing the contents of `sample.txt`.  If you see an `AuthenticationError`, your `ANTHROPIC_API_KEY` is not set correctly.  If you see a `ModuleNotFoundError`, run `pip install anthropic` again.
 
 ##### Step 3: Create the Insecure Compose File
 
-Create the file `~/cs357-containerlab/docker-compose-insecure.yml` with the following content. Read every comment; each one identifies a specific security problem that you will fix in Part 2.
+Create the file `~/cs357-containerlab/docker-compose-insecure.yml` with the following content.  Read every comment; each one identifies a specific security problem that you will fix in Part 2.
 
 ```yaml
 # docker-compose-insecure.yml
@@ -203,15 +203,15 @@ Start the container using the insecure compose file:
 docker compose -f docker-compose-insecure.yml up
 ```
 
-> **What you should see:** Docker pulls the `python:3.11-slim` image (first run only), installs the `anthropic` package, then prints a summary of `sample.txt`. Copy this output into your lab notes as the baseline.
+> **What you should see:** Docker pulls the `python:3.11-slim` image (first run only), installs the `anthropic` package, then prints a summary of `sample.txt`.  Copy this output into your lab notes as the baseline.
 
-Now open a second terminal and explore what the container can access while it is running. Because the command finishes quickly, use this one-shot approach to explore:
+Now open a second terminal and explore what the container can access while it is running.  Because the command finishes quickly, use this one-shot approach to explore:
 
 ```bash
 docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent
 ```
 
-This drops you into a shell inside the container. Run the following exploration commands and copy the output into your notes:
+This drops you into a shell inside the container.  Run the following exploration commands and copy the output into your notes:
 
 ```bash
 # What user are we running as?
@@ -227,20 +227,20 @@ ls /hostdata/.ssh 2>/dev/null && echo "SSH keys visible!" || echo "(no .ssh dire
 env | grep -i key
 ```
 
-> **What you should see:** You are running as `root` (uid=0). You can see your entire home directory. Any SSH keys, `.aws` credentials, or other secrets in your home directory are visible. The `ANTHROPIC_API_KEY` value appears in `env` output.
+> **What you should see:** You are running as `root` (uid=0).  You can see your entire home directory.  Any SSH keys, `.aws` credentials, or other secrets in your home directory are visible.  The `ANTHROPIC_API_KEY` value appears in `env` output.
 
 Type `exit` to leave the shell.
 
 ##### Step 5: Demonstrate One Unsafe Action
 
-Still using the insecure compose file, demonstrate one specific unsafe action: reading a file from outside the intended workspace. Run this exact command (it runs a one-shot container, reads a sensitive-looking file, and exits):
+Still using the insecure compose file, demonstrate one specific unsafe action: reading a file from outside the intended workspace.  Run this exact command (it runs a one-shot container, reads a sensitive-looking file, and exits):
 
 ```bash
 docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
   -c "cat /hostdata/.bashrc | head -5"
 ```
 
-> **What you should see:** The first five lines of your `.bashrc` file, a file the agent has no legitimate reason to read. Copy this output into your notes as exhibit A of the baseline threat.
+> **What you should see:** The first five lines of your `.bashrc` file, a file the agent has no legitimate reason to read.  Copy this output into your notes as exhibit A of the baseline threat.
 
 To confirm that secrets are exposed via `docker inspect`, run:
 
@@ -249,7 +249,7 @@ docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
   -c "echo secret_visible=\$ANTHROPIC_API_KEY" 
 ```
 
-> **What you should see:** The actual value of your API key printed to stdout. In a production incident, this is how a compromised container leaks credentials.
+> **What you should see:** The actual value of your API key printed to stdout.  In a production incident, this is how a compromised container leaks credentials.
 
 ##### Troubleshooting for Part 1
 
@@ -263,17 +263,17 @@ docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
 
 Answer these questions in your notes before moving to Part 2:
 
-1. What is the effective UID of the process running inside the baseline container, and why is running as that UID a security problem?
-2. List three specific files or directories on your host machine that the baseline container can read that it has no legitimate reason to access.
-3. How would an attacker who had achieved remote code execution inside this container exfiltrate your `ANTHROPIC_API_KEY`? Describe the exact mechanism.
+1.  What is the effective UID of the process running inside the baseline container, and why is running as that UID a security problem?
+2.  List three specific files or directories on your host machine that the baseline container can read that it has no legitimate reason to access.
+3.  How would an attacker who had achieved remote code execution inside this container exfiltrate your `ANTHROPIC_API_KEY`?  Describe the exact mechanism.
 
 ---
 
 #### Part 2: Hardening Step by Step
 
-**Goal:** Apply six hardening measures one at a time. After each step, verify the change took effect before applying the next one. Do not batch them; the point is to observe each layer independently.
+**Goal:** Apply six hardening measures one at a time.  After each step, verify the change took effect before applying the next one.  Do not batch them; the point is to observe each layer independently.
 
-Start by creating a `Dockerfile` alongside your `docker-compose.yml`. Some hardening steps require a custom image.
+Start by creating a `Dockerfile` alongside your `docker-compose.yml`.  Some hardening steps require a custom image.
 
 Create `~/cs357-containerlab/Dockerfile`:
 
@@ -316,7 +316,7 @@ docker compose build
 docker compose up
 ```
 
-> **What you should see:** The agent summarizes `sample.txt` exactly as it did in Part 1, but now only the `workspace/` subdirectory is mounted instead of your entire home directory. This is already slightly better, but it is still running as root with no other protections.
+> **What you should see:** The agent summarizes `sample.txt` exactly as it did in Part 1, but now only the `workspace/` subdirectory is mounted instead of your entire home directory.  This is already slightly better, but it is still running as root with no other protections.
 
 ---
 
@@ -351,7 +351,7 @@ docker compose run --rm --entrypoint id agent
 > ```
 > uid=1000(agent) gid=1000(agent) groups=1000(agent)
 > ```
-> If you still see `uid=0(root)`, the `USER` directive is not being applied. Check that `docker compose build` ran successfully and that you are using the compose file that references `build: .`.
+> If you still see `uid=0(root)`, the `USER` directive is not being applied.  Check that `docker compose build` ran successfully and that you are using the compose file that references `build: .`.
 
 Also verify the agent still functions after this change:
 
@@ -359,7 +359,7 @@ Also verify the agent still functions after this change:
 docker compose up
 ```
 
-> **What you should see:** The same summary output as before. The change should be transparent to the agent's behavior.
+> **What you should see:** The same summary output as before.  The change should be transparent to the agent's behavior.
 
 ---
 
@@ -394,7 +394,7 @@ docker compose run --rm --entrypoint sh agent \
 > ```
 > write blocked
 > ```
-> If you see `wrote file`, the `read_only: true` setting is not in effect. Double-check the indentation in your compose file; YAML is sensitive to indentation.
+> If you see `wrote file`, the `read_only: true` setting is not in effect.  Double-check the indentation in your compose file; YAML is sensitive to indentation.
 
 Verify that the agent can still write to `/tmp` (some Python internals need this):
 
@@ -451,7 +451,7 @@ docker compose run --rm --entrypoint sh agent \
 > ```
 > CapEff: 0000000000000000
 > ```
-> All zeros means no effective capabilities. If the value is nonzero, `cap_drop: ALL` is not being applied.
+> All zeros means no effective capabilities.  If the value is nonzero, `cap_drop: ALL` is not being applied.
 
 Verify the agent still functions:
 
@@ -459,7 +459,7 @@ Verify the agent still functions:
 docker compose up
 ```
 
-> **What you should see:** The agent runs normally. A simple Python script that calls an external API does not need any Linux capabilities. If it fails, check the error message; if it is a capability-related error (`EPERM`), identify the specific capability needed and add only that one to `cap_add:`.
+> **What you should see:** The agent runs normally.  A simple Python script that calls an external API does not need any Linux capabilities.  If it fails, check the error message; if it is a capability-related error (`EPERM`), identify the specific capability needed and add only that one to `cap_add:`.
 
 ---
 
@@ -491,7 +491,7 @@ networks:
     driver: bridge
 ```
 
-> **Note:** The agent needs to reach `api.anthropic.com` to call the API. A named network still allows outbound internet access by default; full network egress filtering requires a firewall rule or an egress proxy outside of compose. What this step does accomplish is removing the agent from the `default` bridge network, which prevents it from reaching other containers that are also on the default bridge. In Part 3, the extension challenge asks you to go further.
+> **Note:** The agent needs to reach `api.anthropic.com` to call the API. A named network still allows outbound internet access by default; full network egress filtering requires a firewall rule or an egress proxy outside of compose.  What this step does accomplish is removing the agent from the `default` bridge network, which prevents it from reaching other containers that are also on the default bridge.  In Part 3, the extension challenge asks you to go further.
 
 Verify the agent is on the named network and not on the default bridge:
 
@@ -501,7 +501,7 @@ docker inspect $(docker compose ps -q agent) | grep -A 5 '"Networks"'
 docker compose down
 ```
 
-> **What you should see:** The output should show `agent-net` as the network and should NOT show `default` as a network. The gateway and subnet will reflect the named network's configuration.
+> **What you should see:** The output should show `agent-net` as the network and should NOT show `default` as a network.  The gateway and subnet will reflect the named network's configuration.
 
 Verify the agent still functions:
 
@@ -545,7 +545,7 @@ networks:
     driver: bridge
 ```
 
-> **Note:** `deploy.resources.limits` works with `docker compose up` when using Docker Compose v2. The `pids_limit` key limits the total number of processes/threads the container can spawn, which blocks fork bombs.
+> **Note:** `deploy.resources.limits` works with `docker compose up` when using Docker Compose v2.  The `pids_limit` key limits the total number of processes/threads the container can spawn, which blocks fork bombs.
 
 Verify the limits are applied:
 
@@ -561,7 +561,7 @@ docker compose down
 > "NanoCpus": 500000000,
 > "PidsLimit": 64,
 > ```
-> `268435456` bytes = 256 MB. `500000000` NanoCPUs = 0.5 CPUs. If you see `0` for any of these, the limit is not applied; check that you are using Docker Compose v2 (`docker compose version`).
+> `268435456` bytes = 256 MB. `500000000` NanoCPUs = 0.5 CPUs.  If you see `0` for any of these, the limit is not applied; check that you are using Docker Compose v2 (`docker compose version`).
 
 Verify the agent still functions:
 
@@ -573,7 +573,7 @@ docker compose up
 
 ##### Step f: Move Secrets to Docker Secrets
 
-**What this protects against:** Environment variables are visible to every process in the container and to anyone who can run `docker inspect`. Docker secrets deliver the value through a file at `/run/secrets/`, which is harder to accidentally log or expose.
+**What this protects against:** Environment variables are visible to every process in the container and to anyone who can run `docker inspect`.  Docker secrets deliver the value through a file at `/run/secrets/`, which is harder to accidentally log or expose.
 
 Create a secrets directory and write the key to a file:
 
@@ -676,7 +676,7 @@ docker inspect $(docker compose ps -q agent) | grep -i "ANTHROPIC"
 docker compose down
 ```
 
-> **What you should see:** No `ANTHROPIC_API_KEY` value appears in the `docker inspect` output. The environment variable block should be empty or absent. If you still see the key, verify you removed the `environment:` block from the compose file.
+> **What you should see:** No `ANTHROPIC_API_KEY` value appears in the `docker inspect` output.  The environment variable block should be empty or absent.  If you still see the key, verify you removed the `environment:` block from the compose file.
 
 Verify the agent still functions:
 
@@ -753,9 +753,9 @@ USER agent
 
 Answer these questions in your notes before moving to Part 3:
 
-1. After Step b, you made the workspace mount read-only (`:ro`). What is the difference between the container filesystem being read-only (`read_only: true`) and the volume mount being read-only (`:ro`)? Could you have one without the other?
-2. After Step c, all capabilities are dropped. Your agent calls an external HTTPS API. Why does it not need `NET_BIND_SERVICE` or any network capability to make outbound connections?
-3. After Step f, run `docker inspect $(docker compose ps -q agent)` and look at the `Env` section. What do you see, and how does this compare to the baseline in Part 1?
+1.  After Step b, you made the workspace mount read-only (`:ro`).  What is the difference between the container filesystem being read-only (`read_only: true`) and the volume mount being read-only (`:ro`)?  Could you have one without the other?
+2.  After Step c, all capabilities are dropped.  Your agent calls an external HTTPS API. Why does it not need `NET_BIND_SERVICE` or any network capability to make outbound connections?
+3.  After Step f, run `docker inspect $(docker compose ps -q agent)` and look at the `Env` section.  What do you see, and how does this compare to the baseline in Part 1?
 
 ---
 
@@ -765,7 +765,7 @@ Answer these questions in your notes before moving to Part 3:
 
 ##### Step 1: Fill In the Threat Model Table
 
-Copy this table into your lab notes document and fill in every cell. Do not leave any cell blank. The `Residual Risk` column should be honest; every defense has limits.
+Copy this table into your lab notes document and fill in every cell.  Do not leave any cell blank.  The `Residual Risk` column should be honest; every defense has limits.
 
 | # | Threat | Specific Attack Vector | Defense Applied (Part 2 Step) | Residual Risk After Hardening |
 |---|--------|----------------------|-------------------------------|-------------------------------|
@@ -776,17 +776,17 @@ Copy this table into your lab notes document and fill in every cell. Do not leav
 
 **Guidance for each row:**
 
-- **Row 1 (Prompt injection / file access):** The attack vector should describe a specific prompt a user or attacker could send to the agent that would cause it to read a file it was not supposed to. The defense should reference the read-only mount and non-root user. The residual risk should acknowledge that the agent CAN read any file in `/workspace`; so what happens if sensitive files end up there?
+- **Row 1 (Prompt injection / file access):** The attack vector should describe a specific prompt a user or attacker could send to the agent that would cause it to read a file it was not supposed to.  The defense should reference the read-only mount and non-root user.  The residual risk should acknowledge that the agent CAN read any file in `/workspace`; so what happens if sensitive files end up there?
 
-- **Row 2 (Data exfiltration):** The attack vector should describe how a compromised agent could transmit data to an attacker's server. The defense should reference the named network. The residual risk should be honest: does the named network actually block outbound internet access to arbitrary hosts, or just isolate the container from other containers?
+- **Row 2 (Data exfiltration):** The attack vector should describe how a compromised agent could transmit data to an attacker's server.  The defense should reference the named network.  The residual risk should be honest: does the named network actually block outbound internet access to arbitrary hosts, or just isolate the container from other containers?
 
-- **Row 3 (Resource exhaustion):** The attack vector should describe a specific prompt or exploit that causes runaway resource use (for example, a recursive prompt that generates an infinite loop in code the agent writes and executes). The defense should reference `cpus:`, `memory:`, and `pids_limit`. The residual risk should note what happens when the limit is hit: does the container crash? Does it affect the host?
+- **Row 3 (Resource exhaustion):** The attack vector should describe a specific prompt or exploit that causes runaway resource use (for example, a recursive prompt that generates an infinite loop in code the agent writes and executes).  The defense should reference `cpus:`, `memory:`, and `pids_limit`.  The residual risk should note what happens when the limit is hit: does the container crash?  Does it affect the host?
 
-- **Row 4 (Secret theft):** The attack vector should describe how environment variables are visible (via `docker inspect`, via `/proc/self/environ` inside the container, via container logs). The defense should reference Step f. The residual risk should note that the secret is now a file at `/run/secrets/`: who can read that file inside the container?
+- **Row 4 (Secret theft):** The attack vector should describe how environment variables are visible (via `docker inspect`, via `/proc/self/environ` inside the container, via container logs).  The defense should reference Step f.  The residual risk should note that the secret is now a file at `/run/secrets/`: who can read that file inside the container?
 
 ##### Step 2: Red Team Exercise
 
-Attempt to make your hardened container take each of the following unsafe actions. For each attempt, record exactly what command you ran and exactly what output or error you received. These records are part of your deliverables.
+Attempt to make your hardened container take each of the following unsafe actions.  For each attempt, record exactly what command you ran and exactly what output or error you received.  These records are part of your deliverables.
 
 **Attempt 1: Write to the read-only filesystem**
 
@@ -800,7 +800,7 @@ docker compose run --rm --entrypoint sh agent \
 > sh: /app/backdoor.py: Read-only file system
 > write blocked
 > ```
-> If you see `write succeeded`, the read-only setting is not in effect. Revisit Step b.
+> If you see `write succeeded`, the read-only setting is not in effect.  Revisit Step b.
 
 **Attempt 2: Connect to an unauthorized host**
 
@@ -813,7 +813,7 @@ docker compose run --rm --entrypoint sh agent \
 > ```
 > connection failed
 > ```
-> or a curl timeout error. Note: if your named network still allows outbound internet access (which the default Docker bridge driver does), you may see `connection succeeded` here. Record what you actually see and explain it in your threat model's residual risk for Row 2. This is an important finding: the named network alone does NOT block outbound internet access; it only prevents cross-container communication on the default bridge.
+> or a curl timeout error.  Note: if your named network still allows outbound internet access (which the default Docker bridge driver does), you may see `connection succeeded` here.  Record what you actually see and explain it in your threat model's residual risk for Row 2.  This is an important finding: the named network alone does NOT block outbound internet access; it only prevents cross-container communication on the default bridge.
 
 **Attempt 3: Read a file outside the workspace**
 
@@ -827,9 +827,9 @@ docker compose run --rm --entrypoint sh agent \
 > cat: /etc/shadow: Permission denied
 > read blocked
 > ```
-> The non-root user (uid=1000) cannot read `/etc/shadow`, which is owned by root. Record the exact error.
+> The non-root user (uid=1000) cannot read `/etc/shadow`, which is owned by root.  Record the exact error.
 
-After all three attempts, write a one-paragraph summary in your notes: what did the hardening successfully prevent, and what did it not prevent? Which finding surprised you most?
+After all three attempts, write a one-paragraph summary in your notes: what did the hardening successfully prevent, and what did it not prevent?  Which finding surprised you most?
 
 ##### Troubleshooting for Part 3
 
@@ -843,9 +843,9 @@ After all three attempts, write a one-paragraph summary in your notes: what did 
 
 Answer these questions in your notes before moving to Part 4:
 
-1. In Attempt 2, you may have found that outbound internet connections still work from the hardened container. What additional control (outside of Docker Compose's built-in features) would you need to add to actually block the agent from reaching unauthorized hosts?
-2. The threat model table asks for "residual risk." For Threat 4 (secret theft), is the secret completely safe now that it is in `/run/secrets/`? What would an attacker need to do inside the container to read it?
-3. Suppose you wanted to add a fifth row to the threat model covering "supply chain attack via a malicious dependency in the agent's requirements." What would the attack vector, defense, and residual risk look like? (You do not need to implement a defense; just reason through it.)
+1.  In Attempt 2, you may have found that outbound internet connections still work from the hardened container.  What additional control (outside of Docker Compose's built-in features) would you need to add to actually block the agent from reaching unauthorized hosts?
+2.  The threat model table asks for "residual risk."  For Threat 4 (secret theft), is the secret completely safe now that it is in `/run/secrets/`?  What would an attacker need to do inside the container to read it?
+3.  Suppose you wanted to add a fifth row to the threat model covering "supply chain attack via a malicious dependency in the agent's requirements."  What would the attack vector, defense, and residual risk look like?  (You do not need to implement a defense; just reason through it.)
 
 ---
 
@@ -855,7 +855,7 @@ Answer these questions in your notes before moving to Part 4:
 
 ##### Step 1: Final docker-compose.yml Check
 
-Before writing any documentation, verify all six hardening measures are present in your final `docker-compose.yml`. Use this checklist:
+Before writing any documentation, verify all six hardening measures are present in your final `docker-compose.yml`.  Use this checklist:
 
 | # | Hardening Measure | How to Verify It Is Present |
 |---|------------------|-----------------------------|
@@ -866,11 +866,11 @@ Before writing any documentation, verify all six hardening measures are present 
 | e | Resource limits | `docker inspect ... \| grep -E 'Memory\|NanoCpus\|PidsLimit'` shows nonzero values |
 | f | Docker secrets (no env var) | `docker inspect ... \| grep ANTHROPIC` returns nothing |
 
-Run each verification command and record the output. Do not proceed to Step 2 until all six pass.
+Run each verification command and record the output.  Do not proceed to Step 2 until all six pass.
 
 ##### Step 2: Write the Security Runbook
 
-Create a file `~/cs357-containerlab/RUNBOOK.md`. Use this template and fill in every section marked `[TODO]`:
+Create a file `~/cs357-containerlab/RUNBOOK.md`.  Use this template and fill in every section marked `[TODO]`:
 
 ```markdown
 # Security Runbook, CS357 Containerized AI Agent
@@ -922,21 +922,21 @@ docker compose logs agent
 docker compose down
 ```
 
-> **What you should see:** `docker compose down` removes the container and network. `docker compose up -d` recreates them. `docker compose logs agent` shows the agent ran and produced a summary. The final `docker compose down` removes everything cleanly. Record the full output.
+> **What you should see:** `docker compose down` removes the container and network. `docker compose up -d` recreates them. `docker compose logs agent` shows the agent ran and produced a summary.  The final `docker compose down` removes everything cleanly.  Record the full output.
 
 ##### Part 4 Checkpoint
 
 Answer these questions in your notes before writing your reflection:
 
-1. In Step 1, did all six verification commands pass on the first attempt? If not, which ones failed and what did you have to fix?
-2. In the runbook, you noted whether a running process automatically sees an updated Docker secrets file. What is the answer, and why does it matter for operational security?
-3. Suppose you wanted to add automated log monitoring (for example, an alert when the agent makes more than 10 API calls in a minute). Where in the current architecture would you add that monitoring, and would adding it require any changes to the compose file?
+1.  In Step 1, did all six verification commands pass on the first attempt?  If not, which ones failed and what did you have to fix?
+2.  In the runbook, you noted whether a running process automatically sees an updated Docker secrets file.  What is the answer, and why does it matter for operational security?
+3.  Suppose you wanted to add automated log monitoring (for example, an alert when the agent makes more than 10 API calls in a minute).  Where in the current architecture would you add that monitoring, and would adding it require any changes to the compose file?
 
 ---
 
 #### Deliverables
 
-Submit a ZIP file named `cs357-containerlab-[yournames].zip` containing all of the following. Missing items will result in point deductions as indicated in the rubric.
+Submit a ZIP file named `cs357-containerlab-[yournames].zip` containing all of the following.  Missing items will result in point deductions as indicated in the rubric.
 
 | File | Description |
 |------|-------------|
@@ -955,11 +955,11 @@ Submit a ZIP file named `cs357-containerlab-[yournames].zip` containing all of t
 
 #### Extension Challenges
 
-These challenges are optional but highly recommended for students who want to push further. They are not graded as part of the main rubric, but completing them demonstrates mastery.
+These challenges are optional but highly recommended for students who want to push further.  They are not graded as part of the main rubric, but completing them demonstrates mastery.
 
 ##### Challenge 1: Enforce Strict Egress Filtering Between Containers
 
-Add a second container to your compose file: a lightweight web server (use `nginx:alpine`) that serves a static file. Reconfigure the agent so it can reach the nginx container by hostname but cannot reach any other host (including `api.anthropic.com`). This requires adding an egress firewall rule or a proxy container.
+Add a second container to your compose file: a lightweight web server (use `nginx:alpine`) that serves a static file.  Reconfigure the agent so it can reach the nginx container by hostname but cannot reach any other host (including `api.anthropic.com`).  This requires adding an egress firewall rule or a proxy container.
 
 Hints:
 - Look into `iptables` rules applied at container startup, or consider running a forward proxy (such as `squid`) as a third container that the agent routes all traffic through.
@@ -980,31 +980,31 @@ curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/inst
 trivy image cs357-containerlab-agent
 ```
 
-Document all HIGH and CRITICAL severity findings. For each finding, answer: is this CVE reachable given the agent's behavior? What would you do to remediate it (update the base image, remove the affected package, accept the risk)?
+Document all HIGH and CRITICAL severity findings.  For each finding, answer: is this CVE reachable given the agent's behavior?  What would you do to remediate it (update the base image, remove the affected package, accept the risk)?
 
 ##### Challenge 3: CI Check with GitHub Actions
 
 Write a GitHub Actions workflow file at `.github/workflows/container-security.yml` that:
 
-1. Checks out the repository
-2. Builds the hardened Docker image with `docker compose build`
-3. Runs `docker compose up --abort-on-container-exit` with a test input file to verify the agent completes without error
-4. Runs `trivy image` on the built image and fails the workflow if any CRITICAL CVEs are found
+1.  Checks out the repository
+2.  Builds the hardened Docker image with `docker compose build`
+3.  Runs `docker compose up --abort-on-container-exit` with a test input file to verify the agent completes without error
+4.  Runs `trivy image` on the built image and fails the workflow if any CRITICAL CVEs are found
 
-The workflow should trigger on every push to `main` and every pull request. Include the workflow file in your deliverables ZIP and attach a screenshot of a passing workflow run.
+The workflow should trigger on every push to `main` and every pull request.  Include the workflow file in your deliverables ZIP and attach a screenshot of a passing workflow run.
 
 ---
 
 #### Reflection Prompts
 
-Answer each prompt in complete sentences. Answers that reference specific observations from this lab (file names, command outputs, step letters) will receive full credit. Generic answers will not.
+Answer each prompt in complete sentences.  Answers that reference specific observations from this lab (file names, command outputs, step letters) will receive full credit.  Generic answers will not.
 
 - Which hardening step had the most surprising effect on the agent's behavior, and why?
-- The container boundary is not a complete security guarantee. Name one class of attack that your hardening does not prevent, and describe what additional control would be needed.
+- The container boundary is not a complete security guarantee.  Name one class of attack that your hardening does not prevent, and describe what additional control would be needed.
 - How does the principle of least privilege apply differently to an AI agent than to a traditional web server?
-- After completing this lab, how would you advise a team that wants to give an AI coding agent write access to their production codebase? What specific container-level controls would you require, and which threats would those controls not address?
-- The six hardening steps you applied are independent layers. If an attacker could bypass exactly one layer, which would they target first, and why?
-- If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
+- After completing this lab, how would you advise a team that wants to give an AI coding agent write access to their production codebase?  What specific container-level controls would you require, and which threats would those controls not address?
+- The six hardening steps you applied are independent layers.  If an attacker could bypass exactly one layer, which would they target first, and why?
+- If collaboration beyond your pair occurred, identify it.  Do you certify that this submission represents your pair's original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
 ---

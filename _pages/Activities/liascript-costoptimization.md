@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Cost Optimization: Token Budgets, Caching, and Model Routing
 
-Cloud AI tokens are like taxi rides; you don't notice the meter until the bill arrives. Running an LLM once in a notebook is cheap; running one **a million times a day for a production product** is not. Cost optimization is not optional once a system leaves a classroom. Today you learn the full cost structure of LLM inference, how to control it through caching and token budgets, and how model routing lets you spend frontier-model money only when you actually need frontier-model quality. The arc: **cost anatomy $\rightarrow$ token budgets $\rightarrow$ prompt and semantic caching $\rightarrow$ model routing $\rightarrow$ batching and right-sizing $\rightarrow$ building a cost model**.
+Cloud AI tokens are like taxi rides; you don't notice the meter until the bill arrives.  Running an LLM once in a notebook is cheap; running one **a million times a day for a production product** is not.  Cost optimization is not optional once a system leaves a classroom.  Today you learn the full cost structure of LLM inference, how to control it through caching and token budgets, and how model routing lets you spend frontier-model money only when you actually need frontier-model quality.  Here is the path for today: **cost anatomy $\rightarrow$ token budgets $\rightarrow$ prompt and semantic caching $\rightarrow$ model routing $\rightarrow$ batching and right-sizing $\rightarrow$ building a cost model**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). The Recorder maintains running cost estimates as the activity progresses; the Reflector tracks every assumption the team makes. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  The Recorder maintains running cost estimates as the activity progresses; the Reflector tracks every assumption the team makes.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -43,15 +43,15 @@ In this part, you will build a mental model of how LLM API costs accumulate, inc
 
 ## Model 1: Token Cost Breakdown
 
-Every hosted LLM API charges by the token. The pricing structure has two parts: **input tokens** (everything in the prompt, including system prompt and context) and **output tokens** (every token the model generates). The asymmetry is important: **output tokens typically cost two to four times more than input tokens** at the same provider.
+Every hosted LLM API charges by the token.  The pricing structure has two parts: **input tokens** (everything in the prompt, including system prompt and context) and **output tokens** (every token the model generates).  The asymmetry is important: **output tokens typically cost two to four times more than input tokens** at the same provider.
 
 The reason is computational: reading a token into the attention mechanism is a forward-pass matrix multiply; generating a token requires sampling from a probability distribution and feeding the result back as the next input, a sequential process that cannot be parallelized across tokens and must allocate KV-cache memory (the stored key-value pairs from prior tokens that the attention mechanism needs to re-use) per token for the entire context length.
 
-Context length also affects cost: a model processing a 128K-token context pays the full attention computation across all positions for every generated token, which scales as $O(n^2)$ with naive attention. Even the best implementations charge per input token, so a long context multiplies your bill proportionally.
+Context length also affects cost: a model processing a 128K-token context pays the full attention computation across all positions for every generated token, which scales as $O(n^2)$ with naive attention.  Even the best implementations charge per input token, so a long context multiplies your bill proportionally.
 
-**Token budget management** is the discipline of explicitly constraining an agent before it runs: you may use at most $T_{\text{in}}$ input tokens and at most $T_{\text{out}}$ output tokens. Providers like Anthropic expose a `max_tokens` parameter for output; some extended thinking APIs additionally allow a `budget_tokens` cap on chain-of-thought. Setting these guards prevents runaway agentic loops from burning your entire monthly budget on one stuck task.
+**Token budget management** is the discipline of explicitly constraining an agent before it runs: you may use at most $T_{\text{in}}$ input tokens and at most $T_{\text{out}}$ output tokens.  Providers like Anthropic expose a `max_tokens` parameter for output; some extended thinking APIs additionally allow a `budget_tokens` cap on chain-of-thought.  Setting these guards prevents runaway agentic loops from burning your entire monthly budget on one stuck task.
 
-The table below uses approximate 2025 prices for reference. Actual prices vary by provider, model, and tier. "Local (Ollama)" has zero per-token cost but nonzero electricity, hardware amortization, and opportunity cost of GPU time.
+The table below uses approximate 2025 prices for reference.  Actual prices vary by provider, model, and tier.  "Local (Ollama)" has zero per-token cost but nonzero electricity, hardware amortization, and opportunity cost of GPU time.
 
 | Operation | Approx. Tokens | Cost @ GPT-4 class ($15/$60 per 1M in/out) | Cost @ Local (Ollama) | In Our Course |
 |---|---|---|---|---|
@@ -63,17 +63,17 @@ The table below uses approximate 2025 prices for reference. Actual prices vary b
 
 ### Critical Thinking Questions
 
-1. The 10-turn conversation charges input tokens for the entire conversation history on every turn. If turn 10 includes turns 1-9 as history, how many times does turn 1's content get charged as an input token over the course of the full conversation? Generalize this to $n$ turns and explain why this pattern makes long conversations disproportionately expensive.
+1.  The 10-turn conversation charges input tokens for the entire conversation history on every turn.  If turn 10 includes turns 1-9 as history, how many times does turn 1's content get charged as an input token over the course of the full conversation?  Generalize this to $n$ turns and explain why this pattern makes long conversations disproportionately expensive.
 
-   *Hint:* On turn 2, turn 1 is in the history. On turn 3, turns 1 and 2 are in the history. Keep going. How many times total does turn 1 appear across all 10 turns?
+   *Hint:* On turn 2, turn 1 is in the history.  On turn 3, turns 1 and 2 are in the history.  Keep going.  How many times total does turn 1 appear across all 10 turns?
 
-2. Why does a 200-word response cost three times more per token than a 200-word input, even though both contain "200 words" of text? Explain the computational reason in your own words.
+2.  Why does a 200-word response cost three times more per token than a 200-word input, even though both contain "200 words" of text?  Explain the computational reason in your own words.
 
    *Hint:* Think about what the GPU has to do differently when reading existing text versus generating new text one token at a time.
 
-3. A team's agent uses a 500-token system prompt, issues 100 tool calls per session, and each tool call returns 200 tokens of retrieved context. Estimate the total input token cost per session. Which component dominates the total cost, and what does that reveal about where to focus your optimization effort?
+3.  A team's agent uses a 500-token system prompt, issues 100 tool calls per session, and each tool call returns 200 tokens of retrieved context.  Estimate the total input token cost per session.  Which component dominates the total cost, and what does that reveal about where to focus your optimization effort?
 
-   *Hint:* Multiply each component: (system prompt tokens) × (number of turns) + (tool context tokens) × (number of tool calls). Which term is largest?
+   *Hint:* Multiply each component: (system prompt tokens) × (number of turns) + (tool context tokens) × (number of tool calls).  Which term is largest?
 
 With the cost anatomy understood, Part II introduces the two main techniques for paying less per request: caching static prompt prefixes at the provider level, and recognizing semantically duplicate queries before they ever reach the model.
 
@@ -85,22 +85,22 @@ In this part, you will learn how prompt caching and semantic caching work, when 
 
 ## Model 2: Prompt Caching and Semantic Caching
 
-**Prompt caching** is a provider-level optimization where a static prefix of your prompt (typically your system prompt) is cached on the provider's inference servers after the first call. Subsequent requests that share that identical prefix pay a lower "cache read" price (Anthropic charges cache-read tokens at roughly one-tenth the cost of fresh input tokens). To maximize cache utilization:
+**Prompt caching** is a provider-level optimization where a static prefix of your prompt (typically your system prompt) is cached on the provider's inference servers after the first call.  Subsequent requests that share that identical prefix pay a lower "cache read" price (Anthropic charges cache-read tokens at roughly one-tenth the cost of fresh input tokens).  To maximize cache utilization:
 
 - Place **static content first**: system prompt, background documents, rules, personas, anything identical across requests.
 - Place **dynamic content last**: the user's specific message, the current date, retrieved documents that vary per query.
 - Keep the prefix **long enough to matter**: caching a 10-token prefix saves negligible money; caching a 2,000-token system prompt plus a 4,000-token policy document saves significantly.
 - Avoid **cache-busting prefixes**: if you prepend the current timestamp to your system prompt, every request is a cache miss; the cache never gets used because the prefix is never identical twice.
 
-**Semantic caching** goes further: it caches LLM *responses* keyed not by exact prompt text but by semantic similarity. A user asking "What is the capital of France?" and another asking "Which city is the capital of France?" should return the same cached answer. Implementations like **GPTCache** and **Redis Semantic Cache** embed the incoming query, search a vector store for similar past queries above a similarity threshold, and return the stored response if the threshold is met, without calling the LLM at all.
+**Semantic caching** goes further: it caches LLM *responses* keyed not by exact prompt text but by semantic similarity.  A user asking "What is the capital of France?" and another asking "Which city is the capital of France?" should return the same cached answer.  Implementations like **GPTCache** and **Redis Semantic Cache** embed the incoming query, search a vector store for similar past queries above a similarity threshold, and return the stored response if the threshold is met, without calling the LLM at all.
 
-The tradeoff is engineering cost and precision risk: a semantic cache may surface a stale or slightly-wrong answer when the similarity threshold is too loose. The correct architecture uses semantic caching only for queries where a slightly-varied-but-correct answer is acceptable, and falls through to the LLM for queries requiring freshness or precision.
+The tradeoff is engineering cost and precision risk: a semantic cache may surface a stale or slightly-wrong answer when the similarity threshold is too loose.  The correct architecture uses semantic caching only for queries where a slightly-varied-but-correct answer is acceptable, and falls through to the LLM for queries requiring freshness or precision.
 
-**Caching ROI Example.** A system receives 10,000 queries per day. The system prompt is 500 tokens and is identical for all users. Without caching: $10{,}000 \times 500 \times \$0.000015 = \$75$/day just for the system prompt prefix. With prompt caching (cache-read at $0.0000015$): $\$7.50$/day, a 90% reduction on that portion alone. If semantic caching additionally catches 20% of queries as duplicates, those 2,000 queries cost $0, saving the full output token cost for 2,000 responses.
+**Caching ROI Example.**  A system receives 10,000 queries per day.  The system prompt is 500 tokens and is identical for all users.  Without caching: $10{,}000 \times 500 \times \$0.000015 = \$75$/day just for the system prompt prefix.  With prompt caching (cache-read at $0.0000015$): $\$7.50$/day, a 90% reduction on that portion alone.  If semantic caching additionally catches 20% of queries as duplicates, those 2,000 queries cost $0, saving the full output token cost for 2,000 responses.
 
-> **Two layers, same idea.** The **prompt caching** here is a *billing* feature of a hosted API; you are charged less for a shared prefix. There is a distinct but related optimization one layer down, inside the inference engine itself: **prefix caching** in a serving stack like vLLM reuses the shared prefix's *KV cache* in GPU memory so its prefill is never recomputed, cutting time-to-first-token rather than your bill. If you self-host, you get the serving-layer version; if you call a hosted API, you get the billing-layer version. See Part IV of *Serving LLMs in Production* (`liascript-llmserving.md`) for how serving-layer prefix caching works and why PagedAttention makes it possible.
+> **Two layers, same idea.**  The **prompt caching** here is a *billing* feature of a hosted API; you are charged less for a shared prefix.  There is a distinct but related optimization one layer down, inside the inference engine itself: **prefix caching** in a serving stack like vLLM reuses the shared prefix's *KV cache* in GPU memory so its prefill is never recomputed, cutting time-to-first-token rather than your bill.  If you self-host, you get the serving-layer version; if you call a hosted API, you get the billing-layer version.  See Part IV of *Serving LLMs in Production* (`liascript-llmserving.md`) for how serving-layer prefix caching works and why PagedAttention makes it possible.
 
-A production agent has a 2,000-token system prompt that is identical for all users. To minimize cost, you should:
+A production agent has a 2,000-token system prompt that is identical for all users.  To minimize cost, you should:
 
 [(X)] Use a provider that supports prompt caching, structure the system prompt as a static prefix, and ensure it appears at the start of every request so it maximizes cache hit rate
 [( )] Reduce the system prompt to 10 tokens; shorter prompts always produce lower costs regardless of caching behavior
@@ -111,7 +111,7 @@ A production agent has a 2,000-token system prompt that is identical for all use
 
 > **Common Misconception:** "Switching to a local model (like Ollama) eliminates AI costs entirely."
 >
-> A local model eliminates per-token API fees, but not cost. You still pay for: the GPU or cloud compute instance to run the model (a decent GPU costs $0.50-$2.00/hour on cloud providers), electricity, the engineering time to set up and maintain the local inference stack, and the opportunity cost of GPU time that could serve other tasks. For low-volume projects, a local model often costs *more* when you account for idle GPU time. The breakeven analysis depends on your query volume, which is exactly what the cost model in Part IV is designed to compute.
+> A local model eliminates per-token API fees, but not cost.  You still pay for: the GPU or cloud compute instance to run the model (a decent GPU costs $0.50-$2.00/hour on cloud providers), electricity, the engineering time to set up and maintain the local inference stack, and the opportunity cost of GPU time that could serve other tasks.  For low-volume projects, a local model often costs *more* when you account for idle GPU time.  The breakeven analysis depends on your query volume, which is exactly what the cost model in Part IV is designed to compute.
 
 Caching reduces the cost of repeated work; Part III introduces model routing, which reduces cost on novel work by matching each query to the cheapest model tier capable of answering it correctly.
 
@@ -123,11 +123,11 @@ In this part, you will apply the right-sizing principle to a routing decision ta
 
 ## Model 3: Right-Sizing and the Routing Decision
 
-**Right-sizing** is the principle that you should deploy the minimum model capable of performing the task correctly. A 405-billion-parameter frontier model answering "What is 2+2?" wastes money, latency, and GPU cycles that could serve another user. A 3-billion-parameter model writing a novel technical specification will likely produce something inadequate. The art is in building a **routing function** that classifies incoming queries and dispatches them to the appropriate model tier.
+**Right-sizing** is the principle that you should deploy the minimum model capable of performing the task correctly.  A 405-billion-parameter frontier model answering "What is 2+2?" wastes money, latency, and GPU cycles that could serve another user.  A 3-billion-parameter model writing a novel technical specification will likely produce something inadequate.  The art is in building a **routing function** that classifies incoming queries and dispatches them to the appropriate model tier.
 
 Routing architectures take several forms:
-- **Classifier-first**: a tiny, fast, cheap model (or a rules-based classifier) reads the query and outputs a label: `trivial`, `medium`, `complex`, `sensitive`. Each label maps to a model tier.
-- **Confidence-based**: a small model attempts the task and also predicts its own confidence. If confidence exceeds a threshold, return the result; otherwise escalate to a larger model.
+- **Classifier-first**: a tiny, fast, cheap model (or a rules-based classifier) reads the query and outputs a label: `trivial`, `medium`, `complex`, `sensitive`.  Each label maps to a model tier.
+- **Confidence-based**: a small model attempts the task and also predicts its own confidence.  If confidence exceeds a threshold, return the result; otherwise escalate to a larger model.
 - **Cost-capped**: every query goes to the small model first; the orchestrator escalates only if the small model's answer fails a quality check (a property test or LLM-as-judge score).
 
 | Query Type | Correct Route | Why This Route Is Right | Cost Savings vs. Always Using Frontier |
@@ -141,17 +141,17 @@ Routing architectures take several forms:
 
 ### Critical Thinking Questions
 
-4. Design a routing function for a customer-support agent that handles billing questions, technical troubleshooting, and general product questions. What features of the incoming query text would your classifier use to assign a route? What happens to the user experience if the classifier mis-classifies a complex billing dispute as a simple product question?
+4.  Design a routing function for a customer-support agent that handles billing questions, technical troubleshooting, and general product questions.  What features of the incoming query text would your classifier use to assign a route?  What happens to the user experience if the classifier mis-classifies a complex billing dispute as a simple product question?
 
-   *Hint:* Consider features like: presence of numbers or account references (billing), presence of error messages or version numbers (technical), question length, presence of emotional language (escalation needed). What's the cost of a wrong classification in each direction?
+   *Hint:* Consider features like: presence of numbers or account references (billing), presence of error messages or version numbers (technical), question length, presence of emotional language (escalation needed).  What's the cost of a wrong classification in each direction?
 
-5. What is the risk of routing a complex query to the wrong (cheaper) tier? How would you detect in production that mis-routing is happening frequently? What specific metric would you monitor, and what threshold would trigger an alarm?
+5.  What is the risk of routing a complex query to the wrong (cheaper) tier?  How would you detect in production that mis-routing is happening frequently?  What specific metric would you monitor, and what threshold would trigger an alarm?
 
-   *Hint:* If the small model frequently produces answers that the user immediately follows up on with "that's not right" or "can you try again," that's a signal of mis-routing. What would you log to detect this pattern?
+   *Hint:* If the small model frequently produces answers that the user immediately follows up on with "that's not right" or "can you try again," that's a signal of mis-routing.  What would you log to detect this pattern?
 
-6. A confidence-based router relies on the small model's self-reported confidence score to decide whether to escalate. Why might this be unreliable, and what alternative signal could you use instead to decide when to escalate to a larger model?
+6.  A confidence-based router relies on the small model's self-reported confidence score to decide whether to escalate.  Why might this be unreliable, and what alternative signal could you use instead to decide when to escalate to a larger model?
 
-   *Hint:* LLMs are known to be poorly calibrated; they are often very confident when wrong. What could you check about the *output itself* (rather than the model's confidence score) to decide if it looks trustworthy?
+   *Hint:* LLMs are known to be poorly calibrated; they are often very confident when wrong.  What could you check about the *output itself* (rather than the model's confidence score) to decide if it looks trustworthy?
 
 Routing handles the per-query cost; Part IV closes the loop with batching for non-interactive workloads and a cost formula that lets you project your system's expenses before you deploy it.
 
@@ -163,29 +163,29 @@ In this part, you will distinguish batching from streaming (they are often confu
 
 ## Model 4: Batching, Streaming, and the Cost Formula
 
-**Batching** accumulates multiple requests and submits them together. Most providers offer a batch API at 50% of the standard price; the tradeoff is latency: batch jobs may take minutes to hours to complete. Batching is appropriate for workloads that are **not latency-sensitive**: nightly document processing, bulk embedding generation, offline evaluation runs. It is inappropriate for a user waiting at a screen for a chat response.
+**Batching** accumulates multiple requests and submits them together.  Most providers offer a batch API at 50% of the standard price; the tradeoff is latency: batch jobs may take minutes to hours to complete.  Batching is appropriate for workloads that are **not latency-sensitive**: nightly document processing, bulk embedding generation, offline evaluation runs.  It is inappropriate for a user waiting at a screen for a chat response.
 
-**Streaming** reduces *time-to-first-token* by returning tokens to the user as they are generated rather than waiting for the full response to complete before sending anything. Streaming does not reduce the total number of tokens generated and does not reduce cost. It improves perceived responsiveness and allows the UI to begin rendering before the response is complete, which feels faster even when the total time is the same.
+**Streaming** reduces *time-to-first-token* by returning tokens to the user as they are generated rather than waiting for the full response to complete before sending anything.  Streaming does not reduce the total number of tokens generated and does not reduce cost.  It improves perceived responsiveness and allows the UI to begin rendering before the response is complete, which feels faster even when the total time is the same.
 
-Before deploying any agent system, build a **cost model**: a spreadsheet or script that estimates daily expenditure given realistic usage assumptions. The structure:
+Before deploying any agent system, build a **cost model**: a spreadsheet or script that estimates daily expenditure given realistic usage assumptions.  The structure:
 
 $$
 \text{daily cost} = Q \times (T_{\text{in}} \times P_{\text{in}} + T_{\text{out}} \times P_{\text{out}})
 $$
 
-where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query, $T_{\text{out}}$ is average output tokens per query, and $P_{\text{in}}$, $P_{\text{out}}$ are the per-token prices in dollars. Add separate terms for cache miss rate (what fraction of requests are not cached), embedding costs (a separate cheaper rate), and tool-call overhead (extra tokens from retrieved context). Then ask: at what query scale does cost become unsustainable, and at what scale does switching to local inference pay off?
+where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query, $T_{\text{out}}$ is average output tokens per query, and $P_{\text{in}}$, $P_{\text{out}}$ are the per-token prices in dollars.  Add separate terms for cache miss rate (what fraction of requests are not cached), embedding costs (a separate cheaper rate), and tool-call overhead (extra tokens from retrieved context).  Then ask: at what query scale does cost become unsustainable, and at what scale does switching to local inference pay off?
 
 ### Critical Thinking Questions
 
-7. At what query volume does semantic caching become worth the engineering cost of building and maintaining it? What factors beyond raw query volume matter in this decision?
+7.  At what query volume does semantic caching become worth the engineering cost of building and maintaining it?  What factors beyond raw query volume matter in this decision?
 
-   *Hint:* Consider: How repetitive are your queries? (A homework helper gets many unique questions; a FAQ bot gets many repeated ones.) What is the risk of serving a slightly stale cached answer? What is the engineering cost of building the cache correctly?
+   *Hint:* Consider: How repetitive are your queries?  (A homework helper gets many unique questions; a FAQ bot gets many repeated ones.)  What is the risk of serving a slightly stale cached answer?  What is the engineering cost of building the cache correctly?
 
-8. A team proposes to reduce cost by streaming responses to users and canceling the generation mid-stream once the user stops reading or scrolls away. What practical and ethical complications does this introduce, even though it would save money?
+8.  A team proposes to reduce cost by streaming responses to users and canceling the generation mid-stream once the user stops reading or scrolls away.  What practical and ethical complications does this introduce, even though it would save money?
 
-   *Hint:* Think about what happens if the user missed the most important part of the response (which might be in the second paragraph). Think also about the billing model: does canceling generation mid-stream actually stop the charge, or has the compute already been done?
+   *Hint:* Think about what happens if the user missed the most important part of the response (which might be in the second paragraph).  Think also about the billing model: does canceling generation mid-stream actually stop the charge, or has the compute already been done?
 
-9. Build a cost model for a hypothetical Ursinus College tutoring agent. Assume: 200 student queries per day, each with a 300-token system prompt, a 100-token student question, and a 250-token answer. Estimate the monthly cost at GPT-4 pricing ($15/$60 per million input/output tokens). Then estimate the cost with a local model running on a GPU that costs $0.50/hour. At what query volume per day does local inference become cheaper than the API?
+9.  Build a cost model for a hypothetical Ursinus College tutoring agent.  Assume: 200 student queries per day, each with a 300-token system prompt, a 100-token student question, and a 250-token answer.  Estimate the monthly cost at GPT-4 pricing ($15/$60 per million input/output tokens).  Then estimate the cost with a local model running on a GPU that costs $0.50/hour.  At what query volume per day does local inference become cheaper than the API?
 
    *Starter hint:* Run this script and compare the two monthly cost figures; the crossover point where local inference becomes cheaper depends entirely on how fully you can utilize the GPU.
    ```python
@@ -222,42 +222,42 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
 ## Exercises
 
-1. *Token budget audit.*
+1.  *Token budget audit.*
 
-   *What to do:* Take your final project agent and instrument it to log the number of input and output tokens used in each API call. Run 10 representative queries through your agent. Calculate the average cost per query and project it to a daily and monthly cost assuming 500 queries/day. Identify the single largest contributor to token cost and propose one specific change to reduce it.
+   *What to do:* Take your final project agent and instrument it to log the number of input and output tokens used in each API call.  Run 10 representative queries through your agent.  Calculate the average cost per query and project it to a daily and monthly cost assuming 500 queries/day.  Identify the single largest contributor to token cost and propose one specific change to reduce it.
 
-   *Starter hint:* Most LLM APIs return token usage in the response object. For Anthropic: `response.usage.input_tokens` and `response.usage.output_tokens`. For OpenAI: `response.usage.prompt_tokens` and `response.usage.completion_tokens`. Log these to a CSV file and compute averages across your 10 runs.
+   *Starter hint:* Most LLM APIs return token usage in the response object.  For Anthropic: `response.usage.input_tokens` and `response.usage.output_tokens`.  For OpenAI: `response.usage.prompt_tokens` and `response.usage.completion_tokens`.  Log these to a CSV file and compute averages across your 10 runs.
 
    *You've succeeded when:* You have a table showing per-call token counts for all 10 runs, a projected monthly cost, and a specific actionable proposal (e.g., "shorten the system prompt from 800 to 300 tokens by removing the detailed formatting rules") with an estimated savings percentage.
 
-2. *Caching design.*
+2.  *Caching design.*
 
-   *What to do:* For your final project, identify which parts of your prompt are static (identical on every call) and which are dynamic (vary per user or per query). Redesign your prompt structure so that all static content appears first. Estimate the cache hit rate you would achieve if prompt caching were enabled, and calculate the monthly savings.
+   *What to do:* For your final project, identify which parts of your prompt are static (identical on every call) and which are dynamic (vary per user or per query).  Redesign your prompt structure so that all static content appears first.  Estimate the cache hit rate you would achieve if prompt caching were enabled, and calculate the monthly savings.
 
-   *Starter hint:* Draw a diagram of your current prompt structure showing: [SYSTEM PROMPT] -> [RETRIEVED CONTEXT] -> [USER MESSAGE]. Mark each section as Static (same every call) or Dynamic (changes per call). Static content that appears before any dynamic content is cacheable; dynamic content anywhere in the prefix breaks caching for everything after it.
+   *Starter hint:* Draw a diagram of your current prompt structure showing: [SYSTEM PROMPT] -> [RETRIEVED CONTEXT] -> [USER MESSAGE].  Mark each section as Static (same every call) or Dynamic (changes per call).  Static content that appears before any dynamic content is cacheable; dynamic content anywhere in the prefix breaks caching for everything after it.
 
    *You've succeeded when:* You can produce an annotated prompt diagram, a cache-hit-rate estimate with reasoning, and a dollar-amount monthly savings estimate using the formula from Model 4.
 
-3. *Cost model spreadsheet.*
+3.  *Cost model spreadsheet.*
 
-   *What to do:* Build a cost model for your final project as a Python script or spreadsheet. The model should accept as parameters: queries per day, average input tokens, average output tokens, cache hit rate, and per-token prices. It should output: cost per query, daily cost, monthly cost, and the query volume at which switching to a local model becomes cheaper. Run the model for three scenarios: current usage, 10x growth, and 100x growth.
+   *What to do:* Build a cost model for your final project as a Python script or spreadsheet.  The model should accept as parameters: queries per day, average input tokens, average output tokens, cache hit rate, and per-token prices.  It should output: cost per query, daily cost, monthly cost, and the query volume at which switching to a local model becomes cheaper.  Run the model for three scenarios: current usage, 10x growth, and 100x growth.
 
-   *Starter hint:* Use the formula from Model 4: `daily_cost = Q * ((T_in * P_in) + (T_out * P_out))`. Add a cache term: `effective_input_cost = T_in * ((1 - cache_hit_rate) * P_in + cache_hit_rate * P_cache_read)`. Present results in a table with one column per scenario.
+   *Starter hint:* Use the formula from Model 4: `daily_cost = Q * ((T_in * P_in) + (T_out * P_out))`.  Add a cache term: `effective_input_cost = T_in * ((1 - cache_hit_rate) * P_in + cache_hit_rate * P_cache_read)`.  Present results in a table with one column per scenario.
 
    *You've succeeded when:* Your model produces a three-scenario table, correctly applies the cache discount, and identifies the crossover point where local inference becomes cheaper with a brief written explanation of what drives that crossover.
 
 ---
 
--> Coming Up Next: Cost is one constraint on how we build AI systems. The next module examines another: the cognitive science of how humans and AI systems make decisions, and what happens when those processes collide.
+-> Coming Up Next: Cost is one constraint on how we build AI systems.  The next module examines another: the cognitive science of how humans and AI systems make decisions, and what happens when those processes collide.
 
 ## Further Reading
 
-- Anthropic. *Prompt Caching* (API documentation, 2024).
+- Anthropic.  *Prompt Caching* (API documentation, 2024).
 - Zhuang et al. *GPTCache: An Open-Source Semantic Cache for LLM Applications* (2023).
 - Ong et al. *RouteLLM: Learning to Route LLMs with Preference Data* (2024).
 - OpenAI. *Batch API* (documentation, 2024).
 
-> **From the Environmental Cost of Inference session.** Right-sizing is the same decision this activity makes on dollars, made on watts; the matrix below is that session's version.
+> **From the Environmental Cost of Inference session.**  Right-sizing is the same decision this activity makes on dollars, made on watts; the matrix below is that session's version.
 
 ## Model 2: Right-Sizing Decision Matrix
 
@@ -272,19 +272,19 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
 ### Critical Thinking Questions
 
-4. The right-sizing matrix does not include a column for accuracy. Construct the missing argument: under what conditions does using a smaller model for a task impose a *social* cost that must be weighed against the carbon benefit?
+4.  The right-sizing matrix does not include a column for accuracy.  Construct the missing argument: under what conditions does using a smaller model for a task impose a *social* cost that must be weighed against the carbon benefit?
 
-   *Hint: Consider a medical triage task or a hiring screening task where the smaller model's error rate is meaningfully higher. Who bears the cost of those errors? Are those costs visible in the same accounting that makes the carbon benefit visible? Is there a way to measure both in the same units?*
+   *Hint: Consider a medical triage task or a hiring screening task where the smaller model's error rate is meaningfully higher.  Who bears the cost of those errors?  Are those costs visible in the same accounting that makes the carbon benefit visible?  Is there a way to measure both in the same units?*
 
-5. The "local-first" principle is often presented as unambiguously better. Identify two scenarios where local inference has *worse* environmental impact than a well-managed cloud inference endpoint, and explain why.
+5.  The "local-first" principle is often presented as unambiguously better.  Identify two scenarios where local inference has *worse* environmental impact than a well-managed cloud inference endpoint, and explain why.
 
-   *Hint: Think about what happens when many individual users each run a model on their own hardware versus one highly optimized cloud endpoint serving the same workload. Think about hardware utilization rates, cooling efficiency, and renewable energy purchasing. When does centralization have an environmental advantage?*
+   *Hint: Think about what happens when many individual users each run a model on their own hardware versus one highly optimized cloud endpoint serving the same workload.  Think about hardware utilization rates, cooling efficiency, and renewable energy purchasing.  When does centralization have an environmental advantage?*
 
-6. You are advising a nonprofit organization that does document analysis for human rights investigations, processing thousands of witness testimonies in multiple languages. They currently use a frontier cloud API. What model-choice and deployment recommendations would you make, and how would you weigh privacy, accuracy, cost, and carbon against each other?
+6.  You are advising a nonprofit organization that does document analysis for human rights investigations, processing thousands of witness testimonies in multiple languages.  They currently use a frontier cloud API. What model-choice and deployment recommendations would you make, and how would you weigh privacy, accuracy, cost, and carbon against each other?
 
-   *Hint: Start by listing the constraints: the testimonies are highly sensitive (privacy argument for local), multi-language capability is required (accuracy constraint), the organization has limited budget (cost constraint), and the work matters (accuracy cost of a wrong inference is high). Where do these constraints converge, and where do they conflict?*
+   *Hint: Start by listing the constraints: the testimonies are highly sensitive (privacy argument for local), multi-language capability is required (accuracy constraint), the organization has limited budget (cost constraint), and the work matters (accuracy cost of a wrong inference is high).  Where do these constraints converge, and where do they conflict?*
 
-A development team wants to reduce the carbon footprint of their AI-powered customer support system. Which intervention is most likely to produce the largest reduction in inference-time carbon emissions?
+A development team wants to reduce the carbon footprint of their AI-powered customer support system.  Which intervention is most likely to produce the largest reduction in inference-time carbon emissions?
 
 [( )] Switching from Python to a compiled language for the API wrapper; runtime efficiency gains in the surrounding code are in the microsecond range, whereas the model forward pass dominates at the millisecond-to-second scale; the wrapper is not the bottleneck
 [( )] Adding a caching layer that serves identical responses to repeated queries without re-running the model; caching is a meaningful lever but only eliminates compute for exact or near-duplicate queries; a customer support system with diverse question phrasing will still run the full model for the majority of requests
@@ -293,5 +293,5 @@ A development team wants to reduce the carbon footprint of their AI-powered cust
 
 ---
 
-*Parts I and II focused on choices you can make as an individual developer. Part III zooms out to ask: what happens when everyone makes those choices, and whether efficiency gains collectively reduce impact or accidentally increase it.*
+*Parts I and II focused on choices you can make as an individual developer.  Part III zooms out to ask: what happens when everyone makes those choices, and whether efficiency gains collectively reduce impact or accidentally increase it.*
 
