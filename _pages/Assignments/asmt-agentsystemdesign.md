@@ -7,7 +7,7 @@ info:
   coursenum: CS357
   purpose: "To build the discipline of designing an agent system on paper: its goals, agents, data flow, gates, failure modes, and success criteria, so ambiguity and risk surface in writing while they are still cheap to fix, before or alongside implementation."
   tilt:
-    task: "Choose one direction and produce a complete written design for an agent system: either a spec-first design document (problem statement, agent design table, data-flow diagram, pre-mortem, and measurable success criteria) or a full agent operating system (charter, agent contract, standing prompt with confirmation gates, and handoff files) proven by a governed loop of at least three fresh-context iterations, one of which is interrupted mid-task."
+    task: "Choose one direction and produce a complete written design for an agent system: either a spec-first design document (problem statement, agent design table, data-flow diagram, pre-mortem, and measurable success criteria) or a full agent operating system (charter, agent contract, standing prompt with confirmation gates, and handoff files) proven by a governed loop of at least two fresh-context iterations, one of which is interrupted mid-task."
     criteria: "Assessed on one shared rubric across both directions: problem framing and constraints, architecture and specification quality, failure-mode analysis and gate design, verifiability and evidence, and reflection and presentation; see the rubric below for the full breakdown."
   points: 100
   goals:
@@ -40,8 +40,8 @@ info:
       description: Verifiability and Evidence
       preemerging: No success criteria or loop evidence is provided, or criteria are purely subjective, or no iteration was actually run
       beginning: "Criteria are stated but cannot be measured without access to the system's internals or its authors; or a loop is described but its iterations share one context window, or the interruption is trivial, or the stop condition was decided after the run rather than committed before it, or resumption relies on information not present in the written state"
-      progressing: "Most criteria are third-party measurable from outputs alone though at least one needs clarification, or the token ledger questions are attempted with an arithmetic or setup error; or three fresh-context iterations run and a genuine mid-task interruption and resumption is shown, but the iteration ledger does not distinguish what an iteration learned from the documents versus what it rediscovered, or the runaway analysis is missing"
-      proficient: "For Direction A: three to five criteria complete all four columns (criterion, what success looks like, measurement method, passing threshold), cover functional correctness plus at least one safety or quality dimension, and the reflection states how the data would be collected one week after deployment, by whom, and what follows if a criterion fails. For Direction B: the run brief's acceptance checklist and stop condition are committed before the first iteration and honored; three or more real or rigorously simulated iterations each begin from a fresh context, carrying nothing but what the previous iteration wrote to disk; at least one iteration is a genuine mid-task stop whose SESSION and CURRENT_TASK are included verbatim, each ending with a next safe action and an evidence-cited reality check; the next iteration resumes from the written state alone without duplicating completed work; the iteration ledger is complete for every iteration; every question an iteration had to ask a human is identified along with the document revision that now answers it; and the runaway analysis names the specific charter gate or Forbidden-lane item that would have caught a weak-criteria commit. Both directions: the token ledger questions are answered with correct, shown arithmetic grounded in the submission's own tool count and prompt sizes"
+      progressing: "Most criteria are third-party measurable from outputs alone though at least one needs clarification, or the token ledger questions are attempted with an arithmetic or setup error; or two or more fresh-context iterations run and a genuine mid-task interruption and resumption is shown, but the iteration ledger does not distinguish what an iteration learned from the documents versus what it rediscovered, or the runaway analysis is missing"
+      proficient: "For Direction A: three to five criteria complete all four columns (criterion, what success looks like, measurement method, passing threshold), cover functional correctness plus at least one safety or quality dimension, and the reflection states how the data would be collected one week after deployment, by whom, and what follows if a criterion fails. For Direction B: the run brief's acceptance checklist and stop condition are committed before the first iteration and honored; two or more real or rigorously simulated iterations each begin from a fresh context, carrying nothing but what the previous iteration wrote to disk; at least one iteration is a genuine mid-task stop whose SESSION and CURRENT_TASK are included verbatim, each ending with a next safe action and an evidence-cited reality check; the next iteration resumes from the written state alone without duplicating completed work; the iteration ledger is complete for every iteration; every question an iteration had to ask a human is identified along with the document revision that now answers it; and the runaway analysis names the specific charter gate or Forbidden-lane item that would have caught a weak-criteria commit. Both directions: the token ledger questions are answered with correct, shown arithmetic grounded in the submission's own tool count and prompt sizes"
     - weight: 10
       description: Reflection and Presentation
       preemerging: No reflection is provided, or the submission is incomplete or contains unredacted personal or sensitive information
@@ -87,9 +87,9 @@ Read both directions before choosing. Pick the one that best fits where you are:
 
 **This builds on:** the *Design First* session, whose agent table and pre-mortem are the backbone of Direction A, and *How I AI*, whose charter, contract, and handoff documents are the backbone of Direction B; Direction B's loop also draws on the *Coding Agents* session's overnight brief and its treatment of loops that run themselves. All are taught before this is due.
 
-**You need:** no code and no running system. Direction B's loop needs an agent you can actually run several times over and interrupt once, so if you take it, use a real project (your Project Thread repository, or your `cs357-work`).
+**You need:** no code and no running system. Direction B's loop needs an agent you can actually restart from scratch and interrupt once, so if you take it, use a real project (your Project Thread repository, or your `cs357-work`).
 
-**Time:** ten to twelve hours, most of it thinking and writing. The pre-mortem in Direction A and the governed loop in Direction B are the parts that take longest and carry the most points; do not leave either for the last evening. Direction B's loop in particular is wall-clock work you cannot compress: three iterations have to actually run.
+**Time:** nine to eleven hours, most of it thinking and writing. The pre-mortem in Direction A and the governed loop in Direction B are the parts that take longest and carry the most points; do not leave either for the last evening. Direction B's loop in particular is wall-clock work you cannot compress: the iterations have to actually run.
 
 **Choosing a direction.** Read both. Then:
 
@@ -118,7 +118,7 @@ A strong submission, in either direction, has these qualities:
 Both directions carry the full 100 points under the shared rubric above. Choose **one** and complete it in full.
 
 - **Direction A: Design Before You Build**: produce a complete spec-first design document for an agentic system: problem statement, agent design table, data-flow diagram, six-item pre-mortem, and measurable success criteria. No implementation required; the document is the deliverable.
-- **Direction B: Design Your Agent Operating System**: author the governing document set for an agent in a domain of your choosing (charter, agent contract, standing prompt with confirmation gates, handoff files, and an action classification), then prove it works by running it as a governed loop: three or more unattended iterations, each starting from a fresh context, one of them interrupted mid-task.
+- **Direction B: Design Your Agent Operating System**: author the governing document set for an agent in a domain of your choosing (charter, agent contract, standing prompt with confirmation gates, handoff files, and an action classification), then prove it works by running it as a governed loop: two or more unattended iterations, each starting from a fresh context, one of them interrupted mid-task.
 
 Expand your chosen direction below for the full instructions.
 
@@ -226,7 +226,7 @@ A single PDF or markdown file containing all five components plus the shared ref
 <details markdown="1">
 <summary><strong>Direction B: Design Your Agent Operating System</strong></summary>
 
-The two production case studies you read describe an "agent operating system": the written contract, charter, gates, and handoff state that make an AI agent system trustworthy, interruptible, and independent of any single model or vendor. You will author that operating system for a domain of **your** choosing, and then prove it works by running it as a loop: several unattended iterations, each starting from nothing but your documents, one of them interrupted mid-task and picked up cold by the next.
+The two production case studies you read describe an "agent operating system": the written contract, charter, gates, and handoff state that make an AI agent system trustworthy, interruptible, and independent of any single model or vendor. You will author that operating system for a domain of **your** choosing, and then prove it works by running it as a loop: repeated unattended iterations, each starting from nothing but your documents, one of them interrupted mid-task and picked up cold by the next.
 
 #### Step 1: Choose a domain
 
@@ -246,9 +246,9 @@ Delete every template section you cannot honestly enforce, and list what you del
 
 #### Step 3: Run the governed loop
 
-A single handoff proves your documents survive one interruption. What you actually want to know is whether they survive *repetition*: whether an agent that starts over from nothing, again and again, keeps making forward progress instead of relitigating what the last one already did. So you will run your document set as a **governed loop**: several unattended iterations, each beginning with a fresh context, with your `.ai/` files and workspace as the only thing carried between them. This is the pattern the *Coding Agents* session calls a self-running loop, and the reason it works is the one the *How I AI* session insists on: the memory lives on disk, not in the conversation.
+A single handoff proves your documents survive one interruption. What you actually want to know is whether they survive *repetition*: whether an agent that starts over from nothing, again and again, keeps making forward progress instead of relitigating what the last one already did. So you will run your document set as a **governed loop**: repeated unattended iterations, each beginning with a fresh context, with your `.ai/` files and workspace as the only thing carried between them. This is the pattern the *Coding Agents* session calls a self-running loop, and the reason it works is the one the *How I AI* session insists on: the memory lives on disk, not in the conversation.
 
-Any agent CLI or chat agent from this course works, and any harness works: a shell `while` loop that re-invokes your agent, or three hand-restarts with the history cleared between them. The requirement is a **fresh context per iteration**, not a particular tool. If your domain has no digital surface an agent can touch, a rigorous simulated transcript is acceptable; mark it as simulated.
+Any agent CLI or chat agent from this course works, and any harness works: a shell `while` loop that re-invokes your agent, or hand-restarts with the history cleared between them. The requirement is a **fresh context per iteration**, not a particular tool. If your domain has no digital surface an agent can touch, a rigorous simulated transcript is acceptable; mark it as simulated.
 
 **1. Write the run brief, and commit it before you start.** Three things, in the testable-versus-vague discipline you practiced in the *Coding Agents* session:
 
@@ -258,7 +258,7 @@ Any agent CLI or chat agent from this course works, and any harness works: a she
 
 Write it down first and do not edit it afterward. A stop condition you adjust mid-run is not a stop condition; it is a preference. This is also where your charter earns its keep: the milestone gate you wrote in Step 2 is the natural place for the loop's "done" check to come from.
 
-**2. Run at least three iterations.** Seed each one with only your kickoff prompt and your document set (the [handoff kickoff template]({{ site.baseurl }}/files/agent-templates/ai/AGENT_HANDOFF_KICKOFF.md) is already written for exactly this). Require every iteration to restate the mission, the active task, and the next safe action before it does anything, and to update the handoff state before it stops, for any reason. Nothing may cross the boundary between iterations except what is written to disk.
+**2. Run at least two iterations.** Seed each one with only your kickoff prompt and your document set (the [handoff kickoff template]({{ site.baseurl }}/files/agent-templates/ai/AGENT_HANDOFF_KICKOFF.md) is already written for exactly this). Require every iteration to restate the mission, the active task, and the next safe action before it does anything, and to update the handoff state before it stops, for any reason. Nothing may cross the boundary between iterations except what is written to disk.
 
 **3. Interrupt one of them mid-task.** At least one iteration must end in a hard stop at a genuinely inconvenient moment: an interruption, an exhausted iteration budget, or a simulated quota death. Not a tidy boundary the agent chose. The next iteration has to pick that up cold.
 
@@ -338,7 +338,7 @@ Held against the rubric's `proficient` column. Skip the rows for the direction y
 - [ ] Every gate is justified by a concrete failure scenario: the action, the harm, and why recovery afterwards is impossible or expensive.
 - [ ] At least one forbidden item argues why **no** approval could make it safe.
 - [ ] The run brief's acceptance checklist and stop condition were **committed before iteration one** and were not edited during the run.
-- [ ] Three or more iterations ran, and each began from a **fresh context**: nothing crossed between them except what was written to disk.
+- [ ] Two or more iterations ran, and each began from a **fresh context**: nothing crossed between them except what was written to disk.
 - [ ] One iteration was interrupted at a genuine mid-task moment, not a convenient boundary.
 - [ ] `SESSION` and `CURRENT_TASK` are included verbatim as of that interrupted iteration, each ending with a next safe action and an evidence-cited reality check.
 - [ ] The iteration that followed resumed **from the written state alone** and did not redo completed work.
