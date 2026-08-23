@@ -459,6 +459,33 @@ JSON
 
 On the native route, use `http://localhost:11434/v1` instead: the same substitution as everywhere else in this tutorial.
 
+**Variant: routing through OpenWebUI instead.** Talking to Ollama directly, as above, is the default for this course and needs no key at all. But if you are running **OpenWebUI** in front of Ollama, you can point opencode at that instead, and get the models, tools, and knowledge bases you configured there. OpenWebUI exposes an OpenAI-compatible endpoint, which is exactly what opencode's `@ai-sdk/openai-compatible` provider wants, so only the `baseURL` changes and one field is added:
+
+```bash
+mkdir -p ~/.config/opencode
+cat > ~/.config/opencode/config.json <<'JSON'
+{
+  "provider": {
+    "openwebui": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:3000/api/v1",
+        "apiKey": "sk-REPLACE-ME"
+      },
+      "models": { "llama3.2": { "name": "llama3.2" } }
+    }
+  }
+}
+JSON
+```
+
+Two things to be clear about, because "API key" usually means "bill":
+
+- **The key is yours, from your own server.** Generate it in OpenWebUI under *Settings -> Account -> API Keys*, the same key you will mint for the Python clients in the Local Agent lab. It authenticates you to a server running on your machine; it is not a payment credential.
+- **This route is still free** as long as the models behind OpenWebUI are the local ones you have pulled. You are adding a front door, not a bill. Point the same config at a paid provider's models later and the cost follows the model, not the config.
+
+Port 3000 is the OpenWebUI default this course uses. From inside the container, substitute `host.docker.internal` for `localhost`, as everywhere else in this tutorial.
+
 > **A candid expectation.** `llama3.2` is a 3-billion-parameter model running on your laptop. It is a fine model to *learn the loop with* and a weak one to build with. Expect it to be slow, to sometimes ignore your instructions, and to occasionally propose an edit that makes no sense. That is not your setup failing; that is the honest capability of a small local model, and noticing where the ceiling sits is a real part of today's learning. Later labs let you point the same tool at a larger model.
 
 ### 8.3: Give it one small job
