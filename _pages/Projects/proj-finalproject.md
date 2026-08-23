@@ -23,7 +23,7 @@ info:
       description: Approach, sound methods and justified design decisions
       preemerging: The work shows no evidence of a deliberate approach, decisions are unexplained defaults, the direction's required rigor (baseline evaluation, framework application, or gap verification) is absent, and the project does not build on the Stakeholder Brief or Literature Review
       beginning: An approach is described but is generic or unjustified, design decisions are asserted rather than argued, the direction's evidence of rigor is attempted but incomplete (an evaluation without a baseline, a framework applied superficially, a gap asserted without evidence), or the connection to the stakeholder problem is nominal
-      progressing: The approach is deliberate and mostly sound, major design decisions are justified with reference to course patterns or evidence, the direction's rigor requirement is substantially met (baseline comparison with metrics, systematic framework application with citations, or verified gap with linked evidence), and the proposal builds on the Stakeholder Brief and Literature Review, with minor gaps in how alternatives were considered or in the failure analysis
+      progressing: The approach is deliberate and mostly sound, major design decisions are justified with reference to course patterns or evidence, the direction's rigor requirement is substantially met (baseline comparison with metrics, systematic framework application with citations, or verified gap with linked evidence), and the project builds on the Stakeholder Brief and Literature Review, with minor gaps in how alternatives were considered or in the failure analysis
       proficient: The approach is deliberate, documented, and defensible, every major decision names the alternative that was rejected and the course pattern, principle, or evidence that motivated the choice; the direction's rigor requirement is fully met (Direction A - a fixed evaluation set compared against a monolith baseline with at least three failure modes documented from transcripts and at least one mitigation re-measured; Direction B - every major framework step yields a specific, cited finding with at least three mechanistic failure modes distinguishing materialized from foreseeable risks; Direction C - an independently verifiable ecosystem gap with named alternatives, a one-sentence minimum viable scope, and at least three non-trivially specified property tests); and the work is explicitly grounded in the Stakeholder Brief, Literature Review, and the partner's stated needs (Goals 11, 12)
     - weight: 18
       description: Process and Professionalism, meetings, communication, project management, check-ins, charter adherence
@@ -94,7 +94,7 @@ tags:
 
 ---
 
-> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview), your team operates under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
+> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief), the [Literature Review]({{ site.baseurl }}/Assignments/LitReview) reads against that plan during the sprint window, your team operates under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences. See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
@@ -116,7 +116,7 @@ These are directions within the one project, not separate assignments: your team
 
 **This is not a new assignment.** It is the point every Project-Thread milestone has been building toward, and almost everything it asks for already exists somewhere in your team's work: the stakeholder you interviewed, the literature you synthesized, the agent system you designed, and the labs you built. Read the timeline below as an assembly plan, not a fresh start.
 
-**Time:** the largest single commitment of the term, spread across the back half of the semester. The proposal is due in week 12 and Demo Day is week 15, so the sprints are where the work lives; a team that starts building in week 14 will demo something that does not run.
+**Time:** the largest single commitment of the term, spread across the back half of the semester. The proposal is due about six weeks before Demo Day (see the [course schedule]({{ site.baseurl }}/) for exact dates), so the sprints are where the work lives; a team that starts building in the last two weeks will demo something that does not run.
 
 **Choosing a direction** is the one decision worth making slowly, because all three are real and they suit genuinely different teams:
 
@@ -141,6 +141,7 @@ The Final Project's milestones run in the sequence below; see the course schedul
 | Hand-out | **Project handed out.** Teams read all three directions and begin converging on one. | - |
 | Before the proposal | **Intra-team check-in 2** (private, to the instructor); this check-in precedes and informs your proposal. | - |
 | Proposal deadline | **Proposal due**, with direction declared, stakeholder grounding, and AI-use disclosure. | **25 / 100** |
+| Sprint window | **Literature Review** handed out the day the proposal is due; its annotated bibliographies and team synthesis read against the committed plan and state what the evidence changes. | *graded on its own page* |
 | Sprint window | **Sprints.** Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the sprint/gallery-walk window (the final sprint). | - |
 | Final sprint | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | - |
 | Last class | **Demo Day + final submission**, including the partner-facing artifact and the final AI-use disclosure. | **75 / 100** |
@@ -183,13 +184,11 @@ Read them as the arc you have actually walked: the Stakeholder Brief is *Define 
 
 ## Stage 1: Proposal (25 points)
 
-Every proposal (2-3 pages), regardless of direction, must include:
+**The proposal has its own page and its own rubric: see [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).** Read it before you start writing; what follows here is a summary of where the proposal sits in the project.
 
-- **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion.
-- **Stakeholder grounding** integrating your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
-- **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to the three sprints with named owners (Goal 13).
-- **AI-use disclosure** for the proposal itself.
-- The **direction-specific elements** listed under your direction below.
+Every proposal (2-3 pages), regardless of direction, declares its direction and defends the choice, grounds the problem in your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief), argues its design decisions against the alternatives rejected, sketches the implementation and assessment plan with a GANTT-style timeline and named owners, discloses AI use, and includes the direction-specific elements listed under your direction below.
+
+The proposal is graded on its own rubric, not on this one: three course families (Approach, Process and Professionalism, and Plan Quality) worth 60 points between them, plus the four AAC&U problem-solving criteria a plan can actually demonstrate. *Implement Solution* and *Evaluate Outcomes* are graded here, at Demo Day, because a plan cannot demonstrate them.
 
 Incomplete proposals are returned ungraded; proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected. The second intra-team check-in lands shortly before this deadline; use it to surface scope disagreements early.
 
@@ -204,6 +203,8 @@ Build in three sprints between the proposal and Demo Day, aligned with in-class 
 | Sprint 1 (proposal submitted -> cross-team proposal critique) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running MVP (core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
 | Sprint 2 (proposal critique -> gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
 | Sprint 3 (gallery walk -> Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
+
+**The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sprints 1 and 2.** It is graded on its own page, but its synthesis is a project document: it states what the evidence confirms, complicates, or changes about your proposal, and any scope change that follows belongs in your decision log and your next check-in.
 
 **Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
