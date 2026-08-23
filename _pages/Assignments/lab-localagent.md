@@ -47,36 +47,30 @@ info:
     - To handle API keys so that no secret is ever committed or exposed to the client, and to explain the production backend-proxy pattern in your own words
     - To design an application whose core functionality degrades gracefully when the AI is unavailable
   rubric:
-    - weight: 30
+    - weight: 35
       description: Agent Loop Implementation
       preemerging: The agent (Python loop or configured OpenWebUI agent) fails to run due to major issues, or the program or agent configuration fails to run at all
       beginning: The agent runs but fails on the test goals due to one or more minor issues
       progressing: The agent runs correctly on the test goals, but would fail in a general case due to a minor issue such as fragile action parsing, a missing step budget, or (on the low-code route) undocumented tool invocations
       proficient: A correct agent loop runs the test goals, enforces a step budget, parses actions robustly, and would be reasonably expected to handle the general case; a screenshot or terminal log shows successful completion of at least three distinct goals with the step count and final answer printed; on the Direction 0 (OpenWebUI) route this row is earned on equal terms by a correctly configured agent that completes at least three distinct goals with each tool invocation documented from the exported chat transcripts
     - weight: 20
-      description: System Prompt and Persona Design
-      preemerging: The system prompt is absent or does not constrain behavior
-      beginning: The system prompt establishes a role but omits tools, format, or guardrails
-      progressing: The system prompt addresses role, goal, tools, format, and guardrails with minor gaps
-      proficient: The system prompt fully specifies role, goal, tools, format, and guardrails; the writeup quotes each of the five elements, cites the transcript line where the model used each tool correctly, and explains what each guardrail prevents
+      description: "Instruction Design: System Prompt, Persona, and Skill"
+      preemerging: The system prompt is absent or does not constrain behavior, or no skill is submitted and none was ever loaded by an agent
+      beginning: The system prompt establishes a role but omits tools, format, or guardrails, or a skill file exists but the agent never invoked it and no transcript evidence of its use is provided
+      progressing: "The system prompt addresses role, goal, tools, format, and guardrails with minor gaps, and the skill is installed and invoked by name with a transcript showing it firing, but the submission is missing one of: the case where the skill correctly did not fire, the paragraph on what a generated skill got wrong, or an installable .skill archive"
+      proficient: "The system prompt fully specifies role, goal, tools, format, and guardrails; the writeup quotes each of the five elements, cites the transcript line where the model used each tool correctly, and explains what each guardrail prevents. The skill's description states a trigger rather than a topic; one transcript shows it firing and changing behavior that would not have happened otherwise and a second shows it correctly not firing on out-of-scope work; the writeup names something the skill got wrong, how it was found, and what changed; and a .skill archive is posted to the course discussion with SKILL.md at its top level. On the generated route the skill half of this row is earned by the diagnosis, what the AI assumed about the project that was not true; on the Direction 5 route it is earned by the skills authored there, with one packaged and shared here"
     - weight: 20
       description: Evaluation and Failure Analysis
       preemerging: No evaluation is provided
       beginning: A few informal trials are described without a protocol
       progressing: A small task set with a defined metric is evaluated, with limited failure analysis
       proficient: A task set of at least eight goals is evaluated at fixed temperature and seed; accuracy is reported as a fraction; at least two failure modes are each shown with a full transcript excerpt (from terminal logs or exported chat transcripts); a mitigation is implemented (in code or in configuration) for one, and the accuracy delta is reported with a sentence explaining the mechanism
-    - weight: 10
+    - weight: 15
       description: Code Quality and Documentation
       preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from best practice
       beginning: Code or configuration documentation is limited in ways that reduce the readability and reproducibility of the work
       progressing: Documentation is present that re-states the explicit code or configuration definitions
       proficient: Every non-trivial function has a docstring; all network and parsing operations are wrapped in exception handlers that print a located message (e.g., [lab1:run_agent]) followed by a traceback; model name, temperature, seed, and step budget are read from a JSON config file rather than hardcoded; on the Direction 0 route this row is earned by configuration quality, exported model JSON, documented tool schemas and settings, and setup notes sufficient for another student to reproduce the agent exactly
-    - weight: 10
-      description: "Agent Skill: Authoring or Generation, Installation, and Use"
-      preemerging: No skill is submitted, or no skill was ever loaded by an agent
-      beginning: A skill file exists but the agent never invoked it, or no transcript evidence of its use is provided
-      progressing: "The skill is installed and invoked by name and a transcript shows it firing, but the submission is missing one of: the case where it correctly did not fire, the paragraph on what the generated skill got wrong, or an installable .skill archive"
-      proficient: "The skill's description states a trigger rather than a topic; a transcript shows it firing and changing behavior that would not have happened otherwise, and a second shows it correctly not firing on out-of-scope work; the writeup names something the skill got wrong, how it was found, and what changed; and a .skill archive is posted to the course discussion with SKILL.md at its top level. On the generated route this row is earned by the diagnosis: what the AI assumed about the project that was not true. On the Direction 5 route it is earned by the skills authored there, with one packaged and shared here"
     - weight: 10
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
