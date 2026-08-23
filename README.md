@@ -29,6 +29,40 @@ This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringli
 
 ---
 
+## Term Rollover
+
+Deck links are not written out in full. A page body composes them from config:
+
+```
+{{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md
+```
+
+and front matter, where Jekyll does not evaluate Liquid, uses a flag the syllabus
+and assignment layouts expand:
+
+```yaml
+link: "Activities/liascript-agentloop.md"
+liapage: true
+```
+
+When starting a new term, the semester appears in exactly three places, all of
+which have to be updated together:
+
+- `baseurl` in `_config.yml`
+- `raw_pages_url` in `_config.yml`
+- `info.course_homepage` in `_pages/syllabus.md`
+
+One further sweep is unavoidable. The `comment: Render with ...` header lines
+inside `_pages/Activities/liascript-*.md` name the repository literally, because
+LiaScript fetches those files straight from GitHub raw and Jekyll never processes
+them. Retarget them with:
+
+```bash
+sed -i 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' _pages/Activities/liascript-*.md
+```
+
+---
+
 ## Course License
 
 All original course materials in this repository (slides, activities, notes, and assessments authored by the course instructor) are licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)** license. See the [LICENSE](LICENSE) file for the full license text.

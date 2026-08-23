@@ -49,9 +49,11 @@ info:
       proficient: The submission is a single PDF containing the stated experimental protocol, all four pattern entries, all three worked problems with intermediate steps and Python output, the system prompt workshop deliverables, the analysis and synthesis paragraphs, and software version information (model name and version, Python version, Ollama version)
   readings:
     - rtitle: "Prompt Engineering Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-promptengineering.md"
+      rlink: "Activities/liascript-promptengineering.md"
+      liapage: true
     - rtitle: "Sampling and Generation Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-samplinggeneration.md"
+      rlink: "Activities/liascript-samplinggeneration.md"
+      liapage: true
     - rtitle: "AI by Hand, Tom Yeh"
       rlink: "https://www.scribd.com/document/726922630/AI-by-Hand-Vol-1"
 
@@ -182,7 +184,7 @@ Complete all three problems with all intermediate steps shown. Handwritten and s
 
 Either one earns the verification credit. What is not accepted is an unverified answer.
 
-As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity]({{ site.activity_url }}liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
+As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
 
 ### Problem 1: Softmax with Temperature
 

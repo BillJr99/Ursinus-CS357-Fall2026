@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-environmentalai.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-environmentalai.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-environmentalai.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -130,7 +130,7 @@ The single most impactful design decision for reducing AI environmental cost is 
 ---
 
 
-> **Right-sizing, in detail.** The full decision matrix for matching a model's size to a task lives in the optional activity [Cost Optimization](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-costoptimization.md). The principle for today: the smallest model that passes your golden set is the right one, on carbon as on cost.
+> **Right-sizing, in detail.** The full decision matrix for matching a model's size to a task lives in the optional activity [Cost Optimization](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-costoptimization.md). The principle for today: the smallest model that passes your golden set is the right one, on carbon as on cost.
 
 # Part III: Jevons Paradox and Systemic Risk
 
