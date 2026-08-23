@@ -37,6 +37,7 @@ info:
     - "Write a valid OpenCode skill manifest (SKILL.md + opencode.json) that an agent loads and invokes by name"
     - "Implement a safety guardrail skill that intercepts file deletion and branch-push operations and requires explicit confirmation before proceeding"
     - "Implement an Obsidian vault memory skill that reads context from vault notes and appends dated session summaries to a memory log"
+    - "Implement a handoff skill that lets two agents with no shared context window pass work through a durable medium, under a claim protocol that survives a concurrency test"
     - "Write a test harness that exercises each skill with a scripted prompt sequence and verifies the agent's behavior matches the skill's intent"
     - "Reflect on the limits of instruction-based skills versus code-based tool enforcement"
     - To integrate a language model into an application through a single provider-agnostic API call that can switch between a local and a cloud provider without rewriting the app
@@ -830,7 +831,7 @@ Each direction now lives on its own page. The table below summarizes what each o
 | [Direction 2](LocalAgent/Direction2): Composing the Local Agent Stack | A five-tier local AI stack (inference, gateway, frontend, tool, and agent) wired with Docker Compose and a verified wiring matrix | Docker Desktop + roughly 6 GB of image pulls; no accounts or API costs | 4-6 |
 | [Direction 3](LocalAgent/Direction3): Containerizing an AI System Safely | A deliberately insecure agent container hardened step by step to least privilege, with a documented and tested threat model | Docker Desktop + roughly 6 GB of disk; an Anthropic API key (small usage cost); a test VM is strongly recommended | 5-7 |
 | [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free; a local Ollama-based agent fallback is built in | 5-7 |
-| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill and an Obsidian-vault memory skill, loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model | 4-6 |
+| [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill, an Obsidian-vault memory skill, and a two-agent handoff skill with a claim protocol, each loaded by name and verified with a scripted test harness | Free GitHub account; OpenCode and Obsidian (both free) with your local model; a second agent session for the handoff tests | 6-8 |
 | [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5-8 |
 
 Whichever direction you choose, fold its deliverables into the same submission ZIP and readme as the core lab, and treat its stated expectations as the standard your direction work must meet.
