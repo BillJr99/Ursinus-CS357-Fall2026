@@ -7,12 +7,12 @@ info:
   coursenum: CS357
   purpose: "To commit your team to one defensible plan before you start building: a declared direction, a stakeholder-grounded problem, an argued set of design decisions, and a sprint timeline with named owners, so that the sprint window is spent executing a plan rather than discovering one."
   tilt:
-    task: "With your standing team, write a 2-3 page proposal that declares your Final Project direction (A, B, or C), grounds it in your Stakeholder Brief and Literature Review, sketches the implementation and assessment plan with a GANTT-style timeline, includes the direction-specific elements, and discloses AI use."
+    task: "With your standing team, write a 2-3 page proposal that declares your Final Project direction (A, B, or C), grounds it in your Stakeholder Brief and an initial evidence base, sketches the implementation and assessment plan with a GANTT-style timeline, includes the direction-specific elements, and discloses AI use."
     criteria: "Assessed on three course families worth 60 points between them, Approach (a defended direction and argued design decisions), Process and Professionalism (authorship, timeline, signatures, check-in, and disclosure), and Plan Quality (scope, feasibility, and stakeholder grounding), plus the four AAC&U VALUE Problem Solving criteria that a plan can actually demonstrate, worth 40; see the rubric below for the full breakdown."
   points: 25
   goals:
     - To declare one Final Project direction and defend it against the two you did not choose, naming what your team gains and gives up
-    - To carry the stakeholder problem forward from the Stakeholder Brief and the gap identified in the Literature Review into a scoped, buildable plan (Goals 11, 12)
+    - To carry the stakeholder problem forward from the Stakeholder Brief into a scoped, buildable plan, and to state the gap the project addresses specifically enough that the Literature Review can later confirm or refute it (Goals 11, 12)
     - To argue every major design decision at the point where it is still cheap to change, naming the alternative rejected and the course pattern, principle, or evidence that motivated the choice
     - To size the work honestly against three sprints, producing a GANTT-style timeline with named owners and a role-rotation plan the team has agreed to
     - To anticipate failure before it happens through a pre-mortem, a preliminary risk hypothesis, or a verified gap, depending on direction
@@ -34,8 +34,8 @@ info:
       description: "Plan Quality: scope, feasibility, and stakeholder grounding"
       preemerging: The plan is too generic to act on, the scope is unbounded or unrelated to the team's stakeholder, and there is no evidence the work could be completed in three sprints
       beginning: The scope is stated but is either far too large for three sprints or so small it would not exercise the direction's requirements; the stakeholder connection is nominal, a sentence asserting relevance rather than a problem framed in the partner's terms
-      progressing: The scope is plausible for three sprints and the plan builds on the Stakeholder Brief and Literature Review, but sprint boundaries are uneven, one milestone carries most of the risk, or the account of what the partner's needs imply for scope is thin
-      proficient: The scope is specific, accessible, and demonstrably sized to three sprints, with each sprint producing a runnable increment or evidenced stage checkpoint and no single boundary carrying disproportionate risk; the problem appears in the partner's terms, the gap identified in the Literature Review is named and connected to what this project will do about it, and the proposal states explicitly what the partner's stated needs imply for scope, including what the team has decided not to do (Goals 11, 12)
+      progressing: The scope is plausible for three sprints and the plan builds on the Stakeholder Brief and an initial evidence base, but sprint boundaries are uneven, one milestone carries most of the risk, or the account of what the partner's needs imply for scope is thin
+      proficient: The scope is specific, accessible, and demonstrably sized to three sprints, with each sprint producing a runnable increment or evidenced stage checkpoint and no single boundary carrying disproportionate risk; the problem appears in the partner's terms, the gap the project addresses is named specifically enough that the Literature Review that follows could confirm or refute it, and the proposal states explicitly what the partner's stated needs imply for scope, including what the team has decided not to do (Goals 11, 12)
     - weight: 9
       description: "Define Problem (AAC&U VALUE Problem Solving); here, the stakeholder problem carried from your Brief into the proposal"
       preemerging: Demonstrates a limited ability in identifying a problem statement or related contextual factors.
@@ -75,7 +75,7 @@ tags:
   - governance
 ---
 
-> **The Project Thread:** The Final Project Proposal is the first graded stage of the [Final Project]({{ site.baseurl }}/Projects/FinalProject), which is itself the last stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview), and your team writes it under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread).
+> **The Project Thread:** The Final Project Proposal is the first graded stage of the [Final Project]({{ site.baseurl }}/Projects/FinalProject), which is itself the last stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread). Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief); the [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this is due and reads against the plan you commit to here. Your team writes it under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread).
 
 ## What This Is
 
@@ -90,6 +90,8 @@ The proposal exists because the sprint window is short and unforgiving. A team t
 ## Before You Start
 
 **Read the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page in full first**, including all three directions. That page is the complete reference for the project; this page is the proposal deliverable and its rubric.
+
+**Where this sits in the Project Thread.** The proposal comes *before* the [Literature Review]({{ site.baseurl }}/Assignments/LitReview), and the ordering is deliberate: you commit to a plan, then read against it. The review is expected to confirm parts of this document, complicate others, and occasionally kill one, and the team synthesis has to say which. Propose the plan you actually believe in, not the one that will be easiest to defend later.
 
 **Choosing a direction** is the one decision worth making slowly, because all three are real and they suit genuinely different teams:
 
@@ -111,7 +113,7 @@ Regardless of direction:
 
 - **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion. Declare the direction explicitly; do not leave it inferable.
 - **Direction defense**: why this direction, and what you gain and give up relative to the two you did not choose. Two or three sentences is enough, but they must be about *your* team and *your* stakeholder, not about the directions in general.
-- **Stakeholder grounding** integrating your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope, **including what you have decided not to do** (Goals 11, 12).
+- **Stakeholder grounding** built on your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief): the problem in the partner's terms, the gap this project addresses, the initial evidence you have that the gap is real (sources you have actually opened, per your direction's requirements), and what the partner's needs imply for scope, **including what you have decided not to do** (Goals 11, 12). The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) that follows tests this gap claim in depth, so state it here specifically enough to be proven wrong.
 - **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared **GANTT-style timeline** mapping tasks to the three sprints with named owners (Goal 13).
 - **Design decisions**, each naming the alternative rejected and the course pattern, principle, or evidence that motivated the choice. This is the section that most distinguishes a proposal from a summary.
 - **AI-use disclosure** for the proposal itself: what was AI-assisted, with what tool, why you chose to use it there, and how the output was verified. Disclosed, verified AI assistance is professional practice; undisclosed AI assistance is an integrity violation.
@@ -132,6 +134,8 @@ These mirror the elements listed under each direction on the [Final Project]({{ 
 - A **pre-mortem table** with at least 5 predicted risks (your specification gap, irreversible action, global invariant, and two more), each with the deterministic checker or gate that owns it
 - An **evaluation plan**: the 10-task set sketch, numeric metrics (precision, recall, parse success rate, latency, or human rating), the protocol, and the **monolith baseline** description
 
+> The [Design Your Agent System]({{ site.baseurl }}/Assignments/AgentSystemDesign) written assignment is due the week after this proposal and develops these same artifacts in full depth. Sketch them here at proposal fidelity, enough to defend the architecture and show the work is feasible; the design assignment is where they become a specification someone else could build from.
+
 ### Direction B: Responsible AI Audit
 
 - **System identification**: name, operator, what it does, where it is deployed. The system must be specific: not "AI in hiring" but a named tool as deployed by a named operator
@@ -139,6 +143,8 @@ These mirror the elements listed under each direction on the [Final Project]({{ 
 - **Framework choice** (NIST AI RMF, EU AI Act, or Montreal Declaration) with a 3-sentence justification for why it fits this system better than the alternatives
 - **Preliminary hypothesis**: where you expect the highest risks to lie, written before the deep analysis
 - Evidence that enough public information exists (at least two independent sources from an initial search)
+
+> **Your framework choice may be provisional.** Governance and policy writing comes after this proposal on the schedule. Declare the framework you expect to use and defend it as well as you can now; you may revise that choice once, with a written justification, by the end of Sprint 1. The other Direction B elements are not provisional.
 
 ### Direction C: Build and Publish an Open-Source Agent
 
@@ -171,6 +177,7 @@ Only four of AAC&U's six problem-solving criteria appear here, and the omission 
 - **Incomplete proposals are returned ungraded.** Complete means every shared element and every direction-specific element is present, not that every one is perfect.
 - **Proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected**, with specific guidance on what to cut or change. A redirect is not a penalty; it is much cheaper here than in week 14.
 - **Sprint 1 begins from the approved proposal**, and runs to the cross-team proposal critique. Your Sprint 1 milestone is set by your direction; see the sprint table on the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page.
+- **The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this is due**, and it reads against the plan you have just committed to. Its team synthesis must state what the evidence confirms, complicates, or changes about this proposal. A synthesis that changes nothing is a warning sign, not a clean bill of health.
 - Some proposal artifacts are **living documents**: the pre-mortem, the decision log, and the timeline are maintained through the sprints and resubmitted with the final artifacts folder, not frozen here.
 
 ---
@@ -187,4 +194,5 @@ Answer these honestly as a team. Every "no" is cheaper to fix now than at any la
 - Have you written down what you are *not* doing?
 - Is every team member primary author of at least one section, and can every member explain every section?
 - Does the AI-use disclosure name the tool, the section, the reason, and the verification, rather than gesturing at "AI was used for editing"?
+- Is your gap claim specific enough that the Literature Review could prove it wrong?
 - If your most likely predicted failure happened in Sprint 2, does the plan survive it?

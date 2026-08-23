@@ -5,15 +5,15 @@ title: "CS357: Foundations of Artificial Intelligence - Literature Review"
 
 info:
   coursenum: CS357
-  purpose: "To ground your project in evidence rather than intuition, and to make your understanding of the problem genuinely multi-disciplinary by reading what the stakeholder's own field says about it."
+  purpose: "To test the plan your team has already committed to against the published evidence rather than against your intuitions, and to make your understanding of the problem genuinely multi-disciplinary by reading what the stakeholder's own field says about it, while there is still time for what you find to change the project."
   tilt:
-    task: "Individually annotate 2-3 credible sources, then as a team write a one-page synthesis that connects them to your problem statement and names the gap your project will address."
-    criteria: "Assessed on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, and a gap that actually follows from the sources; see the rubric below for the full breakdown."
+    task: "Individually annotate 2-3 credible sources, then as a team write a one-page synthesis that connects them to your problem statement, tests the gap your proposal claimed, and states plainly what the evidence confirms, complicates, or changes about the plan you proposed."
+    criteria: "Assessed on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, a gap that actually follows from the sources, and an honest account of what the evidence changes about your proposed plan; see the rubric below for the full breakdown."
   points: 100
   goals:
     - To research the team's stakeholder problem through published sources, assessing each source's credibility and relevance to the problem statement (Goal 11)
     - To build a multi-disciplinary understanding of the problem by drawing sources from at least two disciplinary perspectives, including the stakeholder's own discipline (Goal 12)
-    - To synthesize individually gathered sources into a team-level account of what is known and the specific gap the project will address
+    - To synthesize individually gathered sources into a team-level account of what is known and the specific gap the project addresses, and to carry that account back into the project plan as a stated confirmation, revision, or risk
     - To practice information literacy, finding, reading, and critically evaluating scholarly and technical sources
   rubric:
     - weight: 40
@@ -32,8 +32,8 @@ info:
       description: Team Synthesis and Gap Identification (Goals 11, 12)
       preemerging: No synthesis is submitted, or it is a list of the annotations restated
       beginning: The synthesis connects some sources to each other but not to the problem statement, or names no gap
-      progressing: The one-page synthesis connects the sources to the problem statement and proposes a gap, but the gap is generic ("more work is needed") or is not actually supported by the reviewed sources
-      proficient: The one-page synthesis, with a named primary author, weaves the team's sources into a coherent account of what is known about the stakeholder's problem, states the specific gap the project will address, shows that the gap follows from the reviewed sources (what exists, what is missing, why it matters to the stakeholder), and honestly notes where the team's sources are weakest (Goals 11, 12)
+      progressing: The one-page synthesis connects the sources to the problem statement and proposes a gap, but the gap is generic ("more work is needed") or is not actually supported by the reviewed sources, or the account of what the evidence changes about the proposed plan is present but perfunctory
+      proficient: The one-page synthesis, with a named primary author, weaves the team's sources into a coherent account of what is known about the stakeholder's problem, states the specific gap the project addresses, shows that the gap follows from the reviewed sources (what exists, what is missing, why it matters to the stakeholder), states explicitly what the evidence confirms, complicates, or changes about the plan the team proposed (naming the affected element of the proposal, and where nothing changed, saying why the sources leave the plan standing), and honestly notes where the team's sources are weakest (Goals 11, 12)
     - weight: 15
       description: Information Literacy, Process, and Submission
       preemerging: An incomplete submission is provided
@@ -78,7 +78,9 @@ A literature review is not a book report and not a pile of links. It is an argum
 
 ## Before You Start
 
-**This builds on:** your Stakeholder Brief, whose problem statement tells you what to go looking for. A literature review without a question is a reading list.
+**This builds on:** your Stakeholder Brief, whose problem statement tells you what to go looking for, and your [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal), which is handed to you the same day this is. A literature review without a question is a reading list.
+
+**You are reading against a plan you have already committed to,** and that is the point. The proposal named a gap and made design decisions; your job here is to find out whether the published evidence supports them. Coming back and reporting that a source complicates your plan is the assignment working, not a setback. The synthesis has to say what changed.
 
 **Two phases with a hard boundary between them:** everyone writes an individual annotated bibliography first, and only then does the team synthesize. The individual phase has its own due date on the schedule, and it is not a formality; a synthesis assembled from four people who each read one source is visibly thinner than one assembled from four people who each read several.
 
@@ -116,6 +118,7 @@ One page, with a **named primary author** (drafting responsibility; the whole te
 - Show where the disciplinary perspectives converge, conflict, or measure success differently, and what that means for the project.
 - **Identify the gap** the project will address, and show it follows from the sources: what exists, what is missing, why the missing piece matters to your stakeholder.
 - Note honestly where your source base is weakest (the seed of future work, and of your proposal's risk section).
+- **State what this changes about the plan.** Name the elements of your [proposal]({{ site.baseurl }}/Projects/FinalProjectProposal) the evidence confirms, the ones it complicates, and any it kills, with the source that did it. If the sources leave the plan standing, say so and say why, which is a finding and not a formality. Any resulting scope change goes in your decision log and your next intra-team check-in.
 
 **Hard requirement:** the team's combined review must span **at least two disciplinary perspectives** (e.g., computer science and public health; education and economics), including the stakeholder's discipline. A review whose every source is a CS paper fails this requirement regardless of quality.
 
@@ -141,7 +144,7 @@ Two ways into the same skill: a search recipe and a reading protocol.
 ## Deliverables
 
 - **Phase 1:** each member submits their own annotated bibliography (2-3 annotated sources, search notes, complete citations) individually via the LMS.
-- **Phase 2:** one team PDF containing the one-page synthesis (primary author named), the combined bibliography, all members' typed signatures, and the team AI-use disclosure.
+- **Phase 2:** one team PDF containing the one-page synthesis (primary author named), the *what this changes about the plan* section, the combined bibliography, all members' typed signatures, and the team AI-use disclosure.
 
 ## Reflection Prompts
 
@@ -168,6 +171,8 @@ Answer individually in your submission, keyed to the Open Questions (Goal 15):
 - [ ] The synthesis is organized by **theme or argument**, not source by source.
 - [ ] Where sources disagree, the disagreement is stated and not smoothed over.
 - [ ] The gap our project addresses is named, and it follows from the sources rather than being asserted before them.
+- [ ] We have said what the evidence confirms, complicates, or changes about our proposal, naming the element affected and the source responsible.
+- [ ] If nothing about the plan changed, we have said why the sources leave it standing rather than leaving the question unanswered.
 - [ ] Every claim traces to a citation, and every citation traces to a source someone on the team read.
 - [ ] AI disclosure names what was AI-assisted and how citations were verified.
 - [ ] Contribution statement says who read what.
