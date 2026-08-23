@@ -275,8 +275,10 @@ The flags explained: `ANTHROPIC_BASE_URL` overrides the default `https://api.ant
 For the other tools, the same redirect looks slightly different:
 
 ```bash
-# opencode: edit ~/.config/opencode/config.json and set:
+# opencode: edit ~/.config/opencode/config.json and set, inside the
+# provider's "options" block:
 # "baseURL": "http://localhost:4000/v1"
+# "apiKey":  "sk-litellm-local"
 
 # Codex: add to ~/.codex/config.toml:
 # [model_providers.local]
