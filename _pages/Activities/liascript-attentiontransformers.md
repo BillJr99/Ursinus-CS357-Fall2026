@@ -14,19 +14,19 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Attention and Transformers, Conceptually and by Hand
 
-The embeddings from the *Tokens, Embeddings, and Attention* activity give each token a meaning vector, and its Model 3 works one attention step by hand; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan." We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy. The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
+The embeddings from the *Tokens, Embeddings, and Attention* activity give each token a meaning vector, and its Model 3 works one attention step by hand; today's **attention** lets every token *update* its meaning by looking at its neighbors, which is how "bank" near "river" differs from "bank" near "loan."  We work **use-inspired**: enough mechanism to reason about agent behavior, computed once **by hand** in the AI by Hand tradition, then verified in NumPy.  The arc is **the disambiguation problem -> queries, keys, values -> a worked 3-token example -> what this explains about context windows**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
 ## Key Concepts
 
-Before diving in, orient yourself with the vocabulary you will use throughout today's activity. Each term below has a plain-English definition and a pointer to where you will encounter it.
+Before diving in, orient yourself with the vocabulary you will use throughout today's activity.  Each term below has a plain-English definition and a pointer to where you will encounter it.
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
@@ -41,15 +41,15 @@ Before diving in, orient yourself with the vocabulary you will use throughout to
 
 # Part I: The Idea of Attention
 
-In this Part, you will learn why a static word-meaning table is not enough for language understanding, and you will work through the attention calculation by hand using a three-token example. By the end, you will have computed exactly how context shifts the meaning of an ambiguous word, and you will understand the arithmetic that every large language model repeats billions of times per second.
+In this Part, you will learn why a static word-meaning table is not enough for language understanding, and you will work through the attention calculation by hand using a three-token example.  By the end, you will have computed exactly how context shifts the meaning of an ambiguous word, and you will understand the arithmetic that every large language model repeats billions of times per second.
 
-## 1. Context Changes Meaning
+## 1.  Context Changes Meaning
 
-**Why attention matters, the short version.** Think of attention as how the model decides which words to "look at" when building the meaning of each token, like a musician who simultaneously glances at the sheet music *and* the conductor, blending both signals into every note they play. The model does the same thing in every layer: each token briefly "consults" every other token and blends in a little of their meaning, weighted by relevance.
+**Why attention matters, the short version.**  Think of attention as how the model decides which words to "look at" when building the meaning of each token, like a musician who simultaneously glances at the sheet music *and* the conductor, blending both signals into every note they play.  The model does the same thing in every layer: each token briefly "consults" every other token and blends in a little of their meaning, weighted by relevance.
 
-**Static embeddings are not enough.** The token "bank" deserves different vectors in "river bank" and "bank loan," yet a lookup table gives it one. Attention solves this by letting each token form a new representation as a **weighted average of all tokens' values**, with weights determined by relevance.
+Static embeddings are not enough.  The token "bank" deserves different vectors in "river bank" and "bank loan," yet a lookup table gives it one.  Attention solves this by letting each token form a new representation as a **weighted average of all tokens' values**, with weights determined by relevance.
 
-**Queries, keys, and values.** Each token's embedding $\mathbf{x}_i$ is projected into three roles: a **query** $\mathbf{q}_i$ ("what am I looking for?"), a **key** $\mathbf{k}_i$ ("what do I offer as a match?"), and a **value** $\mathbf{v}_i$ ("what content do I contribute if selected?"). Think of it like a library search: the query is your search term, the keys are the index cards, and the values are the actual book contents. Relevance of token $j$ to token $i$ is the dot product $\mathbf{q}_i \cdot \mathbf{k}_j$, normalized across all $j$ by softmax:
+**Queries, keys, and values.**  Each token's embedding $\mathbf{x}_i$ is projected into three roles: a **query** $\mathbf{q}_i$ ("what am I looking for?"), a **key** $\mathbf{k}_i$ ("what do I offer as a match?"), and a **value** $\mathbf{v}_i$ ("what content do I contribute if selected?").  Think of it like a library search: the query is your search term, the keys are the index cards, and the values are the actual book contents.  Relevance of token $j$ to token $i$ is the dot product $\mathbf{q}_i \cdot \mathbf{k}_j$, normalized across all $j$ by softmax:
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
@@ -66,13 +66,13 @@ Breaking the formula down symbol by symbol:
 - $\text{softmax}(\cdots)$ converts the scaled dot products into weights that sum to 1.
 - Multiplying by $V$ (the value matrix) blends each token's content according to those weights.
 
-The $\sqrt{d_k}$ keeps dot products from growing with dimension and saturating (pushing to extreme values) the softmax. A **transformer** (the neural network architecture underlying GPT, Claude, and nearly every modern LLM) stacks this operation (in parallel "heads," interleaved with small neural networks) dozens of times; **causal masking** (blocking each token from attending to any token that comes later in the sequence) during generation prevents tokens from attending to the future.
+The $\sqrt{d_k}$ keeps dot products from growing with dimension and saturating (pushing to extreme values) the softmax.  A **transformer** (the neural network architecture underlying GPT, Claude, and nearly every modern LLM) stacks this operation (in parallel "heads," interleaved with small neural networks) dozens of times; **causal masking** (blocking each token from attending to any token that comes later in the sequence) during generation prevents tokens from attending to the future.
 
 ---
 
 ## Model 1: Attention by Hand
 
-**Why this model matters.** The three-token sentence "river bank loan" is a perfect stress-test for a word-sense system: "bank" could be a financial institution or a riverbank, and only context can tell us which. By computing attention by hand, you will see exactly how the surrounding tokens shift the meaning of "bank", the same arithmetic that runs inside every large language model you have used. Think of it as opening the hood: the engine turns out to be repeated dot products, divisions, and weighted sums.
+**Why this model matters.**  The three-token sentence "river bank loan" is a perfect stress-test for a word-sense system: "bank" could be a financial institution or a riverbank, and only context can tell us which.  By computing attention by hand, you will see exactly how the surrounding tokens shift the meaning of "bank", the same arithmetic that runs inside every large language model you have used.  Think of it as opening the hood: the engine turns out to be repeated dot products, divisions, and weighted sums.
 
 Use a 2-dimensional toy with three tokens, with these (already-projected) vectors:
 
@@ -86,7 +86,7 @@ Compute the new representation of **bank** ($d_k = 2$, so divide scores by $\sqr
 
 ### Worked Example: All Arithmetic Shown
 
-Follow these four steps exactly. The Critical Thinking Questions will then ask you to repeat the process and extend it.
+Follow these four steps exactly.  The Critical Thinking Questions will then ask you to repeat the process and extend it.
 
 ---
 
@@ -122,13 +122,13 @@ Dividing each raw score by 1.41:
 
 Scaled scores: $[0.71, \; 0.71, \; 1.41]$
 
-*Why divide at all?* In higher-dimensional spaces, dot products naturally grow larger (more terms to add), which can push softmax outputs toward 0 or 1 and make learning unstable. Dividing by $\sqrt{d_k}$ keeps the scale in a comfortable range regardless of dimension.
+*Why divide at all?*  In higher-dimensional spaces, dot products naturally grow larger (more terms to add), which can push softmax outputs toward 0 or 1 and make learning unstable.  Dividing by $\sqrt{d_k}$ keeps the scale in a comfortable range regardless of dimension.
 
 ---
 
 **Step 3 - Softmax: convert scores to weights**
 
-Softmax raises $e$ (Euler's number, $\approx 2.718$) to the power of each score, then divides each result by their sum. This guarantees all weights are positive and sum to exactly 1.
+Softmax raises $e$ (Euler's number, $\approx 2.718$) to the power of each score, then divides each result by their sum.  This guarantees all weights are positive and sum to exactly 1.
 
 Compute $e^s$ for each scaled score $s$:
 
@@ -152,7 +152,7 @@ Attention weights: $[0.25, \; 0.25, \; 0.50]$
 
 **Step 4 - Weighted sum of value vectors**
 
-The new representation of "bank" is a blend of all three value vectors, weighted by the attention weights we just computed. Each value vector is multiplied by its weight entry-by-entry, then the results are added together.
+The new representation of "bank" is a blend of all three value vectors, weighted by the attention weights we just computed.  Each value vector is multiplied by its weight entry-by-entry, then the results are added together.
 
 Value vectors: $\mathbf{v}_{\text{river}} = (1,1)$, $\mathbf{v}_{\text{bank}} = (2,0)$, $\mathbf{v}_{\text{loan}} = (0,2)$.
 
@@ -174,25 +174,25 @@ $$
 \text{new\_bank} \approx (0.75, \; 1.25)
 $$
 
-**Interpretation.** Compare this to $\mathbf{v}_{\text{bank}} = (2, 0)$, the static embedding with no context. The new vector has a *much* larger second component (1.25 vs. 0) and a smaller first component (0.75 vs. 2). The second dimension was contributed heavily by the "loan" token (whose value vector is $(0, 2)$), meaning the financial sense of "bank" has been pulled into the representation by the surrounding context. This is the core mechanism of transformer-based language models: static meaning updated by weighted context.
+**Interpretation.**  Compare this to $\mathbf{v}_{\text{bank}} = (2, 0)$, the static embedding with no context.  The new vector has a *much* larger second component (1.25 vs. 0) and a smaller first component (0.75 vs. 2).  The second dimension was contributed heavily by the "loan" token (whose value vector is $(0, 2)$), meaning the financial sense of "bank" has been pulled into the representation by the surrounding context.  This is the core mechanism of transformer-based language models: static meaning updated by weighted context.
 
 ---
 
 ### Critical Thinking Questions
 
-1. Compute the three raw scores $\mathbf{q}_{\text{bank}} \cdot \mathbf{k}_j$ for $j \in \{\text{river}, \text{bank}, \text{loan}\}$. The Recorder shows each dot product.
+1.  Compute the three raw scores $\mathbf{q}_{\text{bank}} \cdot \mathbf{k}_j$ for $j \in \{\text{river}, \text{bank}, \text{loan}\}$. The Recorder shows each dot product.
 
    *Hint:* Dot product of $(a_1, a_2)$ and $(b_1, b_2)$ is $a_1 b_1 + a_2 b_2$. You can check your answers against the Worked Example above; all three raw scores are computed there step by step.
 
-2. Divide by $\sqrt{2}$ and apply softmax (calculator permitted; two decimal places suffice). Which token receives the most attention from "bank"?
+2.  Divide by $\sqrt{2}$ and apply softmax (calculator permitted; two decimal places suffice).  Which token receives the most attention from "bank"?
 
-   *Hint:* First divide each raw score by 1.41. Then compute $e^s$ for each scaled score $s$, sum those values, and divide each $e^s$ by the sum. The token with the largest resulting weight receives the most attention.
+   *Hint:* First divide each raw score by 1.41.  Then compute $e^s$ for each scaled score $s$, sum those values, and divide each $e^s$ by the sum.  The token with the largest resulting weight receives the most attention.
 
-3. Form the weighted sum of the value vectors. Compare the result with $\mathbf{v}_{\text{bank}}$ alone: in what direction did context pull the meaning of "bank"?
+3.  Form the weighted sum of the value vectors.  Compare the result with $\mathbf{v}_{\text{bank}}$ alone: in what direction did context pull the meaning of "bank"?
 
-   *Hint:* Multiply each value vector by its attention weight from CTQ 2, then add the three resulting vectors component-by-component. Compare the first and second components of the result to $(2, 0)$.
+   *Hint:* Multiply each value vector by its attention weight from CTQ 2, then add the three resulting vectors component-by-component.  Compare the first and second components of the result to $(2, 0)$.
 
-4. Suppose the sentence were "bank loan" without "river." Recompute the weights over just two tokens. Does "bank" now lean differently? This is contextualization in action.
+4.  Suppose the sentence were "bank loan" without "river."  Recompute the weights over just two tokens.  Does "bank" now lean differently?  This is contextualization in action.
 
    *Hint:* Repeat Steps 1-3 from the Worked Example, but only include $j \in \{\text{bank}, \text{loan}\}$. Raw scores are still $\mathbf{q}_{\text{bank}} \cdot \mathbf{k}_j$; there are now only two softmax inputs, so the weights must sum to 1 over two tokens instead of three.
 
@@ -226,19 +226,19 @@ print("new bank representation:", np.round(new_bank, 3))
 
 ---
 
-*You have just computed the mechanism inside every transformer layer. Part II connects that mechanism to the practical constraints you will hit when building and deploying agents, especially the context window limit and the "lost in the middle" effect.*
+*You have just computed the mechanism inside every transformer layer.  Part II connects that mechanism to the practical constraints you will hit when building and deploying agents, especially the context window limit and the "lost in the middle" effect.*
 
 # Part II: What Attention Explains About Agents
 
-## 2. Consequences You Have Already Met
+## 2.  Consequences You Have Already Met
 
-**Why this matters for the agents you will build.** The attention mechanism is not just a mathematical curiosity; it directly sets the budget you have to work with when deploying a language-model agent. Think of the musician analogy again: the musician can only see so much sheet music at once. A transformer's "sheet music" is its context window (the maximum number of tokens the model can consider in one pass), and the cost of attention determines exactly how large that window can be. Understanding this constraint is what separates an agent that works in production from one that runs out of memory on the first long document.
+**Why this matters for the agents you will build.**  The attention mechanism is not just a mathematical curiosity; it directly sets the budget you have to work with when deploying a language-model agent.  Think of the musician analogy again: the musician can only see so much sheet music at once.  A transformer's "sheet music" is its context window (the maximum number of tokens the model can consider in one pass), and the cost of attention determines exactly how large that window can be.  Understanding this constraint is what separates an agent that works in production from one that runs out of memory on the first long document.
 
-**The context window is the attention span, literally.** Attention compares every token with every other, costing $O(n^2)$ in sequence length $n$; doubling context quadruples this work. This is why context windows are finite, why long contexts are slow on your laptop, and why the *small context window principle* we adopt in the *Memory and the Small Context Window Principle* activity is not merely aesthetic but computational.
+The context window is the attention span, literally.  Attention compares every token with every other, costing $O(n^2)$ in sequence length $n$; doubling context quadruples this work.  This is why context windows are finite, why long contexts are slow on your laptop, and why the *small context window principle* we adopt in the *Memory and the Small Context Window Principle* activity is not merely aesthetic but computational.
 
-**Position matters.** Models attend most reliably to the beginning and end of long contexts (the "lost in the middle" effect), which is why we will place an agent's instructions and the current question at the edges of the prompt, with retrieved evidence in between.
+**Position matters.**  Models attend most reliably to the beginning and end of long contexts (the "lost in the middle" effect), which is why we will place an agent's instructions and the current question at the edges of the prompt, with retrieved evidence in between.
 
-An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares every token with every other token, the computation per layer grows by approximately a factor of:
+An agent's prompt grows from 2,000 to 8,000 tokens.  Since attention compares every token with every other token, the computation per layer grows by approximately a factor of:
 
 [( )] 2, as if attention grew linearly with the number of tokens
 [( )] 4, as if only the number of tokens doubled and cost doubled with it
@@ -247,11 +247,11 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 > **Common Misconception: "More context is always better"**
 >
-> It is tempting to assume that giving a model a longer context (more background, more examples, more retrieved documents) always improves its answers. The attention mechanism reveals why this is not true. First, the computational cost grows as $O(n^2)$: quadrupling the context length multiplies the attention work by 16×. Second, the "lost in the middle" effect shows that models reliably extract information from the *beginning* and *end* of long prompts but often miss material buried in the middle. Third, every extra token competes for the finite "attention budget" of each query token, potentially diluting the signal from the most relevant parts of the prompt. The practical lesson: be selective. Retrieve only what is relevant, place it strategically, and keep prompts as short as the task allows.
+> It is tempting to assume that giving a model a longer context (more background, more examples, more retrieved documents) always improves its answers.  The attention mechanism reveals why this is not true.  First, the computational cost grows as $O(n^2)$: quadrupling the context length multiplies the attention work by 16×. Second, the "lost in the middle" effect shows that models reliably extract information from the *beginning* and *end* of long prompts but often miss material buried in the middle.  Third, every extra token competes for the finite "attention budget" of each query token, potentially diluting the signal from the most relevant parts of the prompt.  The practical lesson: be selective.  Retrieve only what is relevant, place it strategically, and keep prompts as short as the task allows.
 
 ---
 
-*Part II connected attention arithmetic to practical agent constraints. Part III asks you to apply both: compute attention for a second token, experiment with masking, and reason about scaling, the three skills that will recur whenever you tune a prompt or choose a retrieval strategy.*
+*Part II connected attention arithmetic to practical agent constraints.  Part III asks you to apply both: compute attention for a second token, experiment with masking, and reason about scaling, the three skills that will recur whenever you tune a prompt or choose a retrieval strategy.*
 
 ---
 
@@ -261,39 +261,39 @@ An agent's prompt grows from 2,000 to 8,000 tokens. Since attention compares eve
 
 ## Worked Example: the full $QK^\top$ matrix
 
-We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace. Work through it at home if the single row left you wanting the whole picture.
+We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace.  Work through it at home if the single row left you wanting the whole picture.
 
-## 3. Exercises
+## 3.  Exercises
 
-1. **Second token by hand.** Repeat Model 1 for the token "river." Which neighbor does it attend to most, and does the answer match your linguistic intuition?
+1.  **Second token by hand.**  Repeat Model 1 for the token "river."  Which neighbor does it attend to most, and does the answer match your linguistic intuition?
 
-   *What to do:* Use $\mathbf{q}_{\text{river}} = (1, 0)$ as the query. Compute the dot product of $(1, 0)$ against $\mathbf{k}_{\text{river}} = (1,0)$, $\mathbf{k}_{\text{bank}} = (0,1)$, and $\mathbf{k}_{\text{loan}} = (1,1)$. Scale by $\sqrt{2}$, apply softmax, then form the weighted sum of the three value vectors.
+   *What to do:* Use $\mathbf{q}_{\text{river}} = (1, 0)$ as the query.  Compute the dot product of $(1, 0)$ against $\mathbf{k}_{\text{river}} = (1,0)$, $\mathbf{k}_{\text{bank}} = (0,1)$, and $\mathbf{k}_{\text{loan}} = (1,1)$. Scale by $\sqrt{2}$, apply softmax, then form the weighted sum of the three value vectors.
 
    *Starter hint:* Raw scores for "river": $\mathbf{q}_{\text{river}} \cdot \mathbf{k}_{\text{river}} = 1\times1+0\times0=1$; $\mathbf{q}_{\text{river}} \cdot \mathbf{k}_{\text{bank}} = 1\times0+0\times1=0$; $\mathbf{q}_{\text{river}} \cdot \mathbf{k}_{\text{loan}} = 1\times1+0\times1=1$. Scale and softmax those three values, then blend the value vectors with the resulting weights.
 
    *You've succeeded when:* You can state which token "river" attends to most (or tie between which two), report the numeric attention weights, and give a one-sentence linguistic justification for whether the result makes sense.
 
-2. **Mask experiment.** In the code cell, zero out (set to $-\infty$ before softmax) the score from "bank" to "loan," simulating a causal mask where "loan" is in the future. Report how the new representation changes.
+2.  **Mask experiment.**  In the code cell, zero out (set to $-\infty$ before softmax) the score from "bank" to "loan," simulating a causal mask where "loan" is in the future.  Report how the new representation changes.
 
-   *What to do:* Modify the code cell so that after computing `scores`, you set `scores[2] = -np.inf` (index 2 is "loan"). Re-run `softmax` and the weighted sum. Print and compare the new representation to the unmasked version.
+   *What to do:* Modify the code cell so that after computing `scores`, you set `scores[2] = -np.inf` (index 2 is "loan").  Re-run `softmax` and the weighted sum.  Print and compare the new representation to the unmasked version.
 
-   *Starter hint:* In softmax, $e^{-\infty} = 0$, so a masked token receives exactly zero attention weight. The remaining weights will re-normalize over "river" and "bank" only. Mathematically, the masked two-token softmax uses only scores $[0.71, 0.71]$, which are equal, giving weights $[0.50, 0.50]$; the new bank vector is then $0.50 \times (1,1) + 0.50 \times (2,0) = (1.50, 0.50)$.
+   *Starter hint:* In softmax, $e^{-\infty} = 0$, so a masked token receives exactly zero attention weight.  The remaining weights will re-normalize over "river" and "bank" only.  Mathematically, the masked two-token softmax uses only scores $[0.71, 0.71]$, which are equal, giving weights $[0.50, 0.50]$; the new bank vector is then $0.50 \times (1,1) + 0.50 \times (2,0) = (1.50, 0.50)$.
 
    *You've succeeded when:* You can report the exact new representation $(1.50, 0.50)$ (or close, accounting for rounding), explain why it differs from $(0.75, 1.25)$, and state in one sentence what causal masking prevents a model from doing during generation.
 
-3. **Scaling sketch.** Tabulate $n^2$ for $n \in \{1\text{k}, 4\text{k}, 32\text{k}, 128\text{k}\}$ tokens, and use the table to argue, in three sentences, why retrieval (fetching only relevant text) beats ever-longer contexts for an agent searching a large document base.
+3.  **Scaling sketch.**  Tabulate $n^2$ for $n \in \{1\text{k}, 4\text{k}, 32\text{k}, 128\text{k}\}$ tokens, and use the table to argue, in three sentences, why retrieval (fetching only relevant text) beats ever-longer contexts for an agent searching a large document base.
 
-   *What to do:* Fill in a four-row table with columns $n$ and $n^2$. Express $n^2$ in millions or billions for readability (e.g., 1 k tokens -> $10^6$ pairs). Then write three sentences connecting the numbers to the retrieval argument.
+   *What to do:* Fill in a four-row table with columns $n$ and $n^2$. Express $n^2$ in millions or billions for readability (e.g., 1 k tokens -> $10^6$ pairs).  Then write three sentences connecting the numbers to the retrieval argument.
 
-   *Starter hint:* $1\text{k}^2 = 1{,}000{,}000$; $4\text{k}^2 = 16{,}000{,}000$; $32\text{k}^2 = 1{,}024{,}000{,}000$; $128\text{k}^2 = 16{,}384{,}000{,}000$. The ratio between consecutive rows is 16× each time you double twice. Retrieval lets you reduce $n$ to only the relevant chunk before the model ever sees it.
+   *Starter hint:* $1\text{k}^2 = 1{,}000{,}000$; $4\text{k}^2 = 16{,}000{,}000$; $32\text{k}^2 = 1{,}024{,}000{,}000$; $128\text{k}^2 = 16{,}384{,}000{,}000$. The ratio between consecutive rows is 16× each time you double twice.  Retrieval lets you reduce $n$ to only the relevant chunk before the model ever sees it.
 
    *You've succeeded when:* Your table has four correct rows, your three sentences quantify (not just mention) the growth, and they explain why even a 128 k-token context window does not replace a good retrieval strategy for large document bases.
 
-4. **Head hypothesis.** Real models use many attention heads in parallel. Propose two different relations (for example, syntax vs. coreference) that separate heads might specialize in, and design a sentence that would distinguish them.
+4.  **Head hypothesis.**  Real models use many attention heads in parallel.  Propose two different relations (for example, syntax vs. coreference) that separate heads might specialize in, and design a sentence that would distinguish them.
 
-   *What to do:* Choose two linguistic relationships (e.g., subject-verb agreement; pronoun-antecedent coreference; modifier-noun attachment; temporal ordering). For each, describe what pattern an attention head specializing in that relationship would show: which tokens would have high attention weights to which. Then write a single English sentence where the two patterns point to *different* pairs of tokens.
+   *What to do:* Choose two linguistic relationships (e.g., subject-verb agreement; pronoun-antecedent coreference; modifier-noun attachment; temporal ordering).  For each, describe what pattern an attention head specializing in that relationship would show: which tokens would have high attention weights to which.  Then write a single English sentence where the two patterns point to *different* pairs of tokens.
 
-   *Starter hint:* In a sentence like "The tall woman who won the race finished first," subject-verb agreement links "woman" <-> "finished," while coreference links "who" <-> "woman." A head tracking agreement would show "finished" attending strongly to "woman"; a head tracking coreference would show "who" attending strongly to "woman." Design a sentence where those two target tokens are as far apart as possible to make the distinction clear.
+   *Starter hint:* In a sentence like "The tall woman who won the race finished first," subject-verb agreement links "woman" <-> "finished," while coreference links "who" <-> "woman."  A head tracking agreement would show "finished" attending strongly to "woman"; a head tracking coreference would show "who" attending strongly to "woman."  Design a sentence where those two target tokens are as far apart as possible to make the distinction clear.
 
    *You've succeeded when:* You have named two distinct linguistic relations, described the expected attention pattern for each, and provided a sentence where the two patterns visibly diverge (different source-target token pairs).
 
@@ -303,22 +303,22 @@ We do the single-row arithmetic together in Part I. The **full matrix** version 
 
 In your notebook, reflect at three levels after computing attention by hand:
 
-**Personal.** Has your intuition about "the AI reads my prompt" changed? Write two or three sentences contrasting how you imagined the process before with the weighted-average reality you now understand. What surprised you most about the arithmetic?
+**Personal.**  Has your intuition about "the AI reads my prompt" changed?  Write two or three sentences contrasting how you imagined the process before with the weighted-average reality you now understand.  What surprised you most about the arithmetic?
 
-**Technical.** Think about the two-head analogy from Exercise 4. If a model runs eight attention heads in parallel (each potentially specializing in a different linguistic relation) and stacks this 96 layers deep (as in a large production model), how does that change your estimate of what the model "knows" vs. what it "computes"? Write two or three sentences.
+**Technical.**  Think about the two-head analogy from Exercise 4.  If a model runs eight attention heads in parallel (each potentially specializing in a different linguistic relation) and stacks this 96 layers deep (as in a large production model), how does that change your estimate of what the model "knows" vs. what it "computes"?  Write two or three sentences.
 
-**Societal.** The "lost in the middle" effect means that, in a long prompt, evidence buried in the center may be underweighted regardless of its relevance. Describe one real-world scenario (legal document review, medical record summarization, or another domain you care about) where this bias could lead to a consequential error. Who would be harmed, and what design practice could mitigate it?
-
----
-
--> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token. If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference. We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+**Societal.**  The "lost in the middle" effect means that, in a long prompt, evidence buried in the center may be underweighted regardless of its relevance.  Describe one real-world scenario (legal document review, medical record summarization, or another domain you care about) where this bias could lead to a consequential error.  Who would be harmed, and what design practice could mitigate it?
 
 ---
 
-## 4. Further Reading
+-> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token.  If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference.  We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+
+---
+
+## 4.  Further Reading
 
 - [Attention notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Attention.ipynb), a runnable companion that computes dot-product attention by hand on a sentence with an ambiguous word, mirroring today's worked example.
-- Vaswani et al. "Attention Is All You Need." *NeurIPS* (2017). The transformer paper.
-- Tom Yeh. *AI by Hand*, attention worksheets (today's models follow this style).
-- Jay Alammar. "The Illustrated Transformer" (online).
-- Liu et al. "Lost in the Middle: How Language Models Use Long Contexts." *TACL* (2024).
+- Vaswani et al. "Attention Is All You Need."  *NeurIPS* (2017).  The transformer paper.
+- Tom Yeh.  *AI by Hand*, attention worksheets (today's models follow this style).
+- Jay Alammar.  "The Illustrated Transformer" (online).
+- Liu et al. "Lost in the Middle: How Language Models Use Long Contexts."  *TACL* (2024).

@@ -1,8 +1,8 @@
 # Agent Operating System Templates
 
-Copy-paste skeletons for governing AI agents in real, long-running work. These templates come from a production system, anonymized and made application-agnostic. They implement one idea:
+Copy-paste skeletons for governing AI agents in real, long-running work.  These templates come from a production system, anonymized and made application-agnostic.  They implement one idea:
 
-> **The repository is the durable memory for the project. Conversation history is not durable project state.**
+> **The repository is the durable memory for the project.  Conversation history is not durable project state.**
 
 Every file here exists so that an agent can be reset, swapped for a different agent, or interrupted mid-task, and the *next* agent (or the next you) can continue safely by reading documents instead of remembering conversations.
 
@@ -37,9 +37,9 @@ The `ai/` folder here is deployed as `.ai/` in your repository (it is unhidden i
 
 ## How to adopt
 
-1. Copy the layer you need into your repository or vault.
-2. Replace every `<angle-bracket placeholder>` with your project's reality. Delete sections that do not apply; a rule nobody enforces is worse than no rule.
-3. Point your agent at `START_HERE.md` (projects) or `AGENTS.md` (vaults) as its first read, every session.
-4. Keep the documents current: **updating these files is part of every task, not an afterthought.**
+1.  Copy the layer you need into your repository or vault.
+2.  Replace every `<angle-bracket placeholder>` with your project's reality.  Delete sections that do not apply; a rule nobody enforces is worse than no rule.
+3.  Point your agent at `START_HERE.md` (projects) or `AGENTS.md` (vaults) as its first read, every session.
+4.  Keep the documents current: **updating these files is part of every task, not an afterthought.**
 
 These templates accompany the course activities *Governing Coding Agents: Charters, Handoffs, and Durable Memory* and *From Second Brain to Chief of Staff: A Personal Agent in Production*.

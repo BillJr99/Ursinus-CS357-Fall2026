@@ -1,6 +1,6 @@
 # Current Task
 
-<!-- The active-work pointer. Updated whenever the task changes and before every stop.
+<!-- The active-work pointer.  Updated whenever the task changes and before every stop.
      A new agent should be able to resume from this file alone plus the session log. -->
 
 ## Active Milestone
@@ -18,7 +18,7 @@ Milestone <N>: <name>
 
 ## Reality Check: what is NOT done
 
-<!-- Anti-overclaiming section. List what a hopeful reader might assume is finished
+<!-- Anti-overclaiming section.  List what a hopeful reader might assume is finished
      but is not, with evidence. Cite the authoritative artifact (test output, audit
      file, CI log) rather than memory. -->
 

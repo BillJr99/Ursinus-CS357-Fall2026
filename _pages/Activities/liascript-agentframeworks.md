@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agent Frameworks: LangChain, CrewAI, AutoGen, Agno, and DeepAgents
 
-Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.* When the wager pays off, you write a research agent in twenty lines instead of two hundred. When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system. This activity examines what the major 2024-2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project. The arc: **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama $\rightarrow$ raising the ceiling: a deep agent**.
+Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.*  When the wager pays off, you write a research agent in twenty lines instead of two hundred.  When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system.  This activity examines what the major 2024-2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project.  Today's path runs **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama $\rightarrow$ raising the ceiling: a deep agent**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Read each model carefully before answering the questions beneath it. The Recorder collects the group's answers to post to the Class Activity Questions discussion board; the Presenter is prepared to report out disagreements and alternative framings. After class, complete the Reflection Prompt individually in your course notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Read each model carefully before answering the questions beneath it.  The Recorder collects the group's answers to post to the Class Activity Questions discussion board; the Presenter is prepared to report out disagreements and alternative framings.  After class, complete the Reflection Prompt individually in your course notebook.
 
 ---
 
@@ -44,9 +44,9 @@ In this part, you will compare four major agent frameworks side-by-side and iden
 
 ## Model 1: Framework Comparison
 
-Every agent system, regardless of framework, must solve the same four boilerplate problems: **memory management** (which prior turns does the agent see?), **tool routing** (how does the model's function-call land in real code?), **prompt templating** (how do dynamic values get inserted without string bugs?), and **conversation history** (how is the message list accumulated and truncated?). Frameworks pre-solve these so you don't re-solve them on every project. The cost is **abstraction leakage**: the moment the framework's assumptions diverge from your requirements, the hidden machinery becomes your adversary.
+Every agent system, regardless of framework, must solve the same four boilerplate problems: **memory management** (which prior turns does the agent see?), **tool routing** (how does the model's function-call land in real code?), **prompt templating** (how do dynamic values get inserted without string bugs?), and **conversation history** (how is the message list accumulated and truncated?).  Frameworks pre-solve these so you don't re-solve them on every project.  The cost is **abstraction leakage**: the moment the framework's assumptions diverge from your requirements, the hidden machinery becomes your adversary.
 
-Choosing a framework is like choosing a car vs. a motorcycle vs. a bicycle for a commute. Each has advantages at different scales and route types. The mistake is choosing based on prestige rather than fit.
+Choosing a framework is like choosing a car vs. a motorcycle vs. a bicycle for a commute.  Each has advantages at different scales and route types.  The mistake is choosing based on prestige rather than fit.
 
 | Framework | Best For | Abstraction Level | Code Volume | Control Level | Key Concept | Install Command |
 |---|---|---|---|---|---|---|
@@ -60,17 +60,17 @@ Choosing a framework is like choosing a car vs. a motorcycle vs. a bicycle for a
 
 ### Critical Thinking Questions
 
-1. For each row in Model 1, identify one thing the framework hides that a developer writing raw code must implement explicitly. Which hidden mechanism is most likely to surprise a beginner?
+1.  For each row in Model 1, identify one thing the framework hides that a developer writing raw code must implement explicitly.  Which hidden mechanism is most likely to surprise a beginner?
 
-   *Hint:* LangGraph hides how `PipelineState` is serialized and passed between nodes. CrewAI hides the exact system prompt text it sends to each agent. AutoGen hides the routing decision of which agent speaks next. Agno hides very little, making it a good choice for beginners who want to understand what is happening. DeepAgents hides the most of all (the entire agent loop *plus* the decisions of when to plan, when to spawn a sub-agent, and what to write to its virtual filesystem), which is powerful but the hardest to inspect when it misbehaves.
+   *Hint:* LangGraph hides how `PipelineState` is serialized and passed between nodes.  CrewAI hides the exact system prompt text it sends to each agent.  AutoGen hides the routing decision of which agent speaks next.  Agno hides very little, making it a good choice for beginners who want to understand what is happening.  DeepAgents hides the most of all (the entire agent loop *plus* the decisions of when to plan, when to spawn a sub-agent, and what to write to its virtual filesystem), which is powerful but the hardest to inspect when it misbehaves.
 
-2. "Abstraction level" and "control level" move in opposite directions across the table. State this as a general engineering principle and give one example from outside AI where the same tradeoff appears.
+2.  "Abstraction level" and "control level" move in opposite directions across the table.  State this as a general engineering principle and give one example from outside AI where the same tradeoff appears.
 
-   *Hint:* High-level languages (Python, JavaScript) are easy to write but hide memory management; when you need to optimize memory use, you must understand what the runtime is doing underneath. Low-level languages (C, Rust) give full control but require you to handle everything explicitly. Is this a valid analogy to framework abstraction levels?
+   *Hint:* High-level languages (Python, JavaScript) are easy to write but hide memory management; when you need to optimize memory use, you must understand what the runtime is doing underneath.  Low-level languages (C, Rust) give full control but require you to handle everything explicitly.  Is this a valid analogy to framework abstraction levels?
 
-3. A classmate says "I'll just use LangChain for everything; it has the biggest ecosystem." What is the strongest argument *against* this as a default strategy?
+3.  A classmate says "I'll just use LangChain for everything; it has the biggest ecosystem."  What is the strongest argument *against* this as a default strategy?
 
-   *Hint:* Consider a project where you need precise control over the exact system prompt your agent receives, or where LangChain's default memory behavior causes an agent to receive more context than intended. What is the cost of debugging the framework vs. writing the behavior directly?
+   *Hint:* Consider a project where you need precise control over the exact system prompt your agent receives, or where LangChain's default memory behavior causes an agent to receive more context than intended.  What is the cost of debugging the framework vs. writing the behavior directly?
 
 ---
 
@@ -78,15 +78,15 @@ Choosing a framework is like choosing a car vs. a motorcycle vs. a bicycle for a
 
 In this part, you will trace what each framework hides inside the same three-agent pipeline, and practice identifying the specific hidden mechanism that could leak and cause a bug, because the most common framework bugs require understanding the hidden layer to fix.
 
-## 2. What Frameworks Are Really Hiding
+## 2.  What Frameworks Are Really Hiding
 
-When a framework's assumption breaks down, you must understand the hidden layer to fix the problem. The same three-agent pipeline implemented in three frameworks reveals dramatically different hidden machinery.
+When a framework's assumption breaks down, you must understand the hidden layer to fix the problem.  The same three-agent pipeline implemented in three frameworks reveals dramatically different hidden machinery.
 
 ## Model 2: The Same Pipeline, Three Frameworks
 
-Consider a three-agent pipeline: **Researcher** (searches the web and retrieves relevant passages) -> **Drafter** (writes a response using those passages) -> **Critic** (identifies weaknesses and returns a revision list). Below is the conceptual structure in three frameworks, with the hidden machinery surfaced.
+Consider a three-agent pipeline: **Researcher** (searches the web and retrieves relevant passages) -> **Drafter** (writes a response using those passages) -> **Critic** (identifies weaknesses and returns a revision list).  Below is the conceptual structure in three frameworks, with the hidden machinery surfaced.
 
-The three code blocks below implement the same three-agent pipeline in three different frameworks. As you read each one, note what you have to write explicitly versus what the framework handles invisibly; those invisible parts are exactly where abstraction leaks can occur.
+The three code blocks below implement the same three-agent pipeline in three different frameworks.  As you read each one, note what you have to write explicitly versus what the framework handles invisibly; those invisible parts are exactly where abstraction leaks can occur.
 
 **LangChain / LangGraph (`pip install langgraph`):**
 
@@ -110,13 +110,13 @@ graph.add_conditional_edges("critic", should_revise, {"yes": "drafter", "no": EN
 app = graph.compile()
 result = app.invoke({"question": q})
 ```
-*What this makes easy:* Stateful loops, conditional branching, streaming intermediate results to LangSmith for monitoring. Every node's input and output is a typed dictionary slice of `PipelineState`.
+*What this makes easy:* Stateful loops, conditional branching, streaming intermediate results to LangSmith for monitoring.  Every node's input and output is a typed dictionary slice of `PipelineState`.
 
-*What this hides (and can leak):* The `PipelineState` accumulates state from all prior nodes. If `researcher_chain` adds a key to the state, the `critic_chain` can see it, even if you didn't intend that. LCEL's (LangChain Expression Language) `|` operator overloading hides the prompt structure; to see the exact system prompt your Researcher is receiving, you must call `researcher_chain.get_prompts()`.
+*What this hides (and can leak):* The `PipelineState` accumulates state from all prior nodes.  If `researcher_chain` adds a key to the state, the `critic_chain` can see it, even if you didn't intend that.  LCEL's (LangChain Expression Language) `|` operator overloading hides the prompt structure; to see the exact system prompt your Researcher is receiving, you must call `researcher_chain.get_prompts()`.
 
 ---
 
-The CrewAI version replaces explicit routing code with plain-English role descriptions. Notice how much less Python you write, and think about what the framework is generating on your behalf that you cannot see.
+The CrewAI version replaces explicit routing code with plain-English role descriptions.  Notice how much less Python you write, and think about what the framework is generating on your behalf that you cannot see.
 
 **CrewAI (`pip install crewai crewai-tools`):**
 
@@ -147,13 +147,13 @@ crew = Crew(agents=[researcher, drafter, critic],
             process=Process.sequential)
 crew.kickoff(inputs={"question": q})
 ```
-*What this makes easy:* Role semantics are human-readable: great for demos and for explaining agent behavior to non-technical stakeholders. The `backstory`, `role`, and `goal` fields form the agent's identity in plain English.
+*What this makes easy:* Role semantics are human-readable: great for demos and for explaining agent behavior to non-technical stakeholders.  The `backstory`, `role`, and `goal` fields form the agent's identity in plain English.
 
-*What this hides (and can leak):* CrewAI writes part of every agent's system prompt for you: the `role`, `backstory`, and `goal` are injected into a prompt template you cannot see by default. Inter-task data passing is implicit: `{passages}` in `task_d` is filled by the output of `task_r` automatically. If the Researcher's output doesn't match what the Drafter's description expects, the pipeline silently uses unexpected data.
+*What this hides (and can leak):* CrewAI writes part of every agent's system prompt for you: the `role`, `backstory`, and `goal` are injected into a prompt template you cannot see by default.  Inter-task data passing is implicit: `{passages}` in `task_d` is filled by the output of `task_r` automatically.  If the Researcher's output doesn't match what the Drafter's description expects, the pipeline silently uses unexpected data.
 
 ---
 
-The AutoGen version exposes the shared `groupchat.messages` list explicitly. As you read it, ask yourself: which agents can see which messages, and could that sharing cause unintended behavior?
+The AutoGen version exposes the shared `groupchat.messages` list explicitly.  As you read it, ask yourself: which agents can see which messages, and could that sharing cause unintended behavior?
 
 **AutoGen (`pip install pyautogen`):**
 
@@ -189,29 +189,29 @@ researcher.initiate_chat(manager, message=q)
 ```
 *What this makes easy:* Conversational handoffs between agents; code execution built in for the UserProxy pattern; native async support for parallel agent execution.
 
-*What this hides (and can leak):* All three agents share the `groupchat.messages` list: every agent sees every message from every other agent in every round. The GroupChatManager uses an LLM to decide which agent speaks next, which is itself a prompt injection surface. If the Critic's feedback mentions something that contradicts the Researcher's retrieval, the Drafter may update its draft in a direction the developer did not intend.
+*What this hides (and can leak):* All three agents share the `groupchat.messages` list: every agent sees every message from every other agent in every round.  The GroupChatManager uses an LLM to decide which agent speaks next, which is itself a prompt injection surface.  If the Critic's feedback mentions something that contradicts the Researcher's retrieval, the Drafter may update its draft in a direction the developer did not intend.
 
-> **Common Misconception:** Many beginners assume that using a framework means they do not need to understand what the framework is doing: "it handles all of that." In practice, **the most common LangChain, CrewAI, and AutoGen bugs require understanding the framework's hidden behavior** to fix: why is agent A seeing agent B's messages? Why is the state carrying stale data from three turns ago? Why is CrewAI sending a 3,000-token system prompt for a simple task? You must understand the hidden layer to fix leaks.
+> **Common Misconception:** Many beginners assume that using a framework means they do not need to understand what the framework is doing: "it handles all of that."  In practice, **the most common LangChain, CrewAI, and AutoGen bugs require understanding the framework's hidden behavior** to fix: why is agent A seeing agent B's messages?  Why is the state carrying stale data from three turns ago?  Why is CrewAI sending a 3,000-token system prompt for a simple task?  You must understand the hidden layer to fix leaks.
 
-The three frameworks above hide the *plumbing* around a pipeline you still design. One more level up sits **DeepAgents** (built on LangGraph), which hides the pipeline itself: the loop, the planning, and the delegation between sub-agents all move inside the framework. Because it hides the most, it is the hardest to debug when it leaks; we examine it hands-on in Part IV once you have built the explicit loop it replaces.
+The three frameworks above hide the *plumbing* around a pipeline you still design.  One more level up sits **DeepAgents** (built on LangGraph), which hides the pipeline itself: the loop, the planning, and the delegation between sub-agents all move inside the framework.  Because it hides the most, it is the hardest to debug when it leaks; we examine it hands-on in Part IV once you have built the explicit loop it replaces.
 
 ### Critical Thinking Questions
 
-4. In the LangGraph version, the `PipelineState` object is the blackboard. What is the equivalent shared-state artifact in the CrewAI and AutoGen versions, and which is most visible to the developer?
+4.  In the LangGraph version, the `PipelineState` object is the blackboard.  What is the equivalent shared-state artifact in the CrewAI and AutoGen versions, and which is most visible to the developer?
 
-   *Hint:* CrewAI's shared state is the `context` passed between tasks (implicit in the `{variable_name}` template syntax). AutoGen's shared state is the `groupchat.messages` list. Which one can you inspect and print most easily during debugging?
+   *Hint:* CrewAI's shared state is the `context` passed between tasks (implicit in the `{variable_name}` template syntax).  AutoGen's shared state is the `groupchat.messages` list.  Which one can you inspect and print most easily during debugging?
 
-5. In the AutoGen version, all three agents share the group chat message list. Describe a concrete scenario where this causes the Drafter to behave incorrectly because of something the Critic said to the Researcher.
+5.  In the AutoGen version, all three agents share the group chat message list.  Describe a concrete scenario where this causes the Drafter to behave incorrectly because of something the Critic said to the Researcher.
 
-   *Hint:* The Critic's message "The Researcher's sources are unreliable; focus on academic journals only" is visible to the Drafter. The Drafter then changes its writing style to focus on academic language, but the task description said to write for a general audience.
+   *Hint:* The Critic's message "The Researcher's sources are unreliable; focus on academic journals only" is visible to the Drafter.  The Drafter then changes its writing style to focus on academic language, but the task description said to write for a general audience.
 
-6. The CrewAI framework writes part of each agent's prompt for you (the `backstory` and `role` fields are injected into the system prompt automatically). Is this an advantage or a risk? Under what circumstances would you want to read the exact system prompt your agent receives?
+6.  The CrewAI framework writes part of each agent's prompt for you (the `backstory` and `role` fields are injected into the system prompt automatically).  Is this an advantage or a risk?  Under what circumstances would you want to read the exact system prompt your agent receives?
 
-   *Hint:* The advantage is readability: agent behavior is described in plain English. The risk is that the framework may add language that conflicts with your requirements (for example, if the backstory says "you always complete tasks independently" but you need the agent to ask for help). To see the actual system prompt, call `crew.kickoff()` with verbose=True.
+   *Hint:* The advantage is readability: agent behavior is described in plain English.  The risk is that the framework may add language that conflicts with your requirements (for example, if the backstory says "you always complete tasks independently" but you need the agent to ask for help).  To see the actual system prompt, call `crew.kickoff()` with verbose=True.
 
-7. A student migrates her three-agent pipeline from raw OpenAI SDK calls to LangGraph. She finds that her Researcher agent now receives the Critic's feedback even though she didn't intend this. Explain in terms of abstraction leakage why this happened and what she should inspect.
+7.  A student migrates her three-agent pipeline from raw OpenAI SDK calls to LangGraph.  She finds that her Researcher agent now receives the Critic's feedback even though she didn't intend this.  Explain in terms of abstraction leakage why this happened and what she should inspect.
 
-   *Hint:* In her raw SDK code, each agent only received a handcrafted prompt with specific context. In LangGraph, the `PipelineState` may carry the `critic_feedback` key from the Critic node to all downstream nodes. She should inspect the `PipelineState` TypedDict definition and check which keys are passed to the Researcher node's prompt template.
+   *Hint:* In her raw SDK code, each agent only received a handcrafted prompt with specific context.  In LangGraph, the `PipelineState` may carry the `critic_feedback` key from the Critic node to all downstream nodes.  She should inspect the `PipelineState` TypedDict definition and check which keys are passed to the Researcher node's prompt template.
 
 With the hidden machinery now visible, Part III gives you a decision framework for choosing the right level of abstraction for a given project, because the correct answer depends on your goal, your team, and your timeline, not on which framework is most popular.
 
@@ -221,9 +221,9 @@ With the hidden machinery now visible, Part III gives you a decision framework f
 
 In this part, you will apply a selection rubric to realistic project scenarios and practice justifying your framework choice against the strongest counterargument, the professional skill of arguing for a technical decision, not just making one.
 
-## 3. The Selection Decision
+## 3.  The Selection Decision
 
-Choosing a framework before understanding the problem is like choosing a power tool before knowing what material you're cutting. Different frameworks optimize for different primary use cases.
+Choosing a framework before understanding the problem is like choosing a power tool before knowing what material you're cutting.  Different frameworks optimize for different primary use cases.
 
 ## Model 3: Framework Selection Decision Table
 
@@ -237,7 +237,7 @@ Choosing a framework before understanding the problem is like choosing a power t
 | Teaching a team of non-technical students the agent-team pattern | CrewAI | Role/Task/Crew maps directly onto POGIL roles (Manager, Researcher, Writer, Critic); code is readable without framework expertise; agents are described in plain English | `pip install crewai` then show Model 2's CrewAI code above |
 | An open-ended, long-horizon task that must plan its own steps and spawn sub-tasks: deep research, a multi-file code change, a multi-step investigation | DeepAgents | Planning (todos), sub-agent delegation with isolated context, and a virtual filesystem for offloading context all come pre-built on LangGraph; you supply only the tools and instructions | `pip install deepagents` then `create_deep_agent(model=..., tools=[...], system_prompt=...)` |
 
-A student builds a 4-agent pipeline using LangChain and notices the agents are sharing more context than they should: the Formatter agent is responding to instructions that were only meant for the Researcher. The most likely cause is:
+A student builds a 4-agent pipeline using LangChain and notices the agents are sharing more context than they should: the Formatter agent is responding to instructions that were only meant for the Researcher.  The most likely cause is:
 
 [(X)] LangChain's default memory sharing is exposing more conversation history than intended; they need to configure per-agent memory isolation rather than passing the full shared state to every node
 [( )] LangChain contains a bug that routes messages to wrong agents in multi-node graphs; this is a known issue that requires upgrading the library
@@ -248,15 +248,15 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 
 ### Critical Thinking Questions
 
-8. The table recommends raw SDK code for learning. Once you have learned the mechanism, what specific signal should tell you it is time to introduce a framework? Name at least two concrete repetitions that would justify the abstraction.
+8.  The table recommends raw SDK code for learning.  Once you have learned the mechanism, what specific signal should tell you it is time to introduce a framework?  Name at least two concrete repetitions that would justify the abstraction.
 
-   *Hint:* You know it's time to reach for a framework when you find yourself copying and pasting the same memory management code into every agent, or writing the same tool routing logic for the third time. Two concrete signals: (1) you've written 50+ lines of boilerplate that every agent needs; (2) you've spent more time debugging your agent infrastructure than your agent's actual task logic.
+   *Hint:* You know it's time to reach for a framework when you find yourself copying and pasting the same memory management code into every agent, or writing the same tool routing logic for the third time.  Two concrete signals: (1) you've written 50+ lines of boilerplate that every agent needs; (2) you've spent more time debugging your agent infrastructure than your agent's actual task logic.
 
-9. LlamaIndex is categorized as a "data framework" rather than an "agent framework," yet it supports agents. What does this distinction reveal about the designers' primary mental model, and how does mental model shape API design?
+9.  LlamaIndex is categorized as a "data framework" rather than an "agent framework," yet it supports agents.  What does this distinction reveal about the designers' primary mental model, and how does mental model shape API design?
 
-   *Hint:* LlamaIndex's core abstraction is an `Index`, a way to store and retrieve data. Its agent support is layered on top of this retrieval focus. By contrast, CrewAI's core abstraction is a `Crew` of `Agents` with `Tasks`. What kinds of problems does each mental model make easy vs. hard?
+   *Hint:* LlamaIndex's core abstraction is an `Index`, a way to store and retrieve data.  Its agent support is layered on top of this retrieval focus.  By contrast, CrewAI's core abstraction is a `Crew` of `Agents` with `Tasks`.  What kinds of problems does each mental model make easy vs. hard?
 
-10. Agno (formerly Phi Data) markets itself as "lightweight and fast." In the context of LLM applications, what does *fast* mean (inference speed, developer iteration speed, or runtime startup speed) and why does the distinction matter for your project?
+10.  Agno (formerly Phi Data) markets itself as "lightweight and fast."  In the context of LLM applications, what does *fast* mean (inference speed, developer iteration speed, or runtime startup speed) and why does the distinction matter for your project?
 
     *Hint:* LLM inference speed is determined by the model and hardware, not the framework. Runtime startup speed matters for serverless deployments (cold starts). Developer iteration speed matters for prototyping. Which kind of "fast" matters most for a student project vs. a production API vs. a batch processing job?
 
@@ -264,13 +264,13 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 
 # Part IV: Hands-On, Building with LangChain
 
-In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in the Local Agent Lab, so that the framework's abstractions land on concepts you have already implemented yourself, not on faith. Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem, the top of the abstraction ladder this activity has been climbing.
+In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in the Local Agent Lab, so that the framework's abstractions land on concepts you have already implemented yourself, not on faith.  Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem, the top of the abstraction ladder this activity has been climbing.
 
 ## Model 4: Hands-On, A LangChain Agent on Ollama
 
-> **A note on versions:** LangChain's APIs evolve quickly; package names, import paths, and helper functions have all changed across releases and will change again. The code below is pinned to *conceptual clarity*: the structure (a chat model object, a decorated tool, a bind-tools call, an explicit loop) is stable even when the spelling changes. When something does not import, check the current documentation at https://python.langchain.com/docs/ rather than fighting the error message.
+> **A note on versions:** LangChain's APIs evolve quickly; package names, import paths, and helper functions have all changed across releases and will change again.  The code below is pinned to *conceptual clarity*: the structure (a chat model object, a decorated tool, a bind-tools call, an explicit loop) is stable even when the spelling changes.  When something does not import, check the current documentation at https://python.langchain.com/docs/ rather than fighting the error message.
 
-**Step 1: the model object.** LangChain wraps every provider behind a common chat interface. `ChatOllama` is the wrapper for your local server (`pip install langchain-ollama`); its `.invoke()` is doing exactly what your Local Agent Lab `requests.post` to `/api/chat` did, with retry, parsing, and message formatting hidden inside:
+**Step 1: the model object.**  LangChain wraps every provider behind a common chat interface. `ChatOllama` is the wrapper for your local server (`pip install langchain-ollama`); its `.invoke()` is doing exactly what your Local Agent Lab `requests.post` to `/api/chat` did, with retry, parsing, and message formatting hidden inside:
 
 ```python
 # pip install langchain-ollama langchain-core
@@ -280,7 +280,7 @@ llm = ChatOllama(model="llama3.2", temperature=0)
 print(llm.invoke("In one sentence: what is an agent?").content)
 ```
 
-**Step 2: a tool and an agent loop.** The `@tool` decorator builds the JSON schema for you *from the function's type hints and docstring*, the same schema you wrote by hand in the Tool Use activity. `bind_tools` attaches the schemas to every request, and the loop below is deliberately written in the same shape as your Local Agent Lab loop so you can see what moved into the framework and what did not:
+**Step 2: a tool and an agent loop.**  The `@tool` decorator builds the JSON schema for you *from the function's type hints and docstring*, the same schema you wrote by hand in the Tool Use activity. `bind_tools` attaches the schemas to every request, and the loop below is deliberately written in the same shape as your Local Agent Lab loop so you can see what moved into the framework and what did not:
 
 ```python
 from langchain_core.tools import tool
@@ -309,9 +309,9 @@ for _ in range(4):                          # perceive-plan-act, same as Local A
         messages.append(ToolMessage(content=result, tool_call_id=call["id"]))
 ```
 
-Read the comments as a ledger: the framework absorbed the *plumbing* (schema generation, request formatting, `tool_calls` parsing into typed objects), while the *authority* (which functions exist, when to stop, whether a call needs human confirmation) stayed in your loop. LangChain also ships prebuilt agent loops (e.g., LangGraph's `create_react_agent`) that absorb the loop itself; use them once you can say precisely what they took from you.
+Read the comments as a ledger: the framework absorbed the *plumbing* (schema generation, request formatting, `tool_calls` parsing into typed objects), while the *authority* (which functions exist, when to stop, whether a call needs human confirmation) stayed in your loop.  LangChain also ships prebuilt agent loops (e.g., LangGraph's `create_react_agent`) that absorb the loop itself; use them once you can say precisely what they took from you.
 
-**Step 3: a multi-agent handoff.** Two "agents" are two differently-prompted model objects; the handoff is nothing more than one agent's output becoming the other agent's entire context:
+**Step 3: a multi-agent handoff.**  Two "agents" are two differently-prompted model objects; the handoff is nothing more than one agent's output becoming the other agent's entire context:
 
 ```python
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -337,24 +337,24 @@ answer = executor.invoke([
 print(answer)
 ```
 
-Notice what the handoff pattern controls that a shared group chat does not: the executor sees *only* the brief, not the original question, not the clarifier's system prompt. In LangGraph terms, this is a two-node graph whose state carries a single `brief` field; in Model 2's terms, it is the leak-proof version of AutoGen's shared message list.
+Notice what the handoff pattern controls that a shared group chat does not: the executor sees *only* the brief, not the original question, not the clarifier's system prompt.  In LangGraph terms, this is a two-node graph whose state carries a single `brief` field; in Model 2's terms, it is the leak-proof version of AutoGen's shared message list.
 
 **The extended tutorial:** the course notebook [langchain_ollama_multiagent_tutorial.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb) develops this sequence end to end: environment setup, a first raw query, the multiply tool with a single tool-call roundtrip, retrieval over a directory of documents (RAG), a supervisor pattern that exposes sub-agents as tools, and the clarifier -> executor handoff above, with exercises after each stage.
 
 ## Model 5: Hands-On, Raising the Ceiling with a Deep Agent
 
-In Step 2 you kept the loop; in Step 3 you wrote the handoff by hand. **DeepAgents** (`pip install deepagents`), a LangChain-family library built on the *same* LangGraph you just used, takes both of those away and hands you an opinionated harness with four capabilities pre-installed:
+In Step 2 you kept the loop; in Step 3 you wrote the handoff by hand.  **DeepAgents** (`pip install deepagents`), a LangChain-family library built on the *same* LangGraph you just used, takes both of those away and hands you an opinionated harness with four capabilities pre-installed:
 
 - a **planning tool**: the agent writes and revises its own todo list (`write_todos`) as it works;
 - **sub-agents**: it can spawn helpers that run in *isolated context windows*, so a research sub-task cannot pollute the main thread;
 - a **virtual filesystem**: it offloads long intermediate results to files (`write_file` / `read_file`) instead of carrying them in the prompt;
 - a **detailed built-in system prompt**: a long instruction set (modeled on Claude Code) that tells the model *how* to plan, delegate, and use the filesystem.
 
-You supply the tools and the instructions; the loop, the planning, and the delegation are the framework's. This tutorial builds one up in four small steps; run each cell against the same local Ollama server from Steps 1-3.
+You supply the tools and the instructions; the loop, the planning, and the delegation are the framework's.  This tutorial builds one up in four small steps; run each cell against the same local Ollama server from Steps 1-3.
 
-> **A note on versions (again):** DeepAgents is young and its API moves: the top-level prompt argument has changed name (`instructions` -> `system_prompt`), a sub-agent's prompt key appears in the docs as both `prompt` and `system_prompt` across releases, and sub-agents can be passed either as these dictionaries or as compiled LangGraph graphs. The code below is pinned to *conceptual clarity*, not to an exact signature. If an import or keyword fails, check the current reference at https://docs.langchain.com/oss/python/deepagents/subagents and the README at https://github.com/langchain-ai/deepagents rather than fighting the error.
+> **A note on versions (again):** DeepAgents is young and its API moves: the top-level prompt argument has changed name (`instructions` -> `system_prompt`), a sub-agent's prompt key appears in the docs as both `prompt` and `system_prompt` across releases, and sub-agents can be passed either as these dictionaries or as compiled LangGraph graphs.  The code below is pinned to *conceptual clarity*, not to an exact signature.  If an import or keyword fails, check the current reference at https://docs.langchain.com/oss/python/deepagents/subagents and the README at https://github.com/langchain-ai/deepagents rather than fighting the error.
 
-**Step 4a: the minimal deep agent.** One call, one tool, no loop. Notice that you never write a `for` loop or a stopping condition; the harness owns both:
+**Step 4a: the minimal deep agent.**  One call, one tool, no loop.  Notice that you never write a `for` loop or a stopping condition; the harness owns both:
 
 ```python
 # pip install deepagents   (talks to your local Ollama, same as Steps 1-3)
@@ -379,7 +379,7 @@ result = agent.invoke({"messages": "How many days until the final on 2026-12-07,
 print(result["messages"][-1].content)
 ```
 
-**Step 4b: watch it plan.** The harness gave the model a `write_todos` tool without you asking. On a multi-part request the model calls it to lay out a plan, then works the list. You can see the plan by walking the returned message list instead of only printing the last message:
+**Step 4b: watch it plan.**  The harness gave the model a `write_todos` tool without you asking.  On a multi-part request the model calls it to lay out a plan, then works the list.  You can see the plan by walking the returned message list instead of only printing the last message:
 
 ```python
 for m in result["messages"]:
@@ -390,7 +390,7 @@ for m in result["messages"]:
 # agent decided on - a plan you never wrote and cannot see in your own code.
 ```
 
-**Step 4c: sub-agents with isolated context.** This is the payoff. Recall Model 2's **Researcher -> Drafter -> Critic** pipeline; there you wired three nodes (LangGraph) or three roles (CrewAI) yourself. As a deep agent, each becomes a *sub-agent* with its own context window; the main agent decides when to delegate, and each sub-agent's scratch work never touches the others' context:
+**Step 4c: sub-agents with isolated context.**  This is the payoff.  Recall Model 2's **Researcher -> Drafter -> Critic** pipeline; there you wired three nodes (LangGraph) or three roles (CrewAI) yourself.  As a deep agent, each becomes a *sub-agent* with its own context window; the main agent decides when to delegate, and each sub-agent's scratch work never touches the others' context:
 
 ```python
 research_subagent = {
@@ -418,9 +418,9 @@ out = agent.invoke({"messages": "Write a 3-week study plan for the final on 2026
 print(out["messages"][-1].content)
 ```
 
-Compare this to Model 2's AutoGen `GroupChat`, where **every** agent saw **every** message. Here the isolation is the default: the critic's private reasoning never lands in the researcher's context, so the cross-talk bug from CTQ 5 cannot happen; the framework eliminated a whole class of leak by *construction*.
+Compare this to Model 2's AutoGen `GroupChat`, where **every** agent saw **every** message.  Here the isolation is the default: the critic's private reasoning never lands in the researcher's context, so the cross-talk bug from CTQ 5 cannot happen; the framework eliminated a whole class of leak by *construction*.
 
-**Step 4d: the virtual filesystem.** On long tasks the agent offloads bulky intermediate output to files rather than stuffing it into the prompt. You can seed files on the way in and read them on the way out through the `files` key of the state:
+**Step 4d: the virtual filesystem.**  On long tasks the agent offloads bulky intermediate output to files rather than stuffing it into the prompt.  You can seed files on the way in and read them on the way out through the `files` key of the state:
 
 ```python
 out = agent.invoke({
@@ -430,7 +430,7 @@ out = agent.invoke({
 print(out["files"].get("summary.md", "(no file written)"))   # read what it wrote
 ```
 
-**Step 4e: choosing the model and provider.** Every cell above passed `model="ollama:llama3.2"`, but that argument is doing real work worth understanding, because **DeepAgents does not default to a local model**: out of the box it reaches for a hosted Anthropic Claude model and expects that provider's API key. To run on your own infrastructure you set `model=` explicitly, and it accepts two forms:
+**Step 4e: choosing the model and provider.**  Every cell above passed `model="ollama:llama3.2"`, but that argument is doing real work worth understanding, because **DeepAgents does not default to a local model**: out of the box it reaches for a hosted Anthropic Claude model and expects that provider's API key.  To run on your own infrastructure you set `model=` explicitly, and it accepts two forms:
 
 ```python
 from deepagents import create_deep_agent
@@ -452,25 +452,25 @@ llm = ChatOpenAI(base_url="http://localhost:3000/api", api_key="sk-...", model="
 agent = create_deep_agent(model=llm, tools=[days_between], system_prompt="...")
 ```
 
-Two things decide whether this works. First, **the provider must be reachable and its integration installed**: a `provider:model` string only resolves if the corresponding `langchain-<provider>` package is present. Second, **the model must support tool calling**: DeepAgents' whole architecture (planning, sub-agent delegation) is built out of tool calls, so a model without tool training will stall. You can also override the model *per sub-agent* (give a sub-agent its own `model` key) so a small, cheap model handles planning while a stronger one drafts, which is often the practical way to keep a deep agent affordable on local hardware.
+Two things decide whether this works.  First, **the provider must be reachable and its integration installed**: a `provider:model` string only resolves if the corresponding `langchain-<provider>` package is present.  Second, **the model must support tool calling**: DeepAgents' whole architecture (planning, sub-agent delegation) is built out of tool calls, so a model without tool training will stall.  You can also override the model *per sub-agent* (give a sub-agent its own `model` key) so a small, cheap model handles planning while a stronger one drafts, which is often the practical way to keep a deep agent affordable on local hardware.
 
-**Read the whole tutorial against Step 2's ledger.** There, the framework absorbed only *plumbing* (schema generation, formatting, parsing) while every *decision* (when to stop, what to call, whether a call is safe) stayed in your ten-line loop. DeepAgents absorbs the decisions too: **when to plan (4b), when to spawn a sub-agent (4c), and what to write to disk (4d)** are now made inside the harness by its built-in system prompt. That is the opposite trade. It buys enormous leverage on long, open-ended tasks, but when the agent plans badly or a sub-agent returns something unexpected, the behavior you must debug lives in the framework's prompt and control flow, not in your code. Use it once you can describe precisely what it took from you.
+**Read the whole tutorial against Step 2's ledger.**  There, the framework absorbed only *plumbing* (schema generation, formatting, parsing) while every *decision* (when to stop, what to call, whether a call is safe) stayed in your ten-line loop.  DeepAgents absorbs the decisions too: **when to plan (4b), when to spawn a sub-agent (4c), and what to write to disk (4d)** are now made inside the harness by its built-in system prompt.  That is the opposite trade.  It buys enormous leverage on long, open-ended tasks, but when the agent plans badly or a sub-agent returns something unexpected, the behavior you must debug lives in the framework's prompt and control flow, not in your code.  Use it once you can describe precisely what it took from you.
 
 ### Critical Thinking Questions
 
-11. In the Step 2 loop, list what the framework absorbed from your Local Agent Lab code and what remained yours, then answer: did LangChain absorb any *decision*, or only *plumbing*? Why does that distinction predict where your future bugs will and will not be?
+11.  In the Step 2 loop, list what the framework absorbed from your Local Agent Lab code and what remained yours, then answer: did LangChain absorb any *decision*, or only *plumbing*?  Why does that distinction predict where your future bugs will and will not be?
 
     *Hint:* Absorbed: schema generation from the docstring, request/response formatting, parsing `tool_calls` into objects. Retained: the registry, the step budget, the stopping condition, execution itself. Plumbing bugs now hide inside the framework (harder to see, rarer); decision bugs are still in your ten lines (visible, yours). Which kind was more common in your Local Agent Lab debugging?
 
-12. In the Local Agent Lab you wrote the tool's JSON schema by hand; here `@tool` generates it from the signature and docstring. Recalling Model 1 of the Tool Use activity (schema-as-interface), what new *failure mode* does auto-generation introduce, and what practice defends against it?
+12.  In the Local Agent Lab you wrote the tool's JSON schema by hand; here `@tool` generates it from the signature and docstring.  Recalling Model 1 of the Tool Use activity (schema-as-interface), what new *failure mode* does auto-generation introduce, and what practice defends against it?
 
     *Hint:* The docstring is now dual-purpose: documentation for humans AND the model's only description of the tool. A terse or stale docstring ("helper function") silently becomes a Team-A-quality schema. Defense: write docstrings as prompt engineering, and print the generated schema (`days_between.args_schema.model_json_schema()`) to review what the model will actually see.
 
-13. The Step 3 handoff gives the executor *only* the brief. Connect this to CTQ 5's AutoGen scenario: which class of multi-agent bug does the handoff pattern eliminate, and what new risk does it accept in exchange?
+13.  The Step 3 handoff gives the executor *only* the brief.  Connect this to CTQ 5's AutoGen scenario: which class of multi-agent bug does the handoff pattern eliminate, and what new risk does it accept in exchange?
 
     *Hint:* Eliminated: cross-talk, the executor cannot be influenced by messages never placed in its context. Accepted: information loss, if the clarifier's brief omits something essential from the original question, the executor has no way to recover it. Explicit state passing trades leakage for bottlenecks; which failure is easier to detect in testing?
 
-14. Return to CTQ 11's distinction between *plumbing* and *decisions*. In Step 2, LangChain absorbed only plumbing; in Step 4, DeepAgents absorbs decisions too. Name one decision that stayed in your Step 2 loop but is made inside the DeepAgents harness in Step 4, and explain why moving that decision into the framework relocates where your future bugs will live.
+14.  Return to CTQ 11's distinction between *plumbing* and *decisions*.  In Step 2, LangChain absorbed only plumbing; in Step 4, DeepAgents absorbs decisions too.  Name one decision that stayed in your Step 2 loop but is made inside the DeepAgents harness in Step 4, and explain why moving that decision into the framework relocates where your future bugs will live.
 
     *Hint:* Candidate decisions now inside the harness: *when to write or revise the plan (todos)*, *when to spawn a sub-agent versus answer directly*, and *what to offload to the virtual filesystem*. In Step 2, a bad stopping or tool-choice decision was visible in your ten lines. In Step 4, a bad *planning* or *delegation* decision lives in the framework's built-in system prompt and control flow; you cannot see it by reading your own code, so debugging shifts from "read my loop" to "trace the harness." Which is harder for a beginner to diagnose?
 
@@ -492,9 +492,9 @@ Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step
 
 ## Exercises
 
-1. *Framework audit.* Choose any two frameworks from Model 1 and install them in a local environment. Write the minimal code in each to call one LLM with one tool and print the result. Count the lines of code. Which boilerplate problems does each framework eliminate versus require you to handle?
+1.  *Framework audit.*  Choose any two frameworks from Model 1 and install them in a local environment.  Write the minimal code in each to call one LLM with one tool and print the result.  Count the lines of code.  Which boilerplate problems does each framework eliminate versus require you to handle?
 
-   *What to do:* The task is a simple web-search agent: given a question, call a web search tool, pass the results to an LLM, and print the answer. Implement this in both frameworks, count lines, and compare.
+   *What to do:* The task is a simple web-search agent: given a question, call a web search tool, pass the results to an LLM, and print the answer.  Implement this in both frameworks, count lines, and compare.
 
    *Starter hint:*
    ```python
@@ -551,27 +551,27 @@ Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step
 
    *You've succeeded when:* You have working code in both frameworks, a line count for each, and a written comparison table with the same columns as Model 1 filled in based on your own experience.
 
-2. *Leaky abstraction hunt.* Take your existing agent project (or the pipeline from the Agent Loop activity) and wrap it in one framework from Model 1 that you have not used before. Identify one place where the framework's default behavior conflicts with your existing design. Document the conflict, the fix, and what you learned about the framework's assumptions.
+2.  *Leaky abstraction hunt.*  Take your existing agent project (or the pipeline from the Agent Loop activity) and wrap it in one framework from Model 1 that you have not used before.  Identify one place where the framework's default behavior conflicts with your existing design.  Document the conflict, the fix, and what you learned about the framework's assumptions.
 
-   *What to do:* Choose a framework, install it, and port one of your existing agents. Look for: unexpected context in the agent's prompt, unexpected tool call behavior, memory that persists when it shouldn't (or doesn't persist when it should).
+   *What to do:* Choose a framework, install it, and port one of your existing agents.  Look for: unexpected context in the agent's prompt, unexpected tool call behavior, memory that persists when it shouldn't (or doesn't persist when it should).
 
-   *Starter hint:* A common surprise with CrewAI: if your agent's task description contains `{variable_name}` accidentally (from a dictionary key in your description text), CrewAI tries to substitute it and crashes. With LangGraph: if you forget to include a key in the `PipelineState` TypedDict, accessing it raises a `KeyError` deep inside the graph execution.
+   *Starter hint:* A common surprise with CrewAI: if your agent's task description contains `{variable_name}` accidentally (from a dictionary key in your description text), CrewAI tries to substitute it and crashes.  With LangGraph: if you forget to include a key in the `PipelineState` TypedDict, accessing it raises a `KeyError` deep inside the graph execution.
 
-   *You've succeeded when:* You have a written description of (1) the conflict you found, (2) what the framework was doing that caused it, and (3) the specific code change that fixed it. This is the most valuable exercise in the module; debugging abstractions builds deep understanding.
+   *You've succeeded when:* You have a written description of (1) the conflict you found, (2) what the framework was doing that caused it, and (3) the specific code change that fixed it.  This is the most valuable exercise in the module; debugging abstractions builds deep understanding.
 
-3. *Selection defense.* For your final project, write a one-page technical memo (addressed to a hypothetical engineering manager) justifying your framework choice. Explicitly acknowledge the strongest counterargument and rebut it. The memo must reference at least one failure mode of your chosen framework and explain how you will mitigate it.
+3.  *Selection defense.*  For your final project, write a one-page technical memo (addressed to a hypothetical engineering manager) justifying your framework choice.  Explicitly acknowledge the strongest counterargument and rebut it.  The memo must reference at least one failure mode of your chosen framework and explain how you will mitigate it.
 
    *What to do:* Structure the memo as: (1) Project summary in two sentences, (2) Framework recommended and three reasons, (3) Strongest counterargument (another framework that could also work), (4) Rebuttal explaining why your choice wins for this specific project, (5) Known failure mode and your mitigation.
 
-   *Starter hint:* Example structure for a CrewAI project: "We chose CrewAI because (a) our team of three student developers benefits from role-based clarity, (b) our task graph is strictly sequential with no loops, and (c) we need a demo-ready prototype in two weeks. The strongest counterargument is LangGraph, which offers better monitoring. We rebut this by noting that our project scope does not require production monitoring. CrewAI's known failure mode is implicit inter-task data passing that can break if task output format changes; we will mitigate this by writing explicit output validators for each task."
+   *Starter hint:* Example structure for a CrewAI project: "We chose CrewAI because (a) our team of three student developers benefits from role-based clarity, (b) our task graph is strictly sequential with no loops, and (c) we need a demo-ready prototype in two weeks.  The strongest counterargument is LangGraph, which offers better monitoring.  We rebut this by noting that our project scope does not require production monitoring.  CrewAI's known failure mode is implicit inter-task data passing that can break if task output format changes; we will mitigate this by writing explicit output validators for each task."
 
    *You've succeeded when:* Your memo would convince a skeptical manager who has read this activity's Model 3 table and knows the tradeoffs.
 
-4. *Climb one rung.* Take the three-agent pipeline from Model 2 (Researcher -> Drafter -> Critic) that you either read or built earlier, and re-implement it as a **single deep agent** with two sub-agents, following Model 5. Then break it on purpose: give the `researcher` sub-agent a tool the `critic` should not have, and confirm from the message trace that the critic never sees the researcher's private tool calls.
+4.  *Climb one rung.*  Take the three-agent pipeline from Model 2 (Researcher -> Drafter -> Critic) that you either read or built earlier, and re-implement it as a **single deep agent** with two sub-agents, following Model 5.  Then break it on purpose: give the `researcher` sub-agent a tool the `critic` should not have, and confirm from the message trace that the critic never sees the researcher's private tool calls.
 
-   *What to do:* Install `deepagents`, point `model=` at your local Ollama (`"ollama:llama3.2"`), and port Model 2's roles into `create_deep_agent(..., subagents=[...])`. Run it on one question, then walk `result["messages"]` (as in Step 4b) to see the plan and the delegation. Finally, inspect any files the agent wrote via `result["files"]`.
+   *What to do:* Install `deepagents`, point `model=` at your local Ollama (`"ollama:llama3.2"`), and port Model 2's roles into `create_deep_agent(..., subagents=[...])`.  Run it on one question, then walk `result["messages"]` (as in Step 4b) to see the plan and the delegation.  Finally, inspect any files the agent wrote via `result["files"]`.
 
-   *Starter hint:* Reuse the `research_subagent` / `critic_subagent` dictionaries from Model 5's Step 4c verbatim; the only new work is writing a `system_prompt` for the main agent that says, in order, "delegate to `researcher`, draft, then delegate to `critic` and revise." If the run loops or never stops, lower the model temperature and shorten the task; small local models plan less reliably than frontier models, which is itself a finding worth writing down.
+   *Starter hint:* Reuse the `research_subagent` / `critic_subagent` dictionaries from Model 5's Step 4c verbatim; the only new work is writing a `system_prompt` for the main agent that says, in order, "delegate to `researcher`, draft, then delegate to `critic` and revise."  If the run loops or never stops, lower the model temperature and shorten the task; small local models plan less reliably than frontier models, which is itself a finding worth writing down.
 
    *You've succeeded when:* You can point to the exact place in the message trace where (1) the agent wrote a plan you did not author, and (2) a sub-agent's context stayed isolated from the others, and you can state one thing that was *harder* to control than in your explicit Step 2 loop.
 
@@ -579,30 +579,30 @@ Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step
 
 ## Reflection Prompt
 
-*Personal:* Think of a time you used a "framework" in everyday life (a planning template, a decision checklist, a standard process) that made a common task easier but got in your way when your situation was unusual. What was the hidden assumption in that framework, and how did you discover it? How does this experience map to choosing a software framework?
+*Personal:* Think of a time you used a "framework" in everyday life (a planning template, a decision checklist, a standard process) that made a common task easier but got in your way when your situation was unusual.  What was the hidden assumption in that framework, and how did you discover it?  How does this experience map to choosing a software framework?
 
-*Technical:* A framework is someone else's opinion about which patterns repeat. Every design choice in a framework reflects the designers' assumptions about what problems are most common. Looking at CrewAI's role-based abstraction and LangGraph's state-machine abstraction, what does each reveal about what its designers thought agent systems were *for*? Which assumption is closer to your own mental model of AI agents, and why does that matter for how you learn?
+*Technical:* A framework is someone else's opinion about which patterns repeat.  Every design choice in a framework reflects the designers' assumptions about what problems are most common.  Looking at CrewAI's role-based abstraction and LangGraph's state-machine abstraction, what does each reveal about what its designers thought agent systems were *for*?  Which assumption is closer to your own mental model of AI agents, and why does that matter for how you learn?
 
-*Societal:* Frameworks make it easier to build powerful AI agents quickly: a beginner can deploy a multi-agent system in an afternoon that would have taken an expert weeks to build from scratch a year ago. Who benefits from this democratization, and who is disadvantaged? Consider software developers, businesses, end users, and society as a whole. What obligations do framework creators have when their tools lower the barrier to deploying consequential AI systems?
+*Societal:* Frameworks make it easier to build powerful AI agents quickly: a beginner can deploy a multi-agent system in an afternoon that would have taken an expert weeks to build from scratch a year ago.  Who benefits from this democratization, and who is disadvantaged?  Consider software developers, businesses, end users, and society as a whole.  What obligations do framework creators have when their tools lower the barrier to deploying consequential AI systems?
 
-> *Hint:* Consider who can now build a multi-agent customer service system that could previously only be built by a team of ML engineers with months of work. Is that person a small business owner, a student, a well-resourced enterprise, or a bad actor? The same tool reaches all of them.
+> *Hint:* Consider who can now build a multi-agent customer service system that could previously only be built by a team of ML engineers with months of work.  Is that person a small business owner, a student, a well-resourced enterprise, or a bad actor?  The same tool reaches all of them.
 
 ---
 
--> Coming Up Next: You have now completed the core technical modules of this course. The final activities focus on integrating these concepts: building a full-stack agent system that combines vector databases, a chosen model (local or API), security controls, multimodal inputs, and a framework of your choice, and presenting it for peer review.
+-> Coming Up Next: You have now completed the core technical modules of this course.  The final activities focus on integrating these concepts: building a full-stack agent system that combines vector databases, a chosen model (local or API), security controls, multimodal inputs, and a framework of your choice, and presenting it for peer review.
 
 ---
 
 ## Further Reading
 
-- Chase, H. "LangChain Blog: LangGraph: Multi-Actor Applications with LLMs." (2024, online).
+- Chase, H. "LangChain Blog: LangGraph: Multi-Actor Applications with LLMs."  (2024, online).
 - Wu et al. "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation." arXiv:2308.08155 (2023).
-- CrewAI documentation. "Core Concepts: Agents, Tasks, Crews, Processes." (2024, online): https://docs.crewai.com/concepts/agents
-- Agno documentation. "Quickstart and Architecture Overview." (2025, online): https://docs.agno.com/introduction
-- Liu, J. "LlamaIndex: A Data Framework for LLM Applications." (2023, online): https://docs.llamaindex.ai
-- LangChain documentation. "Introduction, Chat Models, and Tools." (online): https://python.langchain.com/docs/
-- LangChain documentation. "ChatOllama integration." (online): https://python.langchain.com/docs/integrations/chat/ollama/
-- LangChain. "DeepAgents." GitHub repository (2025, online): https://github.com/langchain-ai/deepagents
-- LangChain documentation. "Deep Agents: planning, sub-agents, and file-system context." (online): https://docs.langchain.com/labs/deep-agents/overview
-- LangChain Blog. "Deep Agents." (2025, online): https://blog.langchain.com/deep-agents/
+- CrewAI documentation.  "Core Concepts: Agents, Tasks, Crews, Processes."  (2024, online): https://docs.crewai.com/concepts/agents
+- Agno documentation.  "Quickstart and Architecture Overview."  (2025, online): https://docs.agno.com/introduction
+- Liu, J. "LlamaIndex: A Data Framework for LLM Applications."  (2023, online): https://docs.llamaindex.ai
+- LangChain documentation.  "Introduction, Chat Models, and Tools."  (online): https://python.langchain.com/docs/
+- LangChain documentation.  "ChatOllama integration."  (online): https://python.langchain.com/docs/integrations/chat/ollama/
+- LangChain.  "DeepAgents."  GitHub repository (2025, online): https://github.com/langchain-ai/deepagents
+- LangChain documentation.  "Deep Agents: planning, sub-agents, and file-system context."  (online): https://docs.langchain.com/labs/deep-agents/overview
+- LangChain Blog.  "Deep Agents."  (2025, online): https://blog.langchain.com/deep-agents/
 - Course notebook: LangChain + Ollama multi-agent tutorial: [/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/langchain_ollama_multiagent_tutorial.ipynb)

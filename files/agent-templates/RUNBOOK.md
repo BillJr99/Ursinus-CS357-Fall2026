@@ -8,7 +8,7 @@
 
 ## Environment Topology
 
-<!-- Name your deployments precisely. If the assistant runs in more than one place,
+<!-- Name your deployments precisely.  If the assistant runs in more than one place,
      ambiguity about WHICH instance owns a capability causes real incidents. -->
 
 | Instance | Role | Runtime | Durable config source |
@@ -49,4 +49,4 @@ Cutover gate for any owner change of a user-facing capability, all boxes checked
 
 ## Maintenance Directive
 
-Keep these pages current whenever the setup changes. Make each update in the topic page that owns the subject. Never record secret values: variable names, file paths, ownership, and purpose only. Commit durable changes (with sync metadata) when made.
+Keep these pages current whenever the setup changes.  Make each update in the topic page that owns the subject.  Never record secret values: variable names, file paths, ownership, and purpose only.  Commit durable changes (with sync metadata) when made.

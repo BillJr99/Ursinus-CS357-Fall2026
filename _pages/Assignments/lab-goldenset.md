@@ -5,10 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Golden-Set Benchmar
 
 info:
   coursenum: CS357
-  purpose: "To build the personal 10-item benchmark you will reuse all semester: a golden set of questions with expected answers, designed to separate what your local model reliably knows from where it hallucinates."
+  purpose: "To build the personal 10-item benchmark you will reuse all semester, a golden set of questions with expected answers, designed to separate what your local model reliably knows from where it hallucinates."
   tilt:
     task: "Design a 10-item benchmark with per-item rationale, run it against your local model with the class evaluation harness, and analyze where your predictions held."
-    criteria: "Assessed on the design quality of the benchmark items and rationales, and on a faithful run with prediction-versus-outcome analysis; see the rubric below for the full breakdown."
+    criteria: "I assess your work on the design quality of the benchmark items and rationales, and on a faithful run with prediction-versus-outcome analysis.  Please read the rubric below for the details."
   points: 100
   goals:
     - To design benchmark items that deliberately probe both reliable knowledge and hallucination-prone territory
@@ -39,7 +39,7 @@ tags:
 
 ---
 
-This small **lab** builds an artifact you will use for the rest of the course: your personal **golden set**: ten benchmark questions with expected answers and scoring rules, run against your local model under a fixed protocol. The RAG Quality Checkup lab reuses it as the seed of your regression harness, the RAG Knowledge Base Lab's evaluation leans on it, and the Rubric Pipeline Lab's rubric pipeline grades against exactly this kind of set. Budget **one to two hours**; the class evaluation-harness code from the Hallucinations and Evaluating Agent Outputs session is your starting point, so there is little new code to write.
+This small **lab** builds an artifact you'll use for the rest of the course, your personal **golden set** of ten benchmark questions, each with an expected answer and a scoring rule, run against your local model under a fixed protocol.  The RAG Quality Checkup lab reuses it as the seed of your regression harness, the RAG Knowledge Base Lab's evaluation leans on it, and the Rubric Pipeline Lab's rubric pipeline grades against exactly this kind of set.  Budget **one to two hours**; the class evaluation-harness code from the Hallucinations and Evaluating Agent Outputs session is your starting point, so there is little new code to write.
 
 See the course schedule for the assigned and due dates.
 
@@ -47,23 +47,23 @@ See the course schedule for the assigned and due dates.
 
 ## Before You Start
 
-**This builds on:** the *Hallucinations and Evaluating Agent Outputs* session, where we mapped the territory where models are unreliable, and the evaluation harness written in class. You do not need any other lab finished first.
+**This builds on:** the *Hallucinations and Evaluating Agent Outputs* session, where we mapped the territory where models are unreliable, and the evaluation harness written in class.  You do not need any other lab finished first.
 
-**You need:** Ollama running with a model pulled, and either Python with `requests` (code route), promptfoo (low-code route), or a spreadsheet and a chat window (no-code route). Check your model server is up:
+**You need:** Ollama running with a model pulled, and either Python with `requests` (code route), promptfoo (low-code route), or a spreadsheet and a chat window (no-code route).  Check your model server is up:
 
 ```bash
 curl -s http://localhost:11434/api/tags | head -c 200
 ```
 
-**Time budget:** one to two hours. Most of it is Part 1, and that is the correct proportion: designing ten good items is genuinely harder than running them.
+**Pace yourself:** most of your effort belongs in Part 1, and that is the right proportion.  Designing ten good items is harder than running them.
 
-**What you will have at the end:** a ten-item benchmark that you will reuse three more times this semester (RAG Quality Checkup, RAG Knowledge Base, Rubric Pipeline). Build it to keep.
+**What you will have at the end:** a ten-item benchmark that you will reuse three more times this semester (RAG Quality Checkup, RAG Knowledge Base, Rubric Pipeline).  Build it to keep.
 
 ---
 
 ## Choose Your Path
 
-All three routes are graded on the same rubric and are worth the same credit. The design work in Part 1 is identical on all three; they differ only in how you run the set in Part 2.
+All three routes are graded on the same rubric and are worth the same credit.  The design work in Part 1 is identical on all three; they differ only in how you run the set in Part 2.
 
 | Route | What you build | Pick this if | What you submit instead |
 |-------|----------------|--------------|-------------------------|
@@ -71,9 +71,9 @@ All three routes are graded on the same rubric and are worth the same credit. Th
 | **Low-code** | The set as a `promptfoo` YAML case list, run against your local Ollama, which gives you a pass/fail grid without a harness | You would rather configure than program, or you plan to take the Rubric Pipeline Lab's promptfoo direction later | The YAML file and the promptfoo output |
 | **Code** | `goldenset.json` plus a short runner grown from the class evaluation harness | You want the harness you will extend in later labs | `goldenset.json` and `results.md` |
 
-Whichever you pick, **the written analysis in Part 2 is the same and carries the same weight.** The judgment of what to measure is the assignment; the machinery is a detail.
+Whichever you pick, **the written analysis in Part 2 is the same and carries the same weight.**  The judgment of what to measure is the assignment; the machinery is a detail.
 
-> **A note on "no-code is the easy one."** It is not. Running ten items by hand means you read every answer closely, which is exactly what catches a *metric failure* (your rule mis-graded a correct answer). Students on the code route often miss those because the harness printed FAIL and they believed it.
+> **A note on "no-code is the easy one."**  It is not.  Running ten items by hand means you read every answer closely, which is exactly what catches a *metric failure* (your rule mis-graded a correct answer).  Students on the code route often miss those because the harness printed FAIL and they believed it.
 
 ---
 
@@ -110,14 +110,14 @@ An **expected-fragile** item:
 }
 ```
 
-Notice what each rationale does: it names a *reason from the training data* (thick, thin, recent, local, changing), and it commits to a prediction before the run. A rationale that says "this seems hard" earns the `beginning` row; a rationale that says *why the data would be thin here* earns `proficient`.
+Notice what each rationale does: it names a *reason from the training data* (thick, thin, recent, local, changing), and it commits to a prediction before the run.  A rationale that says "this seems hard" earns the `beginning` row; a rationale that says *why the data would be thin here* earns `proficient`.
 
 ### Step by step
 
-1. Write your five reliable items first. They are easier, and they calibrate your sense of what an unambiguous `expected` looks like.
-2. Write the five fragile items, deliberately spread across the four kinds of thin territory: **local**, **post-cutoff**, **exact statistic**, and **citation-shaped**. At least one of each.
-3. For each item, choose the `rule` **last**, after you know what a correct answer would look like. Ask: could a fully correct answer fail this rule? Could a wrong answer pass it?
-4. Write every rationale as a prediction plus a reason. The prediction is what Part 2 grades you against.
+1.  Write your five reliable items first.  They are easier, and they calibrate your sense of what an unambiguous `expected` looks like.
+2.  Write the five fragile items, deliberately spread across the four kinds of thin territory: **local**, **post-cutoff**, **exact statistic**, and **citation-shaped**.  At least one of each.
+3.  For each item, choose the `rule` **last**, after you know what a correct answer would look like.  Ask: could a fully correct answer fail this rule?  Could a wrong answer pass it?
+4.  Write every rationale as a prediction plus a reason.  The prediction is what Part 2 grades you against.
 
 > **You've succeeded when** you have ten items, each with all four fields, and a classmate reading only your rationales could predict your pass rate to within two items.
 
@@ -125,24 +125,24 @@ Notice what each rationale does: it names a *reason from the training data* (thi
 
 ## Part 2: Run and Analyze (50 points)
 
-Run all ten items against your local model with the protocol pinned: **temperature 0.0, a fixed seed, and the model name recorded.** Pinning is not bureaucracy: an unpinned run cannot be repeated, and a result you cannot repeat is not a measurement. (This is the dial from *Running Your Own AI*, Section 3b, doing real work.)
+Run all ten items against your local model with the protocol pinned: **temperature 0.0, a fixed seed, and the model name recorded.**  Pinning is not bureaucracy: an unpinned run cannot be repeated, and a result you cannot repeat is not a measurement.  (This is the dial from *Running Your Own AI*, Section 3b, doing real work.)
 
 ### Step by step
 
-1. **Pin the protocol** on your route: `"options": {"temperature": 0, "seed": 42}` in code; `config.temperature: 0` in promptfoo YAML; the **Advanced Params** panel in Open WebUI on the no-code route. Record the model name and the exact settings at the top of `results.md`.
-2. **Run all ten** and record PASS/FAIL per item, alongside the prediction you made in Part 1.
-3. **Find your misses.** A miss is any item where the outcome differs from your prediction, in *either* direction. A fragile item that passed is as interesting as a reliable one that failed.
-4. **Classify each miss** in one sentence:
+1.  **Pin the protocol** on your route: `"options": {"temperature": 0, "seed": 42}` in code; `config.temperature: 0` in promptfoo YAML; the **Advanced Params** panel in Open WebUI on the no-code route.  Record the model name and the exact settings at the top of `results.md`.
+2.  **Run all ten** and record PASS/FAIL per item, alongside the prediction you made in Part 1.
+3.  **Find your misses.**  A miss is any item where the outcome differs from your prediction, in *either* direction.  A fragile item that passed is as interesting as a reliable one that failed.
+4.  **Classify each miss** in one sentence:
    - **Knowledge failure**: the model genuinely does not have the fact.
-   - **Metric failure**: the model answered correctly (or incorrectly) and *your rule graded it wrong*. For example, the model answered "seventeen seventy-six" and your substring rule looked for "1776".
-   That distinction is the whole point of this lab. A benchmark whose failures are mostly metric failures is measuring your rules, not the model.
-5. **State one revision** the results motivated: an item you would replace, or a rule you would tighten, and why.
+   - **Metric failure**: the model answered correctly (or incorrectly) and *your rule graded it wrong*.  For example, the model answered "seventeen seventy-six" and your substring rule looked for "1776".
+   That distinction is the whole point of this lab.  A benchmark whose failures are mostly metric failures is measuring your rules, not the model.
+5.  **State one revision** the results motivated: an item you would replace, or a rule you would tighten, and why.
 
 ### A worked miss, for calibration
 
-> **Item 7** (fragile, citation-shaped). Predicted FAIL, outcome PASS.
+> **Item 7** (fragile, citation-shaped).  Predicted FAIL, outcome PASS.
 >
-> I asked for a source on a claim about local rainfall and expected an invented citation. The model instead refused, saying it did not have a reliable source. That is a **metric failure**: my rule scored "no answer" as a pass because the invented-citation string was absent, but abstention and correctness are not the same outcome and my rule cannot tell them apart. **Revision:** split this into two items, one that scores abstention as a pass and one that scores a fabricated citation as a fail, so the two behaviors stop sharing a row.
+> I asked for a source on a claim about local rainfall and expected an invented citation.  The model instead refused, saying it did not have a reliable source.  That is a **metric failure**: my rule scored "no answer" as a pass because the invented-citation string was absent, but abstention and correctness are not the same outcome and my rule cannot tell them apart.  **Revision:** split this into two items, one that scores abstention as a pass and one that scores a fabricated citation as a fail, so the two behaviors stop sharing a row.
 
 > **You've succeeded when** `results.md` names the model and protocol, shows ten prediction-versus-outcome rows, explains every miss as knowledge or metric, and ends with one revision you can justify.
 
@@ -152,11 +152,11 @@ Keep your golden set under version control with your course work; you will point
 
 ## The No-Code and Low-Code Routes, in Detail (equal credit)
 
-The whole point of a golden set is judgment about *what to measure*, not the harness that measures it. You may therefore build and run your set **in a spreadsheet plus a chat interface**, with no code at all.
+The whole point of a golden set is judgment about *what to measure*, not the harness that measures it.  You may therefore build and run your set **in a spreadsheet plus a chat interface**, with no code at all.
 
-1. **Design the set in a spreadsheet.** One row per case: `id`, `input`, `expected`, `why this case earns its place`. The design criteria in Part 1 apply unchanged: coverage, discriminating power, and honest hard cases.
-2. **Run it by hand or with promptfoo's UI.** Either paste each input into Open WebUI and record the output in a `got` column, or use `promptfoo` in its web view, which takes a YAML list of cases and shows a pass/fail grid without you writing a harness.
-3. **Analyze in the same spreadsheet.** Add `pass/fail` and `failure mode` columns, then compute the pass rate and group the failures by cause.
+1.  **Design the set in a spreadsheet.**  One row per case: `id`, `input`, `expected`, `why this case earns its place`.  The design criteria in Part 1 apply unchanged: coverage, discriminating power, and honest hard cases.
+2.  **Run it by hand or with promptfoo's UI.** Either paste each input into Open WebUI and record the output in a `got` column, or use `promptfoo` in its web view, which takes a YAML list of cases and shows a pass/fail grid without you writing a harness.
+3.  **Analyze in the same spreadsheet.**  Add `pass/fail` and `failure mode` columns, then compute the pass rate and group the failures by cause.
 
 **What you submit instead of code:** the spreadsheet (CSV export), a screenshot of the grid or your run log, and the identical written analysis: which cases discriminate, which turned out to be duplicates, and what the failure clusters tell you about the model.
 
@@ -187,13 +187,13 @@ Hold your own work against the rubric's `proficient` column:
 - [ ] One revision is stated, with its reason.
 - [ ] The AI-disclosure and hours reflections are answered.
 
-If a box is unchecked, that is a specific, fixable thing rather than a vague worry. Fix it and check it.
+If a box is unchecked, that is a specific, fixable thing rather than a vague worry.  Fix it and check it.
 
 ---
 
 ## Deliverables
 
-Submit your benchmark (`goldenset.json`, the promptfoo YAML, or the spreadsheet CSV) and `results.md` (protocol, per-item outcomes, miss analysis, one motivated revision). Name your route at the top of `results.md` so it is graded against the right column of the rubric.
+Submit your benchmark (`goldenset.json`, the promptfoo YAML, or the spreadsheet CSV) and `results.md` (protocol, per-item outcomes, miss analysis, one motivated revision).  Name your route at the top of `results.md` so it is graded against the right column of the rubric.
 
 ## Grading Breakdown
 
