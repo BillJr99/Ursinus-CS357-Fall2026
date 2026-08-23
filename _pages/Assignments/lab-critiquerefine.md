@@ -52,13 +52,17 @@ info:
       proficient: The program is submitted according to the directions with externalized configuration in a JSON file, located exception handling with tracebacks on all model calls, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific numeric result or transcript excerpt from the lab
   readings:
     - rtitle: "Critique and Refine Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-critiquerefine.md"
+      rlink: "Activities/liascript-critiquerefine.md"
+      liapage: true
     - rtitle: "Orchestration Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-orchestration.md"
+      rlink: "Activities/liascript-orchestration.md"
+      liapage: true
     - rtitle: "Coding Agents Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
+      rlink: "Activities/liascript-codingagents.md"
+      liapage: true
     - rtitle: "The Local Agent Stack Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md"
+      rlink: "Activities/liascript-agentstack.md"
+      liapage: true
 
 tags:
   - multi-agent
@@ -82,8 +86,8 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [Critique and Refine Activity]({{ site.activity_url }}liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
-- [Orchestration Activity]({{ site.activity_url }}liascript-orchestration.md): chaining agents with structured outputs
+- [Critique and Refine Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Orchestration Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestration.md): chaining agents with structured outputs
 
 **Tools to install:**
 
@@ -824,7 +828,7 @@ You may then **extend** the core in the direction below. The direction is not a 
 > - **Node.js and npm** (install from [https://nodejs.org](https://nodejs.org) if you do not have them)
 > - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
 > - **A model for the agent to call.** Three routes, in order of what costs you nothing:
->   1. **opencode pointed at OpenWebUI** (free): if you are running OpenWebUI over your local models, configure opencode against it with the provider block in Step 8.2 of the [Development Environment tutorial]({{ site.activity_url }}liascript-devenvironment.md). The key it takes is one you mint on your own server, not a billing credential.
+>   1. **opencode pointed at OpenWebUI** (free): if you are running OpenWebUI over your local models, configure opencode against it with the provider block in Step 8.2 of the [Development Environment tutorial]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md). The key it takes is one you mint on your own server, not a billing credential.
 >   2. **The instructor-provided key**, if one is announced in class.
 >   3. **Your own provider key** (roughly $5 of credit is more than enough for this direction).
 >
@@ -849,8 +853,8 @@ Because this direction is graded under the same 100-point rubric as the core lab
 
 Before beginning, make sure you have completed both of the following activities (linked in the readings above):
 
-- [Coding Agents Activity]({{ site.activity_url }}liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
-- [The Local Agent Stack Activity]({{ site.activity_url }}liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
+- [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
+- [The Local Agent Stack Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
 
 If you have not done both activities, do them now before reading further. The concepts introduced there are assumed throughout this direction.
 
