@@ -1,6 +1,6 @@
 # Agent Handoff Kickoff Prompt
 
-<!-- The mid-project swap prompt. Paste the block below into a NEW agent when the
+<!-- The mid-project swap prompt.  Paste the block below into a NEW agent when the
      previous one hit a context, quota, or session limit, or when you are switching
      to a different agent entirely. It assumes the previous agent updated the handoff
      state before stopping (see START_HERE ground rule 6). -->

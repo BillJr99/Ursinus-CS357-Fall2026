@@ -1,6 +1,6 @@
 # LLMMEMORIES.md: Durable Memory
 
-<!-- The self-updating memory file. The canonical record of stored memories about the
+<!-- The self-updating memory file.  The canonical record of stored memories about the
      owner and the durable backup of the assistant's operational memory. The assistant
      writes acquired memories back here; every change to the live memory store must be
      reflected here BEFORE any deletion or compression happens (the memory-to-vault

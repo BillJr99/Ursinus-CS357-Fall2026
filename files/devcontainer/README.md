@@ -6,7 +6,7 @@ libraries (`requests`, `chromadb`, `sentence-transformers`, `scikit-learn`,
 `pandas`, `flask`), plus Node.js with `promptfoo` for the evaluation lab, and
 `git` so you commit and push from inside the container.
 
-**Ollama is the one thing that stays on your host.** It runs natively for
+**Ollama is the one thing that stays on your host.**  It runs natively for
 model performance; code inside the container reaches it at
 `http://host.docker.internal:11434`, the host-bridge pattern from the
 [Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
@@ -26,12 +26,12 @@ This README is the quickstart version.
 
 ## Setup (common to routes A and B)
 
-1. Install [Ollama](https://ollama.com/download) **on your host** (not in
+1.  Install [Ollama](https://ollama.com/download) **on your host** (not in
    Docker) and pull the course model: `ollama pull llama3.2`.
-2. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+2.  Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
    (macOS/Windows) or Docker Engine (Linux) and confirm `docker run hello-world` works.
-3. Create a **private** GitHub repository named `cs357-work` and clone it.
-4. Copy the three files above into a `.devcontainer/` folder inside the clone:
+3.  Create a **private** GitHub repository named `cs357-work` and clone it.
+4.  Copy the three files above into a `.devcontainer/` folder inside the clone:
 
    ```
    cs357-work/
@@ -44,17 +44,17 @@ This README is the quickstart version.
 
 The bind mount in `docker-compose.yml` (and the `workspaceMount` in
 `devcontainer.json`) exposes **your cloned GitHub repo** (and nothing else on
-your machine) at `/workspace` inside the container. You edit, test, commit,
+your machine) at `/workspace` inside the container.  You edit, test, commit,
 and push there; the files live on your disk and on GitHub, so the container
 itself is disposable.
 
 ## Route A: VS Code Dev Containers
 
-1. Install VS Code and the **Dev Containers** extension.
-2. Open the `cs357-work` folder in VS Code.
-3. Run **Dev Containers: Reopen in Container** from the command palette. The
+1.  Install VS Code and the **Dev Containers** extension.
+2.  Open the `cs357-work` folder in VS Code.
+3.  Run **Dev Containers: Reopen in Container** from the command palette.  The
    first build downloads the ML libraries and takes a while; later opens are fast.
-4. Open a terminal in VS Code; you are inside the container at `/workspace`.
+4.  Open a terminal in VS Code; you are inside the container at `/workspace`.
 
 ## Route B: plain Docker Compose
 
@@ -79,7 +79,7 @@ in the mounted repo.
 ## Route C: native fallback (no Docker)
 
 Every lab's "Before You Start" section already lists its native installs, and
-those remain valid. In short: install Ollama on your machine as above, use
+those remain valid.  In short: install Ollama on your machine as above, use
 [uv](https://docs.astral.sh/uv/) (or `pip`) to add each lab's packages as that
 lab documents (`uv add requests`, then `chromadb sentence-transformers` for
 the retrieval lab, `scikit-learn numpy` for the ML labs, `spacy`/`shap`/
@@ -93,7 +93,7 @@ and `npm install -g promptfoo` for the evaluation lab, and use
 - `Cannot connect to the Docker daemon`: Docker Desktop is not running; start it.
 - Connection refused to `host.docker.internal:11434`: either Ollama is not
   running on the host, or (Linux) the container was started without the
-  `extra_hosts`/`--add-host` mapping. The compose file and `devcontainer.json`
+  `extra_hosts`/`--add-host` mapping.  The compose file and `devcontainer.json`
   here both include it.
 - Slow first build: normal (the ML libraries are large); later builds reuse
   cached layers.

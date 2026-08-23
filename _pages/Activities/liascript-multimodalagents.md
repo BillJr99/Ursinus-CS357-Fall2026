@@ -14,13 +14,13 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Multimodal Agents: Vision, Documents, and Code as First-Class Inputs
 
-A multimodal agent is like a colleague who can not only read your email but also glance at the whiteboard photo you attached, scan the PDF contract you dropped in the chat, and look at the screenshot of the error you're seeing. The ability to reason across formats (not just text) dramatically expands what an agent can perceive and act on. But every modality conversion introduces new failure modes, and understanding those failures is essential for building reliable systems.
+A multimodal agent is like a colleague who can not only read your email but also glance at the whiteboard photo you attached, scan the PDF contract you dropped in the chat, and look at the screenshot of the error you're seeing.  The ability to reason across formats (not just text) dramatically expands what an agent can perceive and act on.  But every modality conversion introduces new failure modes, and understanding those failures is essential for building reliable systems.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -39,15 +39,15 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 # Part I: What Multimodal Means for Agents
 
-In this part, you will learn how different input types (images, PDFs, audio, video, code) are all converted to the same token format that LLMs process. Understanding this conversion pipeline is essential because every failure mode in multimodal agents originates at a conversion step.
+In this part, you will learn how different input types (images, PDFs, audio, video, code) are all converted to the same token format that LLMs process.  Understanding this conversion pipeline is essential because every failure mode in multimodal agents originates at a conversion step.
 
 ## Model 1: How Modalities Become Tokens
 
-Early language models accepted only text. Modern agents increasingly accept (and reason over) a much broader set of inputs: images, PDFs, audio recordings, video clips, and structured code files. This is what it means for an agent to be **multimodal**: its input space is not confined to a single modality.
+Early language models accepted only text.  Modern agents increasingly accept (and reason over) a much broader set of inputs: images, PDFs, audio recordings, video clips, and structured code files.  This is what it means for an agent to be **multimodal**: its input space is not confined to a single modality.
 
-This matters for agents more than for standalone chatbots because agents take actions. An agent that can see a screenshot can click the right button. An agent that can read a PDF contract can extract the clause that triggers a tool call. An agent that hears a voice command can act on it without a human typing an intermediate transcript.
+This matters for agents more than for standalone chatbots because agents take actions.  An agent that can see a screenshot can click the right button.  An agent that can read a PDF contract can extract the clause that triggers a tool call.  An agent that hears a voice command can act on it without a human typing an intermediate transcript.
 
-Multimodality is not magic; it is an extension of the fundamental token-processing architecture. Every modality is ultimately encoded as a sequence of tokens before it enters the transformer. What differs is how that encoding happens, how lossy it is, and what kinds of errors result.
+Multimodality is not magic; it is an extension of the fundamental token-processing architecture.  Every modality is ultimately encoded as a sequence of tokens before it enters the transformer.  What differs is how that encoding happens, how lossy it is, and what kinds of errors result.
 
 | Modality | Input Format | How the Model Receives It | Typical Token Count | Key Capability | Key Limitation |
 |:---------|:------------|:---------------------|:---------------------|:-------------|:------------|
@@ -59,17 +59,17 @@ Multimodality is not magic; it is an extension of the fundamental token-processi
 
 ### Critical Thinking Questions
 
-1. An agent is asked to process a 100-page PDF invoice archive. Calculate the approximate token cost of each approach (text extraction, OCR, and VLM) for 100 pages. At the rate of $0.003 per 1,000 input tokens (a rough mid-range API price), what is the cost difference between the cheapest and most expensive approaches?
+1.  An agent is asked to process a 100-page PDF invoice archive.  Calculate the approximate token cost of each approach (text extraction, OCR, and VLM) for 100 pages.  At the rate of $0.003 per 1,000 input tokens (a rough mid-range API price), what is the cost difference between the cheapest and most expensive approaches?
 
-   *Hint:* Text extraction: ~500 tokens/page × 100 pages = 50,000 tokens. VLM (one image per page): ~768 tokens/image × 100 pages = 76,800 tokens. But what happens when the PDFs are scanned (image-only), which approaches still work?
+   *Hint:* Text extraction: ~500 tokens/page × 100 pages = 50,000 tokens.  VLM (one image per page): ~768 tokens/image × 100 pages = 76,800 tokens.  But what happens when the PDFs are scanned (image-only), which approaches still work?
 
-2. A customer service agent transcribes voice calls and then processes the transcripts to extract action items. The transcription error rate is 3% of words (a realistic Whisper error rate in noisy call centers). For a 500-word conversation, estimate the number of errors. How many of those errors are likely to affect downstream extraction of fields like names, dates, and dollar amounts?
+2.  A customer service agent transcribes voice calls and then processes the transcripts to extract action items.  The transcription error rate is 3% of words (a realistic Whisper error rate in noisy call centers).  For a 500-word conversation, estimate the number of errors.  How many of those errors are likely to affect downstream extraction of fields like names, dates, and dollar amounts?
 
-   *Hint:* 3% of 500 words = 15 expected errors. Names, dates, and amounts are high-information words; the model cannot guess them from context if it mishears them. Compare this to common words like "the" or "and" where context allows recovery.
+   *Hint:* 3% of 500 words = 15 expected errors.  Names, dates, and amounts are high-information words; the model cannot guess them from context if it mishears them.  Compare this to common words like "the" or "and" where context allows recovery.
 
-3. The same image is processed by a VLM to extract an invoice total. The first extraction returns "$1,247". The second extraction (with the same prompt, same image) returns "$1,274". What does this tell you about the reliability of VLM extraction for numeric fields, and what mitigation strategy would you add to the pipeline?
+3.  The same image is processed by a VLM to extract an invoice total.  The first extraction returns "$1,247".  The second extraction (with the same prompt, same image) returns "$1,274".  What does this tell you about the reliability of VLM extraction for numeric fields, and what mitigation strategy would you add to the pipeline?
 
-   *Hint:* The model has some uncertainty about the digits; its output is sampled, not deterministic at temperature > 0. Running extraction twice and comparing results is a simple way to detect low-confidence extractions. What would you do when the two runs disagree?
+   *Hint:* The model has some uncertainty about the digits; its output is sampled, not deterministic at temperature > 0.  Running extraction twice and comparing results is a simple way to detect low-confidence extractions.  What would you do when the two runs disagree?
 
 Now that we understand the token-level mechanics of modality conversion, we can look at specific models and tools, and what makes each one the right choice for a given document type.
 
@@ -77,11 +77,11 @@ Now that we understand the token-level mechanics of modality conversion, we can 
 
 # Part II: Vision Language Models
 
-In this part, you will survey the landscape of Vision Language Models (VLMs) and learn the document processing pipeline that real agents use for PDFs. The goal is to know which tool to reach for and when, and to understand why the "obvious" choice (just send the image to the model) often fails on structured data like tables.
+In this part, you will survey the landscape of Vision Language Models (VLMs) and learn the document processing pipeline that real agents use for PDFs.  The goal is to know which tool to reach for and when, and to understand why the "obvious" choice (just send the image to the model) often fails on structured data like tables.
 
-## 2. Notable VLMs
+## 2.  Notable VLMs
 
-A **Vision Language Model** (VLM) is an LLM extended with an image encoder. The image encoder (typically a Vision Transformer, or ViT) converts an image into a sequence of patch embeddings, which are then projected into the same embedding space as text tokens and concatenated with the text input.
+A **Vision Language Model** (VLM) is an LLM extended with an image encoder.  The image encoder (typically a Vision Transformer, or ViT) converts an image into a sequence of patch embeddings, which are then projected into the same embedding space as text tokens and concatenated with the text input.
 
 Notable VLMs include:
 
@@ -93,13 +93,13 @@ Notable VLMs include:
 | Moondream (open-source) | Vikhyat Kopula | Local via Ollama (`ollama pull moondream`) | Very small (1.8B parameters); designed for edge deployment; fast even on CPU | Embedded devices, offline use, situations where a 7B model is too large | Free; fits in 4 GB RAM |
 | Gemma 3 multimodal | Google DeepMind | Local via Ollama (`ollama pull gemma3:12b`) | Vision-capable variant; strong grounding; 128K context for long documents | Long-document vision tasks locally | Free to run locally; requires 16 GB RAM |
 
-The common thread: the image becomes tokens. The model never "looks" at pixels the way a human does; it processes a patch-level compressed representation. This is why fine detail, small text, and complex layouts can confuse VLMs even when they look clear to a human eye.
+The common thread: the image becomes tokens.  The model never "looks" at pixels the way a human does; it processes a patch-level compressed representation.  This is why fine detail, small text, and complex layouts can confuse VLMs even when they look clear to a human eye.
 
 ---
 
 ## Model 2: PDF and Document Processing Approaches
 
-When an agent needs to work with a PDF, there are three main approaches, each with different trade-offs. Understanding these trade-offs lets you choose the right tool for the document type in front of you.
+When an agent needs to work with a PDF, there are three main approaches, each with different trade-offs.  Understanding these trade-offs lets you choose the right tool for the document type in front of you.
 
 | Approach | Tool | Install Command | When It Works Well | When It Fails | Typical Speed |
 |---|---|---|---|---|---|
@@ -109,21 +109,21 @@ When an agent needs to work with a PDF, there are three main approaches, each wi
 
 In practice, robust document processing pipelines combine all three: extract text where available, fall back to OCR for scanned pages, and use vision for validation or for documents that defeat both.
 
-> **Common Misconception:** Many developers assume that a VLM "sees" a PDF the way a human reads it: understanding layout, inferring meaning from position, and reading left-to-right correctly. In reality, **VLMs frequently misread tables, merge adjacent cells, transpose rows and columns, and hallucinate values in dense numeric regions**. Always validate extracted numbers against a range check (is this dollar amount plausible for this type of invoice?) before using them downstream.
+> **Common Misconception:** Many developers assume that a VLM "sees" a PDF the way a human reads it: understanding layout, inferring meaning from position, and reading left-to-right correctly.  In reality, **VLMs frequently misread tables, merge adjacent cells, transpose rows and columns, and hallucinate values in dense numeric regions**.  Always validate extracted numbers against a range check (is this dollar amount plausible for this type of invoice?) before using them downstream.
 
 ### Critical Thinking Questions
 
-4. You are building an agent to process medical imaging reports that arrive as scanned PDFs. Some are typed, some are handwritten, and all contain critical numeric values (lab results, dosages). Sketch a multi-stage pipeline that maximizes accuracy on numeric values while minimizing cost. Justify each stage.
+4.  You are building an agent to process medical imaging reports that arrive as scanned PDFs.  Some are typed, some are handwritten, and all contain critical numeric values (lab results, dosages).  Sketch a multi-stage pipeline that maximizes accuracy on numeric values while minimizing cost.  Justify each stage.
 
-   *Hint:* Stage 1: try text extraction (fast, accurate for typed documents). Stage 2: if text extraction returns empty or garbled text, try OCR. Stage 3: for all numeric fields, use a VLM to cross-check (extract the same field twice using different prompts and compare). Stage 4: flag any extraction where Stage 1, 2, and 3 disagree for human review.
+   *Hint:* Stage 1: try text extraction (fast, accurate for typed documents).  Stage 2: if text extraction returns empty or garbled text, try OCR. Stage 3: for all numeric fields, use a VLM to cross-check (extract the same field twice using different prompts and compare).  Stage 4: flag any extraction where Stage 1, 2, and 3 disagree for human review.
 
-5. A coding agent is given a 2,000-line Python codebase to refactor. It cannot fit the entire codebase in its context window. Design a tool-based approach where the agent queries the codebase incrementally rather than reading it all at once. What tools would you give it, and in what order would it use them?
+5.  A coding agent is given a 2,000-line Python codebase to refactor.  It cannot fit the entire codebase in its context window.  Design a tool-based approach where the agent queries the codebase incrementally rather than reading it all at once.  What tools would you give it, and in what order would it use them?
 
-   *Hint:* Tools to consider: `list_files()`, `read_function(name: str)`, `find_all_callers(function_name: str)`, `search_code(pattern: str)`. The agent should plan its refactoring by understanding the structure first (which functions exist, which call which), then reading only the functions it needs to modify.
+   *Hint:* Tools to consider: `list_files()`, `read_function(name: str)`, `find_all_callers(function_name: str)`, `search_code(pattern: str)`.  The agent should plan its refactoring by understanding the structure first (which functions exist, which call which), then reading only the functions it needs to modify.
 
-6. An audio processing agent transcribes a doctor-patient consultation and extracts the patient's current medications and dosages. What specific types of transcription errors are most dangerous in this scenario, and how would you design a validation step to catch them before the extracted data is written to an electronic health record?
+6.  An audio processing agent transcribes a doctor-patient consultation and extracts the patient's current medications and dosages.  What specific types of transcription errors are most dangerous in this scenario, and how would you design a validation step to catch them before the extracted data is written to an electronic health record?
 
-   *Hint:* "Metformin 500mg" vs. "Metformin 50mg": a single dropped digit can cause a 10x dosage error. "Lisinopril" vs. "Lisinopril": drug names are often unfamiliar to the ASR model and easily mangled. What validation can you do with just a known drug name list and a dose range table?
+   *Hint:* "Metformin 500mg" vs. "Metformin 50mg": a single dropped digit can cause a 10x dosage error.  "Lisinopril" vs. "Lisinopril": drug names are often unfamiliar to the ASR model and easily mangled.  What validation can you do with just a known drug name list and a dose range table?
 
 The conversion failures you've seen in specific tools are all instances of a deeper structural problem, and grounding is the technique that makes those failures detectable rather than silent.
 
@@ -131,15 +131,15 @@ The conversion failures you've seen in specific tools are all instances of a dee
 
 # Part III: The Modality Bottleneck and Grounding
 
-In this part, you will examine the fundamental limitation of multimodal systems (lossy conversion) and the concept of grounding, which connects a model's claims back to specific locations in its input. Grounding is what makes multimodal agent outputs verifiable rather than just plausible.
+In this part, you will examine the fundamental limitation of multimodal systems (lossy conversion) and the concept of grounding, which connects a model's claims back to specific locations in its input.  Grounding is what makes multimodal agent outputs verifiable rather than just plausible.
 
-## 3. The Modality Bottleneck
+## 3.  The Modality Bottleneck
 
-All modalities eventually become tokens. This unification is the source of multimodal models' power (a single architecture reasons across modalities), but it introduces a fundamental limitation: **lossy conversion**.
+All modalities eventually become tokens.  This unification is the source of multimodal models' power (a single architecture reasons across modalities), but it introduces a fundamental limitation: **lossy conversion**.
 
-When an image is encoded into patch embeddings, fine spatial detail is compressed and potentially lost. When audio is transcribed, tone, emphasis, and speaker identity may be lost. When a PDF is parsed, layout relationships may be lost. When code is summarized, implementation details may be lost.
+When an image is encoded into patch embeddings, fine spatial detail is compressed and potentially lost.  When audio is transcribed, tone, emphasis, and speaker identity may be lost.  When a PDF is parsed, layout relationships may be lost.  When code is summarized, implementation details may be lost.
 
-These losses are not bugs; they are the cost of compression. The implication for agents is that **errors introduced at modality conversion propagate through the entire pipeline**. If the VLM misreads a digit in an invoice, every downstream tool call based on that digit will be wrong. If the transcription of a voice command mis-hears a name, the agent will act on the wrong entity.
+These losses are not bugs; they are the cost of compression.  The implication for agents is that **errors introduced at modality conversion propagate through the entire pipeline**.  If the VLM misreads a digit in an invoice, every downstream tool call based on that digit will be wrong.  If the transcription of a voice command mis-hears a name, the agent will act on the wrong entity.
 
 ## Model 3: Mitigation Strategies for Modality Errors
 
@@ -151,45 +151,45 @@ These losses are not bugs; they are the cost of compression. The implication for
 | VLM hallucinates a value for an unclear region | Invoice field is partially obscured; VLM guesses "$500" | Confidence scoring: extract logprobs or re-extract and compare | Use model's logprobs (available in OpenAI API) to estimate confidence; alternatively, extract the same field three times and flag majority-vote disagreements |
 | Video frame sampling misses a key event | A 1-frame-per-second sample misses a 0.5-second event at 0:47 | Adaptive sampling: use motion detection to identify high-activity frames | `pip install opencv-python`; compute frame-to-frame pixel difference and oversample during high-motion periods |
 
-## 4. Grounding
+## 4.  Grounding
 
 **Grounding** refers to connecting a model's output back to specific locations in its input: pointing at the exact region of an image, the exact sentence in a document, or the exact line of code that the model's response refers to.
 
-Grounding is not automatic. A model can say "the error is in the header section" without specifying where the header is. A model can say "the invoice total is $1,247" without citing which pixel region it read that from.
+Grounding is not automatic.  A model can say "the error is in the header section" without specifying where the header is.  A model can say "the invoice total is $1,247" without citing which pixel region it read that from.
 
-Models trained for grounding tasks (like PaliGemma with referring expression comprehension, or GPT-4o with bounding box output) can produce coordinates or region identifiers along with their claims. This matters for agents because:
+Models trained for grounding tasks (like PaliGemma with referring expression comprehension, or GPT-4o with bounding box output) can produce coordinates or region identifiers along with their claims.  This matters for agents because:
 
 - **Verification**: If the agent can point to the evidence, a human reviewer or a downstream tool can verify the claim
 - **UI interaction**: An agent clicking on a UI element must specify coordinates, not just describe what it wants to click
 - **Debugging**: When a grounded model is wrong, you can see exactly what region misled it
 
-**Multimodal Retrieval:** Standard RAG retrieves text documents using embedding similarity. **Multimodal retrieval** extends this to images and mixed-content documents. CLIP (Contrastive Language-Image Pretraining, `pip install clip`) trains image and text encoders jointly so that images and captions describing them have similar embeddings. This enables queries like "find me images of broken login forms" against an image database, or "find me documents that visually look like W-2 forms", without requiring that every artifact be manually transcribed to text first.
+**Multimodal Retrieval:** Standard RAG retrieves text documents using embedding similarity.  **Multimodal retrieval** extends this to images and mixed-content documents.  CLIP (Contrastive Language-Image Pretraining, `pip install clip`) trains image and text encoders jointly so that images and captions describing them have similar embeddings.  This enables queries like "find me images of broken login forms" against an image database, or "find me documents that visually look like W-2 forms", without requiring that every artifact be manually transcribed to text first.
 
 ---
 
 ## Grounding Exercise: Identifying a Broken UI Element
 
-Imagine an agent performing visual regression testing. It receives a screenshot of a web page and must identify which element is broken.
+Imagine an agent performing visual regression testing.  It receives a screenshot of a web page and must identify which element is broken.
 
 **Why This Is Hard:**
 
-- The model sees the entire screenshot, not individual elements. Without grounding, it can say "the login button looks wrong" but not specify which pixel region.
-- "Broken" is ambiguous: is it a style issue? A positioning issue? A functional issue (the button exists but does nothing)?
+- The model sees the entire screenshot, not individual elements.  Without grounding, it can say "the login button looks wrong" but not specify which pixel region.
+- "Broken" is ambiguous: is it a style issue?  A positioning issue?  A functional issue (the button exists but does nothing)?
 - The model has no access to the DOM, CSS, or JavaScript; it sees only the rendered output.
 - False positives (reporting a correctly rendered element as broken) are as problematic as false negatives.
 
 **What Grounding Means Here:**
 
-Grounding means the model outputs a bounding box or click coordinate alongside its diagnosis: "The 'Submit' button at coordinates (412, 678) to (598, 712) appears to be overlapping with the footer, and its background color (#f5f5f5) is identical to the page background, making it invisible." This is actionable; an engineer can navigate to exactly that region.
+Grounding means the model outputs a bounding box or click coordinate alongside its diagnosis: "The 'Submit' button at coordinates (412, 678) to (598, 712) appears to be overlapping with the footer, and its background color (#f5f5f5) is identical to the page background, making it invisible."  This is actionable; an engineer can navigate to exactly that region.
 
 **How to Verify the Agent Pointed to the Right Element:**
 
 - **Ground truth comparison**: If you have a reference screenshot of the correct UI, diff the flagged region between the broken and correct screenshots and confirm they differ.
 - **DOM cross-reference**: Map the bounding box back to a DOM element using browser automation tooling (Playwright's `page.locator` at those coordinates) and confirm the element's identity.
 - **Human review**: For high-stakes testing, route flagged regions to a human reviewer who confirms the diagnosis before filing a bug report.
-- **Re-query with crop**: Crop the flagged region and re-query the model asking it to describe only that region. If the description is consistent with the original diagnosis, confidence increases.
+- **Re-query with crop**: Crop the flagged region and re-query the model asking it to describe only that region.  If the description is consistent with the original diagnosis, confidence increases.
 
-A VLM is processing a screenshot of a spreadsheet to extract all cell values. The most likely failure mode is:
+A VLM is processing a screenshot of a spreadsheet to extract all cell values.  The most likely failure mode is:
 
 [(X)] Small text, merged cells, or unusual formatting confuses the model, causing extraction errors or missed values.
 [( )] The model refuses to process spreadsheets on ethical grounds; VLMs do not treat spreadsheet images as a restricted category; refusals occur for content policy reasons, not document type.
@@ -202,11 +202,11 @@ With the failure modes of individual components understood, we can now see how t
 
 # Part IV: Agent Pipeline Deep Dive
 
-In this part, you will trace a complete, real-world multimodal pipeline step by step, from receiving a raw image to writing validated data to a database. Each step in the table reveals a different failure mode and its mitigation, illustrating why production pipelines require multiple stages rather than a single model call.
+In this part, you will trace a complete, real-world multimodal pipeline step by step, from receiving a raw image to writing validated data to a database.  Each step in the table reveals a different failure mode and its mitigation, illustrating why production pipelines require multiple stages rather than a single model call.
 
 ## Model 4: Extracting Data from a Hospital Intake Form
 
-Consider an agent tasked with digitizing handwritten hospital intake forms. Each step uses different tools and introduces different failure modes.
+Consider an agent tasked with digitizing handwritten hospital intake forms.  Each step uses different tools and introduces different failure modes.
 
 | Step | Tool Used | Install / Access | Input | Output | Failure Mode | Mitigation |
 |:-----|:---------|:------|:-------|:------------|:------------|:------------|
@@ -222,11 +222,11 @@ Note that Steps 4 and 5 are critical controls: flagging low-confidence fields pr
 
 # Part V: Synthesis and Practice
 
-In this part, you will build and evaluate real multimodal pipelines using the tools covered in earlier parts. The exercises are designed to surface failure modes you can only discover by running the system on real data; accuracy numbers that surprise you are the most valuable result.
+In this part, you will build and evaluate real multimodal pipelines using the tools covered in earlier parts.  The exercises are designed to surface failure modes you can only discover by running the system on real data; accuracy numbers that surprise you are the most valuable result.
 
 ## Exercises
 
-1. *VLM extraction benchmark.* Take 10 screenshots of web forms, invoices, or structured documents. Using a VLM of your choice (LLaVA locally via `ollama pull llava:7b`, or GPT-4o/Claude via API), extract the structured fields from each. Manually compare the extracted values to the ground truth. Report: field-level accuracy, which field types are most often wrong, and the cost of API calls if you used a cloud model.
+1.  *VLM extraction benchmark.*  Take 10 screenshots of web forms, invoices, or structured documents.  Using a VLM of your choice (LLaVA locally via `ollama pull llava:7b`, or GPT-4o/Claude via API), extract the structured fields from each.  Manually compare the extracted values to the ground truth.  Report: field-level accuracy, which field types are most often wrong, and the cost of API calls if you used a cloud model.
 
    *What to do:* Create a simple evaluation script that compares extracted JSON to a manually labeled ground truth JSON. Use exact match for numeric fields and case-insensitive match for text fields.
 
@@ -273,9 +273,9 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
    *You've succeeded when:* You have a table of 10 documents × field count with accuracy percentages, and you can identify which field type (text name, date, dollar amount, address) has the lowest extraction accuracy and explain why.
 
-2. *Audio pipeline construction.* Using Whisper (`pip install openai-whisper`) and an LLM, build a meeting-to-action-items pipeline: record or use a sample audio file, transcribe it, and extract a structured list of action items with assignee and due date.
+2.  *Audio pipeline construction.*  Using Whisper (`pip install openai-whisper`) and an LLM, build a meeting-to-action-items pipeline: record or use a sample audio file, transcribe it, and extract a structured list of action items with assignee and due date.
 
-   *What to do:* Transcribe the audio, then send the transcript to an LLM with a structured extraction prompt. Validate that each action item has the required fields.
+   *What to do:* Transcribe the audio, then send the transcript to an LLM with a structured extraction prompt.  Validate that each action item has the required fields.
 
    *Starter hint:* The code below chains two steps (Whisper transcription followed by LLM extraction) look for how the transcript is passed verbatim into the extraction prompt, and consider what happens to the extraction if the transcription contains a word error:
 
@@ -315,17 +315,17 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
    *You've succeeded when:* You can demonstrate the full pipeline (audio in, structured JSON action items out) and you have tested it on at least one audio file where you know the ground truth (either you recorded it yourself or you have a transcript).
 
-3. *Modality comparison experiment.* Take the same 5 documents in two formats: as a text file (typed text) and as a screenshot. Extract the same structured fields using the text directly vs. using the VLM on the screenshot. Report: accuracy difference, token cost difference, and which document types favor one approach over the other.
+3.  *Modality comparison experiment.*  Take the same 5 documents in two formats: as a text file (typed text) and as a screenshot.  Extract the same structured fields using the text directly vs. using the VLM on the screenshot.  Report: accuracy difference, token cost difference, and which document types favor one approach over the other.
 
    *What to do:* For text extraction, send the document text directly to the LLM. For vision extraction, encode the screenshot as base64 and send it to a VLM. Compare accuracy and cost.
 
-   *Starter hint:* Expected finding: text extraction is almost always more accurate and cheaper than VLM extraction for digitally-created documents. VLM wins for documents with complex layout where text extraction loses column structure, and for scanned documents where there is no text layer to extract.
+   *Starter hint:* Expected finding: text extraction is almost always more accurate and cheaper than VLM extraction for digitally-created documents.  VLM wins for documents with complex layout where text extraction loses column structure, and for scanned documents where there is no text layer to extract.
 
    *You've succeeded when:* You have a 5×2 table (documents × approaches) with per-field accuracy and cost in tokens/dollars, and a written recommendation for each document type.
 
-4. *Grounding implementation.* Using a VLM that supports bounding box output (GPT-4o with structured output, or a grounding-trained model), process a screenshot of a web page and ask the model to identify three specific UI elements (a button, a form field, and an error message) and return their bounding box coordinates. Verify by cropping the image to those coordinates and confirming the element is present.
+4.  *Grounding implementation.*  Using a VLM that supports bounding box output (GPT-4o with structured output, or a grounding-trained model), process a screenshot of a web page and ask the model to identify three specific UI elements (a button, a form field, and an error message) and return their bounding box coordinates.  Verify by cropping the image to those coordinates and confirming the element is present.
 
-   *What to do:* Ask the VLM to return `{"elements": [{"name": "Submit button", "bbox": [x1, y1, x2, y2], "confidence": "high/low"}]}`. Crop the image using Pillow and display the crops.
+   *What to do:* Ask the VLM to return `{"elements": [{"name": "Submit button", "bbox": [x1, y1, x2, y2], "confidence": "high/low"}]}`.  Crop the image using Pillow and display the crops.
 
    *Starter hint:*
    ```python
@@ -344,17 +344,17 @@ In this part, you will build and evaluate real multimodal pipelines using the to
        crop_and_show("screenshot.png", element["bbox"], element["name"].replace(" ", "_"))
    ```
 
-   *You've succeeded when:* You have saved cropped images for each element and can confirm visually that the VLM pointed to the correct region (not just the right general area). Note and document any cases where the bounding box was incorrect.
+   *You've succeeded when:* You have saved cropped images for each element and can confirm visually that the VLM pointed to the correct region (not just the right general area).  Note and document any cases where the bounding box was incorrect.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Think about how you process information differently when you read a text description of something versus when you see a photo or diagram. What kinds of information do you extract from images that you would miss in a text description? Now think about what a VLM might miss that a human would catch: what does this suggest about where humans should remain in the loop?
+*Personal:* Think about how you process information differently when you read a text description of something versus when you see a photo or diagram.  What kinds of information do you extract from images that you would miss in a text description?  Now think about what a VLM might miss that a human would catch: what does this suggest about where humans should remain in the loop?
 
-*Technical:* All modalities eventually become tokens. This means lossy conversion is unavoidable; some information is always lost in the encoding step. For a medical imaging agent that processes X-ray images, what specific information might be lost when a complex radiological image is encoded as ~512 patch tokens? What does this loss imply about deploying VLMs as autonomous decision-makers in radiology?
+*Technical:* All modalities eventually become tokens.  This means lossy conversion is unavoidable; some information is always lost in the encoding step.  For a medical imaging agent that processes X-ray images, what specific information might be lost when a complex radiological image is encoded as ~512 patch tokens?  What does this loss imply about deploying VLMs as autonomous decision-makers in radiology?
 
-*Societal:* Multimodal agents can process photos of people, audio recordings of conversations, and documents that were not intended to be machine-readable. What new privacy risks emerge when AI agents can extract structured data from a photo of a whiteboard taken at a business meeting, or from a voice recording captured in a public space? What norms or regulations would you want to see govern these capabilities?
+*Societal:* Multimodal agents can process photos of people, audio recordings of conversations, and documents that were not intended to be machine-readable.  What new privacy risks emerge when AI agents can extract structured data from a photo of a whiteboard taken at a business meeting, or from a voice recording captured in a public space?  What norms or regulations would you want to see govern these capabilities?
 
 ---
 
@@ -364,8 +364,8 @@ In this part, you will build and evaluate real multimodal pipelines using the to
 
 ## Further Reading
 
-- Radford et al. "Learning Transferable Visual Models From Natural Language Supervision." (CLIP paper) *ICML* (2021).
-- Liu et al. "Visual Instruction Tuning." (LLaVA paper) *NeurIPS* (2023).
-- OpenAI. "GPT-4 Technical Report." arXiv:2303.08774 (2023). Section on vision capabilities.
+- Radford et al. "Learning Transferable Visual Models From Natural Language Supervision."  (CLIP paper) *ICML* (2021).
+- Liu et al. "Visual Instruction Tuning."  (LLaVA paper) *NeurIPS* (2023).
+- OpenAI. "GPT-4 Technical Report." arXiv:2303.08774 (2023).  Section on vision capabilities.
 - Whisper model card and documentation: https://github.com/openai/whisper
 - PaliGemma model card (for grounding tasks): https://ai.google.dev/gemma/docs/paligemma

@@ -4,14 +4,14 @@ permalink: /Assignments/LocalAgent/Direction4
 title: "CS357 Lab: Local Agent, Direction 4: Build and Deploy an MCP Server with OAuth 2.0"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent). It carries no separate point value and no rubric of its own; your combined core + direction work is graded with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  No separate points and no separate rubric here.  I grade the core and the direction together against the rubric on the core lab page.
 
-> **Rather not write the code?** [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Pick whichever direction fits how you want to work.  The credit is the same either way.
 
 > **What this direction requires**
 >
 > - **Accounts:** none; the OAuth authorization server is a local mock server (or local Keycloak); no cloud identity provider is involved.
-> - **API costs:** none required; the MCP server, tokens, and tools are all local. Part 4 drives the server from an agent client; the direction shows one hosted-agent configuration but explicitly permits any MCP-capable agent, including local Ollama-based agents with tool support.
+> - **API costs:** none required; the MCP server, tokens, and tools are all local.  Part 4 drives the server from an agent client; the direction shows one hosted-agent configuration but explicitly permits any MCP-capable agent, including local Ollama-based agents with tool support.
 > - **Installs / disk:** Python packages (`mcp[cli]`, `fastapi`, `uvicorn`, `python-jose[cryptography]`, `requests`) plus Docker Desktop or Docker Engine to run the mock OAuth2 server image (a few hundred MB; the Keycloak alternative is roughly 1 GB).
 > - **Hardware:** any machine that runs the core lab; three services run simultaneously, so plan your ports.
 > - **No-cost fallback:** built in; for Part 4, use an Ollama-backed agent with tool support instead of a hosted agent client, as the direction text allows.
@@ -19,19 +19,19 @@ title: "CS357 Lab: Local Agent, Direction 4: Build and Deploy an MCP Server with
 ---
 
 
-Take the local agent you built in the core lab and give it real, authenticated tools. You will build a Model Context Protocol (MCP) server that exposes at least two working tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools, and document the full data flow from agent request through OAuth token to tool response.
+Take the local agent you built in the core lab and give it real, authenticated tools.  You will build a Model Context Protocol (MCP) server that exposes at least two working tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools, and document the full data flow from agent request through OAuth token to tool response.
 
-> **Background resource:** the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/), built with Anthropic, covers the MCP protocol, building a server, and connecting clients. Work through its server-building units before this direction if MCP is new to you; this direction then adds the OAuth 2.0 authorization layer on top of that foundation.
+> **Background resource:** the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/), built with Anthropic, covers the MCP protocol, building a server, and connecting clients.  Work through its server-building units before this direction if MCP is new to you; this direction then adds the OAuth 2.0 authorization layer on top of that foundation.
 
-In this lab, you and your partner will build a Model Context Protocol (MCP) server that exposes real tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools. The skills being assessed are implementation precision (does the server actually work?), security integration (does OAuth actually gate access?), and documentation clarity (can someone else understand the data flow?). This lab is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**.
+In this lab, you and your partner will build a Model Context Protocol (MCP) server that exposes real tools to a local AI agent, then secure it with OAuth 2.0 so that only authorized clients can invoke those tools.  The skills being assessed are implementation precision (does the server actually work?), security integration (does OAuth actually gate access?), and documentation clarity (can someone else understand the data flow?).  You complete this lab in **pairs, using driver/navigator roles, swapping at least every 30 minutes and keeping a swap log**.
 
 ---
 
 #### Overview
 
-**Model Context Protocol (MCP)** is an open standard that gives AI agents a uniform way to discover and call external tools. Instead of hard-coding API calls into an agent, you publish a server that advertises its capabilities through a standard schema. The agent reads that schema, decides which tools to use, and calls them, all without the agent needing to know anything about the underlying implementation.
+**Model Context Protocol (MCP)** is an open standard that gives AI agents a uniform way to discover and call external tools.  Instead of hard-coding API calls into an agent, you publish a server that advertises its capabilities through a standard schema.  The agent reads that schema, decides which tools to use, and calls them, all without the agent needing to know anything about the underlying implementation.
 
-Why does OAuth matter here? Without authentication, any process on the same machine (or network) could invoke your MCP tools. OAuth 2.0 adds a layer of authorization: the agent must first prove its identity to an authorization server and receive a short-lived token; then the MCP server validates that token on every request and enforces scopes that limit what each caller is permitted to do. This lab walks you through all three layers: the MCP server itself, the OAuth wrapper, and the agent that uses both.
+Why does OAuth matter here?  Without authentication, any process on the same machine (or network) could invoke your MCP tools.  OAuth 2.0 adds a layer of authorization: the agent must first prove its identity to an authorization server and receive a short-lived token; then the MCP server validates that token on every request and enforces scopes that limit what each caller is permitted to do.  This lab walks you through all three layers: the MCP server itself, the OAuth wrapper, and the agent that uses both.
 
 ---
 
@@ -44,7 +44,7 @@ Why does OAuth matter here? Without authentication, any process on the same mach
 
 ##### Install Required Tools
 
-Run the following commands in your terminal. If you are using a virtual environment (recommended), activate it first.
+Run the following commands in your terminal.  If you are using a virtual environment (recommended), activate it first.
 
 ```bash
 pip install "mcp[cli]" fastapi uvicorn "python-jose[cryptography]" requests
@@ -62,7 +62,7 @@ Alternatively, you may use Keycloak in dev mode:
 docker pull quay.io/keycloak/keycloak:latest
 ```
 
-Both options are acceptable. The lab instructions below use the mock OAuth2 server because its startup time is faster. If you choose Keycloak, the token endpoint URL and realm configuration will differ; consult the Keycloak quickstart documentation and adapt the `curl` commands accordingly.
+Both options are acceptable.  The lab instructions below use the mock OAuth2 server because its startup time is faster.  If you choose Keycloak, the token endpoint URL and realm configuration will differ; consult the Keycloak quickstart documentation and adapt the `curl` commands accordingly.
 
 ##### Verify Your Installation
 
@@ -76,13 +76,13 @@ $ docker run --rm ghcr.io/navikt/mock-oauth2-server:latest --help
 # Should print usage information for the mock OAuth2 server
 ```
 
-If the first command raises `ModuleNotFoundError`, the `mcp` package did not install correctly. Confirm that you are in the right virtual environment and re-run `pip install "mcp[cli]"`.
+If the first command raises `ModuleNotFoundError`, the `mcp` package did not install correctly.  Confirm that you are in the right virtual environment and re-run `pip install "mcp[cli]"`.
 
-If the second command hangs or fails with a "Cannot connect to the Docker daemon" error, Docker is not running. Start Docker Desktop (or the Docker daemon on Linux) and try again.
+If the second command hangs or fails with a "Cannot connect to the Docker daemon" error, Docker is not running.  Start Docker Desktop (or the Docker daemon on Linux) and try again.
 
 ##### Port Planning
 
-This lab runs three services simultaneously. Each must use a distinct port to avoid collisions. Plan your ports **now**, before writing any code:
+This lab runs three services simultaneously.  Each must use a distinct port to avoid collisions.  Plan your ports **now**, before writing any code:
 
 | Service | Default Port | Assigned Port | Reason for Change |
 |---|---|---|---|
@@ -90,7 +90,7 @@ This lab runs three services simultaneously. Each must use a distinct port to av
 | OAuth Server | 8080 | _(fill in)_ | _(fill in or "no change")_ |
 | AI Agent / Claude Code | varies | _(fill in)_ | _(fill in or "no change")_ |
 
-> **Tip:** On most development machines port 8080 is frequently in use. Assigning the OAuth server to port 8090 is a common choice that avoids conflicts. If you are unsure whether a port is free, run `lsof -i :<port>` (macOS/Linux) or `netstat -ano | findstr :<port>` (Windows).
+> **Tip:** On most development machines port 8080 is frequently in use.  Assigning the OAuth server to port 8090 is a common choice that avoids conflicts.  If you are unsure whether a port is free, run `lsof -i :<port>` (macOS/Linux) or `netstat -ano | findstr :<port>` (Windows).
 
 ##### Estimated Time
 
@@ -115,11 +115,11 @@ Choose **one** of the following domains for your MCP server, or propose an alter
 - **Weather API wrapper**: tools that query a local JSON data file of weather observations
 - **Code repository summary**: tools that inspect a local git repository and summarize recent commits or changed files
 
-Write a one-paragraph justification for your choice. Your justification should address: (a) what the two tools will do, (b) which tool reads data and which transforms or processes it, and (c) why this domain is interesting or useful to automate with an AI agent. Include this paragraph in your submission's README.
+Write a one-paragraph justification for your choice.  Your justification should address: (a) what the two tools will do, (b) which tool reads data and which transforms or processes it, and (c) why this domain is interesting or useful to automate with an AI agent.  Include this paragraph in your submission's README.
 
 ##### Step 2: Write the Tool Schemas
 
-For each tool, you must write a complete JSON Schema object **before** implementing it. Writing the schema first forces you to think precisely about inputs, types, and constraints before you touch any code.
+For each tool, you must write a complete JSON Schema object **before** implementing it.  Writing the schema first forces you to think precisely about inputs, types, and constraints before you touch any code.
 
 Here is a complete, filled-in example for a `search_files` tool and a `summarize_file` tool (these match the local file search domain):
 
@@ -209,7 +209,7 @@ Include both completed schemas in your submission's README.
 
 ##### Step 3: Sketch the OAuth 2.0 Flow
 
-Before writing any code, draw a simple ASCII diagram (or a hand-drawn photo) showing the three actors and the message flow. Here is the pattern to follow; adapt it for your deployment:
+Before writing any code, draw a simple ASCII diagram (or a hand-drawn photo) showing the three actors and the message flow.  Here is the pattern to follow; adapt it for your deployment:
 
 ```
   AI Agent (MCP Client)
@@ -238,24 +238,24 @@ Before writing any code, draw a simple ASCII diagram (or a hand-drawn photo) sho
   AI Agent (receives tool response)
 ```
 
-Label each arrow with the protocol step number. Include this diagram in your submission.
+Label each arrow with the protocol step number.  Include this diagram in your submission.
 
 ##### Step 4: Fill In the Port Table
 
-Return to the port table from the Before You Start section and complete every column. Resolve any collisions now. You will reference these ports throughout the lab.
+Return to the port table from the Before You Start section and complete every column.  Resolve any collisions now.  You will reference these ports throughout the lab.
 
 ---
 
 ##### Troubleshooting, Part 1
 
 **"Port 8080 is already in use when I start the OAuth server."**
-Use a different host port. The Docker `-p` flag maps `host:container`, so `-p 8090:8080` runs the container on host port 8090 while the container still listens internally on 8080. Update every `curl` command to use 8090.
+Use a different host port.  The Docker `-p` flag maps `host:container`, so `-p 8090:8080` runs the container on host port 8090 while the container still listens internally on 8080.  Update every `curl` command to use 8090.
 
 **"My tool schema is missing a `required` field and validation is silently passing."**
-JSON Schema `required` is a property of the object schema, not of individual properties. It must be a top-level array inside `"type": "object"`. If you omit `required`, all fields are considered optional and you must enforce presence manually in your code.
+JSON Schema `required` is a property of the object schema, not of individual properties.  It must be a top-level array inside `"type": "object"`.  If you omit `required`, all fields are considered optional and you must enforce presence manually in your code.
 
 **"I am confused about which component is the client."**
-In the OAuth 2.0 client credentials flow: the **AI agent** is the client (it requests the token), the **mock OAuth server** is the authorization server (it issues tokens), and the **MCP server** is the resource server (it validates tokens and serves tools). The MCP server never requests a token; it only validates them.
+In the OAuth 2.0 client credentials flow: the **AI agent** is the client (it requests the token), the **mock OAuth server** is the authorization server (it issues tokens), and the **MCP server** is the resource server (it validates tokens and serves tools).  The MCP server never requests a token; it only validates them.
 
 ---
 
@@ -263,9 +263,9 @@ In the OAuth 2.0 client credentials flow: the **AI agent** is the client (it req
 
 Answer these three questions in your pair log before moving to Part 2:
 
-1. What are the names of your two tools, and which one reads data versus which one transforms or processes it?
-2. What port will each of your three services use? Are there any collisions?
-3. In the OAuth 2.0 flow you sketched, which component issues tokens and which component validates them?
+1.  What are the names of your two tools, and which one reads data versus which one transforms or processes it?
+2.  What port will each of your three services use?  Are there any collisions?
+3.  In the OAuth 2.0 flow you sketched, which component issues tokens and which component validates them?
 
 ---
 
@@ -273,7 +273,7 @@ Answer these three questions in your pair log before moving to Part 2:
 
 ##### Step 1: Set Up the Project Structure
 
-Create the following directory layout before writing any code. Having a clear structure now will save debugging time later.
+Create the following directory layout before writing any code.  Having a clear structure now will save debugging time later.
 
 ```
 cs357-mcp-lab/
@@ -303,7 +303,7 @@ pip freeze > requirements.txt
 
 ##### Step 2: Implement the MCP Server Skeleton
 
-Create `mcp_server.py` using the starter code below. Read every `TODO` comment carefully; each one is a specific task you must complete. Do not remove the logging lines; they are required for the rubric.
+Create `mcp_server.py` using the starter code below.  Read every `TODO` comment carefully; each one is a specific task you must complete.  Do not remove the logging lines; they are required for the rubric.
 
 ```python
 # mcp_server.py
@@ -424,7 +424,7 @@ if __name__ == "__main__":
 
 ##### Step 3: Test the Tools Directly
 
-Before adding OAuth, verify that both tools work by running the server in stdio mode and calling it with `curl`. In one terminal, start the server:
+Before adding OAuth, verify that both tools work by running the server in stdio mode and calling it with `curl`.  In one terminal, start the server:
 
 ```bash
 python mcp_server.py
@@ -447,7 +447,7 @@ curl -s -X POST http://localhost:8000/mcp \
 ```
 
 > **What you should see:**
-> A JSON response containing a `result` object with a `content` array. The first element should have `"type": "text"` and a `text` field containing your tool's output. For example:
+> A JSON response containing a `result` object with a `content` array.  The first element should have `"type": "text"` and a `text` field containing your tool's output.  For example:
 > ```json
 > {
 >   "jsonrpc": "2.0",
@@ -460,11 +460,11 @@ curl -s -X POST http://localhost:8000/mcp \
 > }
 > ```
 
-Test your second tool with a similar `curl` command. Also test the error case: send a request that is missing a required argument and verify the response contains an error.
+Test your second tool with a similar `curl` command.  Also test the error case: send a request that is missing a required argument and verify the response contains an error.
 
 ##### Step 4: Verify Structured Logging
 
-Check the terminal where the server is running. Each invocation should produce a log line that is valid JSON. For example:
+Check the terminal where the server is running.  Each invocation should produce a log line that is valid JSON. For example:
 
 ```json
 {"time": "2026-06-21 10:15:32,041", "level": "INFO", "message": "Tool invoked: search_files, arguments: {\"query\": \"README\"}, timestamp: 2026-06-21T10:15:32.041Z"}
@@ -477,13 +477,13 @@ If the log lines are not appearing, check that `logging.basicConfig` is called b
 ##### Troubleshooting, Part 2
 
 **`ImportError: No module named 'mcp'`**
-The package was not installed in the active environment. Confirm which Python interpreter is running (`which python`) and that your virtual environment is activated. Re-run `pip install "mcp[cli]"` in that environment.
+The package was not installed in the active environment.  Confirm which Python interpreter is running (`which python`) and that your virtual environment is activated.  Re-run `pip install "mcp[cli]"` in that environment.
 
 **Tool handler returns `None` instead of `TextContent`**
-Every branch of `call_tool` must explicitly `return` a list. A missing `return` statement (or a `pass` left in place) causes Python to return `None`, which the MCP SDK cannot serialize. Replace every `pass` with a `return [types.TextContent(...)]`.
+Every branch of `call_tool` must explicitly `return` a list.  A missing `return` statement (or a `pass` left in place) causes Python to return `None`, which the MCP SDK cannot serialize.  Replace every `pass` with a `return [types.TextContent(...)]`.
 
 **JSON schema validation is silently accepting missing fields**
-The MCP SDK does not automatically enforce your `inputSchema`. You must validate manually in `call_tool`. After completing the TODO block, test this by intentionally sending a request without a required field and verifying that you receive a `ValueError` response.
+The MCP SDK does not automatically enforce your `inputSchema`.  You must validate manually in `call_tool`.  After completing the TODO block, test this by intentionally sending a request without a required field and verifying that you receive a `ValueError` response.
 
 ---
 
@@ -491,9 +491,9 @@ The MCP SDK does not automatically enforce your `inputSchema`. You must validate
 
 Answer these three questions in your pair log before moving to Part 3:
 
-1. Paste the `curl` command you used to test your first tool and the first line of the response you received.
-2. What happens when you send a request with a missing required argument? Paste the response.
-3. Open the log file (or terminal output) and paste one log line. Is it valid JSON? Verify by piping it through `python -m json.tool`.
+1.  Paste the `curl` command you used to test your first tool and the first line of the response you received.
+2.  What happens when you send a request with a missing required argument?  Paste the response.
+3.  Open the log file (or terminal output) and paste one log line.  Is it valid JSON? Verify by piping it through `python -m json.tool`.
 
 ---
 
@@ -501,7 +501,7 @@ Answer these three questions in your pair log before moving to Part 3:
 
 ##### Step 1: Start the Mock OAuth Server
 
-Open a new terminal and start the mock OAuth2 server. This server will issue and validate JWT tokens for your lab.
+Open a new terminal and start the mock OAuth2 server.  This server will issue and validate JWT tokens for your lab.
 
 ```bash
 docker run -d --name oauth-server -p 8090:8080 \
@@ -509,7 +509,7 @@ docker run -d --name oauth-server -p 8090:8080 \
 ```
 
 > **What you should see:**
-> Docker will print a container ID (a long hex string) and return you to the prompt. The container starts in the background. Verify it is running:
+> Docker will print a container ID (a long hex string) and return you to the prompt.  The container starts in the background.  Verify it is running:
 > ```bash
 > docker ps
 > # You should see a row with "oauth-server" in the NAMES column and
@@ -521,7 +521,7 @@ docker run -d --name oauth-server -p 8090:8080 \
 
 ##### Step 2: Obtain a Token Using Client Credentials Flow
 
-The client credentials flow is the OAuth 2.0 grant type used when a machine (not a human) needs to authenticate. The agent presents its client ID and secret directly to the token endpoint and receives an access token.
+The client credentials flow is the OAuth 2.0 grant type used when a machine (not a human) needs to authenticate.  The agent presents its client ID and secret directly to the token endpoint and receives an access token.
 
 ```bash
 curl -s -X POST http://localhost:8090/default/token \
@@ -538,12 +538,12 @@ curl -s -X POST http://localhost:8090/default/token \
 >   "scope": "mcp:read"
 > }
 > ```
-> Copy the value of `access_token`. You will use it in the next step.
+> Copy the value of `access_token`.  You will use it in the next step.
 > To inspect the token's claims, paste it into [jwt.io](https://jwt.io); you should see the `sub`, `scope`, `iat`, and `exp` fields.
 
 ##### Step 3: Add Bearer Token Validation to the MCP Server
 
-Create `oauth_middleware.py` with the helper functions below, then import and call them from `mcp_server.py`. The key points:
+Create `oauth_middleware.py` with the helper functions below, then import and call them from `mcp_server.py`.  The key points:
 
 - Fetch the JWKS (public keys) from the OAuth server once at startup and cache them.
 - On every request, extract the `Authorization: Bearer <token>` header.
@@ -634,7 +634,7 @@ def validate_token(token: str, required_scope: str = None) -> dict:
     return claims
 ```
 
-Now add token validation to `mcp_server.py`. At the top of both `list_tools` and `call_tool`, call `validate_token` with the appropriate scope. Because the MCP SDK uses stdio transport for local communication, the token is passed as a custom header or query parameter depending on your agent configuration; for this lab you will wrap the server with a small FastAPI HTTP layer.
+Now add token validation to `mcp_server.py`.  At the top of both `list_tools` and `call_tool`, call `validate_token` with the appropriate scope.  Because the MCP SDK uses stdio transport for local communication, the token is passed as a custom header or query parameter depending on your agent configuration; for this lab you will wrap the server with a small FastAPI HTTP layer.
 
 Add a `server_http.py` file that wraps the MCP server with FastAPI:
 
@@ -713,7 +713,7 @@ curl -s -X POST http://localhost:8000/mcp \
 
 ##### Step 5: Demonstrate Token Expiry
 
-Request a token with a very short lifetime. The mock OAuth2 server accepts a custom expiry via the `exp` parameter in some configurations, or you can simply wait for the default token to expire. A simpler approach is to manually craft an expired token for testing:
+Request a token with a very short lifetime.  The mock OAuth2 server accepts a custom expiry via the `exp` parameter in some configurations, or you can simply wait for the default token to expire.  A simpler approach is to manually craft an expired token for testing:
 
 ```bash
 # Request a token with the shortest supported lifetime
@@ -732,20 +732,20 @@ curl -s -X POST http://localhost:8090/default/token \
 >   "detail": "Invalid token: Signature has expired."
 > }
 > ```
-> with HTTP status `401 Unauthorized`. Save this output for your submission.
+> with HTTP status `401 Unauthorized`.  Save this output for your submission.
 
 ---
 
 ##### Troubleshooting, Part 3
 
 **"HTTP 401 even though I just got the token and it should not have expired."**
-Check that your `ISSUER` constant in `oauth_middleware.py` exactly matches the `iss` claim in the token (inspect it at jwt.io). A trailing slash or wrong realm name will cause `jose.jwt.decode` to fail with an issuer mismatch, which presents as 401.
+Check that your `ISSUER` constant in `oauth_middleware.py` exactly matches the `iss` claim in the token (inspect it at jwt.io).  A trailing slash or wrong realm name will cause `jose.jwt.decode` to fail with an issuer mismatch, which presents as 401.
 
 **"The `scope` claim is not in the token."**
-The mock OAuth2 server only includes scopes that you explicitly request in the `scope` parameter of the token request. Confirm your `curl` command includes `scope=mcp:read`. If the claim is still absent, check the server's claim mapping configuration.
+The mock OAuth2 server only includes scopes that you explicitly request in the `scope` parameter of the token request.  Confirm your `curl` command includes `scope=mcp:read`.  If the claim is still absent, check the server's claim mapping configuration.
 
 **"JWKS endpoint is unreachable: `ConnectionRefusedError`."**
-The OAuth Docker container may not have finished starting. Run `docker logs oauth-server` to see its startup output. Wait until you see a line indicating the server is listening, then retry.
+The OAuth Docker container may not have finished starting.  Run `docker logs oauth-server` to see its startup output.  Wait until you see a line indicating the server is listening, then retry.
 
 ---
 
@@ -753,9 +753,9 @@ The OAuth Docker container may not have finished starting. Run `docker logs oaut
 
 Answer these three questions in your pair log before moving to Part 4:
 
-1. Paste the HTTP 401 response you received when you sent a request without a token.
-2. What is the value of the `iss` claim in your token, and how does it match the `ISSUER` constant in your code?
-3. Paste the HTTP 401 response you received when you presented an expired token. How does the error message differ from the "missing token" error?
+1.  Paste the HTTP 401 response you received when you sent a request without a token.
+2.  What is the value of the `iss` claim in your token, and how does it match the `ISSUER` constant in your code?
+3.  Paste the HTTP 401 response you received when you presented an expired token.  How does the error message differ from the "missing token" error?
 
 ---
 
@@ -763,7 +763,7 @@ Answer these three questions in your pair log before moving to Part 4:
 
 ##### Step 1: Configure the Agent to Use Your MCP Server
 
-For **Claude Code**, add your MCP server to the project configuration file. Create or edit `.claude/settings.json` in your project directory (or `~/.claude.json` for a global configuration):
+For **Claude Code**, add your MCP server to the project configuration file.  Create or edit `.claude/settings.json` in your project directory (or `~/.claude.json` for a global configuration):
 
 ```json
 {
@@ -783,38 +783,38 @@ For **Claude Code**, add your MCP server to the project configuration file. Crea
 
 Replace `/absolute/path/to/cs357-mcp-lab/` with the actual path on your machine.
 
-For **other agents** (Ollama with tool support, LangChain agents, etc.), consult your agent's documentation for the equivalent MCP server registration step. The key information you need to provide is: the server command, any environment variables for OAuth credentials, and the transport type (stdio for local servers).
+For **other agents** (Ollama with tool support, LangChain agents, etc.), consult your agent's documentation for the equivalent MCP server registration step.  The key information you need to provide is: the server command, any environment variables for OAuth credentials, and the transport type (stdio for local servers).
 
-Restart the agent after editing the configuration. The agent should now list your tools when it starts.
+Restart the agent after editing the configuration.  The agent should now list your tools when it starts.
 
 ##### Step 2: Give the Agent a Task That Requires Both Tools
 
-Do **not** manually call the tools or construct the tool calls yourself. Give the agent a natural-language task and let it decide which tools to use and in what order. Here are three example tasks matched to the local file search domain; adapt for your chosen domain:
+Do **not** manually call the tools or construct the tool calls yourself.  Give the agent a natural-language task and let it decide which tools to use and in what order.  Here are three example tasks matched to the local file search domain; adapt for your chosen domain:
 
 - **Task A:** "Find all Python files in the cs357-mcp-lab directory that contain the word 'TODO', then summarize the first one you find so I know what still needs to be done."
 - **Task B:** "Search the workspace for any file named `requirements.txt` and show me its first 10 lines."
-- **Task C:** "I want to understand the structure of this project. Find all `.py` files and then give me a summary of `mcp_server.py`."
+- **Task C:** "I want to understand the structure of this project.  Find all `.py` files and then give me a summary of `mcp_server.py`."
 
-Each of these tasks requires the agent to (1) call the search tool to locate a file, and then (2) call the transform/summarize tool on the result. This is the natural two-tool sequence you must demonstrate.
+Each of these tasks requires the agent to (1) call the search tool to locate a file, and then (2) call the transform/summarize tool on the result.  This is the natural two-tool sequence you must demonstrate.
 
 ##### Step 3: Capture the Full Invocation Trace
 
-You must capture and submit evidence of the full invocation sequence. Depending on your agent:
+You must capture and submit evidence of the full invocation sequence.  Depending on your agent:
 
 - **Claude Code:** run with `--debug` or check the MCP server log file in `logs/`.
 - **Any agent:** redirect the MCP server's stderr to a file: `python mcp_server.py 2> logs/invocation.log`.
 
 The trace must show:
-1. The agent calling `tools/list` (tool discovery)
-2. The token exchange request and response (or evidence that the token was used)
-3. The `tools/call` request with the exact arguments passed
-4. The tool response returned to the agent
+1.  The agent calling `tools/list` (tool discovery)
+2.  The token exchange request and response (or evidence that the token was used)
+3.  The `tools/call` request with the exact arguments passed
+4.  The tool response returned to the agent
 
 Save the complete trace as `invocation_trace.txt` in your submission.
 
 ##### Step 4: Test Error Case 1, Expired Token
 
-Use the expired token from Part 3 Step 5 and send it to your server while the agent is running. Document the exact request, the server log entry, and the response the agent receives.
+Use the expired token from Part 3 Step 5 and send it to your server while the agent is running.  Document the exact request, the server log entry, and the response the agent receives.
 
 ```bash
 # Send a request with the expired token
@@ -840,20 +840,20 @@ curl -s -X POST http://localhost:8000/mcp \
 ```
 
 > **What you should see:**
-> A JSON-RPC error response (not HTTP 500) with a descriptive message. The agent should receive this error and either retry with a different path or report the failure to the user. Save this output as `error_tool_failure.txt`.
+> A JSON-RPC error response (not HTTP 500) with a descriptive message.  The agent should receive this error and either retry with a different path or report the failure to the user.  Save this output as `error_tool_failure.txt`.
 
 ---
 
 ##### Troubleshooting, Part 4
 
 **"The agent cannot discover my tools; it says the MCP server is unavailable."**
-Check that the server is actually running (`ps aux | grep mcp_server`). Verify the path in the agent configuration is correct and absolute. Check the agent's log for the exact error message; common causes are a wrong Python interpreter path and a missing environment variable.
+Check that the server is actually running (`ps aux | grep mcp_server`).  Verify the path in the agent configuration is correct and absolute.  Check the agent's log for the exact error message; common causes are a wrong Python interpreter path and a missing environment variable.
 
 **"The agent discovers the tools but never invokes them."**
-The agent may not think the tools are relevant to the task you gave it. Try a more explicit task: "Use the search_files tool to find README files." Also verify that your tool descriptions in `list_tools()` are clear and specific; vague descriptions cause the agent to skip the tool.
+The agent may not think the tools are relevant to the task you gave it.  Try a more explicit task: "Use the search_files tool to find README files."  Also verify that your tool descriptions in `list_tools()` are clear and specific; vague descriptions cause the agent to skip the tool.
 
 **"The agent invokes the tool but the response is not formatted as expected."**
-The MCP SDK requires that `call_tool` return a `list[types.TextContent]`. If you return a plain string, a dict, or an empty list, the agent may not be able to parse the response. Double-check every `return` statement in `call_tool`.
+The MCP SDK requires that `call_tool` return a `list[types.TextContent]`.  If you return a plain string, a dict, or an empty list, the agent may not be able to parse the response.  Double-check every `return` statement in `call_tool`.
 
 ---
 
@@ -861,9 +861,9 @@ The MCP SDK requires that `call_tool` return a `list[types.TextContent]`. If you
 
 Answer these three questions in your pair log before writing up your documentation:
 
-1. What exact task did you give the agent? Did it naturally invoke both tools without you prompting it for each one?
-2. What does the invocation trace show happened between tool discovery and the first tool call?
-3. How did the agent respond when it received the tool failure error from Step 5; did it retry, report the error, or do something else?
+1.  What exact task did you give the agent?  Did it naturally invoke both tools without you prompting it for each one?
+2.  What does the invocation trace show happened between tool discovery and the first tool call?
+3.  How did the agent respond when it received the tool failure error from Step 5; did it retry, report the error, or do something else?
 
 ---
 
@@ -893,33 +893,33 @@ Submit a ZIP file containing all of the following:
 
 #### Extension Challenges
 
-These challenges are optional. They are designed to push your understanding beyond the rubric requirements.
+These challenges are optional.  They are designed to push your understanding beyond the rubric requirements.
 
 ##### Challenge 1: Add a Third Tool with Admin-Only Access
 
-Implement a third tool (for example, `list_all_indexes` or `export_results`) that requires the `mcp:admin` scope. Verify that a token with only `mcp:read` receives HTTP 403 (Forbidden) when it attempts to invoke this tool, while a token with `mcp:admin` succeeds. Document the exact test commands and responses.
+Implement a third tool (for example, `list_all_indexes` or `export_results`) that requires the `mcp:admin` scope.  Verify that a token with only `mcp:read` receives HTTP 403 (Forbidden) when it attempts to invoke this tool, while a token with `mcp:admin` succeeds.  Document the exact test commands and responses.
 
 ##### Challenge 2: Implement Automatic Token Refresh
 
-The agent's token expires after a set lifetime. Without refresh, the agent would need the user to manually obtain a new token. Implement a token refresh mechanism in `oauth_middleware.py`: before every request, check whether the cached token will expire within the next 60 seconds; if so, automatically request a new token using the client credentials flow before proceeding. Write a test that demonstrates the refresh happening transparently; the agent completes a long-running multi-step task without any manual token intervention even after the original token expires.
+The agent's token expires after a set lifetime.  Without refresh, the agent would need the user to manually obtain a new token.  Implement a token refresh mechanism in `oauth_middleware.py`: before every request, check whether the cached token will expire within the next 60 seconds; if so, automatically request a new token using the client credentials flow before proceeding.  Write a test that demonstrates the refresh happening transparently; the agent completes a long-running multi-step task without any manual token intervention even after the original token expires.
 
 ##### Challenge 3: Add Rate Limiting and a Verification Test
 
-Add rate limiting to your MCP server so that no single client can invoke more than 10 tool calls per minute. Return HTTP 429 (Too Many Requests) with a `Retry-After` header when the limit is exceeded. Then write a test script (`tests/test_rate_limit.py`) that sends 12 rapid tool calls with the same client token and asserts that the first 10 succeed and calls 11 and 12 receive HTTP 429.
+Add rate limiting to your MCP server so that no single client can invoke more than 10 tool calls per minute.  Return HTTP 429 (Too Many Requests) with a `Retry-After` header when the limit is exceeded.  Then write a test script (`tests/test_rate_limit.py`) that sends 12 rapid tool calls with the same client token and asserts that the first 10 succeed and calls 11 and 12 receive HTTP 429.
 
 ---
 
 #### Reflection Prompts
 
-Answer each prompt in complete sentences. Your answers should reference specific decisions you made in this lab, not generic statements about security or AI.
+Answer each prompt in complete sentences.  Your answers should reference specific decisions you made in this lab, not generic statements about security or AI.
 
-- What is the advantage of MCP over giving the agent raw HTTP access to the same underlying data? What does the tool schema give you that a bare API endpoint does not?
+- What is the advantage of MCP over giving the agent raw HTTP access to the same underlying data?  What does the tool schema give you that a bare API endpoint does not?
 - How did OAuth scopes limit what the agent could do, and what would happen if the agent's token were stolen?
-- What would you need to add or change to make this deployment production-ready? Name at least three specific gaps.
-- If collaboration beyond your pair occurred, identify it. Do you certify that this submission represents your pair's original work? Please identify any and all portions of your submission that were not originally written by you.
+- What would you need to add or change to make this deployment production-ready?  Name at least three specific gaps.
+- If collaboration beyond your pair occurred, identify it.  Do you certify that this submission represents your pair's original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
-- MCP is a relatively new standard. What problem would arise if every AI tool vendor invented their own proprietary tool-calling protocol instead? How does standardization (like MCP) change the security landscape; does it make security easier or harder, and for whom?
-- Imagine a malicious MCP server that lies about its tool descriptions: for example, it advertises a tool called `search_files` that actually exfiltrates data to a remote server. How could an AI agent be tricked into calling this harmful tool? What trust mechanisms (at the protocol, deployment, or organizational level) would need to exist to prevent this attack?
+- MCP is a relatively new standard.  What problem would arise if every AI tool vendor invented their own proprietary tool-calling protocol instead?  How does standardization (like MCP) change the security landscape; does it make security easier or harder, and for whom?
+- Imagine a malicious MCP server that lies about its tool descriptions: for example, it advertises a tool called `search_files` that actually exfiltrates data to a remote server.  How could an AI agent be tricked into calling this harmful tool?  What trust mechanisms (at the protocol, deployment, or organizational level) would need to exist to prevent this attack?
 
 ---
 
