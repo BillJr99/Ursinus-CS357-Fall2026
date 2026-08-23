@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-agenticopenwebui.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenticopenwebui.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agenticopenwebui.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -16,7 +16,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 You already run OpenWebUI as a chat window over Ollama. Today we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive. The arc: **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
 
-This is a **supplemental tutorial**: it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2).
+This is a **supplemental tutorial**: it is not graded and no commercial API keys are required. It builds directly on the local agent stack you assembled in the [Agent Stack activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentstack.md) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction2).
 
 ---
 

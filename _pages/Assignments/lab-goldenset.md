@@ -29,7 +29,8 @@ info:
       proficient: A pinned run (temperature 0.0, fixed seed, model named) reports per-item outcomes; every prediction miss gets a sentence separating knowledge failure from metric failure; and the writeup states one revision the results motivated. On the no-code route the protocol is pinned in the chat interface rather than in code, and the run log or screenshot stands in for the harness output; the analysis requirement is unchanged
   readings:
     - rtitle: "Hallucinations and Evaluating Agent Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "Activities/liascript-evaluatingoutputs.md"
+      liapage: true
 
 tags:
   - evaluation

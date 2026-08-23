@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-mcp.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-mcp.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-mcp.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-mcp.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -243,7 +243,7 @@ The primary value MCP adds over each team writing custom tool integrations is:
 ---
 
 
-> **A no-code route to the same problem.** Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP. It is covered in the optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agenticopenwebui.md).
+> **A no-code route to the same problem.** Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP. It is covered in the optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md).
 
 # Part III: Synthesis and Practice
 

@@ -62,9 +62,11 @@ info:
       proficient: "Evaluation of solutions is deep and elegant (for example, contains thorough and insightful explanation) and includes, deeply and thoroughly, all of the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
   readings:
     - rtitle: "Agent Teams Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentteams.md"
+      rlink: "Activities/liascript-agentteams.md"
+      liapage: true
     - rtitle: "Project Studio Protocol"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-projectstudio.md"
+      rlink: "Activities/liascript-projectstudio.md"
+      liapage: true
     - rtitle: "Problem Solving VALUE Rubric (AAC&U); the four problem-solving criteria in the rubric below are quoted from it"
       rlink: "https://www.lamar.edu/data-analytics-reporting-analysis/_files/documents/problem_solving.pdf"
 

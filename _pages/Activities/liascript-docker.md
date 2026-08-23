@@ -3,7 +3,7 @@ author:   William Mongan
 language: en
 narrator: US English Male
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357/blob/gh-pages/_pages/Activities/liascript-docker.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md
+comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-docker.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md
 
 import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
 
@@ -445,7 +445,7 @@ docker run -it --rm \
 
 Read that command as a sentence: *the agent may act without asking, and the worst it can do is damage one git-tracked folder.* Every clause earns the first one.
 
-> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress. There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need. There is, however, a middle setting worth knowing: put the agent on a network whose only reachable host is your own gateway, so it can call models but cannot reach anything else on the internet. That is rung 5 in the next section's ladder, and the gateway it points at is the one the [Agentic CLI Tools tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentclis.md) routes through.
+> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress. There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need. There is, however, a middle setting worth knowing: put the agent on a network whose only reachable host is your own gateway, so it can call models but cannot reach anything else on the internet. That is rung 5 in the next section's ladder, and the gateway it points at is the one the [Agentic CLI Tools tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentclis.md) routes through.
 
 ### 9.4 Read-only root, writable workspace
 
