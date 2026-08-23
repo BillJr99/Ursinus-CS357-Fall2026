@@ -50,21 +50,27 @@ info:
       proficient: The reflection names a specific assumption that changed, a specific surprise or leak surfaced by the pre-mortem or the loop, and the concrete revision each motivates; the submission is professionally formatted, internally consistent, fully anonymized where the domain involves real people or data, and answers every reflection prompt with a specific observation from this assignment
   readings:
     - rtitle: "Agent Design Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-designfirst.md"
+      rlink: "Activities/liascript-designfirst.md"
+      liapage: true
     - rtitle: "Pre-mortem Technique (Klein, 2007)"
       rlink: "https://hbr.org/2007/09/performing-a-project-premortem"
     - rtitle: "Case Study: Governing Coding Agents - Charters, Handoffs, and Durable Memory"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentgovernance.md"
+      rlink: "Activities/liascript-agentgovernance.md"
+      liapage: true
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-productionassistant.md"
+      rlink: "Activities/liascript-productionassistant.md"
+      liapage: true
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
       rlink: "../files/agent-templates/README.md"
     - rtitle: "Coding Agents: the overnight brief, and loops that run themselves (Ralph, autoresearch, gnhf, crews)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-codingagents.md"
+      rlink: "Activities/liascript-codingagents.md"
+      liapage: true
     - rtitle: "Advanced Agent Loops: Control Flow, Reflection, and Recovery (checkpointing and termination design)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentloopsadvanced.md"
+      rlink: "Activities/liascript-agentloopsadvanced.md"
+      liapage: true
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-humanintheloop.md"
+      rlink: "Activities/liascript-humanintheloop.md"
+      liapage: true
 
 tags:
   - design

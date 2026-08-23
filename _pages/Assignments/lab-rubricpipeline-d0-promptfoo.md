@@ -9,9 +9,11 @@ info:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: /Assignments/RubricPipeline
   - rtitle: LLM-as-Judge Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-llmasjudge.md
+    rlink: "Activities/liascript-llmasjudge.md"
+    liapage: true
   - rtitle: Evaluating Outputs Activity
-    rlink: https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md
+    rlink: "Activities/liascript-evaluatingoutputs.md"
+    liapage: true
   - rtitle: promptfoo Documentation
     rlink: https://www.promptfoo.dev/docs/intro/
 tags:
@@ -30,8 +32,8 @@ To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agr
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [LLM-as-Judge Activity]({{ site.activity_url }}liascript-llmasjudge.md)
-- [Evaluating Outputs Activity]({{ site.activity_url }}liascript-evaluatingoutputs.md)
+- [LLM-as-Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-llmasjudge.md)
+- [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
 This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). It is the **low-code route** through the lab: you meet the same core objectives: batch rubric scoring, human-agreement validation, bias measurement, and regression testing, by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.

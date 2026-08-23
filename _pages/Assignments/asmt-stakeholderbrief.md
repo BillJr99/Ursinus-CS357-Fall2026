@@ -44,7 +44,8 @@ info:
     - rtitle: "The Project Thread (semester map, team playbook, and assessment philosophy)"
       rlink: "../Projects/PBLThread"
     - rtitle: "Structured Peer Review Activity (SQR protocol used at the brief exchange)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-peerreview.md"
+      rlink: "Activities/liascript-peerreview.md"
+      liapage: true
     - rtitle: "Shulman, L. S. (2005). Pedagogies of Uncertainty. Liberal Education, 91(2), 18-25."
 
 tags:
@@ -177,7 +178,7 @@ Attach the **interview packet** as an appendix: prep questions, notes, consent r
 
 ## Peer Exchange
 
-Before the brief is due, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.activity_url }}liascript-peerreview.md). Plan to revise the brief in response before the due date, before it feeds the Literature Review; the cycle is *artifact -> peer review -> revise*, and it repeats at the proposal and the gallery walk.
+Before the brief is due, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk). The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-peerreview.md). Plan to revise the brief in response before the due date, before it feeds the Literature Review; the cycle is *artifact -> peer review -> revise*, and it repeats at the proposal and the gallery walk.
 
 ---
 

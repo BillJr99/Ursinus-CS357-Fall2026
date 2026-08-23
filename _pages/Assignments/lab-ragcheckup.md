@@ -30,11 +30,14 @@ info:
       proficient: The harness (a scripted run sheet in a spreadsheet, declarative promptfoo YAML, or plain Python built on the class evaluation harness, student's choice) pins a golden set (seeded from the Golden-Set Benchmark lab, extended with corpus-specific items) and a fixed protocol; two runs are shown to agree; and the harness lives in the RAG Knowledge Base Lab repository where the Rubric Pipeline Lab's pipeline work can pick it up
   readings:
     - rtitle: "Hallucinations and Evaluating Agent Outputs Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-evaluatingoutputs.md"
+      rlink: "Activities/liascript-evaluatingoutputs.md"
+      liapage: true
     - rtitle: "RAG Quality: Chunking, Clustering, and Reranking Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ragquality.md"
+      rlink: "Activities/liascript-ragquality.md"
+      liapage: true
     - rtitle: "Required prep for the Rubric Pipeline Lab: Testing Agents, Evaluation, Regression, and the Non-Determinism Problem"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-testingagents.md"
+      rlink: "Activities/liascript-testingagents.md"
+      liapage: true
     - rtitle: "Reference: promptfoo, declarative LLM/agent eval and red-teaming (harness option, runs against Ollama)"
       rlink: "https://www.promptfoo.dev/"
 

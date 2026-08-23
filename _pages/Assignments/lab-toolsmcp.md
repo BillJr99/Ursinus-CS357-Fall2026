@@ -110,14 +110,14 @@ Every submission must show that you can make an agent **use a tool**, make an ag
 <details markdown="1">
 <summary><strong>Tool Use · From Scratch, expose a function to the model</strong></summary>
 
-Give your agent a real, typed tool using **native function calling** (not the week-1 regex parse). Define a Python function, describe it as a JSON schema in a `tools` list, and let the model emit a structured `tool_calls` request that your code executes and feeds back as a `tool`-role message. Do this against Ollama's `/api/chat` *or* OpenWebUI's OpenAI-compatible `/api/chat/completions`; the schema is identical across both (see the [Tool Use and Function Calling activity]({{ site.activity_url }}liascript-tooluse.md), Parts II-2b). Deliver: your tool schema, a transcript showing the model requesting the tool and your program executing it, and one sentence on what your code (not the model) is responsible for.
+Give your agent a real, typed tool using **native function calling** (not the week-1 regex parse). Define a Python function, describe it as a JSON schema in a `tools` list, and let the model emit a structured `tool_calls` request that your code executes and feeds back as a `tool`-role message. Do this against Ollama's `/api/chat` *or* OpenWebUI's OpenAI-compatible `/api/chat/completions`; the schema is identical across both (see the [Tool Use and Function Calling activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-tooluse.md), Parts II-2b). Deliver: your tool schema, a transcript showing the model requesting the tool and your program executing it, and one sentence on what your code (not the model) is responsible for.
 
 </details>
 
 <details markdown="1">
 <summary><strong>Tool Use · From a Framework, give an agent tools you did not wire</strong></summary>
 
-Hand the same tool to an agent through a framework so the framework owns the tool-calling loop. Register a Python function as a tool with **smolagents** (Hugging Face's lightweight agent library, the gentlest starting point), LangChain/DeepAgents, or Agno, and let it drive invocation (see the [Agent Frameworks activity]({{ site.activity_url }}liascript-agentframeworks.md), including how to point the framework at your local Ollama/OpenWebUI model). If you are new to frameworks, prefer smolagents: it is a much thinner wrapper than LangChain, so less of the loop is hidden and the code you write stays close to the from-scratch version. Deliver: the tool registration, a run transcript, and two things the framework hid from you that you had to do by hand in the from-scratch version.
+Hand the same tool to an agent through a framework so the framework owns the tool-calling loop. Register a Python function as a tool with **smolagents** (Hugging Face's lightweight agent library, the gentlest starting point), LangChain/DeepAgents, or Agno, and let it drive invocation (see the [Agent Frameworks activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentframeworks.md), including how to point the framework at your local Ollama/OpenWebUI model). If you are new to frameworks, prefer smolagents: it is a much thinner wrapper than LangChain, so less of the loop is hidden and the code you write stays close to the from-scratch version. Deliver: the tool registration, a run transcript, and two things the framework hid from you that you had to do by hand in the from-scratch version.
 
 </details>
 
@@ -126,14 +126,14 @@ Hand the same tool to an agent through a framework so the framework owns the too
 <details markdown="1">
 <summary><strong>Reasoning · From Scratch, make the agent think, and measure it</strong></summary>
 
-Add explicit reasoning to your agent and test whether it helps. Either (a) insert a scratchpad/chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check). Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens/latency it cost. Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost. Concepts are in the [model-types lecture]({{ site.activity_url }}liascript-modeltypes.md).
+Add explicit reasoning to your agent and test whether it helps. Either (a) insert a scratchpad/chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check). Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens/latency it cost. Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost. Concepts are in the [model-types lecture]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-modeltypes.md).
 
 </details>
 
 <details markdown="1">
 <summary><strong>Reasoning · From a Model/User Perspective, use a reasoning model</strong></summary>
 
-Drive reasoning by *choosing the model* rather than building the loop. Run a reasoning-capable model (or toggle a "think step by step" / extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set. Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful. Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why. See the [model-types lecture]({{ site.activity_url }}liascript-modeltypes.md) for what makes a model a "reasoning" model.
+Drive reasoning by *choosing the model* rather than building the loop. Run a reasoning-capable model (or toggle a "think step by step" / extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set. Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful. Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why. See the [model-types lecture]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-modeltypes.md) for what makes a model a "reasoning" model.
 
 </details>
 
@@ -142,14 +142,14 @@ Drive reasoning by *choosing the model* rather than building the loop. Run a rea
 <details markdown="1">
 <summary><strong>MCP · Create, stand up your own MCP server</strong></summary>
 
-Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover -> invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)* Background: the [MCP activity]({{ site.activity_url }}liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
+Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop. Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover -> invoke round-trip. Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not. *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)* Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
 
 </details>
 
 <details markdown="1">
 <summary><strong>MCP · Use, connect your agent to an existing MCP server</strong></summary>
 
-Consume MCP instead of authoring it. Point your agent (or a framework client) at an existing MCP server (for example a filesystem, fetch, or SQLite server) and let it discover the server's tools and call them to complete a task. Deliver: the connection/config, a transcript showing tool discovery and at least one successful invocation, and one sentence on the trust question this raises (you are now running someone else's tool definitions). Background: the [MCP activity]({{ site.activity_url }}liascript-mcp.md).
+Consume MCP instead of authoring it. Point your agent (or a framework client) at an existing MCP server (for example a filesystem, fetch, or SQLite server) and let it discover the server's tools and call them to complete a task. Deliver: the connection/config, a transcript showing tool discovery and at least one successful invocation, and one sentence on the trust question this raises (you are now running someone else's tool definitions). Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md).
 
 </details>
 
