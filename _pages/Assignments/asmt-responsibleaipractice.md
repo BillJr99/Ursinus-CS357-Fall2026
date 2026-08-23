@@ -51,21 +51,27 @@ info:
     - rtitle: "Mitchell, Artificial Intelligence: A Guide for Thinking Humans (2019), Chapter 8"
       rlink: "https://melaniemitchell.me/aibook/"
     - rtitle: "The Philosophy and Psychology of Artificial Intelligence Activity (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-philosophyai.md"
+      rlink: "Activities/liascript-philosophyai.md"
+      liapage: true
     - rtitle: "Data Cards Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-datacards.md"
+      rlink: "Activities/liascript-datacards.md"
+      liapage: true
     - rtitle: "Bias in Data Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-biasdata.md"
+      rlink: "Activities/liascript-biasdata.md"
+      liapage: true
     - rtitle: "Governance Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-governance.md"
+      rlink: "Activities/liascript-governance.md"
+      liapage: true
     - rtitle: "NIST AI Risk Management Framework"
       rlink: "https://www.nist.gov/itl/ai-risk-management-framework"
     - rtitle: "EU AI Act, Annex III"
       rlink: "https://artificialintelligenceact.eu/"
     - rtitle: "AI Regulation Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-regulation.md"
+      rlink: "Activities/liascript-regulation.md"
+      liapage: true
     - rtitle: "Ethical Frameworks Activity"
-      rlink: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-ethicalframeworks.md"
+      rlink: "Activities/liascript-ethicalframeworks.md"
+      liapage: true
     - rtitle: "Strubell et al., Energy and Policy Considerations for Deep Learning in NLP (2019)"
       rlink: "https://arxiv.org/abs/1906.02629"
     - rtitle: "Patterson et al., Carbon Emissions and Large Neural Network Training (2021)"
