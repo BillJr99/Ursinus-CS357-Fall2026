@@ -14,15 +14,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Building an AI Chess Coach: LLM API Calls in a Real Web App
 
-This module dissects a complete, working web app (the **Chess AI Coach**) to show exactly how a language model gets wired into real software through **API calls**. We move from **what the app is $\rightarrow$ the three-layer architecture $\rightarrow$ one function that talks to three different providers $\rightarrow$ prompt engineering and structured JSON output for coaching $\rightarrow$ keeping your API keys safe $\rightarrow$ wiring the AI into the user interface**.
+This module dissects a complete, working web app (the **Chess AI Coach**) to show exactly how a language model gets wired into real software through **API calls**.  We move from **what the app is $\rightarrow$ the three-layer architecture $\rightarrow$ one function that talks to three different providers $\rightarrow$ prompt engineering and structured JSON output for coaching $\rightarrow$ keeping your API keys safe $\rightarrow$ wiring the AI into the user interface**.
 
-The app is a single self-contained HTML file. You can open it, read every line, and change it. Everything you learned in the [RESTful LLM Access](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md) activity (the `/v1/chat/completions` payload, the `choices[0].message.content` response path, provider portability) reappears here, this time in JavaScript running inside a browser instead of Python in a notebook.
+The app is a single self-contained HTML file.  You can open it, read every line, and change it.  Everything you learned in the [RESTful LLM Access](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md) activity (the `/v1/chat/completions` payload, the `choices[0].message.content` response path, provider portability) reappears here, this time in JavaScript running inside a browser instead of Python in a notebook.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -44,20 +44,20 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 ### Before You Start
 
-**What you need:** Ollama running locally. Section 0 lets you try the finished app before building anything.
+**What you need:** Ollama running locally.  Section 0 lets you try the finished app before building anything.
 
 **What you will have at the end:** a working chess coach that explains moves, built from API calls you can read end to end.
 
-Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Take the sections in order, since each builds on the one before it.  Run the code blocks as you come to them instead of reading past them.
 
 ---
 
-## 0. Try the App First
+## 0.  Try the App First
 
 Before reading any code, **play the app** so the rest of the activity has something concrete to attach to.
 
-1. Download or open [`chess-ai-coach.html`](https://www.billmongan.com/Ursinus-CS357/files/apps/chess-ai-coach.html).
-2. Because browsers restrict `fetch` from `file://` pages, serve the folder with a tiny local web server and open it over `http://`:
+1.  Download or open [`chess-ai-coach.html`](https://www.billmongan.com/Ursinus-CS357/files/apps/chess-ai-coach.html).
+2.  Because browsers restrict `fetch` from `file://` pages, serve the folder with a tiny local web server and open it over `http://`:
 
 ## Code Cell
 
@@ -67,7 +67,7 @@ python -m http.server 8000
 # then open http://localhost:8000/chess-ai-coach.html
 ```
 
-3. Leave the provider set to **Local only** and play a few moves. The board enforces full chess rules and a computer opponent replies, **with no AI and no API key at all.** Keep that in mind: the language model is an *addition*, not the engine.
+3.  Leave the provider set to **Local only** and play a few moves.  The board enforces full chess rules and a computer opponent replies, **with no AI and no API key at all.**  Keep that in mind: the language model is an *addition*, not the engine.
 
 ---
 
@@ -75,7 +75,7 @@ python -m http.server 8000
 
 In this part you build a mental map of the app before touching the AI. The single most useful habit when adding AI to software is knowing **which parts are deterministic program logic and which parts call the model**, because they fail, cost, and get tested in completely different ways.
 
-## 1. The App at a Glance
+## 1.  The App at a Glance
 
 The Chess AI Coach lets you play a full game against a built-in computer opponent, and (if you connect a language model) it adds a coaching layer on top:
 
@@ -84,9 +84,9 @@ The Chess AI Coach lets you play a full game against a built-in computer opponen
 - **An Elo estimate**: a calibrated guess at each side's playing strength based on the moves so far.
 - **PGN and analysis export**: the game and all commentary saved to a text file.
 
-Every one of those features is optional. The board, the legal-move enforcement, the computer opponent, and a fallback evaluation all run **locally in the browser** with no network calls.
+Every one of those features is optional.  The board, the legal-move enforcement, the computer opponent, and a fallback evaluation all run **locally in the browser** with no network calls.
 
-## 2. Three Layers, Cleanly Separated
+## 2.  Three Layers, Cleanly Separated
 
 The file is organized into three layers, and the separation is deliberate:
 
@@ -100,27 +100,27 @@ $$
 | **React UI** | Draws the board, handles clicks and drags, shows commentary and meters | the `ChessAICoach` component and its `useState`/`useEffect` hooks | No |
 | **AI layer** | Turns a position into a prompt, calls a provider, parses the reply | `callTextModel`, `getAICommentary`, `getAIEvaluation`, `getSideAIElo` | **Yes, this is where the API calls live** |
 
-The engine is the kind of code you can unit-test exhaustively: given this board, `legalMoves` must return exactly these moves. The AI layer is the opposite: it calls a probabilistic model over the network, so it can be slow, cost money, fail, or return something unexpected. **Keeping them apart means a bug in the coach can never make the board illegal, and the game never depends on a server being reachable.**
+The engine is the kind of code you can unit-test exhaustively: given this board, `legalMoves` must return exactly these moves.  The AI layer is the opposite: it calls a probabilistic model over the network, so it can be slow, cost money, fail, or return something unexpected.  **Keeping them apart means a bug in the coach can never make the board illegal, and the game never depends on a server being reachable.**
 
 ---
 
 ## Model 1: Locating the Seams
 
-Open `chess-ai-coach.html` and skim the top-level function names. Group them into the three layers above.
+Open `chess-ai-coach.html` and skim the top-level function names.  Group them into the three layers above.
 
 ### Critical Thinking Questions
 
-1. `evaluate(state)` (local, in the engine) and `getAIEvaluation(providerConfig, fen)` (in the AI layer) both produce a single number describing who is winning. Why does the app keep **both**, and when does each one run?
+1. `evaluate(state)` (local, in the engine) and `getAIEvaluation(providerConfig, fen)` (in the AI layer) both produce a single number describing who is winning.  Why does the app keep **both**, and when does each one run?
 
-   > *Hint: Look at the `useEffect` that sets `evalScore`. When no provider is configured (`!aiEnabled`), it uses `evaluate(gameState) / 100`. When a provider is configured, it calls `getAIEvaluation` and falls back to `evaluate` if the call throws. One is free, instant, and deterministic; the other needs a working API call.*
+   > *Hint: Look at the `useEffect` that sets `evalScore`.  When no provider is configured (`!aiEnabled`), it uses `evaluate(gameState) / 100`.  When a provider is configured, it calls `getAIEvaluation` and falls back to `evaluate` if the call throws.  One is free, instant, and deterministic; the other needs a working API call.*
 
-2. The function `boardToFEN(state)` belongs to the engine, but the AI layer depends on it heavily. What is the FEN string *for*, and why is it the natural thing to send to a language model instead of, say, the raw 8×8 JavaScript array?
+2.  The function `boardToFEN(state)` belongs to the engine, but the AI layer depends on it heavily.  What is the FEN string *for*, and why is it the natural thing to send to a language model instead of, say, the raw 8×8 JavaScript array?
 
-   > *Hint: FEN is a compact, standard, text encoding of a position. Models have seen enormous amounts of FEN in training; a nested JS array is not something a model reads fluently, and it would waste tokens. Text-in, text-out; the engine speaks the model's language by exporting FEN and SAN.*
+   > *Hint: FEN is a compact, standard, text encoding of a position.  Models have seen enormous amounts of FEN in training; a nested JS array is not something a model reads fluently, and it would waste tokens.  Text-in, text-out; the engine speaks the model's language by exporting FEN and SAN.*
 
-3. Suppose the Anthropic API is down for an hour. Trace what a user can and cannot do in the app during that hour. Which layer is affected?
+3.  Suppose the Anthropic API is down for an hour.  Trace what a user can and cannot do in the app during that hour.  Which layer is affected?
 
-   > *Hint: Only the AI layer makes network calls. The engine and UI keep working, so the user can still play full games against the local computer; they just lose commentary, the AI evaluation, and the Elo estimate. This is graceful degradation, and it is a direct consequence of the layering.*
+   > *Hint: Only the AI layer makes network calls.  The engine and UI keep working, so the user can still play full games against the local computer; they just lose commentary, the AI evaluation, and the Elo estimate.  This is graceful degradation, and it is a direct consequence of the layering.*
 
 Which group of functions makes the HTTP requests to a language-model provider?
 
@@ -129,15 +129,15 @@ Which group of functions makes the HTTP requests to a language-model provider?
 [(X)] `callTextModel`, `getAICommentary`, `getAIEvaluation`
 [( )] `handleSquareClick`, `handleDragStart`
 
-> **Common Misconception:** "The AI plays the chess." It does not. The **computer opponent** is the local `minimax` search in the engine layer: pure code, no network. The **language model** only *comments on* moves and *estimates* numbers. You could delete every AI function and still have a working chess game. Conflating "the program that plays" with "the model that talks" is the first confusion to clear up.
+> **Common Misconception:** "The AI plays the chess."  It does not.  The **computer opponent** is the local `minimax` search in the engine layer: pure code, no network.  The **language model** only *comments on* moves and *estimates* numbers.  You could delete every AI function and still have a working chess game.  Conflating "the program that plays" with "the model that talks" is the first confusion to clear up.
 
 ---
 
 # Part II: The Provider-Agnostic AI Layer
 
-This is the heart of the activity. You will see how one function, `callTextModel`, sends the same prompt to **Anthropic, OpenAI, or a local Open WebUI / Ollama server**, differing only in URL, headers, and where the reply text sits in the response. This is the browser-JavaScript version of the provider portability you built in Python in the REST activity.
+This is the heart of the activity.  You will see how one function, `callTextModel`, sends the same prompt to **Anthropic, OpenAI, or a local Open WebUI / Ollama server**, differing only in URL, headers, and where the reply text sits in the response.  This is the browser-JavaScript version of the provider portability you built in Python in the REST activity.
 
-## 3. One Function, Three Providers
+## 3.  One Function, Three Providers
 
 Everywhere else in the app, code that needs the model calls a single function:
 
@@ -145,7 +145,7 @@ Everywhere else in the app, code that needs the model calls a single function:
 const text = await callTextModel(providerConfig, prompt, { maxTokens: 350, temperature: 0.2 });
 ```
 
-`providerConfig` is a plain object assembled from the UI (which provider is selected, plus the relevant key/URL/model). `callTextModel` reads `providerConfig.provider` and branches. Its skeleton is:
+`providerConfig` is a plain object assembled from the UI (which provider is selected, plus the relevant key/URL/model). `callTextModel` reads `providerConfig.provider` and branches.  Its skeleton is:
 
 ## Code Cell
 
@@ -159,11 +159,11 @@ async function callTextModel(providerConfig, prompt, { maxTokens = 500, temperat
 }
 ```
 
-Notice the shape: **the rest of the app never knows or cares which provider is active.** Adding a fourth provider later means adding one more branch here and nothing else changes. That is the whole point of a dispatcher.
+Notice the shape: **the rest of the app never knows or cares which provider is active.**  Adding a fourth provider later means adding one more branch here and nothing else changes.  That is the whole point of a dispatcher.
 
-## 4. Anthropic: `POST https://api.anthropic.com/v1/messages`
+## 4.  Anthropic: `POST https://api.anthropic.com/v1/messages`
 
-Anthropic's Messages API uses its own endpoint and header names. Here is the branch, annotated:
+Anthropic's Messages API uses its own endpoint and header names.  Here is the branch, annotated:
 
 ## Code Cell
 
@@ -198,7 +198,7 @@ if (provider === "anthropic") {
 
 Three things to note: the auth header is **`x-api-key`** (not `Authorization: Bearer`); a **version** header is mandatory; and the reply text lives at **`data.content[].text`**, an array of content blocks, not a single string.
 
-## 5. OpenAI: `POST https://api.openai.com/v1/chat/completions`
+## 5.  OpenAI: `POST https://api.openai.com/v1/chat/completions`
 
 The OpenAI branch uses the same `/v1/chat/completions` shape you already know from the REST activity:
 
@@ -230,7 +230,7 @@ if (provider === "openai") {
 }
 ```
 
-The reply lives at **`choices[0].message.content`**. The app wraps that access in a small helper, `extractOpenAIText`, that tolerates a few response shapes instead of crashing on an unexpected one:
+The reply lives at **`choices[0].message.content`**.  The app wraps that access in a small helper, `extractOpenAIText`, that tolerates a few response shapes instead of crashing on an unexpected one:
 
 ## Code Cell
 
@@ -244,9 +244,9 @@ function extractOpenAIText(data) {
 }
 ```
 
-## 6. Open WebUI / Local: `POST <baseUrl>/api/chat/completions`
+## 6.  Open WebUI / Local: `POST <baseUrl>/api/chat/completions`
 
-The third branch targets a **local, OpenAI-compatible server** (Open WebUI in front of Ollama, or Ollama directly). Because it speaks the same protocol as OpenAI, the response parsing is *identical*; only the URL changes, and the key is optional:
+The third branch targets a **local, OpenAI-compatible server** (Open WebUI in front of Ollama, or Ollama directly).  Because it speaks the same protocol as OpenAI, the response parsing is *identical*; only the URL changes, and the key is optional:
 
 ## Code Cell
 
@@ -279,7 +279,7 @@ if (provider === "openwebui") {
 
 The app can even **discover** which models a local server has, via a `GET /api/models` call in `fetchOpenWebUIModels`, the same "list models before you use one" pattern from the REST activity's `/v1/models`.
 
-Here is the whole idea, reduced to a **runnable Python cell** you can execute against your own local Ollama right now. It is the same request the browser makes (same endpoint shape, same `messages` array, same `choices[0].message.content` parse), just in Python:
+Here is the whole idea, reduced to a **runnable Python cell** you can execute against your own local Ollama right now.  It is the same request the browser makes (same endpoint shape, same `messages` array, same `choices[0].message.content` parse), just in Python:
 
 ## Code Cell
 
@@ -311,7 +311,7 @@ print(reply)
 
 ## Model 2: Same Prompt, Three Response Shapes
 
-The request bodies are nearly identical; the **auth** and the **reply location** differ. That table is the entire practical difference a developer must remember:
+The request bodies are nearly identical; the **auth** and the **reply location** differ.  That table is the entire practical difference a developer must remember:
 
 | | Anthropic | OpenAI | Open WebUI / Ollama |
 |---|---|---|---|
@@ -323,17 +323,17 @@ The request bodies are nearly identical; the **auth** and the **reply location**
 
 ### Critical Thinking Questions
 
-4. A student copies the OpenAI branch, changes the URL to Anthropic's, and keeps `Authorization: Bearer <key>` and `data.choices[0].message.content`. Predict the two distinct failures they will hit and how each would appear at runtime.
+4.  A student copies the OpenAI branch, changes the URL to Anthropic's, and keeps `Authorization: Bearer <key>` and `data.choices[0].message.content`.  Predict the two distinct failures they will hit and how each would appear at runtime.
 
-   > *Hint: (1) Auth: Anthropic ignores `Authorization` and wants `x-api-key` plus `anthropic-version`, so the request is rejected with an auth/version error before any reply. (2) Parsing: even with a valid reply, `choices` does not exist on an Anthropic response (the text is under `content[].text`), so `choices[0]` throws. Same lesson as the REST activity's "empty response" bug, one layer up.*
+   > *Hint: (1) Auth: Anthropic ignores `Authorization` and wants `x-api-key` plus `anthropic-version`, so the request is rejected with an auth/version error before any reply.  (2) Parsing: even with a valid reply, `choices` does not exist on an Anthropic response (the text is under `content[].text`), so `choices[0]` throws.  Same lesson as the REST activity's "empty response" bug, one layer up.*
 
-5. The Open WebUI branch and the OpenAI branch parse the response with the **same** `extractOpenAIText` helper. What property of Open WebUI makes that reuse correct, and what would you have to change to add a provider that does *not* share it?
+5.  The Open WebUI branch and the OpenAI branch parse the response with the **same** `extractOpenAIText` helper.  What property of Open WebUI makes that reuse correct, and what would you have to change to add a provider that does *not* share it?
 
-   > *Hint: Open WebUI is OpenAI-compatible; it returns the same `choices[0].message.content` structure. A non-compatible provider (like Anthropic) needs its own parse branch, which is exactly why the Anthropic branch has its own `content[].text` line instead of calling `extractOpenAIText`.*
+   > *Hint: Open WebUI is OpenAI-compatible; it returns the same `choices[0].message.content` structure.  A non-compatible provider (like Anthropic) needs its own parse branch, which is exactly why the Anthropic branch has its own `content[].text` line instead of calling `extractOpenAIText`.*
 
-6. `callTextModel` throws a specific `Error` (e.g. "Enter an Anthropic API key.") before it ever calls `fetch` when the key is missing. Why check first instead of letting the provider return a 401?
+6. `callTextModel` throws a specific `Error` (e.g. "Enter an Anthropic API key.") before it ever calls `fetch` when the key is missing.  Why check first instead of letting the provider return a 401?
 
-   > *Hint: A local guard gives a clear, instant, actionable message and avoids a pointless network round-trip (and a confusing provider-specific error body). Validate what you can locally; only spend a network call on things only the server can decide.*
+   > *Hint: A local guard gives a clear, instant, actionable message and avoids a pointless network round-trip (and a confusing provider-specific error body).  Validate what you can locally; only spend a network call on things only the server can decide.*
 
 In a response from `POST https://api.anthropic.com/v1/messages`, where is the model's reply text?
 
@@ -342,17 +342,17 @@ In a response from `POST https://api.anthropic.com/v1/messages`, where is the mo
 [( )] `data.output_text` only
 [( )] `data.message.content`
 
-> **Common Misconception:** "If it's the same prompt, it's the same response object." No. Providers agree on very little beyond "send messages, get a completion." The **request** can look almost identical while the **response shape** and the **auth headers** differ. Write one small parse function per response family (OpenAI-style, Anthropic-style) and route to the right one; never assume `choices[0]` exists.
+> **Common Misconception:** "If it's the same prompt, it's the same response object."  No. Providers agree on very little beyond "send messages, get a completion."  The **request** can look almost identical while the **response shape** and the **auth headers** differ.  Write one small parse function per response family (OpenAI-style, Anthropic-style) and route to the right one; never assume `choices[0]` exists.
 
 ---
 
 # Part III: Prompt Engineering and Structured Output for Coaching
 
-Now that the pipe exists, what do we push through it? Two different jobs: **prose commentary** (free text a human reads) and **structured values** (JSON the program uses to drive a meter or a badge). They demand different prompting.
+Now that the pipe exists, what do we push through it?  Two different jobs: **prose commentary** (free text a human reads) and **structured values** (JSON the program uses to drive a meter or a badge).  They demand different prompting.
 
-## 7. The Coach Commentary Prompt
+## 7.  The Coach Commentary Prompt
 
-`getAICommentary` builds the prompt that produces the sentence-or-two after each move. Read how much context it assembles, and the guardrails it sets:
+`getAICommentary` builds the prompt that produces the sentence-or-two after each move.  Read how much context it assembles, and the guardrails it sets:
 
 ## Code Cell
 
@@ -389,7 +389,7 @@ Design decisions worth copying:
 
 - **Role framing first** ("You are an expert chess coach") sets the voice.
 - **Concrete state, not vibes**: it passes the FEN *before* and *after*, the move in SAN, and the whole game's PGN. The model reasons about the actual position, not a vague description.
-- **Explicit scope limits**: "Analyze ONLY the move just played" and "Do NOT predict future moves." Without these, models happily volunteer whole opening lines, which would spoil the game and often be wrong.
+- **Explicit scope limits**: "Analyze ONLY the move just played" and "Do NOT predict future moves."  Without these, models happily volunteer whole opening lines, which would spoil the game and often be wrong.
 - **A length cap and a low `temperature` (0.2)**: coaching should be steady and repeatable, not creative.
 
 You can prove the prompt matters with a runnable cell, the same coach prompt, against your local model:
@@ -410,9 +410,9 @@ print(chat_completion(
 ))
 ```
 
-## 8. Structured Output: Asking for JSON You Can Use
+## 8.  Structured Output: Asking for JSON You Can Use
 
-The evaluation bar and the Elo meter cannot use a paragraph; they need a **number**. So those prompts demand JSON and the code parses it. Here is the evaluation call, start to finish:
+The evaluation bar and the Elo meter cannot use a paragraph; they need a **number**.  So those prompts demand JSON and the code parses it.  Here is the evaluation call, start to finish:
 
 ## Code Cell
 
@@ -436,15 +436,15 @@ function safeJsonParse(text, fallback) {
 
 Three defenses stacked together make this robust:
 
-1. **Ask precisely**: "Respond ONLY with a JSON object like `{"eval": 0.5}`" and `temperature: 0`.
-2. **Clean the text**: strip ```` ```json ```` fences the model may add.
-3. **Never trust the parse**: `safeJsonParse` returns a fallback instead of throwing, and the code then checks that `parsed.eval` is actually a number before using it.
+1.  **Ask precisely**: "Respond ONLY with a JSON object like `{"eval": 0.5}`" and `temperature: 0`.
+2.  **Clean the text**: strip ```` ```json ```` fences the model may add.
+3.  **Never trust the parse**: `safeJsonParse` returns a fallback instead of throwing, and the code then checks that `parsed.eval` is actually a number before using it.
 
 The Elo estimator (`getSideAIElo`) does the same for `{"elo": 1200, "label": "Intermediate"}`, with `parsed.elo || 1200` and `parsed.label || "Unknown"` as fallbacks.
 
-## 9. Async Orchestration and the Stale-Closure Trap
+## 9.  Async Orchestration and the Stale-Closure Trap
 
-After you move, the app wants **two** independent AI answers: commentary and a fresh Elo estimate. They don't depend on each other, so it fires them together with `Promise.all` and waits once:
+After you move, the app wants **two** independent AI answers: commentary and a fresh Elo estimate.  They don't depend on each other, so it fires them together with `Promise.all` and waits once:
 
 ## Code Cell
 
@@ -457,7 +457,7 @@ setCommentary(c);
 setEloEstimate(elo);
 ```
 
-One subtlety specific to long-lived UI code: the move handler is an `async` function that may still be awaiting a slow API call when you change the provider dropdown. If it read the provider from the React render that created it, it could use **stale** settings. The app avoids this by reading the *current* config from a ref at call time:
+One subtlety specific to long-lived UI code: the move handler is an `async` function that may still be awaiting a slow API call when you change the provider dropdown.  If it read the provider from the React render that created it, it could use **stale** settings.  The app avoids this by reading the *current* config from a ref at call time:
 
 ## Code Cell
 
@@ -471,7 +471,7 @@ const currentAIEnabled = aiEnabledRef.current;
 
 ## Model 3: Tracing One Move Through the AI Layer
 
-You are White. You play `Nf3`. Walk the sequence the app performs (see `executeMove`).
+You are White.  You play `Nf3`.  Walk the sequence the app performs (see `executeMove`).
 
 | Step | What happens | Layer |
 |---|---|---|
@@ -484,17 +484,17 @@ You are White. You play `Nf3`. Walk the sequence the app performs (see `executeM
 
 ### Critical Thinking Questions
 
-7. Steps 1-2 (engine + UI) finish in well under a millisecond; steps 3-5 (AI) can take several seconds. The app updates the board *before* awaiting the AI. Why is that ordering a deliberate UX decision, not an accident?
+7.  Steps 1-2 (engine + UI) finish in well under a millisecond; steps 3-5 (AI) can take several seconds.  The app updates the board *before* awaiting the AI. Why is that ordering a deliberate UX decision, not an accident?
 
-   > *Hint: The move is already legal and known; there is no reason to make the human wait on a network call to see their own move. Render the certain, cheap result immediately; stream in the slow, uncertain AI result when it arrives. Never block a deterministic UI update on a probabilistic network call.*
+   > *Hint: The move is already legal and known; there is no reason to make the human wait on a network call to see their own move.  Render the certain, cheap result immediately; stream in the slow, uncertain AI result when it arrives.  Never block a deterministic UI update on a probabilistic network call.*
 
 8. `getAIEvaluation` strips ```` ```json ```` fences before calling `JSON.parse`. Give a concrete model output that would make `JSON.parse` throw *without* that strip, and explain why `safeJsonParse` still keeps the app alive even if the strip missed something.
 
    > *Hint: A reply like ` ```json\n{"eval": 0.3}\n``` ` is not valid JSON because of the fence lines; `JSON.parse` throws on the backticks. `safeJsonParse` wraps the parse in try/except and returns the fallback `{}`, so the app shows a neutral eval instead of crashing.*
 
-9. Suppose the Elo call succeeds but returns `{"label": "Intermediate"}` with no `elo` field. What number ends up on the meter, and which line of code decided that?
+9.  Suppose the Elo call succeeds but returns `{"label": "Intermediate"}` with no `elo` field.  What number ends up on the meter, and which line of code decided that?
 
-   > *Hint: `parsed.elo || 1200` supplies `1200` when `elo` is missing/falsy. Defensive defaults on every field mean a partially-malformed structured response degrades to something sensible instead of `undefined` reaching the UI.*
+   > *Hint: `parsed.elo || 1200` supplies `1200` when `elo` is missing/falsy.  Defensive defaults on every field mean a partially-malformed structured response degrades to something sensible instead of `undefined` reaching the UI.*
 
 Why does `getAIEvaluation` call `safeJsonParse` instead of `JSON.parse` directly?
 
@@ -503,39 +503,39 @@ Why does `getAIEvaluation` call `safeJsonParse` instead of `JSON.parse` directly
 [( )] Because the model can only output JavaScript objects, never strings
 [( )] To convert the number from pawns to centipawns
 
-> **Common Misconception:** "If I ask for JSON, I get JSON." Language models are *usually* obedient but never guaranteed. They add prose, wrap output in code fences, or drop a field. Treat every structured reply as untrusted input: constrain the prompt, strip known wrappers, parse defensively, and default every field. Robust structured output is 20% prompt and 80% parsing discipline.
+> **Common Misconception:** "If I ask for JSON, I get JSON." Language models are *usually* obedient but never guaranteed.  They add prose, wrap output in code fences, or drop a field.  Treat every structured reply as untrusted input: constrain the prompt, strip known wrappers, parse defensively, and default every field.  Robust structured output is 20% prompt and 80% parsing discipline.
 
 ---
 
 # Part IV: Securing Your API Keys
 
-This part is not optional polish; it is the difference between a safe project and a leaked credential that runs up someone else's bill. The rules are simple; the failures are expensive.
+This part is not optional polish; it is the difference between a safe project and a leaked credential that runs up someone else's bill.  The rules are simple; the failures are expensive.
 
-## 10. The Golden Rule: Never Commit or Hardcode a Key
+## 10.  The Golden Rule: Never Commit or Hardcode a Key
 
-A key like `sk-REPLACE_ME...` is a password. The two ways students most often leak one:
+A key like `sk-REPLACE_ME...` is a password.  The two ways students most often leak one:
 
 - **Hardcoding it** in the source: `const key = "sk-abc123..."`; now it's in your Git history forever, even if you delete it later.
 - **Committing a config file** that contains it.
 
-How the Chess AI Coach avoids both: the key is only ever **typed into a password field** and held in React state (`useState`) for the session. It is never written to disk, never hardcoded, and there is nothing to commit. Close the tab and it's gone. In a project with a build step, the equivalent discipline is: read keys from **environment variables** and add your `.env` file to **`.gitignore`** so it can never be committed.
+How the Chess AI Coach avoids both: the key is only ever **typed into a password field** and held in React state (`useState`) for the session.  It is never written to disk, never hardcoded, and there is nothing to commit.  Close the tab and it's gone.  In a project with a build step, the equivalent discipline is: read keys from **environment variables** and add your `.env` file to **`.gitignore`** so it can never be committed.
 
-## 11. The Client-Side Exposure Problem
+## 11.  The Client-Side Exposure Problem
 
-Here is the uncomfortable truth about the app's Anthropic branch. It calls `api.anthropic.com` **directly from the browser**, and Anthropic makes you opt in with a header literally named:
+Here is the uncomfortable truth about the app's Anthropic branch.  It calls `api.anthropic.com` **directly from the browser**, and Anthropic makes you opt in with a header literally named:
 
 ```
 anthropic-dangerous-direct-browser-access: true
 ```
 
-The word "dangerous" is doing real work. When the browser makes the call, **the key travels from the user's browser and is visible in that browser's DevTools -> Network tab** on every request. Think about who can see it in each situation:
+The word "dangerous" is doing real work.  When the browser makes the call, **the key travels from the user's browser and is visible in that browser's DevTools -> Network tab** on every request.  Think about who can see it in each situation:
 
-- **You, running the app locally, typing your own key**: fine. The key stays on your machine, in your browser, used only by you. This is the app's intended use.
-- **You deploy the app to a public URL and hardcode your key so visitors don't need one**: a disaster. Every visitor can open DevTools and copy your key, then spend your money. **Never do this.**
+- **You, running the app locally, typing your own key**: fine.  The key stays on your machine, in your browser, used only by you.  This is the app's intended use.
+- **You deploy the app to a public URL and hardcode your key so visitors don't need one**: a disaster.  Every visitor can open DevTools and copy your key, then spend your money.  **Never do this.**
 
-`type="password"` on the input only hides the characters from someone looking over your shoulder. It does **nothing** to hide the key from the network layer or from other scripts on the page.
+`type="password"` on the input only hides the characters from someone looking over your shoulder.  It does **nothing** to hide the key from the network layer or from other scripts on the page.
 
-## 12. The Production Pattern: A Backend Proxy
+## 12.  The Production Pattern: A Backend Proxy
 
 For any app real users will touch, the key belongs on a **server you control**, never in the browser:
 
@@ -548,7 +548,7 @@ For any app real users will touch, the key belongs on a **server you control**, 
         reply                        reply
 ```
 
-The browser calls **your** endpoint. Your server reads the key from an environment variable and adds it to the provider request. The secret never leaves your server; users never see it; and you can add rate limits and logging in one place. A minimal proxy is only a few lines:
+The browser calls **your** endpoint.  Your server reads the key from an environment variable and adds it to the provider request.  The secret never leaves your server; users never see it; and you can add rate limits and logging in one place.  A minimal proxy is only a few lines:
 
 ## Code Cell
 
@@ -575,13 +575,13 @@ def coach():
     return jsonify({"text": data["choices"][0]["message"]["content"]})
 ```
 
-The **local-model escape hatch** sidesteps the whole problem: point the app at Open WebUI / Ollama and there is *no cloud key to leak*. That is a big reason this course leans on local models, and why the app supports them as a first-class provider.
+The **local-model escape hatch** sidesteps the whole problem: point the app at Open WebUI / Ollama and there is *no cloud key to leak*.  That is a big reason this course leans on local models, and why the app supports them as a first-class provider.
 
 ---
 
 ## Model 4: Where Should the Key Live?
 
-Three deployment scenarios. For each, decide where the key should live.
+Three deployment scenarios.  For each, decide where the key should live.
 
 | Scenario | Who uses it | Safe place for the key |
 |---|---|---|
@@ -591,15 +591,15 @@ Three deployment scenarios. For each, decide where the key should live.
 
 ### Critical Thinking Questions
 
-10. In scenario C, a teammate suggests "we'll just obfuscate the key by base64-encoding it in the JavaScript so nobody can read it." Explain precisely why this does not work.
+10.  In scenario C, a teammate suggests "we'll just obfuscate the key by base64-encoding it in the JavaScript so nobody can read it."  Explain precisely why this does not work.
 
     > *Hint: Anything the browser can decode to make the request, an attacker can also decode; the browser must send the real key over the wire, so it appears decoded in the Network tab regardless of how it was stored in the source. Obfuscation is not encryption; the secret still reaches the client. The only fix is to not send the secret to the client at all.*
 
-11. Scenario B has two safe options. Compare them: what does the backend-proxy option buy you that the keyless-local-model option does not, and vice versa?
+11.  Scenario B has two safe options.  Compare them: what does the backend-proxy option buy you that the keyless-local-model option does not, and vice versa?
 
     > *Hint: The proxy lets you use powerful cloud models while centralizing the key, rate limits, and logging, at the cost of running a server and paying per call. The local model needs no key and no per-call cost and keeps data on-premises, at the cost of hardware and (often) lower capability. Different tradeoffs, both avoid a client-side secret.*
 
-12. The app stores the key in `useState`, not in `localStorage`. Why is that a safer default for a browser app, even for personal use?
+12.  The app stores the key in `useState`, not in `localStorage`.  Why is that a safer default for a browser app, even for personal use?
 
     > *Hint: `useState` lives only in memory for the tab's lifetime, so the key vanishes when the tab closes and never persists to disk where other scripts or a shared machine's next user could read it. `localStorage` would survive restarts and be readable by any script on the origin, more exposure for no real benefit here.*
 
@@ -610,7 +610,7 @@ In a safe public deployment, where does the provider API key live?
 [(X)] On a backend server you control, read from an environment variable
 [( )] In a hidden HTML input with `type="password"`
 
-> **Common Misconception:** "`type='password'` protects the key." It only masks the characters on screen. The key is still in memory, still sent over the network in plain view of the Network tab, and still readable by any script on the page. Masking ≠ protecting. The real protections are: keep the key off the client entirely (backend proxy) or use a provider that needs no key (local model).
+> **Common Misconception:** "`type='password'` protects the key."  It only masks the characters on screen.  The key is still in memory, still sent over the network in plain view of the Network tab, and still readable by any script on the page.  Masking ≠ protecting.  The real protections are: keep the key off the client entirely (backend proxy) or use a provider that needs no key (local model).
 
 ---
 
@@ -618,9 +618,9 @@ In a safe public deployment, where does the provider API key live?
 
 The final layer is glue: React state that holds the provider settings (never keys in code), and the move handler that decides *whether* and *when* to call the model.
 
-## 13. Provider Config State and `executeMove`
+## 13.  Provider Config State and `executeMove`
 
-The provider settings are ordinary React state (a dropdown value plus the relevant fields), assembled into `providerConfig` and handed to the AI functions. The move handler branches on whether AI is configured:
+The provider settings are ordinary React state (a dropdown value plus the relevant fields), assembled into `providerConfig` and handed to the AI functions.  The move handler branches on whether AI is configured:
 
 ## Code Cell
 
@@ -648,9 +648,9 @@ if (currentAIEnabled) {
 }
 ```
 
-Notice the `try/catch/finally`: a failed API call turns into a **visible message** and the loading spinner always clears. Silent failures are the worst failures in AI features, because the user can't tell "the model is thinking" from "the model is broken."
+Notice the `try/catch/finally`: a failed API call turns into a **visible message** and the loading spinner always clears.  Silent failures are the worst failures in AI features, because the user can't tell "the model is thinking" from "the model is broken."
 
-## 14. Graceful Degradation, One More Time
+## 14.  Graceful Degradation, One More Time
 
 Because `aiEnabled` gates every model call, the app has a complete fallback path:
 
@@ -664,52 +664,52 @@ This is the template for adding AI to *any* existing app: **make the app fully w
 
 ## Exercises
 
-1. *Add a fourth provider.*
+1.  *Add a fourth provider.*
 
-   - *What to do*: Add a new branch to `callTextModel` for another OpenAI-compatible server (for example a second local endpoint, or a hosted gateway). Reuse `extractOpenAIText` for parsing. Add it to the provider `<select>` and the `aiEnabled` check.
-   - *Starter hint*: Copy the `openwebui` branch, change the base URL source, and add `<option value="myprovider">`. Because it's OpenAI-compatible, the response parse is unchanged; that's the payoff of the dispatcher pattern.
+   - *What to do*: Add a new branch to `callTextModel` for another OpenAI-compatible server (for example a second local endpoint, or a hosted gateway).  Reuse `extractOpenAIText` for parsing.  Add it to the provider `<select>` and the `aiEnabled` check.
+   - *Starter hint*: Copy the `openwebui` branch, change the base URL source, and add `<option value="myprovider">`.  Because it's OpenAI-compatible, the response parse is unchanged; that's the payoff of the dispatcher pattern.
    - *You've succeeded when*: Selecting your new provider and making a move produces commentary, and **no code outside `callTextModel`, the dropdown, and `aiEnabled` had to change.**
 
-2. *Add a structured-output feature.*
+2.  *Add a structured-output feature.*
 
-   - *What to do*: Write `getOpeningName(providerConfig, pgnSoFar)` that asks the model to name the opening and return `{"opening": "...", "confidence": 0.0-1.0}`. Parse it with the strip-fences-then-`safeJsonParse` pattern and display it above the board.
+   - *What to do*: Write `getOpeningName(providerConfig, pgnSoFar)` that asks the model to name the opening and return `{"opening": "...", "confidence": 0.0-1.0}`.  Parse it with the strip-fences-then-`safeJsonParse` pattern and display it above the board.
    - *Starter hint*: Model your prompt on `getAIEvaluation`: demand JSON with an example, use `temperature: 0`, strip fences, and default both fields (`parsed.opening || "Unknown"`, `parsed.confidence ?? 0`).
    - *You've succeeded when*: A recognizable opening (e.g. after `1. e4 e5 2. Nf3`) is named, and a garbled reply shows "Unknown" instead of crashing the app.
 
-3. *Swap the coach's persona.*
+3.  *Swap the coach's persona.*
 
    - *What to do*: Change the role sentence in `getAICommentary` (e.g. "You are a terse grandmaster" vs. "You are a warm beginner-friendly coach") and compare the commentary on the same three moves.
-   - *Starter hint*: Only the first line of the prompt needs to change. Keep the scope guardrails ("analyze only this move; no future moves") so the comparison is fair.
+   - *Starter hint*: Only the first line of the prompt needs to change.  Keep the scope guardrails ("analyze only this move; no future moves") so the comparison is fair.
    - *You've succeeded when*: You can describe, with examples, how the persona line changed tone and detail without changing correctness.
 
-4. *Move the key server-side.*
+4.  *Move the key server-side.*
 
    - *What to do*: Stand up the `minimal_proxy.py` from Part IV (or a Node equivalent), set the key in an environment variable, and add a fifth provider branch whose base URL is your proxy, so the browser sends **no key at all**.
-   - *Starter hint*: The browser branch becomes `fetch("http://localhost:5000/api/coach", { method: "POST", body: JSON.stringify({ prompt }) })`. Confirm in DevTools -> Network that no key appears on the browser request.
+   - *Starter hint*: The browser branch becomes `fetch("http://localhost:5000/api/coach", { method: "POST", body: JSON.stringify({ prompt }) })`.  Confirm in DevTools -> Network that no key appears on the browser request.
    - *You've succeeded when*: Commentary works, and inspecting the browser's outgoing request shows a prompt but **no API key** anywhere.
 
 ---
 
 ## Reflection Prompt
 
-*Personal*: Before reading this app, did "the AI analyzed my move" feel like magic? Now that you have seen it is an HTTP POST with a carefully worded prompt and a defensive JSON parse, has your sense of what these features *are* changed? What still feels non-obvious?
+*Personal*: Before reading this app, did "the AI analyzed my move" feel like magic?  Now that you have seen it is an HTTP POST with a carefully worded prompt and a defensive JSON parse, has your sense of what these features *are* changed?  What still feels non-obvious?
 
-*Technical*: In your notebook, design the configuration and secret-handling for a version of this app that your whole class could use at once. Where does the key live? Which provider(s) do you support and why? Sketch the request path from a student's browser to the model and back, and mark every place a secret must **not** appear.
+*Technical*: In your notebook, design the configuration and secret-handling for a version of this app that your whole class could use at once.  Where does the key live?  Which provider(s) do you support and why?  Sketch the request path from a student's browser to the model and back, and mark every place a secret must **not** appear.
 
-*Societal*: The app estimates a player's Elo from their moves and shows it back to them in real time. What are the risks of software that continuously scores a person's skill and reports it? Who might be discouraged or misjudged by a wrong estimate, and what responsibilities does a developer have when a model's confident-looking number is actually a rough guess?
+*Societal*: The app estimates a player's Elo from their moves and shows it back to them in real time.  What are the risks of software that continuously scores a person's skill and reports it?  Who might be discouraged or misjudged by a wrong estimate, and what responsibilities does a developer have when a model's confident-looking number is actually a rough guess?
 
 ---
 
 ## -> Coming Up Next
 
-You now have the full pattern for adding a language model to real software: isolate the AI layer, dispatch across providers, engineer prompts for prose and for structured JSON, parse defensively, and keep secrets off the client. In the **Build Your Own AI Coach** lab you will apply exactly this pattern to a domain of your choosing (a simpler game, a writing tutor, a code reviewer), reusing the provider-agnostic call, the structured-output discipline, and the key-security rules you practiced here.
+You now have the full pattern for adding a language model to real software: isolate the AI layer, dispatch across providers, engineer prompts for prose and for structured JSON, parse defensively, and keep secrets off the client.  In the **Build Your Own AI Coach** lab you will apply exactly this pattern to a domain of your choosing (a simpler game, a writing tutor, a code reviewer), reusing the provider-agnostic call, the structured-output discipline, and the key-security rules you practiced here.
 
 ---
 
 ## Further Reading
 
-- Anthropic. "Messages API Reference." *docs.anthropic.com*. The `/v1/messages` endpoint, the `x-api-key`/`anthropic-version` headers, and the `content[]` block response shape used in the Anthropic branch.
-- OpenAI. "Chat Completions API Reference." *platform.openai.com/docs/api-reference/chat*. The `/v1/chat/completions` request and the `choices[0].message.content` response reused by the OpenAI and Open WebUI branches.
-- Open WebUI. *Open WebUI Documentation*. `docs.openwebui.com`. The OpenAI-compatible `/api/chat/completions` and `/api/models` endpoints the local branch targets.
-- OWASP. "Secrets Management Cheat Sheet." *cheatsheetseries.owasp.org*. Why secrets must not ship to clients, and the backend-proxy pattern from Part IV.
-- Prior activity: [RESTful LLM Access: The api/v1 Paradigm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md). The Python foundation this activity builds on.
+- Anthropic.  "Messages API Reference."  *docs.anthropic.com*.  The `/v1/messages` endpoint, the `x-api-key`/`anthropic-version` headers, and the `content[]` block response shape used in the Anthropic branch.
+- OpenAI. "Chat Completions API Reference."  *platform.openai.com/docs/api-reference/chat*.  The `/v1/chat/completions` request and the `choices[0].message.content` response reused by the OpenAI and Open WebUI branches.
+- Open WebUI. *Open WebUI Documentation*. `docs.openwebui.com`.  The OpenAI-compatible `/api/chat/completions` and `/api/models` endpoints the local branch targets.
+- OWASP. "Secrets Management Cheat Sheet."  *cheatsheetseries.owasp.org*.  Why secrets must not ship to clients, and the backend-proxy pattern from Part IV.
+- Prior activity: [RESTful LLM Access: The api/v1 Paradigm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md).  The Python foundation this activity builds on.

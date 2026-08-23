@@ -14,21 +14,21 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Running Your Own AI: Ollama, OpenWebUI, and Private Local Models
 
-Every model you have talked to so far, in this course or anywhere else, has run on someone else's server. Today that stops. Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester. We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
+Every model you have talked to so far, in this course or anywhere else, has run on someone else's server.  Today that stops.  Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester.  We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
 
 > **Before class: the 10-minute pre-install checklist**
 >
-> 1. Download and install Ollama at home: https://ollama.com/download
-> 2. Run `ollama pull llama3.2` (about a 2 GB download) while you are on a good connection.
-> 3. Bring the output of `ollama list` to class.
+> 1.  Download and install Ollama at home: https://ollama.com/download
+> 2.  Run `ollama pull llama3.2` (about a 2 GB download) while you are on a good connection.
+> 3.  Bring the output of `ollama list` to class.
 >
-> In class we verify installs, fix stragglers, and explore. If your install failed or the download would not finish, do not worry; that is exactly what today's session is for. The Docker/OpenWebUI step (step 5 of the install checklist below) is optional today.
+> In class we verify installs, fix stragglers, and explore.  If your install failed or the download would not finish, do not worry; that is exactly what today's session is for.  The Docker/OpenWebUI step (step 5 of the install checklist below) is optional today.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Today is a hands-on build day: the Manager keeps the install moving, the Recorder logs every command and error, the Presenter demos your working stack at the end, and the Reflector notes friction points to share. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Today is a hands-on build day: the Manager keeps the install moving, the Recorder logs every command and error, the Presenter demos your working stack at the end, and the Reflector notes friction points to share.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -50,21 +50,21 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 
 In this part, you will understand the privacy, cost, and capability tradeoffs that motivate running AI models on your own hardware, so that when you choose between local and cloud inference for the rest of the semester, you can justify that choice with specific reasons.
 
-## 1. The Case for Local
+## 1.  The Case for Local
 
-Before we get to installation, consider why running AI locally matters. Imagine a doctor who needs to draft a clinical summary using patient records, or a researcher analyzing confidential survey responses. Sending those prompts to a cloud service means the data leaves the institution, potentially violating privacy law. A local model solves this by never letting the data leave the machine at all. At the same time, local models have real limitations: a model that fits on a laptop is far smaller than a frontier cloud model, and knowing which tasks each handles well is a core practitioner skill.
+Before we get to installation, consider why running AI locally matters.  Imagine a doctor who needs to draft a clinical summary using patient records, or a researcher analyzing confidential survey responses.  Sending those prompts to a cloud service means the data leaves the institution, potentially violating privacy law.  A local model solves this by never letting the data leave the machine at all.  At the same time, local models have real limitations: a model that fits on a laptop is far smaller than a frontier cloud model, and knowing which tasks each handles well is a core practitioner skill.
 
-**Privacy.** Prompts sent to a hosted service leave your machine; prompts to a local model never do. For work involving student records, health information, unpublished research, or anything covered by FERPA or an IRB protocol, local inference is often the only responsible choice.
+**Privacy.**  Prompts sent to a hosted service leave your machine; prompts to a local model never do.  For work involving student records, health information, unpublished research, or anything covered by FERPA or an IRB protocol, local inference is often the only responsible choice.
 
-**Cost and control.** A local model has no per-token bill, no rate limits, and no surprise deprecations. You choose the model, pin the version, and reproduce results months later, which connects directly to scientific reproducibility.
+**Cost and control.**  A local model has no per-token bill, no rate limits, and no surprise deprecations.  You choose the model, pin the version, and reproduce results months later, which connects directly to scientific reproducibility.
 
-**The tradeoff is capability.** Part of becoming a practitioner is learning *which tasks small local models do well* (formatting, extraction, drafting, classification, retrieval-augmented generation over your own documents) and which still demand frontier capability (complex multi-step reasoning, broad world knowledge, subtle creative tasks).
+The tradeoff is capability.  Part of becoming a practitioner is learning *which tasks small local models do well* (formatting, extraction, drafting, classification, retrieval-augmented generation over your own documents) and which still demand frontier capability (complex multi-step reasoning, broad world knowledge, subtle creative tasks).
 
 ---
 
-## 2. What a Model File Is
+## 2.  What a Model File Is
 
-A model you download is a tensor (a large multi-dimensional array; think of it as a very large spreadsheet of numbers) of learned numerical weights plus metadata that tells Ollama how to run it. Its size is governed by two numbers: the parameter count $N$ (how many individual weights the model has) and the **quantization level** (the number of bits, the units of computer storage, used to store each weight):
+A model you download is a tensor (a large multi-dimensional array; think of it as a very large spreadsheet of numbers) of learned numerical weights plus metadata that tells Ollama how to run it.  Its size is governed by two numbers: the parameter count $N$ (how many individual weights the model has) and the **quantization level** (the number of bits, the units of computer storage, used to store each weight):
 
 $$
 \text{size} \approx N_{\text{params}} \times \frac{\text{bits}}{8} \text{ bytes}
@@ -79,17 +79,17 @@ A team wants to run a 70B-parameter model quantized to 4 bits on a laptop with 1
 [( )] About 70 GB regardless of quantization
 [( )] Quantization makes memory use independent of parameter count
 
-> **Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy. In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks; the main practical impact is speed and memory, not correctness. The serious quality drop typically happens at 2-bit or below. Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
+> **Common Misconception:** Many people assume that a "4-bit" model is four times worse than a "16-bit" model, or that quantization destroys accuracy.  In practice, the perceptual quality difference between 4-bit and 16-bit versions of the same model is often surprisingly small for everyday language tasks; the main practical impact is speed and memory, not correctness.  The serious quality drop typically happens at 2-bit or below.  Choose quantization based on what fits in your RAM, not based on a fear of "lower quality."
 
 ---
 
 # Part II: The Build
 
-In this part, you will install and configure your own local AI stack (Ollama to serve models and optionally OpenWebUI for a chat interface) and verify that your Python code can talk to it over a local network connection. Every step is hands-on: the goal by the end of class is a working system you can call from your own scripts.
+In this part, you will install and configure your own local AI stack (Ollama to serve models and optionally OpenWebUI for a chat interface) and verify that your Python code can talk to it over a local network connection.  Every step is hands-on: the goal by the end of class is a working system you can call from your own scripts.
 
-## 3. Install Checklist
+## 3.  Install Checklist
 
-Follow this sequence as a team; the Recorder logs each step's outcome, including the exact error message if a step fails. A failed step is not a problem; it is data. Record the error verbatim, write down your hypothesis for the cause, and test the hypothesis before asking for help. This troubleshooting protocol is itself a course outcome.
+Follow this sequence as a team; the Recorder logs each step's outcome, including the exact error message if a step fails.  A failed step is not a problem; it is data.  Record the error verbatim, write down your hypothesis for the cause, and test the hypothesis before asking for help.  This troubleshooting protocol is itself a course outcome.
 
 ```
 1. Install Ollama:        https://ollama.com/download
@@ -104,7 +104,7 @@ Follow this sequence as a team; the Recorder logs each step's outcome, including
 
 ---
 
-The code cell below sends a single message to your locally running Ollama server using Python's `requests` library (a standard tool for making web requests). If Ollama is running correctly, it will respond with a confirmation message. The second block lists every model currently downloaded on your machine.
+The code cell below sends a single message to your locally running Ollama server using Python's `requests` library (a standard tool for making web requests).  If Ollama is running correctly, it will respond with a confirmation message.  The second block lists every model currently downloaded on your machine.
 
 ## Code Cell
 
@@ -143,31 +143,31 @@ While a long generation runs, open your system monitor (Activity Monitor on macO
 
 ### Critical Thinking Questions
 
-1. Which resource saturates during generation: CPU, GPU, memory (RAM), or disk? What does that tell you about where the primary bottleneck of local inference lies on your hardware?
+1.  Which resource saturates during generation: CPU, GPU, memory (RAM), or disk?  What does that tell you about where the primary bottleneck of local inference lies on your hardware?
 
-   > *Hint: If you have a GPU, watch GPU memory utilization. If you do not, the model falls back to CPU. Either way, something will peg near 100%; that resource is your bottleneck.*
+   > *Hint: If you have a GPU, watch GPU memory utilization.  If you do not, the model falls back to CPU. Either way, something will peg near 100%; that resource is your bottleneck.*
 
-2. Time a 100-word generation using Python's `time` module. Estimate tokens per second, and compare that rate to a hosted service you have used. What kinds of agent designs does slow generation penalize most?
+2.  Time a 100-word generation using Python's `time` module.  Estimate tokens per second, and compare that rate to a hosted service you have used.  What kinds of agent designs does slow generation penalize most?
 
-   > *Hint: An agent that makes five tool calls in a loop pays the generation cost five times. Multiply your tokens-per-second by 5 × (average tokens per step) to estimate wall-clock time for a full run.*
+   > *Hint: An agent that makes five tool calls in a loop pays the generation cost five times.  Multiply your tokens-per-second by 5 × (average tokens per step) to estimate wall-clock time for a full run.*
 
-3. Disconnect from the network and repeat a prompt. Articulate precisely what data left your machine during the offline run. Why does the answer to this question matter for the FERPA and IRB scenarios in Section 1?
+3.  Disconnect from the network and repeat a prompt.  Articulate precisely what data left your machine during the offline run.  Why does the answer to this question matter for the FERPA and IRB scenarios in Section 1?
 
-   > *Hint: With the network disconnected, the only data path is between your CPU/GPU and RAM. Nothing leaves the machine. Compare that to what would happen with a cloud API call.*
+   > *Hint: With the network disconnected, the only data path is between your CPU/GPU and RAM. Nothing leaves the machine.  Compare that to what would happen with a cloud API call.*
 
-4. Pull a second model of a different size (for example, `ollama pull llama3.2:1b`) and pose the same reasoning question to both. The Recorder captures both full outputs for the class comparison.
+4.  Pull a second model of a different size (for example, `ollama pull llama3.2:1b`) and pose the same reasoning question to both.  The Recorder captures both full outputs for the class comparison.
 
-   > *Hint: Choose a question that requires multi-step reasoning, such as a simple math word problem or a question about cause and effect. Single-word-answer questions will not reveal quality differences between model sizes.*
+   > *Hint: Choose a question that requires multi-step reasoning, such as a simple math word problem or a question about cause and effect.  Single-word-answer questions will not reveal quality differences between model sizes.*
 
 ---
 
-## 3b. Turn the Dial: Temperature in Your Own Chatbot
+## 3b.  Turn the Dial: Temperature in Your Own Chatbot
 
-You have just run a model that is *yours*. That means the settings that shape its answers are yours too, and the most consequential one is **temperature**.
+You have just run a model that is *yours*.  That means the settings that shape its answers are yours too, and the most consequential one is **temperature**.
 
-Here is the whole idea in one sentence: at each step the model produces a ranked list of candidate next words, and temperature decides whether it always takes the top one or sometimes reaches further down the list. **Near 0 it always takes the top candidate**, so the same prompt gives you very nearly the same answer every time. **Near 1 it reaches down**, so the wording varies from run to run. Nothing about the model changes; only how its output is picked.
+Here is the whole idea in one sentence: at each step the model produces a ranked list of candidate next words, and temperature decides whether it always takes the top one or sometimes reaches further down the list.  **Near 0 it always takes the top candidate**, so the same prompt gives you very nearly the same answer every time.  **Near 1 it reaches down**, so the wording varies from run to run.  Nothing about the model changes; only how its output is picked.
 
-You will meet the mathematics of that pick in *Why Different Answers Every Time? Sampling, Temperature, and Generation*. Today you just need to find the dial and feel what it does.
+You will meet the mathematics of that pick in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.  Today you just need to find the dial and feel what it does.
 
 ### Where the dial lives
 
@@ -180,40 +180,40 @@ You already have three places to set it, and they are all the same setting:
 | **The Ollama CLI** | Inside an `ollama run llama3.2` session, type `/set parameter temperature 0` and press Enter, then keep chatting. |
 | **Your Python code** | The `"options": {"temperature": ...}` block you already sent in the code cell above. |
 
-That last row is the point worth pausing on: the `temperature=0.7` your Python helper has been passing all along, and the slider in the OpenWebUI sidebar, are the *same knob*. The chatbot is not a different kind of thing from your script; it is a friendlier front end onto the identical API call.
+That last row is the point worth pausing on: the `temperature=0.7` your Python helper has been passing all along, and the slider in the OpenWebUI sidebar, are the *same knob*.  The chatbot is not a different kind of thing from your script; it is a friendlier front end onto the identical API call.
 
 ### Do this now (about ten minutes)
 
-1. Pick one prompt with room to vary. `"Write two sentences of advice for a first-year college student."` works well. A prompt with one right answer (`"What is 7 times 8?"`) will not show you anything.
-2. Set temperature to **0**. Send your prompt **three times**, starting a fresh chat each time so nothing carries over. The Recorder pastes all three answers into the team log.
-3. Set temperature to **1**. Send the same prompt **three more times**, fresh chat each time. Log those too.
-4. Now compare the two sets of three, on two separate questions: *how much did the **wording** change?* and *how much did the **advice itself** change?*
+1.  Pick one prompt with room to vary. `"Write two sentences of advice for a first-year college student."` works well.  A prompt with one right answer (`"What is 7 times 8?"`) will not show you anything.
+2.  Set temperature to **0**.  Send your prompt **three times**, starting a fresh chat each time so nothing carries over.  The Recorder pastes all three answers into the team log.
+3.  Set temperature to **1**.  Send the same prompt **three more times**, fresh chat each time.  Log those too.
+4.  Now compare the two sets of three, on two separate questions: *how much did the **wording** change?* and *how much did the **advice itself** change?*
 
 > **You've succeeded when** your log shows six answers, and your team can state in one sentence what changed between the two groups and what stayed the same.
 
 ### Critical Thinking Questions
 
-1. At temperature 0, were your three answers identical, or merely very similar? If they differed at all, what does that tell you about "deterministic" as a promise a system makes to you?
+1.  At temperature 0, were your three answers identical, or merely very similar?  If they differed at all, what does that tell you about "deterministic" as a promise a system makes to you?
 
-   > *Hint: Other things besides temperature can move: which machine served the request, how the numbers round on your hardware. Temperature 0 buys you a great deal of repeatability, not a guarantee.*
+   > *Hint: Other things besides temperature can move: which machine served the request, how the numbers round on your hardware.  Temperature 0 buys you a great deal of repeatability, not a guarantee.*
 
-2. At temperature 1, did the model's **facts and recommendations** change, or only its phrasing? Try a prompt where you can check the facts. Which kind of change would worry you more in a system a stranger depends on?
+2.  At temperature 1, did the model's **facts and recommendations** change, or only its phrasing?  Try a prompt where you can check the facts.  Which kind of change would worry you more in a system a stranger depends on?
 
-3. In the *Agent Loop* activity, `run_agent` pinned `temperature=0.0` while the plain `chat` helper defaulted to `0.7`. Now that you have watched both settings behave, restate in your own words why the loop wanted the pinned one.
+3.  In the *Agent Loop* activity, `run_agent` pinned `temperature=0.0` while the plain `chat` helper defaulted to `0.7`.  Now that you have watched both settings behave, restate in your own words why the loop wanted the pinned one.
 
    > *Hint: The loop searches the model's text for the exact strings `Final Answer:` and `calc(...)`.*
 
-4. Suppose you are building the campus advising assistant your team keeps sketching. Would you ship it at 0, at 1, or somewhere between? Name the failure you are trading away, and the one you are accepting.
+4.  Suppose you are building the campus advising assistant your team keeps sketching.  Would you ship it at 0, at 1, or somewhere between?  Name the failure you are trading away, and the one you are accepting.
 
-> **Common Misconception:** Temperature is not a "creativity" slider, and it is certainly not an "accuracy" slider. A model at temperature 0 will state a wrong fact just as confidently as one at temperature 1; it will simply state the *same* wrong fact every time. Turning temperature down makes a system **repeatable**, which makes it testable. It does not make it right.
+> **Common Misconception:** Temperature is not a "creativity" slider, and it is certainly not an "accuracy" slider.  A model at temperature 0 will state a wrong fact just as confidently as one at temperature 1; it will simply state the *same* wrong fact every time.  Turning temperature down makes a system **repeatable**, which makes it testable.  It does not make it right.
 
 ---
 
-## 4. Multi-Turn Conversations: Managing the Message List
+## 4.  Multi-Turn Conversations: Managing the Message List
 
-The call above sends a single message and forgets it instantly. A real conversation remembers what came before, and here is the key idea: **the Ollama server is stateless.** It does not remember your last turn. *You* remember, by keeping a running `messages` list and re-sending the whole thing on every call. Each turn you append the user's message, send the full list, then append the assistant's reply back onto it. The growing list *is* the conversation's memory.
+The call above sends a single message and forgets it instantly.  A real conversation remembers what came before, and here is the key idea: **the Ollama server is stateless.**  It does not remember your last turn.  *You* remember, by keeping a running `messages` list and re-sending the whole thing on every call.  Each turn you append the user's message, send the full list, then append the assistant's reply back onto it.  The growing list *is* the conversation's memory.
 
-The cell below holds a three-turn conversation. Notice that `chat()` now takes the entire `messages` list, and that after each reply we append the assistant's message (`r.json()["message"]`) verbatim, so the next turn can see it.
+The cell below holds a three-turn conversation.  Notice that `chat()` now takes the entire `messages` list, and that after each reply we append the assistant's message (`r.json()["message"]`) verbatim, so the next turn can see it.
 
 ## Code Cell
 
@@ -249,7 +249,7 @@ say("Remind me, what is my name?")         # ...yet the model still knows, from 
 print(f"[the message list now holds {len(messages)} entries]")
 ```
 
-The last question never mentions Iceland or the name Sam, yet the model answers correctly, because the entire prior exchange rode along in the `messages` list. Delete the `messages.append(reply)` line and the model goes amnesiac.
+The last question never mentions Iceland or the name Sam, yet the model answers correctly, because the entire prior exchange rode along in the `messages` list.  Delete the `messages.append(reply)` line and the model goes amnesiac.
 
 **The same pattern through OpenWebUI.** If you put OpenWebUI in front of Ollama, its OpenAI-compatible endpoint accepts the *identical* growing `messages` array; only the URL, an `Authorization: Bearer <key>` header, and the response path change:
 
@@ -266,62 +266,62 @@ Everything else (append the user turn, resend the whole list, append the reply) 
 
 ### Critical Thinking Questions
 
-5. Every turn resends the *entire* history, so a 20-turn chat re-sends turns 1-19 again on turn 20. As the conversation grows, what happens to the number of tokens processed (and therefore the time and cost) per turn?
+5.  Every turn resends the *entire* history, so a 20-turn chat re-sends turns 1-19 again on turn 20.  As the conversation grows, what happens to the number of tokens processed (and therefore the time and cost) per turn?
 
    > *Hint: If each turn adds roughly the same number of tokens, the total sent by turn $N$ grows like $1 + 2 + \dots + N$. Is that linear or quadratic in $N$?*
 
-6. Every model has a fixed **context window** (a maximum number of tokens it can read at once). What happens when your growing `messages` list exceeds it? Name two strategies to stay under the limit without simply deleting the earliest turns outright.
+6.  Every model has a fixed **context window** (a maximum number of tokens it can read at once).  What happens when your growing `messages` list exceeds it?  Name two strategies to stay under the limit without simply deleting the earliest turns outright.
 
-   > *Hint: You could drop old turns, or you could replace them with a short summary. Which one preserves more of what mattered?*
+   > *Hint: You could drop old turns, or you could replace them with a short summary.  Which one preserves more of what mattered?*
 
-7. The server is stateless, but your Python process holds the `messages` list in memory. If the program crashes mid-conversation, the history is gone. What would you add to make a conversation survive a restart?
+7.  The server is stateless, but your Python process holds the `messages` list in memory.  If the program crashes mid-conversation, the history is gone.  What would you add to make a conversation survive a restart?
 
    > *Hint: Think about writing the messages list to disk (as JSON) after each turn and reloading it on startup.*
 
-> **Common Misconception:** It is tempting to think the model "remembers" your conversation the way a person does. It does not. Between calls the server keeps *nothing*; the illusion of memory comes entirely from your client resending the full `messages` list each time. When the list grows too long for the context window, that memory silently starts to fall off the front, exactly the problem the *Memory and the Small Context Window* activity later solves with summarization.
+> **Common Misconception:** It is tempting to think the model "remembers" your conversation the way a person does.  It does not.  Between calls the server keeps *nothing*; the illusion of memory comes entirely from your client resending the full `messages` list each time.  When the list grows too long for the context window, that memory silently starts to fall off the front, exactly the problem the *Memory and the Small Context Window* activity later solves with summarization.
 
 ---
 
 # Part III: Synthesis and Practice
 
-In this part, you will probe your local model across five different task types to build a concrete capability map, a table showing where it succeeds and where it fails. This map will serve as your baseline for the rest of the semester as you add tools, retrieval, and multi-agent techniques.
+In this part, you will probe your local model across five different task types to build a concrete capability map, a table showing where it succeeds and where it fails.  This map will serve as your baseline for the rest of the semester as you add tools, retrieval, and multi-agent techniques.
 
-## 5. Exercises
+## 5.  Exercises
 
-1. *Capability map.*
+1.  *Capability map.*
 
-   - *What to do*: As a team, test your local model on five task types: (a) summarize a paragraph, (b) extract key facts into JSON, (c) solve an arithmetic word problem, (d) answer a question about a recent event (post-training-cutoff), and (e) write a short creative passage. Build a table of pass / partial / fail with one sentence of evidence for each cell.
-   - *Starter hint*: For the recent-event question, choose something that happened in 2025 or 2026. For extraction, give the model a paragraph and ask for `{"name": ..., "date": ..., "location": ...}`; check whether the JSON is valid.
+   - *What to do*: As a team, test your local model on five task types: (a) summarize a paragraph, (b) extract key facts into JSON, (c) solve an arithmetic word problem, (d) answer a question about a recent event (post-training-cutoff), and (e) write a short creative passage.  Build a table of pass / partial / fail with one sentence of evidence for each cell.
+   - *Starter hint*: For the recent-event question, choose something that happened in 2025 or 2026.  For extraction, give the model a paragraph and ask for `{"name": ..., "date": ..., "location": ...}`; check whether the JSON is valid.
    - *You've succeeded when*: Your table has five rows, a clear pass/partial/fail verdict for each, and you can identify which failure type (knowledge cutoff, format compliance, reasoning) explains each failing cell.
 
-2. *Quantization estimate.*
+2.  *Quantization estimate.*
 
-   - *What to do*: Using the formula from Section 2, compute the approximate weight-only storage size for models with 1B, 8B, and 70B parameters at both 4-bit and 16-bit quantization. Mark which fit in your laptop's RAM.
+   - *What to do*: Using the formula from Section 2, compute the approximate weight-only storage size for models with 1B, 8B, and 70B parameters at both 4-bit and 16-bit quantization.  Mark which fit in your laptop's RAM.
    - *Starter hint*: Plug into $\text{size} = N \times \frac{\text{bits}}{8}$ bytes, then convert to GB by dividing by $10^9$. For example, 1B parameters at 4-bit: $1 \times 10^9 \times 0.5 = 0.5$ GB.
    - *You've succeeded when*: You have a 3-by-2 table (three model sizes by two quantization levels) with sizes in GB and a checkmark or cross next to each based on your laptop's actual RAM.
 
-3. *Stack diagram.*
+3.  *Stack diagram.*
 
-   - *What to do*: Draw a box-and-arrow diagram showing the full data flow from OpenWebUI to Ollama to the model weights and back, plus your Python script as a separate entry point. Label which component owns the system prompt, the sampling parameters (the temperature you turned in Section 3b, plus its sibling `top-p`), and the model weights.
-   - *Starter hint*: Your diagram should have at least four boxes: OpenWebUI (or your Python script), the Ollama process, the model weights file on disk, and the GPU or CPU memory where inference actually runs. Arrows should show the direction of data flow for both the input prompt and the output response.
-   - *You've succeeded when*: Someone who was not in class today could read your diagram and correctly answer: "Where does the system prompt live? Where do the weights live? What does Ollama actually do?"
+   - *What to do*: Draw a box-and-arrow diagram showing the full data flow from OpenWebUI to Ollama to the model weights and back, plus your Python script as a separate entry point.  Label which component owns the system prompt, the sampling parameters (the temperature you turned in Section 3b, plus its sibling `top-p`), and the model weights.
+   - *Starter hint*: Your diagram should have at least four boxes: OpenWebUI (or your Python script), the Ollama process, the model weights file on disk, and the GPU or CPU memory where inference actually runs.  Arrows should show the direction of data flow for both the input prompt and the output response.
+   - *You've succeeded when*: Someone who was not in class today could read your diagram and correctly answer: "Where does the system prompt live?  Where do the weights live?  What does Ollama actually do?"
 
 ---
 
 ## Reflection Prompt
 
-*Personal*: You now own a working AI stack that costs nothing per query and shares nothing with anyone outside your machine. Did anything about the installation process surprise you, was it harder or easier than expected? What mental model did you have before about "where AI lives," and how has that changed?
+*Personal*: You now own a working AI stack that costs nothing per query and shares nothing with anyone outside your machine.  Did anything about the installation process surprise you, was it harder or easier than expected?  What mental model did you have before about "where AI lives," and how has that changed?
 
-*Technical*: You now have a tool that can run privately on your laptop. Identify one project (academic, personal, or professional) that becomes newly possible for you because privacy and cost are no longer barriers. Describe what you would build and what the remaining obstacle is.
+*Technical*: You now have a tool that can run privately on your laptop.  Identify one project (academic, personal, or professional) that becomes newly possible for you because privacy and cost are no longer barriers.  Describe what you would build and what the remaining obstacle is.
 
-*Societal*: Local AI puts the full capability of a language model in the hands of any individual with a modern laptop, with no oversight, no logging, and no terms of service enforcement. What are two benefits and two risks of that shift in power from institutions to individuals? Who benefits most from local AI, and who might be harmed?
+*Societal*: Local AI puts the full capability of a language model in the hands of any individual with a modern laptop, with no oversight, no logging, and no terms of service enforcement.  What are two benefits and two risks of that shift in power from institutions to individuals?  Who benefits most from local AI, and who might be harmed?
 
 ---
 
--> Coming Up Next: Your model is running and you have turned your first dial on it. Next, in *Prompt Engineering as Agent Design*, we work on the other half of the control surface: the words. Bring this stack, because that session edits system prompts against a live model and the temperature slider from Section 3b is one of the things we vary. (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time? Sampling, Temperature, and Generation*.)
+-> Coming Up Next: Your model is running and you have turned your first dial on it.  Next, in *Prompt Engineering as Agent Design*, we work on the other half of the control surface: the words.  Bring this stack, because that session edits system prompts against a live model and the temperature slider from Section 3b is one of the things we vary.  (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.)
 
-## 6. Further Reading
+## 6.  Further Reading
 
 - Ollama documentation: https://ollama.com and https://github.com/ollama/ollama/blob/main/docs/api.md (see the `/api/chat` `messages` array for multi-turn conversations)
 - OpenWebUI documentation: https://docs.openwebui.com
-- Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 3.
+- Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 3.

@@ -39,9 +39,9 @@ To earn trust in agentic software through engineering discipline: test-driven de
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
-This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline). Complete the core lab first. This direction is not a separate assignment: your single submission is graded once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together. Estimated additional time: **3-6 hours**.
+This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 
-> **Rather not write the code?** [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead. Pick whichever direction fits how you want to work; the credit is identical.
+> **Rather not write the code?**  [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead.  Take whichever direction appeals to you.  I give the same credit for either one.
 
 > **What this direction requires**
 >
@@ -52,7 +52,7 @@ This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Ass
 > - Local Ollama (used in the TDD and publishing parts; the tests themselves run against a mock, so **no API key is needed**)
 
 
-The core pipeline earns trust through measurement; this direction earns it through engineering discipline, so the pipeline can be tested, trusted, installed, and shipped. You will apply professional software engineering practices to agentic Python code that calls local LLMs and produces non-deterministic outputs: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing your agent as both a pip-installable package and a container image. This direction is completed **individually**.
+The core pipeline earns trust through measurement; this direction earns it through engineering discipline, so the pipeline can be tested, trusted, installed, and shipped.  You will apply professional software engineering practices to agentic Python code that calls local LLMs and produces non-deterministic outputs: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing your agent as both a pip-installable package and a container image.  This direction is completed **individually**.
 
 #### Before You Start (Direction 3)
 
@@ -84,17 +84,17 @@ If `ollama list` hangs or errors, start the server in a separate terminal:
 ollama serve
 ```
 
-**Create your GitHub repository** if you have not already. All four parts require a repository with at least one commit before you can open a pull request.
+**Create your GitHub repository** if you have not already.  All four parts require a repository with at least one commit before you can open a pull request.
 
 #### Step-by-step guide (Direction 3)
 
-The example below packages a small research agent, but you may instead package the rubric-grading pipeline you built in the core lab (its `ask_model`/judge functions map cleanly onto `ask_model`/`summarize`/`extract_facts`). Keep whichever you choose consistent across all four parts.
+The example below packages a small research agent, but you may instead package the rubric-grading pipeline you built in the core lab (its `ask_model`/judge functions map cleanly onto `ask_model`/`summarize`/`extract_facts`).  Keep whichever you choose consistent across all four parts.
 
 ##### Part 1: Test-Driven Development for a Non-Deterministic Agent
 
-The hardest part of testing agent code is that the model's output is never exactly the same twice. Instead of asserting exact strings, you write **semantic tests** (does the response contain the right concept?), **format tests** (does the response have the right structure?), and **safety tests** (does the response avoid forbidden content?). A mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI, the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
+The hardest part of testing agent code is that the model's output is never exactly the same twice.  Instead of asserting exact strings, you write **semantic tests** (does the response contain the right concept?), **format tests** (does the response have the right structure?), and **safety tests** (does the response avoid forbidden content?).  A mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI, the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
 
-**Step 1: Create the starter agent file.** Create `research_agent.py` in your project root:
+**Step 1: Create the starter agent file.**  Create `research_agent.py` in your project root:
 
 ```python
 import requests
@@ -139,7 +139,7 @@ def extract_facts(text: str) -> list[str]:
     raise NotImplementedError
 ```
 
-**Step 2: Create the test file with the mock fixture.** Create `test_agent.py`:
+**Step 2: Create the test file with the mock fixture.**  Create `test_agent.py`:
 
 ```python
 import pytest
@@ -231,7 +231,7 @@ def test_extract_facts_excludes_forbidden_content(mock_ollama):
     raise NotImplementedError
 ```
 
-**Step 3: Complete the TODOs and run the tests.** Implement all three `# TODO:` stubs in `research_agent.py` and all three `# TODO:` test stubs in `test_agent.py`, then run:
+**Step 3: Complete the TODOs and run the tests.**  Implement all three `# TODO:` stubs in `research_agent.py` and all three `# TODO:` test stubs in `test_agent.py`, then run:
 
 ```bash
 pytest -v
@@ -253,15 +253,15 @@ test_agent.py::test_extract_facts_excludes_forbidden_content PASSED
 
 **Troubleshooting, Part 1**
 
-- **`NotImplementedError` on every test:** You have not yet filled in the `# TODO:` stubs. The fixture patches `requests.post` correctly; the remaining work is in the function bodies.
-- **`AttributeError: module 'research_agent' has no attribute 'requests'`:** Your patch target must match how `requests` is imported inside `research_agent.py`. With `import requests` at the top, the patch target is `"research_agent.requests.post"`.
-- **All five tests pass without a live Ollama instance:** This is expected; the mock intercepts the HTTP call. Verify by stopping `ollama serve` and re-running `pytest`.
+- **`NotImplementedError` on every test:** You have not yet filled in the `# TODO:` stubs.  The fixture patches `requests.post` correctly; the remaining work is in the function bodies.
+- **`AttributeError: module 'research_agent' has no attribute 'requests'`:** Your patch target must match how `requests` is imported inside `research_agent.py`.  With `import requests` at the top, the patch target is `"research_agent.requests.post"`.
+- **All five tests pass without a live Ollama instance:** This is expected; the mock intercepts the HTTP call.  Verify by stopping `ollama serve` and re-running `pytest`.
 
-> **Checkpoint:** Make sure you can answer: (1) Why can we not use `assert result == "..."` to test a language model's output, even if the model is deterministic? (2) What does `patch("research_agent.requests.post")` do exactly; which object does it replace, and for how long? (3) Why might a safety test fail even when the mock returns a safe response? (Hint: look at how `extract_facts` processes the reply.)
+> **Checkpoint:** Make sure you can answer: (1) Why can we not use `assert result == "..."` to test a language model's output, even if the model is deterministic?  (2) What does `patch("research_agent.requests.post")` do exactly; which object does it replace, and for how long?  (3) Why might a safety test fail even when the mock returns a safe response?  (Hint: look at how `extract_facts` processes the reply.)
 
 ##### Part 2: Code Quality and Formatting
 
-Professional Python projects enforce formatting and linting in CI so style debates never reach code review. `black` is an opinionated formatter; `ruff` is a fast linter. Both exit non-zero on failure, which lets CI block a merge. The starter `research_agent.py` contains **two deliberate style issues**; find and fix them after running the tools.
+Professional Python projects enforce formatting and linting in CI so style debates never reach code review. `black` is an opinionated formatter; `ruff` is a fast linter.  Both exit non-zero on failure, which lets CI block a merge.  The starter `research_agent.py` contains **two deliberate style issues**; find and fix them after running the tools.
 
 **Step 1: Run `black` and observe the changes.**
 
@@ -281,7 +281,7 @@ All done! ✨ 🍰 ✨
 1 file reformatted, 1 file left unchanged.
 ```
 
-Look at the diff before applying. In your writeup, describe one specific change black made and why it is beneficial.
+Look at the diff before applying.  In your writeup, describe one specific change black made and why it is beneficial.
 
 **Step 2: Run `ruff` and fix linting errors.**
 
@@ -289,7 +289,7 @@ Look at the diff before applying. In your writeup, describe one specific change 
 ruff check research_agent.py test_agent.py
 ```
 
-Ruff will flag the two deliberate style issues with rule codes (e.g., `E501`, `F841`). Fix both, then re-run until you see:
+Ruff will flag the two deliberate style issues with rule codes (e.g., `E501`, `F841`).  Fix both, then re-run until you see:
 
 ```
 All checks passed!
@@ -316,20 +316,20 @@ TOTAL                  22      3      6      1    84%
 5 passed in 0.13s
 ```
 
-If coverage is below 80%, the `Missing` column lists the lines not exercised by any test. Add tests to cover those paths. Paste the final coverage report into your writeup.
+If coverage is below 80%, the `Missing` column lists the lines not exercised by any test.  Add tests to cover those paths.  Paste the final coverage report into your writeup.
 
 **Troubleshooting, Part 2**
 
 - **`black` and `ruff` disagree on the same line:** Apply `black` first, then run `ruff`. `ruff check --fix` resolves most remaining issues.
-- **Coverage stays below 80% even after adding tests:** `--cov-branch` counts every `if/else` path. The most commonly missed branches are exception handlers; add a test that triggers the exception path in `ask_model` by configuring the mock to raise `requests.exceptions.ConnectionError`.
+- **Coverage stays below 80% even after adding tests:** `--cov-branch` counts every `if/else` path.  The most commonly missed branches are exception handlers; add a test that triggers the exception path in `ask_model` by configuring the mock to raise `requests.exceptions.ConnectionError`.
 
-> **Checkpoint:** Make sure you can answer: (1) What is the difference between a formatter (black) and a linter (ruff)? Could one replace the other? (2) Name the two style issues you fixed and the ruff rule code for each. (3) Which lines are listed under `Missing`, and why were they not hit?
+> **Checkpoint:** Make sure you can answer: (1) What is the difference between a formatter (black) and a linter (ruff)?  Could one replace the other?  (2) Name the two style issues you fixed and the ruff rule code for each.  (3) Which lines are listed under `Missing`, and why were they not hit?
 
 ##### Part 3: GitHub Actions CI
 
-A CI pipeline runs your quality checks automatically on every push and pull request, catching style and test failures before they reach main. You will write a GitHub Actions workflow that replicates the three commands from Part 2 on a matrix of Python versions.
+A CI pipeline runs your quality checks automatically on every push and pull request, catching style and test failures before they reach main.  You will write a GitHub Actions workflow that replicates the three commands from Part 2 on a matrix of Python versions.
 
-**Step 1: Create the workflow file.** Create `.github/workflows/ci.yml`:
+**Step 1: Create the workflow file.**  Create `.github/workflows/ci.yml`:
 
 ```yaml
 {% raw %}
@@ -380,7 +380,7 @@ jobs:
 {% endraw %}
 ```
 
-**Step 2: Complete the YAML TODOs.** The install step should be a single `pip install` command; the format, lint, and test steps should be the same commands you ran in Part 2.
+**Step 2: Complete the YAML TODOs.**  The install step should be a single `pip install` command; the format, lint, and test steps should be the same commands you ran in Part 2.
 
 **Step 3: Push to a branch and open a pull request.**
 
@@ -391,21 +391,21 @@ git commit -m "Add CI pipeline and TDD implementation"
 git push origin ci-pipeline
 ```
 
-Open a pull request from `ci-pipeline` to `main`. In the Checks tab, watch the workflow run. The matrix produces two parallel jobs (one per Python version). Expected outcome: both jobs show a green checkmark. Take a screenshot of the Checks tab.
+Open a pull request from `ci-pipeline` to `main`.  In the Checks tab, watch the workflow run.  The matrix produces two parallel jobs (one per Python version).  Expected outcome: both jobs show a green checkmark.  Take a screenshot of the Checks tab.
 
 **Troubleshooting, Part 3**
 
-- **Workflow does not appear in the Actions tab:** The `.github/workflows/` directory must be committed and pushed. Check the path is exactly `.github/workflows/ci.yml`.
+- **Workflow does not appear in the Actions tab:** The `.github/workflows/` directory must be committed and pushed.  Check the path is exactly `.github/workflows/ci.yml`.
 - **The `black --check` step fails in CI but passes locally:** Ensure you ran `black` on the exact same files listed in the YAML step, and committed the formatted `test_agent.py`.
-- **`--cov-fail-under=80` fails in CI though local coverage is above 80%:** CI runs only the tests committed to the repository. If you wrote temporary tests locally but did not commit them, coverage is lower in CI.
+- **`--cov-fail-under=80` fails in CI though local coverage is above 80%:** CI runs only the tests committed to the repository.  If you wrote temporary tests locally but did not commit them, coverage is lower in CI.
 
-> **Checkpoint:** Make sure you can answer: (1) Why run both Python 3.11 and 3.12? What class of bug does this catch? (2) If `black --check` fails, what must happen before `ruff` and `pytest` run? (3) Where is the "human gate" in this CI pipeline?
+> **Checkpoint:** Make sure you can answer: (1) Why run both Python 3.11 and 3.12?  What class of bug does this catch?  (2) If `black --check` fails, what must happen before `ruff` and `pytest` run?  (3) Where is the "human gate" in this CI pipeline?
 
 ##### Part 4: Publishing Your Agent
 
 Once your agent passes CI, you can ship it in two forms: a pip-installable Python package and a container image.
 
-**Step 1: Write `pyproject.toml` for pip packaging.** Create `pyproject.toml` in your project root:
+**Step 1: Write `pyproject.toml` for pip packaging.**  Create `pyproject.toml` in your project root:
 
 ```toml
 [build-system]
@@ -501,14 +501,14 @@ If you do not have a TestPyPI account, demonstrate the upload with `--dry-run`:
 twine upload --repository testpypi --skip-existing dist/* 2>&1 | head -20
 ```
 
-Include the terminal output (real upload or dry run) as a screenshot. Verify the install:
+Include the terminal output (real upload or dry run) as a screenshot.  Verify the install:
 
 ```bash
 pip install --index-url https://test.pypi.org/simple/ research-agent
 research-agent "What is photosynthesis?"
 ```
 
-**Step 3: Write a `Dockerfile` for container publishing.** Create `Dockerfile` in your project root:
+**Step 3: Write a `Dockerfile` for container publishing.**  Create `Dockerfile` in your project root:
 
 ```dockerfile
 FROM python:3.11-slim
@@ -575,7 +575,7 @@ docker push ghcr.io/yourusername/research-agent:0.1.0
 
 Make the package public in your GitHub profile under the Packages tab if you want `docker pull` to work without authentication.
 
-**Step 5 (Optional): npm wrapper for a REST endpoint.** If your agent exposes a REST endpoint (not required), you can publish a minimal npm CLI wrapper:
+**Step 5 (Optional): npm wrapper for a REST endpoint.**  If your agent exposes a REST endpoint (not required), you can publish a minimal npm CLI wrapper:
 
 ```json
 {
@@ -597,19 +597,19 @@ Include the `--dry-run` output if you attempt this step.
 **Troubleshooting, Part 4**
 
 - **`hatchling` is not installed:** Run `pip install hatchling` and retry `python -m build`.
-- **`twine upload` fails with `403 Forbidden`:** Your API token may be scoped to PyPI (not TestPyPI) or expired. Generate a new token scoped to the specific project or "Entire account."
-- **`docker run` exits immediately without output:** Your `CMD` line is empty. It must be a JSON array: `["python", "research_agent.py"]`. The prompt is appended at runtime.
-- **`docker run` cannot reach Ollama:** On macOS/Windows use `-e OLLAMA_URL=http://host.docker.internal:11434/v1/chat/completions`. On Linux, use `--network=host` or pass the host's IP explicitly.
+- **`twine upload` fails with `403 Forbidden`:** Your API token may be scoped to PyPI (not TestPyPI) or expired.  Generate a new token scoped to the specific project or "Entire account."
+- **`docker run` exits immediately without output:** Your `CMD` line is empty.  It must be a JSON array: `["python", "research_agent.py"]`.  The prompt is appended at runtime.
+- **`docker run` cannot reach Ollama:** On macOS/Windows use `-e OLLAMA_URL=http://host.docker.internal:11434/v1/chat/completions`.  On Linux, use `--network=host` or pass the host's IP explicitly.
 
-> **Checkpoint:** Make sure you can answer: (1) What is the difference between a wheel (`.whl`) and a source distribution (`.tar.gz`)? (2) Why upload to TestPyPI before PyPI? (3) Why is setting `OLLAMA_URL` via `ENV` better than hardcoding the URL for a containerized deployment?
+> **Checkpoint:** Make sure you can answer: (1) What is the difference between a wheel (`.whl`) and a source distribution (`.tar.gz`)?  (2) Why upload to TestPyPI before PyPI? (3) Why is setting `OLLAMA_URL` via `ENV` better than hardcoding the URL for a containerized deployment?
 
 #### Extension Challenges (Direction 3, optional)
 
-**Challenge 1 (moderate): Property-based testing.** Install `hypothesis` and write a property-based test for `summarize`: generate random strings of varying lengths and assert the returned summary is always a non-empty string.
+**Challenge 1 (moderate): Property-based testing.**  Install `hypothesis` and write a property-based test for `summarize`: generate random strings of varying lengths and assert the returned summary is always a non-empty string.
 
-**Challenge 2 (moderate): Automated TestPyPI publishing in CI.** Add a `publish.yml` workflow that triggers only on a pushed version tag (e.g., `v0.1.0`), builds the wheel, and runs `twine upload --repository testpypi`. Store your TestPyPI token as a repository secret named `TEST_PYPI_TOKEN`.
+**Challenge 2 (moderate): Automated TestPyPI publishing in CI.** Add a `publish.yml` workflow that triggers only on a pushed version tag (e.g., `v0.1.0`), builds the wheel, and runs `twine upload --repository testpypi`.  Store your TestPyPI token as a repository secret named `TEST_PYPI_TOKEN`.
 
-**Challenge 3 (harder): Multi-stage Docker build.** Rewrite the Dockerfile with a `builder` stage that installs build dependencies and runs the tests, and a `runtime` stage that copies only the tested artifact. The final image should not contain pytest or dev dependencies.
+**Challenge 3 (harder): Multi-stage Docker build.**  Rewrite the Dockerfile with a `builder` stage that installs build dependencies and runs the tests, and a `runtime` stage that copies only the tested artifact.  The final image should not contain pytest or dev dependencies.
 
 #### Deliverables (Direction 3)
 
@@ -636,11 +636,11 @@ Fold the following into your single lab submission:
 
 Cite a specific observation from the direction (a line of code, a terminal output, or a CI run result) rather than restating the question.
 
-- When you mocked the Ollama HTTP call, you tested your code's behavior without testing the model's behavior. What aspect of the agent's correctness is your test suite completely unable to verify, and what would a complementary evaluation strategy look like? (The core pipeline's human-agreement and evidence-verification work is one such complement; connect them.)
-- The CI matrix runs on both Python 3.11 and 3.12. Describe one concrete Python language or library behavior that differs between these versions and that your test suite could catch.
-- Publishing to TestPyPI requires an API token; the Dockerfile accepts `OLLAMA_URL` as an environment variable. What is the general principle of externalizing sensitive or environment-specific configuration, and where does it show up elsewhere in this course? (Your core pipeline reads model, paths, temperature, and seed from config; name that connection.)
-- Looking at your final coverage report: which lines are still not covered, and what would you have to mock to cover them? Is 100% coverage always the right goal for agentic code?
-- Approximately how many hours did this direction take? (Used only to calibrate assignment difficulty.)
+- When you mocked the Ollama HTTP call, you tested your code's behavior without testing the model's behavior.  What aspect of the agent's correctness is your test suite completely unable to verify, and what would a complementary evaluation strategy look like?  (The core pipeline's human-agreement and evidence-verification work is one such complement; connect them.)
+- The CI matrix runs on both Python 3.11 and 3.12.  Describe one concrete Python language or library behavior that differs between these versions and that your test suite could catch.
+- Publishing to TestPyPI requires an API token; the Dockerfile accepts `OLLAMA_URL` as an environment variable.  What is the general principle of externalizing sensitive or environment-specific configuration, and where does it show up elsewhere in this course?  (Your core pipeline reads model, paths, temperature, and seed from config; name that connection.)
+- Looking at your final coverage report: which lines are still not covered, and what would you have to mock to cover them?  Is 100% coverage always the right goal for agentic code?
+- Approximately how many hours did this direction take?  (Used only to calibrate assignment difficulty.)
 
 
 ---

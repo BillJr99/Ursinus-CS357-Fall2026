@@ -8,7 +8,7 @@ info:
   purpose: "To get your local AI stack working before the labs depend on it, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
   tilt:
     task: "Install and verify a working local AI environment and write a short baseline reflection on AI agency and trust."
-    criteria: "Assessed on a complete setup-verification transcript and a specific, personal reflection in equal measure; see the rubric below for the full breakdown."
+    criteria: "I grade this on a complete setup-verification transcript and a specific, personal reflection in equal measure.  Please read the rubric below for the details."
   points: 100
   goals:
     - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
@@ -39,7 +39,7 @@ info:
     - rtitle: "Required setup (Route A): Your Course Development Environment - Host Ollama, the Course Container, Git, and GitHub"
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
-    - rtitle: "Required setup: Your AI Workbench, Step 0 (The Shell in Ten Minutes) - the terminal skills every later lab assumes, and the read-before-you-run habit"
+    - rtitle: "Required setup: Your AI Workbench, Step 0 (The Shell in Ten Minutes), covering the terminal skills every later lab assumes and the read-before-you-run habit"
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
     - rtitle: "Going further, if the shell is new to you: The Shell, in full (pipes, redirection, background jobs, and PATH)"
@@ -54,37 +54,37 @@ tags:
 
 ---
 
-In this warmup you will install your local AI stack and write a short baseline reflection on your experiences with AI. This assignment is deliberately low-stakes: it exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you will revisit at the end of the semester. (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).) There are no wrong answers in the reflection; this is a starting point, not an evaluation of knowledge. See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
+In this warmup you'll install your local AI stack and write a short baseline reflection on your experiences with AI.  I have kept the stakes low here on purpose.  It exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you'll come back to at the end of the semester.  (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).)  There are no wrong answers in the reflection.  This is a starting point, and I am not evaluating what you know.  See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
 
 ---
 
 ## Before You Start
 
-**This is the first thing you install for this course**, and it is deliberately front-loaded so that a broken setup costs you a low-stakes assignment rather than a lab.
+This is the first thing you install for this course.  I have put it early on purpose, so that a broken setup costs you this assignment rather than a lab.
 
-**Time:** two to three hours, and **most of that is downloading.** The model pull alone is about 2 GB and the container image is larger. Start the downloads on good wifi, then do the reflection while they run. Doing this the night before is the single most common way students lose points on this assignment, and it is entirely avoidable.
+**Pace yourself:** **most of this is downloading.**  The model pull alone is about 2 GB, and the container image is larger.  Please start the downloads on good wifi and write the reflection while they run.  Don't leave this for the night before; the downloads will not go any faster because you are in a hurry, and I can't help you at 11 PM.
 
-**You need:** a laptop you can install software on, a GitHub account, and about 10 GB free disk. If any of those is a problem, say so this week rather than in week four; there is a lab-machine route and it takes scheduling.
+**You need:** a laptop you can install software on, a GitHub account, and about 10 GB free disk.  If any of those is a problem, please say so this week rather than in week four.  There is a lab-machine route, and it takes some scheduling.
 
 **Do it in this order:**
 
-1. Start the Ollama download (Part 1). It runs in the background.
-2. While it downloads, write the baseline reflection (Part 2). It needs no tools.
-3. Come back and finish the setup transcript.
-4. Do the command-line and git checkpoint (Part 1.5) last, since it uses what you just installed.
+1.  Start the Ollama download (Part 1).  It runs in the background.
+2.  While it downloads, write the baseline reflection (Part 2).  It needs no tools.
+3.  Come back and finish the setup transcript.
+4.  Do the command-line and git checkpoint (Part 1.5) last, since it uses what you just installed.
 
-**Two routes, both fully supported:** Route A (host Ollama plus the course container) is recommended because every later lab assumes it, and it is what the *Your AI Workbench* session builds together. Route B (native install) is complete and supported; take it if Docker will not run on your machine, and say so in your transcript. Neither route is the "real" one.
+**Two routes, and I support both.**  Route A (host Ollama plus the course container) is the one I recommend, because every later lab assumes it and it is what we build together in the *Your AI Workbench* session.  Route B (native install) is complete and supported too, so take it if Docker will not run on your machine, and please say so in your transcript.  Neither route is the "real" one.
 
-> **You've succeeded when** all four boxes in the Setup Checklist are checked, all three in the Part 1.5 checklist are checked, and your reflection has four labeled sections. If a step failed, a documented failure with the verbatim error and what you tried earns full credit for that step; a vague "it worked eventually" does not.
+> **You've succeeded when** all four boxes in the Setup Checklist are checked, all three in the Part 1.5 checklist are checked, and your reflection has four labeled sections.  If a step failed, a documented failure with the verbatim error and what you tried earns full credit for that step; a vague "it worked eventually" does not.
 
 ---
 
 ## What a Strong Submission Looks Like
 
-A strong submission has three qualities:
+A strong submission has these qualities:
 
-1. **The transcript is complete and honest.** It shows the actual terminal output (version numbers, model names, the API response), copied faithfully. If something broke, the error is quoted verbatim and the student explains what they tried. Fabricated or paraphrased transcripts earn no credit.
-2. **The reflection is personal and specific.** It names a real AI tool the student used, describes a real moment of surprise or confusion, and takes a genuine position on agency and trust, not a dictionary definition, not a summary of the course syllabus. A strong reflection reads like a journal entry from someone thinking carefully, not like an answer written to please a grader.
+1.  **The transcript is complete and honest.**  It shows the actual terminal output (version numbers, model names, the API response), copied faithfully.  If something broke, quote the error verbatim and tell me what you tried.  I won't give credit for a fabricated or paraphrased transcript.
+2.  **The reflection is personal and specific.**  It names a real AI tool you used, describes a real moment of surprise or confusion, and takes an actual position on agency and trust.  I am not looking for a dictionary definition or a summary of the syllabus.  A strong reflection reads like a journal entry from someone thinking carefully.
 
 A weak submission has a transcript that says "it worked" without showing output and a reflection that restates prompts without answering them.
 
@@ -96,16 +96,16 @@ Complete this part by **one of two routes**; the four verification steps and the
 
 ### Route A (recommended): host Ollama + the course dev container
 
-Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity. On this route, run steps 1-3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity.  On this route, run steps 1-3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
 
 ### Route B: native install
 
-Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; ask the instructor if you are unsure which to use). Then complete each step below and capture the output:
+Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; ask the instructor if you are unsure which to use).  Then complete each step below and capture the output:
 
-1. Pull a small model: `ollama pull llama3.2`
-2. Run a CLI sanity check: `ollama run llama3.2 "Say hello in five words."`
-3. Verify the REST API responds: `curl http://localhost:11434/api/tags`
-4. From Python, send one chat request using the `requests` library, as we did in class, and print the response. Your script should look roughly like this:
+1.  Pull a small model: `ollama pull llama3.2`
+2.  Run a CLI sanity check: `ollama run llama3.2 "Say hello in five words."`
+3.  Verify the REST API responds: `curl http://localhost:11434/api/tags`
+4.  From Python, send one chat request using the `requests` library, as we did in class, and print the response.  Your script should look roughly like this:
 
 ```python
 import requests, json
@@ -123,7 +123,7 @@ print(json.dumps(response.json(), indent=2))
 
 Copy-paste or screenshot the output of all four steps, including the output of `ollama --version` and your operating system name and version.
 
-**If any step fails:** document the error message verbatim, state your hypothesis about the cause, and describe what you tried. A well-documented failure with a follow-up plan earns full credit for that step. Do not delete error output or write "it eventually worked" without showing what changed.
+**If any step fails:** document the error message verbatim, state your hypothesis about the cause, and describe what you tried.  A well-documented failure with a follow-up plan earns full credit for that step.  Do not delete error output or write "it eventually worked" without showing what changed.
 
 ### Setup Checklist
 
@@ -138,15 +138,15 @@ Before moving on, confirm you can answer yes to each of these:
 
 ## Part 1.5: Command-Line and Git Checkpoint
 
-Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment. This checkpoint makes sure those underlying tools work *before* the labs depend on them, the same philosophy as the Ollama setup above. You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork. If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
+Every lab this semester runs from a terminal, lives in a git repository, and depends on a reproducible Python environment.  This checkpoint makes sure those underlying tools work *before* the labs depend on them, the same philosophy as the Ollama setup above.  You do not need to be a shell wizard; you need to be able to move around, version your work, and stand up an environment without guesswork.  If any command below is unfamiliar, the **Command-Line Survival** resources at the end of this section will get you there.
 
-**Container-route note (Route A):** perform the git steps of this checkpoint **from inside the course container**, against the `cs357-work` GitHub repository you created in the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md); the activity's practice section (create `hello_agent.py`, run it against host Ollama, commit, push) is exactly this checkpoint, so its transcript satisfies the navigation and git items below. The `uv` step still runs on your host (the container image already bundles the course packages; `uv` is your reproducible-environment tool for the native route and anywhere outside the container).
+**Container-route note (Route A):** perform the git steps of this checkpoint **from inside the course container**, against the `cs357-work` GitHub repository you created in the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md); the activity's practice section (create `hello_agent.py`, run it against host Ollama, commit, push) is exactly this checkpoint, so its transcript satisfies the navigation and git items below.  The `uv` step still runs on your host (the container image already bundles the course packages; `uv` is your reproducible-environment tool for the native route and anywhere outside the container).
 
 Complete each step and capture the terminal output:
 
-1. **Navigate.** From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`. Then use one search tool, `grep` (or `ripgrep`/`rg` if installed), to find a string in a file, and paste the command you ran.
-2. **Version control.** Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`. Paste the transcript of `git log --oneline` showing your commit.
-3. **Reproducible Python with uv.** Install [uv](https://docs.astral.sh/uv/) (the fast, modern Python environment manager we standardize on this term). Create and activate a project environment and add the one dependency the labs start with: `uv venv`, then `uv add requests`, then `uv run python -c "import requests; print(requests.__version__)"`. Paste the output. (If you cannot install uv, fall back to `python -m venv` and `pip install requests`, and note in your submission that you used the fallback.)
+1.  **Navigate.**  From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`.  Then use one search tool, `grep` (or `ripgrep`/`rg` if installed), to find a string in a file, and paste the command you ran.
+2.  **Version control.**  Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`.  Paste the transcript of `git log --oneline` showing your commit.
+3.  **Reproducible Python with uv.**  Install [uv](https://docs.astral.sh/uv/) (the fast, modern Python environment manager we standardize on this term).  Create and activate a project environment and add the one dependency the labs start with: `uv venv`, then `uv add requests`, then `uv run python -c "import requests; print(requests.__version__)"`.  Paste the output.  (If you cannot install uv, fall back to `python -m venv` and `pip install requests`, and note in your submission that you used the fallback.)
 
 ### Command-Line Survival: reference (use as needed, not required reading cover-to-cover)
 
@@ -165,25 +165,25 @@ Complete each step and capture the terminal output:
 
 ## Part 2: Baseline Reflection
 
-Write approximately one page addressing all four prompts below. This is captured now so you can compare it to your thinking at the end of the semester. There are no wrong answers.
+Write approximately one page addressing all four prompts below.  This is captured now so you can compare it to your thinking at the end of the semester.  There are no wrong answers.
 
 **Reflection Template** (use these as section headings; write a paragraph under each):
 
 ### My AI Experience So Far
 
-Describe which AI tools you use, for what purposes, and how often. Then describe one specific moment when an AI output surprised you, either because it was better than you expected, or because it failed in an unexpected way. Name the tool, describe the task, and describe the surprise.
+Describe which AI tools you use, for what purposes, and how often.  Then describe one specific moment when an AI output surprised you, either because it was better than you expected, or because it failed in an unexpected way.  Name the tool, describe the task, and describe the surprise.
 
 ### What "Agent" Means to Me Right Now
 
-Write your own definition of what makes a system an "agent" rather than just a program or a tool. You do not need to match any textbook definition; write what you actually think. After the semester, we will return to this and see how your thinking changed.
+Write your own definition of what makes a system an "agent" rather than just a program or a tool.  You do not need to match any textbook definition; write what you actually think.  After the semester, we will return to this and see how your thinking changed.
 
 ### What I Would and Would Not Delegate
 
-Name one task you would happily hand to an AI agent and one you would not. For each, write one or two sentences explaining the specific reason: what is it about that task that makes delegation feel appropriate or inappropriate? The difference between your two examples is more interesting than either example alone.
+Name one task you would happily hand to an AI agent and one you would not.  For each, write one or two sentences explaining the specific reason: what is it about that task that makes delegation feel appropriate or inappropriate?  The difference between your two examples is more interesting than either example alone.
 
 ### What I Want to Build
 
-Describe one thing you hope to be able to build or do by the end of the semester that you cannot do today. Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
+Describe one thing you hope to be able to build or do by the end of the semester that you cannot do today.  Be as concrete as you can: what would it do, who would use it, and what would "working" look like?
 
 ---
 
@@ -232,18 +232,18 @@ Submit a single PDF or markdown file containing:
 
 ## Frequently Asked Questions
 
-**Q: I don't have a machine that can run Ollama. What should I do?**
-A: Use a lab machine or contact the instructor before the due date. Do not wait until the night before; lab access may require scheduling. Document which machine you used in your transcript.
+**Q: I don't have a machine that can run Ollama.  What should I do?**
+A: Use a lab machine or contact the instructor before the due date.  Do not wait until the night before; lab access may require scheduling.  Document which machine you used in your transcript.
 
-**Q: My Python API call returns an error or the model responds very slowly. Is that okay?**
-A: Slow is okay for a small model on older hardware. An error is okay as long as you document it fully: copy the full error message, describe what you tried, and state whether it was eventually resolved. A partial success with complete documentation earns full credit for that step.
+**Q: My Python API call returns an error or the model responds very slowly.  Is that okay?**
+A: Slow is okay for a small model on older hardware.  An error is okay as long as you document it fully: copy the full error message, describe what you tried, and state whether it was eventually resolved.  A partial success with complete documentation earns full credit for that step.
 
 **Q: The reflection prompts ask about "agency" and "trust"; do I need to use the textbook definitions?**
-A: No. This is a baseline, not a knowledge test. Write what you actually think before the course shapes your view. The textbook will be there later; this snapshot of your prior thinking is valuable precisely because it is unfiltered.
+A: No.  This is a baseline, and not a knowledge test.  Write what you actually think before the course shapes your view.  The textbook will be there later; this snapshot of your prior thinking is valuable precisely because it is unfiltered.
 
 ---
 
 Please also answer the following questions in your submission:
 
-- If collaboration with a buddy was permitted, did you work with a buddy on this assignment? If so, who? If not, do you certify that this submission represents your own original work? Please identify any and all portions of your submission that were not originally written by you.
+- If collaboration with a buddy was permitted, did you work with a buddy on this assignment?  If so, who?  If not, do you certify that this submission represents your own original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours it took you to finish this assignment (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

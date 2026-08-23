@@ -14,15 +14,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # From Text Generation to a Neural Network
 
-You have sampled from a softmax, tuned temperature, and measured cosine similarity between embeddings, but so far the "model" between the prompt and the logits has been a mysterious box. Today we open that box. We move from **the generation loop as a pipeline $\rightarrow$ a neural network you can compute entirely by hand $\rightarrow$ visualizing what the numbers inside are doing $\rightarrow$ the bridge: an embedding IS a learned representation**.
+You have sampled from a softmax, tuned temperature, and measured cosine similarity between embeddings, but so far the "model" between the prompt and the logits has been a mysterious box.  Today we open that box.  We move from **the generation loop as a pipeline $\rightarrow$ a neural network you can compute entirely by hand $\rightarrow$ visualizing what the numbers inside are doing $\rightarrow$ the bridge: an embedding IS a learned representation**.
 
-**Purpose (why we are doing this):** Every agent you build this semester rides on a forward pass: numbers multiplied by weights, summed, squashed, repeated. If you can trace one forward pass by hand, then "the model computed logits" stops being magic words and becomes arithmetic you can audit, debug, and question. **Task:** trace one short prompt through every stage of the generation loop with real (tiny) numbers, then compute a complete 2-2-1 neural network forward pass by hand and verify it in code. **Criteria for success:** your trace table matches the Python verification to two decimal places, and you can state in one sentence where the neural network lives inside the generation loop.
+**Purpose (why we are doing this):** Every agent you build this semester rides on a forward pass: numbers multiplied by weights, summed, squashed, repeated.  If you can trace one forward pass by hand, then "the model computed logits" stops being magic words and becomes arithmetic you can audit, debug, and question.  **Task:** trace one short prompt through every stage of the generation loop with real (tiny) numbers, then compute a complete 2-2-1 neural network forward pass by hand and verify it in code.  **Criteria for success:** your trace table matches the Python verification to two decimal places, and you can state in one sentence where the neural network lives inside the generation loop.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**). Consider each model and question individually first, then discuss with your group. The Recorder posts answers to the Class Activity Questions discussion board; the Presenter reports out areas of disagreement or alternative approaches. After class, respond to the reflective prompt individually in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -39,29 +39,29 @@ Work in your POGIL team with rotated roles (**Manager**, **Recorder**, **Present
 | **Embedding** | A learned vector of numbers representing a token. It is literally the first layer of the network: a lookup table of weights, trained like every other weight. | Token id 464 mapped to the 4-number vector $(0.2, -1.1, 0.7, 0.3)$ |
 | **Activation** | The output value of a neuron after its activation function, the "signal" that layer sends forward. Visualizing activations shows what the network responds to. | $h = (2.0, 0.0)$ in the trace table; the heatmaps in Model 3 |
 
-Notice that each concept above appears in at least two forms today: in the Key Concepts table (words), in a diagram or trace table (pictures and numbers), and in runnable Python (code). If one representation does not click, use another; they all describe the same thing.
+Notice that each concept above appears in at least two forms today: in the Key Concepts table (words), in a diagram or trace table (pictures and numbers), and in runnable Python (code).  If one representation does not click, use another; they all describe the same thing.
 
 ---
 
 ### Before You Start
 
-**What you need:** Python 3.10+, or a notebook if you prefer. No prior neural-network background assumed.
+**What you need:** Python 3.10+, or a notebook if you prefer.  No prior neural-network background assumed.
 
 **What you will have at the end:** a forward pass you traced by hand, connected to the code that does the same thing.
 
-Work through the sections in order; each one builds on the last, and the code blocks are meant to be run as you reach them, not read past.
+Go in order here.  Every section leans on the previous one, and you should run each code block when you reach it.
 
 ---
 
 # Part I: The Generation Loop as a Pipeline
 
-In this Part you will lay out every stage between typing a prompt and reading a response, as a pipeline diagram, and then push one short prompt through the whole pipeline with actual small numbers. By the end you will be able to point to exactly one box in the diagram and say "that is the neural network."
+In this Part you will lay out every stage between typing a prompt and reading a response, as a pipeline diagram, and then push one short prompt through the whole pipeline with actual small numbers.  By the end you will be able to point to exactly one box in the diagram and say "that is the neural network."
 
-## 1. The Pipeline
+## 1.  The Pipeline
 
-**Why this matters:** In the sampling activity we studied the *last two* stages of generation (softmax and sampling) in isolation. But an agent's behavior (good, bad, or biased) is shaped by every stage. When you later debug an agent that tokenizes a course code strangely, or ask why two paraphrases retrieve the same document, you will be reasoning about specific stages of this pipeline.
+**Why this matters:** In the sampling activity we studied the *last two* stages of generation (softmax and sampling) in isolation.  But an agent's behavior (good, bad, or biased) is shaped by every stage.  When you later debug an agent that tokenizes a course code strangely, or ask why two paraphrases retrieve the same document, you will be reasoning about specific stages of this pipeline.
 
-Here is the entire loop, drawn as a pipeline. Read it top to bottom; the arrow at the bottom loops back to the top.
+Here is the entire loop, drawn as a pipeline.  Read it top to bottom; the arrow at the bottom loops back to the top.
 
 ```
  prompt text            "The sky is"
@@ -110,9 +110,9 @@ Here is the entire loop, drawn as a pipeline. Read it top to bottom; the arrow a
       +--------------------> loop back to [ tokenizer ]
 ```
 
-The numbers in this diagram are illustrative but real: you can check the softmax row yourself. At $T = 1$: $e^{4.0} \approx 54.598$, $e^{2.5} \approx 12.182$, $e^{1.0} \approx 2.718$, $e^{0.5} \approx 1.649$, $e^{-1.0} \approx 0.368$; the sum is $\approx 71.516$, and $54.598 / 71.516 \approx 0.763$, exactly the temperature math from the sampling activity, now placed in context as the *second-to-last* stage of a longer machine.
+The numbers in this diagram are illustrative but real: you can check the softmax row yourself.  At $T = 1$: $e^{4.0} \approx 54.598$, $e^{2.5} \approx 12.182$, $e^{1.0} \approx 2.718$, $e^{0.5} \approx 1.649$, $e^{-1.0} \approx 0.368$; the sum is $\approx 71.516$, and $54.598 / 71.516 \approx 0.763$, exactly the temperature math from the sampling activity, now placed in context as the *second-to-last* stage of a longer machine.
 
-**So how does this become a neural net?** Look at the three middle boxes: **embedding lookup**, **transformer layers**, and **output layer**. Those three boxes *are* the neural network; everything else (tokenizer, softmax, sampling, appending) is ordinary deterministic code wrapped around it. The embedding table is a layer of learned weights. Each transformer layer is (at heart) weighted sums of its inputs passed through non-linear functions, the same recipe you will compute by hand in Part II, just with millions of neurons instead of two. The output layer is one more weighted sum per vocabulary word, producing the logits. A "large language model" is a very large stack of the small thing you are about to build, run once per generated token.
+So how does this become a neural net?  Look at the three middle boxes: **embedding lookup**, **transformer layers**, and **output layer**.  Those three boxes *are* the neural network; everything else (tokenizer, softmax, sampling, appending) is ordinary deterministic code wrapped around it.  The embedding table is a layer of learned weights.  Each transformer layer is (at heart) weighted sums of its inputs passed through non-linear functions, the same recipe you will compute by hand in Part II, just with millions of neurons instead of two.  The output layer is one more weighted sum per vocabulary word, producing the logits.  A "large language model" is a very large stack of the small thing you are about to build, run once per generated token.
 
 ---
 
@@ -132,17 +132,17 @@ The table below traces the prompt "The sky is" through one full turn of the loop
 
 ### Critical Thinking Questions
 
-1. Exactly one stage in the table involves randomness. Name it, and list two stages that are *learned* (their behavior was set by training) but perfectly deterministic at generation time.
+1.  Exactly one stage in the table involves randomness.  Name it, and list two stages that are *learned* (their behavior was set by training) but perfectly deterministic at generation time.
 
-   > *Hint: "Learned" and "random" are different properties. The embedding table and transformer weights were shaped by training, but at generation time they are frozen numbers; the same input always produces the same logits. Which single stage rolls a die?*
+   > *Hint: "Learned" and "random" are different properties.  The embedding table and transformer weights were shaped by training, but at generation time they are frozen numbers; the same input always produces the same logits.  Which single stage rolls a die?*
 
-2. Recompute the softmax row at $T = 0.5$ (calculator permitted): the scaled logits become $(8, 5, 2, 1, -2)$. Show that $P(\text{blue})$ rises to about $0.949$. Which *earlier* pipeline stage is completely unaffected by this change, and why does that matter for reproducibility?
+2.  Recompute the softmax row at $T = 0.5$ (calculator permitted): the scaled logits become $(8, 5, 2, 1, -2)$. Show that $P(\text{blue})$ rises to about $0.949$. Which *earlier* pipeline stage is completely unaffected by this change, and why does that matter for reproducibility?
 
    > *Hint: $e^{8} \approx 2980.958$, $e^{5} \approx 148.413$, $e^{2} \approx 7.389$, $e^{1} \approx 2.718$, $e^{-2} \approx 0.135$; the sum is $\approx 3139.614$. Temperature is applied after the logits are computed; do the weights, embeddings, or logits change when you change $T$?*
 
-3. The loop appends "blue" and runs again. Explain, using the diagram, why the *entire network* must run again for the next token, and why generating a 200-token answer therefore costs roughly 200 forward passes. (The Recorder writes the group's one-sentence explanation.)
+3.  The loop appends "blue" and runs again.  Explain, using the diagram, why the *entire network* must run again for the next token, and why generating a 200-token answer therefore costs roughly 200 forward passes.  (The Recorder writes the group's one-sentence explanation.)
 
-   > *Hint: The next-token distribution depends on the tokens so far. After appending "blue," the input to the tokenizer has changed, so every downstream stage receives different values. Nothing from the previous pass can simply be reused for the new final position (production systems cache parts of it, but a new forward pass still occurs).*
+   > *Hint: The next-token distribution depends on the tokens so far.  After appending "blue," the input to the tokenizer has changed, so every downstream stage receives different values.  Nothing from the previous pass can simply be reused for the new final position (production systems cache parts of it, but a new forward pass still occurs).*
 
 In the generation pipeline, the neural network proper consists of which stages?
 
@@ -151,17 +151,17 @@ In the generation pipeline, the neural network proper consists of which stages?
 [( )] Only the transformer layers
 [( )] The whole pipeline, including the random sampling step
 
-> **Common Misconception:** Students often believe the tokenizer is part of the neural network, or that it is learned by gradient descent along with the weights. It is not: the tokenizer is a fixed, deterministic program (built once, before training, from corpus statistics) that converts text to integers. If the tokenizer splits "CS357" into strange pieces, no amount of temperature tuning will fix it; the problem is upstream of the network entirely.
+> **Common Misconception:** Students often believe the tokenizer is part of the neural network, or that it is learned by gradient descent along with the weights.  It is not: the tokenizer is a fixed, deterministic program (built once, before training, from corpus statistics) that converts text to integers.  If the tokenizer splits "CS357" into strange pieces, no amount of temperature tuning will fix it; the problem is upstream of the network entirely.
 
 ---
 
 # Part II: A Forward Pass by Numbers
 
-In this Part you will compute every number in a tiny neural network (two inputs, two hidden ReLU neurons, one output) entirely by hand, then verify your arithmetic in Python. This is the same computation as one slice of the transformer box in Part I, small enough to own completely.
+In this Part you will compute every number in a tiny neural network (two inputs, two hidden ReLU neurons, one output) entirely by hand, then verify your arithmetic in Python.  This is the same computation as one slice of the transformer box in Part I, small enough to own completely.
 
-## 2. The Tiny Network
+## 2.  The Tiny Network
 
-**Why this matters:** "The model computed logits" is only meaningful if you know what computing means here: multiply inputs by weights, add a bias, apply a non-linearity, repeat per layer. Doing it by hand once (every multiplication visible) is the difference between believing this and knowing it. The extended by-hand practice for this skill (a full network fitting a quadratic, with more neurons and a backward pass) is on the printable worksheet: [Neural Network by Hand worksheet (PDF)](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
+**Why this matters:** "The model computed logits" is only meaningful if you know what computing means here: multiply inputs by weights, add a bias, apply a non-linearity, repeat per layer.  Doing it by hand once (every multiplication visible) is the difference between believing this and knowing it.  The extended by-hand practice for this skill (a full network fitting a quadratic, with more neurons and a backward pass) is on the printable worksheet: [Neural Network by Hand worksheet (PDF)](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
 
 Here is the network, in both picture and formula form (two representations of one object; check each against the other):
 
@@ -194,7 +194,7 @@ $$
 
 ## Model 2: The Trace Table
 
-We push the input $\mathbf{x} = (1.0, 2.0)$ through the network. Every arithmetic step appears in the table; nothing is hidden.
+We push the input $\mathbf{x} = (1.0, 2.0)$ through the network.  Every arithmetic step appears in the table; nothing is hidden.
 
 | Step | Computation | Value |
 |------|-------------|-------|
@@ -208,15 +208,15 @@ So this network maps $(1.0, 2.0) \mapsto 3.25$. Notice that $h_2$ "died" for thi
 
 ### Critical Thinking Questions
 
-4. Repeat the full trace by hand for $\mathbf{x} = (2.0, 1.0)$: same table format, all five rows. (You should get $y = 5.5$, with *both* hidden neurons active.) The Recorder writes the completed table.
+4.  Repeat the full trace by hand for $\mathbf{x} = (2.0, 1.0)$: same table format, all five rows.  (You should get $y = 5.5$, with *both* hidden neurons active.)  The Recorder writes the completed table.
 
-   > *Hint: $h_1$ pre-activation is $0.5(2.0) + 1.0(1.0) - 0.5 = 1.5$; $h_2$ pre-activation is $1.0(2.0) - 1.0(1.0) + 0.5 = 1.5$. Both are positive, so ReLU passes both through. Then $y = 1.5(1.5) + 2.0(1.5) + 0.25$.*
+   > *Hint: $h_1$ pre-activation is $0.5(2.0) + 1.0(1.0) - 0.5 = 1.5$; $h_2$ pre-activation is $1.0(2.0) - 1.0(1.0) + 0.5 = 1.5$. Both are positive, so ReLU passes both through.  Then $y = 1.5(1.5) + 2.0(1.5) + 0.25$.*
 
-5. Compare your two traces. The inputs $(1,2)$ and $(2,1)$ contain the same two numbers, yet the outputs differ ($3.25$ vs $5.5$) and *different neurons are active*. What does this tell you about how a ReLU network processes its input; is it applying one fixed formula, or switching between formulas?
+5.  Compare your two traces.  The inputs $(1,2)$ and $(2,1)$ contain the same two numbers, yet the outputs differ ($3.25$ vs $5.5$) and *different neurons are active*.  What does this tell you about how a ReLU network processes its input; is it applying one fixed formula, or switching between formulas?
 
-   > *Hint: When $h_2$ is clipped to zero, the network's output formula is effectively $y = 1.5 h_1 + 0.25$; when both neurons are active, it is a different linear formula. ReLU networks are piecewise linear: the pattern of which neurons are on/off selects which linear piece applies. More neurons means more pieces means more expressive functions.*
+   > *Hint: When $h_2$ is clipped to zero, the network's output formula is effectively $y = 1.5 h_1 + 0.25$; when both neurons are active, it is a different linear formula.  ReLU networks are piecewise linear: the pattern of which neurons are on/off selects which linear piece applies.  More neurons means more pieces means more expressive functions.*
 
-6. Trace $\mathbf{x} = (0.0, 0.0)$. Even with all-zero inputs, the output is not zero. Which parameters are responsible, and what would the network lose if all biases were removed?
+6.  Trace $\mathbf{x} = (0.0, 0.0)$. Even with all-zero inputs, the output is not zero.  Which parameters are responsible, and what would the network lose if all biases were removed?
 
    > *Hint: With zero inputs, all weight terms vanish, leaving only biases: $h_1 = \text{ReLU}(-0.5) = 0$, $h_2 = \text{ReLU}(0.5) = 0.5$, $y = 2.0(0.5) + 0.25 = 1.25$. Without biases, every neuron's decision boundary would be forced through the origin; could the network then represent a function like $y = x_1 + 5$?*
 
@@ -231,7 +231,7 @@ In the trace for $\mathbf{x} = (1.0, 2.0)$, hidden neuron $h_2$ output $0.0$ bec
 
 ## Code Cell: Verify Your Hand Trace
 
-The code below implements the exact network above using plain Python lists (no libraries needed), prints every intermediate value in trace-table order, and checks the three inputs from the Model and questions. Your hand values and the printed values must match to two decimal places.
+The code below implements the exact network above using plain Python lists (no libraries needed), prints every intermediate value in trace-table order, and checks the three inputs from the Model and questions.  Your hand values and the printed values must match to two decimal places.
 
 ```python
 W1 = [[0.5, 1.0],    # weights into h1
@@ -259,7 +259,7 @@ for x in [(1.0, 2.0), (2.0, 1.0), (0.0, 0.0)]:
     forward(list(x))
 ```
 
-If any line disagrees with your hand trace, find the first row where they diverge; that row contains the arithmetic slip. This is exactly how you will debug real models later: compare expected and actual values layer by layer, top to bottom.
+If any line disagrees with your hand trace, find the first row where they diverge; that row contains the arithmetic slip.  This is exactly how you will debug real models later: compare expected and actual values layer by layer, top to bottom.
 
 For extended by-hand practice (a wider network approximating $y = x^2$, including the training (backward) pass) work through the printable worksheet: [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf).
 
@@ -267,15 +267,15 @@ For extended by-hand practice (a wider network approximating $y = x^2$, includin
 
 # Part III: Seeing Inside the Network
 
-In this Part you will visualize the tiny network's weights and activations as heatmaps, the same technique, scaled up, that researchers use to inspect real language models. A picture of a weight matrix is a second representation of the same numbers you multiplied by hand in Part II.
+In this Part you will visualize the tiny network's weights and activations as heatmaps, the same technique, scaled up, that researchers use to inspect real language models.  A picture of a weight matrix is a second representation of the same numbers you multiplied by hand in Part II.
 
-## 3. What a Neural-Network Visualizer Shows
+## 3.  What a Neural-Network Visualizer Shows
 
-**Why this matters:** A network's weights are just a grid of numbers, and a grid of numbers is an image waiting to happen. Neural-network visualizers (in the spirit of tools like TensorFlow Playground or the "nviz"-style activation viewers) show three things: (1) the **weights**, which inputs each neuron amplifies (bright) or suppresses (dark/negative); (2) the **activations**, which neurons actually fire for a given input; and (3) how activations *change* as the input changes, revealing which features of the input each neuron has learned to detect. For our 2-2-1 network the pictures are small enough to check against your hand trace; for a real model the same pictures have millions of cells, but the reading skill is identical.
+**Why this matters:** A network's weights are just a grid of numbers, and a grid of numbers is an image waiting to happen.  Neural-network visualizers (in the spirit of tools like TensorFlow Playground or the "nviz"-style activation viewers) show three things: (1) the **weights**, which inputs each neuron amplifies (bright) or suppresses (dark/negative); (2) the **activations**, which neurons actually fire for a given input; and (3) how activations *change* as the input changes, revealing which features of the input each neuron has learned to detect.  For our 2-2-1 network the pictures are small enough to check against your hand trace; for a real model the same pictures have millions of cells, but the reading skill is identical.
 
 ## Model 3: Weight and Activation Heatmaps
 
-The code below draws three heatmaps: the hidden-layer weight matrix $W_1$ (rows = hidden neurons, columns = inputs), the output weights $V$, and the hidden activations for the two inputs you traced by hand. Compare each cell to a number you already computed.
+The code below draws three heatmaps: the hidden-layer weight matrix $W_1$ (rows = hidden neurons, columns = inputs), the output weights $V$, and the hidden activations for the two inputs you traced by hand.  Compare each cell to a number you already computed.
 
 ## Code Cell
 
@@ -316,13 +316,13 @@ print("wrote tiny_net_viz.png -- open it and compare each cell to your trace tab
 
 ### Critical Thinking Questions
 
-7. In the $W_1$ heatmap, one cell is strongly negative ($w_{22} = -1.0$). Using your Part II traces, describe in plain English what that negative weight makes neuron $h_2$ *detect* about the input. (Consider: when is $h_2$ active, when $x_1 > x_2$, or when $x_1 < x_2$?)
+7.  In the $W_1$ heatmap, one cell is strongly negative ($w_{22} = -1.0$).  Using your Part II traces, describe in plain English what that negative weight makes neuron $h_2$ *detect* about the input.  (Consider: when is $h_2$ active, when $x_1 > x_2$, or when $x_1 < x_2$?)
 
-   > *Hint: $h_2$'s pre-activation is $x_1 - x_2 + 0.5$. It fires when $x_1 - x_2 > -0.5$, i.e., roughly when $x_1$ is at least as large as $x_2$. A neuron with one positive and one negative incoming weight is computing a comparison between its inputs. Real networks are full of such learned comparisons.*
+   > *Hint: $h_2$'s pre-activation is $x_1 - x_2 + 0.5$. It fires when $x_1 - x_2 > -0.5$, i.e., roughly when $x_1$ is at least as large as $x_2$. A neuron with one positive and one negative incoming weight is computing a comparison between its inputs.  Real networks are full of such learned comparisons.*
 
-8. The activation heatmap has a cell that is exactly $0.0$ for input $(1, 2)$ but $1.5$ for input $(2, 1)$. A visualizer scaled to a real model would show thousands of such cells switching on and off per token. Why is this on/off *pattern* (not just the final output) useful to someone auditing a model's behavior?
+8.  The activation heatmap has a cell that is exactly $0.0$ for input $(1, 2)$ but $1.5$ for input $(2, 1)$. A visualizer scaled to a real model would show thousands of such cells switching on and off per token.  Why is this on/off *pattern* (not just the final output) useful to someone auditing a model's behavior?
 
-   > *Hint: From question 5, the active/inactive pattern selects which linear formula the network applies. Two inputs producing the same output through different activation patterns are being processed by different "reasoning paths." Auditors look for neurons or patterns that activate on protected attributes, foreshadowing our explainability lab.*
+   > *Hint: From question 5, the active/inactive pattern selects which linear formula the network applies.  Two inputs producing the same output through different activation patterns are being processed by different "reasoning paths."  Auditors look for neurons or patterns that activate on protected attributes, foreshadowing our explainability lab.*
 
 Hands-on follow-ups (each opens in Google Colab; run top to bottom and watch the loss curves and weight visualizations evolve):
 
@@ -335,11 +335,11 @@ Hands-on follow-ups (each opens in Google Colab; run top to bottom and watch the
 
 # Part IV: The Bridge - Representation = Learned Embedding
 
-In this Part you will connect Part I's embedding stage to Part II's hidden layer and see that they are the same kind of object: a learned representation. This closes the loop between the generation pipeline and the arithmetic you just did by hand.
+In this Part you will connect Part I's embedding stage to Part II's hidden layer and see that they are the same kind of object: a learned representation.  This closes the loop between the generation pipeline and the arithmetic you just did by hand.
 
-## 4. An Embedding IS a Learned Representation
+## 4.  An Embedding IS a Learned Representation
 
-**Why this matters:** In the tokens-and-embeddings activity, embeddings were handed to you as given: "words become vectors, similar words have similar vectors." Now you can say *where those vectors come from*. The embedding table in Part I's pipeline is a layer of the network, a grid of weights, initialized randomly and adjusted by training exactly like $w_{11}$ and $b_1$ in your tiny network. And your tiny network's hidden layer built a representation too: it re-described the input $(1.0, 2.0)$ as the activation vector $(2.0, 0.0)$, a new coordinate system ("how much weighted-sum-pattern 1 is present, how much comparison-pattern 2 is present") that makes the output layer's job easy. An embedding is the same move applied to words: a learned re-description of a token that makes next-token prediction easy. **Representation = learned embedding**, whether the input is a pair of numbers or the word "sky."
+**Why this matters:** In the tokens-and-embeddings activity, embeddings were handed to you as given: "words become vectors, similar words have similar vectors."  Now you can say *where those vectors come from*.  The embedding table in Part I's pipeline is a layer of the network, a grid of weights, initialized randomly and adjusted by training exactly like $w_{11}$ and $b_1$ in your tiny network.  And your tiny network's hidden layer built a representation too: it re-described the input $(1.0, 2.0)$ as the activation vector $(2.0, 0.0)$, a new coordinate system ("how much weighted-sum-pattern 1 is present, how much comparison-pattern 2 is present") that makes the output layer's job easy.  An embedding is the same move applied to words: a learned re-description of a token that makes next-token prediction easy.  **Representation = learned embedding**, whether the input is a pair of numbers or the word "sky."
 
 ## Model 4: Cosine Similarity, Revisited Inside the Network
 
@@ -355,15 +355,15 @@ Using the cosine similarity formula from the tokens-and-embeddings activity, $\c
 
 ### Critical Thinking Questions
 
-9. Verify $\cos(\text{cat}, \text{kitten}) \approx 0.982$ by hand: compute the dot product, both norms, and the ratio. (Calculator permitted; the Recorder writes all intermediate values.)
+9.  Verify $\cos(\text{cat}, \text{kitten}) \approx 0.982$ by hand: compute the dot product, both norms, and the ratio.  (Calculator permitted; the Recorder writes all intermediate values.)
 
    > *Hint: dot product $= 0.72 + 0.06 + 0.06 + 0.0 = 0.84$; $\|\text{cat}\| = \sqrt{0.95} \approx 0.9747$; $\|\text{kitten}\| = \sqrt{0.77} \approx 0.8775$; then $0.84 / (0.9747 \times 0.8775) \approx 0.982$.*
 
-10. Nobody typed these vectors in; they emerged from training on next-token prediction. Propose a mechanism: *why* would training push "cat" and "kitten" close together? What do those two tokens share that "carburetor" does not?
+10.  Nobody typed these vectors in; they emerged from training on next-token prediction.  Propose a mechanism: *why* would training push "cat" and "kitten" close together?  What do those two tokens share that "carburetor" does not?
 
     > *Hint: "cat" and "kitten" appear in similar contexts ("the ___ purred", "fed the ___"). If two tokens need similar next-token predictions, the network's loss is lowest when their embeddings (the inputs to all downstream layers) are similar. Similar use pressures similar representation.*
 
-11. Connect all four Parts in two sentences (Presenter reports out): where in the Part I pipeline does the Part II arithmetic happen, and where in the pipeline do the Part IV vectors live?
+11.  Connect all four Parts in two sentences (Presenter reports out): where in the Part I pipeline does the Part II arithmetic happen, and where in the pipeline do the Part IV vectors live?
 
     > *Hint: The Part II forward pass is what happens inside the "transformer layers" and "output layer" boxes (many times over); the Part IV embedding vectors are the output of the "embedding lookup" box, and the hidden activations of Part II are the same kind of object one layer deeper.*
 
@@ -380,52 +380,52 @@ Which statement best captures the "bridge" of Part IV?
 
 ## Exercises
 
-1. *Complete forward-pass practice.*
+1.  *Complete forward-pass practice.*
 
-   - *What to do:* Work at least the first forward-pass problem of the printable worksheet [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) by hand, showing a trace table in exactly the Model 2 format. Then adapt today's code cell to verify it.
+   - *What to do:* Work at least the first forward-pass problem of the printable worksheet [nn_by_hand_quadratic_full.pdf](https://www.billmongan.com/Ursinus-CS357/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) by hand, showing a trace table in exactly the Model 2 format.  Then adapt today's code cell to verify it.
    - *Starter hint:* Copy the `forward` function and replace `W1`, `b1`, `V`, and `c` with the worksheet's values; add a loop over the worksheet's inputs.
    - *You've succeeded when:* Every row of your hand table matches the printed verification to two decimal places, and any discrepancy you found is annotated with the arithmetic slip that caused it.
 
-2. *Break the network.*
+2.  *Break the network.*
 
-   - *What to do:* Find an input $(x_1, x_2)$ with both coordinates between $-3$ and $3$ for which *both* hidden neurons output zero. Report the network's output for every such input and explain why it is constant.
-   - *Starter hint:* You need $0.5 x_1 + 1.0 x_2 \le 0.5$ AND $1.0 x_1 - 1.0 x_2 \le -0.5$ simultaneously. Try $(-2, 0)$ or $(-1, -1)$. When all hidden activations are zero, what is left of the output formula?
+   - *What to do:* Find an input $(x_1, x_2)$ with both coordinates between $-3$ and $3$ for which *both* hidden neurons output zero.  Report the network's output for every such input and explain why it is constant.
+   - *Starter hint:* You need $0.5 x_1 + 1.0 x_2 \le 0.5$ AND $1.0 x_1 - 1.0 x_2 \le -0.5$ simultaneously.  Try $(-2, 0)$ or $(-1, -1)$. When all hidden activations are zero, what is left of the output formula?
    - *You've succeeded when:* You have at least two qualifying inputs, both produce output $c = 0.25$, and you can state the general principle (a dead layer makes the network output its bias, ignoring the input entirely).
 
-3. *Temperature meets the pipeline.*
+3.  *Temperature meets the pipeline.*
 
-   - *What to do:* Using the Part I logits $(4.0, 2.5, 1.0, 0.5, -1.0)$, compute the full five-word distribution at $T = 2$ by hand, then verify in Python. Add a row to the Model 1 trace table showing how the pipeline's output changes while every upstream stage stays identical.
+   - *What to do:* Using the Part I logits $(4.0, 2.5, 1.0, 0.5, -1.0)$, compute the full five-word distribution at $T = 2$ by hand, then verify in Python.  Add a row to the Model 1 trace table showing how the pipeline's output changes while every upstream stage stays identical.
    - *Starter hint:* Scaled logits at $T=2$ are $(2.0, 1.25, 0.5, 0.25, -0.5)$. Exponentiate, sum, divide, the same three moves as always.
    - *You've succeeded when:* Your distribution sums to 1.000 (within rounding), $P(\text{blue})$ has dropped noticeably below $0.763$, and you can say which pipeline stages produced identical values across all three temperatures.
 
-4. *Notebook scale-up.*
+4.  *Notebook scale-up.*
 
-   - *What to do:* Run [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb) end to end. Find the line(s) implementing the forward pass and annotate (in a Markdown cell) which line corresponds to each row of your Model 2 trace table.
-   - *Starter hint:* Look for a matrix multiplication followed by a ReLU (or similar) function; that is $h = \text{ReLU}(W x + b)$ vectorized. The 2-2-1 structure becomes 784-10-10, but the rows of your trace table map one-to-one onto lines of code.
+   - *What to do:* Run [Simple_MNIST_NN_from_scratch.ipynb](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Simple_MNIST_NN_from_scratch.ipynb) end to end.  Find the line(s) implementing the forward pass and annotate (in a Markdown cell) which line corresponds to each row of your Model 2 trace table.
+   - *Starter hint:* Look for a matrix multiplication followed by a ReLU (or similar) function; that is $h = \text{ReLU}(W x + b)$ vectorized.  The 2-2-1 structure becomes 784-10-10, but the rows of your trace table map one-to-one onto lines of code.
    - *You've succeeded when:* Your annotated notebook identifies the pre-activation, activation, and output computations, and the model trains to above 80% accuracy.
 
 ---
 
 ## Reflection Prompt
 
-*Personal:* Today a "language model" resolved into arithmetic you can do by hand. Did opening the box make the technology feel more trustworthy to you, less, or differently trustworthy? Name one belief about AI you held two weeks ago that a trace table would have corrected.
+*Personal:* Today a "language model" resolved into arithmetic you can do by hand.  Did opening the box make the technology feel more trustworthy to you, less, or differently trustworthy?  Name one belief about AI you held two weeks ago that a trace table would have corrected.
 
 *Technical:* Where does the randomness enter the generation pipeline, and (just as importantly) where does it NOT? List every stage from Part I's diagram in two columns (deterministic / random), and explain why setting temperature to zero changes the *sampling* column but leaves every weight, embedding, and logit untouched.
 
-*Societal:* An embedding is a learned representation, and it is learned from human-written text. If the training text associates certain occupations more often with certain groups of people, where in today's pipeline does that association come to live, and why won't adjusting temperature remove it? (We will measure exactly this in the bias unit.)
+*Societal:* An embedding is a learned representation, and it is learned from human-written text.  If the training text associates certain occupations more often with certain groups of people, where in today's pipeline does that association come to live, and why won't adjusting temperature remove it?  (We will measure exactly this in the bias unit.)
 
 ---
 
 ## -> Coming Up Next
 
-You can now trace a forward pass and point to where representations live. Next we ask what happens *between* the embedding lookup and the logits at scale: attention, the mechanism that lets every token's vector consult every other token's vector, and later, how those millions of weights get their values in the first place (training).
+You can now trace a forward pass and point to where representations live.  Next we ask what happens *between* the embedding lookup and the logits at scale: attention, the mechanism that lets every token's vector consult every other token's vector, and later, how those millions of weights get their values in the first place (training).
 
 ---
 
-## 5. Further Reading
+## 5.  Further Reading
 
-- Tom Yeh. *AI by Hand*, neural network and softmax worksheets.
-- 3Blue1Brown. "But what is a neural network?" (video series on neural networks, gradient descent, and transformers).
-- Michael Nielsen. *Neural Networks and Deep Learning*, Chapter 1. http://neuralnetworksanddeeplearning.com/chap1.html
-- Andrej Karpathy. "The spelled-out intro to neural networks and backpropagation: building micrograd." (video).
-- Melanie Mitchell. *AI: A Guide for Thinking Humans*, Chapter 2.
+- Tom Yeh.  *AI by Hand*, neural network and softmax worksheets.
+- 3Blue1Brown.  "But what is a neural network?"  (video series on neural networks, gradient descent, and transformers).
+- Michael Nielsen.  *Neural Networks and Deep Learning*, Chapter 1. http://neuralnetworksanddeeplearning.com/chap1.html
+- Andrej Karpathy.  "The spelled-out intro to neural networks and backpropagation: building micrograd."  (video).
+- Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 2.
