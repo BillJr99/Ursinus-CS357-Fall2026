@@ -409,7 +409,7 @@ docker run -it --rm \
 
 - `/work`: the project. Read-write, because the agent's job is to change it. This folder is a **git repository**, so every change the agent makes is reviewable with `git diff` and revertible with `git checkout`.
 - `/reference:ro`: your notes, style guides, or corpus. The agent reads them and physically cannot modify them.
-- `-e ANTHROPIC_API_KEY` with no value passes the variable through from your shell without baking it into the image or its history.
+- `-e ANTHROPIC_API_KEY` with no value passes the variable through from your shell without baking it into the image or its history. That is the right move for a throwaway `--rm` session, and it is not the end of the story: an environment variable is still readable by anyone who can run `docker inspect` on the container. For anything longer-lived than an experiment, Step f of the [Containerized Agent direction](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction3) of the Local Agent lab shows the leak and moves the secret into Docker secrets instead.
 
 What is deliberately **not** mounted matters more than what is:
 
@@ -445,7 +445,7 @@ docker run -it --rm \
 
 Read that command as a sentence: *the agent may act without asking, and the worst it can do is damage one git-tracked folder.* Every clause earns the first one.
 
-> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress. There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need.
+> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress. There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need. There is, however, a middle setting worth knowing: put the agent on a network whose only reachable host is your own gateway, so it can call models but cannot reach anything else on the internet. That is rung 5 in the next section's ladder, and the gateway it points at is the one the [Agentic CLI Tools tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-agentclis.md) routes through.
 
 ### 9.4 Read-only root, writable workspace
 
@@ -472,7 +472,8 @@ docker run -it --rm \
 | 2 | `-v ./project:/work` | Change one project | Git to catch mistakes |
 | 3 | Rung 2 + `:ro` reference + `--cap-drop ALL` | Change one project, read reference | The kernel |
 | 4 | Rung 3 + `--read-only --tmpfs` | Change one project only | The kernel, and nothing persists |
-| 5 | Rung 4 + `--network none` | Change one project, offline | Nothing leaves |
+| 5 | Rung 4 + egress only to your gateway | Change one project, reach models but no other host | The gateway's routing and its logs |
+| 6 | Rung 4 + `--network none` | Change one project, offline | Nothing leaves |
 
 ### 9.5 Verify the fence before you trust it
 
@@ -570,6 +571,22 @@ Which change makes it reasonable to run a coding agent with its permission promp
    ```
 
    *You've succeeded when:* You have copy-pasted terminal output showing `curl http://localhost:8001` returning a connection error and `curl http://host.docker.internal:8001` returning a successful HTTP response, and you can explain in one sentence why the two addresses produce different results from inside the same container.
+
+6. *The agent's fence.*
+
+   *What to do:* Build the agent image from Section 9.1 and prove its boundaries hold before you trust an agent inside it. Create a scratch git repository to be the writable workspace and a second folder to be the read-only reference. Build the image, then run all three verification commands from Section 9.5 and paste the output of each. Finally, write one sentence naming the worst thing an agent could do to your machine from inside that container.
+
+   *Starter hint:* Save the Section 9.1 Dockerfile as `Dockerfile.agent` and build it:
+   ```bash
+   mkdir -p ~/agents/project ~/agents/reference
+   git -C ~/agents/project init
+   docker build -f Dockerfile.agent -t course-agent .
+   ```
+   Then run the three checks from Section 9.5 in order: write to the `:ro` mount, resolve a hostname under `--network none`, and list the writable bind mounts. Each is written to *fail loudly* when the fence is working, so a failure is your evidence, not your bug.
+
+   *You've succeeded when:* Your three pasted outputs show, in order, `Read-only file system` (or your `BLOCKED-as-expected` message) from the reference mount, a name-resolution failure under `--network none`, and exactly one writable bind mount at `/work`. Your worst-case sentence names a specific, bounded outcome, damage to files in one git-tracked folder, rather than a vague reassurance. If you cannot write that sentence, Section 9.3 says you have not earned `--dangerously-skip-permissions`, and this exercise is where you find that out.
+
+   *Going further:* Try to actually run an agent under the full Section 9.3 command. You will hit the contradiction the Watch Out box names: `--network none` blocks the model API too. Record what happened, then decide which rung of the Section 9.4 ladder your real work belongs on and say why.
 
 ---
 

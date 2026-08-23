@@ -823,9 +823,12 @@ You may then **extend** the core in the direction below. The direction is not a 
 >
 > - **Node.js and npm** (install from [https://nodejs.org](https://nodejs.org) if you do not have them)
 > - **One coding agent**, installed via npm: `@anthropic-ai/claude-code` **or** `opencode-ai`
-> - **An API key** for the provider your agent uses (roughly $5 of credit is more than enough for this direction, or use the instructor-provided key if one is announced in class)
+> - **A model for the agent to call.** Three routes, in order of what costs you nothing:
+>   1. **opencode pointed at OpenWebUI** (free): if you are running OpenWebUI over your local models, configure opencode against it with the provider block in Step 8.2 of the [Development Environment tutorial]({{ site.activity_url }}liascript-devenvironment.md). The key it takes is one you mint on your own server, not a billing credential.
+>   2. **The instructor-provided key**, if one is announced in class.
+>   3. **Your own provider key** (roughly $5 of credit is more than enough for this direction).
 >
-> **The API key is required for this direction**: the coding agents used here call a hosted model, not your local Ollama instance. This is the only part of this lab that needs an API key; the core lab (Parts 1-4) runs entirely against your local Ollama setup from the earlier labs. If the cost or the account setup is a barrier, talk to me before you start rather than after; do not let a missing key silently eat your time budget.
+> **This direction needs a stronger model than the rest of the lab**: a coding agent driving a real specification asks more of a model than the core lab does, which is why route 3 exists at all. But route 1 is genuinely free and worth trying first, and the core lab (Parts 1-4) still runs entirely against your local Ollama setup from the earlier labs. If cost or account setup is a barrier, talk to me before you start rather than after; do not let a missing key silently eat your time budget.
 
 In this direction you apply the very same generator-critic-refine loop you built above, but with a **coding agent standing in as the generator**. You hand the agent a written specification for a REST API endpoint and it drafts an implementation. You play the critic: instead of accepting its diff, you read every line against the spec, categorize your findings the way your JSON critic categorizes rubric violations, and feed a precise critique back to the agent as a follow-up prompt, one turn of the refine loop. After the loop converges you harden the accepted result with linting and security scanning. The skill being assessed is not whether the agent produces working code on the first try; it is whether your critique-and-refine discipline can drive the agent to a trustworthy outcome. Complete this direction in **pairs using driver/navigator roles with swaps at least every 30 minutes and a logged swap record**.
 
