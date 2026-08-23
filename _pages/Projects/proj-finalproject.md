@@ -183,13 +183,11 @@ Read them as the arc you have actually walked: the Stakeholder Brief is *Define 
 
 ## Stage 1: Proposal (25 points)
 
-Every proposal (2-3 pages), regardless of direction, must include:
+**The proposal has its own page and its own rubric: see [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).** Read it before you start writing; what follows here is a summary of where the proposal sits in the project.
 
-- **Direction declaration** and a one-paragraph problem statement naming the task or system, the affected users or populations, and the success criterion.
-- **Stakeholder grounding** integrating your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview): the problem in the partner's terms, the gap your review identified, how this project addresses it, and what the partner's needs imply for scope (Goals 11, 12).
-- **Implementation-and-assessment sketch**: who holds which role in which sprint, how progress will be assessed at each sprint boundary, and a shared GANTT-style timeline mapping tasks to the three sprints with named owners (Goal 13).
-- **AI-use disclosure** for the proposal itself.
-- The **direction-specific elements** listed under your direction below.
+Every proposal (2-3 pages), regardless of direction, declares its direction and defends the choice, grounds the problem in your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) and [Literature Review]({{ site.baseurl }}/Assignments/LitReview), argues its design decisions against the alternatives rejected, sketches the implementation and assessment plan with a GANTT-style timeline and named owners, discloses AI use, and includes the direction-specific elements listed under your direction below.
+
+The proposal is graded on its own rubric, not on this one: three course families (Approach, Process and Professionalism, and Plan Quality) worth 60 points between them, plus the four AAC&U problem-solving criteria a plan can actually demonstrate. *Implement Solution* and *Evaluate Outcomes* are graded here, at Demo Day, because a plan cannot demonstrate them.
 
 Incomplete proposals are returned ungraded; proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected. The second intra-team check-in lands shortly before this deadline; use it to surface scope disagreements early.
 

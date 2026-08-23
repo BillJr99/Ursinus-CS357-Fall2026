@@ -702,8 +702,9 @@ schedule:
   link: "https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-environmentalai.md"
   deliverables:
   - dtitle: "Project: Final Project Proposal Due"
-    dlink: "Projects/FinalProject"
+    dlink: "Projects/FinalProjectProposal"
     points: "25"
+    rubricpath: "_pages/Projects/proj-finalprojectproposal.md"
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 1 - Earth: the mineralogical and energy substrate of computation"
   - rtitle: "Going further: Cost Optimization for AI Systems, caching, batching, and choosing the smallest model that works"
