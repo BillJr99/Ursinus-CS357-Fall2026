@@ -7,7 +7,7 @@ info:
   purpose: 'To earn trust in agentic software through engineering discipline: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing the agent as a pip package and a container image.'
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
-    rlink: /Assignments/RubricPipeline
+    rlink: "../RubricPipeline"
   - rtitle: 'Publishing Activity: GHCR, Docker Hub, and npm'
     rlink: "Activities/liascript-publishing.md"
     liapage: true

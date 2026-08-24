@@ -43,7 +43,7 @@ info:
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
     - rtitle: "The Shell, in Full: pipes, redirection, background jobs, and PATH, if the shell is new to you"
-      rlink: "/Tutorials/Shell"
+      rlink: "../Tutorials/Shell"
     - rtitle: "Mitchell, Prologue and Chapter 1"
 
 tags:

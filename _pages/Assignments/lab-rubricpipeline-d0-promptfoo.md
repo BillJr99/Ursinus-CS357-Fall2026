@@ -7,7 +7,7 @@ info:
   purpose: To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agreement validation, bias measurement, and regression testing, declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
-    rlink: /Assignments/RubricPipeline
+    rlink: "../RubricPipeline"
   - rtitle: LLM-as-Judge Activity
     rlink: "Activities/liascript-llmasjudge.md"
     liapage: true
