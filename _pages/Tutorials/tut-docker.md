@@ -425,7 +425,7 @@ docker run -it --rm \
 
 - `/work`: the project.  Read-write, because the agent's job is to change it.  This folder is a **git repository**, so every change the agent makes is reviewable with `git diff` and revertible with `git checkout`.
 - `/reference:ro`: your notes, style guides, or corpus.  The agent reads them and physically cannot modify them.
-- `-e ANTHROPIC_API_KEY` with no value passes the variable through from your shell without baking it into the image or its history.  That is the right move for a throwaway `--rm` session, and it is not the end of the story: an environment variable is still readable by anyone who can run `docker inspect` on the container.  For anything longer-lived than an experiment, Step f of the [Containerized Agent direction](https://www.billmongan.com/Ursinus-CS357/Assignments/LocalAgent/Direction3) of the Local Agent lab shows the leak and moves the secret into Docker secrets instead.
+- `-e ANTHROPIC_API_KEY` with no value passes the variable through from your shell without baking it into the image or its history.  That is the right move for a throwaway `--rm` session, and it is not the end of the story: an environment variable is still readable by anyone who can run `docker inspect` on the container.  For anything longer-lived than an experiment, Step f of the [Containerized Agent direction](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction3) of the Local Agent lab shows the leak and moves the secret into Docker secrets instead.
 
 What is deliberately **not** mounted matters more than what is:
 
