@@ -380,6 +380,8 @@ The attention mechanism is not a mathematical curiosity.  It sets the budget you
 
 **Position matters, and not evenly.**  Models attend most reliably to the beginning and the end of a long context and are measurably worse at material buried in the middle, an effect usually called *lost in the middle*.  This is why we put an agent's standing instructions and the current question at the edges of a prompt, with retrieved evidence in between, once we start building retrieval pipelines.
 
+**Depth is fixed, so the number of dependent steps is fixed.**  Attention lets any token look at any other token, which is a genuinely powerful thing and is not the same as computing.  A stack of layers gives the model a set number of operations that can *depend on each other* before it has to commit to a token, and that number was frozen when the model was trained.  A problem needing more dependent steps than the stack has does not get more; the model answers anyway.  Hold onto this, because *Why Different Answers Every Time?* shows you the one way out of it, and the way out is not a bigger context or better attention: it is the model writing intermediate results into its own context and reading them back on the next pass.
+
 > **Common Misconception: "More context is always better."**  Three things say otherwise, and you have now seen all three.  The cost is quadratic, so a longer prompt is not a free improvement.  The middle of a long prompt is the least reliable part of it.  And every extra token competes for the same finite attention budget, so filler actively dilutes the signal from the tokens that mattered.  Retrieve only what is relevant, place it deliberately, and keep prompts as short as the task allows.
 
 ---

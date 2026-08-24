@@ -111,6 +111,8 @@ $$
 
 Here $o_t$ is the observation at step $t$, $m_t$ is memory, $\pi$ is the policy implemented by the language model, and $a_t$ is the chosen action.  The loop terminates when the agent emits a distinguished *final answer* action or exceeds a step budget.
 
+> **One caution to carry all term.**  The loop is worth building when the next step genuinely depends on what came back from the last one, and it is pure overhead when it does not.  A task with a fixed sequence of steps is a script; a task whose rule you can state is a function; a task with thousands of labeled examples and a small fixed answer set is usually a classifier.  Each of those is faster, cheaper, and always right, which a loop around a language model is not.  We build the loop today because you cannot judge when to reach for it until you know exactly what it costs, and *Design First* comes back to that judgment with a decision table once you do.
+
 ### Pseudocode
 
 ```
