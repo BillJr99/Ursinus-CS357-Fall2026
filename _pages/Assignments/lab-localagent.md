@@ -112,10 +112,10 @@ info:
       rlink: "https://python.useinstructor.com/integrations/ollama/"
     - rtitle: "Outlines: Grammar-Constrained Generation"
       rlink: "https://github.com/dottxt-ai/outlines"
-    - rtitle: "Building an AI Chess Coach: LLM API Calls in a Real Web App (this lab's worked example)"
+    - rtitle: "The AI Chess Coach activity: LLM API calls in a real web app (this lab's worked example)"
       rlink: "Activities/liascript-chessaicoach.md"
       liapage: true
-    - rtitle: "RESTful LLM Access: The api/v1 Paradigm (prerequisite)"
+    - rtitle: "The RESTful LLM Access activity on the api/v1 paradigm (prerequisite)"
       rlink: "Activities/liascript-restllmapi.md"
       liapage: true
 

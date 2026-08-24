@@ -64,10 +64,7 @@ info:
       rlink: "https://github.com/leinn32/labStudentLLM"
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
-    - rtitle: "Privacy-Preserving AI"
-      rlink: "Activities/liascript-ipprivacy.md"
-      liapage: true
-    - rtitle: "Intellectual Property and Privacy"
+    - rtitle: "The Intellectual Property and Privacy activity, whose Part IIb covers federated learning, differential privacy, and PII scrubbing"
       rlink: "Activities/liascript-ipprivacy.md"
       liapage: true
     - rtitle: "Explainability Activity"
