@@ -85,6 +85,57 @@ Two teams expose the same function with different schemas:
 
 ---
 
+
+---
+
+## Model 1b: Four Ways to Ask for Structure, and What Each One Guarantees
+
+Model 1 gave you the schema as an interface.  Before you trust one, you need to know what actually enforces it, because "I asked for JSON" and "JSON is the only thing that can come out" are very different promises, and only one of them survives a bad day.
+
+Same prompt, four mechanisms:
+
+```
+PROMPT: "Classify the sentiment of: 'The product broke after one day.'"
+
+Plain text          "The sentiment of this review is clearly negative. The customer
+                     is unhappy because the product failed quickly."
+                     -> no parse; fragile regex; breaks when phrasing shifts
+
+JSON mode           {"sentiment": "negative", "reasoning": "Product failure"}
+                     -> usually works, but prose can still come out on a bad day
+
+Tool / function     tool_calls=[{"name":"classify","args":{"sentiment":"negative"}}]
+                     -> structure guaranteed; the values are still the model's guess
+
+Grammar-constrained {"sentiment": "negative"}
+                     -> nothing else is samplable; the schema is enforced at decode time
+```
+
+| Mode | What actually enforces it | Guarantee | How it fails |
+|---|---|---|---|
+| **Plain text** | Nothing | None | Unparseable, and the format drifts when you reword the prompt or change model version |
+| **JSON mode** | A line in the system prompt | Soft: usually valid JSON | The model ignores the instruction when context is long, when it is uncertain, or when the question triggers a refusal.  Nothing catches this |
+| **Function calling** | The API wraps the output in a call schema | The call is structurally valid and argument types match | Wrong tool chosen, required argument omitted, or right type with wrong meaning |
+| **Grammar-constrained decoding** | The sampler masks every token that would violate the grammar | Syntactic validity is guaranteed at the token level | Valid format, wrong meaning; very complex grammars can degrade answer quality |
+
+Notice the column that does not exist: none of the four guarantees the answer is *correct*.  Grammar constraints buy you a parse, not a fact.
+
+### Critical Thinking Questions
+
+1b.  Your two-tool agent above parses the model's output.  Which of these four modes is it using, and what is the specific line of your code that would break first if the model answered in prose one time in fifty?
+
+   > *Hint: Look at where the code reaches into the response for a field.  What happens to that expression when the field is not there?*
+
+2b.  You have a required field with five allowed values.  JSON mode gets it right about 95 percent of the time; grammar-constrained decoding gets the format right every time.  Name a situation where you would still choose JSON mode, and be specific about what you are buying with the other five percent.
+
+   > *Hint: Grammar constraints need a runtime that supports them.  What does that cost you in portability across the hosted and local models you have used so far?*
+
+3b.  A tool call comes back with `{"days": "seven"}` where your schema declared an integer.  Which of the four guarantees was violated, which one would have caught it, and where in your agent loop should the check live so the model gets a chance to fix it?
+
+   > *Hint: There is a difference between rejecting the call and telling the model why you rejected it.  Only one of those lets the loop recover.*
+
+The Tools and MCP lab takes this further, into schema design and a full validation pipeline.  What you need today is the habit of asking, of any structured output, "what is enforcing this?"
+
 # Part II: Native Function Calling
 
 ## 2.  A Two-Tool Agent

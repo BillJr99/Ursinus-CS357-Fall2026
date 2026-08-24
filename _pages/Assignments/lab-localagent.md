@@ -101,8 +101,7 @@ info:
     - rtitle: "Docker from Zero Activity"
       rlink: "/Tutorials/Docker"
     - rtitle: "MCP Server Activity"
-      rlink: "Activities/liascript-mcprestoauth.md"
-      liapage: true
+      rlink: "/Assignments/LocalAgent/Direction4"
     - rtitle: "Hugging Face MCP Course (built with Anthropic)"
       rlink: "https://huggingface.co/learn/mcp-course/"
     - rtitle: "Hugging Face Agents Course (smolagents)"
@@ -150,10 +149,10 @@ In this lab, you and a partner will build a working agent from first principles:
 
 **Prep decks this lab assumes.**  Work through whichever apply to your direction before you start:
 
-- [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-structuredoutputs.md): all directions.
+- [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.baseurl }}/Assignments/ToolsMCP): all directions.
 - [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-restllmapi.md): all directions.
 - [Docker from First Principles]({{ site.baseurl }}/Tutorials/Docker): Directions 2 and 3 only; do the installs at home first.
-- [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcprestoauth.md): Direction 4 only.
+- [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.baseurl }}/Assignments/LocalAgent/Direction4): Direction 4 only.
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 

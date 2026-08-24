@@ -83,7 +83,7 @@ Think of delegating the relocation of an office to a moving company.  You tell t
 
 3.  Friction (2) is the memory problem made concrete.  When the agent hits a context limit, it must summarize its own progress, and summaries lose detail.  Prescribe a concrete external state representation that the agent should have maintained from the start: what fields, in what format, stored where?
 
-   *Hint:* Think of a structured JSON or CSV file the agent writes after processing each file: `{"filename": "liascript-consensus.md", "status": "done", "output_path": "_pages/Activities/liascript-consensus.md", "checks_passed": ["renders", "links_valid"]}`.  Where should this file live so the agent can read it after a context reset?
+   *Hint:* Think of a structured JSON or CSV file the agent writes after processing each file: `{"filename": "week07-notes.md", "status": "done", "output_path": "_site/week07/index.html", "checks_passed": ["renders", "links_valid"]}`.  Where should this file live so the agent can read it after a context reset?
 
 4.  Design the verification harness for friction (3).  Describe three programmatic checks that distinguish "done" from "done-looking" for a website migration, including what tool you would use for each check.
 
