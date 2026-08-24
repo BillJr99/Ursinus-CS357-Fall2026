@@ -115,6 +115,8 @@ The PAIR loop has four components:
 
 The following code simulates a PAIR red-teaming loop using two local Ollama models: one as the attacker, one as the judge.  The target is a deliberately benign constraint violation (length limit bypass), not a harmful content request.  Read every comment; they explain the structure of each prompt and why each design decision was made.
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 import json

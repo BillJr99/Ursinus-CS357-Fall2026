@@ -91,6 +91,8 @@ The code below is split into two phases.  The **indexing phase** (run once) crea
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 import chromadb

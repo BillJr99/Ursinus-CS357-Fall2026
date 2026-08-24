@@ -55,6 +55,8 @@ This section assumes Ollama is running locally (we install it together in the *R
 > 3.  **Write the observation** your program would compute and append to memory.
 > 4.  **Repeat** from step 1 with the updated memory until the trace reaches `Final Answer:`.
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import json
 import requests

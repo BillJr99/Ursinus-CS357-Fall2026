@@ -147,6 +147,8 @@ The code cell below makes the mechanism concrete.  It sends the *same* arithmeti
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 # Direct answer vs. "think step by step" against a LOCAL model.
 # Shows that generating reasoning tokens can change the final answer.

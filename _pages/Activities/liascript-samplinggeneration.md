@@ -5,6 +5,8 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-samplinggeneration.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-samplinggeneration.md
 
+import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
+
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -114,6 +116,8 @@ The cell below exercises three of these knobs: a short `num_predict` cap, a `rep
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -161,6 +165,8 @@ We quantify "how different are the answers" by sampling the same prompt multiple
 The code below asks the model to name a single animal eight times at each of three temperature settings and uses a `Counter` (a Python dictionary that counts occurrences) to tally how many distinct answers appear.  A temperature of 0.0 should produce the same answer every time; higher temperatures should spread answers across more options.
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -260,6 +266,7 @@ for T in [0.1, 0.5, 1.0, 1.5, 2.0]:
     H = entropy(probs)
     print(f"{T:>5.1f}  " + "  ".join(f"{p:>8.4f}" for p in probs) + f"  {H:>8.4f}")
 ```
+@Pyodide.eval
 
 **Expected output (approximate):**
 
@@ -308,6 +315,8 @@ Fill in the observation table as you go.  The Recorder keeps the table and posts
 ---
 
 ### Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -445,6 +454,8 @@ The Presenter shares the team's guide with the class.  The Reflector identifies 
 ---
 
 ### Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -658,6 +669,7 @@ def add(a, b):
 # Always returns 5, no exceptions, no surprises.
 print(add(2, 3))
 ```
+@Pyodide.eval
 
 Database queries, sorting algorithms, cryptographic hashes, and arithmetic are all deterministic.  This predictability is a feature: it makes these systems easy to test, debug, and trust because you can verify them exhaustively.
 
@@ -682,6 +694,7 @@ def flip_coin():
 # Could return either, by design.
 print(flip_coin())
 ```
+@Pyodide.eval
 
 Randomness is not a bug here; it is a feature.  Probabilistic systems are used when we want to explore a space of possibilities, when the real-world phenomenon being modeled is inherently uncertain, or when avoiding predictability is itself valuable (cryptography, game fairness).
 

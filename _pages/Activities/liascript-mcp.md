@@ -122,6 +122,8 @@ curl http://localhost:8765/tools/list
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell starts a server and binds a port, which a web page cannot do.  Copy it into your course container and run it there.
+
 ```python
 # server.py: run with `python server.py`, then query it from another terminal.
 from flask import Flask, request, jsonify
@@ -184,6 +186,8 @@ if __name__ == "__main__":
 The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools.  Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 # client side: discover the server's tools, hand them to the model, dispatch calls.

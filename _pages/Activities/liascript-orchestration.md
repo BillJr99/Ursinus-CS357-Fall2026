@@ -97,6 +97,8 @@ python orchestration.py
 
 The code below implements both a three-stage pipeline (extract -> draft -> polish) and a two-stage router (classify -> dispatch) using a local language model.  Read through the comments before running it; each comment explains a design choice you will be asked about in the questions that follow.
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -615,6 +617,8 @@ Contrast it with the fixed families: a router makes **one** classification decis
 ## Code Cell
 
 The sketch below is illustrative; **read it locally**, do not treat it as production.  It uses the course's `chat(messages)` convention against a local OpenAI-compatible endpoint (e.g., Ollama's `/v1`, LM Studio, or a `llama.cpp` server).  Watch for the three things that stay *yours* even in a "dynamic" system: the **roster**, the **spawn budget**, and the **stop condition**.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import json, requests

@@ -346,6 +346,8 @@ Writing the tests first forces you to confront every ambiguity in the spec *befo
 
 **Failing tests (the red phase):**
 
+> **Runs on your machine, not here.**  This is a test file: save it in your repository and run it with `pytest`.
+
 ```python
 import pytest
 
@@ -451,6 +453,8 @@ Read the diff, not the summary the agent gives you. `git diff` shows what change
 ## Model 3: A Planted-Bug Diff
 
 Below is an implementation of `search_memory` that an agent might plausibly produce.  **It passes all five tests from Model 2.**  It contains three deliberate problems.  Read it as a team before answering; the Recorder marks the line number of each problem your team finds.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
