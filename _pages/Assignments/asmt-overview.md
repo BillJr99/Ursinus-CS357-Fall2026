@@ -42,7 +42,7 @@ info:
     - rtitle: "Required setup: Your AI Workbench, Step 0 (The Shell in Ten Minutes), covering the terminal skills every later lab assumes and the read-before-you-run habit"
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
-    - rtitle: "Going further, if the shell is new to you: The Shell, in full (pipes, redirection, background jobs, and PATH)"
+    - rtitle: "The Shell, in Full: pipes, redirection, background jobs, and PATH, if the shell is new to you"
       rlink: "/Tutorials/Shell"
     - rtitle: "Mitchell, Prologue and Chapter 1"
 

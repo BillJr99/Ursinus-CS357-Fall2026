@@ -71,7 +71,7 @@ Today has three parts and a going-deeper section you take home.
 | **Part II** | Write a specification and its failing tests *before* any code exists, review the agent's **plan** before it acts, then let it implement against them | 25 min |
 | **Part III** | Read a diff that passes every test and is still dangerous | 20 min |
 | **Part IV** | Exercises and reflection | take-home |
-| **Part V** | Going further: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
+| **Extension** | Self-paced: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
 
 Part V is real material, not filler; it is where you go when a lab direction or your project needs it.  Nothing in it is assumed by Parts I through IV.
 
@@ -633,12 +633,12 @@ The Local Agent Lab's containerization direction turns these questions into a ha
 -> Coming Up Next: You watched the agent produce a different plan each time you asked, and you pinned `temperature` in Week 1 to stop exactly that.  Next session, *Why Different Answers Every Time?  Sampling, Temperature, and Generation*, explains where the variation comes from, which is also the reason a schema your parser depends on has to be constrained rather than requested.  Keep `spec_search_memory.py`: writing the check before the work is the through-line of the next several weeks.
 
 
-# Part V: Going Further (self-paced)
+# Extension: Coding Agents in Depth (self-paced)
 
 Nothing below is assumed by Parts I through IV, and none of it is required to finish today's work.  It is here because your labs and your project will eventually need it: a comparison of how different agents are built, a full worked scenario from goal to commit, the patterns for loops that run unattended overnight, the cowork paradigm for agents that work outside a codebase, and the complete opencode configuration reference.  Read the section you need when you need it.
 
 
-## Going Further A: A Comparison of Coding Agent Architectures
+## A.  A Comparison of Coding Agent Architectures
 
 Three open or widely-used coding agents take meaningfully different architectural approaches to the same problem: how does an agent read a codebase, plan changes, and execute them safely?
 
@@ -668,7 +668,7 @@ A3.  Every agent above must load file content into its context window before rea
 
 ---
 
-## Going Further B: A Full Scenario, "Add OAuth2 Login"
+## B.  A Full Scenario, "Add OAuth2 Login"
 
 A student types: *"Add OAuth2 login with GitHub to this Flask app."*  The coding agent begins its loop.  Trace what happens at each stage.
 
@@ -703,7 +703,7 @@ B3.  The agent's context window at the Verify stage contains the original task, 
 
 ---
 
-## Going Further C: Loops That Run Themselves - Ralph, autoresearch, gnhf, and Crews
+## C.  Loops That Run Themselves - Ralph, autoresearch, gnhf, and Crews
 
 Model 2 traced *one* pass of the agent loop.  But the loop's real power appears when you run it **over and over, unattended**: the agent finishes, a shell script starts it again, and it keeps going while you sleep.  The surprising design choice that makes this work is that each iteration begins with a **fresh context window**.  That sounds like amnesia, and it would be, except the agent's memory does not live in the conversation; it lives on **disk**: the codebase itself, a running `TODO` file, and the `git` history.  Fresh context is a *feature*: it sidesteps the context-overflow failure mode from Model 2's Perceive stage, because the agent re-reads only what it needs each round instead of dragging a bloated, half-forgotten history behind it.
 
@@ -745,7 +745,7 @@ Why does a Ralph loop start each iteration with a *fresh* context window instead
 
 ---
 
-## Going Further E: The Cowork Paradigm, General Agents Beyond Code
+## E.  The Cowork Paradigm, General Agents Beyond Code
 
 Every architecture so far assumes the agent's world is a **codebase**.  But the same loop (perceive, plan, act, verify) works just as well when the "files" are a spreadsheet, a slide deck, and a browser tab.  That is a different paradigm, and it is worth naming the three explicitly (the *Agentic CLI Tools* activity develops this framing in full):
 
@@ -765,7 +765,7 @@ The paradigm shift raises the stakes on everything this module taught about revi
 
 ---
 
-## Going Further D: Configuring OpenCode with Plugins and Project Instructions
+## D.  Configuring OpenCode with Plugins and Project Instructions
 
 OpenCode is configurable at two scopes: **project scope** (a file in your repository that everyone on the team shares) and **global scope** (a file in your home directory that applies to all your projects).  Understanding which configuration belongs where is the same discipline as deciding which secrets belong in environment variables versus which belong in version control; the wrong choice exposes either too much or too little.
 
