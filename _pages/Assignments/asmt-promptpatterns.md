@@ -82,7 +82,7 @@ curl -s http://localhost:11434/api/tags | head -c 120
 
 **Do Part 2 by hand, and do it for real.**  It is the one place in the course where you compute what the model computes, and doing it with a model's help defeats the entire exercise.  The arithmetic is deliberately small enough to do on paper.
 
-The protocol comes first.  Before you run a single prompt, fill in the Experimental Protocol section below: model, temperature, seed, number of runs per prompt.  Everything in Part 1 is a comparison, and a comparison with a drifting protocol measures nothing.  (This is the dial from *Running Your Own AI*, Section 3b, and the seed you met in the prompt-engineering eval harness.)
+The protocol comes first.  Before you run a single prompt, fill in the Experimental Protocol section below: model, temperature, seed, number of runs per prompt.  Everything in Part 1 is a comparison, and a comparison with a drifting protocol measures nothing.  (This is the dial from *Running Your Own AI*, Section 3c, and the seed you met in the prompt-engineering eval harness.)
 
 > **On the routes:** this assignment has no code requirement.  Part 1 works identically whether you run prompts in Open WebUI and paste the transcripts or drive them from a script; the grade is in the comparison and the analysis.  If you run by hand, keep a run log, because "three runs per prompt" has to be verifiable.
 

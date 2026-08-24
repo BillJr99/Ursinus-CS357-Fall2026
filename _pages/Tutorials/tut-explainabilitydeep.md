@@ -292,7 +292,7 @@ Now that we understand how to explain individual decisions, we turn to publishin
 
 ## Further Reading
 
-- [Credit Score Feature Weight Estimator notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/CreditScoreFeatureWeightEstimator.ipynb), a runnable companion that trains a fully transparent linear credit-scoring model and reads its feature weights out as an equation, the baseline against which SHAP and LIME explanations are judged.
+- [Credit Score Feature Weight Estimator notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/CreditScoreFeatureWeightEstimator.ipynb), a runnable companion that trains a fully transparent linear credit-scoring model and reads its feature weights out as an equation, the baseline against which SHAP and LIME explanations are judged.
 - Ribeiro, M. T., Singh, S., and Guestrin, C. (2016).  "'Why Should I Trust You?': Explaining the Predictions of Any Classifier."  *KDD 2016*.  [LIME paper]
 - Lundberg, S. M., and Lee, S.-I. (2017).  "A Unified Approach to Interpreting Model Predictions."  *NeurIPS 2017*.  [SHAP paper]
 - Jain, S., and Wallace, B. C. (2019).  "Attention is not Explanation."  *NAACL 2019*.

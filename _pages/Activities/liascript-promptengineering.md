@@ -32,6 +32,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | Chain-of-thought | A prompting technique that asks the model to write out intermediate reasoning steps before giving a final answer, which often improves accuracy on multi-step problems | Adding "think step by step" to a math prompt and observing whether accuracy improves |
 | Output structuring | Specifying a machine-readable format (such as JSON) in the prompt so that downstream code can parse and act on the model's response reliably | The `json_bot` persona that returns `{"answer": ..., "confidence": ...}` |
 | Guardrail | An explicit instruction in the system prompt telling the agent what topics to refuse, escalate to a human, or handle with extra caution | "If asked for medical advice, always recommend consulting a licensed professional" |
+| Chain-of-thought | A prompting pattern that asks for intermediate steps before the answer. It buys computation, not carefulness: each emitted token is another forward pass with the prior steps readable | "Think step by step" on a multi-step task, and why it is redundant on a model already trained to do it |
 
 ---
 
@@ -42,7 +43,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | Minutes | What we do |
 |---|---|
 | 0-10 | Key Concepts, and the recipe framing for what a system prompt actually is |
-| 10-30 | Part I, the anatomy of a prompt, worked against a live model |
+| 10-30 | Part I, the anatomy of a prompt, worked against a live model, including what chain-of-thought actually buys |
 | 30-50 | Part II, personas in practice: write one, then try to break a teammate's |
 | 50-70 | Part IIb, where personas leak and how to write one that holds up |
 | 70-75 | Reflection prompt.  Part IIb's longer workshop continues at home if you ran short |
@@ -119,7 +120,29 @@ An agent must return JSON so that downstream code can parse its decision.  The m
 [(X)] Specify the exact schema in the system prompt and include a few-shot example of a valid response
 [( )] Avoid mentioning JSON so the model is not confused
 
-> *On the second option: that is the temperature dial you turned in *Running Your Own AI*, Section 3b.  Recall what raising it actually did to your six answers, then ask yourself whether "explores formats" is a thing you want from a value your code has to parse.*
+> *On the second option: that is the temperature dial you turned in *Running Your Own AI*, Section 3c.  Recall what raising it actually did to your six answers, then ask yourself whether "explores formats" is a thing you want from a value your code has to parse.*
+
+---
+
+### Asking for Steps Versus Being Trained to Take Them
+
+Chain-of-thought is listed above as a prompting pattern, which is where it belongs, and it is the one pattern on that list whose story changed.  Worth thirty seconds now so that the pattern does not get overtrusted for the rest of the semester.
+
+**What "show your work" actually buys.**  Not carefulness.  A model produces one distribution per forward pass, and asking for intermediate steps makes it emit more tokens, each of which is another pass with everything written so far available to read.  You are buying **computation**, not diligence, and the steps *are* the computation rather than a description of it.  *Why Different Answers Every Time?* works through the mechanism.
+
+**Where the prompt stops being enough.**  You can ask a standard model to check its work, and it usually will, in form.  It will also, quite often, confirm its original mistake in a fluent paragraph, because it is imitating what checking looks like rather than being rewarded for catching anything.  A **reasoning model** is trained differently: reinforcement learning against problems that can be automatically checked, where the reward lands on runs that *end correct*.  That is what makes backtracking, noticing a contradiction, and abandoning an approach reliable rather than merely requestable.
+
+So the honest summary of the pattern is two lines, and the second is the one that gets forgotten:
+
+> **Prompting can request a behavior.  Training is what makes it dependable.**
+
+This has a practical consequence for the prompts you write today.  On a standard model, "think step by step" is worth adding to genuinely multi-step tasks and is close to free elsewhere.  On a reasoning model it is redundant at best, and provider guidance generally says not to bother; the model already does it, and your instruction competes with the training.  Neither one is a fix for a prompt that never said what "done" means, which is what Section 3 is about.
+
+#### Critical Thinking Questions
+
+5.  You add "think step by step, then check your answer" to a prompt on a standard local model.  Accuracy on your ten-item test set does not move, and the outputs are four times longer.  Give two different explanations consistent with that result, and say what you would measure next to tell them apart.
+
+   > *Hint: Either the tasks did not need extra dependent steps (so the added computation had nothing to do), or the model performed checking as a genre without the training that makes a check catch anything, confirming its own errors at greater length. To separate them: look at the items it got wrong. If the reasoning is sound and the answer is still wrong, that points at the second. If the reasoning is trivially short because the task was one step all along, that points at the first. Splitting your test set by how many steps a human needs is the cheap version of this.*
 
 ---
 
@@ -195,15 +218,15 @@ Run the cell (or examine projected outputs) and compare the three responses to t
 
 ### Critical Thinking Questions
 
-5.  Which differences across the three outputs are *formatting*, which are *tone*, and which (if any) are *substance* (different facts or claims)?
+6.  Which differences across the three outputs are *formatting*, which are *tone*, and which (if any) are *substance* (different facts or claims)?
 
    > *Hint: Formatting is about structure: bullets, paragraphs, JSON fields.  Tone is about word choice and hedging.  Substance means the actual claims about the world changed.*
 
-6.  The `json_bot` output is the only one a program can reliably consume.  Sketch the two lines of Python that would extract the confidence field, and identify what happens if the model adds a single word of preamble before the JSON.
+7.  The `json_bot` output is the only one a program can reliably consume.  Sketch the two lines of Python that would extract the confidence field, and identify what happens if the model adds a single word of preamble before the JSON.
 
    > *Hint: Try `import json; data = json.loads(output); confidence = data["confidence"]`.  Now imagine the model outputs `Sure! {"answer": ..., "confidence": ...}`; which line of that code breaks and why?*
 
-7.  Design a persona that would be actively harmful for a factual question like this one, and explain the mechanism of harm.  (Keep it classroom-appropriate; the goal is to reason about failure modes, not to produce harmful content.)
+8.  Design a persona that would be actively harmful for a factual question like this one, and explain the mechanism of harm.  (Keep it classroom-appropriate; the goal is to reason about failure modes, not to produce harmful content.)
 
    > *Hint: Think about a persona that would make the model systematically overconfident, systematically misleading about a specific domain, or unwilling to express any uncertainty.*
 
@@ -226,7 +249,7 @@ The cell below defines five `(country, expected capital)` pairs, then runs the *
 ```python
 import requests
 
-# temperature=0.0 pins the wording (Running Your Own AI, Section 3b).
+# temperature=0.0 pins the wording (Running Your Own AI, Section 3c).
 # seed=42 pins the random draw itself: any fixed number works, the same one
 # every run means the same dice rolls every run. Together they make this
 # harness repeatable, which is what lets a test tell you something.
@@ -285,15 +308,15 @@ The loop is the whole point: **write the test set once, then let it referee ever
 
 ### Critical Thinking Questions
 
-8.  The vague prompt sometimes produces a *correct capital* buried inside a sentence, yet scores FAIL. Is the model wrong, or is the *metric* wrong?  What does this tell you about exact-match scoring?
+9.  The vague prompt sometimes produces a *correct capital* buried inside a sentence, yet scores FAIL. Is the model wrong, or is the *metric* wrong?  What does this tell you about exact-match scoring?
 
    > *Hint: Separate "did the model know the answer?" from "did the output match the expected string?"  Both matter, but they are different failures with different fixes.*
 
-9.  Exact match would reject `"Paris"` (capital P, unnormalized) even from a perfect prompt.  Name two ways to make the metric more forgiving without making it so loose that a wrong answer slips through.
+10.  Exact match would reject `"Paris"` (capital P, unnormalized) even from a perfect prompt.  Name two ways to make the metric more forgiving without making it so loose that a wrong answer slips through.
 
    > *Hint: Contrast normalization (lowercasing, stripping punctuation) with semantic checks (substring, or an LLM-as-judge).  Each trades strictness for robustness.*
 
-10.  Suppose you kept editing the prompt until it scored 5/5 on exactly these five countries.  What might happen on a sixth, unseen country?  Name the risk and one way to guard against it.
+11.  Suppose you kept editing the prompt until it scored 5/5 on exactly these five countries.  What might happen on a sixth, unseen country?  Name the risk and one way to guard against it.
 
     > *Hint: This is overfitting to the test set. What would a held-out set of countries reveal that the original five cannot?*
 

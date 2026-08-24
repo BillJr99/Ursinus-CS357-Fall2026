@@ -328,7 +328,7 @@ The container is disposable, privilege-restricted, and exposes only the mounted 
 
 ## 6.  Exercises
 
-Copy-paste starting points for every document in this tutorial are in the course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
+Copy-paste starting points for every document in this tutorial are in the course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).
 
 1.  *Charter a project you actually have.*
 
@@ -368,7 +368,7 @@ The charter governs agents working on a *repository*.  The companion case study,
 
 ## 7.  Further Reading
 
-- The course template set for this tutorial: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
+- The course template set for this tutorial: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).
 - Andrej Karpathy.  "Software 2.0."  *Medium* (2017).  The framing that motivates treating specs and docs as the durable program.
 - The Menon Lab.  "The Karpathy CLAUDE.md: Four Rules That Fix AI Coding Agents." https://themenonlab.blog/blog/karpathy-claude-md-four-rules-ai-coding-agents: the community distillation compared in Model 2.
 - AI Builder Club.  "Karpathy's agents.md: What It Is and Why It Matters." https://www.aibuilderclub.com/blog/karpathy-agents-md-framework: on instruction files as the control layer for coding agents.
