@@ -67,14 +67,30 @@ which have to be updated together:
 - `raw_pages_url` in `_config.yml`
 - `info.course_homepage` in `_pages/syllabus.md`
 
-One further sweep is unavoidable. The `comment: Render with ...` header lines
-inside `_pages/Activities/liascript-*.md` name the repository literally, because
-LiaScript fetches those files straight from GitHub raw and Jekyll never processes
-them. Retarget them with:
+One further sweep is unavoidable, and it covers two things rather than one.
+LiaScript fetches deck files straight from GitHub raw, so Jekyll never processes
+them: a deck has no front matter, and `{{ site.baseurl }}` inside one renders as
+literal text rather than a URL. That means both the `comment: Render with ...`
+header lines **and** any link from a deck to a course page name the repository
+literally. Retarget both with:
 
 ```bash
-sed -i 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' _pages/Activities/liascript-*.md
+sed -i -e 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' \
+       -e 's|billmongan.com/Ursinus-CS357-Fall2026/|billmongan.com/<new-repo>/|g' \
+       _pages/Activities/liascript-*.md
 ```
+
+Inside a deck, a link to a course page must be the absolute URL for that reason:
+
+```
+[Docker from Zero](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker)
+```
+
+Pages are Jekyll-processed and use `{{ site.baseurl }}` in their bodies as usual.
+Page **front matter** is a third case: Liquid does not run there either, so
+`rlink` values are relative paths resolved against the page's own URL
+(`Tutorials/Docker` from the syllabus at the site root, `../Tutorials/Docker`
+from a page one level down).
 
 The Class Agendas and Class Notes pages in the OneNote notebook's `_Teacher Only`
 section carry the same literal repository name in their links, so they need the
