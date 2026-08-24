@@ -53,6 +53,246 @@ If your Obsidian vault is not yet synced to GitHub, complete the sync tutorial f
 
 ---
 
+#### Background: What Skills and Plugins Are, and How They Are Configured
+
+This direction asks you to write three skills, so it needs the reference that used to live in a separate activity.  It is here now: the spectrum from a prompt to a packaged skill, the opencode and pi.ai models, the full `opencode.json` schema, and the authoring principles your three skills will be graded against.
+
+##### Key Concepts
+
+Before diving in, anchor the vocabulary.  You will encounter all of these terms in today's work; return to this table whenever a term appears unfamiliar.
+
+| Term | Plain-English Definition | Example You'll See Today |
+|------|--------------------------|--------------------------|
+| **Skill** | A named instruction set that an agent can invoke on demand, scoped to a specific purpose | A "code-review" skill that instructs the agent to always check for hardcoded secrets before approving a diff |
+| **Plugin** | A packaged bundle of one or more skills (and optionally tools) distributed as an installable unit, often a Git repository | The Superpowers plugin (`git+https://github.com/obra/superpowers.git`) bundles several utility skills into one install |
+| **System prompt** | An always-on, always-active instruction injected before every conversation turn | "You are a helpful coding assistant. Always explain your reasoning." - loaded automatically, not invokable by name |
+| **`opencode.json`** | OpenCode's configuration file; lives at `$HOME/.config/opencode/opencode.json` (global) or `.opencode.json` in a project root (local) | The file where you add a `skills` array to register named instruction sets |
+| **Skill manifest** | A `SKILL.md` or `skill.md` file at the root of a publishable skill repository; contains frontmatter metadata (name, description, author, version) and human-readable description | The file a tool reads to discover, list, and display a skill's purpose |
+| **Tool (function call)** | A piece of code the agent can execute, a real function that runs in the host environment and returns structured data | `read_file("main.py")` runs in the shell and returns the file's contents; it is not an instruction template |
+| **`when` trigger** | An optional field in an OpenCode skill entry that specifies a condition string; when the agent detects that condition in the conversation, it automatically surfaces the skill | `"when": "user asks to delete"` makes the safety-check skill appear whenever deletion is discussed |
+| **Superpowers plugin** | A community skill bundle for agent CLIs installable via a single Git URL | `opencode skills install git+https://github.com/obra/superpowers.git` |
+
+---
+
+##### The Spectrum of Agent Instruction
+
+Think of the ways you can give a colleague standing guidance.  You might write a team handbook that everyone always consults (system prompt).  You might leave a note on a specific project folder (context file).  You might hand someone a checklist to follow whenever they perform a code review (skill).  Or you might give them a calculator they can press to get an answer (tool).  These are not synonyms: each one carries a different scope, trigger, and encoding.
+
+| Instruction Form | Scope | Always Active? | Invoked How? | Encoded As |
+|-----------------|-------|----------------|--------------|------------|
+| System prompt | Global, every conversation turn | Yes | Automatically | Text injected before the conversation |
+| Context file (`AGENTS.md`, `opencode.json`) | Project, read at startup | Yes | Automatically at launch | Markdown or JSON file in project root or `$HOME/.config` |
+| Skill | Named, surfaced on demand | No | By name or trigger | Named entry in config; optionally a `SKILL.md` file |
+| Tool (function call) | Named, executes real code | No | By name, returns data | Code function registered with the agent runtime |
+
+The critical distinction between a skill and a tool: a skill is an **instruction template**; it tells the agent *how to behave* in a situation.  A tool is **executable code**; the agent calls it and gets back structured data.  A skill says "when reviewing a diff, follow steps 1-4."  A tool says "call `run_tests()` and here is the exit code."  You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation.  The instruction is the skill; the file-listing is the tool.
+
+> **Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn, like a system prompt.  It will not.  A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill").  If you want always-on behavior, a context file or system prompt is the right instrument.  If you want composable, named behavior you can invoke selectively, a skill is correct.
+
+##### The OpenCode Skill Model
+
+OpenCode stores its configuration in a JSON file with a top-level `skills` array.  Each entry in that array is a skill definition.  Here is the minimal shape of the file with two skill entries:
+
+```json
+{
+  "model": "ollama/llama3.1",
+  "skills": [
+    {
+      "name": "code-review",
+      "description": "Review a diff or set of changed files using a structured checklist.",
+      "instructions": "When the user asks you to review code or a diff:\n1. Read every changed file completely before commenting.\n2. Check for hardcoded secrets, API keys, or passwords.\n3. Check for missing error handling in I/O and network calls.\n4. Check that new public functions have docstrings.\n5. Summarize findings as: [BLOCKER], [WARNING], or [SUGGESTION] on separate lines.\n6. Do not approve a diff that contains a [BLOCKER] item."
+    },
+    {
+      "name": "safety-check",
+      "description": "Run a mandatory pre-action check before any destructive file operation.",
+      "instructions": "Before deleting, overwriting, or moving any file:\n1. List every file that will be affected, with full paths.\n2. Print the message: 'SAFETY CHECK: the following files will be permanently modified or deleted.'\n3. Wait for explicit user confirmation ('yes' or 'proceed') before continuing.\n4. If the user does not confirm within the same turn, abort and explain what you did not do.",
+      "when": "user asks to delete or remove or overwrite"
+    }
+  ]
+}
+```
+
+The key fields: `name` is the identifier you use to invoke the skill by name in a prompt. `description` is what the agent displays when you ask it to list available skills. `instructions` is the multi-line string the agent treats as scoped guidance when the skill is active. `when` is an optional trigger string: if the agent detects that phrase pattern in the conversation, it will surface the skill automatically.
+
+The file location matters: `$HOME/.config/opencode/opencode.json` applies globally to every project on your machine.  A `.opencode.json` file in a project directory applies only when you run `opencode` from inside that project.  Project-local skills override global skills of the same name, which lets you customize per-project without polluting your global config.
+
+##### The pi.ai Plugin Model
+
+pi.ai uses a plugin system rather than a JSON config array, but the underlying idea is identical: a named instruction bundle is registered with the agent.  A pi plugin is either a URL pointing to a manifest file or a local file path.  The manifest describes the plugin's name, what it does, the instruction text it injects when active, and optionally a list of capability strings the agent can use to decide when to invoke it.
+
+A minimal pi plugin manifest (`my-review-plugin.md`) looks like this:
+
+```markdown
+---
+name: code-review
+description: Review diffs using a structured checklist with severity levels.
+version: 1.0.0
+author: your-username
+capabilities:
+  - review
+  - diff
+---
+
+## Instructions
+
+When the user asks you to review code, a pull request, or a diff:
+
+1. Read all changed files in full before writing any comment.
+2. Flag hardcoded credentials as BLOCKER items.
+3. Flag missing error handling as WARNING items.
+4. Suggest documentation improvements as SUGGESTION items.
+5. Never approve a change set containing a BLOCKER.
+```
+
+To add this plugin to a pi project, you point pi at the file or URL:
+
+```bash
+# From a GitHub URL (raw content):
+pi plugin add https://raw.githubusercontent.com/your-username/my-skills/main/my-review-plugin.md
+
+# From a local file during development:
+pi plugin add ./my-review-plugin.md
+
+# List loaded plugins to verify:
+pi plugin list
+```
+
+Scoping works the same way as OpenCode: a plugin added from inside a project directory (where a `pi.md` project file is present) is scoped to that project.  A plugin added from outside a project applies globally.
+
+A classmate says: "I added a safety-check skill to `opencode.json`, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does."  What is wrong with this claim?
+
+---
+
+With the taxonomy clear and both platforms understood, Part II builds on that foundation by configuring real skills in OpenCode, including a worked example and the Superpowers verification workflow.
+
+---
+
+##### The `opencode.json` Schema in Full
+
+A production-ready `opencode.json` file pulls together model routing, global settings, and skills in one place.  Here is a realistic example for a CS357 coursework machine:
+
+```json
+{
+  "model": "ollama/llama3.1",
+  "baseURL": "http://localhost:11434/v1",
+  "theme": "dark",
+  "skills": [
+    {
+      "name": "code-review",
+      "description": "Structured diff review with severity classification.",
+      "instructions": "When reviewing code or a diff:\n1. Read every changed file in full; do not skim.\n2. Classify each finding as one of:\n   - [BLOCKER] Correctness bug, security flaw, or data loss risk\n   - [WARNING]  Missing error handling, performance issue, or convention violation\n   - [SUGGESTION] Style, naming, or documentation improvement\n3. List findings grouped by file, then by severity.\n4. End with a one-sentence overall verdict: APPROVE, APPROVE WITH CHANGES, or REQUEST CHANGES.\n5. Do not approve any diff containing a [BLOCKER]."
+    },
+    {
+      "name": "safety-check",
+      "description": "Mandatory pre-action pause before any destructive operation.",
+      "instructions": "Before executing any command or edit that deletes, overwrites, truncates, or moves a file:\n1. List every affected file with its full absolute path.\n2. Print: 'SAFETY CHECK - the following files will be permanently modified or deleted:'\n3. Wait for the user to type exactly 'yes' or 'proceed' before continuing.\n4. If the user types anything else, or does not respond in the same turn, abort all actions and print what you did NOT do and why.\n5. Never skip this check, even if the user previously said 'always approve deletes'.",
+      "when": "user asks to delete or remove or overwrite or truncate or drop"
+    },
+    {
+      "name": "obsidian-memory",
+      "description": "After each session, append a dated summary to the Obsidian session log.",
+      "instructions": "At the end of every work session, or when the user says 'wrap up' or 'end session':\n1. Collect the key decisions made, files created or modified, and commands run during this session.\n2. Format them as a Markdown section with a level-2 heading of today's ISO date (YYYY-MM-DD).\n3. Append that section to `vault/memories/session-log.md`, creating the file if it does not exist.\n4. Print: 'Session log updated at vault/memories/session-log.md'",
+      "when": "user says wrap up or end session or close out"
+    }
+  ]
+}
+```
+
+Every field is optional except `name` and `instructions` inside a skill entry. `description` is the human-readable summary shown by `opencode skills list`. `when` is the trigger phrase: the agent pattern-matches against it in the current conversation; if there is a match, the agent proactively surfaces the skill.  Omitting `when` means the skill is available but never auto-surfaced; you invoke it by name in your prompt.
+
+> **Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times; it is a *hint* that auto-surfaces the skill when the pattern matches.  You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired.  Think of `when` as a notification, not a lock.
+
+##### A Worked Example: The Code Review Skill
+
+Trace through what happens when you invoke this skill.  You are in an OpenCode session, and you type:
+
+```
+Please do a code review on my latest changes using the code-review skill.
+```
+
+The agent:
+1.  Looks up the `code-review` entry in the `skills` array.
+2.  Temporarily injects the `instructions` text as scoped guidance for this turn.
+3.  Reads every file you have staged or recently edited (it may call `git diff --staged` or ask which files to check).
+4.  Produces output structured exactly as the instructions specify: findings grouped by file, classified by severity, ending with a verdict.
+5.  Returns to normal behavior for the next turn; the skill's instructions are not persistent beyond the invocation.
+
+The skill does three things that a plain chat prompt cannot reliably do: it establishes a **consistent output format** across all uses, it embeds **domain-specific constraints** (never approve a BLOCKER), and it is **reusable** without re-typing the checklist.  These are the authoring principles that distinguish a good skill from a long prompt you paste by hand.
+
+##### Skill Authoring Principles
+
+A skill that is vague or open-ended will be applied inconsistently; the agent will interpret its instructions differently on each invocation, and you will not be able to predict or test its behavior.  Three principles make skills reliable:
+
+**One clear purpose.**  A skill that tries to do "code review, plus security scanning, plus documentation generation" will do all three poorly.  Split compound behaviors into separate skills.  If you cannot name the skill's purpose in ten words or fewer, split it.
+
+**Explicit constraints.**  Do not write "be careful."  Write "never proceed without listing all affected files first."  Do not write "check for security issues."  Write "check for hardcoded strings matching the regex `[A-Z]{2,}_KEY|password|secret|token`."  Concrete constraints can be tested; abstract ones cannot.
+
+**Concrete output format.**  Specify exactly what the agent should produce: which headings, which labels, which order.  A skill that produces consistently formatted output is automatable; you can pipe its output to another tool.  A skill with free-form output is not.
+
+> **Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction; it is a deference to an undefined standard.  The agent will infer "best practices" from its training data, which may not match your project's conventions at all.  Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item.  A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
+
+##### The Skill Manifest Format
+
+A publishable skill is a Git repository with a predictable layout.  When someone runs `opencode skills install git+https://github.com/you/your-skills.git`, the tool looks for this structure:
+
+```
+your-skills/                    <- repository root
+|-- SKILL.md                    <- manifest: name, description, author, version
+|-- instructions/               <- one .md file per skill in this bundle
+|   |-- safety-check.md
+|   |-- code-review.md
+|   `-- obsidian-memory.md
+`-- package.json                <- optional: enables npm install as alternative
+```
+
+The `SKILL.md` manifest file with frontmatter:
+
+```markdown
+---
+name: cs357-skills
+description: A bundle of safety, review, and memory skills for CS357 coursework.
+author: your-github-username
+version: 1.0.0
+skills:
+  - safety-check
+  - code-review
+  - obsidian-memory
+---
+
+## CS357 Agent Skills
+
+This bundle provides three skills designed for safe, consistent agent-assisted
+development in CS357: Foundations of AI at Ursinus College.
+
+- **safety-check**: Mandatory pre-action pause before destructive file operations.
+- **code-review**: Structured diff review with severity classification.
+- **obsidian-memory**: Appends a dated session summary to an Obsidian vault log.
+
+Install with:
+```bash
+opencode skills install git+https://github.com/your-username/cs357-skills.git
+
+```
+```
+
+Each file under `instructions/` contains only the instruction text for that skill: no frontmatter, just the multi-line Markdown that becomes the `instructions` field in the installed `opencode.json` entry.  The installer reads the `skills` list from `SKILL.md` frontmatter, maps each name to its file under `instructions/`, and writes the corresponding entries into your config.
+
+##### Key Concepts Summary
+
+| Term | Definition |
+|------|------------|
+| **Skill** | A named, composable instruction set an agent can invoke on demand, scoped to a specific purpose |
+| **Plugin** | A packaged bundle of one or more skills distributed as an installable unit (usually a Git repository) |
+| **System prompt** | Always-on instructions injected before every conversation turn |
+| **`opencode.json`** | OpenCode's configuration file; contains the `skills` array and model routing settings |
+| **Skill manifest** | `SKILL.md` frontmatter file at the root of a publishable skill repository |
+| **Tool (function call)** | Executable code the agent calls at runtime; returns structured data |
+| **`when` trigger** | Optional field that auto-surfaces a skill when the agent detects a matching phrase pattern |
+| **Superpowers plugin** | A community skill bundle installable via `opencode skills install git+https://github.com/obra/superpowers.git` |
+| **Assumptions audit** | A structured comparison of two artifacts to surface the implicit beliefs each author encoded |
+
+---
+
 #### Part A: The Safety Guardrail Skill
 
 ##### A1.  Understand What You Are Building

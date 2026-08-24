@@ -201,7 +201,7 @@ docker run -d --name open-webui -p 3000:8080 \
 ```
 
 
-> **Isolation and trust boundaries**, meaning which tier may talk to which and what a container actually isolates, are worked through in the optional activity [Containerization and Safety](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-containerizationsafety.md).
+> **Isolation and trust boundaries**, meaning which tier may talk to which and what a container actually isolates, are worked through in the optional activity [Containerization and Safety]({{ site.baseurl }}/Assignments/LocalAgent/Direction3).
 
 ## 6.  The Agent Tier
 

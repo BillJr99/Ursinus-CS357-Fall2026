@@ -604,6 +604,32 @@ A coding agent produces an implementation that passes all five acceptance-criter
 
 ---
 
+
+---
+
+## Sizing the Blast Radius Before You Hand Over the Keys
+
+You just watched an agent edit files and run shell commands on a real machine.  The question that should be nagging you is how much damage a wrong decision can do, and the honest answer is: exactly as much as the process it runs in is allowed to do.  "It runs in Docker" is not by itself a safety claim, so it is worth knowing what a container actually buys you.
+
+Docker does not virtualize hardware the way a virtual machine does.  It leans on two Linux kernel features that predate it: **namespaces**, which partition what a process can *see*, and **cgroups**, which cap what a process can *consume*.  Namespaces are one-way mirrors; cgroups are a utility meter that cuts the power when a tenant runs over.
+
+| Namespace | What it isolates | What that means for an agent |
+|---|---|---|
+| `pid` | The list of running processes | The agent cannot see, signal, or kill anything on the host, and cannot attach a debugger to your editor |
+| `net` | Interfaces, addresses, routing | The container gets its own virtual adapter; `--network none` cuts it off entirely |
+| `mnt` | Which directories exist at all | Your home directory is invisible unless you bind-mount it with `-v` |
+| `user` | The numeric user identity | Root inside the container maps to an unprivileged user outside |
+
+Two flags do most of the work.  `--memory 2g` stops an agent stuck in a tool-call loop from eating the host's RAM and taking every other process down with it.  Dropping `CAP_SYS_PTRACE` stops a hijacked agent from attaching a debugger to a process that holds secrets in memory.
+
+Three questions to settle for your own setup, before the next lab:
+
+1.  Which directories does your coding agent genuinely need?  Everything you mount is inside the blast radius, and `-v ~:/host` puts your entire life inside it.
+2.  Does your agent need the network at all?  A research agent does.  An agent that only refactors local files does not, and `--network none` is free safety when the answer is no.
+3.  What is the worst single command your current setup would let an agent run without stopping to ask you?  If you cannot answer that, you do not yet know your blast radius.
+
+The Local Agent Lab's containerization direction turns these questions into a hardened deployment with a written threat model.  What matters today is that you stop treating the sandbox as a detail and start treating it as part of the design.
+
 -> Coming Up Next: You watched the agent produce a different plan each time you asked, and you pinned `temperature` in Week 1 to stop exactly that.  Next session, *Why Different Answers Every Time?  Sampling, Temperature, and Generation*, explains where the variation comes from, which is also the reason a schema your parser depends on has to be constrained rather than requested.  Keep `spec_search_memory.py`: writing the check before the work is the through-line of the next several weeks.
 
 
