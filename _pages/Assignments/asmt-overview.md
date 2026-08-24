@@ -36,10 +36,10 @@ info:
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
-    - rtitle: "Required setup (Route A): Your Course Development Environment - Host Ollama, the Course Container, Git, and GitHub"
+    - rtitle: "Required setup (Route A): the Your AI Workbench activity, on your course development environment - Host Ollama, the Course Container, Git, and GitHub"
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
-    - rtitle: "Required setup: Your AI Workbench, Step 0 (The Shell in Ten Minutes), covering the terminal skills every later lab assumes and the read-before-you-run habit"
+    - rtitle: "Required setup: the Your AI Workbench activity, Step 0 (the shell in ten minutes), covering the terminal skills every later lab assumes and the read-before-you-run habit"
       rlink: "Activities/liascript-devenvironment.md"
       liapage: true
     - rtitle: "The Shell, in Full: pipes, redirection, background jobs, and PATH, if the shell is new to you"

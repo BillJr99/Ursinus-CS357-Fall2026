@@ -77,7 +77,7 @@ info:
     - rtitle: "Agent Teams Activity"
       rlink: "Activities/liascript-agentteams.md"
       liapage: true
-    - rtitle: "Project Studio Protocol"
+    - rtitle: "The Project Studio activity and its gallery-walk protocol"
       rlink: "Activities/liascript-projectstudio.md"
       liapage: true
     - rtitle: "Explainability Activity"
