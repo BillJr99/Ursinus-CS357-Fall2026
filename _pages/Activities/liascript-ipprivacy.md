@@ -139,11 +139,11 @@ Consider three pipelines you have personally built this term: the RAG Knowledge 
 
 The case for local AI is not only ethical, it is technical, and the techniques have names.  Federated learning, differential privacy, and PII scrubbing each buy you something specific at a specific cost.  Knowing which is which is what turns a privacy preference into a design you can defend to a stakeholder.
 
-### Why Privacy and AI Conflict
+## Why Privacy and AI Conflict
 
 Think of AI training data like a sponge: once you soak up water, you can't easily squeeze out just one drop.  An LLM trained on private data absorbs personal information into billions of parameters spread across the entire model; there is no simple "delete this person's data" button.  Differential privacy is like adding just enough noise to a survey that you can't tell what any one person answered, but the average is still accurate; the model learns useful patterns without memorizing individual secrets.  This tension between *learning from data* and *protecting the people that data describes* is the central problem of privacy-preserving AI.
 
-#### The Training Data Problem
+### The Training Data Problem
 
 Large language models are trained on massive corpora scraped from the internet and licensed datasets.  These corpora often contain **personally identifiable information (PII)**: email addresses, phone numbers, home addresses, medical records, financial information, and personal narratives.  When the model trains on this data, it can **memorize** specific examples, not in an explicit lookup-table way, but as statistical patterns that can be elicited through targeted prompts.
 
@@ -156,7 +156,7 @@ Large language models are trained on massive corpora scraped from the internet a
 
 This is not a bug; it is an emergent consequence of training on private data at scale.
 
-#### A Concrete Before/After Scrubbing Example
+### A Concrete Before/After Scrubbing Example
 
 **Before scrubbing (raw support ticket):**
 > "Hi, I'm Sarah Johnson, DOB 03/14/1987.  My SSN is 555-12-3456 and I need help with account 7734-2291.  I've been dealing with this since my surgery at Phoenixville Hospital last March."
@@ -166,7 +166,7 @@ This is not a bug; it is an emergent consequence of training on private data at 
 
 Notice that the last sentence still implies a health event and a hospital; a regex looking for Social Security number patterns would miss it entirely.  This is why scrubbing is harder than it looks.
 
-#### Privacy Attack Taxonomy
+### Privacy Attack Taxonomy
 
 | Attack Type | What the Attacker Learns | Data Required by Attacker | How Realistic | Key Defense |
 |-------------|-------------------------|--------------------------|---------------|-------------|
@@ -175,14 +175,14 @@ Notice that the last sentence still implies a health event and a hospital; a reg
 | **Model Inversion** | Reconstructed features or attributes of training data records from model outputs | API access plus many queries to observe output patterns | Medium: easier for simpler classification models | Output perturbation; rate limiting to prevent bulk queries |
 | **Attribute Inference** | Sensitive attributes such as income or health status, inferred from partial data | Black-box model access plus auxiliary data about the target | Medium to high for structured prediction tasks | Data minimization; purpose limitation in system design |
 
-#### Anonymization vs. Pseudonymization
+### Anonymization vs. Pseudonymization
 
 These terms are frequently conflated:
 
 - **Anonymization**: Removing or altering data so that re-identification is impossible, even with auxiliary data.  True anonymization is extremely difficult; most "anonymized" datasets have been re-identified using publicly available auxiliary information (e.g., Netflix viewing histories re-identified using IMDb ratings).
 - **Pseudonymization**: Replacing identifiers such as names and Social Security numbers with pseudonyms such as arbitrary IDs.  Re-identification is possible if the pseudonym mapping is exposed or if enough quasi-identifiers remain.  The GDPR treats pseudonymized data as still being personal data subject to regulation.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 1.**  Your company decides to fine-tune a frontier LLM on your internal Slack messages and email threads to build an internal knowledge assistant.  What memorization risk does this create?  Who could be harmed, and under what circumstances?
 
@@ -204,11 +204,11 @@ These terms are frequently conflated:
 
 Now that you understand how and why private information leaks from AI systems, you are ready to study the technical defenses (and their specific limitations) that engineers use to reduce those risks.
 
-### Privacy-Preserving Techniques
+## Privacy-Preserving Techniques
 
 If Model 1 was about understanding the threat, Model 2 is about the defenses.  None of these techniques is a silver bullet: differential privacy reduces statistical leakage but costs model accuracy; federated learning keeps raw data local but is vulnerable to gradient inversion; PII scrubbing catches obvious identifiers but misses contextual ones.  Real privacy protection requires combining all three layers, just as a bank uses locked vaults, security cameras, and access logs together rather than relying on any one alone.
 
-#### Differential Privacy (DP)
+### Differential Privacy (DP)
 
 Differential privacy provides a **formal mathematical guarantee**: any two datasets that differ by exactly one individual's record will produce outputs that are statistically indistinguishable up to a factor controlled by the **privacy budget ε (epsilon)**.
 
@@ -225,7 +225,7 @@ In plain English: if you were in the dataset and I ran the mechanism, you could 
 | ε = 10 | Weak: a formal guarantee exists but the bound is loose | Minimal accuracy loss, close to non-private baseline | Used when some formal guarantee is required but accuracy is paramount |
 | ε = ∞ | No privacy guarantee whatsoever | No accuracy loss | Mathematically equivalent to not using DP at all |
 
-#### Federated Learning (FL)
+### Federated Learning (FL)
 
 In traditional training, all data is sent to a central server.  In federated learning:
 
@@ -243,7 +243,7 @@ In traditional training, all data is sent to a central server.  In federated lea
 
 **FL is strongest when combined with DP** (adding calibrated noise to gradient updates before sharing) and **secure aggregation** (cryptographic techniques that prevent the server from seeing any individual client's update).
 
-#### PII Scrubbing
+### PII Scrubbing
 
 Three approaches to removing PII from text before training or inference:
 
@@ -261,7 +261,7 @@ Three approaches to removing PII from text before training or inference:
 
 > **Common Misconception:** Many people assume that "anonymizing" a dataset before training fully protects privacy.  In practice, anonymization is nearly impossible to achieve for rich text data.  Clinical notes, support tickets, and personal narratives contain combinations of rare details (unusual diagnoses, specific events, distinctive writing styles) that remain re-identifiable even after named entities are removed.  Differential privacy is the only technique that provides a *formal* guarantee, and even then, the guarantee's strength depends entirely on the ε value chosen and the size of the dataset.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 4.**  A hospital wants to fine-tune a clinical NLP model.  They are choosing between ε = 0.1 and ε = 10 for differential privacy.  They are optimizing for early detection of rare diseases from clinical notes, where accuracy is critical.  Which value would you recommend, and what trade-off are you accepting?  Is there a better approach than a binary choice between these two values?
 
@@ -281,7 +281,7 @@ Three approaches to removing PII from text before training or inference:
 
 ---
 
-#### Multiple Choice Question
+### Multiple Choice Question
 
 A hospital wants to fine-tune a large language model on patient clinical notes to build a discharge summary assistant.  They want to do this without transmitting patient data to the model vendor.  The most appropriate privacy-preserving approach is:
 
@@ -296,9 +296,9 @@ A hospital wants to fine-tune a large language model on patient clinical notes t
 
 With the theoretical defenses in hand, you are ready to apply them in the concrete operational context of a real AI agent system, where PII enters through user inputs, can be echoed back in outputs, and must be managed through a layered logging and deletion policy.
 
-### Practical PII Handling for Agents
+## Practical PII Handling for Agents
 
-#### The Three-Layer Defense
+### The Three-Layer Defense
 
 When an AI agent processes user inputs and produces outputs, PII can enter and leak at multiple points.  A robust system defends at every layer:
 
@@ -312,7 +312,7 @@ When an AI agent processes user inputs and produces outputs, PII can enter and l
 - Who is authorized to access it?  (Engineering, support, legal, no one)
 - Under what conditions is it deleted?  (User request via GDPR Article 17, session end, time-based expiration)
 
-#### The Right to Be Forgotten and Model Weights
+### The Right to Be Forgotten and Model Weights
 
 GDPR Article 17 grants individuals the right to erasure, the right to have their personal data deleted.  For most databases, this is operationally straightforward: delete the row and cascade deletions to backup tables.  For AI models, it is deeply problematic:
 
@@ -321,13 +321,13 @@ GDPR Article 17 grants individuals the right to erasure, the right to have their
 - **Machine unlearning** is an active research field focused on approximate techniques: fine-tuning the model to reduce the statistical influence of a specific data point without full retraining.  Current approaches include gradient ascent on the data to be forgotten and selective weight perturbation.
 - No approach is currently both computationally efficient and formally verifiable; the model cannot certify that the data's influence has been fully removed
 
-#### Relevant Regulations
+### Relevant Regulations
 
 - **GDPR** (European Union, effective 2018): Mandates data minimization, purpose limitation, the right to erasure, data protection by design and by default, and mandatory breach notification within 72 hours of discovery
 - **CCPA** (California Consumer Privacy Act, effective 2020): Grants California residents the right to know what personal data is collected, the right to delete it, the right to opt out of its sale, and protection against discrimination for exercising those rights
 - Both regulations apply to AI systems that process data belonging to EU or California residents, regardless of where the AI company is physically located
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 7.**  A user asks your customer service agent: "Can you check the status of my order?  My name is Sarah Johnson, my account number is 7734-2291, and my Social Security Number is 555-12-3456."  The SSN was almost certainly included by accident.  Write a step-by-step response protocol: what should the agent do, in order, and what should it say to the user?
 
