@@ -23,7 +23,7 @@ Every AI tool you use maintains its own little memory of you, in its own format,
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text files, they work with any other tool; no proprietary format lock-in. | Your vault might contain notes from class, links between ideas, summaries of papers, and context files that agents read before working with your data. |
 | **Personal Access Token (PAT)** | A secret string that acts as a password for GitHub API calls. It grants specific permissions (like reading and writing a single repository) without sharing your full GitHub account credentials. | Your sync plugin uses the PAT to push note changes to GitHub; your agent uses it to pull the vault and write new wiki pages. |

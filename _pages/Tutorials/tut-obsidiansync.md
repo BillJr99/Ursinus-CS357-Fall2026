@@ -24,7 +24,7 @@ Your Obsidian vault contains your best thinking: class notes, project plans, dec
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text, every other tool (agents, scripts, editors) can read and write them without a special library. | Your vault might contain class notes, project decision logs, and a folder of `agent-context/` files that your local agents read before each session. |
 | **Community plugin** | An Obsidian extension written by the community and installed through the in-app plugin browser. Community plugins are not audited by the Obsidian team, so you review them before enabling. | Obsidian Git is the most widely used community sync plugin; it wraps standard git operations in a background process that pushes on a configurable interval. |

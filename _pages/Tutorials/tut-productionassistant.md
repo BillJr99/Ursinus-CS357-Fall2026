@@ -21,11 +21,11 @@ To follow one real personal agent from a Markdown vault to a system running in p
 
 In *The Second Brain* module you built the foundation: a Markdown vault on GitHub, a sync protocol, and an `AGENTS.md` contract that let an agent like **hermes** read and write your knowledge safely.  This case study (a real production system, anonymized) shows what that foundation grows into after a year of daily use: a standing assistant wired into a task manager, calendar, file store, email, and GitHub, running scheduled routines around the clock, accumulating skills, and updating its own memory, all without ever once being trusted to send an email on its own.
 
-Today's route runs **the three-file contract $\rightarrow$ confirmation gates and governed autonomy $\rightarrow$ integrations and scheduled routines $\rightarrow$ the robustness harness $\rightarrow$ operations as knowledge**.
+This case study runs **the three-file contract $\rightarrow$ confirmation gates and governed autonomy $\rightarrow$ integrations and scheduled routines $\rightarrow$ the robustness harness $\rightarrow$ operations as knowledge**.
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Standing Prompt** | A versioned system-prompt file that governs *every* session of a personal assistant: habits, style, gates, and escalation: the law the persona operates under. | `SYSTEMPROMPT.md` §9: "Drafting is permitted without confirmation; sending is not." |
 | **Confirmation Gate** | A rule that a specific category of irreversible action requires fresh, explicit approval at the moment of execution; no blanket consent. | "Go ahead and handle everything" still does NOT authorize sending an email |
@@ -344,7 +344,7 @@ You now have both halves of the governance story: charters and handoffs for agen
 
 ## 8.  Further Reading
 
-- The course template set for this activity: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
-- This course: [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) (the foundation this activity builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins]({{ site.baseurl }}/Assignments/LocalAgent/Direction5) (the skill format this system's inventory manages).
+- The course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
+- This course: [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) (the foundation this tutorial builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins]({{ site.baseurl }}/Assignments/LocalAgent/Direction5) (the skill format this system's inventory manages).
 - Model Context Protocol documentation. https://modelcontextprotocol.io, the integration layer behind the tool connections in Part III.
 - Atul Gawande.  *The Checklist Manifesto*.  Metropolitan Books (2009).  Why written procedure outperforms expert memory in high-stakes operations, the human-institutions version of everything in this activity.

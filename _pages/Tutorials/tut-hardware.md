@@ -23,7 +23,7 @@ CS357 - Foundations of Artificial Intelligence / Agentic AI | Ursinus College
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **VRAM (Video RAM)** | The dedicated memory on a GPU that must hold the entire model during inference; if the model does not fit, it cannot run at full speed | A 70B parameter model at FP16 requires 140 GB of VRAM; a single RTX 4090 has only 24 GB |
 | **Memory Bandwidth** | How fast data can be moved from VRAM into the GPU's compute cores; often the actual bottleneck during token generation, not raw compute speed | An H100 has ~3.35 TB/s bandwidth; an RTX 4090 has ~1 TB/s |
