@@ -57,7 +57,7 @@ info:
       rlink: "Activities/liascript-multiagentdebate.md"
       liapage: true
     - rtitle: "Stochastic Consensus Activity"
-      rlink: "/Assignments/MultiAgentDebate"
+      rlink: "../Assignments/MultiAgentDebate"
 
 tags:
   - multi-agent
