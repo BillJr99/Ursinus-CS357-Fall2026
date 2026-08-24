@@ -41,6 +41,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, generation as repeated prediction: why the same prompt gives different answers |
+| 10-25 | The temperature and entropy sweep, run in the browser; predict the shape before you run it |
+| 25-45 | Part II, the same experiment against your own stack |
+| 45-70 | Part IIb, the systematic sweep and building a parameter policy you can defend |
+| 70-75 | Reflection prompt.  Part IIb's three-persona guide and the Extension continue at home |
+
+---
 # Part I: Generation as Repeated Prediction
 
 In this part, you will work out by hand how a language model converts raw scores into a probability distribution and then samples from it, resolving the mystery from the *Welcome: What Is AI, and What Is an Agent?* activity of why identical prompts produce different outputs.  The math here (softmax and temperature) will recur every time you tune an agent's behavior for the rest of the semester.
@@ -241,6 +254,9 @@ High entropy means the distribution is flat: the model is uncertain.  Low entrop
 ---
 
 ### Code Cell
+
+> **Predict first.**  You are about to sweep temperature across the same five-token distribution.  Before you press Run, sketch on paper what you expect to happen to the probability of `Paris` and to the entropy as temperature climbs from 0.1 to 2.0.  Draw the shape of the curve, not just the direction.  Then run it and check your sketch against the table.
+
 
 ```python
 import math

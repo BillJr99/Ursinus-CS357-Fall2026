@@ -60,6 +60,18 @@ Step 0 defines the shell vocabulary.  These are the terms the rest of the page a
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Check what everyone already has installed, and pair up anyone whose Docker did not survive the download |
+| 10-35 | Steps 0 through 3: the shell in ten minutes, the repository, and the container |
+| 35-60 | Steps 4 through 7: the model server, the gateway, and your first end-to-end call |
+| 60-75 | Step 8: hand opencode a real task and watch it work.  Any step you do not reach today is the homework |
+
+---
 ## Step 0: The Shell in Ten Minutes
 
 Every step below, and every lab this semester, is typed into a **shell**.  If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1.  If they are not, this section is the ten minutes that make everything after it make sense instead of feeling like incantation.

@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | The three prompts you brought: triage real confidently-wrong answers, not invented ones |
+| 10-25 | Part I, why models hallucinate, mechanism first |
+| 25-45 | Part II, build the tiny evaluation harness |
+| 45-70 | Part IIb, design the benchmark the Golden-Set Lab asks you for |
+| 70-75 | Reflection prompt, and the lab handout |
+
+---
 # Part I: Why Models Hallucinate
 
 In this part, you will learn why hallucination (a model producing confident but false output) is not a bug that can be patched, but a predictable consequence of how language models are trained, and you will build a taxonomy of three hallucination types that each call for a different fix.

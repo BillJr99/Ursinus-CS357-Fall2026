@@ -35,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, why a separate critic at all |
+| 10-40 | Part II, implement the generator and the critic, and watch a draft improve |
+| 40-65 | Part III, when refinement fails: the cases where the loop makes things worse |
+| 65-75 | Reflection prompt.  The Human-in-the-Loop Extension is self-paced |
+
+---
 # Part I: Why a Separate Critic?
 
 In this section you will examine why separating generation from evaluation produces better results than asking one agent to do both.  You will analyze two real critique transcripts and practice writing structured, actionable feedback, skills you will need when designing your own critic agents in the Critique and Refine.

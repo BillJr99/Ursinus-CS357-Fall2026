@@ -233,6 +233,9 @@ In the trace for $\mathbf{x} = (1.0, 2.0)$, hidden neuron $h_2$ output $0.0$ bec
 
 The code below implements the exact network above using plain Python lists (no libraries needed), prints every intermediate value in trace-table order, and checks the three inputs from the Model and questions.  Your hand values and the printed values must match to two decimal places.
 
+> **Predict first.**  You traced this forward pass by hand in the table above.  Write your two hidden activations and your output value down now, before you run anything.  The cell prints the same numbers; if they disagree, the disagreement tells you exactly which step of your trace drifted.
+
+
 ```python
 W1 = [[0.5, 1.0],    # weights into h1
       [1.0, -1.0]]   # weights into h2
@@ -279,6 +282,9 @@ In this Part you will visualize the tiny network's weights and activations as he
 The code below draws three heatmaps: the hidden-layer weight matrix $W_1$ (rows = hidden neurons, columns = inputs), the output weights $V$, and the hidden activations for the two inputs you traced by hand.  Compare each cell to a number you already computed.
 
 ## Code Cell
+
+> **Predict first.**  Before you run this, mark on your trace table which of the two inputs you expect to light up which hidden unit more strongly.  The heatmap makes the answer visible in one glance, so commit to a guess while it still costs you something.
+
 
 ```python
 import matplotlib.pyplot as plt

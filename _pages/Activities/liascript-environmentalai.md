@@ -35,6 +35,20 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, orders of magnitude: what a query actually costs |
+| 10-20 | Part II, right-sizing and the local-first principle |
+| 20-35 | Part III, the Jevons paradox and why efficiency gains may not reduce impact |
+| 35-65 | Part IIIb, what you can actually do about it: caching, batching, and the smallest model that clears the bar |
+| 65-75 | Part IV, the carbon audit of your own AI week |
+
+---
+
 # Part I: Orders of Magnitude
 
 In this Part, you will build a concrete, numerical sense of how much energy and carbon different AI workloads produce, from a single query to a full model training run.  The goal is not guilt but judgment: once you know the proportions, you can make smarter choices about which tools to reach for.
