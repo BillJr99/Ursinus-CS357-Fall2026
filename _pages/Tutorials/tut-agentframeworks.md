@@ -23,7 +23,7 @@ Every framework is a wager: *we think these patterns repeat often enough to just
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | Abstraction | Hiding complexity behind a simpler interface: you use a high-level concept (like "Agent") without thinking about all the HTTP calls, prompt formatting, and response parsing underneath. | CrewAI's `Agent(role="Researcher", goal="...")` hides the system prompt construction, LLM call, tool routing, and memory management that raw SDK code would require explicitly. |
 | Leaky Abstraction | An abstraction that fails to hide its underlying complexity at inconvenient moments: you must understand the hidden layer to fix the problem. | When LangGraph's state graph puts unexpected content into the context of an agent, you need to understand how LCEL (LangChain Expression Language) formats prompts to debug it. |
@@ -262,7 +262,7 @@ A student builds a 4-agent pipeline using LangChain and notices the agents are s
 
 # Part IV: Hands-On, Building with LangChain
 
-In this part, you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in the Local Agent Lab, so that the framework's abstractions land on concepts you have already implemented yourself, not on faith.  Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem, the top of the abstraction ladder this activity has been climbing.
+Next you will build a minimal LangChain agent against your local Ollama server and place it side-by-side with the from-scratch agent loop you built in the Local Agent Lab, so that the framework's abstractions land on concepts you have already implemented yourself, not on faith.  Then, in Model 5, you will hand the loop *itself* to a deep agent and watch it plan, delegate to sub-agents, and use a virtual filesystem, the top of the abstraction ladder this activity has been climbing.
 
 ## Hands-On, A LangChain Agent on Ollama
 
@@ -570,7 +570,7 @@ Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step
 
    *Starter hint:* Example structure for a CrewAI project: "We chose CrewAI because (a) our team of three student developers benefits from role-based clarity, (b) our task graph is strictly sequential with no loops, and (c) we need a demo-ready prototype in two weeks.  The strongest counterargument is LangGraph, which offers better monitoring.  We rebut this by noting that our project scope does not require production monitoring.  CrewAI's known failure mode is implicit inter-task data passing that can break if task output format changes; we will mitigate this by writing explicit output validators for each task."
 
-   *You've succeeded when:* Your memo would convince a skeptical manager who has read this activity's Model 3 table and knows the tradeoffs.
+   *You've succeeded when:* Your memo would convince a skeptical manager who has read the comparison table above and knows the tradeoffs.
 
 4.  *Climb one rung.*  Take the three-agent pipeline from Model 2 (Researcher -> Drafter -> Critic) that you either read or built earlier, and re-implement it as a **single deep agent** with two sub-agents, following Model 5.  Then break it on purpose: give the `researcher` sub-agent a tool the `critic` should not have, and confirm from the message trace that the critic never sees the researcher's private tool calls.
 

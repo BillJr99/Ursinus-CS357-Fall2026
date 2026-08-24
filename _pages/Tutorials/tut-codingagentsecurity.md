@@ -23,7 +23,7 @@ You already know the general shape of prompt injection from *Prompt Injection* a
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Indirect prompt injection** | Injection where the malicious instructions are not typed by the user but *embedded in content the agent reads*: a file, web page, issue, or tool output | A README comment telling the agent to exfiltrate `.env` |
 | **Repo-artifact injection** | Indirect injection delivered specifically through software-project artifacts: source comments, README, GitHub issues/PRs, commit messages, and agent rule files | A `.cursorrules` file with hidden instructions |
@@ -196,7 +196,7 @@ Which defense limits the *damage* of a successful injection rather than trying t
 
 ## Reflection Prompt
 
-**Personal**: This activity asked you to read your own coding-agent setup as an attacker would.  Did anything about *your* configuration (a token it can read, a network call it can make, a repo it trusts) feel riskier once you mapped the trifecta?  What is one change you will actually make?
+**Personal**: This tutorial asked you to read your own coding-agent setup as an attacker would.  Did anything about *your* configuration (a token it can read, a network call it can make, a repo it trusts) feel riskier once you mapped the trifecta?  What is one change you will actually make?
 
 **Technical**: The defenses here span prompt formatting, model training, and system architecture, plus blast-radius controls.  In your notebook, argue which single defense gives the best security-per-unit-effort for a student team, and connect it to the sandboxing and least-privilege ideas in *Containerizing AI Systems* and `liascript-tooluse.md`.
 
@@ -243,6 +243,6 @@ Securing a single coding agent is the start.  As agents gain autonomy and are wi
 
 **Course cross-references**
 
-- *Prompt Injection*, *Agent Security*, the general injection taxonomy and OWASP LLM Top 10 this activity builds on.
+- *Prompt Injection*, *Agent Security*, the general injection taxonomy and OWASP LLM Top 10 this tutorial builds on.
 - *Containerizing AI Systems*, sandboxing, isolation, and trust boundaries for the blast-radius controls in Model 3.
 - `liascript-tooluse.md`, the read-only vs. irreversible-write tool taxonomy and human-approval gates.
