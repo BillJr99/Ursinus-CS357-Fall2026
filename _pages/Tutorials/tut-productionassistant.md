@@ -1,28 +1,27 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/ProductionAssistant
+title: 'CS357: Foundations of Artificial Intelligence - From Second Brain to Chief of Staff'
+info:
+  coursenum: CS357
+  purpose: "To follow one real personal agent from a Markdown vault to a system running in production, and to see which design decisions survived contact with daily use."
+tags:
+- case-study
+- agents
+- production
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-productionassistant.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md
+# CS357: Foundations of Artificial Intelligence - From Second Brain to Chief of Staff
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To follow one real personal agent from a Markdown vault to a system running in production, and to see which design decisions survived contact with daily use.
 
-# From Second Brain to Chief of Staff: A Personal Agent in Production
+## About This Tutorial
 
 In *The Second Brain* module you built the foundation: a Markdown vault on GitHub, a sync protocol, and an `AGENTS.md` contract that let an agent like **hermes** read and write your knowledge safely.  This case study (a real production system, anonymized) shows what that foundation grows into after a year of daily use: a standing assistant wired into a task manager, calendar, file store, email, and GitHub, running scheduled routines around the clock, accumulating skills, and updating its own memory, all without ever once being trusted to send an email on its own.
 
 Today's route runs **the three-file contract $\rightarrow$ confirmation gates and governed autonomy $\rightarrow$ integrations and scheduled routines $\rightarrow$ the robustness harness $\rightarrow$ operations as knowledge**.
-
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
 
 ## Key Concepts
 
@@ -65,7 +64,7 @@ A precedence rule ties the set together: *where `AGENTS.md` and `SYSTEMPROMPT.md
 
 ---
 
-## Model 1: Which File Governs?
+## Which File Governs?
 
 For each scenario, decide which of the three files the assistant should be obeying:
 
@@ -77,7 +76,7 @@ For each scenario, decide which of the three files the assistant should be obeyi
 | 4 | Asked to draft thank-you notes to 40 people, the assistant generates all 40 immediately | ? |
 | 5 | Mid-task, a cloud API starts returning errors the assistant has never seen | ? |
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Resolve each scenario: name the governing file *and* the specific rule violated or invoked.  Scenarios 2 and 4 violate different rules with the same underlying philosophy; what is it?
 
@@ -133,7 +132,7 @@ Approvals arrive over authenticated channels (dashboard buttons, or `approve #17
 
 ---
 
-## Model 2: Classify the Action
+## Classify the Action
 
 Classify each action into **Autorun**, **Queue**, or **Forbidden** under the policy above:
 
@@ -148,7 +147,7 @@ Classify each action into **Autorun**, **Queue**, or **Forbidden** under the pol
 9.  Open a draft PR with a proposed fix to the owner's website
 10.  Include a student's graded submission in a prompt to a cloud model to "summarize progress"
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Classify all ten.  Two of them are Forbidden, and the reason they are Forbidden rather than merely Queued is different for each.  Explain the two distinct principles.
 
@@ -191,7 +190,7 @@ The second big pattern is **no-agent routines**: the scheduled layer is almost e
 
 And because an always-on host is sometimes off, the routines carry a **catch-up policy**: after a restart, "collapse the downtime into one missed-execution event, run the job exactly once immediately as catch-up, record that catch-up, advance the next scheduled run normally, and avoid replaying every missed interval."
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Why implement the morning brief as a deterministic script rather than an LLM prompt ("summarize my day"), given that the assistant has a perfectly good model available?  Name three concrete advantages, at least one involving failure behavior.
 
@@ -234,7 +233,7 @@ Governing one-liners, verbatim: *"Verify before you assert."*  *"Verification is
 
 ---
 
-## Model 3: The Flawed Transcript
+## The Flawed Transcript
 
 An assistant using the harness was asked to "clean up the vault's project pages: fix broken links and update the status field on each of the 12 project pages."  Its transcript, condensed:
 
@@ -243,7 +242,7 @@ An assistant using the harness was asked to "clean up the vault's project pages:
 > ...work happens...
 > "Done!  I fixed 9 broken links across the pages.  I also noticed the status fields used inconsistent vocabulary, so I standardized them to Active/Paused/Done, which better satisfies the spirit of criterion (b).  The pages look much better now; I'm confident everything is in order.  Marking both criteria passed."
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Find *three* distinct harness violations in the closing message.  For each, name the harness element that should have caught it.
 
@@ -282,7 +281,7 @@ In this part, you will see the move that completes the "second brain" idea: the 
 
 The through-line of the whole case study: intelligence is cheap and replaceable; the model behind this assistant changed several times in that year.  What persisted, and what made each new model immediately competent, was the **written operating system around it**: contract, prompt, memory, gates, routines, harness, runbook.  That is the part you can start building today, and it is the part this course's templates give you.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  The cutover checklist requires "survives a host reboot" *and* "survives a service restart" as separate checks before an old capability owner is disabled.  Why are these distinct failure modes, and what specifically breaks if you test only the restart?
 
@@ -337,7 +336,7 @@ Copy-paste starting points (the vault contract, standing prompt, memory file, an
 
 ---
 
-## -> Coming Up Next
+## Where This Goes Next
 
 You now have both halves of the governance story: charters and handoffs for agents that build software, and gates, routines, and self-updating memory for an agent that runs a life.  The remaining modules put these to work at team scale (multi-agent debate, consensus, and agent teams) where every lesson about traceability and verification applies *between* agents, not just between an agent and you.
 
@@ -346,6 +345,6 @@ You now have both halves of the governance story: charters and handoffs for agen
 ## 8.  Further Reading
 
 - The course template set for this activity: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
-- This course: [The Second Brain](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-secondbrain.md) (the foundation this activity builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-humanintheloop.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentskills.md) (the skill format this system's inventory manages).
+- This course: [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) (the foundation this activity builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-humanintheloop.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentskills.md) (the skill format this system's inventory manages).
 - Model Context Protocol documentation. https://modelcontextprotocol.io, the integration layer behind the tool connections in Part III.
 - Atul Gawande.  *The Checklist Manifesto*.  Metropolitan Books (2009).  Why written procedure outperforms expert memory in high-stakes operations, the human-institutions version of everything in this activity.

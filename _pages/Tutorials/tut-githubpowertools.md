@@ -1,26 +1,25 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/GitHubPowerTools
+title: 'CS357: Foundations of Artificial Intelligence - GitHub Superpowers for AI Developers'
+info:
+  coursenum: CS357
+  purpose: "To turn any GitHub repository into something an agent can actually read, using gitingest, deepwiki, github.dev, and the other domain-swap tricks."
+tags:
+- github
+- tooling
+- agents
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-githubpowertools.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-githubpowertools.md
+# CS357: Foundations of Artificial Intelligence - GitHub Superpowers for AI Developers
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To turn any GitHub repository into something an agent can actually read, using gitingest, deepwiki, github.dev, and the other domain-swap tricks.
 
-# GitHub Superpowers for AI Developers
+## About This Tutorial
 
 This module introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
-
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
 
 ## Key Concepts
 
@@ -84,17 +83,17 @@ gitingest https://github.com/owner/repo --output repo_context.txt
 
 ---
 
-## Model 1: Hands-On Ingestion Workflow
+## Hands-On Ingestion Workflow
 
-Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target, a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity).  If that repo is too large, your instructor will direct you to a smaller example.
+Work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target, a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity).  If that repo is too large, your instructor will direct you to a smaller example.
 
 **Step 1**: Navigate to `github.com/BerriAI/litellm` and press `.`.  Locate the main entry point (`__main__.py` or equivalent) and the directory where provider adapters live.
 
 **Step 2**: Open `gitingest.com/BerriAI/litellm` in a second tab.  Note the token count displayed.  If it exceeds 100 000 tokens, use the path filter to select only the `litellm/` subdirectory.
 
-**Step 3**: Copy the filtered text block.  In your team's shared document, paste the first 30 lines (the file-tree summary) and record the total token count.
+**Step 3**: Copy the filtered text block.  In a scratch file, paste the first 30 lines (the file-tree summary) and record the total token count.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1. `gitingest.com` reports a token count for the whole repository.  What would you do if that count exceeded the context window of the local model you are running (for example, `llama3.2` with a 128k context window)?  Describe at least two strategies for reducing the input to a manageable size.
 
@@ -129,8 +128,11 @@ The workflow has three steps: (1) paste the repo URL into `getmcp.io` and copy t
 ## Code Cell
 
 ```python
+
 # Example: Ollama agent configured to use an MCP server
+
 # In practice, MCP configuration lives in your agent framework's config file.
+
 # This snippet shows the logical structure of an MCP-grounded agent call.
 
 import requests
@@ -168,11 +170,11 @@ print(result)
 
 ---
 
-## Model 2: Hallucination Before and After Grounding
+## Hallucination Before and After Grounding
 
-For this model, your instructor will demonstrate the same request sent to a local `llama3.2` model (a) without MCP grounding and (b) with a `getmcp.io` MCP server for `chromadb` configured.  The Recorder notes any differences in the generated API calls.
+Compare the same request sent to a local `llama3.2` model (a) without MCP grounding and (b) with a `getmcp.io` MCP server for `chromadb` configured.  The Recorder notes any differences in the generated API calls.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  In the un-grounded response, identify any method names or parameter names that do not appear in the current `chromadb` documentation.  What is the most likely explanation for the discrepancy?
 
@@ -213,9 +215,9 @@ The diagram is a starting point, not a source of truth.  Generated diagrams may 
 
 ---
 
-## Model 3: Codebase Orientation Sprint
+## Codebase Orientation Sprint
 
-Your team has 12 minutes to answer five questions about an unfamiliar agent framework, using only `deepwiki.com` and `gdagram.com`.  Your instructor will name the repository at the start of the sprint.  The Presenter will report your answers and which tool was more useful for each question.
+Give yourself 12 minutes to answer five questions about an unfamiliar agent framework, using only `deepwiki.com` and `gdagram.com`.  Your instructor will name the repository at the start of the sprint.  The Presenter will report your answers and which tool was more useful for each question.
 
 **Questions to answer**:
 - What is the main entry point of the application?
@@ -224,9 +226,9 @@ Your team has 12 minutes to answer five questions about an unfamiliar agent fram
 - What happens when the agent exceeds its step budget?
 - Which module would you edit to add a new tool?
 
-### Critical Thinking Questions
+### Questions to Work Through
 
-6.  For each of the five questions above, record which tool (deepwiki or gdagram) your team used and how confident you are in the answer (high / medium / low).  What patterns do you notice about which tool works better for which type of question?
+6.  For each of the five questions above, record which tool (deepwiki or gdagram) you used and how confident you are in the answer (high / medium / low).  What patterns do you notice about which tool works better for which type of question?
 
    > *Hint: Diagram tools are good at "what connects to what" questions.  Text explanation tools are good at "why" and "how" questions.  Neither is good at questions that require reading actual code logic.*
 
@@ -291,7 +293,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 ---
 
-## -> Coming Up Next
+## Where This Goes Next
 
 Now that you can efficiently read and feed any public codebase to an AI agent, the next activity asks a deeper question: how do you communicate with a local model at the protocol level, without relying on a high-level SDK? We examine the OpenAI-compatible REST API pattern (the common language spoken by Ollama, LiteLLM, and most local inference servers) so you can write agent code that works across providers without being locked into any single library.
 

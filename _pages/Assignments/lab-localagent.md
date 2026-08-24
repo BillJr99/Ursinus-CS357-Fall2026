@@ -99,8 +99,7 @@ info:
       rlink: "Activities/liascript-agentstack.md"
       liapage: true
     - rtitle: "Docker from Zero Activity"
-      rlink: "Activities/liascript-docker.md"
-      liapage: true
+      rlink: "/Tutorials/Docker"
     - rtitle: "MCP Server Activity"
       rlink: "Activities/liascript-mcprestoauth.md"
       liapage: true
@@ -153,7 +152,7 @@ In this lab, you and a partner will build a working agent from first principles:
 
 - [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-structuredoutputs.md): all directions.
 - [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-restllmapi.md): all directions.
-- [Docker from First Principles]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-docker.md): Directions 2 and 3 only; do the installs at home first.
+- [Docker from First Principles]({{ site.baseurl }}/Tutorials/Docker): Directions 2 and 3 only; do the installs at home first.
 - [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcprestoauth.md): Direction 4 only.
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:

@@ -1,37 +1,29 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/Shell
+title: 'CS357: Foundations of Artificial Intelligence - The Shell, in Full'
+info:
+  coursenum: CS357
+  purpose: "To take you from your first terminal prompt to fluent command-line work, so that you can read and supervise every shell command an agent proposes to run on your behalf."
+tags:
+- shell
+- tooling
+- setup
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-shellbasics.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-shellbasics.md
+# CS357: Foundations of Artificial Intelligence - The Shell, in Full
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To take you from your first terminal prompt to fluent command-line work, so that you can read and supervise every shell command an agent proposes to run on your behalf.
 
-# The Shell: Your Agent's Native Habitat
+## About This Tutorial
 
 Every agentic CLI tool you will meet this semester (Claude Code, Codex, Gemini CLI, opencode, pi, and the rest) lives in the **terminal**, and when those agents act, they act by running shell commands on your behalf.  You cannot supervise what you cannot read.  This tutorial takes you from your very first prompt to fluent command-line work, assuming nothing.  We move today from **what a shell is $\rightarrow$ moving around $\rightarrow$ working with files $\rightarrow$ pipes and redirection $\rightarrow$ environment and PATH $\rightarrow$ processes $\rightarrow$ the terminal inside VS Code**.
 
----
-
-## Directions and Group Roles
-
-Throughout this course, we work in POGIL-style teams of three or four with rotating roles:
-
-- **Manager**: keeps the team on task and watches the time.
-- **Recorder**: writes the team's answers on the Class Activity Questions discussion board.
-- **Presenter**: reports the team's findings to the class.
-- **Reflector**: notes what helped or hindered the team, and shares one observation at the end.
-
-Today is hands-on: every member opens a terminal and types every command personally (watching does not build muscle memory).  The Recorder captures surprising outputs verbatim.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
-
 ## Key Concepts
 
-The following terms appear throughout today's activity.  Read through them as a team before diving into the models; they are the vocabulary you need to decode everything else.
+These terms turn up all through this tutorial.  Read them once before you start; they are the vocabulary you need to decode everything else.
 
 | Term | Plain-English Definition | Example You'll See Today |
 |---|---|---|
@@ -88,11 +80,11 @@ The filesystem is a tree.  Paths beginning with `/` are **absolute** (measured f
 
 ---
 
-## Model 1: Read Before You Run
+## Read Before You Run
 
 Think of the terminal as your agent's native language, like learning to read blueprints instead of just looking at buildings.  This model asks you to study one compound command the way an architect reads a blueprint (word by word, symbol by symbol) before allowing any construction to begin.  Your agent will propose lines like this one routinely; the skill of parsing them before approving them is the core competency of this course.
 
-Your teammate's agent proposes this sequence.  Decode it as a team before anyone executes anything:
+An agent proposes the sequence below.  Decode every line before you run any of it:
 
 ```bash
 cd ~/projects/demo && ls -la && cat config.json | head -20
@@ -106,7 +98,7 @@ Breaking it down piece by piece:
 - `cat config.json`: print the entire contents of `config.json` to the screen
 - `| head -20`: pass that output through a pipe and show only the first 20 lines (`head` takes `-N` where N is the number of lines)
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Translate the entire line into one plain English sentence.  What does `&&` appear to do, and what would you predict happens to `ls -la` and `cat config.json | head -20` if `cd ~/projects/demo` fails because the directory does not exist?
 
@@ -153,15 +145,21 @@ Pipes and redirection let you compose simple commands into powerful one-liners w
 
 ```bash
 grep "ERROR" agent.log | wc -l
+
 # grep searches agent.log for lines containing "ERROR" and passes them to wc
+
 # wc -l counts the number of lines received; result is the total error count
 
 ls -la | sort -k5 -n | tail -3
+
 # ls -la lists files with details; sort -k5 -n sorts by the 5th column (file size) numerically
+
 # tail -3 keeps only the last 3 lines; result is the three largest files
 
 cat results.csv | grep "fail" | head -10
+
 # cat prints results.csv; grep keeps only lines containing "fail"
+
 # head -10 keeps only the first 10 of those; result is the first ten failures
 ```
 
@@ -169,14 +167,19 @@ Redirection sends output to files instead of the screen.  Use `>` to overwrite, 
 
 ```bash
 python run_eval.py > results.txt
+
 # Runs run_eval.py and saves ALL standard output to results.txt
+
 # WARNING: this OVERWRITES results.txt entirely if it already exists
 
 python run_eval.py >> results.txt
+
 # Same, but APPENDS to results.txt instead of overwriting; safe for accumulating runs
 
 python run_eval.py > out.txt 2> err.txt
+
 # Saves normal output to out.txt AND saves error messages to err.txt separately
+
 # The "2>" targets file descriptor 2, which is the error stream
 ```
 
@@ -195,7 +198,7 @@ A teammate runs `python eval.py > results.txt` twice in a row with different set
 
 ---
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  Write a single pipeline that searches `agent.log` for lines containing the word `WARN`, counts them, and also saves just those `WARN` lines to a file called `warnings.txt`, all in one command.  (Hint: `tee` is a command that sends output to both a file and to standard output simultaneously.  Try `grep "WARN" agent.log | tee warnings.txt | wc -l`.)
 
@@ -219,17 +222,23 @@ A teammate runs `python eval.py > results.txt` twice in a row with different set
 
 ```bash
 echo $HOME
+
 # Prints the value of the HOME variable, your home directory path
 
 export ANTHROPIC_BASE_URL=http://localhost:4000
+
 # Creates (or overwrites) the variable ANTHROPIC_BASE_URL and marks it for export
+
 # "export" means child processes (like Claude Code) will inherit this value
 
 export ANTHROPIC_API_KEY=sk-litellm-local
+
 # Sets the API key that Claude Code reads on startup
 
 env | grep ANTHROPIC
+
 # env lists ALL current environment variables; grep filters to only ANTHROPIC ones
+
 # Use this to confirm your variables are set correctly before launching a tool
 ```
 
@@ -237,7 +246,7 @@ Variables set with `export` last only until the terminal closes; to make them pe
 
 PATH is the list of directories the shell searches to find commands.  When you type `claude` and the shell says `command not found`, the diagnosis is almost always one of two things: the tool is not installed, or it is installed somewhere not on your PATH. `which python3` shows where a command resolves; `echo $PATH` shows the search list.  This single concept explains most installation frustration you will ever feel.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 7.  Run `echo $PATH` in your terminal and count how many directories are listed (they are separated by `:`).  Now run `which python3`.  Which directory in your PATH contains `python3`?
 
@@ -255,31 +264,41 @@ Every running program is a **process** (a running instance of a program, assigne
 
 ```bash
 some_long_command
+
 # Runs in the foreground; your prompt disappears and waits until the command finishes
 
 Ctrl+C
+
 # Sends an interrupt signal to the foreground process; politely asks it to stop immediately
 
 some_server &
+
 # The & at the end runs the command in the background; your prompt returns immediately
+
 # The shell prints the background job's PID (process ID number) so you can track it
 
 ps aux | grep ollama
+
 # ps aux lists every running process on the system with details
+
 # grep ollama filters to only lines mentioning "ollama"; shows PID, CPU, memory
 
 kill 12345
+
 # Sends a polite termination signal (SIGTERM) to process number 12345
+
 # Replace 12345 with the actual PID from ps aux
 
 kill -9 12345
+
 # Sends an immediate, uncatchable kill signal (SIGKILL); use only if kill 12345 fails
+
 # The process cannot clean up after itself, so use this as a last resort
 ```
 
 When a port is "already in use" (a constant companion in the Docker module), `lsof -i :3000` names the process holding port 3000, and now you know how to evict it.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 9.  A teammate's agent started a local model server in the background with `ollama serve &`.  Ten minutes later they close the terminal; is the server still running?  How would you check, and how would you stop it?
 
@@ -303,7 +322,7 @@ VS Code's integrated terminal puts your agent's command output and its file edit
 
 Open VS Code's integrated terminal with **Ctrl+`** (backtick). It is a full shell, opened in your project's folder automatically, which is exactly where agent CLIs want to be launched: `claude`, `codex`, `gemini`, `opencode`, and `pi` all start in the current directory and treat it as their workspace. The split is natural: the agent runs in the terminal pane while you read its edits in the editor pane above, with VS Code's diff coloring showing every change the agent makes the moment it makes it. The agent CLI module builds on this layout; today, just confirm you can open the panel, run `pwd`, and see your project path.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 11.  Open the VS Code integrated terminal and run `pwd`.  Does the path it prints match the folder you have open in the VS Code Explorer sidebar?  If not, what command would bring the terminal to the same location?
 
@@ -339,7 +358,7 @@ Open VS Code's integrated terminal with **Ctrl+`** (backtick). It is a full shel
 
 4.  **Permission rehearsal.**
 
-   *What to do:* Each teammate writes one shell line that looks innocent on a quick glance but is actually destructive or has a surprising side effect.  Take turns reading each line aloud as a team and giving a verdict: "approve" or "deny," with one sentence of reasoning.  This is the exact skill the agent permission gate requires of you every time an agent proposes a command.
+   *What to do:* Write one shell line that looks innocent on a quick glance but is actually destructive or has a surprising side effect.  Take turns reading each line aloud as a team and giving a verdict: "approve" or "deny," with one sentence of reasoning.  This is the exact skill the agent permission gate requires of you every time an agent proposes a command.
 
    *Starter hint:* Examples of deceptive-looking lines include: `cat file.txt > important.txt` (silently overwrites `important.txt`), `find . -name "*.log" -delete` (deletes files without showing them first), or `mv * /tmp/` (moves everything in the current directory to `/tmp/`).  Try to write one that would fool a teammate reading quickly.
 
