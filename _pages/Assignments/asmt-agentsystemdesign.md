@@ -58,7 +58,7 @@ info:
       rlink: "Activities/liascript-agentgovernance.md"
       liapage: true
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
-      rlink: "/Tutorials/ProductionAssistant"
+      rlink: "../Tutorials/ProductionAssistant"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
       rlink: "../files/agent-templates/README.md"
     - rtitle: "The Coding Agents activity: the overnight brief, and loops that run themselves (Ralph, autoresearch, gnhf, crews)"
