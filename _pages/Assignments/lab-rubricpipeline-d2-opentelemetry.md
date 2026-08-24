@@ -8,9 +8,8 @@ info:
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: "../RubricPipeline"
-  - rtitle: Observability Activity
-    rlink: "Activities/liascript-observability.md"
-    liapage: true
+  - rtitle: Observability
+    rlink: "../../Tutorials/Observability"
 tags:
 - observability
 - opentelemetry
@@ -26,7 +25,7 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Observability Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-observability.md)
+- [Observability]({{ site.baseurl }}/Tutorials/Observability)
 
 This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 

@@ -86,19 +86,16 @@ info:
       liapage: true
     - rtitle: "Ollama API Documentation"
       rlink: "https://github.com/ollama/ollama/blob/main/docs/api.md"
-    - rtitle: "Agent Debugging Activity"
-      rlink: "Activities/liascript-agentdebugging.md"
-      liapage: true
-    - rtitle: "Agent Observability Activity"
-      rlink: "Activities/liascript-observability.md"
-      liapage: true
+    - rtitle: "Agent Debugging"
+      rlink: "../Tutorials/AgentDebugging"
+    - rtitle: "Agent Observability"
+      rlink: "../Tutorials/Observability"
     - rtitle: "Advanced Agent Loops Activity"
       rlink: "Activities/liascript-orchestration.md"
       liapage: true
-    - rtitle: "The Local Agent Stack Activity"
-      rlink: "Activities/liascript-agentstack.md"
-      liapage: true
-    - rtitle: "Docker from Zero Activity"
+    - rtitle: "The Local Agent Stack"
+      rlink: "../Tutorials/AgentStack"
+    - rtitle: "Docker from Zero"
       rlink: "../Tutorials/Docker"
     - rtitle: "MCP Server Activity"
       rlink: "../Assignments/LocalAgent/Direction4"
@@ -112,12 +109,10 @@ info:
       rlink: "https://python.useinstructor.com/integrations/ollama/"
     - rtitle: "Outlines: Grammar-Constrained Generation"
       rlink: "https://github.com/dottxt-ai/outlines"
-    - rtitle: "The AI Chess Coach activity: LLM API calls in a real web app (this lab's worked example)"
-      rlink: "Activities/liascript-chessaicoach.md"
-      liapage: true
-    - rtitle: "The RESTful LLM Access activity on the api/v1 paradigm (prerequisite)"
-      rlink: "Activities/liascript-restllmapi.md"
-      liapage: true
+    - rtitle: "AI Chess Coach: LLM API calls in a real web app (this lab's worked example)"
+      rlink: "../Tutorials/ChessAICoach"
+    - rtitle: "RESTful LLM Access, on the api/v1 paradigm (prerequisite)"
+      rlink: "../Tutorials/RESTLLMAPI"
 
 tags:
   - agents
@@ -150,7 +145,7 @@ In this lab, you and a partner will build a working agent from first principles:
 **Prep decks this lab assumes.**  Work through whichever apply to your direction before you start:
 
 - [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.baseurl }}/Assignments/ToolsMCP): all directions.
-- [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-restllmapi.md): all directions.
+- [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.baseurl }}/Tutorials/RESTLLMAPI): all directions.
 - [Docker from First Principles]({{ site.baseurl }}/Tutorials/Docker): Directions 2 and 3 only; do the installs at home first.
 - [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.baseurl }}/Assignments/LocalAgent/Direction4): Direction 4 only.
 

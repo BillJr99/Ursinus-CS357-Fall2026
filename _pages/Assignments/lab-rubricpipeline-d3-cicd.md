@@ -8,9 +8,8 @@ info:
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: "../RubricPipeline"
-  - rtitle: 'Publishing Activity: GHCR, Docker Hub, and npm'
-    rlink: "Activities/liascript-publishing.md"
-    liapage: true
+  - rtitle: 'Publishing: GHCR, Docker Hub, and npm'
+    rlink: "../../Tutorials/Publishing"
   - rtitle: Coding Agents Activity
     rlink: "Activities/liascript-codingagents.md"
     liapage: true
@@ -34,7 +33,7 @@ To earn trust in agentic software through engineering discipline: test-driven de
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Publishing Activity: GHCR, Docker Hub, and npm]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-publishing.md)
+- [Publishing: GHCR, Docker Hub, and npm]({{ site.baseurl }}/Tutorials/Publishing)
 - [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md)
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
@@ -58,7 +57,7 @@ The core pipeline earns trust through measurement; this direction earns it throu
 
 **Prerequisite activities**: complete these before writing any code:
 
-- [Publishing Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-publishing.md): registries, names, tags, and pip publishing
+- [Publishing Activity]({{ site.baseurl }}/Tutorials/Publishing): registries, names, tags, and pip publishing
 - [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md): agent loops and CI
 
 **Tools to install:**

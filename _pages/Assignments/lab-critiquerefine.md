@@ -60,9 +60,8 @@ info:
     - rtitle: "Coding Agents Activity"
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
-    - rtitle: "The Local Agent Stack Activity"
-      rlink: "Activities/liascript-agentstack.md"
-      liapage: true
+    - rtitle: "The Local Agent Stack"
+      rlink: "../Tutorials/AgentStack"
 
 tags:
   - multi-agent
@@ -854,7 +853,7 @@ Because this direction is graded under the same 100-point rubric as the core lab
 Before beginning, make sure you have completed both of the following activities (linked in the readings above):
 
 - [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md): covers what a coding agent is, how it reads files, proposes edits, and accepts or rejects changes
-- [The Local Agent Stack Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentstack.md): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
+- [The Local Agent Stack]({{ site.baseurl }}/Tutorials/AgentStack): covers how to run a local agent with a system prompt, how the agent loop works, and how to capture a trace
 
 If you have not done both activities, do them now before reading further.  The concepts introduced there are assumed throughout this direction.
 

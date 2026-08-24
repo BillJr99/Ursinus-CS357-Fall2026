@@ -72,18 +72,15 @@ info:
     - rtitle: "Evaluating Outputs Activity"
       rlink: "Activities/liascript-evaluatingoutputs.md"
       liapage: true
-    - rtitle: "Testing Agents Activity"
-      rlink: "Activities/liascript-testingagents.md"
-      liapage: true
+    - rtitle: "Testing Agents"
+      rlink: "../Tutorials/TestingAgents"
     - rtitle: "LLM as Judge Activity"
       rlink: "Activities/liascript-llmasjudge.md"
       liapage: true
-    - rtitle: "Observability Activity"
-      rlink: "Activities/liascript-observability.md"
-      liapage: true
-    - rtitle: "Publishing Activity: GHCR, Docker Hub, and npm"
-      rlink: "Activities/liascript-publishing.md"
-      liapage: true
+    - rtitle: "Observability"
+      rlink: "../Tutorials/Observability"
+    - rtitle: "Publishing: GHCR, Docker Hub, and npm"
+      rlink: "../Tutorials/Publishing"
     - rtitle: "Coding Agents Activity"
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
@@ -123,7 +120,7 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 ## Before You Start
 
-**Prep deck.**  [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-testingagents.md) sets up the judge-calibration work this lab grades.
+**Prep deck.**  [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.baseurl }}/Tutorials/TestingAgents) sets up the judge-calibration work this lab grades.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
