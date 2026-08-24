@@ -64,10 +64,7 @@ info:
       rlink: "https://github.com/leinn32/labStudentLLM"
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
-    - rtitle: "Privacy-Preserving AI"
-      rlink: "Activities/liascript-privacypreservingai.md"
-      liapage: true
-    - rtitle: "Intellectual Property and Privacy"
+    - rtitle: "The Intellectual Property and Privacy activity, whose Part IIb covers federated learning, differential privacy, and PII scrubbing"
       rlink: "Activities/liascript-ipprivacy.md"
       liapage: true
     - rtitle: "Explainability Activity"
@@ -111,7 +108,7 @@ Then pick **one** of the four directions below and carry it out in depth.  Each 
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
-**Prep deck for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-promptinjection.md) walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
+**Prep deck for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentcasestudies.md) walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
 
 Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like, from both sides of it.  This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist.  Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
 

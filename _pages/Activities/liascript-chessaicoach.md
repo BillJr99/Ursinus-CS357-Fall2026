@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-chessaicoach.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-chessaicoach.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -283,6 +281,8 @@ Here is the whole idea, reduced to a **runnable Python cell** you can execute ag
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -395,6 +395,8 @@ Design decisions worth copying:
 You can prove the prompt matters with a runnable cell, the same coach prompt, against your local model:
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 # Reuses chat_completion(...) from Part II.
@@ -551,6 +553,8 @@ For any app real users will touch, the key belongs on a **server you control**, 
 The browser calls **your** endpoint.  Your server reads the key from an environment variable and adds it to the provider request.  The secret never leaves your server; users never see it; and you can add rate limits and logging in one place.  A minimal proxy is only a few lines:
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell starts a server and binds a port, which a web page cannot do.  Copy it into your course container and run it there.
 
 ```python
 # minimal_proxy.py  - run with a real key in the environment, e.g.

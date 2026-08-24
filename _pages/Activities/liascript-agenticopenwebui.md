@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agenticopenwebui.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agenticopenwebui.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -95,6 +93,8 @@ In this Part you will move from clicking the UI to scripting it: the same chat, 
 
 Every interaction reduces to one authenticated POST. Run this against your own stack (replace the API key with yours; the default OpenWebUI port from the agent stack lab is 3000):
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -172,6 +172,8 @@ The workflow pattern from Notebook 2, reduced to its skeleton:
 ```
 
 A compact implementation.  Three roles, one endpoint, the loop visible:
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 import requests

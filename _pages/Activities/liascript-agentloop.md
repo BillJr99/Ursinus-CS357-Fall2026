@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentloop.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentloop.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -40,6 +38,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Key Concepts and the search-and-rescue framing: what makes a loop an agent |
+| 10-30 | Part I, the sense-think-act cycle and the ReAct trace, worked on paper |
+| 30-60 | Part II, paper-trace the minimal tool-using agent step by step |
+| 60-75 | Part III, the budget experiment and the failure hunt; Reflection at home |
+
+---
 ## 0.  Environment and Utilities
 
 This section sets up the Python helper function that all later code cells will reuse.  It sends a list of messages (the conversation history so far) to a locally running Ollama server and returns the model's reply as a plain string.  You don't need to understand every line yet; just run it and confirm the "Environment ready." message appears before moving on.
@@ -56,6 +66,8 @@ This section assumes Ollama is running locally (we install it together in the *R
 > 2.  **Parse it exactly as your code would**: which branch fires, the `Final Answer:` check or the `calc(...)` regex?
 > 3.  **Write the observation** your program would compute and append to memory.
 > 4.  **Repeat** from step 1 with the updated memory until the trace reaches `Final Answer:`.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import json

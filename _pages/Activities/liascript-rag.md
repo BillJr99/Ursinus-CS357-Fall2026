@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-rag.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rag.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -37,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the open-book exam insight |
+| 10-35 | Part II, build it: chunk, embed, store, retrieve, generate |
+| 35-60 | Part IIb, how the search actually finds anything: distance metrics and the retrieval pipeline |
+| 60-70 | The failure modes, against a query you deliberately break |
+| 70-75 | Reflection prompt.  The vector-database ecosystem survey is at home |
+
+---
 # Part I: The Open-Book Exam Insight
 
 ## 1.  Parameters Versus Context
@@ -92,6 +103,8 @@ The code below is split into two phases.  The **indexing phase** (run once) crea
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -178,6 +191,132 @@ The single most important reason RAG reduces factual hallucination is that it:
 [(X)] Moves the burden of factual precision from parametric memory to text supplied in the context
 [( )] Lowers the sampling temperature automatically
 [( )] Fine-tunes the model on your documents
+
+---
+
+---
+
+# Part IIb: How the Search Actually Finds Anything
+
+Chroma made retrieval look like one function call.  Underneath it is a distance metric, an index, and a set of tradeoffs that decide whether your pipeline stays fast at ten documents and at ten million.  You need this to debug retrieval when it starts returning the wrong thing, which it will.
+
+## Why Brute Force Fails
+
+In this part, you will see why checking every vector in a million-document database is computationally infeasible and how two approximate nearest-neighbor algorithms (HNSW and IVF) solve the problem through clever indexing.
+
+### The Scale Problem
+
+Searching a vector database is like finding the most similar song in a music library, not by song title, but by how it *sounds*.  If you had 1 million songs and had to listen to each one to decide which is most similar to your query, it would take forever.  ANN indexes are the equivalent of organizing songs by genre, tempo, and key so you can jump straight to the right neighborhood.
+
+An embedding vector for a single sentence is a point in $\mathbb{R}^{1536}$. At query time, a RAG system must find the $k$ stored vectors closest to the query vector.  The naive approach is to compute the distance from the query to every stored vector.  For 1 million documents, each at 1536 dimensions, that is $1536 \times 10^6 \approx 1.5 \times 10^9$ floating-point operations per query, enough to take several seconds on a single CPU, unacceptable for an interactive assistant.
+
+**Approximate nearest-neighbor (ANN) search** accepts a small chance of missing the true nearest neighbor in exchange for a 100x to 1000x speedup.  Two algorithms dominate production systems:
+
+- **HNSW (Hierarchical Navigable Small World, an approximate nearest-neighbor index that organizes vectors into a multi-layer graph so search can navigate quickly from coarse to fine-grained neighborhoods):** builds a multi-layer graph where each node connects to its approximate nearest neighbors.  Search navigates from a coarse top layer downward, greedily jumping toward the query.  Think of it as a subway map where express lines get you close quickly, then local stops get you to the exact station.
+- **IVF (Inverted File Index):** partitions the vector space into $n$ clusters (Voronoi cells) at index time.  At query time only the nearest few cluster centroids are searched.  Think of it as dividing a library into sections: you check the "Science" section, not every shelf.
+
+---
+
+### Distance Metrics
+
+Not all distance functions measure the same thing.  Choose the wrong one and semantically similar documents rank below dissimilar ones.  Think of this like choosing the right ruler: a protractor measures angles, a tape measure measures length; both are "distance" tools but answer different questions.
+
+| Scenario | Best Metric | Why | When to Use |
+|---|---|---|---|
+| Finding semantically similar sentences in a text retrieval system | Cosine similarity | Direction encodes meaning; vectors from the same model are already unit-normalized in most libraries, so magnitude differences are irrelevant. | Default choice for all text embedding retrieval; use this unless you have a specific reason not to. |
+| Finding documents of similar "importance" where magnitude carries signal | L2 (Euclidean) distance | Magnitude differences are meaningful; two vectors far from the origin but close in angle are different in quantity or intensity, not just topic. | Image embeddings where pixel intensity matters; word count or frequency embeddings where raw size is meaningful. |
+| Maximum inner product search for recommendation | Dot product | Relevance decomposes as magnitude × angle; used when popularity or frequency should interact with semantic similarity. | Recommendation systems where a popular item (high magnitude) should rank higher than an obscure but equally relevant item. |
+| Comparing images embedded by a CLIP model with known unit norms | Cosine or dot product (equivalent when norms are 1) | Normalization makes them identical; use whichever the library exposes natively to avoid unnecessary computation. | Any embedding model that explicitly states it returns unit-normalized vectors, including `text-embedding-3-small` and `nomic-embed-text`. |
+
+#### Critical Thinking Questions
+
+1.  Most text embedding models (such as `nomic-embed-text` and OpenAI `text-embedding-3-small`) return L2-normalized vectors, meaning every vector has magnitude 1.  Show algebraically that for unit vectors, cosine similarity and dot product are identical.  Why does this simplification matter for implementation?
+
+   *Hint:* Cosine similarity is defined as $\frac{u \cdot v}{||u|| \cdot ||v||}$. What happens to the denominator when both vectors have magnitude 1?
+
+2.  You index 50,000 legal briefs and 50,000 social media posts in the same collection.  A query about "contract breach" retrieves a mix of both.  What property of the embedding space caused this, and which metadata filter would you add to the ANN query to fix it?
+
+   *Hint:* Both document types use the word "breach" but in very different contexts.  The embedding model was trained on mixed text.  What structured field (stored alongside the vectors, not in the vectors) would let you restrict results to one document type?
+
+3.  HNSW builds its graph at index time.  What is the trade-off when you set the number of neighbors per node very high versus very low?  Consider index-build time, query time, and recall.
+
+   *Hint:* More neighbors per node means more edges in the graph.  During search, more edges means more paths to explore.  During index construction, more edges means more distance calculations per inserted node.
+
+---
+
+## The Retrieval Pipeline
+
+In this part, you will trace a complete RAG query through six pipeline steps (embedding, ANN search, metadata filtering, and LLM generation) and learn to diagnose which step is responsible when the answer comes out wrong.
+
+### From Query to Answer
+
+Every RAG query traverses a fixed sequence of steps, like an assembly line where each station transforms the work piece and hands it to the next.  Understanding who owns each step is essential for debugging: when the answer is wrong, you need to pinpoint whether to blame the embedding model, the ANN index, the metadata filter, or the language model.
+
+### Pipeline Tracing
+
+| Step | Component | Input | Output | What Can Go Wrong Here |
+|---|---|---|---|---|
+| 1. Query arrives | Application layer | Raw user question typed by the user | Plain text string | Query is ambiguous, misspelled, or in a different language than the indexed documents. |
+| 2. Query is embedded | Embedding model (e.g., `nomic-embed-text`; install: `ollama pull nomic-embed-text`) | Text string | Float array (1536-dim) | Using a different embedding model than was used at index time causes a "dialect mismatch"; vectors are incomparable. |
+| 3. ANN search | Vector database index (HNSW or IVF) | Query vector, $k$ (how many results to return) | Candidate document IDs with distances | If $k$ is too small, the correct document is excluded before the filter even runs. |
+| 4. Metadata filter applied | Vector database filter engine | Candidate IDs, filter expression (e.g., `{"year": {"$gte": 2024}}`) | Filtered subset of IDs | Overly strict filters remove the correct document; overly loose filters let irrelevant documents through. |
+| 5. Top-$k$ documents returned | Vector database | Filtered IDs | Document text + metadata | If chunks are too long, they waste context window space; if too short, they lack the context the LLM needs to answer. |
+| 6. LLM generates with docs in context | Language model (e.g., `claude-sonnet-4-5`, `llama3.1:8b`) | Prompt = system instructions + retrieved chunks + user question | Answer string | LLM ignores the retrieved text and hallucinates from parametric memory; "lost in the middle" effect buries the relevant chunk. |
+
+> **Common Misconception:** Many beginners assume that if the LLM gives a wrong answer, the problem must be with the LLM itself.  In practice, **the retrieval step fails far more often than the generation step**.  A perfect LLM cannot produce a correct answer if Step 3 or 4 returned the wrong documents.  Always check what was actually retrieved (Step 5's output) before debugging the LLM.
+
+#### Critical Thinking Questions
+
+4.  A user asks "What were the 2024 FDA guidelines on GLP-1 drugs?"  Your index was built in January 2024 and the guidelines were published in September 2024.  At which step does the failure occur?  What is the fix, and what is its operational cost?
+
+   *Hint:* The failure happens at Step 3: the correct document was never indexed, so ANN search cannot return it.  The fix involves re-running the indexing pipeline.  How often would you need to do this for a regulatory database?
+
+5.  Your system retrieves the correct documents at step 5, but the LLM's answer contradicts them.  Which step is at fault?  What experiment would you run to confirm this before changing the prompt?
+
+   *Hint:* Before changing anything, print the exact retrieved chunks and compare them to the LLM's answer.  If the chunks clearly contain the correct answer and the LLM ignores them, you have isolated Step 6 as the culprit.
+
+6.  Metadata filters at step 4 operate *after* ANN search, not before.  Why is pre-filtering expensive, and what architectural pattern (called "filtered ANN") is used by databases like Qdrant to make it efficient?
+
+   *Hint:* Pre-filtering means scanning the entire metadata table before doing any vector math.  Qdrant's filtered ANN uses a different strategy: it builds separate HNSW graphs per metadata partition so that filters can be applied during graph traversal rather than after it.
+
+---
+
+## The Ecosystem and Failure Modes
+
+In this part, you will compare six production vector databases by architecture and operational profile, and study the four most common retrieval failure signatures (semantic mismatch, hallucination, stale index, and "lost in the middle") so you can diagnose them from their symptoms.
+
+### Choosing a Vector Database
+
+The market has converged on a handful of architectures, each with a distinct operational profile.  Choosing the wrong one is like choosing a cargo ship when you need a speedboat; technically works but painfully slow to get started.
+
+| Database | Architecture | Hosted? | Strengths | Best For | Installation |
+|---|---|---|---|---|---|
+| Chroma | Embedded (in-process) or client-server | Self-host or embedded | Minimal setup, Pythonic API, zero infrastructure overhead | Prototyping, local development, courses; you can be running in 5 minutes | `pip install chromadb` |
+| Qdrant | Rust core, client-server | Self-host or Qdrant Cloud | Rich payload filters, very fast queries, production-grade reliability | Production RAG systems where metadata filters are complex and performance matters | `pip install qdrant-client` then `docker run -p 6333:6333 qdrant/qdrant` |
+| Weaviate | Go, distributed | Self-host or Weaviate Cloud | GraphQL API, native hybrid search, multimodal support | Hybrid (dense + sparse) search, enterprise deployments with complex schemas | `pip install weaviate-client` |
+| pgvector | Postgres extension | Wherever Postgres runs | SQL and vector queries in a single database, familiar tooling for backend teams | Teams already running Postgres who want to add vector search without a new database | `CREATE EXTENSION vector;` in Postgres |
+| Pinecone | Managed SaaS, serverless | Cloud only (no self-hosting) | Zero infrastructure management, automatic scaling | Startups that need managed infrastructure and want to avoid DevOps overhead | `pip install pinecone` (API key required) |
+| Milvus | Distributed, C++ + Python | Self-host or Zilliz Cloud | Billion-scale capacity, multi-tenancy, GPU acceleration | Very large corpora (100M+ documents), enterprise deployments at scale | `pip install pymilvus` then Docker Compose setup |
+
+**Hybrid search** combines dense (embedding) retrieval with sparse (BM25/keyword) retrieval.  Dense search finds semantically related text even when exact words differ; sparse search finds documents that contain the literal query terms, which dense search can miss for rare names, part numbers, or acronyms.  Systems like Weaviate and Qdrant run both in parallel and merge the ranked lists with a fusion algorithm (Reciprocal Rank Fusion is common).
+
+### Failure Mode Analysis
+
+Vector search fails in predictable ways.  Knowing the failure signature helps you diagnose quickly instead of chasing the wrong culprit.
+
+| Failure | Cause | How to Detect | Fix |
+|---|---|---|---|
+| Semantic mismatch: the retrieved documents are topically wrong | Query and document use different vocabulary for the same concept (e.g., query says "layoffs," documents say "workforce reductions"); the embedding model treats them as distant because they rarely co-occur in training text | Recall@k falls below 0.6 on a labeled evaluation set; a human reviewer looks at the top-5 retrieved chunks and they are clearly off-topic | Add hybrid search to catch keyword matches; expand the query with synonyms before embedding; or switch to a domain-specific embedding model |
+| Hallucination about retrieved content: the LLM contradicts its own retrieved text | The LLM ignores the retrieved chunks and draws on parametric memory instead, especially when the retrieved content conflicts with what it learned during training | The LLM's answer contradicts text that is clearly present in the retrieved chunks; a citation check fails | Strengthen the grounding instruction in the system prompt ("Answer only using the provided documents"); lower temperature to 0; use a model with stronger instruction-following |
+| Stale index: correct answer exists in the source but is never retrieved | Documents updated or added after the index was last built are invisible to retrieval; the index is a snapshot, not a live view | The correct answer exists in the source database but is never returned even with broad queries | Build an incremental indexing pipeline that detects changes (file modification time, hash comparison, or a change data capture stream from the database) and re-embeds only changed documents |
+| Lost in the middle: the correct chunk is retrieved but the LLM ignores it | The relevant chunk is retrieved and placed in the middle of a long context window; research shows LLMs attend most strongly to the beginning and end of their context | Faithfulness score drops as $k$ increases past 5; manual inspection shows the correct chunk is present in the context but the LLM's answer ignores it | Apply a reranker (e.g., `pip install rerankers`) to place the highest-scoring chunk first in the context; reduce $k$ to 3-5; summarize the context before generation |
+
+You are choosing between cosine similarity and L2 distance for a text retrieval system.  Your embedding model outputs unit-normalized vectors.  Which statement is correct?
+
+[( )] L2 distance should be preferred because it accounts for vector magnitude; magnitude carries additional signal about document importance that cosine similarity discards
+[(X)] Cosine similarity and L2 distance produce identical rankings when vectors are unit-normalized, so either works; cosine is typically the default for text
+[( )] L2 distance is always faster to compute than cosine similarity because it avoids the normalization step in the cosine formula
+[( )] Cosine similarity cannot be used with approximate nearest-neighbor indexes because ANN algorithms like HNSW require a Euclidean distance metric
 
 ---
 

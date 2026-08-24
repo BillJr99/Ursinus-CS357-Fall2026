@@ -1,32 +1,29 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/SecondBrain
+title: 'CS357: Foundations of Artificial Intelligence - The Second Brain'
+info:
+  coursenum: CS357
+  purpose: "To build one Markdown vault that you own, that GitHub hosts, that Obsidian edits, and that every agent you run can read and write safely."
+tags:
+- obsidian
+- memory
+- knowledge-management
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-secondbrain.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-secondbrain.md
+# CS357: Foundations of Artificial Intelligence - The Second Brain
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
+## Purpose
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+To build one Markdown vault that you own, that GitHub hosts, that Obsidian edits, and that every agent you run can read and write safely.
 
--->
-
-# The Second Brain: Obsidian, Gitless GitHub Sync, and Agent Access
+## About This Tutorial
 
 Every AI tool you use maintains its own little memory of you, in its own format, in its own silo, and none of them agree.  The cure is architectural: **one Markdown vault, hosted on GitHub, edited by you in Obsidian, and readable and writable by every agent you run**, so that your context becomes a single, versioned, portable artifact instead of five inconsistent copies.  This tutorial builds that system from zero: the vault, the gitless sync, the personal access token, the agent contract, and the wiring to an agent like **hermes** from our stack.  Here is the path for today: **why a vault $\rightarrow$ Obsidian and the repository $\rightarrow$ gitless sync with a PAT $\rightarrow$ the three-zone structure and AGENTS.md $\rightarrow$ the metadata protocol agents must honor $\rightarrow$ wiring hermes by prompting**.
 
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Prerequisites: a GitHub account and the shell module; the agent stack module helps for Part IV but the wiring also works with any agent CLI. Privacy note before we begin: this vault will contain personal context by design, so it lives in a **private** repository, and what you choose to put in it is itself a data-handling decision this course has prepared you to make deliberately.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
-
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text files, they work with any other tool; no proprietary format lock-in. | Your vault might contain notes from class, links between ideas, summaries of papers, and context files that agents read before working with your data. |
 | **Personal Access Token (PAT)** | A secret string that acts as a password for GitHub API calls. It grants specific permissions (like reading and writing a single repository) without sharing your full GitHub account credentials. | Your sync plugin uses the PAT to push note changes to GitHub; your agent uses it to pull the vault and write new wiki pages. |
@@ -41,7 +38,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 In this part, you will understand why a single versioned vault (rather than five disconnected tool silos) is the right architectural choice for persistent AI context, and what each component of the system contributes to that goal.
 
-## Model 1: Why This Architecture, and What Each Piece Does
+## Why This Architecture, and What Each Piece Does
 
 Every AI tool you use today maintains its own context about you.  Your coding assistant knows your recent files.  Your chat AI knows this conversation.  Your email AI knows your last few messages.  None of them know what the others know, and none of them persist that knowledge reliably across sessions.  The result is that you re-explain yourself constantly, to tools that could, in principle, already know.
 
@@ -61,7 +58,7 @@ The design has four pieces, each independently replaceable:
 | **Gitless sync plugin** | Running `git` commands on every device and handling merge conflicts manually. | One sync mechanism, owned by one plugin, means one consistent state machine instead of three fighting ones. | Simplicity: without the plugin, every device needs git installed and you'll deal with merge conflicts between your phone and laptop. |
 | **AGENTS.md contract** | Per-tool configuration of what each agent is allowed to do. | The contract travels inside the repository; every agent reads it automatically, requiring zero per-tool configuration. | Safety and consistency: without a contract, agents may write anywhere in the vault, including overwriting your source files. |
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Compare the classic `repo`-scope Personal Access Token against a fine-grained token limited to a single repository's Contents permission.  What does an attacker gain with each token if it leaks?  Which does our data-minimization principle select, and why?
 
@@ -83,7 +80,7 @@ Now that you understand what each architectural piece does and why it was chosen
 
 In this part, you will design the zone structure and contract file that make it safe to give agents write access to your vault, which is the difference between a helpful automated collaborator and one that silently corrupts your source files.
 
-## Model 2: The Three-Zone Vault and the AGENTS.md Contract
+## The Three-Zone Vault and the AGENTS.md Contract
 
 Structure is what turns a pile of notes into a system agents can be trusted inside.  Without explicit zone boundaries, an agent asked to "help with your notes" has no way to know which files are pristine sources it must not touch, which are the curated knowledge base it should maintain, and which are internal plugin state it must never modify.  The zone structure encodes those distinctions in the vault's own layout.
 
@@ -128,7 +125,7 @@ With the zone structure and contract defined, you are ready to learn the metadat
 
 In this part, you will learn the specific metadata bookkeeping step that every agent commit must include to keep the bidirectional sync working, the single most common failure point when wiring agents to a gitless-synced vault.
 
-## Model 3: Why Agent Writes Need One Extra Step
+## Why Agent Writes Need One Extra Step
 
 Here is the subtle mechanic that makes bidirectional sync work, and the single most common failure point when wiring agents to a gitless-synced vault.  The plugin tracks every file's sync state in `.obsidian/github-sync-metadata.json`.  When **you** edit in Obsidian, the plugin maintains this file automatically.  But when an **agent** creates or modifies vault files directly through the GitHub API, the plugin has no record of the change, and on the next sync, it may simply not pull the agent's work, or may overwrite it.
 
@@ -159,6 +156,7 @@ For completeness, because a thorough agent may pre-compute it: the `sha` field, 
 The following code demonstrates how to compute a git blob SHA, the exact hash format that git uses internally and that the sync metadata file requires.  Run it and observe that the plain SHA-1 of the same content (shown in the second output line) produces a different value, which is the mistake that causes silent sync failures.
 
 ```python
+
 # The git blob SHA, demystified: this reproduces `git hash-object` exactly.
 import hashlib, traceback
 
@@ -175,6 +173,7 @@ def git_blob_sha(content: str) -> str:
 note = "# CS357\nAgentic AI, Fall 2026.\n"
 print("blob sha:", git_blob_sha(note))
 print("plain sha1 (WRONG for git):", hashlib.sha1(note.encode()).hexdigest())
+
 # Multi-byte check: byte length vs character count matters
 emoji_note = "café ☕\n"
 print("bytes:", len(emoji_note.encode("utf-8")), "chars:", len(emoji_note))
@@ -182,7 +181,7 @@ print("bytes:", len(emoji_note.encode("utf-8")), "chars:", len(emoji_note))
 
 Notice the last line: for content containing multi-byte characters (accented letters, emoji, non-ASCII), the *byte length* and the *character count* differ.  Git uses byte length in the header; using character count instead will produce a wrong SHA that causes the sync to fail silently.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  An agent's commit contains: a new file `wiki/people/silverman.md`, an edit to `wiki/index.md`, and a metadata file updated with only one entry (for `silverman.md`) whose `sha` field holds the plain SHA-1 of the file's text (not the git blob SHA).  Find both protocol violations and predict the concrete symptom each one produces on the next Obsidian sync.
 
@@ -204,7 +203,7 @@ Having mastered the metadata protocol, you have everything you need to wire an a
 
 In this final part, you will see that connecting an agent to your vault requires only a well-formed prompt (not integration code) and you will trace the session rhythm that results when the full system is running.
 
-## Model 4: The Wiring Is Just a Prompt
+## The Wiring Is Just a Prompt
 
 Because the contract lives in the repository, connecting an agent requires no plugin and no integration code; it requires *telling the agent where the contract is*.  For hermes from our stack (or Claude Code, or any capable agent CLI), the entire wiring is:
 
@@ -229,6 +228,7 @@ docker run --rm -it --name hermes \
 For agents on the same machine, a simpler read path exists: bind-mount the vault directory itself (`-v "$HOME/obsidian-vault:/vault:ro"` for context-consuming agents; read-write only for designated wiki authors).  Standing instructions then go in each project's context file:
 
 ```markdown
+
 ## Context
 Before any task, fetch and read from the knowledge repository:
 - AGENTS.md, LLMMEMORIES.md, SYSTEMPROMPT.md (repository root)
@@ -239,7 +239,7 @@ The session rhythm that results: you drop a PDF into `raw/` from your phone and 
 
 Obsidian becomes the comfortable viewer onto a knowledge base your agents largely maintain.  What becomes possible once that loop is running, a living wiki that grows more useful each session rather than a folder that grows larger, is the argument the *How I AI* session makes; this page is the deeper build behind it.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 7.  The wiring prompt above passes the PAT via an environment variable rather than including it in the prompt string.  Explain specifically why this matters: what are the two specific places where an inline PAT in a prompt could be exposed to unintended readers?
 
@@ -299,7 +299,9 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 
 ---
 
--> Coming Up Next: This page is the deep version of Part I of the *How I AI* session; if you arrived here from that session, its Part II is where the same instinct gets applied to a project repository rather than to your notes.  Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
+## Where This Goes Next
+
+This page is the deep version of Part I of the *How I AI* session; if you arrived here from that session, its Part II is where the same instinct gets applied to a project repository rather than to your notes.  Later in the course, the case study **From Second Brain to Chief of Staff: A Personal Agent in Production** shows what this exact architecture grows into after a year of daily use: confirmation gates, scheduled routines, a robustness harness, and an assistant that maintains its own runbook inside the vault you just built.
 
 ## Reflection Prompt
 
@@ -316,4 +318,4 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 - W. Mongan, "A Private AI Knowledge Base: Obsidian, GitHub Sync, and Cross-Platform AI Context" (billmongan.com, May 2026): the full architecture this module teaches, including the complete AGENTS.md specification and SHA protocol.
 - The GitHub Gitless Sync plugin repository and README: settings, conflict resolution, and the config-sync caution.
 - GitHub Docs, "Managing your personal access tokens": fine-grained tokens and scoping.
-- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-productionassistant.md), the production case study of the vault contract you built here.
+- This course: [From Second Brain to Chief of Staff: A Personal Agent in Production]({{ site.baseurl }}/Tutorials/ProductionAssistant), the production case study of the vault contract you built here.

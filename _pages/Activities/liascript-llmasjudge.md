@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-llmasjudge.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmasjudge.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -37,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, judgment at scale: what a judge buys you and what it costs |
+| 10-40 | Part II, build the rubric pipeline |
+| 40-65 | Part III, audit the judge: find a bias, then measure it |
+| 65-75 | Reflection prompt, and how this feeds the Rubric Pipeline Lab |
+
+---
 # Part I: Judgment at Scale
 
 In this part, you will examine what a rubric actually is, why vague rubrics produce unreliable scores, and how the same design mistakes show up whether the grader is human or AI. This foundation determines whether the judge you build in Part II is trustworthy.
@@ -94,6 +104,8 @@ The function below sends an essay to your local Ollama model along with a rubric
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import json

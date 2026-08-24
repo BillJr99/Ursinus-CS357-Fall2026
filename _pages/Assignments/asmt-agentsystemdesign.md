@@ -54,22 +54,21 @@ info:
       liapage: true
     - rtitle: "Pre-mortem Technique (Klein, 2007)"
       rlink: "https://hbr.org/2007/09/performing-a-project-premortem"
-    - rtitle: "Case Study: Governing Coding Agents - Charters, Handoffs, and Durable Memory"
+    - rtitle: "The Governing Coding Agents activity: charters, handoffs, and durable memory"
       rlink: "Activities/liascript-agentgovernance.md"
       liapage: true
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
-      rlink: "Activities/liascript-productionassistant.md"
-      liapage: true
+      rlink: "/Tutorials/ProductionAssistant"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"
       rlink: "../files/agent-templates/README.md"
-    - rtitle: "Coding Agents: the overnight brief, and loops that run themselves (Ralph, autoresearch, gnhf, crews)"
+    - rtitle: "The Coding Agents activity: the overnight brief, and loops that run themselves (Ralph, autoresearch, gnhf, crews)"
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
-    - rtitle: "Advanced Agent Loops: Control Flow, Reflection, and Recovery (checkpointing and termination design)"
-      rlink: "Activities/liascript-agentloopsadvanced.md"
+    - rtitle: "The Orchestration activity, Part IIb on loops that recover: control flow, reflection, and recovery (checkpointing and termination design)"
+      rlink: "Activities/liascript-orchestration.md"
       liapage: true
-    - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
-      rlink: "Activities/liascript-humanintheloop.md"
+    - rtitle: "The Critique and Refine activity, whose extension covers human-in-the-loop oversight, escalation, and appropriate autonomy"
+      rlink: "Activities/liascript-critiquerefine.md"
       liapage: true
 
 tags:

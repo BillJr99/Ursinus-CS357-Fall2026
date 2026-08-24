@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-aimaker.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-aimaker.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -84,6 +82,8 @@ In this part, you will apply software-engineering discipline (tests, small diffs
 Treat agent output exactly as you would a pull request from a bright, fast, context-poor new hire, which yields the working rules.  **Small diffs only**: ask for one function, one fix, one test at a time, because review quality collapses with diff size, and your review *is* the safety system.  **Tests precede or accompany every change**: the strongest pattern is writing (or having the agent write, then you verifying) the failing test first, so the specification exists in executable form before the implementation does; an agent aimed at a failing test cannot reward-hack you nearly as easily as an agent aimed at prose.  **Read every line before it merges**: the permission gate taught you to read commands; this is the same discipline for diffs, and "it passed the tests" does not excuse you, because the tests are also under review.  **Pin everything**: dependency versions, model versions, seeds; an unpinned project is an unreproducible one, and you have a lab rubric line that already says so.
 
 The code below illustrates the "test first" pattern: notice that the tests exist before any implementation does, and each test case is a precise contract the agent must satisfy; look for how the `test_rejects_nonnumeric` test pre-decides the comma-bug behavior that would otherwise be a specification gap.
+
+> **Runs on your machine, not here.**  This is a test file: save it in your repository and run it with `pytest`.
 
 ```python
 # The pattern in miniature: the spec exists as a failing test first.

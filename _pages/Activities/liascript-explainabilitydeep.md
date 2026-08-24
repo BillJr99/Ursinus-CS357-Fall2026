@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?... or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-explainabilitydeep.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -242,6 +240,8 @@ When an *agent* (not just a classifier) is making decisions, explanation require
 *What to do:* Install `transformers` and `shap` (or use a free Colab notebook).  Run a sentiment model on your five sentences.  Use `shap.Explainer` on the model, or if SHAP is not available, compare model outputs after manually replacing words to estimate importance.
 
 *Starter hint:* The code below loads a pre-trained sentiment model and runs SHAP to produce token-level attributions; look for which words receive negative SHAP values (pushing toward "negative") versus positive ones, and notice whether the attributions match your intuition about why the sentence has that sentiment:
+
+> **Runs on your machine, not here.**  This cell needs libraries that are installed in your course container rather than in the page.  Copy it there and run it.
 
 ```python
 # Install: pip install transformers shap
