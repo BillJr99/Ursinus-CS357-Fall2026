@@ -119,7 +119,7 @@ If `node` is missing and you would rather not install it on your host, skip to Â
 | **Claude Code** | `npm i -g @anthropic-ai/claude-code` | `claude` | `~/.claude/`, project `CLAUDE.md` | Browser login on first run, or `ANTHROPIC_API_KEY` |
 | **Codex CLI** | `npm i -g @openai/codex` | `codex` | `~/.codex/config.toml`, project `AGENTS.md` | `OPENAI_API_KEY` or sign-in |
 | **Gemini CLI** | `npm i -g @google/gemini-cli` | `gemini` | `~/.gemini/`, project `GEMINI.md` | Google sign-in or `GEMINI_API_KEY` |
-| **opencode** | `npm i -g opencode-ai` | `opencode` | `~/.config/opencode/config.json`, project `opencode.json` | Provider key, or a local gateway |
+| **opencode** | `npm i -g opencode-ai` | `opencode` | `~/.config/opencode/opencode.json`, project `opencode.json` | Provider key, or a local gateway |
 | **Aider** | `pip install aider-chat` | `aider` | `~/.aider.conf.yml`, project `CONVENTIONS.md` | Provider key in env |
 
 > **Watch out!** `npm i -g` on some systems wants `sudo`, which installs the tool as root and then complains about permissions later.  The clean fix is a Node version manager (`nvm`) so your global installs land in your home directory, or a container, which sidesteps the question entirely.
@@ -293,7 +293,7 @@ For the other tools, the same redirect looks slightly different:
 
 ```bash
 
-# opencode: edit ~/.config/opencode/config.json and set, inside the
+# opencode: edit ~/.config/opencode/opencode.json and set, inside the
 
 # provider's "options" block:
 
