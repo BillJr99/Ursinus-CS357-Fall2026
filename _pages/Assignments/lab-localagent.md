@@ -93,7 +93,7 @@ info:
       rlink: "Activities/liascript-observability.md"
       liapage: true
     - rtitle: "Advanced Agent Loops Activity"
-      rlink: "Activities/liascript-agentloopsadvanced.md"
+      rlink: "Activities/liascript-orchestration.md"
       liapage: true
     - rtitle: "The Local Agent Stack Activity"
       rlink: "Activities/liascript-agentstack.md"

@@ -65,7 +65,7 @@ info:
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
     - rtitle: "Advanced Agent Loops: Control Flow, Reflection, and Recovery (checkpointing and termination design)"
-      rlink: "Activities/liascript-agentloopsadvanced.md"
+      rlink: "Activities/liascript-orchestration.md"
       liapage: true
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
       rlink: "Activities/liascript-critiquerefine.md"
