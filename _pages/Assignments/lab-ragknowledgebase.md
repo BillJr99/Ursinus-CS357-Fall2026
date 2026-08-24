@@ -68,7 +68,7 @@ info:
     - rtitle: "Chroma Documentation"
       rlink: "https://docs.trychroma.com"
     - rtitle: "Fine-Tuning vs. RAG"
-      rlink: "Activities/liascript-finetuningvsrag.md"
+      rlink: "Activities/liascript-ragquality.md"
       liapage: true
     - rtitle: "Unsloth: Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
       rlink: "https://unsloth.ai/docs/get-started/unsloth-notebooks"
