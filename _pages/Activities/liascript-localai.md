@@ -44,6 +44,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, why local at all: the four reasons, and which one is yours |
+| 10-20 | Pull a model and get one response back on your own machine |
+| 20-55 | Part II, the build: OpenWebUI, the API call, and the temperature dial |
+| 55-70 | Compare answers across two models on the same prompt |
+| 70-75 | Reflection prompt, and what to post before next session |
+
+---
 # Part I: Why Run Models Locally?
 
 In this part, you will understand the privacy, cost, and capability tradeoffs that motivate running AI models on your own hardware, so that when you choose between local and cloud inference for the rest of the semester, you can justify that choice with specific reasons.

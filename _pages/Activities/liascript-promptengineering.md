@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Key Concepts, and the recipe framing for what a system prompt actually is |
+| 10-30 | Part I, the anatomy of a prompt, worked against a live model |
+| 30-50 | Part II, personas in practice: write one, then try to break a teammate's |
+| 50-70 | Part IIb, where personas leak and how to write one that holds up |
+| 70-75 | Reflection prompt.  Part IIb's longer workshop continues at home if you ran short |
+
+---
 # Part I: The Anatomy of a Prompt
 
 In this part, you will learn that a prompt is not just a question but a structured program in natural language, and that small changes to its wording produce large changes in the agent's behavior.  By the end, you will be able to identify every behavioral commitment embedded in a prompt before you even run it.

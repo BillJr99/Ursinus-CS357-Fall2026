@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the open-book exam insight |
+| 10-35 | Part II, build it: chunk, embed, store, retrieve, generate |
+| 35-60 | Part IIb, how the search actually finds anything: distance metrics and the retrieval pipeline |
+| 60-70 | The failure modes, against a query you deliberately break |
+| 70-75 | Reflection prompt.  The vector-database ecosystem survey is at home |
+
+---
 # Part I: The Open-Book Exam Insight
 
 ## 1.  Parameters Versus Context

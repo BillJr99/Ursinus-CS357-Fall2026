@@ -42,6 +42,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Why design first, and what a bad first prompt actually costs |
+| 10-40 | Draft your system design: components, contracts, and failure modes |
+| 40-65 | Trade drafts and review a teammate's design against the same checklist |
+| 65-75 | Revise your own draft with what the review surfaced.  The Extension is self-paced |
+
+---
 ## Designing for Observability, Isolation, and Reversibility
 
 The agent table below is a good design artifact and it is missing three columns that this course keeps insisting on.  Add them, and the table stops describing what each agent *does* and starts describing what happens when it is wrong.

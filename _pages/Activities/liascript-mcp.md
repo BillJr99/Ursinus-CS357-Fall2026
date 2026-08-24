@@ -37,6 +37,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the integration problem: why N times M connectors was never going to work |
+| 10-20 | The unassisted problem statement you brought, before your team drafts the brief |
+| 20-55 | Part II, build the tiny tool server and connect a client to it |
+| 55-70 | Trace one request end to end and name every hop |
+| 70-75 | Part III, synthesis and the reflection prompt |
+
+---
 # Part I: The Integration Problem
 
 ## Warm-Up: The Services You Already Use

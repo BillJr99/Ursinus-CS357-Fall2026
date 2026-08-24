@@ -35,6 +35,20 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, from values to mechanisms |
+| 10-25 | Part II, the anatomy of your policy |
+| 25-45 | Part IIb, what alignment actually means technically: RLHF and Constitutional AI |
+| 45-70 | Part III, the drafting workshop: write the policy, then trade it |
+| 70-75 | Report out one mechanism you could not make concrete.  The Accessibility Extension is self-paced |
+
+---
+
 # Part I: From Values to Mechanisms
 
 In this part, you will learn to distinguish policy language that merely sounds good from policy language that actually commits someone to a specific, checkable action.  This is the single most important skill in this activity; everything else builds on it.

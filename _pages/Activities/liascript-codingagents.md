@@ -61,9 +61,9 @@ git -C ~/cs357-work status
 
 ---
 
-## How Today Runs
+## Today's 75 Minutes
 
-Today has three parts and a going-deeper section you take home.
+Three parts inside our seventy-five minutes, and an extension you take home.
 
 | | What you do | Roughly |
 |---|---|---|
@@ -73,7 +73,7 @@ Today has three parts and a going-deeper section you take home.
 | **Part IV** | Exercises and reflection | take-home |
 | **Extension** | Self-paced: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
 
-Part V is real material, not filler; it is where you go when a lab direction or your project needs it.  Nothing in it is assumed by Parts I through IV.
+The Extension is real material, not filler; it is where you go when a lab direction or your project needs it.  Nothing in it is assumed by Parts I through IV.
 
 ---
 

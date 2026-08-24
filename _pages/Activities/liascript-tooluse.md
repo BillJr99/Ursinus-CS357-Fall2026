@@ -38,6 +38,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the contract: a schema is an interface |
+| 10-25 | Model 1b, the four ways to ask for structure and what each one guarantees |
+| 25-50 | Part II, the two-tool agent, built and traced |
+| 50-65 | Part III, what a tool call costs in the context window |
+| 65-75 | Part IV, exercises and the reflection prompt |
+
+---
 # Part I: From Parsing to Protocol
 
 ## 1.  The Contract

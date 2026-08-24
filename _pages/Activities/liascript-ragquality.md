@@ -35,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, chunking: where the boundaries go and what they cost you |
+| 10-45 | Part II, measure retrieval, then improve it and measure again |
+| 45-65 | The peer-review round on your team's Stakeholder Brief draft |
+| 65-75 | Part III, synthesis and the reflection prompt.  Both Extensions are self-paced |
+
+---
 # Part I: Chunking
 
 ## 1.  The Goldilocks Problem

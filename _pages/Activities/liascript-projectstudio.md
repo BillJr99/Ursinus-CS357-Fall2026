@@ -37,6 +37,19 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 
 In this first section, each team answers four fixed questions in two minutes, no more.  You will use the stand-up to surface the current state of your project: real metrics, real blockers, and the single riskiest unfinished piece.  Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Set up: get your artifact displayed and your SQR cards in hand |
+| 10-45 | Gallery walk: every team sees every other team's work |
+| 45-70 | Studio time on what the walk surfaced |
+| 70-75 | One commitment per team for the next session |
+
+---
+
 ## Model 1: Stand-Up and Readiness Assessment
 
 Stand-ups exist to surface the truth quickly.  The instinct to say "it's going pretty well" instead of "the evaluation harness reports 41%" is understandable but counterproductive; the whole point of a stand-up is to get the real number into the room so the team and instructor can help.  Think of it as a 120-second system health check: inputs (what you did), outputs (what the numbers say), and blockers (what is in the way).

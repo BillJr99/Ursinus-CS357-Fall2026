@@ -200,6 +200,9 @@ The code below generates three prompt-response pairs, simulates a human labeling
 
 ## Code Cell
 
+> **Predict first.**  Three prompts, two candidate responses each.  Before you run this, write down which response you expect the "better" model to prefer in each pair, and how confident you are.  Then run it and see where your intuition and the simulated annotator disagree.  The disagreements are the interesting part: they are where real annotator noise comes from.
+
+
 ```python
 # Simulating RLHF preference data collection
 # Run this cell to see preference data structure and naive reward scoring

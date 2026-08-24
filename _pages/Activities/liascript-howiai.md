@@ -57,6 +57,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-15 | Part I, the vault as memory you own |
+| 15-45 | Part II, the repository as the channel agents talk through |
+| 45-70 | Part III, open studio: bring your stuck points and your pipeline-in-progress |
+| 70-75 | Report out one thing that moved and one thing that is still stuck |
+
+---
 # Part I: The Vault as Memory You Own
 
 In this part you build the read side: a place your agents can consult so that you stop re-explaining yourself, and a set of boundaries that make it safe to let them write there.
