@@ -397,9 +397,6 @@ schedule:
   - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand.  Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
     rlink: "Activities/liascript-attentiontransformers.md"
     liapage: true
-  - rtitle: "Going further, synthesis: Anatomy of an LLM Request, one prompt end to end by hand (tokenize, embed, attend, feed-forward, sample, loss, update)"
-    rlink: "Activities/liascript-llmanatomy.md"
-    liapage: true
   - rtitle: "Bring the printed Neural Network by Hand worksheet, or a tablet you can write on."
     rlink: false
 - week: "3"
@@ -428,9 +425,6 @@ schedule:
     rlink: "https://web.stanford.edu/~jurafsky/slp3/"
   - rtitle: "Going further, hands-on: Temperature and Sampling Explorer, the parameter-tuning workshop version of the dial you turned in Week 1"
     rlink: "Activities/liascript-temperatureexplorer.md"
-    liapage: true
-  - rtitle: "Going further, discussion: Deterministic vs. Probabilistic Computing (automation bias, and why AI outputs are not ground truth)"
-    rlink: "Activities/liascript-deterministicvsprobabilistic.md"
     liapage: true
 - week: "4"
   date: "0"
@@ -529,12 +523,6 @@ schedule:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Please bring your team's Stakeholder Brief draft, because the peer review round works on real drafts."
     rlink: false
-  - rtitle: "Going further, tutorial: Fine-Tuning, RAG, and Prompting, choosing the right approach for a given problem"
-    rlink: "Activities/liascript-finetuningvsrag.md"
-    liapage: true
-  - rtitle: "Going further, activity: Synthetic Data, using AI to train AI, and what that does to your evaluation"
-    rlink: "Activities/liascript-syntheticdata.md"
-    liapage: true
 - week: "7"
   date: "1"
   title: "How I AI: A Vault, a Charter, and Agents That Talk Through GitHub (plus open studio)"
@@ -591,9 +579,6 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-agentsystemdesign.md"
   readings:
-  - rtitle: "Going further, tutorial: Designing Your AI Development Environment (context models, AGENTS.md, and standing instructions that scale)"
-    rlink: "Activities/liascript-aidevenv.md"
-    liapage: true
   - rtitle: "Going further, tutorial: Agent Skills and Plugins, writing, configuring, and publishing skills for opencode and pi.ai"
     rlink: "/Assignments/LocalAgent/Direction5"
 - week: "9"
@@ -635,9 +620,6 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
-  - rtitle: "Going further, tutorial: Human-in-the-Loop, oversight, escalation, and appropriate autonomy"
-    rlink: "Activities/liascript-humanintheloop.md"
-    liapage: true
   - rtitle: "Going further, case study: From Second Brain to Chief of Staff, a personal agent in production"
     rlink: "/Tutorials/ProductionAssistant"
 - week: "10"
@@ -656,9 +638,6 @@ schedule:
     rlink: false
   - rtitle: "Going further, activity: Stochastic Multi-Agent Consensus.  Its clustering model is built step by step inside the Multi-Agent Patterns Lab Part 2; this is the full activity"
     rlink: "/Assignments/MultiAgentDebate"
-  - rtitle: "Going further, activity: Multi-Agent Communication (protocols, shared state, and coordination)"
-    rlink: "Activities/liascript-multiagentprotocols.md"
-    liapage: true
 - week: "10"
   date: "1"
   title: "Evaluating Agents: LLM-as-Judge and Rubric Pipelines"
@@ -718,9 +697,6 @@ schedule:
   - rtitle: "Going further, activity: Privacy-Preserving AI (federated learning, differential privacy, and PII scrubbing)"
     rlink: "Activities/liascript-privacypreservingai.md"
     liapage: true
-  - rtitle: "Going further, activity: AI Creativity, generative models, authorship, and the nature of originality"
-    rlink: "Activities/liascript-aicreativity.md"
-    liapage: true
 - week: "12"
   date: "0"
   title: "Governance and Policy Writing"
@@ -737,9 +713,6 @@ schedule:
   - rtitle: "Christian, The Alignment Problem: any one chapter (for example, the section on reward and reinforcement)"
   - rtitle: "Going further, activity: AI Alignment and Safety, from RLHF to Constitutional AI"
     rlink: "Activities/liascript-alignmentsafety.md"
-    liapage: true
-  - rtitle: "Going further, activity: AI for Accessibility, opportunity, obligation, and risk"
-    rlink: "Activities/liascript-accessibilityai.md"
     liapage: true
 - week: "12"
   date: "1"
@@ -770,9 +743,6 @@ schedule:
   - rtitle: "Benjamin, Race After Technology, Chapters 1-2: case studies in discriminatory design"
   - rtitle: "Going further, tutorial: Agent Security, threat modeling and the OWASP LLM Top 10"
     rlink: "Activities/liascript-agentsecurity.md"
-    liapage: true
-  - rtitle: "Going further, tutorial: Prompt Injection, attacks and defenses"
-    rlink: "Activities/liascript-promptinjection.md"
     liapage: true
 - week: "14"
   date: "0"
