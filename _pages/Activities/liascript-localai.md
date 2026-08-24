@@ -40,7 +40,9 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | Quantization | A technique that reduces the storage size of a model by representing each number with fewer bits, trading a small amount of accuracy for the ability to run on ordinary hardware | A 4-bit quantized 8B-parameter model takes roughly 4 GB instead of 16 GB at full precision |
 | Parameter count | The number of numerical values (weights) that define a model's learned behavior, roughly correlated with capability, but also with memory and speed requirements | llama3.2 has ~3 billion parameters; larger models like llama3:70b have 70 billion |
 | Tokens per second | A measure of how fast a model generates output; each "token" is roughly a word or word-piece, so 10 tokens per second is roughly 10 words per second | You will measure this today by timing a 100-word generation against your system's hardware |
-| Temperature | A setting you control, not something baked into the model, that decides how much the model varies its wording. Near 0 it gives you nearly the same answer every time; near 1 it wanders. It is one of several *sampling parameters* (`top-p` is another) that sit between the model and the text you read | The **Advanced Params** panel in OpenWebUI, and the `options` block of your Python call. Section 3b has you turn it yourself; *Why Different Answers Every Time?* explains what it does to the math |
+| Temperature | A setting you control, not something baked into the model, that decides how much the model varies its wording. Near 0 it gives you nearly the same answer every time; near 1 it wanders. It is one of several *sampling parameters* (`top-p` is another) that sit between the model and the text you read | The **Advanced Params** panel in OpenWebUI, and the `options` block of your Python call. Section 3c has you turn it yourself; *Why Different Answers Every Time?* explains what it does to the math |
+| `host.docker.internal` | A hostname Docker resolves, from inside a container, to the machine the container is running on. Inside a container, `localhost` means the container itself | An agent in a container reaching your laptop's Ollama at `http://host.docker.internal:11434` instead of `localhost` |
+| API key (OpenWebUI) | A token you generate on your own OpenWebUI server that identifies you to it. It authenticates you to software on your machine; it is not a payment credential, and Ollama needs none at all | The `OPENWEBUI_API_KEY` you mint in Section 3b and use for the rest of the semester |
 
 ---
 
@@ -52,7 +54,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 |---|---|
 | 0-10 | Part I, why local at all: the four reasons, and which one is yours |
 | 10-20 | Pull a model and get one response back on your own machine |
-| 20-55 | Part II, the build: OpenWebUI, the API call, and the temperature dial |
+| 20-55 | Part II, the build: OpenWebUI, the connection troubleshooting in 3a, your API key, the API call, and the temperature dial |
 | 55-70 | Compare answers across two models on the same prompt |
 | 70-75 | Reflection prompt, and what to post before next session |
 
@@ -111,7 +113,65 @@ Follow this sequence as a team; the Recorder logs each step's outcome, including
      -v open-webui:/app/backend/data \
      --name open-webui ghcr.io/open-webui/open-webui:main
 6. Browse to http://localhost:3000 and connect it to Ollama.
+7. (If you set up OpenWebUI) Mint an API key: Settings -> Account -> API Keys.
 ```
+
+---
+
+## 3a.  When It Says "Connection Refused"
+
+Nearly every failure in this session is one of three things, and none of them means your install is broken.  Work them in this order, because the fix for each one is different and guessing wastes the class period.
+
+**One: you are asking the wrong machine.**  `localhost` means "the computer this program is running on."  If your Python is running on your laptop and Ollama is on your laptop, `localhost` is right and you can stop reading.  But the moment either side moves into a container, `localhost` inside that container means *the container*, where nothing is listening, and you get a connection refused that looks exactly like a dead server.
+
+| Where your code runs | The address for Ollama |
+|---|---|
+| Directly on your laptop | `http://localhost:11434` |
+| Inside a Docker container | `http://host.docker.internal:11434` |
+
+**Two: Ollama is listening, but only to itself.**  By default Ollama binds to `127.0.0.1`, which accepts connections from your own machine and nothing else, so a container cannot reach it even with the right hostname.  Restart it as:
+
+```
+OLLAMA_HOST=0.0.0.0 ollama serve
+```
+
+Know what you just traded.  Any machine that can reach yours on port 11434 can now use your models.  That is fine on your own laptop; think twice on shared campus wifi, and turn it back when you are done.
+
+**Three: on Linux, that hostname does not exist yet.**  Docker Desktop on macOS and Windows provides `host.docker.internal` automatically.  Docker Engine on Linux does not, and you have to ask for it:
+
+```
+docker run --add-host=host.docker.internal:host-gateway ...
+```
+
+> **Prove where the problem is before you change anything.**  This one command separates a network problem from a configuration problem, which is the distinction that decides which of the three fixes above you need:
+>
+> ```
+> curl http://localhost:11434/api/tags
+> ```
+>
+> JSON back means the server is fine and the problem is on the client side.  A refused connection means the server is not reachable from where you are asking, and you are in case one, two, or three.  Run the same `curl` from *inside* your container (`docker exec -it <name> curl ...`) and the answer usually becomes obvious.
+
+The containerized case is worked end to end in *Terminal and Filesystem Isolation for Agent Safety*, and the agent-CLI side of it in *Agentic CLI Tools*, if you want the full version later.
+
+## 3b.  Mint Your API Key Now
+
+Do this today, while OpenWebUI is in front of you, because three later labs assume you already have it and none of them stops to explain where it comes from.
+
+In OpenWebUI: **Settings -> Account -> API Keys -> Create new key.**  Copy it somewhere you will find again, and store it as an environment variable rather than pasting it into a notebook you might share:
+
+```
+export OPENWEBUI_API_KEY="sk-your-key-here"      # macOS, Linux, WSL
+setx OPENWEBUI_API_KEY "sk-your-key-here"        # Windows, native shell
+```
+
+Two things to be clear about, because "API key" usually means "bill":
+
+- **This key is yours, from your own server.**  It authenticates you to software running on your own machine.  It is not a payment credential, nothing is metered, and no request leaves your network because of it.
+- **Ollama takes no key at all.**  Talking to port 11434 directly needs no authentication, which is a real difference between the two routes and one you will use later when you want the simplest possible client.
+
+You will need this key in the *Local Agent* lab and in the OpenWebUI agent tutorials.  Having it now costs a minute; not having it costs the first fifteen minutes of a lab.
+
+> **You've succeeded when** `curl http://localhost:11434/api/tags` returns JSON, and, if you set up OpenWebUI, `echo $OPENWEBUI_API_KEY` prints a key that starts with `sk-`.
 
 ---
 
@@ -174,7 +234,7 @@ While a long generation runs, open your system monitor (Activity Monitor on macO
 
 ---
 
-## 3b.  Turn the Dial: Temperature in Your Own Chatbot
+## 3c.  Turn the Dial: Temperature in Your Own Chatbot
 
 You have just run a model that is *yours*.  That means the settings that shape its answers are yours too, and the most consequential one is **temperature**.
 
