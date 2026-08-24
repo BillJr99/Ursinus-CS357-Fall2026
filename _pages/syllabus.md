@@ -330,11 +330,9 @@ schedule:
   - rtitle: "Please bring a laptop with Docker Desktop already installed.  The download alone can eat the session.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
     rlink: false
   - rtitle: "Going further, tutorial: The Shell, in full (pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\").  Step 0 of today's activity is the ten-minute version"
-    rlink: "Activities/liascript-shellbasics.md"
-    liapage: true
+    rlink: "/Tutorials/Shell"
   - rtitle: "Going further, tutorial: Docker from Zero, how containers, images, and mounts actually work underneath today's build"
-    rlink: "Activities/liascript-docker.md"
-    liapage: true
+    rlink: "/Tutorials/Docker"
 - week: "1"
   date: "1"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -353,11 +351,9 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
   - rtitle: "Reading Response / Discussion: post a short response before class, what changed once the model ran on your own machine?"
   - rtitle: "Going further: The Local Model Landscape (Llama, Mistral, Phi, Gemma, and Friends), for choosing what to pull next"
-    rlink: "Activities/liascript-localmodels.md"
-    liapage: true
+    rlink: "/Tutorials/LocalModels"
   - rtitle: "Going further, tutorial: The Hardware Behind AI (GPUs, Quantization, and Running Models at the Edge), if today's speeds surprised you"
-    rlink: "Activities/liascript-hardwarequantization.md"
-    liapage: true
+    rlink: "/Tutorials/Hardware"
 - week: "2"
   date: "0"
   title: "Prompt Engineering as Agent Design: Personas and System Prompts"
@@ -416,11 +412,9 @@ schedule:
   - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8).  Today we drive it against a real specification, so a broken setup costs you the session."
     rlink: false
   - rtitle: "Going further, tutorial: Agentic CLI Tools, the wider landscape (Claude Code, Codex, Gemini CLI, pi, and how they differ from opencode)"
-    rlink: "Activities/liascript-agentclis.md"
-    liapage: true
+    rlink: "/Tutorials/AgentCLIs"
   - rtitle: "Going further, tutorial: AI Coding Agent Security, poisoned repositories and the software supply chain.  The risks that arrive with the convenience"
-    rlink: "Activities/liascript-codingagentsecurity.md"
-    liapage: true
+    rlink: "/Tutorials/CodingAgentSecurity"
   - rtitle: "Going further, tutorial: Containerizing AI Systems, what a container actually isolates, and how to size an agent's blast radius before you hand it your machine"
     rlink: "Activities/liascript-containerizationsafety.md"
     liapage: true
@@ -501,8 +495,7 @@ schedule:
     rlink: "Activities/liascript-mcprestoauth.md"
     liapage: true
   - rtitle: "Going further, tutorial: GitHub Power-User Tools (gitingest, getmcp.io, deepwiki, gdagram, and github.dev), for turning a repository into something an agent can read"
-    rlink: "Activities/liascript-githubpowertools.md"
-    liapage: true
+    rlink: "/Tutorials/GitHubPowerTools"
 - week: "5"
   date: "1"
   title: "Retrieval-Augmented Generation with Chroma"
@@ -572,11 +565,9 @@ schedule:
   - rtitle: "Optional, five minutes: install Obsidian before class if you want to follow Part I on your own machine"
     rlink: "https://obsidian.md"
   - rtitle: "Going further, tutorial: The Second Brain in depth, Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
-    rlink: "Activities/liascript-secondbrain.md"
-    liapage: true
+    rlink: "/Tutorials/SecondBrain"
   - rtitle: "Going further, tutorial: Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault, the full read path and write path"
-    rlink: "Activities/liascript-obsidiansync.md"
-    liapage: true
+    rlink: "/Tutorials/ObsidianSync"
 - week: "8"
   date: "0"
   title: "Memory and the Small Context Window Principle"
@@ -628,8 +619,7 @@ schedule:
     rlink: "Activities/liascript-agentloopsadvanced.md"
     liapage: true
   - rtitle: "Going further, tutorial: Agent Frameworks (LangChain, CrewAI, AutoGen, and Agno), when a framework earns its weight"
-    rlink: "Activities/liascript-agentframeworks.md"
-    liapage: true
+    rlink: "/Tutorials/AgentFrameworks"
 - week: "9"
   date: "1"
   title: "The Critique and Refine Pattern"
@@ -653,8 +643,7 @@ schedule:
     rlink: "Activities/liascript-humanintheloop.md"
     liapage: true
   - rtitle: "Going further, case study: From Second Brain to Chief of Staff, a personal agent in production"
-    rlink: "Activities/liascript-productionassistant.md"
-    liapage: true
+    rlink: "/Tutorials/ProductionAssistant"
 - week: "10"
   date: "0"
   title: "Multi-Agent Debate and Stochastic Consensus"

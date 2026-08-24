@@ -1,30 +1,25 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/CodingAgentSecurity
+title: 'CS357: Foundations of Artificial Intelligence - AI Coding Agent Security'
+info:
+  coursenum: CS357
+  purpose: "To show how a poisoned repository or a hostile dependency turns an agent's convenience into your compromise, and what defenses actually hold."
+tags:
+- security
+- supply-chain
+- coding-agents
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-codingagentsecurity.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagentsecurity.md
+# CS357: Foundations of Artificial Intelligence - AI Coding Agent Security
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To show how a poisoned repository or a hostile dependency turns an agent's convenience into your compromise, and what defenses actually hold.
 
-# AI Coding Agent Security: Poisoned Repos, the Software Supply Chain, and State-of-the-Art Defenses
+## About This Tutorial
 
 You already know the general shape of prompt injection from `liascript-promptinjection.md` and `liascript-agentsecurity.md`: an LLM has no privileged "instruction register," so text it *reads as data* can hijack it as if it were a command.  This activity narrows that lens onto a specific, fast-growing setting: the **AI coding assistant** (Copilot, Cursor, Claude Code, and their kin) working inside a real repository.  When your agent reads a README, a code comment, a GitHub issue, a dependency, or the output of a tool it ran, *any* of those can carry an attacker's instructions.  We look at how those attacks work against coding agents specifically, at the AI software-supply-chain risks that have no pre-AI equivalent, and at the current, named, peer-reviewed defenses, because "be careful" is not a mitigation.
-
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  The Manager keeps the team moving through the three Parts; the Recorder captures each concrete attack payload and its matching defense; the Presenter prepares a two-minute "attack we found most surprising" summary; the Reflector notes which defense the team would actually adopt first and why.  After class, please respond to the reflective prompt on your own in your notebook.
-
-> **Ethics and scope.**  Every payload in this activity is a *defensive* example: you study attacks to recognize and block them, on systems you own or are authorized to test.  This is the same posture as `liascript-promptinjection.md` and the prompt-injection lab.  Do not deploy these against systems or repositories you do not control.
-
-This activity **builds on**, and does not repeat, the general OWASP LLM Top 10 taxonomy (`liascript-agentsecurity.md`), the injection taxonomy and red-team method (`liascript-promptinjection.md`, `liascript-redteaming.md`), and container sandboxing (`liascript-containerizationsafety.md`).  We cross-reference those rather than re-teach them.
-
----
 
 ## Key Concepts
 
@@ -46,7 +41,7 @@ This activity **builds on**, and does not repeat, the general OWASP LLM Top 10 t
 
 In this part, you learn how a coding agent gets hijacked by the very artifacts it is designed to read, and you see two real 2025 incidents that prove this is not hypothetical.
 
-## Model 1: The Attack Surface Is the Repo Itself
+## The Attack Surface Is the Repo Itself
 
 A human developer reading a hostile README thinks "that's a weird comment" and moves on.  A coding agent reads it as part of its context and may *act on it*, because to the model there is no bright line between the repository's content and its own instructions.  Every place a project accepts text is an injection channel:
 
@@ -65,7 +60,7 @@ The pattern is always the same: text that a human treats as inert **data** is in
 - **The "Rules File Backdoor" (Pillar Security, March 2025).**  Researchers showed that hidden Unicode inside AI coding-agent *rule files* (`.cursorrules`, Copilot instructions), invisible to a human reviewer, could silently steer GitHub Copilot and Cursor into emitting malicious code.  Because rule files propagate through forks, templates, and shared starter repos, a single poisoned file becomes a **supply-chain** vector.
 - **EchoLeak: CVE-2025-32711 (Aim Labs, June 2025).**  A *zero-click* indirect prompt injection against Microsoft 365 Copilot: a single crafted email could cause the assistant to exfiltrate a user's private data with **no user interaction at all**.  Rated CVSS 9.3 and patched by Microsoft, it is the first widely documented zero-click data-exfiltration flaw in a production LLM system, the lethal trifecta realized in the wild.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  A human reviewer reads a pull request and sees a normal-looking `.cursorrules` file.  Explain how the "Rules File Backdoor" defeats human review specifically: what property of the payload makes code review, our usual quality gate, blind to it?
 
@@ -94,7 +89,7 @@ What makes a repository README a viable prompt-injection channel against a codin
 
 In this part, you learn two attack classes that AI coding assistants have made newly practical: getting an agent to *install* attacker code, and getting it to *run* untrusted code.
 
-## Model 2: Hallucinated and Confused Dependencies
+## Hallucinated and Confused Dependencies
 
 Coding agents suggest and install dependencies.  That creates attack surface that did not meaningfully exist before LLMs:
 
@@ -104,7 +99,7 @@ Coding agents suggest and install dependencies.  That creates attack surface tha
 
 The through-line: an agent that can add a dependency can, without any exploit of the model itself, be steered into **executing attacker-controlled code on your machine**, and then, if it also runs that code (installs, builds, runs tests), the compromise is immediate.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Explain precisely why slopsquatting is *more* reliable for an attacker than classic typosquatting.  What property of LLM hallucinations (shown in the Spracklen study) turns a random-looking mistake into a predictable target?
 
@@ -133,7 +128,7 @@ The through-line: an agent that can add a dependency can, without any exploit of
 
 In this part, you move from threats to named, sourced, current mitigations, the ones you would actually cite in a design review.  They fall into two groups: defenses that make injection *harder to land*, and controls that make a successful injection *do less damage*.
 
-## Model 3: Making Injection Harder, and Less Costly When It Lands
+## Making Injection Harder, and Less Costly When It Lands
 
 **Defenses that reduce the chance injection works:**
 
@@ -152,7 +147,7 @@ The caveat, straight from this literature: **no prompt-level trick is a complete
 - **Human approval on irreversible actions.**  Opening a PR, pushing to a remote, installing a new dependency, or writing outside the workspace should require a human gate, the same "confirm before irreversible-write" boundary from `liascript-tooluse.md`, now applied to a coding agent.
 - **Pin and vet dependencies.**  Lockfiles, hash-pinning, and an allowlist defeat slopsquatting and dependency confusion regardless of what the model hallucinates.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Spotlighting, instruction hierarchy, and CaMeL attack the injection problem at three different *layers* (prompt formatting, model training, system architecture).  For a coding agent your team is deploying this semester, which layer can you realistically control, and which must you rely on your model provider for?
 
@@ -209,7 +204,7 @@ Which defense limits the *damage* of a successful injection rather than trying t
 
 ---
 
-## -> Coming Up Next
+## Where This Goes Next
 
 Securing a single coding agent is the start.  As agents gain autonomy and are wired together into teams and pipelines, the attack surface compounds; one hijacked agent can inject the next.  The multi-agent and governance activities (`liascript-multiagentprotocols.md`, `liascript-agentgovernance.md`) extend these ideas to systems of agents, and the prompt-injection lab lets you red-team and defend a running system hands-on.
 

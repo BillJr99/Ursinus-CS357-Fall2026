@@ -1,26 +1,25 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/AgentCLIs
+title: 'CS357: Foundations of Artificial Intelligence - Agentic CLI Tools'
+info:
+  coursenum: CS357
+  purpose: "To install and compare the major terminal coding agents (Claude Code, Codex, Gemini CLI, opencode, and pi) and to teach the review discipline their generated diffs demand."
+tags:
+- coding-agents
+- cli
+- tooling
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-agentclis.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentclis.md
+# CS357: Foundations of Artificial Intelligence - Agentic CLI Tools
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To install and compare the major terminal coding agents (Claude Code, Codex, Gemini CLI, opencode, and pi) and to teach the review discipline their generated diffs demand.
 
-# Agentic CLI Tools: Claude Code, Codex, Gemini, opencode, pi, and Friends
+## About This Tutorial
 
 The agent loop you study in this course ships today as a family of **terminal programs**: you describe a goal, the agent reads your files, proposes shell commands and edits, asks permission at the gates, and iterates.  This tutorial installs the major tools from zero, teaches the shared workflow they all follow, and shows how to drive them from inside VS Code.  We take today in this order: **the shared anatomy $\rightarrow$ installing the big five $\rightarrow$ project context files $\rightarrow$ permission gates and supervision $\rightarrow$ routing them through our local gateway $\rightarrow$ VS Code integration**.
-
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Prerequisites: the shell module (you will live in the terminal) and Node.js 20 or later installed (`node --version` to check; install from nodejs.org or your package manager).  A free-tier or course-provided API path exists for every tool; nobody needs to pay to complete this module.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
 
 ## Key Concepts
 
@@ -135,6 +134,7 @@ If `node` is missing and you would rather not install it on your host, skip to Â
 Every one of these tools reads a **project instruction file**: `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `opencode.json`, `CONVENTIONS.md`.  They differ in name and format, not in purpose: standing instructions so you stop retyping context.  Start with four headings and grow it only when you catch yourself repeating a correction:
 
 ```markdown
+
 # Project
 One paragraph: what this is, who uses it, what "working" means.
 
@@ -165,17 +165,17 @@ docker run -it --rm \
   course-agent claude
 ```
 
-One writable mount (`/work`, git-tracked), one read-only mount, no host credentials.  The **[Docker from Zero](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md)** module builds `course-agent` and explains each flag, including when disabling the permission prompts becomes a reasonable trade rather than a reckless one.
+One writable mount (`/work`, git-tracked), one read-only mount, no host credentials.  The **[Docker from Zero]({{ site.baseurl }}/Tutorials/Docker)** module builds `course-agent` and explains each flag, including when disabling the permission prompts becomes a reasonable trade rather than a reckless one.
 
 ---
 
-## Model 1: First Contact
+## First Contact
 
 **Why this matters:** The first session with an agentic CLI is a bit like handing someone the keys to your apartment and watching what they do.  The agent will open drawers (read files) you did not point it to, propose actions you did not anticipate, and ask permission at moments that reveal its internal plan.  Paying close attention during this first session (rather than just clicking "approve") is what transforms you from a passive user into someone who can supervise an agent intentionally.  Think of the permission gates as the dashboard of a car: you can ignore them and still arrive somewhere, but reading them tells you a lot about where the car thinks it is going.
 
 Each pair installs one assigned tool, runs the weather-script task above in a fresh directory, and captures the transcript.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  List every permission request your tool raised, in order.  Which proposed action was the riskiest, and would you have noticed without the gate?
 
@@ -202,6 +202,7 @@ In this part, you will write a project context file, configure permission gates 
 Imagine you hired a very capable but completely new contractor to work on your apartment.  On day one you explain everything: "don't touch the walls in the east bedroom, always ask before buying materials, and the supply list is in the kitchen drawer."  On day two, you would have to explain it all again, unless you left a note on the door.  The context file is that note on the door.  Every tool reads its context file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`) from the project root at startup, making it the place for standing instructions that survive every session: what the project is, conventions to follow, commands to use for testing, and boundaries.  A starter worth copying:
 
 ```markdown
+
 # CLAUDE.md
 
 ## Project
@@ -273,18 +274,27 @@ The flags explained: `ANTHROPIC_BASE_URL` overrides the default `https://api.ant
 For the other tools, the same redirect looks slightly different:
 
 ```bash
+
 # opencode: edit ~/.config/opencode/config.json and set, inside the
+
 # provider's "options" block:
+
 # "baseURL": "http://localhost:4000/v1"
+
 # "apiKey":  "sk-litellm-local"
 
 # Codex: add to ~/.codex/config.toml:
+
 # [model_providers.local]
+
 # base_url = "http://localhost:4000/v1"
+
 # api_key  = "sk-litellm-local"
 
 # pi: add to models.json in your pi config directory:
+
 # { "provider": "openai", "base_url": "http://host.docker.internal:11434/v1" }
+
 # (use host.docker.internal instead of localhost when running pi in a container)
 ```
 
@@ -336,7 +346,9 @@ Here is a failure every remote worker eventually hits: you SSH into a machine, l
 ```bash
 tmux new -s agents        # start a persistent session named "agents"
 claude                    # launch a long agent task inside it
+
 # press Ctrl-b then d      -> DETACH: the view closes, the agent keeps running
+
 # ... close your laptop, ride the train, open it again ...
 tmux attach -t agents     # REATTACH from anywhere, even a fresh SSH login
 ```
@@ -371,7 +383,7 @@ But persistence cuts both ways, and this is the governance point: **detaching do
 
 This same idea (an agent that keeps working while you are away) scales up in the next module from "several agents in panes" to **loops that restart themselves and crews that coordinate** (the Ralph loop, `gnhf`, and `firstmate`).
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  A classmate runs a 40-minute refactor over SSH *without* a multiplexer, closes their laptop, and returns to find the agent gone and the work half-done.  Explain precisely what killed the process, and what one command at the start would have prevented it.
 
@@ -516,7 +528,7 @@ In your notebook, respond at three levels:
 
 ---
 
-## -> Coming Up Next
+## Where This Goes Next
 
 In the *The Local Agent Stack: Wiring Containers into a System* activity you will move from individual CLI tools to an **orchestrated agent stack**: multiple tools running behind a shared gateway, with a task harness (freebuff) that can route work to the right model automatically.  The containerized invocation pattern you saw in Section 8 is the building block; next you will see how those containers are networked together, how the gateway decides which model handles each request, and how to add your own tools to the MCP ecosystem the entire stack shares.  Everything you practiced today (working directories, context files, gate calibration, gateway routing) will be preconditions for that module, so make sure your Exercise 4 gateway redirect is working before you take on that activity.  The *Coding Agents* activity then takes the "walk away and come back" idea from Part IV one step further: into **loops that restart themselves and crews that coordinate** (the Ralph loop, `gnhf`, and `firstmate`).
 
