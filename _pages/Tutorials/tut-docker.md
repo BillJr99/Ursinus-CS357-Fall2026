@@ -155,10 +155,16 @@ Now the application's data directory lives on *your* disk; destroy and recreate 
 
 You run a model server with `docker run -p 8080:11434 ...` and the docs say the server listens on port 11434 inside the container.  Which URL does your browser use to reach it?
 
-[( )] http://localhost:11434, because that is the port the server actually listens on
-[(X)] http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
-[( )] http://localhost:8080:11434, combining both ports
-[( )] Either one; Docker forwards both directions automatically
+- http://localhost:11434, because that is the port the server actually listens on
+- http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
+- http://localhost:8080:11434, combining both ports
+- Either one; Docker forwards both directions automatically
+
+<details markdown="1"><summary>Answer</summary>
+
+http://localhost:8080, because the host side of -p (the left number) is what the outside world sees
+
+</details>
 
 ---
 
@@ -508,10 +514,16 @@ Then `git status` and `git diff` in the project after a session.  The agent's wo
 
 Which change makes it reasonable to run a coding agent with its permission prompts disabled?
 
-[( )] Using a more capable model, since stronger models make fewer destructive mistakes
-[(X)] Running it in a container whose only writable mount is one git-tracked project folder, so the worst case is a reviewable diff
-[( )] Adding an instruction to the system prompt telling the agent not to delete files
-[( )] Running the agent as root inside the container so it can repair anything it breaks
+- Using a more capable model, since stronger models make fewer destructive mistakes
+- Running it in a container whose only writable mount is one git-tracked project folder, so the worst case is a reviewable diff
+- Adding an instruction to the system prompt telling the agent not to delete files
+- Running the agent as root inside the container so it can repair anything it breaks
+
+<details markdown="1"><summary>Answer</summary>
+
+Running it in a container whose only writable mount is one git-tracked project folder, so the worst case is a reviewable diff
+
+</details>
 
 > **Common Misconception:** "Skip permissions" is often read as a statement about the *agent*, that you trust it now.  It is really a statement about the *environment*: you have made the consequences of any single action small enough that approving each one adds no information.  If you cannot describe the worst case in one sentence, you have not earned the flag.
 

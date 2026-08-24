@@ -106,10 +106,16 @@ The boundaries are the design. `raw/` is a one-way inbox: humans and automations
 
 An agent processing a new PDF in raw/ notices a typo in the PDF and also that wiki/index.md lacks a link to the page it just created.  Under the AGENTS.md contract, the correct actions are:
 
-[( )] Fix the typo in the PDF and add the index link
-[(X)] Leave the PDF untouched (raw/ is read-only), add the index link, and note the source's typo in the wiki page if it matters
-[( )] Fix the typo and skip the index, since navigation is the human's job
-[( )] Move the PDF into wiki/ so it can be edited
+- Fix the typo in the PDF and add the index link
+- Leave the PDF untouched (raw/ is read-only), add the index link, and note the source's typo in the wiki page if it matters
+- Fix the typo and skip the index, since navigation is the human's job
+- Move the PDF into wiki/ so it can be edited
+
+<details markdown="1"><summary>Answer</summary>
+
+Leave the PDF untouched (raw/ is read-only), add the index link, and note the source's typo in the wiki page if it matters
+
+</details>
 
 ---
 
