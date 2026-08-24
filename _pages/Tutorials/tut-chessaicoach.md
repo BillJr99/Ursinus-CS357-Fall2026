@@ -20,7 +20,7 @@ To dissect a complete working web app and see exactly how a language model gets 
 
 This tutorial dissects a complete, working web app (the **Chess AI Coach**) to show exactly how a language model gets wired into real software through **API calls**.  We move from **what the app is $\rightarrow$ the three-layer architecture $\rightarrow$ one function that talks to three different providers $\rightarrow$ prompt engineering and structured JSON output for coaching $\rightarrow$ keeping your API keys safe $\rightarrow$ wiring the AI into the user interface**.
 
-The app is a single self-contained HTML file.  You can open it, read every line, and change it.  Everything you learned in the [RESTful LLM Access](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md) activity (the `/v1/chat/completions` payload, the `choices[0].message.content` response path, provider portability) reappears here, this time in JavaScript running inside a browser instead of Python in a notebook.
+The app is a single self-contained HTML file.  You can open it, read every line, and change it.  Everything you learned in the [RESTful LLM Access]({{ site.baseurl }}/Tutorials/RESTLLMAPI) activity (the `/v1/chat/completions` payload, the `choices[0].message.content` response path, provider portability) reappears here, this time in JavaScript running inside a browser instead of Python in a notebook.
 
 ## Key Concepts
 
@@ -743,4 +743,4 @@ You now have the full pattern for adding a language model to real software: isol
 - OpenAI. "Chat Completions API Reference."  *platform.openai.com/docs/api-reference/chat*.  The `/v1/chat/completions` request and the `choices[0].message.content` response reused by the OpenAI and Open WebUI branches.
 - Open WebUI. *Open WebUI Documentation*. `docs.openwebui.com`.  The OpenAI-compatible `/api/chat/completions` and `/api/models` endpoints the local branch targets.
 - OWASP. "Secrets Management Cheat Sheet."  *cheatsheetseries.owasp.org*.  Why secrets must not ship to clients, and the backend-proxy pattern from Part IV.
-- Prior activity: [RESTful LLM Access: The api/v1 Paradigm](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-restllmapi.md).  The Python foundation this tutorial builds on.
+- Prior activity: [RESTful LLM Access: The api/v1 Paradigm]({{ site.baseurl }}/Tutorials/RESTLLMAPI).  The Python foundation this tutorial builds on.

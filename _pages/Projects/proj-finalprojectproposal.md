@@ -61,9 +61,8 @@ info:
       progressing: "Evaluation of solutions is adequate (for example, contains thorough explanation) and includes the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
       proficient: "Evaluation of solutions is deep and elegant (for example, contains thorough and insightful explanation) and includes, deeply and thoroughly, all of the following: considers history of problem, reviews logic/reasoning, examines feasibility of solution, and weighs impacts of solution."
   readings:
-    - rtitle: "Agent Teams Activity"
-      rlink: "Activities/liascript-agentteams.md"
-      liapage: true
+    - rtitle: "Agent Teams"
+      rlink: "../Tutorials/AgentTeams"
     - rtitle: "The Project Studio activity and its gallery-walk protocol"
       rlink: "Activities/liascript-projectstudio.md"
       liapage: true

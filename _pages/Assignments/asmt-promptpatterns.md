@@ -184,7 +184,7 @@ Complete all three problems with all intermediate steps shown.  Handwritten and 
 
 Either one earns the verification credit.  What is not accepted is an unverified answer.
 
-As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-textgen2nn.md), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
+As preparation for Problem 3, work through the [From Text Generation to a Neural Network activity]({{ site.baseurl }}/Tutorials/TextGenToNN), which traces the same style of forward pass with a worked trace table, and use the printable [Neural Network by Hand worksheet (PDF)]({{ site.baseurl }}/files/activity-neuralnets/nn_by_hand_quadratic_full.pdf) for extended by-hand practice.
 
 ### Problem 1: Softmax with Temperature
 

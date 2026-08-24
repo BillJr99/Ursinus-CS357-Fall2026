@@ -643,7 +643,7 @@ The vector $(0.6698, 1.0)$ is "cat," now aware of the token before it.  That is 
 
    > *Hint: Softmax exponentiates before normalizing.  What does $e^x$ do to a difference of $0.707$ in the exponent?*
 
-3.  This is where the $O(n^2)$ cost of context length comes from (see `liascript-memorycontext.md`).  With 2 tokens we computed 2 scores.  How many query·key scores would a 1,000-token prompt need for its last token, and for *all* tokens?
+3.  This is where the $O(n^2)$ cost of context length comes from (see the *Memory and the Small Context Window Principle* activity).  With 2 tokens we computed 2 scores.  How many query·key scores would a 1,000-token prompt need for its last token, and for *all* tokens?
 
    > *Hint: The last token dots against all prior keys.  Summed over every token attending to every prior token, the total grows like $n^2$.*
 
@@ -667,7 +667,7 @@ In this part, you turn the context vector into an actual next-word prediction.
 $$W_1 = \begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}, \quad b_1 = (0, 0), \qquad z = \text{context}\,W_1 + b_1$$
 $$z = (0.6698\cdot 1 + 1.0\cdot 1,\; 0.6698\cdot 0 + 1.0\cdot 1) = (1.6698,\; 1.0)$$
 
-ReLU replaces negatives with 0.  Both components here are positive, so $h = \text{ReLU}(z) = (1.6698, 1.0)$ passes through unchanged.  (For a case where ReLU actually clips a negative to zero, see the fully worked 2-2-1 network in `liascript-textgen2nn.md`.)
+ReLU replaces negatives with 0.  Both components here are positive, so $h = \text{ReLU}(z) = (1.6698, 1.0)$ passes through unchanged.  (For a case where ReLU actually clips a negative to zero, see the fully worked 2-2-1 network in [From Text Generation to a Neural Network](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TextGenToNN).)
 
 **Step 2: Unembedding to logits.**  A matrix $W_U$ (one row per vocabulary token, here reusing the embedding directions) scores $h$ against every token: $\text{logit}_i = W_{U,i} \cdot h$.
 
@@ -689,7 +689,7 @@ The sum is $24.9313$, giving:
 |---|---|---|---|---|
 | $0.2130$ | $0.1090$ | $\mathbf{0.5791}$ | $0.0205$ | $0.0784$ |
 
-**Step 4: Sample.**  At temperature 0 (greedy) the model emits the argmax: **"sat."**  The full request "the cat" -> "sat" is complete.  (Temperature and top-p reshape this distribution before sampling; see `liascript-samplinggeneration.md`.)
+**Step 4: Sample.**  At temperature 0 (greedy) the model emits the argmax: **"sat."**  The full request "the cat" -> "sat" is complete.  (Temperature and top-p reshape this distribution before sampling; see the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* activity.)
 
 #### Questions to Work Through
 

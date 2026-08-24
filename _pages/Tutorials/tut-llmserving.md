@@ -479,6 +479,6 @@ We have a model running efficiently in production, but what happens when a user 
 - Agrawal et al. "SARATHI: Efficient LLM Inference by Piggybacking Decodes with Chunked Prefills." arXiv 2023.  (Explains the prefill/decode imbalance and chunked scheduling; the mechanism behind the chunked-prefill knob in Model 8.)
 - vLLM project documentation: https://docs.vllm.ai (Reference for production LLM serving with continuous batching, prefix caching, and the tuning knobs in Model 8.)
 - "KV Cache and PagedAttention explained" (video): https://www.youtube.com/watch?v=o0gkdZBtwEg (A short, accessible walkthrough of the two mechanisms and the four tuning knobs covered in Part IV.)
-- This tutorial pairs with `liascript-localai.md` (running Ollama locally) and `liascript-cloudflare.md` (hosting inference behind a gateway facade).
+- This tutorial pairs with the *Running Your Own AI* activity (running Ollama locally) and [Hosting with Cloudflare]({{ site.baseurl }}/Tutorials/Cloudflare) (hosting inference behind a gateway facade).
 
-> **Citation**: AI Engineering from Scratch, Phase 17.  Pairs with `liascript-localai.md` and `liascript-cloudflare.md`.
+> **Citation**: AI Engineering from Scratch, Phase 17.  Pairs with the *Running Your Own AI* activity and [Hosting with Cloudflare]({{ site.baseurl }}/Tutorials/Cloudflare).
