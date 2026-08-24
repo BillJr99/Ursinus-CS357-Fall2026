@@ -226,7 +226,7 @@ The cell below defines five `(country, expected capital)` pairs, then runs the *
 ```python
 import requests
 
-# temperature=0.0 pins the wording (Running Your Own AI, Section 3b).
+# temperature=0.0 pins the wording (Running Your Own AI, Section 3c).
 # seed=42 pins the random draw itself: any fixed number works, the same one
 # every run means the same dice rolls every run. Together they make this
 # harness repeatable, which is what lets a test tell you something.
