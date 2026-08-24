@@ -416,8 +416,7 @@ schedule:
   - rtitle: "Going further, tutorial: AI Coding Agent Security, poisoned repositories and the software supply chain.  The risks that arrive with the convenience"
     rlink: "/Tutorials/CodingAgentSecurity"
   - rtitle: "Going further, tutorial: Containerizing AI Systems, what a container actually isolates, and how to size an agent's blast radius before you hand it your machine"
-    rlink: "Activities/liascript-containerizationsafety.md"
-    liapage: true
+    rlink: "/Assignments/LocalAgent/Direction3"
 - week: "3"
   date: "1"
   title: "Why Different Answers Every Time?  Sampling, Temperature, and Generation"
@@ -472,8 +471,7 @@ schedule:
   - rtitle: "Reference: Ollama Structured Outputs, schema-constrained JSON. Used in the Local Agent Lab's required structured-output segment, so read this one before the lab"
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
   - rtitle: "Going further, activity: Structured Outputs in depth (JSON mode, tool schemas, and output validation)"
-    rlink: "Activities/liascript-structuredoutputs.md"
-    liapage: true
+    rlink: "/Assignments/ToolsMCP"
   - rtitle: "Going further, reference: typed and grammar-constrained generation, Instructor with Pydantic and Ollama.  Validity by construction rather than by retry"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
 - week: "5"
@@ -492,8 +490,7 @@ schedule:
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
   - rtitle: "Going further, tutorial: MCP, REST APIs, and OAuth 2.0 together, the reference behind Local Agent Lab Direction 4"
-    rlink: "Activities/liascript-mcprestoauth.md"
-    liapage: true
+    rlink: "/Assignments/LocalAgent/Direction4"
   - rtitle: "Going further, tutorial: GitHub Power-User Tools (gitingest, getmcp.io, deepwiki, gdagram, and github.dev), for turning a repository into something an agent can read"
     rlink: "/Tutorials/GitHubPowerTools"
 - week: "5"
@@ -598,8 +595,7 @@ schedule:
     rlink: "Activities/liascript-aidevenv.md"
     liapage: true
   - rtitle: "Going further, tutorial: Agent Skills and Plugins, writing, configuring, and publishing skills for opencode and pi.ai"
-    rlink: "Activities/liascript-agentskills.md"
-    liapage: true
+    rlink: "/Assignments/LocalAgent/Direction5"
 - week: "9"
   date: "0"
   title: "Orchestration and Agent Teams: Pipelines, Routers, and Specialists over Monoliths"
@@ -659,8 +655,7 @@ schedule:
   - rtitle: "Please post your reading response before class, since the debate exercise starts from the positions you staked out."
     rlink: false
   - rtitle: "Going further, activity: Stochastic Multi-Agent Consensus.  Its clustering model is built step by step inside the Multi-Agent Patterns Lab Part 2; this is the full activity"
-    rlink: "Activities/liascript-consensus.md"
-    liapage: true
+    rlink: "/Assignments/MultiAgentDebate"
   - rtitle: "Going further, activity: Multi-Agent Communication (protocols, shared state, and coordination)"
     rlink: "Activities/liascript-multiagentprotocols.md"
     liapage: true

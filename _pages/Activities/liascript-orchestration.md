@@ -449,7 +449,7 @@ input --> +--> [ Agent B ] --+--> [ Vote / Cluster ] --> consensus
           '--> [ Agent C ] --'
 ```
 
-The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-consensus.md).
+The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus]({{ site.baseurl }}/Assignments/MultiAgentDebate).
 
 Every shape above is *fixed*: even the critique loop and the debate vote follow a control flow you authored and can draw on a whiteboard before running.  What changes in the next section is who draws that diagram.
 

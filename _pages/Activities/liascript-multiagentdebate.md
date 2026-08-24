@@ -205,6 +205,19 @@ Multi-agent debate most reliably improves accuracy when:
 
 ---
 
+## 3.  When Agreement Misleads
+
+Debate and consensus both aggregate the model's *distribution*, so both amplify whatever that distribution over-represents: popular framings, mainstream defaults, training-data majorities.  For factual questions with a checkable answer, that is usually a feature, and it is why the vote in Part II works at all.
+
+For questions of taste, values, or contested policy, it is a hazard.  "The average of six samples" can quietly erase a legitimate minority position, and the erasure looks identical to a strong result: a big cluster, a confident synthesis, no visible dissent.  We take this up squarely in *Training Data, Bias, and Explainability*, and it is the reason the Multi-Agent Patterns Lab requires your synthesizer to **disclose** close disagreement in one line rather than resolve it silently.
+
+Sit with the distinction before you move on, because your lab design depends on which side of it your question falls:
+
+- Where would you *want* the majority to win outright, and why is disclosure just noise there?
+- Where would a candid "the samples split three to two, and here is the other position" be more useful to your stakeholder than a clean single answer?
+- Your project's community partner will ask you a question of one kind or the other.  Which is it, and what does that imply about whether you should be aggregating samples at all?
+---
+
 # Part III: Measure It
 
 In this section you will run controlled experiments to quantify exactly when debate earns its extra cost.  The goal is to replace the intuition "more agents = better" with actual numbers showing where debate helps and where it does not.

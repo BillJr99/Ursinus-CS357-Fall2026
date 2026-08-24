@@ -57,8 +57,7 @@ info:
       rlink: "Activities/liascript-multiagentdebate.md"
       liapage: true
     - rtitle: "Stochastic Consensus Activity"
-      rlink: "Activities/liascript-consensus.md"
-      liapage: true
+      rlink: "/Assignments/MultiAgentDebate"
 
 tags:
   - multi-agent
@@ -80,7 +79,7 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 **Prerequisite concepts**: complete these activities before writing any code:
 
 - [Multi-Agent Debate Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-multiagentdebate.md): independent rounds, peer-informed revision, majority vote
-- [Stochastic Consensus Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-consensus.md): sampling, embedding clustering, synthesis
+- [Stochastic Consensus Activity]({{ site.baseurl }}/Assignments/MultiAgentDebate): sampling, embedding clustering, synthesis
 
 **Tools to install:**
 
@@ -396,7 +395,43 @@ question --> sample k drafts at high temperature      (k model calls)
    single answer, majority-following, close-disagreement disclosed
 ```
 
-Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged; the subject of Part 4).  For the full treatment, including the in-class tomatillo salsa example and why *independence* between samples matters, work through the [Stochastic Consensus Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-consensus.md); it is strongly recommended before you start this part.
+Notice the two dials you will experiment with in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged; the subject of Part 4).
+
+#### Why voting on meaning beats voting on strings
+
+There are three ways to aggregate $$k$$ samples, and they are not interchangeable.
+
+**Self-consistency** votes on the *answer*.  Sample $$k$$ independent chains at moderate temperature, extract each final answer, and return the mode:
+
+$$
+\hat{y} = \arg\max_{y} \sum_{i=1}^{k} \mathbb{1}[y_i = y]
+$$
+
+For questions with short checkable answers, accuracy rises with $$k$$, because a correct answer tends to be reached by many distinct reasoning paths while errors scatter.  This is what Part 1's debate vote does.
+
+**Clustered consensus** votes on the *meaning*.  When answers are paragraphs rather than tokens, exact-match voting collapses: "simmer the tomatillos" and "boil them briefly" should count together, and a string comparison says they are unrelated.  Embed the $$k$$ drafts, cluster by cosine similarity, and treat the largest cluster as the consensus position.  It is the same machinery as the RAG-quality clustering you have already met, aimed now at agent outputs.
+
+**Synthesis** writes the merged view.  A synthesizer receives the cluster representatives with their support counts and drafts one output that keeps majority positions and names real disagreements.  Its context stays small on purpose: cluster summaries, never all $$k$$ transcripts.
+
+#### A worked example: five recipes, three positions
+
+Five agents at temperature 1.0 propose tomatillo salsa recipes.  Three roast the tomatillos, one boils them, one uses them raw; four include cilantro; opinions split on jalapeño versus serrano.
+
+| Agent | Cooking technique | Chile | Key aromatics | Cluster |
+|---|---|---|---|---|
+| Agent 1 | Roasts under broiler until charred | Jalapeño | Cilantro, white onion, garlic | A |
+| Agent 2 | Roasts in dry skillet | Serrano | Cilantro, white onion | A |
+| Agent 3 | Roasts on open flame | Jalapeño | Cilantro, garlic, lime | A |
+| Agent 4 | Boils for 10 minutes | Jalapeño | Cilantro, cumin | B |
+| Agent 5 | Uses raw, no heat | Serrano | Cilantro, avocado, lime | C |
+
+Before you build anything, work out three things on paper, because they are the design decisions the code will otherwise make for you:
+
+1.  Which choice here is *load-bearing* (it fundamentally changes the dish) and which is garnish-level?  If you swapped jalapeño for serrano, would the dish taste radically different?  What if you swapped raw for roasted?  Your answer tells you what the clustering has to be sensitive to, and where embeddings are likely to mislead you.
+2.  Write, in two sentences, the synthesis you would want.  It should commit where the majority is strong (3 of 5 roast) and stay candid where it is split (the chile).  That is the behavior your synthesizer prompt has to produce.
+3.  State precisely why exact-match voting on the full recipe texts yields five singleton answers.  The distinction you need is *string* identity versus *semantic* identity.
+
+**Independence is the load-bearing assumption.**  Sampling helps only when the errors scatter.  If all $$k$$ drafts share a systematic bias, whether that is a misconception baked into the model or a misleading phrase in your own prompt, they will agree confidently and be wrong together, and a large cluster will look exactly like a strong consensus.  Part 3's shootout deliberately includes questions with well-known intuitive-but-wrong answers so you can watch this happen.
 
 Implement the sample, cluster, synthesize pipeline: $$k$$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and **discloses any close disagreement in one line**.  Demonstrate the pipeline on a long-form question with no single correct answer (the in-class tomatillo salsa question is a fine starting point; choose your own analogous question too).
 
