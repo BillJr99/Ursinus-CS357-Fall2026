@@ -1,34 +1,31 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/Docker
+title: 'CS357: Foundations of Artificial Intelligence - Docker from Zero'
+info:
+  coursenum: CS357
+  purpose: "To explain what containers, images, volumes, and ports actually are, so that the local AI stack you run all semester is something you understand rather than something you copy."
+tags:
+- docker
+- containers
+- setup
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-docker.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-docker.md
+# CS357: Foundations of Artificial Intelligence - Docker from Zero
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
+## Purpose
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+To explain what containers, images, volumes, and ports actually are, so that the local AI stack you run all semester is something you understand rather than something you copy.
 
--->
-
-# Docker from Zero: Containers for Agent Builders
+## About This Tutorial
 
 Our entire local AI stack (the model servers, the gateways, the agent frameworks, the web frontends) runs in **Docker containers**, and so will the agents you build.  This tutorial assumes you have never touched Docker and ends with you writing Dockerfiles and composing multi-service stacks.  We move today from **images versus containers -> run, exec, logs, stop -> ports -> volumes -> writing a Dockerfile -> docker compose -> talking to the host**.
 
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Hands-on rules from the shell module apply: everyone types everything.  Install Docker before class (Docker Desktop on macOS and Windows; Docker Engine on Linux) and verify with `docker run hello-world`.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
-
 ## Key Concepts
 
-Before diving in, anchor these terms.  You will see every one of them today; look back here whenever something feels unfamiliar.
+Anchor these terms before you start.  You will see every one of them below; look back here whenever something feels unfamiliar.
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | **Image** | A frozen, read-only snapshot of a filesystem and a default startup command, like a template you never edit directly. | `ghcr.io/open-webui/open-webui:main` is the image you pull to run the chat interface. |
 | **Container** | A live, running instance created from an image, like a copy of the template that can accumulate state while it runs. | Each time you run `docker run ubuntu bash` you get a new container from the same Ubuntu image. |
@@ -84,13 +81,13 @@ The pair worth internalizing is **run versus exec**: `run` creates a *new* conta
 
 ---
 
-## Model 1: The Disappearing File
+## The Disappearing File
 
 > Remember the apartment analogy: each time you call `docker run` you are moving into a **brand-new, empty apartment** cloned from the master floor plan, not returning to the one you previously lived in.  Any notes you left in the old apartment stay there, in that stopped container, untouched but unreachable until you go back to it explicitly.
 
 A teammate runs `docker run -it ubuntu bash`, creates `/notes.txt` inside, exits, runs the same command again, and the file is gone.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  Explain the disappearance using the image/container distinction.  Where does (did) `/notes.txt` actually live?
 
@@ -120,6 +117,7 @@ A containerized server listens on a port *inside* the container, invisible to yo
 
 ```bash
 docker run -d --name webui -p 3000:8080 ghcr.io/open-webui/open-webui:main
+
 # Open WebUI listens on 8080 INSIDE; your browser visits http://localhost:3000
 ```
 
@@ -172,23 +170,30 @@ You run a model server with `docker run -p 8080:11434 ...` and the docs say the 
 
 ```dockerfile
 FROM python:3.12-slim
+
 # Start FROM a base image: Python preinstalled on slim Debian.
 
 WORKDIR /app
+
 # All later commands run here; created automatically.
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
 # Copy ONLY the dependency list first, then install. Docker caches layers:
+
 # as long as requirements.txt is unchanged, rebuilds skip the slow install.
 
 COPY . .
+
 # Now copy the application code (changes often, so it goes LAST).
 
 EXPOSE 8000
+
 # Documentation of the listening port (publishing still needs -p at run time).
 
 CMD ["python", "server.py"]
+
 # The default command a container runs at start.
 ```
 
@@ -220,6 +225,7 @@ The ordering rule (stable layers first, volatile layers last) is the single most
 Running three services with hand-typed `docker run` lines gets old immediately.  **Compose declares the whole stack in one YAML file** (YAML is a human-readable configuration format, similar to a Python dictionary but without the quotes and brackets):
 
 ```yaml
+
 # docker-compose.yml
 services:
   gateway:
@@ -285,13 +291,13 @@ or, in Compose, the `extra_hosts` block shown above.  Forgetting this flag on Li
 
 ---
 
-## Model 2: Diagnose the Stack
+## Diagnose the Stack
 
 > Back to the apartment analogy: imagine the gateway (Ollama) is a restaurant on the ground floor of a different building.  From the street (your host) you can walk in the front door.  But a tenant sealed inside their self-contained apartment (the WebUI container) cannot walk to the restaurant using "my front door"; that address leads to their own building's lobby, not the restaurant's.  They need the restaurant's external street address.  That external address is `host.docker.internal`.
 
 A teammate's Open WebUI container cannot reach Ollama.  From the host, `curl http://localhost:11434` answers; from inside the container (`docker exec -it webui bash`), `curl http://localhost:11434` fails.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  Explain why the same URL behaves differently in the two places, using the container networking model.
 
@@ -369,6 +375,7 @@ A coding agent is a program that reads your files, writes new ones, and runs she
 Install the agent CLI into an image rather than onto your laptop, so the tool and its dependencies are disposable too:
 
 ```dockerfile
+
 # Dockerfile.agent
 FROM node:22-slim
 
@@ -379,8 +386,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install whichever agent CLI you are using. Examples:
 RUN npm install -g @anthropic-ai/claude-code
+
 # RUN npm install -g @google/gemini-cli
+
 # RUN npm install -g @openai/codex
+
 # (Aider is Python: pip install aider-chat)
 
 # Never run as root inside a container you are handing to an agent
@@ -430,6 +440,7 @@ Most agents offer a way to skip the prompts.  Claude Code, for example, has `--d
 Inside a properly constrained container, the calculus changes: the container boundary replaces the per-action prompt.
 
 ```bash
+
 # Reasonable ONLY because of the flags around it
 docker run -it --rm \
   -v "$HOME/agents/project:/work" \
@@ -445,7 +456,7 @@ docker run -it --rm \
 
 Read that command as a sentence: *the agent may act without asking, and the worst it can do is damage one git-tracked folder.*  Every clause earns the first one.
 
-> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress.  There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need.  There is, however, a middle setting worth knowing: put the agent on a network whose only reachable host is your own gateway, so it can call models but cannot reach anything else on the internet.  That is rung 5 in the next section's ladder, and the gateway it points at is the one the [Agentic CLI Tools tutorial](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentclis.md) routes through.
+> **Watch out!** `--network none` also blocks the agent from reaching the model API. Use it for offline refactoring against a local model reachable another way, or drop it and accept network egress.  There is no configuration where an agent can call a hosted model and also be unable to send data outward; decide which property you need.  There is, however, a middle setting worth knowing: put the agent on a network whose only reachable host is your own gateway, so it can call models but cannot reach anything else on the internet.  That is rung 5 in the next section's ladder, and the gateway it points at is the one the [Agentic CLI Tools tutorial]({{ site.baseurl }}/Tutorials/AgentCLIs) routes through.
 
 ### 9.4 Read-only root, writable workspace
 
@@ -480,6 +491,7 @@ docker run -it --rm \
 Do not take the flags on faith; test them, the same way you would test any other claim:
 
 ```bash
+
 # Should print "Read-only file system"
 docker run --rm -v "$HOME/notes/vault:/reference:ro" course-agent \
   sh -c 'touch /reference/breakme || echo BLOCKED-as-expected'
@@ -586,7 +598,7 @@ Which change makes it reasonable to run a coding agent with its permission promp
 
    *You've succeeded when:* Your three pasted outputs show, in order, `Read-only file system` (or your `BLOCKED-as-expected` message) from the reference mount, a name-resolution failure under `--network none`, and exactly one writable bind mount at `/work`.  Your worst-case sentence names a specific, bounded outcome, damage to files in one git-tracked folder, rather than a vague reassurance.  If you cannot write that sentence, Section 9.3 says you have not earned `--dangerously-skip-permissions`, and this exercise is where you find that out.
 
-   *Going further:* Try to actually run an agent under the full Section 9.3 command.  You will hit the contradiction the Watch Out box names: `--network none` blocks the model API too.  Record what happened, then decide which rung of the Section 9.4 ladder your real work belongs on and say why.
+   *Push it harder:* Try to actually run an agent under the full Section 9.3 command.  You will hit the contradiction the Watch Out box names: `--network none` blocks the model API too.  Record what happened, then decide which rung of the Section 9.4 ladder your real work belongs on and say why.
 
 ---
 
@@ -604,7 +616,7 @@ Take 10 minutes individually in your notebook to respond at three levels:
 
 ## Coming Up Next
 
-In the next module you will apply everything here to deploy the full course AI stack: Ollama running natively on the host, LiteLLM as a containerized gateway translating between model providers, and Open WebUI as the containerized chat interface, all wired together with the port mappings and `host.docker.internal` bridges you practiced today.  You will also write your first agent service as a Dockerfile and add it to a Compose stack, so the Dockerfile and volume habits from exercises 3 and 4 will matter immediately.
+The *Your AI Workbench* session applies everything here to deploy the full course AI stack: Ollama running natively on the host, LiteLLM as a containerized gateway translating between model providers, and Open WebUI as the containerized chat interface, all wired together with the port mappings and `host.docker.internal` bridges you practiced today.  You will also write your first agent service as a Dockerfile and add it to a Compose stack, so the Dockerfile and volume habits from exercises 3 and 4 will matter immediately.
 
 ---
 

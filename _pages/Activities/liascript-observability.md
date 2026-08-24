@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-observability.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-observability.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -125,6 +123,8 @@ Attributes on spans are the primary mechanism for answering questions about prod
 **OpenTelemetry** (OTel) is a vendor-neutral open standard for collecting and exporting telemetry data (traces, metrics, and logs) from applications.  It provides a unified API and SDK so you can instrument your agent once and export to any compatible backend (Jaeger, Honeycomb, Grafana Tempo, etc.) by changing configuration, not code.
 
 The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python.  As you read it, notice two things: (1) the setup block runs once at startup and wires up the exporter, and (2) each instrumented function uses `with tracer.start_as_current_span(...)` to create a span; look at which attributes are logged and which sensitive information (like the raw query text) is deliberately omitted.
+
+> **Runs on your machine, not here.**  This cell needs libraries that are installed in your course container rather than in the page.  Copy it there and run it.
 
 ```python
 from opentelemetry import trace

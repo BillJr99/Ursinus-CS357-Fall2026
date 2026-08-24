@@ -5,7 +5,7 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-textgen2nn.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-textgen2nn.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
+import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
 
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
@@ -233,6 +233,9 @@ In the trace for $\mathbf{x} = (1.0, 2.0)$, hidden neuron $h_2$ output $0.0$ bec
 
 The code below implements the exact network above using plain Python lists (no libraries needed), prints every intermediate value in trace-table order, and checks the three inputs from the Model and questions.  Your hand values and the printed values must match to two decimal places.
 
+> **Predict first.**  You traced this forward pass by hand in the table above.  Write your two hidden activations and your output value down now, before you run anything.  The cell prints the same numbers; if they disagree, the disagreement tells you exactly which step of your trace drifted.
+
+
 ```python
 W1 = [[0.5, 1.0],    # weights into h1
       [1.0, -1.0]]   # weights into h2
@@ -258,6 +261,7 @@ def forward(x, verbose=True):
 for x in [(1.0, 2.0), (2.0, 1.0), (0.0, 0.0)]:
     forward(list(x))
 ```
+@Pyodide.eval
 
 If any line disagrees with your hand trace, find the first row where they diverge; that row contains the arithmetic slip.  This is exactly how you will debug real models later: compare expected and actual values layer by layer, top to bottom.
 
@@ -279,9 +283,10 @@ The code below draws three heatmaps: the hidden-layer weight matrix $W_1$ (rows 
 
 ## Code Cell
 
+> **Predict first.**  Before you run this, mark on your trace table which of the two inputs you expect to light up which hidden unit more strongly.  The heatmap makes the answer visible in one glance, so commit to a guess while it still costs you something.
+
+
 ```python
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 W1 = [[0.5, 1.0], [1.0, -1.0]]
@@ -310,9 +315,9 @@ for ax, (M, title, cols, rows) in zip(axes, panels):
             ax.text(j, i, f"{val:.1f}", ha="center", va="center", fontsize=9)
     fig.colorbar(im, ax=ax, shrink=0.8)
 plt.tight_layout()
-plt.savefig("tiny_net_viz.png", dpi=120)
-print("wrote tiny_net_viz.png -- open it and compare each cell to your trace table")
+plt.show()   # renders right here in the page; compare each cell to your trace table
 ```
+@Pyodide.eval
 
 ### Critical Thinking Questions
 

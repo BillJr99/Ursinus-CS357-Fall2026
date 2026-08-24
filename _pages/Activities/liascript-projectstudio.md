@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-projectstudio.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-projectstudio.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -38,6 +36,19 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 ---
 
 In this first section, each team answers four fixed questions in two minutes, no more.  You will use the stand-up to surface the current state of your project: real metrics, real blockers, and the single riskiest unfinished piece.  Getting this right before the gallery walk helps you direct visitors toward the things that most need feedback.
+
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Set up: get your artifact displayed and your SQR cards in hand |
+| 10-45 | Gallery walk: every team sees every other team's work |
+| 45-70 | Studio time on what the walk surfaced |
+| 70-75 | One commitment per team for the next session |
+
+---
 
 ## Model 1: Stand-Up and Readiness Assessment
 

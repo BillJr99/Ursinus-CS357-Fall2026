@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-llmserving.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmserving.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -118,6 +116,8 @@ The code cell below simulates both strategies with a simple Python scheduler.  I
 ## Code Cell: Batching Scheduler Simulation
 
 The following simulation models a queue of requests with different prompt lengths and response budgets.  It estimates total wall-clock time and throughput (tokens/sec) for batch sizes of 1, 4, and 8 under both static and continuous batching strategies.  Read the comments carefully; they explain each assumption made.
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 import math
@@ -309,7 +309,7 @@ Part II established *why* the KV cache exists: it trades memory for compute so d
 
 ## Model 6: The Naive Allocation Problem
 
-Start with the memory budget.  Model weights are the fixed cost of being open for business.  A 13-billion-parameter model at FP16 (2 bytes per parameter) needs roughly **26 GB** just for its weights.  On a 40 GB GPU that is about **65% of the card gone before a single user connects**; see the VRAM sizing math in `liascript-hardwarequantization.md` for where that number comes from.  Everything else (the KV cache for *every* active request) has to fit in the remaining ~35%.
+Start with the memory budget.  Model weights are the fixed cost of being open for business.  A 13-billion-parameter model at FP16 (2 bytes per parameter) needs roughly **26 GB** just for its weights.  On a 40 GB GPU that is about **65% of the card gone before a single user connects**; see the VRAM sizing math in *The Hardware Behind AI* for where that number comes from.  Everything else (the KV cache for *every* active request) has to fit in the remaining ~35%.
 
 Traditional serving systems manage that 35% badly, in three distinct ways:
 

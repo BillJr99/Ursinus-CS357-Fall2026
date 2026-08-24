@@ -1,32 +1,30 @@
-<!--
-author:   Prof. Bill Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/ObsidianSync
+title: 'CS357: Foundations of Artificial Intelligence - Syncing Obsidian to GitHub and Wiring Agents to Your Vault'
+info:
+  coursenum: CS357
+  purpose: "To get your vault onto GitHub and give agents a navigation contract, a read path, and a write path that will not quietly corrupt your notes."
+tags:
+- obsidian
+- github
+- agents
+- memory
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-obsidiansync.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-obsidiansync.md
+# CS357: Foundations of Artificial Intelligence - Syncing Obsidian to GitHub and Wiring Agents to Your Vault
 
-import: https://raw.githubusercontent.com/liaScript/coderunner/master/README.md
+## Purpose
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap
+To get your vault onto GitHub and give agents a navigation contract, a read path, and a write path that will not quietly corrupt your notes.
 
--->
-
-# Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault
+## About This Tutorial
 
 Your Obsidian vault contains your best thinking: class notes, project plans, decisions you've made and why.  But right now it lives entirely on one machine, invisible to every agent you run.  The fix is architectural: **put the vault on GitHub, write a navigation contract agents can read, give agents a write-back path so knowledge accumulates across sessions, and wire the whole loop through the local tools you already use**.  This tutorial builds that system from zero: why GitHub is the right host $\rightarrow$ the Obsidian Git community plugin and its configuration $\rightarrow$ pointing agents at your vault as read context $\rightarrow$ letting agents write back to it as persistent memory.
 
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Prerequisites: a GitHub account, Obsidian installed, and at least one agent CLI (OpenCode, pi.ai, or another tool from the agent CLIs module) running locally.  This is a supplemental tutorial; no commercial API keys are required.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
-
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Obsidian vault** | A folder of plain Markdown files that Obsidian treats as a unified knowledge base. Because the files are just text, every other tool (agents, scripts, editors) can read and write them without a special library. | Your vault might contain class notes, project decision logs, and a folder of `agent-context/` files that your local agents read before each session. |
 | **Community plugin** | An Obsidian extension written by the community and installed through the in-app plugin browser. Community plugins are not audited by the Obsidian team, so you review them before enabling. | Obsidian Git is the most widely used community sync plugin; it wraps standard git operations in a background process that pushes on a configurable interval. |
@@ -43,7 +41,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 In this part, you will understand why a local Obsidian vault is invisible to agents and what it takes to make it accessible, and you will set up the Obsidian Git plugin with a private repository so that your notes are one sync away from any tool you run.
 
-## Model 1: The Locality Problem and the Git Solution
+## The Locality Problem and the Git Solution
 
 Agents read files.  When you run OpenCode or pi.ai in a project directory, the agent can see every file in that directory tree.  But your Obsidian vault is somewhere else (probably `~/Documents/Obsidian/MyVault` or a similar location) and unless you explicitly point an agent at it, the agent has no idea it exists.  This is the **locality problem**: your knowledge lives in one place; your agents work in another.
 
@@ -74,6 +72,7 @@ Community plugins are disabled by default because they run arbitrary code.  To e
 Not every file in your vault folder should go to GitHub.  The workspace state and plugin caches change constantly and create noisy commits with no informational value.  A minimal `.gitignore`:
 
 ```gitignore
+
 # Obsidian workspace state; changes on every open/close, no information value
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
@@ -121,7 +120,7 @@ Categories to exclude by policy:
 
 A rule of thumb: the vault is for *your knowledge about the world*, not *secrets that unlock access to the world*.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  You generate a fine-grained PAT scoped to Contents read/write on your vault repo.  Your roommate generates a classic `repo`-scope PAT for the same task.  Compare what an attacker gains from each token if it leaks.  Which token does the principle of least privilege select, and why?
 
@@ -145,7 +144,7 @@ With your vault synced to GitHub and your `.gitignore` keeping the commit histor
 
 In this part, you will learn how agents read from files, build a vault index that lets an agent navigate without reading everything, and wire OpenCode and pi.ai to your vault so they start every session informed by your notes.
 
-## Model 2: File-Based Context vs. RAG
+## File-Based Context vs. RAG
 
 There are two ways to get your vault contents into an agent's context window.  Understanding the tradeoff guides your design choice.
 
@@ -163,6 +162,7 @@ A single file (`_index.md` at the root of your vault) lists every note by topic 
 A well-structured `_index.md`:
 
 ```markdown
+
 # Vault Index
 
 ## CS357: Foundations of AI
@@ -199,8 +199,11 @@ agent-context/
 A Python helper that injects this folder into an agent session:
 
 ```python
+
 # inject_vault_context.py
+
 # Concatenates all agent-context/*.md files into a system prompt preamble.
+
 # Usage: python inject_vault_context.py | opencode --system-prompt -
 import os
 import pathlib
@@ -231,6 +234,7 @@ if __name__ == "__main__":
 OpenCode reads its system instructions from `AGENTS.md` in the current working directory.  To give OpenCode persistent access to your vault context, add a reference at the top of your project's `AGENTS.md`:
 
 ```markdown
+
 # AGENTS.md
 
 ## Vault Context
@@ -252,6 +256,7 @@ Because OpenCode reads and follows `AGENTS.md` at session start, this instructio
 pi.ai reads a minimal `pi.md` context file if one is present in the working directory.  Add a knowledge directory reference:
 
 ```markdown
+
 # pi.md
 
 ## Knowledge Base
@@ -281,7 +286,7 @@ You have 400 notes in your vault.  You want an agent to answer a question that m
 >
 > An agent given a directory path can list the files in that directory, but listing 400 filenames tells it almost nothing about which two or three notes are relevant to your question.  The vault index solves this by providing a human-curated summary of each note's topic: the agent reads the index (one file, one context window), decides which notes to request, and reads only those.  Without the index, the agent must either read everything (often too much) or guess from filenames (unreliable).
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  A teammate argues: "I'll just give the agent access to my entire vault directory and tell it to search for what it needs."  Explain two specific failure modes this causes (one related to context window size, one related to agent decision quality) that the vault index pattern prevents.
 
@@ -305,7 +310,7 @@ With your vault connected as readable context, agents can now start each session
 
 In this part, you will learn why agent write-back matters, design a structured memory format agents can append to reliably, and handle the one real failure mode in a bidirectional system: the simultaneous write conflict.
 
-## Model 3: Persistent Memory via Write-Back
+## Persistent Memory via Write-Back
 
 An agent that reads your vault but never writes to it is a student who does your homework but never updates your notes.  Every insight the agent produces, every decision it makes with you, every refinement it surfaces: all of it disappears when the session ends.  The next session starts from the same place as the last one.  Over weeks, this is a significant waste.
 
@@ -316,6 +321,7 @@ Write-back solves this: at the end of a session, the agent appends a structured 
 Structure each memory entry with YAML frontmatter for machine-readable metadata and a narrative body for human and agent readability:
 
 ```markdown
+
 ## 2026-06-21
 
 ---
@@ -356,6 +362,7 @@ Agents must **never rewrite or delete** existing entries in `session-log.md`.  T
 Add a memory write skill to your project's `AGENTS.md` that OpenCode invokes at session end:
 
 ```markdown
+
 ## Memory Write-Back Protocol
 
 At the end of every session, before closing:
@@ -389,8 +396,11 @@ When a conflict does occur (visible as `<<<<<<< HEAD` markers in the file), the 
 ```bash
 cd ~/Documents/Obsidian/MyVault
 git pull origin main --no-rebase   # fetch the other side
+
 # Open memories/session-log.md in any editor
+
 # The conflict markers show: your version on top, remote version on bottom
+
 # Resolution: keep BOTH sections; remove the markers, keep all content
 git add memories/session-log.md
 git commit -m "memory: merge conflict resolved (kept both sections)"
@@ -410,7 +420,7 @@ An agent finishes a session and wants to update `memories/session-log.md`.  Whic
 >
 > Separate files avoid write conflicts but create a different problem: the vault index must be updated every time a new session file is created, or the agent won't know the file exists.  Worse, an agent reading context must now decide how many session files to read and which ones are most relevant.  The append-only log in a single file is searchable, readable top-to-bottom, and requires only one index entry.  A one-line git conflict in an append-only file is trivially resolved; a vault with 300 individual session files and a stale index is not.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 7.  The YAML frontmatter in each memory entry includes `key_decisions` as a list.  Write a ten-line Python function that parses `session-log.md` and returns all `key_decisions` entries tagged with a given `project` name, as a flat list of strings.
 
@@ -434,7 +444,7 @@ With the read path and write path both working, you now have a full bidirectiona
 
 In this part, you will execute each component of the vault-agent system from scratch, verify that each piece works end-to-end, and design a folder structure that serves both personal knowledge and AI project memory simultaneously.
 
-## Model 4: The Full Loop
+## The Full Loop
 
 When all four pieces are working, the session rhythm looks like this:
 

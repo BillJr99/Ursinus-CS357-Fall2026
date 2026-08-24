@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-tooluse.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-tooluse.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -40,6 +38,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the contract: a schema is an interface |
+| 10-25 | Model 1b, the four ways to ask for structure and what each one guarantees |
+| 25-50 | Part II, the two-tool agent, built and traced |
+| 50-65 | Part III, what a tool call costs in the context window |
+| 65-75 | Part IV, exercises and the reflection prompt |
+
+---
 # Part I: From Parsing to Protocol
 
 ## 1.  The Contract
@@ -87,6 +98,57 @@ Two teams expose the same function with different schemas:
 
 ---
 
+
+---
+
+## Model 1b: Four Ways to Ask for Structure, and What Each One Guarantees
+
+Model 1 gave you the schema as an interface.  Before you trust one, you need to know what actually enforces it, because "I asked for JSON" and "JSON is the only thing that can come out" are very different promises, and only one of them survives a bad day.
+
+Same prompt, four mechanisms:
+
+```
+PROMPT: "Classify the sentiment of: 'The product broke after one day.'"
+
+Plain text          "The sentiment of this review is clearly negative. The customer
+                     is unhappy because the product failed quickly."
+                     -> no parse; fragile regex; breaks when phrasing shifts
+
+JSON mode           {"sentiment": "negative", "reasoning": "Product failure"}
+                     -> usually works, but prose can still come out on a bad day
+
+Tool / function     tool_calls=[{"name":"classify","args":{"sentiment":"negative"}}]
+                     -> structure guaranteed; the values are still the model's guess
+
+Grammar-constrained {"sentiment": "negative"}
+                     -> nothing else is samplable; the schema is enforced at decode time
+```
+
+| Mode | What actually enforces it | Guarantee | How it fails |
+|---|---|---|---|
+| **Plain text** | Nothing | None | Unparseable, and the format drifts when you reword the prompt or change model version |
+| **JSON mode** | A line in the system prompt | Soft: usually valid JSON | The model ignores the instruction when context is long, when it is uncertain, or when the question triggers a refusal.  Nothing catches this |
+| **Function calling** | The API wraps the output in a call schema | The call is structurally valid and argument types match | Wrong tool chosen, required argument omitted, or right type with wrong meaning |
+| **Grammar-constrained decoding** | The sampler masks every token that would violate the grammar | Syntactic validity is guaranteed at the token level | Valid format, wrong meaning; very complex grammars can degrade answer quality |
+
+Notice the column that does not exist: none of the four guarantees the answer is *correct*.  Grammar constraints buy you a parse, not a fact.
+
+### Critical Thinking Questions
+
+1b.  Your two-tool agent above parses the model's output.  Which of these four modes is it using, and what is the specific line of your code that would break first if the model answered in prose one time in fifty?
+
+   > *Hint: Look at where the code reaches into the response for a field.  What happens to that expression when the field is not there?*
+
+2b.  You have a required field with five allowed values.  JSON mode gets it right about 95 percent of the time; grammar-constrained decoding gets the format right every time.  Name a situation where you would still choose JSON mode, and be specific about what you are buying with the other five percent.
+
+   > *Hint: Grammar constraints need a runtime that supports them.  What does that cost you in portability across the hosted and local models you have used so far?*
+
+3b.  A tool call comes back with `{"days": "seven"}` where your schema declared an integer.  Which of the four guarantees was violated, which one would have caught it, and where in your agent loop should the check live so the model gets a chance to fix it?
+
+   > *Hint: There is a difference between rejecting the call and telling the model why you rejected it.  Only one of those lets the loop recover.*
+
+The Tools and MCP lab takes this further, into schema design and a full validation pipeline.  What you need today is the habit of asking, of any structured output, "what is enforcing this?"
+
 # Part II: Native Function Calling
 
 ## 2.  A Two-Tool Agent
@@ -98,6 +160,8 @@ The code below defines two tools (`get_today` and `days_until`), describes them 
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import json
@@ -199,6 +263,8 @@ Whether native tool calling works at all still depends on the underlying model: 
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import os, json, requests
 from datetime import date
@@ -273,7 +339,7 @@ Two facts fall out of this ledger.  First, the **two tool schemas cost ~150 toke
 
    > *Hint: A result appended to history is re-sent on every later turn.  Multiply the result size by the remaining turns.  The request is small; the result is the heavy part that lingers.*
 
-3.  Connect this to cost and latency from `liascript-costoptimization.md` and `liascript-llmserving.md`: if tool schemas and results inflate the input token count on every turn, which two user-facing quantities get worse, and why?
+3.  Connect this to cost and latency from *Cost Optimization for AI Systems* and `liascript-llmserving.md`: if tool schemas and results inflate the input token count on every turn, which two user-facing quantities get worse, and why?
 
    > *Hint: More input tokens means more to bill for and more to prefill.  What happens to per-turn cost, and to time-to-first-token, as the prompt grows?*
 
@@ -290,7 +356,7 @@ Two practices follow directly from the ledger.
 
 **Limit the tools you offer.**  Beyond the raw token cost, a long tool list *degrades tool selection*.  The model must choose the right tool from everything offered; the more near-duplicate or irrelevant options crowd the list, the more often it picks wrong or fills arguments poorly; the same lesson as the schema-quality ablation in the Exercises, now at the level of tool *count*.  Offer the smallest set of well-described tools each task actually needs, not everything you have ever built.
 
-**Use subagents to keep each context focused.**  When a task needs many tools or produces large intermediate results, the fix is not one agent holding all of it.  It is to hand a narrow sub-task to a **subagent** running in its *own* context window, with only the few tools and the brief it needs, and return just the answer to the main thread, so the main context never accumulates the sub-task's schemas and scratch work.  This course teaches that pattern in depth elsewhere: the small-context-window principle (`liascript-memorycontext.md`), subagents with isolated context and filesystem offload (`liascript-agentframeworks.md`), and orchestration where each stage "sees only what it needs" (`liascript-orchestration.md`).  The token ledger above is *why* those patterns work.
+**Use subagents to keep each context focused.**  When a task needs many tools or produces large intermediate results, the fix is not one agent holding all of it.  It is to hand a narrow sub-task to a **subagent** running in its *own* context window, with only the few tools and the brief it needs, and return just the answer to the main thread, so the main context never accumulates the sub-task's schemas and scratch work.  This course teaches that pattern in depth elsewhere: the small-context-window principle (`liascript-memorycontext.md`), subagents with isolated context and filesystem offload (*Agent Frameworks*), and orchestration where each stage "sees only what it needs" (`liascript-orchestration.md`).  The token ledger above is *why* those patterns work.
 
 ### Critical Thinking Questions
 

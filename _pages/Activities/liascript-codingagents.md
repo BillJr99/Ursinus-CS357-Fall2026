@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-codingagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -63,9 +61,9 @@ git -C ~/cs357-work status
 
 ---
 
-## How Today Runs
+## Today's 75 Minutes
 
-Today has three parts and a going-deeper section you take home.
+Three parts inside our seventy-five minutes, and an extension you take home.
 
 | | What you do | Roughly |
 |---|---|---|
@@ -73,9 +71,9 @@ Today has three parts and a going-deeper section you take home.
 | **Part II** | Write a specification and its failing tests *before* any code exists, review the agent's **plan** before it acts, then let it implement against them | 25 min |
 | **Part III** | Read a diff that passes every test and is still dangerous | 20 min |
 | **Part IV** | Exercises and reflection | take-home |
-| **Part V** | Going further: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
+| **Extension** | Self-paced: architecture comparison, a full worked scenario, unattended loops, cowork agents, and the full opencode configuration reference | self-paced |
 
-Part V is real material, not filler; it is where you go when a lab direction or your project needs it.  Nothing in it is assumed by Parts I through IV.
+The Extension is real material, not filler; it is where you go when a lab direction or your project needs it.  Nothing in it is assumed by Parts I through IV.
 
 ---
 
@@ -348,6 +346,8 @@ Writing the tests first forces you to confront every ambiguity in the spec *befo
 
 **Failing tests (the red phase):**
 
+> **Runs on your machine, not here.**  This is a test file: save it in your repository and run it with `pytest`.
+
 ```python
 import pytest
 
@@ -453,6 +453,8 @@ Read the diff, not the summary the agent gives you. `git diff` shows what change
 ## Model 3: A Planted-Bug Diff
 
 Below is an implementation of `search_memory` that an agent might plausibly produce.  **It passes all five tests from Model 2.**  It contains three deliberate problems.  Read it as a team before answering; the Recorder marks the line number of each problem your team finds.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -606,15 +608,41 @@ A coding agent produces an implementation that passes all five acceptance-criter
 
 ---
 
+
+---
+
+## Sizing the Blast Radius Before You Hand Over the Keys
+
+You just watched an agent edit files and run shell commands on a real machine.  The question that should be nagging you is how much damage a wrong decision can do, and the honest answer is: exactly as much as the process it runs in is allowed to do.  "It runs in Docker" is not by itself a safety claim, so it is worth knowing what a container actually buys you.
+
+Docker does not virtualize hardware the way a virtual machine does.  It leans on two Linux kernel features that predate it: **namespaces**, which partition what a process can *see*, and **cgroups**, which cap what a process can *consume*.  Namespaces are one-way mirrors; cgroups are a utility meter that cuts the power when a tenant runs over.
+
+| Namespace | What it isolates | What that means for an agent |
+|---|---|---|
+| `pid` | The list of running processes | The agent cannot see, signal, or kill anything on the host, and cannot attach a debugger to your editor |
+| `net` | Interfaces, addresses, routing | The container gets its own virtual adapter; `--network none` cuts it off entirely |
+| `mnt` | Which directories exist at all | Your home directory is invisible unless you bind-mount it with `-v` |
+| `user` | The numeric user identity | Root inside the container maps to an unprivileged user outside |
+
+Two flags do most of the work.  `--memory 2g` stops an agent stuck in a tool-call loop from eating the host's RAM and taking every other process down with it.  Dropping `CAP_SYS_PTRACE` stops a hijacked agent from attaching a debugger to a process that holds secrets in memory.
+
+Three questions to settle for your own setup, before the next lab:
+
+1.  Which directories does your coding agent genuinely need?  Everything you mount is inside the blast radius, and `-v ~:/host` puts your entire life inside it.
+2.  Does your agent need the network at all?  A research agent does.  An agent that only refactors local files does not, and `--network none` is free safety when the answer is no.
+3.  What is the worst single command your current setup would let an agent run without stopping to ask you?  If you cannot answer that, you do not yet know your blast radius.
+
+The Local Agent Lab's containerization direction turns these questions into a hardened deployment with a written threat model.  What matters today is that you stop treating the sandbox as a detail and start treating it as part of the design.
+
 -> Coming Up Next: You watched the agent produce a different plan each time you asked, and you pinned `temperature` in Week 1 to stop exactly that.  Next session, *Why Different Answers Every Time?  Sampling, Temperature, and Generation*, explains where the variation comes from, which is also the reason a schema your parser depends on has to be constrained rather than requested.  Keep `spec_search_memory.py`: writing the check before the work is the through-line of the next several weeks.
 
 
-# Part V: Going Further (self-paced)
+# Extension: Coding Agents in Depth (self-paced)
 
 Nothing below is assumed by Parts I through IV, and none of it is required to finish today's work.  It is here because your labs and your project will eventually need it: a comparison of how different agents are built, a full worked scenario from goal to commit, the patterns for loops that run unattended overnight, the cowork paradigm for agents that work outside a codebase, and the complete opencode configuration reference.  Read the section you need when you need it.
 
 
-## Going Further A: A Comparison of Coding Agent Architectures
+## A.  A Comparison of Coding Agent Architectures
 
 Three open or widely-used coding agents take meaningfully different architectural approaches to the same problem: how does an agent read a codebase, plan changes, and execute them safely?
 
@@ -644,7 +672,7 @@ A3.  Every agent above must load file content into its context window before rea
 
 ---
 
-## Going Further B: A Full Scenario, "Add OAuth2 Login"
+## B.  A Full Scenario, "Add OAuth2 Login"
 
 A student types: *"Add OAuth2 login with GitHub to this Flask app."*  The coding agent begins its loop.  Trace what happens at each stage.
 
@@ -679,7 +707,7 @@ B3.  The agent's context window at the Verify stage contains the original task, 
 
 ---
 
-## Going Further C: Loops That Run Themselves - Ralph, autoresearch, gnhf, and Crews
+## C.  Loops That Run Themselves - Ralph, autoresearch, gnhf, and Crews
 
 Model 2 traced *one* pass of the agent loop.  But the loop's real power appears when you run it **over and over, unattended**: the agent finishes, a shell script starts it again, and it keeps going while you sleep.  The surprising design choice that makes this work is that each iteration begins with a **fresh context window**.  That sounds like amnesia, and it would be, except the agent's memory does not live in the conversation; it lives on **disk**: the codebase itself, a running `TODO` file, and the `git` history.  Fresh context is a *feature*: it sidesteps the context-overflow failure mode from Model 2's Perceive stage, because the agent re-reads only what it needs each round instead of dragging a bloated, half-forgotten history behind it.
 
@@ -721,7 +749,7 @@ Why does a Ralph loop start each iteration with a *fresh* context window instead
 
 ---
 
-## Going Further E: The Cowork Paradigm, General Agents Beyond Code
+## E.  The Cowork Paradigm, General Agents Beyond Code
 
 Every architecture so far assumes the agent's world is a **codebase**.  But the same loop (perceive, plan, act, verify) works just as well when the "files" are a spreadsheet, a slide deck, and a browser tab.  That is a different paradigm, and it is worth naming the three explicitly (the *Agentic CLI Tools* activity develops this framing in full):
 
@@ -741,7 +769,7 @@ The paradigm shift raises the stakes on everything this module taught about revi
 
 ---
 
-## Going Further D: Configuring OpenCode with Plugins and Project Instructions
+## D.  Configuring OpenCode with Plugins and Project Instructions
 
 OpenCode is configurable at two scopes: **project scope** (a file in your repository that everyone on the team shares) and **global scope** (a file in your home directory that applies to all your projects).  Understanding which configuration belongs where is the same discipline as deciding which secrets belong in environment variables versus which belong in version control; the wrong choice exposes either too much or too little.
 
