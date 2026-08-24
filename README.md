@@ -29,6 +29,41 @@ This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringli
 
 ---
 
+## Pre-Merge Checks
+
+The Pages workflow builds only on a push to `gh-pages`, so a bad layout name or a
+stray Liquid delimiter is not caught until after the merge. `bin/check-site.py`
+runs the checks that would have caught the ones we have actually hit:
+
+```bash
+git submodule update --init _layouts     # the layout check needs these present
+pip install pyyaml
+python3 bin/check-site.py
+```
+
+It verifies that every `layout:` names a file that exists in `_layouts/`, that
+the deck invariant below holds, that no deck uses Liquid, that no page has a
+literal `{{ }}` outside `{% raw %}`, and that every relative front-matter link
+resolves to a real permalink.
+
+Two of those deserve a word, because both fail silently rather than loudly:
+
+- **Layouts.** Jekyll warns and drops the page's chrome when `layout:` names a
+  file that is not in `_layouts/`. The available layouts come from the
+  `_layouts` submodule, so check there rather than guessing: `default-standard`
+  is the one course pages use, and there is no `tutorial` layout.
+- **Literal braces.** Liquid runs before Markdown, so a `{{ ... }}` in prose or
+  inside a fenced code block is evaluated and deleted even though it looks
+  quoted. GitHub Actions YAML and Python `.format()` examples are the usual
+  victims. Wrap the block in `{% raw %}` / `{% endraw %}`. This does not apply
+  to decks, which Jekyll never processes.
+
+To reproduce the Pages build locally, `bundle install` then build with Jekyll;
+`jekyll-github-metadata` needs `JEKYLL_GITHUB_TOKEN` set or it cannot reach the
+API and the build stops.
+
+---
+
 ## Term Rollover
 
 Deck links are not written out in full. A page body composes them from config:
@@ -45,12 +80,29 @@ link: "Activities/liascript-agentloop.md"
 liapage: true
 ```
 
-Reading lists do not use that flag. A LiaScript deck is the thing the class works
-through together, so the only `liapage: true` in `_pages/syllabus.md` is the day's
-own `link:`. Readings point at books, papers, external sites, or a page under
-`_pages/Tutorials/`, which holds the reference and procedural material that used
-to live in decks. Those are ordinary Jekyll pages on `layout: default-standard`,
-linked by permalink:
+**A file in `_pages/Activities/` is a deck if and only if it is a `link:` on a
+syllabus schedule day.** That is the whole rule, and it is checkable:
+
+```bash
+# prints the decks present that are not a scheduled lecture; should print nothing
+python3 - <<'CHECK'
+import yaml, os, glob
+d = yaml.safe_load(open('_pages/syllabus.md').read().split('---', 2)[1])
+lecture = {os.path.basename(e['link']) for e in d['schedule']
+           if isinstance(e.get('link'), str) and e['link'].startswith('Activities/')}
+have = {os.path.basename(f) for f in glob.glob('_pages/Activities/liascript-*.md')}
+print('\n'.join(sorted(have - lecture)))
+CHECK
+```
+
+Everything else lives in `_pages/Tutorials/` as an ordinary Jekyll page. A deck
+is what a class works through together in seventy-five minutes; a page is what
+someone reads on their own, and the reading lists point at pages.
+
+Reading lists therefore do not use the `liapage` flag. The only `liapage: true`
+in `_pages/syllabus.md` is the day's own `link:`. Readings point at books,
+papers, external sites, or a page under `_pages/Tutorials/`. Those pages use
+`layout: default-standard` and are linked by permalink:
 
 ```yaml
 rlink: "/Tutorials/Docker"
@@ -67,14 +119,34 @@ which have to be updated together:
 - `raw_pages_url` in `_config.yml`
 - `info.course_homepage` in `_pages/syllabus.md`
 
-One further sweep is unavoidable. The `comment: Render with ...` header lines
-inside `_pages/Activities/liascript-*.md` name the repository literally, because
-LiaScript fetches those files straight from GitHub raw and Jekyll never processes
-them. Retarget them with:
+One further sweep is unavoidable, and it covers two things rather than one.
+LiaScript fetches deck files straight from GitHub raw, so Jekyll never processes
+them: a deck has no front matter, and `{{ site.baseurl }}` inside one renders as
+literal text rather than a URL. That means both the `comment: Render with ...`
+header lines **and** any link from a deck to a course page name the repository
+literally. Retarget both with:
 
 ```bash
-sed -i 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' _pages/Activities/liascript-*.md
+sed -i -e 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' \
+       -e 's|billmongan.com/Ursinus-CS357-Fall2026/|billmongan.com/<new-repo>/|g' \
+       _pages/Activities/liascript-*.md
+
+# Then check nothing still points at a previous term's site, which the sweep above
+# cannot catch because it does not carry this term's name:
+grep -rn 'billmongan.com/Ursinus-CS357[/-]' _pages/Activities/ | grep -v '<new-repo>'
 ```
+
+Inside a deck, a link to a course page must be the absolute URL for that reason:
+
+```
+[Docker from Zero](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker)
+```
+
+Pages are Jekyll-processed and use `{{ site.baseurl }}` in their bodies as usual.
+Page **front matter** is a third case: Liquid does not run there either, so
+`rlink` values are relative paths resolved against the page's own URL
+(`Tutorials/Docker` from the syllabus at the site root, `../Tutorials/Docker`
+from a page one level down).
 
 The Class Agendas and Class Notes pages in the OneNote notebook's `_Teacher Only`
 section carry the same literal repository name in their links, so they need the

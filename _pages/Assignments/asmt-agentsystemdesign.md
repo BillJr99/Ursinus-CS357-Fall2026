@@ -54,9 +54,8 @@ info:
       liapage: true
     - rtitle: "Pre-mortem Technique (Klein, 2007)"
       rlink: "https://hbr.org/2007/09/performing-a-project-premortem"
-    - rtitle: "The Governing Coding Agents activity: charters, handoffs, and durable memory"
-      rlink: "Activities/liascript-agentgovernance.md"
-      liapage: true
+    - rtitle: "Governing Coding Agents: charters, handoffs, and durable memory"
+      rlink: "../Tutorials/AgentGovernance"
     - rtitle: "Case Study: From Second Brain to Chief of Staff - A Personal Agent in Production"
       rlink: "../Tutorials/ProductionAssistant"
     - rtitle: "Agent Operating System Templates (starting points for the Direction B document set)"

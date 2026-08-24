@@ -35,9 +35,8 @@ info:
     - rtitle: "RAG Quality: Chunking, Clustering, and Reranking Activity"
       rlink: "Activities/liascript-ragquality.md"
       liapage: true
-    - rtitle: "Required prep for the Rubric Pipeline Lab: the Testing Agents activity, Evaluation, Regression, and the Non-Determinism Problem"
-      rlink: "Activities/liascript-testingagents.md"
-      liapage: true
+    - rtitle: "Required prep for the Rubric Pipeline Lab: the Testing Agents tutorial, Evaluation, Regression, and the Non-Determinism Problem"
+      rlink: "../Tutorials/TestingAgents"
     - rtitle: "promptfoo, for declarative LLM and agent evaluation and red-teaming.  One of the harness options, and it runs against Ollama"
       rlink: "https://www.promptfoo.dev/"
 

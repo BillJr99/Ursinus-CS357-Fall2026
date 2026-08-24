@@ -11,3 +11,6 @@ Gemfile.lock
 _pages/Quizzes/qti_*
 setformprocessorasmtid.sh
 updaterubrics.sh
+# Python bytecode from compile-checking the harness starter files
+__pycache__/
+*.pyc

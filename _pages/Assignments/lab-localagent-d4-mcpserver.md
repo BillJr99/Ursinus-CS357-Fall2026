@@ -40,7 +40,7 @@ Why does OAuth matter here?  Without authentication, any process on the same mac
 **Complete these prerequisite activities first:**
 
 - [MCP Server Activity]({{ site.baseurl }}/Assignments/LocalAgent/Direction4): introduces the MCP protocol and the Python SDK
-- [The Local Agent Stack Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentstack.md): walks through running a local AI agent and wiring in tools
+- [The Local Agent Stack Activity]({{ site.baseurl }}/Tutorials/AgentStack): walks through running a local AI agent and wiring in tools
 
 ##### Install Required Tools
 
