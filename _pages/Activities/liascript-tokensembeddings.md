@@ -5,6 +5,8 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-tokensembeddings.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-tokensembeddings.md
 
+import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
+
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -316,7 +318,65 @@ In the calculation above, which quantity decided *how much* `bank` was influence
 [( )] The order of the tokens in the sentence
 [( )] The dimension $d_k = 2$
 
-> **Going deeper.**  Multi-head attention, causal masking, the full $QK^\top$ matrix for all three tokens at once, and a runnable implementation are in the attention deep-dive linked from today's schedule entry.  Everything above is what the rest of this course actually depends on.
+---
+
+## Demo: Check Your Arithmetic Against the Machine
+
+You just did one layer of attention on paper.  Now watch the machine do the same thing, and hold it to your numbers.
+
+**Before you press Run, write down your predictions.**  From Model 3 you should already have: the three raw scores, the three softmax weights, and the new `bank` vector.  Put them on paper now.  A prediction you did not commit to is not a prediction.
+
+This cell runs in your browser, so there is nothing to install and no server involved.  Change the numbers and run it again as often as you like.
+
+```python
+import numpy as np
+
+q = {"river": np.array([1., 0.]), "bank": np.array([1., 1.]), "loan": np.array([0., 1.])}
+k = {"river": np.array([1., 0.]), "bank": np.array([0., 1.]), "loan": np.array([1., 1.])}
+v = {"river": np.array([1., 1.]), "bank": np.array([2., 0.]), "loan": np.array([0., 2.])}
+tokens = ["river", "bank", "loan"]
+
+def softmax(z):
+    e = np.exp(z - z.max())          # subtract the max for numerical stability
+    return e / e.sum()
+
+scores  = np.array([q["bank"] @ k[t] for t in tokens]) / np.sqrt(2)
+weights = softmax(scores)
+new_bank = sum(w * v[t] for w, t in zip(weights, tokens))
+
+print("raw/scaled scores :", np.round(scores, 3))
+print("softmax weights   :", np.round(weights, 3))
+print("new bank vector   :", np.round(new_bank, 3))
+```
+@Pyodide.eval
+
+Your paper and the output should agree to two decimal places.  If they do not, the disagreement is the most useful thing on this page: find which of the four steps drifted.
+
+### Try It Yourself
+
+1.  **Delete a word.**  Remove `"river"` from `tokens` and run again.  The softmax now normalizes over two tokens instead of three.  Predict the direction the new `bank` vector moves *before* you run it, then check.  This is question 6 above, done in code.
+
+   *You've succeeded when* you can say in one sentence why dropping an unrelated word still changed `bank`, and what that implies about padding a prompt with filler.
+
+2.  **Change the query.**  Compute the new representation of `river` instead of `bank`, by swapping `q["bank"]` for `q["river"]` in the `scores` line.  Which token does `river` lean on, and does that match your intuition about the sentence?
+
+   *You've succeeded when* you can point at the specific dot product that made the difference.
+
+3.  **Break the scaling.**  Delete the `/ np.sqrt(2)` and run again.  Now multiply every vector by 10 and run both versions.  Watch what the unscaled softmax does to the weights.
+
+   *You've succeeded when* you can explain what $\sqrt{d_k}$ is protecting against, using the numbers you just saw rather than the formula.
+
+---
+
+## 2c.  What This Arithmetic Already Costs You
+
+The attention mechanism is not a mathematical curiosity.  It sets the budget you have to work with for the rest of the semester, and two consequences of it will shape every agent you build.
+
+**The context window is the attention span, literally.**  Attention compares every token with every other token, so $n$ tokens cost $n^2$ scores; doubling the context quadruples the work.  That is why context windows are finite, why long prompts are slow on your laptop, and why the *small context window principle* we adopt in *Memory and the Small Context Window Principle* is a computational fact rather than a matter of taste.  Grow a prompt from 2,000 tokens to 8,000 and the attention work per layer grows by a factor of 16, because $8000^2 / 2000^2 = 16$.
+
+**Position matters, and not evenly.**  Models attend most reliably to the beginning and the end of a long context and are measurably worse at material buried in the middle, an effect usually called *lost in the middle*.  This is why we put an agent's standing instructions and the current question at the edges of a prompt, with retrieved evidence in between, once we start building retrieval pipelines.
+
+> **Common Misconception: "More context is always better."**  Three things say otherwise, and you have now seen all three.  The cost is quadratic, so a longer prompt is not a free improvement.  The middle of a long prompt is the least reliable part of it.  And every extra token competes for the same finite attention budget, so filler actively dilutes the signal from the tokens that mattered.  Retrieve only what is relevant, place it deliberately, and keep prompts as short as the task allows.
 
 ---
 
@@ -552,7 +612,7 @@ The last token, "cat," now asks every token (including itself; causal attention 
 
 $$\text{score}_{\text{the}} = k_{\text{the}} \cdot q_{\text{cat}} = (1,1)\cdot(1,1) = 2 \qquad \text{score}_{\text{cat}} = k_{\text{cat}} \cdot q_{\text{cat}} = (1,2)\cdot(1,1) = 3$$
 
-**Step 2: Scale** by $\sqrt{d_k} = \sqrt{2} \approx 1.4142$ (this keeps scores from growing with dimension; see `liascript-attentiontransformers.md`):
+**Step 2: Scale** by $\sqrt{d_k} = \sqrt{2} \approx 1.4142$ (this keeps scores from growing with dimension; see *Attention and Transformers*):
 
 $$\frac{2}{\sqrt 2} = 1.4142 \qquad \frac{3}{\sqrt 2} = 2.1213$$
 

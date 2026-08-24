@@ -19,7 +19,7 @@ To show how a poisoned repository or a hostile dependency turns an agent's conve
 
 ## About This Tutorial
 
-You already know the general shape of prompt injection from *Prompt Injection* and `liascript-agentsecurity.md`: an LLM has no privileged "instruction register," so text it *reads as data* can hijack it as if it were a command.  This activity narrows that lens onto a specific, fast-growing setting: the **AI coding assistant** (Copilot, Cursor, Claude Code, and their kin) working inside a real repository.  When your agent reads a README, a code comment, a GitHub issue, a dependency, or the output of a tool it ran, *any* of those can carry an attacker's instructions.  We look at how those attacks work against coding agents specifically, at the AI software-supply-chain risks that have no pre-AI equivalent, and at the current, named, peer-reviewed defenses, because "be careful" is not a mitigation.
+You already know the general shape of prompt injection from *Prompt Injection* and *Agent Security*: an LLM has no privileged "instruction register," so text it *reads as data* can hijack it as if it were a command.  This activity narrows that lens onto a specific, fast-growing setting: the **AI coding assistant** (Copilot, Cursor, Claude Code, and their kin) working inside a real repository.  When your agent reads a README, a code comment, a GitHub issue, a dependency, or the output of a tool it ran, *any* of those can carry an attacker's instructions.  We look at how those attacks work against coding agents specifically, at the AI software-supply-chain risks that have no pre-AI equivalent, and at the current, named, peer-reviewed defenses, because "be careful" is not a mitigation.
 
 ## Key Concepts
 
@@ -243,6 +243,6 @@ Securing a single coding agent is the start.  As agents gain autonomy and are wi
 
 **Course cross-references**
 
-- *Prompt Injection*, `liascript-agentsecurity.md`, the general injection taxonomy and OWASP LLM Top 10 this activity builds on.
+- *Prompt Injection*, *Agent Security*, the general injection taxonomy and OWASP LLM Top 10 this activity builds on.
 - *Containerizing AI Systems*, sandboxing, isolation, and trust boundaries for the blast-radius controls in Model 3.
 - `liascript-tooluse.md`, the read-only vs. irreversible-write tool taxonomy and human-approval gates.
