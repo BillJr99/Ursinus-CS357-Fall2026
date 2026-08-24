@@ -130,6 +130,10 @@ literally. Retarget both with:
 sed -i -e 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' \
        -e 's|billmongan.com/Ursinus-CS357-Fall2026/|billmongan.com/<new-repo>/|g' \
        _pages/Activities/liascript-*.md
+
+# Then check nothing still points at a previous term's site, which the sweep above
+# cannot catch because it does not carry this term's name:
+grep -rn 'billmongan.com/Ursinus-CS357[/-]' _pages/Activities/ | grep -v '<new-repo>'
 ```
 
 Inside a deck, a link to a course page must be the absolute URL for that reason:

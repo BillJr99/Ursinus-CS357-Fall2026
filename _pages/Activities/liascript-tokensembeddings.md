@@ -503,7 +503,7 @@ The geometry itself returns in *Retrieval-Augmented Generation with Chroma*, whe
 
 ## 5.  Further Reading
 
-- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
+- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
 - Tom Yeh.  *AI by Hand*, embedding and dot-product worksheets.
 - Jay Alammar.  "The Illustrated Word2Vec" (online).  A visual introduction to embedding geometry.
 - Reimers and Gurevych.  "Sentence-BERT." *EMNLP* (2019).  How sentence-level embeddings are trained.
