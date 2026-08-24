@@ -117,6 +117,8 @@ The code cell below simulates both strategies with a simple Python scheduler.  I
 
 The following simulation models a queue of requests with different prompt lengths and response budgets.  It estimates total wall-clock time and throughput (tokens/sec) for batch sizes of 1, 4, and 8 under both static and continuous batching strategies.  Read the comments carefully; they explain each assumption made.
 
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
+
 ```python
 import math
 import random

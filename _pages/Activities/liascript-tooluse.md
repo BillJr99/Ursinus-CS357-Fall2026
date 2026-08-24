@@ -148,6 +148,8 @@ The code below defines two tools (`get_today` and `days_until`), describes them 
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import json
 import requests
@@ -247,6 +249,8 @@ Whether native tool calling works at all still depends on the underlying model: 
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import os, json, requests

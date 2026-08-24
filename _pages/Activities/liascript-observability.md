@@ -124,6 +124,8 @@ Attributes on spans are the primary mechanism for answering questions about prod
 
 The following pseudocode shows how to wrap an agent invocation with OpenTelemetry tracing in Python.  As you read it, notice two things: (1) the setup block runs once at startup and wires up the exporter, and (2) each instrumented function uses `with tracer.start_as_current_span(...)` to create a span; look at which attributes are logged and which sensitive information (like the raw query text) is deliberately omitted.
 
+> **Runs on your machine, not here.**  This cell needs libraries that are installed in your course container rather than in the page.  Copy it there and run it.
+
 ```python
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider

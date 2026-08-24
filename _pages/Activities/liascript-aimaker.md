@@ -83,6 +83,8 @@ Treat agent output exactly as you would a pull request from a bright, fast, cont
 
 The code below illustrates the "test first" pattern: notice that the tests exist before any implementation does, and each test case is a precise contract the agent must satisfy; look for how the `test_rejects_nonnumeric` test pre-decides the comma-bug behavior that would otherwise be a specification gap.
 
+> **Runs on your machine, not here.**  This is a test file: save it in your repository and run it with `pytest`.
+
 ```python
 # The pattern in miniature: the spec exists as a failing test first.
 import unittest, traceback

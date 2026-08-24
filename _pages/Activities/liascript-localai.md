@@ -106,6 +106,8 @@ The code cell below sends a single message to your locally running Ollama server
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -215,6 +217,8 @@ The cell below holds a three-turn conversation.  Notice that `chat()` now takes 
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -250,6 +254,8 @@ print(f"[the message list now holds {len(messages)} entries]")
 The last question never mentions Iceland or the name Sam, yet the model answers correctly, because the entire prior exchange rode along in the `messages` list.  Delete the `messages.append(reply)` line and the model goes amnesiac.
 
 **The same pattern through OpenWebUI.** If you put OpenWebUI in front of Ollama, its OpenAI-compatible endpoint accepts the *identical* growing `messages` array; only the URL, an `Authorization: Bearer <key>` header, and the response path change:
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 # r = requests.post("http://localhost:3000/api/chat/completions",

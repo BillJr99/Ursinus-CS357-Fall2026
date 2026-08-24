@@ -241,6 +241,8 @@ When an *agent* (not just a classifier) is making decisions, explanation require
 
 *Starter hint:* The code below loads a pre-trained sentiment model and runs SHAP to produce token-level attributions; look for which words receive negative SHAP values (pushing toward "negative") versus positive ones, and notice whether the attributions match your intuition about why the sentence has that sentiment:
 
+> **Runs on your machine, not here.**  This cell needs libraries that are installed in your course container rather than in the page.  Copy it there and run it.
+
 ```python
 # Install: pip install transformers shap
 from transformers import pipeline

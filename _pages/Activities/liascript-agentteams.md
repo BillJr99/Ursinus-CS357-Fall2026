@@ -91,7 +91,7 @@ Different problems call for different team shapes, just as different organizatio
 
 A minimal blackboard is just a dictionary with discipline:
 
-```python
+```json
 state = {
   "goal":        "...",
   "facts":       [{"claim": "...", "source": "...", "verified": false}],
@@ -121,6 +121,8 @@ An agent team keeps stalling: the checker waits for verified facts while the res
 ## Code Cell
 
 The code below implements the three-agent meeting-notes team using a blackboard pattern: a shared `state` dictionary holds all the data, and a `while` loop fires whichever agent matches the current `status` field.  Read the `extractor`, `writer`, and `checker` functions in order; each one reads only the slice of the state it needs, writes its output back to a specific key, and advances the `status` to the next stage.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
