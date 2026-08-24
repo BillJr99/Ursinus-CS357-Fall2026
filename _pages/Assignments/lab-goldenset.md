@@ -125,7 +125,7 @@ Notice what each rationale does: it names a *reason from the training data* (thi
 
 ## Part 2: Run and Analyze (50 points)
 
-Run all ten items against your local model with the protocol pinned: **temperature 0.0, a fixed seed, and the model name recorded.**  Pinning is not bureaucracy: an unpinned run cannot be repeated, and a result you cannot repeat is not a measurement.  (This is the dial from *Running Your Own AI*, Section 3b, doing real work.)
+Run all ten items against your local model with the protocol pinned: **temperature 0.0, a fixed seed, and the model name recorded.**  Pinning is not bureaucracy: an unpinned run cannot be repeated, and a result you cannot repeat is not a measurement.  (This is the dial from *Running Your Own AI*, Section 3c, doing real work.)
 
 ### Step by step
 
