@@ -186,7 +186,7 @@ Read the config's `api_base` carefully: the gateway is *itself a container*, so 
 
 ## 5.  Frontends and Tools
 
-> **Next, build one visually.**  Once the stack is up, go on to the **[Visual Agent with Langflow](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-visualagents.md)** activity and build the same kind of agent on a canvas, same concepts, no Python authorship.  Part IV of that deck is the hands-on build.
+> **Next, build one visually.**  Once the stack is up, go on to the **[Visual Agent with Langflow]({{ site.baseurl }}/Tutorials/VisualAgents)** activity and build the same kind of agent on a canvas, same concepts, no Python authorship.  Part IV of that deck is the hands-on build.
 
 With the gateway answering, frontends attach by URL. Open WebUI:
 

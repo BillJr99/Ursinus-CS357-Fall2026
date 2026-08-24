@@ -67,12 +67,10 @@ info:
     - rtitle: "The Intellectual Property and Privacy activity, whose Part IIb covers federated learning, differential privacy, and PII scrubbing"
       rlink: "Activities/liascript-ipprivacy.md"
       liapage: true
-    - rtitle: "Explainability Activity"
-      rlink: "Activities/liascript-explainability.md"
-      liapage: true
-    - rtitle: "Explainability in Depth Activity"
-      rlink: "Activities/liascript-explainabilitydeep.md"
-      liapage: true
+    - rtitle: "Explainability"
+      rlink: "../Tutorials/Explainability"
+    - rtitle: "Explainability in Depth"
+      rlink: "../Tutorials/ExplainabilityDeep"
     - rtitle: "Bias in Data Activity"
       rlink: "Activities/liascript-biasdata.md"
       liapage: true
@@ -1856,8 +1854,8 @@ This lab is completed in **pairs using driver/navigator roles**: the driver type
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Explainability Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-explainability.md): what explainability means and when it matters
-- [Explainability in Depth Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-explainabilitydeep.md): SHAP and LIME mechanics
+- [Explainability]({{ site.baseurl }}/Tutorials/Explainability): what explainability means and when it matters
+- [Explainability in Depth]({{ site.baseurl }}/Tutorials/ExplainabilityDeep): SHAP and LIME mechanics
 - [Bias in Data Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-biasdata.md): proxy variables and disparate impact
 
 **Tools to install:**
