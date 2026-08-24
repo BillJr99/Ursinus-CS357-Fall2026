@@ -45,6 +45,21 @@ link: "Activities/liascript-agentloop.md"
 liapage: true
 ```
 
+Reading lists do not use that flag. A LiaScript deck is the thing the class works
+through together, so the only `liapage: true` in `_pages/syllabus.md` is the day's
+own `link:`. Readings point at books, papers, external sites, or a page under
+`_pages/Tutorials/`, which holds the reference and procedural material that used
+to live in decks. Those are ordinary Jekyll pages on `layout: default-standard`,
+linked by permalink:
+
+```yaml
+rlink: "/Tutorials/Docker"
+```
+
+Depth that belongs with a session lives at the bottom of that session's own deck
+under an `# Extension: ... (self-paced)` heading, rather than as a separate deck
+in the reading list.
+
 When starting a new term, the semester appears in exactly three places, all of
 which have to be updated together:
 
@@ -60,6 +75,10 @@ them. Retarget them with:
 ```bash
 sed -i 's|BillJr99/Ursinus-CS357-Fall2026/|BillJr99/<new-repo>/|g' _pages/Activities/liascript-*.md
 ```
+
+The Class Agendas and Class Notes pages in the OneNote notebook's `_Teacher Only`
+section carry the same literal repository name in their links, so they need the
+same retarget when the term rolls over.
 
 ---
 
