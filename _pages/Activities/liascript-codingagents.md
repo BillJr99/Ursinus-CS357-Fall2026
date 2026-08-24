@@ -103,7 +103,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ```bash
 mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/config.json <<'JSON'
+cat > ~/.config/opencode/opencode.json <<'JSON'
 {
   "provider": {
     "ollama": {
@@ -780,7 +780,7 @@ OpenCode is configurable at two scopes: **project scope** (a file in your reposi
 OpenCode reads its configuration from `opencode.json`.  Place this file at:
 
 - **Project root** (`./opencode.json`) for settings that all contributors to this repository should share: things like the project's test command, architectural invariants, and which files the agent should never touch.
-- **`~/.opencode/opencode.json`** for settings that are personal to you: your preferred model, your global instructions, your authentication tokens.
+- **`~/.config/opencode/opencode.json`** for settings that are personal to you: your preferred model, your global instructions, your authentication tokens.
 
 The file follows a published schema, which means your editor can validate it in real time:
 
@@ -880,11 +880,11 @@ logic to `app.py`; it is a thin routing layer only.
 
 ### Critical Thinking Questions
 
-**Question A.** Why would you commit `opencode.json` to version control but NOT your global `~/.opencode/instructions.md`?
+**Question A.** Why would you commit `opencode.json` to version control but NOT your global `~/.config/opencode/AGENTS.md`?
 
 [[___ Your answer here ___]]
 
-*Hint: Think about what each file contains and who should be affected by it.  The project `opencode.json` describes invariants and conventions of the codebase that every contributor and every agent session working on this repository should respect.  The global `~/.opencode/instructions.md` describes your personal preferences (things like your preferred coding style, your typical workflow, or notes about your development machine) that are irrelevant or even wrong for other contributors.  What happens if you commit your personal instructions and a teammate with different preferences pulls them?  What happens if the project instructions are not committed and a new contributor's agent session does not know the invariants?*
+*Hint: Think about what each file contains and who should be affected by it.  The project `opencode.json` describes invariants and conventions of the codebase that every contributor and every agent session working on this repository should respect.  The global `~/.config/opencode/AGENTS.md` describes your personal preferences (things like your preferred coding style, your typical workflow, or notes about your development machine) that are irrelevant or even wrong for other contributors.  What happens if you commit your personal instructions and a teammate with different preferences pulls them?  What happens if the project instructions are not committed and a new contributor's agent session does not know the invariants?*
 
 Two instructions are being considered for `opencode.json` in a project's repository.  Which instruction belongs in **project scope** (committed to the repository) rather than in a developer's personal global config?
 

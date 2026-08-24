@@ -450,11 +450,18 @@ opencode --version
 
 ### 8.2: Point it at your own model
 
-opencode reads `~/.config/opencode/config.json`.  Create it so the agent uses the Ollama server on your host rather than a paid API:
+opencode reads a single global config file, and the name matters: it is `opencode.json`, not `config.json`.  If opencode later reports no provider or no models, this file name is the first thing to check.
+
+| Where you are | The file to create |
+|---|---|
+| macOS, Linux, or WSL | `~/.config/opencode/opencode.json` |
+| Windows, native shell | `%USERPROFILE%\.config\opencode\opencode.json` (paste `%USERPROFILE%\.config\opencode` into the Run box with Win+R to open the folder) |
+
+Create it so the agent uses the Ollama server on your host rather than a paid API.  The heredoc below is bash, so run it in a macOS, Linux, or WSL shell; on native Windows, make the folder and save the same JSON with an editor:
 
 ```bash
 mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/config.json <<'JSON'
+cat > ~/.config/opencode/opencode.json <<'JSON'
 {
   "provider": {
     "ollama": {
@@ -473,7 +480,7 @@ On the native route, use `http://localhost:11434/v1` instead: the same substitut
 
 ```bash
 mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/config.json <<'JSON'
+cat > ~/.config/opencode/opencode.json <<'JSON'
 {
   "provider": {
     "openwebui": {
@@ -644,7 +651,7 @@ The first build fails partway through the big pip layer.  Almost always a networ
 
 **`opencode` says "command not found" right after the installer succeeded.**  The installer places the binary in `~/.local/bin`, which is not on the container's `PATH` by default. `export PATH="$HOME/.local/bin:$PATH"` fixes the current session; add the same line to `~/.bashrc` to make it stick.  This is the `PATH` mechanic from Step 0, met in the wild.
 
-**`opencode` starts but reports no provider or no models.**  It is reading a config it cannot use.  Check three things in order: that `~/.config/opencode/config.json` is valid JSON (`python3 -m json.tool ~/.config/opencode/config.json`), that the `baseURL` ends in `/v1`, and that the Step 5.1 host-bridge check still passes.  The agent reaches Ollama by exactly the same route your Python does; if 5.1 works and opencode does not, the fault is in the config file.
+**`opencode` starts but reports no provider or no models.**  Nine times out of ten the config is named `config.json` instead of `opencode.json`, so opencode never reads it.  Check the file name first, then check that it is in `~/.config/opencode/` (or `%USERPROFILE%\.config\opencode\` on native Windows), then check that the JSON parses with `python3 -m json.tool ~/.config/opencode/opencode.json`.
 
 The agent proposes an edit that is obviously wrong, or loops on the same failed idea.  Expected behavior for a 3B local model.  Stop it with Ctrl-C, `git checkout .` to discard, and give a smaller, more concrete instruction.  "Refactor this module" is beyond it; "add a docstring to this one function" is not.
 
@@ -665,7 +672,7 @@ The agent proposes an edit that is obviously wrong, or loops on the same failed 
 | Cache the PAT for a session | `git config credential.helper 'cache --timeout=7200'` |
 | The daily loop | Ollama up -> container -> work -> test -> commit -> push |
 | Install the coding agent | `curl -fsSL https://opencode.ai/install \| bash`, then `opencode --version` |
-| Point the agent at your model | `~/.config/opencode/config.json`, `baseURL` = `http://host.docker.internal:11434/v1` |
+| Point the agent at your model | `~/.config/opencode/opencode.json`, `baseURL` = `http://host.docker.internal:11434/v1` |
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
