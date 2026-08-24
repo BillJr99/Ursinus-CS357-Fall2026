@@ -201,7 +201,7 @@ Here is the single sentence this part is built on:
 
 Everything an agent "knows" at the end of a working session evaporates when that session ends.  It evaporates when the context window fills, when a quota runs out, when you switch tools, when the model is upgraded under you.  If the only record of *why* the code looks like this lived in that conversation, it is gone, and the next agent, or the next you, starts by guessing.
 
-So write it down, in files, in the repository.  The course provides a set of ready-made skeletons for exactly this at [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).  The core five:
+So write it down, in files, in the repository.  The course provides a set of ready-made skeletons for exactly this at [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).  The core five:
 
 | File | Job | Written by |
 |---|---|---|
@@ -227,7 +227,7 @@ Watch the difference.  Halfway through a task an agent notices that making the t
 
 That is the whole trick: a charter is where you make a decision **once**, in writing, so that neither you nor any agent has to relitigate it at three in the afternoon.
 
-The course template at [`files/agent-templates/CHARTER.md`](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/CHARTER.md) has six sections that earn their place:
+The course template at [`files/agent-templates/CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) has six sections that earn their place:
 
 | Section | The question it settles in advance |
 |---|---|
@@ -285,7 +285,7 @@ docs/DECISION_LOG   what we decided and what we rejected, and why   (when it mat
 
 Read that column top to bottom and you have **traceability**: six weeks from now, a line of code traces back to a diff, which traces to a session entry, which traces to a task, which traces to the charter.  Nobody has to remember anything, and "why is it like this?" has a written answer instead of an argument.
 
-The [decision log](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/DECISION_LOG.md) is the one people skip, and it is the one that pays.  It records not only what you chose but **what you rejected and why**, which is the only thing that stops a project from re-proposing the same bad idea every three weeks, whether the proposer is a teammate or an agent starting from a fresh context.
+The [decision log](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/DECISION_LOG.md) is the one people skip, and it is the one that pays.  It records not only what you chose but **what you rejected and why**, which is the only thing that stops a project from re-proposing the same bad idea every three weeks, whether the proposer is a teammate or an agent starting from a fresh context.
 
 Your team's charter ranks **reproducibility above automation**.  An agent proposes replacing your pinned dependency versions with floating ones so that upgrades happen automatically.  Under the charter, what happens?
 
@@ -365,7 +365,7 @@ Nothing was remembered.  Everything was **read**.
 
 Pick **one** of your own repositories: `cs357-work`, or your Project Thread repository if your team is ready to adopt this together.
 
-1.  **Charter.**  Copy [`CHARTER.md`](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/CHARTER.md) into the repository root and fill in three sections for real: the mission in one sentence, **five ranked values**, and a definition of success someone else could check.  Leave the rest as template for now.  Ranking the values is the part that takes the longest and the part that is worth doing.
+1.  **Charter.**  Copy [`CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) into the repository root and fill in three sections for real: the mission in one sentence, **five ranked values**, and a definition of success someone else could check.  Leave the rest as template for now.  Ranking the values is the part that takes the longest and the part that is worth doing.
 2.  **Handoff state.**  Create `.ai/` and copy in `CONTEXT.md`, `CURRENT_TASK.md`, and `SESSION.md`.  Fill in `CONTEXT.md` with one true sentence about your project.
 3.  **Contract.**  Write `AGENTS.md` (or extend the one you already have) with a **Stop and ask** section of at least three items that are true for your project, and one line pointing at the charter.
 4.  **Commit all of it before the agent runs.**  This is your reversibility line, and it takes ten seconds.
@@ -446,7 +446,7 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
 
 ## Further Reading
 
-- [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md), the full set of course templates: charter, kickoff prompt, decision log, RFC skeleton, and the personal-assistant layer.
+- [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md), the full set of course templates: charter, kickoff prompt, decision log, RFC skeleton, and the personal-assistant layer.
 - Obsidian: [obsidian.md](https://obsidian.md).  The vault is a folder; nothing here depends on the app.
 - Andrej Karpathy on the "LLM wiki" pattern: a curated, linked knowledge base maintained *with* a model rather than retrieved *by* one.
 - Tiago Forte.  *Building a Second Brain*.  The knowledge-management tradition this borrows from, written before agents could read your notes.

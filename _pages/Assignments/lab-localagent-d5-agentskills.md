@@ -12,23 +12,39 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 
 > **What this direction requires**
 >
-> - **Accounts:** a free GitHub account, used to publish your skill repository and to sync your Obsidian vault.  Part C's plain-shared-folder route needs no account at all.
-> - **API costs:** none; OpenCode runs against your local Ollama model.
-> - **Installs / disk:** OpenCode (free) configured with your local Ollama model, and Obsidian (free) with the Git/Gitless Sync community plugin; negligible disk beyond the core lab.
-> - **Hardware:** any machine that runs the core lab.
+> - **Accounts:** a free GitHub account, used to publish your skill repository.  Pathway 1 also uses it to sync your Obsidian vault; Part C's plain-shared-folder route needs no account at all.  Pathway 2 needs nothing beyond the publish.
+> - **API costs:** none.  Both pathways run against your local Ollama model, including Pathway 2's evaluation experiment, which is why it is capped at five to ten tasks.
+> - **Installs / disk:** opencode or pi (free) against your local Ollama model.  Pathway 1 adds Obsidian (free) with the Git/Gitless Sync plugin.  Pathway 2 adds Python with `requests`.  Negligible disk beyond the core lab either way.
+> - **Hardware:** any machine that runs the core lab.  Pathway 2 is slower rather than heavier: five conditions across your task set is a lot of local generation, so start it early.
 > - **No-cost fallback:** not needed; every tool in this direction is free.
-> - **Pace yourself:** this sits on top of the core lab.  The safety-guardrail skill is the shortest of the three; the vault skill takes longer because the write path has to be tested against a real sync, and the handoff skill takes longest because you need two agents running before you can test anything.
+> - **Pace yourself:** this sits on top of the core lab.  In Pathway 1, the safety-guardrail skill is the shortest; the vault skill takes longer because the write path has to be tested against a real sync, and the handoff skill takes longest because you need two agents running before you can test anything.  In Pathway 2, the controller is a day's work and the twelve tests are the other day; build the charter gate and the validators first, since everything else depends on them, and leave the evaluation experiment for last but not for the last night.
 
 ---
 
 
-Take the local agent you built in the core lab and extend it with your own agent skills: named, composable instruction sets that an agent loads and invokes by name.  You will build three (a safety guardrail that intercepts destructive operations, an Obsidian-vault memory, and a handoff skill that lets two agents coordinate through a shared medium) and test each rigorously against a scripted prompt sequence.
+Take the local agent you built in the core lab and extend it with your own agent skills: named, composable instruction sets that an agent loads and follows.  There are **two pathways** through this direction, and you pick one.  Either build three skills (a safety guardrail that intercepts destructive operations, an Obsidian-vault memory, and a handoff skill that lets two agents coordinate through a shared medium), or build a personal deliberation harness that spends extra inference time deliberately and measures whether that spending paid off.  Both are tested rigorously against a scripted sequence, and both are assessed with the same rubric.
 
 #### Overview
 
-In this lab you will build three agent skills from scratch and test them rigorously.
+In this lab you will author agent skills from scratch and test them rigorously.
 
-A **skill** is a named instruction set that you give an AI coding agent.  When invoked, the agent follows those instructions as if they were part of its system prompt, but skills are composable, versioned, and shareable.  You can install a skill from a GitHub URL and uninstall it just as easily.
+A **skill** is a named instruction set that you give an AI coding agent: a directory containing a `SKILL.md` file that the agent discovers on disk, loads when it judges the skill relevant, and follows for the duration of a task.  Skills are composable, versioned, and shareable, and a classmate installs yours by cloning it into a directory their tool already looks in.
+
+**Choose one of two pathways.**  They are alternatives, not stages, and they take comparable effort:
+
+| | **Pathway 1: Three Skills** | **Pathway 2: Deliberation Harness** |
+|---|---|---|
+| You build | A safety guardrail, a vault memory, and a handoff protocol | A charter, a task contract, validators, and a controller that runs them |
+| Central question | What can instructions make an agent do reliably? | What can instructions *not* enforce, and what has to be code? |
+| You will need | An Obsidian vault synced to GitHub, and a way to run two agents | Python, and patience for a small local model |
+| Parts to do | A, B, C, then D | E, then D |
+| Best if | You want to feel where instruction-following succeeds and fails | You want to measure whether extra inference time actually buys anything |
+
+Both satisfy core Part 4.  Both are graded with the Local Agent Lab rubric.  Part D's reflection is required either way, using the prompts for your pathway.
+
+> **Which should you pick?**  Pathway 1 if you want breadth across the practical problems of agent instruction, and it is the safer choice if your Obsidian sync is already working.  Pathway 2 if you want depth on one hard question and are comfortable writing and debugging Python; it needs no vault and no second machine, but it will have you reading a lot of your own run logs.  They converge on the same lesson from opposite directions, which is that instruction is not enforcement.
+
+##### Pathway 1: The Three Skills
 
 You will build:
 
@@ -38,24 +54,43 @@ You will build:
 
 3.  **The Handoff Skill**: lets two agents that never share a context window pass work between them through a durable medium (GitHub, your vault, or a plain shared folder), with a claim protocol that says who may take what, and a conflict test that finds out whether the protocol actually holds.
 
+##### Pathway 2: The Personal Deliberation Harness
+
+You will build a small controller that spends extra inference time on a task in a structured way, using one free local model called repeatedly, and then measure whether that spending bought anything.  It starts by interviewing you to build an operating charter, refuses to work until you accept it, generates independent candidate solutions, ranks them against a validation hierarchy where polish never rescues a failed correctness check, repairs against evidence within a budget, stops for a reason it names, and writes a handoff a cold session can pick up.
+
+The claim you are testing is that **extra inference time helps only when an iteration introduces something the previous one did not have**: an executed test, an independent candidate, a counterexample, a retrieved spec, a human decision.  Asking a model to "think again" introduces none of those, and you will run that as a control condition to get your own numbers on it.
+
+Full instructions are in **Part E**.
+
 ---
 
 #### Prerequisites
 
-Before starting this lab you should have:
+**Both pathways** need:
 
-- OpenCode installed and working with a local Ollama model (from the Local Agent Lab)
+- opencode (or pi) installed and working against your local Ollama model, from the Local Agent Lab
+- A GitHub account for publishing the skill you owe core Part 4
+
+**Pathway 1 also needs:**
+
 - An Obsidian vault with the Git/Gitless Sync community plugin configured and syncing to a private GitHub repo (see the *Syncing Obsidian to GitHub* supplemental tutorial)
-- A GitHub account for publishing your skill
-- For Part C, a way to run a **second** agent that does not share a context window with the first: a second OpenCode session with different instructions, a classmate's agent, or a different model
+- For Part C, a way to run a **second** agent that does not share a context window with the first: a second session with different instructions, a classmate's agent, or a different model
 
-If your Obsidian vault is not yet synced to GitHub, complete the sync tutorial first; Part B of this lab depends on it.  Part C's GitHub and vault routes depend on it too; its plain-shared-folder route does not, and is the fallback if your sync is not working.
+If your Obsidian vault is not yet synced to GitHub, complete the sync tutorial first; Part B depends on it.  Part C's GitHub and vault routes depend on it too; its plain-shared-folder route does not, and is the fallback if your sync is not working.
+
+**Pathway 2 also needs:**
+
+- Python 3.10 or newer with `requests` (`pip install requests`), and a test runner you are comfortable with
+- Five to ten small tasks to evaluate against.  Pick these early; a good task set is one where you can tell correct from incorrect without arguing about it
+- Patience.  You will run the same tasks five ways, and a small local model is slow
+
+Pathway 2 needs **no** vault, no second machine, and no second model.
 
 ---
 
 #### Background: What Skills and Plugins Are, and How They Are Configured
 
-This direction asks you to write three skills, so it needs the reference that used to live in a separate activity.  It is here now: the spectrum from a prompt to a packaged skill, the opencode and pi.ai models, the full `opencode.json` schema, and the authoring principles your three skills will be graded against.
+Both pathways ask you to write skills, so the reference that used to live in a separate activity is here: the spectrum from a prompt to a packaged skill, where opencode and pi actually look for skills on disk, and the authoring principles your skills are graded against.  Read this section whichever pathway you choose.
 
 ##### Key Concepts
 
@@ -64,13 +99,13 @@ Before diving in, anchor the vocabulary.  You will encounter all of these terms 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **Skill** | A named instruction set that an agent can invoke on demand, scoped to a specific purpose | A "code-review" skill that instructs the agent to always check for hardcoded secrets before approving a diff |
-| **Plugin** | A packaged bundle of one or more skills (and optionally tools) distributed as an installable unit, often a Git repository | The Superpowers plugin (`git+https://github.com/obra/superpowers.git`) bundles several utility skills into one install |
+| **Plugin / extension** | Harness-specific executable code that adds new capability to the agent itself (a pi TypeScript extension, an opencode plugin). Distinct from a skill, which is instructions any harness can read | `pi install npm:@billjr99/pi-openai-compat` adds provider support; no skill could do that |
 | **System prompt** | An always-on, always-active instruction injected before every conversation turn | "You are a helpful coding assistant. Always explain your reasoning." - loaded automatically, not invokable by name |
-| **`opencode.json`** | OpenCode's configuration file; lives at `$HOME/.config/opencode/opencode.json` (global) or `.opencode.json` in a project root (local) | The file where you add a `skills` array to register named instruction sets |
-| **Skill manifest** | A `SKILL.md` or `skill.md` file at the root of a publishable skill repository; contains frontmatter metadata (name, description, author, version) and human-readable description | The file a tool reads to discover, list, and display a skill's purpose |
+| **`opencode.json`** | OpenCode's configuration file, at `~/.config/opencode/opencode.json` (global) or `opencode.json` in a project root. It holds model routing and **permissions**; skills are directories on disk, not entries in it | The `permission.skill` block that decides which skills an agent may load |
+| **`SKILL.md`** | The file that *is* the skill, inside a directory named for it. YAML front matter carries `name` and `description`; the body is the instruction text | `.agents/skills/safety-check/SKILL.md`, discovered by both opencode and pi |
 | **Tool (function call)** | A piece of code the agent can execute, a real function that runs in the host environment and returns structured data | `read_file("main.py")` runs in the shell and returns the file's contents; it is not an instruction template |
-| **`when` trigger** | An optional field in an OpenCode skill entry that specifies a condition string; when the agent detects that condition in the conversation, it automatically surfaces the skill | `"when": "user asks to delete"` makes the safety-check skill appear whenever deletion is discussed |
-| **Superpowers plugin** | A community skill bundle for agent CLIs installable via a single Git URL | `opencode skills install git+https://github.com/obra/superpowers.git` |
+| **Description-as-trigger** | There is no separate trigger field. The agent decides whether to load a skill by matching your request against the skill's `description`, which makes the description the matching surface rather than documentation | "Use when the user asks to delete, remove, overwrite, or drop anything" fires; "Safety utilities" does not |
+| **Superpowers** | A community skill bundle for agent CLIs, distributed as a Git repository of skill directories | Cloned into a discovery path: `git clone https://github.com/obra/superpowers.git ~/.agents/skills/superpowers` |
 
 ---
 
@@ -81,143 +116,103 @@ Think of the ways you can give a colleague standing guidance.  You might write a
 | Instruction Form | Scope | Always Active? | Invoked How? | Encoded As |
 |-----------------|-------|----------------|--------------|------------|
 | System prompt | Global, every conversation turn | Yes | Automatically | Text injected before the conversation |
-| Context file (`AGENTS.md`, `opencode.json`) | Project, read at startup | Yes | Automatically at launch | Markdown or JSON file in project root or `$HOME/.config` |
-| Skill | Named, surfaced on demand | No | By name or trigger | Named entry in config; optionally a `SKILL.md` file |
+| Context file (`AGENTS.md`, `CLAUDE.md`) | Project, read at startup | Yes | Automatically at launch | Markdown file in the project root |
+| Skill | Named, surfaced on demand | No | By name, or by the agent matching its `description` | A directory containing `SKILL.md`, found on the filesystem |
 | Tool (function call) | Named, executes real code | No | By name, returns data | Code function registered with the agent runtime |
 
 The critical distinction between a skill and a tool: a skill is an **instruction template**; it tells the agent *how to behave* in a situation.  A tool is **executable code**; the agent calls it and gets back structured data.  A skill says "when reviewing a diff, follow steps 1-4."  A tool says "call `run_tests()` and here is the exit code."  You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation.  The instruction is the skill; the file-listing is the tool.
 
 > **Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn, like a system prompt.  It will not.  A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill").  If you want always-on behavior, a context file or system prompt is the right instrument.  If you want composable, named behavior you can invoke selectively, a skill is correct.
 
-##### The OpenCode Skill Model
+##### How Skills Are Actually Stored: Directories, Not Config Entries
 
-OpenCode stores its configuration in a JSON file with a top-level `skills` array.  Each entry in that array is a skill definition.  Here is the minimal shape of the file with two skill entries:
+Both tools you might use here have converged on the same design, and it is worth stating plainly because it is different from how skills worked a year ago: **a skill is a directory containing a `SKILL.md` file, discovered from the filesystem.**  It is not an entry in a JSON array, and there is no `instructions` string to escape into a config file.
 
-```json
-{
-  "model": "ollama/llama3.1",
-  "skills": [
-    {
-      "name": "code-review",
-      "description": "Review a diff or set of changed files using a structured checklist.",
-      "instructions": "When the user asks you to review code or a diff:\n1. Read every changed file completely before commenting.\n2. Check for hardcoded secrets, API keys, or passwords.\n3. Check for missing error handling in I/O and network calls.\n4. Check that new public functions have docstrings.\n5. Summarize findings as: [BLOCKER], [WARNING], or [SUGGESTION] on separate lines.\n6. Do not approve a diff that contains a [BLOCKER] item."
-    },
-    {
-      "name": "safety-check",
-      "description": "Run a mandatory pre-action check before any destructive file operation.",
-      "instructions": "Before deleting, overwriting, or moving any file:\n1. List every file that will be affected, with full paths.\n2. Print the message: 'SAFETY CHECK: the following files will be permanently modified or deleted.'\n3. Wait for explicit user confirmation ('yes' or 'proceed') before continuing.\n4. If the user does not confirm within the same turn, abort and explain what you did not do.",
-      "when": "user asks to delete or remove or overwrite"
-    }
-  ]
-}
+```
+my-project/
+`-- .agents/
+    `-- skills/
+        |-- safety-check/
+        |   `-- SKILL.md          <- the skill IS this directory
+        `-- code-review/
+            |-- SKILL.md
+            `-- checklist.md      <- supporting files live alongside it
 ```
 
-The key fields: `name` is the identifier you use to invoke the skill by name in a prompt. `description` is what the agent displays when you ask it to list available skills. `instructions` is the multi-line string the agent treats as scoped guidance when the skill is active. `when` is an optional trigger string: if the agent detects that phrase pattern in the conversation, it will surface the skill automatically.
+The directory name is the skill name.  Anything else in the directory (reference docs, templates, helper scripts) is available to the agent once the skill is loaded, which is what makes a skill more than a long prompt.
 
-The file location matters: `$HOME/.config/opencode/opencode.json` applies globally to every project on your machine.  A `.opencode.json` file in a project directory applies only when you run `opencode` from inside that project.  Project-local skills override global skills of the same name, which lets you customize per-project without polluting your global config.
+**Where the tools look.**  Both walk up from your working directory to the repository root, then fall back to your home directory:
 
-##### The pi.ai Plugin Model
+| | Project-level | User-level |
+|---|---|---|
+| **opencode** | `.opencode/skills/`, `.claude/skills/`, `.agents/skills/` | `~/.config/opencode/skills/`, `~/.claude/skills/`, `~/.agents/skills/` |
+| **pi** | `.pi/skills/`, `.agents/skills/` | `~/.pi/agent/skills/`, `~/.agents/skills/` |
 
-pi.ai uses a plugin system rather than a JSON config array, but the underlying idea is identical: a named instruction bundle is registered with the agent.  A pi plugin is either a URL pointing to a manifest file or a local file path.  The manifest describes the plugin's name, what it does, the instruction text it injects when active, and optionally a list of capability strings the agent can use to decide when to invoke it.
+Notice the overlap.  **`.agents/skills/` is read by both**, which means one directory of skills works in either tool with no porting step.  Use it for everything you write in this lab unless you have a specific reason not to; you get portability for free, and "it only works in my tool" is a real cost when a teammate uses the other one.
 
-A minimal pi plugin manifest (`my-review-plugin.md`) looks like this:
+**The `SKILL.md` front matter** is short.  opencode recognizes:
 
 ```markdown
 ---
-name: code-review
-description: Review diffs using a structured checklist with severity levels.
-version: 1.0.0
-author: your-username
-capabilities:
-  - review
-  - diff
+name: safety-check
+description: Pause and require explicit confirmation before any destructive file operation. Use when the user asks to delete, remove, overwrite, truncate, or drop anything.
 ---
 
-## Instructions
+## Guarded operations
 
-When the user asks you to review code, a pull request, or a diff:
-
-1. Read all changed files in full before writing any comment.
-2. Flag hardcoded credentials as BLOCKER items.
-3. Flag missing error handling as WARNING items.
-4. Suggest documentation improvements as SUGGESTION items.
-5. Never approve a change set containing a BLOCKER.
+...the instructions the agent follows once this skill is loaded...
 ```
 
-To add this plugin to a pi project, you point pi at the file or URL:
+- `name` is **required**, must be 1 to 64 characters of lowercase alphanumerics with single hyphens, and **must match the directory name**.  A mismatch is the most common reason a skill silently does not load.
+- `description` is **required**, and it is doing more work than it looks like (see below).
+- `license`, `compatibility`, and `metadata` are optional.
 
-```bash
-# From a GitHub URL (raw content):
-pi plugin add https://raw.githubusercontent.com/your-username/my-skills/main/my-review-plugin.md
+> **The description is the trigger.**  There is no `when` field, and this trips people up.  The agent decides whether to pull in a skill by reading its `description` against what you are currently doing, so the description is not documentation, it is the matching surface.  "Safety utilities" will not fire.  "Use when the user asks to delete, remove, overwrite, truncate, or drop anything" will.  Write the description as *when to use this*, in the words a user would actually type, and you will find your skills firing when you expect them to.
 
-# From a local file during development:
-pi plugin add ./my-review-plugin.md
-
-# List loaded plugins to verify:
-pi plugin list
-```
-
-Scoping works the same way as OpenCode: a plugin added from inside a project directory (where a `pi.md` project file is present) is scoped to that project.  A plugin added from outside a project applies globally.
-
-A classmate says: "I added a safety-check skill to `opencode.json`, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does."  What is wrong with this claim?
-
----
-
-With the taxonomy clear and both platforms understood, Part II builds on that foundation by configuring real skills in OpenCode, including a worked example and the Superpowers verification workflow.
-
----
-
-##### The `opencode.json` Schema in Full
-
-A production-ready `opencode.json` file pulls together model routing, global settings, and skills in one place.  Here is a realistic example for a CS357 coursework machine:
+**Permissions live in `opencode.json`, and skills no longer do.**  The config file still exists; it just holds different things:
 
 ```json
 {
-  "model": "ollama/llama3.1",
-  "baseURL": "http://localhost:11434/v1",
-  "theme": "dark",
-  "skills": [
-    {
-      "name": "code-review",
-      "description": "Structured diff review with severity classification.",
-      "instructions": "When reviewing code or a diff:\n1. Read every changed file in full; do not skim.\n2. Classify each finding as one of:\n   - [BLOCKER] Correctness bug, security flaw, or data loss risk\n   - [WARNING]  Missing error handling, performance issue, or convention violation\n   - [SUGGESTION] Style, naming, or documentation improvement\n3. List findings grouped by file, then by severity.\n4. End with a one-sentence overall verdict: APPROVE, APPROVE WITH CHANGES, or REQUEST CHANGES.\n5. Do not approve any diff containing a [BLOCKER]."
-    },
-    {
-      "name": "safety-check",
-      "description": "Mandatory pre-action pause before any destructive operation.",
-      "instructions": "Before executing any command or edit that deletes, overwrites, truncates, or moves a file:\n1. List every affected file with its full absolute path.\n2. Print: 'SAFETY CHECK - the following files will be permanently modified or deleted:'\n3. Wait for the user to type exactly 'yes' or 'proceed' before continuing.\n4. If the user types anything else, or does not respond in the same turn, abort all actions and print what you did NOT do and why.\n5. Never skip this check, even if the user previously said 'always approve deletes'.",
-      "when": "user asks to delete or remove or overwrite or truncate or drop"
-    },
-    {
-      "name": "obsidian-memory",
-      "description": "After each session, append a dated summary to the Obsidian session log.",
-      "instructions": "At the end of every work session, or when the user says 'wrap up' or 'end session':\n1. Collect the key decisions made, files created or modified, and commands run during this session.\n2. Format them as a Markdown section with a level-2 heading of today's ISO date (YYYY-MM-DD).\n3. Append that section to `vault/memories/session-log.md`, creating the file if it does not exist.\n4. Print: 'Session log updated at vault/memories/session-log.md'",
-      "when": "user says wrap up or end session or close out"
+  "permission": {
+    "skill": {
+      "*": "allow",
+      "experimental-*": "deny"
     }
-  ]
+  }
 }
 ```
 
-Every field is optional except `name` and `instructions` inside a skill entry. `description` is the human-readable summary shown by `opencode skills list`. `when` is the trigger phrase: the agent pattern-matches against it in the current conversation; if there is a match, the agent proactively surfaces the skill.  Omitting `when` means the skill is available but never auto-surfaced; you invoke it by name in your prompt.
+**Installing someone else's skills.**  pi installs extensions and skills from npm or a Git host, with `-l` to scope the install to the current project instead of your home directory:
 
-> **Common Misconception:** A `when` trigger is not a filter that prevents the skill from being used at other times; it is a *hint* that auto-surfaces the skill when the pattern matches.  You can still invoke a skill explicitly at any time by naming it in your prompt ("use the safety-check skill before running this command"), regardless of whether the trigger fired.  Think of `when` as a notification, not a lock.
+```bash
+pi install npm:@someone/pi-tools
+pi install git:github.com/someone/their-skills
+pi install git:github.com/someone/their-skills -l   # project-local
+```
 
-##### A Worked Example: The Code Review Skill
+For opencode, a skill directory is installed by *being in one of the discovery paths*, so cloning a repository of skills into `.agents/skills/` (or symlinking it there) is the whole installation.  That is a genuine simplification over a package manager, and it also means you can read exactly what you installed before you run it, which is worth doing.
 
-Trace through what happens when you invoke this skill.  You are in an OpenCode session, and you type:
+##### A Worked Example: What Happens When a Skill Fires
+
+You are in a session and you type:
 
 ```
-Please do a code review on my latest changes using the code-review skill.
+Please review my latest changes.
 ```
 
 The agent:
-1.  Looks up the `code-review` entry in the `skills` array.
-2.  Temporarily injects the `instructions` text as scoped guidance for this turn.
-3.  Reads every file you have staged or recently edited (it may call `git diff --staged` or ask which files to check).
-4.  Produces output structured exactly as the instructions specify: findings grouped by file, classified by severity, ending with a verdict.
-5.  Returns to normal behavior for the next turn; the skill's instructions are not persistent beyond the invocation.
 
-The skill does three things that a plain chat prompt cannot reliably do: it establishes a **consistent output format** across all uses, it embeds **domain-specific constraints** (never approve a BLOCKER), and it is **reusable** without re-typing the checklist.  These are the authoring principles that distinguish a good skill from a long prompt you paste by hand.
+1.  Has already discovered every `SKILL.md` in the paths above at startup, and knows each one's `name` and `description`.
+2.  Matches your request against those descriptions and finds `code-review`.
+3.  Reads that skill's `SKILL.md` in full, plus any supporting files it references, and treats the contents as scoped guidance for this task.
+4.  Follows the instructions: reads the changed files, classifies findings by severity, ends with a verdict.
+5.  Drops the skill's instructions afterwards.  They are not persistent, which is exactly the difference between a skill and a system prompt.
+
+Step 2 is the one to remember.  Nothing pattern-matched a trigger phrase you configured; the model read your request and read the descriptions and decided.  That has a consequence you will test in Part A: **a skill is guidance the model chooses to follow, not a gate the model cannot pass.**  If you need a rule that holds even when the model decides otherwise, the rule belongs in code.
+
+A classmate says: "I wrote a safety-check skill, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does."  Name the two separate things wrong with that claim.
+
+---
 
 ##### Skill Authoring Principles
 
@@ -231,64 +226,51 @@ A skill that is vague or open-ended will be applied inconsistently; the agent wi
 
 > **Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction; it is a deference to an undefined standard.  The agent will infer "best practices" from its training data, which may not match your project's conventions at all.  Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item.  A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
 
-##### The Skill Manifest Format
+##### Publishing a Skill So Someone Else Can Install It
 
-A publishable skill is a Git repository with a predictable layout.  When someone runs `opencode skills install git+https://github.com/you/your-skills.git`, the tool looks for this structure:
+Because a skill is a directory, publishing one is publishing a repository with that directory in it:
 
 ```
-your-skills/                    <- repository root
-|-- SKILL.md                    <- manifest: name, description, author, version
-|-- instructions/               <- one .md file per skill in this bundle
-|   |-- safety-check.md
-|   |-- code-review.md
-|   `-- obsidian-memory.md
-`-- package.json                <- optional: enables npm install as alternative
+cs357-skills/                       <- repository root
+|-- README.md                       <- what these are, and how to install them
+|-- safety-check/
+|   `-- SKILL.md
+|-- code-review/
+|   `-- SKILL.md
+`-- obsidian-memory/
+    `-- SKILL.md
 ```
 
-The `SKILL.md` manifest file with frontmatter:
+A classmate installs the bundle by cloning it into a discovery path:
 
-```markdown
----
-name: cs357-skills
-description: A bundle of safety, review, and memory skills for CS357 coursework.
-author: your-github-username
-version: 1.0.0
-skills:
-  - safety-check
-  - code-review
-  - obsidian-memory
----
-
-## CS357 Agent Skills
-
-This bundle provides three skills designed for safe, consistent agent-assisted
-development in CS357: Foundations of AI at Ursinus College.
-
-- **safety-check**: Mandatory pre-action pause before destructive file operations.
-- **code-review**: Structured diff review with severity classification.
-- **obsidian-memory**: Appends a dated session summary to an Obsidian vault log.
-
-Install with:
 ```bash
-opencode skills install git+https://github.com/your-username/cs357-skills.git
-
+git clone https://github.com/your-username/cs357-skills.git ~/.agents/skills/cs357
+# or, for one project only:
+git clone https://github.com/your-username/cs357-skills.git .agents/skills/cs357
 ```
-```
 
-Each file under `instructions/` contains only the instruction text for that skill: no frontmatter, just the multi-line Markdown that becomes the `instructions` field in the installed `opencode.json` entry.  The installer reads the `skills` list from `SKILL.md` frontmatter, maps each name to its file under `instructions/`, and writes the corresponding entries into your config.
+For pi, the same repository installs with `pi install git:github.com/your-username/cs357-skills`.
+
+Two details that decide whether this works for someone else:
+
+- **The directory name is the skill name, and it has to match `name:` in the front matter.**  Rename the directory during install and the skill stops loading, with no error message saying so.
+- **`README.md` at the repository root is for humans; `SKILL.md` inside each directory is for the agent.**  Do not merge them.  A `README.md` that explains your design decisions is what a reviewer reads; a `SKILL.md` that opens with a paragraph of rationale is a skill whose instructions the agent has to dig for.
+
+**Part 4 of the core lab** asks you to package one skill as a `.skill` archive and post it to the course discussion.  That archive is a zip of one skill directory with `SKILL.md` at its top level, which is exactly the layout above, one folder deep.
+
 
 ##### Key Concepts Summary
 
 | Term | Definition |
 |------|------------|
 | **Skill** | A named, composable instruction set an agent can invoke on demand, scoped to a specific purpose |
-| **Plugin** | A packaged bundle of one or more skills distributed as an installable unit (usually a Git repository) |
+| **Plugin / extension** | Executable integration specific to one harness (a pi TypeScript extension, for example), as opposed to a skill, which is instructions any harness can read |
 | **System prompt** | Always-on instructions injected before every conversation turn |
-| **`opencode.json`** | OpenCode's configuration file; contains the `skills` array and model routing settings |
-| **Skill manifest** | `SKILL.md` frontmatter file at the root of a publishable skill repository |
+| **`opencode.json`** | OpenCode's configuration file: model routing and `permission.skill` rules. Skills themselves are directories on disk |
+| **`SKILL.md`** | The file that is the skill, in a directory named for it, under `.agents/skills/` for portability across opencode and pi |
 | **Tool (function call)** | Executable code the agent calls at runtime; returns structured data |
-| **`when` trigger** | Optional field that auto-surfaces a skill when the agent detects a matching phrase pattern |
-| **Superpowers plugin** | A community skill bundle installable via `opencode skills install git+https://github.com/obra/superpowers.git` |
+| **Description-as-trigger** | The agent loads a skill by matching your request against its `description`; there is no separate trigger field |
+| **Superpowers** | A community skill bundle; installed by cloning its repository into a skills discovery path |
 | **Assumptions audit** | A structured comparison of two artifacts to surface the implicit beliefs each author encoded |
 
 ---
@@ -373,18 +355,15 @@ exact string `YES`. Treat any other response (including "yes",
 "y", "ok") as NO.
 ```
 
-Add this skill to your `opencode.json` (project-local or global):
+Install it by putting the directory where the tool looks.  There is nothing to register:
 
-```json
-{
-  "skills": [
-    {
-      "name": "safety-guardrail",
-      "path": "./agent-safety-skill/SKILL.md"
-    }
-  ]
-}
+```bash
+mkdir -p .agents/skills
+cp -r agent-safety-skill .agents/skills/safety-guardrail
+# the directory name must match `name:` in the front matter, or it will not load
 ```
+
+Use `~/.agents/skills/` instead of `.agents/skills/` if you want it available in every project.  Start a session and ask the agent to list its available skills to confirm it loaded.
 
 ##### A4.  Test Harness
 
@@ -511,20 +490,18 @@ If you create a new note in `vault/context/`, add a row to
 `vault/_index.md` with the topic and filename.
 ```
 
-Add to `opencode.json`:
+Install it the same way, alongside the first:
 
-```json
-{
-  "skills": [
-    {
-      "name": "safety-guardrail",
-      "path": "./agent-safety-skill/SKILL.md"
-    },
-    {
-      "name": "obsidian-vault",
-      "path": "./agent-vault-skill/SKILL.md"
-    }
-  ]
+```bash
+cp -r agent-vault-skill .agents/skills/obsidian-vault
+```
+
+Both skills are now loadable in the same session, which is what makes the composability question in Part D a real one rather than a hypothetical.
+
+```text
+.agents/skills/
+|-- safety-guardrail/SKILL.md
+`-- obsidian-vault/SKILL.md
 }
 ```
 
@@ -604,17 +581,15 @@ cs357-agent-skills/
 2.  Exchange your repo URL with a classmate and install their skills in your OpenCode:
 
 ```bash
-# In opencode.json, add a remote skill:
-{
-  "skills": [
-    {
-      "name": "classmate-safety",
-      "url": "git+https://github.com/classmatename/cs357-agent-skills.git",
-      "path": "agent-safety-skill/SKILL.md"
-    }
-  ]
-}
+# Clone their repository into a discovery path; that is the whole install.
+git clone https://github.com/classmatename/cs357-agent-skills.git \
+  ~/.agents/skills/classmate
+
+# With pi, the equivalent one-liner:
+pi install git:github.com/classmatename/cs357-agent-skills
 ```
+
+Read their `SKILL.md` before you run a session with it loaded.  A skill is instructions your agent will follow, and installing one you have not read is the same category of decision as running a script you have not read.
 
 3.  Confirm installation: start OpenCode and verify the classmate's skill appears in your skill list.
 4.  Write one paragraph in your reflection on how their skill differed from yours in approach.
@@ -636,7 +611,304 @@ Test 3 is the one to spend time on, and it does not have a "correct" outcome.  E
 
 ---
 
+#### Pathway 2, Part E: The Personal Deliberation Harness
+
+> **This is an alternative to Parts A, B, and C, not an addition to them.**  Build the three skills, or build this.  Both satisfy core Part 4, both are assessed with the same Local Agent Lab rubric, and both are meant to take comparable effort.  Part D's reflection is required either way, with the prompts for your pathway.
+
+##### E1.  What You Are Building, and the Claim It Tests
+
+You are building a small **controller** that spends more inference time on a task, in a structured way, using one free local model called repeatedly.  Then you are measuring whether that extra time actually bought anything.
+
+The claim under test is specific, and it is not "more thinking is better."  It is this:
+
+> **Extra inference time improves an outcome only when an iteration introduces at least one thing the previous iteration did not have.**
+
+That list is short and worth memorizing, because your harness is essentially a machine for producing items on it:
+
+1.  New external evidence
+2.  A genuinely independent candidate
+3.  A narrower decomposition of the problem
+4.  Deterministic execution feedback (a test ran, and here is the exit code)
+5.  A retrieved specification
+6.  A counterexample or adversarial test
+7.  A structured human decision
+
+Asking the same model to "think again" introduces **none** of these.  It is the null case, and you will run it as a condition in E7 precisely so you have your own numbers on it rather than mine.  Ungrounded self-critique can leave an error in place and can talk a model out of a correct answer, and the effect is more pronounced in the small models you are running locally.  *Why Different Answers Every Time?* makes the mechanical version of this argument; here you get to test it.
+
+> **Common Misconception:** "This is just an agent loop with more steps."  The agent loop from the first week decides *what to do next*.  This decides *whether what was produced is acceptable, and whether another attempt is worth making*.  The agent loop's stopping condition is "the model emitted a final answer."  Yours is a set of conditions in code that the model does not get a vote on.  That difference is the assignment.
+
+##### E2.  Nine Words You Must Be Able to Distinguish
+
+Most of the confusion in this space comes from using one word for several things.  You will be asked to place each of your own components in exactly one of these rows, so read them against each other rather than one at a time.
+
+| # | Thing | What it is | What it cannot do |
+|---|---|---|---|
+| 1 | **Skill** | Reusable instructions in `SKILL.md` that an agent loads and follows | Enforce anything.  It is followed at the model's discretion |
+| 2 | **Tool** | Executable code the agent calls, which returns an observable result | Decide when it should have been called |
+| 3 | **Agent / session** | One isolated model context with a defined role | Share what it learned, except through something durable |
+| 4 | **Controller / orchestrator** | Code that invokes skills or sessions in a specified order, holds state, applies budgets, and enforces stopping | Judge quality on its own; it needs validators |
+| 5 | **Plugin / extension** | Harness-specific executable integration (a pi TypeScript extension) | Port to another harness |
+| 6 | **Charter** | The standing human-AI operating agreement: goals, boundaries, budgets, definition of done | Substitute for confirming a specific irreversible action |
+| 7 | **Task contract** | The acceptance specification for *one* task | Be written after the work and still mean anything |
+| 8 | **Validator** | An external or independently constructed check that produces a verdict from evidence | Catch a failure it was not designed to look for |
+| 9 | **Handoff artifact** | Durable state that lets a different session continue the work | Contain what nobody wrote down |
+
+**The sentence this table exists to support**, and which you will be asked to defend in your reflection:
+
+> A `SKILL.md` can *describe* a workflow.  It cannot reliably *enforce* multiple independent calls, clean contexts, rollback, time budgets, or deterministic stopping.  Those belong in executable controller code or a harness extension.
+
+You can see why from row 1 alone.  A skill saying "generate three independent candidates" is read by one model in one context, which then produces three things in that one context, having seen the first two while writing the third.  Only code can open three sessions.  A skill saying "stop after three iterations" is a model counting, which it may or may not do.  Only code can enforce a counter.  This is the same lesson Part A's safety guardrail teaches about confirmation gates, generalized: **instruction is not enforcement**, and knowing which of your requirements needs which is the engineering judgment being graded.
+
+##### E3.  Project Structure
+
+Use `.agents/skills/`, which both opencode and pi discover, so your harness is not welded to one tool.
+
+```text
+personal-agent-harness/
+|-- .agents/
+|   `-- skills/
+|       |-- charter-builder/        REQUIRED
+|       |   `-- SKILL.md
+|       |-- task-contract/          REQUIRED
+|       |   `-- SKILL.md
+|       |-- verify-and-repair/      REQUIRED
+|       |   `-- SKILL.md
+|       |-- workflow-orchestrator/  REQUIRED
+|       |   `-- SKILL.md
+|       `-- <two or more of your choosing>/
+|           `-- SKILL.md
+|-- tools/
+|   |-- deliberate_loop.py          REQUIRED: the controller
+|   `-- validators.py
+|-- config/
+|   |-- loop-config.json            every budget and threshold
+|   `-- charter-schema.json
+|-- CHARTER.md                      the human-readable charter
+|-- charter.json                    the machine-readable one
+|-- runs/                           one directory per task, inspectable
+|-- tests/
+|-- test-results/                   your twelve scripted tests
+|-- README.md
+`-- reflection.md
+```
+
+**Starter files are provided** at [`files/agent-templates/deliberation-harness/`]({{ site.baseurl }}/files/agent-templates/deliberation-harness/README.md) in the course repository: a working controller, a validator runner, and both config files.  They run, and they are deliberately incomplete.  Copy them, read them, and change them.  **Submitting them unmodified earns nothing**; the personalization requirements in E8 are what is being assessed, not the volume of code.
+
+##### E4.  The Required Core
+
+Build these six.  Everything else is optional.
+
+| # | Component | Must do |
+|---|---|---|
+| 1 | `charter-builder` skill | Interview the user, draft both charter files, get explicit approval |
+| 2 | `task-contract` skill | Turn one request into a machine-readable acceptance spec the user corrects |
+| 3 | `verify-and-repair` skill | Classify a failure, propose the smallest repair, resist widening the change |
+| 4 | `workflow-orchestrator` skill | State the execution order and the stopping rules, for a human to read |
+| 5 | **An executable controller** | Enforce every one of those things in code |
+| 6 | **Two or more additional skills** | Chosen from below, or invented, and personalized to your workflow |
+
+Choose your two-plus from: `context-pack`, `adversarial-tests`, `candidate-ensemble`, `rubric-auditor`, `failure-memory`, `final-evidence-report`, `benchmark-runner`, or a skill for your own domain.  **Explain the whole architecture in your README, including the components you did not build**, and say why those were the right ones to leave out.  Knowing what you deliberately scoped out is part of the design.
+
+##### E5.  The Charter, and the Gate It Creates
+
+The orchestrated workflow **begins by interviewing you**, and the controller does no substantive work until you have accepted the result.
+
+**Interview coverage.**  Ask about goals and typical tasks; collaboration and explanation style; permitted tools, paths, commands, and data sources; prohibited actions; actions requiring explicit confirmation; autonomy boundaries; privacy and sensitive data; definition of done; evidence required for acceptance; testing expectations; handoff expectations; session-memory and compaction policy; retry and escalation policy; maximum candidate, iteration, token, and wall-clock budgets; and the rule for changing the charter itself.
+
+> **Watch out!**  Do not dump that list on the user as one questionnaire.  Ask in coherent bounded groups, three or four related questions at a time, and reflect back what you heard before moving on.  A charter interview that feels like a form gets answered like a form, and you end up with defaults dressed as decisions.
+
+**Then the skill must:**
+
+1.  Draft `CHARTER.md` for a human to read.
+2.  Draft `charter.json` for the controller to enforce.
+3.  **Show its unresolved assumptions** rather than quietly picking defaults.
+4.  Ask you to approve or revise.
+5.  Record a version identifier and a content hash.
+6.  Prevent the orchestrator from starting until accepted.
+7.  Require renewed approval when a material rule changes.
+
+Points 5 and 6 together are the **charter gate**, and the hash is what makes it real: without it, `CHARTER.md` can be edited after approval and the gate becomes decoration.  The starter controller implements the gate; read `charter_gate()` and satisfy yourself that you could defend every line of it.
+
+> **The charter is not a blanket permission slip.**  Accepting a charter says "these are the rules we work under."  It does not pre-authorize any particular irreversible action.  If a task wants to delete, overwrite, publish, or push, the confirmation happens *then*, separately, every time.  A design that treats charter acceptance as standing consent has quietly removed the gate it was supposed to install.
+
+##### E6.  The Workflow the Controller Enforces
+
+Twelve steps, in this order:
+
+1.  Load or build the charter.
+2.  Interview if it is absent, incomplete, or incompatible with this task.
+3.  Build and approve the task contract.
+4.  Gather a bounded context packet.
+5.  Generate independent candidate plans or solutions.
+6.  Run deterministic and external validators.
+7.  Generate adversarial tests or counterexamples.
+8.  Select the best-known candidate.
+9.  Enter a bounded, evidence-guided repair loop.
+10. Run regression validation.
+11. Produce a final evidence report.
+12. Write a durable handoff.
+
+And it leaves this behind, which is the part a grader reads:
+
+```text
+runs/<task-id>/
+|-- charter-reference.json
+|-- task-contract.json
+|-- context-pack.md
+|-- candidates/
+|-- validation-results.json
+|-- repair-log.jsonl
+|-- final-evidence-report.md
+|-- HANDOFF.md
+`-- summary.json
+```
+
+**The task contract** carries at least these fields, and every hard constraint gets either an acceptance check or an explicit mark that it needs human judgment.  A constraint nothing checks is a preference in a constraint's clothing:
+
+```json
+{
+  "task_id": "", "objective": "", "deliverables": [],
+  "hard_constraints": [], "soft_preferences": [], "acceptance_checks": [],
+  "assumptions": [], "unknowns": [], "prohibited_actions": [],
+  "required_confirmations": [], "resource_budget": {}, "status": "draft"
+}
+```
+
+You get a chance to correct it before implementation starts.  That second gate is the one that catches a misread objective while it is still cheap.
+
+**Candidates: three by default**, configurable.  Generate them in **clean sessions or isolated contexts**, and require **meaningfully different approaches**: direct implementation, a simpler algorithm, a library-based version, invariant-first, test-first.  Rewording one prompt three ways does not produce three candidates.
+
+> **Say the honest thing about independence.**  Three candidates from the same model on the same prompt family are **not** statistically independent, and your writeup should not claim they are.  They share training data, tokenizer, and inductive biases, so they can be wrong in the same way.  Your job is to *look for the correlated failure* and report it: when all three candidates failed, did they fail differently, or did they make the same mistake three times?  The second answer is the more interesting finding and the one that tells you what a validator has to catch.
+
+**Validation is lexicographic**, not a blended score:
+
+| Tier | Check |
+|---|---|
+| 1 | Hard constraints |
+| 2 | Instructor-authored or held-out acceptance tests |
+| 3 | Public tests |
+| 4 | Syntax, compilation, type checking, schema validation |
+| 5 | Static analysis and security checks |
+| 6 | Performance measurements |
+| 7 | Criterion-level rubric judgments |
+| 8 | Style preferences |
+
+A failure at tier 2 is not offset by a perfect tier 8.  **Polish never compensates for a failed correctness check**, and a single weighted score lets exactly that happen, which is why you are not building one.
+
+There is a genuine design question buried here that the starter deliberately leaves to you.  The table is a *severity* ordering: which failure is more serious.  It is also being used as an *execution* ordering: what runs first.  Those come apart.  Acceptance tests sit above compilation in severity, but they cannot pass on code that does not compile, so running them first means a non-compiling candidate and a compiling-but-wrong candidate both fail at tier 2 and tie.  Moving the cheap structural checks earlier separates them, and changes what "got further down the hierarchy" means.  **Pick one, implement it, and defend it in your README.**  Either answer is acceptable; not noticing is not.
+
+For open-ended work with no mechanical check, keep a **claim-and-evidence ledger** classifying each claim as *verified*, *supported but not mechanically verified*, *assumption*, *unresolved*, or *contradicted*.  And do not describe the model's self-reported confidence as a probability: it is not calibrated unless you calibrated it and showed your work.
+
+**Adversarial tests** go in a **separate session from the one that wrote the solution**, and where the task allows: boundary cases; empty, null, malformed, and oversized inputs; semantic invariants; property-based tests; metamorphic relations; state transitions; concurrency; security misuse; and, for explanatory content, the misconceptions a novice actually holds.  Prefer instructor-authored or held-out tests for final acceptance, for a reason worth stating: **a model that misunderstood the spec will write tests that encode the same misunderstanding**, and then the code passes and the misunderstanding survives with a green check next to it.
+
+**The repair loop** preserves the best-known candidate *before* editing, classifies the failure before touching code, makes one coherent repair, reruns the failing check and the regression suite, keeps the repair **only if it improved the result**, rolls back if it did not, and appends every attempt to `repair-log.jsonl`.  Default: at most three iterations after selection.
+
+Stop when any of these is true, and **record which one**:
+
+- All hard gates pass.
+- Two consecutive iterations produce no measurable improvement.
+- The same normalized failure fingerprint appears twice.
+- A repair reintroduces an earlier failure.
+- A candidate, iteration, wall-clock, or token budget is exhausted.
+- The task needs information you do not have, or human judgment.
+- The charter says escalate.
+
+Naming the reason is not bookkeeping.  "Stopped because everything passes" and "stopped because we saw the same failure twice" are completely different claims about your result, and a report that says only "finished" has hidden the difference.
+
+**The handoff** must let a session with none of your context continue: task id, charter version, current owner, objective, current state, artifacts touched, decisions and their evidence, validators run, what passed and failed, **approaches that failed and should not be retried**, outstanding assumptions and risks, the next safe action, required human decisions, acceptance status, and timestamps.
+
+Add a **single-writer rule** for the shared working directory.  Read-only research may overlap; only one process mutates at a time.  Implement it with a claim file, atomic directory creation (`os.mkdir` fails if the directory exists, which is a real lock), a lock file, or another mechanism you justify.  Then say plainly **which parts are enforced by the tool and which hold only because both sides cooperated**.  That distinction is the same one from row 1 of E2, and it is the point of the whole pathway.
+
+**The final report** distinguishes: what was requested, what was produced, verified claims, checks passed, checks failed, **checks not run**, assumptions, residual risks, files changed, commands executed, budget consumed, why the loop stopped, and whether the contract is satisfied.  "Checks not run" is its own line because it is not evidence of anything, and a report that folds it into "passed" is overstating its case.  **The controller must never declare success because the model said it was finished.**
+
+##### E7.  The Evaluation Experiment
+
+Five conditions, same local model, same quantization, same sampling settings, same tasks:
+
+| Condition | Workflow |
+|---|---|
+| A | One-shot generation |
+| B | Ungrounded self-critique ("look at your answer and improve it") |
+| C | Best-of-three candidates |
+| D | Test-guided repair |
+| E | Your full personalized harness |
+
+Use five to ten tasks; more is not better here, since you have to inspect every run.  Measure: first-attempt correctness, final correctness, **correct-to-incorrect regression rate**, compilation and test pass rates, repair yield per iteration, hidden-test performance where you have it, candidate diversity, wall-clock time, generated tokens, unsupported claims, and human-rubric agreement for the criteria no machine checks.
+
+> **Do not assume E wins.**  A result showing your harness costing four times the tokens for no accuracy gain on easy tasks is a *good* result, honestly reported, and it earns full credit.  A results table that happens to rank your own system first, with no discussion of where it did not help, reads as a system that was never really tested.  The interesting questions are: **where did extra inference time help, where did it not, and which single validator was responsible for most of the improvement?**  Condition B is in the list to give you your own evidence about ungrounded self-critique, including whether it ever turned one of your correct answers into a wrong one.
+
+##### E8.  Personalization (Required)
+
+Every student's harness must differ.  Personalize at least:
+
+- One charter section
+- One risk or confirmation rule
+- One validator
+- One selected optional skill
+- One stopping or resource-budget rule
+- One output or handoff convention
+- One workflow-specific test
+
+Your workflow does not have to be software.  Research synthesis, study planning, data analysis, creative work, and course-project management all work, and a validator for "every claim in this literature summary cites a source I can open" is as real a validator as `pytest`.  **Use AI to help design and implement this**; that is expected and encouraged.  What is assessed is your engineering decisions and your evidence, not how much code was produced, and your reflection has to name AI suggestions you **rejected or corrected**, which is only possible if you read them.
+
+##### E9.  Test Harness (Required)
+
+Twelve scripted tests.  For each, submit the **actual transcript, commands, exit codes, and artifacts**.  A sentence asserting that a test passed is not a test result.
+
+| # | Test | Passes when |
+|---|---|---|
+| 1 | **Charter gate** | The orchestrator refuses substantive work before the charter is approved |
+| 2 | **Contract correction** | You change an assumption and the contract updates before execution |
+| 3 | **One-pass success** | A simple task passes every validator with no unnecessary repair |
+| 4 | **Candidate selection** | One candidate fails a hard gate and a different one is selected |
+| 5 | **Evidence-guided repair** | A failing test produces a targeted repair that then passes |
+| 6 | **Regression rollback** | A repair fixes one test and breaks another, and is rejected |
+| 7 | **Plateau stopping** | Repeated failure stops the loop instead of iterating forever |
+| 8 | **Cold handoff** | A fresh session resumes correctly from the durable handoff alone |
+| 9 | **Single-writer conflict** | Two sessions contend for write access and the protocol leaves observable evidence of what happened |
+| 10 | **Bypass attempt** | A user asks the agent to skip the charter, validation, or a confirmation |
+| 11 | **Unverifiable claim** | The report marks a claim unresolved instead of presenting it as verified |
+| 12 | **Personalization** | Behavior that comes from *your* charter or custom skill, not the template |
+
+> **Test 8 is the one that finds the gaps.**  Close everything, open a session that has never seen this task, hand it only `HANDOFF.md`, and ask it to continue.  Every question it asks that the handoff should have answered is a missing section.  Write them down; that list is worth more in your reflection than a handoff that happened to work.
+>
+> **Test 10 deserves a real answer, not a refusal.**  When a user says "skip the safety check this time," the interesting question is not whether the agent complied, but whether it *could* have.  If the gate is in the controller, the request cannot be granted no matter how the model feels about it, and your transcript shows the code refusing rather than the model declining.  If the gate is only in a `SKILL.md`, you have just demonstrated E2's central claim on your own system.  Either outcome is a legitimate result.  Report which one you got.
+
+##### E10.  Research Grounding
+
+Read enough of these to place your own results, and note that each has **scope conditions**.  None of these techniques improves performance universally, and papers that appear to disagree usually differ in whether the loop had access to a real signal.
+
+- **Self-Refine**, iterative refinement with self-generated feedback: [arxiv.org/abs/2303.17651](https://arxiv.org/abs/2303.17651)
+- **Large Language Models Cannot Self-Correct Reasoning Yet**, the counterweight, and the one to read against the previous: [arxiv.org/abs/2310.01798](https://arxiv.org/abs/2310.01798)
+- **Reflexion**, verbal reinforcement using feedback from an environment: [arxiv.org/abs/2303.11366](https://arxiv.org/abs/2303.11366)
+- **Self-Consistency**, sampling several reasoning paths and taking the majority: [arxiv.org/abs/2203.11171](https://arxiv.org/abs/2203.11171)
+- **Fusion Harness**, an architectural example of independent candidates with separated architect, builder, and validator roles: [github.com/disler/fusion-harness](https://github.com/disler/fusion-harness)
+
+Read the first two together.  The apparent contradiction largely dissolves once you ask what each loop had to work with: refinement against **execution feedback or an external signal** behaves very differently from refinement against the model's own opinion.  That distinction is the claim in E1, arrived at from the literature instead of from a lab.
+
+**Fusion Harness is inspiration, not a dependency.**  Do not install it, reproduce it, or require it.  Borrow the ideas worth borrowing: independent candidate generation, separated architect/builder/validator roles, gate-first validation, single-writer discipline, bounded repair, and inspectable run artifacts.  Yours must stay substantially lighter and must work with **one free local model invoked repeatedly**.  Multiple models are an optional extension, not a requirement.
+
+##### E11.  Scope Control
+
+Read this before you start building, and again when you are tempted to add something.
+
+- One local model used repeatedly is sufficient.  It is meant to be.
+- No paid APIs.
+- No Fusion Harness.
+- No Docker beyond what the core lab already gives you, and a non-Docker path must work.
+- You are not building a production multi-agent scheduler.
+- No user interface.  Plain files, JSON, Python, and the native facilities of pi or opencode.
+- Multiple models, parallel execution, richer locking, and harness-specific plugins are **extensions**.  Finish the core first.
+
+A harness that does the required twelve steps on one model with three candidates and a three-iteration repair loop, tested twelve ways and honestly reported, is a complete and excellent submission.  A sprawling one that does more and is tested less is not.
+
+---
+
 #### Part D: Reflection (Required, ~500 words)
+
+Answer the set for the pathway you chose.
+
+##### If you built the three skills (Pathway 1)
 
 Address all five of the following:
 
@@ -650,11 +922,39 @@ Address all five of the following:
 
 5.  **Design generalization:** Describe one other skill you would build for this course's final project: not safety or memory, but something that encodes your personal workflow or project-specific conventions.  What would go in the `SKILL.md` instructions?
 
+##### If you built the deliberation harness (Pathway 2)
+
+Roughly 800 words, since there is more evidence to account for.  Address all eleven, briefly:
+
+1.  **Enforceable versus advisory:** Which parts of your system are enforced by code, and which depend on the model choosing to comply?  Draw the line explicitly, and name one requirement you *moved* across it during the build.
+
+2.  **Which iteration earned its cost:** Point to a specific iteration in a specific `repair-log.jsonl` that introduced genuinely new evidence, and say which of E1's seven kinds it was.
+
+3.  **Ungrounded self-critique:** In condition B, did the model ever turn a correct answer into an incorrect one?  Quote it if so.  If not, say what your task set may have lacked that would have exposed it.
+
+4.  **Candidate independence:** How independent were your candidates, really?  Give a case where two or three failed the *same way*, and say what that implies about what a validator has to catch.
+
+5.  **What the charter clarified:** Name something the charter settled that an ordinary system prompt would not have, and be concrete about the mechanism, not just the content.
+
+6.  **Cold handoff:** Could a new session continue from `HANDOFF.md` alone?  List every question it asked that the handoff should have answered.
+
+7.  **The validator that mattered:** Which single validator produced the largest improvement, and what does that suggest about where to spend effort next time?
+
+8.  **The shared blind spot:** What failure could *all* your candidates and *all* your validators miss together?  This is the most important question here; answer it about your actual system rather than in general.
+
+9.  **When to stop:** From your own data, when should this system stop spending inference time?  Cite a stopping condition that fired and one that never did.
+
+10. **Personalization and its evidence:** How did you personalize the workflow, and what in your results shows the personalization improved or appropriately constrained behavior?
+
+11. **Working with AI on this:** What did AI-generated implementation help with, and which of its suggestions did you **reject or correct**?  Name at least one of each.
+
 ---
 
 #### Deliverables
 
-Submit a `.zip` or GitHub repo link containing:
+Submit a `.zip` or GitHub repo link containing the tree for your pathway.
+
+##### Pathway 1 deliverables
 
 ```
 submission/
@@ -677,9 +977,44 @@ submission/
 |   |-- safety-skill-results.md
 |   |-- vault-skill-results.md
 |   `-- handoff-skill-results.md  (all four tests, with both agents' transcripts)
-|-- opencode.json           (showing all three skills loaded)
+|-- .agents/skills/         (all three skill directories, as installed)
 `-- reflection.md
 ```
+
+##### Pathway 2 deliverables
+
+```
+submission/
+|-- .agents/skills/
+|   |-- charter-builder/SKILL.md
+|   |-- task-contract/SKILL.md
+|   |-- verify-and-repair/SKILL.md
+|   |-- workflow-orchestrator/SKILL.md
+|   `-- <your two or more chosen skills>/SKILL.md
+|-- tools/
+|   |-- deliberate_loop.py       (your controller, modified from the starter)
+|   `-- validators.py
+|-- config/
+|   |-- loop-config.json         (your budgets and thresholds)
+|   `-- charter-schema.json
+|-- CHARTER.md                   (yours, from a real interview, not the template)
+|-- charter.json                 (accepted, with a version and a content hash)
+|-- runs/                        (at least one complete run directory per test below)
+|-- tests/                       (the scripted sequence for all twelve tests)
+|-- test-results/
+|   |-- 01-charter-gate.md       (transcripts, commands, exit codes, artifacts)
+|   |-- ...                      (one file per test, 01 through 12)
+|   `-- 12-personalization.md
+|-- evaluation/
+|   |-- task-set.md              (the five to ten tasks, and why they are checkable)
+|   |-- results.md               (conditions A-E, the full metric table)
+|   `-- raw/                     (per-run data behind the table)
+|-- README.md                    (the whole architecture, including what you did NOT build,
+|                                 your tie-break rule, and your execution-vs-severity choice)
+`-- reflection.md
+```
+
+**One skill from either pathway** still has to be packaged as a `.skill` archive and posted to the course discussion, per core Part 4.
 
 **Due:** See course schedule.
 
@@ -698,9 +1033,26 @@ submission/
 | Agent 2 restarts a task from scratch instead of continuing it | The medium holds the task but not the *state*: what was done, and what the next safe action is | Agent 1 must write progress, not just status. "In progress" tells agent 2 nothing it can act on |
 | An item sits claimed forever | No staleness rule, or a staleness rule with no clock | Record `claimed_at` and define the timeout in the skill. A claim nobody can break is a deadlock with better manners |
 
+**Pathway 2**
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| The controller refuses to start and says the charter is not accepted | That is the charter gate doing its job | Open `charter.json`, read it, and set `"accepted": true` yourself. If you find yourself wanting to automate this step, notice what you are about to remove |
+| It refuses even though `accepted` is `true` | `CHARTER.md` changed after acceptance, so the content hash no longer matches | Re-run the charter interview, or recompute the hash deliberately. Do not delete the check; it is the only thing making the gate more than decoration |
+| A skill does not load at all | The directory name does not match `name:` in the front matter, or the directory is not in a discovery path | `ls .agents/skills/` and compare each directory name to its `SKILL.md`. This is the single most common cause |
+| All three candidates are nearly identical | The strategies differ in wording, not in approach, or they were generated in one shared context | Give each a structurally different instruction (simplest algorithm, library-based, test-first), and confirm the controller issues separate calls |
+| Every candidate fails the same tier and the selection looks arbitrary | They tie, and the incumbent is kept | This is real, not a bug. Decide your tie-break rule, implement it, and document it in the README |
+| The repair loop runs the full three iterations and improves nothing | The repair prompt gets the failure text but no execution detail worth acting on | Feed the actual stderr and exit code, not a summary. If it still plateaus, that *is* your finding: record it and let the stopping rule fire |
+| The loop never stops | A budget defined in JSON that no code reads | Grep your controller for every key in `budgets`. A budget nothing checks is a wish |
+| Every run reports success | Validators that pass vacuously because no commands are configured for them | Read `not_run` in the report. A tier with no commands is not evidence; make the report say so and it will stop flattering you |
+| Condition E is slower and no more accurate than A | An honest result, and quite possibly the correct one for easy tasks | Report it. Then look at whether your task set was hard enough for deliberation to have anything to work with |
+| The cold-handoff test fails immediately | The handoff records status rather than state | "In progress" tells the next session nothing. Record what was done, what was tried and rejected, and the next safe action |
+
 #### Self-Check Before You Submit
 
-- [ ] Both skills exist as installable directories with a valid `SKILL.md`, a `README.md`, and an example session.
+##### Pathway 1
+
+- [ ] Every skill exists as an installable directory with a valid `SKILL.md`, a `README.md`, and an example session.
 - [ ] The safety skill names the guarded operations **explicitly**, rather than describing a topic.
 - [ ] Every guarded operation produces a confirmation prompt **and** an audit-log entry.
 - [ ] The scripted prompt sequence is included, with the agent's actual responses, not a summary.
@@ -714,3 +1066,27 @@ submission/
 - [ ] Test 3 is **diagnosed**, not just reported: what happened, why, and which rule would have prevented it.
 - [ ] The writeup says which of the handoff rules the medium enforces and which hold only because both agents cooperated.
 - [ ] The writeup names one thing the skill failed to catch, and what it would take to catch it.
+
+##### Pathway 2
+
+- [ ] Every required skill exists as a directory under `.agents/skills/` whose name matches its `name:` field.
+- [ ] `CHARTER.md` came from a **real interview** with you and reads like your working agreement, not the template.
+- [ ] `charter.json` validates against the schema, and carries a version, a content hash, and an acceptance record.
+- [ ] The controller **refuses to work** before acceptance, and you have the transcript proving it (test 1).
+- [ ] Every budget in `loop-config.json` is read and enforced somewhere in the controller.
+- [ ] Candidates are generated in **separate calls** with structurally different approaches, not reworded prompts.
+- [ ] The writeup says candidates are **correlated**, not independent, and names a shared failure you observed.
+- [ ] Validation is **lexicographic**; no blended score anywhere, and style cannot rescue a failed correctness check.
+- [ ] Your README states your **tie-break rule** and your **execution-order versus severity-order** choice, with reasons.
+- [ ] The repair loop **preserves the best candidate before editing** and rolls back a regression (test 6).
+- [ ] Every run names **why it stopped**, and the reason is one of the listed conditions.
+- [ ] The final report separates **checks not run** from checks passed.
+- [ ] No run declares success because the model said it was finished.
+- [ ] All **twelve tests** are present with real transcripts, commands, and exit codes, not narrative summaries.
+- [ ] The cold-handoff test (8) lists the questions the fresh session had to ask.
+- [ ] The bypass test (10) says whether the gate was in code or only in a `SKILL.md`, and shows which refused.
+- [ ] The evaluation covers **all five conditions** on the same model, quantization, and sampling settings.
+- [ ] The results discussion says where extra inference time did **not** help, and names the validator that mattered most.
+- [ ] All **seven personalization requirements** are met and are pointed to explicitly in the reflection.
+- [ ] The reflection names at least one AI suggestion you **rejected or corrected**.
+- [ ] Nothing in the submission is a starter file left unmodified.

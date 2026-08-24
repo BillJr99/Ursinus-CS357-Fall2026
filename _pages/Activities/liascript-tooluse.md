@@ -385,7 +385,7 @@ With the protocol understood from Part I and II, this Hands-On section has you b
 
 ## Hands-On: Build and Call a Tool
 
-The full 30-minute build (three tool definitions in OpenAI function-calling schema, the executor pattern, and the agent loop that ties them together) now lives on the **[Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357/Assignments/ToolsMCP)**, where you actually do it.  We spend today's session on the *protocol* and its costs; the lab is where you write the code.
+The full 30-minute build (three tool definitions in OpenAI function-calling schema, the executor pattern, and the agent loop that ties them together) now lives on the **[Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP)**, where you actually do it.  We spend today's session on the *protocol* and its costs; the lab is where you write the code.
 
 If your team finishes the Models early, open the lab and start the walkthrough.
 
@@ -438,5 +438,5 @@ Our agents can now call tools reliably.  Notice that the wobble you studied in *
 - Ollama tool-calling documentation: https://github.com/ollama/ollama/blob/main/docs/api.md
 - Schick et al. "Toolformer: Language Models Can Teach Themselves to Use Tools."  *NeurIPS* (2023).
 - Mialon et al. "Augmented Language Models: A Survey."  *TMLR* (2023).
-- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357/Assignments/RAGKnowledgeBase), a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
-- [Monte Carlo Retirement companion notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/MonteCarloRetirement.ipynb), a runnable version of that lab, including the full function-calling agent loop with offline sample responses.
+- [Multimodal AI and Monte Carlo Simulation lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), a complete tool-calling case study: the simulation is wrapped as a schema-described tool, and an agent chooses its parameters, invokes it, and interprets the resulting chart.
+- [Monte Carlo Retirement companion notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/MonteCarloRetirement.ipynb), a runnable version of that lab, including the full function-calling agent loop with offline sample responses.
