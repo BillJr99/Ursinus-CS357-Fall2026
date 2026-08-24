@@ -32,6 +32,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Model Right-Sizing** | Choosing the smallest model that achieves adequate accuracy for a specific task, rather than defaulting to the most capable (and most energy-intensive) model available. | Using a 7B-parameter local model to summarize documents instead of a 70B frontier API, when accuracy is comparable, reduces inference energy by roughly 10x. |
 | **Jevons Paradox** | The historical observation that improvements in the efficiency of using a resource tend to increase total resource consumption rather than decrease it, because efficiency lowers cost per use and expands the range of economically viable applications. | Fuel-efficient cars led to more total driving; energy-efficient LEDs led to more total light-hours. The same dynamic may apply to more efficient AI models. |
 | **Grid Carbon Intensity** | The amount of CO$_2$ emitted per unit of electricity in a given region at a given time, determined by the mix of energy sources (coal, gas, solar, wind, hydro, nuclear) on the local grid. | The same AI inference job run in Iceland (near-zero-carbon geothermal electricity) versus a coal-heavy region can differ by a factor of 50 in carbon impact. |
+| Thinking tokens | The intermediate stream a reasoning model emits before answering. Billed and burned as *output* tokens, the expensive kind, so extended thinking can multiply the cost of an unchanged reply many times over | The 21x row in the Part IIIb table, where the user sees the same 150-word answer |
 
 ---
 
@@ -44,7 +45,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | 0-10 | Part I, orders of magnitude: what a query actually costs |
 | 10-20 | Part II, right-sizing and the local-first principle |
 | 20-35 | Part III, the Jevons paradox and why efficiency gains may not reduce impact |
-| 35-65 | Part IIIb, what you can actually do about it: caching, batching, and the smallest model that clears the bar |
+| 35-65 | Part IIIb, what you can actually do about it: thinking tokens, caching, batching, and the smallest model that clears the bar |
 | 65-75 | Part IV, the carbon audit of your own AI week |
 
 ---
@@ -241,6 +242,38 @@ The table below uses approximate 2025 prices for reference.  Actual prices vary 
 
 ---
 
+### Thinking Tokens Are Output Tokens
+
+The `budget_tokens` cap mentioned above is worth dwelling on, because it points at the fastest-growing line item in a modern agent's bill.
+
+*Why Different Answers Every Time?* showed that a fixed-depth model buys more computation only by emitting more tokens, and that **reasoning models** do exactly that: a long intermediate stream before the answer.  Read that back through this section's cost model and the consequence is immediate.  **Those thinking tokens are output tokens.**  They are generated one at a time, they cannot be parallelized, they hold KV-cache memory for the whole context, and they are billed at the output rate, which is the expensive one.
+
+The arithmetic is unforgiving because the multiplier is not small.  Take the "one agent response" row above: 150 words, about 200 output tokens, about $0.012.  Now let the model think first.
+
+| What the model does | Output tokens | Cost @ $60/1M out | Multiple |
+|---|---|---|---|
+| Answers directly | ~200 | ~$0.012 | 1x |
+| Thinks briefly, then answers | ~1,200 | ~$0.072 | 6x |
+| Thinks at length, then answers | ~4,200 | ~$0.252 | 21x |
+
+The user sees the same 150-word reply in every row.  Twenty-one times the cost and twenty-one times the energy bought nothing visible, and on a problem the model would have gotten right anyway it bought nothing at all.
+
+Running locally does not make this free, it makes it *invisible*.  The `$0.00` column in the table above never meant zero cost; it meant the cost moved to your electricity bill and your GPU's service life.  A reasoning model on your own hardware is the same twenty-one times more work, and the only thing that changed is that nobody itemizes it for you.
+
+> **The rule that follows.**  Extra inference time is worth its energy when an iteration introduces something the previous one lacked: a checked result, a rejected alternative, a caught contradiction.  When the model restates itself at greater length, you have paid twenty-one times over for a longer way of being equally right or equally wrong.  This is the same test from the sampling session, arrived at from the other direction: there it was about accuracy, here it is about joules.
+
+#### Critical Thinking Questions
+
+4.  A team enables extended thinking across their entire support agent because it improved answers on the hardest ten percent of tickets.  Using the table above, estimate what that decision costs them on the other ninety percent, and propose a change that keeps the gain and drops most of the cost.
+
+   *Hint:* If ninety percent of tickets did not need it, most of the added spend bought nothing, and the multiple is large enough that the waste can exceed the entire original bill. The change is a routing decision, not a capability decision: classify first, and spend thinking only on the tickets that a cheap signal says are hard. The next section builds exactly that classifier.
+
+5.  Your reasoning model runs locally, so the per-token cost is zero. Give two reasons the environmental argument in this session still applies, and one reason it applies *more* strongly than it would to a hosted call.
+
+   *Hint:* Electricity and hardware amortization are the two obvious ones, and neither disappears because no invoice arrives. The stronger case: a consumer GPU is typically less energy-efficient per token than a datacenter accelerator running batched inference, so the same generation can cost more joules locally than remotely even though it costs fewer dollars.
+
+---
+
 ## Caching Strategies
 
 In this part, you will learn how prompt caching and semantic caching work, when each applies, and how to structure your prompts so the provider's cache actually gets used, because a cache-busting prefix in the wrong place can eliminate your entire caching benefit.
@@ -285,6 +318,8 @@ In this part, you will apply the right-sizing principle to a routing decision ta
 
 **Right-sizing** is the principle that you should deploy the minimum model capable of performing the task correctly.  A 405-billion-parameter frontier model answering "What is 2+2?" wastes money, latency, and GPU cycles that could serve another user.  A 3-billion-parameter model writing a novel technical specification will likely produce something inadequate.  The art is in building a **routing function** that classifies incoming queries and dispatches them to the appropriate model tier.
 
+Since the section above, right-sizing has a second dial.  It is no longer only *which model*, it is *how much thinking*, and the two are independent: a small model asked to think at length can cost more than a large one answering directly.  So a routing function now emits two decisions rather than one, and the cheaper decision is usually the thinking dial, because turning it down costs no capability on queries that never needed it.
+
 Routing architectures take several forms:
 - **Classifier-first**: a tiny, fast, cheap model (or a rules-based classifier) reads the query and outputs a label: `trivial`, `medium`, `complex`, `sensitive`.  Each label maps to a model tier.
 - **Confidence-based**: a small model attempts the task and also predicts its own confidence.  If confidence exceeds a threshold, return the result; otherwise escalate to a larger model.
@@ -298,18 +333,20 @@ Routing architectures take several forms:
 | "Write a technical specification for a microservices API" | Large frontier model | Open-ended generation requiring coherent, technically accurate long-form structure; small models produce vague or incomplete specs. | No savings: frontier quality is genuinely needed. |
 | "Translate this sentence to Spanish" | Medium model or specialized translation model | Translation does not require frontier-level reasoning; specialized translation models (e.g., NLLB) often outperform general LLMs at lower cost. | ~80% savings depending on translation volume. |
 | "What year was Lincoln born?" | Retrieval + tiny model | The answer lives in a lookup table; generation is effectively one token; retrieval is faster and more reliable than LLM recall. | ~95% savings: retrieval is cheap; generation is minimal. |
+| "Reconcile these two conflicting spec sections" | Frontier model, thinking **on** | Genuinely needs dependent steps: hold both sections, find the conflict, reason about which governs. This is the case extended thinking exists for. | No savings, and the spend is justified: verify by checking whether thinking-off gets it right. |
+| "Reformat this JSON to match our schema" | Any model, thinking **off** | A structural transformation with a stated rule. Thinking adds output tokens and no correctness; better still, this row is a candidate for not using a model at all. | ~90% savings versus the same model with thinking on. |
 
 #### Critical Thinking Questions
 
-4.  Design a routing function for a customer-support agent that handles billing questions, technical troubleshooting, and general product questions.  What features of the incoming query text would your classifier use to assign a route?  What happens to the user experience if the classifier mis-classifies a complex billing dispute as a simple product question?
+6.  Design a routing function for a customer-support agent that handles billing questions, technical troubleshooting, and general product questions.  What features of the incoming query text would your classifier use to assign a route?  What happens to the user experience if the classifier mis-classifies a complex billing dispute as a simple product question?
 
    *Hint:* Consider features like: presence of numbers or account references (billing), presence of error messages or version numbers (technical), question length, presence of emotional language (escalation needed).  What's the cost of a wrong classification in each direction?
 
-5.  What is the risk of routing a complex query to the wrong (cheaper) tier?  How would you detect in production that mis-routing is happening frequently?  What specific metric would you monitor, and what threshold would trigger an alarm?
+7.  What is the risk of routing a complex query to the wrong (cheaper) tier?  How would you detect in production that mis-routing is happening frequently?  What specific metric would you monitor, and what threshold would trigger an alarm?
 
    *Hint:* If the small model frequently produces answers that the user immediately follows up on with "that's not right" or "can you try again," that's a signal of mis-routing.  What would you log to detect this pattern?
 
-6.  A confidence-based router relies on the small model's self-reported confidence score to decide whether to escalate.  Why might this be unreliable, and what alternative signal could you use instead to decide when to escalate to a larger model?
+8.  A confidence-based router relies on the small model's self-reported confidence score to decide whether to escalate.  Why might this be unreliable, and what alternative signal could you use instead to decide when to escalate to a larger model?
 
    *Hint:* LLMs are known to be poorly calibrated; they are often very confident when wrong.  What could you check about the *output itself* (rather than the model's confidence score) to decide if it looks trustworthy?
 
@@ -335,15 +372,15 @@ where $Q$ is queries per day, $T_{\text{in}}$ is average input tokens per query,
 
 #### Critical Thinking Questions
 
-7.  At what query volume does semantic caching become worth the engineering cost of building and maintaining it?  What factors beyond raw query volume matter in this decision?
+9.  At what query volume does semantic caching become worth the engineering cost of building and maintaining it?  What factors beyond raw query volume matter in this decision?
 
    *Hint:* Consider: How repetitive are your queries?  (A homework helper gets many unique questions; a FAQ bot gets many repeated ones.)  What is the risk of serving a slightly stale cached answer?  What is the engineering cost of building the cache correctly?
 
-8.  A team proposes to reduce cost by streaming responses to users and canceling the generation mid-stream once the user stops reading or scrolls away.  What practical and ethical complications does this introduce, even though it would save money?
+10.  A team proposes to reduce cost by streaming responses to users and canceling the generation mid-stream once the user stops reading or scrolls away.  What practical and ethical complications does this introduce, even though it would save money?
 
    *Hint:* Think about what happens if the user missed the most important part of the response (which might be in the second paragraph).  Think also about the billing model: does canceling generation mid-stream actually stop the charge, or has the compute already been done?
 
-9.  Build a cost model for a hypothetical Ursinus College tutoring agent.  Assume: 200 student queries per day, each with a 300-token system prompt, a 100-token student question, and a 250-token answer.  Estimate the monthly cost at GPT-4 pricing ($15/$60 per million input/output tokens).  Then estimate the cost with a local model running on a GPU that costs $0.50/hour.  At what query volume per day does local inference become cheaper than the API?
+11.  Build a cost model for a hypothetical Ursinus College tutoring agent.  Assume: 200 student queries per day, each with a 300-token system prompt, a 100-token student question, and a 250-token answer.  Estimate the monthly cost at GPT-4 pricing ($15/$60 per million input/output tokens).  Then estimate the cost with a local model running on a GPU that costs $0.50/hour.  At what query volume per day does local inference become cheaper than the API?
 
    *Starter hint:* Run this script and compare the two monthly cost figures; the crossover point where local inference becomes cheaper depends entirely on how fully you can utilize the GPU.
    ```python

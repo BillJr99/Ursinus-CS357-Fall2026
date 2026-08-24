@@ -32,6 +32,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Majority Vote** | An aggregation method where the most common answer among debating agents is taken as the final answer, treating all agents as equals regardless of their reasoning quality. | Three agents answer "10", "15", "10"; majority vote returns "10" (correct answer in the water bottle problem). |
 | **Judge Agent** | An alternative to majority vote: a separate agent that reads all agents' final answers and reasoning, then selects or synthesizes the best answer based on argument quality rather than counting votes. | A judge agent with prompt "Read these three answers and their reasoning. Identify which reasoning is most rigorous." |
 | **Explore-Then-Commit** | A temperature scheduling strategy where early rounds use high temperature (diverse initial answers) and later rounds use lower temperature (converging toward a well-supported conclusion). | Round 1 at temperature 0.9 for diversity; Round 2 at temperature 0.5 for more considered revision. |
+| Reasoning model | A model trained by reinforcement learning against checkable outcomes, which deliberates at length inside one response. It buys more *dependent* steps; debate buys more *independent* errors. They compose, and neither substitutes for the other | Three reasoning models converging confidently on the same wrong answer, because deliberation does not decorrelate error |
 
 ---
 
@@ -41,7 +42,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 | Minutes | What we do |
 |---|---|
-| 0-10 | Part I, the logic of productive disagreement, starting from the positions you staked out in your reading response |
+| 0-10 | Part I, the logic of productive disagreement, and why it is not the same thing a reasoning model does |
 | 10-40 | Part II, three agents, two rounds, one vote, implemented and traced |
 | 40-55 | Model 2, the autopsy: did round 2 repair the error or spread it? |
 | 55-70 | Section 3, when agreement misleads, and what that means for your project's question |
@@ -86,6 +87,31 @@ Honesty about costs.  Debate multiplies inference cost by roughly $n \times R$. 
 3.  When agents share training data and similar biases, which kinds of errors will *correlate* across agents and therefore survive debate?  Give one concrete example of a question where debate would confidently produce the wrong answer.
 
    > *Hint: Think about what all LLMs trained on similar internet text might systematically misrepresent or underrepresent.  A question whose correct answer contradicts common misconceptions in that training data is a candidate for a correlated error.  Can you name one?*
+
+### Debate Is Not the Same Thing a Reasoning Model Does
+
+*Why Different Answers Every Time?* introduced **reasoning models**: models trained by reinforcement learning against checkable outcomes, which deliberate at length inside a single response before answering.  It is easy to hear "the model thinks before it answers" and conclude that debate is the same idea with extra steps.  It is not, and the difference is exactly the thing this session is about.
+
+| | Reasoning model | Multi-agent debate |
+|---|---|---|
+| Where deliberation happens | Inside one context, one response | Across $n$ contexts that started separately |
+| What it buys | More *dependent* steps: step B can use step A's result | More *independent* errors: two wrong answers that are wrong differently |
+| What it cannot fix | A misconception held throughout that one pass | A misconception all $n$ agents share |
+| Cost shape | One call, a long one | $n \times R$ calls |
+
+The row that matters is the second.  A reasoning model lifts the cap on how many steps *depend on each other*, which is why it helps on problems that need a chain of inference.  It does nothing about correlated error: a model reasoning at length from a wrong premise reaches a wrong conclusion carefully.  Debate attacks the other axis entirely.  Its whole premise is that two runs fail *differently*, so one can catch the other.
+
+They compose, and the composition is the interesting case.  Nothing stops you running a debate among three reasoning models, and you would then be buying both properties, at both costs.  What you cannot do is substitute one for the other and expect the same protection.
+
+> **Watch out!**  Reasoning models make debate *harder to evaluate*, not easier.  Each agent now emits a long reasoning stream, and a stream that reads like careful deliberation is more persuasive to the other agents and to you.  Section 3 below is about agreement that misleads; a confident, well-argued, wrong reasoning trace is the most misleading kind of agreement there is.
+
+#### Critical Thinking Questions
+
+4.  Your team runs a 3-agent debate and all three agents are reasoning models.  All three produce long, internally consistent reasoning and converge on the same wrong answer.  Which of debate's two assumptions failed, and would swapping in three *different* models have helped?
+
+    > *Hint: The independence assumption failed, not the deliberation one; every agent reasoned carefully and correlated anyway, because they share training data and inductive biases. Different model families genuinely decorrelate errors more than different samples from one model, so it would likely help, and it is not a guarantee: models trained on overlapping web data can share the same misconception. The honest move is to measure disagreement rate rather than assume it.*
+
+---
 
 With the theory of when debate works (and fails) established, Part II shows the protocol running on a real problem so you can observe these dynamics directly in the output.
 
@@ -195,15 +221,15 @@ Run the debate on this question.  The correct answer is **10 dollars** (if the w
 
 ### Critical Thinking Questions
 
-4.  Did any round 1 agent fall for the intuitive-but-wrong answer of 15 dollars?  Did exposure to the other agents' reasoning in round 2 repair the error (converging toward 10) or spread the error (pulling correct agents toward 15)?  Quote the decisive sentence from the transcript that shows which happened.
+5.  Did any round 1 agent fall for the intuitive-but-wrong answer of 15 dollars?  Did exposure to the other agents' reasoning in round 2 repair the error (converging toward 10) or spread the error (pulling correct agents toward 15)?  Quote the decisive sentence from the transcript that shows which happened.
 
    > *Hint: Look at round 2 transcripts for any agent that changed its answer.  Did the agent that changed provide a clear reason for the change?  Is "the other agents said 10 so I will too" a good reason?  What distinguishes persuasion by evidence from persuasion by social pressure?*
 
-5.  Round 1 uses temperature 0.9 and round 2 uses temperature 0.5.  Explain this scheduling as an "explore then commit" strategy: what does each temperature level accomplish, and what would go wrong at temperature 0.0 everywhere?
+6.  Round 1 uses temperature 0.9 and round 2 uses temperature 0.5.  Explain this scheduling as an "explore then commit" strategy: what does each temperature level accomplish, and what would go wrong at temperature 0.0 everywhere?
 
    > *Hint: At 0.0, every independent agent produces the same answer (the model's mode).  If that mode answer is wrong, all agents start with the same wrong answer and there is nothing to debate.  What is the minimum diversity you need in round 1 for debate to be possible?*
 
-6.  Majority vote treats all agents as equal regardless of the quality of their reasoning.  Sketch the judge-agent alternative: write out the system prompt the judge would use, and explain which pattern from earlier in the course a judge agent most resembles.
+7.  Majority vote treats all agents as equal regardless of the quality of their reasoning.  Sketch the judge-agent alternative: write out the system prompt the judge would use, and explain which pattern from earlier in the course a judge agent most resembles.
 
    > *Hint: The judge reads everyone's reasoning, not just their final answers.  A judge that can explain why it chose one answer over another is more useful than a vote counter.  Which agent role from the critique-and-refine activity does this most closely resemble?*
 
