@@ -19,11 +19,11 @@ To turn any GitHub repository into something an agent can actually read, using g
 
 ## About This Tutorial
 
-This module introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
+This tutorial introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Domain swap** | Replacing `github.com` in a repo URL with a different domain to activate a specialized tool on that same repo | `github.com/owner/repo` -> `gitingest.com/owner/repo` |
 | **Token budget** | The maximum amount of text (measured in tokens) a model can process in one call; large repos may exceed it | A 50,000-line codebase flattened to text may be 200 000+ tokens, more than most local models can handle at once |
@@ -42,7 +42,7 @@ In this part, you will learn how swapping a single domain in a GitHub URL unlock
 
 You already know that pressing the `.` key on any GitHub repository opens `github.dev`, a full VS Code editor in the browser, no installation required.  That one-key trick is a domain swap in disguise: the browser replaces `github.com` with `github.dev` and GitHub serves a different application.  Five specialized services have extended this pattern to deliver capabilities that matter specifically for AI-assisted development.
 
-Every tool in this activity works on public repositories only.  Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo.  These tools are designed for reading and understanding open-source code; treat them as read-only research instruments.
+Every tool here works on public repositories only.  Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo.  These tools are designed for reading and understanding open-source code; treat them as read-only research instruments.
 
 The table below maps each tool to its purpose.  Some tools belong in your daily workflow; others are situational; you reach for them when a specific problem appears.
 
@@ -259,7 +259,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 1.  *Domain-swap scavenger hunt.*
 
-   - *What to do*: Choose any open-source agent project from GitHub (not one used in today's examples).  Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity: domain swap, what it revealed, whether it was useful for this particular repo.
+   - *What to do*: Choose any open-source agent project from GitHub (not one used in this tutorial's examples).  Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity: domain swap, what it revealed, whether it was useful for this particular repo.
    - *Starter hint*: Start with `github.dev` (press `.`) to orient yourself, then `gdagram.com` for the diagram, then `deepwiki.com` for the explanation.  Use `gitingest.com` last so you know which subdirectory to filter to.  Save `getmcp.io` for a library you actually plan to use in code.
    - *You've succeeded when*: You can answer the five codebase-orientation questions from Model 3 for your chosen repo, citing which tool gave you each answer.
 
@@ -277,7 +277,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 4.  *Security audit of the workflow.*
 
-   - *What to do*: Write a one-page team policy for using the five tools in this activity safely.  Cover: which tools are appropriate for which types of repositories, what to check before pasting a URL into any external service, and what to do if a teammate accidentally exposes a private URL.
+   - *What to do*: Write a one-page team policy for using the five tools here safely.  Cover: which tools are appropriate for which types of repositories, what to check before pasting a URL into any external service, and what to do if a teammate accidentally exposes a private URL.
    - *Starter hint*: Consider the data flow for each tool: where does the repo content go, who processes it, and is it stored?  The answers differ by tool; some process client-side, some send repo content to external servers.
    - *You've succeeded when*: Your policy covers all five tools, addresses both public and private repo scenarios, and includes at least one concrete "red line" action that is never acceptable (for example: "Never paste a URL containing credentials into any external tool").
 
@@ -285,7 +285,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 ## Reflection Prompt
 
-*Personal*: Before today, how did you typically explore an unfamiliar codebase?  Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before?  How do the five tools today compare to your existing approach, and which one would you actually add to your personal workflow?
+*Personal*: Before reading this, how did you typically explore an unfamiliar codebase?  Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before?  How do the five tools today compare to your existing approach, and which one would you actually add to your personal workflow?
 
 *Technical*: In your notebook: You are building an agent that generates database queries using `psycopg2`.  The library has been updated twice since your local model was trained.  Design a grounding strategy using the tools from today.  Which tool(s) would you use, at what stage of development (prototyping vs. production), and what would you do differently for each stage?
 

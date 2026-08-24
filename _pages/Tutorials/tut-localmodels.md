@@ -23,7 +23,7 @@ The assumption that useful AI requires an API call to a remote server is no long
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | Open-Weight Model | A language model whose trained weight files are publicly downloadable; anyone can run, modify, or fine-tune it without paying per call. "Open-weight" does not necessarily mean open-source; licenses vary. | Llama 3.1 8B, Mistral 7B, and Phi-4 are all open-weight models available through Ollama. |
 | Quantization | A technique that stores each model weight using fewer bits (e.g., 4 bits instead of 32), reducing file size and RAM requirements at the cost of a small quality decrease. | A 7B model at full precision (F32) needs 28 GB of RAM; the same model at Q4 quantization fits in 4 GB. |
@@ -240,7 +240,7 @@ With hardware matching and model selection understood, Part III gives you hands-
 
 # Part III: Synthesis and Practice
 
-In this part, you will pull and compare real models on your own hardware, test the quantization tradeoff on a concrete task, and analyze the privacy implications of local versus cloud data flows, the three exercises that turn this module's concepts into deployable decisions.
+Next you will pull and compare real models on your own hardware, test the quantization tradeoff on a concrete task, and analyze the privacy implications of local versus cloud data flows, the three exercises that turn this module's concepts into deployable decisions.
 
 ## Exercises
 

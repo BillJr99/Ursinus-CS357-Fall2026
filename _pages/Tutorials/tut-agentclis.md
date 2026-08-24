@@ -23,9 +23,9 @@ The agent loop you study in this course ships today as a family of **terminal pr
 
 ## Key Concepts
 
-Before diving in, make sure these terms are solid.  You will encounter all of them in today's work, and the table gives you a quick reference to return to.
+Make sure these terms are solid before you start.  You will meet all of them below, and the table is here to look back at to return to.
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Agent loop** | The repeating cycle an AI agent runs: observe the environment, plan the next step, use a tool, observe the result, repeat until done | When you ask Claude Code to write a weather script, it reads your directory, drafts the file, proposes a shell command to test it, and waits for your approval, then loops again |
 | **REPL** | Read-Eval-Print Loop: an interactive session where you type something, the program responds, and you keep going, like a conversation | The `claude` command drops you into a REPL; you type goals, it replies with plans and proposed changes |
@@ -520,7 +520,7 @@ In your notebook, respond at three levels:
 
 **Personal level:** These tools place a capable agent one keystroke from your filesystem, and the differences between them are mostly differences in how much friction they put between intention and action.  After today, where do you personally want that friction?  Did your answer change from what it was before you ran your first session, and if so, what in the session shifted it?
 
-> *Hint:* Think about the permission gates you encountered today.  Did any gate prompt make you pause and reconsider?  Did any gate fire for an action you had not anticipated?  Your intuition about friction may have updated from the session itself.
+> *Hint:* Think about the permission gates you met above.  Did any gate prompt make you pause and reconsider?  Did any gate fire for an action you had not anticipated?  Your intuition about friction may have updated from the session itself.
 
 **Technical level:** The working directory, the context file, and the permission gates form a three-layer scoping system.  Describe in your own words what each layer controls and what breaks if you remove any one of them.  Is there a fourth layer you think is missing?
 

@@ -25,7 +25,7 @@ Every agentic CLI tool you will meet this semester (Claude Code, Codex, Gemini C
 
 These terms turn up all through this tutorial.  Read them once before you start; they are the vocabulary you need to decode everything else.
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | **Shell** | A program that reads a line of text you type, runs the named command, and prints the result back to you; think of it as a conversation between you and the operating system. | `bash` or `zsh` running inside your terminal window |
 | **Terminal** | The window or application that hosts the shell and displays its text; the shell is the engine, the terminal is the dashboard. | Terminal.app on macOS; Windows Terminal on Windows; any terminal emulator on Linux |

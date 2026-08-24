@@ -23,9 +23,9 @@ Our entire local AI stack (the model servers, the gateways, the agent frameworks
 
 ## Key Concepts
 
-Before diving in, anchor these terms.  You will see every one of them today; look back here whenever something feels unfamiliar.
+Anchor these terms before you start.  You will see every one of them below; look back here whenever something feels unfamiliar.
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |---|---|---|
 | **Image** | A frozen, read-only snapshot of a filesystem and a default startup command, like a template you never edit directly. | `ghcr.io/open-webui/open-webui:main` is the image you pull to run the chat interface. |
 | **Container** | A live, running instance created from an image, like a copy of the template that can accumulate state while it runs. | Each time you run `docker run ubuntu bash` you get a new container from the same Ubuntu image. |
@@ -616,7 +616,7 @@ Take 10 minutes individually in your notebook to respond at three levels:
 
 ## Coming Up Next
 
-In the next module you will apply everything here to deploy the full course AI stack: Ollama running natively on the host, LiteLLM as a containerized gateway translating between model providers, and Open WebUI as the containerized chat interface, all wired together with the port mappings and `host.docker.internal` bridges you practiced today.  You will also write your first agent service as a Dockerfile and add it to a Compose stack, so the Dockerfile and volume habits from exercises 3 and 4 will matter immediately.
+The *Your AI Workbench* session applies everything here to deploy the full course AI stack: Ollama running natively on the host, LiteLLM as a containerized gateway translating between model providers, and Open WebUI as the containerized chat interface, all wired together with the port mappings and `host.docker.internal` bridges you practiced today.  You will also write your first agent service as a Dockerfile and add it to a Compose stack, so the Dockerfile and volume habits from exercises 3 and 4 will matter immediately.
 
 ---
 
