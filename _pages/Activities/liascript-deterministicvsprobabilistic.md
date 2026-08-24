@@ -2,7 +2,6 @@
 author: Prof. Bill Mongan
 language: en
 narrator: US English Male
-import: https://raw.githubusercontent.com/liaScript/coderunner/master/README.md
 link: https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap
 -->
 
