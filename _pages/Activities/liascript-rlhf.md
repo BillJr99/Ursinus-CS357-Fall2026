@@ -5,7 +5,7 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-rlhf.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rlhf.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
+import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
 
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
@@ -200,6 +200,9 @@ The code below generates three prompt-response pairs, simulates a human labeling
 
 ## Code Cell
 
+> **Predict first.**  Three prompts, two candidate responses each.  Before you run this, write down which response you expect the "better" model to prefer in each pair, and how confident you are.  Then run it and see where your intuition and the simulated annotator disagree.  The disagreements are the interesting part: they are where real annotator noise comes from.
+
+
 ```python
 # Simulating RLHF preference data collection
 # Run this cell to see preference data structure and naive reward scoring
@@ -275,6 +278,7 @@ print("Edit ground_truth_preferred to flip one judgment (e.g., [1, 0, 1])")
 print("Then re-run. What does this mean for the training signal the reward model receives?")
 print("Which response in pair 2 is actually better? Do you agree with the annotation?")
 ```
+@Pyodide.eval
 
 ---
 

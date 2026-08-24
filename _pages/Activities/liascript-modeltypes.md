@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-modeltypes.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-modeltypes.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -149,6 +147,8 @@ The code cell below makes the mechanism concrete.  It sends the *same* arithmeti
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 # Direct answer vs. "think step by step" against a LOCAL model.
 # Shows that generating reasoning tokens can change the final answer.
@@ -283,5 +283,5 @@ These four activities are the deep dives this hub connects.  Open any of them wh
 
 - [How LLMs Are Built: Tokenization, Pre-Training, and Scaling](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmpretraining.md), the *pretraining -> base model* stage in full.
 - [From Rewards to Preferences: Reinforcement Learning and RLHF](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rlhf.md), RL, RLHF, and DPO, the machinery behind *alignment* and *reasoning* training.
-- [Fine-Tuning, RAG, and Prompting: Choosing the Right Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-finetuningvsrag.md), how to specialize any model type, including the LoRA shortcut.
+- [Fine-Tuning, RAG, and Prompting: Choosing the Right Approach](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-ragquality.md), how to specialize any model type, including the LoRA shortcut.
 - [Multimodal Agents: Vision, Documents, and Code as First-Class Inputs](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multimodalagents.md), the deep dive on *vision/multimodal* models, the modality bottleneck, and grounding.

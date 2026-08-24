@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-localai.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-localai.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -46,6 +44,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, why local at all: the four reasons, and which one is yours |
+| 10-20 | Pull a model and get one response back on your own machine |
+| 20-55 | Part II, the build: OpenWebUI, the API call, and the temperature dial |
+| 55-70 | Compare answers across two models on the same prompt |
+| 70-75 | Reflection prompt, and what to post before next session |
+
+---
 # Part I: Why Run Models Locally?
 
 In this part, you will understand the privacy, cost, and capability tradeoffs that motivate running AI models on your own hardware, so that when you choose between local and cloud inference for the rest of the semester, you can justify that choice with specific reasons.
@@ -107,6 +118,8 @@ Follow this sequence as a team; the Recorder logs each step's outcome, including
 The code cell below sends a single message to your locally running Ollama server using Python's `requests` library (a standard tool for making web requests).  If Ollama is running correctly, it will respond with a confirmation message.  The second block lists every model currently downloaded on your machine.
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests
@@ -217,6 +230,8 @@ The cell below holds a three-turn conversation.  Notice that `chat()` now takes 
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -252,6 +267,8 @@ print(f"[the message list now holds {len(messages)} entries]")
 The last question never mentions Iceland or the name Sam, yet the model answers correctly, because the entire prior exchange rode along in the `messages` list.  Delete the `messages.append(reply)` line and the model goes amnesiac.
 
 **The same pattern through OpenWebUI.** If you put OpenWebUI in front of Ollama, its OpenAI-compatible endpoint accepts the *identical* growing `messages` array; only the URL, an `Authorization: Bearer <key>` header, and the response path change:
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 # r = requests.post("http://localhost:3000/api/chat/completions",

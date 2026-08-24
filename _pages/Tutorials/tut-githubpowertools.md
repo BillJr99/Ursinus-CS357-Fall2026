@@ -1,32 +1,29 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
-
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-githubpowertools.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-githubpowertools.md
-
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
-
--->
-
-# GitHub Superpowers for AI Developers
-
-This module introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
-
+---
+layout: default-standard
+permalink: /Tutorials/GitHubPowerTools
+title: 'CS357: Foundations of Artificial Intelligence - GitHub Superpowers for AI Developers'
+info:
+  coursenum: CS357
+  purpose: "To turn any GitHub repository into something an agent can actually read, using gitingest, deepwiki, github.dev, and the other domain-swap tricks."
+tags:
+- github
+- tooling
+- agents
 ---
 
-## Directions and Group Roles
+# CS357: Foundations of Artificial Intelligence - GitHub Superpowers for AI Developers
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
+## Purpose
 
----
+To turn any GitHub repository into something an agent can actually read, using gitingest, deepwiki, github.dev, and the other domain-swap tricks.
+
+## About This Tutorial
+
+This tutorial introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
 
 ## Key Concepts
 
-| Term | Plain-English Definition | Example You'll See Today |
+| Term | Plain-English Definition | Where You'll Meet It |
 |------|--------------------------|--------------------------|
 | **Domain swap** | Replacing `github.com` in a repo URL with a different domain to activate a specialized tool on that same repo | `github.com/owner/repo` -> `gitingest.com/owner/repo` |
 | **Token budget** | The maximum amount of text (measured in tokens) a model can process in one call; large repos may exceed it | A 50,000-line codebase flattened to text may be 200 000+ tokens, more than most local models can handle at once |
@@ -45,7 +42,7 @@ In this part, you will learn how swapping a single domain in a GitHub URL unlock
 
 You already know that pressing the `.` key on any GitHub repository opens `github.dev`, a full VS Code editor in the browser, no installation required.  That one-key trick is a domain swap in disguise: the browser replaces `github.com` with `github.dev` and GitHub serves a different application.  Five specialized services have extended this pattern to deliver capabilities that matter specifically for AI-assisted development.
 
-Every tool in this activity works on public repositories only.  Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo.  These tools are designed for reading and understanding open-source code; treat them as read-only research instruments.
+Every tool here works on public repositories only.  Never paste a private repository URL into any of these services, and never include secrets (API keys, tokens, database passwords) in any file you commit to a public repo.  These tools are designed for reading and understanding open-source code; treat them as read-only research instruments.
 
 The table below maps each tool to its purpose.  Some tools belong in your daily workflow; others are situational; you reach for them when a specific problem appears.
 
@@ -86,17 +83,17 @@ gitingest https://github.com/owner/repo --output repo_context.txt
 
 ---
 
-## Model 1: Hands-On Ingestion Workflow
+## Hands-On Ingestion Workflow
 
-Your team will work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target, a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity).  If that repo is too large, your instructor will direct you to a smaller example.
+Work through the following steps using the `litellm` repository (`github.com/BerriAI/litellm`) as the target, a popular proxy that lets one codebase talk to many LLM providers (the same gateway pattern used in the *The Local Agent Stack: Wiring Containers into a System* activity).  If that repo is too large, your instructor will direct you to a smaller example.
 
 **Step 1**: Navigate to `github.com/BerriAI/litellm` and press `.`.  Locate the main entry point (`__main__.py` or equivalent) and the directory where provider adapters live.
 
 **Step 2**: Open `gitingest.com/BerriAI/litellm` in a second tab.  Note the token count displayed.  If it exceeds 100 000 tokens, use the path filter to select only the `litellm/` subdirectory.
 
-**Step 3**: Copy the filtered text block.  In your team's shared document, paste the first 30 lines (the file-tree summary) and record the total token count.
+**Step 3**: Copy the filtered text block.  In a scratch file, paste the first 30 lines (the file-tree summary) and record the total token count.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1. `gitingest.com` reports a token count for the whole repository.  What would you do if that count exceeded the context window of the local model you are running (for example, `llama3.2` with a 128k context window)?  Describe at least two strategies for reducing the input to a manageable size.
 
@@ -131,8 +128,11 @@ The workflow has three steps: (1) paste the repo URL into `getmcp.io` and copy t
 ## Code Cell
 
 ```python
+
 # Example: Ollama agent configured to use an MCP server
+
 # In practice, MCP configuration lives in your agent framework's config file.
+
 # This snippet shows the logical structure of an MCP-grounded agent call.
 
 import requests
@@ -170,11 +170,11 @@ print(result)
 
 ---
 
-## Model 2: Hallucination Before and After Grounding
+## Hallucination Before and After Grounding
 
-For this model, your instructor will demonstrate the same request sent to a local `llama3.2` model (a) without MCP grounding and (b) with a `getmcp.io` MCP server for `chromadb` configured.  The Recorder notes any differences in the generated API calls.
+Compare the same request sent to a local `llama3.2` model (a) without MCP grounding and (b) with a `getmcp.io` MCP server for `chromadb` configured.  The Recorder notes any differences in the generated API calls.
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 4.  In the un-grounded response, identify any method names or parameter names that do not appear in the current `chromadb` documentation.  What is the most likely explanation for the discrepancy?
 
@@ -215,9 +215,9 @@ The diagram is a starting point, not a source of truth.  Generated diagrams may 
 
 ---
 
-## Model 3: Codebase Orientation Sprint
+## Codebase Orientation Sprint
 
-Your team has 12 minutes to answer five questions about an unfamiliar agent framework, using only `deepwiki.com` and `gdagram.com`.  Your instructor will name the repository at the start of the sprint.  The Presenter will report your answers and which tool was more useful for each question.
+Give yourself 12 minutes to answer five questions about an unfamiliar agent framework, using only `deepwiki.com` and `gdagram.com`.  Your instructor will name the repository at the start of the sprint.  The Presenter will report your answers and which tool was more useful for each question.
 
 **Questions to answer**:
 - What is the main entry point of the application?
@@ -226,9 +226,9 @@ Your team has 12 minutes to answer five questions about an unfamiliar agent fram
 - What happens when the agent exceeds its step budget?
 - Which module would you edit to add a new tool?
 
-### Critical Thinking Questions
+### Questions to Work Through
 
-6.  For each of the five questions above, record which tool (deepwiki or gdagram) your team used and how confident you are in the answer (high / medium / low).  What patterns do you notice about which tool works better for which type of question?
+6.  For each of the five questions above, record which tool (deepwiki or gdagram) you used and how confident you are in the answer (high / medium / low).  What patterns do you notice about which tool works better for which type of question?
 
    > *Hint: Diagram tools are good at "what connects to what" questions.  Text explanation tools are good at "why" and "how" questions.  Neither is good at questions that require reading actual code logic.*
 
@@ -259,7 +259,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 1.  *Domain-swap scavenger hunt.*
 
-   - *What to do*: Choose any open-source agent project from GitHub (not one used in today's examples).  Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity: domain swap, what it revealed, whether it was useful for this particular repo.
+   - *What to do*: Choose any open-source agent project from GitHub (not one used in this tutorial's examples).  Apply all five domain-swap tools to it and fill in one row of the key-concepts table from this activity: domain swap, what it revealed, whether it was useful for this particular repo.
    - *Starter hint*: Start with `github.dev` (press `.`) to orient yourself, then `gdagram.com` for the diagram, then `deepwiki.com` for the explanation.  Use `gitingest.com` last so you know which subdirectory to filter to.  Save `getmcp.io` for a library you actually plan to use in code.
    - *You've succeeded when*: You can answer the five codebase-orientation questions from Model 3 for your chosen repo, citing which tool gave you each answer.
 
@@ -277,7 +277,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 4.  *Security audit of the workflow.*
 
-   - *What to do*: Write a one-page team policy for using the five tools in this activity safely.  Cover: which tools are appropriate for which types of repositories, what to check before pasting a URL into any external service, and what to do if a teammate accidentally exposes a private URL.
+   - *What to do*: Write a one-page team policy for using the five tools here safely.  Cover: which tools are appropriate for which types of repositories, what to check before pasting a URL into any external service, and what to do if a teammate accidentally exposes a private URL.
    - *Starter hint*: Consider the data flow for each tool: where does the repo content go, who processes it, and is it stored?  The answers differ by tool; some process client-side, some send repo content to external servers.
    - *You've succeeded when*: Your policy covers all five tools, addresses both public and private repo scenarios, and includes at least one concrete "red line" action that is never acceptable (for example: "Never paste a URL containing credentials into any external tool").
 
@@ -285,7 +285,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 ## Reflection Prompt
 
-*Personal*: Before today, how did you typically explore an unfamiliar codebase?  Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before?  How do the five tools today compare to your existing approach, and which one would you actually add to your personal workflow?
+*Personal*: Before reading this, how did you typically explore an unfamiliar codebase?  Did you read files top-to-bottom, search for keywords, or ask someone who had used the project before?  How do the five tools today compare to your existing approach, and which one would you actually add to your personal workflow?
 
 *Technical*: In your notebook: You are building an agent that generates database queries using `psycopg2`.  The library has been updated twice since your local model was trained.  Design a grounding strategy using the tools from today.  Which tool(s) would you use, at what stage of development (prototyping vs. production), and what would you do differently for each stage?
 
@@ -293,7 +293,7 @@ In this part, you will combine the tools from Parts I-IV in a real codebase spri
 
 ---
 
-## -> Coming Up Next
+## Where This Goes Next
 
 Now that you can efficiently read and feed any public codebase to an AI agent, the next activity asks a deeper question: how do you communicate with a local model at the protocol level, without relying on a high-level SDK? We examine the OpenAI-compatible REST API pattern (the common language spoken by Ollama, LiteLLM, and most local inference servers) so you can write agent code that works across providers without being locked into any single library.
 

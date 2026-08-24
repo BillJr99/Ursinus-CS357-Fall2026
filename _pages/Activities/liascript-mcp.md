@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-mcp.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-mcp.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -39,6 +37,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the integration problem: why N times M connectors was never going to work |
+| 10-20 | The unassisted problem statement you brought, before your team drafts the brief |
+| 20-55 | Part II, build the tiny tool server and connect a client to it |
+| 55-70 | Trace one request end to end and name every hop |
+| 70-75 | Part III, synthesis and the reflection prompt |
+
+---
 # Part I: The Integration Problem
 
 ## Warm-Up: The Services You Already Use
@@ -124,6 +135,8 @@ curl http://localhost:8765/tools/list
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell starts a server and binds a port, which a web page cannot do.  Copy it into your course container and run it there.
+
 ```python
 # server.py: run with `python server.py`, then query it from another terminal.
 from flask import Flask, request, jsonify
@@ -186,6 +199,8 @@ if __name__ == "__main__":
 The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools.  Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 # client side: discover the server's tools, hand them to the model, dispatch calls.

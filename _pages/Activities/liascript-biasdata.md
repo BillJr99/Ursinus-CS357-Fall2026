@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-biasdata.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -37,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, mechanism: how a training distribution becomes a behavior |
+| 10-40 | Part II, hands on the distribution |
+| 40-65 | Part III, mitigation without illusion, against the design choice you named in your reading response |
+| 65-75 | Reflection prompt, and the Responsible AI Capstone handout |
+
+---
 # Part I: Mechanism
 
 In this part, you will trace exactly how bias enters an AI system, not as a one-time mistake, but at multiple stages from data collection through deployment.  The goal is to shift from thinking "this model is biased" (vague) to "bias entered at this specific stage for this specific reason" (actionable).
@@ -107,6 +117,8 @@ The code below asks the model to write a sentence about a specific occupation 12
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests

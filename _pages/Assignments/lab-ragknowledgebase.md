@@ -67,17 +67,16 @@ info:
       liapage: true
     - rtitle: "Chroma Documentation"
       rlink: "https://docs.trychroma.com"
-    - rtitle: "Fine-Tuning vs. RAG"
-      rlink: "Activities/liascript-finetuningvsrag.md"
+    - rtitle: "The RAG Quality activity, whose extension weighs fine-tuning against RAG and prompting"
+      rlink: "Activities/liascript-ragquality.md"
       liapage: true
     - rtitle: "Unsloth: Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
       rlink: "https://unsloth.ai/docs/get-started/unsloth-notebooks"
     - rtitle: "Unsloth: Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
       rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
-      rlink: "Activities/liascript-localmodels.md"
-      liapage: true
-    - rtitle: "Data Cards and Model Cards"
+      rlink: "/Tutorials/LocalModels"
+    - rtitle: "The Data Cards and Model Cards activity"
       rlink: "Activities/liascript-datacards.md"
       liapage: true
     - rtitle: "Sampling, Temperature, and Generation Activity"

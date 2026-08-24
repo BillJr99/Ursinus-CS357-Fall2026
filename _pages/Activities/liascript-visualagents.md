@@ -5,8 +5,6 @@ narrator: US English Male
 
 comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-visualagents.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-visualagents.md
 
-import: https://raw.githubusercontent.com/liascript/CodeRunner/master/README.md
-
 link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
         https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
 
@@ -99,6 +97,8 @@ Note that "ingest" and "query" are the same Chroma node set to different modes, 
 Visual flows don't have to stay visual; you can export them and call them from regular Python code, which means your existing test harnesses from earlier labs still work.  The snippet below shows exactly how: Langflow runs your flow as a local web service (a **REST API**, meaning a program you talk to over HTTP, just like your Ollama calls), and you send it a question and receive the answer.
 
 Every flow exports as JSON (a text-based data format), and Langflow can serve any flow as a REST API endpoint.  Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used.  Then call the flow endpoint from three lines of Python `requests`:
+
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
 
 ```python
 import requests
