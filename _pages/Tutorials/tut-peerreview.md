@@ -18,7 +18,7 @@ To use the two review instruments that run through the whole Project Thread: SQR
 
 ## About This Tutorial
 
-Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process.  Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*.  We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
+Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process.  Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*.  We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
 
 ---
 
@@ -216,4 +216,4 @@ You will use SQR cards for real at the Stakeholder Brief exchange on the course 
 - Edmondson, A. (1999).  "Psychological Safety and Learning Behavior in Work Teams."  *Administrative Science Quarterly*, 44(2), 350-383.
 - AAC&U VALUE Rubrics (Teamwork; Written Communication): https://www.aacu.org/initiatives/value
 - WPI SWEET Center Team Contract Exercise, Worcester Polytechnic Institute (companion protocol from the Team Charter activity)
-- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357/Projects/PBLThread
+- The Project Thread hub: https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread
