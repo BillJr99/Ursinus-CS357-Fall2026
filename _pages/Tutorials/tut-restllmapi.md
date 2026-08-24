@@ -575,7 +575,7 @@ The two calls above differ only in what got pasted into `{context}`.  The "after
 
 12.  A JSON example inside a template (for instance, showing the model the shape `{"topic": "..."}`) collides with `.format()` because the braces are interpreted as fields.  What is the fix, and why does this collision push many teams toward f-strings or dedicated template engines?
 
-    > *Hint: In `.format()` you must double every literal brace (`{{` and `}}`) so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*
+{% raw %}    > *Hint: In `.format()` you must double every literal brace (`{{` and `}}`) so `{{"topic": "..."}}` renders as `{"topic": "..."}`. This is easy to get wrong when the literal JSON is large, so teams often switch to f-strings with explicit `{variable}` interpolation, or to engines like Jinja2 that use a different delimiter (`{{ }}` for variables) and leave literal braces alone.*{% endraw %}
 
 In the template `"Context:\n{context}\n\nQuestion: {question}"`, what does the model actually receive when you call `.format(context=docs, question=q)`?
 
@@ -682,7 +682,7 @@ The most powerful use of templates is **pipelining**: the output of one prompt b
 
 **Why this matters:** Free text is hard for a program to branch on; JSON is trivial.  When stage 1 returns `{"topic": "billing", "urgent": true, "needs_calc": false}`, your code can *route* on `topic`, *escalate* on `urgent`, and *skip* a calculator call when `needs_calc` is false, then fill only the relevant fields into stage 2's template.  The model does the understanding; your code does the control flow.  This is the same "structured outputs" idea you will formalize elsewhere, applied as the glue between pipeline stages.
 
-Note the templating subtlety: because stage 1's instruction *shows* the model a literal JSON shape, the braces in that example must be **doubled** (`{{ }}`) if you build the instruction with `.format()`.  Below we sidestep the collision by keeping stage 1 as a plain string (no `.format()` needed) and using `.format()` only in stage 2, where the blanks are ours.
+{% raw %}Note the templating subtlety: because stage 1's instruction *shows* the model a literal JSON shape, the braces in that example must be **doubled** (`{{ }}`) if you build the instruction with `.format()`.  Below we sidestep the collision by keeping stage 1 as a plain string (no `.format()` needed) and using `.format()` only in stage 2, where the blanks are ours.{% endraw %}
 
 ---
 

@@ -457,7 +457,14 @@ opencode reads a single global config file, and the name matters: it is `opencod
 | macOS, Linux, or WSL | `~/.config/opencode/opencode.json` |
 | Windows, native shell | `%USERPROFILE%\.config\opencode\opencode.json` (paste `%USERPROFILE%\.config\opencode` into the Run box with Win+R to open the folder) |
 
-Create it so the agent uses the Ollama server on your host rather than a paid API.  The heredoc below is bash, so run it in a macOS, Linux, or WSL shell; on native Windows, make the folder and save the same JSON with an editor:
+Before you write it, settle the address, because getting this wrong produces a connection error that looks like a broken install.  **`localhost` means "the machine this process is running on."**  Run opencode natively and that is your laptop; run it in the container and that is the container, where nothing is listening.
+
+| Where opencode runs | Ollama | OpenWebUI |
+|---|---|---|
+| Natively on your laptop | `http://localhost:11434/v1` | `http://localhost:3000/api/v1` |
+| Inside the container | `http://host.docker.internal:11434/v1` | `http://host.docker.internal:3000/api/v1` |
+
+The `provider` block is a map, so you do not have to choose: name two keys and you get two providers, both live, both listed in `/model`.  Set them both up now, because you will want to compare them in a minute.  The heredoc below is bash, so run it in a macOS, Linux, or WSL shell; on native Windows, make the folder and save the same JSON with an editor.  It is written for the container route, so swap `host.docker.internal` for `localhost` in both URLs if you installed opencode natively:
 
 ```bash
 mkdir -p ~/.config/opencode
@@ -467,43 +474,34 @@ cat > ~/.config/opencode/opencode.json <<'JSON'
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "options": { "baseURL": "http://host.docker.internal:11434/v1" },
-      "models": { "llama3.2": { "name": "llama3.2" } }
-    }
-  }
-}
-JSON
-```
-
-On the native route, use `http://localhost:11434/v1` instead: the same substitution as everywhere else in this tutorial.
-
-**Variant: routing through OpenWebUI instead.**  Talking to Ollama directly, as above, is the default for this course and needs no key at all.  But if you are running **OpenWebUI** in front of Ollama, you can point opencode at that instead, and get the models, tools, and knowledge bases you configured there.  OpenWebUI exposes an OpenAI-compatible endpoint, which is exactly what opencode's `@ai-sdk/openai-compatible` provider wants, so only the `baseURL` changes and one field is added:
-
-```bash
-mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/opencode.json <<'JSON'
-{
-  "provider": {
+      "models": { "llama3.2": { "name": "llama3.2 (raw Ollama)" } }
+    },
     "openwebui": {
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://localhost:3000/api/v1",
+        "baseURL": "http://host.docker.internal:3000/api/v1",
         "apiKey": "sk-REPLACE-ME"
       },
-      "models": { "llama3.2": { "name": "llama3.2" } }
+      "models": { "llama3.2": { "name": "llama3.2 (via OpenWebUI)" } }
     }
   }
 }
 JSON
 ```
 
-Two things to be clear about, because "API key" usually means "bill":
+**These two routes are not the same thing, which is the whole reason to register both.**  Ollama hands you the raw model: the weights you pulled, answering with nothing around them.  OpenWebUI hands you that same model *plus* everything you configured in front of it, meaning your knowledge bases, your tools, your system prompts.  Later, when an answer is wrong, you will ask the same question through each and learn in one step whether the problem is the model or the pipeline you built around it.  That is worth two minutes of setup now.
 
-- **The key is yours, from your own server.**  Generate it in OpenWebUI under *Settings -> Account -> API Keys*, the same key you will mint for the Python clients in the Local Agent lab.  It authenticates you to a server running on your machine; it is not a payment credential.
-- **This route is still free** as long as the models behind OpenWebUI are the local ones you have pulled.  You are adding a front door, not a bill.  Point the same config at a paid provider's models later and the cost follows the model, not the config.
+Two clarifications about that key, because "API key" usually means "bill":
 
-Port 3000 is the OpenWebUI default this course uses.  From inside the container, substitute `host.docker.internal` for `localhost`, as everywhere else in this tutorial.
+- **The key is yours, from your own server.**  Generate it in OpenWebUI under *Settings -> Account -> API Keys*, the same key you will mint for the Python clients in the Local Agent lab.  It authenticates you to a server running on your machine; it is not a payment credential.  Ollama takes no key at all, which is why its block has none.
+- **Both routes are free** as long as the models behind them are the local ones you have pulled.  You are adding a front door, not a bill.  Point the same config at a paid provider's models later and the cost follows the model, not the config.
+
+Port 3000 is the OpenWebUI default this course uses.  One more thing if you are on Linux: `host.docker.internal` is provided automatically by Docker Desktop on macOS and Windows, but not by Docker Engine on Linux, where you add `--add-host=host.docker.internal:host-gateway` to your `docker run`.  And Ollama listens only on `127.0.0.1` unless you start it as `OLLAMA_HOST=0.0.0.0 ollama serve`, which a container needs and which also means anything that can route to your machine can use your models.
+
+> **Prefer a different agent?**  pi does the same two-provider trick through a plugin, and the instructions are in the [agentic CLI tools tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCLIs).  If you want it running inside a container with the Dockerfile written out, that is in [terminal and filesystem isolation](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/FilesystemIsolation).
 
 > **A candid expectation.** `llama3.2` is a 3-billion-parameter model running on your laptop.  It is a fine model to *learn the loop with* and a weak one to build with.  Expect it to be slow, to sometimes ignore your instructions, and to occasionally propose an edit that makes no sense.  That is not your setup failing; that is the honest capability of a small local model, and noticing where the ceiling sits is a real part of today's learning.  Later labs let you point the same tool at a larger model.
+
 
 ### 8.3: Give it one small job
 
