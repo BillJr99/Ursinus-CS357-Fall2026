@@ -99,9 +99,9 @@ info:
       rlink: "Activities/liascript-agentstack.md"
       liapage: true
     - rtitle: "Docker from Zero Activity"
-      rlink: "/Tutorials/Docker"
+      rlink: "../Tutorials/Docker"
     - rtitle: "MCP Server Activity"
-      rlink: "/Assignments/LocalAgent/Direction4"
+      rlink: "../Assignments/LocalAgent/Direction4"
     - rtitle: "Hugging Face MCP Course (built with Anthropic)"
       rlink: "https://huggingface.co/learn/mcp-course/"
     - rtitle: "Hugging Face Agents Course (smolagents)"

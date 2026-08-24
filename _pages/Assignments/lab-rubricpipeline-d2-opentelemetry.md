@@ -7,7 +7,7 @@ info:
   purpose: 'To turn the rubric-grading pipeline (or another course agent) from a black box into an observable system: every LLM call, tool invocation, and retrieval step emits a structured trace span you can query, visualize, and alert on.'
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
-    rlink: /Assignments/RubricPipeline
+    rlink: "../RubricPipeline"
   - rtitle: Observability Activity
     rlink: "Activities/liascript-observability.md"
     liapage: true
