@@ -1,0 +1,138 @@
+<!-- Makes the code block immediately above this include runnable in the browser.
+     Pyodide (CPython on WebAssembly) loads from a CDN on the first Run, so a page
+     with no cell pays nothing and a page with one does not block its own render.
+     Usage: put this include on the line after a fenced ```python block. -->
+
+<style>
+.pyrun{margin:-0.6em 0 1.4em;font-family:'Lexend Deca',system-ui,sans-serif}
+.pyrun button{background:#1e4e79;color:#fff;border:0;border-radius:4px;padding:.45em 1.1em;
+  font:inherit;font-size:.9em;cursor:pointer}
+.pyrun button:hover:not(:disabled){background:#2e75b5}
+.pyrun button:disabled{background:#8a8a8a;cursor:default}
+.pyrun .pyrun-note{margin-left:.8em;font-size:.85em;color:#555}
+.pyrun pre.pyrun-out{display:none;margin:.7em 0 0;padding:.7em .9em;background:#f6f8fa;
+  border-left:4px solid #1e4e79;white-space:pre-wrap;overflow-x:auto;font-size:.9em}
+.pyrun pre.pyrun-out.err{border-left-color:#b32d2d;background:#fdf3f3}
+.pyrun img.pyrun-fig{display:block;max-width:100%;margin:.7em 0 0}
+</style>
+<script>
+window.PyRun = window.PyRun || (function () {
+  var ready = null;
+  function boot() {
+    if (ready) return ready;
+    ready = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/pyodide/v314.0.5/full/pyodide.js';
+      s.onload = function () {
+        loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v314.0.5/full/' })
+          .then(resolve, reject);
+      };
+      s.onerror = function () { reject(new Error('could not reach the Pyodide CDN')); };
+      document.head.appendChild(s);
+    });
+    return ready;
+  }
+
+  // matplotlib has no screen here: render the current figure to a PNG instead.
+  var SHOW_PATCH = [
+    'import base64, io, warnings',
+    'import matplotlib',
+    'matplotlib.use("AGG")',
+    'import matplotlib.pyplot as _plt',
+    'def _pyrun_show(*a, **k):',
+    '    # warnings raised in here come from this shim, not from the cell above,',
+    '    # so they are noise the reader cannot act on',
+    '    with warnings.catch_warnings():',
+    '        warnings.simplefilter("ignore")',
+    '        try:',
+    '            _plt.tight_layout()',
+    '        except Exception:',
+    '            pass',
+    '        buf = io.BytesIO()',
+    '        _plt.savefig(buf, format="png", dpi=120)',
+    '    globals()["_PYRUN_FIG"] = base64.b64encode(buf.getvalue()).decode()',
+    '    _plt.close("all")',
+    '_plt.show = _pyrun_show'
+  ].join('\n');
+
+  function attach(btn) {
+    var wrap = btn.closest('.pyrun');
+    var out  = wrap.querySelector('.pyrun-out');
+    var note = wrap.querySelector('.pyrun-note');
+    // the code block is the element right before this widget
+    var prev = wrap.previousElementSibling;
+    var codeEl = prev && prev.querySelector ? prev.querySelector('code') : null;
+    if (!codeEl && prev && prev.tagName === 'PRE') codeEl = prev;
+    if (!codeEl) { btn.disabled = true; note.textContent = 'no code block found'; return; }
+    var source = codeEl.innerText;
+
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      note.textContent = 'starting Python, this takes a few seconds the first time';
+      out.style.display = 'block'; out.classList.remove('err'); out.textContent = '';
+      var fig = wrap.querySelector('.pyrun-fig'); if (fig) fig.remove();
+
+      boot().then(function (py) {
+        note.textContent = 'loading what this cell imports';
+        var lines = [];
+        var pre = /matplotlib|pyplot/.test(source)
+          ? py.loadPackage('matplotlib').then(function () { return py.runPythonAsync(SHOW_PATCH); })
+          : Promise.resolve();
+        return pre
+          .then(function () { return py.loadPackagesFromImports(source); })
+          .then(function () {
+            // capture output only for the student's own code, not the loader chatter
+            note.textContent = 'running';
+            py.setStdout({ batched: function (t) { lines.push(t); } });
+            py.setStderr({ batched: function (t) { lines.push(t); } });
+            return py.runPythonAsync(source);
+          })
+          .then(function (result) {
+            py.setStdout({}); py.setStderr({});
+            if (result !== undefined && result !== null) lines.push(String(result));
+            var text = lines.join('\n').replace(/\n+$/, '');
+            var hasFig = !!py.globals.get('_PYRUN_FIG');
+            out.textContent = text || (hasFig ? '' : '(finished with no output)');
+            out.style.display = text ? 'block' : 'none';
+            var b64 = py.globals.get('_PYRUN_FIG');
+            if (b64) {
+              var img = document.createElement('img');
+              img.className = 'pyrun-fig'; img.alt = 'figure produced by this cell';
+              img.src = 'data:image/png;base64,' + b64;
+              wrap.appendChild(img);
+              py.runPython('globals().pop("_PYRUN_FIG", None)');
+            }
+            note.textContent = '';
+          });
+      }).catch(function (e) {
+        out.style.display = 'block';
+        out.classList.add('err');
+        out.textContent = String(e && e.message ? e.message : e);
+        note.textContent = 'this one you can always run in the course container';
+      }).then(function () { btn.disabled = false; });
+    });
+  }
+
+  function bindAll() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pyrun button'), function (b) {
+      if (b.dataset.pyrunBound) return;      // a page may include this more than once
+      b.dataset.pyrunBound = '1';
+      attach(b);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAll);
+  } else {
+    bindAll();
+  }
+  return { boot: boot, bindAll: bindAll };
+})();
+</script>
+
+<script>if (window.PyRun && window.PyRun.bindAll) { setTimeout(window.PyRun.bindAll, 0); }</script>
+
+<div class="pyrun">
+  <button type="button">Run this cell</button>
+  <span class="pyrun-note"></span>
+  <pre class="pyrun-out" aria-live="polite"></pre>
+</div>

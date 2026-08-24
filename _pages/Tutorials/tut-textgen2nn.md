@@ -314,8 +314,10 @@ panels = [
 for ax, (M, title, cols, rows) in zip(axes, panels):
     im = ax.imshow(M, cmap="coolwarm", vmin=-2, vmax=2)
     ax.set_title(title, fontsize=9)
-    ax.set_xticks(range(len(cols)), cols)
-    ax.set_yticks(range(len(rows)), rows)
+    ax.set_xticks(list(range(len(cols))))
+    ax.set_xticklabels(cols)
+    ax.set_yticks(list(range(len(rows))))
+    ax.set_yticklabels(rows)
     for i, row in enumerate(M):
         for j, val in enumerate(row):
             ax.text(j, i, f"{val:.1f}", ha="center", va="center", fontsize=9)

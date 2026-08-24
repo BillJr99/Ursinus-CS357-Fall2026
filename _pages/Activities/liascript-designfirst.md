@@ -287,7 +287,7 @@ Not required for today's design work, and nothing above assumes it.  Design-firs
 |------|--------------------------|--------------------------|
 | **Agent Memory File** | A plain-text file the agent reads at the start of every session to reconstruct context it cannot remember across sessions: project structure, conventions, what not to do. | `AGENTS.md` in the project root listing architecture and invariants |
 | **Project Instructions** | Agent memory scoped to one project: the architecture, key invariants, test commands, and common pitfalls. Lives next to the code it describes. | An `AGENTS.md` for the RAG lab telling the agent "do not modify the Chroma schema" |
-| **Global Instructions** | Agent memory that applies to every project you work on: your personal style preferences, preferred libraries, tone. Lives in your home directory or agent config. | `~/.opencode/instructions.md` containing "always use Black for Python formatting" |
+| **Global Instructions** | Agent memory that applies to every project you work on: your personal style preferences, preferred libraries, tone. Lives in your home directory or agent config. | `~/.config/opencode/AGENTS.md` containing "always use Black for Python formatting" |
 | **Skill** | A reusable prompt template, a named workflow you can invoke by name instead of re-typing the same long prompt. | A "security-review" skill that prompts the agent to check a diff for OWASP top-10 agent risks |
 | **Plugin** | A collection of skills and tools packaged together and loaded by the agent at startup via a config file. | The `superpowers` plugin providing pre-built skills for TDD, security audit, and refactoring |
 | **Environment as Code** | The principle that your agent config files, instructions files, and skill definitions are version-controlled alongside your source code, so the agent environment is reproducible. | Committing `opencode.json` and `AGENTS.md` to the same repository as the application code |
@@ -319,7 +319,7 @@ In this part, you will diagnose why AI coding agents "forget" your project conve
 
 | Layer | Where it Lives | What it Contains | Who Writes it |
 |-------|----------------|------------------|---------------|
-| **Global instructions** | `~/.opencode/instructions.md` or equivalent home-directory config | Personal style (formatting, preferred libraries, tone) that applies to every project | You, once |
+| **Global instructions** | `~/.config/opencode/AGENTS.md` or equivalent home-directory config | Personal style (formatting, preferred libraries, tone) that applies to every project | You, once |
 | **Project instructions** | `./AGENTS.md` or `opencode.json` `instructions` field in the project root | Project architecture, key invariants, test commands, what not to do | You, per project |
 | **Skills** | Named `.md` files loaded by the agent config | Reusable prompt templates for specific workflows | You or the plugin author |
 
@@ -356,7 +356,7 @@ A developer is working on the RAG lab from earlier in the course.  They have acc
 A developer always wants their coding agent to use Black for Python formatting, regardless of which project they are working on.  Which layer is most appropriate for this instruction?
 
 [( )] Project instructions (`AGENTS.md` in the project root), so it is version-controlled
-[(X)] Global instructions (`~/.opencode/instructions.md`), so it applies to every project automatically
+[(X)] Global instructions (`~/.config/opencode/AGENTS.md`), so it applies to every project automatically
 [( )] A skill, so it can be invoked by name when formatting is needed
 [( )] The prompt, paste it at the start of every session
 
