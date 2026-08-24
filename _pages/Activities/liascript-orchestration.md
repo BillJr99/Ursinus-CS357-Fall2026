@@ -232,7 +232,7 @@ According to the design heuristic developed today, a team should reach for a pla
 
 Orchestration decides who runs next.  This part decides what happens when one of them fails, which is the more common case in production: the loop architectures, the safety controls that bound them, and the surprisingly hard question of how an agent knows it is finished.
 
-### Four Loop Architectures
+## Four Loop Architectures
 
 **Why this matters:** Self-correction makes agents far more reliable on real tasks.  Think of a surgeon who, after each incision, checks the patient's vital signs before proceeding; this feedback loop catches problems before they cascade.  ReAct gives agents the same property: by writing out reasoning before each action, the agent can catch its own mistakes mid-task rather than only at the end.  Reflexion takes this further, letting agents learn from entire failed attempts.  These patterns transform agents from one-shot guessers into iterative problem-solvers.
 
@@ -247,7 +247,7 @@ These patterns are not mutually exclusive.  Production systems often layer them:
 
 **The inner loop vs. the outer loop:** The *inner loop* is the LLM generating tokens for one completion, deterministic given temperature and seed.  The *outer loop* is the agent choosing actions, calling tools, and updating its context, stochastic and long-running.  Most failures occur in the outer loop, but most compute cost is in the inner loop.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 1.  A ReAct agent is solving a ten-step research task.  Each step adds approximately 800 tokens to the context (thought + action + observation).  The model has a 32,000-token context window.  At what step does the agent risk running out of context?  What options does the agent have at that point?
 
@@ -263,7 +263,7 @@ These patterns are not mutually exclusive.  Production systems often layer them:
 
 ---
 
-### A ReAct Trace - Five Steps in Detail
+## A ReAct Trace - Five Steps in Detail
 
 **Why this matters:** Reading an actual ReAct trace makes the abstract pattern concrete.  Notice that the agent is not just calling tools at random; each "Thought:" entry reflects a real decision about what to do next based on what was observed.  This is what makes ReAct traces valuable for debugging: you can inspect the reasoning at each step and identify exactly where the agent made a wrong assumption or missed an opportunity.
 
@@ -279,7 +279,7 @@ The task: *"Find the three most-cited papers on transformer self-attention publi
 
 Observe that at step 1 the agent decides it needs two separate API calls rather than assuming one call returns everything.  At step 5, the agent recognizes termination because it has satisfied all sub-goals, not because it hit a step limit.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 4.  At step 3, the agent chose the third candidate by heuristic ("ULMFiT appeared in the top 10 results").  A more rigorous approach would fetch citation counts for all 10 papers from step 1 and sort them.  What is the tradeoff between the heuristic approach (fewer steps, less cost) and the exhaustive approach (guaranteed accuracy)?
 
@@ -299,7 +299,7 @@ Now that you have seen what a ReAct loop looks like step by step, the next model
 
 ---
 
-### Loop Safety Controls
+## Loop Safety Controls
 
 In this section you will examine six concrete engineering controls that keep agent loops safe in production.  Understanding these controls matters because even a loop that works perfectly in testing can spin out of control when deployed on real, messy inputs.
 
@@ -320,7 +320,7 @@ Even a well-architected loop can fail.  These controls are not optional; they ar
 
 **Checkpointing** allows a loop to resume after failure.  The checkpoint stores the full context window, the tool call history, and any external state (files written, IDs retrieved).  On restart, the agent replays from the last checkpoint rather than from zero.  This is especially important for tasks that take hours or involve expensive API calls.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 7.  The idempotency check compares `(action, args)` hashes.  An agent calls `search("transformer attention mechanisms")` at step 2, gets 5 results, calls other tools, and then at step 8 calls `search("transformer attention mechanisms")` again, hoping for updated results from the search index.  Is this a true oscillation or a legitimate re-query?  How would you modify the idempotency check to allow legitimate re-queries while still catching true oscillation?
 
@@ -336,7 +336,7 @@ Even a well-architected loop can fail.  These controls are not optional; they ar
 
 ---
 
-### Termination - How Does an Agent Know It Is Done?
+## Termination - How Does an Agent Know It Is Done?
 
 In this section you will compare three ways of defining "done" for an agent, and you will practice revising task specifications to make termination more reliable.  This connects directly back to the loop safety controls in Model 3: a clear stopping rule is what makes the max-iterations control meaningful.
 
@@ -352,7 +352,7 @@ This is one of the hardest problems in agent design.  There are three approaches
 
 Production systems typically combine all three: an explicit criterion when possible, self-assessment as the primary signal, and budget exhaustion as a hard fallback.  The point to hold onto is that **"done" is a property of the task specification, not of the agent's internal state**.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 10.  An agent is tasked with *"Write a complete test suite for this Python module."*  There is no explicit count of required tests.  The agent writes 12 tests and declares itself done.  How would you revise the task specification to give the agent a more checkable termination criterion without over-specifying the solution?
 
@@ -364,7 +364,7 @@ Production systems typically combine all three: an explicit criterion when possi
 
 ---
 
-### Multiple Choice Checkpoint
+## Multiple Choice Checkpoint
 
 A ReAct agent is on step 18 of a task.  Its context window shows 28,000 of 32,000 tokens used.  The agent decides to call a tool that typically returns a 6,000-token observation.  What is the correct action before making this tool call?
 
