@@ -45,12 +45,29 @@ link: "Activities/liascript-agentloop.md"
 liapage: true
 ```
 
-Reading lists do not use that flag. A LiaScript deck is the thing the class works
-through together, so the only `liapage: true` in `_pages/syllabus.md` is the day's
-own `link:`. Readings point at books, papers, external sites, or a page under
-`_pages/Tutorials/`, which holds the reference and procedural material that used
-to live in decks. Those are ordinary Jekyll pages on `layout: default-standard`,
-linked by permalink:
+**A file in `_pages/Activities/` is a deck if and only if it is a `link:` on a
+syllabus schedule day.** That is the whole rule, and it is checkable:
+
+```bash
+# prints the decks present that are not a scheduled lecture; should print nothing
+python3 - <<'CHECK'
+import yaml, os, glob
+d = yaml.safe_load(open('_pages/syllabus.md').read().split('---', 2)[1])
+lecture = {os.path.basename(e['link']) for e in d['schedule']
+           if isinstance(e.get('link'), str) and e['link'].startswith('Activities/')}
+have = {os.path.basename(f) for f in glob.glob('_pages/Activities/liascript-*.md')}
+print('\n'.join(sorted(have - lecture)))
+CHECK
+```
+
+Everything else lives in `_pages/Tutorials/` as an ordinary Jekyll page. A deck
+is what a class works through together in seventy-five minutes; a page is what
+someone reads on their own, and the reading lists point at pages.
+
+Reading lists therefore do not use the `liapage` flag. The only `liapage: true`
+in `_pages/syllabus.md` is the day's own `link:`. Readings point at books,
+papers, external sites, or a page under `_pages/Tutorials/`. Those pages use
+`layout: default-standard` and are linked by permalink:
 
 ```yaml
 rlink: "/Tutorials/Docker"
