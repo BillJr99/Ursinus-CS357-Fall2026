@@ -32,14 +32,15 @@ An agent that can write to any path on your filesystem is as dangerous as a hous
 | **Bind Mount** | A Docker feature that makes a directory from the host machine visible inside a container, optionally as read-only | `-v /home/user/data:/data:ro` makes `/home/user/data` appear as `/data` inside the container and blocks all writes |
 | **Identity Directory** | A dedicated home directory for one specific agent, containing only that agent's config, memory files, logs, and workspace, separate from every other agent's directory | `/home/user/agents/researcher/` contains only the researcher agent's files; the writer agent cannot see inside it |
 | **chmod** | The Linux command for changing who is allowed to read, write, or execute a file or directory | `chmod 700 /agents/researcher` means only the owning user can enter that directory; everyone else is blocked |
+| **`host.docker.internal`** | A hostname Docker resolves, from inside a container, to the machine the container is running on; `localhost` inside a container means the container itself | An agent in a container reaching your laptop's Ollama server at `http://host.docker.internal:11434/v1` instead of `localhost` |
 
 ---
 
 ### Before You Start
 
-**What you need:** Docker and a terminal.
+**What you need:** Docker and a terminal.  The worked example near the end also expects Ollama running on your machine, and optionally OpenWebUI in front of it.
 
-**What you will have at the end:** an agent sandbox where you can state exactly what the agent may read and write.
+**What you will have at the end:** an agent sandbox where you can state exactly what the agent may read and write, and a real coding agent running inside it against your own models.
 
 Take the sections in order, since each builds on the one before it.  Run the code blocks as you come to them instead of reading past them.
 
@@ -287,6 +288,169 @@ docker run --rm \
 
 ---
 
+## A Worked Example: pi.dev in a Container, Talking to Your Own Models
+
+Everything above has been about drawing the boundary.  This section builds one end to end, with a real agent inside it, so you can see what the boundary costs you and what it does not.
+
+The agent is [pi](https://pi.dev), a small terminal coding agent installed with one `npm install`.  Small matters here: pi's whole surface is a binary, a config directory, and whatever plugins you chose to install, so the question "what can this thing reach?" has an answer you can read off a Dockerfile instead of guessing.  The models come from your own machine, either straight from Ollama or through OpenWebUI, so no key leaves your laptop and no request leaves your network.
+
+### The localhost problem, first
+
+The one thing that trips up everyone doing this for the first time: **inside a container, `localhost` means the container.**  It does not mean your laptop.  Ollama is listening on your laptop's port 11434, and a containerized agent that dials `http://localhost:11434` is dialing a port on a machine where nothing is listening, then reporting a connection refused that looks like a broken install.
+
+Docker's answer is a special hostname that resolves to the host from inside the container:
+
+| Where the agent runs | Ollama | OpenWebUI |
+|---|---|---|
+| Directly on your laptop | `http://localhost:11434/v1` | `http://localhost:3000/api/v1` |
+| Inside a container | `http://host.docker.internal:11434/v1` | `http://host.docker.internal:3000/api/v1` |
+
+Two caveats that cost people an hour each:
+
+- **On Linux, `host.docker.internal` does not exist unless you ask for it.**  Docker Desktop on macOS and Windows provides it automatically; plain Docker Engine on Linux does not.  Add `--add-host=host.docker.internal:host-gateway` to your `docker run` and it resolves.
+- **Ollama listens only on `127.0.0.1` by default**, which the container cannot reach even with the right hostname.  Restart it with `OLLAMA_HOST=0.0.0.0 ollama serve` so it accepts connections from the Docker bridge network.  Be aware of what you just did: anything that can reach your machine on port 11434 can now use your models, so do this on a laptop or a trusted network, not on shared campus wifi.
+
+> **Watch out!** A connection error here is almost never the agent's fault.  Before you touch pi's config, prove the endpoint is reachable *from inside the container*: `docker run --rm --add-host=host.docker.internal:host-gateway curlimages/curl -s http://host.docker.internal:11434/v1/models`.  If that returns JSON, the network is fine and the problem is configuration.  If it hangs or refuses, fix the network first.
+
+### The Dockerfile
+
+pi's model support is extensible through plugins, and connecting it to an arbitrary OpenAI-compatible endpoint (which is what both Ollama and OpenWebUI expose) is what **[pi-openai-compat](https://github.com/BillJr99/pi-openai-compat)** does.  It registers each endpoint as a first-class pi provider, so their models show up in pi's own `/model` picker next to everything else, and it will hold **several providers at once**.  That last property is the one this section leans on.
+
+Both installs are ordinary npm-shaped commands, so both belong in the image:
+
+```dockerfile
+FROM node:20-slim
+
+# git is not optional: every coding agent assumes it, and pi uses it to show
+# you diffs before it writes anything
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Run as a non-root user. If the agent ever does escape its mount, it should
+# land as nobody-in-particular rather than as root on your host's UID 0.
+RUN useradd --create-home --shell /bin/bash agent
+USER agent
+ENV HOME=/home/agent
+
+# The agent itself
+RUN npm install -g --prefix "$HOME/.npm-global" @mariozechner/pi-coding-agent
+ENV PATH="$HOME/.npm-global/bin:$PATH"
+
+# The provider plugin. This must run AFTER USER and HOME are set, or the
+# plugin installs into root's home and the agent user never sees it.
+RUN pi install npm:@billjr99/pi-openai-compat
+
+WORKDIR /workspace
+CMD ["pi"]
+```
+
+Build it once:
+
+```bash
+docker build -t course-pi .
+```
+
+> **Why `--prefix` instead of a plain global install?**  A bare `npm install -g` as a non-root user fails on permissions, and the usual fix (`sudo npm i -g`) installs the agent as root, which is exactly the thing this whole tutorial is arguing against.  Pointing npm's global prefix at the agent's own home keeps the install unprivileged and keeps the whole agent inside one directory you can inspect.
+
+### Running it with a boundary you chose
+
+Now apply Student B's lesson from the section above.  One writable mount for the work, one read-only mount for reference, and nothing else:
+
+```bash
+docker run -it --rm \
+  --add-host=host.docker.internal:host-gateway \
+  -v "$PWD:/workspace:rw" \
+  -v "$HOME/agents/knowledgebase:/reference:ro" \
+  -v pi-config:/home/agent/.config \
+  --cap-drop ALL --security-opt no-new-privileges \
+  course-pi
+```
+
+Read that command as a list of decisions rather than as boilerplate.  `$PWD` and nothing above it is what the agent can change, so launch it from a project directory and never from `~`.  `/reference` is readable and not writable, so the agent can consult your notes and cannot rewrite them.  `--cap-drop ALL` removes the Linux capabilities a coding agent has no business holding, and `--security-opt no-new-privileges` stops any process inside from acquiring more than it started with.  The named volume `pi-config` is the one deliberate exception to `--rm`: it survives the container so you do not re-register your providers on every launch, and it holds credentials, which is why it is a volume you can inspect and delete rather than a bind mount into your real `~/.config`.
+
+Notice what is *not* there.  No `-v $HOME:/home/agent`.  No `-e OPENAI_API_KEY`.  No `-e ANTHROPIC_API_KEY`.  The agent has no cloud credentials because it does not need any: the model is on the other side of `host.docker.internal`, on hardware you own.
+
+### Connecting to OpenWebUI and Ollama at the same time
+
+Inside pi, run the plugin's login command once per endpoint:
+
+```text
+/compat-login
+```
+
+The wizard asks which provider, then for a base URL and a key.  Do it twice.
+
+**First, Ollama.**  Choose *Ollama (local, keyless)*, then **replace the offered `http://localhost:11434/v1` with `http://host.docker.internal:11434/v1`**, because you are in a container and the default is the host-native form.  There is no key; Ollama does not use one.  pi fetches the model list and every model you have pulled appears in `/model`.
+
+**Then, OpenWebUI.**  Run `/compat-login` again and choose *Custom*.  The base URL is `http://host.docker.internal:3000/api/v1`, and the key is one you mint yourself in OpenWebUI under *Settings -> Account -> API Keys*.  That key authenticates you to a server running on your own machine; it is not a payment credential and nothing is billed.
+
+Now run `/model`.  Both providers are listed, labeled separately, with all their models, and you switch between them mid-session.  That is the point of doing both: they are not the same route to the same thing.
+
+| | Straight to Ollama | Through OpenWebUI |
+|---|---|---|
+| What you get | The raw models you have pulled, nothing more | The models *plus* whatever you configured in OpenWebUI: knowledge bases, tools, system prompts, per-model settings |
+| Auth | None | A key you generate on your own server |
+| Fewest moving parts | Yes.  If a model misbehaves, it is the model | No.  A bad answer could be the model, the retrieval, or the prompt template |
+| Use it when | You are debugging, benchmarking, or want the model's honest unassisted behavior | You want the agent to inherit the RAG setup and tooling you already built |
+
+Keeping both registered means you can answer "is this the model or is this my pipeline?" by switching providers and re-asking, which is a debugging move you will want more often than you expect.
+
+### Baking the configuration into the image
+
+The wizard is fine for one person at one laptop.  For a lab where twenty students should get a working agent on first launch, pre-seed the config instead.  The plugin stores providers in `~/.config/pi-openai-compat/config.json`, it re-reads that file at session start, and a provider with an empty `cachedModels` list triggers a live fetch of the model catalog on first run.  So a hand-written file with both endpoints and no cached models is exactly the right thing to ship:
+
+```dockerfile
+RUN mkdir -p "$HOME/.config/pi-openai-compat" && \
+    printf '%s' '{ \
+      "previousModel": null, \
+      "providers": { \
+        "ollama": { \
+          "displayName": "Ollama (local)", \
+          "baseUrl": "http://host.docker.internal:11434/v1", \
+          "apiKey": null, \
+          "cachedModels": [] \
+        }, \
+        "openwebui": { \
+          "displayName": "OpenWebUI", \
+          "baseUrl": "http://host.docker.internal:3000/api/v1", \
+          "apiKey": null, \
+          "cachedModels": [] \
+        } \
+      } \
+    }' > "$HOME/.config/pi-openai-compat/config.json"
+```
+
+Leave `apiKey` as `null` in the image and let each student supply their own OpenWebUI key with `/compat-login` on first run, which re-registers that one provider with the key attached.  **Do not bake a key into a Dockerfile.**  An image is a shareable artifact and every layer is readable with `docker history`; a key committed there is a key published there.  This is the same reasoning that kept `-e ANTHROPIC_API_KEY` out of the `docker run` above.
+
+### What the boundary actually bought you
+
+| Question | Answer, and why |
+|---|---|
+| Can pi read your SSH keys? | No.  `~/.ssh` was never mounted, so the path does not exist inside the container |
+| Can pi read your notes? | Yes, at `/reference`, because you chose to mount them |
+| Can pi *change* your notes? | No.  `:ro` makes the write fail at the kernel, not at the agent's discretion |
+| Can pi edit your project? | Yes, at `/workspace`.  This is the one thing you granted, and `git diff` is how you audit it |
+| Can pi reach the internet? | Yes, unless you add `--network none`, which also cuts off the models.  Reaching only your host is a middle ground you have to build with a custom network |
+| If pi runs a destructive command, what is lost? | Uncommitted work in the current project.  Nothing else on the host is reachable |
+
+Compare that last row to Student A's mount, where the honest answer was "your home directory."  The difference is four flags in a `docker run`.
+
+### Questions to Work Through
+
+10.  The `pi-config` named volume exists so provider registrations survive `--rm`.  It also stores an OpenWebUI key in plaintext.  Name one thing that key can do if someone gets the volume, and one thing it cannot, then say whether the convenience is worth it for a shared lab machine as opposed to your own laptop.
+
+   *Hint: Ask what the key authenticates to and what lives behind that server.  Compare `docker volume inspect pi-config` (which shows you where it lives on the host) with what a cloud provider key would expose if leaked the same way.*
+
+11.  You set `OLLAMA_HOST=0.0.0.0` so the container could reach the model server, and in doing so you exposed port 11434 to every machine that can route to yours.  Describe what an attacker on the same network could do with an open Ollama endpoint, and propose a `docker run` change or a firewall rule that restores the container's access without leaving the port open to the network.
+
+   *Hint: An open Ollama endpoint accepts generate requests and can also pull and delete models.  For the fix, consider binding to the Docker bridge address specifically rather than to all interfaces, or a host firewall rule that permits the `docker0` interface and drops everything else.*
+
+12.  Both providers are registered and you ask the same question through each: Ollama answers correctly and OpenWebUI answers wrong.  Nothing about the model changed between the two.  List the components that exist on the OpenWebUI path but not the Ollama path, then write the order you would check them in, cheapest test first.
+
+   *Hint: The table above names the extra components.  For ordering, prefer tests that need no code: comparing the two answers is free, checking which documents were retrieved is nearly free, and re-running with retrieval disabled isolates one variable cleanly.*
+
+---
+
 ## Exercises
 
 1.  **Build a safe agent workspace.**
@@ -350,5 +514,8 @@ Identity directories and bind mounts are filesystem-level controls.  The next ac
 
 - "The Principle of Least Privilege."  OWASP Top Ten documentation. https://owasp.org/www-project-developer-guide/draft/design/web_app_checklist/digital_identity/, foundational security principle applied throughout this tutorial.
 - Docker Documentation: "Use volumes." https://docs.docker.com/storage/volumes/, specifically the sections on bind mounts vs. named volumes and read-only mounts.
+- pi.  https://pi.dev, the terminal coding agent used in the worked example; small enough that its whole footprint fits in a Dockerfile you can read.
+- pi-openai-compat.  https://github.com/BillJr99/pi-openai-compat, the pi plugin that registers OpenAI-compatible endpoints (Ollama, OpenWebUI, and others) as native pi providers, several at once.
+- Docker Documentation: "Networking."  https://docs.docker.com/engine/network/, the reference for `host.docker.internal`, `--add-host`, and `--network none`.
 - Julia Evans.  "How containers work: overlayfs." https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/, intuitive explanation of what Docker isolation actually does at the filesystem level.
 - Saltzer and Schroeder.  "The Protection of Information in Computer Systems."  *Proceedings of the IEEE* (1975).  The original paper enumerating least privilege, fail-safe defaults, and economy of mechanism, principles that are fifty years old and still directly applicable to agent design.

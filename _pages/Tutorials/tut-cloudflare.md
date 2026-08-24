@@ -358,6 +358,7 @@ echo "Deploy complete."
 
 The workflow that runs it is short, because the logic is elsewhere:
 
+{% raw %}
 ```yaml
 
 # .github/workflows/deploy.yml  (skeleton; full guarded version appears in Section 11)
@@ -367,6 +368,7 @@ The workflow that runs it is short, because the logic is elsewhere:
     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # injected, then masked in logs
     WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain, non-secret variable
 ```
+{% endraw %}
 
 ## The CI Deploy Pipeline
 
@@ -550,6 +552,7 @@ With credentials scoped, the last layer is governance: constraining *who* can tr
 
 Here is the full guarded workflow, the skeleton from Section 8 with every gate wired in.  Every `<PLACEHOLDER>` is a TODO you fill in for your own repo.
 
+{% raw %}
 ```yaml
 
 # .github/workflows/deploy.yml
@@ -588,6 +591,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}   # environment secret, masked
           WORKER_NAME: ${{ vars.WORKER_NAME }}                        # plain variable
 ```
+{% endraw %}
 
 ## 12.  Automation-Safe Scripts: No Prompts, No Hangs
 
@@ -671,11 +675,13 @@ on:
 
 - **Cancel superseded runs.**  A `concurrency` group with `cancel-in-progress: true` stops an older run when a newer commit arrives, so you are not paying for a build that is already obsolete (use this for *test/CI* jobs; keep `cancel-in-progress: false` for the *deploy* job so a live deploy is never interrupted mid-flight):
 
+{% raw %}
 ```yaml
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true           # newer push cancels the older, still-running CI
 ```
+{% endraw %}
 
 - **Trim what runs.**  Skip redundant jobs with `if:` conditions, keep the test matrix as small as it can be, and cache dependencies so each run does less work.
 
@@ -849,12 +855,14 @@ npx wrangler deploy --api-token GLOBAL_KEY # (over-broad: a global key, not a sc
 
 *Starter hint:* The easiest to demonstrate quickly is the branch restriction or the actor allowlist: push from a non-`main` branch, or have a teammate (not on the allowlist) trigger it, and screenshot the skipped/blocked job.  The simulated deploy step keeps everything free:
 
+{% raw %}
 ```yaml
       - name: Deploy (simulated)
         run: echo "would deploy ${WORKER_NAME} - real wrangler deploy goes here"
         env:
           WORKER_NAME: ${{ vars.WORKER_NAME }}
 ```
+{% endraw %}
 
 *You've succeeded when:* You can show one run that was correctly *refused* by your guardrail and one that was correctly *allowed*, and explain which human judgment the guardrail replaced.
 
