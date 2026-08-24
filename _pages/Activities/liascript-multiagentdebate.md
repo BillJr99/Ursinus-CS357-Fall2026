@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the logic of productive disagreement, starting from the positions you staked out in your reading response |
+| 10-40 | Part II, three agents, two rounds, one vote, implemented and traced |
+| 40-55 | Model 2, the autopsy: did round 2 repair the error or spread it? |
+| 55-70 | Section 3, when agreement misleads, and what that means for your project's question |
+| 70-75 | Part III, the experiments you will run.  The protocols Extension is self-paced |
+
+---
 # Part I: The Logic of Productive Disagreement
 
 In this section you will examine when multi-agent debate adds value and when it does not.  You will analyze a table of question types and practice identifying which situations benefit from structured disagreement versus which are better handled by a single tool call or a single model call.

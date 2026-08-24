@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, intellectual property: whose work is in the model |
+| 10-25 | Part II, privacy, and the data-flow audit |
+| 25-60 | Part IIb, the techniques behind the argument: federated learning, differential privacy, and PII scrubbing |
+| 60-75 | Part III, synthesis.  The AI Creativity Extension is self-paced |
+
+---
+
 # Part I: Intellectual Property
 
 In this part, you will learn to separate three legally distinct questions about AI and intellectual property that news coverage routinely conflates.  Keeping these three questions distinct will help you reason more carefully about your own projects and about the legal landscape you'll navigate as a practitioner.

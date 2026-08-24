@@ -35,6 +35,19 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the cost of remembering everything |
+| 10-35 | Part II, memory architectures, built and compared |
+| 35-60 | Part IIb, the four-type vocabulary and the context window as working memory |
+| 60-70 | External memory strategies, against the longest-running work you have done |
+| 70-75 | Part III, exercises and the reflection prompt |
+
+---
 # Part I: The Cost of Remembering Everything
 
 ## 1.  Three Forces Against Long Contexts
@@ -196,89 +209,6 @@ for msg in ["My chemistry exam is Dec 14 and statistics is Dec 16.",
 
 > **Continued below.**  A summarizing-memory agent, and a model for watching compression happen, are in Part III as at-home work.
 
-# Part III: Synthesis and Practice
-
-## 4 (At Home).  A Summarizing-Memory Agent
-
-The `SummarizingMemory` class below has three moving parts: `add()` appends a turn to the verbatim window and triggers compression when the window is full; `prompt()` assembles the full message list for each model call, placing the compressed summary before the recent verbatim turns; and the main loop at the bottom drives a five-turn study-planning conversation so you can watch the summary evolve in real time.  It is the same "fill the blank each turn" idea from Section 3, but now the blank is filled with a *compressed* history instead of the raw one.
-
----
-
-## Code Cell
-
-> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
-
-```python
-import requests
-
-def chat(messages):
-    try:
-        r = requests.post("http://localhost:11434/api/chat", json={
-            "model": "llama3.2", "stream": False,
-            "options": {"temperature": 0.0, "seed": 42},
-            "messages": messages}, timeout=120)
-        return r.json()["message"]["content"]
-    except Exception as e:
-        print(f"[memory:chat] {e}")
-        import traceback; traceback.print_exc()
-        return ""
-
-class SummarizingMemory:
-    """Keep the last `keep` turns verbatim; fold older turns into a running summary."""
-    def __init__(self, system, keep=4):
-        self.system, self.keep = system, keep
-        self.summary, self.turns = "", []
-
-    def add(self, role, content):
-        self.turns.append({"role": role, "content": content})
-        if len(self.turns) > self.keep:
-            old = self.turns[:-self.keep]
-            self.turns = self.turns[-self.keep:]
-            digest_req = [{"role": "system", "content": "Compress the dialogue into <=3 bullet facts/decisions. Keep names and numbers."},
-                          {"role": "user", "content": f"Prior summary: {self.summary}\nNew turns: {old}"}]
-            self.summary = chat(digest_req)
-
-    def prompt(self, user_msg):
-        msgs = [{"role": "system", "content": self.system + "\nSession summary:\n" + self.summary}]
-        msgs += self.turns + [{"role": "user", "content": user_msg}]
-        return msgs
-
-mem = SummarizingMemory("You are a concise study-planning assistant.")
-for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
-            "I retain best with morning study sessions.",
-            "Chemistry is my weaker subject.",
-            "I also work Tuesday evenings.",
-            "Remind me: which exam comes first, and when should I study for it?"]:
-    reply = chat(mem.prompt(msg))
-    mem.add("user", msg); mem.add("assistant", reply)
-    print(f"USER: {msg}\nAGENT: {reply}\n[summary so far]: {mem.summary[:120]}\n")
-```
-
----
-
-## Model 3 (At Home): Watching Compression
-
-**Why this matters:** The `SummarizingMemory` class is a concrete implementation of a principle you have seen abstractly: replace bulk with essence.  Watch carefully which facts survive compression and which are lost.  The summary is the agent's only link to conversations that have scrolled out of the verbatim window, so a lost fact in the summary is a lost fact forever (until retrieved from long-term storage).  This is not a theoretical problem: real production agents fail tasks because their summaries dropped a key constraint stated early in the conversation.
-
-### Critical Thinking Questions
-
-7.  By the final question ("Remind me: which exam comes first..."), which earlier facts live in `self.summary` rather than verbatim turns?  Did the agent still answer correctly?  What does that demonstrate about *sufficient* versus *complete* context?
-
-   > *Hint: Print `mem.summary` and `mem.turns` after the final exchange.  Which of the 5 original messages are still in verbatim turns?  Which key facts (exam dates, subjects, work schedule) appear in the summary?  The agent answered correctly from a compressed representation; what does that tell you about how much verbatim text is actually necessary?*
-
-8.  The summarizer is itself a model call and can hallucinate or drop facts.  Design a one-line test that detects a dropped fact, and identify which earlier course module gave you the technique.
-
-   > *Hint: What module taught you to check whether a specific piece of information appears in a text, either by string matching or by asking the model a yes/no question?  A one-line test might be: `assert "Dec 14" in mem.summary or any("Dec 14" in t["content"] for t in mem.turns)`.  Which module introduced this kind of assertion-based checking?*
-
-9.  Tune `keep` to 1 and to 10.  Predict the behavior at each extreme, then verify by running the code and observing the summary evolution.
-
-   > *Hint: With `keep=1`: only the single most recent message is kept verbatim; everything else is in the summary.  With `keep=10`: 10 messages are kept verbatim before any summarization begins.  Predict for each: (a) how often does summarization happen?  (b) how large does the prompt grow?  (c) how faithful is the agent's memory?  Then run both and compare your predictions to the actual output.*
-
-> **Common Misconception:** Many students assume that a longer context window eliminates the need for memory management.  Even with a 1-million-token context (which exists in some frontier models), the lost-in-the-middle effect means the model under-attends to content in the vast middle of the context.  And the quadratic attention cost makes 1-million-token contexts dramatically slower and more expensive.  Memory architecture is not a workaround for small context windows; it is good engineering practice even when large windows are available.
-
----
-
-
 ---
 
 # Part IIb: A Vocabulary for What an Agent Remembers
@@ -424,6 +354,89 @@ An agent must recall a user preference stated 200 turns ago in a months-long rel
 [( )] Raise the temperature so the model improvises the preference
 
 ---
+
+# Part III: Synthesis and Practice
+
+## 4 (At Home).  A Summarizing-Memory Agent
+
+The `SummarizingMemory` class below has three moving parts: `add()` appends a turn to the verbatim window and triggers compression when the window is full; `prompt()` assembles the full message list for each model call, placing the compressed summary before the recent verbatim turns; and the main loop at the bottom drives a five-turn study-planning conversation so you can watch the summary evolve in real time.  It is the same "fill the blank each turn" idea from Section 3, but now the blank is filled with a *compressed* history instead of the raw one.
+
+---
+
+## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
+```python
+import requests
+
+def chat(messages):
+    try:
+        r = requests.post("http://localhost:11434/api/chat", json={
+            "model": "llama3.2", "stream": False,
+            "options": {"temperature": 0.0, "seed": 42},
+            "messages": messages}, timeout=120)
+        return r.json()["message"]["content"]
+    except Exception as e:
+        print(f"[memory:chat] {e}")
+        import traceback; traceback.print_exc()
+        return ""
+
+class SummarizingMemory:
+    """Keep the last `keep` turns verbatim; fold older turns into a running summary."""
+    def __init__(self, system, keep=4):
+        self.system, self.keep = system, keep
+        self.summary, self.turns = "", []
+
+    def add(self, role, content):
+        self.turns.append({"role": role, "content": content})
+        if len(self.turns) > self.keep:
+            old = self.turns[:-self.keep]
+            self.turns = self.turns[-self.keep:]
+            digest_req = [{"role": "system", "content": "Compress the dialogue into <=3 bullet facts/decisions. Keep names and numbers."},
+                          {"role": "user", "content": f"Prior summary: {self.summary}\nNew turns: {old}"}]
+            self.summary = chat(digest_req)
+
+    def prompt(self, user_msg):
+        msgs = [{"role": "system", "content": self.system + "\nSession summary:\n" + self.summary}]
+        msgs += self.turns + [{"role": "user", "content": user_msg}]
+        return msgs
+
+mem = SummarizingMemory("You are a concise study-planning assistant.")
+for msg in ["I have exams in chemistry on Dec 14 and statistics on Dec 16.",
+            "I retain best with morning study sessions.",
+            "Chemistry is my weaker subject.",
+            "I also work Tuesday evenings.",
+            "Remind me: which exam comes first, and when should I study for it?"]:
+    reply = chat(mem.prompt(msg))
+    mem.add("user", msg); mem.add("assistant", reply)
+    print(f"USER: {msg}\nAGENT: {reply}\n[summary so far]: {mem.summary[:120]}\n")
+```
+
+---
+
+## Model 3 (At Home): Watching Compression
+
+**Why this matters:** The `SummarizingMemory` class is a concrete implementation of a principle you have seen abstractly: replace bulk with essence.  Watch carefully which facts survive compression and which are lost.  The summary is the agent's only link to conversations that have scrolled out of the verbatim window, so a lost fact in the summary is a lost fact forever (until retrieved from long-term storage).  This is not a theoretical problem: real production agents fail tasks because their summaries dropped a key constraint stated early in the conversation.
+
+### Critical Thinking Questions
+
+7.  By the final question ("Remind me: which exam comes first..."), which earlier facts live in `self.summary` rather than verbatim turns?  Did the agent still answer correctly?  What does that demonstrate about *sufficient* versus *complete* context?
+
+   > *Hint: Print `mem.summary` and `mem.turns` after the final exchange.  Which of the 5 original messages are still in verbatim turns?  Which key facts (exam dates, subjects, work schedule) appear in the summary?  The agent answered correctly from a compressed representation; what does that tell you about how much verbatim text is actually necessary?*
+
+8.  The summarizer is itself a model call and can hallucinate or drop facts.  Design a one-line test that detects a dropped fact, and identify which earlier course module gave you the technique.
+
+   > *Hint: What module taught you to check whether a specific piece of information appears in a text, either by string matching or by asking the model a yes/no question?  A one-line test might be: `assert "Dec 14" in mem.summary or any("Dec 14" in t["content"] for t in mem.turns)`.  Which module introduced this kind of assertion-based checking?*
+
+9.  Tune `keep` to 1 and to 10.  Predict the behavior at each extreme, then verify by running the code and observing the summary evolution.
+
+   > *Hint: With `keep=1`: only the single most recent message is kept verbatim; everything else is in the summary.  With `keep=10`: 10 messages are kept verbatim before any summarization begins.  Predict for each: (a) how often does summarization happen?  (b) how large does the prompt grow?  (c) how faithful is the agent's memory?  Then run both and compare your predictions to the actual output.*
+
+> **Common Misconception:** Many students assume that a longer context window eliminates the need for memory management.  Even with a 1-million-token context (which exists in some frontier models), the lost-in-the-middle effect means the model under-attends to content in the vast middle of the context.  And the quadratic attention cost makes 1-million-token contexts dramatically slower and more expensive.  Memory architecture is not a workaround for small context windows; it is good engineering practice even when large windows are available.
+
+---
+
 
 ## 5.  Exercises
 

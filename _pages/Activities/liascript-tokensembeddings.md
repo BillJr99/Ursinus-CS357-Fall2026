@@ -42,17 +42,21 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## How Today Runs
+## Today's 75 Minutes
 
-This is the densest session of the term, and saying so is more useful than pretending otherwise.  Three ideas, each built on the one before it, each worked by hand before any code runs.
+Three ideas, each built on the one before it, each worked by hand before any code runs.
 
 | | What you do | Roughly |
 |---|---|---|
 | **Part I** | Cut text into tokens by hand with real merge rules, then check yourself against a real tokenizer | 20 min |
 | **&sect;2 and Model 2** | Turn meaning into geometry, and compute cosine similarity on paper | 15 min |
-| **&sect;2b and Model 3** | The idea attention exists to solve, then one full attention step by hand | 25 min |
-| **Part II** | A twenty-line semantic search engine, and probing where it fails | 15 min |
+| **&sect;2b and Model 3** | The idea attention exists to solve, then one full attention step by hand | 20 min |
+| **Demo and Try It Yourself** | Predict the numbers, run the cell in your browser, then break it three ways | 10 min |
+| **&sect;2c and Part II** | What the arithmetic costs you, and a twenty-line semantic search engine | 10 min |
 | **Part III** | Exercises and reflection | take-home |
+| **Extension** | Self-paced: one prompt end to end by hand, from tokenizing through the weight update | self-paced |
+
+That is seventy-five minutes, and it is the densest session of the term.  Saying so is more useful than pretending otherwise.
 
 If the room runs long, Part II is the part to finish on your own.  It is the least by-hand of the four and the most self-explanatory from the code, and its questions are answerable from a run you do at home.  **Do not skip Model 3.**  Everything after this session that involves a language model rests on the arithmetic in it, and it is the one piece you will not reconstruct from reading later.
 
@@ -760,6 +764,9 @@ After one gradient-descent step on $W_U[\text{sat},0]$, the loss went from $0.54
 ### Code Cell: Reproduce Every Number
 
 The cell below runs the entire request (embed, project, attend, feed-forward, unembed, softmax, sample) and then the single training step, printing each intermediate value.  Compare every line to your by-hand work; they should match to rounding.  It also does a **numerical gradient check**: it perturbs $W_U[\text{sat},0]$ slightly and confirms the measured slope of the loss equals the analytic gradient $-0.7029$.
+
+> **Predict first.**  This cell recomputes every number in the walkthrough above.  Pick any three of them from your own paper trace, write them down, and check those three against the output rather than skimming the whole thing.  Three numbers you actually verified are worth more than a page you nodded at.
+
 
 ```python
 import numpy as np

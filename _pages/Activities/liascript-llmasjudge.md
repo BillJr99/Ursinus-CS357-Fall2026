@@ -35,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, judgment at scale: what a judge buys you and what it costs |
+| 10-40 | Part II, build the rubric pipeline |
+| 40-65 | Part III, audit the judge: find a bias, then measure it |
+| 65-75 | Reflection prompt, and how this feeds the Rubric Pipeline Lab |
+
+---
 # Part I: Judgment at Scale
 
 In this part, you will examine what a rubric actually is, why vague rubrics produce unreliable scores, and how the same design mistakes show up whether the grader is human or AI. This foundation determines whether the judge you build in Part II is trustworthy.

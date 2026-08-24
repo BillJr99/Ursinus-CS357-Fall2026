@@ -35,6 +35,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, mechanism: how a training distribution becomes a behavior |
+| 10-40 | Part II, hands on the distribution |
+| 40-65 | Part III, mitigation without illusion, against the design choice you named in your reading response |
+| 65-75 | Reflection prompt, and the Responsible AI Capstone handout |
+
+---
 # Part I: Mechanism
 
 In this part, you will trace exactly how bias enters an AI system, not as a one-time mistake, but at multiple stages from data collection through deployment.  The goal is to shift from thinking "this model is biased" (vague) to "bias entered at this specific stage for this specific reason" (actionable).

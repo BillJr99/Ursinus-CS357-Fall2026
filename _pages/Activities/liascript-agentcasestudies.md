@@ -51,6 +51,19 @@ The discipline of asking *the same* five questions is what turns anecdotes into 
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Part I, the cases: what each agent was actually given |
+| 10-35 | Read the cases in teams, one per team, and report the frictions |
+| 35-60 | Part Ib, threat-model the agent you just read about, against the OWASP LLM Top 10 |
+| 60-75 | Part II, cross-case synthesis.  The Prompt Injection Extension is self-paced |
+
+---
+
 # Part I: The Cases
 
 In this part, you will apply the autopsy protocol to three real deployments (one case per team) and then share your findings across groups.  As you read your case, fill in the five autopsy questions before looking at the table; the tables show what actually happened, which is most useful *after* you've made your own predictions.

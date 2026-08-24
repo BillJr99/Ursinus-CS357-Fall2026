@@ -38,6 +38,18 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
+## Today's 75 Minutes
+
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+
+| Minutes | What we do |
+|---|---|
+| 0-10 | Key Concepts and the search-and-rescue framing: what makes a loop an agent |
+| 10-30 | Part I, the sense-think-act cycle and the ReAct trace, worked on paper |
+| 30-60 | Part II, paper-trace the minimal tool-using agent step by step |
+| 60-75 | Part III, the budget experiment and the failure hunt; Reflection at home |
+
+---
 ## 0.  Environment and Utilities
 
 This section sets up the Python helper function that all later code cells will reuse.  It sends a list of messages (the conversation history so far) to a locally running Ollama server and returns the model's reply as a plain string.  You don't need to understand every line yet; just run it and confirm the "Environment ready." message appears before moving on.
