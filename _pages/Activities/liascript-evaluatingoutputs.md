@@ -184,7 +184,7 @@ Examine the PASS/FAIL output line by line.  Before discussing with your group, f
 
 Triaging bad answers one at a time does not scale, and the Golden-Set Lab handed out today asks you to build something that does.  A benchmark is how you turn "it seems better" into a number you can defend.  This part is about designing one that measures what you actually care about.
 
-### What Makes a Good Benchmark?
+## What Makes a Good Benchmark?
 
 A benchmark that frontier models ace is like a test that everyone gets 100% on; it no longer measures anything.  This is the central problem of modern AI evaluation: our best models are improving faster than we can design meaningful tests.  At the same time, a benchmark that is too hard or too narrow may fail for different reasons: it may measure the wrong things, or measure the right things in the wrong way.  Designing a good benchmark is difficult, and understanding why helps you use benchmark results more skeptically and critically.
 
@@ -196,7 +196,7 @@ A **benchmark** is a standardized test used to measure AI system capability.  No
 4.  **Difficulty Calibration**: It is not so easy that all systems score near 100%, nor so hard that all systems score near 0%. A well-calibrated benchmark spreads scores across a useful range.
 5.  **Contamination Resistance**: The test data was not seen during model training, so scores reflect genuine capability rather than memorization of test answers.
 
-#### Historical Benchmarks and Saturation
+### Historical Benchmarks and Saturation
 
 Over time, frontier AI models have scored so highly on once-challenging benchmarks that those benchmarks are no longer informative for comparing leading systems.  This is called **benchmark saturation**.
 
@@ -208,7 +208,7 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 | **MATH** | Competition-level mathematics problems requiring multi-step symbolic reasoning | 2021 | 70-90% for leading models | Partial saturation; the hardest problems remain challenging but easier problems are saturated |
 | **BIG-Bench** | Over 200 diverse tasks designed to exceed model capabilities at release time | 2022 | Mixed: hardest tasks remain; many easier tasks saturated | Designed as a "living" benchmark but still subject to contamination as corpora grow |
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 1.**  Frontier models now score above 90% on MMLU, which covers 57 academic subjects from medicine to law to history.  Does that mean AI systems understand most things humans know?  What are at least two specific reasons the score might overstate actual understanding?
 
@@ -228,7 +228,7 @@ Over time, frontier AI models have scored so highly on once-challenging benchmar
 
 ---
 
-### Designing Your Own Benchmark
+## Designing Your Own Benchmark
 
 Creating a valid benchmark requires more than writing a list of questions.  The following six-step process helps ensure benchmark quality, and each step can fail in a way that invalidates the results.
 
@@ -244,7 +244,7 @@ Creating a valid benchmark requires more than writing a list of questions.  The 
 
 **Step 6 - Resist contamination:** Do not publish the test set in its entirety.  Release training and validation splits publicly for model development; keep the test split private.  Release only aggregate scores, not per-item results, to prevent reverse-engineering of the test items.
 
-#### Common Bias Traps in Benchmark Design
+### Common Bias Traps in Benchmark Design
 
 - **Selection bias:** Items are drawn from a narrow slice of the domain, for example, a "global knowledge" benchmark built primarily from Western English-language news sources systematically underrepresents non-Western knowledge.
 - **Cultural specificity:** Correct answers assume cultural knowledge or social norms that are not universal across the populations that will use the AI system.
@@ -252,7 +252,7 @@ Creating a valid benchmark requires more than writing a list of questions.  The 
 
 > **Common Misconception:** Many people treat published leaderboard rankings as objective ground truth about which AI system is "best."  In practice, every benchmark embeds assumptions about what matters, what counts as correct, and whose knowledge and values define the right answer.  A model that ranks first on HumanEval may rank fifth on a benchmark of multi-turn agent behavior.  A model that aces MMLU may be significantly outperformed on tasks requiring careful uncertainty calibration.  Benchmark rankings tell you about performance on *that specific benchmark under those specific conditions*, not about general intelligence or real-world usefulness.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 4.**  You want to benchmark an AI agent's ability to "understand safety constraints."  That phrase is ambiguous in several ways.  Describe how you would turn it into a concrete, testable benchmark.  What specific behaviors would your instances probe, and how would you write items that have clear ground-truth answers?
 
@@ -272,7 +272,7 @@ Creating a valid benchmark requires more than writing a list of questions.  The 
 
 ---
 
-#### Multiple Choice Question
+### Multiple Choice Question
 
 A benchmark is released publicly with all test examples included in the paper and available for download.  After one year, state-of-the-art models score 97% on it.  The most important caveat when interpreting this result is:
 
@@ -285,11 +285,11 @@ A benchmark is released publicly with all test examples included in the paper an
 
 ---
 
-### Evaluation Beyond Accuracy
+## Evaluation Beyond Accuracy
 
 Accuracy on a benchmark is one signal, but it is rarely sufficient on its own for making real-world deployment decisions.  Real-world AI evaluation combines multiple methods, each with distinct strengths and failure modes.
 
-#### Human Evaluation
+### Human Evaluation
 
 Human evaluators assess model outputs directly.  Common formats:
 
@@ -301,7 +301,7 @@ Human evaluators assess model outputs directly.  Common formats:
 
 **Limitations:** Expensive (professional evaluators cost $10-50 per hour), slow (days to weeks for large-scale studies), subject to annotator bias, and inconsistent across annotators and over time as annotator pools and guidelines evolve.
 
-#### Automatic Evaluation Metrics
+### Automatic Evaluation Metrics
 
 | Metric | What It Measures | Key Blind Spot | When to Use It |
 |--------|-----------------|----------------|----------------|
@@ -310,12 +310,12 @@ Human evaluators assess model outputs directly.  Common formats:
 | **BERTScore** | Semantic similarity using contextual embeddings rather than exact word matches | Can miss factual errors; two sentences can be semantically similar but factually opposite | More reliable than BLEU/ROUGE for generation quality; still misses factual accuracy |
 | **G-Eval / LLM-as-Judge** | A language model scores another model's output on a defined rubric | Inherits the judge model's biases, blind spots, and style preferences; expensive per evaluation | Rapid large-scale evaluation when human evaluation budget is limited |
 
-#### Live / Production Evaluation
+### Live / Production Evaluation
 
 - **Canary queries** (hidden "decoy" test prompts inserted silently into live production traffic to catch quality regressions before users notice them): Fixed test prompts inserted into real production traffic anonymously and regularly.  The agent's response to each canary is automatically scored.  Catches quality regressions before they affect large numbers of real users.
 - **A/B testing:** Route a fraction of real users (say, 5%) to a new model version and the rest to the current version; compare outcome metrics such as task completion rate, escalation rate (how often users give up and contact a human), and explicit feedback (thumbs up/down).
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Question 7.**  When is human evaluation worth the extra cost and time compared to automatic metrics?  Describe a specific, concrete scenario where relying solely on automatic metrics would give a dangerously misleading assessment of agent quality.
 

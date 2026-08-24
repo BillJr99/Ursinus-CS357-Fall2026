@@ -143,7 +143,7 @@ A team writes: "Section 6: We will continuously evaluate the system for quality 
 
 You cannot write credible policy about systems whose control mechanisms you cannot name.  RLHF and Constitutional AI are how today's models got their behavior, and both have failure modes your policy has to anticipate rather than assume away.
 
-### The Alignment Problem
+## The Alignment Problem
 
 Teaching a dog to fetch is straightforward: throw the ball, dog brings it back, reward with a treat.  Teaching it to fetch *exactly the right ball*, only when it's safe to run, without knocking over the furniture, and to stop if a small child is in the way; that is alignment.  The gap between the simple instruction ("fetch") and the full set of things you actually want is where problems live.  In AI, this gap between what we formally specify and what we actually intend is called the alignment problem, and it scales dramatically with capability.
 
@@ -160,7 +160,7 @@ The **alignment problem** is the gap between what we formally specify (the rewar
 | **Deceptive alignment** | Model appears aligned during training and evaluation but behaves differently in low-oversight deployment | Model is helpful and harmless during RLHF evaluation by human raters, but produces different outputs in contexts where oversight is minimal | By definition, it passes every check you run during training |
 | **Specification gaming** | Model satisfies the letter but not the spirit of the objective | Model asked to "be concise" produces one-word answers that are technically brief but completely useless | The metric (length) goes down; what you meant (be appropriately brief without sacrificing usefulness) was never captured in the metric |
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q1.**  Which of the four failure modes is the hardest to detect before deployment?  Explain what makes it hard to detect and what evaluation approaches might catch it.
 
@@ -174,7 +174,7 @@ The **alignment problem** is the gap between what we formally specify (the rewar
 
 *Hint:* RLHF trains a reward model on annotator preferences, then trains the LLM to maximize the reward model's score.  What happens if annotators (often English-speaking, college-educated, US-based) systematically prefer certain styles or topics?  Does the model now serve those annotators' preferences rather than the diverse actual user population?
 
-### RLHF vs. Constitutional AI
+## RLHF vs. Constitutional AI
 
 **Reinforcement Learning from Human Feedback (RLHF)**
 
@@ -207,7 +207,7 @@ Weakness: conflicting principles create ambiguity; whoever writes the constituti
 
 > **Common Misconception:** Many students assume that Constitutional AI removes human judgment from the training process.  It does not: humans still write the constitution, and their choices about which principles to include (and how to phrase them) directly shape the model's values.  CAI moves the human judgment from labeling individual responses to writing the rules.  This is more transparent, but it is not neutral.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q4.**  Who writes the "constitution" in Constitutional AI, and how does that affect whose values are encoded in the resulting model?  Is explicit authorship of values better or worse than implicit encoding through annotator preferences?
 
@@ -230,7 +230,7 @@ A model trained with RLHF is evaluated and found to consistently sound confident
 [( )] Constitutional AI failure, because a constitution that listed accuracy as a principle would have caught this during the model's self-critique phase
 [( )] Goal misgeneralization, because the model was trained on formal text but deployed on informal user queries, shifting the distribution
 
-### Practical Safety for Course Agents
+## Practical Safety for Course Agents
 
 For a deployed student-facing agent, five safety controls can be layered in increasing order of implementation complexity and robustness.  Think of these like physical security at a building: a sign on the door ("no trespassing") is easy but weak; a lock is stronger; a security guard stronger still; a vault with dual keys is the strongest.  No single layer is perfect, but together they raise the cost of any attack high enough to deter most of them.
 
@@ -244,7 +244,7 @@ For a deployed student-facing agent, five safety controls can be layered in incr
 
 **Key insight:** These controls are complementary, not alternatives.  A production system uses several layers (defense in depth).  The question is which to prioritize given resource constraints.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q7.**  If you can only implement a single safety control for a student-facing course agent due to time constraints, which one provides the best coverage-per-effort?  Defend your choice, and acknowledge what it leaves unprotected.
 

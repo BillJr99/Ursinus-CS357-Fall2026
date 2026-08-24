@@ -305,7 +305,7 @@ The loop is the whole point: **write the test set once, then let it referee ever
 
 A system prompt that works on the first try and falls apart on the fifth is not a system prompt, it is a lucky sample.  This part takes the craft further: what a persona actually constrains, where personas leak, and how to write one that survives a hostile user and a long session.
 
-### The Three Layers of a Persona
+## The Three Layers of a Persona
 
 Think of a system prompt like a job description combined with a company handbook.  The job description tells the agent *who it is* and *what its role is*.  The handbook spells out the rules it must follow no matter what the customer asks.  When you walk into a store, the salesperson has been trained to greet you warmly, stay on topic, and call a manager if something goes wrong; their persona has layers, just like an AI agent's does.  A well-designed agent persona also has three nested layers, and each layer constrains the one inside it.
 
@@ -335,7 +335,7 @@ Think of a system prompt like a job description combined with a company handbook
 | Escalation | None; agent keeps going even in sensitive situations | "If a student seems distressed, acknowledge feelings and provide counseling resources." - hands off gracefully | Unhandled sensitive moments are the most legally and ethically dangerous gaps |
 | Uncertainty | None; agent will guess with false confidence | "If you are unsure, say so explicitly and suggest where to find the answer." - teaches honesty | Without this, agents confidently hallucinate wrong answers |
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q1.**  What happens at runtime if the Identity layer contradicts the Behavioral Guidelines layer?  For example, the identity says "You are a formal academic advisor" but the behavioral layer says "Always use casual slang."  How would a model likely resolve this, and how should a designer avoid it?
 
@@ -351,7 +351,7 @@ Think of a system prompt like a job description combined with a company handbook
 
 Understanding how carefully-designed personas can still break down leads naturally to the next question: what are the systematic ways persona design fails in practice?
 
-### Persona Consistency and Failure Modes
+## Persona Consistency and Failure Modes
 
 Even a carefully designed persona can degrade mid-conversation.  Imagine hiring a new employee, briefing them thoroughly on their first day, then watching them slowly forget the rules over the course of a long, exhausting shift.  That is essentially what happens to an AI agent during a long conversation: the original instructions become proportionally less influential as more context accumulates.  Understanding these failure modes helps you design more resilient systems.
 
@@ -373,7 +373,7 @@ The user explicitly instructs the agent to "forget" its persona or "pretend to b
 
 > **Common Misconception:** Many people assume that a longer, more detailed system prompt automatically produces a safer agent.  In reality, a longer prompt with internal contradictions can produce *worse* behavior than a shorter, internally consistent one.  Length is not a substitute for clarity, and adding more rules without checking for conflicts often makes drift and collapse more likely, not less.
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q4.**  Why does persona drift happen more in long conversations than short ones?  Connect your answer to the context window mechanics from the Memory activity.
 
@@ -398,7 +398,7 @@ A course assistant persona is designed to be "always positive and encouraging" t
 
 With these failure modes in mind, we can now look at the positive principles that make system prompts resilient from the start.
 
-### Six Principles for Effective System Prompts
+## Six Principles for Effective System Prompts
 
 Think of building a system prompt like writing a recipe.  A recipe that only says "make something delicious" gives the cook no guidance and guarantees unpredictable results.  A recipe that specifies ingredients, quantities, order of steps, and what "done" looks like produces consistent output.  The six principles below are the equivalent of those recipe components; each one closes a specific gap that, left open, leads to hallucination, drift, or user frustration.
 
@@ -419,7 +419,7 @@ Empirically, effective system prompts share six characteristics:
 | "Be helpful, harmless, and honest." | Role, format, escalation, specificity of what "helpful" means in this context | Add a named role, a specific domain constraint, a concrete output format, an escalation rule for sensitive topics, and a version stamp | Without a role, the model applies "helpful" too broadly; without a domain constraint, it will answer questions about anything |
 | "Never say anything bad. Always be nice." | Role, positive framing (what to do instead of what not to do), format, uncertainty handling, escalation, version | Rewrite with a named role, positive behavior statements, format requirements, an uncertainty response, and an escalation path | Negative framing ("never say bad things") is vague and hard for models to operationalize; the improved version tells the agent what to do, not just what to avoid |
 
-#### Critical Thinking Questions
+### Critical Thinking Questions
 
 **Q7.**  Based on the critique table and your own experience with AI tools, which of the six principles is most often missing in real-world system prompts?  Why do you think it gets skipped?
 
