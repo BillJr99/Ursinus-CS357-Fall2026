@@ -322,7 +322,7 @@ Two facts fall out of this ledger.  First, the **two tool schemas cost ~150 toke
 
    > *Hint: A result appended to history is re-sent on every later turn.  Multiply the result size by the remaining turns.  The request is small; the result is the heavy part that lingers.*
 
-3.  Connect this to cost and latency from `liascript-costoptimization.md` and `liascript-llmserving.md`: if tool schemas and results inflate the input token count on every turn, which two user-facing quantities get worse, and why?
+3.  Connect this to cost and latency from *Cost Optimization for AI Systems* and `liascript-llmserving.md`: if tool schemas and results inflate the input token count on every turn, which two user-facing quantities get worse, and why?
 
    > *Hint: More input tokens means more to bill for and more to prefill.  What happens to per-turn cost, and to time-to-first-token, as the prompt grows?*
 

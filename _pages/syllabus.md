@@ -368,9 +368,6 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 2 of 4: what the model is actually doing when it takes in your prompt"
   - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
     rlink: "https://philarchive.org/rec/CHAWWT-8"
-  - rtitle: "Going further, activity: Designing Agent Personas and System Prompts, a longer workshop on the same craft"
-    rlink: "Activities/liascript-agentpersonas.md"
-    liapage: true
   - rtitle: "Bring your working Ollama setup from Week 1; today's workshop edits system prompts against a live model, and you will want the temperature dial from Section 3b within reach."
     rlink: false
 - week: "2"
@@ -394,9 +391,6 @@ schedule:
   - rtitle: "AI by Hand (Yeh): the attention worksheets, which today's worked example in Model 3 follows"
   - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
     rlink: "files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
-  - rtitle: "Going further, theory: Attention and Transformers, Conceptually and by Hand.  Multi-head attention, causal masking, and the full matrix; today's Model 3 is the condensed version"
-    rlink: "Activities/liascript-attentiontransformers.md"
-    liapage: true
   - rtitle: "Bring the printed Neural Network by Hand worksheet, or a tablet you can write on."
     rlink: false
 - week: "3"
@@ -423,9 +417,6 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's sampling and generation behavior in mind"
   - rtitle: "Jurafsky and Martin, Speech and Language Processing (3rd ed. draft), Chapter 3: N-gram Language Models"
     rlink: "https://web.stanford.edu/~jurafsky/slp3/"
-  - rtitle: "Going further, hands-on: Temperature and Sampling Explorer, the parameter-tuning workshop version of the dial you turned in Week 1"
-    rlink: "Activities/liascript-temperatureexplorer.md"
-    liapage: true
 - week: "4"
   date: "0"
   title: "Hallucinations and Evaluating Agent Outputs"
@@ -448,9 +439,6 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter, hallucination, evaluation, and what the model cannot check for itself"
   - rtitle: "Please bring three prompts where a model gave you a confidently wrong answer.  We triage real examples here, not invented ones."
     rlink: false
-  - rtitle: "Going further, activity: Benchmark Design, how we know whether AI systems work.  Directly useful for the Golden-Set lab handed out today"
-    rlink: "Activities/liascript-benchmarking.md"
-    liapage: true
 - week: "4"
   date: "1"
   title: "Tool Use and Function Calling"
@@ -500,9 +488,6 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
-  - rtitle: "Going further, tutorial: Vector Databases, how agents search for meaning at scale"
-    rlink: "Activities/liascript-vectordatabases.md"
-    liapage: true
   - rtitle: "Going further, video: LangChain RAG from Scratch"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
 - week: "6"
@@ -565,9 +550,6 @@ schedule:
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
-  - rtitle: "Going further, activity: Memory Types in Agents (working, episodic, semantic, and procedural), a taxonomy for what you built by hand in Week 7"
-    rlink: "Activities/liascript-memorytypes.md"
-    liapage: true
 - week: "8"
   date: "1"
   title: "Design First: Plan Your Agent System Before You Build It"
@@ -596,9 +578,6 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
-  - rtitle: "Going further, activity: Advanced Agent Loops, reflection, recovery, and control flow.  Its two key models are folded into today's activity; this is the full version"
-    rlink: "Activities/liascript-agentloopsadvanced.md"
-    liapage: true
   - rtitle: "Going further, tutorial: Agent Frameworks (LangChain, CrewAI, AutoGen, and Agno), when a framework earns its weight"
     rlink: "/Tutorials/AgentFrameworks"
 - week: "9"
@@ -694,9 +673,6 @@ schedule:
   liapage: true
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 6: Affect / the politics of data"
-  - rtitle: "Going further, activity: Privacy-Preserving AI (federated learning, differential privacy, and PII scrubbing)"
-    rlink: "Activities/liascript-privacypreservingai.md"
-    liapage: true
 - week: "12"
   date: "0"
   title: "Governance and Policy Writing"
@@ -711,9 +687,6 @@ schedule:
   - rtitle: "Crawford, Atlas of AI, Chapter 1, Earth: the mineral and energy costs of computation"
   - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
   - rtitle: "Christian, The Alignment Problem: any one chapter (for example, the section on reward and reinforcement)"
-  - rtitle: "Going further, activity: AI Alignment and Safety, from RLHF to Constitutional AI"
-    rlink: "Activities/liascript-alignmentsafety.md"
-    liapage: true
 - week: "12"
   date: "1"
   title: "The Environmental Cost of Inference"
@@ -726,9 +699,6 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
   - rtitle: "Crawford, Atlas of AI, Chapter 1 - Earth: the mineralogical and energy substrate of computation"
-  - rtitle: "Going further: Cost Optimization for AI Systems, caching, batching, and choosing the smallest model that works"
-    rlink: "Activities/liascript-costoptimization.md"
-    liapage: true
 - week: "13"
   date: "0"
   title: "Agentic Case Studies: Migration, Browsing, and Research Agents"
@@ -741,9 +711,6 @@ schedule:
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
   - rtitle: "Benjamin, Race After Technology, Chapters 1-2: case studies in discriminatory design"
-  - rtitle: "Going further, tutorial: Agent Security, threat modeling and the OWASP LLM Top 10"
-    rlink: "Activities/liascript-agentsecurity.md"
-    liapage: true
 - week: "14"
   date: "0"
   title: "Project Studio and Gallery Walk"

@@ -65,7 +65,7 @@ info:
     - rtitle: "Prompt Injection Attacks and Defenses in LLM-Integrated Applications"
       rlink: "https://arxiv.org/abs/2310.12815"
     - rtitle: "Privacy-Preserving AI"
-      rlink: "Activities/liascript-privacypreservingai.md"
+      rlink: "Activities/liascript-ipprivacy.md"
       liapage: true
     - rtitle: "Intellectual Property and Privacy"
       rlink: "Activities/liascript-ipprivacy.md"
