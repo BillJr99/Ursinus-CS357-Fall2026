@@ -7,7 +7,7 @@ info:
   purpose: 'To generalize the judge validation from the core rubric-pipeline lab into a standing test suite: a categorized eval dataset, multiple automated metrics including an LLM judge, a regression runner, and a CI gate that enforces quality on every push.'
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
-    rlink: /Assignments/RubricPipeline
+    rlink: "../RubricPipeline"
   - rtitle: Evaluating Outputs Activity
     rlink: "Activities/liascript-evaluatingoutputs.md"
     liapage: true
