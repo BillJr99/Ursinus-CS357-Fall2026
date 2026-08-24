@@ -29,6 +29,41 @@ This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringli
 
 ---
 
+## Pre-Merge Checks
+
+The Pages workflow builds only on a push to `gh-pages`, so a bad layout name or a
+stray Liquid delimiter is not caught until after the merge. `bin/check-site.py`
+runs the checks that would have caught the ones we have actually hit:
+
+```bash
+git submodule update --init _layouts     # the layout check needs these present
+pip install pyyaml
+python3 bin/check-site.py
+```
+
+It verifies that every `layout:` names a file that exists in `_layouts/`, that
+the deck invariant below holds, that no deck uses Liquid, that no page has a
+literal `{{ }}` outside `{% raw %}`, and that every relative front-matter link
+resolves to a real permalink.
+
+Two of those deserve a word, because both fail silently rather than loudly:
+
+- **Layouts.** Jekyll warns and drops the page's chrome when `layout:` names a
+  file that is not in `_layouts/`. The available layouts come from the
+  `_layouts` submodule, so check there rather than guessing: `default-standard`
+  is the one course pages use, and there is no `tutorial` layout.
+- **Literal braces.** Liquid runs before Markdown, so a `{{ ... }}` in prose or
+  inside a fenced code block is evaluated and deleted even though it looks
+  quoted. GitHub Actions YAML and Python `.format()` examples are the usual
+  victims. Wrap the block in `{% raw %}` / `{% endraw %}`. This does not apply
+  to decks, which Jekyll never processes.
+
+To reproduce the Pages build locally, `bundle install` then build with Jekyll;
+`jekyll-github-metadata` needs `JEKYLL_GITHUB_TOKEN` set or it cannot reach the
+API and the build stops.
+
+---
+
 ## Term Rollover
 
 Deck links are not written out in full. A page body composes them from config:
