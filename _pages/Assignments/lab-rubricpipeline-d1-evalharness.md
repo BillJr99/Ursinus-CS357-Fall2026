@@ -11,9 +11,8 @@ info:
   - rtitle: Evaluating Outputs Activity
     rlink: "Activities/liascript-evaluatingoutputs.md"
     liapage: true
-  - rtitle: Testing Agents Activity
-    rlink: "Activities/liascript-testingagents.md"
-    liapage: true
+  - rtitle: Testing Agents
+    rlink: "../../Tutorials/TestingAgents"
 tags:
 - evaluation
 - testing
@@ -30,7 +29,7 @@ To generalize the judge validation from the core rubric-pipeline lab into a stan
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md)
-- [Testing Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-testingagents.md)
+- [Testing Agents]({{ site.baseurl }}/Tutorials/TestingAgents)
 
 This page is **Direction 1** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 

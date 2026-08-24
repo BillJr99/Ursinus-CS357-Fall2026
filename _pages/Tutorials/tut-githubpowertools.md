@@ -186,10 +186,16 @@ Compare the same request sent to a local `llama3.2` model (a) without MCP ground
 
 Why does connecting an agent to a live MCP server reduce hallucinated API calls, even though the underlying language model's weights have not changed?
 
-[( )] The MCP server retrains the model weights on current library code before each call
-[( )] The agent refuses to generate code for any library that has an MCP server configured
-[(X)] The agent can query the MCP server for current method signatures and include that verified information in its context before generating code
-[( )] MCP servers patch the model's training data in memory at runtime
+- The MCP server retrains the model weights on current library code before each call
+- The agent refuses to generate code for any library that has an MCP server configured
+- The agent can query the MCP server for current method signatures and include that verified information in its context before generating code
+- MCP servers patch the model's training data in memory at runtime
+
+<details markdown="1"><summary>Answer</summary>
+
+The agent can query the MCP server for current method signatures and include that verified information in its context before generating code
+
+</details>
 
 > **Common Misconception:** "Grounding" does not change the model itself; no weights are updated, and the model does not "learn" the library.  It is simply given accurate, current text in its context window at the moment it needs to generate API calls.  Remove the MCP server from the configuration and the hallucinations return, because the underlying model still only knows what was in its training data.
 
@@ -242,10 +248,16 @@ Give yourself 12 minutes to answer five questions about an unfamiliar agent fram
 
 A teammate wants to use `gdagram.com` to verify that a dependency they plan to remove is not used anywhere in the codebase.  Which of the following is the most accurate assessment of this approach?
 
-[( )] This is reliable because gdagram.com performs static analysis equivalent to a compiler
-[( )] This is reliable for dynamically loaded modules but not for statically imported ones
-[(X)] This is a useful starting point but should be verified with a code search, because generated diagrams may miss dynamic imports and optional dependencies
-[( )] This is unreliable in all cases; the only correct approach is to read every file manually
+- This is reliable because gdagram.com performs static analysis equivalent to a compiler
+- This is reliable for dynamically loaded modules but not for statically imported ones
+- This is a useful starting point but should be verified with a code search, because generated diagrams may miss dynamic imports and optional dependencies
+- This is unreliable in all cases; the only correct approach is to read every file manually
+
+<details markdown="1"><summary>Answer</summary>
+
+This is a useful starting point but should be verified with a code search, because generated diagrams may miss dynamic imports and optional dependencies
+
+</details>
 
 > **Common Misconception:** Automatically generated architecture diagrams show the relationships that are visible through static analysis of import statements and class definitions.  They typically miss plugins loaded at runtime, modules imported conditionally based on configuration, and monkey-patching.  Treat the diagram as a hypothesis about the structure (a helpful starting point) and confirm any dependency you plan to remove with a full-text search (`Ctrl+Shift+F` in `github.dev`).
 

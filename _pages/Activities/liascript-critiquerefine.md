@@ -73,6 +73,24 @@ $$
 
 Where $d_t$ is the draft at round $t$, $G$ is the generator, and $C$ is the critic applying the rubric.
 
+### Where This Sits Next to a Reasoning Model
+
+*Why Different Answers Every Time?* introduced reasoning models, which deliberate **inside** the model: a long reasoning stream, trained by reinforcement learning against checkable outcomes, that you receive as one response.  What you are building today deliberates **outside** the model, in code you wrote, with a rubric you can read and rounds you can count.
+
+Both spend the same currency, extra computation at answer time, and the trade between them is worth naming before you build one:
+
+| | Reasoning model (internal) | Critique and refine (external) |
+|---|---|---|
+| Who decides when to stop | The model, from its training | Your stopping rule, in your code |
+| Can you read the criteria | No, they are baked into the weights | Yes, the rubric is a string you wrote |
+| Can you audit each round | Only as a trace the model generated, which may not match what drove the answer | Yes, every draft and every issue list is an object you can log |
+| Can you swap the judge | No | Yes, a different model, a test suite, or a person |
+| Cost | Paid inside one call | Paid in $R$ calls you scheduled |
+
+Neither replaces the other, and a good reason to build the external one even when you have a reasoning model is inspectability: when a reasoning model's answer is wrong, you have a trace and a shrug; when this loop's answer is wrong, you have the exact rubric line that failed to catch it, and you can fix that line.
+
+The deeper point survives both: **an extra round only helps if it introduces something the previous round did not have.**  For a reasoning model that is a checked intermediate result or a rejected alternative.  Here it is the critic's rubric, which the generator never sees directly and therefore cannot simply agree with.  A loop that feeds a draft back with "make it better" adds rounds and no evidence, and you will watch that fail in Part III.
+
 ---
 
 ## Model 1: Two Transcripts

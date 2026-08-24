@@ -94,10 +94,16 @@ For each scenario, decide which of the three files the assistant should be obeyi
 
 Under the production `AGENTS.md`, when the assistant finds `/wiki/` outdated relative to `/raw/` while answering a question, it should:
 
-[( )] Answer from `/raw/` directly, since it is the fresher source
-[( )] Refuse to answer until the owner reorganizes the vault
-[(X)] Update `/wiki/` first when appropriate, then answer grounded in the curated content, so every question asked makes the vault better
-[( )] Answer from `/wiki/` anyway, since it is the authoritative source
+- Answer from `/raw/` directly, since it is the fresher source
+- Refuse to answer until the owner reorganizes the vault
+- Update `/wiki/` first when appropriate, then answer grounded in the curated content, so every question asked makes the vault better
+- Answer from `/wiki/` anyway, since it is the authoritative source
+
+<details markdown="1"><summary>Answer</summary>
+
+Update `/wiki/` first when appropriate, then answer grounded in the curated content, so every question asked makes the vault better
+
+</details>
 
 ---
 
@@ -165,10 +171,16 @@ Classify each action into **Autorun**, **Queue**, or **Forbidden** under the pol
 
 Under the umbrella rule, the owner says: "I trust you; just handle my inbox this week."  The assistant may:
 
-[( )] Send routine replies but queue sensitive ones
-[( )] Send replies but BCC the owner on each
-[(X)] Triage, label, and draft replies freely, but every send still queues for its own approval, because blanket consent never satisfies a per-action gate
-[( )] Nothing, because the instruction is ambiguous
+- Send routine replies but queue sensitive ones
+- Send replies but BCC the owner on each
+- Triage, label, and draft replies freely, but every send still queues for its own approval, because blanket consent never satisfies a per-action gate
+- Nothing, because the instruction is ambiguous
+
+<details markdown="1"><summary>Answer</summary>
+
+Triage, label, and draft replies freely, but every send still queues for its own approval, because blanket consent never satisfies a per-action gate
+
+</details>
 
 ---
 
@@ -206,10 +218,16 @@ And because an always-on host is sometimes off, the routines carry a **catch-up 
 
 The production system's file-store integration reads *metadata only* in routine digests.  The best justification is:
 
-[( )] File contents are too large for the model's context window
-[(X)] Routine jobs should consume the minimum data needed for their purpose; surfacing that a document changed does not require reading it, and least-privilege limits both privacy exposure and blast radius
-[( )] The file-store API charges per byte read
-[( )] Metadata is more accurate than file contents
+- File contents are too large for the model's context window
+- Routine jobs should consume the minimum data needed for their purpose; surfacing that a document changed does not require reading it, and least-privilege limits both privacy exposure and blast radius
+- The file-store API charges per byte read
+- Metadata is more accurate than file contents
+
+<details markdown="1"><summary>Answer</summary>
+
+Routine jobs should consume the minimum data needed for their purpose; surfacing that a document changed does not require reading it, and least-privilege limits both privacy exposure and blast radius
+
+</details>
 
 ---
 
@@ -258,10 +276,16 @@ An assistant using the harness was asked to "clean up the vault's project pages:
 
 Under the self-improvement guardrail, the assistant may add a new skill or durable memory only when:
 
-[( )] The owner explicitly dictates the exact content to store
-[( )] The model's confidence in the lesson exceeds a threshold
-[(X)] The lesson comes from a run that passed the final reconciliation gate, and it is stored with provenance identifying that run
-[( )] The same lesson has been observed in at least three sessions
+- The owner explicitly dictates the exact content to store
+- The model's confidence in the lesson exceeds a threshold
+- The lesson comes from a run that passed the final reconciliation gate, and it is stored with provenance identifying that run
+- The same lesson has been observed in at least three sessions
+
+<details markdown="1"><summary>Answer</summary>
+
+The lesson comes from a run that passed the final reconciliation gate, and it is stored with provenance identifying that run
+
+</details>
 
 ---
 
@@ -293,10 +317,16 @@ The through-line of the whole case study: intelligence is cheap and replaceable;
 
 The service-ownership table exists primarily to prevent:
 
-[( )] The owner from forgetting which cloud vendor hosts the assistant
-[(X)] Two assistant instances from silently duplicating or disabling one another when a capability migrates, by recording exactly one current owner and gating every transfer behind a verified cutover
-[( )] Skills from being installed on more than one instance
-[( )] The assistant from exceeding its API budget
+- The owner from forgetting which cloud vendor hosts the assistant
+- Two assistant instances from silently duplicating or disabling one another when a capability migrates, by recording exactly one current owner and gating every transfer behind a verified cutover
+- Skills from being installed on more than one instance
+- The assistant from exceeding its API budget
+
+<details markdown="1"><summary>Answer</summary>
+
+Two assistant instances from silently duplicating or disabling one another when a capability migrates, by recording exactly one current owner and gating every transfer behind a verified cutover
+
+</details>
 
 ---
 
@@ -345,6 +375,6 @@ You now have both halves of the governance story: charters and handoffs for agen
 ## 8.  Further Reading
 
 - The course template set: [Agent Operating System Templates](https://www.billmongan.com/Ursinus-CS357/files/agent-templates/README.md).
-- This course: [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) (the foundation this tutorial builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md) (the theory behind the gates), [Governing Coding Agents](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-agentgovernance.md) (the companion case study), and [Agent Skills and Plugins]({{ site.baseurl }}/Assignments/LocalAgent/Direction5) (the skill format this system's inventory manages).
+- This course: [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) (the foundation this tutorial builds on), [Human-in-the-Loop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md) (the theory behind the gates), [Governing Coding Agents]({{ site.baseurl }}/Tutorials/AgentGovernance) (the companion case study), and [Agent Skills and Plugins]({{ site.baseurl }}/Assignments/LocalAgent/Direction5) (the skill format this system's inventory manages).
 - Model Context Protocol documentation. https://modelcontextprotocol.io, the integration layer behind the tool connections in Part III.
 - Atul Gawande.  *The Checklist Manifesto*.  Metropolitan Books (2009).  Why written procedure outperforms expert memory in high-stakes operations, the human-institutions version of everything in this activity.

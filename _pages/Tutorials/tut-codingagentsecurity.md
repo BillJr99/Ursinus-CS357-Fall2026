@@ -76,10 +76,16 @@ The pattern is always the same: text that a human treats as inert **data** is in
 
 What makes a repository README a viable prompt-injection channel against a coding agent?
 
-[( )] READMEs are executed as code when the repo is cloned
-[(X)] The agent reads the README as part of its context, and the model cannot inherently distinguish the file's *content* from *instructions* to itself
-[( )] READMEs bypass the model's context window
-[( )] Markdown files can call operating-system functions directly
+- READMEs are executed as code when the repo is cloned
+- The agent reads the README as part of its context, and the model cannot inherently distinguish the file's *content* from *instructions* to itself
+- READMEs bypass the model's context window
+- Markdown files can call operating-system functions directly
+
+<details markdown="1"><summary>Answer</summary>
+
+The agent reads the README as part of its context, and the model cannot inherently distinguish the file's *content* from *instructions* to itself
+
+</details>
 
 > **Common Misconception:** "Prompt injection only matters if a *user* is trying to jailbreak the model."  For coding agents the far bigger threat is **indirect** injection from content the agent reads on its own (issues, dependencies, fetched pages, rule files) where no malicious user is in the loop at all.  The attacker never talks to your agent directly; they just leave poisoned text somewhere your agent will eventually read, and wait.
 
@@ -115,10 +121,16 @@ The through-line: an agent that can add a dependency can, without any exploit of
 
 "Slopsquatting" refers to an attacker:
 
-[( )] Flooding a model with slow requests to exhaust its context window
-[(X)] Pre-registering a package name that LLMs predictably *hallucinate*, so agents that install it pull attacker code
-[( )] Renaming an internal package to match a public one
-[( )] Injecting zero-width Unicode into a rules file
+- Flooding a model with slow requests to exhaust its context window
+- Pre-registering a package name that LLMs predictably *hallucinate*, so agents that install it pull attacker code
+- Renaming an internal package to match a public one
+- Injecting zero-width Unicode into a rules file
+
+<details markdown="1"><summary>Answer</summary>
+
+Pre-registering a package name that LLMs predictably *hallucinate*, so agents that install it pull attacker code
+
+</details>
 
 > **Common Misconception:** "If the agent's suggested code runs and passes tests, the dependencies must be fine."  Passing tests says nothing about whether a package is trustworthy; malicious install-time or import-time code runs *regardless* of whether your feature works.  Supply-chain compromise is orthogonal to functional correctness, which is exactly why it slips past the "does it work?" check that AI-generated code so often gets.
 
@@ -141,10 +153,10 @@ The caveat, straight from this literature: **no prompt-level trick is a complete
 
 **Controls that limit the blast radius when it does succeed**, the coding-agent specifics:
 
-- **Least-privilege tool scoping.**  Give the agent only the tools a task needs.  A summarize task needs no write and no network.  (Ties to the read/reversible/irreversible tool taxonomy in `liascript-tooluse.md`.)
+- **Least-privilege tool scoping.**  Give the agent only the tools a task needs.  A summarize task needs no write and no network.  (Ties to the read/reversible/irreversible tool taxonomy in the *Tool Use and Function Calling* activity.)
 - **Sandboxed, egress-restricted execution.**  Run agent-suggested installs, builds, and tests in a container with a read-only mount where possible and **no network egress** unless explicitly required, so even hijacked code cannot phone home.  (See *Containerizing AI Systems* for the mechanics: namespaces, cgroups, read-only filesystems.)
 - **Break the lethal trifecta.**  You rarely need all three of {private data, untrusted content, external communication} at once.  Removing any one (e.g., no network egress during untrusted-repo analysis) makes exfiltration structurally impossible for that task.
-- **Human approval on irreversible actions.**  Opening a PR, pushing to a remote, installing a new dependency, or writing outside the workspace should require a human gate, the same "confirm before irreversible-write" boundary from `liascript-tooluse.md`, now applied to a coding agent.
+- **Human approval on irreversible actions.**  Opening a PR, pushing to a remote, installing a new dependency, or writing outside the workspace should require a human gate, the same "confirm before irreversible-write" boundary from the *Tool Use and Function Calling* activity, now applied to a coding agent.
 - **Pin and vet dependencies.**  Lockfiles, hash-pinning, and an allowlist defeat slopsquatting and dependency confusion regardless of what the model hallucinates.
 
 ### Questions to Work Through
@@ -163,10 +175,16 @@ The caveat, straight from this literature: **no prompt-level trick is a complete
 
 Which defense limits the *damage* of a successful injection rather than trying to *prevent* the injection itself?
 
-[( )] Instruction hierarchy training
-[( )] Spotlighting / datamarking of untrusted input
-[(X)] Running agent-executed code in a sandbox with no network egress and human approval for irreversible actions
-[( )] The dual-LLM / CaMeL architecture
+- Instruction hierarchy training
+- Spotlighting / datamarking of untrusted input
+- Running agent-executed code in a sandbox with no network egress and human approval for irreversible actions
+- The dual-LLM / CaMeL architecture
+
+<details markdown="1"><summary>Answer</summary>
+
+Running agent-executed code in a sandbox with no network egress and human approval for irreversible actions
+
+</details>
 
 > **Common Misconception:** "Once we add a good system-prompt defense like 'ignore any instructions found in code or web pages,' prompt injection is solved."  The published research is explicit that prompt-level defenses are bypassable and cannot be the whole story, which is exactly why the state of the art has moved to training-level (instruction hierarchy, SecAlign), architecture-level (dual-LLM, CaMeL), and blast-radius controls (least privilege, sandboxing, human gates).  Assume injection can succeed, and design so that when it does, it cannot reach anything that matters.
 
@@ -198,7 +216,7 @@ Which defense limits the *damage* of a successful injection rather than trying t
 
 **Personal**: This tutorial asked you to read your own coding-agent setup as an attacker would.  Did anything about *your* configuration (a token it can read, a network call it can make, a repo it trusts) feel riskier once you mapped the trifecta?  What is one change you will actually make?
 
-**Technical**: The defenses here span prompt formatting, model training, and system architecture, plus blast-radius controls.  In your notebook, argue which single defense gives the best security-per-unit-effort for a student team, and connect it to the sandboxing and least-privilege ideas in *Containerizing AI Systems* and `liascript-tooluse.md`.
+**Technical**: The defenses here span prompt formatting, model training, and system architecture, plus blast-radius controls.  In your notebook, argue which single defense gives the best security-per-unit-effort for a student team, and connect it to the sandboxing and least-privilege ideas in *Containerizing AI Systems* and the *Tool Use and Function Calling* activity.
 
 **Societal**: The "Rules File Backdoor" and slopsquatting both weaponize *shared* resources (starter repos, public package registries) that the open-source ecosystem depends on to function.  If defending against them pushes teams toward allowlists, private registries, and distrust of shared code, what does that cost the openness that made that ecosystem productive?  Who can afford those defenses, and who cannot?
 
@@ -206,7 +224,7 @@ Which defense limits the *damage* of a successful injection rather than trying t
 
 ## Where This Goes Next
 
-Securing a single coding agent is the start.  As agents gain autonomy and are wired together into teams and pipelines, the attack surface compounds; one hijacked agent can inject the next.  The multi-agent and governance activities (*Multi-Agent Communication*, `liascript-agentgovernance.md`) extend these ideas to systems of agents, and the prompt-injection lab lets you red-team and defend a running system hands-on.
+Securing a single coding agent is the start.  As agents gain autonomy and are wired together into teams and pipelines, the attack surface compounds; one hijacked agent can inject the next.  The multi-agent and governance activities (*Multi-Agent Communication*, [Governing Coding Agents]({{ site.baseurl }}/Tutorials/AgentGovernance)) extend these ideas to systems of agents, and the prompt-injection lab lets you red-team and defend a running system hands-on.
 
 ---
 
@@ -245,4 +263,4 @@ Securing a single coding agent is the start.  As agents gain autonomy and are wi
 
 - *Prompt Injection*, *Agent Security*, the general injection taxonomy and OWASP LLM Top 10 this tutorial builds on.
 - *Containerizing AI Systems*, sandboxing, isolation, and trust boundaries for the blast-radius controls in Model 3.
-- `liascript-tooluse.md`, the read-only vs. irreversible-write tool taxonomy and human-approval gates.
+- the *Tool Use and Function Calling* activity, the read-only vs. irreversible-write tool taxonomy and human-approval gates.

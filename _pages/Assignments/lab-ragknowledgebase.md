@@ -76,18 +76,16 @@ info:
       rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
       rlink: "../Tutorials/LocalModels"
-    - rtitle: "The Data Cards and Model Cards activity"
-      rlink: "Activities/liascript-datacards.md"
-      liapage: true
+    - rtitle: "Data Cards and Model Cards"
+      rlink: "../Tutorials/DataCards"
     - rtitle: "Sampling, Temperature, and Generation Activity"
       rlink: "Activities/liascript-samplinggeneration.md"
       liapage: true
     - rtitle: "Evaluating Agent Outputs Activity"
       rlink: "Activities/liascript-evaluatingoutputs.md"
       liapage: true
-    - rtitle: "Multimodal Agents Activity"
-      rlink: "Activities/liascript-multimodalagents.md"
-      liapage: true
+    - rtitle: "Multimodal Agents"
+      rlink: "../Tutorials/MultimodalAgents"
 
 tags:
   - rag
@@ -976,7 +974,7 @@ This direction is the low-code route through the heart of the lab.  You will bui
 
 **Estimated time: 7-9 hours** (in place of core Parts 2-3, so the lab total stays ≈ 8-10 hours).
 
-Background material: the [Visual Agent Building with Langflow activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-visualagents.md), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
+Background material: the [Visual Agent Building with Langflow activity]({{ site.baseurl }}/Tutorials/VisualAgents), especially Part IV's hands-on build; this direction extends that 30-minute build to the full lab standard.
 
 #### Part A: Install and Launch Langflow
 
@@ -1756,7 +1754,7 @@ This direction is completed in **pairs using driver/navigator roles**: the drive
 
 - [Sampling, Temperature, and Generation Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
 - [Evaluating Agent Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
-- [Multimodal Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-multimodalagents.md): sending images to local vision models
+- [Multimodal Agents]({{ site.baseurl }}/Tutorials/MultimodalAgents): sending images to local vision models
 
 **Tools to install:**
 

@@ -50,10 +50,16 @@ The whole of this tutorial lives in the **code** column: an agent scoped to a pr
 
 A teammate says, "Chat, code, and cowork are just three brand names for the same thing, a model answering prompts."  The most accurate correction is:
 
-[( )] They differ only in price; the underlying capability and risk are identical
-[(X)] They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
-[( )] They differ only in which company trained the model behind them
-[( )] They are ordered by intelligence: cowork models are strictly smarter than code models, which are smarter than chat models
+- They differ only in price; the underlying capability and risk are identical
+- They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
+- They differ only in which company trained the model behind them
+- They are ordered by intelligence: cowork models are strictly smarter than code models, which are smarter than chat models
+
+<details markdown="1"><summary>Answer</summary>
+
+They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
+
+</details>
 
 ---
 
@@ -113,8 +119,9 @@ If `node` is missing and you would rather not install it on your host, skip to ย
 | **Claude Code** | `npm i -g @anthropic-ai/claude-code` | `claude` | `~/.claude/`, project `CLAUDE.md` | Browser login on first run, or `ANTHROPIC_API_KEY` |
 | **Codex CLI** | `npm i -g @openai/codex` | `codex` | `~/.codex/config.toml`, project `AGENTS.md` | `OPENAI_API_KEY` or sign-in |
 | **Gemini CLI** | `npm i -g @google/gemini-cli` | `gemini` | `~/.gemini/`, project `GEMINI.md` | Google sign-in or `GEMINI_API_KEY` |
-| **opencode** | `npm i -g opencode-ai` | `opencode` | `~/.config/opencode/config.json`, project `opencode.json` | Provider key, or a local gateway |
+| **opencode** | `npm i -g opencode-ai` | `opencode` | `~/.config/opencode/opencode.json`, project `opencode.json` | Provider key, or a local gateway |
 | **Aider** | `pip install aider-chat` | `aider` | `~/.aider.conf.yml`, project `CONVENTIONS.md` | Provider key in env |
+| **pi** | `npm i -g @mariozechner/pi-coding-agent` | `pi` | `~/.config/pi/`, optional project `pi.md` | Provider key, or a local endpoint via the compat plugin (ยง6c) |
 
 > **Watch out!** `npm i -g` on some systems wants `sudo`, which installs the tool as root and then complains about permissions later.  The clean fix is a Node version manager (`nvm`) so your global installs land in your home directory, or a container, which sidesteps the question entirely.
 
@@ -226,10 +233,16 @@ The gates are not friction; they are the course's human-oversight principle runn
 
 A teammate launches an agent CLI from their home directory instead of the project directory "to save a cd".  The principled objection is:
 
-[( )] The agent will run more slowly because it must index all files before starting; launch location is a performance concern, not a safety one
-[(X)] The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
-[( )] Context files are only read from the home directory, so launching from there is actually required for the context file to be found
-[( )] The working directory only affects which files the agent proposes to edit in its plan; file tool calls are still scoped to the project folder
+- The agent will run more slowly because it must index all files before starting; launch location is a performance concern, not a safety one
+- The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
+- Context files are only read from the home directory, so launching from there is actually required for the context file to be found
+- The working directory only affects which files the agent proposes to edit in its plan; file tool calls are still scoped to the project folder
+
+<details markdown="1"><summary>Answer</summary>
+
+The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
+
+</details>
 
 ---
 
@@ -252,10 +265,16 @@ The connection to the human-in-the-loop principle is direct: a mode is how you *
 
 A student sets their agent to **auto-accept edits** mode to refactor a Python package, reasoning that they will review the final diff in git anyway.  Midway, the agent decides it needs a library and proposes `pip install requests`.  What happens?
 
-[( )] It runs without a prompt; auto-accept edits approves every action, shell commands included, so the install proceeds silently
-[(X)] It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
-[( )] It runs without a prompt, but only because `pip install` counts as a file edit since it writes package files to disk
-[( )] It stops, because auto-accept mode automatically reverts to "ask" mode the instant any shell command is proposed
+- It runs without a prompt; auto-accept edits approves every action, shell commands included, so the install proceeds silently
+- It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
+- It runs without a prompt, but only because `pip install` counts as a file edit since it writes package files to disk
+- It stops, because auto-accept mode automatically reverts to "ask" mode the instant any shell command is proposed
+
+<details markdown="1"><summary>Answer</summary>
+
+It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
+
+</details>
 
 ---
 
@@ -274,29 +293,104 @@ The flags explained: `ANTHROPIC_BASE_URL` overrides the default `https://api.ant
 For the other tools, the same redirect looks slightly different:
 
 ```bash
-
-# opencode: edit ~/.config/opencode/config.json and set, inside the
-
-# provider's "options" block:
-
-# "baseURL": "http://localhost:4000/v1"
-
-# "apiKey":  "sk-litellm-local"
-
-# Codex: add to ~/.codex/config.toml:
-
-# [model_providers.local]
-
-# base_url = "http://localhost:4000/v1"
-
-# api_key  = "sk-litellm-local"
-
-# pi: add to models.json in your pi config directory:
-
-# { "provider": "openai", "base_url": "http://host.docker.internal:11434/v1" }
-
-# (use host.docker.internal instead of localhost when running pi in a container)
+# Codex: add to ~/.codex/config.toml
+[model_providers.local]
+base_url = "http://localhost:4000/v1"
+api_key  = "sk-litellm-local"
 ```
+
+```yaml
+# Aider: add to ~/.aider.conf.yml
+openai-api-base: http://localhost:4000/v1
+openai-api-key: sk-litellm-local
+```
+
+opencode and pi each get a section of their own below, because both can hold **more than one endpoint at a time**, and that turns out to be worth setting up deliberately rather than in passing.
+
+### 6a.  One address, three ways to write it
+
+Every local endpoint in this section is reachable at one of three addresses, and picking the wrong one produces a connection error that looks like a broken install.  The rule is short: **`localhost` means "the machine this process is running on."**  For a CLI you installed on your laptop, that is your laptop.  For a CLI running in a container, that is the container, where nothing is listening.
+
+| Where the CLI runs | Ollama | OpenWebUI | LiteLLM gateway |
+|---|---|---|---|
+| Natively on your laptop | `http://localhost:11434/v1` | `http://localhost:3000/api/v1` | `http://localhost:4000/v1` |
+| Inside a container | `http://host.docker.internal:11434/v1` | `http://host.docker.internal:3000/api/v1` | `http://host.docker.internal:4000/v1` |
+
+Two things to know before you debug anything:
+
+- **On Linux, `host.docker.internal` has to be requested.**  Docker Desktop on macOS and Windows provides it for free; Docker Engine on Linux does not.  Add `--add-host=host.docker.internal:host-gateway` to `docker run`.
+- **Ollama listens on `127.0.0.1` only, by default.**  A container cannot reach that even with the right hostname.  Start it as `OLLAMA_HOST=0.0.0.0 ollama serve`, and know what you traded: anything that can route to your machine can now use your models, so save this for your own laptop rather than shared wifi.
+
+Ollama and OpenWebUI are not interchangeable, which is why the sections below register both rather than making you choose.  **Ollama is the raw model**: the thing you pulled, answering with no scaffolding.  **OpenWebUI is the model plus everything you built around it**: knowledge bases, tools, system prompts, per-model settings.  When an answer is wrong, having both configured lets you re-ask through the other route and learn in one step whether the problem is the model or your pipeline.
+
+### 6b.  opencode: Ollama and OpenWebUI together
+
+opencode reads one global config file, and the file name matters: it is `opencode.json`, not `config.json`.  If opencode reports no provider or no models, check the name first.
+
+| Where you are | The file to create |
+|---|---|
+| macOS, Linux, or WSL | `~/.config/opencode/opencode.json` |
+| Windows, native shell | `%USERPROFILE%\.config\opencode\opencode.json` (Win+R, paste `%USERPROFILE%\.config\opencode`, Enter) |
+
+The `provider` block is a map, so listing two keys registers two providers, both live at once, and `/model` shows you the union:
+
+```bash
+mkdir -p ~/.config/opencode
+cat > ~/.config/opencode/opencode.json <<'JSON'
+{
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": { "baseURL": "http://localhost:11434/v1" },
+      "models": { "llama3.2": { "name": "llama3.2 (raw Ollama)" } }
+    },
+    "openwebui": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:3000/api/v1",
+        "apiKey": "sk-REPLACE-ME"
+      },
+      "models": { "llama3.2": { "name": "llama3.2 (via OpenWebUI)" } }
+    }
+  }
+}
+JSON
+```
+
+Running opencode in a container instead?  Substitute `host.docker.internal` for `localhost` in both `baseURL` values, and nothing else changes.
+
+Two clarifications, because "API key" usually means "bill":
+
+- **The OpenWebUI key is yours, minted on your own server.**  Generate it under *Settings -> Account -> API Keys*.  It authenticates you to software running on your machine.  Ollama takes no key at all, which is why its block has none.
+- **Both routes are free** as long as the models behind them are the local ones you pulled.  You are adding a front door, not a bill.  Point the same config at a paid provider later and the cost follows the model, not the config.
+
+Now start opencode and run `/model`.  You should see both entries, distinguishable because the `name` fields say which is which.  Ask the same question through each; the difference you observe is exactly the value OpenWebUI's configuration is adding, measured rather than assumed.
+
+### 6c.  pi: Ollama and OpenWebUI together
+
+pi connects to arbitrary OpenAI-compatible endpoints through a plugin, **[pi-openai-compat](https://github.com/BillJr99/pi-openai-compat)**, which registers each one as a first-class pi provider so its models appear in pi's own `/model` picker.  It holds several providers simultaneously, which is what makes the Ollama-alongside-OpenWebUI comparison above possible.
+
+Install it once:
+
+```bash
+pi install npm:@billjr99/pi-openai-compat
+# or, straight from source:
+# pi install git:github.com/BillJr99/pi-openai-compat
+```
+
+Then, inside pi, run the login wizard once per endpoint:
+
+```text
+/compat-login
+```
+
+**For Ollama**, choose *Ollama (local, keyless)* and accept `http://localhost:11434/v1` (or type the `host.docker.internal` form if pi is containerized).  There is no key.  pi fetches your pulled models and adds them to `/model`.
+
+**For OpenWebUI**, run `/compat-login` a second time, choose *Custom*, give it `http://localhost:3000/api/v1`, and paste the key you generated in OpenWebUI.  Both providers are now registered and labeled separately in `/model`; nothing was replaced.
+
+The same wizard reaches the gateway from the top of this section: choose *Custom* again with `http://localhost:4000/v1`, and you have all three routes selectable mid-session.  If pi was already running when you installed the plugin, `/reload` first.  Credentials and cached model lists land in `~/.config/pi-openai-compat/config.json`, which is plaintext, so `chmod 600` it or delete it to clear everything.
+
+> **Why bother with three?**  Because "the model gave a bad answer" is not a diagnosis.  With Ollama, OpenWebUI, and the gateway all registered, you re-ask the same question through each and the failure localizes itself: same answer everywhere means the model, different answers means your retrieval or your routing.  The [filesystem isolation]({{ site.baseurl }}/Tutorials/FilesystemIsolation) tutorial builds this exact setup inside a container, with the Dockerfile and the pre-seeded config, if you want the containerized version.
 
 The payoff is the unbundling theme of this course: the *interface* (the CLI you like) is now independent of the *model* (local, free-tier, or frontier), swappable per task with `/model`.  For privacy-sensitive coursework, local routing is not just cheaper; it is the data-minimization requirement satisfied by architecture.
 
@@ -401,10 +495,16 @@ This same idea (an agent that keeps working while you are away) scales up in the
 
 You start a long agent task inside `tmux`, press `Ctrl-b d`, and close your SSH connection.  Thirty minutes later you `tmux attach` from a different machine.  What do you find?
 
-[( )] The task is paused at the moment you detached and resumes only now that you have reattached
-[( )] The task was killed when the SSH connection closed and must be restarted from scratch
-[(X)] The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
-[( )] The task ran only while at least one client was attached, so it made no progress during the 30 minutes you were disconnected
+- The task is paused at the moment you detached and resumes only now that you have reattached
+- The task was killed when the SSH connection closed and must be restarted from scratch
+- The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
+- The task ran only while at least one client was attached, so it made no progress during the 30 minutes you were disconnected
+
+<details markdown="1"><summary>Answer</summary>
+
+The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
+
+</details>
 
 ---
 
