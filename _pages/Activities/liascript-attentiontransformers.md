@@ -259,7 +259,7 @@ An agent's prompt grows from 2,000 to 8,000 tokens.  Since attention compares ev
 
 ## Worked Example: the full $QK^\top$ matrix
 
-We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) deck, where it sits alongside the rest of the end-to-end trace.  Work through it at home if the single row left you wanting the whole picture.
+We do the single-row arithmetic together in Part I. The **full matrix** version (every query against every key, all scores shown) moved to the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-tokensembeddings.md) deck, where it sits alongside the rest of the end-to-end trace.  Work through it at home if the single row left you wanting the whole picture.
 
 ## 3.  Exercises
 
@@ -309,7 +309,7 @@ In your notebook, reflect at three levels after computing attention by hand:
 
 ---
 
--> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token.  If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-llmanatomy.md) reference.  We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
+-> **Coming Up Next:** The next session turns to sampling: how the model converts the scores this machinery produces into an actual choice of next token.  If you want the rest of the stack now (positional encodings, feed-forward sublayers, layer normalization, and end-to-end training with next-token prediction), it is worked end to end by hand in the [Anatomy of an LLM](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-tokensembeddings.md) reference.  We will also revisit the agent architecture from the *Memory and the Small Context Window Principle* activity and quantify, using today's $O(n^2)$ insight, why retrieval-augmented generation (RAG) is not optional for production agents working over large corpora.
 
 ---
 

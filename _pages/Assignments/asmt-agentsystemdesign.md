@@ -68,7 +68,7 @@ info:
       rlink: "Activities/liascript-agentloopsadvanced.md"
       liapage: true
     - rtitle: "Human-in-the-Loop: Oversight, Escalation, and Appropriate Autonomy"
-      rlink: "Activities/liascript-humanintheloop.md"
+      rlink: "Activities/liascript-critiquerefine.md"
       liapage: true
 
 tags:
