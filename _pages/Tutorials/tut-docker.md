@@ -598,7 +598,7 @@ Which change makes it reasonable to run a coding agent with its permission promp
 
    *You've succeeded when:* Your three pasted outputs show, in order, `Read-only file system` (or your `BLOCKED-as-expected` message) from the reference mount, a name-resolution failure under `--network none`, and exactly one writable bind mount at `/work`.  Your worst-case sentence names a specific, bounded outcome, damage to files in one git-tracked folder, rather than a vague reassurance.  If you cannot write that sentence, Section 9.3 says you have not earned `--dangerously-skip-permissions`, and this exercise is where you find that out.
 
-   *Going further:* Try to actually run an agent under the full Section 9.3 command.  You will hit the contradiction the Watch Out box names: `--network none` blocks the model API too.  Record what happened, then decide which rung of the Section 9.4 ladder your real work belongs on and say why.
+   *Push it harder:* Try to actually run an agent under the full Section 9.3 command.  You will hit the contradiction the Watch Out box names: `--network none` blocks the model API too.  Record what happened, then decide which rung of the Section 9.4 ladder your real work belongs on and say why.
 
 ---
 

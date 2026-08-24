@@ -283,7 +283,7 @@ schedule:
   - rtitle: "Mitchell, Prologue and Chapter 1"
   - rtitle: "Teachable Machine: train an image, sound, or pose classifier in the browser, with no code, to see what \"learning from examples\" actually means"
     rlink: "https://teachablemachine.withgoogle.com/"
-  - rtitle: "Going further: AI Capabilities and Limitations (Anthropic Skilljar), a short self-paced companion to today's Capabilities and Limitations Framework"
+  - rtitle: "AI Capabilities and Limitations (Anthropic Skilljar), a short self-paced course that covers the same ground as today's Capabilities and Limitations Framework"
     rlink: "https://anthropic.skilljar.com/ai-capabilities-and-limitations"
 - week: "0"
   date: "1"
@@ -307,7 +307,7 @@ schedule:
     module: overarching
   readings:
   - rtitle: "Mitchell, Chapter 2"
-  - rtitle: "Going further, interactive: The Token Prediction Playground, an unplugged in-browser simulator showing what next-token prediction can and cannot do"
+  - rtitle: "The Token Prediction Playground, an in-browser simulator you drive yourself to see what next-token prediction can and cannot do"
     rlink: "TokenPredictor"
 - week: "1"
   date: "0"
@@ -329,9 +329,9 @@ schedule:
   readings:
   - rtitle: "Please bring a laptop with Docker Desktop already installed.  The download alone can eat the session.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
     rlink: false
-  - rtitle: "Going further, tutorial: The Shell, in full (pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\").  Step 0 of today's activity is the ten-minute version"
+  - rtitle: "The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\".  Step 0 of today's activity is the ten-minute version of this"
     rlink: "/Tutorials/Shell"
-  - rtitle: "Going further, tutorial: Docker from Zero, how containers, images, and mounts actually work underneath today's build"
+  - rtitle: "Docker from Zero: how containers, images, and mounts actually work underneath today's build"
     rlink: "/Tutorials/Docker"
 - week: "1"
   date: "1"
@@ -350,9 +350,9 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
   - rtitle: "Reading Response / Discussion: post a short response before class, what changed once the model ran on your own machine?"
-  - rtitle: "Going further: The Local Model Landscape (Llama, Mistral, Phi, Gemma, and Friends), for choosing what to pull next"
+  - rtitle: "The Local Model Landscape: Llama, Mistral, Phi, Gemma, and their relatives, for deciding what to pull next"
     rlink: "/Tutorials/LocalModels"
-  - rtitle: "Going further, tutorial: The Hardware Behind AI (GPUs, Quantization, and Running Models at the Edge), if today's speeds surprised you"
+  - rtitle: "The Hardware Behind AI: GPUs, quantization, and running models at the edge.  Read this if today's speeds surprised you"
     rlink: "/Tutorials/Hardware"
 - week: "2"
   date: "0"
@@ -402,11 +402,11 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
   - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8).  Today we drive it against a real specification, so a broken setup costs you the session."
     rlink: false
-  - rtitle: "Going further, tutorial: Agentic CLI Tools, the wider landscape (Claude Code, Codex, Gemini CLI, pi, and how they differ from opencode)"
+  - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drove today"
     rlink: "/Tutorials/AgentCLIs"
-  - rtitle: "Going further, tutorial: AI Coding Agent Security, poisoned repositories and the software supply chain.  The risks that arrive with the convenience"
+  - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, which is the risk that arrives with the convenience"
     rlink: "/Tutorials/CodingAgentSecurity"
-  - rtitle: "Going further, tutorial: Containerizing AI Systems, what a container actually isolates, and how to size an agent's blast radius before you hand it your machine"
+  - rtitle: "What a container actually isolates, and how to size an agent's blast radius before you hand it your machine.  This is the background section of the Local Agent Lab's containerization direction"
     rlink: "/Assignments/LocalAgent/Direction3"
 - week: "3"
   date: "1"
@@ -450,11 +450,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
-  - rtitle: "Reference: Ollama Structured Outputs, schema-constrained JSON. Used in the Local Agent Lab's required structured-output segment, so read this one before the lab"
+  - rtitle: "Ollama Structured Outputs, on schema-constrained JSON.  The Local Agent Lab's required structured-output segment uses this, so read it before the lab"
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
-  - rtitle: "Going further, activity: Structured Outputs in depth (JSON mode, tool schemas, and output validation)"
+  - rtitle: "Structured outputs in depth: JSON mode, tool schemas, and output validation, in the background section of the Tools and MCP lab"
     rlink: "/Assignments/ToolsMCP"
-  - rtitle: "Going further, reference: typed and grammar-constrained generation, Instructor with Pydantic and Ollama.  Validity by construction rather than by retry"
+  - rtitle: "Instructor with Pydantic and Ollama, for typed and grammar-constrained generation: validity by construction rather than by retry"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
 - week: "5"
   date: "0"
@@ -471,9 +471,9 @@ schedule:
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
-  - rtitle: "Going further, tutorial: MCP, REST APIs, and OAuth 2.0 together, the reference behind Local Agent Lab Direction 4"
+  - rtitle: "MCP, REST APIs, and OAuth 2.0 together, in the background section of Local Agent Lab Direction 4"
     rlink: "/Assignments/LocalAgent/Direction4"
-  - rtitle: "Going further, tutorial: GitHub Power-User Tools (gitingest, getmcp.io, deepwiki, gdagram, and github.dev), for turning a repository into something an agent can read"
+  - rtitle: "GitHub Superpowers for AI Developers: gitingest, getmcp.io, deepwiki, gdagram, and github.dev, for turning a repository into something an agent can read"
     rlink: "/Tutorials/GitHubPowerTools"
 - week: "5"
   date: "1"
@@ -488,7 +488,7 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
-  - rtitle: "Going further, video: LangChain RAG from Scratch"
+  - rtitle: "LangChain RAG from Scratch (video)"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
 - week: "6"
   date: "0"
@@ -534,9 +534,9 @@ schedule:
   - rtitle: "Bring your stuck points and your pipeline-in-progress.  Part III is an open studio and it is only as useful as the problems you bring to it."
   - rtitle: "Optional, five minutes: install Obsidian before class if you want to follow Part I on your own machine"
     rlink: "https://obsidian.md"
-  - rtitle: "Going further, tutorial: The Second Brain in depth, Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
+  - rtitle: "The Second Brain in depth: Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
     rlink: "/Tutorials/SecondBrain"
-  - rtitle: "Going further, tutorial: Syncing Obsidian to GitHub and Wiring AI Agents to Your Vault, the full read path and write path"
+  - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the full read path and write path"
     rlink: "/Tutorials/ObsidianSync"
 - week: "8"
   date: "0"
@@ -561,7 +561,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-agentsystemdesign.md"
   readings:
-  - rtitle: "Going further, tutorial: Agent Skills and Plugins, writing, configuring, and publishing skills for opencode and pi.ai"
+  - rtitle: "Writing, configuring, and publishing skills for opencode and pi.ai, in the background section of Local Agent Lab Direction 5"
     rlink: "/Assignments/LocalAgent/Direction5"
 - week: "9"
   date: "0"
@@ -578,7 +578,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
-  - rtitle: "Going further, tutorial: Agent Frameworks (LangChain, CrewAI, AutoGen, and Agno), when a framework earns its weight"
+  - rtitle: "Agent Frameworks: LangChain, CrewAI, AutoGen, and Agno, and when a framework earns its weight"
     rlink: "/Tutorials/AgentFrameworks"
 - week: "9"
   date: "1"
@@ -599,7 +599,7 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
-  - rtitle: "Going further, case study: From Second Brain to Chief of Staff, a personal agent in production"
+  - rtitle: "From Second Brain to Chief of Staff: one personal agent followed into production"
     rlink: "/Tutorials/ProductionAssistant"
 - week: "10"
   date: "0"
@@ -615,7 +615,7 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class, when does a multi-agent design help, and when does it just cost tokens?"
   - rtitle: "Please post your reading response before class, since the debate exercise starts from the positions you staked out."
     rlink: false
-  - rtitle: "Going further, activity: Stochastic Multi-Agent Consensus.  Its clustering model is built step by step inside the Multi-Agent Patterns Lab Part 2; this is the full activity"
+  - rtitle: "Stochastic multi-agent consensus: sampling, clustering by meaning, and synthesis, in Part 2 of the Multi-Agent Patterns Lab"
     rlink: "/Assignments/MultiAgentDebate"
 - week: "10"
   date: "1"
@@ -632,11 +632,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
-  - rtitle: "Reference: promptfoo, declarative LLM and agent evaluation.  One of the two supported harnesses for the Rubric Pipeline Lab, and it runs against Ollama"
+  - rtitle: "promptfoo, for declarative LLM and agent evaluation.  One of the two supported harnesses for the Rubric Pipeline Lab, and it runs against Ollama"
     rlink: "https://www.promptfoo.dev/docs/intro/"
-  - rtitle: "Going further, methodology: Your AI Product Needs Evals (Hamel Husain), the error-analysis-first approach to evaluation"
+  - rtitle: "Hamel Husain, \"Your AI Product Needs Evals\": the error-analysis-first approach to evaluation"
     rlink: "https://hamel.dev/blog/posts/evals/"
-  - rtitle: "Going further, reference: Inspect AI (UK AI Security Institute), the Dataset/Solver/Scorer framework, the other supported Rubric Pipeline harness"
+  - rtitle: "Inspect AI (UK AI Security Institute): the Dataset, Solver, and Scorer framework, the other supported Rubric Pipeline harness"
     rlink: "https://inspect.aisi.org.uk/"
 - week: "11"
   date: "0"
@@ -662,9 +662,9 @@ schedule:
     rlink: "https://www.codedbias.com/"
   - rtitle: "O'Neil, Weapons of Math Destruction: the chapter on predictive models in education"
   - rtitle: "Carr, The Glass Cage, Chapters 2-3: automation, deskilling, and automation bias"
-  - rtitle: "Going further, interactive: Gandalf (Lakera), a prompt-injection game.  Shared warm-up for the Responsible AI Capstone handed out today"
+  - rtitle: "Gandalf (Lakera), a prompt-injection game you play in the browser, and the shared warm-up for the Responsible AI Capstone handed out today"
     rlink: "https://gandalf.lakera.ai/"
-  - rtitle: "Going further, interactive: Tensor Trust, attack and defend prompt injection.  The other capstone warm-up"
+  - rtitle: "Tensor Trust, where you attack and defend against prompt injection, and the other capstone warm-up"
     rlink: "https://tensortrust.ai/"
 - week: "11"
   date: "1"
@@ -768,7 +768,7 @@ I have designed this course around deliberate choices, in the spirit of Universa
 - **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
 - **Depth inside every lab.**  Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
 - **Scaffolding you can hold your own work against.**  Every lab and written assignment opens with **Before You Start**, which tells you what it builds on, what to install, and what order to do things in, and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do.  The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
-- **Going further, when you want it.**  Each session lists at most two optional pointers, chosen as the single best next step rather than as a reading list.  They are optional; nothing on the schedule depends on them.
+- **The depth is in the activity, not in a list of links.**  Each session's activity carries the theory, the worked example, and the code, and where a topic runs past the seventy-five minutes we have together, it continues in an extension section at the end of that same activity, clearly marked as self-paced.  Nothing graded assumes those sections.  The readings on the schedule are books, papers, tutorials, and the occasional thing you play with in a browser, and each one says plainly what it is.
 
 If a path you want is not on the menu, please propose it.  The choices are here so you leave this course able to stand up, operate, and reason about an AI system of your own.
 
