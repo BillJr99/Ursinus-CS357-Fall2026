@@ -1,26 +1,25 @@
-<!--
-author:   William Mongan
-language: en
-narrator: US English Male
+---
+layout: default-standard
+permalink: /Tutorials/LocalModels
+title: 'CS357: Foundations of Artificial Intelligence - The Local Model Landscape'
+info:
+  coursenum: CS357
+  purpose: "To map the major open-weight model families (Llama, Mistral, Phi, Gemma, and their relatives) so that you can choose what to pull next instead of guessing."
+tags:
+- local-ai
+- models
+- ollama
+---
 
-comment: Render with https://liascript.github.io/course/?https://github.com/BillJr99/Ursinus-CS357-Fall2026/blob/gh-pages/_pages/Activities/liascript-localmodels.md or locally via https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-localmodels.md
+# CS357: Foundations of Artificial Intelligence - The Local Model Landscape
 
-link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css/liascript-custom.css?v=2025-08-23-4
-        https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap
+## Purpose
 
--->
+To map the major open-weight model families (Llama, Mistral, Phi, Gemma, and their relatives) so that you can choose what to pull next instead of guessing.
 
-# The Local Model Landscape: Llama, Mistral, Phi, Gemma, and Friends
+## About This Tutorial
 
 The assumption that useful AI requires an API call to a remote server is no longer true.  A modern laptop can run a capable language model offline, and a mid-range workstation can run models that outperform GPT-3.  This module maps **why you would run locally $\rightarrow$ the major model families and their strengths $\rightarrow$ quantization as the hardware equalizer $\rightarrow$ how to match models to tasks**.
-
----
-
-## Directions and Group Roles
-
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
-
----
 
 ## Key Concepts
 
@@ -105,7 +104,7 @@ With the model families and quantization levels mapped, Part II applies that kno
 
 In this part, you will match hardware specifications to model sizes, choose models for specific task types, and observe the concrete difference between a generic model and a function-calling-optimized model, a difference that determines whether your agent pipeline works reliably or fails unpredictably.
 
-## Model 1: Hardware Requirements
+## Hardware Requirements
 
 These are practical minimums for comfortable (not just technically possible) inference.  "Speed (CPU)" assumes a modern laptop CPU with no GPU acceleration and 8-bit quantization.
 
@@ -122,6 +121,7 @@ Ollama manages model download, quantization selection, and GPU/CPU layer splitti
 The following commands cover the full Ollama workflow: pulling a model, starting an interactive session, and querying via the Python SDK. Run `ollama list` after pulling to confirm the model downloaded correctly before starting a session.
 
 ```
+
 # Install Ollama from https://ollama.com (macOS/Linux/Windows supported)
 
 ollama pull phi4                  # downloads Phi-4 (default Q4 quantization, ~9 GB)
@@ -132,12 +132,15 @@ ollama list                       # shows locally cached models and their sizes
 ollama ps                         # shows currently running models
 
 # Use Ollama with the OpenAI Python SDK (same API format):
+
 # pip install openai
+
 # client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+
 # response = client.chat.completions.create(model="llama3.2:3b", messages=[...])
 ```
 
-### Critical Thinking Questions
+### Questions to Work Through
 
 1.  You have a laptop with 16 GB of RAM and no discrete GPU. Which models from the table can you run at Q4 quantization?  At Q8?  What is the quality trade-off of choosing Q4 over Q8 for a legal document summarization task?
 
@@ -153,7 +156,7 @@ ollama ps                         # shows currently running models
 
 ---
 
-## Model 2: Task-to-Model Matching
+## Task-to-Model Matching
 
 Choosing a model is an engineering decision, not just a capability question.  Smaller, specialized models often outperform larger general models on specific tasks while using far less hardware.
 
@@ -171,7 +174,7 @@ The table below maps task categories to recommended models.  Use it as a startin
 
 ---
 
-## Model 3: Generic Model vs. Function-Calling Model
+## Generic Model vs. Function-Calling Model
 
 The difference between a generic model and a function-calling-optimized model is not just output quality; it is structural reliability.  Agentic pipelines that call tools depend on the model producing parseable JSON, not prose.  Think of it like the difference between someone who can describe how to fill out a form vs. someone who actually fills it out correctly.
 
@@ -180,6 +183,7 @@ The two outputs below come from the same user query sent to two different models
 **Scenario:** A weather agent exposes this tool:
 
 ```python
+
 # Tool definition (this is what the agent framework sends to the model)
 def get_weather(city: str) -> dict:
     """
@@ -359,7 +363,9 @@ In this part, you will pull and compare real models on your own hardware, test t
 
 ---
 
--> Coming Up Next: Now that you can run models locally, the next module examines the security implications of deploying AI agents: what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
+## Where This Goes Next
+
+Now that you can run models locally, the next module examines the security implications of deploying AI agents: what happens when an agent with tool access is manipulated by malicious input, and how to build defenses.
 
 ---
 

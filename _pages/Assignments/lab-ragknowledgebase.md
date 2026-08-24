@@ -75,8 +75,7 @@ info:
     - rtitle: "Unsloth: Fine-tune Llama 3 and Use in Ollama (Direction 1 tutorial)"
       rlink: "https://unsloth.ai/docs/get-started/fine-tuning-llms-guide/tutorial-how-to-finetune-llama-3-and-use-in-ollama"
     - rtitle: "Running Local Models"
-      rlink: "Activities/liascript-localmodels.md"
-      liapage: true
+      rlink: "/Tutorials/LocalModels"
     - rtitle: "Data Cards and Model Cards"
       rlink: "Activities/liascript-datacards.md"
       liapage: true

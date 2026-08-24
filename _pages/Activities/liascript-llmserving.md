@@ -307,7 +307,7 @@ Part II established *why* the KV cache exists: it trades memory for compute so d
 
 ## Model 6: The Naive Allocation Problem
 
-Start with the memory budget.  Model weights are the fixed cost of being open for business.  A 13-billion-parameter model at FP16 (2 bytes per parameter) needs roughly **26 GB** just for its weights.  On a 40 GB GPU that is about **65% of the card gone before a single user connects**; see the VRAM sizing math in `liascript-hardwarequantization.md` for where that number comes from.  Everything else (the KV cache for *every* active request) has to fit in the remaining ~35%.
+Start with the memory budget.  Model weights are the fixed cost of being open for business.  A 13-billion-parameter model at FP16 (2 bytes per parameter) needs roughly **26 GB** just for its weights.  On a 40 GB GPU that is about **65% of the card gone before a single user connects**; see the VRAM sizing math in *The Hardware Behind AI* for where that number comes from.  Everything else (the KV cache for *every* active request) has to fit in the remaining ~35%.
 
 Traditional serving systems manage that 35% badly, in three distinct ways:
 

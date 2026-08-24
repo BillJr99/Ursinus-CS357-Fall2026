@@ -30,7 +30,7 @@ In this lab, you and your partner will stand up a working local AI stack: one se
 Complete both prerequisite activities before lab day.  These are not optional warm-ups; the lab builds directly on them.
 
 - [The Local Agent Stack Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentstack.md): introduces each tier of the stack and how they connect
-- [Docker from Zero Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-docker.md): covers containers, images, compose files, volumes, and networks
+- [Docker from Zero Activity]({{ site.baseurl }}/Tutorials/Docker): covers containers, images, compose files, volumes, and networks
 
 ##### Tools to Install
 
