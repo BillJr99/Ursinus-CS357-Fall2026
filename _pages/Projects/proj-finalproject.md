@@ -74,15 +74,13 @@ info:
       progressing: Reviews results relative to the problem defined with some consideration of need for further work.
       proficient: Reviews results relative to the problem defined with thorough, specific considerations of need for further work.
   readings:
-    - rtitle: "Agent Teams Activity"
-      rlink: "Activities/liascript-agentteams.md"
-      liapage: true
+    - rtitle: "Agent Teams"
+      rlink: "../Tutorials/AgentTeams"
     - rtitle: "The Project Studio activity and its gallery-walk protocol"
       rlink: "Activities/liascript-projectstudio.md"
       liapage: true
-    - rtitle: "Explainability Activity"
-      rlink: "Activities/liascript-explainability.md"
-      liapage: true
+    - rtitle: "Explainability"
+      rlink: "../Tutorials/Explainability"
     - rtitle: "Problem Solving VALUE Rubric (AAC&U); the six problem-solving criteria in the rubric below are quoted from it"
       rlink: "https://www.lamar.edu/data-analytics-reporting-analysis/_files/documents/problem_solving.pdf"
 
@@ -274,6 +272,7 @@ The system must be **specific**: a named, deployed product with a defined purpos
 **Direction B build requirements (the audit):**
 - **Systematic risk analysis** (4-6 pages, at least 8 citations): apply the chosen framework in full: all four NIST functions (GOVERN, MAP, MEASURE, MANAGE), an argued EU AI Act risk-tier classification with applicable obligations, or all ten Montreal Declaration principles each with an evidentiary basis.  Every major framework step produces a specific, evidenced finding
 - At least **three failure modes with named mechanisms**: each naming the affected group or input type, the specific erroneous output, and the mechanism, distinguishing risks that have materialized from risks that are foreseeable, and naming accountability gaps specifically (what role is absent, and what decision cannot be made without it)
+- **Adversarial probing** of the system or a comparable one you can reach: the [Red-Teaming LLMs]({{ site.baseurl }}/Tutorials/RedTeaming) tutorial gives you the method, including how to write a scoped brief and how to report a failure so someone else can reproduce it.  Where the audited system is not reachable, probe the nearest model you can run and say plainly what that substitution does and does not license you to claim
 - **Governance document** (3-5 pages) a real organization could adopt, passing the third-party test (could an outside auditor verify compliance from evidence?): a **monitoring plan** (each metric with data source, frequency, review threshold, and named owner), an **incident response procedure** (specific incident definition, notification order and timeframes, suspension authority), a **stakeholder communication table** (general public, affected individuals, regulators), and an **appeal process** navigable without a lawyer (initiation, reviewer, evidence, remedies, timeline).  Every recommendation must trace to a specific risk finding
 
 **Direction B final deliverables:**
@@ -339,9 +338,9 @@ Answer individually in your final submission:
 
 ### Background Reading and References
 
-- [The AI Maker Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-aimaker.md)
-- [Publishing Your Work Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-publishing.md)
-- [Hosting with Cloudflare Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-cloudflare.md)
+- [The AI Maker Activity]({{ site.baseurl }}/Tutorials/AIMaker)
+- [Publishing Your Work Activity]({{ site.baseurl }}/Tutorials/Publishing)
+- [Hosting with Cloudflare Activity]({{ site.baseurl }}/Tutorials/Cloudflare)
 
 This guide is not separately graded; its checklist is assessed within the Final Project rubric.
 

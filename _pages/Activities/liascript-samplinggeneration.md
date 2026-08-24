@@ -18,7 +18,7 @@ You have already turned this dial twice.  In *Running Your Own AI* you set tempe
 
 The short answer, and the resolution of the mystery your teams formed hypotheses about back in *Welcome: What Is AI, and What Is an Agent?*: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it, rolling a weighted die at each step.  Temperature is the number that reshapes the die before the roll.
 
-We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack**, and we connect every knob to agent design.
+We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack $\rightarrow$ reasoning models**, and we connect every knob to agent design.  The last step is the one that changes the shape of the story: every dial before it decides *what* gets sampled, and reasoning models are the first thing you meet that changes *how much computation happens at all*.
 
 ---
 
@@ -38,6 +38,8 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | Top-k sampling | A technique that keeps only the k highest-probability tokens before sampling, discarding the long tail of unlikely options | With k=5, only the five most probable next words are considered, even if there are 50,000 in the vocabulary |
 | Top-p (nucleus) sampling | A technique that keeps the smallest group of tokens whose combined probability reaches a threshold p, adapting to how confident the model is at each step | With p=0.9, if Paris alone has probability 0.92, only Paris is kept; if the top 10 words share 0.9 probability, all 10 are kept |
 | Greedy decoding | The strategy of always picking the single most probable next token, equivalent to temperature = 0; deterministic but sometimes repetitive or locally optimal but globally suboptimal | An agent with temperature=0.0 that always picks the same action regardless of context |
+| Test-time compute | Computation spent while *answering*, rather than while training. For a fixed-depth model the only way to spend more of it is to emit more tokens, so the length of what a model writes is the amount of thinking it does | A model that writes two hundred words of steps before its answer has run two hundred more forward passes than one that answers immediately |
+| Reasoning (thinking) model | A model additionally trained with reinforcement learning against automatically checkable outcomes, so it produces a long intermediate reasoning stream before its answer and learns to backtrack and self-check | `deepseek-r1` emitting its work between `<think>` tags in Part III, catching its own misreading of a discount problem |
 
 ---
 
@@ -50,8 +52,9 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | 0-10 | Part I, generation as repeated prediction: why the same prompt gives different answers |
 | 10-25 | The temperature and entropy sweep, run in the browser; predict the shape before you run it |
 | 25-45 | Part II, the same experiment against your own stack |
-| 45-70 | Part IIb, the systematic sweep and building a parameter policy you can defend |
-| 70-75 | Reflection prompt.  Part IIb's three-persona guide and the Extension continue at home |
+| 45-60 | Part IIb, the systematic sweep and building a parameter policy you can defend |
+| 60-72 | Part III, reasoning models: why writing tokens is how a fixed-depth model buys more computation |
+| 72-75 | Reflection prompt.  Part IIb's three-persona guide, Part III's local comparison, and the Extension continue at home |
 
 ---
 # Part I: Generation as Repeated Prediction
@@ -534,7 +537,166 @@ for persona, cfg in PERSONAS.items():
 
 ---
 
-# Part III: Synthesis and Practice
+# Part III: When the Model Thinks Before It Answers
+
+Everything so far has treated generation as one loop: predict a distribution, sample a token, append it, repeat.  Every dial you tuned reshapes that distribution.  None of them changes **how much computation the model spends** on a hard question versus an easy one.  This part is about the models that changed exactly that, and about why it is a deeper change than any dial.
+
+## 6.  The Fixed-Compute Problem
+
+Ask a standard model "what is 2+2" and ask it to prove a claim about prime numbers.  Count the work it does before its first output token.
+
+It is the same.  A transformer runs its input through a fixed stack of layers, the same number every time, and produces one distribution.  Attention is what lets it mix information across the sequence inside that stack, and *Tokens, Embeddings, and Attention* showed you that mixing arithmetic by hand.  What attention does not give it is **more steps when the problem is harder**.  The depth was frozen when the model was trained.
+
+So a fixed-depth model has exactly one way to spend more computation on a hard problem: **write more tokens.**  Each token it emits gets appended to the context and read back on the next pass, so the tokens it has already written become a place to store partial results.  The context window stops being only an input and starts being a scratchpad it can write to and read from.
+
+That is the whole idea, and it is worth saying in one line, because it is the line that separates the two kinds of model:
+
+> **Attention decides what a fixed amount of computation looks at.  Generated tokens decide how much computation happens at all.**
+
+This is why "show your work" prompting was ever more than a stylistic preference.  When you ask a standard model to reason step by step, you are not asking it to be more careful; you are giving it permission to use more forward passes on your problem.  The steps are the computation.
+
+### Critical Thinking Questions
+
+14.  A classmate says: "Chain-of-thought prompting works because the model explains itself, and explaining forces clarity, the same way it does for people."  Using the paragraph above, give a different explanation of why it works that does not depend on the model understanding its own explanation.
+
+    > *Hint: Every emitted token is another full pass through the network, with all previously emitted tokens available in context. Ten tokens of "steps" is ten more passes and a written record of intermediate results the model can attend to. The mechanism is extra serial computation plus external storage, not introspection. A useful test of the two theories: nonsense filler tokens sometimes help a little on some tasks, which the clarity theory does not predict at all.*
+
+15.  Attention lets any token look at any other token in one pass.  If a model can already look anywhere, why can it not simply "look at" the answer to a hard multi-step problem in that same pass?
+
+    > *Hint: Looking is not the same as computing. Attention retrieves and mixes what is present; it does not run a sequence of dependent operations. A problem that requires step B to use the result of step A needs those steps to happen in order, and a fixed stack of layers gives you a fixed number of dependent steps per token. Writing A down as tokens is what makes B's pass able to use A's result.*
+
+---
+
+## 7.  What a Reasoning Model Actually Changes
+
+A **reasoning model** (sometimes called a thinking model) takes the scratchpad idea and builds it into the model rather than leaving it to your prompt.  Four things change, and it is worth being precise about which is which, because only two of them are new mechanisms and the other two are consequences.
+
+**It emits a separate reasoning segment before its answer.**  The model produces a long internal stream, then an answer.  Some providers hide the stream and show a summary; local models generally show it.  Structurally this is still next-token prediction; the stream is just marked off as not-the-answer.
+
+**It was trained on outcomes, not on imitation.**  This is the substantive change.  A standard model is trained mostly to predict human-written text, so its "reasoning" looks like reasoning humans wrote down.  A reasoning model is additionally trained with reinforcement learning against problems that can be **automatically checked**: a math answer that is right or wrong, code that passes or fails its tests.  The training signal rewards reasoning that *reaches the right answer*, not reasoning that reads well.
+
+**Behaviors appear that imitation does not produce.**  Because the reward is the outcome, the model learns moves that a text-imitator has little reason to learn: noticing a contradiction partway through, backtracking, discarding an approach and starting a different one, re-checking an answer against the original question.  Human-written solutions usually show the clean path, not the abandoned ones, so these behaviors are hard to learn by imitation and natural to learn from outcomes.
+
+**A new dial appears, and it is a different kind of dial.**  Reasoning models expose something like a *thinking budget* or *reasoning effort*.  Notice what kind of quantity that is.  Temperature, top-k, and top-p all reshape a distribution; they change **what** gets sampled.  A thinking budget changes **how much computation runs** before an answer exists.  You have spent this whole session on shape dials.  This is the first amount dial you have met.
+
+> **Watch out!**  The parameter guide you just built does not transfer to these models unchanged.  Providers commonly advise leaving temperature at its default for reasoning models rather than driving it to 0, because the RL training already tuned the reasoning stream and pinning it to greedy decoding tends to produce loops and worse answers rather than more reliable ones.  Check the model card before you apply your low-temperature-for-facts rule here.
+
+### Model 5: Two Transcripts, Same Question
+
+Here are two responses to *"A shirt costs $40 after a 20% discount.  What was the original price?"*  Read both before answering anything.
+
+**Model A (standard, temperature 0.2):**
+
+```text
+The original price was $48.
+```
+
+**Model B (reasoning model, thinking shown):**
+
+```text
+<think>
+Let me set up. Let x be the original price.
+20% off means the customer pays 80% of x.
+So 0.8x = 40, and x = 40 / 0.8 = 50.
+Let me check: 20% of 50 is 10, and 50 - 10 = 40. That matches.
+Wait, I should double-check I did not read this as "20% of 40".
+20% of 40 is 8, giving 48. But the discount applies to the ORIGINAL price,
+not the sale price, so 48 is the wrong reading. x = 50 is correct.
+</think>
+The original price was $50.
+```
+
+### Critical Thinking Questions
+
+16.  Model A is wrong, and it is wrong in a specific way that Model B explicitly considers and rejects.  Name the error, and explain what in Model B's transcript caught it.
+
+    > *Hint: Model A applied the 20% to the sale price ($40 + 20% of 40 = $48) instead of solving for the price the discount was taken from. Model B catches it by checking its answer against the problem statement and then, separately, by naming the wrong reading and testing it. That second move, considering an alternative interpretation and ruling it out, is a backtracking behavior, and it is the kind of thing outcome-based training rewards and imitation training rarely teaches.*
+
+17.  A team member concludes: "So reasoning models are just standard models with 'think step by step' glued to the front of every prompt."  Give one thing in Model B's transcript that prompting alone would not reliably produce, and say why the training difference matters.
+
+    > *Hint: The self-correction ("Wait, I should double-check...") is the honest answer. You can ask a standard model to check its work and it often will, in form, and still confirm its original mistake, because it is imitating what checking looks like rather than being rewarded for catching errors. Outcome-based RL rewards the run that ends correct, which makes an actual catch worth something. Prompting can request the behavior; training is what makes it reliable.*
+
+18.  Which statement best describes why a reasoning model can be more capable than an attention-based model that does not produce a reasoning stream?
+   [( )] Its attention mechanism compares more token pairs, so it sees more of the context at once
+   [(X)] Its emitted tokens act as external memory across many forward passes, so the number of dependent computation steps is no longer capped by the model's fixed depth
+   [( )] It has more parameters, and capability scales with parameter count
+   [( )] It samples at a lower temperature, so it makes fewer random mistakes
+
+    > *Hint: The first option describes attention, which is real but is not the change: attention already compares every pair. The third confuses this with model size; a reasoning model can be small. The fourth is a shape dial, not an amount dial. The second is the mechanism: a fixed-depth network gets a bounded number of dependent steps per token, and writing intermediate results into the context lifts that bound.*
+
+---
+
+## 8.  The Honest Limits
+
+Take the claim seriously enough to bound it, because "the model thinks now" invites more belief than the mechanism supports.
+
+**It is still next-token prediction.**  Nothing in the previous sections stopped being true.  There is a distribution, a sample, and an append, and the model can still be confidently wrong.  It has more chances to catch itself, not a different relationship with truth.
+
+**The visible thinking is not a guaranteed transcript of the computation.**  The reasoning stream is generated text, produced by the same mechanism as the answer.  Research on chain-of-thought faithfulness finds cases where a model's stated reasoning does not match what actually drove its answer: it can be swayed by a hint and then write a chain that never mentions the hint.  Read a reasoning trace as **evidence about** the model's process, useful and often revealing, and not as a log of it.
+
+**Thinking cannot supply information the model does not have.**  A budget of ten thousand reasoning tokens will not tell it your registrar's add/drop deadline.  Problems that are gated on *evidence* need retrieval; problems gated on *steps* are the ones extra computation helps.  Sorting your problems into those two piles is one of the more useful habits this course can leave you with, and the retrieval module is the other half of it.
+
+**It costs latency and tokens, and the cost is not small.**  A reasoning stream can be many times longer than the answer, and you pay for all of it in time on your own hardware.  For classification, extraction, formatting, and routing, that spend buys nothing.
+
+**Small local models get less out of it than the headlines suggest.**  The distilled reasoning models you can run on a laptop do show the behaviors, and they show them less reliably than their large counterparts.  Measure on your own tasks rather than assuming the benchmark result transfers to your machine.
+
+> **Common Misconception: "More thinking is always better."**  Extra inference time helps when an iteration introduces something new: a checked intermediate result, a rejected alternative, a caught contradiction.  It does nothing when the model simply restates itself at greater length, and on easy problems it can talk itself out of a correct first answer.  The question is never "did it think longer" but "did the thinking introduce evidence the earlier pass did not have."  You will meet that same question again in *The Critique and Refine Pattern*, where the deliberation happens outside the model and you get to inspect every step of it.
+
+### Try It Yourself
+
+If you have a reasoning-capable model pulled locally, this takes about ten minutes and answers the question for your hardware rather than in general.
+
+> **Runs on your machine, not here.**  This talks to Ollama at `localhost:11434`.  Run `ollama list` first; if you have no reasoning model, `ollama pull deepseek-r1:7b` gets one that emits its thinking between `<think>` tags.  Compare against any standard model you already have.
+
+```python
+import re
+import time
+
+import requests
+
+
+def ask(model, prompt, timeout=300):
+    """Return (thinking, answer, elapsed_seconds) for one non-streaming call."""
+    started = time.time()
+    try:
+        r = requests.post(
+            "http://localhost:11434/api/generate",
+            json={"model": model, "prompt": prompt, "stream": False},
+            timeout=timeout,
+        )
+        r.raise_for_status()
+        text = r.json().get("response", "")
+    except Exception as e:
+        print(f"[ask:{model}] {e}")
+        return "", "", time.time() - started
+    # Reasoning models emit their scratchpad between <think> tags; standard
+    # models have none, so thinking comes back empty and the split still works.
+    think = "\n".join(re.findall(r"<think>(.*?)</think>", text, flags=re.S)).strip()
+    answer = re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
+    return think, answer, time.time() - started
+
+
+PROBLEMS = [
+    ("discount",  "A shirt costs $40 after a 20% discount. What was the original price?"),
+    ("easy",      "What is the capital of France? Answer with the city name only."),
+    ("ordering",  "Sort these by size, smallest first: a grain of sand, a car, a bacterium, a house."),
+]
+
+MODELS = ["llama3.2", "deepseek-r1:7b"]   # edit to match your `ollama list`
+
+for name, prompt in PROBLEMS:
+    print(f"\n=== {name} ===")
+    for model in MODELS:
+        think, answer, elapsed = ask(model, prompt)
+        print(f"  {model:<16} {elapsed:6.1f}s  "
+              f"thinking={len(think.split()):>4} words  answer={answer[:60]!r}")
+```
+
+Record three things for each problem: which model got it right, how long each took, and how many words of thinking were spent.  Then answer the question that matters: **on which problems did the thinking earn its cost?**  The "easy" row is in there deliberately.  If a reasoning model spends two hundred words to say "Paris," you have measured the trade-off yourself rather than taking anyone's word for it.
+
+---
+
+# Part IV: Synthesis and Practice
 
 > Work through this at home.  It shows the renormalization step that most explanations of top-k and top-p leave out.
 

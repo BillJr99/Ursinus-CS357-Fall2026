@@ -126,14 +126,14 @@ Hand the same tool to an agent through a framework so the framework owns the too
 <details markdown="1">
 <summary><strong>Reasoning · From Scratch, make the agent think, and measure it</strong></summary>
 
-Add explicit reasoning to your agent and test whether it helps.  Either (a) insert a scratchpad/chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check).  Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens/latency it cost.  Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost.  Concepts are in the [model-types lecture]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-modeltypes.md).
+Add explicit reasoning to your agent and test whether it helps.  Either (a) insert a scratchpad/chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check).  Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens/latency it cost.  Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost.  Concepts are in the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes).
 
 </details>
 
 <details markdown="1">
 <summary><strong>Reasoning · From a Model/User Perspective, use a reasoning model</strong></summary>
 
-Drive reasoning by *choosing the model* rather than building the loop.  Run a reasoning-capable model (or toggle a "think step by step" / extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set.  Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful.  Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why.  See the [model-types lecture]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-modeltypes.md) for what makes a model a "reasoning" model.
+Drive reasoning by *choosing the model* rather than building the loop.  Run a reasoning-capable model (or toggle a "think step by step" / extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set.  Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful.  Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why.  See the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes) for what makes a model a "reasoning" model.
 
 </details>
 

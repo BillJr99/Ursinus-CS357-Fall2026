@@ -1,0 +1,51 @@
+{
+  "_comment": "Every number the controller obeys lives here, not in the Python. Change a budget by editing this file, and record in your reflection why you changed it.",
+
+  "model": {
+    "provider_url": "http://localhost:11434/api/generate",
+    "name": "llama3.2",
+    "request_timeout_s": 300
+  },
+
+  "candidates": {
+    "count": 3,
+    "strategies": [
+      "direct: implement the obvious solution the most straightforward way",
+      "simple: use the simplest algorithm that could possibly work, even if slower",
+      "test-first: write the tests from the acceptance checks first, then satisfy them"
+    ],
+    "_comment": "Strategies must differ in APPROACH, not in wording. Rephrasing one prompt three ways does not produce three candidates."
+  },
+
+  "repair": {
+    "max_iterations": 3,
+    "stop_on_plateau_after": 2,
+    "stop_on_repeated_fingerprint": true
+  },
+
+  "budgets": {
+    "wall_clock_s": 900,
+    "max_model_calls": 24
+  },
+
+  "validators": {
+    "_comment": "Run in this order. The first tier with a failure stops the ranking; a later tier never rescues an earlier one.",
+    "tiers": [
+      { "tier": 1, "name": "hard_constraints",  "commands": [] },
+      { "tier": 2, "name": "acceptance_tests",  "commands": ["python -m pytest tests/acceptance -q"] },
+      { "tier": 3, "name": "public_tests",      "commands": ["python -m pytest tests/public -q"] },
+      { "tier": 4, "name": "syntax_and_types",  "commands": ["python -m py_compile {artifact}"] },
+      { "tier": 5, "name": "static_analysis",   "commands": [] },
+      { "tier": 6, "name": "performance",       "commands": [] },
+      { "tier": 7, "name": "rubric",            "commands": [] },
+      { "tier": 8, "name": "style",             "commands": [] }
+    ],
+    "command_timeout_s": 120
+  },
+
+  "paths": {
+    "runs_dir": "runs",
+    "charter_md": "CHARTER.md",
+    "charter_json": "charter.json"
+  }
+}

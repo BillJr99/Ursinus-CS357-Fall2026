@@ -39,6 +39,8 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Charter** | The document that decides a project's recurring questions once: mission, **ranked** values, definition of done, and the guardrails no agent may cross. Written from *How I AI*; the agent table below implements it | A charter ranking correctness above speed, which settles "may an agent loosen a test to go faster" without anyone asking |
 | **Reversibility Class** | A label on each agent action saying how hard it is to undo: **free** (a file in git), **costly** (a database write with a backup), or **irreversible** (an email, a payment, a public post). Assigned at design time, because you cannot assign it afterwards | The Reversibility column you add to the agent table in Model 1 |
 | **Observability, isolation, reversibility** | The three properties that make delegating safe: can I see what it did, can I bound what it reaches, can I undo it. Named in *Your AI Workbench*, applied to notes and projects in *How I AI*, and designed in on purpose today | Every row of the agent table should let you answer all three for that agent |
+| **Right-sizing** | Choosing the cheapest tool that would still be correct for a step: stated-rule code, classical ML, a model you trained, or a general LLM. Asked once per step, before that step gets a row in the agent table | Computing a monthly total in code and asking a model only to describe what is unusual about it |
+| **Classical ML** | Models trained on your own labeled examples for a narrow, fixed output (logistic regression, gradient-boosted trees). Deterministic once trained, milliseconds per call, free per call, and frequently more accurate than an LLM on the exact task it was trained for | Routing 8,000 already-labeled support tickets into three categories |
 
 ---
 
@@ -49,8 +51,9 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | Minutes | What we do |
 |---|---|
 | 0-10 | Why design first, and what a bad first prompt actually costs |
-| 10-40 | Draft your system design: components, contracts, and failure modes |
-| 40-65 | Trade drafts and review a teammate's design against the same checklist |
+| 10-22 | Right-sizing: which steps need a model at all, and which are cheaper and safer as code |
+| 22-45 | Draft your system design: components, contracts, and failure modes |
+| 45-65 | Trade drafts and review a teammate's design against the same checklist |
 | 65-75 | Revise your own draft with what the review surfaced.  The Extension is self-paced |
 
 ---
@@ -84,6 +87,87 @@ The interesting part of this question is the notification.  The artifact is edit
 
 ---
 
+## The Question That Comes Before the Table
+
+The agent table you are about to read has one row per agent, and that shape quietly assumes something: that every step in your system needs a model.  Most systems that disappoint their builders got that assumption wrong somewhere, so ask the prior question on every step before you give it a row.
+
+> **For each step: what is the cheapest thing that would be correct here?**
+
+"Cheapest" means cheapest in the ways you will care about at three in the morning, which is not only dollars.  A language model is the most expensive tool in your kit on almost every axis that matters:
+
+| | Deterministic code | Classical ML | A model you trained | A general LLM |
+|---|---|---|---|---|
+| Same input, same output | Always | Yes, once trained | Yes, once trained | No, and that is by design |
+| Testable with an assertion | Yes | Yes, plus held-out metrics | Yes, plus held-out metrics | Only statistically |
+| Latency | Microseconds | Milliseconds | Milliseconds | Hundreds of milliseconds to minutes |
+| Explains a decision | The code is the explanation | Feature weights, and honestly | Sometimes | It will produce an explanation, which is not the same thing |
+| Fails how | Loudly, with a stack trace | Degrades measurably | Degrades measurably | Confidently and plausibly |
+| Needs labeled data | No | Yes | Yes, usually a lot | No |
+| Handles input you did not anticipate | No | Poorly | Poorly | Well, and this is the whole reason to use one |
+
+Read that last row against all the others.  The single thing an LLM does that nothing else on the table does is **cope with open-ended input it was never shown**.  That capability is genuinely remarkable and you are paying for it on every other row.  When the input is not open-ended, you are paying and getting nothing.
+
+### Four Tools, and How to Tell Which One You Are Looking At
+
+**Deterministic code, when you can state the rule.**  If you can write down what correct means as a rule (a valid email has an `@`, an order total is the sum of its line items, a date in ISO format sorts lexicographically), write the rule.  Code that implements a stated rule is faster, free, always right, and testable with `assert`.  A model asked to do the same job will be right most of the time, which is an unambiguous downgrade from always.
+
+**Classical machine learning, when you have labels and a narrow output.**  If the output space is small and fixed (spam or not, which of six categories, a number in a known range) and you have (or can label) a few thousand examples, a logistic regression or a gradient-boosted tree is often more accurate than an LLM on that exact task, runs in milliseconds, costs nothing per call, and gives you feature importances you can argue with.  This is not a legacy technique you are humoring; on tabular data it is frequently still the state of the art.
+
+**A model you train or fine-tune, when the task is narrow, repeated, and yours.**  If you are running the same specialized judgment millions of times, and you have domain data nobody else has, training a small model or fine-tuning an open one buys you a thing you cannot rent: a system that encodes *your* institution's definitions, runs on your hardware, keeps your data on your premises, and does not change underneath you when a vendor ships an update.  The cost is real, in labeled data and in the obligation to monitor it, so this earns its place at volume and by specificity, not by ambition.
+
+**A general LLM, when the input is open-ended and the task varies.**  Free-form text, tasks you cannot enumerate in advance, instructions given in English at runtime, a long tail where every case is a little different, and no labeled data to learn from.  This is the real zone, and it is a large one.  Use the model here without apology.
+
+### The Pattern That Actually Ships
+
+Notice that the answer is rarely one tool for the whole system.  The pattern that survives contact with production is narrower than "build an agent" and better than it:
+
+> **Use the model at the boundary where structure is missing.  Use code everywhere structure exists.**
+
+An agent that reads a messy email and files an expense should use a model for exactly one step, turning unstructured prose into a structured record, and then deterministic code for every step after it: validating the fields, checking the amount against a policy limit, looking up the vendor, computing the total, writing the row.  Ask the model to do the arithmetic and you have taken a solved problem and made it probabilistic.
+
+That framing also tells you where to put your tests.  The code steps get ordinary unit tests with exact expected values.  The one model step gets the treatment from *Evaluating Agent Outputs*: a labeled set, a measured pass rate, and a threshold.  Systems designed this way are debuggable, because when the output is wrong you can usually tell which side of that boundary failed.
+
+### Model 0: Right-Sizing Six Steps
+
+Below are six steps drawn from real student projects.  For each, decide which of the four tools is the cheapest thing that would be correct, and name what goes wrong with the tempting alternative.  Two are filled in.
+
+| Step | Cheapest correct tool | What goes wrong if you reach for an LLM instead |
+|---|---|---|
+| Sort 10,000 support tickets by their creation timestamp | Deterministic code | The model cannot see all 10,000 at once, sorting is not a language task, and a sort that is right 97% of the time is not a sort |
+| Decide whether an incoming support ticket is about billing, technical trouble, or account access, given 8,000 past tickets already labeled by staff | Classical ML, or a fine-tune | Nothing catastrophic, and you are paying per call and per second for accuracy a trained classifier likely matches or beats on this exact distribution, with no labels wasted |
+| Check whether a submitted student ID matches the format `A` followed by seven digits | | |
+| Summarize an open-ended student feedback comment into one sentence | | |
+| Flag which of last term's 40,000 transactions are anomalous, with no labels available | | |
+| Extract the assignment due date from whatever phrasing a professor used in an announcement | | |
+
+### Critical Thinking Questions
+
+1.  Your teammate proposes an agent whose job is to validate that a form's fields are all present and correctly typed, arguing that the model will be more flexible about odd input than a validator would be.  Give the strongest version of their argument, then say what you would build instead and why.
+
+    > *Hint: The strong version is real: a validator rejects `"Jan 3rd, 2027"` where a model would understand it, and rigid validators generate support tickets. The answer is not to pick a side; it is to notice there are two jobs. Interpretation of messy input is a model job. Deciding whether a value is acceptable is a rule you can state, so it is a code job. Normalize with the model, validate with code, and log every case where the model's normalization was rejected, because that log is your list of validator bugs.*
+
+2.  A team has 8,000 labeled tickets and picks an LLM anyway, because "we already have the API set up and we don't know how to train a classifier."  That is an honest reason.  Name two costs they are accepting, and one condition under which their choice is genuinely the right call.
+
+    > *Hint: Costs: per-call money and latency forever, and no calibrated confidence, so they cannot route uncertain cases for review the way a classifier's probability output lets them. Genuinely right when: the label set is expected to change soon, or the volume is low enough that engineering time dominates inference cost. A prototype that ships this week and gets replaced is a legitimate engineering decision as long as somebody wrote down that it is one.*
+
+3.  A step in your pipeline computes a monthly total from a list of transactions.  Which is the correct design?
+   [( )] An agent that reads the transactions and reports the total, since it can also explain anomalies it notices
+   [(X)] Code that computes the total, optionally with a separate model step that describes anything unusual about the result
+   [( )] An agent that computes the total and a second agent that verifies it
+   [( )] Either, since a modern model does arithmetic reliably enough for this
+
+    > *Hint: The first and fourth options make a solved deterministic problem probabilistic to get a feature (the explanation) that does not require it. The third pays twice and still has no guarantee, since two models drawing on the same training can agree on the same wrong answer. The second gets an exactly correct total and still gets the narration, because the model is being asked for the thing only it can do, and is not being asked to add.*
+
+4.  Under what circumstances would you train your own small model rather than call a general one, when the general one is more capable in every benchmark you can find?
+
+    > *Hint: Capability is not the only axis, and benchmarks measure the axis you care about least here. Volume (per-call cost times millions), data residency (the records cannot leave your network), stability (a vendor update must not silently change your outputs), latency (the decision has a hard budget), and specificity (your definition of "at risk" is your institution's, not a general one) each independently justify it. Notice that four of those five are not about accuracy at all.*
+
+> **Common Misconception: "Using a simpler tool means you are not doing AI."**  The engineering judgment being asked for here *is* the AI skill.  Anyone can call a model on everything; deciding that step four does not need one, and defending that decision with a cost, a latency, and a test you can write, is the part that distinguishes a system that works from a demo that impressed someone once.  Every step you move out of the model is a step that becomes deterministic, testable, fast, free, and inspectable.  Spend the model where it earns its keep.
+
+Now go to the agent table, and bring the question with you: **every row you write should survive being asked why it is a model at all.**
+
+---
+
 ## Model 1: The Agent Table
 
 In this model you will read a completed agent table for a three-agent research pipeline, then fill in a fourth row from scratch, the fastest way to internalize what information the table is designed to capture before you need it for your own project.
@@ -102,19 +186,19 @@ The table below carries the original six columns.  When you build your own for t
 
 ### Critical Thinking Questions
 
-1.  The system prompt skeleton for ResearchAgent includes "Do not fabricate citations."  Why is this instruction necessary; doesn't the model already "know" citations should be real?  What does this tell us about how system prompts function?
+5.  The system prompt skeleton for ResearchAgent includes "Do not fabricate citations."  Why is this instruction necessary; doesn't the model already "know" citations should be real?  What does this tell us about how system prompts function?
 
    > *Hint: Think about the difference between knowing a rule in general and following it under pressure.  When a model is "trying to be helpful" and no sources exist, what might it do instead of saying "I don't know"?*
 
-2.  Temperature is set differently for each agent.  WriterAgent has temperature 0.7 while CriticAgent has 0.0.  Explain the reasoning: what would go wrong if their temperatures were swapped?
+6.  Temperature is set differently for each agent.  WriterAgent has temperature 0.7 while CriticAgent has 0.0.  Explain the reasoning: what would go wrong if their temperatures were swapped?
 
    > *Hint: Imagine a critic that gives a different verdict each time you run it on the same draft.  Is that useful?  Now imagine a writer that produces the exact same sentence structure every single time.  Is that a problem?*
 
-3.  The "Failure Mode" column is filled in *before* building the system.  What information source are you drawing on when you predict how an agent might fail?  Is this prediction reliable?
+7.  The "Failure Mode" column is filled in *before* building the system.  What information source are you drawing on when you predict how an agent might fail?  Is this prediction reliable?
 
    > *Hint: You are not predicting from test data; the system does not exist yet.  What general knowledge about LLMs are you applying?  What kinds of failures are hardest to predict in advance?*
 
-4.  A new agent is needed: a **FormatterAgent** that converts the critic-approved draft into HTML. Fill in a complete row for this agent in your team's Recorder notes.  Be specific about its system prompt skeleton and its failure mode; do not leave any cell as "TBD."
+8.  A new agent is needed: a **FormatterAgent** that converts the critic-approved draft into HTML. Fill in a complete row for this agent in your team's Recorder notes.  Be specific about its system prompt skeleton and its failure mode; do not leave any cell as "TBD."
 
    > *Hint: What should FormatterAgent do if it receives a draft that CriticAgent marked as having unfixed issues?  Should it proceed anyway?  How would you encode that decision in the system prompt?*
 
@@ -152,15 +236,15 @@ For agentic systems, the pre-mortem is especially important because agents can f
 
 ### Critical Thinking Questions
 
-5.  The pre-mortem row for CriticAgent includes injecting a "known-bad draft" as a test.  This is called an **adversarial test case**.  Why must this test be designed *before* the system is built, and not added later when a real failure is discovered?
+9.  The pre-mortem row for CriticAgent includes injecting a "known-bad draft" as a test.  This is called an **adversarial test case**.  Why must this test be designed *before* the system is built, and not added later when a real failure is discovered?
 
    > *Hint: Think about what happens to your objectivity once you have already seen the system run successfully 100 times.  Is it harder or easier to design a truly adversarial test at that point?  Why?*
 
-6.  The last row covers the "whole pipeline" failing in a way no single agent caught.  What property of multi-agent systems makes this kind of failure possible even when each individual agent passes its own tests?
+10.  The last row covers the "whole pipeline" failing in a way no single agent caught.  What property of multi-agent systems makes this kind of failure possible even when each individual agent passes its own tests?
 
    > *Hint: Think about a game of telephone.  Each person in the chain repeats correctly what they heard, but what happens at the end?  What is the difference between "each step is correct" and "the composition is correct"?*
 
-7.  Identify one failure mode that is *not* in this table but that you believe is plausible given what you know about LLMs.  Add it to the table with all four columns filled in; do not leave any cell empty.
+11.  Identify one failure mode that is *not* in this table but that you believe is plausible given what you know about LLMs.  Add it to the table with all four columns filled in; do not leave any cell empty.
 
    > *Hint: Consider: what happens if the WriterAgent or CriticAgent receives an unusually long input that approaches its context limit?  What happens if two agents receive slightly different versions of the same source document?*
 
@@ -207,15 +291,15 @@ Two student teams build the same 3-agent research pipeline.  Team A starts codin
 
 ### Critical Thinking Questions
 
-8.  Team A lost two days in Week 2 to a schema disagreement they could have resolved in 30 minutes during a design session.  What is the general principle here, and does it apply to non-agentic software projects as well?
+12.  Team A lost two days in Week 2 to a schema disagreement they could have resolved in 30 minutes during a design session.  What is the general principle here, and does it apply to non-agentic software projects as well?
 
    > *Hint: The cost of a decision is the cost of reversing it plus the cost of everything built on top of it before you reversed it.  How does this principle scale with how late the reversal happens?*
 
-9.  In Week 4, Team A asks "Is this good?" but has no rubric to answer the question.  Why is it impossible to evaluate an AI system without criteria that were defined *before* seeing the output?
+13.  In Week 4, Team A asks "Is this good?" but has no rubric to answer the question.  Why is it impossible to evaluate an AI system without criteria that were defined *before* seeing the output?
 
    > *Hint: If you define "good" after seeing the output, you are at risk of unconsciously defining "good" as "what the system produced."  What is the technical name for this kind of reasoning error in statistics?*
 
-10.  Team B's design document took three days.  Team A saved three days at the start and lost them elsewhere.  What does this suggest about the relationship between upfront design cost and total project cost?  Under what circumstances might Team A's approach actually be *better*?
+14.  Team B's design document took three days.  Team A saved three days at the start and lost them elsewhere.  What does this suggest about the relationship between upfront design cost and total project cost?  Under what circumstances might Team A's approach actually be *better*?
 
     > *Hint: Is there any project type where the requirements are so unstable or unknown that writing a design doc first would be wasted effort? What would a project like that look like, and is a 3-agent research pipeline that kind of project?*
 
@@ -287,7 +371,7 @@ Not required for today's design work, and nothing above assumes it.  Design-firs
 |------|--------------------------|--------------------------|
 | **Agent Memory File** | A plain-text file the agent reads at the start of every session to reconstruct context it cannot remember across sessions: project structure, conventions, what not to do. | `AGENTS.md` in the project root listing architecture and invariants |
 | **Project Instructions** | Agent memory scoped to one project: the architecture, key invariants, test commands, and common pitfalls. Lives next to the code it describes. | An `AGENTS.md` for the RAG lab telling the agent "do not modify the Chroma schema" |
-| **Global Instructions** | Agent memory that applies to every project you work on: your personal style preferences, preferred libraries, tone. Lives in your home directory or agent config. | `~/.opencode/instructions.md` containing "always use Black for Python formatting" |
+| **Global Instructions** | Agent memory that applies to every project you work on: your personal style preferences, preferred libraries, tone. Lives in your home directory or agent config. | `~/.config/opencode/AGENTS.md` containing "always use Black for Python formatting" |
 | **Skill** | A reusable prompt template, a named workflow you can invoke by name instead of re-typing the same long prompt. | A "security-review" skill that prompts the agent to check a diff for OWASP top-10 agent risks |
 | **Plugin** | A collection of skills and tools packaged together and loaded by the agent at startup via a config file. | The `superpowers` plugin providing pre-built skills for TDD, security audit, and refactoring |
 | **Environment as Code** | The principle that your agent config files, instructions files, and skill definitions are version-controlled alongside your source code, so the agent environment is reproducible. | Committing `opencode.json` and `AGENTS.md` to the same repository as the application code |
@@ -319,7 +403,7 @@ In this part, you will diagnose why AI coding agents "forget" your project conve
 
 | Layer | Where it Lives | What it Contains | Who Writes it |
 |-------|----------------|------------------|---------------|
-| **Global instructions** | `~/.opencode/instructions.md` or equivalent home-directory config | Personal style (formatting, preferred libraries, tone) that applies to every project | You, once |
+| **Global instructions** | `~/.config/opencode/AGENTS.md` or equivalent home-directory config | Personal style (formatting, preferred libraries, tone) that applies to every project | You, once |
 | **Project instructions** | `./AGENTS.md` or `opencode.json` `instructions` field in the project root | Project architecture, key invariants, test commands, what not to do | You, per project |
 | **Skills** | Named `.md` files loaded by the agent config | Reusable prompt templates for specific workflows | You or the plugin author |
 
@@ -356,7 +440,7 @@ A developer is working on the RAG lab from earlier in the course.  They have acc
 A developer always wants their coding agent to use Black for Python formatting, regardless of which project they are working on.  Which layer is most appropriate for this instruction?
 
 [( )] Project instructions (`AGENTS.md` in the project root), so it is version-controlled
-[(X)] Global instructions (`~/.opencode/instructions.md`), so it applies to every project automatically
+[(X)] Global instructions (`~/.config/opencode/AGENTS.md`), so it applies to every project automatically
 [( )] A skill, so it can be invoked by name when formatting is needed
 [( )] The prompt, paste it at the start of every session
 

@@ -18,7 +18,7 @@ The bench has four parts, and we build them in order: **the shell** (Step 0, the
 
 This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
-One deliberate exception: **Ollama stays on your host.**  Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`.  That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name.  The [Docker from Zero tutorial]({{ site.baseurl }}/Tutorials/Docker) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work.  When a step below feels like magic, that is the page to read.
+One deliberate exception: **Ollama stays on your host.**  Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`.  That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name.  The [Docker from Zero tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work.  When a step below feels like magic, that is the page to read.
 
 Two ideas carry the whole design:
 
@@ -450,53 +450,58 @@ opencode --version
 
 ### 8.2: Point it at your own model
 
-opencode reads `~/.config/opencode/config.json`.  Create it so the agent uses the Ollama server on your host rather than a paid API:
+opencode reads a single global config file, and the name matters: it is `opencode.json`, not `config.json`.  If opencode later reports no provider or no models, this file name is the first thing to check.
+
+| Where you are | The file to create |
+|---|---|
+| macOS, Linux, or WSL | `~/.config/opencode/opencode.json` |
+| Windows, native shell | `%USERPROFILE%\.config\opencode\opencode.json` (paste `%USERPROFILE%\.config\opencode` into the Run box with Win+R to open the folder) |
+
+Before you write it, settle the address, because getting this wrong produces a connection error that looks like a broken install.  **`localhost` means "the machine this process is running on."**  Run opencode natively and that is your laptop; run it in the container and that is the container, where nothing is listening.
+
+| Where opencode runs | Ollama | OpenWebUI |
+|---|---|---|
+| Natively on your laptop | `http://localhost:11434/v1` | `http://localhost:3000/api/v1` |
+| Inside the container | `http://host.docker.internal:11434/v1` | `http://host.docker.internal:3000/api/v1` |
+
+The `provider` block is a map, so you do not have to choose: name two keys and you get two providers, both live, both listed in `/model`.  Set them both up now, because you will want to compare them in a minute.  The heredoc below is bash, so run it in a macOS, Linux, or WSL shell; on native Windows, make the folder and save the same JSON with an editor.  It is written for the container route, so swap `host.docker.internal` for `localhost` in both URLs if you installed opencode natively:
 
 ```bash
 mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/config.json <<'JSON'
+cat > ~/.config/opencode/opencode.json <<'JSON'
 {
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "options": { "baseURL": "http://host.docker.internal:11434/v1" },
-      "models": { "llama3.2": { "name": "llama3.2" } }
-    }
-  }
-}
-JSON
-```
-
-On the native route, use `http://localhost:11434/v1` instead: the same substitution as everywhere else in this tutorial.
-
-**Variant: routing through OpenWebUI instead.**  Talking to Ollama directly, as above, is the default for this course and needs no key at all.  But if you are running **OpenWebUI** in front of Ollama, you can point opencode at that instead, and get the models, tools, and knowledge bases you configured there.  OpenWebUI exposes an OpenAI-compatible endpoint, which is exactly what opencode's `@ai-sdk/openai-compatible` provider wants, so only the `baseURL` changes and one field is added:
-
-```bash
-mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/config.json <<'JSON'
-{
-  "provider": {
+      "models": { "llama3.2": { "name": "llama3.2 (raw Ollama)" } }
+    },
     "openwebui": {
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "baseURL": "http://localhost:3000/api/v1",
+        "baseURL": "http://host.docker.internal:3000/api/v1",
         "apiKey": "sk-REPLACE-ME"
       },
-      "models": { "llama3.2": { "name": "llama3.2" } }
+      "models": { "llama3.2": { "name": "llama3.2 (via OpenWebUI)" } }
     }
   }
 }
 JSON
 ```
 
-Two things to be clear about, because "API key" usually means "bill":
+**These two routes are not the same thing, which is the whole reason to register both.**  Ollama hands you the raw model: the weights you pulled, answering with nothing around them.  OpenWebUI hands you that same model *plus* everything you configured in front of it, meaning your knowledge bases, your tools, your system prompts.  Later, when an answer is wrong, you will ask the same question through each and learn in one step whether the problem is the model or the pipeline you built around it.  That is worth two minutes of setup now.
 
-- **The key is yours, from your own server.**  Generate it in OpenWebUI under *Settings -> Account -> API Keys*, the same key you will mint for the Python clients in the Local Agent lab.  It authenticates you to a server running on your machine; it is not a payment credential.
-- **This route is still free** as long as the models behind OpenWebUI are the local ones you have pulled.  You are adding a front door, not a bill.  Point the same config at a paid provider's models later and the cost follows the model, not the config.
+Two clarifications about that key, because "API key" usually means "bill":
 
-Port 3000 is the OpenWebUI default this course uses.  From inside the container, substitute `host.docker.internal` for `localhost`, as everywhere else in this tutorial.
+- **The key is yours, from your own server.**  Generate it in OpenWebUI under *Settings -> Account -> API Keys*, the same key you will mint for the Python clients in the Local Agent lab.  It authenticates you to a server running on your machine; it is not a payment credential.  Ollama takes no key at all, which is why its block has none.
+- **Both routes are free** as long as the models behind them are the local ones you have pulled.  You are adding a front door, not a bill.  Point the same config at a paid provider's models later and the cost follows the model, not the config.
+
+Port 3000 is the OpenWebUI default this course uses.  One more thing if you are on Linux: `host.docker.internal` is provided automatically by Docker Desktop on macOS and Windows, but not by Docker Engine on Linux, where you add `--add-host=host.docker.internal:host-gateway` to your `docker run`.  And Ollama listens only on `127.0.0.1` unless you start it as `OLLAMA_HOST=0.0.0.0 ollama serve`, which a container needs and which also means anything that can route to your machine can use your models.
+
+> **Prefer a different agent?**  pi does the same two-provider trick through a plugin, and the instructions are in the [agentic CLI tools tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCLIs).  If you want it running inside a container with the Dockerfile written out, that is in [terminal and filesystem isolation](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/FilesystemIsolation).
 
 > **A candid expectation.** `llama3.2` is a 3-billion-parameter model running on your laptop.  It is a fine model to *learn the loop with* and a weak one to build with.  Expect it to be slow, to sometimes ignore your instructions, and to occasionally propose an edit that makes no sense.  That is not your setup failing; that is the honest capability of a small local model, and noticing where the ceiling sits is a real part of today's learning.  Later labs let you point the same tool at a larger model.
+
 
 ### 8.3: Give it one small job
 
@@ -612,7 +617,7 @@ Everything after today is this loop:
 
 Now the *why*, in this course's own terms.  Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries.  Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week.  Inside the course container, the worst any runaway script can touch is `/workspace`; that is **isolation** from Step 8.5, enforced by the mount rather than by hope.  And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored: that is **reversibility**, and it is the reason the daily loop above insists on committing at every working stopping point rather than at the end.  Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
 
-The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace.  If the bug survives, it is yours.  For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity]({{ site.baseurl }}/Tutorials/Docker).
+The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace.  If the bug survives, it is yours.  For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker).
 
 ---
 
@@ -644,7 +649,7 @@ The first build fails partway through the big pip layer.  Almost always a networ
 
 **`opencode` says "command not found" right after the installer succeeded.**  The installer places the binary in `~/.local/bin`, which is not on the container's `PATH` by default. `export PATH="$HOME/.local/bin:$PATH"` fixes the current session; add the same line to `~/.bashrc` to make it stick.  This is the `PATH` mechanic from Step 0, met in the wild.
 
-**`opencode` starts but reports no provider or no models.**  It is reading a config it cannot use.  Check three things in order: that `~/.config/opencode/config.json` is valid JSON (`python3 -m json.tool ~/.config/opencode/config.json`), that the `baseURL` ends in `/v1`, and that the Step 5.1 host-bridge check still passes.  The agent reaches Ollama by exactly the same route your Python does; if 5.1 works and opencode does not, the fault is in the config file.
+**`opencode` starts but reports no provider or no models.**  Nine times out of ten the config is named `config.json` instead of `opencode.json`, so opencode never reads it.  Check the file name first, then check that it is in `~/.config/opencode/` (or `%USERPROFILE%\.config\opencode\` on native Windows), then check that the JSON parses with `python3 -m json.tool ~/.config/opencode/opencode.json`.
 
 The agent proposes an edit that is obviously wrong, or loops on the same failed idea.  Expected behavior for a 3B local model.  Stop it with Ctrl-C, `git checkout .` to discard, and give a smaller, more concrete instruction.  "Refactor this module" is beyond it; "add a docstring to this one function" is not.
 
@@ -665,8 +670,8 @@ The agent proposes an edit that is obviously wrong, or loops on the same failed 
 | Cache the PAT for a session | `git config credential.helper 'cache --timeout=7200'` |
 | The daily loop | Ollama up -> container -> work -> test -> commit -> push |
 | Install the coding agent | `curl -fsSL https://opencode.ai/install \| bash`, then `opencode --version` |
-| Point the agent at your model | `~/.config/opencode/config.json`, `baseURL` = `http://host.docker.internal:11434/v1` |
+| Point the agent at your model | `~/.config/opencode/opencode.json`, `baseURL` = `http://host.docker.internal:11434/v1` |
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
-| How it all works | [Docker from Zero activity]({{ site.baseurl }}/Tutorials/Docker) |
+| How it all works | [Docker from Zero activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) |

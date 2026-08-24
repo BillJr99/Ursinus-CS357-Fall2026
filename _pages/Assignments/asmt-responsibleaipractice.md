@@ -50,12 +50,10 @@ info:
       rlink: "https://archive.org/details/computerpowerhum00weiz"
     - rtitle: "Mitchell, Artificial Intelligence: A Guide for Thinking Humans (2019), Chapter 8"
       rlink: "https://melaniemitchell.me/aibook/"
-    - rtitle: "The Philosophy and Psychology of Artificial Intelligence Activity (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
-      rlink: "Activities/liascript-philosophyai.md"
-      liapage: true
-    - rtitle: "Data Cards Activity"
-      rlink: "Activities/liascript-datacards.md"
-      liapage: true
+    - rtitle: "The Philosophy and Psychology of Artificial Intelligence (Direction A: the positions this essay asks you to engage, laid out with the arguments for each)"
+      rlink: "../Tutorials/PhilosophyAI"
+    - rtitle: "Data Cards"
+      rlink: "../Tutorials/DataCards"
     - rtitle: "Bias in Data Activity"
       rlink: "Activities/liascript-biasdata.md"
       liapage: true
@@ -66,12 +64,10 @@ info:
       rlink: "https://www.nist.gov/itl/ai-risk-management-framework"
     - rtitle: "EU AI Act, Annex III"
       rlink: "https://artificialintelligenceact.eu/"
-    - rtitle: "AI Regulation Activity"
-      rlink: "Activities/liascript-regulation.md"
-      liapage: true
-    - rtitle: "Ethical Frameworks Activity"
-      rlink: "Activities/liascript-ethicalframeworks.md"
-      liapage: true
+    - rtitle: "AI Regulation"
+      rlink: "../Tutorials/Regulation"
+    - rtitle: "Ethical Frameworks"
+      rlink: "../Tutorials/EthicalFrameworks"
     - rtitle: "Strubell et al., Energy and Policy Considerations for Deep Learning in NLP (2019)"
       rlink: "https://arxiv.org/abs/1906.02629"
     - rtitle: "Patterson et al., Carbon Emissions and Large Neural Network Training (2021)"

@@ -237,10 +237,16 @@ Choosing a framework before understanding the problem is like choosing a power t
 
 A student builds a 4-agent pipeline using LangChain and notices the agents are sharing more context than they should: the Formatter agent is responding to instructions that were only meant for the Researcher.  The most likely cause is:
 
-[(X)] LangChain's default memory sharing is exposing more conversation history than intended; they need to configure per-agent memory isolation rather than passing the full shared state to every node
-[( )] LangChain contains a bug that routes messages to wrong agents in multi-node graphs; this is a known issue that requires upgrading the library
-[( )] The agents are reading each other's system prompts because LangChain shares the `llm_config` object across all nodes by reference
-[( )] Switching LLM providers will resolve state-sharing issues because different providers handle memory isolation differently
+- LangChain's default memory sharing is exposing more conversation history than intended; they need to configure per-agent memory isolation rather than passing the full shared state to every node
+- LangChain contains a bug that routes messages to wrong agents in multi-node graphs; this is a known issue that requires upgrading the library
+- The agents are reading each other's system prompts because LangChain shares the `llm_config` object across all nodes by reference
+- Switching LLM providers will resolve state-sharing issues because different providers handle memory isolation differently
+
+<details markdown="1"><summary>Answer</summary>
+
+LangChain's default memory sharing is exposing more conversation history than intended; they need to configure per-agent memory isolation rather than passing the full shared state to every node
+
+</details>
 
 ---
 
@@ -481,17 +487,29 @@ Two things decide whether this works.  First, **the provider must be reachable a
 
 In the hands-on LangChain agent, which responsibility did the framework take over from the from-scratch Local Agent Lab loop?
 
-[( )] Deciding when the loop should stop
-[( )] Choosing which Python functions the model is allowed to execute
-[(X)] Generating the tool's JSON schema from the function signature and docstring, and parsing the model's response into typed `tool_calls` objects
-[( )] Confirming irreversible actions with a human before execution
+- Deciding when the loop should stop
+- Choosing which Python functions the model is allowed to execute
+- Generating the tool's JSON schema from the function signature and docstring, and parsing the model's response into typed `tool_calls` objects
+- Confirming irreversible actions with a human before execution
+
+<details markdown="1"><summary>Answer</summary>
+
+Generating the tool's JSON schema from the function signature and docstring, and parsing the model's response into typed `tool_calls` objects
+
+</details>
 
 Compared with the explicit Step 2 loop, what does the DeepAgents harness in Step 4 additionally take over?
 
-[( )] Only the same plumbing (HTTP calls, schema generation, and response parsing) with no change in which decisions you control
-[(X)] The *decisions* as well: when to plan, when to spawn a sub-agent, and what to offload to the virtual filesystem are now made inside the framework's built-in system prompt
-[( )] Nothing; DeepAgents is just an alias for `create_react_agent` with a different import path
-[( )] It removes your ability to supply custom tools, forcing you to use only its built-in web search
+- Only the same plumbing (HTTP calls, schema generation, and response parsing) with no change in which decisions you control
+- The *decisions* as well: when to plan, when to spawn a sub-agent, and what to offload to the virtual filesystem are now made inside the framework's built-in system prompt
+- Nothing; DeepAgents is just an alias for `create_react_agent` with a different import path
+- It removes your ability to supply custom tools, forcing you to use only its built-in web search
+
+<details markdown="1"><summary>Answer</summary>
+
+The *decisions* as well: when to plan, when to spawn a sub-agent, and what to offload to the virtual filesystem are now made inside the framework's built-in system prompt
+
+</details>
 
 ---
 

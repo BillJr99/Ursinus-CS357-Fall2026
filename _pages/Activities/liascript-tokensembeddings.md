@@ -380,6 +380,8 @@ The attention mechanism is not a mathematical curiosity.  It sets the budget you
 
 **Position matters, and not evenly.**  Models attend most reliably to the beginning and the end of a long context and are measurably worse at material buried in the middle, an effect usually called *lost in the middle*.  This is why we put an agent's standing instructions and the current question at the edges of a prompt, with retrieved evidence in between, once we start building retrieval pipelines.
 
+**Depth is fixed, so the number of dependent steps is fixed.**  Attention lets any token look at any other token, which is a genuinely powerful thing and is not the same as computing.  A stack of layers gives the model a set number of operations that can *depend on each other* before it has to commit to a token, and that number was frozen when the model was trained.  A problem needing more dependent steps than the stack has does not get more; the model answers anyway.  Hold onto this, because *Why Different Answers Every Time?* shows you the one way out of it, and the way out is not a bigger context or better attention: it is the model writing intermediate results into its own context and reading them back on the next pass.
+
 > **Common Misconception: "More context is always better."**  Three things say otherwise, and you have now seen all three.  The cost is quadratic, so a longer prompt is not a free improvement.  The middle of a long prompt is the least reliable part of it.  And every extra token competes for the same finite attention budget, so filler actively dilutes the signal from the tokens that mattered.  Retrieve only what is relevant, place it deliberately, and keep prompts as short as the task allows.
 
 ---
@@ -501,7 +503,7 @@ The geometry itself returns in *Retrieval-Augmented Generation with Chroma*, whe
 
 ## 5.  Further Reading
 
-- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
+- [Sentence Prediction with BERT notebook](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/notebooks/Sentence_Prediction_with_BERT.ipynb), a runnable companion that uses BERT's masked-token predictions to see contextual embeddings in action.
 - Tom Yeh.  *AI by Hand*, embedding and dot-product worksheets.
 - Jay Alammar.  "The Illustrated Word2Vec" (online).  A visual introduction to embedding geometry.
 - Reimers and Gurevych.  "Sentence-BERT." *EMNLP* (2019).  How sentence-level embeddings are trained.
@@ -643,7 +645,7 @@ The vector $(0.6698, 1.0)$ is "cat," now aware of the token before it.  That is 
 
    > *Hint: Softmax exponentiates before normalizing.  What does $e^x$ do to a difference of $0.707$ in the exponent?*
 
-3.  This is where the $O(n^2)$ cost of context length comes from (see `liascript-memorycontext.md`).  With 2 tokens we computed 2 scores.  How many query·key scores would a 1,000-token prompt need for its last token, and for *all* tokens?
+3.  This is where the $O(n^2)$ cost of context length comes from (see the *Memory and the Small Context Window Principle* activity).  With 2 tokens we computed 2 scores.  How many query·key scores would a 1,000-token prompt need for its last token, and for *all* tokens?
 
    > *Hint: The last token dots against all prior keys.  Summed over every token attending to every prior token, the total grows like $n^2$.*
 
@@ -667,7 +669,7 @@ In this part, you turn the context vector into an actual next-word prediction.
 $$W_1 = \begin{bmatrix} 1 & 0 \\ 1 & 1 \end{bmatrix}, \quad b_1 = (0, 0), \qquad z = \text{context}\,W_1 + b_1$$
 $$z = (0.6698\cdot 1 + 1.0\cdot 1,\; 0.6698\cdot 0 + 1.0\cdot 1) = (1.6698,\; 1.0)$$
 
-ReLU replaces negatives with 0.  Both components here are positive, so $h = \text{ReLU}(z) = (1.6698, 1.0)$ passes through unchanged.  (For a case where ReLU actually clips a negative to zero, see the fully worked 2-2-1 network in `liascript-textgen2nn.md`.)
+ReLU replaces negatives with 0.  Both components here are positive, so $h = \text{ReLU}(z) = (1.6698, 1.0)$ passes through unchanged.  (For a case where ReLU actually clips a negative to zero, see the fully worked 2-2-1 network in [From Text Generation to a Neural Network](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TextGenToNN).)
 
 **Step 2: Unembedding to logits.**  A matrix $W_U$ (one row per vocabulary token, here reusing the embedding directions) scores $h$ against every token: $\text{logit}_i = W_{U,i} \cdot h$.
 
@@ -689,7 +691,7 @@ The sum is $24.9313$, giving:
 |---|---|---|---|---|
 | $0.2130$ | $0.1090$ | $\mathbf{0.5791}$ | $0.0205$ | $0.0784$ |
 
-**Step 4: Sample.**  At temperature 0 (greedy) the model emits the argmax: **"sat."**  The full request "the cat" -> "sat" is complete.  (Temperature and top-p reshape this distribution before sampling; see `liascript-samplinggeneration.md`.)
+**Step 4: Sample.**  At temperature 0 (greedy) the model emits the argmax: **"sat."**  The full request "the cat" -> "sat" is complete.  (Temperature and top-p reshape this distribution before sampling; see the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* activity.)
 
 #### Questions to Work Through
 

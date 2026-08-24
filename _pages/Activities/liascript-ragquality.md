@@ -236,7 +236,7 @@ With the theory of recall and reranking established, this hands-on section puts 
 
 ## Hands-On: Chunking Strategy Comparison
 
-The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
+The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
 
 Today we stay on the *judgment*: where a chunk boundary belongs, and what recall@k does and does not tell you.
 
