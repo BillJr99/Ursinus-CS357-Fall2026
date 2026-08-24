@@ -18,7 +18,7 @@ The bench has four parts, and we build them in order: **the shell** (Step 0, the
 
 This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
-One deliberate exception: **Ollama stays on your host.**  Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`.  That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name.  The [Docker from Zero tutorial]({{ site.baseurl }}/Tutorials/Docker) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work.  When a step below feels like magic, that is the page to read.
+One deliberate exception: **Ollama stays on your host.**  Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`.  That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name.  The [Docker from Zero tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work.  When a step below feels like magic, that is the page to read.
 
 Two ideas carry the whole design:
 
@@ -612,7 +612,7 @@ Everything after today is this loop:
 
 Now the *why*, in this course's own terms.  Later in the semester you will run **agent loops**: code that reads model output and then *does things*: writes files, renames, deletes, retries.  Agents fail in creative ways, and an agent that misparses a response and executes `rm` on the wrong path is not hypothetical; it is a lab week.  Inside the course container, the worst any runaway script can touch is `/workspace`; that is **isolation** from Step 8.5, enforced by the mount rather than by hope.  And because `/workspace` is a git repository pushed to GitHub, even a trashed workspace is one `git checkout` (worst case, one fresh `git clone`) from restored: that is **reversibility**, and it is the reason the daily loop above insists on committing at every working stopping point rather than at the end.  Your documents, your other courses, your credentials (if you took the PAT route): unreachable, by construction.
 
-The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace.  If the bug survives, it is yours.  For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity]({{ site.baseurl }}/Tutorials/Docker).
+The same property answers "did I break my environment or my code?": exit, rerun `docker compose run --rm cs357`, and you have a factory-fresh environment on the same workspace.  If the bug survives, it is yours.  For the mechanics underneath every claim in this paragraph (writable layers, bind mounts, network namespaces) see the [Docker from Zero activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker).
 
 ---
 
@@ -669,4 +669,4 @@ The agent proposes an edit that is obviously wrong, or loops on the same failed 
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
-| How it all works | [Docker from Zero activity]({{ site.baseurl }}/Tutorials/Docker) |
+| How it all works | [Docker from Zero activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) |
