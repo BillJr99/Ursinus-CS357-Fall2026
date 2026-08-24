@@ -187,10 +187,16 @@ The four workhorses worth memorizing by name are `grep` (search text for a patte
 
 A teammate runs `python eval.py > results.txt` twice in a row with different settings, intending to compare the two runs.  What happened to the first run's results?
 
-[( )] They appear above the second run's results in the file; this is how `>>` (append) works, but `>` does not accumulate output; it overwrites from the first byte of the new run
-[(X)] They were overwritten and are gone, because > truncates the file before writing; >> would have appended
-[( )] They were automatically backed up to `results.txt.bak` by the shell; the shell provides no automatic backup mechanism; silent overwrite is the default behavior and there is no undo
-[( )] The second run failed silently because the file already existed; `>` does not check whether the destination file exists; it opens, truncates, and writes unconditionally
+- They appear above the second run's results in the file; this is how `>>` (append) works, but `>` does not accumulate output; it overwrites from the first byte of the new run
+- They were overwritten and are gone, because > truncates the file before writing; >> would have appended
+- They were automatically backed up to `results.txt.bak` by the shell; the shell provides no automatic backup mechanism; silent overwrite is the default behavior and there is no undo
+- The second run failed silently because the file already existed; `>` does not check whether the destination file exists; it opens, truncates, and writes unconditionally
+
+<details markdown="1"><summary>Answer</summary>
+
+They were overwritten and are gone, because > truncates the file before writing; >> would have appended
+
+</details>
 
 ---
 

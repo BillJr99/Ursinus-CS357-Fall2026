@@ -50,10 +50,16 @@ The whole of this tutorial lives in the **code** column: an agent scoped to a pr
 
 A teammate says, "Chat, code, and cowork are just three brand names for the same thing, a model answering prompts."  The most accurate correction is:
 
-[( )] They differ only in price; the underlying capability and risk are identical
-[(X)] They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
-[( )] They differ only in which company trained the model behind them
-[( )] They are ordered by intelligence: cowork models are strictly smarter than code models, which are smarter than chat models
+- They differ only in price; the underlying capability and risk are identical
+- They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
+- They differ only in which company trained the model behind them
+- They are ordered by intelligence: cowork models are strictly smarter than code models, which are smarter than chat models
+
+<details markdown="1"><summary>Answer</summary>
+
+They differ in *who executes the actions and how large the blast radius is*: in chat you run everything by hand, in code a gated agent changes your repo, and in cowork the agent acts across your whole desktop
+
+</details>
 
 ---
 
@@ -226,10 +232,16 @@ The gates are not friction; they are the course's human-oversight principle runn
 
 A teammate launches an agent CLI from their home directory instead of the project directory "to save a cd".  The principled objection is:
 
-[( )] The agent will run more slowly because it must index all files before starting; launch location is a performance concern, not a safety one
-[(X)] The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
-[( )] Context files are only read from the home directory, so launching from there is actually required for the context file to be found
-[( )] The working directory only affects which files the agent proposes to edit in its plan; file tool calls are still scoped to the project folder
+- The agent will run more slowly because it must index all files before starting; launch location is a performance concern, not a safety one
+- The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
+- Context files are only read from the home directory, so launching from there is actually required for the context file to be found
+- The working directory only affects which files the agent proposes to edit in its plan; file tool calls are still scoped to the project folder
+
+<details markdown="1"><summary>Answer</summary>
+
+The working directory defines the agent's accessible world, so launching from home grants it the entire filesystem of personal documents rather than one scoped project
+
+</details>
 
 ---
 
@@ -252,10 +264,16 @@ The connection to the human-in-the-loop principle is direct: a mode is how you *
 
 A student sets their agent to **auto-accept edits** mode to refactor a Python package, reasoning that they will review the final diff in git anyway.  Midway, the agent decides it needs a library and proposes `pip install requests`.  What happens?
 
-[( )] It runs without a prompt; auto-accept edits approves every action, shell commands included, so the install proceeds silently
-[(X)] It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
-[( )] It runs without a prompt, but only because `pip install` counts as a file edit since it writes package files to disk
-[( )] It stops, because auto-accept mode automatically reverts to "ask" mode the instant any shell command is proposed
+- It runs without a prompt; auto-accept edits approves every action, shell commands included, so the install proceeds silently
+- It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
+- It runs without a prompt, but only because `pip install` counts as a file edit since it writes package files to disk
+- It stops, because auto-accept mode automatically reverts to "ask" mode the instant any shell command is proposed
+
+<details markdown="1"><summary>Answer</summary>
+
+It stops at a gate: auto-accept edits waives the prompt for *file edits only*; a shell command like `pip install` still pauses, which is the whole point of a mode that sits between "ask" and "full-auto"
+
+</details>
 
 ---
 
@@ -401,10 +419,16 @@ This same idea (an agent that keeps working while you are away) scales up in the
 
 You start a long agent task inside `tmux`, press `Ctrl-b d`, and close your SSH connection.  Thirty minutes later you `tmux attach` from a different machine.  What do you find?
 
-[( )] The task is paused at the moment you detached and resumes only now that you have reattached
-[( )] The task was killed when the SSH connection closed and must be restarted from scratch
-[(X)] The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
-[( )] The task ran only while at least one client was attached, so it made no progress during the 30 minutes you were disconnected
+- The task is paused at the moment you detached and resumes only now that you have reattached
+- The task was killed when the SSH connection closed and must be restarted from scratch
+- The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
+- The task ran only while at least one client was attached, so it made no progress during the 30 minutes you were disconnected
+
+<details markdown="1"><summary>Answer</summary>
+
+The task kept running the whole time on the multiplexer's persistent server, and you are now viewing its current state, including anything it did while you were gone
+
+</details>
 
 ---
 
