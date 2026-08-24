@@ -144,6 +144,8 @@ The code cell below runs the same question ("Why is the sky blue?") through thre
 
 > If you have not installed Ollama yet (we do it together in the *Running Your Own AI* session), read this cell and predict its output; bring your prediction to class.
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -205,6 +207,8 @@ The cell below defines five `(country, expected capital)` pairs, then runs the *
 ## Code Cell
 
 > If you have not installed Ollama yet (we do it together in the *Running Your Own AI* session), read this cell and predict its output; bring your prediction to class.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests

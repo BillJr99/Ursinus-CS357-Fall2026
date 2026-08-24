@@ -392,6 +392,8 @@ Ollama serves embedding models too.  We embed a handful of campus FAQ sentences 
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 import numpy as np
@@ -825,6 +827,7 @@ def loss_at(w):
 num = (loss_at(W_U[target,0]+eps) - loss_at(W_U[target,0]-eps)) / (2*eps)
 print("numerical grad = %.4f   analytic grad = %.4f  (match!)" % (num, grad))
 ```
+@Pyodide.eval
 
 ---
 

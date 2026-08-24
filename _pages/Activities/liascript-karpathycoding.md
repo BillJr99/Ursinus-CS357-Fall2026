@@ -114,6 +114,8 @@ In this part, you will practice the spec-first workflow: writing a clear functio
 
 **Failing tests (red phase):**
 
+> **Runs on your machine, not here.**  This is a test file: save it in your repository and run it with `pytest`.
+
 ```python
 import pytest
 
@@ -197,6 +199,8 @@ In this part, you will read a realistic AI-generated diff with a planted bug, pr
 ## Model 3: A Planted-Bug Diff
 
 Below is a 35-line implementation of `search_memory` that an agent might plausibly produce.  It passes all five tests above.  It contains **three deliberate issues**.  Read it carefully before answering the questions.
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests

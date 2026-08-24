@@ -98,6 +98,8 @@ Visual flows don't have to stay visual; you can export them and call them from r
 
 Every flow exports as JSON (a text-based data format), and Langflow can serve any flow as a REST API endpoint.  Export your RAG flow, open the JSON in a text editor and find your prompt text and chunk size by searching for keywords you used.  Then call the flow endpoint from three lines of Python `requests`:
 
+> **Runs on your machine, not here.**  This cell makes network calls that the page sandbox blocks.  Copy it into your course container and run it there.
+
 ```python
 import requests
 response = requests.post("http://localhost:7860/api/v1/run/<your-flow-id>",

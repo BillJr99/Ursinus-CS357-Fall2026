@@ -57,6 +57,8 @@ This activity uses a locally running Ollama instance.  Verify it is running befo
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -134,6 +136,8 @@ Understanding what the SDK does for you requires seeing what happens without it.
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import subprocess
@@ -260,6 +264,8 @@ The model does not execute the function.  The model only decides *which* functio
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import json
 import requests
@@ -381,6 +387,8 @@ The developer experience is identical across providers.  You write the request o
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 # Demonstrates provider portability: same request body, two different base_urls.
 # In a real environment, you would have both servers running.
@@ -483,6 +491,8 @@ The clearest demonstration is a **before/after** contrast on a `{context}` blank
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 
@@ -568,6 +578,8 @@ A single sample from a model is a roll of the dice: at `temperature > 0` the sam
 
 ## Code Cell
 
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
+
 ```python
 import requests
 from collections import Counter
@@ -649,6 +661,8 @@ Note the templating subtlety: because stage 1's instruction *shows* the model a 
 ---
 
 ## Code Cell
+
+> **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
 ```python
 import requests, json
