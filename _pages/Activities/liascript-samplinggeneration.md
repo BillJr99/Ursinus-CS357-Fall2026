@@ -643,7 +643,19 @@ In this part, you will apply the sampling vocabulary to real design decisions (c
 
 Nothing above depends on this section.  It is here because the dial you turned today has a consequence that outlives the session: every program you have written until now returned the same answer for the same input, and this one does not.  That break is worth sitting with, along with automation bias, which is the human half of the same problem.
 
-#### Before You Start
+## Key Concepts
+
+| Term | Definition |
+|---|---|
+| Deterministic | A system that always produces the same output for the same input |
+| Probabilistic / stochastic | A system that samples from a probability distribution, so outputs vary across runs |
+| Automation bias | The tendency to over-rely on automated systems, accepting their outputs without independent verification |
+| Calibration | A system is calibrated if its stated confidence matches its actual accuracy rate; e.g., a calibrated model that says "80% confidence" is correct 80% of the time |
+| Cognitive offloading | Delegating mental work to an external tool or system, reducing cognitive effort at the cost of reduced engagement with the result |
+
+---
+
+## Before You Start
 
 **What you need:** Nothing installed; this one is discussion and paper first.  Python only if you run the optional demo.
 
@@ -653,7 +665,7 @@ Work these in sequence.  Each section assumes the one before it, and the code bl
 
 ---
 
-### Overview and Roles
+### Why This Matters
 
 Most software you have used behaves predictably: the same input always produces the same output.  AI systems built on large language models deliberately do not.  Understanding *why* (and what that means for how you interpret and rely on AI outputs) is one of the most practically important ideas in this course.
 
@@ -892,17 +904,5 @@ Before your Presenter shares with the class, agree on answers to the following a
 3.  State one concrete habit you will adopt after today to protect yourself from automation bias when using AI tools in this course or professionally.
 
 4.  *Challenge question:* Could an AI system be designed that is both probabilistic *and* well-calibrated in its expressed confidence?  What would that require, and why don't current LLMs do it?
-
----
-
-## Key Concepts
-
-| Term | Definition |
-|---|---|
-| Deterministic | A system that always produces the same output for the same input |
-| Probabilistic / stochastic | A system that samples from a probability distribution, so outputs vary across runs |
-| Automation bias | The tendency to over-rely on automated systems, accepting their outputs without independent verification |
-| Calibration | A system is calibrated if its stated confidence matches its actual accuracy rate; e.g., a calibrated model that says "80% confidence" is correct 80% of the time |
-| Cognitive offloading | Delegating mental work to an external tool or system, reducing cognitive effort at the cost of reduced engagement with the result |
 
 ---
