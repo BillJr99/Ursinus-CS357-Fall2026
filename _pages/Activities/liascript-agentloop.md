@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Agent Loop: Perceive, Plan, Act
 
-In the *Welcome: What Is AI, and What Is an Agent?* activity we placed systems on an agency spectrum; today we build the machinery that moves a system along it.  This module develops the **agent loop**, the control structure that turns a reactive language model into a goal-directed system.  We move from **intuition $\rightarrow$ the sense-think-act cycle $\rightarrow$ the ReAct pattern $\rightarrow$ a working agent loop in Python** against a local Ollama model.
+In the *Welcome: What Is AI, and What Is an Agent?* activity we placed systems on an agency spectrum; today we build the machinery that moves a system along it.  This module develops the **agent loop**, the control structure that turns a reactive language model into a goal-directed system.  We move from **intuition → the sense-think-act cycle → the ReAct pattern → a working agent loop in Python** against a local Ollama model.
 
 ---
 

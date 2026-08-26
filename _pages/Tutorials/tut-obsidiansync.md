@@ -20,7 +20,7 @@ To get your vault onto GitHub and give agents a navigation contract, a read path
 
 ## About This Tutorial
 
-Your Obsidian vault contains your best thinking: class notes, project plans, decisions you've made and why.  But right now it lives entirely on one machine, invisible to every agent you run.  The fix is architectural: **put the vault on GitHub, write a navigation contract agents can read, give agents a write-back path so knowledge accumulates across sessions, and wire the whole loop through the local tools you already use**.  This tutorial builds that system from zero: why GitHub is the right host $\rightarrow$ the Obsidian Git community plugin and its configuration $\rightarrow$ pointing agents at your vault as read context $\rightarrow$ letting agents write back to it as persistent memory.
+Your Obsidian vault contains your best thinking: class notes, project plans, decisions you've made and why.  But right now it lives entirely on one machine, invisible to every agent you run.  The fix is architectural: **put the vault on GitHub, write a navigation contract agents can read, give agents a write-back path so knowledge accumulates across sessions, and wire the whole loop through the local tools you already use**.  This tutorial builds that system from zero: why GitHub is the right host → the Obsidian Git community plugin and its configuration → pointing agents at your vault as read context → letting agents write back to it as persistent memory → standing up an LLM wiki, the pattern all of this is in service of.
 
 ## Key Concepts
 
@@ -30,6 +30,7 @@ Your Obsidian vault contains your best thinking: class notes, project plans, dec
 | **Community plugin** | An Obsidian extension written by the community and installed through the in-app plugin browser. Community plugins are not audited by the Obsidian team, so you review them before enabling. | Obsidian Git is the most widely used community sync plugin; it wraps standard git operations in a background process that pushes on a configurable interval. |
 | **Obsidian Git plugin** | A community plugin that runs git inside Obsidian, auto-committing and pushing your vault on a set interval without you ever touching the terminal. | Configured with a 5-minute auto-push interval, the plugin commits any changed notes and pushes them to your private GitHub repo while you keep writing. |
 | **Personal Access Token (PAT)** | A secret string that authenticates GitHub API and git-over-HTTPS operations. It grants specific permissions without sharing your full account credentials. | The Obsidian Git plugin uses your PAT as the HTTPS password when pushing to GitHub; agents use the same or a separate token to pull the vault and push session memories. |
+| **LLM wiki** | A folder of Markdown pages that an agent builds and maintains from your raw sources, so knowledge compounds across sessions instead of being re-derived on every query.  Named in Andrej Karpathy's April 2026 [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist. | Part IV stands one up inside the vault you sync here: `wiki/` for the pages, `index.md` as the catalog, `log.md` as the history, and ingest/query/lint as the three standing prompts. |
 | **Vault index** | A single Markdown file (`_index.md` or `index.md`) that lists every note in the vault by topic with a one-sentence description, letting an agent navigate the vault without reading every file. | An agent given the path to `_index.md` can decide which three notes are relevant to your question and read only those, rather than loading the entire vault into its context. |
 | **File-based context injection** | Passing relevant file contents directly in the context window before an agent starts work, as opposed to embedding+retrieval (RAG). | Concatenating `agent-context/*.md` files and prepending them to an OpenCode session prompt gives the agent your standing instructions and recent decisions without a vector database. |
 | **Write-back / agent memory** | An agent appending what it learned during a session to a persistent file in your vault, so future sessions start with that knowledge already present. | At the end of a coding session, OpenCode appends a YAML-headed entry to `memories/session-log.md` noting the date, the project, and the key decisions made. |
@@ -45,7 +46,7 @@ In this part, you will understand why a local Obsidian vault is invisible to age
 
 Agents read files.  When you run OpenCode or pi.ai in a project directory, the agent can see every file in that directory tree.  But your Obsidian vault is somewhere else (probably `~/Documents/Obsidian/MyVault` or a similar location) and unless you explicitly point an agent at it, the agent has no idea it exists.  This is the **locality problem**: your knowledge lives in one place; your agents work in another.
 
-There are two ways to bridge the gap.  The expensive way is a retrieval-augmented generation (RAG) pipeline: embed every note as a vector, run a similarity search on each query, and inject the top results.  RAG is powerful for large vaults but requires infrastructure.  The cheap, reliable alternative is **file-based context**: make the vault a git repository, push it to GitHub, and let agents clone or read it directly.  Every note is already plain Markdown.  No embedding pipeline required.  No vector database to maintain.  Agents that can read files can read your vault.
+There are two ways to bridge the gap.  The expensive way is a retrieval-augmented generation (RAG) pipeline: embed every note as a vector, run a similarity search on each query, and inject the top results.  RAG is powerful for large vaults but requires infrastructure.  The cheap, reliable alternative is **file-based context**: make the vault a git repository, push it to GitHub, and let agents clone or read it directly.  Every note is already plain Markdown.  No embedding pipeline required.  No vector database to maintain.  Agents that can read files can read your vault.  This is the bet Andrej Karpathy's [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist makes as well, and Part IV of this tutorial walks the setup: rather than searching raw documents on every query, you have the agent *compile* them into a maintained wiki whose `index.md` is the retrieval layer.  [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) covers what the pattern is and why it works; this page is the wiring.
 
 GitHub is the right host for three reasons:
 
@@ -501,6 +502,124 @@ MyVault/
 
 The `raw/` folder mirrors the zone boundary concept from the second brain module: it is a one-way inbox for source material that should stay pristine.  Agents synthesize from `raw/` into `CS357/` or `personal-projects/`; they never modify `raw/` itself.
 
+## Standing Up an LLM Wiki in Your Vault
+
+Everything above gives an agent a *read* path and a *write* path into your notes.  This section is what to do with them.  The target is the **LLM wiki** described in Andrej Karpathy's [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist (April 2026): rather than the agent searching your raw documents afresh on every question, it compiles them once into a linked encyclopedia and then maintains that encyclopedia for you.  [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) explains the pattern and the argument behind it; the six steps below are the Obsidian-and-GitHub setup, and they take about an evening.
+
+**Step 1: add the wiki zones to the vault you already synced.**  The reference structure above already has `raw/`; the wiki is what sits beside it.
+
+```
+MyVault/
+|-- AGENTS.md                   # the schema: rules the agent follows in this vault
+|-- raw/                        # sources you drop in and never edit
+|   `-- 2026-08-inbox/
+`-- wiki/
+    |-- index.md                # catalog: every page, by topic, one line each
+    |-- log.md                  # append-only: every ingest, query, and lint
+    |-- sources/                # one summary page per item in raw/
+    |-- people/                 # entity pages
+    |-- orgs/
+    `-- concepts/               # concept pages
+```
+
+The topical folders are a starting suggestion, not a rule; use whatever categories your material actually has.  What is not negotiable is that `index.md` and `log.md` exist from day one, because retrofitting them onto two hundred unindexed pages is miserable and the agent will not do it unprompted.  Note that `wiki/index.md` is a different file from the vault-wide `_index.md` of Part II and does a narrower job: `_index.md` maps your whole vault for an agent arriving cold, while `wiki/index.md` catalogs only the pages the agent itself authored.  Keep them separate, and have `_index.md` point at `wiki/index.md`.
+
+**Step 2: write the schema into `AGENTS.md`.**  This is the layer the gist calls the schema, and it is the difference between a disciplined wiki maintainer and a chatbot with filesystem access.  Add these sections to the `AGENTS.md` you already wrote in Part II:
+
+```markdown
+
+## Wiki conventions
+
+- `raw/` is read-only. Never edit, rename, or delete anything in it.
+- Every page in `wiki/` starts with a one-sentence definition, then details,
+  then a "Sources" section citing the `wiki/sources/` pages it draws on.
+- Link entities and concepts with `[[wikilinks]]` on first mention. A page
+  nothing links to is a bug; fix it by linking, not by deleting.
+- Prefer enriching an existing page over creating a near-duplicate. Check
+  `index.md` before you create anything.
+- When two sources disagree, say so on the page and name both. Never smooth
+  a conflict into a single confident sentence.
+- Distinguish what a source claims from what is established. Attribute claims.
+
+## index.md and log.md
+
+- Every new or renamed page gets its `index.md` entry in the same commit.
+- Append one line to `log.md` for every ingest, query, and lint pass:
+  `YYYY-MM-DD  ingest|query|lint  <what>  <pages touched>`
+- Never rewrite an existing `log.md` line. Append only.
+
+## Commits
+
+- One commit per operation, message prefixed `ingest:`, `query:`, or `lint:`.
+- Never mix an ingest and a lint in the same commit; I need to revert one
+  without losing the other.
+```
+
+**Step 3: seed `index.md` and `log.md`.**  Write the first entries by hand so the agent has a format to imitate; models copy an existing convention far more reliably than they follow a described one.
+
+```markdown
+
+# Wiki Index
+
+## Concepts
+- [[concepts/retrieval-augmented-generation]] - Why grounding a model in retrieved text reduces hallucination, and what it costs.
+- [[concepts/kv-cache]] - The memory buffer that makes token-by-token generation affordable.
+
+## Sources
+- [[sources/2026-08-attention-is-all-you-need]] - The transformer paper. Read for the architecture, not the benchmarks.
+```
+
+```markdown
+
+# Wiki Log
+
+2026-08-24  ingest  raw/2026-08-inbox/attention-is-all-you-need.pdf  sources/2026-08-attention-is-all-you-need, concepts/kv-cache, index
+2026-08-25  query   "why does batching help throughput but hurt TTFT"  no new pages; concepts/kv-cache was sufficient
+2026-08-26  lint    first pass  3 orphans linked, 1 contradiction flagged in concepts/kv-cache
+```
+
+**Step 4: turn on the three Obsidian settings the pattern assumes.**  Obsidian is doing real work here and not just displaying text; these are the settings that make a machine-written wiki navigable by a human.
+
+| Setting | Where | Why it matters for an LLM wiki |
+|---|---|---|
+| **Use `[[Wikilinks]]`** | Settings → Files and links → Use `[[Wikilinks]]` (on) | The agent writes `[[concepts/kv-cache]]`; with wikilinks off, Obsidian renders that as literal text and you lose backlinks and the graph |
+| **New link format: relative or absolute path** | Settings → Files and links → New link format | Pick one and state it in `AGENTS.md`. Mixed link formats are the most common reason a page looks linked but has no backlink |
+| **Show unresolved links in the graph** | Graph view → Filters | An unresolved link is the agent promising a page it never wrote; the graph surfaces those in seconds |
+
+Then use the two views the pattern is designed around.  **Backlinks** (in the right sidebar) answer "what else in my wiki cites this claim?", which is the check you run before you trust a page.  **Graph view** answers "what did the agent leave stranded?"  An island in the graph is either a page nothing needed or a missing link, and both are worth ten seconds of your attention.
+
+**Step 5: let GitHub be the undo button.**  The reason an ingest can touch fifteen pages without alarming anybody is that all fifteen edits are in one commit you can inspect and revert.
+
+- Keep the vault repository **private**, and give the agent a **fine-grained PAT scoped to that one repository's Contents**, exactly as in Part I.  An LLM wiki accumulates a detailed record of what you are thinking about; treat the token accordingly.
+- Review the ingest as a diff, not as a claim.  On github.com, open the commit the agent pushed and read the changed pages before you sync them into Obsidian.  `git revert <sha>` undoes a bad synthesis pass completely, which is what makes it safe to let the agent write at all.
+- If the Obsidian Git plugin's auto-push interval and an agent commit collide, the append-only rule from Part III is what saves you: `log.md` conflicts resolve by keeping both sides.
+
+**Step 6: run the three operations as standing prompts.**  There is no software to install for this part.  Ingest, query, and lint are prompts you keep in `agent-context/` and paste.
+
+```text
+INGEST
+Read AGENTS.md completely. A new source is in raw/2026-08-inbox/.
+Read it, then tell me the three things in it that matter before you write
+anything. After I confirm: write wiki/sources/<slug>.md, then update every
+existing page the source bears on, then update index.md and log.md.
+One commit, message prefixed "ingest:".
+
+QUERY
+Read AGENTS.md, then wiki/index.md. Answer from wiki/ pages only, citing
+each page you used. If the wiki cannot answer, say so and name the raw/
+material that would fill the gap; do not guess. If the answer was worth
+having, propose a new page and wait for me to approve it.
+
+LINT
+Read AGENTS.md, then audit the wiki and report before changing anything:
+(1) pages that contradict each other, (2) claims a source no longer supports,
+(3) orphan pages nothing links to, (4) unresolved [[links]] with no page,
+(5) topics named on three or more pages that have no page of their own.
+Then fix only what I approve, in one commit prefixed "lint:".
+```
+
+Note the shape all three share: the agent reports before it writes, and you approve before it commits.  That gate is the whole discipline.  A wiki an agent maintains without review is a wiki that confidently accumulates its own errors, and because the pages read fluently you will not notice for months.
+
 ---
 
 ## Exercises
@@ -557,6 +676,8 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 | **Fine-grained PAT** | A GitHub Personal Access Token scoped to specific permissions on a single repository, following the principle of least privilege. |
 | **Community plugin** | An Obsidian extension written by the community; requires deliberate opt-in because it runs arbitrary code. |
 | **Vault index (`_index.md`)** | A curated file listing all vault notes by topic and description, enabling agents to navigate without reading everything. |
+| **LLM wiki** | Karpathy's pattern of having an agent compile raw sources into a maintained, cross-linked Markdown encyclopedia, rather than re-searching the sources on every query. |
+| **Ingest / query / lint** | The three standing prompts that drive an LLM wiki: absorb a new source, answer from the wiki with citations, and audit the wiki for contradictions, stale claims, and orphan pages. |
 | **`agent-context/` folder** | A designated folder of short, always-injected files that establish standing instructions and current project state for every agent session. |
 | **File-based context injection** | Prepending relevant Markdown file contents to an agent's context window before it starts work, the low-infrastructure alternative to RAG. |
 | **Write-back / agent memory** | An agent appending a structured summary entry to a persistent vault file at session end, so future sessions inherit what past sessions learned. |
@@ -568,6 +689,7 @@ The `raw/` folder mirrors the zone boundary concept from the second brain module
 
 ## Further Reading
 
+- Andrej Karpathy, [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) (gist, April 2026): the LLM wiki pattern, and the source for the three-layer split, the `index.md`/`log.md` convention, and the ingest/query/lint loop that Part IV wires into Obsidian and GitHub.
 - Obsidian Git community plugin repository (github.com/Vinzent03/obsidian-git): full configuration reference, conflict handling documentation, and mobile sync notes.
 - GitHub Docs, "Managing your personal access tokens": how to create and scope fine-grained tokens, and how to rotate them before expiration.
 - W. Mongan, "A Private AI Knowledge Base: Obsidian, GitHub Sync, and Cross-Platform AI Context" (billmongan.com, May 2026): the full second-brain architecture this module is part of.

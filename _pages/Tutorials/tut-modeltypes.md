@@ -20,7 +20,7 @@ To read a model picker correctly: base, instruct, reasoning, and vision are labe
 
 When you open a model picker and see names like *base*, *instruct*, *reasoning*, or *vision*, those are not marketing adjectives; they are labels for **where a model stopped along a training pipeline**.  Every one of them begins life as the same thing: a next-token predictor.  What separates a chatbot from a "thinking" model from a model that can read a screenshot is which additional training stages were applied, and in what order.  This tutorial is the **hub** that ties together pieces the course teaches separately (pretraining, alignment, fine-tuning, and multimodality) into one lifecycle you can reason about.  When you need the mechanics of any single stage, we point you to the deep-dive activity that covers it.
 
-Our arc: **pretraining $\rightarrow$ supervised fine-tuning $\rightarrow$ preference alignment $\rightarrow$ reasoning training $\rightarrow$ multimodal training**, and then a taxonomy that lets you *choose* the right model type for a task instead of guessing.
+Our arc: **pretraining → supervised fine-tuning → preference alignment → reasoning training → multimodal training**, and then a taxonomy that lets you *choose* the right model type for a task instead of guessing.
 
 ## Key Concepts
 

@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Governance and Policy Writing
 
-The *Intellectual Property, Privacy, and the Case for Local AI* activity mapped what is at stake; you have built agents that retrieve, decide, judge, and act; **governance** is the discipline of deciding, in advance and in writing, what they may do, who is accountable when they err, and how anyone would know.  Today you learn to *write* policy, a genre with teeth, because your final project requires a governance document and your careers will require many more.  Today we work from **what governance is $\rightarrow$ frameworks in the wild $\rightarrow$ the anatomy of an enforceable policy $\rightarrow$ drafting workshop**.
+The *Intellectual Property, Privacy, and the Case for Local AI* activity mapped what is at stake; you have built agents that retrieve, decide, judge, and act; **governance** is the discipline of deciding, in advance and in writing, what they may do, who is accountable when they err, and how anyone would know.  Today you learn to *write* policy, a genre with teeth, because your final project requires a governance document and your careers will require many more.  Today we work from **what governance is → frameworks in the wild → the anatomy of an enforceable policy → drafting workshop**.
 
 ---
 

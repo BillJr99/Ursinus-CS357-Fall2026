@@ -10,6 +10,9 @@ tags:
 - rest
 - http
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - RESTful LLM Access
 
 ## Purpose
@@ -18,7 +21,7 @@ To talk to a language model over HTTP directly, which is the protocol every prov
 
 ## About This Tutorial
 
-This tutorial develops the mechanics of talking to a language model over HTTP, the protocol that all provider-agnostic AI code uses under the hood.  We move from **what REST is $\rightarrow$ the two key LLM endpoints $\rightarrow$ writing the same request three ways $\rightarrow$ tool calling over the API $\rightarrow$ switching providers by changing one line $\rightarrow$ building prompts from templates, voting for consensus, and chaining stages with JSON**.
+This tutorial develops the mechanics of talking to a language model over HTTP, the protocol that all provider-agnostic AI code uses under the hood.  We move from **what REST is → the two key LLM endpoints → writing the same request three ways → tool calling over the API → switching providers by changing one line → building prompts from templates, voting for consensus, and chaining stages with JSON**.
 
 ## Key Concepts
 

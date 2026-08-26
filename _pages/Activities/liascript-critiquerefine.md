@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Critique and Refine Pattern
 
-The *Orchestration Patterns: Pipelines, Routers, and Planners* activity wired agents into pipelines; today we study the most important two-agent pipeline of all.  Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires.  This is the workhorse pattern of Critique and Refine.  We move from **why separation helps $\rightarrow$ the loop and its stopping rules $\rightarrow$ implementation $\rightarrow$ when refinement fails**.
+The *Orchestration Patterns: Pipelines, Routers, and Planners* activity wired agents into pipelines; today we study the most important two-agent pipeline of all.  Writers improve through revision, and so do agents: a **generator** produces a draft, a **critic** evaluates it against explicit criteria, and the generator **refines** using the critique, looping until the critic approves or a budget expires.  This is the workhorse pattern of Critique and Refine.  We move from **why separation helps → the loop and its stopping rules → implementation → when refinement fails**.
 
 ---
 

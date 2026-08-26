@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Quality: Chunking, Clustering, and Reranking
 
-The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**.  This module develops the engineering of retrieval quality: **chunking strategies $\rightarrow$ measuring retrieval $\rightarrow$ semantic clustering of a corpus $\rightarrow$ reranking**, the same levers you will tune in the RAG Knowledge Base Lab.
+The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**.  This module develops the engineering of retrieval quality: **chunking strategies → measuring retrieval → semantic clustering of a corpus → reranking**, the same levers you will tune in the RAG Knowledge Base Lab.
 
 ---
 

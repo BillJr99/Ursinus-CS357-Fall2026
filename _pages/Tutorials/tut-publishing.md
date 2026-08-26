@@ -19,7 +19,7 @@ To do the second half of making: publishing to GHCR, Docker Hub, or npm so that 
 
 ## About This Tutorial
 
-Building something that works on your machine is the first half of making; **publishing** it so anyone can `docker pull` or `npm install` your work is the second half, and it is far less mysterious than it looks.  This tutorial takes you from zero accounts to published artifacts on the three registries that matter for this course: **GitHub Container Registry (GHCR)**, **Docker Hub**, and **npm**.  Today's path runs **what registries are $\rightarrow$ names, tags, and versions $\rightarrow$ publishing a container image (both registries) $\rightarrow$ publishing an npm package $\rightarrow$ automating it with CI $\rightarrow$ publishing responsibly**.
+Building something that works on your machine is the first half of making; **publishing** it so anyone can `docker pull` or `npm install` your work is the second half, and it is far less mysterious than it looks.  This tutorial takes you from zero accounts to published artifacts on the three registries that matter for this course: **GitHub Container Registry (GHCR)**, **Docker Hub**, and **npm**.  Today's path runs **what registries are → names, tags, and versions → publishing a container image (both registries) → publishing an npm package → automating it with CI → publishing responsibly**.
 
 ## Key Concepts
 
