@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Agentic Case Studies: Migration, Browsing, and Research Agents
 
-Theory meets the field: with the judging tools of the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity in hand, today we dissect three real agentic engagements drawn from your instructor's own practice, each chosen because something instructive happened at the seams: a **course-website migration** delegated to an agentic coworker, a **browsing agent** sent to navigate a live reservation site, and a **document agent** wrangling pagination across a conference proceedings.  For each, your team performs the same autopsy: reconstruct the architecture, locate the failure or friction, and prescribe the Unit 3 pattern that addresses it.  Today's route runs **a shared autopsy protocol $\rightarrow$ three cases $\rightarrow$ cross-case principles for your projects**.
+Theory meets the field: with the judging tools of the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity in hand, today we dissect three real agentic engagements drawn from your instructor's own practice, each chosen because something instructive happened at the seams: a **course-website migration** delegated to an agentic coworker, a **browsing agent** sent to navigate a live reservation site, and a **document agent** wrangling pagination across a conference proceedings.  For each, your team performs the same autopsy: reconstruct the architecture, locate the failure or friction, and prescribe the Unit 3 pattern that addresses it.  Today's route runs **a shared autopsy protocol → three cases → cross-case principles for your projects**.
 
 ---
 

@@ -10,6 +10,9 @@ tags:
 - reinforcement-learning
 - alignment
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - From Rewards to Preferences
 
 ## Purpose
@@ -18,7 +21,7 @@ To see how an agent learns good decisions when nobody can write down every rule,
 
 ## About This Tutorial
 
-Before language models could be aligned to human values, AI researchers had to solve a more fundamental problem: how do you teach an agent to make good decisions when you cannot write down every rule?  The answer (reinforcement learning) turns out to be both powerful and tricky to harness for the subtlety of human preferences.  In this tutorial we trace the path from **basic RL mechanics $\rightarrow$ Q-learning intuition $\rightarrow$ the RLHF training loop $\rightarrow$ DPO as a simpler alternative $\rightarrow$ Constitutional AI**.
+Before language models could be aligned to human values, AI researchers had to solve a more fundamental problem: how do you teach an agent to make good decisions when you cannot write down every rule?  The answer (reinforcement learning) turns out to be both powerful and tricky to harness for the subtlety of human preferences.  In this tutorial we trace the path from **basic RL mechanics → Q-learning intuition → the RLHF training loop → DPO as a simpler alternative → Constitutional AI**.
 
 ## Key Concepts
 
@@ -89,11 +92,11 @@ The Markov property ("the current state contains all information needed for the 
 
 **Q-learning** builds a table (the Q-table) that stores the expected total future reward of taking each action $a$ in each state $s$. The Q-value $Q(s, a)$ answers the question: "if I am in state $s$ and take action $a$, how much total reward can I expect, on average, from here onward?"
 
-A simple way to update Q-values after observing a transition $(s, a, r, s')$:
+A simple way to update Q-values after observing a transition $(s, a, r, s^{\prime})$:
 
-$$Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma \cdot \max_{a'} Q(s', a') - Q(s, a) \right]$$
+$$Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma \cdot \max_{a^{\prime}} Q(s^{\prime}, a^{\prime}) - Q(s, a) \right]$$
 
-where $\alpha$ is the learning rate (how much to update per step), $\gamma$ is the discount factor (how much future rewards are worth relative to immediate rewards), and $\max_{a'} Q(s', a')$ is our best estimate of the future from the new state.  The term in brackets is the **temporal difference error**: the gap between what we expected and what we actually got plus future prospects.
+where $\alpha$ is the learning rate (how much to update per step), $\gamma$ is the discount factor (how much future rewards are worth relative to immediate rewards), and $\max_{a^{\prime}} Q(s^{\prime}, a^{\prime})$ is our best estimate of the future from the new state.  The term in brackets is the **temporal difference error**: the gap between what we expected and what we actually got plus future prospects.
 
 For language models, Q-learning in its raw form is intractable: the state space (all possible token sequences) and action space (the full vocabulary at each step) are astronomically large.  Instead, modern RLHF uses PPO, which approximates Q-learning with neural networks and additional stability constraints.  But the Q-learning intuition ("assign credit for actions that lead to good futures") remains the conceptual core.
 
@@ -114,9 +117,9 @@ A toy Q-table for a tiny two-state ("question-answering" vs. "question-pending")
 
 ### Questions to Work Through
 
-**Q4.**  Using the Q-table above: in the "question-pending" state, which action does an epsilon-greedy policy with $\epsilon = 0.1$ choose 90% of the time?  If the agent chose "answer directly" in this state and received reward 2, with $\alpha = 0.5$ and $\gamma = 0.9$, compute the updated Q-value using the formula above (assume $\max_{a'} Q(\text{question-answering}, a') = 7.0$).
+**Q4.**  Using the Q-table above: in the "question-pending" state, which action does an epsilon-greedy policy with $\epsilon = 0.1$ choose 90% of the time?  If the agent chose "answer directly" in this state and received reward 2, with $\alpha = 0.5$ and $\gamma = 0.9$, compute the updated Q-value using the formula above (assume $\max_{a^{\prime}} Q(\text{question-answering}, a^{\prime}) = 7.0$).
 
-> *Hint: The formula is $Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \cdot \max_{a'} Q(s',a') - Q(s,a)]$. Plug in: $Q = 1.0$, $\alpha = 0.5$, $r = 2$, $\gamma = 0.9$, $\max_{a'} Q = 7.0$. Compute the bracket first, then multiply by $\alpha$, then add to the old Q.*
+> *Hint: The formula is $Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \cdot \max_{a^{\prime}} Q(s^{\prime},a^{\prime}) - Q(s,a)]$. Plug in: $Q = 1.0$, $\alpha = 0.5$, $r = 2$, $\gamma = 0.9$, $\max_{a^{\prime}} Q = 7.0$. Compute the bracket first, then multiply by $\alpha$, then add to the old Q.*
 
 **Q5.**  Why is applying Q-learning directly to language generation intractable?  Estimate the size of the Q-table for a model with a 50,000-token vocabulary generating responses up to 500 tokens long.  What architectural change would you need to make Q-learning feasible at this scale?
 

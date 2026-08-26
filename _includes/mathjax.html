@@ -1,0 +1,27 @@
+<!-- Loads MathJax for a page that contains TeX.  The default-standard layout
+     does not include it (assignment.html and notes.html load their own copy),
+     so a tutorial with math opts in by putting this on a line of its own,
+     followed by a blank line:
+
+         {% raw %}{% include mathjax.html %}{% endraw %}
+
+     Inline math is $...$ and display math is $$...$$.  MathJax skips <code>
+     and <pre>, so a dollar sign inside backticks or a fenced block is safe;
+     a literal dollar sign in ordinary prose on a page that includes this file
+     must be written \$. -->
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code',
+                     'annotation', 'annotation-xml']
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

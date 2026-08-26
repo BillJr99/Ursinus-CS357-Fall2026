@@ -19,7 +19,7 @@ To turn any GitHub repository into something an agent can actually read, using g
 
 ## About This Tutorial
 
-This tutorial introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI $\rightarrow$ domain-swap tools that solve it $\rightarrow$ grounding agents in real code $\rightarrow$ navigating unfamiliar codebases in minutes**.
+This tutorial introduces five URL **domain-swap tricks** that unlock new superpowers when working with GitHub repositories.  We move from **the problem of feeding code to AI → domain-swap tools that solve it → grounding agents in real code → navigating unfamiliar codebases in minutes**.
 
 ## Key Concepts
 

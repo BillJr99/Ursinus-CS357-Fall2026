@@ -19,7 +19,7 @@ To build one Markdown vault that you own, that GitHub hosts, that Obsidian edits
 
 ## About This Tutorial
 
-Every AI tool you use maintains its own little memory of you, in its own format, in its own silo, and none of them agree.  The cure is architectural: **one Markdown vault, hosted on GitHub, edited by you in Obsidian, and readable and writable by every agent you run**, so that your context becomes a single, versioned, portable artifact instead of five inconsistent copies.  This tutorial builds that system from zero: the vault, the gitless sync, the personal access token, the agent contract, and the wiring to an agent like **hermes** from our stack.  Here is the path for today: **why a vault $\rightarrow$ Obsidian and the repository $\rightarrow$ gitless sync with a PAT $\rightarrow$ the three-zone structure and AGENTS.md $\rightarrow$ the metadata protocol agents must honor $\rightarrow$ wiring hermes by prompting**.
+Every AI tool you use maintains its own little memory of you, in its own format, in its own silo, and none of them agree.  The cure is architectural: **one Markdown vault, hosted on GitHub, edited by you in Obsidian, and readable and writable by every agent you run**, so that your context becomes a single, versioned, portable artifact instead of five inconsistent copies.  This tutorial builds that system from zero: the vault, the gitless sync, the personal access token, the agent contract, and the wiring to an agent like **hermes** from our stack.  Here is the path for today: **why a vault → the LLM wiki pattern it implements → Obsidian and the repository → gitless sync with a PAT → the three-zone structure and AGENTS.md → the metadata protocol agents must honor → wiring hermes by prompting**.
 
 ## Key Concepts
 
@@ -29,6 +29,7 @@ Every AI tool you use maintains its own little memory of you, in its own format,
 | **Personal Access Token (PAT)** | A secret string that acts as a password for GitHub API calls. It grants specific permissions (like reading and writing a single repository) without sharing your full GitHub account credentials. | Your sync plugin uses the PAT to push note changes to GitHub; your agent uses it to pull the vault and write new wiki pages. |
 | **Gitless sync** | A sync mechanism that uses the GitHub REST API directly to push and pull files, rather than running `git` commands locally. No `.git` folder, no merge conflicts, one consistent state machine. | The GitHub Gitless Sync Obsidian plugin translates every file save into an API call; your phone and your laptop sync the same vault without ever needing git installed. |
 | **AGENTS.md contract** | A file at the root of the vault that tells any agent exactly how to behave: which folders it can read, which it can write, how to handle sources, and what metadata to update. Because the file travels inside the repo, every agent reads it automatically. | An agent that reads AGENTS.md learns that `raw/` is read-only, that `wiki/` is where it should write, and that it must update `github-sync-metadata.json` in the same commit as any file it creates. |
+| **LLM wiki** | The pattern this tutorial implements: a folder of Markdown pages that a model builds and maintains from your raw sources, so knowledge compounds across sessions instead of being re-derived on every query. Named in Andrej Karpathy's April 2026 [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist. | Your `wiki/` zone, its `index.md` catalog and `log.md` history, and the ingest/query/lint prompts that keep them current. |
 | **Blob SHA** | The specific hash value Git uses to uniquely identify file contents. It is computed differently from a plain SHA-1 hash; Git prefixes the content with `blob {bytecount}\0` before hashing. | When an agent writes a file to the vault, it may need to compute the blob SHA to correctly update the sync metadata file. |
 | **Zone boundary** | A deliberate structural rule about which areas of the vault serve which purpose and who is allowed to write to them. Zone boundaries are what make the vault safe to open to agents. | The `raw/` zone is read-only for everyone including agents; the `wiki/` zone is write-enabled for agents; the `.obsidian/` zone is off-limits except for the specific metadata file. |
 
@@ -57,6 +58,33 @@ The design has four pieces, each independently replaceable:
 | **GitHub as host** | Local storage that agents can only reach if they're on the same machine. | GitHub provides a versioned REST API that agents on any machine, in any container, can reach with a token. | Portability and versioning: no history, no access from remote agents, no audit trail of changes. |
 | **Gitless sync plugin** | Running `git` commands on every device and handling merge conflicts manually. | One sync mechanism, owned by one plugin, means one consistent state machine instead of three fighting ones. | Simplicity: without the plugin, every device needs git installed and you'll deal with merge conflicts between your phone and laptop. |
 | **AGENTS.md contract** | Per-tool configuration of what each agent is allowed to do. | The contract travels inside the repository; every agent reads it automatically, requiring zero per-tool configuration. | Safety and consistency: without a contract, agents may write anywhere in the vault, including overwriting your source files. |
+
+## The Pattern Has a Name: Karpathy's LLM Wiki
+
+What you are about to build is a specific, widely adopted pattern rather than a local invention, and it is worth knowing the name and reading the source.  In April 2026, Andrej Karpathy published a gist titled [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describing what he called an **LLM wiki**: a folder of Markdown files that a model incrementally builds and maintains for you, so that what you learn accumulates instead of evaporating at the end of each session.  The gist is prose, not code (it is written to be handed to an agent), and it is short enough to read in ten minutes.  Read it before you build, because everything below is an implementation of it.
+
+The pattern has three layers, and our vault is one arrangement of them:
+
+| Layer in the gist | Who owns it | Where it lives in this tutorial's vault |
+|---|---|---|
+| **Raw sources** | You. Articles, papers, PDFs, transcripts, dropped in and never edited again | `raw/` |
+| **The wiki** | The model. Source summaries, entity pages, concept pages, and the cross-links between them | `wiki/` |
+| **The schema** | You. The conventions, zone rules, and workflows the model must follow | `AGENTS.md` (plus `LLMMEMORIES.md` and `SYSTEMPROMPT.md`) |
+
+Two files inside `wiki/` do the navigating, and an LLM wiki that lacks them degrades into a folder of disconnected notes:
+
+- **`wiki/index.md`** is a *content* catalog: every page listed under a topic heading with a one-line summary of what it says.  The agent reads it first on any question and then opens only the three or four pages that matter.  This is why a wiki of several hundred pages stays searchable with no embeddings and no vector database; the index is the retrieval layer, and it is human-readable.
+- **`wiki/log.md`** is an append-only, chronological record of what happened to the wiki and when: sources ingested, questions asked, maintenance passes run.  It costs an agent one line per operation and it is the only thing that lets you (or the next agent, in a fresh context) reconstruct how the wiki came to say what it says.
+
+And three operations, each of which is a standing prompt rather than a piece of software:
+
+1.  **Ingest.**  You add a source to `raw/`.  The agent reads it, discusses the takeaways with you, writes a summary page, and then updates every existing page that source touches, which is typically ten to fifteen of them in a single pass.  The cross-reference bookkeeping is the part that would make *you* quit, and it is exactly the part a model does without complaint.
+2.  **Query.**  You ask a question.  The agent reads `index.md`, opens the relevant pages, and answers with citations to the pages it used.  An answer worth keeping becomes a page of its own, which is how questions compound into content.
+3.  **Lint.**  Periodically, you ask the agent to audit its own wiki: pages that contradict each other, claims that have gone stale, orphan pages nothing links to, topics named everywhere but written nowhere.  What the lint finds becomes the next ingest queue.
+
+**Why this is not RAG.**  We build a retrieval-augmented generation pipeline later in the course, and the contrast is the sharpest way to understand what the wiki buys you.  RAG searches your raw documents on every query and throws the result away; ask the same question twice and the model does the same work twice, and nothing about your corpus is any better than it was yesterday.  The LLM wiki pays the synthesis cost **once**, when a source arrives, and keeps the result as a durable artifact.  Karpathy's argument for why this is newly practical is a labor argument rather than a technical one: good wikis have always been valuable and have always died of maintenance, and maintenance is precisely the work that has just become free.  Neither replaces the other; RAG is what you reach for over a corpus too large or too fast-moving to curate, and the wiki is what you build over the corpus you actually care about.
+
+**Your job changes shape.**  You stop being the author and become the curator: you choose what enters `raw/`, you ask the questions, and you review what the agent wrote before you trust it.  That last clause is not optional.  Nothing in the wiki is durable knowledge until you have read it, which is the same review gate you apply to a coding agent's diff.
 
 ### Questions to Work Through
 
@@ -91,12 +119,13 @@ vault/
 |-- SYSTEMPROMPT.md     # Standing behavioral and style instructions
 |-- raw/                # READ-ONLY inbox: PDFs, transcripts, exports; never modified
 |-- wiki/               # The curated, cross-linked knowledge base agents WRITE
-|   `-- index.md        # The hub page: links to all topical sections
+|   |-- index.md        # The hub page: every page, by topic, one line each
+|   `-- log.md          # Append-only: what was ingested, asked, or linted, and when
 `-- .obsidian/
     `-- github-sync-metadata.json   # Sync state: plugin-managed, agent-updated
 ```
 
-The boundaries are the design. `raw/` is a one-way inbox: humans and automations drop source material there and *nobody* ever modifies it, so sources stay pristine and reprocessable. `wiki/` is where all authored knowledge lives, organized into topical subdirectories with wikilinks, and **agents are its primary authors**: their job is synthesis from `raw/` into `wiki/`, not transcription.  The three root files are the only files at the root:
+The boundaries are the design. `raw/` is a one-way inbox: humans and automations drop source material there and *nobody* ever modifies it, so sources stay pristine and reprocessable. `wiki/` is where all authored knowledge lives, organized into topical subdirectories with wikilinks, and **agents are its primary authors**: their job is synthesis from `raw/` into `wiki/`, not transcription.  Its two bookkeeping files are the ones from the LLM wiki pattern above: `index.md` is the catalog an agent reads before it opens anything else, and `log.md` is the append-only history of every ingest, query, and lint pass.  The three root files are the only files at the root:
 
 - **LLMMEMORIES.md** is your externalized, version-controlled memory: who you are, what you are working on, context that every new AI session should know before it does anything else.
 - **SYSTEMPROMPT.md** holds the standing instructions you would otherwise paste into every tool's custom-instructions box.
@@ -321,6 +350,7 @@ This page is the deep version of Part I of the *How I AI* session; if you arrive
 
 ## Further Reading
 
+- Andrej Karpathy, [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) (gist, April 2026): the LLM wiki pattern in the author's own words, and the source for the three-layer split, the `index.md`/`log.md` convention, and the ingest/query/lint loop.  Read it first; everything in this tutorial is one implementation of it.
 - W. Mongan, "A Private AI Knowledge Base: Obsidian, GitHub Sync, and Cross-Platform AI Context" (billmongan.com, May 2026): the full architecture this module teaches, including the complete AGENTS.md specification and SHA protocol.
 - The GitHub Gitless Sync plugin repository and README: settings, conflict resolution, and the config-sync caution.
 - GitHub Docs, "Managing your personal access tokens": fine-grained tokens and scoping.

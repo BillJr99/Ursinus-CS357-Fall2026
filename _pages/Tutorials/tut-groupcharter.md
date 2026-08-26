@@ -18,7 +18,7 @@ To write your team's constitution: rotating roles, psychological-safety ground r
 
 ## About This Tutorial
 
-Today your new semester team writes its constitution.  This tutorial is modeled on the **Team Contract Exercise developed by the SWEET Center at Worcester Polytechnic Institute** (WPI SWEET Center Team Contract Exercise), which has teams agree on norms, decision rules, and repair procedures *before* the first conflict rather than during it.  We move from **getting to know each other honestly $\rightarrow$ understanding how teams develop and what makes them safe $\rightarrow$ writing an enforceable charter you will all sign**.
+Today your new semester team writes its constitution.  This tutorial is modeled on the **Team Contract Exercise developed by the SWEET Center at Worcester Polytechnic Institute** (WPI SWEET Center Team Contract Exercise), which has teams agree on norms, decision rules, and repair procedures *before* the first conflict rather than during it.  We move from **getting to know each other honestly → understanding how teams develop and what makes them safe → writing an enforceable charter you will all sign**.
 
 You drafted a small pre-draft charter in the Overview assignment.  Bring it: you will expand it into the real thing.  The signed charter is due at the charter milestone on the course schedule, and your team will formally revisit and revise it at the midpoint charter revisit on the schedule.
 

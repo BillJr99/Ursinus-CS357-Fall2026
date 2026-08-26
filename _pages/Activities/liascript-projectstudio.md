@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Project Studio and Gallery Walk
 
-With the bias, explainability, and governance work of the last three weeks behind you, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog.  We take today in this order: **stand-up $\rightarrow$ gallery walk $\rightarrow$ triage $\rightarrow$ release checklist**.
+With the bias, explainability, and governance work of the last three weeks behind you, today the classroom becomes a studio: structured work time, a formal **gallery walk** peer review, and a release-readiness checklist that converts feedback into your final sprint's backlog.  We take today in this order: **stand-up → gallery walk → triage → release checklist**.
 
 ---
 

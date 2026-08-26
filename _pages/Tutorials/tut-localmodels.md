@@ -19,7 +19,7 @@ To map the major open-weight model families (Llama, Mistral, Phi, Gemma, and the
 
 ## About This Tutorial
 
-The assumption that useful AI requires an API call to a remote server is no longer true.  A modern laptop can run a capable language model offline, and a mid-range workstation can run models that outperform GPT-3.  This module maps **why you would run locally $\rightarrow$ the major model families and their strengths $\rightarrow$ quantization as the hardware equalizer $\rightarrow$ how to match models to tasks**.
+The assumption that useful AI requires an API call to a remote server is no longer true.  A modern laptop can run a capable language model offline, and a mid-range workstation can run models that outperform GPT-3.  This module maps **why you would run locally → the major model families and their strengths → quantization as the hardware equalizer → how to match models to tasks**.
 
 ## Key Concepts
 

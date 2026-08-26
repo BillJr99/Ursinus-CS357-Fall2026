@@ -19,7 +19,7 @@ To judge when LangChain, CrewAI, AutoGen, Agno, or DeepAgents earns its weight, 
 
 ## About This Tutorial
 
-Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.*  When the wager pays off, you write a research agent in twenty lines instead of two hundred.  When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system.  This activity examines what the major 2024-2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project.  Today's path runs **why frameworks exist $\rightarrow$ the leaky abstraction problem $\rightarrow$ framework comparison $\rightarrow$ choosing the right tool $\rightarrow$ hands-on: a LangChain agent on Ollama $\rightarrow$ raising the ceiling: a deep agent**.
+Every framework is a wager: *we think these patterns repeat often enough to justify hiding them.*  When the wager pays off, you write a research agent in twenty lines instead of two hundred.  When it doesn't, you spend an afternoon fighting the framework's assumptions instead of building your system.  This activity examines what the major 2024-2025 agent frameworks actually hide, what they cost you when they get it wrong, and how to decide which level of abstraction belongs in which project.  Today's path runs **why frameworks exist → the leaky abstraction problem → framework comparison → choosing the right tool → hands-on: a LangChain agent on Ollama → raising the ceiling: a deep agent**.
 
 ## Key Concepts
 

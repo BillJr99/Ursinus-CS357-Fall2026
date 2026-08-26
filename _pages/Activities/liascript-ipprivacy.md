@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Intellectual Property, Privacy, and the Case for Local AI
 
-The *Training Data and Bias* activity showed what models absorb from their training distributions; today we ask who owns that material and who gets watched.  Generative models are trained on creative work and prompted with personal information, which places two bodies of law and ethics (intellectual property and privacy) at the center of agentic practice.  Today we map both, *as engineers*: not to play lawyer, but to recognize the decisions that have legal and ethical weight and to design accordingly, with our local-first stack as a recurring answer.  The path today: **the IP questions $\rightarrow$ the privacy questions $\rightarrow$ regulatory landscape $\rightarrow$ design responses you already know how to build**.
+The *Training Data and Bias* activity showed what models absorb from their training distributions; today we ask who owns that material and who gets watched.  Generative models are trained on creative work and prompted with personal information, which places two bodies of law and ethics (intellectual property and privacy) at the center of agentic practice.  Today we map both, *as engineers*: not to play lawyer, but to recognize the decisions that have legal and ethical weight and to design accordingly, with our local-first stack as a recurring answer.  The path today: **the IP questions → the privacy questions → regulatory landscape → design responses you already know how to build**.
 
 ---
 

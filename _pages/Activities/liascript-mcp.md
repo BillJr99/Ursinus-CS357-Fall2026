@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Connecting Agents to the World: MCP and APIs
 
-In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world.  Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server.  We move from **the services you already use $\rightarrow$ APIs $\rightarrow$ the N-by-M problem $\rightarrow$ MCP architecture $\rightarrow$ building a tiny tool server $\rightarrow$ a no-code alternative**.
+In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world.  Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server.  We move from **the services you already use → APIs → the N-by-M problem → MCP architecture → building a tiny tool server → a no-code alternative**.
 
 ---
 

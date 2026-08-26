@@ -391,6 +391,8 @@ The vault skill gives the agent two capabilities:
 
 This turns a stateless agent into one that learns from and contributes to your personal knowledge base over time.
 
+This is a small version of the **LLM wiki** pattern from Andrej Karpathy's [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist: the human curates what goes in, the agent maintains the pages and the bookkeeping, and the knowledge compounds because it is written down instead of re-derived.  If you want the full version (the `wiki/` zone, the `index.md` catalog, the append-only `log.md`, and the ingest/query/lint prompts, wired to Obsidian and GitHub), it is in [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) and [Syncing Obsidian to GitHub]({{ site.baseurl }}/Tutorials/ObsidianSync).  You do not need it for this direction; the skill below is deliberately the smaller thing.
+
 ##### B2.  Vault Structure
 
 Set up the following directories in your Obsidian vault (these will sync to your GitHub vault repo):

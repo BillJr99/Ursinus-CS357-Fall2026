@@ -18,7 +18,7 @@ To get your work off localhost and somewhere a collaborator, a poster session, o
 
 ## About This Tutorial
 
-Your local stack is private by design, which is its virtue and its limit: nothing on `localhost` can be shown to a collaborator, demoed at a poster session, or used by anyone else.  **Cloudflare's developer platform** fills that gap with a generous free tier: **Pages** hosts static sites, **Workers** runs serverless code at the edge, and **Wrangler** is the CLI that drives both from your terminal.  This tutorial goes from no account to a deployed, secret-bearing API. Today's path runs **the platform map $\rightarrow$ Wrangler from zero $\rightarrow$ your first Worker $\rightarrow$ secrets and configuration $\rightarrow$ a Pages site $\rightarrow$ what belongs at the edge versus at home $\rightarrow$ automating the deploy safely (CI, secrets, and guardrails)**.
+Your local stack is private by design, which is its virtue and its limit: nothing on `localhost` can be shown to a collaborator, demoed at a poster session, or used by anyone else.  **Cloudflare's developer platform** fills that gap with a generous free tier: **Pages** hosts static sites, **Workers** runs serverless code at the edge, and **Wrangler** is the CLI that drives both from your terminal.  This tutorial goes from no account to a deployed, secret-bearing API. Today's path runs **the platform map → Wrangler from zero → your first Worker → secrets and configuration → a Pages site → what belongs at the edge versus at home → automating the deploy safely (CI, secrets, and guardrails)**.
 
 ## Key Concepts
 
