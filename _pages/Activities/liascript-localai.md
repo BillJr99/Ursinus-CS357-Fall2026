@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Running Your Own AI: Ollama, OpenWebUI, and Private Local Models
 
-Every model you have talked to so far, in this course or anywhere else, has run on someone else's server.  Today that stops.  Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester.  We move from **why local $\rightarrow$ installation $\rightarrow$ model selection and quantization $\rightarrow$ talking to the API from Python**.
+Every model you have talked to so far, in this course or anywhere else, has run on someone else's server.  Today that stops.  Today every team stands up a complete, private AI stack on its own hardware: **Ollama** to serve models, **OpenWebUI** for a chat interface, and the **REST API** that our agents will call for the rest of the semester.  We move from **why local → installation → model selection and quantization → talking to the API from Python**.
 
 > **Before class: the 10-minute pre-install checklist**
 >

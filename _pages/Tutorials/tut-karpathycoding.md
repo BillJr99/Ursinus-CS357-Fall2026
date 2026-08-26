@@ -18,7 +18,7 @@ To separate working from correct when an agent writes your program from a few se
 
 ## About This Tutorial
 
-Coding agents can now write working programs from a few sentences of English, but "working" and "correct" are not the same thing.  Researcher Andrej Karpathy coined the term **vibe coding** for the practice of giving an agent full latitude to implement a feature while you focus on the specification and the review.  We move from **the spectrum of AI assistance $\rightarrow$ specification-first development $\rightarrow$ rigorous diff review $\rightarrow$ the red-green-refactor-agent repair cycle**.
+Coding agents can now write working programs from a few sentences of English, but "working" and "correct" are not the same thing.  Researcher Andrej Karpathy coined the term **vibe coding** for the practice of giving an agent full latitude to implement a feature while you focus on the specification and the review.  We move from **the spectrum of AI assistance → specification-first development → rigorous diff review → the red-green-refactor-agent repair cycle**.
 
 ## Key Concepts
 

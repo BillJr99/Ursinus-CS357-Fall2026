@@ -10,6 +10,9 @@ tags:
 - forward-pass
 - fundamentals
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - From Text Generation to a Neural Network
 
 ## Purpose
@@ -18,7 +21,7 @@ To open the box between the prompt and the logits, and compute a forward pass by
 
 ## About This Tutorial
 
-You have sampled from a softmax, tuned temperature, and measured cosine similarity between embeddings, but so far the "model" between the prompt and the logits has been a mysterious box.  Today we open that box.  We move from **the generation loop as a pipeline $\rightarrow$ a neural network you can compute entirely by hand $\rightarrow$ visualizing what the numbers inside are doing $\rightarrow$ the bridge: an embedding IS a learned representation**.
+You have sampled from a softmax, tuned temperature, and measured cosine similarity between embeddings, but so far the "model" between the prompt and the logits has been a mysterious box.  Today we open that box.  We move from **the generation loop as a pipeline → a neural network you can compute entirely by hand → visualizing what the numbers inside are doing → the bridge: an embedding IS a learned representation**.
 
 **Purpose (why we are doing this):** Every agent you build this semester rides on a forward pass: numbers multiplied by weights, summed, squashed, repeated.  If you can trace one forward pass by hand, then "the model computed logits" stops being magic words and becomes arithmetic you can audit, debug, and question.  **Task:** trace one short prompt through every stage of the generation loop with real (tiny) numbers, then compute a complete 2-2-1 neural network forward pass by hand and verify it in code.  **Criteria for success:** your trace table matches the Python verification to two decimal places, and you can state in one sentence where the neural network lives inside the generation loop.
 

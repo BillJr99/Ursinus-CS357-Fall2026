@@ -10,6 +10,9 @@ tags:
 - tokenization
 - scaling
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - How LLMs Are Built
 
 ## Purpose
@@ -18,7 +21,7 @@ To trace the engineering decisions behind a trained model: how text is cut into 
 
 ## About This Tutorial
 
-The LLMs powering today's AI applications are not magic; they are the result of well-understood engineering decisions made during construction: how text is cut into pieces, what objective the model is trained to optimize, how many parameters and how much data are needed, and how weights are compressed for deployment.  This tutorial traces the full construction path from **tokenization $\rightarrow$ byte-pair encoding by hand $\rightarrow$ causal vs. masked language modeling $\rightarrow$ cross-entropy loss in code $\rightarrow$ Chinchilla scaling laws $\rightarrow$ quantization for deployment**, building enough mechanical understanding to make informed choices about which models to use and how.
+The LLMs powering today's AI applications are not magic; they are the result of well-understood engineering decisions made during construction: how text is cut into pieces, what objective the model is trained to optimize, how many parameters and how much data are needed, and how weights are compressed for deployment.  This tutorial traces the full construction path from **tokenization → byte-pair encoding by hand → causal vs. masked language modeling → cross-entropy loss in code → Chinchilla scaling laws → quantization for deployment**, building enough mechanical understanding to make informed choices about which models to use and how.
 
 ## Key Concepts
 
@@ -195,7 +198,7 @@ Given the four-character sequence "abbc" tokenized at the character level (token
 
 **Q7.**  Compare CLM and MLM training objectives: which one can be used to generate new text, and why can the other one not?  Use the mechanics of the attention mask to explain your answer, not just "CLM is generative."
 
-> *Hint: CLM uses a causal attention mask: position $t$ can only attend to positions $\leq t$. At inference time, you have positions 1 through $t-1$ and want to predict position $t$; the mask exactly matches this setup, so CLM can generate autoregressively.  MLM has no causal mask: position $t$ attends to all positions including $t+1, t+2, ..., T$. At inference time, if you want to generate position $t$, you do not yet have positions $t+1$ through $T$; the MLM training setup assumed you did.*
+> *Hint: CLM uses a causal attention mask: position $t$ can only attend to positions $\leq t$. At inference time, you have positions 1 through $t-1$ and want to predict position $t$; the mask exactly matches this setup, so CLM can generate autoregressively.  MLM has no causal mask: position $t$ attends to all positions including $t+1, t+2, \ldots, T$. At inference time, if you want to generate position $t$, you do not yet have positions $t+1$ through $T$; the MLM training setup assumed you did.*
 
 ---
 

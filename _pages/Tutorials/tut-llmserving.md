@@ -78,7 +78,7 @@ The practical implication: **to improve TTFT, shorten prompts or use a smaller m
 
 3.  The prefill phase for a 500-token prompt takes 120 ms on a given GPU. Estimate the prefill time for a 4,000-token RAG prompt on the same hardware.  If TPOT is 25 ms and the response is 150 tokens, what is the total end-to-end latency for each case?
 
-   > *Hint: Prefill time scales roughly linearly with prompt length for transformer models (each token attends to all prior tokens, so work is proportional to $n$).  Decode time is simply TPOT × output tokens.  Add them.*
+   > *Hint: Prefill time scales roughly linearly with prompt length for transformer models (each token attends to all prior tokens, so work is proportional to *n*).  Decode time is simply TPOT × output tokens.  Add them.*
 
 A product team is building a streaming chat assistant where the model's response appears word-by-word in a chat bubble.  A user complains "the response takes forever to start but then comes out fast."  Which metric is the primary problem?
 
@@ -103,7 +103,7 @@ In this part, you will understand why the KV cache is the central mechanism that
 
 ## The KV Cache - Compute Once, Reuse Always
 
-During the decode phase, the attention mechanism needs the key (K) and value (V) tensors for every previous token in the sequence to compute the next token's attention scores.  Without a cache, generating token $t$ would require re-reading and re-computing the K and V tensors for tokens $1$ through $t-1$, meaning the work to generate a 200-token response would be proportional to $1 + 2 + 3 + \ldots + 200 = 20{,}100$ forward passes instead of 200.
+During the decode phase, the attention mechanism needs the key (K) and value (V) tensors for every previous token in the sequence to compute the next token's attention scores.  Without a cache, generating token *t* would require re-reading and re-computing the K and V tensors for tokens 1 through *t*-1, meaning the work to generate a 200-token response would be proportional to 1 + 2 + 3 + ... + 200 = 20,100 forward passes instead of 200.
 
 The **KV cache** eliminates this redundancy.  After the prefill phase computes K and V for all input tokens, those tensors are stored in GPU memory.  Each decode step appends the new token's K and V tensors to the cache, then reads the full cache for the attention computation.  The critical tradeoff: **KV cache consumes GPU memory proportional to context length × number of layers × head dimension**, and this memory is unavailable for model weights or other requests.  A 128K-context request on a large model can consume dozens of gigabytes of KV cache alone.
 

@@ -18,7 +18,7 @@ To use the two review instruments that run through the whole Project Thread: SQR
 
 ## About This Tutorial
 
-Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process.  Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*.  We move from **the inter-group review cycle $\rightarrow$ the intra-group check-in $\rightarrow$ how to receive feedback without flinching**.
+Professionals do not wait for the final grade to find out what is wrong with their work; they build review into the process.  Today you learn the two review instruments used across the entire [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread): **SQR cards** for reviewing *other teams' artifacts*, and the **structured check-in** for giving private, candid feedback about *your own team*.  We move from **the inter-group review cycle → the intra-group check-in → how to receive feedback without flinching**.
 
 ---
 

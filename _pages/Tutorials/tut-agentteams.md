@@ -18,7 +18,7 @@ To treat pipelines, critics, and debaters as roles, and to compose them into a t
 
 ## About This Tutorial
 
-Everything in Unit 3 converges here: the pipelines and routers of *Orchestration Patterns*, the critics of *The Critique and Refine Pattern*, and the debaters of *Multi-Agent Debate* are *roles*, and an **agent team** is a deliberate composition of roles around a shared task, exactly what your final project will build.  The design thesis of this course is that **a team of small, specialized agents with focused contexts beats one monolithic agent with a giant prompt**, and today we argue it, architect with it, and stress-test it.  Here is where today goes: **the case for specialists $\rightarrow$ team topologies $\rightarrow$ shared state and handoffs $\rightarrow$ designing your project team**.
+Everything in Unit 3 converges here: the pipelines and routers of *Orchestration Patterns*, the critics of *The Critique and Refine Pattern*, and the debaters of *Multi-Agent Debate* are *roles*, and an **agent team** is a deliberate composition of roles around a shared task, exactly what your final project will build.  The design thesis of this course is that **a team of small, specialized agents with focused contexts beats one monolithic agent with a giant prompt**, and today we argue it, architect with it, and stress-test it.  Here is where today goes: **the case for specialists → team topologies → shared state and handoffs → designing your project team**.
 
 ## Key Concepts
 

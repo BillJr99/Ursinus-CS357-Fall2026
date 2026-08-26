@@ -18,7 +18,7 @@ To test a system that returns a different answer every run, where classical test
 
 ## About This Tutorial
 
-Classical software testing rests on a quiet assumption: given the same input, the program produces the same output.  Agents violate this assumption by design: temperature, sampling, and context accumulation mean every run is a fresh draw from a probability distribution.  This tutorial confronts what software quality engineering looks like when the oracle is uncertain, the outputs are open-ended, and the thing you are testing can write its own code.  Today we work from **why agent testing is hard $\rightarrow$ what to test and how $\rightarrow$ building an eval harness $\rightarrow$ CI integration**.
+Classical software testing rests on a quiet assumption: given the same input, the program produces the same output.  Agents violate this assumption by design: temperature, sampling, and context accumulation mean every run is a fresh draw from a probability distribution.  This tutorial confronts what software quality engineering looks like when the oracle is uncertain, the outputs are open-ended, and the thing you are testing can write its own code.  Today we work from **why agent testing is hard → what to test and how → building an eval harness → CI integration**.
 
 ## Key Concepts
 

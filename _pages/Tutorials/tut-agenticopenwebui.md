@@ -18,7 +18,7 @@ To use OpenWebUI as an agent frontend rather than a chat window: registering too
 
 ## About This Tutorial
 
-You already run OpenWebUI as a chat window over Ollama.  Here we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive.  We move from **OpenWebUI as an agent frontend $\rightarrow$ driving its API from Python (two hands-on notebooks) $\rightarrow$ a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
+You already run OpenWebUI as a chat window over Ollama.  Here we treat it as something more interesting: an **agent frontend**: a server that registers tools, holds uploaded knowledge, manages models, and exposes an OpenAI-compatible API that *your Python code* can drive.  We move from **OpenWebUI as an agent frontend → driving its API from Python (two hands-on notebooks) → a goal-directed planner/worker/critic workflow built entirely from successive API calls**.
 
 This is a **supplemental tutorial**: it is not graded and no commercial API keys are required.  It builds directly on the local agent stack you assembled in the [Agent Stack activity]({{ site.baseurl }}/Tutorials/AgentStack) and the [Compose and Verify a Local Agent Stack lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction2).
 

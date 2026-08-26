@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Evaluating Agents: LLM-as-Judge and Rubric Pipelines
 
-Exact-match accuracy (our metric since the *Hallucinations and Evaluating Agent Outputs* activity) served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**.  Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment, which is the architecture of the Rubric Pipeline Lab and a live research problem in AI for education.  Here is where today goes: **why scale forces this $\rightarrow$ rubric design $\rightarrow$ a judging pipeline in code $\rightarrow$ auditing the judge itself**.
+Exact-match accuracy (our metric since the *Hallucinations and Evaluating Agent Outputs* activity) served us when answers were one word; agent outputs are essays, plans, and code, and judging *those* at scale requires recruiting a model as the **judge**.  Today we build a **rubric pipeline**: structured criteria in, JSON scores out, validated against human judgment, which is the architecture of the Rubric Pipeline Lab and a live research problem in AI for education.  Here is where today goes: **why scale forces this → rubric design → a judging pipeline in code → auditing the judge itself**.
 
 ---
 

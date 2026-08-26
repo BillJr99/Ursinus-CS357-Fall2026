@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Prompt Engineering as Agent Design: Personas and System Prompts
 
-In *The Agent Loop: Perceive, Plan, Act* activity, two-thirds of our calculator agent's design lived in one string: its system prompt.  A prompt is not a question; it is a **program written in natural language** that configures an agent's behavior.  This module moves from **anatomy of a prompt $\rightarrow$ core patterns $\rightarrow$ personas and system prompts $\rightarrow$ designing the policy of your own agent**, because in an agentic system the system prompt *is* the agent's job description.
+In *The Agent Loop: Perceive, Plan, Act* activity, two-thirds of our calculator agent's design lived in one string: its system prompt.  A prompt is not a question; it is a **program written in natural language** that configures an agent's behavior.  This module moves from **anatomy of a prompt → core patterns → personas and system prompts → designing the policy of your own agent**, because in an agentic system the system prompt *is* the agent's job description.
 
 ---
 
