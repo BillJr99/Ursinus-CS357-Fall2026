@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Tool Use and Function Calling
 
-Our agent from *The Agent Loop: Perceive, Plan, Act* activity parsed `calc(...)` out of free text with a regular expression, and it worked until it did not.  Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it.  We move from **why structure beats parsing $\rightarrow$ tool schemas $\rightarrow$ native function calling with Ollama $\rightarrow$ safety boundaries for tools that change the world**.
+Our agent from *The Agent Loop: Perceive, Plan, Act* activity parsed `calc(...)` out of free text with a regular expression, and it worked until it did not.  Today we upgrade to **structured function calling** (also called tool use): the model emits a machine-readable request to invoke a function, and the runtime executes it.  We move from **why structure beats parsing → tool schemas → native function calling with Ollama → safety boundaries for tools that change the world**.
 
 ---
 

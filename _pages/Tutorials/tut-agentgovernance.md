@@ -22,7 +22,7 @@ This is a case study of a real production system, anonymized.  A single engineer
 
 > **The repository is the durable memory for the project.  Conversation history is not durable project state.**
 
-You have already learned to write project instructions in an `AGENTS.md` file and to work spec-first with tests.  This tutorial is about the layer above that: the *constitution*, the *handoff protocol*, and the *decision record* that let agents come and go while the work continues.  Here is the path for today: **the read-order funnel $\rightarrow$ the charter $\rightarrow$ the `.ai/` handoff directory $\rightarrow$ kickoff prompts and decision records $\rightarrow$ the disposable devbox**.
+You have already learned to write project instructions in an `AGENTS.md` file and to work spec-first with tests.  This tutorial is about the layer above that: the *constitution*, the *handoff protocol*, and the *decision record* that let agents come and go while the work continues.  Here is the path for today: **the read-order funnel → the charter → the `.ai/` handoff directory → kickoff prompts and decision records → the disposable devbox**.
 
 ## Key Concepts
 

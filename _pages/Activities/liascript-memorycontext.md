@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Memory and the Small Context Window Principle
 
-In *The Agent Loop: Perceive, Plan, Act* activity you predicted that an agent's growing conversation memory would eventually cause trouble; today we name the trouble and adopt this course's central design principle: **keep each agent's context window small and focused**.  We move from **why context fills up $\rightarrow$ what degrades when it does $\rightarrow$ memory architectures $\rightarrow$ a summarizing-memory agent in code**.
+In *The Agent Loop: Perceive, Plan, Act* activity you predicted that an agent's growing conversation memory would eventually cause trouble; today we name the trouble and adopt this course's central design principle: **keep each agent's context window small and focused**.  We move from **why context fills up → what degrades when it does → memory architectures → a summarizing-memory agent in code**.
 
 ---
 

@@ -123,6 +123,35 @@ The instinct to fix the typo is a good instinct about writing and a bad instinct
 
 ---
 
+## Where This Structure Comes From: Karpathy's LLM Wiki
+
+The layout above is not something we invented for this course.  In April 2026 Andrej Karpathy published a gist called [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describing the same shape, and the name it gave the idea (**the LLM wiki**) is the one the field now uses.  It is worth reading in full; it is prose, not code, and it is short.
+
+The claim is that the interesting thing to do with a model is not to *retrieve* from your documents on every question, but to have the model *compile* them, once, into an encyclopedia it then maintains:
+
+| Layer | Who owns it | In our vault |
+|---|---|---|
+| **Raw sources** | You. Immutable once dropped in | `raw/` |
+| **The wiki** | The model. Entity pages, concept pages, source summaries, cross-links | `wiki/` |
+| **The schema** | You. The conventions and workflows the model must follow | `AGENTS.md` |
+
+Two files carry the navigation, and both belong in `wiki/`:
+
+- **`index.md`**, a catalog of every page with a one-line summary, grouped by topic.  The agent reads it first on any question, which is why a wiki of hundreds of pages needs no vector database to be searchable.
+- **`log.md`**, an append-only record of every ingest, question, and maintenance pass, so that both you and the next agent can see how the wiki got to be the way it is.
+
+And three operations, each of which is just a prompt:
+
+1.  **Ingest.**  You add a source.  The agent reads it, writes a summary page, and updates the ten or fifteen existing pages that source touches.
+2.  **Query.**  You ask a question.  The agent answers from `wiki/`, with citations, and an answer worth keeping becomes a page.
+3.  **Lint.**  Periodically, the agent audits its own wiki: contradictions between pages, claims that have gone stale, orphan pages nothing links to, gaps where a topic is named but never written.
+
+Notice what makes this different from RAG, which we build later in the semester.  RAG re-discovers the same context on every query and keeps nothing; the wiki pays the synthesis cost once and keeps the result.  Karpathy's argument for why this is newly practical is a labor argument rather than a technical one: wikis have always been good and have always died of maintenance, and maintenance is exactly the work a model will do for free, forever, without getting bored.  Your job shifts from writing to curating: choosing sources, asking good questions, and reviewing what the agent wrote before you trust it.
+
+> **Why Obsidian and GitHub, specifically.**  The gist is deliberately tool-agnostic, but the pattern asks for two things, and these two supply them.  Obsidian supplies the reading experience: `[[wikilinks]]` between entity pages, backlinks that show you what else cites a claim, and a graph view in which an orphan page is visible at a glance.  GitHub supplies the safety: every ingest is a commit, so a synthesis pass that went wrong is one `git revert` away, and a scoped token is what lets an agent running in a container do the writing at all.  The setup is stepwise and takes an evening: [The Second Brain](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SecondBrain) builds the vault and the contract, and [Syncing Obsidian to GitHub](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync) walks the wiring, including a section on standing up the LLM wiki itself.
+
+---
+
 ## 2.  The Contract
 
 `AGENTS.md` is the same kind of file you wrote for `cs357-work` in Week 1, doing a bigger job.  It opens with a non-negotiable instruction and then answers four questions:
@@ -448,5 +477,6 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
 
 - [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md), the full set of course templates: charter, kickoff prompt, decision log, RFC skeleton, and the personal-assistant layer.
 - Obsidian: [obsidian.md](https://obsidian.md).  The vault is a folder; nothing here depends on the app.
-- Andrej Karpathy on the "LLM wiki" pattern: a curated, linked knowledge base maintained *with* a model rather than retrieved *by* one.
+- Andrej Karpathy, [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) (gist, April 2026): the "LLM wiki" pattern in the author's own words.  A curated, linked knowledge base maintained *with* a model rather than retrieved *by* one: raw sources in, entity pages out, an `index.md` you can navigate without embeddings, and ingest/query/lint as the three standing prompts.
+- This course: [The Second Brain](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SecondBrain) builds the vault and the agent contract; [Syncing Obsidian to GitHub](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync) is the step-by-step setup, including a section on standing up an LLM wiki inside your own vault.
 - Tiago Forte.  *Building a Second Brain*.  The knowledge-management tradition this borrows from, written before agents could read your notes.

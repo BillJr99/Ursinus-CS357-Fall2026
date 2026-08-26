@@ -10,6 +10,9 @@ tags:
 - design
 - trust
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - Explainability and Human-Centric Design
 
 ## Purpose
@@ -18,7 +21,7 @@ To answer the question your Demo Day audience will actually ask, which is why th
 
 ## About This Tutorial
 
-Fresh from the *Governance and Policy Writing* and *Environmental Impact and the Carbon Cost of Intelligence* session, the final design lecture asks the question your Demo Day audience will ask: *why should I trust this?*  **Explainability** is the engineering of justified trust: surfacing evidence, exposing reasoning, communicating uncertainty, and designing the human's role on purpose.  We move from **kinds of explanation $\rightarrow$ what agents can honestly show $\rightarrow$ calibration $\rightarrow$ human-centric design heuristics for your demos**.
+Fresh from the *Governance and Policy Writing* and *Environmental Impact and the Carbon Cost of Intelligence* session, the final design lecture asks the question your Demo Day audience will ask: *why should I trust this?*  **Explainability** is the engineering of justified trust: surfacing evidence, exposing reasoning, communicating uncertainty, and designing the human's role on purpose.  We move from **kinds of explanation → what agents can honestly show → calibration → human-centric design heuristics for your demos**.
 
 ### Key Concepts
 

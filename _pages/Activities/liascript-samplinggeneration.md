@@ -18,7 +18,7 @@ You have already turned this dial twice.  In *Running Your Own AI* you set tempe
 
 The short answer, and the resolution of the mystery your teams formed hypotheses about back in *Welcome: What Is AI, and What Is an Agent?*: a language model computes a **probability distribution over the next word-piece (token)**, and the system **samples** from it, rolling a weighted die at each step.  Temperature is the number that reshapes the die before the roll.
 
-We move from **next-token prediction $\rightarrow$ softmax and temperature $\rightarrow$ top-k and top-p $\rightarrow$ experiments on our own stack $\rightarrow$ reasoning models**, and we connect every knob to agent design.  The last step is the one that changes the shape of the story: every dial before it decides *what* gets sampled, and reasoning models are the first thing you meet that changes *how much computation happens at all*.
+We move from **next-token prediction → softmax and temperature → top-k and top-p → experiments on our own stack → reasoning models**, and we connect every knob to agent design.  The last step is the one that changes the shape of the story: every dial before it decides *what* gets sampled, and reasoning models are the first thing you meet that changes *how much computation happens at all*.
 
 ---
 

@@ -19,7 +19,7 @@ To install and compare the major terminal coding agents (Claude Code, Codex, Gem
 
 ## About This Tutorial
 
-The agent loop you study in this course ships today as a family of **terminal programs**: you describe a goal, the agent reads your files, proposes shell commands and edits, asks permission at the gates, and iterates.  This tutorial installs the major tools from zero, teaches the shared workflow they all follow, and shows how to drive them from inside VS Code.  We take today in this order: **the shared anatomy $\rightarrow$ installing the big five $\rightarrow$ project context files $\rightarrow$ permission gates and supervision $\rightarrow$ routing them through our local gateway $\rightarrow$ VS Code integration**.
+The agent loop you study in this course ships today as a family of **terminal programs**: you describe a goal, the agent reads your files, proposes shell commands and edits, asks permission at the gates, and iterates.  This tutorial installs the major tools from zero, teaches the shared workflow they all follow, and shows how to drive them from inside VS Code.  We take today in this order: **the shared anatomy → installing the big five → project context files → permission gates and supervision → routing them through our local gateway → VS Code integration**.
 
 ## Key Concepts
 

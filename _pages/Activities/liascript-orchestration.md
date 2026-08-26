@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Orchestration Patterns: Pipelines, Routers, and Planners
 
-Unit 3 begins: with your design artifacts from the *Design First: Plan Before You Build* activity in hand, instead of making one agent smarter, we make **several simple agents cooperate**.  The enabling insight comes straight from the small context window principle of the *Memory and the Small Context Window Principle* activity: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt.  We move from **why decompose $\rightarrow$ the pipeline $\rightarrow$ the router $\rightarrow$ the planner $\rightarrow$ composing them in code $\rightarrow$ keeping the composed loop reliable**.
+Unit 3 begins: with your design artifacts from the *Design First: Plan Before You Build* activity in hand, instead of making one agent smarter, we make **several simple agents cooperate**.  The enabling insight comes straight from the small context window principle of the *Memory and the Small Context Window Principle* activity: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt.  We move from **why decompose → the pipeline → the router → the planner → composing them in code → keeping the composed loop reliable**.
 
 ---
 
@@ -53,7 +53,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 **Why this matters:** Think of a restaurant kitchen.  The head chef does not cook every dish, take orders, and serve tables simultaneously.  Instead, the work is divided: servers take orders (routing), line cooks handle specific stations (specialized subagents), and the expediter coordinates the flow (orchestration).  This division works because each role has a narrow, well-defined job.  When the pasta cook knows nothing about the appetizer station, neither can interfere with the other, and both can focus completely on their job.  The same principle applies to agent orchestration: narrow roles, clear handoffs, and an orchestrator that manages the overall flow without doing the detail work.
 
-**Pipeline (fixed sequence).**  Stage outputs feed stage inputs: extract $\rightarrow$ draft $\rightarrow$ polish.  Each stage has its own small system prompt and sees *only* what it needs.  Pipelines are predictable, debuggable (you can inspect any intermediate output), and cheap.  They are the right default when the workflow is known in advance.
+**Pipeline (fixed sequence).**  Stage outputs feed stage inputs: extract → draft → polish.  Each stage has its own small system prompt and sees *only* what it needs.  Pipelines are predictable, debuggable (you can inspect any intermediate output), and cheap.  They are the right default when the workflow is known in advance.
 
 **Router (one decision, then dispatch).**  A classifier agent reads the input and forwards it to one of several specialists: billing questions to the billing agent, technical questions to the tech agent.  The router's entire context is the input plus the menu of destinations, about as small as a context gets.  Reliability comes from constraining the router's output to a closed set of labels.
 
@@ -529,7 +529,7 @@ Respond to all three levels in your notebook:
 
 > **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md), read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
 
-Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class.  Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code.  This section steps back to the single decision that sits *above* all of them: **who decides the control flow, you, in advance, or a model, at runtime?**  Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task needs.  We move from **the two families $\rightarrow$ each fixed shape explained separately $\rightarrow$ the dynamic supervisor loop $\rightarrow$ a recap you can reach for on the job.**
+Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class.  Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code.  This section steps back to the single decision that sits *above* all of them: **who decides the control flow, you, in advance, or a model, at runtime?**  Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task needs.  We move from **the two families → each fixed shape explained separately → the dynamic supervisor loop → a recap you can reach for on the job.**
 
 ---
 

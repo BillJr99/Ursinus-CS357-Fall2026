@@ -19,7 +19,7 @@ To take you from your first terminal prompt to fluent command-line work, so that
 
 ## About This Tutorial
 
-Every agentic CLI tool you will meet this semester (Claude Code, Codex, Gemini CLI, opencode, pi, and the rest) lives in the **terminal**, and when those agents act, they act by running shell commands on your behalf.  You cannot supervise what you cannot read.  This tutorial takes you from your very first prompt to fluent command-line work, assuming nothing.  We move today from **what a shell is $\rightarrow$ moving around $\rightarrow$ working with files $\rightarrow$ pipes and redirection $\rightarrow$ environment and PATH $\rightarrow$ processes $\rightarrow$ the terminal inside VS Code**.
+Every agentic CLI tool you will meet this semester (Claude Code, Codex, Gemini CLI, opencode, pi, and the rest) lives in the **terminal**, and when those agents act, they act by running shell commands on your behalf.  You cannot supervise what you cannot read.  This tutorial takes you from your very first prompt to fluent command-line work, assuming nothing.  We move today from **what a shell is → moving around → working with files → pipes and redirection → environment and PATH → processes → the terminal inside VS Code**.
 
 ## Key Concepts
 

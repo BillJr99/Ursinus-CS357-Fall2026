@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Hallucinations and Evaluating Agent Outputs
 
-In the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* activity we saw that a model samples plausible continuations, and a model that writes fluently can be fluently wrong.  This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness**, because an agent we cannot measure is an agent we cannot trust or improve.  We move from **mechanism $\rightarrow$ taxonomy $\rightarrow$ measurement $\rightarrow$ mitigation previews**.
+In the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* activity we saw that a model samples plausible continuations, and a model that writes fluently can be fluently wrong.  This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness**, because an agent we cannot measure is an agent we cannot trust or improve.  We move from **mechanism → taxonomy → measurement → mitigation previews**.
 
 ---
 

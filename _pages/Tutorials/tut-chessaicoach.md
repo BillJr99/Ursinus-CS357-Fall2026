@@ -10,6 +10,9 @@ tags:
 - web-app
 - case-study
 ---
+
+{% include mathjax.html %}
+
 # CS357: Foundations of Artificial Intelligence - Building an AI Chess Coach
 
 ## Purpose
@@ -18,7 +21,7 @@ To dissect a complete working web app and see exactly how a language model gets 
 
 ## About This Tutorial
 
-This tutorial dissects a complete, working web app (the **Chess AI Coach**) to show exactly how a language model gets wired into real software through **API calls**.  We move from **what the app is $\rightarrow$ the three-layer architecture $\rightarrow$ one function that talks to three different providers $\rightarrow$ prompt engineering and structured JSON output for coaching $\rightarrow$ keeping your API keys safe $\rightarrow$ wiring the AI into the user interface**.
+This tutorial dissects a complete, working web app (the **Chess AI Coach**) to show exactly how a language model gets wired into real software through **API calls**.  We move from **what the app is → the three-layer architecture → one function that talks to three different providers → prompt engineering and structured JSON output for coaching → keeping your API keys safe → wiring the AI into the user interface**.
 
 The app is a single self-contained HTML file.  You can open it, read every line, and change it.  Everything you learned in the [RESTful LLM Access]({{ site.baseurl }}/Tutorials/RESTLLMAPI) activity (the `/v1/chat/completions` payload, the `choices[0].message.content` response path, provider portability) reappears here, this time in JavaScript running inside a browser instead of Python in a notebook.
 

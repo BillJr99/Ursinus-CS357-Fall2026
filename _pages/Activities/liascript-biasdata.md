@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Training Data and Bias
 
-The *Agentic Case Studies: Migration, Browsing, and Research Agents* activity closed our study of how agents behave; Unit 4 begins where every model begins: with data.  You watched *Coded Bias* before class; today we connect Joy Buolamwini's discovery (facial analysis failing darkest-skinned women at rates orders of magnitude above lightest-skinned men) to the mechanics you now command: training distributions, sampling, consensus, and agents that *act*.  We take today in this order: **where bias enters $\rightarrow$ measuring it $\rightarrow$ what agents add to the stakes $\rightarrow$ mitigations and their limits**.
+The *Agentic Case Studies: Migration, Browsing, and Research Agents* activity closed our study of how agents behave; Unit 4 begins where every model begins: with data.  You watched *Coded Bias* before class; today we connect Joy Buolamwini's discovery (facial analysis failing darkest-skinned women at rates orders of magnitude above lightest-skinned men) to the mechanics you now command: training distributions, sampling, consensus, and agents that *act*.  We take today in this order: **where bias enters → measuring it → what agents add to the stakes → mitigations and their limits**.
 
 ---
 
