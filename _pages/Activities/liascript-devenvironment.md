@@ -16,7 +16,7 @@ Today you build the bench you will work at for the rest of the semester, and by 
 
 The bench has four parts, and we build them in order: **the shell** (Step 0, the language you give every one of these tools their instructions in), **a model server** (Step 1), **a versioned workspace** (Step 3), and **a container** (Steps 2 and 4) that keeps everything an agent does inside a box you chose.  Step 8 then hands the whole bench to a coding agent and asks it to do something small, so you can see what that feels like before any of it is graded.
 
-This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js and promptfoo for evaluation), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
+This tutorial builds **one environment that runs every CS357 lab**: a Docker container with the whole course Python stack preinstalled (retrieval, classical ML, NLP, explainability, plus Node.js with promptfoo for evaluation and opencode, the coding agent), bind-mounted onto a directory that is a **git repository with a GitHub remote**, so everything you write inside the container is versioned and pushed like normal work.
 
 One deliberate exception: **Ollama stays on your host.**  Model inference is the performance-critical piece, so it runs natively with direct access to your hardware, and your containerized code reaches it over the host bridge at `http://host.docker.internal:11434`.  That hostname is doing real work and it is worth knowing why: inside a container, `localhost` means *the container*, so reaching your own machine needs a different name.  The [Docker from Zero tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) (Section 7, *host.docker.internal: Talking to the Host*) explains that and everything else here from first principles; today we put it to work.  When a step below feels like magic, that is the page to read.
 
@@ -54,7 +54,7 @@ Step 0 defines the shell vocabulary.  These are the terms the rest of the page a
 | **Host** | Your actual machine, as seen from inside a container. Worth naming because inside the container, `localhost` means the container, not you | `host.docker.internal`, the address your containerized code uses to reach Ollama running natively |
 | **Repository (repo)** | A folder whose entire history git tracks, so any past state can be restored and any change can be undone | `cs357-work`, created in Step 3 and pushed to GitHub in Step 7 |
 | **Commit** | A saved point in that history, with a message saying what changed and why | Step 7.4. Commit at every working stopping point, not at the end of the day |
-| **Coding agent** | A program that takes a goal in plain English, reads your files, proposes edits and commands, and loops until it is done or you stop it. The agent loop from *The Agent Loop*, pointed at your file system | `opencode`, installed in Step 8 and given one small job |
+| **Coding agent** | A program that takes a goal in plain English, reads your files, proposes edits and commands, and loops until it is done or you stop it. The agent loop from *The Agent Loop*, pointed at your file system | `opencode`, already in the course image and given one small job in Step 8 |
 | **Diff** | The exact lines added and removed by a change, shown side by side. What you review instead of re-reading the whole file | `git diff` after the agent edits `hello_agent.py`. Reading this is the skill, not a formality |
 | **`AGENTS.md`** | A file of standing instructions an agent reads automatically, so you stop retyping context. A system prompt you keep in version control | Written in Step 8.4, and grown for the rest of the semester |
 
@@ -252,7 +252,7 @@ You are the non-root user `student`, in `/workspace`, which *is* your `cs357-wor
 
 ## Step 5: Verify the Stack from Inside the Container
 
-Keep Ollama running on the host, enter the container, and run these three checks **at the container prompt**.  This transcript is what the Overview assignment asks for.
+Keep Ollama running on the host, enter the container, and run these four checks **at the container prompt**.  This transcript is what the Overview assignment asks for.
 
 **5.1: The host bridge to Ollama.**  One line of Python, straight through the container wall to the model server on your host:
 
@@ -292,7 +292,19 @@ python3 -c "import spacy; nlp = spacy.load('en_core_web_sm'); print('spacy OK:',
 spacy OK: NOUN
 ```
 
-If all three pass, your environment for every lab is done.
+**5.4: opencode (the coding agent, and the OpenCode Studio lab's whole toolchain):**
+
+```bash
+opencode --version
+```
+
+```text
+opencode x.x.x
+```
+
+The agent is baked into the image, so a version string here means Step 8 has nothing left to install and only needs its provider configured.
+
+If all four pass, your environment for every lab is done.
 
     --{{0}}--
 The single most common failure at this step is the host bridge: the one-liner in 5.1 raises a connection error.  Before anything else, check the two usual suspects: is Ollama actually running on the host right now, and, on Linux, was the container started through the course compose file, which contains the extra hosts mapping that makes host dot docker dot internal resolve at all?
@@ -430,19 +442,27 @@ A **coding agent** is the agent loop from the *Agent Loop* activity, wired to yo
 
 We use **opencode** because it is the most provider-flexible of the family: it speaks to any OpenAI-compatible backend, so it will talk to the Ollama server already running on your host without an account, an API key, or a bill.
 
-### 8.1: Install it
+### 8.1: It is already installed (on the container route)
 
-Run this **inside the container**, at the `/workspace` prompt:
+The course image ships opencode, so on the container route there is nothing to install.  At the `/workspace` prompt:
+
+```bash
+opencode --version
+```
+
+That is deliberate rather than convenient.  `docker compose run --rm` deletes the container when you exit, and the only thing mounted is `/workspace`, so an agent you installed by hand into your container home directory would be gone every morning.  Baking it into the image is what makes it survive.
+
+**On the native route** from Step 10, install it in your normal terminal:
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
 ```
 
-(If Node.js is your preference, `npm i -g opencode-ai` does the same job.  On the native route from Step 10, run either one in your normal terminal.)
+(If Node.js is your preference, `npm i -g opencode-ai` does the same job, and it is what the course Dockerfile uses.)
 
-You just piped a script off the internet into a shell, which is precisely the thing Step 0 told you to think twice about.  Two reasons it is defensible here: the URL is the project's own documented installer, and you are inside a container whose only door is `/workspace`.  Notice that both halves of that sentence had to be true.
+That first command pipes a script off the internet into a shell, which is precisely the thing Step 0 told you to think twice about.  Two reasons it is defensible: the URL is the project's own documented installer, and on the container route you are not running it at all.  Notice that both halves of that sentence had to be true.
 
-Verify:
+Verify either way:
 
 ```bash
 opencode --version
@@ -454,8 +474,11 @@ opencode reads a single global config file, and the name matters: it is `opencod
 
 | Where you are | The file to create |
 |---|---|
-| macOS, Linux, or WSL | `~/.config/opencode/opencode.json` |
+| **Inside the course container** | `/workspace/opencode.json`, at the root of your repository |
+| macOS, Linux, or WSL, natively | `~/.config/opencode/opencode.json` |
 | Windows, native shell | `%USERPROFILE%\.config\opencode\opencode.json` (paste `%USERPROFILE%\.config\opencode` into the Run box with Win+R to open the folder) |
+
+Read that first row carefully, because it is the one that saves you an hour.  opencode reads a **project-level** `opencode.json` from the repository root as well as the global one in your home directory.  Inside the container, your home directory is deleted when the container exits and `/workspace` is not, so put the file in the repository.  It then survives, it is versioned along with everything else, and a classmate who clones your repository gets your provider setup for free.  (Do not commit a real API key this way.  The Ollama block below has none, which is one more reason to prefer it.)
 
 Before you write it, settle the address, because getting this wrong produces a connection error that looks like a broken install.  **`localhost` means "the machine this process is running on."**  Run opencode natively and that is your laptop; run it in the container and that is the container, where nothing is listening.
 
@@ -467,8 +490,9 @@ Before you write it, settle the address, because getting this wrong produces a c
 The `provider` block is a map, so you do not have to choose: name two keys and you get two providers, both live, both listed in `/model`.  Set them both up now, because you will want to compare them in a minute.  The heredoc below is bash, so run it in a macOS, Linux, or WSL shell; on native Windows, make the folder and save the same JSON with an editor.  It is written for the container route, so swap `host.docker.internal` for `localhost` in both URLs if you installed opencode natively:
 
 ```bash
-mkdir -p ~/.config/opencode
-cat > ~/.config/opencode/opencode.json <<'JSON'
+# Container route: write it to the repository root, where it survives `--rm`.
+# Native route: use ~/.config/opencode/opencode.json instead (mkdir -p it first).
+cat > /workspace/opencode.json <<'JSON'
 {
   "provider": {
     "ollama": {
@@ -627,7 +651,7 @@ If your machine cannot run Docker (unsupported hardware, administrator locks, di
 
 1.  **Ollama**: exactly as in Step 1; it is native in both routes.
 2.  **Python environment**: in your cloned `cs357-work` repo, use [uv](https://docs.astral.sh/uv/) (from the Overview assignment's Part 1.5): `uv venv`, then `uv add` each lab's packages as that lab lists them: `requests` first (every lab), then `chromadb sentence-transformers` (retrieval), `scikit-learn numpy` (the ML labs), `spacy` plus `python -m spacy download en_core_web_sm` (NLP direction), `shap lime matplotlib pandas` (explainability direction), `flask` (web-endpoint direction).
-3.  **Node.js + promptfoo** (evaluation lab): install Node.js from [nodejs.org](https://nodejs.org/), then `npm install -g promptfoo`.
+3.  **Node.js, promptfoo, and opencode** (evaluation lab and the coding-agent labs): install Node.js from [nodejs.org](https://nodejs.org/), then `npm install -g promptfoo opencode-ai`.
 4.  **Addresses**: use `http://localhost:11434` everywhere this activity says `host.docker.internal:11434`; with no container wall, `localhost` on your host really is Ollama.
 5.  **Git practice**: Steps 3, 6, and 7 work identically in a native terminal in your `cs357-work` clone (with the `localhost` substitution in `hello_agent.py`); do them there and capture the same transcript.
 
@@ -647,9 +671,9 @@ Line endings: every file shows modified, or scripts fail with `\r: command not f
 
 The first build fails partway through the big pip layer.  Almost always a network hiccup during the large ML downloads.  Rerun `docker compose build`; completed layers are cached and the build resumes at the failed step.
 
-**`opencode` says "command not found" right after the installer succeeded.**  The installer places the binary in `~/.local/bin`, which is not on the container's `PATH` by default. `export PATH="$HOME/.local/bin:$PATH"` fixes the current session; add the same line to `~/.bashrc` to make it stick.  This is the `PATH` mechanic from Step 0, met in the wild.
+**`opencode` says "command not found" on the native route, right after the installer succeeded.**  The installer places the binary in `~/.local/bin`, which is not on your `PATH` by default. `export PATH="$HOME/.local/bin:$PATH"` fixes the current session; add the same line to `~/.bashrc` to make it stick.  This is the `PATH` mechanic from Step 0, met in the wild.  Inside the course container this cannot happen, because opencode is installed globally by the image; if it does, you are on an old image and `docker compose build` will fix it.
 
-**`opencode` starts but reports no provider or no models.**  Nine times out of ten the config is named `config.json` instead of `opencode.json`, so opencode never reads it.  Check the file name first, then check that it is in `~/.config/opencode/` (or `%USERPROFILE%\.config\opencode\` on native Windows), then check that the JSON parses with `python3 -m json.tool ~/.config/opencode/opencode.json`.
+**`opencode` starts but reports no provider or no models.**  Nine times out of ten the config is named `config.json` instead of `opencode.json`, so opencode never reads it.  Check the file name first.  Then check the location: `/workspace/opencode.json` on the container route, `~/.config/opencode/` natively (or `%USERPROFILE%\.config\opencode\` on native Windows).  Then check that the JSON parses, with `python3 -m json.tool /workspace/opencode.json`.  If your provider block disappeared between sessions, you wrote it into the container's home directory rather than into `/workspace`, and `--rm` deleted it; that is the failure the project-level file exists to prevent.
 
 The agent proposes an edit that is obviously wrong, or loops on the same failed idea.  Expected behavior for a 3B local model.  Stop it with Ctrl-C, `git checkout .` to discard, and give a smaller, more concrete instruction.  "Refactor this module" is beyond it; "add a docstring to this one function" is not.
 
@@ -665,12 +689,12 @@ The agent proposes an edit that is obviously wrong, or loops on the same failed 
 | Enter the container | `docker compose run --rm cs357` (from `.devcontainer/`) |
 | Rebuild the image | `docker compose build` |
 | Verify the host bridge | `python3 -c "import requests; print(requests.get('http://host.docker.internal:11434/api/tags').json())"` |
-| Verify promptfoo / spacy | `promptfoo --version` / `python3 -c "import spacy; spacy.load('en_core_web_sm')"` |
+| Verify promptfoo / spacy / opencode | `promptfoo --version` / `python3 -c "import spacy; spacy.load('en_core_web_sm')"` / `opencode --version` |
 | One-repo git identity | `git config user.name "..."` / `git config user.email "..."` (in `/workspace`) |
 | Cache the PAT for a session | `git config credential.helper 'cache --timeout=7200'` |
 | The daily loop | Ollama up -> container -> work -> test -> commit -> push |
-| Install the coding agent | `curl -fsSL https://opencode.ai/install \| bash`, then `opencode --version` |
-| Point the agent at your model | `~/.config/opencode/opencode.json`, `baseURL` = `http://host.docker.internal:11434/v1` |
+| Install the coding agent | Already in the course image; `opencode --version`.  Native route: `curl -fsSL https://opencode.ai/install \| bash` |
+| Point the agent at your model | `/workspace/opencode.json` in the container (or `~/.config/opencode/opencode.json` natively), `baseURL` = `http://host.docker.internal:11434/v1` |
 | Standing instructions for the agent | `AGENTS.md` in the repo root, committed |
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |

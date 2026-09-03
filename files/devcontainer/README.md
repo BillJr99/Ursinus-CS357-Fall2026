@@ -3,17 +3,18 @@
 One environment that runs every CS357 lab: Python 3.11 with the course
 libraries (`requests`, `chromadb`, `sentence-transformers`, `scikit-learn`,
 `numpy`, `spacy` with `en_core_web_sm`, `shap`, `lime`, `matplotlib`,
-`pandas`, `flask`), plus Node.js with `promptfoo` for the evaluation lab, and
-`git` so you commit and push from inside the container.
+`pandas`, `flask`), plus Node.js with `promptfoo` for the evaluation lab and
+`opencode` for the coding-agent labs, and `git` so you commit and push from
+inside the container.
 
 **Ollama is the one thing that stays on your host.**  It runs natively for
 model performance; code inside the container reaches it at
 `http://host.docker.internal:11434`, the host-bridge pattern from the
-[Docker from Zero activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-docker.md).
+[Docker from Zero tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker).
 
 The full walk-through (Ollama first, then Docker, then GitHub setup,
 credential options, practice steps, and troubleshooting) is the
-[Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md).
+[Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md).
 This README is the quickstart version.
 
 ## Files
@@ -23,6 +24,9 @@ This README is the quickstart version.
 | `Dockerfile` | Recipe for the course image (each package commented with the lab that uses it) |
 | `docker-compose.yml` | One-command build/run with the workspace bind mount and the Linux `host.docker.internal` fix |
 | `devcontainer.json` | VS Code Dev Containers configuration |
+
+Everything the labs need is in the image, including `opencode`; the only thing
+that stays on your host is Ollama.
 
 ## Setup (common to routes A and B)
 
@@ -70,8 +74,15 @@ Verify the stack from the container prompt (Ollama must be running on the host):
 ```bash
 python3 -c "import requests; print(requests.get('http://host.docker.internal:11434/api/tags').json())"
 promptfoo --version
+opencode --version
 python3 -c "import spacy; spacy.load('en_core_web_sm'); print('spacy OK')"
 ```
+
+`opencode` is installed in the image on purpose: `--rm` deletes the container
+on exit and only `/workspace` is mounted, so an agent installed by hand would
+have to be reinstalled every session.  For the same reason, put its provider
+config in `/workspace/opencode.json` (the repository root), not in the
+container's home directory.
 
 Exit with `exit` or Ctrl-D. `--rm` discards the container; your work is safe
 in the mounted repo.
@@ -85,7 +96,8 @@ lab documents (`uv add requests`, then `chromadb sentence-transformers` for
 the retrieval lab, `scikit-learn numpy` for the ML labs, `spacy`/`shap`/
 `lime`/`matplotlib`/`pandas` for the explainability directions, `flask` for
 the web-endpoint direction), install Node.js from [nodejs.org](https://nodejs.org/)
-and `npm install -g promptfoo` for the evaluation lab, and use
+and `npm install -g promptfoo opencode-ai` for the evaluation and coding-agent
+labs, and use
 `http://localhost:11434` instead of `host.docker.internal` in every URL.
 
 ## Troubleshooting
@@ -98,4 +110,4 @@ and `npm install -g promptfoo` for the evaluation lab, and use
 - Slow first build: normal (the ML libraries are large); later builds reuse
   cached layers.
 - Push rejected / authentication failures: see the credential section of the
-  [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357/gh-pages/_pages/Activities/liascript-devenvironment.md).
+  [Development Environment activity](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-devenvironment.md).
