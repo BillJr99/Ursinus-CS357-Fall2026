@@ -10,9 +10,11 @@ missing the parts that make it yours.
 deliberation-harness/
 |-- config/
 |   |-- charter-schema.json   the machine-readable half of your charter
+|   |-- energy-profiles.json  token-to-carbon rates, and the training term
 |   `-- loop-config.json      every budget and threshold the controller obeys
 `-- tools/
     |-- deliberate_loop.py    the controller: gates, candidates, repair, reports
+    |-- token_meter.py        what a run actually cost, measured not estimated
     `-- validators.py         running external checks and ranking their results
 ```
 
@@ -56,13 +58,40 @@ repair log, the evidence report, and the handoff.
 | How many candidates, and their strategies | `config/loop-config.json` → `candidates` |
 | Which checks run, and in what order | `config/loop-config.json` → `validators.tiers` |
 | Repair iterations and stopping | `config/loop-config.json` → `repair` |
-| Budgets | `config/loop-config.json` → `budgets` |
+| Budgets, including the token budget | `config/loop-config.json` → `budgets` |
+| Carbon rates, training totals, and the lifetime-request denominators | `config/energy-profiles.json` |
 | What questions the charter asks | your `charter-builder/SKILL.md` |
 | How results are ranked and compared | `tools/validators.py` → `rank_key`, `is_better` |
 | What a repair prompt says | `tools/deliberate_loop.py` → `repair_loop` |
 
 Nothing that matters is hardcoded in the Python.  If you find yourself editing
 a number in `deliberate_loop.py`, that number probably belongs in the JSON.
+
+## Measuring what a run cost
+
+`tools/token_meter.py` reads `prompt_eval_count` and `eval_count` off every
+Ollama response, so the token counts in `summary.json` and the evidence report
+are measured rather than estimated. When those counters are missing it falls
+back to `tiktoken` and sets `measured` to False, and that flag travels all the
+way into the report, because an estimate presented as a measurement is worse
+than no number at all.
+
+The conversion to grams has two terms and keeps them apart:
+
+```
+total = operational + training_share
+        |             |
+        |             `- the model's one-time training cost, divided by an
+        |                assumed number of lifetime requests
+        `- this request's own energy, from measured tokens
+```
+
+The denominator in that second term is an assumption, not a measurement, and it
+is the largest source of uncertainty in the whole calculation. Run your numbers
+under the shipped denominator and under one you argue for yourself, and report
+both. With the denominators in the shipped config, the offline profile's
+training share is larger than its operational cost, which is worth understanding
+before you describe local inference as free.
 
 ## Two things the starter does not decide for you
 

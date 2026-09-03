@@ -425,10 +425,6 @@ schedule:
     dlink: "Assignments/LocalAgent"
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
-  - dtitle: "Lab: Golden-Set Benchmark Checkpoint Handed Out"
-    dlink: "Assignments/GoldenSet"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-goldenset.md"
   - dtitle: "Project: Stakeholder Brief Handed Out"
     dlink: "Assignments/StakeholderBrief"
     points: "100"
@@ -498,10 +494,6 @@ schedule:
     dlink: "Assignments/LocalAgent"
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
-  - dtitle: "Lab: Golden-Set Benchmark Checkpoint Due"
-    dlink: "Assignments/GoldenSet"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-goldenset.md"
   - dtitle: "Lab: RAG Knowledge Base Handed Out"
     dlink: "Assignments/RAGKnowledgeBase"
     points: "100"
@@ -765,7 +757,7 @@ This course is about building agents you understand and can run yourself.  The s
 I have designed this course around deliberate choices, in the spirit of Universal Design for Learning.  There are many routes through it and several ways to demonstrate what you have learned, and none of them is the "remedial" path.  You have real authorship over your semester.
 
 - **Choose your direction.**  Everyone completes the same **7 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
-- **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
+- **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, a spreadsheet-and-Open-WebUI run sheet for the RAG Quality Checkup, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
 - **Analytical routes are real routes.**  Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths.  Taking one of them is a real choice about how you want to work, and I do not read it as avoidance.
 - **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
 - **Depth inside every lab.**  Each of the 7 labs opens with a shared core that everyone builds, then a menu of **directions**: instruction design and agent governance, handoffs between sessions, local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
