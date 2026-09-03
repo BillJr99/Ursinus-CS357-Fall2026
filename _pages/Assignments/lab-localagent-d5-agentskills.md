@@ -6,7 +6,9 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 
 > **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  It is not separately graded.  Your core and direction work together are assessed with the Local Agent Lab rubric on the core lab page.
 
-> **This direction satisfies core Part 4.**  Every student in the lab has to obtain, install, and use an agent skill.  Other directions reach that by having an AI tool generate one; you reach it by authoring three from scratch here, which is the deep version of the same requirement.  You do still owe Part 4's last step: package one of your skills as a `.skill` archive (a zip of the skill directory, with `SKILL.md` at its top level) and post it to the course discussion on the LMS portal, so the section can install it.
+> **This direction satisfies core Part 4.**  Every student in the lab has to obtain, install, and use an agent skill.  Other directions reach that by having an AI tool generate one; you reach it by authoring three from scratch here, which is the deep version of the same requirement.
+
+> **This is the advanced continuation of [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), not a repeat of it.**  There you wrote two advisory skills, installed them under `.agents/skills/`, and proved a handoff with a **single writer**: you stopped one session and a later session of your own picked the work up from the repository.  The three skills here are **in addition to** those two and may not be resubmissions of them.  What is genuinely new is the part that single-writer handoff could not reach: a guardrail that tries to *stop* something rather than advise it, and a **second writer**, which is the change that makes a claim protocol necessary at all.  The `.skill` archive was already packaged and posted in that lab, so there is nothing to post again here unless you skipped it.  If the Background section below covers ground you already have, skim it; Part A onward is where this direction goes past what you did before.
 
 > **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work, since both earn identical credit.
 
@@ -69,7 +71,8 @@ Full instructions are in **Part E**.
 **Both pathways** need:
 
 - opencode (or pi) installed and working against your local Ollama model, from the Local Agent Lab
-- A GitHub account for publishing the skill you owe core Part 4
+- The two skills, the `CHARTER.md`, and the `AGENTS.md` you wrote in [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio).  The three skills here are in addition to those two, not replacements for them
+- A GitHub account for publishing your skill repository
 
 **Pathway 1 also needs:**
 
