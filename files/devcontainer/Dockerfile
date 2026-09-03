@@ -1,8 +1,9 @@
 # CS357 Course Development Container
 # ----------------------------------
 # One image that runs every CS357 lab: the Python libraries for retrieval,
-# classical ML, NLP, and explainability, plus Node.js and promptfoo for the
-# evaluation lab. The ONE thing that stays OUTSIDE this container is Ollama:
+# classical ML, NLP, and explainability, plus Node.js with promptfoo for the
+# evaluation lab and opencode, the course coding agent. The ONE thing that
+# stays OUTSIDE this container is Ollama:
 # it runs natively on your host for model performance, and code inside the
 # container reaches it at http://host.docker.internal:11434 -- exactly the
 # host-bridge pattern from the "Docker from Zero" activity.
@@ -18,14 +19,14 @@
 FROM python:3.11-slim
 
 LABEL org.opencontainers.image.title="CS357 course development environment" \
-      org.opencontainers.image.description="Python 3.11 with the CS357 lab libraries (requests, chromadb, sentence-transformers, scikit-learn, spacy, shap, lime, flask, ...) plus Node.js and promptfoo; talks to host Ollama via host.docker.internal" \
+      org.opencontainers.image.description="Python 3.11 with the CS357 lab libraries (requests, chromadb, sentence-transformers, scikit-learn, spacy, shap, lime, flask, ...) plus Node.js, promptfoo, and the opencode coding agent; talks to host Ollama via host.docker.internal" \
       org.opencontainers.image.authors="CS357 course staff" \
       org.opencontainers.image.url="https://www.billmongan.com/Ursinus-CS357/"
 
 # System packages:
 #   git    -- commit and push your work from inside the container
 #   curl   -- probe the Ollama API and other HTTP endpoints
-#   nodejs, npm -- run promptfoo (Rubric Pipeline Lab)
+#   nodejs, npm -- run promptfoo (Rubric Pipeline Lab) and opencode (the coding agent)
 #   zip    -- package submissions
 RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
@@ -69,6 +70,13 @@ RUN python -m spacy download en_core_web_sm
 
 # promptfoo -- Rubric Pipeline Lab: prompt/agent evaluation harness.
 RUN npm install -g promptfoo
+
+# opencode -- the course coding agent: OpenCode Studio Lab, the Coding Agents
+# session, and Local Agent Lab Direction 5. It is baked into the image on
+# purpose. `docker compose run --rm` deletes the container on exit and only
+# /workspace is mounted, so an agent installed by hand into ~/.local/bin would
+# have to be reinstalled every single session.
+RUN npm install -g opencode-ai
 
 # Code inside the container reaches the HOST's Ollama server here. This is
 # the special DNS name Docker provides for "my host machine"; on Linux the
