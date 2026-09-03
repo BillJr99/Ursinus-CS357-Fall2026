@@ -330,15 +330,6 @@ schedule:
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
   link: "Activities/liascript-localai.md"
   liapage: true
-  deliverables:
-  - dtitle: "Lab: Local Agent Handed Out"
-    dlink: "Assignments/LocalAgent"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-localagent.md"
-  - dtitle: "Project: Team Charter Handed Out"
-    dlink: "Projects/PBLThread"
-    points: "3"
-    rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
   - rtitle: "Reading Response / Discussion: post a short response before class, what changed once the model ran on your own machine?"
@@ -356,6 +347,14 @@ schedule:
     dlink: "Assignments/Overview"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-overview.md"
+  - dtitle: "Lab: OpenCode Studio Handed Out"
+    dlink: "Assignments/OpenCodeStudio"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-opencodestudio.md"
+  - dtitle: "Project: Team Charter Handed Out"
+    dlink: "Projects/PBLThread"
+    points: "3"
+    rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 2 of 4: what the model is actually doing when it takes in your prompt"
   - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
@@ -368,10 +367,6 @@ schedule:
   link: "Activities/liascript-tokensembeddings.md"
   liapage: true
   deliverables:
-  - dtitle: "Project: Signed Team Charter (Forming) Due"
-    dlink: "Projects/PBLThread"
-    points: "3"
-    rubricpath: "_pages/Projects/proj-pblthread.md"
   - dtitle: "Written Assignment: Prompt Patterns and AI by Hand Handed Out"
     dlink: "Assignments/PromptPatterns"
     points: "100"
@@ -390,10 +385,17 @@ schedule:
   title: "Coding Agents: OpenCode, Spec-First Development, and Reading the Diff"
   link: "Activities/liascript-codingagents.md"
   liapage: true
+  deliverables:
+  - dtitle: "Project: Signed Team Charter (Forming) Due"
+    dlink: "Projects/PBLThread"
+    points: "3"
+    rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
-  - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8).  Today we drive it against a real specification, so a broken setup costs you the session."
+  - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8), along with the charter, contract, and skills you have written so far for the OpenCode Studio lab.  Today is that lab's mid-flight checkpoint: we drive the agent against a real specification and read the diff together, so a broken setup costs you the session."
     rlink: false
+  - rtitle: "OpenCode Studio, the lab this session sits inside.  Bring your open questions about the charter, the skill trigger, or the diff review"
+    rlink: "Assignments/OpenCodeStudio"
   - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drove today"
     rlink: "Tutorials/AgentCLIs"
   - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, which is the risk that arrives with the convenience"
@@ -415,7 +417,11 @@ schedule:
   link: "Activities/liascript-evaluatingoutputs.md"
   liapage: true
   deliverables:
-  - dtitle: "Lab: Local Agent Due"
+  - dtitle: "Lab: OpenCode Studio Due"
+    dlink: "Assignments/OpenCodeStudio"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-opencodestudio.md"
+  - dtitle: "Lab: Local Agent Handed Out"
     dlink: "Assignments/LocalAgent"
     points: "100"
     rubricpath: "_pages/Assignments/lab-localagent.md"
@@ -488,6 +494,10 @@ schedule:
   link: "Activities/liascript-ragquality.md"
   liapage: true
   deliverables:
+  - dtitle: "Lab: Local Agent Due"
+    dlink: "Assignments/LocalAgent"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-localagent.md"
   - dtitle: "Lab: Golden-Set Benchmark Checkpoint Due"
     dlink: "Assignments/GoldenSet"
     points: "100"
@@ -754,11 +764,11 @@ This course is about building agents you understand and can run yourself.  The s
 
 I have designed this course around deliberate choices, in the spirit of Universal Design for Learning.  There are many routes through it and several ways to demonstrate what you have learned, and none of them is the "remedial" path.  You have real authorship over your semester.
 
-- **Choose your direction.**  Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
+- **Choose your direction.**  Everyone completes the same **7 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
 - **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
 - **Analytical routes are real routes.**  Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths.  Taking one of them is a real choice about how you want to work, and I do not read it as avoidance.
 - **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
-- **Depth inside every lab.**  Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
+- **Depth inside every lab.**  Each of the 7 labs opens with a shared core that everyone builds, then a menu of **directions**: instruction design and agent governance, handoffs between sessions, local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
 - **Scaffolding you can hold your own work against.**  Every lab and written assignment opens with **Before You Start**, which tells you what it builds on, what to install, and what order to do things in, and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do.  The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
 - **The depth is in the activity, not in a list of links.**  Each session's activity carries the theory, the worked example, and the code, and where a topic runs past the seventy-five minutes we have together, it continues in an extension section at the end of that same activity, clearly marked as self-paced.  Nothing graded assumes those sections.  The readings on the schedule are books, papers, tutorials, and the occasional thing you play with in a browser, and each one says plainly what it is.
 

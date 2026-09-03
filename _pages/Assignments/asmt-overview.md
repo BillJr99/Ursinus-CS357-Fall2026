@@ -5,13 +5,13 @@ title: "CS357: Foundations of Artificial Intelligence - Overview"
 
 info:
   coursenum: CS357
-  purpose: "To get your local AI stack working before the labs depend on it, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
+  purpose: "To get your local AI stack and your coding agent working before the labs depend on them, capture a baseline snapshot of your thinking about AI that you will revisit at the end of the semester, and launch your team."
   tilt:
-    task: "Install and verify a working local AI environment and write a short baseline reflection on AI agency and trust."
+    task: "Install and verify a working local AI environment and coding agent, and write a short baseline reflection on AI agency and trust."
     criteria: "I grade this on a complete setup-verification transcript and a specific, personal reflection in equal measure.  Please read the rubric below for the details."
   points: 100
   goals:
-    - To install and verify a working local AI environment including Ollama, a pulled model, and a Python API call
+    - To install and verify a working local AI environment including Ollama, a pulled model, a Python API call, and a coding agent answering from that same local model
     - To demonstrate baseline command-line, git, and Python-environment fluency by navigating a shell, cloning and committing to a repository, and creating a reproducible environment with uv
     - To articulate personal baseline beliefs about AI agency, trust, and delegation with specific examples
   rubric:
@@ -19,8 +19,8 @@ info:
       description: Environment Setup and Verification
       preemerging: Little or no evidence that the environment was attempted
       beginning: Some components installed, but the verification transcript is missing or incomplete
-      progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing or version information, or the command-line and git checkpoint is incomplete
-      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output, the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field, plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
+      progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing, missing version information, or a missing coding-agent check, or the command-line and git checkpoint is incomplete
+      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output, the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field, plus the fifth step, the output of opencode --version and one answered prompt from your local model, plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
     - weight: 40
       description: Reflection Essay
       preemerging: The reflection is missing or does not address the prompts
@@ -32,7 +32,7 @@ info:
       preemerging: An incomplete submission is provided
       beginning: The submission is provided but is disorganized, the transcript and the reflection are hard to tell apart, or one is missing
       progressing: All required components are present in a single file, with a minor omission such as an unlabeled transcript section or missing OS information
-      proficient: A single well-organized PDF or Markdown file with each component clearly labeled, the four-step setup transcript with version and OS details, the Part 1.5 command-line and git checkpoint, and the four-section reflection, with the collaboration, AI-disclosure, and time questions answered at the end
+      proficient: A single well-organized PDF or Markdown file with each component clearly labeled, the five-step setup transcript with version and OS details, the Part 1.5 command-line and git checkpoint, and the four-section reflection, with the collaboration, AI-disclosure, and time questions answered at the end
   readings:
     - rtitle: "Welcome Activity"
       rlink: "https://www.billmongan.com/Ursinus-CS357-Overview"
@@ -53,11 +53,13 @@ tags:
 
 ---
 
-In this warmup you'll install your local AI stack and write a short baseline reflection on your experiences with AI.  I have kept the stakes low here on purpose.  It exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you'll come back to at the end of the semester.  (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).)  There are no wrong answers in the reflection.  This is a starting point, and I am not evaluating what you know.  See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
+In this warmup you'll install your local AI stack and your coding agent, and write a short baseline reflection on your experiences with AI.  I have kept the stakes low here on purpose.  It exists to make sure your tools work before the labs depend on them, and to capture a snapshot of your thinking that you'll come back to at the end of the semester.  (Your team charter is **not** part of this assignment; it is handed out separately once teams are announced; see the [Project Thread]({{ site.baseurl }}/Projects/PBLThread#the-team-charter-a-signed-team-contract).)  There are no wrong answers in the reflection.  This is a starting point, and I am not evaluating what you know.  See the course schedule for this onboarding assignment's due date; it is assessed within the Class Activities and Participation category.
 
 ---
 
 ## Before You Start
+
+> **Added after this assignment went out:** Step 5 of Part 1, the coding-agent check, and its checklist item.  It is one command and one prompt, and the Week 2 lab depends on it, which is why it is here rather than discovered later.  It follows the same failure policy as everything else on this page: a documented failure, with the verbatim error and what you tried, earns full credit for that step.
 
 This is the first thing you install for this course.  I have put it early on purpose, so that a broken setup costs you this assignment rather than a lab.
 
@@ -95,7 +97,7 @@ Complete this part by **one of two routes**; the four verification steps and the
 
 ### Route A (recommended): host Ollama + the course dev container
 
-Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity.  On this route, run steps 1-3 below on your host as written, and run step 4 (the Python request) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity.  On this route, run steps 1-3 below on your host as written, and run steps 4 and 5 (the Python request and the coding-agent check) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
 
 ### Route B: native install
 
@@ -120,7 +122,15 @@ response = requests.post(
 print(json.dumps(response.json(), indent=2))
 ```
 
-Copy-paste or screenshot the output of all four steps, including the output of `ollama --version` and your operating system name and version.
+5.  Confirm your **coding agent** is installed and talking to that same local model.  On Route A it is already in the course image; on Route B, install it as the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md) Step 8 describes.  Then:
+
+```bash
+opencode --version
+```
+
+Start `opencode`, type `/model`, and confirm your Ollama provider is listed.  Then ask it one question ("what files are in this directory?" is enough) and paste the answer.  If the provider list is empty, check the configuration **file name** first: it is `opencode.json`, never `config.json`, and opencode silently ignores a file with the wrong name.
+
+Copy-paste or screenshot the output of all five steps, including the output of `ollama --version` and your operating system name and version.
 
 **If any step fails:** document the error message verbatim, state your hypothesis about the cause, and describe what you tried.  A well-documented failure with a follow-up plan earns full credit for that step.  Do not delete error output or write "it eventually worked" without showing what changed.
 
@@ -132,6 +142,7 @@ Before moving on, confirm you can answer yes to each of these:
 - [ ] `ollama list` shows at least one downloaded model
 - [ ] The `curl` command to `/api/tags` returns JSON (not a connection error)
 - [ ] Your Python script prints a response that includes a `"content"` field
+- [ ] `opencode --version` returns a version string, `/model` lists your Ollama provider, and the agent answered one prompt
 
 ---
 
@@ -199,6 +210,8 @@ Work down this table before you post in the course channel; if none of it helps,
 | `Cannot connect to the Docker daemon` | Docker Desktop is installed but not running | Start the application. On Linux, `sudo systemctl start docker`, and confirm your user is in the `docker` group |
 | `git push` rejected, "authentication failed" | GitHub no longer accepts account passwords over HTTPS | Use a fine-grained personal access token scoped to that one repository, with Contents: read and write |
 | `uv: command not found` | Not installed, or not on `PATH` yet | Follow the uv install docs, restart the terminal, and if it still fails use the documented `python -m venv` fallback and say so |
+| `opencode` reports no provider or no models | Almost always the config **file name**: it must be `opencode.json`, not `config.json` | Fix the name, then check the location (`/workspace/opencode.json` in the container, `~/.config/opencode/opencode.json` natively), then check that the JSON parses with `python3 -m json.tool` |
+| `opencode: command not found` inside the container | An older build of the course image, from before the agent was added | Rerun `docker compose build` from your `.devcontainer/` folder; cached layers make it quick |
 | Responses are very slow | A small model on CPU-only hardware | Expected. `llama3.2` is the right choice for that machine. Note the speed in your transcript; it is a real observation, not a failure |
 | Out of disk space partway through the build | The course image plus models is roughly 8 to 10 GB | Clear space and rerun `docker compose build`; completed layers are cached and the build resumes |
 
@@ -209,7 +222,7 @@ Work down this table before you post in the course channel; if none of it helps,
 Hold your submission against the rubric's `proficient` column:
 
 - [ ] One file, PDF or Markdown, with each component **clearly labeled**.
-- [ ] Setup transcript covers all four steps, and states your **OS and version numbers**.
+- [ ] Setup transcript covers all five steps, including the coding-agent check, and states your **OS and version numbers**.
 - [ ] Transcript output is **copied verbatim**, not retyped or paraphrased.
 - [ ] Any failure is quoted exactly, with a hypothesis and what you tried.
 - [ ] Part 1.5: shell navigation and a search, a `git log --oneline` showing a pushed commit, and the uv (or documented fallback) output.
@@ -223,7 +236,7 @@ Hold your submission against the rubric's `proficient` column:
 ## Deliverables
 
 Submit a single PDF or markdown file containing:
-- Your tool setup transcript (all four steps plus version and OS info)
+- Your tool setup transcript (all five steps, including `opencode --version` and one answered prompt, plus version and OS info)
 - Your command-line and git checkpoint transcript (Part 1.5: navigation, git commit/push, uv environment)
 - Your baseline reflection (one page, four sections)
 
