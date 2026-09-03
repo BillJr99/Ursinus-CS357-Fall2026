@@ -44,8 +44,8 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | 0-10 | The three prompts you brought: triage real confidently-wrong answers, not invented ones |
 | 10-25 | Part I, why models hallucinate, mechanism first |
 | 25-45 | Part II, build the tiny evaluation harness |
-| 45-70 | Part IIb, design the benchmark the Golden-Set Lab asks you for |
-| 70-75 | Reflection prompt, and the lab handout |
+| 45-70 | Part IIb, design the benchmark your evaluation work will keep needing |
+| 70-75 | Reflection prompt, and the benchmark sketch you keep |
 
 ---
 # Part I: Why Models Hallucinate
@@ -182,7 +182,7 @@ Examine the PASS/FAIL output line by line.  Before discussing with your group, f
 
 # Part IIb: Designing the Benchmark You Are About to Need
 
-Triaging bad answers one at a time does not scale, and the Golden-Set Lab handed out today asks you to build something that does.  A benchmark is how you turn "it seems better" into a number you can defend.  This part is about designing one that measures what you actually care about.
+Triaging bad answers one at a time does not scale.  A benchmark is how you turn "it seems better" into a number you can defend, and you will need a real one: the *RAG Quality Checkup* lab opens by asking you for a ten-item golden set with a prediction and a rationale per item, and every evaluation after that leans on it.  Sketch it here, while today's failure modes are still fresh; Exercise 1 at the end of this session turns the sketch into the set you keep.
 
 ## What Makes a Good Benchmark?
 
@@ -344,7 +344,7 @@ In this part, you will build your own benchmark, a domain-specific task set your
 1.  *Benchmark sketch.*
 
    - *What to do*: Draft a 10-item task set for a domain your team knows well: a sport, a fandom, a local community, a scientific field.  Specify: the 10 questions, the gold answers, the metric you will use (exact match, substring, or something else), and the full protocol (which model, what temperature, what seed).
-   - *Starter hint*: Choose a domain where you can verify the correct answers independently (you know them from experience or can check a reliable source).  Make at least two questions "thin training data" questions where you expect the model to struggle.  Save this task set; you will reuse it to evaluate retrieval-augmented generation in the *Retrieval-Augmented Generation with Chroma* activity and your project agents at the end of the semester.
+   - *Starter hint*: Choose a domain where you can verify the correct answers independently (you know them from experience or can check a reliable source).  Make at least two questions "thin training data" questions where you expect the model to struggle.  Save this task set; it is the seed of the ten-item golden set the *RAG Quality Checkup* lab asks you to finish, and you will reuse it to evaluate retrieval-augmented generation in the *Retrieval-Augmented Generation with Chroma* activity and your project agents at the end of the semester.
    - *You've succeeded when*: Your task set has 10 questions with verified gold answers, a written metric definition, and a written protocol, specific enough that a teammate could run it without asking you any questions.
 
 2.  *Calibration probe.*

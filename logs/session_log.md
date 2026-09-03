@@ -31,3 +31,36 @@ Resequenced the AI assignment track so that students write a system prompt and a
 - Canvas module items (the "Handed Out" links) are not covered by the change document; move three by hand or rebuild modules with `--existing-modules leave`.
 - The Dockerfile change was not build-tested; no Docker daemon in the session container.  `opencode-ai` 1.18.27 exists on npm and provides the `opencode` command.
 - Pre-existing, untouched: `_pages/syllabus.md` links `TokenPredictor`, which is not a permalink, and `bin/check-site.py` reports it.
+
+## 2026-09-03, evening
+
+Gave the course an instrument for measuring what an AI request actually costs, rather than looking the figure up in a table, and removed the Golden-Set Benchmark Checkpoint lab by rehoming its pedagogy into the RAG Quality Checkup rather than discarding it.  The measurement work needed no new page: the Local Agent Lab's Direction 5, Pathway 2 already listed "generated tokens" among the measures for its evaluation experiment without supplying anything that produces the number, and the deliberation-harness starter already had a `Budget` class that counted model calls and refused to proceed past a limit, so token accounting slotted into an existing mechanism.  Two findings shaped the work.  First, the `caveman` compression skill was in this repository and was deleted in `bf9e4a5` when `liascript-agentskills.md` folded into Direction 5; it is restored as the compression condition of the new three-condition experiment, where its own claim of 65 to 75 percent output compression is now something students measure rather than repeat.  Second, Written Assignment 3's rubric never reaches Canvas, because `asmt-responsibleaipractice.md` is Component 2 of the Responsible AI Capstone and the only `rubricpath` Canvas sees for that assignment is `lab-responsibleai.md`; the rubric change made here therefore alters the website and the graded expectation and changes nothing in the shell.
+
+### Files created or modified
+
+- `files/agent-templates/deliberation-harness/tools/token_meter.py`: **new**, 282 lines.  Reads `prompt_eval_count` and `eval_count` off an Ollama response, converts measured tokens to grams CO2eq as an operational term plus an additive amortized training term, and expresses the result in operational anchors.  Every estimate is labelled with the method that produced it, and a failed conversion refuses to print a zero.
+- `files/agent-templates/deliberation-harness/config/energy-profiles.json`: **new**.  Two model classes.  Commercial is anchored on the ~500 tonne GPT-3 training figure the course already cites to Patterson et al. 2021; offline is anchored on the 390 tCO2eq Llama 3 8B figure read from Meta's published model card and cited by URL in the file.  The lifetime-request denominators are labelled as assumptions in the file itself.
+- `files/agent-templates/deliberation-harness/tools/deliberate_loop.py`: `Budget` gains token fields and `spend_tokens`; `exhausted()` gains a `max_total_tokens` arm that is a real gate; `call_model` keeps the whole response so usage survives; the repair log, evidence report, and `summary.json` carry the totals and the carbon breakdown.
+- `files/agent-templates/deliberation-harness/config/loop-config.json`: `max_total_tokens` budget added.
+- `files/agent-templates/deliberation-harness/README.md`: file tree, the "what to change, and where" table, and a new section on measuring what a run cost.
+- `_pages/Assignments/lab-localagent-d5-agentskills.md`: E7's measure list splits the two token terms and explains why they grow differently; new **E7b**, a three-condition experiment (verbose one-shot, compressed, agentic loop); the `caveman` catalog entry restored; Key Concepts gains token-meter and amortized-training-cost rows.
+- `_pages/Assignments/asmt-responsibleaipractice.md`: Direction E's reference table gains the additive training term for both model classes with denominators stated; the Part 1 log records measured tokens with an estimated-versus-measured column; Part 2 gains the three-condition comparison; rubric rows 2 and 4 extended.  No weight changes.
+- `_pages/Assignments/lab-ragcheckup.md`: restructured to Part 1 Design (25), Part 2 Worksheet (45), Part 3 Harness (30).  Absorbs the deleted lab's worked items, design sequence, miss classification, and troubleshooting rows, and adds a RAG-specific third failure category.
+- `_pages/Assignments/lab-goldenset.md`: **deleted**.
+- `_pages/Activities/liascript-evaluatingoutputs.md`: minute-budget rows and Part IIb reframed around the activity's own Exercise 1 as the same-day output, with RAG Checkup named as the eventual consumer.
+- `_pages/syllabus.md`: both Golden-Set deliverable blocks removed; RAG Quality Checkup added to the no-code enumeration.  The "7 labs" prose deliberately unchanged.
+
+### External actions
+
+- **Pushed** to `claude/token-usage-estimation-8vktzt` on `BillJr99/Ursinus-CS357-Fall2026`.  Authorized: the session's designated development branch, with the work approved in session.  No pull request opened.
+- **Canvas**: nothing written and no change document produced.  Bill is extending `ursinus_canvas_inline_changes.py` first; the requirements he specified are recorded in the session plan.
+- **OneNote**: nothing written.
+- Cloned `BillJr99/Ursinus-Boilerplate-Code` read-only, with permission, to read the Canvas script schemas.
+
+### Open items
+
+- **Canvas change document, pending Bill's script update.**  Three operations plus one rubric replacement: remove the two Golden-Set module items (`Tue, Sep 22, 2026 - Hallucinations and Evaluating Agent Outputs` and `Tue, Oct 06, 2026 - RAG Quality: Chunking, Clustering, and Reranking`), delete the `Lab: Golden-Set Benchmark Checkpoint` assignment, and replace the RAG Quality Checkup rubric, which went from two rows to three.  Open question for Bill: whether the new submission-file-types and available-until-last-day behaviors should also be backfilled across assignments already in the shell.
+- **The Canvas course id is still unknown**, carried over from the previous session.
+- **OneNote** teacher-only Class Agendas and Class Notes still need updating for these changes; gated, and a dry-run preview comes first.
+- **`bin/check-site.py` reports a false positive, not a broken link.**  The previous session's log lists the syllabus's `TokenPredictor` link as a real problem.  It is not: `_pages/token-predictor.html` carries `permalink: /TokenPredictor`, but `pages()` globs only `*.md`, so the checker cannot see it.  A one-line glob fix would clear it; left alone as out of scope.
+- **A pre-existing scheduling bug, flagged and not fixed.**  The RAG Quality Checkup calls itself a mid-flight diagnostic of the RAG Knowledge Base pipeline, but it is handed out Week 9 Day 0, one session before that pipeline is due, and is itself due Week 11 Day 0, two weeks after.  Moving its handout to Week 7 Day 1, the open-studio session, would fix it and would also shorten the gap from the Week 4 benchmark-design work.

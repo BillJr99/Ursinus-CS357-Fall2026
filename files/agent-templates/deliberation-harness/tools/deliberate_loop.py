@@ -29,6 +29,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import token_meter
 import validators
 
 try:
@@ -106,10 +107,35 @@ class Budget:
     wall_clock_s: int
     max_model_calls: int
     started_at: float
+    max_total_tokens: int = 0            # 0 disables the token budget
     model_calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    measured_calls: int = 0
+    estimated_calls: int = 0
 
     def spend_call(self) -> None:
         self.model_calls += 1
+
+    def spend_tokens(self, usage: dict[str, Any]) -> None:
+        """Record what one call actually cost.
+
+        Input and output are kept apart because they do not grow the same way.
+        Output tokens accumulate once per call. Input tokens are re-billed for
+        the whole conversation on every turn, so in a loop the input term grows
+        with the square of the number of turns while the output term grows
+        linearly. Watching that happen here is the point of measuring at all.
+        """
+        self.input_tokens += usage.get("input_tokens", 0)
+        self.output_tokens += usage.get("output_tokens", 0)
+        if usage.get("measured"):
+            self.measured_calls += 1
+        else:
+            self.estimated_calls += 1
+
+    @property
+    def total_tokens(self) -> int:
+        return self.input_tokens + self.output_tokens
 
     def elapsed_s(self) -> float:
         return time.monotonic() - self.started_at
@@ -120,7 +146,47 @@ class Budget:
             return "wall_clock"
         if self.model_calls >= self.max_model_calls:
             return "model_calls"
+        if self.max_total_tokens and self.total_tokens >= self.max_total_tokens:
+            return "total_tokens"
         return None
+
+
+# --------------------------------------------------------------------------- #
+# What the run cost
+# --------------------------------------------------------------------------- #
+
+def _cost(budget: Budget, profile: str = "offline") -> dict[str, Any] | None:
+    """Convert this run's measured tokens into grams CO2eq and equivalents."""
+    try:
+        cfg = token_meter.load_config()
+        if cfg is None:
+            return None
+        usage = {"input_tokens": budget.input_tokens,
+                 "output_tokens": budget.output_tokens,
+                 "measured": budget.estimated_calls == 0,
+                 "source": "ollama" if budget.estimated_calls == 0 else "mixed"}
+        carbon = token_meter.grams_co2e(usage, profile, cfg)
+        return {"usage": usage, "carbon": carbon,
+                "equivalents": token_meter.equivalents(carbon["total"], cfg)}
+    except Exception as e:                                     # noqa: BLE001
+        print(f"[deliberate_loop:_cost] {e}")
+        traceback.print_exc()
+        return None
+
+
+def cost_block(budget: Budget, profile: str = "offline") -> str:
+    """The markdown the evidence report pastes in, or an honest apology."""
+    m = _cost(budget, profile)
+    if m is None:
+        return ("- Cost not computed: `config/energy-profiles.json` could not be read. "
+                "Report the raw token counts above rather than an invented conversion.")
+    return token_meter.format_report(m["usage"], m["carbon"], m["equivalents"])
+
+
+def cost_summary(budget: Budget, profile: str = "offline") -> dict[str, Any] | None:
+    """The same numbers as data, for summary.json."""
+    m = _cost(budget, profile)
+    return None if m is None else {"carbon": m["carbon"], "equivalents": m["equivalents"]}
 
 
 # --------------------------------------------------------------------------- #
@@ -232,17 +298,22 @@ async def call_model(prompt: str, config: dict[str, Any], budget: Budget) -> str
 
     model_cfg = config["model"]
 
-    def _post() -> str:
+    def _post() -> dict[str, Any]:
         r = requests.post(
             model_cfg["provider_url"],
             json={"model": model_cfg["name"], "prompt": prompt, "stream": False},
             timeout=model_cfg["request_timeout_s"],
         )
         r.raise_for_status()
-        return r.json().get("response", "")
+        return r.json()
 
     try:
-        return await asyncio.to_thread(_post)
+        payload = await asyncio.to_thread(_post)
+        text = payload.get("response", "")
+        # Ollama reports prompt_eval_count and eval_count on a non-streaming
+        # call. Record them before returning, so no call goes uncounted.
+        budget.spend_tokens(token_meter.read_usage(payload, prompt, text))
+        return text
     except Exception as e:                                     # noqa: BLE001
         print(f"[call_model] {e}")
         traceback.print_exc()
@@ -424,6 +495,8 @@ async def repair_loop(best: Path, best_tiers: list[validators.TierResult],
             "kept": improved,
             "elapsed_s": round(budget.elapsed_s(), 1),
             "model_calls": budget.model_calls,
+            "input_tokens": budget.input_tokens,
+            "output_tokens": budget.output_tokens,
         })
 
         if improved:
@@ -465,6 +538,12 @@ def write_evidence_report(run_dir: Path, contract: dict[str, Any],
         f"- Loop stopped because: **{stop_reason}**",
         f"- Budget consumed: {budget.model_calls} model calls, "
         f"{round(budget.elapsed_s(), 1)}s wall clock",
+        f"- Tokens: {budget.input_tokens} in, {budget.output_tokens} out "
+        f"({budget.measured_calls} calls measured, {budget.estimated_calls} estimated)",
+        "",
+        "## What this run cost",
+        "",
+        cost_block(budget),
         "",
         "## What was requested",
         "",
@@ -590,6 +669,7 @@ async def orchestrate(args: argparse.Namespace) -> int:
     budget = Budget(
         wall_clock_s=config["budgets"]["wall_clock_s"],
         max_model_calls=config["budgets"]["max_model_calls"],
+        max_total_tokens=config["budgets"].get("max_total_tokens", 0),
         started_at=time.monotonic(),
     )
 
@@ -646,6 +726,11 @@ async def orchestrate(args: argparse.Namespace) -> int:
         "failed": summary["failed"],
         "not_run": summary["not_run"],
         "model_calls": budget.model_calls,
+        "input_tokens": budget.input_tokens,
+        "output_tokens": budget.output_tokens,
+        "measured_calls": budget.measured_calls,
+        "estimated_calls": budget.estimated_calls,
+        "cost": cost_summary(budget),
         "elapsed_s": round(budget.elapsed_s(), 1),
         "finished_at": now_iso(),
     })
