@@ -1,0 +1,50 @@
+{
+  "_comment": "Every number the token meter obeys lives here, not in the Python. Two model classes, one commercial and one offline, each with an operational per-token rate and an ADDITIVE amortized share of the model's one-time training cost. Change a number by editing this file, and say in your writeup which number you changed and why.",
+
+  "_the_honest_part": "The operational rates are derived from published per-query bands, and the training totals are published figures with sources named below. The LIFETIME REQUEST DENOMINATORS ARE ASSUMPTIONS. Nobody publishes them. They are the single largest source of uncertainty in the training term, and the term moves by orders of magnitude when you move them. Change them, rerun, and report both numbers; that spread is a finding, not a defect.",
+
+  "logging": {
+    "level": "INFO",
+    "_comment": "DEBUG, INFO, WARNING, or ERROR. DEBUG prints every conversion step, which is the setting to use the first time you check the arithmetic by hand."
+  },
+
+  "profiles": {
+    "commercial": {
+      "label": "Commercial frontier API (GPT-4 class, hosted)",
+      "operational": {
+        "gco2e_per_input_token": 5.3e-6,
+        "gco2e_per_output_token": 1.6e-5,
+        "_comment": "Derived from the 0.001-0.01 g CO2eq per cloud query band in Written Assignment 3's reference table, taking the 0.005 g midpoint over a representative 337-input / 200-output-token query, and splitting it so an output token costs 3x an input token. That 3x is the pricing asymmetry from the Environmental Cost of Inference activity, and it is a compute fact before it is a billing fact: reading a token is one forward pass, generating one is a sequential sample that holds KV-cache memory for the whole context."
+      },
+      "training": {
+        "total_gco2e": 5.0e8,
+        "assumed_lifetime_requests": 1.0e12,
+        "_total_source": "~500 tonnes CO2eq for one GPT-3-scale training run, the figure used in the Environmental Cost of Inference activity (Model 1) and attributed there to Patterson, D. et al., 'Carbon Emissions and Large Neural Network Training,' arXiv:2104.10350 (2021).",
+        "_denominator_rationale": "One trillion requests over the model's service life. An assumption, chosen because a hosted frontier model serving hundreds of millions of queries per day reaches this order within a few years. Defend it or replace it."
+      }
+    },
+
+    "offline": {
+      "label": "Offline open-weights model (Llama 3 8B class, local)",
+      "operational": {
+        "gco2e_per_input_token": 5.3e-7,
+        "gco2e_per_output_token": 1.6e-6,
+        "_comment": "Derived the same way from the 0.0001-0.001 g CO2eq per local query band, 0.0005 g midpoint. Exactly a tenth of the commercial rate, which matches the roughly 10x right-sizing claim the activity makes. Note what this rate does NOT include: your laptop's own draw, which the activity puts at about 0.07 kg over eight hours whether or not you run a model on it."
+      },
+      "training": {
+        "total_gco2e": 3.9e8,
+        "assumed_lifetime_requests": 1.0e11,
+        "_total_source": "390 tCO2eq estimated for Llama 3 8B pretraining (1.3M GPU hours on H100-80GB at 700W TDP), from Meta's published model card at https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md. Meta states 100% of these emissions were offset by its sustainability program; this file counts the emissions rather than the offset, for the reason the Environmental Cost of Inference activity gives in its Part IIIb quiz.",
+        "_denominator_rationale": "One hundred billion requests, an order of magnitude below the commercial denominator, because an open-weights model is run by many small operators rather than one large one and does not reach a frontier model's aggregate volume. This is the assumption most worth arguing with, and arguing with it is the point: at this denominator the training share of a local request EXCEEDS its operational cost, which is the opposite of what 'free local inference' suggests."
+      }
+    }
+  },
+
+  "equivalents": {
+    "_comment": "Operational anchors only. The car mile, hamburger, and streaming hour are taken verbatim from the reference table in Written Assignment 3, Direction E. The smartphone charge is the equivalence the Environmental Cost of Inference activity gives for one diffusion-model image (0.003 kg) in its Model 1 table. All four are daily-frequency activities on purpose: comparing a week of AI use to a flight is technically accurate and deeply misleading, which is the common pitfall Direction E warns about.",
+    "gco2e_per_car_mile": 400,
+    "gco2e_per_hamburger": 2500,
+    "gco2e_per_streaming_hour": 36,
+    "gco2e_per_smartphone_charge": 3
+  }
+}

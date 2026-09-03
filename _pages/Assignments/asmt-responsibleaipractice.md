@@ -28,7 +28,7 @@ info:
       preemerging: No sources, reference values, or framework provisions are cited, or cited sources are not real and retrievable
       beginning: Sources are cited decoratively, quoted in the introduction or conclusion, name-checked without mapping, or reference values used without showing the conversion steps
       progressing: Evidence is real and mostly deployed where needed, passages cited in the body of the argument, Annex III or NIST functions referenced with reasonable justification, arithmetic mostly visible, but at least one key claim rests on assertion, one framework citation lacks the specific provision, or one calculation omits its assumptions
-      proficient: Every load-bearing claim is supported at the point it is made, at least two specific passages from the readings deployed inside the argument; published citations or the student's own empirical testing behind each bias or risk claim; specific articles, annex categories, and provisions cited by name; every estimate showing the reference value, the conversion steps, and the stated assumptions; and every unknown item flagged with an explanation of what harm the absence of that information could cause
+      proficient: Every load-bearing claim is supported at the point it is made, at least two specific passages from the readings deployed inside the argument; published citations or the student's own empirical testing behind each bias or risk claim; specific articles, annex categories, and provisions cited by name; every estimate showing the reference value, the conversion steps, and the stated assumptions; every token figure labelled measured or estimated with the instrument or rule named, and never an estimate presented as a measurement; the amortized training term shown as an explicit division with its assumed lifetime-request denominator stated and defended, and the result restated under one alternative denominator; and every unknown item flagged with an explanation of what harm the absence of that information could cause
     - weight: 20
       description: Connection to Course Systems and Concepts
       preemerging: No connection is made to the systems built in this course, the final project, or the frameworks studied in class
@@ -40,7 +40,7 @@ info:
       preemerging: The submission is incomplete, disorganized, or written at a level its stated audience could not use
       beginning: The submission is complete but its genre conventions are not followed, the essay has no thesis until late, documentation sections are one-line bullets, clauses assign responsibility to "the team," tables contain single words without context, or required word counts and structures are ignored
       progressing: The submission follows its direction's genre and structure with all required sections, tables, and lengths, and is readable for its audience, with minor lapses in precision, formatting, or completeness
-      proficient: The submission reads as a professional artifact of its genre, a thesis-first essay within the word limit that a CS audience without philosophy background can follow; documentation a deployer could act on without further research; a governance document an auditor could check against evidence; a compliance mapping a governance lead could file; or an environmental analysis whose arithmetic a reviewer could verify, with every required section, table, and count present, all reflection prompts answered specifically, and any required disclosures, certifications, or appendices included
+      proficient: The submission reads as a professional artifact of its genre, a thesis-first essay within the word limit that a CS audience without philosophy background can follow; documentation a deployer could act on without further research; a governance document an auditor could check against evidence; a compliance mapping a governance lead could file; or an environmental analysis whose arithmetic a reviewer could verify, including a three-condition table a reader could act on (condition, measured input tokens, measured output tokens, operational and training terms shown apart) and a stated shipping decision with its trade-off named, with every required section, table, and count present, all reflection prompts answered specifically, and any required disclosures, certifications, or appendices included
   readings:
     - rtitle: "Turing, Computing Machinery and Intelligence (1950)"
       rlink: "https://doi.org/10.1093/mind/LIX.236.433"
@@ -105,7 +105,7 @@ Read all five directions before choosing, then pick **one** and carry it out in 
 
 **This builds on:** the *Training Data, Bias, and Explainability* session, *Intellectual Property, Privacy, and the Case for Local AI*, *Governance and Policy Writing*, and *The Environmental Cost of Inference*.  Each direction leans on a different one, and all four are taught before this is due.
 
-**You need:** no code.  Direction E needs a week of your own AI usage logged, so **start the log the day this is handed out** even if you have not chosen a direction yet; it is the only part of this assignment you cannot do retroactively.
+**You need:** no code.  Direction E needs a week of your own AI usage logged, so **start the log the day this is handed out** even if you have not chosen a direction yet; it is the only part of this assignment you cannot do retroactively.  Direction E also reads token counts off your own requests, for which `files/agent-templates/deliberation-harness/tools/token_meter.py` in the course repository is a ready-made instrument; running it is a few lines and estimating instead is an accepted fallback, so this is still a no-code direction.
 
 **Pace yourself:** Direction C's peer review round and Direction E's week-long audit both depend on the calendar and not only on your effort, so start those early.
 
@@ -142,7 +142,7 @@ Complete **one** of the five directions below in full.  Expand your chosen direc
 - **Direction B: Model Cards and Datasheets**, real documentation (a Gebru et al. datasheet and a Mitchell et al. model card) for a system you have used in this course, plus a bias analysis and misuse scenarios with implementable controls.
 - **Direction C: Governance and Policy**: an enforceable eight-section governance document for your final project's agent team, mapped onto the NIST AI RMF and the EU AI Act, and hardened by adversarial peer review.  Includes the Policy Clause Workshop used in the Governance and Policy Writing class session.
 - **Direction D: Mapping a Real AI System to the Regulatory Landscape**: classify a real deployed AI system under the EU AI Act, map it onto the NIST AI RMF, identify the sector-specific rules it triggers, and build a structured risk register.
-- **Direction E: The Carbon Cost of Intelligence**: a one-week personal AI carbon audit, an environmental analysis of your final project at scale, prioritized efficiency redesigns, and a defended position on the Jevons paradox.
+- **Direction E: The Carbon Cost of Intelligence**: a one-week personal AI carbon audit with measured token counts, an environmental analysis of your final project at scale including a measured three-condition comparison and the amortized cost of training the model, prioritized efficiency redesigns, and a defended position on the Jevons paradox.
 
 <details markdown="1">
 <summary><strong>Direction A: Does It Matter If Machines Understand?</strong></summary>
@@ -398,13 +398,32 @@ Every query you send to a language model consumes electricity, and electricity h
 | Driving a gasoline car, 1 mile | 400 g CO2eq |
 | A beef hamburger | 2,500 g CO2eq |
 
+Every figure above is **operational**: the cost of serving the request.  A request also carries a share of the one-time cost of *training* the model that serves it, and that share is **additive**:
+
+$$
+\text{total per request} = \text{operational} + \frac{\text{training total}}{\text{assumed lifetime requests}}
+$$
+
+| Model class | Published training total | Assumed lifetime requests | Additive share per request |
+|---|---|---|---|
+| Commercial frontier (GPT-3 scale, hosted) | ~500 tonnes CO2eq (Patterson et al. 2021) | 1 x 10^12 | ~0.0005 g CO2eq |
+| Offline open-weights (Llama 3 8B, local) | 390 tonnes CO2eq ([Meta's model card](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md)) | 1 x 10^11 | ~0.004 g CO2eq |
+
+Notice what that second row does.  A local request's *operational* cost is roughly a tenth of a hosted one, which is the usual argument for running locally, and its *training share* at these denominators is several times larger than its own operational cost.  The 8B model was cheaper to train and is amortized over far fewer requests, and the second effect is the bigger one.  Whether that holds depends entirely on the denominator, which nobody publishes.
+
+> **The denominators are assumptions, not measurements.**  They are the largest source of uncertainty in this entire direction, and they are the one number you are expected to argue with rather than accept.  Run your figures under the denominators above and under one you defend yourself, report both, and say which way the conclusion moved.  A part that reports one number and hides the assumption inside it earns *progressing* at best.
+
+> **A note on offsets.**  Meta states that 100 percent of the Llama 3 emissions above were offset by its sustainability program.  The table counts the emissions rather than the offset, for the reason the *Environmental Cost of Inference* activity gives: an offset shifts accounting responsibility without reducing the energy the training run consumed.  If you disagree, argue it; that is a legitimate position and it needs to be argued rather than assumed.
+
 Pick a value within each range that matches your best estimate of model size and provider (lower end for smaller models or cleaner grids), and state which value you chose and why.
 
 > **Common Pitfall:** Comparing AI energy use to a flight (a one-time event, ~1,000,000 g CO2eq) rather than a daily habit.  Your week of AI use probably emits between 1 and 50 g CO2eq; the flight comparison is technically accurate but deeply misleading.  Compare AI use to other daily-frequency activities (streaming, commuting, lunch) so the scale is meaningful.  The relevant question is what the habit costs at scale, over a year, across millions of users.
 
 #### Part 1: Personal Carbon Audit (one week)
 
-**Start logging on Day 1 of the assignment week**: real-time logs beat memory reconstruction, and a gap honestly acknowledged beats reconstructed data presented as complete.  For one full week, record every AI interaction: tool and model (if known), one-sentence task description, approximate prompt length (short: <50 words; medium: 50-200; long: >200), approximate response length, and cloud-hosted vs. local.  Expect 10-30 rows.
+**Start logging on Day 1 of the assignment week**: real-time logs beat memory reconstruction, and a gap honestly acknowledged beats reconstructed data presented as complete.  For one full week, record every AI interaction: tool and model (if known), one-sentence task description, **input and output tokens**, whether those counts are measured or estimated, and cloud-hosted vs. local.  Expect 10-30 rows.
+
+**Measure the tokens where the tool will tell you, and estimate them where it will not.**  Any request you make to your own Ollama returns `prompt_eval_count` and `eval_count`, and `files/agent-templates/deliberation-harness/tools/token_meter.py` reads them for you; many hosted APIs return an equivalent `usage` block.  A browser chat window will not tell you anything, and for those rows the old rule stands: estimate at roughly four characters per token, or use the word-length buckets (short: <50 words; medium: 50-200; long: >200) and convert.  **Add a column saying which each row is.**  A log that is half measured and says so is worth more than one that is uniformly estimated and does not admit it, and far more than one that presents estimates as measurements.
 
 At the end of the week, estimate your total CO2eq using the reference values, **showing every conversion step**: "50 medium prompts × 0.005 g/query (GPT-4 midpoint, cloud) = 0.25 g CO2eq" earns proficient; "my AI use produced 2 g" earns beginning.  Then compute the CO2eq of three other activities from that same week that are comparable in frequency (commuting, streaming, meals) and write a one-paragraph reflection on what surprised you most.  Analysis and reflection: approximately 250-350 words, plus the log table as an appendix.
 
@@ -416,6 +435,9 @@ Analyze your final project agent team design through an environmental lens (appr
 2.  **Per-session CO2eq:** estimate using the reference values, stating every assumption (model size, provider, grid mix).
 3.  **Annual projection at scale:** if 1,000 users each ran one session per day for a year, what is the total CO2eq?  Compare to a concrete real-world equivalent (flight hours, car miles, household electricity).
 4.  **Hot spots:** identify and quantitatively rank the top three places where reducing calls, switching models, or changing architecture would have the largest impact, at least one should reflect a design choice your team could realistically change.
+5.  **Three conditions, measured.**  Take one representative task from your project and run it three ways, changing nothing else: as a **verbose one-shot** prompt, as a **compressed** prompt (terse, article-free, same acceptance criteria), and as an **agentic loop** with tool calls across turns.  Report a four-column table: condition, measured input tokens, measured output tokens, and total g CO2eq with the operational and training terms shown separately.  Then answer in two or three sentences: which condition would you ship, and what are you giving up?
+
+    Predict the ordering before you run it.  Input tokens should dominate in the loop, because every turn re-reads the conversation so far, and across $n$ turns that term grows with $n^2$ while output grows with $n$.  If your measurements contradict the prediction, report the measurements and work out why; that is a better result than a table that agrees with the theory.
 
 #### Part 3: Redesign for Efficiency
 
@@ -476,4 +498,4 @@ Answer each of the following with a specific observation from this assignment (p
 
 **Direction D** — a real deployed system, named; an EU AI Act classification with the argument for it; the NIST mapping; sector-specific rules identified; a structured risk register with owners.
 
-**Direction E** — a week of logged usage, logged **as it happened**; the project-at-scale analysis with its arithmetic shown; efficiency redesigns prioritized by impact; a defended position on the Jevons paradox that engages the strongest counterargument.
+**Direction E** — a week of logged usage, logged **as it happened**, with every row marked measured or estimated; the project-at-scale analysis with its arithmetic shown, including the three-condition comparison and the training term under two denominators; efficiency redesigns prioritized by impact; a defended position on the Jevons paradox that engages the strongest counterargument.

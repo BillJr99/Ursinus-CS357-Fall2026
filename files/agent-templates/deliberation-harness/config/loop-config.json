@@ -25,7 +25,9 @@
 
   "budgets": {
     "wall_clock_s": 900,
-    "max_model_calls": 24
+    "max_model_calls": 24,
+    "max_total_tokens": 0,
+    "_comment": "max_total_tokens is a real gate, not a report: the controller refuses the next call once measured input plus output tokens reach it. 0 disables it. Set it to something deliberately small once, watch a run stop, and you have proved the gate is in the code rather than in the instructions."
   },
 
   "validators": {

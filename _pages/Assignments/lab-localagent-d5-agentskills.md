@@ -19,7 +19,7 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 > - **Installs / disk:** opencode or pi (free) against your local Ollama model.  Pathway 1 adds Obsidian (free) with the Git/Gitless Sync plugin.  Pathway 2 adds Python with `requests`.  Negligible disk beyond the core lab either way.
 > - **Hardware:** any machine that runs the core lab.  Pathway 2 is slower rather than heavier: five conditions across your task set is a lot of local generation, so start it early.
 > - **No-cost fallback:** not needed; every tool in this direction is free.
-> - **Pace yourself:** this sits on top of the core lab.  In Pathway 1, the safety-guardrail skill is the shortest; the vault skill takes longer because the write path has to be tested against a real sync, and the handoff skill takes longest because you need two agents running before you can test anything.  In Pathway 2, the controller is a day's work and the twelve tests are the other day; build the charter gate and the validators first, since everything else depends on them, and leave the evaluation experiment for last but not for the last night.
+> - **Pace yourself:** this sits on top of the core lab.  In Pathway 1, the safety-guardrail skill is the shortest; the vault skill takes longer because the write path has to be tested against a real sync, and the handoff skill takes longest because you need two agents running before you can test anything.  In Pathway 2, the controller is a day's work and the twelve tests are the other day; build the charter gate and the validators first, since everything else depends on them, and leave the evaluation experiment for last but not for the last night.  E7b adds three more runs of a single task on top of E7, which is minutes rather than hours, but it needs the compression skill installed first, so do that install while something else is generating.
 
 ---
 
@@ -109,6 +109,9 @@ Before diving in, anchor the vocabulary.  You will encounter all of these terms 
 | **Tool (function call)** | A piece of code the agent can execute, a real function that runs in the host environment and returns structured data | `read_file("main.py")` runs in the shell and returns the file's contents; it is not an instruction template |
 | **Description-as-trigger** | There is no separate trigger field. The agent decides whether to load a skill by matching your request against the skill's `description`, which makes the description the matching surface rather than documentation | "Use when the user asks to delete, remove, overwrite, or drop anything" fires; "Safety utilities" does not |
 | **Superpowers** | A community skill bundle for agent CLIs, distributed as a Git repository of skill directories | Cloned into a discovery path: `git clone https://github.com/obra/superpowers.git ~/.agents/skills/superpowers` |
+| **caveman** | A community skill (`JuliusBrussee/caveman`, MIT) that compresses the agent's output by forcing terse, article-free responses. Three intensity levels, `lite`, `full`, and `ultra`, the last intended for token-budget-constrained pipelines. It reverts to normal communication for security warnings and irreversible actions, which is a design decision worth reading before you install it | `opencode skills install git+https://github.com/JuliusBrussee/caveman.git`, and the compression condition in Pathway 2's E7b |
+| **Token meter** | Reading the token counts a provider actually reports, rather than estimating them from word counts. Ollama returns `prompt_eval_count` and `eval_count` on every non-streaming call, so the measurement costs nothing | `tools/token_meter.py` in the starter harness, whose numbers land in `summary.json` |
+| **Amortized training cost** | A request's share of the one-time carbon cost of training the model that serves it: the training total divided by an assumed number of lifetime requests. Additive to the request's own operational cost | `config/energy-profiles.json`. The denominator is an assumption, and the term moves by orders of magnitude with it |
 
 ---
 
@@ -274,6 +277,8 @@ Two details that decide whether this works for someone else:
 | **Tool (function call)** | Executable code the agent calls at runtime; returns structured data |
 | **Description-as-trigger** | The agent loads a skill by matching your request against its `description`; there is no separate trigger field |
 | **Superpowers** | A community skill bundle; installed by cloning its repository into a skills discovery path |
+| **caveman** | A community skill that compresses agent output to terse, article-free responses at three intensity levels; the compression condition in E7b |
+| **Token meter** | Measured token counts read off the provider's response, plus the conversion to grams CO2eq, in `tools/token_meter.py` |
 | **Assumptions audit** | A structured comparison of two artifacts to surface the implicit beliefs each author encoded |
 
 ---
@@ -838,9 +843,33 @@ Five conditions, same local model, same quantization, same sampling settings, sa
 | D | Test-guided repair |
 | E | Your full personalized harness |
 
-Use five to ten tasks; more is not better here, since you have to inspect every run.  Measure: first-attempt correctness, final correctness, **correct-to-incorrect regression rate**, compilation and test pass rates, repair yield per iteration, hidden-test performance where you have it, candidate diversity, wall-clock time, generated tokens, unsupported claims, and human-rubric agreement for the criteria no machine checks.
+Use five to ten tasks; more is not better here, since you have to inspect every run.  Measure: first-attempt correctness, final correctness, **correct-to-incorrect regression rate**, compilation and test pass rates, repair yield per iteration, hidden-test performance where you have it, candidate diversity, wall-clock time, **measured input tokens and measured output tokens separately**, unsupported claims, and human-rubric agreement for the criteria no machine checks.
+
+The starter harness measures the token terms for you.  `tools/token_meter.py` reads `prompt_eval_count` and `eval_count` off each Ollama response, `deliberate_loop.py` accumulates them, and both land in `summary.json` and the evidence report.  Where a counter is missing it falls back to `tiktoken` and marks the number **estimated**; carry that flag into your results table, because an estimate reported as a measurement is the one error here that cannot be caught by reading the table.  The gap is not small: on ordinary English prose the four-characters-per-token rule from the *Tokens, Embeddings, and Attention* activity overestimates `tiktoken`'s count by roughly forty percent, and `tiktoken` is itself the wrong tokenizer for your local model.  Measure where you can.
+
+**Report the two terms apart, because they do not grow the same way.**  Output tokens accumulate once per call.  Input tokens are re-billed for the entire conversation on every turn, so across $n$ turns the input term grows with $n^2$ while the output term grows with $n$.  That is the same arithmetic the *Environmental Cost of Inference* activity asks you to derive by hand in its first critical-thinking question; here you watch it happen to your own run, and it is the reason a deliberation loop can cost many times a one-shot call while producing an answer of the same length.
 
 > **Do not assume E wins.**  A result showing your harness costing four times the tokens for no accuracy gain on easy tasks is a *good* result, honestly reported, and it earns full credit.  A results table that happens to rank your own system first, with no discussion of where it did not help, reads as a system that was never really tested.  The interesting questions are: **where did extra inference time help, where did it not, and which single validator was responsible for most of the improvement?**  Condition B is in the list to give you your own evidence about ungrounded self-critique, including whether it ever turned one of your correct answers into a wrong one.
+
+##### E7b.  Three Conditions, One Task
+
+E7 asks whether extra inference time bought accuracy.  This asks what it cost, and it is a separate question with a separate answer.
+
+Take **one** task from your set and run it three ways, changing nothing else: same model, same quantization, same sampling settings, same acceptance checks.
+
+| Condition | What it is | What you expect to dominate |
+|---|---|---|
+| **Verbose one-shot** | The task described the way you would describe it to a person, in one call | Neither term; this is the baseline |
+| **Compressed** | The same task, same acceptance criteria, with a compression skill loaded so the agent's own output is terse | Fewer output tokens, and fewer input tokens on any turn that reads them back |
+| **Agentic loop** | Your controller solving it across turns, with tools and repair | Input tokens, by a wide margin, because every turn re-reads the history |
+
+Write your prediction down first, in three lines, before you run anything.  Then report, for each condition: measured input tokens, measured output tokens, grams CO2eq split into its operational and training terms, wall-clock time, and whether the result passed your validators.
+
+The compression condition is where the **[caveman](https://github.com/JuliusBrussee/caveman)** skill earns its place in the catalog above.  It claims 65 to 75 percent output compression, and you now have the instrument to check that claim on your own task rather than repeat it.  A measured 30 percent is a perfectly good result; so is a measured 70 percent that broke a validator because the terser output no longer parsed.  Report what you got.
+
+> **The interesting outcome is not the ranking.**  You already know the loop costs more.  The questions worth answering are: *how much* more, in what proportion between input and output; whether the compressed condition changed the answer's quality and not only its length; and whether the extra spend in the loop bought anything an examiner could point at.  A condition that costs eight times the tokens and passes the same validators is a finding, and reporting it plainly earns full credit.  So does a compression skill that saved a third of the output and silently broke your structured-output contract, as long as you noticed.
+
+> **Say what you would ship.**  Close with one paragraph naming which of the three you would put in front of a user, and what it would take to change your mind.  "Whichever is cheapest" is not an answer unless you can say what you are giving up.
 
 ##### E8.  Personalization (Required)
 
