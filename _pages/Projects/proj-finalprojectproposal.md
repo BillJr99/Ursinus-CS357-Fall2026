@@ -5,10 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Final Project Proposal"
 
 info:
   coursenum: CS357
-  purpose: "To commit your team to one defensible plan before you start building, with a declared direction, a stakeholder-grounded problem, an argued set of design decisions, and a sprint timeline with named owners, so that the sprint window is spent executing a plan rather than discovering one."
+  purpose: "To commit your team to one defensible plan before you start building: a declared direction, a stakeholder-grounded problem, an argued set of design decisions, and a sprint timeline with named owners, so that the sprint window is spent executing a plan rather than discovering one."
   tilt:
     task: "With your standing team, write a 2-3 page proposal that declares your Final Project direction (A, B, or C), grounds it in your Stakeholder Brief and an initial evidence base, sketches the implementation and assessment plan with a GANTT-style timeline, includes the direction-specific elements, and discloses AI use."
-    criteria: "I assess your work on three course families worth 60 points between them, Approach (a defended direction and argued design decisions), Process and Professionalism (authorship, timeline, signatures, check-in, and disclosure), and Plan Quality (scope, feasibility, and stakeholder grounding), plus the four AAC&U VALUE Problem Solving criteria that a plan can actually demonstrate, worth 40.  The rubric below breaks it down in full."
+    criteria: "I grade this on three course families worth 60 points between them: Approach (a defended direction and argued design decisions), Process and Professionalism (authorship, timeline, signatures, check-in, and disclosure), and Plan Quality (scope, feasibility, and stakeholder grounding).  The other 40 points come from the four AAC&U VALUE Problem Solving criteria that a plan can demonstrate.  The rubric below breaks it down in full."
   points: 25
   goals:
     - To declare one Final Project direction and defend it against the two you did not choose, naming what your team gains and gives up
@@ -76,25 +76,25 @@ tags:
   - governance
 ---
 
-> **The Project Thread:** The Final Project Proposal is the first graded stage of the [Final Project]({{ site.baseurl }}/Projects/FinalProject), which is itself the last stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread).  Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief); the [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this is due and reads against the plan you commit to here.  Your team writes it under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread).
+> **The Project Thread:** The Final Project Proposal is the first graded stage of the [Final Project]({{ site.baseurl }}/Projects/FinalProject), which is itself the last stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread).  Your proposal builds on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief).  The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this proposal is due, and it reads against the plan you commit to here.  Your team writes the proposal under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread).
 
 ## What This Is
 
-This is the plan I will hold you to.  It is worth **25 of the Final Project's 100 points**.  You earn the remaining 75 at Demo Day and in the final submission, and I grade those against the [Final Project rubric]({{ site.baseurl }}/Projects/FinalProject) rather than this one.
+The proposal is the plan I will hold you to.  It is worth **25 of the Final Project's 100 points**.  The other 75 come from Demo Day and the final submission, and I grade those against the [Final Project rubric]({{ site.baseurl }}/Projects/FinalProject) rather than this one.
 
-The proposal exists because the sprint window is short and unforgiving.  A team that arrives at Sprint 1 with a declared direction, an argued architecture, named owners, and an honest sense of what could go wrong spends the sprints building.  A team that arrives still deciding spends the sprints deciding, and demos an apology.
+The sprint window is short.  A team that arrives at Sprint 1 with a declared direction, an argued architecture, named owners, and a written list of what could go wrong spends the sprints building.  A team that arrives still deciding spends the sprints deciding, and demos an apology.  The proposal exists to put your team in the first group.
 
-This is not a new assignment.  Nearly everything it asks for already exists in your team's work: the stakeholder you interviewed, the literature you synthesized, the agent system you designed, and the labs you built.  Read what follows as an assembly plan.
+Most of what the proposal asks for already exists in your team's work: the stakeholder you interviewed, the agent systems you have designed in the labs, and the check-ins you have filed.  Read what follows as an assembly plan, not a new assignment.
 
 ---
 
 ## Before You Start
 
-**Read the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page in full first**, including all three directions.  That page is the complete reference for the project; this page is the proposal deliverable and its rubric.
+**Read the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page in full first**, including all three directions.  That page is the complete reference for the project.  This page describes the proposal deliverable and its rubric.
 
-**Where this sits in the Project Thread.**  The proposal comes *before* the [Literature Review]({{ site.baseurl }}/Assignments/LitReview), and the ordering is deliberate: you commit to a plan, then read against it.  The review is expected to confirm parts of this document, complicate others, and occasionally kill one, and the team synthesis has to say which.  Please propose the plan you actually believe in, rather than the one that will be easiest to defend later.
+**Where this sits in the Project Thread.**  The proposal comes before the [Literature Review]({{ site.baseurl }}/Assignments/LitReview), on purpose.  You commit to a plan first, then you read against it.  The review will confirm parts of this document, complicate others, and occasionally kill one, and the team synthesis has to say which.  So propose the plan you believe in, not the plan that will be easiest to defend later.
 
-**Choosing a direction** is the one decision worth making slowly, because all three are real and they suit different teams:
+**Choose your direction slowly.**  All three directions are real, and they suit different teams:
 
 | Take | If your team |
 |---|---|
@@ -102,7 +102,7 @@ This is not a new assignment.  Nearly everything it asks for already exists in y
 | **B: Responsible AI Audit** | Wants to investigate. This is a **fully non-programming** direction and it is not the lesser one; a good audit is harder than a mediocre build |
 | **C: Open-Source Agent** | Wants what you make to outlive the semester, and is willing to take documentation, packaging, and licensing as seriously as the code |
 
-The second intra-team check-in lands shortly before this deadline.  It is private, it goes to the instructor, and it exists precisely so that scope disagreements surface here rather than in week 14.  Use it honestly; a check-in that says "everything is fine" from a team that is not fine is a wasted instrument.
+**Use the second intra-team check-in.**  It is due two days before this proposal.  It is private, it goes to me, and it exists so that scope disagreements surface now rather than in week 14.  A check-in that says "everything is fine" from a team that is not fine wastes the instrument.
 
 **Length:** 2-3 pages, excluding the timeline, tables, and appendices.
 
@@ -125,7 +125,7 @@ Regardless of direction:
 
 ## Direction-Specific Proposal Elements
 
-These mirror the elements listed under each direction on the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page; that page carries the full build requirements and final deliverables for each.
+These match the elements listed under each direction on the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page.  That page carries the full build requirements and final deliverables for each direction.
 
 ### Direction A: Custom Agent Team
 
@@ -135,7 +135,7 @@ These mirror the elements listed under each direction on the [Final Project]({{ 
 - A **pre-mortem table** with at least 5 predicted risks (your specification gap, irreversible action, global invariant, and two more), each with the deterministic checker or gate that owns it
 - An **evaluation plan**: the 10-task set sketch, numeric metrics (precision, recall, parse success rate, latency, or human rating), the protocol, and the **monolith baseline** description
 
-> The [Design Your Agent System]({{ site.baseurl }}/Assignments/AgentSystemDesign) written assignment is due the week after this proposal and develops these same artifacts in full depth.  Sketch them here at proposal fidelity, enough to defend the architecture and show the work is feasible; the design assignment is where they become a specification someone else could build from.
+> The [Design Your Agent System]({{ site.baseurl }}/Assignments/AgentSystemDesign) written assignment is due the week after this proposal, and it develops these same artifacts in full depth.  Sketch them here at proposal fidelity: enough to defend the architecture and show the work is feasible.  The design assignment is where they become a specification someone else could build from.
 
 ### Direction B: Responsible AI Audit
 
@@ -145,7 +145,7 @@ These mirror the elements listed under each direction on the [Final Project]({{ 
 - **Preliminary hypothesis**: where you expect the highest risks to lie, written before the deep analysis
 - Evidence that enough public information exists (at least two independent sources from an initial search)
 
-> **Your framework choice may be provisional.**  Governance and policy writing comes after this proposal on the schedule.  Declare the framework you expect to use and defend it as well as you can now; you may revise that choice once, with a written justification, by the end of Sprint 1.  The other Direction B elements are not provisional.
+> **Your framework choice may be provisional.**  The *Governance, Policy, and the Cost of Inference* session comes after this proposal on the schedule.  Declare the framework you expect to use and defend it as well as you can now.  You may revise that choice once, with a written justification, by the end of Sprint 1.  The other Direction B elements are not provisional.
 
 ### Direction C: Build and Publish an Open-Source Agent
 
@@ -156,30 +156,30 @@ These mirror the elements listed under each direction on the [Final Project]({{ 
 - **Minimum viable scope** in one sentence, plus two to three stretch goals
 - **Governance sketch**: who is responsible, what the artifact must never be used for, and what risk the instructor should know about before approving
 
-> If you are taking the **Direction C variant** (contributing to an existing open-source project rather than publishing a new one), the "what the artifact does / who would use it / how they would install it" elements describe the upstream feature you are adding, and gap verification becomes issue selection with linked evidence that a maintainer or real user wants it.  Scope must be approved here, in the proposal.
+> If you are taking the **Direction C variant** (contributing to an existing open-source project rather than publishing a new one), the "what the artifact does / who would use it / how they would install it" elements describe the upstream feature you are adding.  Gap verification becomes issue selection, with linked evidence that a maintainer or real user wants it.  Scope must be approved here, in the proposal.
 
 ---
 
 ## How This Is Graded
 
-The rubric has two halves, in the same spirit as the Final Project's:
+The rubric has two halves, like the Final Project's:
 
 - Three **course families** worth 60 points between them: **Approach** (a defended direction and argued design decisions), **Process and Professionalism** (authorship, timeline, signatures, check-in, and disclosure), and **Plan Quality** (scope, feasibility, and stakeholder grounding).
-- Four criteria worth 40 between them, quoted verbatim from the **Problem Solving VALUE Rubric** published by the Association of American Colleges and Universities and reproduced here under its permission for classroom use.  AAC&U's four performance levels map onto this course's four: *Benchmark 1* is read as pre-emerging, *Milestone 2* as beginning, *Milestone 3* as progressing, and *Capstone 4* as proficient.  The translation into a graded course rubric, and the weights, are mine.
+- Four criteria worth 40 between them, quoted verbatim from the **Problem Solving VALUE Rubric** published by the Association of American Colleges and Universities (AAC&U) and reproduced here under its permission for classroom use.  AAC&U's four performance levels map onto this course's four: *Benchmark 1* is read as pre-emerging, *Milestone 2* as beginning, *Milestone 3* as progressing, and *Capstone 4* as proficient.  The translation into a graded course rubric, and the weights, are mine.
 
-Only four of AAC&U's six problem-solving criteria appear here, and the omission is deliberate: *Implement Solution* and *Evaluate Outcomes* cannot be demonstrated by a plan.  They are graded at Demo Day, on the [Final Project rubric]({{ site.baseurl }}/Projects/FinalProject).  What a proposal *can* demonstrate is that you defined the problem, weighed the strategies, proposed something specific, and evaluated it honestly before committing, which is why *Propose Solutions/Hypotheses* and *Evaluate Potential Solutions* carry the most weight of the four.
+Only four of AAC&U's six problem-solving criteria appear here, on purpose.  *Implement Solution* and *Evaluate Outcomes* cannot be demonstrated by a plan, so they are graded at Demo Day on the [Final Project rubric]({{ site.baseurl }}/Projects/FinalProject).  A proposal can show that you defined the problem, weighed the strategies, proposed something specific, and evaluated it honestly before committing.  That is why *Propose Solutions/Hypotheses* and *Evaluate Potential Solutions* carry the most weight of the four.
 
-**A note on what "evaluate potential solutions" means here.**  Your pre-mortem (Direction A), preliminary risk hypothesis (Direction B), or gap verification (Direction C) is the evidence for this criterion, together with the alternatives you rejected and why.  A proposal that names no rejected alternative and predicts no failure cannot score above beginning on it, however polished the plan looks.
+**What "evaluate potential solutions" means here.**  Your pre-mortem (Direction A), preliminary risk hypothesis (Direction B), or gap verification (Direction C) is the evidence for this criterion, together with the alternatives you rejected and why.  A proposal that names no rejected alternative and predicts no failure cannot score above beginning on it, however polished the plan looks.
 
 ---
 
 ## What Happens After You Submit
 
-- **Incomplete proposals are returned ungraded.**  Complete means every shared element and every direction-specific element is present, not that every one is perfect.
-- **Proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected**, with specific guidance on what to cut or change.  A redirect is not a penalty; it is much cheaper here than in week 14.
-- **Sprint 1 begins from the approved proposal**, and runs to the cross-team proposal critique.  Your Sprint 1 milestone is set by your direction; see the sprint table on the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page.
-- **The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this is due**, and it reads against the plan you have just committed to.  Its team synthesis must state what the evidence confirms, complicates, or changes about this proposal.  A synthesis that changes nothing is a warning sign rather than a clean bill of health.
-- Some proposal artifacts are **living documents**: the pre-mortem, the decision log, and the timeline are maintained through the sprints and resubmitted with the final artifacts folder, not frozen here.
+- **Incomplete proposals are returned ungraded.**  Complete means every shared element and every direction-specific element is present.  It does not mean every one is perfect.
+- **Proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected**, with specific guidance on what to cut or change.  A redirect is not a penalty.  It is much cheaper here than in week 14.
+- **Sprint 1 begins from the approved proposal** and runs to the cross-team proposal critique at the *Project Studio: Sprint and Threat Model* session.  Your Sprint 1 milestone depends on your direction; see the sprint table on the [Final Project]({{ site.baseurl }}/Projects/FinalProject) page.
+- **The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) is handed out the day this is due**, and it reads against the plan you have just committed to.  Its team synthesis must state what the evidence confirms, complicates, or changes about this proposal.  A synthesis that changes nothing is a warning sign, not a clean bill of health.
+- Some proposal artifacts are **living documents**.  The pre-mortem, the decision log, and the timeline are maintained through the sprints and resubmitted with the final artifacts folder.  They are not frozen here.
 
 ---
 

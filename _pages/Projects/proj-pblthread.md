@@ -6,7 +6,7 @@ info:
   coursenum: CS357
   purpose: To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions.
   tilt:
-    task: Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day.
+    task: Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, final-project proposal, literature review, sprints, and Demo Day.
     criteria: Every milestone is evaluated on three dimensions, approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown.
   goals:
   - To identify and research an issue, question, or practical problem in partnership with a real stakeholder outside computer science (Goal 11)
@@ -59,7 +59,7 @@ tags:
 
 **Purpose:** To practice, over a full semester, the professional cycle of problem finding, multi-disciplinary research, collaborative intervention, and multi-audience communication, and to make your own learning visible along the way using the Ursinus Open Questions.
 
-**Task:** Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, literature review, final-project proposal, sprints, and Demo Day.
+**Task:** Complete the semester-long sequence of thread milestones with your standing POGIL team, from the formation survey and charter through the stakeholder brief, final-project proposal, literature review, sprints, and Demo Day.
 
 **Criteria:** Every milestone is evaluated on three dimensions, approach (was the work deliberate and grounded?), professionalism and process (did the team follow its playbook?), and product (does the artifact serve its audience?); see the rubric below for the full breakdown.
 
@@ -84,9 +84,9 @@ The goals of this assignment are:
 - [CATME Smarter Teamwork (research-based team formation and peer evaluation tools)](https://www.catme.org/)
 - [AAC&U VALUE Rubrics (Teamwork, Written and Oral Communication, Inquiry and Analysis, Information Literacy, and Integrative Learning)](https://www.aacu.org/initiatives/value)
 
-This page is the hub for the **Project Thread**: a semester-long, project-based learning arc that runs underneath everything else in CS357.  The thread carries no points of its own (every milestone is graded on its own assignment page) but it is the map that shows how the pieces connect: how an opening survey becomes a team, how a team becomes a charter, how a conversation with a real stakeholder becomes a literature review, and how all of it converges on your final project and Demo Day.
+This page is the hub for the **Project Thread**, a semester-long, project-based learning arc that runs underneath everything else in CS357.  The thread carries no points of its own; every milestone is graded on its own assignment page.  This page is the map that shows how the pieces connect: how an opening survey becomes a team, how a team becomes a charter, how a conversation with a real stakeholder becomes a proposal and a literature review, and how all of it converges on your final project and Demo Day.
 
-The project is how the learning happens; it is not the point in itself.  What this course is actually teaching through the thread is a *process*: how to find a problem worth solving, how to understand it from more than one discipline's point of view, how to work on a team that stays healthy under pressure, and how to communicate what you built to people who do not share your training.  Project-based learning of this kind is one of the most consistently effective educational experiences documented in the literature (Kuh, 2008, names it among the high-impact practices), precisely because it forces you to work on problems whose answers are not in the back of the book, what Shulman (2005) calls the *pedagogies of uncertainty*.  Uncertainty is built into this on purpose.  Your stakeholder's problem will be messy, your team will disagree, and your first plan will be wrong.  The thread exists so that none of those moments is a crisis.  And you will not learn these practices by being told about them: a team becomes a working community by doing real work together, at the edge of its competence, alongside people who are learning the same craft, what Lave and Wenger (1991) call *situated learning* in a community of practice.  The thread is that community's calendar.
+The project is how the learning happens; it is not the point in itself.  What this course teaches through the thread is a *process*: how to find a problem worth solving, how to understand it from more than one discipline's point of view, how to work on a team that stays healthy under pressure, and how to communicate what you built to people who do not share your training.  Project-based learning of this kind is one of the most consistently effective educational experiences in the literature (Kuh, 2008, names it among the high-impact practices), because it makes you work on problems whose answers are not in the back of the book.  Shulman (2005) calls this the *pedagogies of uncertainty*.  The uncertainty is deliberate.  Your stakeholder's problem will be messy, your team will disagree, and your first plan will be wrong.  The thread exists so that none of those moments is a crisis.  You will not learn these practices by being told about them.  A team becomes a working community by doing real work together, at the edge of its competence, alongside people who are learning the same craft, which Lave and Wenger (1991) call *situated learning* in a community of practice.  The thread is that community's calendar.
 
 ---
 
@@ -105,13 +105,13 @@ The project is how the learning happens; it is not the point in itself.  What th
 | **Primary Author** | The named team member responsible for drafting and defending one section of a team document. Every student is primary author of at least one section of every team document. | Every team deliverable |
 | **AI-Use Disclosure** | A short statement, attached to every milestone, of what (if anything) was AI-assisted, with what tool, and how the team verified it. | Every milestone submission |
 
-*Dates live in one place.*  This page gives the **order** of the milestones; the [course schedule]({{ site.baseurl }}/) gives the **dates**.  When the two ever seem to disagree, the schedule is right.
+*Dates live in one place.*  This page gives the **order** of the milestones; the [course schedule]({{ site.baseurl }}/) gives the **dates**.  When the two seem to disagree, the schedule is right.
 
 ---
 
 ## How to Read This Page
 
-This is the longest page in the course and you do not need all of it today.  It describes a semester-long structure, and the parts become relevant at different times.
+This is the longest page in the course, and you do not need all of it today.  It describes a semester-long structure, and the parts become relevant at different times.
 
 | Read now | Read when |
 |---|---|
@@ -123,15 +123,15 @@ This is the longest page in the course and you do not need all of it today.  It 
 | **Intra-Team Check-Ins 1-3** | Before each check-in, which is three times across the term |
 | **Assessment Philosophy** and the **rubric** | Before your first milestone, then before each one |
 
-**The one thing worth internalizing now:** the graded emphasis in this thread falls on **process** as much as product.  How your team frames a problem, works with a stakeholder, manages itself, and communicates is not the soft part around the real work.  It is a substantial share of the grade, and it is the part that a strong technical result cannot rescue.
+**The one thing to internalize now:** the graded emphasis in this thread falls on **process** as much as product.  How your team frames a problem, works with a stakeholder, manages itself, and communicates is not the soft part around the real work.  It is a substantial share of the grade, and a strong technical result cannot rescue it.
 
-> **If your team is struggling, say so early.**  The confidential pulse in any check-in works, and so does office hours.  Every team hits the storming stage; the ones that come out of it well are the ones that named it while it was happening rather than at the post-mortem.
+> **If your team is struggling, say so early.**  The confidential pulse in any check-in works, and so does office hours.  Every team hits the storming stage.  The teams that come out of it well are the ones that named it while it was happening rather than at the post-mortem.
 
 ---
 
 ## The Semester Map
 
-Two views of the same thread: a table for scanning, then a narrative for reading.  Every artifact below has its own assignment or activity page; this table is the authoritative *sequence*, and the [course schedule]({{ site.baseurl }}/) carries the dates.
+Here are two views of the same thread: a table for scanning, then a narrative for reading.  Every artifact below has its own assignment or activity page.  The table is the authoritative *sequence*, and the [course schedule]({{ site.baseurl }}/) carries the dates.
 
 | Step | Milestone | What Happens | Where |
 |---|---|---|---|
@@ -141,29 +141,29 @@ Two views of the same thread: a table for scanning, then a narrative for reading
 | 4 | **Stakeholder Brief kickoff** | Speed-dating topic-generation round in class; teams identify a real stakeholder outside CS. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
 | 5 | **Unassisted problem statement** (individual) | Half a page, written alone and without AI, on what you now believe the stakeholder's real problem is. Completion credit; a calibration baseline, not a test. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
 | 6 | **Peer review round 1** | Brief drafts are exchanged across teams in class for SQR review. | [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview) |
-| 7 | **Stakeholder Brief due** | 2-3 page brief, revised after peer review: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. The Literature Review is handed out the same session. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
+| 7 | **Stakeholder Brief due** | 2-3 page brief, revised after peer review: the issue in the stakeholder's own terms, the disciplines involved, a problem statement an agent system could address. The Final Project and its Proposal are handed out the same session. | [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) |
 | 8 | **Intra-team check-in 1** | Signed team progress report, plus the first confidential individual pulse to the instructor. | [Check-Ins](#intra-team-check-ins-1-3) |
-| 9 | **Literature Review, Phase 1** (individual) | Each member builds an annotated bibliography of 2-3 sources, alone, before the team synthesizes anything. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
+| 9 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team]({{ site.baseurl }}/Projects/FinalProject), [Responsible AI Audit]({{ site.baseurl }}/Projects/FinalProject), or [Open-Source Agent]({{ site.baseurl }}/Projects/FinalProject). | Track pages |
 | 10 | **Charter revisit** | Midpoint: the team re-reads its charter, discusses what held and what did not, and files a revision. | [Team Charter and Norms activity]({{ site.baseurl }}/Tutorials/GroupCharter) |
-| 11 | **Final project tracks handed out** | Choose one of three tracks: [Custom Agent Team]({{ site.baseurl }}/Projects/FinalProject), [Responsible AI Audit]({{ site.baseurl }}/Projects/FinalProject), or [Open-Source Agent]({{ site.baseurl }}/Projects/FinalProject). | Track pages |
-| 12 | **Intra-team check-in 2** | Second signed progress report and confidential pulse, now with the peer-evaluation section (below). | [Check-Ins](#intra-team-check-ins-1-3) |
-| 13 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
-| 14 | **Proposal due** | The proposal integrates the Stakeholder Brief and Literature Review. | Track pages |
+| 11 | **Intra-team check-in 2** | Second signed progress report and confidential pulse, now with the peer-evaluation section (below). | [Check-Ins](#intra-team-check-ins-1-3) |
+| 12 | **Proposal due** | The proposal builds on the Stakeholder Brief; the Literature Review is handed out the same day and feeds the sprints. | Track pages |
+| 13 | **Literature Review, Phase 1** (individual) | Each member builds an annotated bibliography of 2-3 sources, alone, before the team synthesizes anything. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
+| 14 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
 | 15 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class. | [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview) |
 | 16 | **Sprints 1-3** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, and evaluation updates. Sprint 2 spans the Thanksgiving break; plan for it in your charter's cadence. | Track pages |
 | 17 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
 | 18 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
 | 19 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, and a disseminable artifact, the team's deliberate adjourning: final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
 
-**The same map, as a story.**  You open the semester by filling out a short survey, and within the first two weeks you have a team formed for compatibility of schedules and working styles.  Your first job as a team is not technical: it is to write down, and sign, how you will treat each other.  Then you go find a real problem: not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words.  You spend the middle of the term understanding that problem the way scholars do: reading, annotating, and synthesizing sources from at least two disciplines.  At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not.  Only *then*, with a grounded problem and a healthy team, do you choose a final project track and propose an intervention.  The last stretch is sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
+**The same map, as a story.**  You open the semester by filling out a short survey, and within the first two weeks you have a team formed for compatibility of schedules and working styles.  Your first job as a team is not technical.  It is to write down, and sign, how you will treat each other.  Then you go find a real problem: not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words.  The [Final Project]({{ site.baseurl }}/Projects/FinalProject) is handed out the day your Stakeholder Brief is due, and two weeks later you choose a direction and commit to a [proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).  Then you read against that plan: each of you annotates sources from at least two disciplines, and the team writes a one-page synthesis that says what the published evidence confirms, complicates, or changes about the proposal.  At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not.  The last stretch is sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
 
 ---
 
 ## Step 1: The Team Formation Survey
 
-This survey is **not in the LMS**: it lives here, on this page.  Read the questions below, write your answers, and submit them **individually** to the **Team Formation Survey** assignment in Canvas (a text entry or an uploaded document is fine; there is no form to fill in).  Do not email your answers.  The [assignment page]({{ site.baseurl }}/Assignments/TeamSurvey) carries the rubric and the reflection prompts; the [course schedule]({{ site.baseurl }}/) carries the dates.
+This survey is **not in the LMS**.  It lives here, on this page.  Read the questions below, write your answers, and submit them **individually** to the **Team Formation Survey** assignment in Canvas (a text entry or an uploaded document is fine; there is no form to fill in).  Do not email your answers.  The [assignment page]({{ site.baseurl }}/Assignments/TeamSurvey) carries the rubric and the reflection prompts; the [course schedule]({{ site.baseurl }}/) carries the dates.
 
-Your answers are the data used to form the standing teams you will work with all semester.  Teams are *homogenized* on logistics (availability windows and deadline styles) while interests and perspectives are allowed to vary, following the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)).  You will not self-select teams.  Accurate answers serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
+Your answers are the data I use to form the standing teams you will work with all semester.  Teams are *homogenized* on logistics (availability windows and deadline styles) while interests and perspectives are allowed to vary, following the CATME Smarter Teamwork research program ([catme.org](https://www.catme.org/)).  You will not self-select teams.  Accurate answers serve you directly: the only way to end up on a team that fits your actual life is to describe your actual life.
 
 **Confidentiality.**  Your individual responses are read **only by the instructor** and are never shared with your teammates or anyone else.  What your future team learns about your working style, it learns from *you*, at the charter activity.
 
@@ -194,7 +194,7 @@ Your answers are the data used to form the standing teams you will work with all
 
 ## Where Your Team Will Be, and When: The Tuckman Map
 
-Tuckman (1965) observed that small groups reliably pass through recognizable developmental stages.  Knowing the map does not let you skip the hard parts, but it turns "our team is broken" into "our team is storming, right on schedule."  Here is the same idea twice: first as a table, then as advice.
+Tuckman (1965) observed that small groups reliably pass through recognizable developmental stages.  Knowing the map does not let you skip the hard parts.  But it turns "our team is broken" into "our team is storming, right on schedule."  Here is the same idea twice: first as a table, then as advice.
 
 | Tuckman Stage | Where On The Thread | What It Feels Like | What To Do About It |
 |---|---|---|---|
@@ -204,16 +204,16 @@ Tuckman (1965) observed that small groups reliably pass through recognizable dev
 | **Performing** | The sprints | Sprints run themselves; the team self-corrects without drama. | Lighten the scaffolding (see the Playbook below) and spend the saved energy on the product. |
 | **Adjourning** | Demo Day | Demo Day, submission, and the end of the team. Often bittersweet. | Close deliberately: the final reflection, contribution statements, and your professional portfolio artifact (pinned repo, project story, drafted post) are the adjourning ritual: the team ends by each member naming what they can now claim. |
 
-**In prose:** expect the beginning to feel easy and the middle to feel hard.  The single most common team failure mode in a semester project is treating the first real conflict (usually while the Brief and the Literature Review are in flight) as evidence that the team is broken, and responding by disengaging.  The charter's conflict protocol, the psychological-safety norm below, and the scheduled charter revisit are all placed where they are because that is where teams need them.
+**In prose:** expect the beginning to feel easy and the middle to feel hard.  The most common team failure in a semester project is treating the first real conflict (usually while the Brief, the proposal, and the Literature Review are in flight) as evidence that the team is broken, and responding by disengaging.  The charter's conflict protocol, the psychological-safety norm below, and the scheduled charter revisit are placed where they are because that is where teams need them.
 
 ---
 
 ## Psychological Safety Is the Working Norm
 
-Edmondson (1999) defines **psychological safety** as a team's shared belief that the team is safe for interpersonal risk-taking, and found that teams with it learn faster because members surface problems, questions, and mistakes early instead of hiding them.  In this course, psychological safety is not an aspiration; it is the operating requirement for every team activity:
+Edmondson (1999) defines **psychological safety** as a team's shared belief that the team is safe for interpersonal risk-taking.  She found that teams with it learn faster, because members surface problems, questions, and mistakes early instead of hiding them.  In this course, psychological safety is not an aspiration.  It is the operating requirement for every team activity:
 
 - **Questions are contributions.**  "I don't understand our problem statement" said while the Brief is being drafted is worth more than the same sentence said during the final sprint.
-- **Mistakes are data.**  The thread's assessment philosophy (below) grades approach and process alongside product precisely so that reporting a failure honestly is never the losing move.
+- **Mistakes are data.**  The thread's assessment philosophy (below) grades approach and process alongside product, so that reporting a failure honestly is never the losing move.
 - **Treat disagreement as a protocol rather than a fight.**  Your charter names the procedure; the peer review activity teaches the repair moves.
 - **Feedback is specific and about the work.**  SQR cards and check-in forms are structured so that feedback names artifacts and behaviors, never persons and character.
 
@@ -221,9 +221,9 @@ Edmondson (1999) defines **psychological safety** as a team's shared belief that
 
 ## The Team Charter: A Signed Team Contract
 
-> **Handed out** at the *Running Your Own AI* session, once teams are announced, and **signed and due** at the *Tokens and Embeddings* session the following week.  See the [course schedule]({{ site.baseurl }}/) for exact dates.
+> **Handed out** at the *Coding Agents* session in week 2, once teams are announced, and **signed and due** at the *Prompt Engineering as Agent Design* session the following week.  See the [course schedule]({{ site.baseurl }}/) for exact dates.
 
-Use this template as a starting point; the format is flexible, but every row has to be answered concretely.  A paragraph that says "we will use Discord, meet Sundays at 2pm, and rotate roles every two weeks" covers more ground than a table full of vague entries.
+Use this template as a starting point.  The format is flexible, but every row has to be answered concretely.  A paragraph that says "we will use Discord, meet Sundays at 2pm, and rotate roles every two weeks" covers more ground than a table full of vague entries.
 
 | Charter Section | Your Team's Answer |
 |---|---|
@@ -236,30 +236,30 @@ Use this template as a starting point; the format is flexible, but every row has
 
 Submit one charter per team; each member includes it with their own submission.  Typed names at the bottom serve as signatures.
 
-Work through the **[Team Charter and Norms activity]({{ site.baseurl }}/Tutorials/GroupCharter)** together when teams are announced; it walks the seven required elements and gives you the language for the harder ones.  Revisit it at the midpoint charter check.
+Work through the **[Team Charter and Norms activity]({{ site.baseurl }}/Tutorials/GroupCharter)** together when teams are announced.  It walks the seven required elements and gives you the language for the harder ones.  Revisit it at the midpoint charter check.
 
 
-Your team's first deliverable is not technical: it is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the in-class charter activity and signed by every member within the following week, that turns "we'll figure it out" into commitments you can point to later.  The charter must cover seven things:
+Your team's first deliverable is not technical.  It is a **contract**, in the style of the team contracts used in WPI's project-based curriculum: a short document, drafted together at the in-class charter activity and signed by every member within the following week, that turns "we'll figure it out" into commitments you can point to later.  The charter must cover seven things:
 
-1.  **Norms and values.**  Three to five concrete, behavioral norms: not "communicate well" but "if you will miss a deadline, say so in the channel at least 24 hours out."  Start from your survey answers: the pet peeves and "what matters most" answers your members choose to share are the raw material.
-2.  **Meeting cadence with a rotating agenda-owner.**  When and where the team meets (built from your overlapping survey windows), and who owns the agenda, a role that **rotates** each week, so no one person becomes the team's default manager.  The agenda-owner posts the agenda before the meeting and confirms notes exist after it.
-3.  **Rotating roles, with responsibilities in writing.**  The POGIL roles you already use in class (**Manager**, **Recorder**, **Presenter**, **Reflector**) carry directly into project work.  The charter states, in a sentence each, what each role owes the team that week, and records the rotation schedule (weekly until the midpoint charter revisit, per sprint after; see the Playbook below).  Rotation is a charter commitment, and I do treat it as binding.
-4.  **Communication channels and response-time expectations.**  Which channel is for what (decisions vs. logistics vs. drafts), and how quickly a teammate is owed a reply (e.g., 24 hours on weekdays, no expectation after 9pm).  Most "my teammate is ignoring me" conflicts are actually unstated response-time mismatches.
-5.  **Decision-making process.**  How the team decides when it disagrees: consensus with a fallback vote, Manager breaks ties, "disagree and commit" with a revisit date, and the standing rule that every non-trivial decision lands in the decision log.
-6.  **A conflict repair process.**  Name friction **early**, while it is still small; raise it **inside the team first**, using the move your charter names (many teams use the SQR framing: a strength, a question, a risk; about the situation, not the person); and escalate to the **instructor as backstop**, not as first resort.  Going to the instructor is never a betrayal, but the repair skill you are here to practice lives in the step before that.
-7.  **Psychological-safety ground rules.**  Concrete commitments that make it safe to speak up: questions are never mocked, mistakes reported early are thanked, disagreement is addressed to the work.  This is not team-building decoration: Edmondson (1999) found that this one condition, the ability to speak up without punishment or humiliation, accounts for much of the variability between high- and low-performing teams.
+1.  **Norms and values.**  Three to five concrete, behavioral norms: not "communicate well" but "if you will miss a deadline, say so in the channel at least 24 hours out."  Start from your survey answers.  The pet peeves and "what matters most" answers your members choose to share are the raw material.
+2.  **Meeting cadence with a rotating agenda-owner.**  When and where the team meets (built from your overlapping survey windows), and who owns the agenda.  The agenda-owner role **rotates** each week, so no one person becomes the team's default manager.  The agenda-owner posts the agenda before the meeting and confirms notes exist after it.
+3.  **Rotating roles, with responsibilities in writing.**  The POGIL roles you already use in class (**Manager**, **Recorder**, **Presenter**, **Reflector**) carry directly into project work.  The charter states, in a sentence each, what each role owes the team that week, and records the rotation schedule (weekly until the midpoint charter revisit, per sprint after; see the Playbook below).  Rotation is a charter commitment, and I treat it as binding.
+4.  **Communication channels and response-time expectations.**  Which channel is for what (decisions vs. logistics vs. drafts), and how quickly a teammate is owed a reply (e.g., 24 hours on weekdays, no expectation after 9pm).  Most "my teammate is ignoring me" conflicts are unstated response-time mismatches.
+5.  **Decision-making process.**  How the team decides when it disagrees: consensus with a fallback vote, Manager breaks ties, or "disagree and commit" with a revisit date, plus the standing rule that every non-trivial decision lands in the decision log.
+6.  **A conflict repair process.**  Name friction **early**, while it is still small.  Raise it **inside the team first**, using the move your charter names (many teams use the SQR framing: a strength, a question, a risk; about the situation, not the person).  Escalate to the **instructor as backstop**, not as first resort.  Going to the instructor is never a betrayal, but the repair skill you are here to practice lives in the step before that.
+7.  **Psychological-safety ground rules.**  Concrete commitments that make it safe to speak up: questions are never mocked, mistakes reported early are thanked, disagreement is addressed to the work.  This is not team-building decoration.  Edmondson (1999) found that this one condition, the ability to speak up without punishment or humiliation, accounts for much of the variability between high- and low-performing teams.
 
-**Every member signs.**  And the charter is a **living document**: your team re-reads it at each intra-team check-in (below), asks "does this still describe us?", and files a formal revision at the midpoint revisit.  A charter that never changes is a charter nobody is reading.
+**Every member signs.**  The charter is a **living document**: your team re-reads it at each intra-team check-in (below), asks "does this still describe us?", and files a formal revision at the midpoint revisit.  A charter that never changes is a charter nobody is reading.
 
 ---
 
 ## The Team Playbook
 
-The playbook is your team's operating system.  The structure is **deliberately heavier early** (the forming and storming stages, up through the midpoint charter revisit) **and lighter later** (norming and performing): scaffolding comes down as the team demonstrates it no longer needs it.
+The playbook is your team's operating system.  The structure is **deliberately heavier early** (the forming and storming stages, up through the midpoint charter revisit) **and lighter later** (norming and performing).  Scaffolding comes down as the team shows it no longer needs it.
 
 ### Standups
 
-Open every team meeting (and post to your team channel between meetings, twice weekly until the midpoint revisit, then at your discretion) with the three-line standup.  Each member answers, in writing or out loud:
+Open every team meeting with the three-line standup, and post it to your team channel between meetings (twice weekly until the midpoint revisit, then at your discretion).  Each member answers, in writing or out loud:
 
 ```
 Since last time I: ...
@@ -267,7 +267,7 @@ Before next time I will: ...
 I am blocked by / worried about: ...
 ```
 
-The third line is the one that matters: it is the psychological-safety line.  A standup where nobody is ever blocked is a standup where nobody is being honest.
+The third line is the one that matters.  It is the psychological-safety line.  A standup where nobody is ever blocked is a standup where nobody is being honest.
 
 ### Decision Log
 
@@ -277,7 +277,7 @@ Every non-trivial team decision gets one row in a running `DECISIONS.md` (or sha
 |------|----------|------------------------|-----|----------------|--------------|
 | 2026-09-18 | Stakeholder: campus sustainability office | Local food bank; Bio dept lab group | Best access + clear agent-shaped problem | (member name) | If interview access falls through |
 
-The decision log is what the "approach" rubric dimension reads.  It also ends the late-semester "wait, why did we do it this way?" argument; you look it up.
+The decision log is what the "approach" rubric dimension reads.  It also ends the late-semester "wait, why did we do it this way?" argument: you look it up.
 
 ### Meeting Agenda and Notes Discipline
 
@@ -286,12 +286,12 @@ The decision log is what the "approach" rubric dimension reads.  It also ends th
 
 ### POGIL Role Rotation Cadence
 
-Roles (**Manager**, **Recorder**, **Presenter**, **Reflector** in activities; **Coordinator**, **Builder**, **Evaluator**, **Scribe** in the final project) rotate.  The two role sets are deliberately different: the activity roles (Manager/Recorder/Presenter/Reflector) rotate within POGIL class sessions, while the project roles (Coordinator/Builder/Evaluator/Scribe) rotate across the sprint weeks.
+Roles rotate.  There are two role sets, and they are deliberately different.  The activity roles (**Manager**, **Recorder**, **Presenter**, **Reflector**) rotate within POGIL class sessions.  The project roles (**Coordinator**, **Builder**, **Evaluator**, **Scribe**) rotate across the sprint weeks of the final project.
 
 - **Weekly** until the midpoint revisit, so every member holds every role at least once before the final project begins.
 - **Per sprint** from the proposal through Demo Day, documented in the contribution statements.
 
-Rotation is not optional and not tradeable: the point is that everyone practices every job, including the ones they would not volunteer for.
+Rotation is not optional and not tradeable.  The point is that everyone practices every job, including the ones they would not volunteer for.
 
 ---
 
@@ -301,10 +301,10 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 
 The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol**: one Strength with evidence, one genuine Question, one Risk with a mitigation.  The **[Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview)** carries the protocol card; bring it to each review round.
 
-Three times in the semester (with the Stakeholder Brief, between the project tracks and the proposal, and after the gallery walk) your team pauses for a structured check-in.  Each check-in carries **3 points, assessed within Class Activities and Participation**: enough to make it a real commitment, small enough that the check-in itself, not the score, is the point.  Every check-in has the same two parts:
+Three times in the semester (with the Stakeholder Brief, between the project hand-out and the proposal, and after the gallery walk) your team pauses for a structured check-in.  Each check-in carries **3 points, assessed within Class Activities and Participation**: enough to make it a real commitment, small enough that the check-in itself, not the score, is the point.  Every check-in has the same two parts:
 
-1.  **A short team progress report, signed by all members**: what shipped since the last milestone, what is next, and the current risks.  Three sections, half a page, honest.  The signatures matter: signing a report you know is rosy is the small version of every engineering-ethics case study you will ever read.
-2.  **A confidential individual team-health pulse to the instructor**: a few private sentences on how the team is working *for you*: not a report on your teammates, but on your experience.  Is your voice landing?  Is your workload fair?  Is there anything you cannot raise in the room?  This channel exists precisely for the things psychological safety has not yet made sayable; it is read only by the instructor and never quoted back.
+1.  **A short team progress report, signed by all members**: what shipped since the last milestone, what is next, and the current risks.  Three sections, half a page, honest.  The signatures matter.  Signing a report you know is rosy is the small version of every engineering-ethics case study you will ever read.
+2.  **A confidential individual team-health pulse to the instructor**: a few private sentences on how the team is working *for you*.  This is not a report on your teammates; it is a report on your experience.  Is your voice landing?  Is your workload fair?  Is there anything you cannot raise in the room?  This channel exists for the things psychological safety has not yet made sayable.  Only I read it, and I never quote it back.
 
 The three check-ins are timed to the Tuckman map above, and each has a stage-specific focus:
 
@@ -320,7 +320,7 @@ Each team progress report answers three stage-specific prompts alongside the sta
 - **Check-In 2 (norming into performing):** (a) Role-rotation audit: list who has held each role so far; where has the team quietly specialized?  (b) Workload audit: where is effort unbalanced, and what is the rebalancing plan for the sprints?  (c) What shorthand or rhythm has this team developed that should be codified in the charter revision?
 - **Check-In 3 (performing into adjourning):** (a) What would you put in your next team's charter on day one, based on this team?  (b) Name one repair that succeeded: a conflict or slippage the team actually recovered from, and how.  (c) What will each member claim, with evidence, on Demo Day and beyond?
 
-**The confidential peer pulse (Check-Ins 2 and 3).**  At the second and third check-ins, the individual pulse adds a short structured section, adapted from the CATME behaviorally-anchored peer-evaluation dimensions (see the research base above): rate **yourself and each teammate** from 1 to 5 on (1) contributing to the team's work, (2) interacting with teammates, (3) keeping the team on track, (4) expecting quality, and (5) having relevant knowledge and skills, with one sentence of evidence for any rating of 2 or below.  Three commitments about how this is used: it is **read only by the instructor**; it is **never mechanically averaged into anyone's grade**; and it informs the individual-contribution component of the final project grade and triggers a coaching conversation when self- and peer-ratings diverge sharply.  I use it as a health instrument, and never as a weapon.
+**The confidential peer pulse (Check-Ins 2 and 3).**  At the second and third check-ins, the individual pulse adds a short structured section, adapted from the CATME behaviorally-anchored peer-evaluation dimensions (see the research base above).  Rate **yourself and each teammate** from 1 to 5 on (1) contributing to the team's work, (2) interacting with teammates, (3) keeping the team on track, (4) expecting quality, and (5) having relevant knowledge and skills, with one sentence of evidence for any rating of 2 or below.  Three commitments govern how I use it.  It is **read only by the instructor**.  It is **never mechanically averaged into anyone's grade**.  It informs the individual-contribution component of the final project grade and triggers a coaching conversation when self- and peer-ratings diverge sharply.  I use it as a health instrument, never as a weapon.
 
 At every check-in, the team re-reads its charter against its actual behavior.  The charter is a living document; the check-ins are where it lives.
 
@@ -328,7 +328,7 @@ At every check-in, the team re-reads its charter against its actual behavior.  T
 
 ## Why So Much Process?
 
-Because the process *is* the pedagogy.  Standups, decision logs, rotating roles, signed reports, and check-ins are graded not despite being overhead but because they are the curriculum: the project is how you learn collaborative inquiry, and it is not the point in itself.  Any of you could learn to build an agent system alone; what you cannot learn alone is how to find a problem with a stakeholder, hold a team together through storming, disagree productively, and repair a working relationship, and those skills live entirely in the process.  The artifact you demo at Demo Day will be obsolete in a year.  The way your team produced it will not.
+Because the process *is* the pedagogy.  Standups, decision logs, rotating roles, signed reports, and check-ins are graded because they are the curriculum, not despite being overhead.  The project is how you learn collaborative inquiry; it is not the point in itself.  Any of you could learn to build an agent system alone.  What you cannot learn alone is how to find a problem with a stakeholder, hold a team together through storming, disagree productively, and repair a working relationship.  Those skills live entirely in the process.  The artifact you demo at Demo Day will be obsolete in a year.  The way your team produced it will not.
 
 ---
 
@@ -337,12 +337,12 @@ Because the process *is* the pedagogy.  Standups, decision logs, rotating roles,
 Three commitments govern how everything on the thread is graded:
 
 1.  **Milestones are evaluated on approach, professionalism/process, and product, in that order of emphasis early on.**  Early milestones weight the *how* heavily; the final project weights the *what* more.  A team that interviews thoughtfully, logs its decisions, and reports honestly will outscore a team with a slicker artifact and no visible process.
-2.  **Your final-project grade combines team output, individual contribution, and individual understanding.**  The team's artifact earns a team score; your contribution statement, primary-author sections, check-in record, and role-rotation history earn an individual contribution score; and your ability to explain and defend the work (in reflections, discussions, and Demo Day questions) earns an individual understanding score.  Riding along is not a strategy, and neither is doing everything yourself.
-3.  **Authorship and AI use are always visible.**  Every team document names a **primary author for each section** (every student is primary author of at least one section of every team document) and every milestone carries an **AI-use disclosure**: what was AI-assisted, with what tool, and how the team verified the output.  Disclosed, verified AI assistance is a professional practice; undisclosed AI assistance is an integrity violation.  One milestone runs the other way: the **unassisted problem statement** on the Stakeholder Brief is written alone and without AI on purpose, so that you keep a record of what you can do without help and can tell later whether a tool is extending your judgment or standing in for it.
+2.  **Your final-project grade combines team output, individual contribution, and individual understanding.**  The team's artifact earns a team score.  Your contribution statement, primary-author sections, check-in record, and role-rotation history earn an individual contribution score.  Your ability to explain and defend the work (in reflections, discussions, and Demo Day questions) earns an individual understanding score.  Riding along is not a strategy, and neither is doing everything yourself.
+3.  **Authorship and AI use are always visible.**  Every team document names a **primary author for each section** (every student is primary author of at least one section of every team document), and every milestone carries an **AI-use disclosure**: what was AI-assisted, with what tool, and how the team verified the output.  Disclosed, verified AI assistance is a professional practice; undisclosed AI assistance is an integrity violation.  One milestone runs the other way.  The **unassisted problem statement** on the Stakeholder Brief is written alone and without AI on purpose, so that you keep a record of what you can do without help and can tell later whether a tool is extending your judgment or standing in for it.
 
 ### The Same Artifact, Read More Than Once
 
-Your thread work is read at more than one level, and the mapping below is fixed at design time so that no artifact has to be produced twice.  You are graded against the CS357 rubric rows in the left column; the same evidence answers the course goals in the middle column and, when the college reviews student work against its core outcomes, the AAC&U VALUE dimensions in the right column.  Nothing here is extra work; it is a translation table, and you may find the right-hand column useful when you describe this project on a resume or in an interview.
+Your thread work is read at more than one level, and the mapping below is fixed at design time so that no artifact has to be produced twice.  You are graded against the CS357 rubric rows in the left column.  The same evidence answers the course goals in the middle column and, when the college reviews student work against its core outcomes, the AAC&U VALUE dimensions in the right column.  Nothing here is extra work.  It is a translation table, and the right-hand column may help when you describe this project on a resume or in an interview.
 
 | CS357 thread rubric row | Course goal | AAC&U VALUE rubric and dimension |
 |---|---|---|
@@ -368,7 +368,7 @@ Every thread milestone ends with reflection prompts keyed to the four **Ursinus 
 
 ## How This Course Is Designed for Learner Agency
 
-The structure of CS357 is deliberate choice architecture, in the spirit of Universal Design for Learning: everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project**, and every one of them offers **directions you choose inside it**, so you can steer toward the work that matches your background, interests, and the stakeholder problem your team adopts, without any path being the "remedial" one.  The Project Thread's milestones are the shared spine everyone travels; the choices surround it.  Reflection and expression admit multiple formats throughout (prose, diagrams, recorded demos where noted), presentations address more than one audience by design, and the transparency framing on each assignment (Purpose / Task / Criteria, per [TILT](https://www.tilthighered.com/)) exists so that no one has to guess what "good" looks like.  If a format barrier is getting between you and demonstrating what you know, say so; there is almost always an equivalent route.
+The structure of CS357 is deliberate choice architecture, in the spirit of Universal Design for Learning.  Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project**, and every one of them offers **directions you choose inside it**.  You can steer toward the work that matches your background, interests, and the stakeholder problem your team adopts, and no path is the "remedial" one.  The Project Thread's milestones are the shared spine everyone travels; the choices surround it.  Reflection and expression admit multiple formats throughout (prose, diagrams, recorded demos where noted), presentations address more than one audience by design, and the transparency framing on each assignment (Purpose / Task / Criteria, per [TILT](https://www.tilthighered.com/)) exists so that no one has to guess what "good" looks like.  If a format barrier is getting between you and demonstrating what you know, say so.  There is almost always an equivalent route.
 
 ## Reflection Prompts
 

@@ -7,8 +7,8 @@ info:
   coursenum: CS357
   purpose: "To synthesize the entire course, and the semester-long Project Thread, into one substantial community-grounded final project.  That may be a system you build, an audit you evidence, or an artifact you publish, carried from proposal through sprints to a multi-audience Demo Day, with the process graded alongside the product."
   tilt:
-    task: "With your standing team, choose one of three directions: build a custom agent team, perform a responsible AI audit, or build and publish an open-source agent, then propose it, build it in sprints with a community partner in the loop, and present it at Demo Day with a partner-facing artifact."
-    criteria: "I grade this on three course families worth 60 points between them, Approach (sound methods and justified design decisions), Process and Professionalism (meeting discipline, communication, project management, check-ins, charter adherence), and Product (the working system, audit, or publication, the Demo Day presentation, and the partner-facing artifact), plus the six problem-solving criteria of the AAC&U VALUE Problem Solving Rubric worth 40.  The rubric below spells out each row."
+    task: "With your standing team, choose one of three directions: build a custom agent team, perform a responsible AI audit, or build and publish an open-source agent.  Then propose it, build it in sprints with a community partner in the loop, and present it at Demo Day with a partner-facing artifact."
+    criteria: "I grade this on three course families worth 60 points between them: Approach (sound methods and justified design decisions), Process and Professionalism (meeting discipline, communication, project management, check-ins, charter adherence), and Product (the working system, audit, or publication, the Demo Day presentation, and the partner-facing artifact).  The other 40 points come from the six problem-solving criteria of the AAC&U VALUE Problem Solving Rubric.  The rubric below spells out each row."
   points: 100
   goals:
     - To carry one substantial project from proposal through sprints to Demo Day, choosing the direction (build, audit, or publish) that best serves the team's stakeholder problem
@@ -95,31 +95,31 @@ tags:
 
 ---
 
-> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread).  Your proposal must build on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief), the [Literature Review]({{ site.baseurl }}/Assignments/LitReview) reads against that plan during the sprint window, your team operates under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences.  See the Thread hub for the semester map and assessment philosophy.
+> **The Project Thread:** The Final Project is the final stage of the semester-long [Project Thread]({{ site.baseurl }}/Projects/PBLThread).  Your proposal builds on your team's [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief).  The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) reads against that plan during the sprint window.  Your team operates under its signed charter and the [Team Playbook]({{ site.baseurl }}/Projects/PBLThread), and Demo Day addresses both technical and non-technical audiences.  See the Thread hub for the semester map and assessment philosophy.
 
 ## Project Overview
 
-The Final Project is **one required project with three directions**.  Every team completes the same arc (proposal, sprints with check-ins, a gallery walk, and Demo Day) and every team is graded on the same three rubric families.  What differs is the direction your team chooses for its intervention:
+The Final Project is **one required project with three directions**.  Every team completes the same arc (proposal, sprints with check-ins, a gallery walk, and Demo Day), and every team is graded on the same three rubric families.  What differs is the direction your team chooses for its intervention:
 
 - **Direction A: Custom Agent Team**: design, build, and evaluate a system of at least three cooperating, specialized agents that accomplishes a real goal-oriented task end to end on your local stack, benchmarked against a monolithic baseline and governed by a document you can defend.
 - **Direction B: Responsible AI Audit**: perform a structured, evidenced responsible-AI audit of a specific deployed system: a risk analysis with mechanistic failure modes, a governance document a real organization could adopt, and a presentation a real board could act on.
-- **Direction C: Build and Publish an Open-Source Agent**: identify and verify a real gap in the agent tooling ecosystem, then build, test, document, and publish an open-source agent to a public registry, engaging a real community with its governance and limitations disclosed, or, as a variant, contribute reviewed pull requests to an existing open-source agent project (see the variant under Direction C below).
+- **Direction C: Build and Publish an Open-Source Agent**: identify and verify a real gap in the agent tooling ecosystem, then build, test, document, and publish an open-source agent to a public registry, engaging a real community with its governance and limitations disclosed.  As a variant, contribute reviewed pull requests to an existing open-source agent project (see the variant under Direction C below).
 
-These are directions within the one project, not separate assignments: your team chooses the direction that best serves the stakeholder problem you have carried since the [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief).  All three directions are completed with your standing Project Thread team, operating under its signed charter, with project roles (**Coordinator**, **Builder**, **Evaluator**, **Scribe**) rotating at every sprint boundary.
+These are directions within the one project, not separate assignments.  Your team chooses the direction that best serves the stakeholder problem you have carried since the [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief).  All three directions are completed with your standing Project Thread team, operating under its signed charter, with project roles (**Coordinator**, **Builder**, **Evaluator**, **Scribe**) rotating at every sprint boundary.
 
 The project is how the learning happens; it is not the point in itself.  The graded emphasis falls on your *process* as much as your *product*: how you decided, how you worked together, how you engaged your community partner, and how honestly you disclosed what worked and what did not.  A team that meets on schedule, logs its decisions, checks in candidly, and reports a limitation honestly will outscore a team with a slicker artifact and no visible process.
 
-There is no final exam in this course.  Demo Day presentations (plus the registrar's final-exam slot if needed for presentation overflow) are the terminal event of the semester.
+There is no final exam in this course.  Demo Day presentations (plus the registrar's final-exam slot, if needed for presentation overflow) are the terminal event of the semester.
 
 ---
 
 ## Before You Start
 
-This is not a new assignment.  It is the point every Project-Thread milestone has been building toward, and almost everything it asks for already exists somewhere in your team's work: the stakeholder you interviewed, the literature you synthesized, the agent system you designed, and the labs you built.  Read the timeline below as an assembly plan, not a fresh start.
+This is not a new assignment.  It is the point every Project Thread milestone has been building toward, and most of what it asks for already exists somewhere in your team's work: the stakeholder you interviewed, the agent systems you designed, the labs you built, and, during the sprints, the literature you review.  Read the timeline below as an assembly plan, not a fresh start.
 
-**Time:** the largest single commitment of the term, spread across the back half of the semester.  The proposal is due about six weeks before Demo Day (see the [course schedule]({{ site.baseurl }}/) for exact dates), so the sprints are where the work lives; a team that starts building in the last two weeks will demo something that does not run.
+**Time:** this is the largest single commitment of the term, spread across the back half of the semester.  The proposal is due about six weeks before Demo Day (see the [course schedule]({{ site.baseurl }}/) for exact dates), so the sprints are where the work lives.  A team that starts building in the last two weeks will demo something that does not run.
 
-**Choosing a direction** is the one decision worth making slowly, because all three are real and they suit different teams:
+**Choose your direction slowly.**  All three are real, and they suit different teams:
 
 | Take | If your team |
 |---|---|
@@ -127,9 +127,9 @@ This is not a new assignment.  It is the point every Project-Thread milestone ha
 | **B: Responsible AI Audit** | Wants to investigate. This is a **fully non-programming** direction and it is not the lesser one; a good audit is harder than a mediocre build |
 | **C: Open-Source Agent** | Wants what you make to outlive the semester, and is willing to take documentation, packaging, and licensing as seriously as the code |
 
-> **The thing that most often goes wrong**, and it is almost never technical: teams build the system they find interesting and present it to an audience that includes the stakeholder they interviewed in week 5.  Demo Day is a **multi-audience** presentation.  Keep the stakeholder's problem visible in every sprint, or you will discover in week 14 that you built something impressive that answers a different question.
+> **The thing that most often goes wrong** is almost never technical.  Teams build the system they find interesting and present it to an audience that includes the stakeholder they interviewed in week 5.  Demo Day is a **multi-audience** presentation.  Keep the stakeholder's problem visible in every sprint, or you will discover in week 14 that you built something impressive that answers a different question.
 
-> **Whatever you build, it must run at the start of week 14.**  The second studio session is a rehearsal, not a work session.  That is not a scheduling preference; it is the difference between a demo and an apology.
+> **Whatever you build, it must run at the start of week 14.**  The *Final Integration and Demo Rehearsal* studio is a rehearsal, not a work session.  That is not a scheduling preference.  It is the difference between a demo and an apology.
 
 ---
 
@@ -147,17 +147,17 @@ The Final Project's milestones run in the sequence below; see the course schedul
 | Final sprint | **Gallery walk + peer review (SQR cards)**, and **intra-team check-in 3**. | - |
 | Last class | **Demo Day + final submission**, including the partner-facing artifact and the final AI-use disclosure. | **75 / 100** |
 
-The registrar's final-exam slot is reserved for Demo Day overflow only: if all teams present at the last class meeting, it is not used.  Either way, the last class meeting is the submission deadline: no work is accepted after it.
+The registrar's final-exam slot is reserved for Demo Day overflow only.  If all teams present at the last class meeting, it is not used.  Either way, the last class meeting is the submission deadline; no work is accepted after it.
 
 ---
 
 ## Community Partner Engagement
 
-This project is deliberately community-grounded: **every team connects its project to a community stakeholder**.  Partners are identified by the instructor and the roster is shared in class (it is not published on the website).  Three touchpoints are required:
+This project is community-grounded on purpose: **every team connects its project to a community stakeholder**.  I identify the partners and share the roster in class (it is not published on the website).  Three touchpoints are required:
 
 1.  **Proposal:** the partner's stated needs inform the proposal, building directly on your Project Thread [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief).  Name the problem in the partner's terms and state how the direction you chose serves it.
-2.  **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact) and document their feedback and how you triaged it: incorporate, disclose, or defer.
-3.  **Partner-facing artifact (Demo Day):** deliver an artifact an external stakeholder can actually use (a one-page brief, a demo video, or a deployed tool) and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
+2.  **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact).  Document their feedback and how you triaged it: incorporate, disclose, or defer.
+3.  **Partner-facing artifact (Demo Day):** deliver an artifact an external stakeholder can actually use (a one-page brief, a demo video, or a deployed tool), and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
 
 ---
 
@@ -171,33 +171,33 @@ Your final-project grade combines **team output**, **individual contribution**, 
 
 ### The problem-solving half of the rubric
 
-Six of the rubric's criteria (Define Problem, Identify Strategies, Propose Solutions/Hypotheses, Evaluate Potential Solutions, Implement Solution, Evaluate Outcomes) are quoted verbatim from the **Problem Solving VALUE Rubric**, published by the Association of American Colleges and Universities and reproduced here under its permission for classroom use.  AAC&U's four performance levels map onto this course's four: *Benchmark 1* is read as pre-emerging, *Milestone 2* as beginning, *Milestone 3* as progressing, and *Capstone 4* as proficient.  AAC&U states that its rubrics "can and should be translated into the language of individual campuses, disciplines, and even courses," and that they were designed for program-level assessment rather than for grading; the translation into a graded course rubric, and the weights, are mine.
+Six of the rubric's criteria (Define Problem, Identify Strategies, Propose Solutions/Hypotheses, Evaluate Potential Solutions, Implement Solution, Evaluate Outcomes) are quoted verbatim from the **Problem Solving VALUE Rubric**, published by the Association of American Colleges and Universities (AAC&U) and reproduced here under its permission for classroom use.  AAC&U's four performance levels map onto this course's four: *Benchmark 1* is read as pre-emerging, *Milestone 2* as beginning, *Milestone 3* as progressing, and *Capstone 4* as proficient.  AAC&U states that its rubrics "can and should be translated into the language of individual campuses, disciplines, and even courses," and that they were designed for program-level assessment rather than for grading.  The translation into a graded course rubric, and the weights, are mine.
 
-They earn their place because of what they measure.  In AAC&U's words the rubric "is designed to measure the quality of a process, rather than the quality of an end-product," which is the half of this project the three course families are least able to see.  That is also why AAC&U warns that "the final product of an assignment that required problem resolution is insufficient without insight into the student's problem-solving process."  Your decision log, your check-ins, your pre-mortem, and your reflections are that insight, and they are where these six criteria will mostly be scored.  A polished artifact with no visible record of how you got there cannot earn proficient on them.
+These criteria earn their place because of what they measure.  In AAC&U's words, the rubric "is designed to measure the quality of a process, rather than the quality of an end-product," which is the half of this project the three course families are least able to see.  That is also why AAC&U warns that "the final product of an assignment that required problem resolution is insufficient without insight into the student's problem-solving process."  Your decision log, your check-ins, your pre-mortem, and your reflections are that insight, and they are where these six criteria will mostly be scored.  A polished artifact with no visible record of how you got there cannot earn proficient on them.
 
-Read them as the arc you have actually walked: the Stakeholder Brief is *Define Problem*, the direction and architecture you weighed is *Identify Strategies*, the proposal is *Propose Solutions*, the pre-mortem and rejected alternatives are *Evaluate Potential Solutions*, the sprints are *Implement Solution*, and your limitations and next steps are *Evaluate Outcomes*.
+Read the six criteria as the arc you have walked.  The Stakeholder Brief is *Define Problem*.  The direction and architecture you weighed is *Identify Strategies*.  The proposal is *Propose Solutions*.  The pre-mortem and rejected alternatives are *Evaluate Potential Solutions*.  The sprints are *Implement Solution*.  Your limitations and next steps are *Evaluate Outcomes*.
 
 **AI-use disclosure:** both the proposal and the final submission must include a disclosure statement of **how and why AI tools were used**: what was AI-assisted, with what tool, why you chose to use it there, and how the output was verified.  Disclosed, verified AI assistance is professional practice; undisclosed AI assistance is an integrity violation.
 
-**Absence policy for Demo Day:** every team member must be able to present *any* part of the project; prepare accordingly.  The grade of a member absent on Demo Day depends on the reason for the absence and on that member's documented contribution to that point.
+**Absence policy for Demo Day:** every team member must be able to present *any* part of the project, so prepare accordingly.  The grade of a member absent on Demo Day depends on the reason for the absence and on that member's documented contribution to that point.
 
 ---
 
 ## Stage 1: Proposal (25 points)
 
-The proposal has its own page and its own rubric: see [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).  Read it before you start writing; what follows here is a summary of where the proposal sits in the project.
+The proposal has its own page and its own rubric: see [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).  Read it before you start writing.  What follows here is a summary of where the proposal sits in the project.
 
 Every proposal (2-3 pages), regardless of direction, declares its direction and defends the choice, grounds the problem in your [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief), argues its design decisions against the alternatives rejected, sketches the implementation and assessment plan with a GANTT-style timeline and named owners, discloses AI use, and includes the direction-specific elements listed under your direction below.
 
-The proposal is graded on its own rubric, not on this one: three course families (Approach, Process and Professionalism, and Plan Quality) worth 60 points between them, plus the four AAC&U problem-solving criteria a plan can actually demonstrate.  *Implement Solution* and *Evaluate Outcomes* are graded here, at Demo Day, because a plan cannot demonstrate them.
+The proposal is graded on its own rubric, not on this one: three course families (Approach, Process and Professionalism, and Plan Quality) worth 60 points between them, plus the four AAC&U problem-solving criteria a plan can demonstrate.  *Implement Solution* and *Evaluate Outcomes* are graded here, at Demo Day, because a plan cannot demonstrate them.
 
-Incomplete proposals are returned ungraded; proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected.  The second intra-team check-in lands shortly before this deadline; use it to surface scope disagreements early.
+Incomplete proposals are returned ungraded.  Proposals whose scope is too generic, inaccessible, or infeasible in three sprints are redirected.  The second intra-team check-in is due two days before the proposal; use it to surface scope disagreements early.
 
 ---
 
 ## Stage 2: Sprints
 
-Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Each sprint produces: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
+Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
@@ -205,17 +205,19 @@ Build in three sprints between the proposal and Demo Day, aligned with in-class 
 | Sprint 2 (proposal critique -> gallery walk; spans the Thanksgiving break) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
 | Sprint 3 (gallery walk -> Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
-The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sprints 1 and 2.  It is graded on its own page, but its synthesis is a project document: it states what the evidence confirms, complicates, or changes about your proposal, and any scope change that follows belongs in your decision log and your next check-in.
+The cross-team proposal critique happens at the *Project Studio: Sprint and Threat Model* session, and the gallery walk at *Project Studio and Gallery Walk*.
+
+The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sprints 1 and 2.  It is graded on its own page, but its synthesis is a project document.  It states what the evidence confirms, complicates, or changes about your proposal, and any scope change that follows belongs in your decision log and your next check-in.
 
 **Partner feedback pass (final sprint):** during this window, put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
-**Gallery walk + peer review (final sprint):** mandatory and graded within the Process family.  Host honestly: demonstrate your work including at least one known failure or open finding.  Walk generously: fill out a **S**trength / **Q**uestion / **R**isk card for every team you visit.  Triage all feedback you receive into three buckets (*fix before submission*, *disclose in the report*, or *defer to future work*) and put your triage decisions in the artifacts folder.  Intra-team check-in 3 is due the same day.
+**Gallery walk + peer review (final sprint):** mandatory and graded within the Process family.  Host honestly: demonstrate your work, including at least one known failure or open finding.  Walk generously: fill out a **S**trength / **Q**uestion / **R**isk card for every team you visit.  Triage all feedback you receive into three buckets (*fix before submission*, *disclose in the report*, or *defer to future work*) and put your triage decisions in the artifacts folder.  Intra-team check-in 3 is due at the *Final Integration and Demo Rehearsal* studio that follows.
 
 ---
 
 ## Stage 3: Demo Day and Final Submission (75 points)
 
-**Demo Day logistics:** all teams present within the single class slot, splitting the time evenly, so each team's window is short and fixed, including Q&A; rehearse to time.
+**Demo Day logistics:** all teams present within the single class slot, splitting the time evenly, so each team's window is short and fixed, including Q&A.  Rehearse to time.
 
 Every team, regardless of direction, delivers at Demo Day:
 
@@ -232,7 +234,7 @@ The final submission (due the same day) includes your direction's deliverables b
 
 ## Direction A: Custom Agent Team
 
-Design, build, evaluate, and present a **custom agent team**: cooperating, specialized agents accomplishing a real goal-oriented task end to end on your local AI stack.  The agent loop, prompting, retrieval, memory, tools, orchestration, critique, judging, explainability, and governance all have a place here, and your report must show that each architectural choice was a *decision*, not a default.  Choose a task that matters to your partner's community; it must require at least three meaningfully distinct agent roles, at least one retrieval or tool capability, and at least one evaluation or critique stage.  Tasks touching sensitive data require instructor approval, must run fully locally with de-identification, and your governance document must say so explicitly.
+Design, build, evaluate, and present a **custom agent team**: cooperating, specialized agents accomplishing a real goal-oriented task end to end on your local AI stack.  The agent loop, prompting, retrieval, memory, tools, orchestration, critique, judging, explainability, and governance all have a place here, and your report must show that each architectural choice was a *decision*, not a default.  Choose a task that matters to your partner's community.  It must require at least three meaningfully distinct agent roles, at least one retrieval or tool capability, and at least one evaluation or critique stage.  Tasks touching sensitive data require instructor approval, must run fully locally with de-identification, and your governance document must say so explicitly.
 
 **Direction A proposal elements** (in addition to the shared elements):
 - An **agent design table**, one row per agent: role, system-prompt summary, inputs, outputs, temperature with justification, tools, and the isolated evaluation you will run on it
@@ -258,9 +260,9 @@ Design, build, evaluate, and present a **custom agent team**: cooperating, speci
 
 ## Direction B: Responsible AI Audit
 
-Perform a structured **responsible AI audit** of a publicly available, deployed AI system: the kind of analysis increasingly required by regulation, expected by investors, and demanded by affected communities.  The deliverable is not an opinion piece: it is evidenced, structured, and written for people who will make decisions based on it.  The audited system should live in the domain your community partner cares about.
+Perform a structured **responsible AI audit** of a publicly available, deployed AI system.  This is the kind of analysis increasingly required by regulation, expected by investors, and demanded by affected communities.  The deliverable is not an opinion piece.  It is evidenced, structured, and written for people who will make decisions based on it.  The audited system should live in the domain your community partner cares about.
 
-The system must be **specific**: a named, deployed product with a defined purpose and identifiable affected populations; not "AI in hiring" but a named tool as deployed by a named operator.  Strong candidates: a hiring screening tool, a medical imaging AI, a content moderation system, a predictive risk tool in criminal justice or benefits eligibility, or an educational AI that grades or places students.  Avoid general-purpose chatbots unless scoped to a specific deployment context.  You are not expected to have access to the system's internals; base the analysis on public documentation, news coverage, academic studies, and regulatory filings, and cite every claim; documented absence of information is itself a finding.
+The system must be **specific**: a named, deployed product with a defined purpose and identifiable affected populations.  Not "AI in hiring," but a named tool as deployed by a named operator.  Strong candidates: a hiring screening tool, a medical imaging AI, a content moderation system, a predictive risk tool in criminal justice or benefits eligibility, or an educational AI that grades or places students.  Avoid general-purpose chatbots unless scoped to a specific deployment context.  You are not expected to have access to the system's internals.  Base the analysis on public documentation, news coverage, academic studies, and regulatory filings, and cite every claim.  Documented absence of information is itself a finding.
 
 **Direction B proposal elements** (in addition to the shared elements):
 - **System identification**: name, operator, what it does, where it is deployed
@@ -287,7 +289,7 @@ The system must be **specific**: a named, deployed product with a defined purpos
 
 Build something that outlasts the semester: a published, documented, reusable agent or agent component that real users can discover, install, and run.  The deliverable is a **software artifact with a community presence**: a package on a public registry, a README a stranger can follow, a CI badge, a governance statement, and at least one authentic exchange with a real community member.  The gap your artifact fills should serve the community your partner belongs to.  Artifacts touching sensitive data or making outbound API calls on behalf of users require instructor approval and a governance statement addressing those risks.
 
-> **Direction C variant: Contribute to an Existing Open-Source Project.**  Instead of publishing a new artifact, your team may make substantive, reviewed contributions to an existing project in the agent ecosystem: an MCP server, the Ollama or OpenWebUI ecosystem, promptfoo, or Inspect AI are strong candidates.  The same rubric applies with these equivalences: *gap verification* becomes issue selection (a triaged open issue or feature request, with linked evidence that a maintainer or real user wants it); *publication* becomes one or more submitted pull requests with tests and documentation, carried through maintainer review (a merge is ideal but not required; a substantive review exchange is, because maintainer response times are outside your control); *community engagement* is intrinsic to the PR thread and documented from it; and the CONTRIBUTING.md and GOVERNANCE.md requirements are met by following the upstream project's own documents and stating in your report what they required of you.  Scope must be approved in the proposal, whose "what the artifact does / who would use it / how they would install it" elements describe the upstream feature you are adding.  A contribution reviewed by the maintainers of a real project is a portfolio line few graduates have.
+> **Direction C variant: Contribute to an Existing Open-Source Project.**  Instead of publishing a new artifact, your team may make substantive, reviewed contributions to an existing project in the agent ecosystem.  An MCP server, the Ollama or OpenWebUI ecosystem, promptfoo, or Inspect AI are strong candidates.  The same rubric applies with these equivalences.  *Gap verification* becomes issue selection: a triaged open issue or feature request, with linked evidence that a maintainer or real user wants it.  *Publication* becomes one or more submitted pull requests with tests and documentation, carried through maintainer review.  A merge is ideal but not required; a substantive review exchange is required, because maintainer response times are outside your control.  *Community engagement* is intrinsic to the PR thread and documented from it.  The CONTRIBUTING.md and GOVERNANCE.md requirements are met by following the upstream project's own documents and stating in your report what they required of you.  Scope must be approved in the proposal, whose "what the artifact does / who would use it / how they would install it" elements describe the upstream feature you are adding.  A contribution reviewed by the maintainers of a real project is a portfolio line few graduates have.
 
 **Direction C proposal elements** (in addition to the shared elements):
 - **What the artifact does**, in one paragraph a stranger can understand
@@ -342,9 +344,9 @@ Answer individually in your final submission:
 - [Publishing Your Work Activity]({{ site.baseurl }}/Tutorials/Publishing)
 - [Hosting with Cloudflare Activity]({{ site.baseurl }}/Tutorials/Cloudflare)
 
-This guide is not separately graded; its checklist is assessed within the Final Project rubric.
+This guide is not separately graded.  Its checklist is assessed within the Final Project rubric.
 
-This guide (required reading for the Final Project) walks you through carrying one artifact from a written specification through building with an AI agent, testing, continuous integration, and public publication under your own name.  This is the maker's full arc compressed into one real, public, small artifact.  By the end, something you built will exist in the world, installable or reachable by anyone, with your name on it.  The self-assessment checklist above rewards discipline over scope.  A small, finished, well-tested, well-documented artifact demonstrates more than an ambitious one that does not run.  Use the checklist as a self-assessment before your project's publish gate.  **Choose one track and one artifact**, and observe the standing course rule throughout: agents may prepare every step, but a human (you) runs every publish or deploy command.
+This guide is required reading for the Final Project.  It walks you through carrying one artifact from a written specification through building with an AI agent, testing, continuous integration (CI, the automated checks that run on every push), and public publication under your own name.  That is the maker's full arc, compressed into one real, public, small artifact.  By the end, something you built will exist in the world, installable or reachable by anyone, with your name on it.  The self-check table at the end of this guide rewards discipline over scope.  A small, finished, well-tested, well-documented artifact demonstrates more than an ambitious one that does not run.  Use the self-check before your project's publish gate.  **Choose one track and one artifact**, and observe the standing course rule throughout: agents may prepare every step, but a human (you) runs every publish or deploy command.
 
 ---
 
@@ -352,9 +354,9 @@ This guide (required reading for the Final Project) walks you through carrying o
 
 Strong work has these qualities:
 
-- **The specification preceded the artifact, with a timestamp to prove it.**  The dated specification file is preserved in its original form, before any agent-generated code touches it.  The self-assessment values the original spec even if it was imperfect; discovering and documenting a spec gap is part of the discipline, not a failure.
-- **Wire CI to something real, and not to a placeholder.**  The GitHub Actions workflow runs the project's actual tests (or actual accessibility/content checks for Track B), not `echo "tests pass"`.  The evidence portfolio includes links or screenshots of one red run and one green run; the red run proves the CI was not trivially passing before the code worked.
-- **A classmate confirmed it works cold.**  The "stranger test" is documented: a classmate's GitHub username or name, what they installed or visited, and their one-line confirmation that it worked from the public record alone.  This is not optional; it is what "published" means.
+- **The specification preceded the artifact, with a timestamp to prove it.**  The dated specification file is preserved in its original form, before any agent-generated code touches it.  The self-assessment values the original spec even if it was imperfect.  Discovering and documenting a spec gap is part of the discipline, not a failure.
+- **CI is wired to something real, not to a placeholder.**  The GitHub Actions workflow runs the project's actual tests (or actual accessibility/content checks for Track B), not `echo "tests pass"`.  The evidence portfolio includes links or screenshots of one red run and one green run.  The red run proves the CI was not trivially passing before the code worked.
+- **A classmate confirmed it works cold.**  The "stranger test" is documented: a classmate's GitHub username or name, what they installed or visited, and their one-line confirmation that it worked from the public record alone.  This is not optional.  It is what "published" means.
 - **The AI contribution statement is honest and specific.**  A weak statement says "I used AI to help build this."  A strong statement says: "The agent generated the initial `handler.js` function and all three test files.  I wrote the `config.json` schema and the README, and I rewrote the error handling in lines 44-62 of `handler.js` after the agent's version silently swallowed exceptions.  I verified every test manually before pushing."
 
 Weak work has CI that passes immediately with no red run, a readme that only an author could follow, and an AI contribution statement that could apply to any project.
@@ -372,7 +374,7 @@ Weak work has CI that passes immediately with no red run, a readme that only an 
 
 Your specification instrument is a **failing test suite written before implementation**.  The agent's job is to make the tests pass without modifying them.
 
-**Track B (maker track, no programming background assumed, you will use guided DevOps tooling (GitHub Actions and Cloudflare's wrangler), following step-by-step instructions).**  Choose one:
+**Track B (maker track).**  No programming background is assumed.  You will use guided DevOps tooling (GitHub Actions and Cloudflare's wrangler), following step-by-step instructions.  Choose one:
 - A static site deployed to Cloudflare Pages: a project page, a resource hub, or an interactive explainer built with an agent
 - A simple Cloudflare Worker built entirely through agent collaboration: a JSON API for something you care about
 
@@ -380,19 +382,19 @@ Your specification instrument is a **failing test suite written before implement
 
 Your specification instruments are an **acceptance checklist written before generation** and the five-questions instruction to your agent (what it should do, what it must not do, who will use it, what counts as working, and what the edge cases are).
 
-Artifacts must be original, must not include course-restricted materials or anyone's personal data, and must carry a license.  If your idea touches credentials, payments, or other people's private information, redesign or consult the instructor first; recognizing that boundary is part of the assignment.
+Artifacts must be original, must not include course-restricted materials or anyone's personal data, and must carry a license.  If your idea touches credentials, payments, or other people's private information, redesign or consult the instructor first.  Recognizing that boundary is part of the assignment.
 
 ---
 
 #### Stage 1: Specify (before building)
 
-Write and date your specification before generation begins.  The timestamp is part of the discipline; commit it to the repository (or post it where your project lives) before any agent-generated code exists.
+Write and date your specification before generation begins.  The timestamp is part of the discipline.  Commit it to the repository (or post it where your project lives) before any agent-generated code exists.
 
 **Track A specification:**
-Write your failing test suite.  Tests should cover: the happy path, at least one edge case (empty input, malformed input), and at least one deliberate misuse case (input designed to trigger an error or unexpected behavior).  Include a `spec.md` describing what the artifact should do in plain English, one paragraph per major feature.
+Write your failing test suite.  Tests should cover the happy path, at least one edge case (empty input, malformed input), and at least one deliberate misuse case (input designed to trigger an error or unexpected behavior).  Include a `spec.md` describing what the artifact should do in plain English, one paragraph per major feature.
 
 **Track B specification:**
-Write your acceptance checklist.  Each item should be a falsifiable statement: "The page loads in under 3 seconds on a standard wifi connection," not "The page is fast."  Also write: a one-paragraph persona (who uses this, on what device, under what pressure) and explicit expected behavior for at least one misuse case (what happens when someone submits an empty form, clicks an unexpected button, or uses the artifact in an unintended way).
+Write your acceptance checklist.  Each item should be a falsifiable statement: "The page loads in under 3 seconds on a standard wifi connection," not "The page is fast."  Also write a one-paragraph persona (who uses this, on what device, under what pressure) and explicit expected behavior for at least one misuse case (what happens when someone submits an empty form, clicks an unexpected button, or uses the artifact in an unintended way).
 
 **Both tracks:** State in your specification what "done" means: the specific condition under which you would consider this artifact ready to publish.  You will compare your shipped artifact against this standard in the writeup.
 
@@ -432,7 +434,7 @@ Before publishing, conduct the pre-publication audit:
 - **Container image:** Run `docker image inspect <image>` and review the layer listing.  Verify no credentials or private data are in any layer.
 - **Cloudflare:** Review the deploy directory listing before `wrangler deploy`.  Verify no `.env` files or private keys are staged.
 
-Document the audit output in your evidence portfolio; this is not just a checklist item, it is evidence of the professional discipline the course requires.
+Document the audit output in your evidence portfolio.  This is not only a checklist item; it is evidence of the professional discipline the course requires.
 
 Then publish:
 - `npm publish --access public` (npm)
@@ -441,13 +443,13 @@ Then publish:
 
 **Versioning:** Start at `0.1.0`.  Ship at least one subsequent patch release (`0.1.1`) so the version walk is demonstrated.  Use semantic versioning: patch for bug fixes, minor for new features.
 
-**Stranger confirmation:** A classmate must install or visit your artifact from the public record alone; no setup instructions from you, no personal help.  They should use only your README. Their one-line confirmation ("I ran `npm install -g your-package` and `your-package --help` worked, [GitHub username]") goes in your evidence portfolio.
+**Stranger confirmation:** A classmate must install or visit your artifact from the public record alone: no setup instructions from you, no personal help.  They should use only your README.  Their one-line confirmation ("I ran `npm install -g your-package` and `your-package --help` worked, [GitHub username]") goes in your evidence portfolio.
 
 ---
 
 #### Evidence Portfolio
 
-Assemble the following evidence; this is what you will check against the self-assessment checklist before your project's publish gate, and it is assessed within the Final Project rubric:
+Assemble the following evidence.  This is what you will check against the self-assessment checklist before your project's publish gate, and it is assessed within the Final Project rubric:
 
 1.  The dated specification (original form, before generation)
 2.  The build transcript or session log (conversation with the agent, or commit history)
@@ -467,28 +469,28 @@ Ensure reproducibility by pinning dependency versions and listing software versi
 
 #### Your Portfolio Entry and GitHub Profile
 
-Publication is only half of existing in the world; the other half is being findable.  Once the artifact is live:
+Publication is only half of existing in the world.  The other half is being findable.  Once the artifact is live:
 
-- **Pin the repository** on your GitHub profile.  If you do not have a profile README, create one now; it is a ten-minute job with an outsized payoff, and this artifact is its first entry.
+- **Pin the repository** on your GitHub profile.  If you do not have a profile README, create one now.  It is a ten-minute job with an outsized payoff, and this artifact is its first entry.
 - **Write a project story of roughly 200 words**: the problem, what you built (and what the agent built, honestly delineated; your AI contribution statement is most of this already), and the evidence: the registry link, the CI badge, the classmate's stranger confirmation.  Name what *you* did explicitly, because that is the sentence a resume bullet and an interview answer are made from.
 - **Reuse the story.**  The same story is your opening move with guests at Demo Day (see the [Demo Day Guide](#demo-day-external-guests-and-technical-interview-practice)) and the public, recruiter-legible trace the Final Project's Product rubric asks for.  Update your resume and LinkedIn while the numbers are fresh.
-- **Draft the post.**  Turn the story into a **drafted LinkedIn-style post** (150-250 words: problem, what you built, one number, what you learned) and include the draft in your submission.  Publishing is always optional and never graded; the draft simply means that if you want the post, it is already written at the moment the project is most impressive to describe.
+- **Draft the post.**  Turn the story into a **drafted LinkedIn-style post** (150-250 words: problem, what you built, one number, what you learned) and include the draft in your submission.  Publishing is always optional and never graded.  The draft means that if you want the post, it is already written at the moment the project is most impressive to describe.
 
 ---
 
 #### Frequently Asked Questions
 
 **Q: My CI keeps failing because of a flaky network call in my tests.  What should I do?**
-A: Mock the network call in tests.  The specification discipline the course teaches requires tests that are deterministic.  If a test depends on an external service, it should be mocked in the test suite and tested against the real service only in a separate integration test step that is clearly labeled as potentially flaky.  Document the decision in your writeup.
+A: Mock the network call in tests.  The specification discipline the course teaches requires tests that are deterministic.  If a test depends on an external service, mock it in the test suite and test against the real service only in a separate integration step that is clearly labeled as potentially flaky.  Document the decision in your writeup.
 
 **Q: What counts as a "deliberate misuse case"?**
 A: An input or user action that is wrong, adversarial, or outside the happy path.  Examples: an empty input field, an input that is 10,000 characters long, a file of the wrong type, a sequence of requests that tries to exhaust a rate limit.  The requirement is that your specification named the case and your testing shows what the artifact does when it happens.
 
 **Q: Do I really need to publish to a public registry?  Can I just push to a private GitHub repo?**
-A: No. The "stranger confirmation" criterion requires a classmate to install or visit from the public record alone, which means the artifact must be publicly accessible.  A private repository does not satisfy this requirement.
+A: No.  The "stranger confirmation" criterion requires a classmate to install or visit from the public record alone, which means the artifact must be publicly accessible.  A private repository does not satisfy this requirement.
 
 **Q: Can my classmate "confirm it works" by email instead of in the evidence portfolio?**
-A: Include the confirmation in your evidence portfolio, not just in email.  Quote their exact words and identify them by name or GitHub username.  The confirmation should describe what they did, not just say "it worked."
+A: Include the confirmation in your evidence portfolio, not only in email.  Quote their exact words and identify them by name or GitHub username.  The confirmation should describe what they did, not only say "it worked."
 
 **Q: My Track B artifact is a static site.  Do I still need to demonstrate CI?**
 A: Yes.  Even a static site can have automated checks: a build step that verifies the HTML is valid, a link checker, a content check that confirms key pages exist.  The CI requirement applies to both tracks.  Cloudflare Pages has built-in GitHub Actions integration that makes this straightforward.
@@ -518,7 +520,7 @@ Answer these as part of your self-assessment before your project's publish gate:
 
 ## Demo Day: External Guests and Technical Interview Practice
 
-*To prepare you to present your project to people beyond the course (your community partner, invited alumni and industry guests, and eventually interviewers) by practicing the plain-language pitch, the limitation disclosure, and the interview-style deep dive on a system you actually built.*
+*To prepare you to present your project to people beyond the course (your community partner, invited alumni and industry guests, and eventually interviewers) by practicing the plain-language pitch, the limitation disclosure, and the interview-style close examination of a system you actually built.*
 
 ### Goals
 
@@ -533,18 +535,18 @@ Answer these as part of your self-assessment before your project's publish gate:
 - [Final Project]({{ site.baseurl }}/Projects/FinalProject)
 - [ShipIt Guide: Build, Test, CI, and Publish One Artifact](#shipping-your-artifact-the-shipit-checklist)
 
-This guide is not separately graded; the presentation is assessed within the Final Project's **Product** dimension, and the mock-interview rehearsal is credited as **class participation**.
+This guide is not separately graded.  The presentation is assessed within the Final Project's **Product** dimension, and the mock-interview rehearsal is credited as **class participation**.
 
-Demo Day is already a multi-audience event: your community partner's world and your CS peers' world meet in one room.  This guide widens the circle one step further: alumni, industry guests, and faculty from other departments may join as audience members and Q&A panelists, invited **as available**; your grade never depends on who attends, and prepares you for the skill all of those audiences share with a technical interviewer: explain a system you built, in plain language first and full depth on request, defend your decisions, and be honest about what does not work.  Nothing here is extra work; it is rehearsal for work you already owe.
+Demo Day is already a multi-audience event: your community partner's world and your CS peers' world meet in one room.  This guide widens the circle one step further.  Alumni, industry guests, and faculty from other departments may join as audience members and Q&A panelists, invited **as available**; your grade never depends on who attends.  The guide prepares you for the skill all of those audiences share with a technical interviewer: explain a system you built, in plain language first and full depth on request, defend your decisions, and be honest about what does not work.  Nothing here is extra work.  It is rehearsal for work you already owe.
 
 ---
 
 #### What Strong Work Looks Like
 
 - **The opener lands with someone who has never heard of an agent loop.**  "Our partner's food pantry answers the same fifty questions by phone every week.  We built a system that answers them from the pantry's own documents, says *I don't know* when the documents don't say, and never sends anything without a human approving it.  I built the retrieval piece that finds the right document."  Ninety seconds, no jargon, ends with what *working* means, and what the system refuses to do.
-- **Keep the depth available on demand, and do not impose it up front.**  When a guest asks "how does it actually work?", the answer walks one request through the system (perceive, plan, act; what each agent sees, decides, and hands off) at whatever level the asker's follow-ups invite.
-- **Volunteer your limitations before anyone has to pull them out of you.**  Strong presenters disclose a rehearsed failure mode with its transcript evidence (or, for audit teams, a finding with its citations) before anyone asks.  It reads as command of the work, because it is.
-- **Questions come back.**  The best conversations at Demo Day are two-way: ask a guest what they build, how their team uses (or refuses) AI tools, what they wish new graduates knew.
+- **Depth is available on demand, not imposed up front.**  When a guest asks "how does it actually work?", the answer walks one request through the system (perceive, plan, act; what each agent sees, decides, and hands off) at whatever level the asker's follow-ups invite.
+- **Limitations are volunteered before anyone has to pull them out of you.**  Strong presenters disclose a rehearsed failure mode with its transcript evidence (or, for audit teams, a finding with its citations) before anyone asks.  It reads as command of the work, because it is.
+- **Questions come back.**  The best conversations at Demo Day are two-way.  Ask a guest what they build, how their team uses (or refuses) AI tools, and what they wish new graduates knew.
 
 ---
 
@@ -552,19 +554,19 @@ Demo Day is already a multi-audience event: your community partner's world and y
 
 Have these five moves rehearsed before Demo Day:
 
-1.  **The ninety-second opener.**  The stakeholder problem in the partner's terms, what your project does about it, who it is for, and one sentence on what you personally built.  Write it, say it aloud, cut every term a non-CS friend would stumble on.  (Your stakeholder-facing Demo Day segment is the long form of this; the opener is the version you give a guest standing in front of your table.)
-2.  **The three-sentence architecture.**  The system in plain words: *a request comes in; specialist agents each handle their piece, one retrieves evidence, one drafts, one critiques; a human approves anything consequential before it happens.*  Then one sentence on where your part lives.  Audit teams: the framework in plain words: *we mapped who the system touches, measured where it fails, and wrote the rules a real organization could adopt.*
+1.  **The ninety-second opener.**  The stakeholder problem in the partner's terms, what your project does about it, who it is for, and one sentence on what you personally built.  Write it, say it aloud, and cut every term a non-CS friend would stumble on.  (Your stakeholder-facing Demo Day segment is the long form of this; the opener is the version you give a guest standing in front of your table.)
+2.  **The three-sentence architecture.**  The system in plain words: *a request comes in; specialist agents each handle their piece, one retrieves evidence, one drafts, one critiques; a human approves anything consequential before it happens.*  Then one sentence on where your part lives.  Audit teams give the framework in plain words instead: *we mapped who the system touches, measured where it fails, and wrote the rules a real organization could adopt.*
 3.  **The limitation.**  One known failure mode or finding, stated plainly, with its evidence and why you triaged it as disclose-rather-than-fix.  Practice saying it without apologizing.
-4.  **The redirect.**  For questions you cannot answer: "I don't know, my teammate built that part, let me hand you to them," or "I don't know, but here's how I'd find out."  Both are strong answers.  Bluffing is the only weak one, and in this course, saying *I don't know* when the evidence is absent is literally what we graded your systems on.
+4.  **The redirect.**  For questions you cannot answer: "I don't know, my teammate built that part, let me hand you to them," or "I don't know, but here's how I'd find out."  Both are strong answers.  Bluffing is the only weak one.  In this course, saying *I don't know* when the evidence is absent is literally what we graded your systems on.
 5.  **The question back.**  Prepare two real questions to ask a guest, about their work, how AI is changing it, or their path.  Demo Day is a networking event wearing a final-exam costume; treat the conversation as two-way.
 
 ---
 
 #### The Mock Technical Interview (Week 14 Project Studio)
 
-During the "Final Integration and Demo Rehearsal" studio, you will pair **across teams** for interview rounds, credited as class participation:
+During the *Final Integration and Demo Rehearsal* studio, you will pair **across teams** for interview rounds, credited as class participation.
 
-**Format.**  Ten minutes per round, then swap roles.  The interviewer asks from the question bank below (or invents better ones); the interviewee answers **without slides**; a whiteboard or paper is allowed, your repository is not.  Close each round with an SQR-style feedback card: one **Strength**, one **Question** the interviewee should be ready for at Demo Day.
+**Format.**  Ten minutes per round, then swap roles.  The interviewer asks from the question bank below (or invents better ones).  The interviewee answers **without slides**; a whiteboard or paper is allowed, your repository is not.  Close each round with an SQR-style feedback card: one **Strength**, one **Question** the interviewee should be ready for at Demo Day.
 
 **Question bank** (interviewers: pick three or four, follow the answers, dig where they wobble):
 
@@ -576,7 +578,7 @@ During the "Final Integration and Demo Rehearsal" studio, you will pair **across
 - (For audit teams) Which of your findings would the operator dispute most vigorously, and what is your evidence when they do?
 - (For open-source teams) A stranger files an issue saying your quickstart fails on their machine.  Walk me through what you do.
 
-**Why cross-team pairs:** explaining your system to someone who has never seen it is the whole game; your own teammates know too much to be useful practice, and interviewing *them* about their project teaches you what good interviewer questions feel like from the inside.
+**Why cross-team pairs:** explaining your system to someone who has never seen it is the whole game.  Your own teammates know too much to be useful practice, and interviewing *them* about their project teaches you what good interviewer questions feel like from the inside.
 
 ---
 
@@ -584,8 +586,8 @@ During the "Final Integration and Demo Rehearsal" studio, you will pair **across
 
 The project does not have to end at Demo Day:
 
-- **[CCSC-Eastern](https://ccscne.org/)** and similar regional conferences run **student poster sessions**: an evaluated multi-agent system, a regulator-ready audit, or a published open-source tool is exactly the kind of work they exist to showcase.  Talk to the instructor about submitting; your proposal and report are most of the abstract.
-- **Campus research and creative-work showcases** welcome course projects of this scope; presenting there is a low-stakes rehearsal for any external venue.
+- **[CCSC-Eastern](https://ccscne.org/)** and similar regional conferences run **student poster sessions**.  An evaluated multi-agent system, a regulator-ready audit, or a published open-source tool is exactly the kind of work they exist to present.  Talk to the instructor about submitting; your proposal and report are most of the abstract.
+- **Campus research and creative-work showcases** welcome course projects of this scope.  Presenting there is a low-stakes rehearsal for any external venue.
 - **Your profile.**  The [ShipIt guide](#shipping-your-artifact-the-shipit-checklist)'s portfolio entry (the pinned repository or public write-up and the 200-word project story) is the durable version of everything you rehearsed here.  Update your resume and LinkedIn while the numbers (evaluation results, test counts, the registry link) are fresh.
 
 ---
@@ -593,16 +595,16 @@ The project does not have to end at Demo Day:
 #### Frequently Asked Questions
 
 **Q: Will there definitely be external guests at Demo Day?**
-A: Guests are invited as available: some years the room is full, some years it is classmates, partners, and faculty.  Prepare the same either way: the Product rubric's multi-audience expectations do not change, and the mock-interview rehearsal happens regardless.
+A: Guests are invited as available.  Some years the room is full; some years it is classmates, partners, and faculty.  Prepare the same either way: the Product rubric's multi-audience expectations do not change, and the mock-interview rehearsal happens regardless.
 
 **Q: Does talking to guests affect my grade?**
-A: The presentation is graded by the Final Project's existing rubric; guest attendance and guest reactions are never grading conditions.  The mock-interview rehearsal is credited as ordinary class participation for the studio session it happens in.
+A: The presentation is graded by the Final Project's existing rubric.  Guest attendance and guest reactions are never grading conditions.  The mock-interview rehearsal is credited as ordinary class participation for the studio session it happens in.
 
 **Q: I get nervous in interview settings.  Can I opt out of the mock interview?**
-A: Talk to the instructor beforehand; the format can be adjusted (a smaller room, a written walk-through, extra prep time).  The rehearsal exists precisely because the tenth time explaining your architecture is calmer than the first; we want you to spend nervous repetitions here, where they are cheap.
+A: Talk to the instructor beforehand; the format can be adjusted (a smaller room, a written walk-through, extra prep time).  The rehearsal exists because the tenth time explaining your architecture is calmer than the first.  We want you to spend the nervous repetitions here, where they are cheap.
 
 **Q: Our project is an audit with no running system.  What do we demo to a guest?**
-A: The evidence walkthrough is your demo: one failure mode, its mechanism, and the trail of citations behind it, shown, not asserted.  Guests with industry experience often find the audit conversations the most engaging in the room.
+A: The evidence walkthrough is your demo: one failure mode, its mechanism, and the trail of citations behind it, shown rather than asserted.  Guests with industry experience often find the audit conversations the most engaging in the room.
 
 ---
 

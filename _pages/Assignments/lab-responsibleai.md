@@ -40,7 +40,7 @@ info:
       preemerging: No working intervention is implemented or concretely specified, or the code does not run as submitted.
       beginning: A partial intervention, implemented in code, or (on Direction 0) concretely specified as a defense design, addresses only a small slice of the chosen direction, or is done incorrectly (e.g., a control so weak it is ineffective).
       progressing: The chosen direction's required components are all implemented or concretely specified and function as described, but one or more are weak or not fully connected to the agent's real input/output/decision path (on Direction 0, not clearly mapped to a logged attack).
-      proficient: The chosen direction is realized completely, correctly, and multi-layered where the direction calls for it, as implemented controls or explanations integrated into the agent's real path and clearly marked in the code (Directions 1-3), OR as concretely specified defenses (Direction 0) where each mechanism is named, mapped to a specific logged attack, and precise enough that an engineer could build it from the description; the work would run or be actionable from a clean environment following only the provided instructions.
+      proficient: The chosen direction is realized completely, correctly, and multi-layered where the direction calls for it, as implemented controls or explanations integrated into the agent's real path and clearly marked in the code (Directions 1-3), OR as concretely specified defenses (Direction 0) where each mechanism is named, mapped to a specific logged attack, and precise enough that an engineer could build it from the description; the work would run, or could be acted on, from a clean environment following only the provided instructions.
     - weight: 25
       description: Evaluation and Evidence
       preemerging: No evaluation is provided, or claims are asserted without evidence.
@@ -94,41 +94,55 @@ tags:
 
 ---
 
-By this point in the course you have built at least one working agent, whether that is a local agent, a RAG agent, an MCP agent, a coding agent, or a decision model.  It runs, and it produces answers.  That is exactly the moment when responsibility begins, because an agent that works is an agent people will be tempted to rely on, and this lab is where you earn that reliance.  Building a system and being able to defend it are two different skills; this lab is about the second one.
+By this point in the course you have built at least one working agent: a local agent, a RAG agent, an MCP agent, a coding agent, or a decision model.  It runs, and it produces answers.  That is the moment when responsibility begins.  An agent that works is an agent people will be tempted to rely on, and this capstone is where you earn that reliance.  Building a system and being able to defend it are two different skills.  This capstone is about the second one.
 
 **See the course schedule for the assigned and due dates.**
 
-**Pace yourself:** the shared warm-up and threat model come first, your chosen direction is the largest piece, and the writeup is the shortest.
+## One capstone, two components, 200 points
 
-Everyone starts the same way.  Choose one agent you have already built and put it on the examination table.  Write a short **threat and risk model**: name the agent, describe what it does and who would use it, and trace its data and decision flow from the moment input arrives to the moment a result leaves.  At each boundary (user input, system prompt, retrieved or tool-supplied content, logs, and the final output or decision) ask what could go wrong if an adversary, a careless user, or a regulator were on the other side.  This shared framing step is required of every submission regardless of which direction you choose, because you cannot harden what you have not honestly mapped.
+The Responsible AI **lab** and the Responsible AI in Practice **written assignment** used to be two 100-point deliverables due two days apart in the final week, alongside the Final Project.  They are now a single capstone worth 200 points, handed out November 10 and due December 1.
 
-Then pick **one** of the four directions below and carry it out in depth.  Each direction is a full audit-and-harden cycle along one axis of responsible AI: defending against prompt injection, protecting privacy, or making decisions explainable, or, on the low-code Direction 0, turning your hands-on attack experience into a rigorous, concretely specified defense design.  Your single 100-point grade covers the shared threat model plus the one direction you choose; the rubric dimensions (threat/risk analysis, implementation, evaluation and evidence, writeup and reflection) are written to apply to whichever direction you pick.  Read all four before deciding; the direction you choose should be the one whose failure mode would do the most damage to the specific agent you built.  Do not attempt more than one direction; depth on one is worth far more than a shallow pass over several.
+**Component 1, Build (100 points).**  The audit, red-team, and mitigation work specified on this page.  You produce evidence about a system's behavior.
+
+**Component 2, Govern (100 points).**  The written analysis specified on **[Responsible AI in Practice]({{ site.baseurl }}/Assignments/ResponsibleAIPractice)**; choose one of its directions.  You argue what should be done about that behavior, for a named audience.
+
+Submit both together.  The rubric on this page covers Component 1.  The rubric on the Practice page covers Component 2, and the two are averaged into one 200-point grade.
+
+**Why they are one thing.**  An audit with no recommendation is a bug report nobody owns.  A policy with no evidence is a press release.  The capstone asks you to do both about the *same* system, which is the actual professional task.  Your Component 2 argument must cite your own Component 1 findings, not a paper you read.
+
+**Prerequisites.**  *Training Data, Bias, and Explainability* (Nov 10) is taught the day this is handed out.  *Intellectual Property, Privacy, and the Case for Local AI* (Nov 12) and *Governance, Policy, and the Cost of Inference* (Nov 17) land inside the work window; the governance session comes fourteen days before the capstone is due.
+
+**Pace yourself.**  The shared warm-up and threat model come first.  Your chosen direction is the largest piece.  The writeup is the shortest.
+
+Everyone starts the same way.  Choose one agent you have already built and put it on the examination table.  Write a short **threat and risk model**: name the agent, describe what it does and who would use it, and trace its data and decision flow from the moment input arrives to the moment a result leaves.  At each boundary (user input, system prompt, retrieved or tool-supplied content, logs, and the final output or decision), ask what could go wrong if an adversary, a careless user, or a regulator were on the other side.  This shared framing step is required of every submission, regardless of which direction you choose, because you cannot harden what you have not honestly mapped.
+
+Then pick **one** of the four directions below and carry it out in depth.  Each direction is a full audit-and-harden cycle along one axis of responsible AI: defending against prompt injection, protecting privacy, or making decisions explainable.  The low-code Direction 0 turns your hands-on attack experience into a rigorous, concretely specified defense design instead.  Component 1's 100 points cover the shared threat model plus the one direction you choose.  The rubric dimensions (threat/risk analysis, implementation, evaluation and evidence, writeup and reflection) apply to whichever direction you pick.  Read all four before deciding.  The right direction is the one whose failure mode would do the most damage to the specific agent you built.  Do not attempt more than one direction; depth on one is worth far more than a shallow pass over several.
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
-**Prep deck for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.baseurl }}/Tutorials/AgentCaseStudies#prompt-injection-attacks-and-defenses) walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
+**Prep reading for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.baseurl }}/Tutorials/AgentCaseStudies#prompt-injection-attacks-and-defenses), a part of the Agentic Case Studies tutorial, walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
 
-Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like, from both sides of it.  This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist.  Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
+Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack feels like, from both sides.  This warm-up is required of **every** submission, regardless of the direction you later choose.  A threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist.  Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions.  There is no separate rubric row for the warm-up.
 
 Do both of the following and keep an **adversary's notebook** as you go:
 
 1.  **[Gandalf](https://gandalf.lakera.ai/) (attacker's seat).**  Gandalf is a browser game in which each level guards a password behind progressively stronger defenses; your job is to talk the model into revealing it.  Play until you clear at least the first several levels.  For each level you clear, record in your notebook the exact prompt you used and, in one sentence, *why* it worked: which assumption of the defense did it violate?  When you get stuck, note what the defense appears to be doing and what you would need to get past it.  (Gandalf runs on a hosted model; it is a game, not your infrastructure, so no local setup is involved.)
 2.  **[Tensor Trust](https://tensortrust.ai/) (both seats).**  Tensor Trust is an attack-and-defend game: you write a defense prompt that is supposed to protect an "access code," and you attack other players' defenses.  Write one defense, then attempt at least three attacks.  Record which of your attacks succeeded, which of your defense's assumptions an attacker could exploit, and one defense idea you saw that you would reuse.
 
-In your notebook, close the warm-up by naming the **three techniques** you found most effective as an attacker and, for each, the class of defense from OWASP LLM01 (Prompt Injection) that would blunt it.  Carry these three techniques forward: when you write the shared threat model below, at least one of the concrete attack scenarios you enumerate must be one you personally executed in this warm-up.  In the class session accompanying this lab we run a short attack-and-defend tournament using these same games; participation there is assessed under the ordinary participation rubric, not this lab.
+In your notebook, close the warm-up by naming the **three techniques** you found most effective as an attacker and, for each, the class of defense from OWASP LLM01 (Prompt Injection) that would blunt it.  OWASP is the Open Worldwide Application Security Project, and LLM01 is the first entry on its Top 10 list for LLM applications.  Carry these three techniques forward.  When you write the shared threat model below, at least one of the concrete attack scenarios you enumerate must be one you personally executed in this warm-up.  In the class session accompanying this capstone we run a short attack-and-defend tournament using these same games; participation there is assessed under the ordinary participation rubric, not this capstone.
 
-> **Why this is here and not optional:** every direction in this lab (even the privacy and explainability directions) audits a system that an adversary or a careless user can reach.  Having felt how easily a plausible-looking guardrail falls makes the "what could go wrong at this boundary?" question in your threat model concrete rather than hypothetical.
+> **Why this is here and not optional:** every direction in this capstone (even the privacy and explainability directions) audits a system that an adversary or a careless user can reach.  Once you have felt how easily a plausible-looking guardrail falls, the "what could go wrong at this boundary?" question in your threat model becomes concrete rather than hypothetical.
 
 ## Choose Your Direction
 
-Every submission begins with the shared warm-up and threat-model framing above: you play the adversary, then you name the agent you already built, trace its data and decision flow, and map where it could fail.  Then you pick **one** of the four directions below and carry it out in full depth.  Each is a complete audit-and-harden cycle along one axis of responsible AI, and your single 100-point grade covers the shared threat model plus the one direction you choose.  Read all four before deciding; the right choice is the direction whose failure mode would do the most damage to the specific agent you built (or, for Direction 0, the no-code route if you want to reason about defenses without a new codebase).  Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
+Every submission begins with the shared warm-up and threat-model framing above.  You play the adversary, then you name the agent you already built, trace its data and decision flow, and map where it could fail.  Then you pick **one** of the four directions below and carry it out in full depth.  Each is a complete audit-and-harden cycle along one axis of responsible AI, and Component 1's 100 points cover the shared threat model plus the one direction you choose.  Read all four before deciding.  The right choice is the direction whose failure mode would do the most damage to the specific agent you built, or Direction 0 if you want to reason about defenses without a new codebase.  Do not attempt more than one; depth on one is worth far more than a shallow pass over several.
 
 - **Direction 0: Attack and Policy (no code)**: the low-code route; escalate the shared warm-up into a graded artifact, map each successful attack to a layered defense design, and stress-test it in a paper red-team exchange with another team.  No programming required.
 - **Direction 1: Finding and Defending Against Prompt Injection**: for agents that read untrusted text; red-team the agent, layer defenses, and quantify residual risk.
 - **Direction 2: Privacy Audit for an AI Agent**: for agents that touch sensitive data; inventory PII at every boundary, scrub input and output, and write a governance policy.
 - **Direction 3: AI Explainability with SHAP and LIME**: for agents that make or support decisions; explain a decision model, compare SHAP and LIME, and audit feature proxies.
 
-All four are graded under the same direction-agnostic 100-point rubric at the top of this page; on Direction 0 the Implementation dimension credits concretely specified defenses rather than running code.  Expand your chosen direction below for the full instructions.
+All four are graded under the same 100-point Component 1 rubric at the top of this page.  On Direction 0, the Implementation dimension credits concretely specified defenses rather than running code.  Expand your chosen direction below for the full instructions.
 
 <details markdown="1">
 <summary><strong>Direction 0: Attack and Policy (no code)</strong></summary>
@@ -138,7 +152,7 @@ All four are graded under the same direction-agnostic 100-point rubric at the to
 > - **A web browser only.**  [Gandalf](https://gandalf.lakera.ai/) and [Tensor Trust](https://tensortrust.ai/) are hosted browser games; no local setup, no API key, no programming.  Everything you produce on this route is a written and diagrammed artifact.
 > - **A partner team to swap with** for the Part D red-team exchange (arrange this in the lab session).
 
-This is the **low-code route** through the Responsible AI Capstone.  Instead of instrumenting a codebase, you turn the hands-on attack experience from the shared warm-up into a rigorous, defensible **defense design** and stress-test it against another team.  You still complete the shared warm-up and the shared threat model like everyone else; here those become graded artifacts rather than scaffolding.  Direction 0 is assessed under the **same direction-agnostic rubric** as the other three: Threat and Risk Analysis (25), Implementation (35) (where "implementation" here means the **concrete mechanisms of your defense design**, not running code), Evaluation and Evidence (25), and Writeup and Reflection (15).  The Implementation row explicitly credits "implemented OR concretely specified defenses (Direction 0)," so your points come from how specific, layered, and attack-mapped your defense design is.
+This is the **low-code route** through the Responsible AI Capstone.  Instead of instrumenting a codebase, you turn the hands-on attack experience from the shared warm-up into a rigorous, defensible **defense design**, and you stress-test it against another team.  You still complete the shared warm-up and the shared threat model like everyone else.  Here those become graded artifacts rather than scaffolding.  Direction 0 is assessed under the **same rubric** as the other three: Threat and Risk Analysis (25), Implementation (35), Evaluation and Evidence (25), and Writeup and Reflection (15).  "Implementation" here means the **concrete mechanisms of your defense design**, not running code.  The Implementation row explicitly credits "implemented OR concretely specified defenses (Direction 0)," so your points come from how specific, layered, and attack-mapped your defense design is.
 
 Estimated time: about 3-4 hours for the direction, on top of the shared warm-up and threat model.
 
@@ -210,7 +224,7 @@ Complete the same writeup and reflection required of all directions (see "Delive
 > - **A hosted-model API key OR a local Ollama model**; this direction works either way.  The reference agent is shown with a hosted client, but the Setup Notes at the bottom of this lab give the Ollama option and the exact code changes, and the OWASP labStudentLLM target (Target B) ships a deterministic mock model that runs fully offline.  If you use a hosted key, note that different models have very different injection susceptibility (record the model in every attack-log entry); if you use Ollama, no key or network is needed.
 > - Python 3.10+ and the client library for whichever model you choose.
 
-Choose this direction if the agent you built reads untrusted text: user questions, retrieved documents, tool output, or web content.  You will put that agent on the examination table: stand up a deliberately undefended baseline (your own agent, or the reference agent provided below), red-team it with five categories of prompt-injection attack, layer defenses onto it one at a time, and quantify the risk that survives after every practical control has been applied.  Prompt injection is the most pervasive security vulnerability in LLM-based applications, and this direction is a complete audit-and-harden cycle against it.
+Choose this direction if the agent you built reads untrusted text: user questions, retrieved documents, tool output, or web content.  You will put that agent on the examination table in four steps.  Stand up a deliberately undefended baseline (your own agent, or the reference agent provided below).  Red-team it with five categories of prompt-injection attack.  Layer defenses onto it one at a time.  Then quantify the risk that survives after every practical control has been applied.  Prompt injection is the most pervasive security vulnerability in LLM-based applications, and this direction is a complete audit-and-harden cycle against it.
 
 #### Before You Start
 
@@ -225,12 +239,12 @@ You do not need to memorize either document.  You need enough familiarity to rec
 
 ##### Choose Your Target (build-your-own or the OWASP lab apps)
 
-Part 1 asks you to stand up a deliberately vulnerable agent to attack.  You have two equally acceptable ways to do this; pick whichever fits the agent you want to harden:
+Part 1 asks you to stand up a deliberately vulnerable agent to attack.  You have two equally acceptable ways to do this.  Pick whichever fits the agent you want to harden:
 
-- **Target A (default): build the minimal reference agent below.**  Fastest path; the RAG-style knowledge-base agent in Part 1 is fully specified here and maps cleanly onto the five attack categories in Part 2.
-- **Target B: use the [OWASP labStudentLLM](https://github.com/leinn32/labStudentLLM) vulnerable app suite.**  This open-source teaching repo ships ten deliberately vulnerable FastAPI apps (one per OWASP LLM Top-10 category), each with attack scripts, a fix, tests, and a **deterministic mock LLM** so the labs run fully offline (or you can point them at your local Ollama).  If your agent's real risk is broader than prompt injection alone (excessive agency, sensitive-information disclosure, or vector/embedding weaknesses in your RAG store), start from the matching labStudentLLM app as your baseline instead of the reference agent, then carry it through the same red-team -> defend -> residual-risk cycle.  Cite the specific app(s) you used and keep the exploit -> fix -> test artifacts in your submission.
+- **Target A (default): build the minimal reference agent below.**  This is the fastest path.  The RAG-style knowledge-base agent in Part 1 is fully specified here and maps cleanly onto the five attack categories in Part 2.
+- **Target B: use the [OWASP labStudentLLM](https://github.com/leinn32/labStudentLLM) vulnerable app suite.**  This open-source teaching repo ships ten deliberately vulnerable FastAPI apps (one per OWASP LLM Top-10 category), each with attack scripts, a fix, tests, and a **deterministic mock LLM**, so the labs run fully offline (or you can point them at your local Ollama).  If your agent's real risk is broader than prompt injection alone (excessive agency, sensitive-information disclosure, or vector/embedding weaknesses in your RAG store), start from the matching labStudentLLM app as your baseline instead of the reference agent.  Then carry it through the same red-team -> defend -> residual-risk cycle.  Cite the specific app(s) you used and keep the exploit -> fix -> test artifacts in your submission.
 
-Whichever target you choose, the four graded parts (threat model, red-team, layered defense, residual-risk analysis) are identical; Target B simply gives you a richer, standards-aligned starting codebase.
+Whichever target you choose, the four graded parts (threat model, red-team, layered defense, residual-risk analysis) are identical.  Target B simply gives you a richer, standards-aligned starting codebase.
 
 ##### Tools to Install
 
@@ -260,27 +274,11 @@ ollama serve &
 ollama pull llama3.2
 curl http://localhost:11434/api/tags
 # Expected: {"models":[{"name":"llama3.2",...}]}
-
-## One capstone, two components, 200 points
-
-The Responsible AI **lab** and the Responsible AI in Practice **written assignment** used to be two 100-point deliverables due two days apart in the final week, alongside the Final Project. They are now a single capstone worth 200 points, handed out November 10 and due December 1.
-
-**Component 1 - Build (100 points).** The audit, red-team, and mitigation work specified on this page. You produce evidence about a system's behavior.
-
-**Component 2 - Govern (100 points).** The written analysis specified on **[Responsible AI in Practice]({{ site.baseurl }}/Assignments/ResponsibleAIPractice)** - choose one of its directions. You argue what should be done about that behavior, for a named audience.
-
-Submit both together. The rubric below covers Component 1; the rubric on the Practice page covers Component 2, and the two are averaged into one 200-point grade.
-
-**Why they are one thing.** An audit with no recommendation is a bug report nobody owns; a policy with no evidence is a press release. The capstone asks you to do both about the *same* system, which is the actual professional task. Your Component 2 argument must cite your own Component 1 findings - not a paper you read.
-
-**Prerequisites, all taught before this is handed out:** Training Data, Bias, and Explainability (Nov 10). Governance, Policy, and the Cost of Inference (Nov 17) lands inside the work window, fourteen days before it is due.
-
-
 ```
 
 ##### A Note on Model Choice
 
-Different models have meaningfully different susceptibility to prompt injection.  Claude Sonnet is among the more resistant models; older or less-aligned models (including many open-source models available via Ollama) comply with injection attacks much more readily.  **Record which model you used in every single entry in your attack log.**  If you switch models mid-lab, that switch is a variable that must be documented; results are not comparable across models without noting the change.
+Different models have meaningfully different susceptibility to prompt injection.  Claude Sonnet is among the more resistant models.  Older or less-aligned models (including many open-source models available via Ollama) comply with injection attacks much more readily.  **Record which model you used in every single entry in your attack log.**  If you switch models partway through, that switch is a variable you must document.  Results are not comparable across models without noting the change.
 
 ##### Estimated Time
 
@@ -301,9 +299,9 @@ Different models have meaningfully different susceptibility to prompt injection.
 
 #### Overview
 
-Prompt injection is the most pervasive security vulnerability in LLM-based applications.  Unlike traditional code injection attacks, prompt injection does not exploit a memory error or a parser bug; it exploits the model's fundamental design: it treats all text in its context window as potentially authoritative instruction.  In this lab you will build a deliberately vulnerable agent, attack it systematically, layer defenses one at a time, and analyze what risk remains after every practical control has been applied.
+Prompt injection is the most pervasive security vulnerability in LLM-based applications.  Unlike traditional code injection attacks, prompt injection does not exploit a memory error or a parser bug.  It exploits the model's fundamental design: the model treats all text in its context window as potentially authoritative instruction.  In this direction you will build a deliberately vulnerable agent, attack it systematically, layer defenses one at a time, and analyze what risk remains after every practical control has been applied.
 
-**Before you touch the code, read the full lab.**  The attack methodology in Part 2 and the defense in Part 3 are tightly coupled; you need to understand both before starting either.  In particular, knowing what you will defend against in Part 3 will change how you observe and document your attacks in Part 2.
+**Before you touch the code, read this whole direction.**  The attack methodology in Part 2 and the defense in Part 3 are tightly coupled, so you need to understand both before starting either.  In particular, knowing what you will defend against in Part 3 will change how you observe and document your attacks in Part 2.
 
 ---
 
@@ -724,7 +722,7 @@ Before moving to Part 3, answer these questions in your attack log:
 
 #### Part 3: Defense Implementation
 
-Apply the following defenses **one at a time**.  After adding each defense, re-run all five attacks and record the results in the Defense Results Table below.  This allows you to see exactly which defense blocks which attack.
+Apply the following defenses **one at a time**.  After adding each defense, re-run all five attacks and record the results in the Defense Results Table below.  That way you can see exactly which defense blocks which attack.
 
 **Before Defense 1: Set up `agent_defended.py`**
 
@@ -1138,7 +1136,7 @@ Before moving to Part 4, answer these questions in your attack log:
 
 #### Part 4: Residual Risk Analysis
 
-After all five defenses are in place, some attacks will still succeed, either partially or completely.  This section asks you to analyze what remains and why.
+After all five defenses are in place, some attacks will still succeed, partially or completely.  This part asks you to analyze what remains and why.
 
 ##### Which Attacks Survived All Defenses?
 
@@ -1154,7 +1152,7 @@ Based on your completed defense results table, fill in the survivorship table be
 
 ##### Why Can't Residual Risks Be Fully Mitigated?
 
-For each surviving attack, write 2-3 sentences explaining the *architectural* reason it cannot be fully mitigated through input/output controls alone.  Ground your explanation in how LLMs process context: the model has no privileged instruction register; instructions and data share the same token stream, and the model must infer which text to treat as authoritative.
+For each surviving attack, write 2-3 sentences explaining the *architectural* reason it cannot be fully mitigated through input/output controls alone.  Ground your explanation in how LLMs process context.  The model has no privileged instruction register.  Instructions and data share the same token stream, and the model must infer which text to treat as authoritative.
 
 Consider: Why does system prompt hardening help but not guarantee resistance?  What would it take to build a truly injection-resistant system?  (Hint: consider whether the task requires the model to ever follow instructions in retrieved content.)
 
@@ -1204,7 +1202,7 @@ Before writing your final certification statement, answer these questions:
 
 1.  You applied five defenses.  Which one are you least confident in: the one where you can most easily imagine a real attacker bypassing it?  What would the bypass look like?
 2.  The canary token (Defense 5) detects but does not prevent exfiltration.  Describe a deployment scenario where detection-without-prevention is still valuable enough to be worth implementing.
-3.  Imagine your defended agent were deployed to serve all Ursinus students.  A student discovers Attack C still works some of the time.  They post the working prompt publicly.  What happens next, and what would you do to respond?
+3.  Suppose your defended agent were deployed to serve all Ursinus students.  A student discovers Attack C still works some of the time.  They post the working prompt publicly.  What happens next, and what would you do to respond?
 
 ---
 
@@ -1226,7 +1224,7 @@ Submit the following through the course's secure submission portal:
 
 #### Setup Notes
 
-This lab requires access to an LLM API. The instructor will provide API credentials or a local model endpoint.  If using Anthropic's API, install the client with:
+This direction requires access to an LLM API.  I will provide API credentials or a local model endpoint.  If using Anthropic's API, install the client with:
 
 ```bash
 pip install anthropic
@@ -1238,7 +1236,7 @@ Set your API key as an environment variable:
 export ANTHROPIC_API_KEY="your-key-here"
 ```
 
-If you prefer to use a local model (Ollama, LM Studio, or the course's llmproxy endpoint), adapt the client code to use the OpenAI-compatible endpoint.  The attack and defense methodology is identical regardless of which model you use, though you may observe different susceptibility rates across models; that variation is itself worth noting in your attack log.
+If you prefer to use a local model (Ollama, LM Studio, or the course's llmproxy endpoint), adapt the client code to use the OpenAI-compatible endpoint.  The attack and defense methodology is identical regardless of which model you use.  You may observe different susceptibility rates across models, and that variation is itself worth noting in your attack log.
 
 **Using Ollama instead of Anthropic:**
 
@@ -1370,13 +1368,13 @@ Answer all of the following in your attack log or as a separate section of your 
 > - **Python 3.10+ and a spaCy language model**; install with `pip install spacy presidio-analyzer presidio-anonymizer` and then `python -m spacy download en_core_web_sm` (a one-time ~12 MB model download).  No hosted-model API key is required for the scrubbing work; you audit and instrument the agent you already built.
 > - A working agent from a prior lab (RAG, MCP, or coding) that you can run locally.
 
-Choose this direction if the agent you built touches sensitive data: user queries that carry names or medical details, a RAG index of internal documents, or logs that capture full conversation history.  You will audit the agent you already built for the personally identifiable information it exposes at every boundary, implement scrubbing at its input and output, and write the data-governance and retention policy that would let someone actually rely on it.
+Choose this direction if the agent you built touches sensitive data: user queries that carry names or medical details, a RAG index of internal documents, or logs that capture full conversation history.  You will audit the agent you already built for the personally identifiable information it exposes at every boundary, implement scrubbing at its input and output, and write the data-governance and retention policy that would let someone rely on it.
 
 #### Overview
 
-Every agent system processes sensitive data: user queries that contain names and medical details, RAG indexes that contain internal documents, logs that capture full conversation history.  This lab asks you to audit an agent system you have built (the RAG agent, MCP agent, or coding agent from prior labs) for privacy risks, implement mitigations, and write a data governance policy.
+Every agent system processes sensitive data: user queries that contain names and medical details, RAG indexes that contain internal documents, logs that capture full conversation history.  This direction asks you to audit an agent system you have built (the RAG agent, MCP agent, or coding agent from prior labs) for privacy risks, implement mitigations, and write a data governance policy.
 
-**PII** (Personally Identifiable Information) is any data that can be used to identify a specific individual: names, email addresses, Social Security numbers, medical details, and more.  **GDPR** (General Data Protection Regulation) and **CCPA** (California Consumer Privacy Act) are the two major privacy laws you will reference throughout this lab.
+**PII** (Personally Identifiable Information) is any data that can be used to identify a specific individual: names, email addresses, Social Security numbers, medical details, and more.  **GDPR** (the European Union's General Data Protection Regulation) and **CCPA** (the California Consumer Privacy Act) are the two major privacy laws you will reference throughout this direction.
 
 #### Before You Start
 
@@ -1384,7 +1382,7 @@ Every agent system processes sensitive data: user queries that contain names and
 
 - [ ] You have a working agent from a prior lab (RAG, MCP, or coding agent) that you can run locally
 - [ ] Python 3.10 or later (`python --version`)
-- [ ] You have reviewed the Privacy-Preserving AI activity (linked above)
+- [ ] You have reviewed the Intellectual Property and Privacy activity (linked above)
 
 ##### Environment Setup
 
@@ -1434,7 +1432,7 @@ print('Replace this stub with a test call to your agent')
 
 #### Part 1: PII Inventory
 
-**Why this matters:** You cannot protect data you do not know about.  A PII inventory is the first step in every privacy audit; it forces you to trace data flows through your entire system and find the places where sensitive information enters, moves, and rests.
+**Why this matters:** You cannot protect data you do not know about.  A PII inventory is the first step in every privacy audit.  It forces you to trace data flows through your entire system and find the places where sensitive information enters, moves, and rests.
 
 Map every place in your agent where user or third-party data flows:
 
@@ -1762,7 +1760,7 @@ For each data type above, state the specific purpose. If you cannot state a purp
 
 #### Part 4: Utility-Privacy Trade-off Analysis
 
-**Why this matters:** Privacy controls are not free.  They degrade agent functionality, and it is your job as an AI practitioner to make those trade-offs explicit and defend them.  A control that eliminates the product's value is worse than no control at all.
+**Why this matters:** Privacy controls are not free.  They degrade agent functionality, and your job as an AI practitioner is to make those trade-offs explicit and defend them.  A control that eliminates the product's value is worse than no control at all.
 
 ##### Steps
 
@@ -1840,17 +1838,17 @@ Submit a ZIP containing:
 >
 > - **Python 3.10+ with scikit-learn, SHAP, and LIME** (`pip install scikit-learn shap lime`).  Everything in this direction runs **pure-local with no network and no API key**; you train a small model and explain it entirely on your own machine.
 
-Choose this direction if the agent you built makes or supports decisions (approvals, rankings, classifications, recommendations) where a person affected by the outcome would be entitled to an explanation.  You will open the decision model your agent depends on with two widely deployed explainability techniques, SHAP and LIME, compare where they disagree, and judge honestly whether post-hoc explanations are enough to justify a high-stakes outcome.  If your own earlier agent wraps or calls a tabular decision model, audit that; otherwise, use the synthetic credit-scoring model below, which is built to expose exactly the tensions this direction is about.
+Choose this direction if the agent you built makes or supports decisions (approvals, rankings, classifications, recommendations) where a person affected by the outcome would be entitled to an explanation.  You will open the decision model your agent depends on with two widely deployed explainability techniques, SHAP and LIME, compare where they disagree, and judge honestly whether post-hoc explanations are enough to justify a high-stakes outcome.  If your own earlier agent wraps or calls a tabular decision model, audit that.  Otherwise, use the synthetic credit-scoring model below, which is built to expose exactly the tensions this direction is about.
 
-Black-box AI makes decisions.  Explainability tools open the box, partially.  This lab applies two widely deployed techniques (SHAP and LIME) to a synthetic credit scoring model, then asks you to evaluate whether the explanations they produce are sufficient for real-world use.  The answer, you will discover, is nuanced.
+Black-box AI makes decisions.  Explainability tools open the box, partially.  This direction applies two widely deployed techniques (SHAP and LIME) to a synthetic credit scoring model, then asks you to evaluate whether the explanations they produce are sufficient for real-world use.  The answer, you will discover, is nuanced.
 
-This lab is completed in **pairs using driver/navigator roles**: the driver types while the navigator reviews, questions, and consults documentation, and you must **swap roles at least every 30 minutes**, keeping a brief log of swap times and who held each role.
+Complete this direction in **pairs using driver/navigator roles**.  The driver types while the navigator reviews, questions, and consults documentation.  **Swap roles at least every 30 minutes**, and keep a brief log of swap times and who held each role.
 
 ---
 
 #### Before You Start
 
-**Why credit scoring?**  Credit scoring is a regulated domain governed by the Equal Credit Opportunity Act (ECOA) in the United States and classified as a high-risk AI system under the EU AI Act.  It requires that denied applicants receive an explanation.  It also has features that are simultaneously legitimate predictors of repayment and historically correlated proxies for protected characteristics like race and ethnicity.  This combination (regulated, high-stakes, and riddled with proxy variables) makes credit scoring an ideal domain for studying what explainability tools can and cannot do.
+**Why credit scoring?**  Credit scoring is a regulated domain.  The Equal Credit Opportunity Act (ECOA) governs it in the United States, and the EU AI Act classifies it as a high-risk AI system.  Both require that denied applicants receive an explanation.  Credit scoring also has features that are legitimate predictors of repayment and, at the same time, historically correlated proxies for protected characteristics like race and ethnicity.  This combination (regulated, high-stakes, and full of proxy variables) makes credit scoring an ideal domain for studying what explainability tools can and cannot do.
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
@@ -2008,7 +2006,7 @@ This happens if `np.random.seed(42)` was not called before the data generation. 
 
 #### Part 2: SHAP Global and Local Explanations
 
-SHAP (SHapley Additive exPlanations) uses game-theoretic Shapley values to assign each feature a contribution to each individual prediction.  The global summary aggregates these contributions across many predictions to show overall model behavior.  The local force plot shows the reasoning behind a single prediction.
+SHAP (SHapley Additive exPlanations) uses Shapley values from game theory to assign each feature a contribution to each individual prediction.  A Shapley value is a feature's fair share of the difference between this prediction and the average prediction, averaged over every order in which features could be added.  The global summary aggregates these contributions across many predictions to show overall model behavior.  The local force plot shows the reasoning behind a single prediction.
 
 ##### Step 1: Compute SHAP values.
 
@@ -2211,7 +2209,7 @@ This usually means `explainer(X_test)` was called with `check_additivity=True` (
 
 #### Part 3: LIME Local Explanation
 
-LIME (Local Interpretable Model-agnostic Explanations) works differently from SHAP. Rather than decomposing the model's exact output, LIME perturbs the input around a specific example, runs many perturbed versions through the model, and fits a simple linear model to the results.  The linear model's coefficients are the "explanation."  This makes LIME model-agnostic but also approximate; it is explaining a local linear approximation, not the model's true behavior.
+LIME (Local Interpretable Model-agnostic Explanations) works differently from SHAP.  Rather than decomposing the model's exact output, LIME perturbs the input around a specific example, runs many perturbed versions through the model, and fits a simple linear model to the results.  The linear model's coefficients are the "explanation."  This makes LIME model-agnostic but also approximate.  It explains a local linear approximation, not the model's true behavior.
 
 ##### Step 1: Set up the LIME explainer.
 
@@ -2520,7 +2518,7 @@ Submit a ZIP file containing all of the following.  Items marked with a checkbox
 
 ## Self-Check Before You Submit
 
-Held against the rubric's `proficient` column, which is shared across all directions.
+Check your work against the rubric's `proficient` column, which is shared across all directions.
 
 - [ ] The threat model traces the agent's **full** data and decision flow, not just the part my direction addresses.
 - [ ] Risks are enumerated **at every boundary**, prioritized, with likelihood and impact.
