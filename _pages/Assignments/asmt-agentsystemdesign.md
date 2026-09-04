@@ -5,16 +5,17 @@ title: "CS357: Foundations of Artificial Intelligence - Written Assignment 2: De
 
 info:
   coursenum: CS357
-  purpose: "To build the discipline of designing an agent system on paper first, including its goals, agents, data flow, gates, failure modes, and success criteria, so that ambiguity and risk surface in writing while they are still cheap to fix, before or alongside implementation."
+  purpose: "To build the discipline of designing an agent system on paper first, including its goals, agents, data flow, gates, failure modes, success criteria, and its Observability, Traceability, and Handoff Protocol, so that ambiguity and risk surface in writing while they are still cheap to fix, before or alongside implementation."
   tilt:
-    task: "Choose one direction and produce a complete written design for an agent system: either a spec-first design document (problem statement, agent design table, data-flow diagram, pre-mortem, and measurable success criteria) or a full agent operating system (charter, agent contract, standing prompt with confirmation gates, and handoff files) proven by a governed loop of at least two fresh-context iterations, one of which is interrupted mid-task."
-    criteria: "One shared rubric covers both directions, and I apply it: problem framing and constraints, architecture and specification quality, failure-mode analysis and gate design, verifiability and evidence, and reflection and presentation.  The full breakdown is in the rubric below."
+    task: "Choose one direction and produce a complete written design for an agent system: either a spec-first design document (problem statement, agent design table, data-flow diagram, pre-mortem, measurable success criteria, and an Observability, Traceability, and Handoff Protocol) or a full agent operating system (charter, agent contract, standing prompt with confirmation gates, handoff files, and an Observability, Traceability, and Handoff Protocol skill invoked at start and stop) proven by a governed loop of at least two fresh-context iterations, one of which is interrupted mid-task."
+    criteria: "One shared rubric covers both directions, and I apply it: problem framing and constraints, architecture and specification quality, failure-mode analysis and gate design (including the protocol), verifiability and evidence, and reflection and presentation.  The full breakdown is in the rubric below."
   points: 100
   goals:
     - To articulate the goals, constraints, and rules of an agentic system in writing before or alongside implementation, with every constraint or rule specific enough that a third party could determine whether it was satisfied or enforced
     - To specify the agents that compose a system (their roles, prompts or contracts, inputs, outputs, and capabilities) precisely enough that someone else could build or operate the system from the document alone
     - To trace how data, tasks, and state move through the system, including every handoff, branch, and external call, or every zone of the workspace and the write protocols that govern it
     - To anticipate failure before it happens, through a concrete pre-mortem with detection and mitigation, or through confirmation gates and an autorun/queue/forbidden action classification justified by named failure modes and reversibility reasoning
+    - To write an Observability, Traceability, and Handoff Protocol that says what each step logs, how a decision traces back to a named rule, and what the start/restart handoff file contains, so that an outsider can reconstruct what the system did and a fresh process can resume it
     - To define how an outsider would verify the design works, through third-party-measurable success criteria, or through a governed loop in which each fresh-context iteration resumes an interrupted task from the written state alone, under a stop condition committed before the first iteration ran
     - To reflect honestly on where the design changed, where it leaked, and what revision each discovery motivates
   rubric:
@@ -34,8 +35,8 @@ info:
       description: Failure-Mode Analysis and Gate Design
       preemerging: No pre-mortem or confirmation gates are provided, or risks and gates are copied verbatim without reference to the specific system
       beginning: Risks or gates are present but justified by abstract danger ("this could be bad") rather than a named, concrete failure mode; fewer than the required six pre-mortem risks or ten classified actions are provided
-      progressing: The required coverage is met with mostly sound reasoning, but some detection signals, mitigations, or consequence descriptions remain generic ("we would notice", "be more careful"), or the forbidden lane conflates "very risky" with "no approval can make this safe"
-      proficient: "For Direction A: at least six concrete, system-specific risks each name the agent, input type, and output fault; detection names a specific observable signal and mitigation names an action the system or team could actually take; at least one row addresses contradictory outputs between two agents and at least one addresses user data or privacy. For Direction B: at least ten realistic domain actions are classified autorun/queue/forbidden with explicit reversibility reasoning; every gate is justified by a concrete failure scenario naming the action, the harm, and why after-the-fact recovery is impossible or expensive; and at least one forbidden item carries an argument for why no approval should ever make it safe"
+      progressing: "The required coverage is met with mostly sound reasoning, but some detection signals, mitigations, or consequence descriptions remain generic (\"we would notice\", \"be more careful\"), or the forbidden lane conflates \"very risky\" with \"no approval can make this safe\"; or the Observability, Traceability, and Handoff Protocol is present but lists log fields without showing a decision tracing back to a named rule, or its start/restart handoff file skips rows of the eight-row checklist, or (Direction B) the skill exists but the run brief does not show it firing at start and stop"
+      proficient: "For Direction A: at least six concrete, system-specific risks each name the agent, input type, and output fault; detection names a specific observable signal and mitigation names an action the system or team could actually take; at least one row addresses contradictory outputs between two agents and at least one addresses user data or privacy. For Direction B: at least ten realistic domain actions are classified autorun/queue/forbidden with explicit reversibility reasoning; every gate is justified by a concrete failure scenario naming the action, the harm, and why after-the-fact recovery is impossible or expensive; and at least one forbidden item carries an argument for why no approval should ever make it safe. Both directions: the Observability, Traceability, and Handoff Protocol names the fields logged at each step, shows a decision tracing back to a rule by the rule's name in the trace, and specifies a start/restart handoff file that covers every row of the eight-row checklist from the Observability, Traceability, and Handoff Protocols session; in Direction B the protocol is a skill the agent invokes at start and at stop, and the run brief shows it fired"
     - weight: 20
       description: Verifiability and Evidence
       preemerging: No success criteria or loop evidence is provided, or criteria are purely subjective, or no iteration was actually run
@@ -69,6 +70,9 @@ info:
     - rtitle: "The Critique, Consensus, and the LLM Judge activity, whose extension covers human-in-the-loop oversight, escalation, and appropriate autonomy"
       rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
+    - rtitle: "Observability, Traceability, and Handoff Protocols, where the protocol checklist comes from"
+      rlink: "Activities/liascript-observability.md"
+      liapage: true
 
 tags:
   - design
@@ -81,26 +85,28 @@ tags:
 
 **Handed out** alongside the Design First session; **see the course schedule for the assigned and due dates.**
 
-Every trustworthy agent system exists twice: once as running code, and once on paper: as the specification, contract, and gates that say what it is supposed to do, what it must never do, and how anyone would know the difference.  This assignment asks you to produce that paper system.  Both directions below build the same skill: designing an agent system in writing, before or alongside building it, so that ambiguity and risk surface while they are still cheap to fix.  Direction A designs a system that does not exist yet: a spec-first design document of the kind engineering teams call a design proposal, system spec, or RFC. Direction B designs the operating system *around* an agent: the charter, contract, gates, and handoff state that make it trustworthy, interruptible, and independent of any single model or vendor, and then proves it works by interrupting a session mid-task.  In both, the document *is* the deliverable, and polish matters exactly as much as it would in production, because in Direction B these documents are the production system.
+Every trustworthy agent system exists twice: once as running code, and once on paper, as the specification, contract, and gates that say what it is supposed to do, what it must never do, and how anyone would know the difference.  This assignment asks you to produce that paper system.  Both directions below build the same skill: designing an agent system in writing, before or alongside building it, so that ambiguity and risk surface while they are still cheap to fix.
 
-Read both directions before choosing.  Pick the one that best fits where you are: if you are still shaping what your system should be, Direction A forces the clarity; if you already have an agent (or a domain with real work in it), Direction B forces the accountability.  Complete **one** direction in full depth; depth on one is worth far more than a shallow pass over both.
+Direction A designs a system that does not exist yet: a spec-first design document of the kind engineering teams call a design proposal, system spec, or RFC.  Direction B designs the operating system *around* an agent: the charter, contract, gates, and handoff state that make it trustworthy, interruptible, and independent of any single model or vendor, and then proves it works by interrupting a session mid-task.  Both directions now include an Observability, Traceability, and Handoff Protocol: the part of the design that says what gets logged, how a decision traces back to the rule that produced it, and what a fresh process reads when it starts or restarts.  In both, the document *is* the deliverable, and polish matters exactly as much as it would in production, because in Direction B these documents are the production system.
+
+Read both directions before choosing.  Pick the one that fits where you are: if you are still shaping what your system should be, Direction A forces the clarity; if you already have an agent (or a domain with real work in it), Direction B forces the accountability.  Complete **one** direction in full depth.  Depth on one is worth far more than a shallow pass over both.
 
 ---
 
 ## Before You Start
 
-**This builds on:** the *Design First* session, whose agent table and pre-mortem are the backbone of Direction A, and *How I AI*, whose charter, contract, and handoff documents are the backbone of Direction B; Direction B's loop also draws on the *Coding Agents* session's overnight brief and its treatment of loops that run themselves.  All are taught before this is due.
+**This builds on:** the *Design First* session, whose agent table and pre-mortem are the backbone of Direction A, and *How I AI*, whose charter, contract, and handoff documents are the backbone of Direction B.  Direction B's loop also draws on the overnight brief from *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff* and on the loops that run themselves from *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent*.  The protocol section in both directions comes from *Observability, Traceability, and Handoff Protocols*.  All are taught before this is due.
 
 **You need:** no code and no running system.  Direction B's loop needs an agent you can actually restart from scratch and interrupt once, so if you take it, use a real project (your Project Thread repository, or your `cs357-work`).
 
-**Pace yourself:** most of this assignment is thinking and writing.  The pre-mortem in Direction A and the governed loop in Direction B take the longest and carry the most points, so please don't leave either for the last evening.  Direction B's loop is wall-clock work you cannot compress, because the iterations have to actually run.
+**Pace yourself:** most of this assignment is thinking and writing.  The pre-mortem in Direction A and the governed loop in Direction B take the longest and carry the most points, so please do not leave either for the last evening.  Direction B's loop is wall-clock work you cannot compress, because the iterations have to actually run.
 
 **Choosing a direction.**  Read both.  Then:
 
 - Take **Direction A** if your system does not exist yet, or exists only as an idea you keep re-explaining differently each time.  The document is what forces one version of it.
 - Take **Direction B** if you already have an agent doing real work, or a domain with real work in it.  The loop is unforgiving in a useful way: it tells you exactly which of your beliefs about the project were written down and which were only in your head, and then it tells you again on the next iteration.
 
-**Carry three columns into your design.**  From the *Design First* session: for every agent and every action, be able to say **how it is observed**, **what it can reach**, and **how it is undone**.  Direction A's agent table and Direction B's action classification are both places those answers belong, and a design that cannot answer them for some component has found its own weakest point.
+**Carry three columns into your design.**  From the *Design First* session: for every agent and every action, be able to say **how it is observed**, **what it can reach**, and **how it is undone**.  Direction A's agent table and Direction B's action classification are both places those answers belong, and the protocol section is where "how it is observed" becomes concrete.  A design that cannot answer these questions for some component has found its own weakest point.
 
 > **The single most common way this assignment loses points** is writing constraints that sound like values.  "The system should handle sensitive data responsibly" cannot be checked by anyone.  "The agent may read `students.csv` and may never write to it or transmit it off the machine" can.  Apply the stranger test to every constraint and every rule before you submit: could someone who has never met you determine, from evidence, whether it held?
 
@@ -111,8 +117,9 @@ Read both directions before choosing.  Pick the one that best fits where you are
 A strong submission, in either direction, has these qualities:
 
 - **Constraints and rules are specific and falsifiable.**  "The system must respond in under 5 seconds on commodity hardware" is a constraint; "the system should be fast and helpful" is not.  "Everything under `originals/` is immutable; the agent works only in `derived/`" is a rule; "the agent should be careful with important files" is not.  Every constraint or rule passes this test: could a stranger determine, from evidence, whether it was satisfied?
-- **Put real prompts and contracts in your specifications, and not just role names.**  A weak agent table says: *Summarizer Agent summarizes documents.*  A strong one gives the three-sentence skeleton: persona and scope, primary task, explicit refusal condition.  A weak charter is about documents; a strong charter is about your domain.
+- **Real prompts and contracts appear in the specification, rather than role names alone.**  A weak agent table says: *Summarizer Agent summarizes documents.*  A strong one gives the three-sentence skeleton: persona and scope, primary task, explicit refusal condition.  A weak charter is about documents; a strong charter is about your domain.
 - **Every risk and gate earns its place with a story.**  A weak pre-mortem lists "the model hallucinates."  A strong one names the agent, the input, the observable fault, the detection signal, and the mitigation the team could actually take.  A weak gate justification says "sending messages is risky."  A strong one names the concrete failure (the resignation email auto-answered with a scheduling template) and why no follow-up un-sends it.
+- **A decision can be traced to its rule.**  A weak protocol says "the agent logs what it does."  A strong one lists the fields of every log entry and shows one trace where a refusal names, by name, the rule that caused it.
 - **The verification is honest.**  In Direction A, the success criteria could be applied by someone who has never met you.  In Direction B, the most valuable sentence is usually something like: "The second agent asked which test command to run; my documents never said.  That answer belongs in the charter's testing section, which now reads: ..."
 
 ---
@@ -121,15 +128,15 @@ A strong submission, in either direction, has these qualities:
 
 Both directions carry the full 100 points under the shared rubric above.  Choose **one** and complete it in full.
 
-- **Direction A: Design Before You Build**: produce a complete spec-first design document for an agentic system: problem statement, agent design table, data-flow diagram, six-item pre-mortem, and measurable success criteria.  No implementation required; the document is the deliverable.
-- **Direction B: Design Your Agent Operating System**: author the governing document set for an agent in a domain of your choosing (charter, agent contract, standing prompt with confirmation gates, handoff files, and an action classification), then prove it works by running it as a governed loop: two or more unattended iterations, each starting from a fresh context, one of them interrupted mid-task.
+- **Direction A: Design Before You Build**: produce a complete spec-first design document for an agentic system: problem statement, agent design table, data-flow diagram, six-item pre-mortem, measurable success criteria, and an Observability, Traceability, and Handoff Protocol.  No implementation required; the document is the deliverable.
+- **Direction B: Design Your Agent Operating System**: author the governing document set for an agent in a domain of your choosing (charter, agent contract, standing prompt with confirmation gates, handoff files, an action classification, and an Observability, Traceability, and Handoff Protocol skill), then prove it works by running it as a governed loop: two or more unattended iterations, each starting from a fresh context, one of them interrupted mid-task.
 
 Expand your chosen direction below for the full instructions.
 
 <details markdown="1">
 <summary><strong>Direction A: Design Before You Build</strong></summary>
 
-You will produce a complete system design document for an agentic AI system before writing a single line of code.  You will define what the system does and for whom, design the agents that compose it, trace data as it flows through the system, anticipate failures before they happen, and state success criteria that an outside evaluator could apply.  You do not need to implement anything; the deliverable is the design document only.
+You will produce a complete system design document for an agentic AI system before writing a single line of code.  You will define what the system does and for whom, design the agents that compose it, trace data as it flows through the system, anticipate failures before they happen, state success criteria that an outside evaluator could apply, and specify how the system is observed, traced, and resumed.  You do not need to implement anything; the deliverable is the design document only.
 
 Choose one of the following domains for your system (or propose your own, with instructor confirmation first; an overly ambitious scope will make the document less precise, which will hurt your grade):
 
@@ -138,7 +145,7 @@ Choose one of the following domains for your system (or propose your own, with i
 - **Code reviewer**: reviews submitted code against a rubric and returns structured feedback
 - **Meeting summarizer**: processes a transcript and produces action items, decisions, and open questions
 
-Produce the five components below.
+Produce the six components below.
 
 #### Component 1: Problem Statement
 
@@ -221,9 +228,19 @@ State three to five measurable criteria that a third-party evaluator (someone wh
 
 Criteria should cover distinct dimensions: functional correctness (does it do the right thing?), quality (is the output useful?), and at least one safety or reliability dimension (does it behave appropriately at the boundary?).  If all your criteria are variations on accuracy, you are missing a dimension.  Example row: *Privacy compliance, no participant's real name appears in the summary without consent, automated scan of output against the participant list, zero name appearances in summaries for meetings marked "anonymous."*
 
+#### Component 6: Observability, Traceability, and Handoff Protocol
+
+Specify how a stranger reading your system's logs could reconstruct what it did and why, and how a fresh process could pick up where the last one stopped.  This component follows the *Observability, Traceability, and Handoff Protocols* session and has three parts:
+
+1.  **What is logged at each step.**  For every agent call, tool call, and branch in your data-flow diagram, list the fields the log entry carries.  A table with one row per step type and one column listing its fields is enough.  Each field should be something a checker could read back, not a description of intent.
+2.  **How a decision traces back to a rule.**  Give each constraint in your problem statement and each refusal condition in your agent table a short name.  Whenever the system refuses, escalates, or short-circuits, the trace must carry that rule name.  Show one worked trace: the input, the log entries it produced, the rule name that fired, and the branch taken.
+3.  **What the start/restart handoff file contains.**  Specify the file a fresh process reads when it starts or restarts, covering every row of the eight-row checklist from the *Observability, Traceability, and Handoff Protocols* session.  List the file's fields and give one filled example for a plausible interruption.
+
+A protocol that says "the agent logs its actions" earns nothing here.  The test is whether someone holding only the logs and the handoff file could say which rule produced a given decision and what the next safe action is.
+
 #### Direction A Deliverable
 
-A single PDF or markdown file containing all five components plus the shared reflection responses below.
+A single PDF or markdown file containing all six components plus the shared reflection responses below.
 
 </details>
 
@@ -245,24 +262,26 @@ Starting from the [course templates]({{ site.baseurl }}/files/agent-templates/RE
 3.  **A standing prompt** (`SYSTEMPROMPT.md` style): operating habits and, centrally, **confirmation gates rewritten for your domain's irreversible actions**, plus an escalation rule.
 4.  **Handoff state files** (`.ai/` style): `CURRENT_TASK.md` with completion criteria and a reality-check table, and `SESSION.md` ready to receive entries that end with a next safe action.
 5.  **An action classification**: at least **ten** realistic actions an agent would take in your domain, classified Autorun / Queue / Forbidden, each with one line of reversibility reasoning.
+6.  **An Observability, Traceability, and Handoff Protocol skill**: a reusable instruction the agent must invoke at the start and at the stop of every iteration.  It states what is logged at each step (the fields of each entry), how a decision traces back to a rule (the trace carries the rule's name as written in your charter or standing prompt), and what the start/restart handoff file contains, covering every row of the eight-row checklist from the *Observability, Traceability, and Handoff Protocols* session.  At start, the skill reads the handoff state and logs what it found; at stop, it refuses to let the iteration end until the handoff state satisfies the checklist.
 
 Delete every template section you cannot honestly enforce, and list what you deleted and why (a rule nobody enforces is worse than no rule).  Every gate must earn its place with a concrete failure scenario: the action, the harm, and why after-the-fact recovery is impossible or expensive.  At least one forbidden item should carry an argument for why no approval should ever make it safe.  Retain the batch-threshold and blanket-consent rules with a domain-specific example, or remove them with a defensible argument.
 
 #### Step 3: Run the governed loop
 
-A single handoff proves your documents survive one interruption.  What you actually want to know is whether they survive *repetition*: whether an agent that starts over from nothing, again and again, keeps making forward progress instead of relitigating what the last one already did.  So you will run your document set as a **governed loop**: repeated unattended iterations, each beginning with a fresh context, with your `.ai/` files and workspace as the only thing carried between them.  This is the pattern the *Coding Agents* session calls a self-running loop, and the reason it works is the one the *How I AI* session insists on: the memory lives on disk, not in the conversation.
+A single handoff proves your documents survive one interruption.  What you actually want to know is whether they survive *repetition*: whether an agent that starts over from nothing, again and again, keeps making forward progress instead of relitigating what the last one already did.  So you will run your document set as a **governed loop**: repeated unattended iterations, each beginning with a fresh context, with your `.ai/` files and workspace as the only thing carried between them.  This is the pattern *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent* calls a self-running loop, and the reason it works is the one the *How I AI* session insists on: the memory lives on disk, not in the conversation.
 
 Any agent CLI or chat agent from this course works, and any harness works: a shell `while` loop that re-invokes your agent, or hand-restarts with the history cleared between them.  The requirement is a **fresh context per iteration**, not a particular tool.  If your domain has no digital surface an agent can touch, a rigorous simulated transcript is acceptable; mark it as simulated.
 
-**1.  Write the run brief, and commit it before you start.**  Three things, in the testable-versus-vague discipline you practiced in the *Coding Agents* session:
+**1.  Write the run brief, and commit it before you start.**  Four things, in the testable-versus-vague discipline you practiced in *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff*:
 
 - a **goal** small and concrete enough to be verifiable;
 - an **acceptance checklist** the loop can check on its own, every item binary rather than a judgment call;
-- a **stop condition**: an iteration budget **and** the check that means "done."
+- a **stop condition**: an iteration budget **and** the check that means "done";
+- a **protocol check**: an acceptance item that the Observability, Traceability, and Handoff Protocol skill fired at the start and at the stop of every iteration, so the run brief shows it fired.
 
 Write it down first and do not edit it afterward.  A stop condition you adjust mid-run is not a stop condition; it is a preference.  This is also where your charter earns its keep: the milestone gate you wrote in Step 2 is the natural place for the loop's "done" check to come from.
 
-**2.  Run at least two iterations.**  Seed each one with only your kickoff prompt and your document set (the [handoff kickoff template]({{ site.baseurl }}/files/agent-templates/ai/AGENT_HANDOFF_KICKOFF.md) is already written for exactly this).  Require every iteration to restate the mission, the active task, and the next safe action before it does anything, and to update the handoff state before it stops, for any reason.  Nothing may cross the boundary between iterations except what is written to disk.
+**2.  Run at least two iterations.**  Seed each one with only your kickoff prompt and your document set (the [handoff kickoff template]({{ site.baseurl }}/files/agent-templates/ai/AGENT_HANDOFF_KICKOFF.md) is already written for exactly this).  Require every iteration to invoke the protocol skill, restate the mission, the active task, and the next safe action before it does anything, and to invoke the skill again to update the handoff state before it stops, for any reason.  Nothing may cross the boundary between iterations except what is written to disk.
 
 **3.  Interrupt one of them mid-task.**  At least one iteration must end in a hard stop at an inconvenient moment: an interruption, an exhausted iteration budget, or a simulated quota death.  Not a tidy boundary the agent chose.  The next iteration has to pick that up cold.
 
@@ -270,7 +289,7 @@ Write it down first and do not edit it afterward.  A stop condition you adjust m
 
 **5.  Write the runaway analysis** (one paragraph).  Name the worst thing that could have landed in your workspace if your acceptance criteria had been too weak, and name the charter gate or Forbidden-lane item that would have caught it.  When you are asleep and the loop is not, the acceptance check and the gates are the only supervision the system has.
 
-Include the two handoff files verbatim as of the interrupted iteration, the run brief, the ledger, and the relevant transcript excerpts.
+Include the two handoff files verbatim as of the interrupted iteration, the run brief, the ledger, and the relevant transcript excerpts, including the protocol skill's start and stop invocations.
 
 #### Step 4: Reflect
 
@@ -278,7 +297,7 @@ One page or less: where did the document set hold, where did it leak, which docu
 
 #### Direction B Deliverable
 
-A single PDF or Markdown bundle containing the five documents, the classification table, the run brief, the iteration ledger, the loop evidence (handoff files + transcript excerpts), the runaway analysis, and the reflection.  **Anonymize everything**: no real credentials, tokens, personal data, or identifying information about third parties may appear anywhere in the submission; treat this rule as your first Forbidden-lane item.
+A single PDF or Markdown bundle containing the five documents, the protocol skill, the classification table, the run brief, the iteration ledger, the loop evidence (handoff files + transcript excerpts), the runaway analysis, and the reflection.  **Anonymize everything**: no real credentials, tokens, personal data, or identifying information about third parties may appear anywhere in the submission; treat this rule as your first Forbidden-lane item.
 
 </details>
 
@@ -318,6 +337,7 @@ Held against the rubric's `proficient` column.  Skip the rows for the direction 
 
 - [ ] Every constraint or rule passes the stranger test: someone who has never met me could determine from evidence whether it held.
 - [ ] Nothing in the document is a template section I left unadapted; every retained section is unmistakably about my domain.
+- [ ] The Observability, Traceability, and Handoff Protocol lists the fields logged at each step, shows one trace in which a decision carries the name of the rule that produced it, and specifies a start/restart handoff file covering every row of the eight-row checklist.
 - [ ] The token ledger questions are answered with arithmetic **shown**, grounded in my own tool count and prompt sizes.
 - [ ] The reflection names a specific assumption that changed, a specific leak or surprise, and the revision each motivates.
 - [ ] Real names and sensitive data are redacted.
@@ -342,6 +362,7 @@ Held against the rubric's `proficient` column.  Skip the rows for the direction 
 - [ ] Every gate is justified by a concrete failure scenario: the action, the harm, and why recovery afterwards is impossible or expensive.
 - [ ] At least one forbidden item argues why **no** approval could make it safe.
 - [ ] The run brief's acceptance checklist and stop condition were **committed before iteration one** and were not edited during the run.
+- [ ] The protocol skill was invoked at the start and at the stop of every iteration, and the run brief's protocol check shows it fired.
 - [ ] Two or more iterations ran, and each began from a **fresh context**: nothing crossed between them except what was written to disk.
 - [ ] One iteration was interrupted at a real mid-task moment, not a convenient boundary.
 - [ ] `SESSION` and `CURRENT_TASK` are included verbatim as of that interrupted iteration, each ending with a next safe action and an evidence-cited reality check.
