@@ -39,7 +39,7 @@ OAuth 2.0 matters here because, without authentication, any process on the same 
 
 Complete these prerequisite activities first:
 
-- [MCP Server Activity]({{ site.baseurl }}/Assignments/LocalAgent/Direction4): introduces the MCP protocol and the Python SDK
+- [MCP: Connecting Agents to Tools and Your Obsidian Vault]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md): the Tue Sep 29 session that introduces the MCP protocol and the Python SDK
 - [The Local Agent Stack Activity]({{ site.baseurl }}/Tutorials/AgentStack): walks through running a local AI agent and wiring in tools
 
 ##### Install Required Tools
