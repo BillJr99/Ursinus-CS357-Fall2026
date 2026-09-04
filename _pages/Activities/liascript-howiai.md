@@ -471,7 +471,7 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
 
 ---
 
--> Coming Up Next: In *Memory and the Small Context Window Principle* we take the idea underneath today's vault and make it precise.  You have just built external memory by hand; next session asks why an agent needs it, what the context window actually costs, and how to keep each agent's working set small enough to be reliable.
+-> Coming Up Next: In *Observability, Traceability, and Handoff Protocols* we take the idea underneath today's vault and make it precise, and write the start, stop, restart, and handoff protocol as a skill.  You have just built external memory by hand; next session asks why an agent needs it, what the context window actually costs, and how to keep each agent's working set small enough to be reliable.
 
 ## Further Reading
 

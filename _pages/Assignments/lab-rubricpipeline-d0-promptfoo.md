@@ -8,8 +8,8 @@ info:
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: "../RubricPipeline"
-  - rtitle: LLM-as-Judge Activity
-    rlink: "Activities/liascript-llmasjudge.md"
+  - rtitle: Judge Pipeline Workshop Activity
+    rlink: "Activities/liascript-rubricworkshop.md"
     liapage: true
   - rtitle: Evaluating Outputs Activity
     rlink: "Activities/liascript-evaluatingoutputs.md"
@@ -32,7 +32,7 @@ To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agr
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [LLM-as-Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-llmasjudge.md)
+- [Judge Pipeline Workshop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md)
 - [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 

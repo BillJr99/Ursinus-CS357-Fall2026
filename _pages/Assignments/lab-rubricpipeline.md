@@ -66,16 +66,16 @@ info:
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The work is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, all human score sheets, and reflection answers that each cite a specific agreement figure (kappa or percent agreement), bias effect size, or evidence-faithfulness finding from the lab rather than restating the prompt
   readings:
-    - rtitle: "LLM-as-Judge Activity"
-      rlink: "Activities/liascript-llmasjudge.md"
+    - rtitle: "Critique, Consensus, and the LLM Judge Activity"
+      rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
     - rtitle: "Evaluating Outputs Activity"
       rlink: "Activities/liascript-evaluatingoutputs.md"
       liapage: true
     - rtitle: "Testing Agents"
       rlink: "../Tutorials/TestingAgents"
-    - rtitle: "LLM as Judge Activity"
-      rlink: "Activities/liascript-llmasjudge.md"
+    - rtitle: "Judge Pipeline Workshop Activity"
+      rlink: "Activities/liascript-rubricworkshop.md"
       liapage: true
     - rtitle: "Observability"
       rlink: "../Tutorials/Observability"
@@ -124,7 +124,7 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [LLM-as-Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-llmasjudge.md): judge prompting, structured output, fail-closed policies
+- [Judge Pipeline Workshop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md): judge prompting, structured output, fail-closed policies
 - [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
 
 **Tools to install:**

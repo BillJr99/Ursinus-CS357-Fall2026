@@ -53,8 +53,8 @@ info:
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The program is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific accuracy figure, transcript excerpt, or named failure mode from the lab rather than restating the prompt
   readings:
-    - rtitle: "Multi-Agent Debate Activity"
-      rlink: "Activities/liascript-multiagentdebate.md"
+    - rtitle: "Critique, Consensus, and the LLM Judge Activity"
+      rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
     - rtitle: "Stochastic Consensus Activity"
       rlink: "../Assignments/MultiAgentDebate"
@@ -78,7 +78,7 @@ In this lab, you and your partner will build and rigorously compare the two aggr
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [Multi-Agent Debate Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-multiagentdebate.md): independent rounds, peer-informed revision, majority vote
+- [Critique, Consensus, and the LLM Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiqueconsensusjudge.md): independent rounds, peer-informed revision, majority vote
 - [Stochastic Consensus Activity]({{ site.baseurl }}/Assignments/MultiAgentDebate): sampling, embedding clustering, synthesis
 
 **Tools to install:**

@@ -47,8 +47,8 @@ info:
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The program is submitted according to the directions with externalized configuration in a JSON file, located exception handling with tracebacks on all model calls, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific numeric result or transcript excerpt from the lab
   readings:
-    - rtitle: "Critique and Refine Activity"
-      rlink: "Activities/liascript-critiquerefine.md"
+    - rtitle: "Critique, Consensus, and the LLM Judge Activity"
+      rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
     - rtitle: "Orchestration Activity"
       rlink: "Activities/liascript-orchestration.md"
@@ -78,7 +78,7 @@ In this lab, you and your partner will build the evaluator-optimizer workhorse o
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
-- [Critique and Refine Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Critique, Consensus, and the LLM Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiqueconsensusjudge.md): the generator/critic/refine loop and stopping rules
 - [Orchestration Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestration.md): chaining agents with structured outputs
 
 **Tools to install:**

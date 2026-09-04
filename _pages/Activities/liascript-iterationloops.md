@@ -392,7 +392,7 @@ Use the Karpathy loop when a runnable check already exists or can be written in 
 
 ## 6.  Loops That Run Themselves
 
-The Sep 8 deck's Extension C described loops that remove you from the gate entirely: the agent finishes, a script restarts it, and it keeps going while you sleep.  Each iteration begins with a fresh context window, and the memory lives on disk: the codebase, a running `TODO` file, and the `git` history.  The four patterns it named, and the one column that matters when nobody is watching:
+Loops that remove you from the gate entirely exist, and this deck is where the course describes them: the agent finishes, a script restarts it, and it keeps going while you sleep.  Each iteration begins with a fresh context window, and the memory lives on disk: the codebase, a running `TODO` file, and the `git` history.  The four patterns, and the one column that matters when nobody is watching:
 
 | Pattern | What it is | How it stops | Safety model |
 |---|---|---|---|
@@ -451,7 +451,7 @@ Why does a Ralph loop start each iteration with a *fresh* context window instead
 
 - This course: [AI-Assisted Development and Vibe Coding](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VibeCoding), the three supervision levels, spec-first development, and the planted-bug diff this deck builds on.
 - This course: [Governing Coding Agents: Charters, Handoffs, and Durable Memory](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentGovernance), the Karpathy rules beside a production charter, and the `.ai/` handoff directory in full.
-- This course: [Coding Agents: OpenCode, Spec-First Development, and Reading the Diff](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md), Section 2b on the plan and Extension C on the loops that run themselves.
+- This course: [Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md), Section 2b on the plan and Section 2c on plan mode; the loops that run themselves.
 - This course: [Lab: OpenCode Studio](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/OpenCodeStudio), the `spec.md`, `system_prompt.txt`, critique document, and refine turn that Model 3 runs against.
 - Andrej Karpathy, [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) (gist, April 2026): the pattern behind keeping the agent's memory in files it maintains and you curate.
 - Andrej Karpathy.  "Software 2.0."  *Medium* (2017).

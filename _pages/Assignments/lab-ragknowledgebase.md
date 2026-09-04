@@ -78,9 +78,8 @@ info:
       rlink: "../Tutorials/LocalModels"
     - rtitle: "Data Cards and Model Cards"
       rlink: "../Tutorials/DataCards"
-    - rtitle: "Sampling, Temperature, and Generation Activity"
-      rlink: "Activities/liascript-samplinggeneration.md"
-      liapage: true
+    - rtitle: "Sampling, Temperature, and Generation"
+      rlink: "../Tutorials/SamplingAndTemperature"
     - rtitle: "Evaluating Agent Outputs Activity"
       rlink: "Activities/liascript-evaluatingoutputs.md"
       liapage: true
@@ -1752,7 +1751,7 @@ This direction is completed in **pairs using driver/navigator roles**: the drive
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Sampling, Temperature, and Generation Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
+- [Sampling, Temperature, and Generation]({{ site.baseurl }}/Tutorials/SamplingAndTemperature): stochastic sampling and output distributions
 - [Evaluating Agent Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
 - [Multimodal Agents]({{ site.baseurl }}/Tutorials/MultimodalAgents): sending images to local vision models
 

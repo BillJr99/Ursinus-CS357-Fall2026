@@ -106,7 +106,7 @@ Then pick **one** of the four directions below and carry it out in depth.  Each 
 
 ## Shared Warm-Up: Feel the Attack Before You Model It
 
-**Prep deck for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentcasestudies.md) walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
+**Prep deck for Direction 1.**  [Prompt Injection: Attacks and Defenses]({{ site.baseurl }}/Tutorials/AgentCaseStudies#prompt-injection-attacks-and-defenses) walks the attack classes this capstone asks you to model and mitigate.  Work through it before the warm-up if you are taking the security direction.
 
 Before you threat-model an agent in the abstract, spend one focused session experiencing what an attack actually feels like, from both sides of it.  This warm-up is required of **every** submission regardless of the direction you later choose, because a threat model written by someone who has personally broken a guardrail is sharper than one written from a checklist.  Your findings here feed directly into the shared threat model and the reflection, both of which are graded dimensions; there is no separate rubric row for the warm-up.
 
@@ -273,7 +273,7 @@ Submit both together. The rubric below covers Component 1; the rubric on the Pra
 
 **Why they are one thing.** An audit with no recommendation is a bug report nobody owns; a policy with no evidence is a press release. The capstone asks you to do both about the *same* system, which is the actual professional task. Your Component 2 argument must cite your own Component 1 findings - not a paper you read.
 
-**Prerequisites, all taught before this is handed out:** Training Data, Bias, and Explainability (Nov 10). Governance and Policy Writing (Nov 17) and The Environmental Cost of Inference (Nov 19) land inside the work window, twelve and fourteen days before it is due.
+**Prerequisites, all taught before this is handed out:** Training Data, Bias, and Explainability (Nov 10). Governance, Policy, and the Cost of Inference (Nov 17) lands inside the work window, fourteen days before it is due.
 
 
 ```

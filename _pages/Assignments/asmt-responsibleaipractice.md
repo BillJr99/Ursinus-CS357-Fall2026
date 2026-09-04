@@ -58,7 +58,7 @@ info:
       rlink: "Activities/liascript-biasdata.md"
       liapage: true
     - rtitle: "Governance Activity"
-      rlink: "Activities/liascript-governance.md"
+      rlink: "Activities/liascript-governancecost.md"
       liapage: true
     - rtitle: "NIST AI Risk Management Framework"
       rlink: "https://www.nist.gov/itl/ai-risk-management-framework"
@@ -103,7 +103,7 @@ Read all five directions before choosing, then pick **one** and carry it out in 
 
 ## Before You Start
 
-**This builds on:** the *Training Data, Bias, and Explainability* session, *Intellectual Property, Privacy, and the Case for Local AI*, *Governance and Policy Writing*, and *The Environmental Cost of Inference*.  Each direction leans on a different one, and all four are taught before this is due.
+**This builds on:** the *Training Data, Bias, and Explainability* session, *Intellectual Property, Privacy, and the Case for Local AI*, and *Governance, Policy, and the Cost of Inference*.  Each direction leans on a different one, and all three are taught before this is due.
 
 **You need:** no code.  Direction E needs a week of your own AI usage logged, so **start the log the day this is handed out** even if you have not chosen a direction yet; it is the only part of this assignment you cannot do retroactively.  Direction E also reads token counts off your own requests, for which `files/agent-templates/deliberation-harness/tools/token_meter.py` in the course repository is a ready-made instrument; running it is a few lines and estimating instead is an accepted fallback, so this is still a no-code direction.
 
@@ -265,7 +265,7 @@ Apply these to every sentence before submitting; they are the same tests real co
 
 #### Part 0: Policy Clause Workshop (Warm-Up)
 
-> This workshop is run during the **Governance and Policy Writing class session**; when that session says "see the Governance direction," this is the sub-section it means.  The workshop itself is an **in-class activity for everyone**: students in class that day complete it there regardless of which direction they choose, and doing so is credited as class participation.  **Only Direction C students** additionally submit the workshop artifact as part of this assignment; your instructor will provide brief written feedback on it before the full governance document is due.
+> This workshop is run during the **Governance, Policy, and the Cost of Inference class session**; when that session says "see the Governance direction," this is the sub-section it means.  The workshop itself is an **in-class activity for everyone**: students in class that day complete it there regardless of which direction they choose, and doing so is credited as class participation.  **Only Direction C students** additionally submit the workshop artifact as part of this assignment; your instructor will provide brief written feedback on it before the full governance document is due.
 
 **The Hospital Sepsis AI Scenario.**  Read this abbreviated incident report:
 
@@ -413,7 +413,7 @@ Notice what that second row does.  A local request's *operational* cost is rough
 
 > **The denominators are assumptions, not measurements.**  They are the largest source of uncertainty in this entire direction, and they are the one number you are expected to argue with rather than accept.  Run your figures under the denominators above and under one you defend yourself, report both, and say which way the conclusion moved.  A part that reports one number and hides the assumption inside it earns *progressing* at best.
 
-> **A note on offsets.**  Meta states that 100 percent of the Llama 3 emissions above were offset by its sustainability program.  The table counts the emissions rather than the offset, for the reason the *Environmental Cost of Inference* activity gives: an offset shifts accounting responsibility without reducing the energy the training run consumed.  If you disagree, argue it; that is a legitimate position and it needs to be argued rather than assumed.
+> **A note on offsets.**  Meta states that 100 percent of the Llama 3 emissions above were offset by its sustainability program.  The table counts the emissions rather than the offset, for the reason the *Governance, Policy, and the Cost of Inference* activity gives: an offset shifts accounting responsibility without reducing the energy the training run consumed.  If you disagree, argue it; that is a legitimate position and it needs to be argued rather than assumed.
 
 Pick a value within each range that matches your best estimate of model size and provider (lower end for smaller models or cleaner grids), and state which value you chose and why.
 

@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Hallucinations and Evaluating Agent Outputs
 
-In the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* activity we saw that a model samples plausible continuations, and a model that writes fluently can be fluently wrong.  This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness**, because an agent we cannot measure is an agent we cannot trust or improve.  We move from **mechanism → taxonomy → measurement → mitigation previews**.
+In the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* tutorial (https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SamplingAndTemperature) we saw that a model samples plausible continuations, and a model that writes fluently can be fluently wrong.  This module names the phenomenon of **hallucination**, explains *why* next-token prediction produces it, and builds our first **evaluation harness**, because an agent we cannot measure is an agent we cannot trust or improve.  We move from **mechanism → taxonomy → measurement → mitigation previews**.
 
 ---
 
@@ -182,7 +182,7 @@ Examine the PASS/FAIL output line by line.  Before discussing with your group, f
 
 # Part IIb: Designing the Benchmark You Are About to Need
 
-Triaging bad answers one at a time does not scale.  A benchmark is how you turn "it seems better" into a number you can defend, and you will need a real one: the *RAG Quality Checkup* lab opens by asking you for a ten-item golden set with a prediction and a rationale per item, and every evaluation after that leans on it.  Sketch it here, while today's failure modes are still fresh; Exercise 1 at the end of this session turns the sketch into the set you keep.
+Triaging bad answers one at a time does not scale.  A benchmark is how you turn "it seems better" into a number you can defend, and you will need a real one: the RAG Quality Checkup pathway of the *RAG Knowledge Base* lab opens by asking you for a ten-item golden set with a prediction and a rationale per item, and every evaluation after that leans on it.  Sketch it here, while today's failure modes are still fresh; Exercise 1 at the end of this session turns the sketch into the set you keep.
 
 ## What Makes a Good Benchmark?
 

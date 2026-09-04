@@ -513,7 +513,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** *The Critique and Refine Pattern* activity is next: a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
+-> **Coming Up Next:** *Critique, Consensus, and the LLM Judge: One Loop, Three Uses* is next: one generate-evaluate-decide loop used three ways, a critic that feeds issues back, several generators compared by meaning, and a judge that scores against a rubric.
 
 ---
 
@@ -600,7 +600,7 @@ The subtasks share no context (that independence is what lets them run in parall
 input --> [ Generate ] --> draft <==> [ Critique ] --> (revise until pass OR budget) --> output
 ```
 
-The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates.  This is the subject of its own activity: [Critique-and-Refine](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md).
+The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates.  This is the subject of its own activity: [Critique, Consensus, and the LLM Judge](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiqueconsensusjudge.md).
 
 ### 4e.  Debate / Stochastic Consensus (many agents, vote or cluster)
 
@@ -612,7 +612,7 @@ input --> +--> [ Agent B ] --+--> [ Vote / Cluster ] --> consensus
           '--> [ Agent C ] --'
 ```
 
-The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate).
+The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Critique, Consensus, and the LLM Judge](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiqueconsensusjudge.md) and [Stochastic Consensus](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate).
 
 Every shape above is *fixed*: even the critique loop and the debate vote follow a control flow you authored and can draw on a whiteboard before running.  What changes in the next section is who draws that diagram.
 

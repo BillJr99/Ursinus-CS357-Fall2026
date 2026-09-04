@@ -379,7 +379,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 4.  *Case watch.*
 
-   *What to do:* Find one currently active AI copyright or privacy case or regulatory action (search the news), and summarize the question it will settle in two sentences.  We will pool these in the *Governance and Policy Writing* activity as the governance landscape.
+   *What to do:* Find one currently active AI copyright or privacy case or regulatory action (search the news), and summarize the question it will settle in two sentences.  We will pool these in the *Governance, Policy, and the Cost of Inference* activity as the governance landscape.
 
    *Starter hint:* Search for terms like "AI copyright lawsuit 2024 2025," "generative AI training data lawsuit," "AI privacy enforcement action," or "state AI privacy law."  Look for cases involving large language models, image generators, or AI training data scraping.
 
@@ -399,7 +399,7 @@ Now that you understand both IP and privacy as legal frameworks, this part asks 
 
 ## -> Coming Up Next
 
-In the *Governance and Policy Writing* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly.  Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6; they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
+In the *Governance, Policy, and the Cost of Inference* activity, you will move from understanding what data your systems handle to writing the governance documents that formally commit you to handling it responsibly.  Bring your data-flow diagrams and the three-sentence disclosure you drafted in Question 6; they become direct inputs to your policy, and the privacy analysis feeds the Responsible AI Capstone.
 
 ## Further Reading
 

@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Training Data and Bias
 
-The *Agentic Case Studies: Migration, Browsing, and Research Agents* activity closed our study of how agents behave; Unit 4 begins where every model begins: with data.  You watched *Coded Bias* before class; today we connect Joy Buolamwini's discovery (facial analysis failing darkest-skinned women at rates orders of magnitude above lightest-skinned men) to the mechanics you now command: training distributions, sampling, consensus, and agents that *act*.  We take today in this order: **where bias enters → measuring it → what agents add to the stakes → mitigations and their limits**.
+The *Evaluating Agents With a Rubric: The Judge Pipeline Workshop* session closed our study of how agents behave; Unit 4 begins where every model begins: with data.  You watched *Coded Bias* before class; today we connect Joy Buolamwini's discovery (facial analysis failing darkest-skinned women at rates orders of magnitude above lightest-skinned men) to the mechanics you now command: training distributions, sampling, consensus, and agents that *act*.  We take today in this order: **where bias enters → measuring it → what agents add to the stakes → mitigations and their limits**.
 
 ---
 
@@ -167,7 +167,7 @@ for occ in ["nurse", "engineer", "kindergarten teacher", "electrician"]:
 
 6.  Suppose a hiring-assistant *agent* drafts outreach messages and, primed by pronoun associations like the ones you measured, subtly varies warmth or formality by the occupation's inferred gender.  No single message would be flagged as discriminatory.  What measurement, run over *many* drafts, would expose this pattern?
 
-   *Hint:* Generate 50 outreach messages for "nurses applying for a position" and 50 for "engineers applying for a position."  Run your LLM-as-judge rubric (from the *Evaluating Agents: LLM-as-Judge and Rubric Pipelines* activity) on all 100, scoring each for warmth, formality, encouragement, and professional tone.  Compare the score distributions.  What statistical test would you run to determine whether any difference is statistically significant rather than random variation?
+   *Hint:* Generate 50 outreach messages for "nurses applying for a position" and 50 for "engineers applying for a position."  Run your LLM-as-judge rubric (from the *Evaluating Agents With a Rubric: The Judge Pipeline Workshop* activity) on all 100, scoring each for warmth, formality, encouragement, and professional tone.  Compare the score distributions.  What statistical test would you run to determine whether any difference is statistically significant rather than random variation?
 
 A resume-screening agent shows equal average approval rates overall but was validated only on resumes from one region's universities.  The *Coded Bias*-informed concern is:
 

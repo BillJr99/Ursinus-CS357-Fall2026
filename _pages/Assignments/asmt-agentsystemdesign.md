@@ -66,8 +66,8 @@ info:
     - rtitle: "The Orchestration activity, Part IIb on loops that recover: control flow, reflection, and recovery (checkpointing and termination design)"
       rlink: "Activities/liascript-orchestration.md"
       liapage: true
-    - rtitle: "The Critique and Refine activity, whose extension covers human-in-the-loop oversight, escalation, and appropriate autonomy"
-      rlink: "Activities/liascript-critiquerefine.md"
+    - rtitle: "The Critique, Consensus, and the LLM Judge activity, whose extension covers human-in-the-loop oversight, escalation, and appropriate autonomy"
+      rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
 
 tags:
@@ -286,11 +286,11 @@ A single PDF or Markdown bundle containing the five documents, the classificatio
 
 ## Required for Both Directions: Token Ledger Questions
 
-Whichever direction you choose, close your submission with this short worked-theory section: the by-hand budget math from the Tool Use session's token ledger and the Memory and Small Context Window session, applied to *your* designed system.  Show your arithmetic; these are graded within the **Verifiability and Evidence** rubric row, because a design whose costs you cannot compute is a design you cannot verify.
+Whichever direction you choose, close your submission with this short worked-theory section: the by-hand budget math from the Tool Use session's token ledger and Model 1 of the Observability, Traceability, and Handoff Protocols session (the Memory and the Small Context Window Principle tutorial works the same arithmetic), applied to *your* designed system.  Show your arithmetic; these are graded within the **Verifiability and Evidence** rubric row, because a design whose costs you cannot compute is a design you cannot verify.
 
 1.  **Schema overhead.**  Your design advertises some number of tools.  Using ~80 tokens per schema, compute the per-turn token overhead of your tool menu, and the overhead per turn that is *wasted* on tools the turn does not use in your system's most common workflow.  State one design change (e.g., a sub-agent holding some tools, per the Small Context Window principle) and recompute.
 2.  **Conversation growth.**  Assume your system re-sends full history each turn and averages some tokens per exchange (state your estimate and justify it from your prompt skeletons).  Compute total tokens *sent* across a 10-turn session (show why the total grows roughly quadratically rather than linearly) and identify the turn at which your chosen model's context window overflows.
-3.  **The mitigation, priced.**  For one mitigation from the memory session (sliding window with a pinned summary, or summarize-and-restart), recompute question 2's total and state what information your system loses in exchange.
+3.  **The mitigation, priced.**  For one mitigation from the memory tutorial or the Observability session (sliding window with a pinned summary, or summarize-and-restart), recompute question 2's total and state what information your system loses in exchange.
 
 ## Submission Instructions
 
