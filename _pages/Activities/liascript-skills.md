@@ -177,6 +177,8 @@ A skill that is vague will be applied differently on every run, and you will not
 3. **Instructions.**  Numbered rules, each concrete enough to check.  Not "write a good subject line" but "keep the subject to 50 characters or fewer."  Concrete constraints can be tested; abstract ones cannot.
 4. **Test.**  One pass-or-fail check per rule, plus the negative-trigger request from step 2.
 
+Steps 1 and 2 are where most of the ambiguity lives, and the fastest way to clear it is to let the agent ask.  A skill in the grill-me / interview-me style does exactly that: before it builds anything, it asks you numbered multiple-choice questions, each with a recommended default, and it records your answers as part of the spec.  Three menued questions ("Which files may this skill touch?  (a) only `src/`, recommended; (b) `src/` and `tests/`; (c) anywhere") cost less than one wrong guess, and the answers become the constraints that step 3's rules enforce and step 4's tests check.  The OpenCode Studio lab's kickoff skill is this pattern, so the `commit-message` skill below is a good place to practice it: decide now which two questions it should ask before it writes a subject line.
+
 The body of a skill has a recognizable shape, and this security-review skill from the design-first session shows it: a role sentence, a numbered list of checks, and an exact output format.
 
 ```markdown
