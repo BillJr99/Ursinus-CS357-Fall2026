@@ -297,7 +297,7 @@ Rotation is not optional and not tradeable: the point is that everyone practices
 
 ## Intra-Team Check-Ins 1-3
 
-> **Bring to class.**  Each review round runs on real artifacts: the Stakeholder Brief draft at the *RAG Quality* session, the proposal at *Agentic Case Studies*, and your gallery-walk artifact plus SQR cards at *Project Studio and Gallery Walk*.  A round with nothing to review is a round wasted.
+> **Bring to class.**  Each review round runs on real artifacts: the Stakeholder Brief draft at the *RAG Quality* session, the proposal at *Project Studio: Sprint and Threat Model*, and your gallery-walk artifact plus SQR cards at *Project Studio and Gallery Walk*.  A round with nothing to review is a round wasted.
 
 The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol**: one Strength with evidence, one genuine Question, one Risk with a mitigation.  The **[Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview)** carries the protocol card; bring it to each review round.
 

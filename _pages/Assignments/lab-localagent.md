@@ -802,7 +802,7 @@ Trace the run as a team.  Expect two round-trips to the model: on step 0 the mod
 
 2.  The `Observation:` is appended with `"role": "user"`, even though no human typed it.  Why does the loop impersonate the user here, and what would break if you used `"role": "assistant"` instead?
 
-3.  This loop grows `messages` by two entries every step.  Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost?  (We name this problem, and its fix, in the *Memory and the Small Context Window Principle* activity.)
+3.  This loop grows `messages` by two entries every step.  Connect that to the `get_weather` example: after ten tool calls, what is being re-sent to the model on every turn, and what does that cost?  (We name this problem, and its fix, in the [Memory and the Small Context Window Principle]({{ site.baseurl }}/Tutorials/MemoryAndContext) tutorial and the *Observability, Traceability, and Handoff Protocols* session.)
 
 4.  Replace the mock `get_weather` with a real tool of your choice (a search call, a file read, a database lookup).  What in the loop has to change, and what stays exactly the same?  *(Almost nothing changes; that is the point: the shape of the loop is independent of the tools.)*
 
@@ -885,10 +885,10 @@ This lab stops at a working agent loop with reliable structured output.  Making 
 
 ## Choose Your Direction
 
-Pick **one** direction below; the single 100-point grade covers the core work plus your chosen direction.  For Directions 1-6, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
+Pick **one** direction below; the single 100-point grade covers the core work plus your chosen direction.  For Directions 1-7, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
 
 - **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration.  Students who choose Direction 0 complete its Parts A-E **in place of** core Parts 1-3; the Before You Start setup, Part 4's skill, the evaluation protocol, and the writeup expectations are shared with everyone else.
-- **Directions 1-6 build on top of** the core lab: complete Parts 1-4 first, then extend in your chosen direction.  Direction 5 is the exception to Part 4: the three skills you author there satisfy it, and they are in addition to the two you already wrote in OpenCode Studio.
+- **Directions 1-7 build on top of** the core lab: complete Parts 1-4 first, then extend in your chosen direction.  Direction 5 is the exception to Part 4: the three skills you author there satisfy it, and they are in addition to the two you already wrote in OpenCode Studio.
 
 Each direction now lives on its own page.  The table below summarizes what each one asks of you; read the "What this direction requires" box at the top of a direction's page before committing to it.
 
@@ -901,5 +901,6 @@ Each direction now lives on its own page.  The table below summarizes what each 
 | [Direction 4](LocalAgent/Direction4): Build and Deploy an MCP Server with OAuth 2.0 | An MCP server exposing real tools, gated behind an OAuth 2.0 client-credentials flow and driven from an agent | Python packages + Docker for a local mock OAuth server; free; a local Ollama-based agent fallback is built in | 5-7 |
 | [Direction 5](LocalAgent/Direction5): Build and Test Your Own Agent Skills | A confirmation-guardrail skill, an Obsidian-vault memory skill, and a two-agent handoff skill with a claim protocol, each loaded by name and verified with a scripted test harness.  Builds on the two skills and the single-writer handoff you already wrote in OpenCode Studio | Free GitHub account; OpenCode and Obsidian (both free) with your local model; a second agent session for the handoff tests | 6-8 |
 | [Direction 6](LocalAgent/Direction6): Build Your Own AI Coach | A working web app whose core runs without AI, plus a language model layered on top through one provider-agnostic, defensively parsed API call | Nothing beyond the core lab on the keyless local-model path; a cloud key is optional | 5-8 |
+| [Direction 7](LocalAgent/Direction7): Coding Agent and Cowork Agent, Same Task | The same bounded task driven twice against local Ollama, once through opencode and once through a cowork-style agent in Open WebUI, with both traces compared on a fixed rubric and a paragraph on which kind of agent fits which kind of task | Nothing beyond the core lab setup plus the opencode install from Week 1 | 4-6 |
 
 Whichever direction you choose, fold its deliverables into the same submission ZIP and readme as the core lab, and treat its stated expectations as the standard your direction work must meet.

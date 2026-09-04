@@ -339,8 +339,8 @@ schedule:
     rlink: "Tutorials/Hardware"
 - week: "2"
   date: "0"
-  title: "Prompt Engineering as Agent Design: Personas and System Prompts"
-  link: "Activities/liascript-promptengineering.md"
+  title: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff"
+  link: "Activities/liascript-codingagents.md"
   liapage: true
   deliverables:
   - dtitle: "Participation: Overview Assignment Due"
@@ -356,34 +356,37 @@ schedule:
     points: "3"
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
-  - rtitle: "Mitchell, Chapter 3, part 2 of 4: what the model is actually doing when it takes in your prompt"
-  - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
-    rlink: "https://philarchive.org/rec/CHAWWT-8"
-  - rtitle: "Bring your working Ollama setup from Week 1; today's workshop edits system prompts against a live model, and you will want the temperature dial from Section 3b within reach."
+  - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
+  - rtitle: "Bring your cs357-work repository and the working opencode install from Week 1 (Step 8).  Today you drive the agent against a written specification and read its diff, so a broken setup costs you the session."
     rlink: false
+  - rtitle: "OpenCode Studio, the lab handed out today.  Read Part 1 and the Before You Start section before class so the charter questions are familiar"
+    rlink: "Assignments/OpenCodeStudio"
+  - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drive today"
+    rlink: "Tutorials/AgentCLIs"
+  - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, the risk that arrives with the convenience"
+    rlink: "Tutorials/CodingAgentSecurity"
+  - rtitle: "What a container isolates, and how to size an agent's blast radius before you hand it your machine.  This is the background section of the Local Agent Lab's containerization direction"
+    rlink: "Assignments/LocalAgent/Direction3"
 - week: "2"
   date: "1"
-  title: "Tokens, Embeddings, and Attention: How Agents Represent and Mix Meaning"
-  link: "Activities/liascript-tokensembeddings.md"
+  title: "Skills: Design One, Then Measure It"
+  link: "Activities/liascript-skills.md"
   liapage: true
   deliverables:
-  - dtitle: "Written Assignment: Prompt Patterns and AI by Hand Handed Out"
-    dlink: "Assignments/PromptPatterns"
+  - dtitle: "Written Assignment: Skill Design Study Handed Out"
+    dlink: "Assignments/SkillDesignStudy"
     points: "100"
-    rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
+    rubricpath: "_pages/Assignments/asmt-skilldesignstudy.md"
   readings:
-  - rtitle: "Mitchell, Chapter 2 (targeted review: revisit the representation sections with today's embeddings lens)"
-  - rtitle: "Nielsen, Neural Networks and Deep Learning, Chapter 1"
-    rlink: "http://neuralnetworksanddeeplearning.com/"
-  - rtitle: "AI by Hand (Yeh): the attention worksheets, which today's worked example in Model 3 follows"
-  - rtitle: "Worksheet: A Neural Network Forward Pass by Hand (printable)"
-    rlink: "files/activity-neuralnets/nn_by_hand_quadratic_full.pdf"
-  - rtitle: "Bring the printed Neural Network by Hand worksheet, or a tablet you can write on."
+  - rtitle: "Mitchell, Chapter 3, part 2 of 4: what the model is doing when it takes in your prompt"
+  - rtitle: "Writing, configuring, and publishing skills for opencode and pi.ai, in the background section of Local Agent Lab Direction 5.  Today's deck builds the first skill with you; read this so the file layout is not new"
+    rlink: "Assignments/LocalAgent/Direction5"
+  - rtitle: "Bring your working Ollama setup and your opencode install.  The second half of class runs the same task with and without a skill and compares the results."
     rlink: false
 - week: "3"
   date: "0"
-  title: "Coding Agents: OpenCode, Spec-First Development, and Reading the Diff"
-  link: "Activities/liascript-codingagents.md"
+  title: "Prompt Engineering as Agent Design: System Prompts, Personas, and Comparing Models"
+  link: "Activities/liascript-promptengineering.md"
   liapage: true
   deliverables:
   - dtitle: "Project: Signed Team Charter (Forming) Due"
@@ -391,26 +394,29 @@ schedule:
     points: "3"
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
-  - rtitle: "Bring your cs357-work repository and a working opencode from Week 1 (Step 8), along with the charter, contract, and skills you have written so far for the OpenCode Studio lab.  Today is that lab's mid-flight checkpoint: we drive the agent against a real specification and read the diff together, so a broken setup costs you the session."
+  - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's system-prompt and sampling behavior in mind"
+  - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
+    rlink: "https://philarchive.org/rec/CHAWWT-8"
+  - rtitle: "Why Different Answers Every Time?  Sampling, Temperature, and Generation.  Read Parts I and II before class; Part IIc of today's deck uses the temperature and seed settings it explains"
+    rlink: "Tutorials/SamplingAndTemperature"
+  - rtitle: "Tokens, Embeddings, and Attention: How Models Represent Meaning.  Optional background for the persona and comparison work; read Part I at minimum"
+    rlink: "Tutorials/TokensEmbeddingsAttention"
+  - rtitle: "AI by Hand: Tokens, Cosine, Attention, Softmax, and a Forward Pass.  Optional worked arithmetic for anyone who wants to see the numbers behind temperature and similarity"
+    rlink: "Tutorials/AIByHand"
+  - rtitle: "Bring your working Ollama setup from Week 1 and the charter, contract, and skills you have written so far for the OpenCode Studio lab.  Today is that lab's mid-flight checkpoint, and the workshop edits system prompts against a live model."
     rlink: false
-  - rtitle: "OpenCode Studio, the lab this session sits inside.  Bring your open questions about the charter, the skill trigger, or the diff review"
-    rlink: "Assignments/OpenCodeStudio"
-  - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drove today"
-    rlink: "Tutorials/AgentCLIs"
-  - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, which is the risk that arrives with the convenience"
-    rlink: "Tutorials/CodingAgentSecurity"
-  - rtitle: "What a container actually isolates, and how to size an agent's blast radius before you hand it your machine.  This is the background section of the Local Agent Lab's containerization direction"
-    rlink: "Assignments/LocalAgent/Direction3"
 - week: "3"
   date: "1"
-  title: "Why Different Answers Every Time?  Sampling, Temperature, and Generation"
-  link: "Activities/liascript-samplinggeneration.md"
+  title: "The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent"
+  link: "Activities/liascript-iterationloops.md"
   liapage: true
   readings:
-  - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's sampling and generation behavior in mind"
-  - rtitle: "Jurafsky and Martin, Speech and Language Processing (3rd ed. draft), Chapter 3: N-gram Language Models"
-    rlink: "https://web.stanford.edu/~jurafsky/slp3/"
+  - rtitle: "AI-Assisted Development and Vibe Coding: the three supervision levels and the spec-first habit that today's loops build on"
+    rlink: "Tutorials/VibeCoding"
+  - rtitle: "Governing Coding Agents: the charter, Karpathy's rules, and the handoff directory"
+    rlink: "Tutorials/AgentGovernance"
+  - rtitle: "Bring the OpenCode Studio artifact you have so far.  Today's second half runs it through one gauntlet round."
+    rlink: false
 - week: "4"
   date: "0"
   title: "Hallucinations and Evaluating Agent Outputs"
@@ -452,7 +458,7 @@ schedule:
     rlink: "https://python.useinstructor.com/integrations/ollama/"
 - week: "5"
   date: "0"
-  title: "Connecting Agents to the World: MCP and APIs"
+  title: "MCP: Connecting Agents to Tools and Your Obsidian Vault"
   link: "Activities/liascript-mcp.md"
   liapage: true
   deliverables:
@@ -465,28 +471,34 @@ schedule:
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
+  - rtitle: "Optional, five minutes: install Obsidian before class.  Model 3 puts an MCP server in front of a vault, and it is more useful on your own notes"
+    rlink: "https://obsidian.md"
+  - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the read path and write path that today's Model 3 exposes as tools"
+    rlink: "Tutorials/ObsidianSync"
   - rtitle: "MCP, REST APIs, and OAuth 2.0 together, in the background section of Local Agent Lab Direction 4"
     rlink: "Assignments/LocalAgent/Direction4"
   - rtitle: "GitHub Superpowers for AI Developers: gitingest, getmcp.io, deepwiki, gdagram, and github.dev, for turning a repository into something an agent can read"
     rlink: "Tutorials/GitHubPowerTools"
 - week: "5"
   date: "1"
-  title: "Retrieval-Augmented Generation with Chroma"
+  title: "RAG Knowledge Base: Code and No-Code Routes"
   link: "Activities/liascript-rag.md"
   liapage: true
   deliverables:
-  - dtitle: "Written Assignment: Prompt Patterns and AI by Hand Due"
-    dlink: "Assignments/PromptPatterns"
+  - dtitle: "Written Assignment: Skill Design Study Due"
+    dlink: "Assignments/SkillDesignStudy"
     points: "100"
-    rubricpath: "_pages/Assignments/asmt-promptpatterns.md"
+    rubricpath: "_pages/Assignments/asmt-skilldesignstudy.md"
   readings:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
   - rtitle: "LangChain RAG from Scratch (video)"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
+  - rtitle: "Tokens, Embeddings, and Attention: Part II, semantic search in twenty lines, is the retrieval step of today's pipeline"
+    rlink: "Tutorials/TokensEmbeddingsAttention"
 - week: "6"
   date: "0"
-  title: "RAG Quality: Chunking, Clustering, and Reranking"
+  title: "RAG Quality: Chunking and Measuring Retrieval"
   link: "Activities/liascript-ragquality.md"
   liapage: true
   deliverables:
@@ -496,15 +508,17 @@ schedule:
     rubricpath: "_pages/Assignments/lab-localagent.md"
   - dtitle: "Lab: RAG Knowledge Base Handed Out"
     dlink: "Assignments/RAGKnowledgeBase"
-    points: "100"
+    points: "200"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Please bring your team's Stakeholder Brief draft, because the peer review round works on real drafts."
     rlink: false
+  - rtitle: "The RAG Quality Checkup pathway of the RAG Knowledge Base lab, handed out today: the golden set, the checkup worksheet, and the regression harness that today's metrics feed"
+    rlink: "Assignments/RAGKnowledgeBase"
 - week: "7"
   date: "1"
-  title: "How I AI: A Vault, a Charter, and Agents That Talk Through GitHub (plus open studio)"
+  title: "How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox"
   link: "Activities/liascript-howiai.md"
   liapage: true
   deliverables:
@@ -524,22 +538,16 @@ schedule:
     dlink: "Assignments/StakeholderBrief"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
-  - dtitle: "Lab: RAG Quality Checkup Checkpoint Handed Out"
-    dlink: "Assignments/RAGCheckup"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
   - rtitle: "Bring your stuck points and your pipeline-in-progress.  Part III is an open studio and it is only as useful as the problems you bring to it."
-  - rtitle: "Optional, five minutes: install Obsidian before class if you want to follow Part I on your own machine"
-    rlink: "https://obsidian.md"
   - rtitle: "The Second Brain in depth: Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
     rlink: "Tutorials/SecondBrain"
   - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the full read path and write path"
     rlink: "Tutorials/ObsidianSync"
 - week: "8"
   date: "0"
-  title: "Memory and the Small Context Window Principle"
-  link: "Activities/liascript-memorycontext.md"
+  title: "Observability, Traceability, and Handoff Protocols"
+  link: "Activities/liascript-observability.md"
   liapage: true
   deliverables:
   - dtitle: "Lab: Tools and MCP Due"
@@ -548,6 +556,10 @@ schedule:
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
+  - rtitle: "Memory and the Small Context Window Principle: why an agent that remembers everything gets worse, and the four kinds of memory today's protocols write down"
+    rlink: "Tutorials/MemoryAndContext"
+  - rtitle: "Agent Observability and Tracing: the three pillars and OpenTelemetry, which today's deck applies to your own agents"
+    rlink: "Tutorials/Observability"
 - week: "8"
   date: "1"
   title: "Design First: Plan Your Agent System Before You Build It"
@@ -559,11 +571,11 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-agentsystemdesign.md"
   readings:
-  - rtitle: "Writing, configuring, and publishing skills for opencode and pi.ai, in the background section of Local Agent Lab Direction 5"
+  - rtitle: "The handoff skill from Local Agent Lab Direction 5, Part C: the claim protocol your design document must specify"
     rlink: "Assignments/LocalAgent/Direction5"
 - week: "9"
   date: "0"
-  title: "Orchestration and Agent Teams: Pipelines, Routers, and Specialists over Monoliths"
+  title: "Orchestration and Multi-Agent Patterns"
   link: "Activities/liascript-orchestration.md"
   liapage: true
   deliverables:
@@ -576,10 +588,14 @@ schedule:
     rlink: "Tutorials/AgentFrameworks"
 - week: "9"
   date: "1"
-  title: "The Critique and Refine Pattern"
-  link: "Activities/liascript-critiquerefine.md"
+  title: "Critique, Consensus, and the LLM Judge: One Loop, Three Uses"
+  link: "Activities/liascript-critiqueconsensusjudge.md"
   liapage: true
   deliverables:
+  - dtitle: "Lab: Multi-Agent Patterns Handed Out"
+    dlink: "Assignments/MultiAgentDebate"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
   - dtitle: "Project: Literature Review Handed Out"
     dlink: "Assignments/LitReview"
     points: "100"
@@ -590,31 +606,27 @@ schedule:
     rubricpath: "_pages/Projects/proj-finalprojectproposal.md"
   - dtitle: "Lab: RAG Knowledge Base Due"
     dlink: "Assignments/RAGKnowledgeBase"
-    points: "100"
+    points: "200"
     rubricpath: "_pages/Assignments/lab-ragknowledgebase.md"
   readings:
   - rtitle: "From Second Brain to Chief of Staff: one personal agent followed into production"
     rlink: "Tutorials/ProductionAssistant"
-- week: "10"
-  date: "0"
-  title: "Multi-Agent Debate and Stochastic Consensus"
-  link: "Activities/liascript-multiagentdebate.md"
-  liapage: true
-  deliverables:
-  - dtitle: "Lab: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Handed Out"
-    dlink: "Assignments/MultiAgentDebate"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
-  readings:
-  - rtitle: "Reading Response / Discussion: post a short response before class, when does a multi-agent design help, and when does it just cost tokens?"
-  - rtitle: "Please post your reading response before class, since the debate exercise starts from the positions you staked out."
-    rlink: false
-  - rtitle: "Stochastic multi-agent consensus: sampling, clustering by meaning, and synthesis, in Part 2 of the Multi-Agent Patterns Lab"
+  - rtitle: "Stochastic multi-agent consensus: sampling, clustering by meaning, and synthesis, in Part 2 of the Multi-Agent Patterns Lab handed out today"
     rlink: "Assignments/MultiAgentDebate"
 - week: "10"
+  date: "0"
+  title: "Agents That Talk: Multi-Agent Communication Through GitHub and Dropbox, and Threat Modeling"
+  link: "Activities/liascript-agentcommunication.md"
+  liapage: true
+  readings:
+  - rtitle: "Reading Response / Discussion: post a short response before class.  When does a multi-agent design help, and when does it just cost tokens?"
+  - rtitle: "Agentic Case Studies: Migration, Browsing, and Research Agents.  Read the two cases and the threat-modeling part; today's second half runs the incident simulation on your own project"
+    rlink: "Tutorials/AgentCaseStudies"
+  - rtitle: "Benjamin, Race After Technology, Chapters 1-2: case studies in discriminatory design"
+- week: "10"
   date: "1"
-  title: "Evaluating Agents: LLM-as-Judge and Rubric Pipelines"
-  link: "Activities/liascript-llmasjudge.md"
+  title: "Evaluating Agents With a Rubric: The Judge Pipeline Workshop"
+  link: "Activities/liascript-rubricworkshop.md"
   liapage: true
   deliverables:
   - dtitle: "Written Assignment: Design Your Agent System Due"
@@ -642,10 +654,6 @@ schedule:
     dlink: "Assignments/LitReview"
     points: "3"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
-  - dtitle: "Lab: RAG Quality Checkup Checkpoint Due"
-    dlink: "Assignments/RAGCheckup"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   - dtitle: "Responsible AI Capstone Handed Out"
     dlink: "Assignments/ResponsibleAI"
     points: "200"
@@ -669,11 +677,11 @@ schedule:
   - rtitle: "Crawford, Atlas of AI, Chapter 6: Affect / the politics of data"
 - week: "12"
   date: "0"
-  title: "Governance and Policy Writing"
-  link: "Activities/liascript-governance.md"
+  title: "Governance, Policy, and the Cost of Inference"
+  link: "Activities/liascript-governancecost.md"
   liapage: true
   deliverables:
-  - dtitle: "Lab: Multi-Agent Patterns (Critique, Refine, Debate, Consensus) Due"
+  - dtitle: "Lab: Multi-Agent Patterns Due"
     dlink: "Assignments/MultiAgentDebate"
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
@@ -681,10 +689,12 @@ schedule:
   - rtitle: "Crawford, Atlas of AI, Chapter 1, Earth: the mineral and energy costs of computation"
   - rtitle: "Reading Response / Discussion: post a short response before class on the carbon and water cost of a deployment you would run"
   - rtitle: "Christian, The Alignment Problem: any one chapter (for example, the section on reward and reinforcement)"
+  - rtitle: "AI for Accessibility: Opportunity, Gaps, and Universal Design.  Optional; the accessibility audit is one of the policy sections you may draft today"
+    rlink: "Tutorials/AIAccessibility"
 - week: "12"
   date: "1"
-  title: "The Environmental Cost of Inference"
-  link: "Activities/liascript-environmentalai.md"
+  title: "Evaluation Workshop II: Run Your Rubric Against Your Project"
+  link: "Activities/liascript-evalworkshop2.md"
   liapage: true
   deliverables:
   - dtitle: "Project: Literature Review, Team Synthesis Due"
@@ -692,11 +702,12 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
-  - rtitle: "Crawford, Atlas of AI, Chapter 1 - Earth: the mineralogical and energy substrate of computation"
+  - rtitle: "Bring your Rubric Pipeline judge as it stands and three artifacts from your final project for it to grade.  Today's workshop runs the judge against your own work and audits the disagreements."
+    rlink: false
 - week: "13"
   date: "0"
-  title: "Agentic Case Studies: Migration, Browsing, and Research Agents"
-  link: "Activities/liascript-agentcasestudies.md"
+  title: "Project Studio: Sprint and Threat Model"
+  link: "Activities/liascript-projectsprint.md"
   liapage: true
   deliverables:
   - dtitle: "Lab: Rubric Pipeline Due"
@@ -704,7 +715,8 @@ schedule:
     points: "100"
     rubricpath: "_pages/Assignments/lab-rubricpipeline.md"
   readings:
-  - rtitle: "Benjamin, Race After Technology, Chapters 1-2: case studies in discriminatory design"
+  - rtitle: "Bring your integrated project and your proposal.  The peer review of proposals and the threat-model checklist both run on what you bring."
+    rlink: false
 - week: "14"
   date: "0"
   title: "Project Studio and Gallery Walk"
@@ -756,11 +768,11 @@ This course is about building agents you understand and can run yourself.  The s
 
 I have designed this course around deliberate choices, in the spirit of Universal Design for Learning.  There are many routes through it and several ways to demonstrate what you have learned, and none of them is the "remedial" path.  You have real authorship over your semester.
 
-- **Choose your direction.**  Everyone completes the same **7 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
-- **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, a spreadsheet-and-Open-WebUI run sheet for the RAG Quality Checkup, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
+- **Choose your direction.**  Everyone completes the same **6 labs**, **3 written assignments**, and **1 team final project** (nothing on the schedule is optional), and every one of them offers **directions** you choose inside the assignment, so you build the same core skill as your classmates, then extend it toward what interests you.  Written Assignment 2 offers a design-document or agent-operating-system direction; Written Assignment 3 offers philosophy, model-cards, governance, regulation, or carbon-cost directions; the final project offers three (a Custom Agent Team, a Responsible AI Audit, or an Open-Source Agent).  The hands-on routes and the analytical routes are equally valid ways to earn your grade, so please build the balance that fits how you learn.
+- **Every lab is within reach, on more than one road.**  Every lab has a programming pathway that asks for only intro-level Python, with starter code provided: you extend a working scaffold, never start from a blank page.  **Every lab also has a supported no-code or low-code pathway**, graded on the same rubric, for the same credit: OpenWebUI configuration for the Local Agent and Tools and MCP labs, a Langflow canvas for the RAG Knowledge Base, declarative promptfoo YAML for the Rubric Pipeline, chat windows and a spreadsheet for the Multi-Agent Patterns lab and its Critique and Refine part, a spreadsheet-and-Open-WebUI run sheet for the RAG Quality Checkup pathway inside the RAG Knowledge Base lab, and an attack-and-policy track for the Responsible AI Capstone.  Each lab opens with a **Choose Your Path** table so the decision is in front of you before you start rather than after, and each rubric row states how it is earned on each route, so "equal credit" is something you can check rather than something I assert.
 - **Analytical routes are real routes.**  Written Assignments 2 and 3 and Final Project Direction B (the Responsible AI Audit) are fully non-programming paths.  Taking one of them is a real choice about how you want to work, and I do not read it as avoidance.
 - **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
-- **Depth inside every lab.**  Each of the 7 labs opens with a shared core that everyone builds, then a menu of **directions**: instruction design and agent governance, handoffs between sessions, local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
+- **Depth inside every lab.**  Each of the 6 labs opens with a shared core that everyone builds, then a menu of **directions**: instruction design and agent governance, handoffs between sessions, local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, privacy, explainability, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
 - **Scaffolding you can hold your own work against.**  Every lab and written assignment opens with **Before You Start**, which tells you what it builds on, what to install, and what order to do things in, and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do.  The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
 - **The depth is in the activity, not in a list of links.**  Each session's activity carries the theory, the worked example, and the code, and where a topic runs past the seventy-five minutes we have together, it continues in an extension section at the end of that same activity, clearly marked as self-paced.  Nothing graded assumes those sections.  The readings on the schedule are books, papers, tutorials, and the occasional thing you play with in a browser, and each one says plainly what it is.
 

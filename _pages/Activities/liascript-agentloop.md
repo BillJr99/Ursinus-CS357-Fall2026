@@ -223,7 +223,7 @@ Run (or examine the projected run of) the agent above as a team.  Pay attention 
 
    > *Hint: Think about what `eval` can do in Python even with `__builtins__` restricted.  Also think about what the model might put inside `calc(...)` if it is confused about the tool's purpose.*
 
-4.  What happens to the conversation `memory` list as steps accumulate?  Predict a specific problem this causes for long-running agents.  (We name this problem in the *Memory and the Small Context Window Principle* activity.)
+4.  What happens to the conversation `memory` list as steps accumulate?  Predict a specific problem this causes for long-running agents.  (We name this problem in the *Memory and the Small Context Window Principle* tutorial, https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MemoryAndContext.)
 
    > *Hint: Language models can only read a fixed amount of text at once, their "context window."  What happens when `memory` grows beyond that limit?*
 

@@ -45,9 +45,9 @@ info:
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
     - rtitle: "Agentic CLIs: the three paradigms, permission gates, and routing tools through your local model"
-      rlink: "../Tutorials/AgentCLIs"
+      rlink: "../../Tutorials/AgentCLIs"
     - rtitle: "Agent Observability and Tracing"
-      rlink: "../Tutorials/Observability"
+      rlink: "../../Tutorials/Observability"
 
 tags:
   - agents

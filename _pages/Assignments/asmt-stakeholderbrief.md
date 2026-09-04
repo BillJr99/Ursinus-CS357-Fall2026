@@ -145,7 +145,7 @@ The protocol has four phases.  Your interview packet (an appendix to the brief) 
 
 ## Interlude: Your Own First Draft, Written Without AI
 
-> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *Connecting Agents to the World* session, written individually and without AI **before** your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality* session for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
+> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session, written individually and without AI **before** your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality* session for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
 
 Due individually, after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date.  **3 points, assessed within Class Activities and Participation, on completion only.**
 
