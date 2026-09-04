@@ -241,7 +241,7 @@ Install it and confirm the trigger before you measure anything: create `.agents/
 
 4.  Rule 4 has two halves: name every file, and say why rather than what.  Only the first half has a rubric item.  Why was the second half left out of the rubric, and what would you need to score it?
 
-   > *Hint: "Names `search_memory.py`" is a string check.  "Explains why" is a judgment.  The *LLM-as-Judge* session later in the term is about scoring judgments; today's rubric sticks to what a string check can decide.*
+   > *Hint: "Names `search_memory.py`" is a string check.  "Explains why" is a judgment.  The *Critique, Consensus, and the LLM Judge* session later in the term is about scoring judgments; today's rubric sticks to what a string check can decide.*
 
 5.  Predict, before Part III runs anything: which rubric item will `llama3.2` fail most often *without* the skill?  Which will it still fail *with* the skill?  Write both predictions down; you will check them against the table.
 
