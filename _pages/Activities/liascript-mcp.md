@@ -10,15 +10,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# Connecting Agents to the World: MCP and APIs
+# MCP: Connecting Agents to Tools and Your Obsidian Vault
 
-In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent; that approach does not scale to the world.  Today we study how tools become **shared infrastructure**: web **APIs** as the world's function registry, and the **Model Context Protocol (MCP)** as a standard way for any agent to discover and call any tool server.  We move from **the services you already use → APIs → the N-by-M problem → MCP architecture → building a tiny tool server → a no-code alternative**.
+In the *Tool Use and Function Calling* activity each team hand-wired tools into one agent.  That approach does not scale to the world.  Today tools become shared infrastructure: web APIs (Application Programming Interfaces) are the world's function registry, and the Model Context Protocol (MCP) is a standard way for any agent to discover and call any tool server.  You leave with a tiny tool server you built yourself, the same server extended to read and write your Obsidian vault, and a trust checklist for connecting servers you did not write.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -27,13 +27,13 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
 | **API (Application Programming Interface)** | A published contract that lets one program call functions in another program over the network, without knowing how the other program works internally. | Calling `GET /weather?city=Philadelphia` to get current weather data from a weather service. |
-| **REST API** | A style of web API where you send requests to URLs (called endpoints) and receive data back as JSON text. REST stands for Representational State Transfer. | `GET https://api.weather.gov/points/40.19,-75.46` returns campus weather as JSON. |
-| **MCP (Model Context Protocol)** | A standard protocol that allows any AI agent to discover and call tools from any compliant tool server, without custom integration code for each pair. Think of it as USB for AI tools. | Your agent calls `GET /tools/list` to discover what a server can do, then calls `POST /tools/call` to use a tool. |
-| **N-by-M Problem** | If you have N agent applications and M services, bespoke (custom, one-off) integration requires up to N × M separate adapters. MCP reduces this to N + M by providing one standard both sides follow. | 4 agents × 6 services = 24 adapters without MCP; 4 + 6 = 10 with MCP. |
-| **Tool Discovery** | The ability of an agent to ask a server at runtime "what can you do?" rather than having the tool list hard-coded in the agent's source code. | `requests.get("http://localhost:8765/tools/list")` returns the current tool menu dynamically. |
-| **JSON-RPC** | A protocol for making remote function calls by sending JSON messages. MCP's full specification is built on top of JSON-RPC. | `{"method": "tools/call", "params": {"name": "hours", "arguments": {"facility": "library"}}}` |
+| **REST API** | A style of web API where you send requests to URLs (called endpoints) and receive data back as JSON text.  REST stands for Representational State Transfer. | `GET https://api.weather.gov/points/40.19,-75.46` returns campus weather as JSON. |
+| **MCP (Model Context Protocol)** | A standard protocol that lets any AI agent discover and call tools from any compliant tool server, without custom integration code for each pair.  Think of it as USB for AI tools. | Your agent calls `GET /tools/list` to discover what a server can do, then calls `POST /tools/call` to use a tool. |
+| **N-by-M Problem** | With N agent applications and M services, bespoke (custom, one-off) integration needs up to N × M separate adapters.  MCP reduces this to N + M because both sides follow one standard. | 4 agents × 6 services = 24 adapters without MCP; 4 + 6 = 10 with MCP. |
+| **Tool Discovery** | The agent asks a server at runtime "what can you do?" instead of carrying a hard-coded tool list in its source code. | `requests.get("http://localhost:8765/tools/list")` returns the current tool menu. |
+| **JSON-RPC** | A protocol for making remote function calls by sending JSON messages.  The full MCP specification is built on JSON-RPC. | `{"method": "tools/call", "params": {"name": "hours", "arguments": {"facility": "library"}}}` |
 | **OAuth 2.0** | An authorization standard that lets a user grant an app limited, revocable access to their account on another service without sharing their password; the app receives a scoped token instead. | Clicking "Allow this app to read my Google Calendar" issues a token, not your password. |
-| **No-code automation / connector** | A platform that builds service-to-service workflows by configuring pre-built "connectors" (each wrapping a service's OAuth/REST API) instead of writing integration code. | Power Automate, Zapier, Make, and IFTTT expose Google, Asana, and hundreds of services as ready-made connectors. |
+| **No-code automation / connector** | A platform that builds service-to-service workflows by configuring pre-built connectors (each wrapping a service's OAuth/REST API) instead of writing integration code. | Power Automate, Zapier, Make, and IFTTT expose Google, Asana, and hundreds of services as ready-made connectors. |
 
 ---
 
@@ -43,50 +43,53 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 | Minutes | What we do |
 |---|---|
-| 0-10 | Part I, the integration problem: why N times M connectors was never going to work |
-| 10-20 | The unassisted problem statement you brought, before your team drafts the brief |
-| 20-55 | Part II, build the tiny tool server and connect a client to it |
-| 55-70 | Trace one request end to end and name every hop |
-| 70-75 | Part III, synthesis and the reflection prompt |
+| 0-10 | Part I, the integration problem: the services you already use, then why N times M connectors was never going to work |
+| 10-20 | Model 1, count the adapters and report the arithmetic |
+| 20-40 | Part II, build the tiny tool server and connect a client to it |
+| 40-60 | Part IIb, put a vault of Markdown notes behind the same server and trace one gated write |
+| 60-70 | Part III, start the exercises: add a tool and confirm the client discovers it |
+| 70-75 | Report out and the reflection prompt |
 
 ---
 # Part I: The Integration Problem
 
 ## Warm-Up: The Services You Already Use
 
-Before we study the integration problem in the abstract, make it personal.  As a team, brainstorm the online services and apps each of you relies on in a typical week: email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
+Make the integration problem personal before you study it in the abstract.  As a team, brainstorm the online services and apps each of you relies on in a typical week: email and calendars, task and project managers, banking and budgeting, cloud storage, music, campus systems.
 
-For every service someone names, ask the question this entire unit turns on: **could an agent reach it, and how?**  Investigate whether each service exposes:
+For every service someone names, ask the question this whole unit turns on: could an agent reach it, and how?  Check whether each service exposes:
 
-- an **MCP server**, an agent can discover and call its tools directly through the protocol we study today;
-- an **OAuth 2.0 / REST API**, an agent can call it over HTTP with the user's delegated, revocable permission; or
+- an **MCP server**, so an agent can discover and call its tools directly through the protocol we study today;
+- an **OAuth 2.0 / REST API**, so an agent can call it over HTTP with the user's delegated, revocable permission; or
 - **neither**, no public programmatic access, so a human (or brittle screen-scraping) is the only way in.
 
-Look each service up rather than guessing; the answer keeps changing as vendors ship new APIs and MCP servers.  A few examples to prime the conversation:
+Look each service up rather than guessing; the answer keeps changing as vendors ship new APIs and MCP servers.  A few examples to start the conversation:
 
 | Service | What people use it for | Programmatic access to investigate |
 |---|---|---|
 | **Google** (Gmail, Calendar, Drive) | Email, scheduling, documents, storage | Mature OAuth 2.0 REST APIs per product; a fast-growing set of MCP servers wraps them |
 | **Asana** | Team task and project tracking | Documented OAuth 2.0 REST API for tasks and projects; MCP servers are available |
-| **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API, a good example of a service that is *not* openly agent-reachable, where access means unofficial scraping or a third-party data aggregator |
+| **Personal Capital / Empower** | Personal budgeting and net-worth tracking | No official public API.  This is a service that is *not* openly agent-reachable; access means unofficial scraping or a third-party data aggregator |
 
 [[___ List 3-5 services your team uses.  For each, mark MCP? / OAuth-REST? / neither, and note how you found out. ___]]
 
-> **Talking point:** A pattern is already forming.  Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all.  That split (a few services are agent-reachable, many are walled off, and each open one still has its own auth quirks) is exactly the fragmentation the rest of this activity is about.  Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
+> **Talking point:** A pattern is already forming.  Google and Asana give an agent a *standard front door* (OAuth/REST, increasingly MCP); Personal Capital gives it *no* front door at all.  That split (a few services are agent-reachable, many are walled off, and each open one has its own auth quirks) is the fragmentation the rest of this activity is about.  Keep your team's list handy; you will recognize the N-by-M problem in it on the next slide.
 
 ---
 
 ## 1.  APIs, Then the N-by-M Problem
 
-In this Part you will see why connecting agents to many services becomes expensive without a shared standard, then work through the arithmetic of how MCP (Model Context Protocol, a standard that lets any agent discover and call any compliant tool server) reduces that cost from multiplicative to additive.
+Connecting agents to many services gets expensive without a shared standard.  In this Part you work through the arithmetic of how MCP reduces that cost from multiplicative to additive.
 
-**Why this matters:** Think about phone chargers before USB-C existed.  Every phone maker had a different cable, so you needed a different charger for every device you owned.  USB-C created a universal standard: one cable works with any compliant device.  MCP does the same thing for AI tools.  Before MCP, every agent team wrote custom glue code to connect to every service.  With MCP, you write a service once as a compliant MCP server, and any MCP client (any agent application anywhere) can use it.  Integration cost drops from multiplicative to additive.
+**Why this matters:** Think about phone chargers before USB-C existed.  Every phone maker had a different cable, so you needed a different charger for every device you owned.  USB-C created one standard: one cable works with any compliant device.  MCP does the same thing for AI tools.  Before MCP, every agent team wrote custom glue code to connect to every service.  With MCP, you write a service once as a compliant MCP server, and any MCP client (any agent application anywhere) can use it.  The analogy stops at the plug: USB-C says nothing about what the device does once connected, and neither does MCP.
 
-An API is a published contract for calling someone else's functions over the network.  REST APIs expose endpoints (`GET /weather?city=...`) returning JSON; your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request.  Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
+An API is a published contract for calling someone else's functions over the network.  REST APIs expose endpoints (`GET /weather?city=...`) that return JSON.  Your agent's tools so far were local Python, but nothing stops a tool's body from being an HTTP request.  Suddenly the agent can reach weather, library catalogs, campus systems, anything with an API.
 
-The problem is multiplication.  With $N$ agent applications and $M$ services, bespoke integration requires up to $N \times M$ adapters, each with its own schema conventions and auth quirks.  The history of computing solves such problems with *protocols*: USB for peripherals, HTTP for documents, LSP for editors and languages.
+The problem is multiplication.  With $N$ agent applications and $M$ services, bespoke integration requires up to $N \times M$ adapters, each with its own schema conventions and auth quirks.  Computing solves such problems with *protocols*: USB for peripherals, HTTP for documents, LSP (the Language Server Protocol) for editors and languages.
 
-MCP is that protocol for tools.  A service wraps itself once as an **MCP server** exposing `tools/list` (machine-readable schemas, like the ones you wrote in the *Tool Use and Function Calling* activity, discovered at runtime) and `tools/call`.  Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls.  Integration cost drops from $N \times M$ to $N + M$. The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
+MCP is that protocol for tools.  A service wraps itself once as an **MCP server** that exposes `tools/list` (machine-readable schemas like the ones you wrote by hand in the *Tool Use and Function Calling* activity, now discovered at runtime) and `tools/call`.  Any **MCP client** (a chat app, an IDE, your Python agent) connects, lists, and calls.  Integration cost drops from $N \times M$ to $N + M$.  The agent loop is unchanged; what changes is that tools arrive by discovery rather than by hard-coding.
+
+Remember two things from this section.  A protocol turns a multiplication into an addition.  The protocol standardizes how tools are found and called, not what they do.
 
 ---
 
@@ -96,11 +99,11 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 ### Critical Thinking Questions
 
-1.  Compute the worst-case adapter count without a protocol, and the count with MCP. Show the arithmetic.
+1.  Compute the worst-case adapter count without a protocol, and the count with MCP.  Show the arithmetic.
 
-   > *Hint: Multiply for bespoke; add for MCP. Then ask: what happens if the campus adds a 5th service?*
+   > *Hint: Multiply for bespoke; add for MCP.  Then ask: what happens if the campus adds a 5th service?*
 
-2.  The library upgrades its catalog API. In each world (bespoke vs. MCP), who must change code, and how many codebases are touched?
+2.  The library upgrades its catalog API.  In each world (bespoke vs. MCP), who must change code, and how many codebases are touched?
 
    > *Hint: In the bespoke world, draw arrows from "catalog" to every agent that uses it.  Each arrow is a codebase change.*
 
@@ -114,11 +117,11 @@ A campus has 4 agent applications (advising bot, library bot, IT helpdesk bot, r
 
 ## 2.  Speaking the Pattern in Code
 
-**Why this matters:** Understanding the theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable.  The server below is not production MCP; it is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name.  Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
+**Why this matters:** The theory of MCP is helpful, but building a minimal version yourself makes the architecture concrete and memorable.  The server below is not production MCP.  It is a teaching implementation of the same two-endpoint pattern: list your tools, then call a tool by name.  Real MCP adds session management, capability negotiation, and streaming, but the core idea is identical.
 
-In this Part you will write a small Flask web server (Flask is a Python library for creating web endpoints, URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` to return the server's tool descriptions, and `/tools/call` to execute a named tool by name.  You will then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
+In this Part you write a small Flask web server (Flask is a Python library for creating web endpoints, URLs your code can respond to over HTTP) that exposes two routes: `/tools/list` returns the server's tool descriptions, and `/tools/call` runs a named tool.  You then run a client that discovers and calls those tools without any hard-coded knowledge of what tools exist.
 
-Full MCP runs over JSON-RPC (a protocol for making remote function calls by sending JSON messages) with sessions and capability negotiation; the essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask.  We build the essence.
+Full MCP runs over JSON-RPC with sessions and capability negotiation.  The essence, a discoverable registry plus a call dispatcher, fits in a screen of Flask.  We build the essence.
 
 You can run the server with:
 
@@ -196,7 +199,7 @@ if __name__ == "__main__":
 
 ---
 
-The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools.  Notice that the client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
+The client code below runs three steps in order: (1) ask the server what tools exist, (2) define a reusable function for calling any of them by name, and (3) demonstrate both tools.  The client never imports or defines `room_lookup` or `hours`; it learns they exist at runtime from the server's response.
 
 ## Code Cell
 
@@ -244,9 +247,9 @@ print(call_remote("room_lookup", {"building": "Pfahler"}))
 
 6.  A malicious server could describe a tool as "harmless lookup" while its implementation deletes files.  Which side of the protocol can lie, and what defenses (allowlists, sandboxes, human gates, audits) operate at which layer?
 
-   > *Hint: Think of a restaurant analogy: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food?  Who provides each kind of protection?*
+   > *Hint: Think of a restaurant: you trust the menu description, but what stops a bad kitchen from putting something harmful in your food?  Who provides each kind of protection?*
 
-> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it.  This is not true.  MCP standardizes *how* you discover and call tools; it says nothing about *what those tools are allowed to do*.  A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf.  Trust must be established by checking who wrote the server, what permissions it requests, and whether it has been audited, not by assuming the protocol protects you.
+> **Common Misconception:** Many students assume that because MCP standardizes the interface, it also guarantees the safety of the tools behind it.  It does not.  MCP standardizes *how* you discover and call tools; it says nothing about *what those tools are allowed to do*.  A perfectly spec-compliant MCP server could read your files, make purchases, or send emails on your behalf.  You establish trust by checking who wrote the server, what permissions it requests, and whether it has been audited, not by assuming the protocol protects you.
 
 The primary value MCP adds over each team writing custom tool integrations is:
 
@@ -257,14 +260,143 @@ The primary value MCP adds over each team writing custom tool integrations is:
 
 ---
 
+> **A no-code route to the same problem.**  Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP.  The optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgenticOpenWebUI) covers it.
 
-> **A no-code route to the same problem.**  Microsoft Power Automate wires services together without a line of code, and it is worth seeing next to MCP. It is covered in the optional activity [Agentic OpenWebUI and No-Code Integration](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgenticOpenWebUI).
+# Part IIb: A Vault Behind a Tool Server
+
+## 2b.  Your Notes as Tools
+
+The two campus lookups in Part II were stand-ins.  The same server pattern works over something you care about: an Obsidian vault, which is a folder of Markdown files.  In this Part you give the server three vault tools and watch a client discover them, exactly as it discovered `hours`.  The three tools cover the read path and the write path from the [Obsidian Sync tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync).  `search_notes` finds notes whose text contains a phrase.  `read_note` returns one note by its path.  `append_daily_note` adds a line to today's daily note, and it refuses to write unless the call includes `confirm` set to true.  Reading is cheap to allow; writing changes your files, so the write tool carries a gate.  One thing to say plainly: a real MCP server speaks JSON-RPC over stdio (standard input and output, for a server launched as a local process) or over HTTP.  This deck's Flask server uses two plain HTTP routes instead.  It is the *pattern*, list then call, not the *protocol*.  When you are ready for the real thing, the Hugging Face MCP Course in Further Reading builds a compliant server step by step, and the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP) offers your Obsidian vault as one MCP option.
+
+Set `VAULT` to your own vault path before you run the cell.  If you do not have a vault yet, make a folder with two or three `.md` files in it; the server does not care which editor made them.  Start it with `python vault_server.py`, then confirm the three tools are advertised with `curl http://localhost:8766/tools/list` in a second terminal.
+
+---
+
+## Code Cell
+
+> **Runs on your machine, not here.**  This cell starts a server and reads files on your disk, which a web page cannot do.  Copy it into your course container and run it there.
+
+```python
+# vault_server.py: server.py with three vault tools. Run with `python vault_server.py`.
+# The endpoints are the ones from server.py; only the tools are new.
+import datetime
+import pathlib
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+VAULT = pathlib.Path.home() / "Documents" / "Obsidian" / "MyVault"
+
+# --- Vault tools (three functions over a folder of Markdown files) ---
+
+def search_notes(query: str):
+    # Case-insensitive text search over every .md file under the vault
+    hits = []
+    for md_file in sorted(VAULT.rglob("*.md")):
+        text = md_file.read_text(encoding="utf-8", errors="ignore")
+        if query.lower() in text.lower():
+            hits.append(str(md_file.relative_to(VAULT)))
+    return hits
+
+def read_note(path: str):
+    # Return one note by its vault-relative path; refuse paths that escape the vault
+    target = (VAULT / path).resolve()
+    if VAULT.resolve() not in target.parents:
+        return "refused: path is outside the vault"
+    if not target.is_file():
+        return "no such note"
+    return target.read_text(encoding="utf-8")
+
+def append_daily_note(text: str, confirm: bool = False):
+    # Append to today's daily note. Nothing is written unless confirm is True.
+    if not confirm:
+        return "not written: call again with confirm=true to append"
+    today = datetime.date.today().isoformat()
+    note = VAULT / "daily" / f"{today}.md"
+    note.parent.mkdir(parents=True, exist_ok=True)
+    with note.open("a", encoding="utf-8") as f:
+        f.write(f"\n- {text}\n")
+    return f"appended to daily/{today}.md"
+
+TOOLS = {
+  "search_notes": {"fn": search_notes,
+    "schema": {"name": "search_notes",
+               "description": "Find vault notes whose text contains a phrase.",
+               "parameters": {"query": "string"}}},
+  "read_note": {"fn": read_note,
+    "schema": {"name": "read_note",
+               "description": "Read one note by its path inside the vault.",
+               "parameters": {"path": "string"}}},
+  "append_daily_note": {"fn": append_daily_note,
+    "schema": {"name": "append_daily_note",
+               "description": "Append a line to today's daily note. Writes only when confirm is true.",
+               "parameters": {"text": "string", "confirm": "boolean"}}},
+}
+
+@app.get("/tools/list")
+def tools_list():
+    return jsonify([t["schema"] for t in TOOLS.values()])
+
+@app.post("/tools/call")
+def tools_call():
+    try:
+        body = request.get_json()
+        name, args = body["name"], body.get("arguments", {})
+        if name not in TOOLS:
+            return jsonify({"error": "unknown tool"}), 404
+        return jsonify({"result": TOOLS[name]["fn"](**args)})
+    except Exception as e:
+        print(f"[vaultserver:tools_call] {e}")
+        import traceback; traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(port=8766, threaded=True)
+```
+
+The client is the Part II client with `SERVER` set to `http://localhost:8766`.  Keep Steps 1 and 2 as they are and replace Step 3 with these four calls, then run it on your machine and keep the transcript:
+
+```python
+print(call_remote("search_notes", {"query": "chroma"}))
+print(call_remote("read_note", {"path": "../../.ssh/id_rsa"}))
+print(call_remote("append_daily_note", {"text": "Tried the vault server in class."}))
+print(call_remote("append_daily_note", {"text": "Tried the vault server in class.", "confirm": True}))
+```
+
+---
+
+## Model 3: A Gated Write
+
+### Critical Thinking Questions
+
+7.  Predict the first line the client prints, then run it.  At that moment, what does the client know about your vault, and what does it still not know (how many notes, what they say, whether a write will succeed)?  Nothing in the client mentions Obsidian; where did the word "note" enter the program?
+
+   > *Hint: The client learns names, descriptions, and parameter types from `/tools/list`, and nothing else.  Compare with the file-injection approach in the Obsidian Sync tutorial, where the agent starts with the notes already in its prompt.  Which approach tells the model more at startup, and which lets it fetch on demand?*
+
+8.  The third call returns "not written" and the fourth writes.  Who decides that `confirm` is true: the model, the client code, or a person?  Describe where a human gate would sit in the agent loop from the *Tool Use and Function Calling* activity, and explain what the flag inside the tool protects against that the schema description ("Writes only when confirm is true") cannot.
+
+   > *Hint: A description is advice to the model; the flag is a check the server enforces.  A model that ignores the advice, or a prompt injection that tells it to "always confirm", meets the check anyway.  What does a real client do with a write-capable tool before calling it?  Now ask the same question of `read_note`: why does it refuse `../../.ssh/id_rsa`, and who wrote that refusal?*
+
+9.  Your vault is also synced to GitHub by the Obsidian Git plugin, which commits and pushes on a timer.  The timer fires while `append_daily_note` is writing.  Walk through what git sees.  Why does the append-only design of this tool usually survive that race, and what would happen instead if the tool rewrote the whole daily note with a fresh summary?
+
+   > *Hint: The plugin commits the file as it existed when the timer fired; the append adds lines below that.  A rewrite changes lines the plugin already committed, so the two versions disagree about the same lines and git reports a conflict.  The Obsidian Sync tutorial's write path gives the conflict-resolution steps; which of them does the append-only rule make unnecessary?*
+
+Which statement about `vault_server.py` is true?
+
+[( )] It is a compliant MCP server because it exposes `/tools/list` and `/tools/call`
+[(X)] It follows the MCP pattern (list, then call by name) but does not speak the MCP protocol, which is JSON-RPC over stdio or HTTP
+[( )] It is safe to expose on the public internet because `read_note` refuses paths outside the vault
+[( )] The `confirm` flag guarantees that a model can never write to the vault without a human's approval
+
+Remember two things from this Part.  Discovery gives the client names and descriptions, never the data behind them, so a vault stays private until a tool is called.  A tool with side effects needs a gate the server enforces, because a description is only advice.
+
+---
 
 # Part III: Synthesis and Practice
 
 ## 3.  Exercises
 
-In this Part you extend the server with a new tool to confirm that discovery is truly automatic, connect the server to a real-world API, and write the trust checklist your final project will use before connecting any third-party MCP server.
+In this Part you extend the server with a new tool to confirm that discovery is automatic, connect the server to a real-world API, and write the trust checklist your final project will use before connecting any third-party MCP server.
 
 1.  **Extend the server with a new tool.**
 
@@ -292,7 +424,7 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
 2.  **Wrap a real public API as an MCP tool.**
 
-   *What to do:* Wrap the National Weather Service API (`https://api.weather.gov`) as a tool on your server.  Add a `get_weather(lat, lon)` tool whose implementation calls the real NWS API and returns the current forecast text.  Then write a short agent loop that asks "What should I wear today at Ursinus College?" and calls your tool to answer it.
+   *What to do:* Wrap the National Weather Service (NWS) API (`https://api.weather.gov`) as a tool on your server.  Add a `get_weather(lat, lon)` tool whose implementation calls the real NWS API and returns the current forecast text.  Then write a short agent loop that asks "What should I wear today at Ursinus College?" and calls your tool to answer it.
 
    *Starter hint:*
    ```python
@@ -315,7 +447,7 @@ In this Part you extend the server with a new tool to confirm that discovery is 
 
 3.  **Write a Trust Memo for your final project.**
 
-   *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server.  Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.
+   *What to do:* In half a page, propose the checklist your final-project team will apply before connecting any third-party MCP server.  Address: who wrote it, what permissions it requests, whether it is read-only or write-capable, and how you would audit its behavior.  Test the checklist on `vault_server.py`: it is write-capable, so say what your team would require before letting an agent call `append_daily_note`.
 
    *Starter hint:* Your memo should have sections for (a) Source Verification, how do you confirm who wrote the server and whether it has been reviewed?, (b) Permission Scope, what is the minimum set of capabilities the server needs?, (c) Audit Logging, how will you record every call made through the server so you can reconstruct what happened?
 
@@ -329,18 +461,19 @@ In your notebook, respond to all three levels:
 
 **Personal:** Think of a time you used a standard that made your life easier: perhaps a charging cable that worked on multiple devices, or a file format that opened in different programs.  How did having that standard change what you did or built?  Would you have worked differently without it?
 
-**Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate.  As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years?  Consider: what new kinds of services will appear that could not exist before MCP? What new security risks emerge?
+**Technical:** Protocols like HTTP made the web explode by letting strangers' systems interoperate.  As agents gain a universal tool protocol in MCP, what is one technically specific consequence you predict in five years?  Consider: what new kinds of services will appear that could not exist before MCP?  What new security risks emerge?
 
-**Societal:** Interoperability standards create network effects: the more people adopt them, the more valuable they become for everyone.  But they also concentrate power: whoever controls the standard has leverage over everyone who depends on it.  Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
+**Societal:** Interoperability standards create network effects: the more people adopt them, the more valuable they become for everyone.  But they also concentrate power: whoever controls the standard has power over everyone who depends on it.  Who currently controls MCP, and what governance structures would you want to see to prevent that control from being abused?
 
 ---
 
--> **Coming Up Next:** Your agent can now reach tools.  Next it needs to reach *documents*.  In the *Retrieval-Augmented Generation with Chroma* activity we put the semantic search you built by hand in *Tokens, Embeddings, and Attention* to work at scale, so the model answers from your corpus instead of from memory.  The MCP work you did today feeds directly into the Local Agent Lab's MCP exploration.
+-> **Coming Up Next:** Your agent can now reach tools, and it can reach your notes one at a time by search and path.  Next it needs to reach *documents* at scale.  In *RAG Knowledge Base: Code and No-Code Routes* (Thursday, October 1) we put the semantic search you built by hand in [Tokens, Embeddings, and Attention](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) to work over a whole corpus, so the model answers from your notes instead of from memory.  The vault server you built today is the starting point for the Obsidian vault option in the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP).
 
 ---
 
 ## Further Reading
 
 - Model Context Protocol specification and documentation: https://modelcontextprotocol.io
+- Hugging Face MCP Course (built with Anthropic), whose early units build and connect a compliant MCP server over JSON-RPC: https://huggingface.co/learn/mcp-course/
 - Roy Fielding's REST dissertation, Chapter 5 (online), for the architectural style behind web APIs.
 - Anthropic.  "Introducing the Model Context Protocol" (2024, online).
