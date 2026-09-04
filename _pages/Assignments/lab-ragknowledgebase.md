@@ -147,7 +147,7 @@ If `ollama NOT running`, start the server with `ollama serve` in a separate term
 
 **Estimated time budget:**
 
-This lab runs across a multi-week window (see the course schedule for the assigned and due dates).  Budget your weeks: aim to have the core pipeline working early (and if a break falls inside your window, front-load) so the direction work and audit are not compressed into the final days.  The **RAG Quality Checkup lab**, begun in the mid-window studio session, is a scaffold for this lab: its recall@k measurements, citation audit, and regression harness are this lab's evaluation work done early; carry its results (and its winning chunking configuration) straight back in here.
+This lab runs across a multi-week window (see the course schedule for the assigned and due dates).  Budget your weeks: aim to have the core pipeline working early (and if a break falls inside your window, front-load) so the direction work and audit are not compressed into the final days.  The **RAG Quality Checkup lab**, begun in the mid-window open studio in *How I AI* and handed out while this lab is still in flight, is a scaffold for this lab: its recall@k measurements, citation audit, and regression harness are this lab's evaluation work done early; carry its results (and its winning chunking configuration) straight back in here.
 
 | Component | Estimated time |
 |-----------|----------------|
