@@ -17,3 +17,6 @@ __pycache__/
 
 # Local deploy artifacts (Canvas change documents, plans); never committed
 outputs/
+
+# Session logs stay local; they are not repository content
+logs/
