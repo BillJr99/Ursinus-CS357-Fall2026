@@ -524,6 +524,10 @@ schedule:
     dlink: "Assignments/StakeholderBrief"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
+  - dtitle: "Lab: RAG Quality Checkup Checkpoint Handed Out"
+    dlink: "Assignments/RAGCheckup"
+    points: "100"
+    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
   - rtitle: "Bring your stuck points and your pipeline-in-progress.  Part III is an open studio and it is only as useful as the problems you bring to it."
   - rtitle: "Optional, five minutes: install Obsidian before class if you want to follow Part I on your own machine"
@@ -567,10 +571,6 @@ schedule:
     dlink: "Projects/PBLThread"
     points: "3"
     rubricpath: "_pages/Projects/proj-pblthread.md"
-  - dtitle: "Lab: RAG Quality Checkup Checkpoint Handed Out"
-    dlink: "Assignments/RAGCheckup"
-    points: "100"
-    rubricpath: "_pages/Assignments/lab-ragcheckup.md"
   readings:
   - rtitle: "Agent Frameworks: LangChain, CrewAI, AutoGen, and Agno, and when a framework earns its weight"
     rlink: "Tutorials/AgentFrameworks"

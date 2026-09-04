@@ -29,24 +29,11 @@ This course is based on **The AI Fluency Framework** by Prof. Rick Dakan (Ringli
 
 ---
 
-## Pre-Merge Checks
+## Things That Fail Silently
 
 The Pages workflow builds only on a push to `gh-pages`, so a bad layout name or a
-stray Liquid delimiter is not caught until after the merge. `bin/check-site.py`
-runs the checks that would have caught the ones we have actually hit:
-
-```bash
-git submodule update --init _layouts     # the layout check needs these present
-pip install pyyaml
-python3 bin/check-site.py
-```
-
-It verifies that every `layout:` names a file that exists in `_layouts/`, that
-the deck invariant below holds, that no deck uses Liquid, that no page has a
-literal `{{ }}` outside `{% raw %}`, and that every relative front-matter link
-resolves to a real permalink.
-
-Two of those deserve a word, because both fail silently rather than loudly:
+stray Liquid delimiter is not caught until after the merge. Two of these fail
+quietly rather than loudly, so they are worth knowing by hand:
 
 - **Layouts.** Jekyll warns and drops the page's chrome when `layout:` names a
   file that is not in `_layouts/`. The available layouts come from the
@@ -57,6 +44,11 @@ Two of those deserve a word, because both fail silently rather than loudly:
   quoted. GitHub Actions YAML and Python `.format()` examples are the usual
   victims. Wrap the block in `{% raw %}` / `{% endraw %}`. This does not apply
   to decks, which Jekyll never processes.
+
+Two more invariants hold by convention rather than by check: a file in
+`_pages/Activities/` is a deck if and only if it is a `link:` on a syllabus
+schedule day, and every relative front-matter `rlink`/`dlink`/`link` has to
+resolve to a real `permalink:` on some page.
 
 To reproduce the Pages build locally, `bundle install` then build with Jekyll;
 `jekyll-github-metadata` needs `JEKYLL_GITHUB_TOKEN` set or it cannot reach the
