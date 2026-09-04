@@ -4,7 +4,7 @@ permalink: /Assignments/LocalAgent/Direction0
 title: "CS357 Lab: Local Agent, Direction 0: The OpenWebUI Route (low-code)"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  It has no separate point value and no rubric of its own.  I grade your work with the Local Agent Lab rubric on the core lab page.  The rubric's rows are pathway-neutral: the "Agent Loop Implementation" row is earned here by a correctly configured OpenWebUI agent with documented tool invocations, and the "Code Quality and Documentation" row is earned by configuration quality: your exported model JSON, documented tool schemas, and reproducible setup notes.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  It has no separate point value and no rubric of its own.  I grade your work with the Local Agent Lab rubric on the core lab page.  The rubric's rows do not depend on the route you take: you earn the "Agent Loop Implementation" row here with a correctly configured OpenWebUI agent and documented tool invocations, and you earn the "Code Quality and Documentation" row with configuration quality: your exported model JSON, documented tool schemas, and reproducible setup notes.
 
 > **What this direction requires**
 >
@@ -18,13 +18,13 @@ title: "CS357 Lab: Local Agent, Direction 0: The OpenWebUI Route (low-code)"
 
 ## Who this direction is for
 
-Direction 0 is the **low-code route through the entire lab**.  Instead of authoring Python for core Parts 1-3, you will build the *same* agent (a persona, two working tools, guaranteed-parseable structured output, and an empirical evaluation) entirely through OpenWebUI's configuration surface.  You configure and **test** tools; you do not code them.
+Direction 0 is the **low-code route through the entire lab**.  Instead of writing Python for core Parts 1-3, you build the *same* agent (a persona, two working tools, guaranteed-parseable structured output, and an empirical evaluation) entirely through OpenWebUI's configuration screens.  You configure and test tools; you do not code them.
 
-This route delivers the same learning objectives as the core lab: you will still design a complete system prompt, still watch an agent decide when to invoke a tool, still force a model to emit structured JSON and verify that it parses, and still run a fixed evaluation set and analyze the failures.  What changes is the medium: where a core-route student writes a `parse_response` function, you will read the tool schema OpenWebUI generates and document what it tells the model; where they write an evaluation loop, you will run the queries through the UI and audit the exported transcripts.
+This route reaches the same learning objectives as the core lab.  You still design a complete system prompt.  You still watch an agent decide when to call a tool.  You still force a model to emit structured JSON and verify that it parses.  You still run a fixed evaluation set and analyze the failures.  What changes is the medium.  Where a core-route student writes a `parse_response` function, you read the tool schema OpenWebUI generates and document what it tells the model.  Where they write an evaluation loop, you run the queries through the UI and audit the exported transcripts.
 
-**What Direction 0 replaces and what it does not.**  Parts A-E below replace core Parts 1-3 and the coding halves of the Required Explorations.  Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), **core Part 4's skill** (which you reach by having an AI tool generate one, then installing and using it in your own agent tooling), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline.  Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration serve as the "from a framework / served model" flavor; note this explicitly in your writeup.
+**What Direction 0 replaces and what it does not.**  Parts A-E below replace core Parts 1-3 and the coding halves of the Required Explorations.  Everything else on the core page still applies to you: the Before You Start setup (Ollama installed, `llama3.2` pulled, health checks passing), core Part 4's skill (you have an AI tool generate one, then install and use it in your own agent tooling), the pair-programming protocol with logged driver/navigator swaps, the Learning Log, and the deliverables discipline.  Where the Required Explorations ask for a "from scratch" option, your Part B tool configuration and Part C structured-output demonstration count as the "from a framework / served model" flavor.  Say so explicitly in your writeup.
 
-**Estimated time: 8-10 hours** across the lab window.  Part A is quick; Parts B and D are where the hours go.
+**Estimated time: 8-10 hours** across the lab window.  Part A is quick; Parts B and D take most of the hours.
 
 | Part | Task | Estimated time |
 |------|------|----------------|
@@ -40,7 +40,7 @@ This route delivers the same learning objectives as the core lab: you will still
 
 OpenWebUI is a self-hosted web frontend that sits in front of your Ollama server.  You have two supported installation routes; pick **one**.  Both end at the same place: a browser tab at `http://localhost:3000` (Docker) or `http://localhost:8080` (pip) showing a chat interface backed by your local model.
 
-**Before either route:** confirm Ollama is running and the model is present, exactly as in the core lab's health check:
+**Before either route:** confirm that Ollama is running and the model is present, exactly as in the core lab's health check:
 
 ```bash
 ollama list
@@ -57,7 +57,7 @@ docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway \
   ghcr.io/open-webui/open-webui:main
 ```
 
-What each flag is doing, so you can explain it in your writeup: `-p 3000:8080` publishes the container's port 8080 on your host's port 3000; `--add-host=host.docker.internal:host-gateway` lets the container reach the Ollama server running on your host (required on Linux, harmless elsewhere); `-v open-webui:/app/backend/data` puts your account, models, and chat history in a named volume so they survive container restarts.
+Each flag does one job, and you will explain them in your writeup.  `-p 3000:8080` publishes the container's port 8080 on your host's port 3000.  `--add-host=host.docker.internal:host-gateway` lets the container reach the Ollama server running on your host (required on Linux, harmless elsewhere).  `-v open-webui:/app/backend/data` keeps your account, models, and chat history in a named volume so they survive container restarts.
 
 Then open `http://localhost:3000` in a browser.
 
@@ -68,14 +68,14 @@ pip install open-webui
 open-webui serve
 ```
 
-The first command downloads a large dependency set; expect several minutes.  The second starts the server in your terminal; leave that terminal open.  When you see the startup banner with a line ending in `Uvicorn running on http://0.0.0.0:8080`, open `http://localhost:8080` in a browser.  (If `pip install` fails on your Python version, create a Python 3.11 virtual environment first; OpenWebUI is sensitive to very new Python releases.)
+The first command downloads a large dependency set; expect several minutes.  The second starts the server in your terminal; leave that terminal open.  When the startup banner shows a line ending in `Uvicorn running on http://0.0.0.0:8080`, open `http://localhost:8080` in a browser.  If `pip install` fails on your Python version, create a Python 3.11 virtual environment first; OpenWebUI is sensitive to very new Python releases.
 
 ### First launch, step by step
 
 1.  The first screen asks you to **create an admin account** (name, email, password).  This account exists only in your local OpenWebUI database; nothing is sent anywhere.  Use any email; it is a local username.
-2.  After login you land in a chat view.  In the **model selector at the top left** of the chat pane, you should see `llama3.2:latest`.  OpenWebUI auto-detects a local Ollama server; if the dropdown is empty, see the troubleshooting box below.
+2.  After login you land in a chat view.  In the **model selector at the top left** of the chat pane, you should see `llama3.2:latest`.  OpenWebUI detects a local Ollama server on its own; if the dropdown is empty, see the troubleshooting box below.
 3.  Send a test message ("Say hello in one sentence.").  You should get a reply within a few seconds.  Save a copy of this first exchange; it is your Part A health-check evidence.
-4.  Create an **API key** for later: click your initials (bottom left) -> **Settings** -> **Account** -> **API Keys** -> **Create new key**.  Record it in your notes file (this stays local too; it authenticates requests to *your own* server).
+4.  Create an **API key** for later: click your initials (bottom left) -> **Settings** -> **Account** -> **API Keys** -> **Create new key**.  Record it in your notes file.  It stays local too; it authenticates requests to *your own* server.
 
 > **Checkpoint A:** Before moving on, you can: (1) log in, (2) see `llama3.2` in the model dropdown, (3) get a chat reply, and (4) state (in one sentence for your writeup) which port is OpenWebUI and which is Ollama, and why a request to each behaves differently.
 
@@ -83,17 +83,17 @@ The first command downloads a large dependency set; expect several minutes.  The
 
 ## Part B: The Persona Agent as a Custom Model, with Two Tested Tools
 
-In the core route, students write a system prompt string and a Python tool registry.  Here you will do the same design work in OpenWebUI's **Workspace**: the system prompt becomes a **custom Model**, and the tools become entries in the **Tools** panel that OpenWebUI executes server-side when the model calls them.
+In the core route, students write a system prompt string and a Python tool registry.  Here you do the same design work in OpenWebUI's **Workspace**.  The system prompt becomes a **custom Model**.  The tools become entries in the **Tools** panel, which OpenWebUI runs on the server when the model calls them.
 
 ### B1: Design the persona (same standard as core Part 2)
 
-Pick an agent with a clear job: a campus study-skills coach, a recipe assistant, a workout planner, or a concept of your own (clear anything sensitive with me first).  Draft the system prompt in your notes file before touching the UI, using the framework from class.  At minimum it must specify:
+Pick an agent with a clear job: a campus study-skills coach, a recipe assistant, a workout planner, or a concept of your own (clear anything sensitive with me first).  Draft the system prompt in your notes file before you touch the UI, using the framework from class.  At minimum it must specify:
 
 - **ROLE:** who the agent is, in one or two sentences.
 - **GOAL:** what it is trying to accomplish for the user.
 - **GUARDRAILS:** at least three concrete behavioral limits (topics it declines, how it declines them, and an instruction not to reveal the system prompt).
 
-The TOOLS and FORMAT elements of the five-part framework are handled differently on this route: tool descriptions are supplied to the model by OpenWebUI from each tool's schema (Part B3), and output format is enforced in Part C. Say exactly this in your writeup; identifying *where each of the five elements lives* on the low-code route is part of the design work.
+The TOOLS and FORMAT elements of the five-part framework live elsewhere on this route.  OpenWebUI supplies tool descriptions to the model from each tool's schema (Part B3), and Part C enforces the output format.  Say exactly this in your writeup: identifying *where each of the five elements lives* on the low-code route is part of the design work.
 
 ### B2: Create the custom Model
 
@@ -101,25 +101,25 @@ The TOOLS and FORMAT elements of the five-part framework are handled differently
 2.  **Name** it after your persona (e.g., `study-coach`).
 3.  **Base model:** select `llama3.2:latest`.
 4.  Paste your ROLE/GOAL/GUARDRAILS prompt into the **System Prompt** field.
-5.  Under **Advanced Params**, set **temperature** to `0.2` and, if the field is available in your version, a fixed **seed** (e.g., `42`), the same reproducibility discipline the core route externalizes into `config.json`.  Record every parameter you set in your config notes.
+5.  Under **Advanced Params**, set **temperature** to `0.2` and, if the field exists in your version, a fixed **seed** (e.g., `42`).  This is the same reproducibility discipline the core route keeps in `config.json`.  Record every parameter you set in your config notes.
 6.  Save.  Your model now appears in the chat model selector alongside the raw `llama3.2`.
 
-Test the persona before adding tools: open a new chat with your custom model and probe each guardrail (an off-topic question, a request for the system prompt).  Save these exchanges; the rubric's System Prompt row asks you to show what each guardrail prevents, with transcript evidence.
+Test the persona before you add tools: open a new chat with your custom model and probe each guardrail (an off-topic question, a request for the system prompt).  Save these exchanges.  The rubric's System Prompt row asks you to show what each guardrail prevents, with transcript evidence.
 
 ### B3: Attach two Tools
 
-Equip the agent with **two tools**, at least one of which takes an argument the model must construct, the same requirement as core Part 2.  On this route you do not write the tool code; you install, configure, and **test** tools:
+Give the agent **two tools**, at least one of which takes an argument the model must construct, the same requirement as core Part 2.  On this route you do not write the tool code; you install, configure, and test tools:
 
 - **A calculator**: available as a built-in/community tool.  In **Workspace -> Tools**, either import a calculator tool from OpenWebUI's community tool library (Workspace -> Tools -> **Discover a tool** / community import) or use the built-in one if your version ships it.
-- **Web search**: configured rather than installed: an admin setting, not a Tools-panel entry.  Go to **Admin Panel -> Settings -> Web Search**, enable it, and choose a search engine integration (a free, keyless option such as `duckduckgo` works; if you already run SearXNG from another direction, that works too).  Once enabled, the search toggle appears in the chat input's **+** controls.
+- **Web search**: configured rather than installed; it is an admin setting, not a Tools-panel entry.  Go to **Admin Panel -> Settings -> Web Search**, enable it, and choose a search engine integration (a free, keyless option such as `duckduckgo` works; if you already run SearXNG from another direction, that works too).  Once enabled, the search toggle appears in the chat input's **+** controls.
 
-Any two tools of comparable substance are acceptable (a date/time tool, a unit converter, a Wikipedia lookup from the community library); the calculator + web search pair is the recommended default.  **Do not install a community tool without reading its source in the import preview first**: tools execute as Python on your OpenWebUI server, with whatever access that server has.  Skim the code, confirm it does what its description claims, and note in your writeup that you did; this is the trust question the core route students meet when parsing actions, in its low-code form.
+Any two tools of comparable substance are acceptable (a date/time tool, a unit converter, a Wikipedia lookup from the community library); the calculator + web search pair is the recommended default.  **Do not install a community tool without reading its source in the import preview first.**  Tools run as Python on your OpenWebUI server, with whatever access that server has.  Skim the code, confirm it does what its description claims, and note in your writeup that you did.  This is the same trust question core-route students meet when they parse actions, in its low-code form.
 
 Then wire the tools to your model:
 
 1.  **Workspace -> Models ->** edit your custom model.
 2.  In the **Tools** section of the model editor, check the calculator tool so it is enabled for this model.
-3.  Save.  In a new chat with your model, verify the tool appears (a tools icon / plug icon near the chat input shows enabled tools; web search has its own toggle).
+3.  Save.  In a new chat with your model, verify that the tool appears (a tools icon / plug icon near the chat input shows enabled tools; web search has its own toggle).
 
 ### B4: Document each tool's schema as the UI shows it
 
@@ -134,8 +134,8 @@ For **each** tool, open its entry in Workspace -> Tools (or the admin web-search
 
 Run and save at least three chats with your custom model:
 
-1.  **A calculation the model would plausibly get wrong unaided** (e.g., "What is 847 × 362, and how confident are you?").  Verify the tool fired: the response shows a tool-invocation indicator (an expandable "tool" block or citation chip, depending on version).  Record the arguments the model constructed.
-2.  **A question requiring fresh information** with web search toggled on (e.g., something about a current event).  Verify the search citations appear.
+1.  **A calculation the model would plausibly get wrong unaided** (e.g., "What is 847 × 362, and how confident are you?").  Verify that the tool fired: the response shows a tool-invocation indicator (an expandable "tool" block or citation chip, depending on version).  Record the arguments the model constructed.
+2.  **A question requiring fresh information** with web search toggled on (e.g., something about a current event).  Verify that the search citations appear.
 3.  **A control run**: the same calculation question with the tool disabled, to show the difference tool access makes.
 
 > **Checkpoint B:** You can show one transcript where each tool fired, name the exact argument the model constructed for the calculator, and point to the line in your `tool-config-notes.md` that told the model the tool existed.
@@ -144,11 +144,11 @@ Run and save at least three chats with your custom model:
 
 ## Part C: Structured Output, Force JSON and Validate Five Runs
 
-The core route requires every student to demonstrate a structured-output technique and distinguish enforcement from encouragement.  Your version: craft a prompt that forces JSON, then **empirically validate** whether it held across five runs.
+The core route requires every student to demonstrate a structured-output technique and to distinguish enforcement from encouragement.  Your version: craft a prompt that forces JSON, then check empirically whether it held across five runs.
 
 ### C1: Build the JSON-forcing prompt
 
-Create a **second** custom Model (e.g., `study-coach-json`); same base model and persona, but with this appended to the system prompt (adapt the schema to your domain):
+Create a **second** custom Model (e.g., `study-coach-json`) with the same base model and persona, and append this to the system prompt (adapt the schema to your domain):
 
 ```
 OUTPUT FORMAT: Respond with ONLY a single JSON object, no prose, no code
@@ -158,7 +158,7 @@ fences, matching exactly this schema:
 If you cannot answer, still return valid JSON with your refusal in "answer".
 ```
 
-Alternatively (and worth a sentence of comparison in your writeup if you try it): OpenWebUI's Chat Controls / model Advanced Params include a **response format** option that requests JSON output from Ollama, the served version of the `format` parameter the core route uses.  The prompt-only version *encourages* valid JSON; the format parameter *constrains* it.  Your five-run validation below measures how far encouragement gets you.
+There is a second option, worth a sentence of comparison in your writeup if you try it.  OpenWebUI's Chat Controls / model Advanced Params include a **response format** option that requests JSON output from Ollama; it is the served version of the `format` parameter the core route uses.  The prompt-only version *encourages* valid JSON.  The format parameter *constrains* it.  Your five-run validation below measures how far encouragement gets you.
 
 ### C2: Run five queries and export the chats
 
@@ -167,7 +167,7 @@ Alternatively (and worth a sentence of comparison in your writeup if you try it)
 
 ### C3: Validate and annotate
 
-For each of the five responses, check whether the reply text parses as JSON matching your schema.  You may check by eye, with any JSON validator, or with this three-line checker (using a checker is not "coding the lab"; it is auditing it):
+For each of the five responses, check whether the reply text parses as JSON matching your schema.  You may check by eye, with any JSON validator, or with this one-line checker.  Using a checker is not "coding the lab"; it is auditing it:
 
 ```bash
 python3 -c "import json,sys; json.loads(sys.stdin.read()); print('parses')" < response1.txt
@@ -179,7 +179,7 @@ Produce a five-row annotation table in your writeup:
 |-----|-------|---------|--------------------|
 | 1 | ... | yes/no | e.g., code fences around the JSON, trailing prose, single quotes |
 
-Close Part C with two or three sentences: what fraction of runs parsed, what the failure looked like verbatim, and which of the techniques from the core page's structured-output requirement (schema-constrained serving, validation-with-retry, grammar-constrained decoding) *guarantees* validity rather than merely encouraging it, and where your prompt-only approach sits on that spectrum.
+Close Part C with two or three sentences: what fraction of runs parsed, what the failure looked like verbatim, which of the techniques from the core page's structured-output requirement (schema-constrained serving, validation-with-retry, grammar-constrained decoding) *guarantees* validity rather than only encouraging it, and where your prompt-only approach sits on that spectrum.
 
 ---
 
@@ -193,8 +193,8 @@ Write a ten-query evaluation set for your agent in `task_set.md`, following the 
 
 ### D2: Run the protocol
 
-- Use your tool-enabled persona model at the fixed temperature (and seed, if available) you recorded in Part B, the protocol from class: fixed settings, defined metric.
-- Run each query in a **fresh chat** (memory across tasks would contaminate the evaluation; say why in your writeup).
+- Use your tool-enabled persona model at the fixed temperature (and seed, if available) you recorded in Part B.  This is the protocol from class: fixed settings, defined metric.
+- Run each query in a **fresh chat**.  Memory across tasks would contaminate the evaluation; say why in your writeup.
 - Mark each task pass/fail against your expected outcome, and record whether the expected tool actually fired (visible from the tool-invocation block in each response).
 
 ### D3: Export transcripts and fill the results table
@@ -206,11 +206,11 @@ Export all ten chats (Export as JSON, as in Part C) into a `transcripts/` folder
 | T01 | ... | ... | calculator | yes | yes | - |
 | ... | | | | | | |
 
-Report **accuracy as a fraction** (e.g., 8/10).  Classify each failure with the core lab's taxonomy, `TOOL_MISUSE`, `HALLUCINATION`, `REFUSAL_FAIL` (guardrail did not hold), or `FORMAT_FAIL`, and paste the full transcript excerpt for at least **two** distinct failure modes.
+Report **accuracy as a fraction** (e.g., 8/10).  Classify each failure with the core lab's taxonomy: `TOOL_MISUSE`, `HALLUCINATION`, `REFUSAL_FAIL` (guardrail did not hold), or `FORMAT_FAIL`.  Paste the full transcript excerpt for at least **two** distinct failure modes.
 
 ### D4: Implement one mitigation and re-run
 
-Choose one failure mode and fix it *through configuration*: a sharper system-prompt guardrail, a better tool description (edit the docstring/description so the model chooses it correctly), a temperature change, or enabling the JSON response format.  Re-run all ten tasks and report before/after accuracy in a two-row table, with a sentence explaining *why* the mitigation worked or did not.  This mirrors the core route exactly; the mitigation lever is configuration instead of code, which is the point.
+Choose one failure mode and fix it *through configuration*: a sharper system-prompt guardrail, a better tool description (edit the docstring/description so the model chooses it correctly), a temperature change, or enabling the JSON response format.  Re-run all ten tasks and report before/after accuracy in a two-row table, with a sentence explaining *why* the mitigation worked or did not.  This mirrors the core route exactly.  The mitigation lever is configuration instead of code, which is the point.
 
 ---
 
@@ -260,7 +260,7 @@ Fold these into the standard Local Agent Lab submission ZIP, alongside the share
 
 ## Self-Check Before You Submit
 
-The core lab's rubric grades this route on equal terms; here is what each row asks for in this medium.
+The core lab's rubric grades this route on equal terms.  Here is what each row asks for in this medium.
 
 - [ ] **Both** custom Models exported as JSON: the persona model and the JSON-format model.
 - [ ] The agent completes **at least three distinct goals**, with each tool invocation visible in the exported transcript.

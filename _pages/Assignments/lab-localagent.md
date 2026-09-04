@@ -5,20 +5,20 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Local Agent"
 
 info:
   coursenum: CS357
-  purpose: "To give you a working, private local agent you fully control as the foundation for everything that follows in the course."
+  purpose: "To give you a working, private local agent that you control completely, as the foundation for everything that follows in the course."
   tilt:
-    task: "Stand up a local model with Ollama and drive a perceive-plan-act loop with a persona, a tool, and structured action parsing from your own machine."
+    task: "Stand up a local model with Ollama and drive a perceive-plan-act loop from your own machine, with a persona, a tool, and structured action parsing."
     criteria: "I assess your work on a correct, step-budgeted agent loop, a fully specified system prompt and persona, and an empirical failure analysis.  The rubric below spells out each row."
   points: 100
   goals:
     - To implement the perceive, plan, act loop against a locally hosted language model
     - To design a system prompt that establishes a persona, tools, output format, and guardrails
     - To add a tool to an agent and parse structured actions safely
-    - To guarantee parseable model output using a structured-output technique (Ollama schema-constrained format, Instructor/Pydantic, or grammar-constrained decoding with Outlines) and to distinguish techniques that enforce validity from those that merely encourage it
+    - To guarantee parseable model output using a structured-output technique (Ollama schema-constrained format, Instructor/Pydantic, or grammar-constrained decoding with Outlines) and to distinguish techniques that enforce validity from those that only encourage it
     - To evaluate agent behavior empirically, including failure modes and step budgets
     - To apply pair programming practices by alternating driver and navigator roles and recording swap times
     - To diagnose each of five specific failure modes in a pre-written research agent by observing its symptom, locating the root cause in the source, and classifying it as a crash or a silent failure
-    - To repair all five bugs such that the fixed agent passes a defined set of test cases without crashes or None returns
+    - To repair all five bugs so that the fixed agent passes a defined set of test cases without crashes or None returns
     - To instrument an agent with structured logging that captures tool name, arguments, result, response length, elapsed time, and severity level at each step
     - To construct a regression test suite that verifies correct behavior for fact retrieval, multi-tool chaining, empty input, unknown-topic abstention, and step-budget enforcement
     - To explain why silent agent failures are harder to detect than crashes, and to propose one architectural change that would prevent a class of bugs
@@ -34,7 +34,7 @@ info:
     - To secure the MCP server with OAuth 2.0 client credentials flow
     - To connect the MCP server to a local AI agent and demonstrate tool invocation
     - To document the full data flow from agent request through OAuth token to tool response
-    - "Direct an AI tool to generate an agent skill, install it, invoke it by name, and evidence both a case where it fired and a case where it correctly did not"
+    - "Direct an AI tool to generate an agent skill, install it, invoke it by name, and show both a case where it fired and a case where it correctly did not"
     - "Diagnose, in writing, one thing a generated skill assumed about the project that was not true, and compare its description with one you wrote by hand"
     - "Implement a safety guardrail skill that intercepts file deletion and branch-push operations and requires explicit confirmation before proceeding"
     - "Implement an Obsidian vault memory skill that reads context from vault notes and appends dated session summaries to a memory log"
@@ -48,10 +48,10 @@ info:
   rubric:
     - weight: 35
       description: Agent Loop Implementation
-      preemerging: The agent (Python loop or configured OpenWebUI agent) fails to run due to major issues, or the program or agent configuration fails to run at all
-      beginning: The agent runs but fails on the test goals due to one or more minor issues
-      progressing: The agent runs correctly on the test goals, but would fail in a general case due to a minor issue such as fragile action parsing, a missing step budget, or (on the low-code route) undocumented tool invocations
-      proficient: A correct agent loop runs the test goals, enforces a step budget, parses actions robustly, and would be reasonably expected to handle the general case; a screenshot or terminal log shows successful completion of at least three distinct goals with the step count and final answer printed; on the Direction 0 (OpenWebUI) route this row is earned on equal terms by a correctly configured agent that completes at least three distinct goals with each tool invocation documented from the exported chat transcripts
+      preemerging: The agent (Python loop or configured OpenWebUI agent) fails to run because of major issues, or the program or agent configuration does not run at all
+      beginning: The agent runs but fails on the test goals because of one or more minor issues
+      progressing: The agent runs correctly on the test goals but would fail in a general case because of a minor issue, such as fragile action parsing, a missing step budget, or (on the low-code route) undocumented tool invocations
+      proficient: A correct agent loop runs the test goals, enforces a step budget, parses actions without crashing on malformed output, and can reasonably be expected to handle the general case; a screenshot or terminal log shows successful completion of at least three distinct goals with the step count and final answer printed; on the Direction 0 (OpenWebUI) route this row is earned on equal terms by a correctly configured agent that completes at least three distinct goals with each tool invocation documented from the exported chat transcripts
     - weight: 20
       description: "Instruction Design: System Prompt, Persona, and a Generated Skill"
       preemerging: The system prompt is absent or does not constrain behavior, or no skill is submitted and none was ever loaded by an agent
@@ -66,9 +66,9 @@ info:
       proficient: A task set of at least eight goals is evaluated at fixed temperature and seed; accuracy is reported as a fraction; at least two failure modes are each shown with a full transcript excerpt (from terminal logs or exported chat transcripts); a mitigation is implemented (in code or in configuration) for one, and the accuracy delta is reported with a sentence explaining the mechanism
     - weight: 15
       description: Code Quality and Documentation
-      preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from best practice
+      preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from accepted practice
       beginning: Code or configuration documentation is limited in ways that reduce the readability and reproducibility of the work
-      progressing: Documentation is present that re-states the explicit code or configuration definitions
+      progressing: Documentation is present but only restates the explicit code or configuration definitions
       proficient: Every non-trivial function has a docstring; all network and parsing operations are wrapped in exception handlers that print a located message (e.g., [lab1:run_agent]) followed by a traceback; model name, temperature, seed, and step budget are read from a JSON config file rather than hardcoded; on the Direction 0 route this row is earned by configuration quality, exported model JSON, documented tool schemas and settings, and setup notes sufficient for another student to reproduce the agent exactly
     - weight: 10
       description: Writeup, Reflection, and Submission
@@ -82,7 +82,7 @@ info:
     - rtitle: "Agent Loop Activity"
       rlink: "Activities/liascript-agentloop.md"
       liapage: true
-    - rtitle: "Prompt Engineering Activity"
+    - rtitle: "Prompt Engineering as Agent Design: System Prompts, Personas, and Comparing Models"
       rlink: "Activities/liascript-promptengineering.md"
       liapage: true
     - rtitle: "Ollama API Documentation"
@@ -133,29 +133,29 @@ tags:
 
 ---
 
-In this lab, you and a partner will build a working agent from first principles: a loop, a prompt, a tool, and an evaluation.  This lab is completed in **pairs using driver/navigator roles**: the driver types while the navigator reviews, questions, and consults documentation, and you must **swap roles at least every 30 minutes**, keeping a brief log of swap times and who held each role.
+In this lab, you and a partner build a working agent from first principles: a loop, a prompt, a tool, and an evaluation.  You complete the lab in **pairs using driver/navigator roles**.  The driver types.  The navigator reviews, asks questions, and consults documentation.  Swap roles at least every 30 minutes, and keep a brief log of each swap time and who held each role.
 
-**Prefer a low-code path?**  [Direction 0: The OpenWebUI Route](LocalAgent/Direction0) delivers the same learning objectives (the persona, two tested tools, structured output, and the full evaluation) through OpenWebUI configuration instead of Python authorship.  See the Choose Your Direction section below before you start Part 1.
+**Prefer a low-code path?**  [Direction 0: The OpenWebUI Route](LocalAgent/Direction0) reaches the same learning objectives (the persona, two tested tools, structured output, and the full evaluation) through OpenWebUI configuration instead of Python.  Read the Choose Your Direction section at the bottom of this page before you start Part 1.
 
 ---
 
 ## Before You Start
 
-> **Bring to class.**  For the *Hallucinations and Evaluating Agent Outputs* session, come with three prompts where a model gave you a confidently wrong answer.  We triage real examples, and yours are better than invented ones.
+> **Bring to class.**  For the *Hallucinations and Evaluating Agent Outputs* session, bring three prompts where a model gave you a confidently wrong answer.  We triage real examples in class, and yours are better than invented ones.
 
-**Prep decks this lab assumes.**  Work through whichever apply to your direction before you start:
+**Prep decks this lab assumes.**  Work through the ones that apply to your direction before you start:
 
 - [Structured Outputs: JSON Mode, Tool Schemas, and Output Validation]({{ site.baseurl }}/Assignments/ToolsMCP): all directions.
 - [RESTful LLM Access: the /v1/chat/completions paradigm, curl, and the OpenAI SDK]({{ site.baseurl }}/Tutorials/RESTLLMAPI): all directions.
 - [Docker from First Principles]({{ site.baseurl }}/Tutorials/Docker): Directions 2 and 3 only; do the installs at home first.
 - [MCP Deep Dive: REST APIs, OAuth 2.0 flows, and secure tool invocation]({{ site.baseurl }}/Assignments/LocalAgent/Direction4): Direction 4 only.
 
-**This lab assumes the OpenCode Studio lab**, which was due the day this one was handed out.  You will keep working in the same `cs357-work` repository, and the charter, the `AGENTS.md` contract, and the two skills you wrote there carry forward: Part 2's system prompt is the persona layer on top of that contract, and Part 4 is the generated-skill counterpart to the two you authored by hand.
+**This lab assumes the OpenCode Studio lab**, which was due the day this one was handed out.  Keep working in the same `cs357-work` repository.  The charter, the `AGENTS.md` contract, and the two skills you wrote there carry forward: Part 2's system prompt is the persona layer on top of that contract, and Part 4 is the generated-skill counterpart to the two you wrote by hand.
 
-**Prerequisite concepts**: make sure you have completed these activities before writing any code:
+**Prerequisite concepts**: complete these activities before you write any code:
 
 - [Agent Loop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md): the perceive/plan/act/remember cycle
-- [Prompt Engineering Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-promptengineering.md): ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
+- [Prompt Engineering as Agent Design: System Prompts, Personas, and Comparing Models]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-promptengineering.md): ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS
 
 **Tools to install:**
 
@@ -170,7 +170,7 @@ ollama pull llama3.2
 pip install requests
 ```
 
-**Health check**: run this before writing any lab code.  You should see the model name listed:
+**Health check**: run this before you write any lab code.  You should see the model name listed:
 
 ```bash
 ollama list
@@ -183,9 +183,9 @@ NAME               ID              SIZE    MODIFIED
 llama3.2:latest    a80c4f17acd5    2.0 GB  2 minutes ago
 ```
 
-If `ollama list` hangs or errors, make sure the Ollama server is running: `ollama serve` (in a separate terminal).
+If `ollama list` hangs or errors, start the Ollama server with `ollama serve` in a separate terminal.
 
-Also verify the API responds:
+Also verify that the API responds:
 
 ```bash
 curl http://localhost:11434/api/tags
@@ -209,23 +209,23 @@ This is a multi-week lab, not a single-evening one.  Across the lab's window (se
 | **Total for Directions 1-6** | **≈ 9-14 hours** |
 | **Total for Direction 0** (replaces Parts 1-3 rather than extending them; Part 4 still applies) | **≈ 9-11 hours** |
 
-Read that last row carefully: **Direction 0's 9-11 hours is the whole lab**, not an addition to it.  Comparing "9-11" against a direction's "+4-8" is comparing a total to an increment; Direction 0 is the *cheaper* path in total time, not the more expensive one.  The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
+Read that last row carefully.  Direction 0's 9-11 hours is the whole lab, not an addition to it.  A direction's "+4-8" is an increment on top of the core, so Direction 0 is the cheaper path in total time, not the more expensive one.  The tool-use, reasoning, and MCP work that used to sit here has moved to the RAG Knowledge Base Lab.
 
-Budget your weeks accordingly: the direction work goes far better when the core parts are finished in the first week, and the large image pulls some directions require should happen before the day you need them.
+Budget your weeks accordingly.  The direction work goes far better when you finish the core parts in the first week, and the large image pulls that some directions require should happen before the day you need them.
 
 ---
 
 ## Part 1: The Loop
 
-Implement an agent loop in Python against your local Ollama server that:
+Implement an agent loop in Python against your local Ollama server.  The loop must:
 
-1.  Accepts a goal string and a configurable step budget (externalize the budget, model name, and temperature into a JSON configuration file).
-2.  Maintains a message history (memory) across steps.
-3.  Prompts the model to respond in a structured Thought/Action/Final Answer format.
-4.  Parses actions, executes them, and appends observations to memory.
-5.  Terminates on a final answer or budget exhaustion, reporting which occurred.
+1.  Accept a goal string and a configurable step budget (put the budget, model name, and temperature in a JSON configuration file rather than in the source).
+2.  Keep a message history (the agent's memory) across steps.
+3.  Prompt the model to respond in a structured Thought/Action/Final Answer format.
+4.  Parse actions, execute them, and append observations to the message history.
+5.  Stop on a final answer or when the budget runs out, and report which one happened.
 
-Wrap all network and parsing operations in exception handlers that print a located message (for example, `[lab1:run_agent] {e}`) followed by a traceback, and never silently swallow an error.
+Wrap every network and parsing operation in an exception handler that prints a located message (for example, `[lab1:run_agent] {e}`) followed by a traceback.  Never silently swallow an error.
 
 ### Step-by-step guide
 
@@ -244,6 +244,8 @@ Create `config.json` in your project root:
 ```
 
 **Step 2: Write the model call function.**
+
+This function sends the whole message history to Ollama and returns the model's reply as a string.  It is the only place in the loop that touches the network.
 
 ```python
 import requests
@@ -283,7 +285,7 @@ Hello! How can I help you today?
 
 **Step 3: Write the action parser.**
 
-The model will respond with lines like:
+The parser reads the model's reply and decides what it means.  The model will respond with lines like:
 
 ```
 Thought: I should use the calculator tool.
@@ -318,6 +320,8 @@ def parse_response(text):
 ```
 
 **Step 4: Write the main agent loop.**
+
+Each pass through the loop asks the model what to do, parses the reply, runs any tool the model asked for, and records the result in the message history.
 
 ```python
 def run_agent(goal, config, tools):
@@ -368,7 +372,7 @@ def run_agent(goal, config, tools):
 
 **Step 5: Run a smoke test.**
 
-Before adding tools, verify the loop terminates:
+Before you add tools, confirm that the loop terminates:
 
 ```python
 if __name__ == "__main__":
@@ -393,13 +397,13 @@ Steps used: 1 | Reason: final_answer
 ### Troubleshooting, Part 1
 
 **Error: `ConnectionRefusedError: [Errno 111] Connection refused`**
-The Ollama server is not running.  Open a second terminal and run `ollama serve`, then retry.
+The Ollama server is not running.  Open a second terminal, run `ollama serve`, then retry.
 
 **Error: `KeyError: 'message'` in call_model**
-The API response format differs between Ollama versions.  Print `response.json()` to inspect the raw response, then adjust the key path.  With stream mode, the key is `response` not `message["content"]`; make sure `"stream": False` is in your payload.
+The API response format differs between Ollama versions.  Print `response.json()` to inspect the raw response, then adjust the key path.  In stream mode the key is `response`, not `message["content"]`, so make sure `"stream": False` is in your payload.
 
 **The model never emits `Action:` or `Final Answer:`**
-Your system prompt does not yet tell the model about the required format.  Jump to Part 2 and write `build_system_prompt`, then re-run.  Until then you can expect `("unknown", None, ...)` from the parser.
+Your system prompt does not yet tell the model about the required format.  Jump to Part 2, write `build_system_prompt`, then re-run.  Until then, expect `("unknown", None, ...)` from the parser.
 
 ---
 
@@ -412,13 +416,15 @@ Your system prompt does not yet tell the model about the required format.  Jump 
 
 ## Part 2: A Persona and Two Tools
 
-Design an agent with a clear job: a campus study-skills coach, a recipe assistant, a workout planner, or a concept of your own (clear it with me if it touches sensitive domains).  Write a complete system prompt with the five elements from class: ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS.
+Design an agent with a clear job: a campus study-skills coach, a recipe assistant, a workout planner, or a concept of your own (clear it with me first if it touches a sensitive domain).  Write a complete system prompt with the five elements from class: ROLE, GOAL, TOOLS, FORMAT, GUARDRAILS.
 
-Equip the agent with **two tools** of your design (for example, a calculator and a date utility, or a unit converter and a lookup table).  At least one tool must take an argument that the model constructs.  **In your writeup, explain how your system prompt advertises each tool to the model, and show one transcript where the model uses each tool correctly.**
+Give the agent **two tools** of your design (for example, a calculator and a date utility, or a unit converter and a lookup table).  At least one tool must take an argument that the model constructs.  In your writeup, explain how your system prompt advertises each tool to the model, and show one transcript where the model uses each tool correctly.
 
 ### Step-by-step guide
 
 **Step 1: Implement your two tool functions.**
+
+A tool is an ordinary Python function.  The loop calls it with the argument the model wrote inside the parentheses and sends the return value back to the model as an observation.
 
 ```python
 import math
@@ -457,6 +463,8 @@ TOOLS = {
 ```
 
 **Step 2: Write `build_system_prompt` using all five ROLE/GOAL/TOOLS/FORMAT/GUARDRAILS elements.**
+
+The TOOLS section is built from each function's docstring, so the model reads the same description you wrote for a human.
 
 ```python
 def build_system_prompt(tools):
@@ -529,13 +537,13 @@ Steps: 3 | Termination: final_answer
 ### Troubleshooting, Part 2
 
 **The model invokes a tool but uses the wrong name (e.g., `calc` instead of `calculator`)**
-The system prompt must list the exact tool name as it appears in your `TOOLS` dict.  Check for typos and ensure the name in the FORMAT section matches the dictionary key exactly.
+The system prompt must list the exact tool name as it appears in your `TOOLS` dict.  Check for typos, and make sure the name in the FORMAT section matches the dictionary key exactly.
 
 **The model outputs `Action: calculator(2 + 2)` but then immediately gives a Final Answer without waiting for the Observation**
 This is a context length or format issue.  Shorten your system prompt, and make sure your FORMAT section says explicitly: "Only one action per response.  Wait for the Observation before continuing."
 
 **The model ignores the GUARDRAILS and discusses off-topic content**
-Smaller models (under 7B parameters) have weaker instruction-following.  Try making the guardrail more explicit: "If you receive a question about [X], respond only with: 'I can only help with study planning.'"  You can also add a post-processing filter in Python.
+Smaller models (under 7B parameters) follow instructions less reliably.  Make the guardrail more explicit: "If you receive a question about [X], respond only with: 'I can only help with study planning.'"  You can also add a post-processing filter in Python.
 
 ---
 
@@ -548,7 +556,7 @@ Smaller models (under 7B parameters) have weaker instruction-following.  Try mak
 
 ## Part 3: Evaluate It
 
-Construct a task set of at least eight goals with known correct outcomes, following the protocol from class: fixed temperature, fixed seed, defined metric.  Report your agent's accuracy.  Then:
+Build a task set of at least eight goals with known correct outcomes, and run it under the protocol from class: fixed temperature, fixed seed, defined metric.  Report your agent's accuracy.  Then:
 
 - Document at least two distinct failure modes with transcripts (for example, an action parse failure, a tool misuse, a hallucinated final answer, or a budget exhaustion on a solvable task).
 - Choose one failure mode, implement a mitigation (a prompt change, a parser hardening, a budget adjustment), and re-run the evaluation.  **Report the accuracy before and after, and explain why the mitigation worked or did not.**
@@ -556,6 +564,8 @@ Construct a task set of at least eight goals with known correct outcomes, follow
 ### Step-by-step guide
 
 **Step 1: Build your task set as a CSV or list.**
+
+Each task has an ID, a goal, a check function that decides whether an answer is correct, and a note on which tool you expect the agent to use.
 
 ```python
 # task_set.py
@@ -639,7 +649,7 @@ For each task that `passed == False`, copy the full printed step-by-step output 
 
 **Step 4: Implement and re-run one mitigation.**
 
-Document the before/after accuracy in your readme in a table:
+Record the before and after accuracy in your readme in a table:
 
 | Condition | Correct | Total | Accuracy |
 |-----------|---------|-------|----------|
@@ -668,11 +678,11 @@ The model may be stuck in a tool-call loop.  Increase `step_budget` temporarily 
 
 ## Part 4: A Skill You Did Not Write
 
-You already authored two skills by hand in [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), installed them under `.agents/skills/`, watched one fire and correctly not fire, and packaged one for the section.  So this part is not "write a skill" again.  It is the other experiment: **have an AI tool generate one, and then find out where it was wrong.**
+You already wrote two skills by hand in [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), installed them under `.agents/skills/`, watched one fire and correctly not fire, and packaged one for the section.  So this part is not "write a skill" again.  It is the other experiment: **have an AI tool generate one, then find out where it was wrong.**
 
-That is not the lesser route.  Generating a skill and then having to fix it teaches something authoring from scratch does not: what an AI assumes about your workflow when you do not tell it, and how confidently it will assert an instruction that does not survive contact with your actual tool.
+This is not the lesser route.  Generating a skill and then fixing it teaches something that writing from scratch does not: what an AI assumes about your workflow when you do not tell it, and how confidently it asserts an instruction that does not survive contact with your actual tool.
 
-Every student does this part.  If you are taking **Direction 5** (Build and Test Your Own Agent Skills), the three skills you author there are in addition to the two you already have, and they satisfy this part on their own terms, so you may skip the generated route.
+Every student does this part.  If you are taking **Direction 5** (Build and Test Your Own Agent Skills), the three skills you write there are in addition to the two you already have, and they satisfy this part on their own terms, so you may skip the generated route.
 
 ### Step 1: Give the skill a job worth doing
 
@@ -687,17 +697,17 @@ A vague job ("help me write better code") produces a skill you cannot evaluate. 
 
 ### Step 2: Have an AI tool generate it
 
-Bring your chosen AI tool the real requirements, not a summary of them: paste the rubric row or the convention you want enforced.  Ask it for a skill directory containing a `SKILL.md` with, at minimum, a **name**, a **description that says when the skill should be invoked** (not just what it does), and the instructions themselves.  Ask for any supporting files it thinks the skill needs.
+Give your chosen AI tool the real requirements, not a summary of them: paste the rubric row or the convention you want enforced.  Ask it for a skill directory containing a `SKILL.md` with, at minimum, a **name**, a **description that says when the skill should be invoked** (not only what it does), and the instructions themselves.  Ask for any supporting files it thinks the skill needs.
 
-The description is the part AI tools most often get wrong, and it is the part that decides whether your skill ever fires.  You already know this from OpenCode Studio; the interesting question here is whether the generator knows it.
+The description is the part AI tools most often get wrong, and it is the part that decides whether your skill ever fires.  You already know this from OpenCode Studio.  The question here is whether the generator knows it.
 
 ### Step 3: Read it before you install it
 
-Non-negotiable, and the same read-before-you-run habit the shell module started.  A skill is **instruction-based control**: your agent follows it because you told it to, and it will follow a bad instruction just as faithfully as a good one.  Read every line.  Note anything the AI assumed about your project that is not true.
+This step is required, and it is the same read-before-you-run habit the shell module started.  A skill is **instruction-based control**: your agent follows it because you told it to, and it will follow a bad instruction as faithfully as a good one.  Read every line.  Note anything the AI assumed about your project that is not true.
 
 ### Step 4: Install it and invoke it by name
 
-Install it the way you already know: put the directory under `.agents/skills/`, which both opencode and pi read, and confirm your agent lists it.  Then use it on real work from this lab.
+Install it the way you already know: put the directory under `.agents/skills/`, which both opencode and pi read, and confirm that your agent lists it.  Then use it on real work from this lab.
 
 ### Step 5: Show that it did something
 
@@ -706,11 +716,11 @@ Two transcript excerpts, both required:
 1.  The skill **firing** and changing what the agent did.  "It fired" is not enough; show the behavior that would not have happened otherwise.
 2.  The skill correctly **not** firing on work outside its scope.  A skill that triggers on everything trains you to ignore it, which is worse than having no skill at all.
 
-Then one paragraph: **what did the generated skill get wrong?**  Every one of them gets something wrong.  Name it, say how you found it, and say what you changed.  That paragraph is the finding; the skill is just the evidence.
+Then one paragraph: **what did the generated skill get wrong?**  Every one of them gets something wrong.  Name it, say how you found it, and say what you changed.  That paragraph is the finding; the skill is the evidence.
 
 ### Step 6: Do not package this one twice
 
-You already posted a `.skill` archive to the course discussion in OpenCode Studio, so there is nothing new to package here.  Include this generated skill's directory in your submission ZIP.  If you skipped the packaging step in that lab, do it now: from inside the skill directory, `zip -r ../my-skill.skill .`, then `unzip -l my-skill.skill` to confirm `SKILL.md` sits at the top level rather than nested in an extra folder, which is the usual reason someone else's install fails.
+You already posted a `.skill` archive to the course discussion in OpenCode Studio, so there is nothing new to package here.  Include this generated skill's directory in your submission ZIP.  If you skipped the packaging step in that lab, do it now: from inside the skill directory, run `zip -r ../my-skill.skill .`, then `unzip -l my-skill.skill` to confirm that `SKILL.md` sits at the top level rather than inside an extra folder.  A nested `SKILL.md` is the usual reason someone else's install fails.
 
 > **Checkpoint: Before writing your deliverables, make sure you can answer:**
 > 1.  What did the generated skill assume about your project that was not true?  How did you find out?
@@ -722,17 +732,17 @@ You already posted a `.skill` archive to the course discussion in OpenCode Studi
 
 ## From Scratch: Driving the Loop with the OpenWebUI API
 
-The `chat()` helper above hid the one piece that makes the loop *real*: the network call to a model.  Here we open that box.  An agent, stripped to its core, is a single primitive (send the running conversation to a model endpoint, read one reply back) wrapped in a loop that **you**, not the model, control.  The model only ever produces text; your program decides what that text *means* and what happens next.
+An agent, stripped to its core, is one primitive (send the running conversation to a model endpoint and read one reply back) wrapped in a loop that **you**, not the model, control.  The model only ever produces text.  Your program decides what that text *means* and what happens next.  Part 1's `call_model` sends that request to Ollama directly; the code below sends it to OpenWebUI instead, and the loop around it does not change.
 
-OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer.  Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings -> Account -> API Keys*, and name a model you have pulled.  Notice that we start from a **single user prompt**; every later message in the conversation is something the *loop* appended (the model's own tool requests and the observations we hand back), not a new human turn.
+OpenWebUI exposes an OpenAI-compatible endpoint, so one `requests.post` is the whole networking layer.  Point it at your own server (default `http://localhost:3000`), pass an API key from OpenWebUI's *Settings -> Account -> API Keys*, and name a model you have pulled.  Notice that the conversation starts from a **single user prompt**.  Every later message is something the *loop* appended (the model's own tool requests and the observations you hand back), not a new human turn.
 
-> This cell talks to your local OpenWebUI over the network, so run it on your own machine rather than in the browser cell above.
+> This code talks to your local OpenWebUI over the network, so run it on your own machine.
 
 ---
 
 ## Code Cell
 
-> **Run after the install session:** trace this on paper today; execute it after the *Running Your Own AI* install session, once your local stack is up.
+> **Run after the install session:** trace this on paper today; run it after the *Running Your Own AI* install session, once your local stack is up.
 
 ```python
 import os, re, requests
@@ -792,7 +802,7 @@ print(agent("What should I wear in Austin today?"))
 
 ## Model: Reading the From-Scratch Loop
 
-Trace the run as a team.  Expect two round-trips to the model: on step 0 the model cannot know the weather, so it emits `Action: get_weather(Austin)`; your code runs the tool and appends `Observation: 36C and sunny`; on step 1 the model reads that observation and emits a `Final Answer:`.
+Trace the run as a team.  Expect two round trips to the model.  On step 0 the model cannot know the weather, so it emits `Action: get_weather(Austin)`; your code runs the tool and appends `Observation: 36C and sunny`.  On step 1 the model reads that observation and emits a `Final Answer:`.
 
 ### Critical Thinking Questions
 
@@ -811,7 +821,7 @@ Trace the run as a team.  Expect two round-trips to the model: on step 0 the mod
 
 ## Self-Check Before You Submit
 
-Held against the rubric's `proficient` column.  On Direction 0, read "log" as "exported chat transcript" and "code" as "configuration" throughout.
+Check each item against the rubric's `proficient` column.  On Direction 0, read "log" as "exported chat transcript" and "code" as "configuration" throughout.
 
 - [ ] The loop completes **at least three distinct goals**, with the step count and final answer visible in a log or transcript.
 - [ ] A step budget is enforced, and I have seen it fire.
@@ -840,7 +850,7 @@ Submit a ZIP containing your code, your JSON configuration file, your task set a
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a metacognitive learning log for this lab in your readme.  In the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
 1.  **What I built.**  One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
 2.  **What surprised me.**
@@ -862,7 +872,7 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 
 ## Extension Challenges
 
-These are optional and carry no extra credit, but they will deepen your understanding significantly.
+These are optional and carry no extra credit, but they will deepen your understanding.
 
 **Challenge 1 (moderate): Add a memory tool.**
 Give the agent a `remember(key=value)` and `recall(key)` tool backed by a Python dict.  Run a two-step goal: "Remember that my exam is on 2025-12-15, then tell me how many days away it is."  Show that the recall tool retrieves the stored value without the user repeating it.
@@ -874,7 +884,7 @@ Network calls can fail transiently.  Wrap `call_model` so that on `requests.Time
 Run your full 8-task evaluation against both `llama3.2` and a second model available via `ollama pull` (e.g., `mistral`).  Hold temperature and seed fixed.  Report the accuracy delta, the average step count, and any qualitative differences in how each model formats its Thought lines.  Hypothesize why the models differ.
 
 **Challenge 4 (wiring it to a server): Drive the loop over the OpenWebUI API.**
-Your agent so far calls a local model directly.  Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model.  Keep everything else (the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list) identical.  The worked example is in the [Agent Loop activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."* In your writeup, note which lines changed (only the transport) and which did not (the whole loop); that invariance is the lesson.
+Your agent so far calls a local model directly.  Re-point the *perceive/plan* step at OpenWebUI's OpenAI-compatible endpoint (`POST http://localhost:3000/api/chat/completions` with a `Bearer` API key) so the exact same loop runs against a served model.  Keep everything else (the single starting prompt, the parse step, the tool execution, and appending each `Observation:` back into the message list) identical.  The worked example is in the [Agent Loop activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-agentloop.md) under *"From Scratch: Driving the Loop with the OpenWebUI API."*  In your writeup, note which lines changed (only the transport) and which did not (the whole loop); that invariance is the lesson.
 
 ---
 
@@ -885,12 +895,12 @@ This lab stops at a working agent loop with reliable structured output.  Making 
 
 ## Choose Your Direction
 
-Pick **one** direction below; the single 100-point grade covers the core work plus your chosen direction.  For Directions 1-7, complete the core Local Agent lab above first, then expand it; Direction 0 instead routes you through the core objectives themselves in a low-code medium.
+Pick **one** direction below.  The single 100-point grade covers the core work plus your chosen direction.  For Directions 1-7, complete the core Local Agent lab above first, then extend it.  Direction 0 instead routes you through the core objectives themselves in a low-code medium.
 
-- **Direction 0 is the low-code route** through this entire lab: instead of authoring Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration.  Students who choose Direction 0 complete its Parts A-E **in place of** core Parts 1-3; the Before You Start setup, Part 4's skill, the evaluation protocol, and the writeup expectations are shared with everyone else.
-- **Directions 1-7 build on top of** the core lab: complete Parts 1-4 first, then extend in your chosen direction.  Direction 5 is the exception to Part 4: the three skills you author there satisfy it, and they are in addition to the two you already wrote in OpenCode Studio.
+- **Direction 0 is the low-code route** through this entire lab.  Instead of writing Python for Parts 1-3, you build the same persona agent, tools, structured output, and evaluation as OpenWebUI configuration.  Students who choose Direction 0 complete its Parts A-E **in place of** core Parts 1-3; the Before You Start setup, Part 4's skill, the evaluation protocol, and the writeup expectations are shared with everyone else.
+- **Directions 1-7 build on top of** the core lab: complete Parts 1-4 first, then extend in your chosen direction.  Direction 5 is the exception to Part 4: the three skills you write there satisfy it, and they are in addition to the two you already wrote in OpenCode Studio.
 
-Each direction now lives on its own page.  The table below summarizes what each one asks of you; read the "What this direction requires" box at the top of a direction's page before committing to it.
+Each direction lives on its own page.  The table below summarizes what each one asks of you.  Read the "What this direction requires" box at the top of a direction's page before committing to it.
 
 | Direction | What you build | Requirements summary | Est. hours |
 |-----------|----------------|----------------------|------------|
