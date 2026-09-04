@@ -10,7 +10,7 @@ info:
     rlink: "../RubricPipeline"
   - rtitle: 'Publishing: GHCR, Docker Hub, and npm'
     rlink: "../../Tutorials/Publishing"
-  - rtitle: Coding Agents Activity
+  - rtitle: 'Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff'
     rlink: "Activities/liascript-codingagents.md"
     liapage: true
   - rtitle: pytest Documentation
@@ -34,11 +34,11 @@ To earn trust in agentic software through engineering discipline: test-driven de
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Publishing: GHCR, Docker Hub, and npm]({{ site.baseurl }}/Tutorials/Publishing)
-- [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md)
+- [Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md)
 - [pytest Documentation](https://docs.pytest.org/en/stable/)
 - [Python Packaging User Guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
-This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
+This page is Direction 3 of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 
 > **Rather not write the code?**  [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead.  Take whichever direction appeals to you.  I give the same credit for either one.
 
@@ -51,16 +51,16 @@ This page is **Direction 3** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Ass
 > - Local Ollama (used in the TDD and publishing parts; the tests themselves run against a mock, so **no API key is needed**)
 
 
-The core pipeline earns trust through measurement; this direction earns it through engineering discipline, so the pipeline can be tested, trusted, installed, and shipped.  You will apply professional software engineering practices to agentic Python code that calls local LLMs and produces non-deterministic outputs: test-driven development against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing your agent as both a pip-installable package and a container image.  This direction is completed **individually**.
+The core pipeline earns trust through measurement.  This direction earns it through engineering discipline, so the pipeline can be tested, trusted, installed, and shipped.  You apply professional software engineering practice to agentic Python code that calls local LLMs and produces non-deterministic output: test-driven development (TDD, where you write the test before the code it checks) against a mocked model, automated code quality, a continuous integration (CI) pipeline in GitHub Actions, and publishing your agent as both a pip-installable package and a container image.  You complete this direction individually.
 
 #### Before You Start (Direction 3)
 
-**Prerequisite activities**: complete these before writing any code:
+Complete these two activities before writing any code:
 
 - [Publishing Activity]({{ site.baseurl }}/Tutorials/Publishing): registries, names, tags, and pip publishing
-- [Coding Agents Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md): agent loops and CI
+- [Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-codingagents.md): agent loops and CI
 
-**Tools to install:**
+Install the tools:
 
 ```bash
 # Install all required Python tooling into your project virtual environment
@@ -83,7 +83,7 @@ If `ollama list` hangs or errors, start the server in a separate terminal:
 ollama serve
 ```
 
-**Create your GitHub repository** if you have not already.  All four parts require a repository with at least one commit before you can open a pull request.
+Create your GitHub repository if you have not already.  All four parts require a repository with at least one commit before you can open a pull request.
 
 #### Step-by-step guide (Direction 3)
 
@@ -91,7 +91,7 @@ The example below packages a small research agent, but you may instead package t
 
 ##### Part 1: Test-Driven Development for a Non-Deterministic Agent
 
-The hardest part of testing agent code is that the model's output is never exactly the same twice.  Instead of asserting exact strings, you write **semantic tests** (does the response contain the right concept?), **format tests** (does the response have the right structure?), and **safety tests** (does the response avoid forbidden content?).  A mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI, the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
+The hardest part of testing agent code is that the model's output is never exactly the same twice.  So instead of asserting exact strings, you write three kinds of test: semantic tests (does the response contain the right concept?), format tests (does the response have the right structure?), and safety tests (does the response avoid forbidden content?).  A mock is a stand-in object that returns a canned reply so the test never touches the network.  Here a mock fixture replaces the live Ollama call, so your tests run instantly and deterministically in CI.  This is the same fail-closed, deterministic-seed discipline from the core pipeline, now enforced by a test suite.
 
 **Step 1: Create the starter agent file.**  Create `research_agent.py` in your project root:
 
@@ -260,7 +260,7 @@ test_agent.py::test_extract_facts_excludes_forbidden_content PASSED
 
 ##### Part 2: Code Quality and Formatting
 
-Professional Python projects enforce formatting and linting in CI so style debates never reach code review. `black` is an opinionated formatter; `ruff` is a fast linter.  Both exit non-zero on failure, which lets CI block a merge.  The starter `research_agent.py` contains **two deliberate style issues**; find and fix them after running the tools.
+Professional Python projects enforce formatting and linting in CI so style debates never reach code review.  `black` is a formatter: it rewrites your code into one fixed style.  `ruff` is a linter: it reads your code and reports likely bugs and bad patterns without changing it.  Both exit non-zero on failure, which lets CI block a merge.  The starter `research_agent.py` contains two deliberate style issues; find and fix them after running the tools.
 
 **Step 1: Run `black` and observe the changes.**
 
@@ -280,7 +280,7 @@ All done! ✨ 🍰 ✨
 1 file reformatted, 1 file left unchanged.
 ```
 
-Look at the diff before applying.  In your writeup, describe one specific change black made and why it is beneficial.
+Look at the diff before applying.  In your writeup, describe one specific change black made and why it helps.
 
 **Step 2: Run `ruff` and fix linting errors.**
 
@@ -296,7 +296,9 @@ All checks passed!
 
 In your writeup, name each rule triggered and explain in one sentence what bug or anti-pattern it prevents.
 
-**Step 3: Measure and achieve ≥80% coverage.**
+**Step 3: Measure and reach ≥80% coverage.**
+
+Coverage is the share of your code's lines (and, with `--cov-branch`, its `if/else` paths) that at least one test executes.
 
 ```bash
 pytest --cov=research_agent --cov-report=term-missing --cov-branch
@@ -315,23 +317,23 @@ TOTAL                  22      3      6      1    84%
 5 passed in 0.13s
 ```
 
-If coverage is below 80%, the `Missing` column lists the lines not exercised by any test.  Add tests to cover those paths.  Paste the final coverage report into your writeup.
+If coverage is below 80%, the `Missing` column lists the lines no test exercises.  Add tests to cover those paths.  Paste the final coverage report into your writeup.
 
 **Troubleshooting, Part 2**
 
-- **`black` and `ruff` disagree on the same line:** Apply `black` first, then run `ruff`. `ruff check --fix` resolves most remaining issues.
+- **`black` and `ruff` disagree on the same line:** Apply `black` first, then run `ruff`.  `ruff check --fix` resolves most remaining issues.
 - **Coverage stays below 80% even after adding tests:** `--cov-branch` counts every `if/else` path.  The most commonly missed branches are exception handlers; add a test that triggers the exception path in `ask_model` by configuring the mock to raise `requests.exceptions.ConnectionError`.
 
 > **Checkpoint:** Make sure you can answer: (1) What is the difference between a formatter (black) and a linter (ruff)?  Could one replace the other?  (2) Name the two style issues you fixed and the ruff rule code for each.  (3) Which lines are listed under `Missing`, and why were they not hit?
 
 ##### Part 3: GitHub Actions CI
 
-A CI pipeline runs your quality checks automatically on every push and pull request, catching style and test failures before they reach main.  You will write a GitHub Actions workflow that replicates the three commands from Part 2 on a matrix of Python versions.
+A CI pipeline runs your quality checks automatically on every push and pull request, so style and test failures are caught before they reach main.  You will write a GitHub Actions workflow that runs the three commands from Part 2 on a matrix of Python versions (the same job repeated once per version).
 
 **Step 1: Create the workflow file.**  Create `.github/workflows/ci.yml`:
 
-```yaml
 {% raw %}
+```yaml
 name: CI
 
 on:
@@ -376,8 +378,8 @@ jobs:
         run: |
           # TODO: Run pytest with --cov=research_agent, --cov-report=term-missing,
           # and --cov-branch. Add --cov-fail-under=80 so the step fails if coverage drops.
-{% endraw %}
 ```
+{% endraw %}
 
 **Step 2: Complete the YAML TODOs.**  The install step should be a single `pip install` command; the format, lint, and test steps should be the same commands you ran in Part 2.
 
@@ -395,14 +397,14 @@ Open a pull request from `ci-pipeline` to `main`.  In the Checks tab, watch the 
 **Troubleshooting, Part 3**
 
 - **Workflow does not appear in the Actions tab:** The `.github/workflows/` directory must be committed and pushed.  Check the path is exactly `.github/workflows/ci.yml`.
-- **The `black --check` step fails in CI but passes locally:** Ensure you ran `black` on the exact same files listed in the YAML step, and committed the formatted `test_agent.py`.
+- **The `black --check` step fails in CI but passes locally:** Make sure you ran `black` on the exact same files listed in the YAML step, and committed the formatted `test_agent.py`.
 - **`--cov-fail-under=80` fails in CI though local coverage is above 80%:** CI runs only the tests committed to the repository.  If you wrote temporary tests locally but did not commit them, coverage is lower in CI.
 
 > **Checkpoint:** Make sure you can answer: (1) Why run both Python 3.11 and 3.12?  What class of bug does this catch?  (2) If `black --check` fails, what must happen before `ruff` and `pytest` run?  (3) Where is the "human gate" in this CI pipeline?
 
 ##### Part 4: Publishing Your Agent
 
-Once your agent passes CI, you can ship it in two forms: a pip-installable Python package and a container image.
+Once your agent passes CI, you ship it in two forms: a pip-installable Python package and a container image.
 
 **Step 1: Write `pyproject.toml` for pip packaging.**  Create `pyproject.toml` in your project root:
 
@@ -465,7 +467,7 @@ Expected output:
 Successfully built research_agent-0.1.0.tar.gz and research_agent-0.1.0-py3-none-any.whl
 ```
 
-Verify `dist/` contains both files:
+The `.whl` file is a wheel, a prebuilt package pip can install directly; the `.tar.gz` is a source distribution that pip builds at install time.  Verify `dist/` contains both files:
 
 ```bash
 ls dist/
@@ -473,7 +475,7 @@ ls dist/
 # research_agent-0.1.0.tar.gz
 ```
 
-**Step 2: Upload to TestPyPI.** TestPyPI is a separate instance of PyPI used for testing; publishing here is safe and free.
+**Step 2: Upload to TestPyPI.**  TestPyPI is a separate instance of PyPI used for testing; publishing here is safe and free.
 
 ```bash
 # Create an account at https://test.pypi.org/ and generate an API token
@@ -606,7 +608,7 @@ Include the `--dry-run` output if you attempt this step.
 
 **Challenge 1 (moderate): Property-based testing.**  Install `hypothesis` and write a property-based test for `summarize`: generate random strings of varying lengths and assert the returned summary is always a non-empty string.
 
-**Challenge 2 (moderate): Automated TestPyPI publishing in CI.** Add a `publish.yml` workflow that triggers only on a pushed version tag (e.g., `v0.1.0`), builds the wheel, and runs `twine upload --repository testpypi`.  Store your TestPyPI token as a repository secret named `TEST_PYPI_TOKEN`.
+**Challenge 2 (moderate): Automated TestPyPI publishing in CI.**  Add a `publish.yml` workflow that triggers only on a pushed version tag (e.g., `v0.1.0`), builds the wheel, and runs `twine upload --repository testpypi`.  Store your TestPyPI token as a repository secret named `TEST_PYPI_TOKEN`.
 
 **Challenge 3 (harder): Multi-stage Docker build.**  Rewrite the Dockerfile with a `builder` stage that installs build dependencies and runs the tests, and a `runtime` stage that copies only the tested artifact.  The final image should not contain pytest or dev dependencies.
 
@@ -653,15 +655,15 @@ When you finish, fold the deliverables above into your single Rubric Pipeline La
 Held against this direction's own *What proficient work looks like* list.
 
 - [ ] All five tests pass, including the three I wrote.
-- [ ] The mock fixture intercepts the Ollama HTTP call, so **no live model is required** to run the suite.
-- [ ] At least one test verifies response **format**.
+- [ ] The mock fixture intercepts the Ollama HTTP call, so no live model is required to run the suite.
+- [ ] At least one test verifies response format.
 - [ ] Each test is labeled with its type: semantic, format, or safety.
 - [ ] `black` and `ruff` both exit 0.
-- [ ] `pytest --cov` reports at least 80% line coverage with **branch coverage enabled**.
+- [ ] `pytest --cov` reports at least 80% line coverage with branch coverage enabled.
 - [ ] The coverage report is pasted into the writeup, with missed lines identified.
 - [ ] Both planted style issues fixed, each fix explained.
 - [ ] `ci.yml` runs on push and pull_request, matrixes Python 3.11 and 3.12, runs all three steps, and carries my inline comment explaining the matrix choice.
-- [ ] A screenshot shows **two green jobs** in the Checks tab.
+- [ ] A screenshot shows two green jobs in the Checks tab.
 - [ ] `pyproject.toml` builds a wheel; `dist/*.whl` exists.
 - [ ] The Dockerfile builds locally and its `CMD` invokes the agent correctly.
 - [ ] TestPyPI receipt or `twine --dry-run` output attached.

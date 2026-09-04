@@ -5,7 +5,7 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline"
 
 info:
   coursenum: CS357
-  purpose: "To industrialize an LLM judge you run into a batch grading pipeline, and to prove with human-agreement and bias tests whether it can be trusted."
+  purpose: "To turn the LLM judge you built in class into a batch grading pipeline, and to prove with human-agreement and bias tests whether that judge can be trusted."
   tilt:
     task: "Build a batch pipeline that scores submissions against a JSON rubric into a CSV, then validate it against blind human scores and measure a judge bias."
     criteria: "I grade this on the batch scoring pipeline, human-to-judge agreement on a blind calibration set, and an empirical bias measurement.  Please read the rubric below for the details."
@@ -34,7 +34,7 @@ info:
       preemerging: The pipeline fails to run due to major issues, or the program fails to run
       beginning: The pipeline runs but fails on the test submissions due to one or more minor issues
       progressing: The pipeline scores the corpus of submissions against the rubric and emits well formed results (CSV on the code route; captured harness output on Direction 0), with a fragile component such as output-parsing fallback or evidence capture
-      proficient: The batch scorer robustly processes the full synthetic corpus end-to-end and emits one result row per artifact with per-criterion outcomes and an overall result (code route, CSV with level labels, quoted evidence strings, and a weighted total; Direction 0, per-criterion judge verdicts across all dataset items); malformed or unusable judge output is surfaced rather than guessed at (code route, a "REVIEW_NEEDED" flag with the raw output logged; Direction 0, noted and re-run); the rubric, model, paths, and settings live in configuration files, not hardcoded; a terminal screenshot or log confirms the end-to-end run on the full corpus
+      proficient: The batch scorer processes the full synthetic corpus end-to-end without failing and emits one result row per artifact with per-criterion outcomes and an overall result (code route, CSV with level labels, quoted evidence strings, and a weighted total; Direction 0, per-criterion judge verdicts across all dataset items); malformed or unusable judge output is surfaced rather than guessed at (code route, a "REVIEW_NEEDED" flag with the raw output logged; Direction 0, noted and re-run); the rubric, model, paths, and settings live in configuration files, not hardcoded; a terminal screenshot or log confirms the end-to-end run on the full corpus
     - weight: 20
       description: Human Agreement Validation
       preemerging: No human validation is attempted
@@ -66,7 +66,7 @@ info:
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The work is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps, all human score sheets, and reflection answers that each cite a specific agreement figure (kappa or percent agreement), bias effect size, or evidence-faithfulness finding from the lab rather than restating the prompt
   readings:
-    - rtitle: "Critique, Consensus, and the LLM Judge Activity"
+    - rtitle: "Critique, Consensus, and the LLM Judge: One Loop, Three Uses"
       rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
     - rtitle: "Evaluating Outputs Activity"
@@ -74,14 +74,14 @@ info:
       liapage: true
     - rtitle: "Testing Agents"
       rlink: "../Tutorials/TestingAgents"
-    - rtitle: "Judge Pipeline Workshop Activity"
+    - rtitle: "Evaluating Agents With a Rubric: The Judge Pipeline Workshop"
       rlink: "Activities/liascript-rubricworkshop.md"
       liapage: true
     - rtitle: "Observability"
       rlink: "../Tutorials/Observability"
     - rtitle: "Publishing: GHCR, Docker Hub, and npm"
       rlink: "../Tutorials/Publishing"
-    - rtitle: "Coding Agents Activity"
+    - rtitle: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff"
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
     - rtitle: "Ollama API Documentation"
@@ -110,11 +110,13 @@ tags:
 
 ---
 
-In this lab, you and your partner will industrialize the in-class judge into a batch grading pipeline: a JSON rubric and a folder (or ZIP) of submissions go in; a CSV of per-criterion scores, quoted evidence, and weighted totals comes out; and, crucially, you will measure whether the judge deserves to be trusted.  **All submissions in this lab are synthetic artifacts you author yourselves; no real student work may be used.**  You complete this lab in **pairs, using driver/navigator roles, swapping at least every 30 minutes and keeping a swap log**.
+In this lab you and your partner turn the judge you built in class into a batch grading pipeline, then measure whether that judge deserves to be trusted.  A JSON rubric and a folder (or ZIP) of submissions go in.  A CSV of per-criterion scores, quoted evidence, and weighted totals comes out.  **All submissions in this lab are synthetic artifacts you author yourselves; no real student work may be used.**  You complete this lab in pairs, using driver/navigator roles, swapping at least every 30 minutes and keeping a swap log.
 
-**See the course schedule for the assigned and due dates.**
+I hand this lab out on Thu Nov 5 in *Evaluating Agents With a Rubric: The Judge Pipeline Workshop*, where you build the in-class judge this lab scales up; that judge comes from the critic-and-judge loop in *Critique, Consensus, and the LLM Judge: One Loop, Three Uses*.  The lab is due Tue Nov 24.  See the course schedule for the assigned and due dates.
 
-This lab has two pathways: the **code route** below (core Parts 1-5, then one of Directions 1-3), or the **low-code route**, [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0), which meets the same objectives declaratively and replaces the core Parts 1-4 coding.  See "Choose Your Pathway and Direction" near the end of this page before you start.
+A few terms recur on this page, so here they are up front.  A rubric is a list of criteria, each with a weight and a set of observable levels, written so that two graders reading the same text land on the same score.  An LLM as judge is a language model prompted to score an artifact against that rubric instead of writing the artifact itself.  Human agreement is the rate at which independent scores match: human to human, or human to judge.  A bias measurement is a controlled experiment that changes one feature the rubric does not care about (length, position, author name) and records how far the score moves.  Fail closed means that when the judge returns output the pipeline cannot parse, the pipeline flags the row for a human instead of guessing a score.
+
+This lab has two pathways.  The code route is core Parts 1-5 below plus one of Directions 1-3.  The low-code route is [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0), which meets the same objectives with promptfoo configuration files and replaces the coding in core Parts 1-4.  Read "Choose Your Pathway and Direction" near the end of this page before you start.
 
 ---
 
@@ -122,12 +124,12 @@ This lab has two pathways: the **code route** below (core Parts 1-5, then one of
 
 **Prep deck.**  [Testing Agents: Evaluation, Regression, and the Non-Determinism Problem]({{ site.baseurl }}/Tutorials/TestingAgents) sets up the judge-calibration work this lab grades.
 
-**Prerequisite concepts**: complete these activities before writing any code:
+Complete these two activities before writing any code:
 
-- [Judge Pipeline Workshop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md): judge prompting, structured output, fail-closed policies
+- [Evaluating Agents With a Rubric: The Judge Pipeline Workshop]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md): judge prompting, structured output, fail-closed policies
 - [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): agreement metrics, bias taxonomy, evidence faithfulness
 
-**Tools to install:**
+Install the tools:
 
 ```bash
 # All you need is requests (Ollama) and optionally fuzzywuzzy for Part 3
@@ -135,7 +137,7 @@ pip install requests
 pip install thefuzz python-Levenshtein   # optional; for fuzzy evidence matching in Part 3
 ```
 
-**Health check:**
+Then run this health check:
 
 ```bash
 # Verify Ollama is running and your model responds to structured output requests
@@ -156,9 +158,9 @@ Expected output:
 {"test": "ok"}
 ```
 
-If you see connection errors, start Ollama: `ollama serve` in a separate terminal.
+If you see connection errors, start Ollama with `ollama serve` in a separate terminal.
 
-**Estimated time budget:**
+Budget your time with this table:
 
 | Part | Task | Estimated time |
 |------|------|----------------|
@@ -169,7 +171,7 @@ If you see connection errors, start Ollama: `ollama serve` in a separate termina
 | Part 5 | Reproducible Evals with a Declarative Harness | 45-60 min |
 | Writeup | Readme and reflection | 30-45 min |
 
-**Totals:**
+The totals by pathway:
 
 | Pathway | Total time |
 |---------|------------|
@@ -177,20 +179,20 @@ If you see connection errors, start Ollama: `ollama serve` in a separate termina
 | ...plus your chosen code-route direction (1, 2, or 3) | **adds ≈ 3-6 h** |
 | **OR** Direction 0, the promptfoo low-code route (replaces core Parts 1-4 coding) | **≈ 7-9 h total** |
 
-Plan multiple pair sessions; no pathway through this lab fits in one sitting.
+Plan several pair sessions; no pathway through this lab fits in one sitting.
 
 ---
 
 ## Part 1: The Pipeline
 
-Author a JSON rubric with at least four criteria, each with four observable levels and integer weights summing to 100, for a short artifact type of your choosing (a persuasive paragraph, a function with docstring, a lab abstract).  Then implement a pipeline that:
+Write a JSON rubric with at least four criteria for a short artifact type of your choosing (a persuasive paragraph, a function with docstring, a lab abstract).  Give each criterion four observable levels and an integer weight, with the weights summing to 100.  Then build a pipeline that does four things:
 
-1.  Walks a folder or ZIP of text submissions (configuration externalized: paths, model, rubric file, temperature, seed).
-2.  Prompts your local model to award a level per criterion **with a quoted sentence of evidence for each score**, returning strict JSON.
-3.  Fails closed on malformed judge output (flag the row for human review rather than guessing), with located exception messages and tracebacks.
+1.  Walks a folder or ZIP of text submissions, with the configuration externalized: paths, model, rubric file, temperature, seed.
+2.  Prompts your local model to award a level per criterion, with a quoted sentence of evidence for each score, returning strict JSON.
+3.  Fails closed on malformed judge output: it flags the row for human review rather than guessing, and prints located exception messages and tracebacks.
 4.  Emits a CSV with one row per submission: filename, per-criterion level and evidence, weighted total, and any flags.
 
-Author at least twelve synthetic submissions spanning the quality range, including at least two edge cases (empty file, off-topic content).
+Write at least twelve synthetic submissions that span the quality range, including at least two edge cases (an empty file and off-topic content).
 
 ### Step-by-step guide
 
@@ -264,7 +266,7 @@ Author at least twelve synthetic submissions spanning the quality range, includi
 }
 ```
 
-**Step 2: Author twelve synthetic submissions.**
+**Step 2: Write twelve synthetic submissions.**
 
 Create a `submissions/` folder.  Write twelve `.txt` files covering the full quality range:
 
@@ -283,7 +285,7 @@ Create a `submissions/` folder.  Write twelve `.txt` files covering the full qua
 | `s11_verbose.txt` | Same content as s01 but padded with filler sentences (for bias probe in Part 4) |
 | `s12_borderline.txt` | Genuinely ambiguous: reasonable people could disagree on two criteria |
 
-Make sure you know the expected level for each criterion in each file; you will need this for Part 2.
+Write down the level you expect for each criterion in each file.  Part 2 depends on it.
 
 **Step 3: Implement the judge prompt function.**
 
@@ -481,18 +483,18 @@ Found 12 submissions in submissions
 Done. Results written to grades.csv
 ```
 
-Open `grades.csv` and verify it has 12 rows with the correct columns.  Check that `s10_empty.txt` shows `EMPTY_FILE` in the flags column.
+Open `grades.csv` and confirm it has 12 rows with the correct columns.  Confirm that `s10_empty.txt` shows `EMPTY_FILE` in the flags column.
 
 ### Troubleshooting, Part 1
 
 **`REVIEW_NEEDED` appears for most submissions**
-The model is not returning valid JSON. First, print the raw output to see what it is producing.  Common fixes: (1) Add `"Keep your response to ONLY the JSON object, nothing else."` at the end of the system prompt.  (2) Strip markdown code fences with `.lstrip("```json").lstrip("```")`; already in the template.  (3) Try a simpler artifact type with fewer rubric criteria.
+The model is not returning valid JSON.  Print the raw output first to see what it is producing.  Common fixes: (1) Add `"Keep your response to ONLY the JSON object, nothing else."` at the end of the system prompt.  (2) Strip markdown code fences with `.lstrip("```json").lstrip("```")`; the template already does this.  (3) Try a simpler artifact type with fewer rubric criteria.
 
 **`weighted_total` values are all the same (e.g., 62.5 for every submission)**
-The model may be awarding level 2 for everything.  Check `C1_level` and `C2_level` columns; if they are all 2, your rubric descriptors may be ambiguous at levels 1 and 3.  Make the level 4 descriptor very specific so the model can distinguish excellent work from average work.
+The model may be awarding level 2 for everything.  Check the `C1_level` and `C2_level` columns; if they are all 2, your rubric descriptors are probably ambiguous at levels 1 and 3.  Make the level 4 descriptor specific enough that the model can tell excellent work from average work.
 
 **The pipeline is slow (>2 minutes per submission)**
-Reduce the number of rubric criteria to 3 for testing, then add the fourth back when the code works.  Also check that `"stream": False` is in your payload; streaming responses parsed as non-streaming will time out.
+Reduce the number of rubric criteria to 3 for testing, then add the fourth back when the code works.  Also confirm that `"stream": False` is in your payload; a streaming response parsed as non-streaming will time out.
 
 ---
 
@@ -505,13 +507,13 @@ Reduce the number of rubric criteria to 3 for testing, then add the fourth back 
 
 ## Part 2: Validate Against Humans
 
-Before running the judge, you and your partner **independently** hand-score a calibration set of at least eight submissions.  Then run the judge and report: human-to-human agreement per criterion, and human-to-judge agreement per criterion.  Identify the criterion with the worst machine-human gap, revise its level descriptors toward observability, and report agreement before and after the revision.
+Before running the judge, you and your partner independently hand-score a calibration set of at least eight submissions.  Then run the judge and report two things per criterion: human-to-human agreement and human-to-judge agreement.  Identify the criterion with the worst machine-human gap, revise its level descriptors toward observability, and report agreement before and after the revision.
 
 ### Step-by-step guide
 
 **Step 1: Score independently BEFORE running the pipeline.**
 
-This order matters: if you see the judge's scores first, your human scores will be anchored to them and the comparison will be biased.
+The order matters.  If you see the judge's scores first, your human scores anchor to them and the comparison is biased.
 
 Each partner scores eight submissions on a separate sheet (paper or spreadsheet).  For each criterion, record the level (1-4) and a one-sentence justification.  Do not discuss scores with your partner until both sheets are complete.
 
@@ -528,6 +530,8 @@ C4 (Conclusion): Level ___ | Justification: ___
 ```
 
 **Step 2: Compute human-to-human agreement.**
+
+The code below computes percent agreement: the share of cells where the two scorers gave the same level.  Cohen's kappa is the same comparison corrected for the agreement two scorers would reach by chance (0 is chance level, 1 is perfect agreement).  The rubric accepts either figure; percent agreement is the simpler one to compute and to explain.
 
 ```python
 # After both partners have scored independently:
@@ -598,7 +602,7 @@ for cid in criteria:
 
 **Step 4: Identify the weakest criterion and revise it.**
 
-The weakest criterion is the one with the lowest human-to-judge agreement.  Revise its level descriptors to be more observable (specific, countable, anchored to visible text features).  Update `rubric.json`, re-run the pipeline on the same eight files, and report the before/after agreement table.
+The weakest criterion is the one with the lowest human-to-judge agreement.  Revise its level descriptors so they are observable: specific, countable, and anchored to visible text features.  Update `rubric.json`, re-run the pipeline on the same eight files, and report the before/after agreement table.
 
 Example revision for a vague criterion:
 
@@ -608,13 +612,13 @@ Example revision for a vague criterion:
 ### Troubleshooting, Part 2
 
 **Human-to-human agreement is very low (below 50%) on one criterion**
-This means the criterion is poorly defined, not that your scores are wrong.  This is valuable data.  In your writeup, explain what made that criterion ambiguous and how your rubric revision addresses it.  Do NOT revise your scores to match your partner; disagreement is the finding.
+The criterion is poorly defined; your scores are not wrong.  This is useful data.  In your writeup, explain what made that criterion ambiguous and how your rubric revision addresses it.  Do NOT revise your scores to match your partner; the disagreement is the finding.
 
 **Judge scores are missing from `grades.csv` for some calibration files**
 Those files triggered `REVIEW_NEEDED`.  Check the console log for the raw output.  You may need to retry those files with a slightly rephrased system prompt.
 
 **You realize you designed your synthetic submissions to be too obvious**
-If levels 1 and 4 are easy to distinguish but levels 2 and 3 look the same, your calibration will show high agreement at the extremes and low agreement in the middle.  This is a real problem in rubric design; note it in your writeup and consider whether `s12_borderline.txt` falls in this gap.
+If levels 1 and 4 are easy to tell apart but levels 2 and 3 look the same, your calibration will show high agreement at the extremes and low agreement in the middle.  This is a real problem in rubric design.  Note it in your writeup and consider whether `s12_borderline.txt` falls in this gap.
 
 ---
 
@@ -627,7 +631,7 @@ If levels 1 and 4 are easy to distinguish but levels 2 and 3 look the same, your
 
 ## Part 3: Verify the Evidence
 
-Implement a programmatic check that each quoted evidence string actually appears in the source submission (exact substring or a fuzzy match with a stated threshold).  Report the **hallucinated evidence rate** across your corpus, and flag offending rows in the CSV.
+Write a programmatic check that each quoted evidence string appears in the source submission, by exact substring or by a fuzzy match with a stated threshold.  A quote that appears nowhere in the source is hallucinated evidence.  Report the hallucinated evidence rate across your corpus, and flag the offending rows in the CSV.
 
 ### Step-by-step guide
 
@@ -734,18 +738,18 @@ Hallucinated: 3/42 = 7.1%
 Verified CSV written to: grades_verified.csv
 ```
 
-Include the hallucination rate and any verbatim hallucinated quotes in your readme.
+Put the hallucination rate and any verbatim hallucinated quotes in your readme.
 
 ### Troubleshooting, Part 3
 
 **Hallucinated rate is 0% even when you expected some hallucinations**
-The judge may be copying sentences so faithfully that even paraphrases pass the fuzzy threshold.  Lower `fuzzy_threshold` to 80 to see if any marginal quotes appear.  Alternatively, check a few quotes by hand to verify the automated check is working correctly.
+The judge may be copying sentences so faithfully that even paraphrases pass the fuzzy threshold.  Lower `fuzzy_threshold` to 80 to see whether any marginal quotes appear.  Also check a few quotes by hand to confirm the automated check works.
 
 **Hallucinated rate is very high (above 30%)**
-The model may be paraphrasing rather than quoting.  Strengthen the prompt: add "The evidence MUST be a verbatim copy-paste from the artifact.  Do not rephrase."  If paraphrasing persists, lower your fuzzy threshold to 85 and accept partial matches as faithful.
+The model is probably paraphrasing rather than quoting.  Strengthen the prompt: add "The evidence MUST be a verbatim copy-paste from the artifact.  Do not rephrase."  If paraphrasing persists, lower your fuzzy threshold to 85 and accept partial matches as faithful.
 
 **`thefuzz` import fails**
-Run `pip install thefuzz python-Levenshtein`.  If you cannot install it, use Python's built-in `difflib.SequenceMatcher` as an alternative:
+Run `pip install thefuzz python-Levenshtein`.  If you cannot install it, use Python's built-in `difflib.SequenceMatcher` instead:
 
 ```python
 from difflib import SequenceMatcher
@@ -771,9 +775,9 @@ Design and run a controlled probe of one judge pathology from class: position bi
 
 **Option A, Verbosity bias** (recommended for this lab): Compare scores for `s01_excellent.txt` versus `s11_verbose.txt` (same content, padded with filler sentences).  If the judge scores the verbose version higher, that is verbosity bias.
 
-**Option B, Position bias**: Present two submissions in a comparison prompt (A then B, then B then A).  Check if the judge consistently favors the first-presented submission.
+**Option B, Position bias**: Present two submissions in a comparison prompt (A then B, then B then A).  Check whether the judge consistently favors the first-presented submission.
 
-**Option C, Byline bias**: Add a fake author byline to otherwise identical submissions (e.g., "Written by: Sarah Chen" vs. "Written by: [no name]" vs. a name that correlates with demographic assumptions).  Check if scores differ.
+**Option C, Byline bias**: Add a fake author byline to otherwise identical submissions (e.g., "Written by: Sarah Chen" vs. "Written by: [no name]" vs. a name that correlates with demographic assumptions).  Check whether the scores differ.
 
 **Step 2: Run the probe and record results.**
 
@@ -848,41 +852,41 @@ State honestly what risk remains even after the countermeasure.
 ### Troubleshooting, Part 4
 
 **No verbosity bias detected (delta ≈ 0)**
-This is a valid finding.  Confirm it by checking whether the filler sentences you added are coherent; incoherent filler may actually lower the score.  Try adding substantive-looking but vacuous sentences ("This demonstrates the complexity of the issue at hand.") rather than obviously meaningless padding.
+This is a valid finding.  Confirm it by checking whether the filler sentences you added are coherent; incoherent filler can lower the score.  Try substantive-looking but vacuous sentences ("This demonstrates the complexity of the issue at hand.") rather than obviously meaningless padding.
 
 **Bias is inconsistent across runs (sometimes positive, sometimes negative)**
-Your temperature may be 0 but the seed is not deterministic in your Ollama version.  Run each submission three times and report the average.  If variance is high at temperature 0, note this as a reliability issue in your writeup.
+Your temperature may be 0 while the seed is not deterministic in your Ollama version.  Run each submission three times and report the average.  If variance is high at temperature 0, note this as a reliability issue in your writeup.
 
 **Byline bias probe seems unethical**
-It is ethical to measure potential bias in a grading system using synthetic test cases; doing so is responsible AI development, not an expression of bias.  You are measuring whether the system IS biased; the point is to find and fix it.  Your synthetic submissions do not involve real people.
+Measuring potential bias in a grading system with synthetic test cases is ethical; it is responsible AI development, not an expression of bias.  You are measuring whether the system IS biased so that you can find and fix it.  Your synthetic submissions do not involve real people.
 
 ---
 
 > **Checkpoint: Before writing your deliverables, make sure you can answer:**
 > 1.  What bias did you measure, and what was the average effect size?  Is that effect size large enough to matter in a real grading context?
 > 2.  What was your countermeasure?  Did it eliminate the bias or reduce it?  What residual risk remains?
-> 3.  Name one condition from the course that must be satisfied before you would trust this pipeline to grade real student work.  Be specific about what "trust" means: not just "the bias is low," but what evidence you would need and from whom.
+> 3.  Name one condition from the course that must be satisfied before you would trust this pipeline to grade real student work.  Be specific about what "trust" means: beyond "the bias is low," what evidence would you need and from whom?
 
 ---
 
 ## Part 5: Reproducible Evals with a Declarative Harness
 
-So far, your confidence in the judge lives in ad-hoc scripts and a readme.  Industry teams instead encode that confidence as a **versioned eval configuration**: a declarative file that says "given these inputs, the judge must produce these outputs (or satisfy these assertions)," checked into the repository next to the code so that every future change to the prompt, model, or rubric can be re-verified with one command.  In this part you will wrap the pipeline you built in Parts 1-4 in exactly such a harness.  This replaces any further ad-hoc verification scripting; the harness *is* your verification from here on.
+So far, your confidence in the judge lives in ad-hoc scripts and a readme.  In this part you move it into a versioned eval configuration: a declarative file that says "given these inputs, the judge must produce these outputs (or satisfy these assertions)."  The file is checked into the repository next to the code, so every future change to the prompt, model, or rubric can be re-verified with one command.  You will wrap the pipeline you built in Parts 1-4 in such a harness.  From here on the harness is your verification; no further ad-hoc scripting is needed.  The harness returns on Thu Nov 19 in *Evaluation Workshop II: Run Your Rubric Against Your Project*, where teams run it against their own final project artifacts.
 
-Choose **one** harness (this is a choice within the lab, not an optional extra; everyone completes Part 5 with one of the two):
+Choose one harness.  This is a choice within the lab, not an optional extra; everyone completes Part 5 with one of the two.
 
-- **Option A (default): [promptfoo](https://www.promptfoo.dev/)**: a declarative YAML-based harness.  You describe prompts, providers, test cases, and assertions in `promptfooconfig.yaml` and run `npx promptfoo eval`. promptfoo speaks to local models through Ollama's OpenAI-compatible endpoint, so no hosted API is required.  Most assertion types (`contains`, `equals`, `javascript`, `regex`) run without any judge model at all.
+- **Option A (default): [promptfoo](https://www.promptfoo.dev/)**: a declarative YAML-based harness.  You describe prompts, providers, test cases, and assertions in `promptfooconfig.yaml` and run `npx promptfoo eval`.  promptfoo talks to local models through Ollama's OpenAI-compatible endpoint, so no hosted API is required.  Most assertion types (`contains`, `equals`, `javascript`, `regex`) run without any judge model at all.
 - **Option B (for pairs who want a Python-native harness): [Inspect AI](https://inspect.aisi.org.uk/)**: the UK AI Security Institute's open-source framework.  You define a `Task` (Dataset -> Solver -> Scorer) in Python and run `inspect eval`.  Point the model at your local Ollama endpoint.  Inspect's log viewer gives you a per-sample trace of every call.
 
 ### Step-by-step guide
 
 1.  **Define your golden set.**  Reuse the calibration set from Part 2: the (at least eight) synthetic submissions with agreed blind human scores.  Each becomes one eval case: the input is the submission text plus the rubric criterion, and the expected output is the human-consensus level for that criterion.  Add two adversarial cases from Part 4's bias probe (e.g., the padded and unpadded versions of the same submission, which must receive the same level).
-2.  **Encode assertions.**  For each case, write at least one assertion: the judge's returned level equals the human-consensus level (exact match on the parsed JSON field), or, for the adversarial pairs, that the two levels are equal to each other.  In promptfoo these are `assert:` blocks; in Inspect they are scorers.
-3.  **Run the harness against your local model** and capture the results (promptfoo's `output.json`/web viewer screenshot, or Inspect's `.eval` log).  Record the pass rate.  It will likely not be 100%: that is a finding, not a failure; your Part 2 kappa already told you the judge and humans disagree sometimes.
-4.  **Demonstrate a regression.**  Make a deliberate, plausible-seeming degradation to your judge prompt (for example, delete the instruction that evidence must be quoted verbatim, or remove the fail-closed JSON instruction).  Re-run the harness.  Show the pass rate drop, then revert the change and show it recover.  Include both result sets and a two-or-three-sentence interpretation in your readme: this is what the harness buys you: a tripwire that catches silent quality regressions before they reach anything real.
+2.  **Encode assertions.**  For each case, write at least one assertion: the judge's returned level equals the human-consensus level (exact match on the parsed JSON field), or, for the adversarial pairs, the two levels equal each other.  In promptfoo these are `assert:` blocks; in Inspect they are scorers.
+3.  **Run the harness against your local model** and capture the results (promptfoo's `output.json` or a web viewer screenshot, or Inspect's `.eval` log).  Record the pass rate.  It will probably not be 100%.  That is a finding, not a failure; your Part 2 agreement figures already told you the judge and humans disagree sometimes.
+4.  **Demonstrate a regression.**  Make a deliberate, plausible-seeming degradation to your judge prompt (for example, delete the instruction that evidence must be quoted verbatim, or remove the fail-closed JSON instruction).  Re-run the harness.  Show the pass rate drop, then revert the change and show it recover.  Include both result sets and a two-or-three-sentence interpretation in your readme.  This is what the harness buys you: a tripwire that catches silent quality regressions before they reach anything real.
 5.  **Commit the configuration.**  The eval config file lives in your submission alongside the code, with a comment header stating the model, temperature, and seed it was validated against.
 
-> **Connection to Direction 1:** if you choose Direction 1 (Building an Agent Evaluation Harness), you will generalize this discipline, hand-rolling the metrics and the regression runner yourself to see what's inside tools like promptfoo and Inspect.  Your Part 5 configuration becomes the baseline your hand-rolled harness must match.
+> **Connection to Direction 1:** if you choose Direction 1 (Building an Agent Evaluation Harness), you will generalize this discipline by hand-rolling the metrics and the regression runner yourself, which shows you what is inside tools like promptfoo and Inspect.  Your Part 5 configuration becomes the baseline your hand-rolled harness must match.
 
 ### Troubleshooting, Part 5
 
@@ -890,7 +894,7 @@ Choose **one** harness (this is a choice within the lab, not an optional extra; 
 Set the provider to Ollama's OpenAI-compatible endpoint, e.g. `openai:chat:llama3.2` with `apiBaseUrl: http://localhost:11434/v1` (any non-empty API key satisfies the client).  Verify first with `curl http://localhost:11434/v1/models`.
 
 **Assertions fail because the judge output wraps JSON in prose**
-Reuse the fail-closed JSON parsing lesson from the core pipeline: assert on the *parsed* field, not the raw text; in promptfoo use a `javascript` assertion that parses first; in Inspect, parse in the scorer.  If parsing itself fails, that is a legitimate eval failure worth counting.
+Reuse the fail-closed JSON parsing lesson from the core pipeline: assert on the *parsed* field, not the raw text.  In promptfoo use a `javascript` assertion that parses first; in Inspect, parse in the scorer.  If parsing itself fails, that is a legitimate eval failure worth counting.
 
 **Inspect eval runs but every score is zero**
 Check that your scorer compares the parsed level as the same type (int vs string) as the target.  Inspect's log viewer (`inspect view`) shows the raw model output per sample, which usually reveals the mismatch immediately.
@@ -903,16 +907,16 @@ Held against the rubric's `proficient` column.  Direction 0 requirements are giv
 
 - [ ] The batch scorer processes the **full** synthetic corpus end to end, one result row per artifact.
 - [ ] Per-criterion outcomes and an overall result, with quoted evidence strings and a weighted total (Direction 0: per-criterion judge verdicts across all items).
-- [ ] Malformed judge output is **surfaced**, not guessed at: a `REVIEW_NEEDED` flag rather than a silent default.
-- [ ] **Both partners** scored the calibration set independently and **blind to the judge** (at least eight artifacts; Direction 0, all fifteen).
+- [ ] Malformed judge output is surfaced, not guessed at: a `REVIEW_NEEDED` flag rather than a silent default.
+- [ ] Both partners scored the calibration set independently and blind to the judge (at least eight artifacts; Direction 0, all fifteen).
 - [ ] Agreement quantified per criterion, as percent agreement or Cohen's kappa.
 - [ ] The criterion with the worst human-to-judge gap is identified, a rubric revision is tested, and the change in agreement is reported.
-- [ ] **At least one judge bias** measured with a controlled experiment (at least four matched pairs; Direction 0, the reordered and padded variants).
-- [ ] The effect is **quantified with a number**, not described.
+- [ ] At least one judge bias measured with a controlled experiment (at least four matched pairs; Direction 0, the reordered and padded variants).
+- [ ] The effect is quantified with a number, not described.
 - [ ] A countermeasure is implemented or prescribed concretely enough to build.
-- [ ] **Evidence verification:** quotes checked against the source artifacts, hallucinated quotes flagged, and the hallucinated-evidence rate reported as a fraction and a percentage.
-- [ ] A versioned eval configuration (promptfoo YAML or an Inspect AI task) with **at least one assertion per case**, committed.
-- [ ] A **before-and-after regression run** shows a deliberate judge-prompt or rubric change being caught, with both result sets and an interpretation.
+- [ ] Evidence verification: quotes checked against the source artifacts, hallucinated quotes flagged, and the hallucinated-evidence rate reported as a fraction and a percentage.
+- [ ] A versioned eval configuration (promptfoo YAML or an Inspect AI task) with at least one assertion per case, committed.
+- [ ] A before-and-after regression run shows a deliberate judge-prompt or rubric change being caught, with both result sets and an interpretation.
 - [ ] All human score sheets included.
 - [ ] Pair log with at least two timestamped role swaps.
 - [ ] Every reflection answer cites a specific agreement figure, bias effect size, or evidence-faithfulness finding.
@@ -920,11 +924,11 @@ Held against the rubric's `proficient` column.  Direction 0 requirements are giv
 
 ## Deliverables
 
-Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, your Part 5 eval harness configuration with both regression result sets, pair log, and a readme writeup of approximately two pages.  Ensure reproducibility by fixing random seeds and listing software version information.
+Submit a ZIP containing your code, JSON rubric and configuration, synthetic submission corpus, output CSV, calibration scores and agreement analysis, bias probe design and results, your Part 5 eval harness configuration with both regression result sets, pair log, and a readme writeup of approximately two pages.  Fix random seeds and list software version information so the run is reproducible.
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme: in the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a metacognitive learning log for this lab in your readme.  In the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
 1.  **What I built.**  One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
 2.  **What surprised me.**
@@ -961,12 +965,12 @@ Instead of putting the entire submission in the prompt, treat grading as a retri
 
 There are two pathways through this lab:
 
-- **The code route (default):** complete the **core rubric-grading pipeline** above: the batch scorer, the human-agreement validation, the evidence verification, the bias measurement, and the declarative eval harness, and then extend it in **one** direction of your choosing (Directions 1-3).  The core is the required spine; the direction matures it.
-- **The low-code route (Direction 0):** meet the same core objectives declaratively with promptfoo configuration instead of Python.  **Direction 0 replaces the coding in core Parts 1-4** (Part 5's declarative harness is inherently satisfied by this route), and it is your entire lab; you do not also pick a code-route direction.
+- **The code route (default):** complete the core rubric-grading pipeline above (the batch scorer, the human-agreement validation, the evidence verification, the bias measurement, and the declarative eval harness), then extend it in one direction of your choosing (Directions 1-3).  The core is the required spine; the direction matures it.
+- **The low-code route (Direction 0):** meet the same core objectives with promptfoo configuration instead of Python.  Direction 0 replaces the coding in core Parts 1-4 (Part 5's declarative harness is satisfied by the route itself), and it is your entire lab; you do not also pick a code-route direction.
 
-Either way, you submit **one** deliverable, and it earns **one grade against the single 100-point rubric at the top of this page**; that grade covers everything you did.  The directions are not separate labs and do not add rubric rows; they are different ways to mature the same measurement pipeline from a one-shot script into a trustworthy, observable, shippable system.  Each direction page carries its own setup, step-by-step instructions, deliverables, and reflection prompts, plus a "What this direction requires" box so you can check the prerequisites before committing.
+Either way, you submit one deliverable, and it earns one grade against the single 100-point rubric at the top of this page; that grade covers everything you did.  The directions are not separate labs and do not add rubric rows.  They are different ways to mature the same measurement pipeline from a one-shot script into a trustworthy, observable, shippable system.  Each direction page carries its own setup, step-by-step instructions, deliverables, and reflection prompts, plus a "What this direction requires" box so you can check the prerequisites before committing.
 
-Wherever a direction refers to "your agent," you may use the rubric-grading pipeline you built above as that agent (the judge and pipeline are themselves a tool-using, LLM-calling system worth evaluating, tracing, and shipping), or another agent you built earlier in the course.  Whichever you choose, keep the connection explicit in your writeup: the direction should measure, instrument, or package the *same* evaluation/measurement pipeline, not an unrelated project.
+Wherever a direction refers to "your agent," you may use the rubric-grading pipeline you built above as that agent (the judge and pipeline are themselves a tool-using, LLM-calling system worth evaluating, tracing, and shipping), or another agent you built earlier in the course.  Whichever you choose, keep the connection explicit in your writeup: the direction should measure, instrument, or package the *same* evaluation pipeline, not an unrelated project.
 
 | Direction | What it is | Estimated time | Key requirements |
 |-----------|------------|----------------|------------------|
@@ -975,4 +979,4 @@ Wherever a direction refers to "your agent," you may use the rubric-grading pipe
 | **[Direction 2: Instrumenting Agents with OpenTelemetry]({{ site.baseurl }}/Assignments/RubricPipeline/Direction2)** | Turn the pipeline from a black box into a system you can reason about: a trace span for every LLM call, tool invocation, and retrieval step, visualized in Jaeger, with alert rules and a runbook. | core ≈ 4.5-6 h **+ ≈ 3-6 h** | Docker + the Jaeger all-in-one image; no API key needed with local Ollama |
 | **[Direction 3: CI/CD, TDD, and Publishing for AI Agent Software]({{ site.baseurl }}/Assignments/RubricPipeline/Direction3)** | Earn trust through engineering discipline: TDD against a mocked model, automated code quality, a GitHub Actions CI pipeline, and publishing as a pip package and container image. | core ≈ 4.5-6 h **+ ≈ 3-6 h** | GitHub repo, TestPyPI account, Docker, GHCR personal access token |
 
-Read the direction pages before choosing; each opens with a "What this direction requires" box listing accounts, tools, and any keys, so nothing ambushes your time budget mid-lab.
+Read the direction pages before choosing.  Each opens with a "What this direction requires" box listing accounts, tools, and any keys, so nothing surprises you mid-lab.

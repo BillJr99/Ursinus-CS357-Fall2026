@@ -4,11 +4,11 @@ permalink: /Assignments/RubricPipeline/Direction0
 title: 'CS357: Foundations of Artificial Intelligence - Lab: Rubric Pipeline, Direction 0: The promptfoo Route'
 info:
   coursenum: CS357
-  purpose: To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agreement validation, bias measurement, and regression testing, declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
+  purpose: To meet the core Rubric Pipeline Lab objectives (batch rubric scoring, human-agreement validation, bias measurement, and regression testing) with promptfoo configuration files and local Ollama instead of Python.
   readings:
   - rtitle: 'Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline'
     rlink: "../RubricPipeline"
-  - rtitle: Judge Pipeline Workshop Activity
+  - rtitle: 'Evaluating Agents With a Rubric: The Judge Pipeline Workshop'
     rlink: "Activities/liascript-rubricworkshop.md"
     liapage: true
   - rtitle: Evaluating Outputs Activity
@@ -27,20 +27,20 @@ tags:
 
 ## Purpose
 
-To meet the core Rubric Pipeline Lab objectives, batch rubric scoring, human-agreement validation, bias measurement, and regression testing, declaratively with promptfoo and local Ollama, writing configuration files instead of Python.
+To meet the core Rubric Pipeline Lab objectives (batch rubric scoring, human-agreement validation, bias measurement, and regression testing) with promptfoo configuration files and local Ollama instead of Python.
 
 ## Background Reading and References
 
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
-- [Judge Pipeline Workshop Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md)
+- [Evaluating Agents With a Rubric: The Judge Pipeline Workshop]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md)
 - [Evaluating Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md)
 - [promptfoo Documentation](https://www.promptfoo.dev/docs/intro/)
 
-This page is **Direction 0** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  It is the **low-code route** through the lab: you meet the same core objectives: batch rubric scoring, human-agreement validation, bias measurement, and regression testing, by writing **declarative YAML configuration** for [promptfoo](https://www.promptfoo.dev/) instead of Python code.
+This page is Direction 0 of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline), the low-code route through the lab.  You meet the same core objectives (batch rubric scoring, human-agreement validation, bias measurement, and regression testing) by writing YAML configuration for [promptfoo](https://www.promptfoo.dev/) instead of Python code.  promptfoo is an evaluation harness: you describe prompts, a model, test cases, and assertions in a file, and it runs them all with one command.  Its `llm-rubric` assertion is an LLM as judge, a language model prompted to decide whether an answer meets a stated criterion rather than to write the answer itself.
 
-**Direction 0 replaces the coding in core Parts 1-4.**  If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs.  Core **Part 5** (expressing the judge as a versioned, declarative harness) **is inherently satisfied by this route**; the entire route *is* a declarative harness.  You are graded under the same 100-point rubric on the core lab page; that rubric's wording is pathway-neutral, and this page tells you what each row means on this route.  As with the core lab, this route is completed in **pairs using driver/navigator roles with swaps at least every 30 minutes and a swap log**; the blind human-scoring step in Part C requires both partners.
+**Direction 0 replaces the coding in core Parts 1-4.**  If you choose this route, you do not build the Python pipeline; you build the same measurements out of promptfoo configs.  Core Part 5 (expressing the judge as a versioned, declarative harness) is satisfied by the route itself, because the entire route is a declarative harness.  You are graded under the same 100-point rubric on the core lab page.  That rubric's wording is pathway-neutral, and this page tells you what each row means on this route.  As with the core lab, you complete this route in pairs using driver/navigator roles, with swaps at least every 30 minutes and a swap log; the blind human-scoring step in Part C requires both partners.
 
-**See the course schedule for the assigned and due dates.**  Budget: expect **7-9 hours total** for this route (it replaces the core coding, so this is your entire Rubric Pipeline Lab time, not an add-on).
+See the course schedule for the assigned and due dates.  Expect 7-9 hours total for this route.  It replaces the core coding, so this is your entire Rubric Pipeline Lab time, not an add-on.
 
 > **What this direction requires**
 >
@@ -62,9 +62,7 @@ cd cs357-lab5-d0
 npx promptfoo@latest init
 ```
 
-The `init` command scaffolds a `promptfooconfig.yaml`.  Verify promptfoo can reach your local Ollama with a minimal smoke-test config; replace the scaffolded file's contents with:
-
-{% raw %}
+The `init` command scaffolds a `promptfooconfig.yaml`.  Confirm promptfoo can reach your local Ollama with a minimal smoke-test config.  Replace the scaffolded file's contents with:
 
 ```yaml
 # smoke-test promptfooconfig.yaml - verify Ollama connectivity
@@ -81,7 +79,6 @@ tests:
       - type: contains
         value: "Paris"
 ```
-{% endraw %}
 
 Run it:
 
@@ -90,7 +87,7 @@ npx promptfoo@latest eval
 npx promptfoo@latest view   # opens the results viewer in your browser
 ```
 
-Expected: 1 test, 1 pass.  If promptfoo cannot reach Ollama, confirm `ollama serve` is running and that `curl http://localhost:11434/api/tags` responds; promptfoo reads the base URL from the `OLLAMA_BASE_URL` environment variable if your Ollama runs elsewhere.
+Expected: 1 test, 1 pass.  If promptfoo cannot reach Ollama, confirm `ollama serve` is running and that `curl http://localhost:11434/api/tags` responds.  If your Ollama runs elsewhere, promptfoo reads the base URL from the `OLLAMA_BASE_URL` environment variable.
 
 ---
 
@@ -98,11 +95,11 @@ Expected: 1 test, 1 pass.  If promptfoo cannot reach Ollama, confirm `ollama ser
 
 **Estimated time: 2-2.5 h (most of it authoring the rubric and the 15 answers)**
 
-This is the declarative counterpart of core Parts 1-2's pipeline: a rubric, a corpus of sample answers, and a judge that scores every answer against every criterion in one command.
+This part is the declarative counterpart of the pipeline in core Parts 1-2: a rubric, a corpus of sample answers, and a judge that scores every answer against every criterion in one command.  A rubric is a list of criteria, each with observable levels, written so that two graders reading the same text land on the same score.
 
-**Step 1: Author your rubric.**  Exactly as in the core lab, write a rubric with **four criteria** and observable level descriptors for a short artifact type of your choosing (persuasive paragraph, function docstring, lab abstract).  You will embed each criterion's text into an `llm-rubric` assertion below.  For each criterion, the judge's job is binary: **PASS if the answer sits at level 3 or 4 of that criterion, FAIL if at level 1 or 2.**  Write each criterion's rubric text so that this pass line is explicit and observable.
+**Step 1: Write your rubric.**  Exactly as in the core lab, write a rubric with four criteria and observable level descriptors for a short artifact type of your choosing (persuasive paragraph, function docstring, lab abstract).  You will embed each criterion's text into an `llm-rubric` assertion below.  For each criterion the judge's job is binary: PASS if the answer sits at level 3 or 4 of that criterion, FAIL if at level 1 or 2.  Write each criterion's rubric text so that this pass line is explicit and observable.
 
-**Step 2: Author your dataset, 15 sample answers.**  Create `dataset.csv` with one row per answer, spanning the full quality range (like the core lab's 12 synthetic submissions, plus three more: include at least one empty-ish answer, one off-topic answer, and one verbose-but-weak answer).  All answers are synthetic; no real student work.
+**Step 2: Write your dataset, 15 sample answers.**  Create `dataset.csv` with one row per answer, spanning the full quality range.  This is like the core lab's 12 synthetic submissions plus three more: include at least one empty-ish answer, one off-topic answer, and one verbose-but-weak answer.  All answers are synthetic; no real student work.
 
 ```csv
 id,answer
@@ -113,9 +110,9 @@ a03,"<your adequate answer>"
 a15,"<your off-topic answer>"
 ```
 
-Record privately (before running anything) which criteria you *intend* each answer to pass; you need this for Part C.
+Before running anything, record privately which criteria you intend each answer to pass.  You need this for Part C.
 
-**Step 3: The baseline scoring config.**  This skeleton is complete except for your rubric text; copy it to `promptfooconfig-baseline.yaml` and fill in the four `value:` blocks with your criterion descriptors:
+**Step 3: Build the baseline scoring config.**  This skeleton is complete except for your rubric text.  Copy it to `promptfooconfig-baseline.yaml` and fill in the four `value:` blocks with your criterion descriptors:
 
 {% raw %}
 
@@ -163,9 +160,9 @@ npx promptfoo@latest eval -c promptfooconfig-baseline.yaml --output run_baseline
 npx promptfoo@latest view
 ```
 
-Expected: 15 rows × 4 assertions = 60 judge verdicts.  Save `run_baseline.json`; it is a deliverable, and Part E diffs against it.  In the viewer, spot-check three items: does the judge's reasoning for each verdict reference the actual answer text?  Note one example where its reasoning is weak or generic; that is this route's version of the core lab's evidence-faithfulness concern, and it feeds your Part C disagreement analysis.
+Expected: 15 rows × 4 assertions = 60 judge verdicts.  Save `run_baseline.json`; it is a deliverable, and Part E diffs against it.  In the viewer, spot-check three items: does the judge's reasoning for each verdict reference the actual answer text?  Note one example where its reasoning is weak or generic.  That note is this route's version of the core lab's evidence-faithfulness concern, and it feeds your Part C disagreement analysis.
 
-**Troubleshooting:** if every assertion passes (or fails), your rubric text is not discriminating; sharpen the PASS line with countable features ("names an opposing view in a full sentence AND rebuts it with a reason"), exactly the observability lesson from the core lab.  If the judge output is erratic, re-run; `llm-rubric` verdicts from a small local model are noisy, and observing that noise is a legitimate finding for your writeup.
+**Troubleshooting:** if every assertion passes (or fails), your rubric text is not discriminating.  Sharpen the PASS line with countable features ("names an opposing view in a full sentence AND rebuts it with a reason"); this is the observability lesson from the core lab.  If the judge output is erratic, re-run.  `llm-rubric` verdicts from a small local model are noisy, and observing that noise is a legitimate finding for your writeup.
 
 ---
 
@@ -173,7 +170,7 @@ Expected: 15 rows × 4 assertions = 60 judge verdicts.  Save `run_baseline.json`
 
 **Estimated time: 1.5-2 h**
 
-**Before looking at any judge output**, each partner independently hand-scores all 15 answers, criterion by criterion, as PASS (level 3-4) or FAIL (level 1-2).  This order matters for the same reason as in the core lab: seeing the judge's scores first anchors yours.
+Human agreement is the rate at which independent scores match: human to human, or human to judge.  Before looking at any judge output, each partner independently hand-scores all 15 answers, criterion by criterion, as PASS (level 3-4) or FAIL (level 1-2).  The order matters for the same reason as in the core lab: seeing the judge's scores first anchors yours.
 
 **The score spreadsheet.**  Build a spreadsheet (Google Sheets, Excel, or CSV) with exactly these columns:
 
@@ -186,7 +183,7 @@ Expected: 15 rows × 4 assertions = 60 judge verdicts.  Save `run_baseline.json`
 | `mismatches` | count of criteria where the human-consensus verdict differs from the judge |
 | `notes` | one line on any disputed item |
 
-Where you and your partner disagree with each other, record both marks and use discussion to set a consensus verdict for the judge comparison (do not erase the original marks; human-to-human disagreement is a finding, just as in the core lab).
+Where you and your partner disagree with each other, record both marks and discuss until you reach a consensus verdict for the judge comparison.  Do not erase the original marks; human-to-human disagreement is a finding, just as in the core lab.
 
 **Compute percent agreement** (no code needed; a spreadsheet formula or a calculator is fine):
 
@@ -195,9 +192,9 @@ percent agreement = (number of criterion-cells where human consensus == judge ve
                     ÷ (15 items × 4 criteria = 60 cells) × 100
 ```
 
-Report percent agreement overall **and per criterion** (each criterion has 15 cells).
+Report percent agreement overall and per criterion (each criterion has 15 cells).
 
-Kappa replacement, read this.  The code route computes Cohen's kappa, which corrects agreement for chance.  **On this route, kappa is not required.**  It is replaced by: (1) the percent-agreement numbers above, and (2) a **written disagreement analysis of the 3 worst mismatches**: the three items with the highest `mismatches` count.  For each of the three, quote the answer, state the human verdict and the judge verdict per disputed criterion, quote the judge's stated reasoning from the promptfoo output, and diagnose *why* they diverged: is the criterion's wording ambiguous, is the judge pattern-matching on surface features, or did the humans read something into the answer that is not on the page?  Then revise the wording of the single worst criterion's rubric text, re-run the baseline config, and report that criterion's per-criterion agreement before and after; the same revise-and-remeasure discipline as core Part 2.
+**Kappa replacement.**  The code route computes Cohen's kappa, which is percent agreement corrected for the matches two scorers would reach by chance.  On this route, kappa is not required.  Two things replace it: (1) the percent-agreement numbers above, and (2) a written disagreement analysis of the 3 worst mismatches, meaning the three items with the highest `mismatches` count.  For each of the three, quote the answer, state the human verdict and the judge verdict per disputed criterion, quote the judge's stated reasoning from the promptfoo output, and diagnose why they diverged: is the criterion's wording ambiguous, is the judge pattern-matching on surface features, or did the humans read something into the answer that is not on the page?  Then revise the wording of the single worst criterion's rubric text, re-run the baseline config, and report that criterion's per-criterion agreement before and after.  This is the same revise-and-remeasure discipline as core Part 2.
 
 ---
 
@@ -205,9 +202,9 @@ Kappa replacement, read this.  The code route computes Cohen's kappa, which corr
 
 **Estimated time: 1-1.5 h**
 
-The core lab measures a judge bias with a controlled Python experiment; here you measure two with **two more config files over the same dataset**.
+A bias measurement is a controlled experiment that changes one feature the rubric does not care about and records how far the verdicts move.  The core lab measures one judge bias with a Python experiment; here you measure two, with two more config files over the same dataset.
 
-**Variant (i), reordering (position/order effects).**  Create `dataset_reordered.csv`: the same 15 answers with the row order reversed (a15 first, a01 last).  Copy the baseline config to `promptfooconfig-reordered.yaml`, changing only the last line to `tests: file://dataset_reordered.csv`.  Since each answer is judged in isolation, a trustworthy judge should give **identical verdicts regardless of order**; any per-item verdict that flips between runs is evidence of order sensitivity or judge instability, which in a real grading deployment amounts to position bias against whoever gets graded late.
+**Variant (i), reordering (position/order effects).**  Create `dataset_reordered.csv`: the same 15 answers with the row order reversed (a15 first, a01 last).  Copy the baseline config to `promptfooconfig-reordered.yaml`, changing only the last line to `tests: file://dataset_reordered.csv`.  Each answer is judged in isolation, so a trustworthy judge should give identical verdicts regardless of order.  Any per-item verdict that flips between runs is evidence of order sensitivity or judge instability, which in a real grading deployment is position bias against whoever gets graded late.
 
 **Variant (ii), padding (verbosity bias).**  Create `dataset_padded.csv`: the same 15 answers, each with three filler sentences appended (substantive-sounding but vacuous, e.g., "Furthermore, it is important to consider the various aspects of this topic from multiple perspectives.").  Copy the baseline config to `promptfooconfig-padded.yaml`, changing only the tests line.  Padding adds no rubric-relevant content, so verdicts should not improve; any criterion that flips FAIL->PASS under padding is verbosity bias.
 
@@ -226,7 +223,7 @@ npx promptfoo@latest eval -c promptfooconfig-padded.yaml --output run_padded.jso
 | ... | | | | | |
 | **Total flips** | | | | | |
 
-Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 60 verdicts FAIL->PASS, an 8% verbosity effect"), propose one countermeasure you could express *in the rubric text of the config* (e.g., "Length and repetition must not be credited; judge only the content that addresses the criterion"), apply it, re-run the padded config, and report the residual effect, mirroring core Part 4's countermeasure-and-residual-risk discipline.
+Then do four things.  Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 60 verdicts FAIL->PASS, an 8% verbosity effect").  Propose one countermeasure you can express in the rubric text of the config (e.g., "Length and repetition must not be credited; judge only the content that addresses the criterion").  Apply it and re-run the padded config.  Report the residual effect.  This mirrors core Part 4's countermeasure-and-residual-risk discipline.
 
 ---
 
@@ -234,19 +231,19 @@ Summarize each bias in one sentence with a number (e.g., "padding flipped 5 of 6
 
 **Estimated time: 45-60 min**
 
-This is the harness discipline of core Part 5, which this route satisfies by construction; now demonstrate it.  Make a deliberate, plausible-seeming **degradation to the judge prompt**: in a copy of the baseline config (`promptfooconfig-regressed.yaml`), weaken one criterion's rubric text (for example, delete the observable PASS line and leave only the criterion name).  Re-run and diff:
+This route satisfies the harness discipline of core Part 5 by construction; now demonstrate it.  Make a deliberate, plausible-seeming degradation to the judge prompt: in a copy of the baseline config (`promptfooconfig-regressed.yaml`), weaken one criterion's rubric text (for example, delete the observable PASS line and leave only the criterion name).  Re-run and diff:
 
 ```bash
 npx promptfoo@latest eval -c promptfooconfig-regressed.yaml --output run_regressed.json
 ```
 
-Compare `run_baseline.json` and `run_regressed.json`; the viewer's side-by-side, a text diff, or a hand-built table of the 60 verdicts all work.  Identify which items' verdicts changed and in which direction.  In two or three sentences in your writeup, interpret the result: this is what a versioned eval configuration buys you: a tripwire that catches a silent judge-quality regression before it grades anything real.  Then revert the change and confirm the baseline verdicts recover.
+Compare `run_baseline.json` and `run_regressed.json`; the viewer's side-by-side, a text diff, or a hand-built table of the 60 verdicts all work.  Identify which items' verdicts changed and in which direction.  In two or three sentences in your writeup, interpret the result.  This is what a versioned eval configuration buys you: a tripwire that catches a silent judge-quality regression before it grades anything real.  Then revert the change and confirm the baseline verdicts recover.
 
 ---
 
 ## Part F: Writeup
 
-**Same writeup as the core lab.**  Complete the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline)'s **Learning Log** (all six prompts plus the lab-specific prompts) in your readme, citing your percent-agreement numbers, bias flip counts, and regression diff as the specific evidence.  Approximately two pages.
+**Same writeup as the core lab.**  Complete the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline)'s Learning Log (all six prompts plus the lab-specific prompts) in your readme, citing your percent-agreement numbers, bias flip counts, and regression diff as the specific evidence.  Approximately two pages.
 
 ---
 
@@ -262,7 +259,7 @@ Submit a ZIP containing:
 
 ## How the rubric reads on this route
 
-You are graded under the same rubric as everyone else, on the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline).  On this route: *Pipeline Implementation* is your baseline config scoring all 15 items end-to-end; *Human Agreement Validation* is the blind spreadsheet plus percent agreement and the criterion revision; *Bias Measurement* is the two config variants with the comparison table and countermeasure; *Evidence Verification* is the judge-reasoning faithfulness check inside your 3-worst-mismatches analysis; *Reproducible Eval Harness* is the regression demonstration of Part E; *Writeup* is Part F.
+You are graded under the same rubric as everyone else, on the [core lab page]({{ site.baseurl }}/Assignments/RubricPipeline).  On this route, each row maps as follows.  *Pipeline Implementation* is your baseline config scoring all 15 items end-to-end.  *Human Agreement Validation* is the blind spreadsheet plus percent agreement and the criterion revision.  *Bias Measurement* is the two config variants with the comparison table and countermeasure.  *Evidence Verification* is the judge-reasoning faithfulness check inside your 3-worst-mismatches analysis.  *Reproducible Eval Harness* is the regression demonstration of Part E.  *Writeup* is Part F.
 
 ---
 
@@ -283,13 +280,13 @@ You are graded under the same rubric as everyone else, on the [core lab page]({{
 Held against the core lab's rubric, read through this route.
 
 - [ ] The batch run covers **all** dataset items, with per-criterion verdicts.
-- [ ] Unusable judge output is **noted and re-run**, not silently accepted.
+- [ ] Unusable judge output is noted and re-run, not silently accepted.
 - [ ] Rubric, model, paths, and settings live in the config files; nothing is hardcoded in a one-off command.
-- [ ] **Both partners** scored all fifteen calibration artifacts independently and blind to the judge.
+- [ ] Both partners scored all fifteen calibration artifacts independently and blind to the judge.
 - [ ] Percent agreement is reported per criterion.
 - [ ] The three worst human-to-judge mismatches are analyzed in writing.
 - [ ] A rubric revision was tested, with before-and-after agreement reported.
-- [ ] The **reordered** and **padded** dataset variants were both run over all items.
+- [ ] The reordered and padded dataset variants were both run over all items.
 - [ ] The bias effect is quantified with a number, for example "padding flipped 5 of 60 verdicts".
 - [ ] A countermeasure is prescribed concretely enough for someone to implement.
 - [ ] The judge's stated reasoning for the three worst mismatches is examined against the source artifacts.
