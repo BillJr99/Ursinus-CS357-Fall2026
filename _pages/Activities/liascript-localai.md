@@ -240,7 +240,7 @@ You have just run a model that is *yours*.  That means the settings that shape i
 
 Here is the whole idea in one sentence: at each step the model produces a ranked list of candidate next words, and temperature decides whether it always takes the top one or sometimes reaches further down the list.  **Near 0 it always takes the top candidate**, so the same prompt gives you very nearly the same answer every time.  **Near 1 it reaches down**, so the wording varies from run to run.  Nothing about the model changes; only how its output is picked.
 
-You will meet the mathematics of that pick in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.  Today you just need to find the dial and feel what it does.
+You will meet the mathematics of that pick in the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* tutorial (https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SamplingAndTemperature).  Today you just need to find the dial and feel what it does.
 
 ### Where the dial lives
 
@@ -395,7 +395,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
--> Coming Up Next: Your model is running and you have turned your first dial on it.  Next, in *Prompt Engineering as Agent Design*, we work on the other half of the control surface: the words.  Bring this stack, because that session edits system prompts against a live model and the temperature slider from Section 3b is one of the things we vary.  (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.)
+-> Coming Up Next: Your model is running and you have turned your first dial on it.  Next, in *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff*, you hand that model a written specification and read every line it produces.  Bring this stack, because the OpenCode Studio lab is handed out that day, and the *Prompt Engineering as Agent Design* session the week after edits system prompts against this same live model, where the temperature slider from Section 3b is one of the things we vary.  (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.)
 
 ## 6.  Further Reading
 

@@ -227,7 +227,7 @@ If the verdict begins with `REVISE`, the orchestrator loops the affected steps b
 
    > *Hint: Which text becomes each call's context; how the plan is split into steps; how many steps run; when the loop terminates; what "begins with REVISE" means.  These are deterministic and inspectable, unlike the model's generations.  Recall the debugging module: check the deterministic scaffolding before blaming the stochastic component.*
 
-8.  The Worker's system prompt says "Execute exactly the step you are given; do not do other steps."  Connect this instruction to the small-context-window principle from *Memory and the Small Context Window Principle*: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
+8.  The Worker's system prompt says "Execute exactly the step you are given; do not do other steps."  Connect this instruction to the small-context-window principle from the [Memory and the Small Context Window Principle]({{ site.baseurl }}/Tutorials/MemoryAndContext) tutorial: what failure appears if the Worker is instead handed the whole plan and told to "make progress"?
 
    > *Hint: With the whole plan in context, the model tends to do a shallow pass over everything, the same dilution as one-big-prompt research.  One step per call keeps each generation focused and makes the blackboard entries attributable to a step.*
 

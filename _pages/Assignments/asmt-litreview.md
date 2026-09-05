@@ -8,7 +8,7 @@ info:
   purpose: "To test the plan your team has already committed to against the published evidence rather than against your intuitions, and to make your understanding of the problem multi-disciplinary by reading what the stakeholder's own field says about it, while there is still time for what you find to change the project."
   tilt:
     task: "Individually annotate 2-3 credible sources, then as a team write a one-page synthesis that connects them to your problem statement, tests the gap your proposal claimed, and states plainly what the evidence confirms, complicates, or changes about the plan you proposed."
-    criteria: "I grade this on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, a gap that actually follows from the sources, and an honest account of what the evidence changes about your proposed plan.  The rubric below has the details."
+    criteria: "I grade this on faithful summaries in your own words, specific credibility assessments, relevance tied to the problem statement, a required span of at least two disciplinary perspectives, a gap that follows from the sources, and an honest account of what the evidence changes about your proposed plan.  The rubric below has the details."
   points: 100
   goals:
     - To research the team's stakeholder problem through published sources, assessing each source's credibility and relevance to the problem statement (Goal 11)
@@ -56,9 +56,9 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem.  The review runs in two phases.  **Phase 1 is individual**, and each team member builds an annotated bibliography of 2-3 sources.  **Phase 2 is a team synthesis**, one page connecting everyone's sources to the problem statement and naming the gap your project will address.  The assignment goes out as your revised [Stakeholder Brief]({{ site.baseurl }}/Assignments/StakeholderBrief) is submitted, and the two phases are due about two weeks apart; see the [course schedule]({{ site.baseurl }}/) for the dates.
+In this Project Thread milestone, your team finds out what the world already knows about your stakeholder's problem.  The review runs in two phases.  **Phase 1 is individual**: each team member builds an annotated bibliography of 2-3 sources.  **Phase 2 is a team synthesis**: one page that connects everyone's sources to the problem statement and names the gap your project will address.  The assignment goes out the day your [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal) is due.  The two phases have separate due dates, the individual one first; see the [course schedule]({{ site.baseurl }}/) for both.
 
-A literature review is not a book report and not a pile of links.  It is an argument: *here is what is known, here is who knows it, here is the hole in it, and here is why that hole matters to our stakeholder.*  The two-phase structure means every member does real source work (there is no way to ride along on a teammate's reading), and the synthesis forces the sources to talk to each other.
+A literature review is not a book report, and it is not a pile of links.  It is an argument: *here is what is known, here is who knows it, here is the hole in it, and here is why that hole matters to our stakeholder.*  The two-phase structure means every member does real source work (there is no way to ride along on a teammate's reading), and the synthesis forces the sources to talk to each other.
 
 ---
 
@@ -78,17 +78,17 @@ A literature review is not a book report and not a pile of links.  It is an argu
 
 ## Before You Start
 
-**This builds on:** your Stakeholder Brief, whose problem statement tells you what to go looking for, and your [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal), which I hand out the same day as this one.  Please start from a question; a literature review without one is just a reading list.
+**This builds on** your Stakeholder Brief, whose problem statement tells you what to go looking for, and your [Final Project Proposal]({{ site.baseurl }}/Projects/FinalProjectProposal), which is due the day this is handed out.  Start from a question.  A literature review without one is a reading list.
 
-**You are reading against a plan you have already committed to,** and that is the point.  The proposal named a gap and made design decisions; your job here is to find out whether the published evidence supports them.  If you come back and report that a source complicates your plan, the assignment is working.  That is not a setback.  The synthesis has to say what changed.
+**You are reading against a plan you have already committed to.**  That is the point.  The proposal named a gap and made design decisions.  Your job here is to find out whether the published evidence supports them.  If you come back and report that a source complicates your plan, the assignment is working; that is not a setback.  The synthesis has to say what changed.
 
-**Two phases with a hard boundary between them:** everyone writes an individual annotated bibliography first, and only then does the team synthesize.  The individual phase has its own due date on the schedule, and it is not a formality; a synthesis assembled from four people who each read one source is visibly thinner than one assembled from four people who each read several.
+**Two phases with a hard boundary between them.**  Everyone writes an individual annotated bibliography first.  Only then does the team synthesize.  The individual phase has its own due date on the schedule, and it is not a formality: a synthesis assembled from four people who each read one source is visibly thinner than one assembled from four people who each read several.
 
-**Pace yourself:** the individual phase is the longer half, and the team synthesis needs a meeting you schedule in advance.
+**Pace yourself.**  The individual phase is the longer half.  The team synthesis needs a meeting you schedule in advance.
 
 **Where to search.**  Start with the *Information Literacy* section below rather than with a general web search.  The library's databases and Google Scholar surface different things, and the difference matters for what you are able to claim.
 
-> **On using AI here.**  It is permitted, disclosed, and useful for finding and triaging sources.  It is also the single most reliable way to end up citing a paper that does not exist.  **Every source you cite must be one you opened.**  Not one a model described to you; one you opened, with a link or DOI that resolves.  Check every one before you submit, and say in your disclosure how you checked.
+> **On using AI here.**  AI tools are permitted, disclosed, and useful for finding and triaging sources.  They are also the single most reliable way to end up citing a paper that does not exist.  **Every source you cite must be one you opened.**  Not one a model described to you: one you opened, with a link or DOI that resolves.  Check every one before you submit, and say in your disclosure how you checked.
 
 ---
 
@@ -103,41 +103,41 @@ A literature review is not a book report and not a pile of links.  It is an argu
 **Each annotation** (150-250 words) has three labeled parts:
 
 1.  **Summary**: what the source claims and on what evidence, in your own words.  If you cannot summarize it without the abstract open, read it again.
-2.  **Credibility assessment**: venue and review process, method and sample, who funded or published it and what they might want, how current it is, and (most importantly) *what this source can and cannot support*.  ("Peer-reviewed" is the start of an assessment, not the end of one.)
-3.  **Relevance to the problem**: which element of your team's problem statement this source informs, and what it changes: does it confirm an assumption, kill one, or open a question?
+2.  **Credibility assessment**: venue and review process, method and sample, who funded or published it and what they might want, how current it is, and (most importantly) *what this source can and cannot support*.  "Peer-reviewed" is the start of an assessment, not the end of one.
+3.  **Relevance to the problem**: which element of your team's problem statement this source informs, and what it changes.  Does it confirm an assumption, kill one, or open a question?
 
-Also note **how you found it** (database and search terms, or what you chained from).  You are the **primary author of your own annotations**; they are individual work, individually graded.
+Also note **how you found it** (database and search terms, or what you chained from).  You are the **primary author of your own annotations**.  They are individual work, individually graded.
 
 ---
 
 ## Phase 2: Team Synthesis
 
-One page, with a **named primary author** (drafting responsibility; the whole team reviews and signs).  The synthesis must:
+One page, with a **named primary author** who holds drafting responsibility; the whole team reviews and signs.  The synthesis must:
 
-- Connect the team's combined sources to the problem statement from your Stakeholder Brief, organized by *idea*, not by source ("Three of our sources agree that X; the exception is..." rather than "Source 1 says... Source 2 says...").
+- Connect the team's combined sources to the problem statement from your Stakeholder Brief, organized by *idea*, not by source.  Write "Three of our sources agree that X; the exception is..." rather than "Source 1 says... Source 2 says...".
 - Show where the disciplinary perspectives converge, conflict, or measure success differently, and what that means for the project.
 - **Identify the gap** the project will address, and show it follows from the sources: what exists, what is missing, why the missing piece matters to your stakeholder.
-- Note honestly where your source base is weakest (the seed of future work, and of your proposal's risk section).
-- **State what this changes about the plan.**  Name the elements of your [proposal]({{ site.baseurl }}/Projects/FinalProjectProposal) the evidence confirms, the ones it complicates, and any it kills, with the source that did it.  If the sources leave the plan standing, say so and say why, which is a finding and not a formality.  Any resulting scope change goes in your decision log and your next intra-team check-in.
+- Note honestly where your source base is weakest.  That weakness is the seed of future work, and of your proposal's risk section.
+- **State what this changes about the plan.**  Name the elements of your [proposal]({{ site.baseurl }}/Projects/FinalProjectProposal) the evidence confirms, the ones it complicates, and any it kills, with the source that did it.  If the sources leave the plan standing, say so and say why.  That is a finding, not a formality.  Any resulting scope change goes in your decision log and your next intra-team check-in.
 
-**Hard requirement:** the team's combined review must span **at least two disciplinary perspectives** (e.g., computer science and public health; education and economics), including the stakeholder's discipline.  A review whose every source is a CS paper fails this requirement regardless of quality.
+**Hard requirement:** the team's combined review must span **at least two disciplinary perspectives** (for example, computer science and public health; education and economics), including the stakeholder's discipline.  A review whose every source is a CS paper fails this requirement regardless of quality.
 
 ---
 
 ## Information Literacy: Finding and Reading Sources Critically
 
-Two ways into the same skill: a search recipe and a reading protocol.
+This section gives you two tools for the same skill: a search recipe and a reading protocol.
 
 **The search recipe:**
 
 1.  Start at the **library databases** (via the Ursinus library site) and **Google Scholar**, not the open web.  Search the stakeholder's vocabulary *and* yours: the education literature says "formative feedback" where CS says "evaluation loop."
-2.  When you find one good source, **chain it**: mine its references for older foundations (backward), and use Google Scholar's "Cited by" for what came after (forward).
-3.  To reach the stakeholder's discipline, look up which journals their field actually reads (your interview's "what should we read?" question was for this), or ask a librarian, which is not a fallback but a professional move.
-4.  Log your search terms as you go; each annotation reports how its source was found.
+2.  When you find one good source, **chain it**.  Mine its references for older foundations (backward), and use Google Scholar's "Cited by" for what came after (forward).
+3.  To reach the stakeholder's discipline, look up which journals their field actually reads (your interview's "what should we read?" question was for this), or ask a librarian.  Asking a librarian is a professional move, not a fallback.
+4.  Log your search terms as you go.  Each annotation reports how its source was found.
 
-**The critical-reading protocol (for a scholarly paper):** read the abstract, then the introduction's last paragraph (the claimed contribution), then the figures and tables, then the conclusion's limitations, *then* decide whether the middle is worth your hour.  As you read, keep three questions open: What is the actual evidence (sample, method, effect size)?  Who is not represented in it?  What do the authors themselves say it cannot show?  For technical documentation, the questions shift: What version is this, is it current, and is it describing designed behavior or measured behavior?
+**The critical-reading protocol (for a scholarly paper):** read the abstract, then the introduction's last paragraph (the claimed contribution), then the figures and tables, then the conclusion's limitations.  *Then* decide whether the middle is worth your hour.  As you read, keep three questions open.  What is the actual evidence (sample, method, effect size)?  Who is not represented in it?  What do the authors themselves say it cannot show?  For technical documentation, the questions shift: What version is this?  Is it current?  Is it describing designed behavior or measured behavior?
 
-**A note on AI assistance:** you may use AI tools to *find* candidate sources or to *explain* difficult passages, but every annotation must be written by you from the actual source, every quote and claim must be verified against the source itself (models fabricate citations fluently), and all AI assistance goes in the disclosure.  An annotated bibliography with a hallucinated source is an integrity violation, not a formatting error.
+**A note on AI assistance:** you may use AI tools to *find* candidate sources or to *explain* difficult passages.  But every annotation must be written by you from the actual source, every quote and claim must be verified against the source itself (models fabricate citations fluently), and all AI assistance goes in the disclosure.  An annotated bibliography with a hallucinated source is an integrity violation, not a formatting error.
 
 ---
 

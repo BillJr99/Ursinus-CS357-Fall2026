@@ -124,8 +124,7 @@ What does it actually do?
 [( )] Nothing; the space makes it invalid
 [( )] Asks for confirmation before deleting anything
 
-    --{{0}}--
-There is a space after the tilde.  That splits one path into two arguments, and the first one is your home directory.  This is not a trick question; it is a real and well documented way people have lost their work, and it is exactly the class of mistake you are being asked to catch in a command a machine hands you.
+> **Why this answer?**  There is a space after the tilde.  That splits one path into two arguments, and the first one is your home directory.  This is not a trick question; it is a real and well documented way people have lost their work, and it is exactly the class of mistake you are being asked to catch in a command a machine hands you.
 
 > **Going deeper on the shell.**  Pipes, redirection into and out of files, background jobs, signals, and the `PATH` mechanics behind "command not found" are worked in full in the shell tutorial linked from today's schedule entry.  You do not need it to finish this page.
 
@@ -306,8 +305,7 @@ The agent is baked into the image, so a version string here means Step 8 has not
 
 If all four pass, your environment for every lab is done.
 
-    --{{0}}--
-The single most common failure at this step is the host bridge: the one-liner in 5.1 raises a connection error.  Before anything else, check the two usual suspects: is Ollama actually running on the host right now, and, on Linux, was the container started through the course compose file, which contains the extra hosts mapping that makes host dot docker dot internal resolve at all?
+> **If this check fails, start here.**  The most common failure at this step is the host bridge, where the one-liner in 5.1 raises a connection error.  Check the two usual suspects before anything else.  First, is Ollama actually running on the host right now?  Second, on Linux, was the container started through the course compose file?  That file carries the `extra_hosts` mapping (`host.docker.internal:host-gateway`) that makes the hostname resolve at all.
 
 From *inside* the course container, which URL reaches the Ollama server running natively on your host?
 
@@ -598,8 +596,7 @@ A student runs a coding agent directly in their home directory, outside any cont
 [( )] Observability and reversibility, since they could retype anything lost
 [( )] None; reading a diff is not real observability
 
-    --{{0}}--
-Reading the diff is genuine observability and it is worth something.  The trap is believing it is worth everything.  Careful review catches a bad change you are shown; it does nothing about a file the agent touched outside the change it described, and it gives you no way back once the write has landed.
+> **Why this answer?**  Reading the diff is genuine observability and it is worth something.  The trap is believing it is worth everything.  Careful review catches a bad change you are shown; it does nothing about a file the agent touched outside the change it described, and it gives you no way back once the write has landed.
 
 ---
 

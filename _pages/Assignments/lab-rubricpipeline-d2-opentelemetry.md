@@ -27,7 +27,7 @@ To turn the rubric-grading pipeline (or another course agent) from a black box i
 - [Rubric Pipeline Lab Core: An LLM Rubric-Grading Pipeline]({{ site.baseurl }}/Assignments/RubricPipeline)
 - [Observability]({{ site.baseurl }}/Tutorials/Observability)
 
-This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
+This page is Direction 2 of the [Rubric Pipeline Lab]({{ site.baseurl }}/Assignments/RubricPipeline).  Complete the core lab first.  This direction is not a separate assignment.  You make one submission, and I grade it once against the core lab's 100-point rubric, which covers the core pipeline and your chosen direction together.  Estimated additional time: **3-6 hours**.
 
 > **Rather not write the code?**  [Direction 0: The promptfoo Route]({{ site.baseurl }}/Assignments/RubricPipeline/Direction0) reaches the same objectives for the Rubric Pipeline Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work, since both earn identical credit.
 
@@ -41,7 +41,7 @@ This page is **Direction 2** of the [Rubric Pipeline Lab]({{ site.baseurl }}/Ass
 > If you cannot run Docker on your machine, talk to me before starting; Zipkin or a classmate-hosted Jaeger are workable substitutes, but plan it in advance.
 
 
-The core pipeline tells you *whether* to trust the judge; this direction tells you *where the time and the failures go* when the pipeline runs at scale.  You will take a tool-using agent (your rubric-grading pipeline, or another agent from the course) and transform it from a black box into a system you can reason about in production.  Every LLM call, tool invocation, and retrieval step will emit a structured **trace span** (a timed, named record of a unit of work, carrying key-value attributes) that you can query, visualize, and alert on.  You will work individually.
+The core pipeline tells you *whether* to trust the judge.  This direction tells you where the time and the failures go when the pipeline runs at scale.  You take a tool-using agent (your rubric-grading pipeline, or another agent from the course) and turn it from a black box into a system you can reason about in production.  Every LLM call, tool invocation, and retrieval step emits a trace span: a timed, named record of one unit of work, carrying key-value attributes, that you can query, visualize, and alert on.  The Oct 20 session, *Observability, Traceability, and Handoff Protocols*, introduced the three pillars (logs, metrics, and traces) and the trace-to-rule chain that links each logged action back to the rule that permitted it; this direction builds the traces pillar with the tooling used in industry.  You work individually.
 
 #### Before You Start (Direction 2)
 
@@ -69,7 +69,7 @@ Successfully installed opentelemetry-api-1.x.x opentelemetry-sdk-1.x.x \
 
 **Step 2: Start Jaeger (the trace visualization backend)**
 
-Create `docker-compose.yml`:
+Jaeger receives spans over OTLP (the OpenTelemetry protocol) on port 4317 and shows them in a web UI on port 16686.  Create `docker-compose.yml`:
 
 ```yaml
 version: "3"
@@ -117,7 +117,7 @@ If you see `Connection refused`, Docker is not exposing port 16686.  Check `dock
 
 ##### Part 1: Baseline Agent (No Observability)
 
-**Why this matters:** Before adding instrumentation, you need a clear record of what you *cannot* see.  This part creates the "before" picture that makes the "after" meaningful.
+**Why this matters:** Before adding instrumentation, you need a clear record of what you *cannot* see.  This part creates the "before" picture that gives the "after" its meaning.
 
 Start from the rubric-grading pipeline, the ReAct agent, or a new agent that makes at least three distinct tool calls to answer a question (for example: search, fetch, summarize; or for the pipeline: load rubric, call judge, verify evidence).
 
@@ -194,7 +194,7 @@ Saved baseline_results.csv
 
 ##### Part 2: Add OpenTelemetry Instrumentation
 
-**Why this matters:** OpenTelemetry (OTel) is the industry-standard, vendor-neutral framework for adding structured observability to any application.  Your agent will emit traces compatible with Jaeger, Grafana, Datadog, and dozens of other backends.
+**Why this matters:** OpenTelemetry is the vendor-neutral standard for adding structured observability to any application.  Your agent will emit traces that Jaeger, Grafana, Datadog, and dozens of other backends can read.
 
 1.  **Create `agent.py`** (or adapt your existing agent/pipeline file) using this skeleton.  Fill in every `# TODO` comment:
 
@@ -342,7 +342,7 @@ If all spans show at the same level (no nesting), the child spans are not being 
 
 ##### Part 3: Trace Analysis
 
-**Why this matters:** Collecting traces is only useful if you can read them.  This part builds the core skill of distributed trace analysis, the same skill SREs use to diagnose production incidents in minutes rather than hours.
+**Why this matters:** Collecting traces is only useful if you can read them.  This part builds the core skill of distributed trace analysis, the same skill site reliability engineers use to diagnose production incidents in minutes rather than hours.
 
 Re-run the same 10 prompts with instrumentation active, then answer each question below in `writeup.md`, citing specific span names, attribute values, or timestamps as evidence.
 
@@ -375,7 +375,7 @@ Done. Open http://localhost:16686 to inspect traces.
 
 2.  **Answer the following** in your writeup, citing span names and attributes as evidence:
 
-**(a) Latency hotspot:** Which span type has the highest p95 latency across your 10 runs?  Report the p95 value in milliseconds.  If Jaeger does not compute p95 directly, sort the 10 latency values and report the 9th-highest.
+**(a) Latency hotspot:** Which span type has the highest p95 latency across your 10 runs?  (The p95 is the value that 95% of runs finish under.)  Report the p95 value in milliseconds.  If Jaeger does not compute p95 directly, sort the 10 latency values and report the 9th-highest.
 
 **(b) Failure analysis:** Identify at least one failed or degraded trace.  At which span did it diverge from the pattern of successful traces (different duration, missing child span, error status)?  What does this tell you about the root cause?
 
@@ -389,7 +389,7 @@ Done. Open http://localhost:16686 to inspect traces.
 
 ##### Part 4: Alerting Rules
 
-**Why this matters:** Traces you can only see in a dashboard are not enough in production; you need automated alerts that page you when something breaks at 3 AM. This part bridges observability and incident response.
+**Why this matters:** Traces you can only see in a dashboard are not enough in production; you need automated alerts that page you when something breaks at 3 AM.  This part connects observability to incident response.
 
 1.  **Design three alert rules** using either pseudocode or valid Prometheus AlertManager YAML, covering:
 
@@ -397,7 +397,7 @@ Done. Open http://localhost:16686 to inspect traces.
    - **Error rate alert:** Agent error rate (traces ending in ERROR status) exceeds 5% in any 10-minute window.
    - **Cost anomaly alert:** Any single request where `llm.prompt_tokens` exceeds 2000 tokens, which may indicate runaway context accumulation.
 
-   Prometheus AlertManager YAML template to adapt:
+   Prometheus AlertManager YAML template to adapt (the `expr` lines are PromQL, Prometheus's query language):
 
    ```yaml
    # alert_rules.yaml
@@ -462,6 +462,8 @@ Fold the following into your single lab submission:
 - `trace_schema.md` (document each span type and its attributes, with cardinality justification and any attributes removed for PII reasons)
 - Writeup additions: your Part 3 trace analysis answers (a/b/c) and the reflection answers below
 
+In `trace_schema.md`, cardinality is the number of distinct values an attribute can take (a `session_id` has one value per run; a `tool.name` has a handful), and PII is personally identifiable information, anything that could tie a trace back to a specific person.
+
 #### What proficient work looks like (Direction 2)
 
 - Root span, LLM child spans, tool call child spans, and retrieval spans (if applicable) are all present, correctly nested, and export the full required attribute set to a running Jaeger or Zipkin instance.
@@ -486,13 +488,13 @@ When you finish, fold the deliverables above into your single Rubric Pipeline La
 
 Held against this direction's own *What proficient work looks like* list.
 
-- [ ] Root span, LLM child spans, tool-call child spans, and retrieval spans are all present and **correctly nested**.
+- [ ] Root span, LLM child spans, tool-call child spans, and retrieval spans are all present and correctly nested.
 - [ ] The full required attribute set exports to a running Jaeger or Zipkin instance.
-- [ ] `trace_schema.md` documents each span type with naming rationale and **cardinality justification**.
+- [ ] `trace_schema.md` documents each span type with naming rationale and cardinality justification.
 - [ ] At least one attribute is explicitly identified as removed or redacted for PII or cardinality reasons.
 - [ ] The p95 latency span is identified, with the supporting data.
-- [ ] A failure trace is compared against a success trace, with the **divergence point named**.
-- [ ] One concrete optimization proposed and justified **from trace evidence**.
+- [ ] A failure trace is compared against a success trace, with the divergence point named.
+- [ ] One concrete optimization proposed and justified from trace evidence.
 - [ ] `trace_fast.png` and `trace_slow.png` are annotated, not raw screenshots.
 - [ ] Three alert rules with justified thresholds, in valid YAML or pseudocode.
 - [ ] `runbook.md` covers all three, naming specific span names, attribute values to inspect, and escalation criteria.

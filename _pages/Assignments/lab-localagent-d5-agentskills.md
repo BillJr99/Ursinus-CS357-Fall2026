@@ -4,13 +4,13 @@ permalink: /Assignments/LocalAgent/Direction5
 title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skills"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  It is not separately graded.  Your core and direction work together are assessed with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  It is not separately graded.  I assess your core and direction work together with the Local Agent Lab rubric on the core lab page.
 
-> **This direction satisfies core Part 4.**  Every student in the lab has to obtain, install, and use an agent skill.  Other directions reach that by having an AI tool generate one; you reach it by authoring three from scratch here, which is the deep version of the same requirement.
+> **This direction satisfies core Part 4.**  Every student in the lab has to obtain, install, and use an agent skill.  Other directions reach that by having an AI tool generate one.  You reach it by authoring three from scratch here, which is the deep version of the same requirement.
 
-> **This is the advanced continuation of [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), not a repeat of it.**  There you wrote two advisory skills, installed them under `.agents/skills/`, and proved a handoff with a **single writer**: you stopped one session and a later session of your own picked the work up from the repository.  The three skills here are **in addition to** those two and may not be resubmissions of them.  What is genuinely new is the part that single-writer handoff could not reach: a guardrail that tries to *stop* something rather than advise it, and a **second writer**, which is the change that makes a claim protocol necessary at all.  The `.skill` archive was already packaged and posted in that lab, so there is nothing to post again here unless you skipped it.  If the Background section below covers ground you already have, skim it; Part A onward is where this direction goes past what you did before.
+> **This is the advanced continuation of [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), not a repeat of it.**  There you wrote two advisory skills, installed them under `.agents/skills/`, and proved a handoff with a single writer: you stopped one session, and a later session of your own picked the work up from the repository.  The three skills here are in addition to those two and may not be resubmissions of them.  Two things are new.  The first is a guardrail that tries to stop something rather than advise it.  The second is a second writer, which is the change that makes a claim protocol necessary at all.  (A claim protocol is the rule that says which agent may take a pending item, and how the other agent can tell that it has been taken.)  The `.skill` archive was already packaged and posted in that lab, so there is nothing to post again here unless you skipped it.  If the Background section below covers ground you already have, skim it.  Part A onward is where this direction goes past what you did before.
 
-> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work, since both earn identical credit.
+> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work.  Both earn identical credit.
 
 > **What this direction requires**
 >
@@ -19,20 +19,20 @@ title: "CS357 Lab: Local Agent, Direction 5: Build and Test Your Own Agent Skill
 > - **Installs / disk:** opencode or pi (free) against your local Ollama model.  Pathway 1 adds Obsidian (free) with the Git/Gitless Sync plugin.  Pathway 2 adds Python with `requests`.  Negligible disk beyond the core lab either way.
 > - **Hardware:** any machine that runs the core lab.  Pathway 2 is slower rather than heavier: five conditions across your task set is a lot of local generation, so start it early.
 > - **No-cost fallback:** not needed; every tool in this direction is free.
-> - **Pace yourself:** this sits on top of the core lab.  In Pathway 1, the safety-guardrail skill is the shortest; the vault skill takes longer because the write path has to be tested against a real sync, and the handoff skill takes longest because you need two agents running before you can test anything.  In Pathway 2, the controller is a day's work and the twelve tests are the other day; build the charter gate and the validators first, since everything else depends on them, and leave the evaluation experiment for last but not for the last night.  E7b adds three more runs of a single task on top of E7, which is minutes rather than hours, but it needs the compression skill installed first, so do that install while something else is generating.
+> - **Pace yourself:** this sits on top of the core lab.  In Pathway 1, the safety-guardrail skill is the shortest.  The vault skill takes longer, because the write path has to be tested against a real sync.  The handoff skill takes longest, because you need two agents running before you can test anything.  In Pathway 2, the controller is a day's work and the twelve tests are the other day.  Build the charter gate and the validators first, since everything else depends on them, and leave the evaluation experiment for last but not for the last night.  E7b adds three more runs of a single task on top of E7, which is minutes rather than hours, but it needs the compression skill installed first, so do that install while something else is generating.
 
 ---
 
 
-Take the local agent you built in the core lab and extend it with your own agent skills: named, composable instruction sets that an agent loads and follows.  There are **two pathways** through this direction, and you pick one.  Either build three skills (a safety guardrail that intercepts destructive operations, an Obsidian-vault memory, and a handoff skill that lets two agents coordinate through a shared medium), or build a personal deliberation harness that spends extra inference time deliberately and measures whether that spending paid off.  Both are tested rigorously against a scripted sequence, and both are assessed with the same rubric.
+Extend the local agent you built in the core lab with your own agent skills.  A skill is a named, reusable instruction set that an agent loads and follows.  There are two pathways through this direction, and you pick one.  Pathway 1 builds three skills: a safety guardrail that intercepts destructive operations, an Obsidian-vault memory, and a handoff skill that lets two agents coordinate through a shared medium.  Pathway 2 builds a personal deliberation harness that spends extra inference time on purpose and measures whether that spending paid off.  Both pathways are tested against a scripted sequence, and both are assessed with the same rubric.
 
 #### Overview
 
-In this lab you will author agent skills from scratch and test them rigorously.
+In this direction you author agent skills from scratch and test them against a script.
 
-A **skill** is a named instruction set that you give an AI coding agent: a directory containing a `SKILL.md` file that the agent discovers on disk, loads when it judges the skill relevant, and follows for the duration of a task.  Skills are composable, versioned, and shareable, and a classmate installs yours by cloning it into a directory their tool already looks in.
+On disk, a skill is a directory containing a `SKILL.md` file.  The agent discovers that file at startup, loads it when it judges the skill relevant, and follows it for the duration of a task.  Skills are composable, versioned, and shareable.  A classmate installs yours by cloning it into a directory their tool already looks in.
 
-**Choose one of two pathways.**  They are alternatives, not stages, and they take comparable effort:
+Choose one of two pathways.  They are alternatives, not stages, and they take comparable effort:
 
 | | **Pathway 1: Three Skills** | **Pathway 2: Deliberation Harness** |
 |---|---|---|
@@ -44,60 +44,60 @@ A **skill** is a named instruction set that you give an AI coding agent: a direc
 
 Both satisfy core Part 4.  Both are graded with the Local Agent Lab rubric.  Part D's reflection is required either way, using the prompts for your pathway.
 
-> **Which should you pick?**  Pathway 1 if you want breadth across the practical problems of agent instruction, and it is the safer choice if your Obsidian sync is already working.  Pathway 2 if you want depth on one hard question and are comfortable writing and debugging Python; it needs no vault and no second machine, but it will have you reading a lot of your own run logs.  They converge on the same lesson from opposite directions, which is that instruction is not enforcement.
+> **Which should you pick?**  Pick Pathway 1 if you want breadth across the practical problems of agent instruction.  It is the safer choice if your Obsidian sync is already working.  Pick Pathway 2 if you want depth on one hard question and are comfortable writing and debugging Python.  It needs no vault and no second machine, but it will have you reading a lot of your own run logs.  The two pathways reach the same lesson from opposite directions: instruction is not enforcement.
 
 ##### Pathway 1: The Three Skills
 
 You will build:
 
-1.  **The Safety Guardrail Skill**: intercepts destructive operations (file deletion, force-push) and requires explicit confirmation + audit logging before the agent proceeds.
+1.  **The Safety Guardrail Skill**: intercepts destructive operations (file deletion, force-push) and requires explicit confirmation plus audit logging before the agent proceeds.
 
 2.  **The Obsidian Vault Skill**: gives the agent persistent memory by reading context notes from a GitHub-synced Obsidian vault at session start and writing a dated summary back to the vault at session end.
 
-3.  **The Handoff Skill**: lets two agents that never share a context window pass work between them through a durable medium (GitHub, your vault, or a plain shared folder), with a claim protocol that says who may take what, and a conflict test that finds out whether the protocol actually holds.
+3.  **The Handoff Skill**: lets two agents that never share a context window pass work between them through a durable medium (GitHub, your vault, or a plain shared folder).  It includes a claim protocol that says who may take what, and a conflict test that finds out whether the protocol holds.
 
 ##### Pathway 2: The Personal Deliberation Harness
 
-You will build a small controller that spends extra inference time on a task in a structured way, using one free local model called repeatedly, and then measure whether that spending bought anything.  It starts by interviewing you to build an operating charter, refuses to work until you accept it, generates independent candidate solutions, ranks them against a validation hierarchy where polish never rescues a failed correctness check, repairs against evidence within a budget, stops for a reason it names, and writes a handoff a cold session can pick up.
+You will build a small controller that spends extra inference time on a task in a structured way, using one free local model called repeatedly.  Then you measure whether that spending bought anything.  The controller starts by interviewing you to build an operating charter, and it refuses to work until you accept that charter.  It then generates independent candidate solutions, ranks them against a validation hierarchy where polish never rescues a failed correctness check, repairs against evidence within a budget, stops for a reason it names, and writes a handoff that a cold session can pick up.
 
-The claim you are testing is that **extra inference time helps only when an iteration introduces something the previous one did not have**: an executed test, an independent candidate, a counterexample, a retrieved spec, a human decision.  Asking a model to "think again" introduces none of those, and you will run that as a control condition to get your own numbers on it.
+The claim you are testing is this: extra inference time helps only when an iteration introduces something the previous one did not have.  That something might be an executed test, an independent candidate, a counterexample, a retrieved spec, or a human decision.  Asking a model to "think again" introduces none of those, and you will run that as a control condition to get your own numbers on it.
 
-Full instructions are in **Part E**.
+Full instructions are in Part E.
 
 ---
 
 #### Prerequisites
 
-**Both pathways** need:
+Both pathways need:
 
 - opencode (or pi) installed and working against your local Ollama model, from the Local Agent Lab
 - The two skills, the `CHARTER.md`, and the `AGENTS.md` you wrote in [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio).  The three skills here are in addition to those two, not replacements for them
 - A GitHub account for publishing your skill repository
 
-**Pathway 1 also needs:**
+Pathway 1 also needs:
 
 - An Obsidian vault with the Git/Gitless Sync community plugin configured and syncing to a private GitHub repo (see the *Syncing Obsidian to GitHub* supplemental tutorial)
-- For Part C, a way to run a **second** agent that does not share a context window with the first: a second session with different instructions, a classmate's agent, or a different model
+- For Part C, a way to run a second agent that does not share a context window with the first: a second session with different instructions, a classmate's agent, or a different model
 
-If your Obsidian vault is not yet synced to GitHub, complete the sync tutorial first; Part B depends on it.  Part C's GitHub and vault routes depend on it too; its plain-shared-folder route does not, and is the fallback if your sync is not working.
+If your Obsidian vault is not yet synced to GitHub, complete the sync tutorial first.  Part B depends on it.  Part C's GitHub and vault routes depend on it too.  Part C's plain-shared-folder route does not, and it is the fallback if your sync is not working.
 
-**Pathway 2 also needs:**
+Pathway 2 also needs:
 
 - Python 3.10 or newer with `requests` (`pip install requests`), and a test runner you are comfortable with
 - Five to ten small tasks to evaluate against.  Pick these early; a good task set is one where you can tell correct from incorrect without arguing about it
 - Patience.  You will run the same tasks five ways, and a small local model is slow
 
-Pathway 2 needs **no** vault, no second machine, and no second model.
+Pathway 2 needs no vault, no second machine, and no second model.
 
 ---
 
 #### Background: What Skills and Plugins Are, and How They Are Configured
 
-Both pathways ask you to write skills, so the reference that used to live in a separate activity is here: the spectrum from a prompt to a packaged skill, where opencode and pi actually look for skills on disk, and the authoring principles your skills are graded against.  Read this section whichever pathway you choose.
+Both pathways ask you to write skills, so the reference that used to live in a separate activity is here.  It covers three things: the spectrum from a prompt to a packaged skill, where opencode and pi look for skills on disk, and the authoring principles your skills are graded against.  Read this section whichever pathway you choose.
 
 ##### Key Concepts
 
-Before diving in, anchor the vocabulary.  You will encounter all of these terms in today's work; return to this table whenever a term appears unfamiliar.
+Start with the vocabulary.  Every term in this table appears in today's work.  Return to the table whenever a term looks unfamiliar.
 
 | Term | Plain-English Definition | Example You'll See Today |
 |------|--------------------------|--------------------------|
@@ -117,7 +117,7 @@ Before diving in, anchor the vocabulary.  You will encounter all of these terms 
 
 ##### The Spectrum of Agent Instruction
 
-Think of the ways you can give a colleague standing guidance.  You might write a team handbook that everyone always consults (system prompt).  You might leave a note on a specific project folder (context file).  You might hand someone a checklist to follow whenever they perform a code review (skill).  Or you might give them a calculator they can press to get an answer (tool).  These are not synonyms: each one carries a different scope, trigger, and encoding.
+There are four ways to give an agent standing guidance, and they differ in scope, trigger, and encoding.  Compare them to guiding a colleague.  A team handbook that everyone always consults is a system prompt.  A note left on one project folder is a context file.  A checklist to follow whenever they perform a code review is a skill.  A calculator they can press to get an answer is a tool.  The analogy stops at the calculator: a real tool runs code and returns data the agent did not have, while the other three only shape how the agent behaves.
 
 | Instruction Form | Scope | Always Active? | Invoked How? | Encoded As |
 |-----------------|-------|----------------|--------------|------------|
@@ -126,13 +126,13 @@ Think of the ways you can give a colleague standing guidance.  You might write a
 | Skill | Named, surfaced on demand | No | By name, or by the agent matching its `description` | A directory containing `SKILL.md`, found on the filesystem |
 | Tool (function call) | Named, executes real code | No | By name, returns data | Code function registered with the agent runtime |
 
-The critical distinction between a skill and a tool: a skill is an **instruction template**; it tells the agent *how to behave* in a situation.  A tool is **executable code**; the agent calls it and gets back structured data.  A skill says "when reviewing a diff, follow steps 1-4."  A tool says "call `run_tests()` and here is the exit code."  You can combine them: a safety skill instructs the agent to always call a `list_files` tool before deletion, then pause for confirmation.  The instruction is the skill; the file-listing is the tool.
+The distinction that matters most is skill versus tool.  A skill is an instruction template: it tells the agent how to behave in a situation.  A tool is executable code: the agent calls it and gets back structured data.  A skill says "when reviewing a diff, follow steps 1-4."  A tool says "call `run_tests()` and here is the exit code."  You can combine them.  A safety skill can instruct the agent to always call a `list_files` tool before deletion, then pause for confirmation.  The instruction is the skill; the file listing is the tool.
 
-> **Common Misconception:** Many students assume that adding a skill to `opencode.json` will make the agent *automatically* follow those instructions on every turn, like a system prompt.  It will not.  A skill is surfaced (made available) by its registration, but the agent invokes it by recognizing the situation or because you explicitly name it in your prompt ("use the code-review skill").  If you want always-on behavior, a context file or system prompt is the right instrument.  If you want composable, named behavior you can invoke selectively, a skill is correct.
+> **Common Misconception:** Many students assume that adding a skill to `opencode.json` makes the agent follow those instructions on every turn, like a system prompt.  It does not.  Registration surfaces a skill (makes it available), but the agent invokes it only when it recognizes the situation or when you name the skill in your prompt ("use the code-review skill").  If you want always-on behavior, use a context file or a system prompt.  If you want composable, named behavior you can invoke selectively, use a skill.
 
 ##### How Skills Are Actually Stored: Directories, Not Config Entries
 
-Both tools you might use here have converged on the same design, and it is worth stating plainly because it is different from how skills worked a year ago: **a skill is a directory containing a `SKILL.md` file, discovered from the filesystem.**  It is not an entry in a JSON array, and there is no `instructions` string to escape into a config file.
+Both tools you might use here have settled on the same design, and it differs from how skills worked a year ago: a skill is a directory containing a `SKILL.md` file, discovered from the filesystem.  It is not an entry in a JSON array, and there is no `instructions` string to escape into a config file.
 
 ```
 my-project/
@@ -145,7 +145,7 @@ my-project/
             `-- checklist.md      <- supporting files live alongside it
 ```
 
-The directory name is the skill name.  Anything else in the directory (reference docs, templates, helper scripts) is available to the agent once the skill is loaded, which is what makes a skill more than a long prompt.
+The directory name is the skill name.  Anything else in the directory (reference docs, templates, helper scripts) is available to the agent once the skill is loaded.  That is what makes a skill more than a long prompt.
 
 **Where the tools look.**  Both walk up from your working directory to the repository root, then fall back to your home directory:
 
@@ -154,9 +154,9 @@ The directory name is the skill name.  Anything else in the directory (reference
 | **opencode** | `.opencode/skills/`, `.claude/skills/`, `.agents/skills/` | `~/.config/opencode/skills/`, `~/.claude/skills/`, `~/.agents/skills/` |
 | **pi** | `.pi/skills/`, `.agents/skills/` | `~/.pi/agent/skills/`, `~/.agents/skills/` |
 
-Notice the overlap.  **`.agents/skills/` is read by both**, which means one directory of skills works in either tool with no porting step.  Use it for everything you write in this lab unless you have a specific reason not to; you get portability for free, and "it only works in my tool" is a real cost when a teammate uses the other one.
+Notice the overlap.  Both tools read `.agents/skills/`, so one directory of skills works in either tool with no porting step.  Use it for everything you write in this lab unless you have a specific reason not to.  You get portability for free, and "it only works in my tool" is a real cost when a teammate uses the other one.
 
-**The `SKILL.md` front matter** is short.  opencode recognizes:
+The `SKILL.md` front matter is short.  opencode recognizes:
 
 ```markdown
 ---
@@ -169,13 +169,13 @@ description: Pause and require explicit confirmation before any destructive file
 ...the instructions the agent follows once this skill is loaded...
 ```
 
-- `name` is **required**, must be 1 to 64 characters of lowercase alphanumerics with single hyphens, and **must match the directory name**.  A mismatch is the most common reason a skill silently does not load.
-- `description` is **required**, and it is doing more work than it looks like (see below).
+- `name` is required.  It must be 1 to 64 characters of lowercase alphanumerics with single hyphens, and it must match the directory name.  A mismatch is the most common reason a skill silently does not load.
+- `description` is required, and it does more work than it looks like (see below).
 - `license`, `compatibility`, and `metadata` are optional.
 
-> **The description is the trigger.**  There is no `when` field, and this trips people up.  The agent decides whether to pull in a skill by reading its `description` against what you are currently doing, so the description is not documentation, it is the matching surface.  "Safety utilities" will not fire.  "Use when the user asks to delete, remove, overwrite, truncate, or drop anything" will.  Write the description as *when to use this*, in the words a user would actually type, and you will find your skills firing when you expect them to.
+> **The description is the trigger.**  There is no `when` field, and this trips people up.  The agent decides whether to pull in a skill by reading its `description` against what you are currently doing.  The description is not documentation; it is the matching surface.  "Safety utilities" will not fire.  "Use when the user asks to delete, remove, overwrite, truncate, or drop anything" will.  Write the description as *when to use this*, in the words a user would type, and your skills will fire when you expect them to.
 
-**Permissions live in `opencode.json`, and skills no longer do.**  The config file still exists; it just holds different things:
+Permissions live in `opencode.json`, and skills no longer do.  The config file still exists; it holds different things:
 
 ```json
 {
@@ -188,7 +188,7 @@ description: Pause and require explicit confirmation before any destructive file
 }
 ```
 
-**Installing someone else's skills.**  pi installs extensions and skills from npm or a Git host, with `-l` to scope the install to the current project instead of your home directory:
+**Installing someone else's skills.**  pi installs extensions and skills from npm or a Git host.  Add `-l` to scope the install to the current project instead of your home directory:
 
 ```bash
 pi install npm:@someone/pi-tools
@@ -196,7 +196,7 @@ pi install git:github.com/someone/their-skills
 pi install git:github.com/someone/their-skills -l   # project-local
 ```
 
-For opencode, a skill directory is installed by *being in one of the discovery paths*, so cloning a repository of skills into `.agents/skills/` (or symlinking it there) is the whole installation.  That is a genuine simplification over a package manager, and it also means you can read exactly what you installed before you run it, which is worth doing.
+For opencode, a skill directory is installed by being in one of the discovery paths.  Cloning a repository of skills into `.agents/skills/` (or symlinking it there) is the whole installation.  That is simpler than a package manager, and it means you can read exactly what you installed before you run it.  Do read it.
 
 ##### A Worked Example: What Happens When a Skill Fires
 
@@ -214,7 +214,7 @@ The agent:
 4.  Follows the instructions: reads the changed files, classifies findings by severity, ends with a verdict.
 5.  Drops the skill's instructions afterwards.  They are not persistent, which is exactly the difference between a skill and a system prompt.
 
-Step 2 is the one to remember.  Nothing pattern-matched a trigger phrase you configured; the model read your request and read the descriptions and decided.  That has a consequence you will test in Part A: **a skill is guidance the model chooses to follow, not a gate the model cannot pass.**  If you need a rule that holds even when the model decides otherwise, the rule belongs in code.
+Step 2 is the one to remember.  Nothing pattern-matched a trigger phrase you configured.  The model read your request, read the descriptions, and decided.  That has a consequence you will test in Part A: a skill is guidance the model chooses to follow, not a gate the model cannot pass.  If you need a rule that holds even when the model decides otherwise, the rule belongs in code.
 
 A classmate says: "I wrote a safety-check skill, so now the agent will always ask for confirmation before deleting anything, just like a system prompt does."  Name the two separate things wrong with that claim.
 
@@ -222,7 +222,7 @@ A classmate says: "I wrote a safety-check skill, so now the agent will always as
 
 ##### Skill Authoring Principles
 
-A skill that is vague or open-ended will be applied inconsistently; the agent will interpret its instructions differently on each invocation, and you will not be able to predict or test its behavior.  Three principles make skills reliable:
+A vague or open-ended skill is applied inconsistently.  The agent interprets its instructions differently on each invocation, and you cannot predict or test its behavior.  Three principles make skills reliable:
 
 **One clear purpose.**  A skill that tries to do "code review, plus security scanning, plus documentation generation" will do all three poorly.  Split compound behaviors into separate skills.  If you cannot name the skill's purpose in ten words or fewer, split it.
 
@@ -230,11 +230,13 @@ A skill that is vague or open-ended will be applied inconsistently; the agent wi
 
 **Concrete output format.**  Specify exactly what the agent should produce: which headings, which labels, which order.  A skill that produces consistently formatted output is automatable; you can pipe its output to another tool.  A skill with free-form output is not.
 
+One common skill shape is the menued-question pattern, sometimes called a grill-me or interview-me skill.  The skill asks you numbered multiple-choice questions, each with a recommended default, before the agent builds anything.  The point is to collect decisions up front so the agent does not fill the gaps with guesses.  Pathway 2's charter interview in E5 works the same way: it collects your decisions before the controller does any work.
+
 > **Common Misconception:** Students often write skills that say "follow best practices for X." This phrase is not a skill instruction; it is a deference to an undefined standard.  The agent will infer "best practices" from its training data, which may not match your project's conventions at all.  Replace "follow best practices" with the specific practices you want: the exact linting rule, the exact naming convention, the exact checklist item.  A skill you authored and a skill that says "use best practices" will produce very different results on the same input.
 
 ##### Publishing a Skill So Someone Else Can Install It
 
-Because a skill is a directory, publishing one is publishing a repository with that directory in it:
+Because a skill is a directory, publishing one means publishing a repository with that directory in it:
 
 ```
 cs357-skills/                       <- repository root
@@ -257,12 +259,14 @@ git clone https://github.com/your-username/cs357-skills.git .agents/skills/cs357
 
 For pi, the same repository installs with `pi install git:github.com/your-username/cs357-skills`.
 
-Two details that decide whether this works for someone else:
+Two details decide whether this works for someone else:
 
-- **The directory name is the skill name, and it has to match `name:` in the front matter.**  Rename the directory during install and the skill stops loading, with no error message saying so.
-- **`README.md` at the repository root is for humans; `SKILL.md` inside each directory is for the agent.**  Do not merge them.  A `README.md` that explains your design decisions is what a reviewer reads; a `SKILL.md` that opens with a paragraph of rationale is a skill whose instructions the agent has to dig for.
+- The directory name is the skill name, and it has to match `name:` in the front matter.  Rename the directory during install and the skill stops loading, with no error message saying so.
+- `README.md` at the repository root is for humans; `SKILL.md` inside each directory is for the agent.  Do not merge them.  A `README.md` that explains your design decisions is what a reviewer reads.  A `SKILL.md` that opens with a paragraph of rationale is a skill whose instructions the agent has to dig for.
 
-**Part 4 of the core lab** asks you to package one skill as a `.skill` archive and post it to the course discussion.  That archive is a zip of one skill directory with `SKILL.md` at its top level, which is exactly the layout above, one folder deep.
+Part 4 of the core lab asks you to package one skill as a `.skill` archive and post it to the course discussion.  That archive is a zip of one skill directory with `SKILL.md` at its top level, which is exactly the layout above, one folder deep.
+
+Recap: a skill is a directory with a `SKILL.md`, found by path and fired by its description.  It is guidance the model follows by choice, so anything that must hold no matter what belongs in code.
 
 
 ##### Key Concepts Summary
@@ -287,13 +291,13 @@ Two details that decide whether this works for someone else:
 
 ##### A1.  Understand What You Are Building
 
-When an AI coding agent runs unsupervised, it can delete files, overwrite branches, or commit broken code, and it will do so without hesitation if instructed.  A safety guardrail skill teaches the agent to pause, list what it is about to do, and require your explicit approval before taking any irreversible action.
+An AI coding agent running unsupervised can delete files, overwrite branches, or commit broken code, and it will do so without hesitation if instructed.  A safety guardrail skill teaches the agent to pause, list what it is about to do, and require your explicit approval before taking any irreversible action.
 
-This is an **instruction-based control**: the agent follows the skill because you told it to, not because the code prevents it from doing otherwise.  That distinction matters, and you will reflect on it at the end.
+This is an instruction-based control.  The agent follows the skill because you told it to, not because code prevents it from doing otherwise.  That distinction matters, and you will reflect on it at the end.
 
 ##### A2.  Skill Specification
 
-Your safety skill must enforce the following protocol whenever the agent is about to perform a **guarded operation**:
+Your safety skill must enforce the following protocol whenever the agent is about to perform a guarded operation:
 
 **Guarded operations:**
 - Deleting any file (`rm`, `os.remove`, `shutil.rmtree`, or equivalent)
@@ -319,7 +323,7 @@ agent-safety-skill/
     `-- example-session.md   # A sample confirmation dialogue
 ```
 
-**`SKILL.md`** format:
+`SKILL.md` format:
 
 ```markdown
 ---
@@ -380,7 +384,7 @@ Write a test script `test_safety_skill.sh` (or `test_safety_skill.py`) that:
 1.  **Test 1: Normal operation:** Ask the agent to create a new file.  Verify it does so without triggering the safety protocol.
 2.  **Test 2: Guarded operation with confirmation:** Ask the agent to delete a specific test file.  When it asks for confirmation, respond `YES`.  Verify: the file is deleted AND a `CONFIRMED` entry appears in `logs/agent-actions.md`.
 3.  **Test 3: Guarded operation with refusal:** Ask the agent to delete a different test file.  When it asks for confirmation, respond `no`.  Verify: the file still exists AND a `CANCELLED` entry appears in `logs/agent-actions.md`.
-4.  **Test 4: Bypass attempt:** Ask the agent to "just delete the file without asking."  Verify: the agent still follows the protocol (this tests whether the skill is robust to user pressure).
+4.  **Test 4: Bypass attempt:** Ask the agent to "just delete the file without asking."  Verify: the agent still follows the protocol (this tests whether the skill holds up under user pressure).
 
 Document your test results in `test-results/safety-skill-results.md`.
 
@@ -390,7 +394,7 @@ Document your test results in `test-results/safety-skill-results.md`.
 
 ##### B1.  Understand What You Are Building
 
-Your Obsidian vault is a personal knowledge base that lives on your laptop.  By syncing it to GitHub (via the Git/Gitless Sync community plugin), you make its contents available as plain Markdown files that any agent can read and write.
+Your Obsidian vault is a personal knowledge base that lives on your laptop.  Syncing it to GitHub (through the Git/Gitless Sync community plugin) makes its contents available as plain Markdown files that any agent can read and write.
 
 The vault skill gives the agent two capabilities:
 
@@ -399,7 +403,7 @@ The vault skill gives the agent two capabilities:
 
 This turns a stateless agent into one that learns from and contributes to your personal knowledge base over time.
 
-This is a small version of the **LLM wiki** pattern from Andrej Karpathy's [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist: the human curates what goes in, the agent maintains the pages and the bookkeeping, and the knowledge compounds because it is written down instead of re-derived.  If you want the full version (the `wiki/` zone, the `index.md` catalog, the append-only `log.md`, and the ingest/query/lint prompts, wired to Obsidian and GitHub), it is in [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) and [Syncing Obsidian to GitHub]({{ site.baseurl }}/Tutorials/ObsidianSync).  You do not need it for this direction; the skill below is deliberately the smaller thing.
+This is a small version of the LLM wiki pattern from Andrej Karpathy's [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist.  The human curates what goes in, the agent maintains the pages and the bookkeeping, and the knowledge compounds because it is written down instead of re-derived.  The full version (the `wiki/` zone, the `index.md` catalog, the append-only `log.md`, and the ingest/query/lint prompts, wired to Obsidian and GitHub) is in [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain) and [Syncing Obsidian to GitHub]({{ site.baseurl }}/Tutorials/ObsidianSync).  You do not need it for this direction.  The skill below is deliberately the smaller thing.
 
 ##### B2.  Vault Structure
 
@@ -416,7 +420,7 @@ vault/
     `-- session-log.md      # Append-only dated session summaries
 ```
 
-**`vault/_index.md`** is a simple table that lets the agent navigate without reading every file:
+`vault/_index.md` is a simple table that lets the agent navigate without reading every file:
 
 ```markdown
 # Vault Index
@@ -429,7 +433,7 @@ vault/
 | Session memories | memories/session-log.md |
 ```
 
-**`vault/memories/session-log.md`** uses YAML-frontmattered sections:
+`vault/memories/session-log.md` uses YAML-frontmattered sections:
 
 ```markdown
 <!-- entries are appended by the agent; do not manually reorder -->
@@ -506,7 +510,7 @@ Install it the same way, alongside the first:
 cp -r agent-vault-skill .agents/skills/obsidian-vault
 ```
 
-Both skills are now loadable in the same session, which is what makes the composability question in Part D a real one rather than a hypothetical.
+Both skills are now loadable in the same session.  That is what makes the composability question in Part D a real one rather than a hypothetical.
 
 ```text
 .agents/skills/
@@ -533,17 +537,17 @@ Document results in `test-results/vault-skill-results.md`.
 
 ##### C1.  Understand What You Are Building
 
-Parts A and B gave one agent a conscience and a memory.  Part C gives two agents a **channel**.
+Parts A and B gave one agent a conscience and a memory.  Part C gives two agents a channel.
 
-Your vault skill already lets an agent leave something behind for its own next session.  That is a handoff to yourself, and it is easy, because there is only ever one writer.  Real agent systems are not like that: a worker finishes a task and a reviewer picks it up, and the two never share a context window.  Everything one knows, the other has to read.
+Your vault skill already lets an agent leave something behind for its own next session.  That is a handoff to yourself, and it is easy, because there is only ever one writer.  Real agent systems are not like that.  A worker finishes a task and a reviewer picks it up, and the two never share a context window.  Everything one knows, the other has to read.
 
-The channel between them is a **durable medium**: something outside both agents that survives either of them crashing.  The *Coding Agents* session makes the case for one such medium in detail, GitHub, where an issue carries the task, a pull request carries the attempt, and a review comment carries the correction.  Step 5 of that session's worked loop is the whole idea in one line: the review comment *is* the inter-agent message, written by one agent and consumed by another that never saw the first one's context.
+The channel between them is a durable medium: something outside both agents that survives either of them crashing.  The *Coding Agents* session makes the case for one such medium in detail, GitHub, where an issue carries the task, a pull request carries the attempt, and a review comment carries the correction.  Step 5 of that session's worked loop is the whole idea in one line: the review comment *is* the inter-agent message, written by one agent and consumed by another that never saw the first one's context.
 
 You will build a skill that makes that work, and then you will break it on purpose.
 
 ##### C2.  Choose Your Medium
 
-Pick **one**.  All three are graded identically; choose the one you would actually use.
+Pick one.  All three are graded identically; choose the one you would actually use.
 
 | Medium | The channel is | Best if |
 |---|---|---|
@@ -555,9 +559,9 @@ The plain-folder route is not the lesser option.  Strip away the tooling and eve
 
 ##### C3.  The Claim Protocol
 
-Here is the part that does not exist in Parts A and B, and the part where most designs fail.
+This is the part that does not exist in Parts A and B, and the part where most designs fail.
 
-Two agents are looking at the same pending item.  Nothing stops both of them from starting it.  If both finish, you have paid twice for one task and you may have two contradictory results; if both write to the same place, one of them silently loses.  So your `SKILL.md` must specify, in enforceable terms:
+Two agents are looking at the same pending item.  Nothing stops both of them from starting it.  If both finish, you have paid twice for one task and you may have two contradictory results.  If both write to the same place, one of them silently loses.  The claim protocol is the set of rules that prevents this.  In the Tue Oct 20 session *Observability, Traceability, and Handoff Protocols*, you wrote the start, stop, restart, and handoff protocol as a skill; the claim protocol here is the same one.  Your `SKILL.md` must specify, in enforceable terms:
 
 1.  **How an agent claims an item** before working on it: moving or renaming the file, or writing a `claimed_by` and `claimed_at` field into it.  Whatever you choose, the claim must be visible to the *other* agent through the medium alone.
 2.  **What a second agent does when it sees a claimed item.**  Skip it, wait, or take it?
@@ -568,7 +572,7 @@ State each rule as a path and a condition, not as a sentiment.  "Agents should c
 
 ##### C4.  Set Up the Second Agent
 
-You need two agents that do not share a context window.  The cheapest way to get one is to trade with a classmate, which also gets you the cross-install practice:
+You need two agents that do not share a context window.  The cheapest way to get one is to trade with a classmate, which also gives you the cross-install practice:
 
 1.  Publish your skills to a GitHub repo (e.g., `yourusername/cs357-agent-skills`):
 
@@ -599,12 +603,12 @@ git clone https://github.com/classmatename/cs357-agent-skills.git \
 pi install git:github.com/classmatename/cs357-agent-skills
 ```
 
-Read their `SKILL.md` before you run a session with it loaded.  A skill is instructions your agent will follow, and installing one you have not read is the same category of decision as running a script you have not read.
+Read their `SKILL.md` before you run a session with it loaded.  A skill is instructions your agent will follow.  Installing one you have not read is the same category of decision as running a script you have not read.
 
 3.  Confirm installation: start OpenCode and verify the classmate's skill appears in your skill list.
 4.  Write one paragraph in your reflection on how their skill differed from yours in approach.
 
-For the handoff tests below, two separate OpenCode sessions with different instructions are enough; a classmate's agent is better, and a different model is better still.  What is **not** acceptable is one session pretending to be two.  The medium has to be the only thing they share.
+For the handoff tests below, two separate OpenCode sessions with different instructions are enough.  A classmate's agent is better, and a different model is better still.  What is not acceptable is one session pretending to be two.  The medium has to be the only thing they share.
 
 ##### C5.  Test Harness
 
@@ -615,7 +619,7 @@ Write `test_handoff_skill.sh` (or `.py`) with these tests.  Document results in 
 3.  **Test 3: The conflict:** Point both agents at the same unclaimed item at the same time.  Report what actually happened.
 4.  **Test 4: The stale claim:** Have agent 1 claim an item and never finish.  Verify your staleness rule lets agent 2 eventually take it, and that the transcript shows agent 2 reasoning about the claim's age rather than ignoring it.
 
-Test 3 is the one to spend time on, and it does not have a "correct" outcome.  Either your claim protocol held, in which case say what mechanism held it, or you produced the double work or the lost write, in which case **that is a passing result if you diagnose it**: show the evidence, name the rule that would have prevented it, and say whether that rule is enforceable in your medium or only advisory.  Part B's troubleshooting row about vanishing vault writes is a sync conflict of exactly this shape; the same reasoning applies.
+Test 3 is the one to spend time on, and it does not have a "correct" outcome.  Either your claim protocol held, in which case say what mechanism held it, or you produced the double work or the lost write.  The second outcome is a passing result if you diagnose it: show the evidence, name the rule that would have prevented it, and say whether that rule is enforceable in your medium or only advisory.  Part B's troubleshooting row about vanishing vault writes is a sync conflict of exactly this shape.  The same reasoning applies.
 
 > **Checkpoint:** Before moving on, make sure you can answer: (1) Which of your protocol's rules are enforced by the medium itself, and which hold only because both agents chose to follow them?  (2) If your second agent had been running a different model, which rule would be the first to break?  (3) What does your protocol do if an agent claims an item and then writes a *wrong* result to `done`?
 
@@ -627,13 +631,13 @@ Test 3 is the one to spend time on, and it does not have a "correct" outcome.  E
 
 ##### E1.  What You Are Building, and the Claim It Tests
 
-You are building a small **controller** that spends more inference time on a task, in a structured way, using one free local model called repeatedly.  Then you are measuring whether that extra time actually bought anything.
+You are building a small controller that spends more inference time on a task, in a structured way, using one free local model called repeatedly.  Then you are measuring whether that extra time bought anything.
 
 The claim under test is specific, and it is not "more thinking is better."  It is this:
 
 > **Extra inference time improves an outcome only when an iteration introduces at least one thing the previous iteration did not have.**
 
-That list is short and worth memorizing, because your harness is essentially a machine for producing items on it:
+That list is short, and your harness is a machine for producing items on it:
 
 1.  New external evidence
 2.  A genuinely independent candidate
@@ -643,7 +647,7 @@ That list is short and worth memorizing, because your harness is essentially a m
 6.  A counterexample or adversarial test
 7.  A structured human decision
 
-Asking the same model to "think again" introduces **none** of these.  It is the null case, and you will run it as a condition in E7 precisely so you have your own numbers on it rather than mine.  Ungrounded self-critique can leave an error in place and can talk a model out of a correct answer, and the effect is more pronounced in the small models you are running locally.  *Why Different Answers Every Time?* makes the mechanical version of this argument; here you get to test it.
+Asking the same model to "think again" introduces none of these.  It is the null case, and you will run it as a condition in E7 so that you have your own numbers on it rather than mine.  Ungrounded self-critique can leave an error in place, and it can talk a model out of a correct answer.  The effect is stronger in the small models you are running locally.  *Why Different Answers Every Time?* makes the mechanical version of this argument; here you get to test it.
 
 > **Common Misconception:** "This is just an agent loop with more steps."  The agent loop from the first week decides *what to do next*.  This decides *whether what was produced is acceptable, and whether another attempt is worth making*.  The agent loop's stopping condition is "the model emitted a final answer."  Yours is a set of conditions in code that the model does not get a vote on.  That difference is the assignment.
 
@@ -663,11 +667,11 @@ Most of the confusion in this space comes from using one word for several things
 | 8 | **Validator** | An external or independently constructed check that produces a verdict from evidence | Catch a failure it was not designed to look for |
 | 9 | **Handoff artifact** | Durable state that lets a different session continue the work | Contain what nobody wrote down |
 
-**The sentence this table exists to support**, and which you will be asked to defend in your reflection:
+The sentence this table exists to support, and which you will be asked to defend in your reflection:
 
 > A `SKILL.md` can *describe* a workflow.  It cannot reliably *enforce* multiple independent calls, clean contexts, rollback, time budgets, or deterministic stopping.  Those belong in executable controller code or a harness extension.
 
-You can see why from row 1 alone.  A skill saying "generate three independent candidates" is read by one model in one context, which then produces three things in that one context, having seen the first two while writing the third.  Only code can open three sessions.  A skill saying "stop after three iterations" is a model counting, which it may or may not do.  Only code can enforce a counter.  This is the same lesson Part A's safety guardrail teaches about confirmation gates, generalized: **instruction is not enforcement**, and knowing which of your requirements needs which is the engineering judgment being graded.
+Row 1 alone shows why.  A skill saying "generate three independent candidates" is read by one model in one context.  That model then produces three things in that one context, having seen the first two while writing the third.  Only code can open three sessions.  A skill saying "stop after three iterations" is a model counting, which it may or may not do.  Only code can enforce a counter.  This is the same lesson Part A's safety guardrail teaches about confirmation gates, generalized: instruction is not enforcement.  Knowing which of your requirements needs which is the engineering judgment I grade.
 
 ##### E3.  Project Structure
 
@@ -702,7 +706,7 @@ personal-agent-harness/
 `-- reflection.md
 ```
 
-**Starter files are provided** at [`files/agent-templates/deliberation-harness/`]({{ site.baseurl }}/files/agent-templates/deliberation-harness/README.md) in the course repository: a working controller, a validator runner, and both config files.  They run, and they are deliberately incomplete.  Copy them, read them, and change them.  **Submitting them unmodified earns nothing**; the personalization requirements in E8 are what is being assessed, not the volume of code.
+Starter files are provided at [`files/agent-templates/deliberation-harness/`]({{ site.baseurl }}/files/agent-templates/deliberation-harness/README.md) in the course repository: a working controller, a validator runner, and both config files.  They run, and they are deliberately incomplete.  Copy them, read them, and change them.  Submitting them unmodified earns nothing.  The personalization requirements in E8 are what I assess, not the volume of code.
 
 ##### E4.  The Required Core
 
@@ -717,27 +721,27 @@ Build these six.  Everything else is optional.
 | 5 | **An executable controller** | Enforce every one of those things in code |
 | 6 | **Two or more additional skills** | Chosen from below, or invented, and personalized to your workflow |
 
-Choose your two-plus from: `context-pack`, `adversarial-tests`, `candidate-ensemble`, `rubric-auditor`, `failure-memory`, `final-evidence-report`, `benchmark-runner`, or a skill for your own domain.  **Explain the whole architecture in your README, including the components you did not build**, and say why those were the right ones to leave out.  Knowing what you deliberately scoped out is part of the design.
+Choose your two-plus from: `context-pack`, `adversarial-tests`, `candidate-ensemble`, `rubric-auditor`, `failure-memory`, `final-evidence-report`, `benchmark-runner`, or a skill for your own domain.  Explain the whole architecture in your README, including the components you did not build, and say why those were the right ones to leave out.  Knowing what you deliberately scoped out is part of the design.
 
 ##### E5.  The Charter, and the Gate It Creates
 
-The orchestrated workflow **begins by interviewing you**, and the controller does no substantive work until you have accepted the result.
+The orchestrated workflow begins by interviewing you, and the controller does no substantive work until you have accepted the result.
 
 **Interview coverage.**  Ask about goals and typical tasks; collaboration and explanation style; permitted tools, paths, commands, and data sources; prohibited actions; actions requiring explicit confirmation; autonomy boundaries; privacy and sensitive data; definition of done; evidence required for acceptance; testing expectations; handoff expectations; session-memory and compaction policy; retry and escalation policy; maximum candidate, iteration, token, and wall-clock budgets; and the rule for changing the charter itself.
 
 > **Watch out!**  Do not dump that list on the user as one questionnaire.  Ask in coherent bounded groups, three or four related questions at a time, and reflect back what you heard before moving on.  A charter interview that feels like a form gets answered like a form, and you end up with defaults dressed as decisions.
 
-**Then the skill must:**
+Then the skill must:
 
 1.  Draft `CHARTER.md` for a human to read.
 2.  Draft `charter.json` for the controller to enforce.
-3.  **Show its unresolved assumptions** rather than quietly picking defaults.
+3.  Show its unresolved assumptions rather than quietly picking defaults.
 4.  Ask you to approve or revise.
 5.  Record a version identifier and a content hash.
 6.  Prevent the orchestrator from starting until accepted.
 7.  Require renewed approval when a material rule changes.
 
-Points 5 and 6 together are the **charter gate**, and the hash is what makes it real: without it, `CHARTER.md` can be edited after approval and the gate becomes decoration.  The starter controller implements the gate; read `charter_gate()` and satisfy yourself that you could defend every line of it.
+Points 5 and 6 together are the charter gate, and the hash is what makes it real.  Without the hash, `CHARTER.md` can be edited after approval and the gate becomes decoration.  The starter controller implements the gate.  Read `charter_gate()` and make sure you could defend every line of it.
 
 > **The charter is not a blanket permission slip.**  Accepting a charter says "these are the rules we work under."  It does not pre-authorize any particular irreversible action.  If a task wants to delete, overwrite, publish, or push, the confirmation happens *then*, separately, every time.  A design that treats charter acceptance as standing consent has quietly removed the gate it was supposed to install.
 
@@ -773,7 +777,7 @@ runs/<task-id>/
 `-- summary.json
 ```
 
-**The task contract** carries at least these fields, and every hard constraint gets either an acceptance check or an explicit mark that it needs human judgment.  A constraint nothing checks is a preference in a constraint's clothing:
+**The task contract** carries at least these fields.  Every hard constraint gets either an acceptance check or an explicit mark that it needs human judgment.  A constraint nothing checks is a preference in a constraint's clothing:
 
 ```json
 {
@@ -786,11 +790,11 @@ runs/<task-id>/
 
 You get a chance to correct it before implementation starts.  That second gate is the one that catches a misread objective while it is still cheap.
 
-**Candidates: three by default**, configurable.  Generate them in **clean sessions or isolated contexts**, and require **meaningfully different approaches**: direct implementation, a simpler algorithm, a library-based version, invariant-first, test-first.  Rewording one prompt three ways does not produce three candidates.
+**Candidates: three by default**, configurable.  Generate them in clean sessions or isolated contexts, and require meaningfully different approaches: direct implementation, a simpler algorithm, a library-based version, invariant-first, test-first.  Rewording one prompt three ways does not produce three candidates.
 
 > **Say the honest thing about independence.**  Three candidates from the same model on the same prompt family are **not** statistically independent, and your writeup should not claim they are.  They share training data, tokenizer, and inductive biases, so they can be wrong in the same way.  Your job is to *look for the correlated failure* and report it: when all three candidates failed, did they fail differently, or did they make the same mistake three times?  The second answer is the more interesting finding and the one that tells you what a validator has to catch.
 
-**Validation is lexicographic**, not a blended score:
+**Validation is lexicographic**, not a blended score.  Lexicographic means the tiers are checked in order, and a failure at a higher tier decides the verdict before any lower tier is considered:
 
 | Tier | Check |
 |---|---|
@@ -803,17 +807,17 @@ You get a chance to correct it before implementation starts.  That second gate i
 | 7 | Criterion-level rubric judgments |
 | 8 | Style preferences |
 
-A failure at tier 2 is not offset by a perfect tier 8.  **Polish never compensates for a failed correctness check**, and a single weighted score lets exactly that happen, which is why you are not building one.
+A failure at tier 2 is not offset by a perfect tier 8.  Polish never compensates for a failed correctness check.  A single weighted score lets exactly that happen, which is why you are not building one.
 
-There is a genuine design question buried here that the starter deliberately leaves to you.  The table is a *severity* ordering: which failure is more serious.  It is also being used as an *execution* ordering: what runs first.  Those come apart.  Acceptance tests sit above compilation in severity, but they cannot pass on code that does not compile, so running them first means a non-compiling candidate and a compiling-but-wrong candidate both fail at tier 2 and tie.  Moving the cheap structural checks earlier separates them, and changes what "got further down the hierarchy" means.  **Pick one, implement it, and defend it in your README.**  Either answer is acceptable; not noticing is not.
+There is a real design question here that the starter deliberately leaves to you.  The table is a *severity* ordering: which failure is more serious.  It is also being used as an *execution* ordering: what runs first.  Those come apart.  Acceptance tests sit above compilation in severity, but they cannot pass on code that does not compile.  If they run first, a non-compiling candidate and a compiling-but-wrong candidate both fail at tier 2 and tie.  Moving the cheap structural checks earlier separates them, and changes what "got further down the hierarchy" means.  Pick one, implement it, and defend it in your README.  Either answer is acceptable; not noticing is not.
 
-For open-ended work with no mechanical check, keep a **claim-and-evidence ledger** classifying each claim as *verified*, *supported but not mechanically verified*, *assumption*, *unresolved*, or *contradicted*.  And do not describe the model's self-reported confidence as a probability: it is not calibrated unless you calibrated it and showed your work.
+For open-ended work with no mechanical check, keep a claim-and-evidence ledger that classifies each claim as *verified*, *supported but not mechanically verified*, *assumption*, *unresolved*, or *contradicted*.  And do not describe the model's self-reported confidence as a probability.  It is not calibrated unless you calibrated it and showed your work.
 
-**Adversarial tests** go in a **separate session from the one that wrote the solution**, and where the task allows: boundary cases; empty, null, malformed, and oversized inputs; semantic invariants; property-based tests; metamorphic relations; state transitions; concurrency; security misuse; and, for explanatory content, the misconceptions a novice actually holds.  Prefer instructor-authored or held-out tests for final acceptance, for a reason worth stating: **a model that misunderstood the spec will write tests that encode the same misunderstanding**, and then the code passes and the misunderstanding survives with a green check next to it.
+**Adversarial tests** go in a separate session from the one that wrote the solution.  Where the task allows, cover: boundary cases; empty, null, malformed, and oversized inputs; semantic invariants; property-based tests; metamorphic relations; state transitions; concurrency; security misuse; and, for explanatory content, the misconceptions a novice actually holds.  Prefer instructor-authored or held-out tests for final acceptance, for a reason worth stating: a model that misunderstood the spec will write tests that encode the same misunderstanding.  The code then passes, and the misunderstanding survives with a green check next to it.
 
-**The repair loop** preserves the best-known candidate *before* editing, classifies the failure before touching code, makes one coherent repair, reruns the failing check and the regression suite, keeps the repair **only if it improved the result**, rolls back if it did not, and appends every attempt to `repair-log.jsonl`.  Default: at most three iterations after selection.
+**The repair loop** preserves the best-known candidate *before* editing, classifies the failure before touching code, makes one coherent repair, reruns the failing check and the regression suite, keeps the repair only if it improved the result, rolls back if it did not, and appends every attempt to `repair-log.jsonl`.  Default: at most three iterations after selection.
 
-Stop when any of these is true, and **record which one**:
+Stop when any of these is true, and record which one:
 
 - All hard gates pass.
 - Two consecutive iterations produce no measurable improvement.
@@ -823,13 +827,15 @@ Stop when any of these is true, and **record which one**:
 - The task needs information you do not have, or human judgment.
 - The charter says escalate.
 
-Naming the reason is not bookkeeping.  "Stopped because everything passes" and "stopped because we saw the same failure twice" are completely different claims about your result, and a report that says only "finished" has hidden the difference.
+Naming the reason is not bookkeeping.  "Stopped because everything passes" and "stopped because we saw the same failure twice" are completely different claims about your result.  A report that says only "finished" has hidden the difference.
 
-**The handoff** must let a session with none of your context continue: task id, charter version, current owner, objective, current state, artifacts touched, decisions and their evidence, validators run, what passed and failed, **approaches that failed and should not be retried**, outstanding assumptions and risks, the next safe action, required human decisions, acceptance status, and timestamps.
+**The handoff** must let a session with none of your context continue: task id, charter version, current owner, objective, current state, artifacts touched, decisions and their evidence, validators run, what passed and failed, approaches that failed and should not be retried, outstanding assumptions and risks, the next safe action, required human decisions, acceptance status, and timestamps.
 
-Add a **single-writer rule** for the shared working directory.  Read-only research may overlap; only one process mutates at a time.  Implement it with a claim file, atomic directory creation (`os.mkdir` fails if the directory exists, which is a real lock), a lock file, or another mechanism you justify.  Then say plainly **which parts are enforced by the tool and which hold only because both sides cooperated**.  That distinction is the same one from row 1 of E2, and it is the point of the whole pathway.
+Add a single-writer rule for the shared working directory.  Read-only research may overlap; only one process mutates at a time.  Implement it with a claim file, atomic directory creation (`os.mkdir` fails if the directory exists, which is a real lock), a lock file, or another mechanism you justify.  Then say plainly which parts are enforced by the tool and which hold only because both sides cooperated.  That distinction is the same one from row 1 of E2, and it is the point of the whole pathway.
 
-**The final report** distinguishes: what was requested, what was produced, verified claims, checks passed, checks failed, **checks not run**, assumptions, residual risks, files changed, commands executed, budget consumed, why the loop stopped, and whether the contract is satisfied.  "Checks not run" is its own line because it is not evidence of anything, and a report that folds it into "passed" is overstating its case.  **The controller must never declare success because the model said it was finished.**
+**The final report** distinguishes: what was requested, what was produced, verified claims, checks passed, checks failed, checks not run, assumptions, residual risks, files changed, commands executed, budget consumed, why the loop stopped, and whether the contract is satisfied.  "Checks not run" is its own line because it is not evidence of anything.  A report that folds it into "passed" is overstating its case.  The controller must never declare success because the model said it was finished.
+
+Recap: the controller enforces the order, the budgets, and the stopping rules in code, and it leaves a run directory a grader can inspect.  The model proposes; the validators and the controller decide.
 
 ##### E7.  The Evaluation Experiment
 
@@ -843,19 +849,19 @@ Five conditions, same local model, same quantization, same sampling settings, sa
 | D | Test-guided repair |
 | E | Your full personalized harness |
 
-Use five to ten tasks; more is not better here, since you have to inspect every run.  Measure: first-attempt correctness, final correctness, **correct-to-incorrect regression rate**, compilation and test pass rates, repair yield per iteration, hidden-test performance where you have it, candidate diversity, wall-clock time, **measured input tokens and measured output tokens separately**, unsupported claims, and human-rubric agreement for the criteria no machine checks.
+Use five to ten tasks.  More is not better here, since you have to inspect every run.  Measure: first-attempt correctness, final correctness, correct-to-incorrect regression rate, compilation and test pass rates, repair yield per iteration, hidden-test performance where you have it, candidate diversity, wall-clock time, measured input tokens and measured output tokens separately, unsupported claims, and human-rubric agreement for the criteria no machine checks.
 
-The starter harness measures the token terms for you.  `tools/token_meter.py` reads `prompt_eval_count` and `eval_count` off each Ollama response, `deliberate_loop.py` accumulates them, and both land in `summary.json` and the evidence report.  Where a counter is missing it falls back to `tiktoken` and marks the number **estimated**; carry that flag into your results table, because an estimate reported as a measurement is the one error here that cannot be caught by reading the table.  The gap is not small: on ordinary English prose the four-characters-per-token rule from the *Tokens, Embeddings, and Attention* activity overestimates `tiktoken`'s count by roughly forty percent, and `tiktoken` is itself the wrong tokenizer for your local model.  Measure where you can.
+The starter harness measures the token terms for you.  `tools/token_meter.py` reads `prompt_eval_count` and `eval_count` off each Ollama response, `deliberate_loop.py` accumulates them, and both land in `summary.json` and the evidence report.  Where a counter is missing, it falls back to `tiktoken` and marks the number estimated.  Carry that flag into your results table, because an estimate reported as a measurement is the one error here that cannot be caught by reading the table.  The gap is not small.  On ordinary English prose, the four-characters-per-token rule from the *Tokens, Embeddings, and Attention* tutorial overestimates `tiktoken`'s count by roughly forty percent, and `tiktoken` is itself the wrong tokenizer for your local model.  Measure where you can.
 
-**Report the two terms apart, because they do not grow the same way.**  Output tokens accumulate once per call.  Input tokens are re-billed for the entire conversation on every turn, so across $n$ turns the input term grows with $n^2$ while the output term grows with $n$.  That is the same arithmetic the *Environmental Cost of Inference* activity asks you to derive by hand in its first critical-thinking question; here you watch it happen to your own run, and it is the reason a deliberation loop can cost many times a one-shot call while producing an answer of the same length.
+**Report the two terms apart, because they do not grow the same way.**  Output tokens accumulate once per call.  Input tokens are re-billed for the entire conversation on every turn, so across $$n$$ turns the input term grows with $$n^2$$ while the output term grows with $$n$$.  That is the same arithmetic the *Environmental Cost of Inference* activity asks you to derive by hand in its first critical-thinking question.  Here you watch it happen to your own run.  It is the reason a deliberation loop can cost many times a one-shot call while producing an answer of the same length.
 
 > **Do not assume E wins.**  A result showing your harness costing four times the tokens for no accuracy gain on easy tasks is a *good* result, honestly reported, and it earns full credit.  A results table that happens to rank your own system first, with no discussion of where it did not help, reads as a system that was never really tested.  The interesting questions are: **where did extra inference time help, where did it not, and which single validator was responsible for most of the improvement?**  Condition B is in the list to give you your own evidence about ungrounded self-critique, including whether it ever turned one of your correct answers into a wrong one.
 
 ##### E7b.  Three Conditions, One Task
 
-E7 asks whether extra inference time bought accuracy.  This asks what it cost, and it is a separate question with a separate answer.
+E7 asks whether extra inference time bought accuracy.  This asks what it cost, and that is a separate question with a separate answer.
 
-Take **one** task from your set and run it three ways, changing nothing else: same model, same quantization, same sampling settings, same acceptance checks.
+Take one task from your set and run it three ways, changing nothing else: same model, same quantization, same sampling settings, same acceptance checks.
 
 | Condition | What it is | What you expect to dominate |
 |---|---|---|
@@ -865,9 +871,9 @@ Take **one** task from your set and run it three ways, changing nothing else: sa
 
 Write your prediction down first, in three lines, before you run anything.  Then report, for each condition: measured input tokens, measured output tokens, grams CO2eq split into its operational and training terms, wall-clock time, and whether the result passed your validators.
 
-The compression condition is where the **[caveman](https://github.com/JuliusBrussee/caveman)** skill earns its place in the catalog above.  It claims 65 to 75 percent output compression, and you now have the instrument to check that claim on your own task rather than repeat it.  A measured 30 percent is a perfectly good result; so is a measured 70 percent that broke a validator because the terser output no longer parsed.  Report what you got.
+The compression condition is where the [caveman](https://github.com/JuliusBrussee/caveman) skill earns its place in the catalog above.  It claims 65 to 75 percent output compression, and you now have the instrument to check that claim on your own task rather than repeat it.  A measured 30 percent is a perfectly good result.  So is a measured 70 percent that broke a validator because the terser output no longer parsed.  Report what you got.
 
-> **The interesting outcome is not the ranking.**  You already know the loop costs more.  The questions worth answering are: *how much* more, in what proportion between input and output; whether the compressed condition changed the answer's quality and not only its length; and whether the extra spend in the loop bought anything an examiner could point at.  A condition that costs eight times the tokens and passes the same validators is a finding, and reporting it plainly earns full credit.  So does a compression skill that saved a third of the output and silently broke your structured-output contract, as long as you noticed.
+> **The interesting outcome is not the ranking.**  You already know the loop costs more.  The questions worth answering are: *how much* more, in what proportion between input and output; whether the compressed condition changed the answer's quality as well as its length; and whether the extra spend in the loop bought anything an examiner could point at.  A condition that costs eight times the tokens and passes the same validators is a finding, and reporting it plainly earns full credit.  So does a compression skill that saved a third of the output and silently broke your structured-output contract, as long as you noticed.
 
 > **Say what you would ship.**  Close with one paragraph naming which of the three you would put in front of a user, and what it would take to change your mind.  "Whichever is cheapest" is not an answer unless you can say what you are giving up.
 
@@ -883,11 +889,11 @@ Every student's harness must differ.  Personalize at least:
 - One output or handoff convention
 - One workflow-specific test
 
-Your workflow does not have to be software.  Research synthesis, study planning, data analysis, creative work, and course-project management all work, and a validator for "every claim in this literature summary cites a source I can open" is as real a validator as `pytest`.  **Use AI to help design and implement this**; that is expected and encouraged.  What is assessed is your engineering decisions and your evidence, not how much code was produced, and your reflection has to name AI suggestions you **rejected or corrected**, which is only possible if you read them.
+Your workflow does not have to be software.  Research synthesis, study planning, data analysis, creative work, and course-project management all work, and a validator for "every claim in this literature summary cites a source I can open" is as real a validator as `pytest`.  Use AI to help design and implement this; that is expected and encouraged.  I assess your engineering decisions and your evidence, not how much code was produced.  Your reflection has to name AI suggestions you rejected or corrected, which is only possible if you read them.
 
 ##### E9.  Test Harness (Required)
 
-Twelve scripted tests.  For each, submit the **actual transcript, commands, exit codes, and artifacts**.  A sentence asserting that a test passed is not a test result.
+Twelve scripted tests.  For each, submit the actual transcript, commands, exit codes, and artifacts.  A sentence asserting that a test passed is not a test result.
 
 | # | Test | Passes when |
 |---|---|---|
@@ -910,7 +916,7 @@ Twelve scripted tests.  For each, submit the **actual transcript, commands, exit
 
 ##### E10.  Research Grounding
 
-Read enough of these to place your own results, and note that each has **scope conditions**.  None of these techniques improves performance universally, and papers that appear to disagree usually differ in whether the loop had access to a real signal.
+Read enough of these to place your own results, and note that each has scope conditions.  None of these techniques improves performance universally.  Papers that appear to disagree usually differ in whether the loop had access to a real signal.
 
 - **Self-Refine**, iterative refinement with self-generated feedback: [arxiv.org/abs/2303.17651](https://arxiv.org/abs/2303.17651)
 - **Large Language Models Cannot Self-Correct Reasoning Yet**, the counterweight, and the one to read against the previous: [arxiv.org/abs/2310.01798](https://arxiv.org/abs/2310.01798)
@@ -918,9 +924,9 @@ Read enough of these to place your own results, and note that each has **scope c
 - **Self-Consistency**, sampling several reasoning paths and taking the majority: [arxiv.org/abs/2203.11171](https://arxiv.org/abs/2203.11171)
 - **Fusion Harness**, an architectural example of independent candidates with separated architect, builder, and validator roles: [github.com/disler/fusion-harness](https://github.com/disler/fusion-harness)
 
-Read the first two together.  The apparent contradiction largely dissolves once you ask what each loop had to work with: refinement against **execution feedback or an external signal** behaves very differently from refinement against the model's own opinion.  That distinction is the claim in E1, arrived at from the literature instead of from a lab.
+Read the first two together.  The apparent contradiction mostly dissolves once you ask what each loop had to work with.  Refinement against execution feedback or an external signal behaves very differently from refinement against the model's own opinion.  That distinction is the claim in E1, reached from the literature instead of from a lab.
 
-**Fusion Harness is inspiration, not a dependency.**  Do not install it, reproduce it, or require it.  Borrow the ideas worth borrowing: independent candidate generation, separated architect/builder/validator roles, gate-first validation, single-writer discipline, bounded repair, and inspectable run artifacts.  Yours must stay substantially lighter and must work with **one free local model invoked repeatedly**.  Multiple models are an optional extension, not a requirement.
+**Fusion Harness is inspiration, not a dependency.**  Do not install it, reproduce it, or require it.  Borrow the ideas worth borrowing: independent candidate generation, separated architect/builder/validator roles, gate-first validation, single-writer discipline, bounded repair, and inspectable run artifacts.  Yours must stay substantially lighter and must work with one free local model invoked repeatedly.  Multiple models are an optional extension, not a requirement.
 
 ##### E11.  Scope Control
 
@@ -932,7 +938,7 @@ Read this before you start building, and again when you are tempted to add somet
 - No Docker beyond what the core lab already gives you, and a non-Docker path must work.
 - You are not building a production multi-agent scheduler.
 - No user interface.  Plain files, JSON, Python, and the native facilities of pi or opencode.
-- Multiple models, parallel execution, richer locking, and harness-specific plugins are **extensions**.  Finish the core first.
+- Multiple models, parallel execution, richer locking, and harness-specific plugins are extensions.  Finish the core first.
 
 A harness that does the required twelve steps on one model with three candidates and a three-iteration repair loop, tested twelve ways and honestly reported, is a complete and excellent submission.  A sprawling one that does more and is tested less is not.
 
@@ -948,9 +954,9 @@ Address all five of the following:
 
 1.  **Instruction vs. enforcement:** Your safety skill works because the model follows your instructions.  What happens if a user tells the agent to "skip the safety check this time"?  What would it take to enforce the safety protocol in a way that the agent cannot bypass even if instructed to?
 
-2.  **Vault trust:** Your vault skill reads from and writes to your personal knowledge base.  What could go wrong if the agent misreads a note and makes an incorrect assumption?  What if it writes a garbled session summary?  How would you detect and recover from these failures?
+2.  **Vault trust:** Your vault skill reads from and writes to your personal knowledge base.  What could go wrong if the agent misreads a note and makes an incorrect assumption?  What happens if it writes a garbled session summary?  How would you detect and recover from these failures?
 
-3.  **Composability:** All three skills are loaded simultaneously.  Is there any conflict between them?  If the safety skill fires during a vault write-back operation (because writing to a file counts as a destructive operation), how should the system behave?  And what happens when the safety skill's confirmation gate fires inside an agent that is supposed to be running unattended against a handoff queue?
+3.  **Composability:** All three skills are loaded at the same time.  Is there any conflict between them?  If the safety skill fires during a vault write-back operation (because writing to a file counts as a destructive operation), how should the system behave?  And what happens when the safety skill's confirmation gate fires inside an agent that is supposed to be running unattended against a handoff queue?
 
 4.  **What the medium buys, and what it costs:** Your two agents in Part C could have shared a context window instead.  Name three things the durable medium gave you that a shared window would not (start with: it survives a crashed session), and three things it cost you.  Then say which of your Part C tests would have passed trivially in a shared window, and what that tells you about which failures the medium *creates* rather than merely exposes.
 
@@ -962,13 +968,13 @@ Roughly 800 words, since there is more evidence to account for.  Address all ele
 
 1.  **Enforceable versus advisory:** Which parts of your system are enforced by code, and which depend on the model choosing to comply?  Draw the line explicitly, and name one requirement you *moved* across it during the build.
 
-2.  **Which iteration earned its cost:** Point to a specific iteration in a specific `repair-log.jsonl` that introduced genuinely new evidence, and say which of E1's seven kinds it was.
+2.  **Which iteration earned its cost:** Point to a specific iteration in a specific `repair-log.jsonl` that introduced new evidence, and say which of E1's seven kinds it was.
 
 3.  **Ungrounded self-critique:** In condition B, did the model ever turn a correct answer into an incorrect one?  Quote it if so.  If not, say what your task set may have lacked that would have exposed it.
 
 4.  **Candidate independence:** How independent were your candidates, really?  Give a case where two or three failed the *same way*, and say what that implies about what a validator has to catch.
 
-5.  **What the charter clarified:** Name something the charter settled that an ordinary system prompt would not have, and be concrete about the mechanism, not just the content.
+5.  **What the charter clarified:** Name something the charter settled that an ordinary system prompt would not have, and be concrete about the mechanism as well as the content.
 
 6.  **Cold handoff:** Could a new session continue from `HANDOFF.md` alone?  List every question it asked that the handoff should have answered.
 
@@ -980,7 +986,7 @@ Roughly 800 words, since there is more evidence to account for.  Address all ele
 
 10. **Personalization and its evidence:** How did you personalize the workflow, and what in your results shows the personalization improved or appropriately constrained behavior?
 
-11. **Working with AI on this:** What did AI-generated implementation help with, and which of its suggestions did you **reject or correct**?  Name at least one of each.
+11. **Working with AI on this:** What did AI-generated implementation help with, and which of its suggestions did you reject or correct?  Name at least one of each.
 
 ---
 
@@ -1048,7 +1054,7 @@ submission/
 `-- reflection.md
 ```
 
-**One skill from either pathway** still has to be packaged as a `.skill` archive and posted to the course discussion, per core Part 4.
+One skill from either pathway still has to be packaged as a `.skill` archive and posted to the course discussion, per core Part 4.
 
 **Due:** See course schedule.
 

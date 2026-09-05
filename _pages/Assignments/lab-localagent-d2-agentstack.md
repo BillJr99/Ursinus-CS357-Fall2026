@@ -4,9 +4,9 @@ permalink: /Assignments/LocalAgent/Direction2
 title: "CS357 Lab: Local Agent, Direction 2: Composing the Local Agent Stack"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  There is no separate point value here and no rubric of its own.  Your core work and your direction work are graded together, with the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  There is no separate point value here and no rubric of its own.  I grade your core work and your direction work together, with the Local Agent Lab rubric on the core lab page.
 
-> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work, since both earn identical credit.
+> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to write; you build and evaluate the same system as configuration instead.  Choose the direction that suits how you like to work.  Both earn identical credit.
 
 > **What this direction requires**
 >
@@ -19,15 +19,15 @@ title: "CS357 Lab: Local Agent, Direction 2: Composing the Local Agent Stack"
 ---
 
 
-Take the local agent you built in the core lab and give it a home: a full five-tier local AI stack (one service from every tier of the course architecture), wired together correctly, verified systematically, and reproducible from a single Docker Compose file.  The skill you are building here is wiring discipline, meaning knowing which address to use from which location, and documenting your choices so another person can reproduce the result from scratch.
+In this direction you give the local agent from the core lab a home: a five-tier local AI stack, with one service from every tier of the course architecture, wired together correctly, verified systematically, and reproducible from a single Docker Compose file.  Hermes, the recommended agent tier, is an example of a general local agent (a cowork-style agent rather than a coding agent); Direction 7 compares those two kinds of agent on one task.  The skill you are building here is wiring discipline: knowing which address to use from which location, and documenting your choices so another person can reproduce the result from scratch.
 
-In this lab, you and your partner will stand up a working local AI stack: one service from every tier of the course architecture, wired together correctly, verified systematically, and reproducible from a compose file.  Work this lab in **pairs with driver/navigator roles**, swap at least every 30 minutes, and keep a swap log.  The skill being graded is not typing commands; it is the wiring discipline that makes two dozen services coexist, demonstrated on five.
+Work this lab in **pairs with driver/navigator roles**, swap at least every 30 minutes, and keep a swap log.  The graded skill is not typing commands.  It is the wiring discipline that lets two dozen services coexist, demonstrated on five.
 
 ---
 
 #### Before You Start
 
-Complete both prerequisite activities before lab day.  These are not optional warm-ups; the lab builds directly on them.
+Complete both prerequisite activities before lab day.  They are not optional warm-ups; the lab builds directly on them.
 
 - [The Local Agent Stack Activity]({{ site.baseurl }}/Tutorials/AgentStack): introduces each tier of the stack and how they connect
 - [Docker from Zero Activity]({{ site.baseurl }}/Tutorials/Docker): covers containers, images, compose files, volumes, and networks
@@ -64,11 +64,11 @@ If `ollama list` shows no models, the pull did not complete.  Re-run `ollama pul
 
 ##### The Key Mental Model
 
-Before writing a single config file, internalize this distinction.  It is the source of the majority of failures in this lab.
+Before you write a single config file, learn this distinction.  It causes most of the failures in this lab.
 
-- **`localhost`** inside a container refers to that container itself, not the host machine, not any other container.  A process inside `open-webui` hitting `http://localhost:11434` is trying to reach port 11434 inside the `open-webui` container, where nothing is listening.
-- **`host.docker.internal`** inside a container refers to the Docker host machine, the laptop or server running Docker.  Use this when a container needs to reach a process running directly on the host (such as Ollama running natively).
-- **A service name like `ollama`** inside a container refers to another container on the same Docker network.  This only works when both containers are declared in the same compose file and Docker has created a shared network for them.
+- **`localhost`** inside a container means that container itself, not the host machine and not any other container.  A process inside `open-webui` that requests `http://localhost:11434` is trying to reach port 11434 inside the `open-webui` container, where nothing is listening.
+- **`host.docker.internal`** inside a container means the Docker host machine, the laptop or server running Docker.  Use it when a container needs to reach a process running directly on the host (such as Ollama running natively).
+- **A service name like `ollama`** inside a container means another container on the same Docker network.  This works only when both containers are declared in the same compose file and Docker has created a shared network for them.
 
 ```
 Your Machine (host)
@@ -85,14 +85,14 @@ Your Machine (host)
 
 ##### Linux-Specific Note
 
-On Mac and Windows, Docker Desktop automatically makes `host.docker.internal` resolve to the host machine inside every container.  **On Linux, this does not happen automatically.**  You must add the following stanza to every service in your compose file that needs to reach the host:
+On Mac and Windows, Docker Desktop makes `host.docker.internal` resolve to the host machine inside every container.  **On Linux, this does not happen on its own.**  Add the following stanza to every service in your compose file that needs to reach the host:
 
 ```yaml
 extra_hosts:
   - "host.docker.internal:host-gateway"
 ```
 
-This is safe to include on Mac and Windows too; it is a no-op there.  Include it everywhere for portability.
+This stanza is safe on Mac and Windows too; it does nothing there.  Include it everywhere for portability.
 
 ##### Estimated Time
 
@@ -105,13 +105,13 @@ This is safe to include on Mac and Windows too; it is a no-op there.  Include it
 
 #### Overview
 
-In this lab you will stand up a local AI stack with one service per tier, wired together correctly, verified systematically, and reproducible from a compose file.  The five tiers are: an inference backend (the model engine), a unified gateway (a single URL that routes to the backend), a frontend (the user-facing chat interface), a tool service (something the agent can call), and an agent (an autonomous loop that uses the other services).  The skill being developed is wiring discipline: understanding which address to use from which location, and documenting your choices so that another person (or your future self) can reproduce the result from scratch.
+The five tiers are: an inference backend (the model engine), a unified gateway (a single URL that routes to the backend), a frontend (the user-facing chat interface), a tool service (something the agent can call), and an agent (an autonomous loop that uses the other services).  You stand up one service per tier, wire them together, verify each link, and capture the whole thing in a compose file so that another person (or your future self) can reproduce it from scratch.
 
 ---
 
 #### Part 1: Plan Before Pulling
 
-**Do not start any container until you have completed every step in this section.**  The most common lab failure is a port collision discovered at midnight.  The purpose of this part is to prevent it.
+**Do not start any container until you have completed every step in this section.**  The most common lab failure is a port collision discovered at midnight.  This part exists to prevent it.
 
 ##### Step 1: Choose One Service Per Tier
 
@@ -125,11 +125,11 @@ Select one service from each tier.  The recommended choices are marked; you may 
 | Tool service | SearXNG | SurrealDB |
 | Agent | Hermes | Agent0, freebuff |
 
-Write your choices down before moving on.  Every subsequent step refers to your five chosen services by name.
+Write your choices down before you move on.  Every later step refers to your five chosen services by name.
 
 ##### Step 2: Create the Port Table
 
-Fill in this table before starting any container.  Look up each image's default port in its documentation.  Resolve every collision by assigning a different host port; you cannot have two services on the same host port.
+Fill in this table before you start any container.  Look up each image's default port in its documentation.  Resolve every collision by assigning a different host port; two services cannot share one host port.
 
 | Tier | Service | Image | Default Port | Assigned Port | Notes |
 |------|---------|-------|-------------|---------------|-------|
@@ -153,11 +153,11 @@ ls $HOME/agents/
 > hermes  llmproxy  ollama  open-webui  searxng
 > ```
 
-Each directory will hold bind-mounted data for one service.  When a container is destroyed and recreated, its data survives because it lives on the host, not inside the container layer.
+Each directory will hold bind-mounted data for one service.  When you destroy and recreate a container, its data survives because it lives on the host, not inside the container layer.
 
 ##### Step 4: Sketch the Wiring Diagram
 
-Before writing any compose file, draw (or copy and annotate) this wiring diagram.  Add the actual port numbers from your table.
+Before you write any compose file, draw (or copy and annotate) this wiring diagram.  Add the actual port numbers from your table.
 
 ```
 Agent (hermes)
@@ -169,7 +169,7 @@ Tool (searxng :8081)
   `--- (agent calls this directly via host.docker.internal)
 ```
 
-This diagram tells you exactly which `extra_hosts` stanzas you will need.  Any arrow that crosses from a container to the host requires `host.docker.internal` and, on Linux, the `extra_hosts` declaration.
+This diagram tells you exactly which `extra_hosts` stanzas you need.  Any arrow that crosses from a container to the host requires `host.docker.internal` and, on Linux, the `extra_hosts` declaration.
 
 ##### Troubleshooting, Part 1
 
@@ -184,7 +184,7 @@ If you are unsure, ask: does the service run the model weights (inference), rout
 
 ##### Part 1 Checkpoint
 
-Before moving to Part 2, confirm you can answer all three questions:
+Before moving to Part 2, confirm that you can answer all three questions:
 
 1.  What is the assigned host port for every service in your stack?  Where did the default port come from, and why did you choose to keep or change it?
 2.  Which services in your wiring diagram need `host.docker.internal` in their config?  Why?
@@ -194,11 +194,11 @@ Before moving to Part 2, confirm you can answer all three questions:
 
 #### Part 2: The Core Chain
 
-Build the stack one link at a time.  **Verify each link before adding the next.**  Adding three services simultaneously and then debugging why nothing works is a trap.
+Build the stack one link at a time.  **Verify each link before adding the next.**  Starting three services at once and then debugging why nothing works is a trap.
 
 ##### Step 2a: Stand Up the Inference Backend (Ollama)
 
-Ollama runs directly on the host, not in Docker.  This is intentional: GPU access from within a container requires additional configuration, and simplicity is the goal here.
+Ollama runs directly on the host, not in Docker.  This is deliberate: GPU access from inside a container requires extra configuration, and simplicity is the goal here.
 
 ```bash
 ollama serve &
@@ -206,7 +206,7 @@ ollama serve &
 ollama serve > $HOME/agents/ollama/ollama.log 2>&1 &
 ```
 
-Verify it is listening from the host terminal:
+Verify that it is listening, from the host terminal:
 
 ```bash
 curl http://localhost:11434/api/tags
@@ -219,7 +219,7 @@ curl http://localhost:11434/api/tags
 
 If you see `connection refused`, Ollama is not running.  Check whether the background process exited: `jobs` (bash) or check `ollama.log`.  If you see an empty models list, the pull did not complete; run `ollama pull llama3.2` again.
 
-Run one inference to confirm the model responds before proceeding:
+Run one inference to confirm that the model responds before you proceed:
 
 ```bash
 curl http://localhost:11434/api/generate \
@@ -242,7 +242,7 @@ mkdir -p $HOME/stack
 cd $HOME/stack
 ```
 
-Create `llmproxy-config.yaml` in that directory.  This file tells llmproxy where to find the inference backend.  Use `host.docker.internal` (not `localhost`) because llmproxy will be running inside a container, not on the host.
+Create `llmproxy-config.yaml` in that directory.  This file tells llmproxy where to find the inference backend.  Use `host.docker.internal` (not `localhost`) because llmproxy will run inside a container, not on the host.
 
 ```yaml
 # llmproxy-config.yaml
@@ -269,7 +269,7 @@ services:
     restart: unless-stopped
 ```
 
-Start just llmproxy:
+Start only llmproxy:
 
 ```bash
 docker compose up -d llmproxy
@@ -317,7 +317,7 @@ docker compose up -d open-webui
 docker compose logs open-webui
 ```
 
-Open a browser to `http://localhost:3000`.  Create an account when prompted (this is local-only; the credentials are stored in your bind-mounted data directory).
+Open a browser to `http://localhost:3000`.  Create an account when prompted.  The account is local only; the credentials live in your bind-mounted data directory.
 
 > **What you should see:** The open-webui chat interface loads.  Select `llama3.2` from the model dropdown at the top.  Type a message and press enter.  The response should arrive within a few seconds.
 
@@ -331,14 +331,14 @@ Complete a chat message that gets a response.  **This is your first end-to-end v
 The log will show something like `Connection refused` or `Failed to connect to host.docker.internal port 11434`.  The fix is to add `extra_hosts: ["host.docker.internal:host-gateway"]` to the llmproxy service and run `docker compose up -d --force-recreate llmproxy`.
 
 **open-webui shows "Connection Error" when you send a chat message.**
-The `OPENAI_API_BASE_URL` environment variable is wrong.  Common mistake: using `http://localhost:4000/v1` instead of `http://host.docker.internal:4000/v1`.  Inside the open-webui container, `localhost` refers to the container itself, not the host where llmproxy's port is published.
+The `OPENAI_API_BASE_URL` environment variable is wrong.  Common mistake: using `http://localhost:4000/v1` instead of `http://host.docker.internal:4000/v1`.  Inside the open-webui container, `localhost` means the container itself, not the host where llmproxy's port is published.
 
 **`curl http://localhost:4000/models` returns "connection refused" immediately.**
 The llmproxy container has not finished starting.  Run `docker compose ps` and check the `STATUS` column.  If it says `Restarting`, run `docker compose logs llmproxy` to see the startup error.
 
 ##### Part 2 Checkpoint
 
-Before moving to Part 3, confirm you can answer all three questions:
+Before moving to Part 3, confirm that you can answer all three questions:
 
 1.  You ran `curl http://localhost:11434/api/generate` from the host terminal, and the same URL appears in `llmproxy-config.yaml`, but it will not work there.  Why?  What URL does the config file use instead?
 2. open-webui is published on host port 3000 but listens on container port 8080.  Why is this remapping necessary?
@@ -362,7 +362,7 @@ Add `searxng` to `docker-compose.yml`:
     restart: unless-stopped
 ```
 
-Note the port remapping: SearXNG's container port is 8080, but host port 8080 is already in use by open-webui's internal mapping.  You assigned 8081 in your port table, so use that here.
+Note the port remapping.  SearXNG's container port is 8080, but host port 8080 is already taken by open-webui's internal mapping.  You assigned 8081 in your port table, so use that here.
 
 Start the service:
 
@@ -388,13 +388,13 @@ docker compose exec llmproxy \
 
 > **Expected output:** The same JSON object as above.
 
-Notice the URL used inside the container: `http://host.docker.internal:8081`, not `http://localhost:8081`.  Inside the `llmproxy` container, `localhost` refers to the `llmproxy` container itself.  SearXNG is a separate process whose port is published on the host, so you reach it via `host.docker.internal`.
+Notice the URL used inside the container: `http://host.docker.internal:8081`, not `http://localhost:8081`.  Inside the `llmproxy` container, `localhost` means the `llmproxy` container itself.  SearXNG is a separate process whose port is published on the host, so you reach it through `host.docker.internal`.
 
-If this command fails with "connection refused" and you are on Linux, verify that `llmproxy` has the `extra_hosts` stanza.  If you get "name resolution failure" for `host.docker.internal`, same fix.
+If this command fails with "connection refused" and you are on Linux, verify that `llmproxy` has the `extra_hosts` stanza.  If you get "name resolution failure" for `host.docker.internal`, the fix is the same.
 
 ##### Step 3b: Add the Agent (Hermes or Equivalent)
 
-Add your agent to `docker-compose.yml`.  The critical details are the bind mount for identity persistence and `extra_hosts` for host connectivity:
+Add your agent to `docker-compose.yml`.  The two details that matter are the bind mount for identity persistence and `extra_hosts` for host connectivity:
 
 ```yaml
   hermes:
@@ -450,7 +450,7 @@ ls $HOME/agents/hermes/
 ##### Troubleshooting, Part 3
 
 **The agent starts but cannot reach the search tool.**
-Check the `TOOL_SEARCH_URL` environment variable.  It must use `host.docker.internal`, not `localhost`.  Also confirm SearXNG is running: `docker compose ps searxng`.
+Check the `TOOL_SEARCH_URL` environment variable.  It must use `host.docker.internal`, not `localhost`.  Also confirm that SearXNG is running: `docker compose ps searxng`.
 
 **The bind mount path is wrong and the container fails to start.**
 Docker will create the directory if it does not exist, but it will be empty.  If the agent fails because it cannot find its identity files, check that the host path (`$HOME/agents/hermes`) actually exists and contains the expected files.
@@ -460,7 +460,7 @@ Run `docker compose logs hermes` to see the error before the restart.  Common ca
 
 ##### Part 3 Checkpoint
 
-Before moving to Part 4, confirm you can answer all three questions:
+Before moving to Part 4, confirm that you can answer all three questions:
 
 1.  From inside the `hermes` container, what URL does the agent use to reach llmproxy?  What URL does it use to reach SearXNG? Why are both `host.docker.internal` and not service names like `llmproxy` or `searxng`?
 2.  You destroyed and recreated the hermes container but its identity survived.  What specific mechanism made this possible?
@@ -512,7 +512,7 @@ docker compose exec open-webui curl http://host.docker.internal:4000/models
 docker compose exec hermes curl "http://host.docker.internal:8081/search?q=test&format=json"
 ```
 
-**End-to-end chat completion via curl** (bypasses the browser, tests the full chain):
+**End-to-end chat completion via curl** (bypasses the browser and tests the full chain):
 
 ```bash
 curl http://localhost:4000/v1/chat/completions \
@@ -529,7 +529,7 @@ curl http://localhost:4000/v1/chat/completions \
 
 ##### Step 4b: Break It on Purpose
 
-This step builds diagnostic intuition.  You will introduce a known failure, observe the symptom, fix it, and write the postmortem.
+This step builds diagnostic intuition.  You introduce a known failure, observe the symptom, fix it, and write the postmortem.
 
 **The break:** In `docker-compose.yml`, remove the `extra_hosts` stanza from one service that reaches the host: for example, `llmproxy`.  Then restart that service:
 
@@ -574,11 +574,11 @@ Cause:    [the specific misconfiguration - what was missing or wrong]
 Fix:      [the exact change that resolved it]
 ```
 
-If you encountered a **real unplanned failure** during the lab, you may substitute its postmortem.  A real failure with a postmortem is more valuable than the intentional break.
+If you hit a **real unplanned failure** during the lab, you may substitute its postmortem.  A real failure with a postmortem is worth more than the intentional break.
 
 ##### Step 4c: Final Compose File and Down/Up Test
 
-Your complete `docker-compose.yml` for the core stack (gateway, frontend, and tool at minimum, all five services if you have them working) should look like this structure.  Fill in your actual image names, ports, and paths:
+Your complete `docker-compose.yml` for the core stack (gateway, frontend, and tool at minimum; all five services if you have them working) should follow this structure.  Fill in your actual image names, ports, and paths:
 
 ```yaml
 services:
@@ -642,14 +642,14 @@ docker compose down
 docker compose up -d
 ```
 
-Wait for services to start (about 10-15 seconds), then verify data persistence:
+Wait for the services to start (about 10-15 seconds), then verify data persistence:
 
 ```bash
 curl http://localhost:4000/models
 # Expected: same model list as before the down
 ```
 
-Open a browser to `http://localhost:3000` and confirm your chat history is still present.
+Open a browser to `http://localhost:3000` and confirm that your chat history is still present.
 
 ##### Troubleshooting, Part 4
 
@@ -659,8 +659,8 @@ If you accidentally ran `docker compose down --volumes`, named volumes were dele
 **After `up -d`, a container keeps restarting.**
 Run `docker compose logs <service>` to see the error.  The most common cause after a clean `down/up` is a missing config file that the container expected to find.  Check that your volume bind mounts point to files and directories that actually exist on the host.
 
-**Containers start in wrong order and fail because dependencies are not ready.**
-`depends_on` ensures start order but not readiness.  Add a `healthcheck` to llmproxy so that open-webui waits for it to be actually healthy, not just started:
+**Containers start in the wrong order and fail because dependencies are not ready.**
+`depends_on` ensures start order but not readiness.  Add a `healthcheck` to llmproxy so that open-webui waits for it to be actually healthy, not only started:
 
 ```yaml
   llmproxy:
@@ -680,7 +680,7 @@ Run `docker compose logs <service>` to see the error.  The most common cause aft
 
 ##### Part 4 Checkpoint
 
-Before writing up your deliverables, confirm you can answer all three questions:
+Before you write up your deliverables, confirm that you can answer all three questions:
 
 1.  Your wiring matrix has a row for "container-to-host" checks.  What does it mean for this check to pass?  What does it prove that the "host liveness" check does not?
 2.  When you ran `docker compose down` and then `docker compose up -d`, which data survived and which did not?  How is that determined by your compose file?
@@ -690,7 +690,7 @@ Before writing up your deliverables, confirm you can answer all three questions:
 
 #### Deliverables
 
-Submit a ZIP file containing the following items.  Everything must be present for the submission to be considered complete.
+Submit a ZIP file containing the following items.  Everything must be present for the submission to count as complete.
 
 **Port table (filled in)**
 The table from Part 1, Step 2 with all five rows complete: assigned ports, image names, and notes on any collisions resolved.
@@ -705,7 +705,7 @@ The compose file that reproduces your running stack.  Requirements:
 - `extra_hosts` stanza on every service that reaches the host
 
 **Configuration files**
-Any supporting files required by your compose file (e.g., `llmproxy-config.yaml`).  Tokens and API keys redacted.
+Any supporting files your compose file requires (e.g., `llmproxy-config.yaml`).  Tokens and API keys redacted.
 
 **`README.md` (approximately one page)**
 Written for a classmate who has not done this lab.  Must include:
@@ -730,7 +730,7 @@ See the Reflection Prompts section below.
 
 #### Extension Challenges
 
-These are optional and ungraded.  Attempt them only after completing all four parts.
+These are optional and ungraded.  Attempt them only after you complete all four parts.
 
 **Challenge 1: Health Checks for All Services**
 
@@ -751,7 +751,7 @@ Add a sixth service (a monitoring stack using Prometheus and Grafana, or Netdata
 
 **Challenge 3: Automated Verification Script**
 
-Write a shell script `verify_stack.sh` that automatically runs every check in your wiring matrix and prints `PASS` or `FAIL` for each one.  The script must:
+Write a shell script `verify_stack.sh` that runs every check in your wiring matrix and prints `PASS` or `FAIL` for each one.  The script must:
 - Test host-side liveness for every service
 - Test at least one container-to-host connection using `docker compose exec`
 - Run the end-to-end chat completion curl and check that the response contains a non-empty `choices` array
@@ -798,7 +798,7 @@ Answer each prompt in two to five sentences.  Shallow answers receive shallow cr
 Which connection in your stack took longest to get right, and what diagnostic step would have found it faster?
 
 **Prompt 2**
-Your stack now runs capable agents entirely on hardware you control.  Name one governance obligation that this locality satisfies automatically and one it quietly transfers onto you.
+Your stack now runs capable agents entirely on hardware you control.  Name one governance obligation that this locality satisfies on its own and one it quietly transfers onto you.
 
 **Prompt 3**
 If collaboration beyond your pair occurred, identify it.  Do you certify that this submission represents your pair's original work?  Please identify any and all portions of your submission that were not originally written by you.
@@ -807,7 +807,7 @@ If collaboration beyond your pair occurred, identify it.  Do you certify that th
 Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
 **Prompt 5**
-The `host.docker.internal` pattern is a workaround for the fact that containers have their own network namespace.  What would a cleaner architectural solution look like: one that did not require this workaround?  What trade-offs would it introduce?  (Hint: think about what would need to change about where Ollama runs, or how Docker networking is configured.)
+The `host.docker.internal` pattern is a workaround for the fact that containers have their own network namespace.  What would a cleaner architectural solution look like, one that did not require this workaround?  What trade-offs would it introduce?  (Hint: think about what would need to change about where Ollama runs, or how Docker networking is configured.)
 
 **Prompt 6**
 You deployed five services in this lab.  In a real production AI system, you might have fifty.  What would need to be different about how you manage ports, secrets, health checks, and restarts at that scale?  Name at least two things that do not scale from this lab's approach and explain specifically why they break down.

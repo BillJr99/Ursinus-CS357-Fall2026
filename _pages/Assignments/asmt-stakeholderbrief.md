@@ -55,9 +55,22 @@ tags:
 
 ---
 
-In this Project Thread milestone, your team anchors its semester in a **real community stakeholder outside computer science**, and learns about a problem *they* have, in *their* words.  I identify the community partners, meaning campus offices and local organizations who have agreed to talk with student teams, and I share the roster in class before the kickoff rather than publishing it on the website; your team anchors its brief in **one real partner from that roster** (or, while the roster is pending, in a concrete named stakeholder group your team identifies and the instructor approves).  The deliverable is a 2-3 page Stakeholder Brief that will anchor your Literature Review and, later, your final project proposal on any of the three tracks: this brief becomes the **stakeholder-needs section of your Final Project proposal** and seeds the **partner-facing artifact your team presents at Demo Day**, so the understanding you build here is understanding you will hand back to a real person.  The milestone runs in four steps: an in-class kickoff when the assignment is handed out; a short unassisted problem statement each member writes individually; a structured peer-review exchange of draft briefs in class; and the revised brief.  See the [course schedule]({{ site.baseurl }}/) for the dates.
+In this Project Thread milestone, your team finds a real stakeholder outside computer science, interviews them, and writes a 2-3 page Stakeholder Brief that states their problem in their own words.  A **stakeholder** is a real person or office who owns the problem: they experience it, they would benefit from progress on it, and they can tell you when you have misunderstood it.  The brief ends in a problem statement, which is one paragraph, traceable to the interview, that names a problem an agent system could address without committing to a design.  Along the way you describe the disciplines the problem lives in.  A discipline is a field of study or practice (education, accounting, ecology, public health) with its own way of deciding what counts as evidence and what "solved" means.
 
-The point of this milestone is a professional skill CS courses rarely practice: **problem finding before problem solving**.  Real problems do not arrive as specs.  They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated.  Learning to sit in that uncertainty without prematurely "solutionizing" is precisely what Shulman (2005) calls a pedagogy of uncertainty, and it is the difference between building something and building something *useful*.
+I identify the community partners: campus offices and local organizations who have agreed to talk with student teams.  I share the roster in class before the kickoff rather than publishing it on the website.  Your team anchors its brief in one real partner from that roster, or, while the roster is pending, in a concrete named stakeholder group your team identifies and I approve.
+
+This brief does more work later in the semester than any other early deliverable.  It anchors your Literature Review.  It becomes the stakeholder-needs section of your Final Project proposal on any of the three tracks.  And it seeds the partner-facing artifact your team presents at Demo Day, so the understanding you build here is understanding you will hand back to a real person.
+
+The milestone runs in four steps:
+
+1.  In-class kickoff on Tue Sep 22, at the Hallucinations and Evaluating Agent Outputs session, when I hand out the assignment.
+2.  A short unassisted problem statement that each member writes individually after the interview, due Tue Sep 29 at the MCP: Connecting Agents to Tools and Your Obsidian Vault session.
+3.  A structured peer-review exchange of draft briefs in class on Tue Oct 6, at the RAG Quality: Chunking and Measuring Retrieval session.
+4.  The revised brief, due Thu Oct 15 at the How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox session.
+
+The [course schedule]({{ site.baseurl }}/) is the authority on all of these dates.
+
+The point of this milestone is a professional skill CS courses rarely practice: problem finding before problem solving.  Real problems do not arrive as specs.  They arrive as a person describing a frustration, in the vocabulary of their own field, with the important constraints unstated.  Sitting in that uncertainty without rushing to a solution is what Shulman (2005) calls a pedagogy of uncertainty.  It is also the difference between building something and building something useful.
 
 ---
 
@@ -77,56 +90,67 @@ The point of this milestone is a professional skill CS courses rarely practice: 
 
 ## Before You Start
 
-**This is a team assignment with one individual gate in the middle**, and the order matters more here than in anything else this term.
-
-**The sequence, and why it is this way:**
+This is a team assignment with one individual gate in the middle, and the order matters more here than in anything else this term.  Follow the steps in this sequence:
 
 1.  **Speed-dating kickoff, in class.**  Topics come out of conversation, not out of a solo brainstorm.
 2.  **Identify a real stakeholder** and make contact early.  This is the step with a lead time you do not control; a person has to answer you.
 3.  **Interview them.**  Not a survey.  A conversation you took notes in.
-4.  **Your own first draft, written individually and without AI**, due before your team drafts.  Half a page.  This is a gate, and I do enforce it.
+4.  **Your own first draft, written individually and without AI**, due Tue Sep 29, before your team drafts.  Half a page.  This is a gate, and I do enforce it.
 5.  **The team brief**, which may use whatever tools you want, with disclosure.
-6.  **Peer exchange**, using SQR cards.
+6.  **Peer exchange**, using SQR cards, in class on Tue Oct 6.
 
-**Pace yourself:** this is spread across two weeks on purpose.  Scheduling the interview is the long pole, so please start on that the week it is assigned.
+Pace yourself.  The milestone spans a little over three weeks on purpose, from Tue Sep 22 to Thu Oct 15, but the interview has to happen in the first week: your individual statement is written after it and is due Tue Sep 29.  Scheduling the interview is the long pole, so start on it the day the assignment is handed out.
 
-**Start the stakeholder contact this week.**  If nobody on your team knows a fitting partner, ask me: I will broker an introduction within one week of the request, and no team's brief is blocked by the roster.  What blocks teams is waiting until week two to discover they have nobody.
+Start the stakeholder contact this week.  If nobody on your team knows a fitting partner, ask me.  I will broker an introduction within one week of the request, and no team's brief is blocked by the roster.  What blocks teams is waiting until week two to discover they have nobody.
 
-> **Why step 4 is unassisted.**  Not because AI is forbidden here; it is not, and steps 5 and 6 are open.  The individual draft exists so that your team's brief is a synthesis of four people's actual understanding rather than four people editing one machine's framing.  You will notice the difference in the peer exchange, in both directions.
+> **Why step 4 is unassisted.**  AI is not forbidden in this milestone; steps 5 and 6 are open, with disclosure.  The individual draft exists so that your team's brief is a synthesis of several people's actual understanding rather than several people editing one machine's framing.  You will notice the difference in the peer exchange, in both directions.
 
 ---
 
 ## In-Class Kickoff: Speed-Dating Topic Generation
 
-Before any team commits to a stakeholder, we generate candidates together.  In class, you will run a **speed-dating round**: pairs of students rotate every four minutes, and in each pairing both people answer, "What is a problem you have personally seen in a campus office, a local organization, or another department, and who owns it?"  The Recorder from each team collects every candidate mentioned.  By the end of class, your team short-lists three candidates and ranks them by (a) access; can you realistically get an interview within two weeks?  (b) shape; could an agent system plausibly help? and (c) interest; does the domain match your team's survey rankings?  Log the ranking and the choice in your decision log.
+Before any team commits to a stakeholder, we generate candidates together.  In class, you run a speed-dating round: pairs of students rotate every four minutes, and in each pairing both people answer, "What is a problem you have personally seen in a campus office, a local organization, or another department, and who owns it?"  The Recorder from each team collects every candidate mentioned.
+
+By the end of class, your team short-lists three candidates and ranks them on three questions:
+
+1.  Access: can you realistically get an interview before the individual statement is due on Tue Sep 29?
+2.  Shape: could an agent system plausibly help?
+3.  Interest: does the domain match your team's survey rankings?
+
+Log the ranking and the choice in your decision log.
 
 ---
 
 ## Part 1: Identify a Real Stakeholder
 
-**Start with the partner roster.**  The instructor shares in class a roster of community partners already contacted and who expect to hear from student teams (the roster is not published on the website); anchoring your brief in a roster partner means your interview access is real, not hoped-for.  Teams claim partners at the kickoff (first come, logged in the decision log).  If the roster is still being finalized, or your team's speed-dating round surfaced a stronger candidate, you may instead anchor in a **concrete stakeholder group of your own**: a named office or a specific organization with a person you can actually interview, cleared with the instructor before first contact.
+Start with the partner roster.  I share it in class, not on the website.  The partners on it have already been contacted and expect to hear from student teams, so anchoring your brief in a roster partner means your interview access is real, not hoped-for.  Teams claim partners at the kickoff (first come, logged in the decision log).
 
-If the roster does not yet fit, do not wait.  If the published roster does not yet name a partner that fits your team's problem, you may immediately draw from a standing on-campus stakeholder list: **Disability and Access Services, the library, the Office of Sustainability, the Center for Writing and Speaking, Community Engagement/UCARE, and Athletics operations**.  Any office that serves real users counts.  Confirm your choice with the instructor in one sentence on Teams.  And if nothing on the roster or the standing list fits your team's interests, ask: the instructor will broker an introduction to a suitable partner within one week of the request; no team's brief is blocked by the roster.
+If the roster does not yet fit, do not wait.  You have two other options:
 
-Whether from the roster or self-identified, the stakeholder must be **real and outside computer science**.  Good candidates:
+1.  If the roster is still being finalized, or your speed-dating round surfaced a stronger candidate, anchor in a concrete stakeholder group of your own: a named office or a specific organization with a person you can actually interview.  Clear it with me before first contact.
+2.  If the roster does not yet name a partner that fits your team's problem, draw immediately from the standing on-campus stakeholder list: Disability and Access Services, the library, the Office of Sustainability, the Center for Writing and Speaking, Community Engagement/UCARE, and Athletics operations.  Any office that serves real users counts.  Confirm your choice with me in one sentence on Teams.
+
+If nothing on the roster or the standing list fits your team's interests, ask.  I will broker an introduction to a suitable partner within one week of the request.
+
+Whether from the roster or self-identified, the stakeholder must be real and outside computer science.  Good candidates:
 
 - **Campus offices:** sustainability, library, registrar, accessibility services, career services, admissions, facilities, dining
 - **Local organizations:** nonprofits, community centers, historical societies, food banks, small businesses, municipal offices
 - **Another discipline on campus:** faculty or students in biology, education, environmental studies, economics, art, health sciences, anyone with a research or operational problem outside CS
 
-Not acceptable: another CS student or CS faculty member's tooling problem, a hypothetical persona, or "students in general."  If your team is unsure whether a candidate qualifies, ask the instructor *before* the interview.
+Not acceptable: another CS student or CS faculty member's tooling problem, a hypothetical persona, or "students in general."  If your team is unsure whether a candidate qualifies, ask me before the interview.
 
-**Etiquette for the first contact:** one short, professional message that says who you are, what the course is, what you are asking for (a 30-minute conversation about a problem in their work, not a commitment of any kind), and when you can meet.  Copy the instructor if you want a credibility boost.
+For the first contact, send one short, professional message.  Say who you are, what the course is, what you are asking for (a 30-minute conversation about a problem in their work, not a commitment of any kind), and when you can meet.  Copy me if you want a credibility boost.
 
 ---
 
 ## Part 2: The Interview Protocol
 
-**Empathy before ideation.**  The discipline this milestone teaches is understanding the issue *from the stakeholder's perspective* (their pressures, their constraints, their definition of a good day) before your team generates a single solution idea.  You are not visiting a partner to validate a project concept; you are there to learn what the problem feels like from inside their work.  Ideation comes later, and it will be better for the wait.
+Understand before you invent.  This milestone teaches you to see the issue from the stakeholder's perspective (their pressures, their constraints, their definition of a good day) before your team generates a single solution idea.  You are not visiting a partner to validate a project concept.  You are there to learn what the problem feels like from inside their work.  Ideation comes later, and it will be better for the wait.
 
-The protocol has four phases.  Your interview packet (an appendix to the brief) documents each.
+The protocol has four phases.  Your interview packet (an appendix to the brief) documents each one.
 
-**Phase 1: Prepare.**  Before the meeting, research the stakeholder's context (their office's public materials, their discipline's basics) and write **at least six prep questions** in advance.  Good prep questions are open and concrete:
+**Phase 1: Prepare.**  Before the meeting, research the stakeholder's context (their office's public materials, their discipline's basics) and write at least six prep questions in advance.  Good prep questions are open and concrete:
 
 - "Walk me through the last time this problem cost you an afternoon."
 - "Who else is affected when this goes wrong?"
@@ -135,55 +159,61 @@ The protocol has four phases.  Your interview packet (an appendix to the brief) 
 - "What should we read to understand your field's view of this?"
 - "Is there data or paperwork this problem produces that we could see?"
 
-**Phase 2: Listen and learn.**  In the meeting, your job is to understand.  Please do not pitch.  Ground rules: the stakeholder should do most of the talking; follow-up questions ("can you say more about...?") beat new questions; and **no proposing solutions in the first meeting**: a premature "we could just build an app that..." teaches the stakeholder to stop describing the problem.  Listen for the **problem behind the stated problem**: the first framing a stakeholder offers is often a symptom or an already-imagined fix ("we need a better spreadsheet"), and your probing questions should keep pulling until you can hear the constraint underneath it ("no one can see who changed what, so nobody trusts the numbers").  Capture **direct quotes** as they happen, and ask permission in the moment ("that's a great way to put it; may we quote that in our writeup?"); quoted-with-permission language is what lets your brief present the issue in the stakeholder's own terms rather than yours.  Take notes; one member interviews while another records.
+**Phase 2: Listen and learn.**  In the meeting, your job is to understand.  Do not pitch.  Three ground rules:
+
+1.  The stakeholder does most of the talking.  Follow-up questions ("can you say more about...?") beat new questions.
+2.  Propose no solutions in the first meeting.  A premature "we could just build an app that..." teaches the stakeholder to stop describing the problem.
+3.  Listen for the problem behind the stated problem.  The first framing a stakeholder offers is often a symptom or an already-imagined fix ("we need a better spreadsheet").  Keep probing until you can hear the constraint underneath it ("no one can see who changed what, so nobody trusts the numbers").
+
+Capture direct quotes as they happen, and ask permission in the moment ("that's a great way to put it; may we quote that in our writeup?").  Quoted-with-permission language is what lets your brief present the issue in the stakeholder's own terms rather than yours.  One member interviews while another records.
 
 **Phase 3: Consent.**  Ask explicitly: "May we name you and your office in our course writeup, or would you prefer we describe you generically?"  Record the answer and honor it in the brief.  If they decline to be named, the brief still works; describe the role, not the person.
 
-**Phase 4: Follow up.**  Within 48 hours, send a thank-you that includes a two-or-three sentence summary of the problem as you understood it, and ask them to correct anything you got wrong.  Their confirmation (or correction) goes in the interview packet; it is your first accuracy check, and it keeps the door open for the rest of the semester.
+**Phase 4: Follow up.**  Within 48 hours, send a thank-you that includes a two-or-three sentence summary of the problem as you understood it, and ask them to correct anything you got wrong.  Their confirmation (or correction) goes in the interview packet.  It is your first accuracy check, and it keeps the door open for the rest of the semester.
 
 ---
 
 ## Interlude: Your Own First Draft, Written Without AI
 
-> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *Connecting Agents to the World* session, written individually and without AI **before** your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality* session for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
+> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session on Tue Sep 29, written individually and without AI before your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality: Chunking and Measuring Retrieval* session on Tue Oct 6 for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
 
-Due individually, after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date.  **3 points, assessed within Class Activities and Participation, on completion only.**
+This statement is due individually on Tue Sep 29, after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date.  It is worth **3 points, assessed within Class Activities and Participation, on completion only.**
 
-After your interview and before your team writes anything together, write **half a page, by yourself, with no AI assistance of any kind**: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about.  No sources, no polish, no rewriting it later, a first honest attempt.
+After your interview and before your team writes anything together, write half a page, by yourself, with no AI assistance of any kind: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about.  No sources, no polish, no rewriting it later.  A first honest attempt.
 
-This is a **calibration exercise**, and not a test.  It is not compared against your teammates' drafts, it is not marked for quality, and nothing in it can lower your grade.  It exists for two reasons, both of them yours:
+This is a calibration exercise, not a test.  It is not compared against your teammates' drafts, it is not marked for quality, and nothing in it can lower your grade.  It exists for two reasons, both of them yours:
 
-- **It gives you something to bring.**  The standing thread principle is *independent work before group work*, the same reason the Literature Review's annotated bibliographies are individual.  A team synthesis is only a synthesis if there were several real contributions to reconcile; five people who each thought about the problem alone first will write a better brief than five people who watched one person type.
+- **It gives you something to bring.**  The standing thread principle is independent work before group work, the same reason the Literature Review's annotated bibliographies are individual.  A team synthesis is only a synthesis if there were several real contributions to reconcile.  Teammates who each thought about the problem alone first will write a better brief than teammates who watched one person type.
 - **It is a baseline you can point at.**  Later in the semester you will want to know what you can do unaided, because that is the only way to tell whether a tool is extending your judgment or substituting for it.  Keep this draft.  Re-read it at Demo Day.
 
-Bring it to class in whatever form you wrote it (typed, handwritten, or a photo of the page) and submit it individually via the LMS. Because this one is unassisted by design, it carries **no AI-use disclosure**: there is nothing to disclose, and that is the point.
+Bring it to class in whatever form you wrote it (typed, handwritten, or a photo of the page) and submit it individually via the LMS.  Because this one is unassisted by design, it carries no AI-use disclosure: there is nothing to disclose, and that is the point.
 
 ---
 
 ## Part 3: The Brief
 
-Write **2-3 pages** with these six sections.  Every section names its **primary author**, and every member is primary author of at least one section (the standing [Project Thread]({{ site.baseurl }}/Projects/PBLThread) rule).
+Write 2-3 pages with these six sections.  Every section names its primary author, and every member is primary author of at least one section (the standing [Project Thread]({{ site.baseurl }}/Projects/PBLThread) rule).
 
 1.  **Stakeholder context.**  Who they are (as consented), what their office or field does, and how this problem fits into their work.
 2.  **The issue in the stakeholder's own terms.**  Their framing, their vocabulary, at least two direct quotes or attributed close paraphrases.  Resist translation; that comes later.
-3.  **Disciplinary perspectives involved.**  At least two perspectives beyond CS. For each: what does this discipline notice about the problem, what would count as evidence, and what would "solved" mean?  Name at least one point where the perspectives pull in different directions.
+3.  **Disciplinary perspectives involved.**  At least two perspectives beyond CS.  For each: what does this discipline notice about the problem, what would count as evidence, and what would "solved" mean?  Name at least one point where the perspectives pull in different directions.
 4.  **A problem statement an agent system could address.**  One paragraph, traceable to the interview.  State the problem, not a design.
-5.  **Candidate track fit.**  Two or three sentences per direction showing the problem could support **all three** directions of the [Final Project]({{ site.baseurl }}/Projects/FinalProject): a built Custom Agent Team, a Responsible AI Audit of an existing or proposed system in this domain, or an Open-Source Agent artifact the stakeholder's community could adopt.  You are not choosing a track yet; you are proving the problem is rich enough to keep the choice open.
+5.  **Candidate track fit.**  Two or three sentences per direction showing the problem could support all three directions of the [Final Project]({{ site.baseurl }}/Projects/FinalProject): a built Custom Agent Team, a Responsible AI Audit of an existing or proposed system in this domain, or an Open-Source Agent artifact the stakeholder's community could adopt.  You are not choosing a track yet; you are proving the problem is rich enough to keep the choice open.
 6.  **What you don't yet know.**  Concrete open questions: missing facts, unverified assumptions, and things only the literature (or a second conversation) can answer.  This section seeds your Literature Review.
 
-Attach the **interview packet** as an appendix: prep questions, notes, consent record, and the follow-up exchange.
+Attach the interview packet as an appendix: prep questions, notes, consent record, and the follow-up exchange.
 
 ---
 
 ## Peer Exchange
 
-Before the brief is due, draft briefs are exchanged across teams in class for structured peer review using **SQR cards** (Strength / Question / Risk).  The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview).  Plan to revise the brief in response before the due date, before it feeds the Literature Review; the cycle is *artifact -> peer review -> revise*, and it repeats at the proposal and the gallery walk.
+On Tue Oct 6, at the RAG Quality: Chunking and Measuring Retrieval session, teams exchange draft briefs in class for structured peer review using SQR cards (Strength / Question / Risk).  The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview).  Revise the brief in response before the Thu Oct 15 due date, so the revised version is what feeds the Literature Review.  The cycle is artifact -> peer review -> revise, and it repeats at the proposal and the gallery walk.
 
 ---
 
 ## Deliverables
 
-**Individually,** by the date on the [course schedule]({{ site.baseurl }}/): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
+**Individually,** by Tue Sep 29 (see the [course schedule]({{ site.baseurl }}/)): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
 
 **As a team,** submit one PDF via the LMS by the brief's due date containing:
 

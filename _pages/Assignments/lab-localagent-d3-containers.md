@@ -4,9 +4,9 @@ permalink: /Assignments/LocalAgent/Direction3
 title: "CS357 Lab: Local Agent, Direction 3: Containerizing an AI System Safely"
 ---
 
-> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  This page carries no points on its own.  Your core plus direction work goes against the Local Agent Lab rubric on the core lab page.
+> **Grading:** This page is one of the directions for the [Local Agent Lab]({{ site.baseurl }}/Assignments/LocalAgent).  This page carries no points on its own.  I grade your core plus direction work against the Local Agent Lab rubric on the core lab page.
 
-> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to author; you build and evaluate the same system as configuration instead.  Take whichever direction appeals to you.  I give the same credit for either one.
+> **Rather not write the code?**  [Direction 0: The OpenWebUI Route]({{ site.baseurl }}/Assignments/LocalAgent/Direction0) reaches the same objectives for the Local Agent Lab with no code to write; you build and evaluate the same system as configuration instead.  Take whichever direction appeals to you.  I give the same credit for either one.
 
 > **What this direction requires**
 >
@@ -14,14 +14,14 @@ title: "CS357 Lab: Local Agent, Direction 3: Containerizing an AI System Safely"
 > - **API costs:** small but nonzero; the agent makes short summarization calls, so expect a few cents to a few dollars of usage at this lab's scale (budget under $5).
 > - **Installs / disk:** Docker Desktop (Mac/Windows) or Docker Engine with Compose (Linux), the `anthropic` Python package, and the `trivy` image scanner; budget roughly 6 GB of free disk for images and build layers.
 > - **Hardware:** run Part 1's deliberately insecure baseline in a dedicated test VM or on a machine with no sensitive files; this is a stated requirement of the direction, not a suggestion.
-> - **No-cost fallback:** none is written into this direction's steps, but the hardening work itself is model-agnostic.  If obtaining an API key is a barrier, talk to me: re-pointing the agent script at your local Ollama server (swapping the SDK call for the local `/api/chat` endpoint you used in the core lab) preserves every security step and earns full credit.
+> - **No-cost fallback:** none is written into this direction's steps, but the hardening work itself does not depend on the model.  If obtaining an API key is a barrier, talk to me: re-pointing the agent script at your local Ollama server (swapping the SDK call for the local `/api/chat` endpoint you used in the core lab) preserves every security step and earns full credit.
 
 ---
 
 
-Take the local agent you built in the core lab and put it in a box.  You begin with a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege, building an explicit trust boundary between the agent and your host system.  You are here to understand why each boundary exists and what specific threat it addresses.
+In this direction you put the local agent from the core lab in a box.  You start with a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it runs under the principle of least privilege: the agent gets only the access its job needs, and nothing more.  The result is an explicit trust boundary between the agent and your host system.
 
-In this lab, you and your partner will take a deliberately insecure AI agent container, document exactly what it can do in that state, and then harden it step by step until it operates under the principle of least privilege.  The goal is not to memorize Docker flags; it is to understand *why* each boundary exists and what specific threat it addresses.  By the end, you will have a concrete mental model of what a container can and cannot protect you from.  This one is a **pair lab**: driver and navigator, swaps at least every 30 minutes, and a swap log you turn in.
+The goal is not to memorize Docker flags.  It is to understand *why* each boundary exists and what specific threat it addresses.  By the end, you will have a concrete mental model of what a container can and cannot protect you from.  This is a **pair lab**: driver and navigator, swaps at least every 30 minutes, and a swap log you turn in.
 
 ---
 
@@ -29,12 +29,12 @@ In this lab, you and your partner will take a deliberately insecure AI agent con
 
 ##### Prerequisite Concepts
 
-Before beginning, make sure you have completed (or are ready to reference) both prerequisite activities:
+Before you begin, complete (or be ready to refer to) both prerequisite activities:
 
 - [Docker from Zero Activity]({{ site.baseurl }}/Tutorials/Docker): covers images, containers, volumes, and basic compose syntax
 - [The Local Agent Stack Activity]({{ site.baseurl }}/Tutorials/AgentStack): covers building a local LLM-calling agent and running it in Docker
 
-If you are fuzzy on any of the following terms, re-read the relevant activity before continuing: image vs. container, bind mount vs. volume, `docker compose up`, `docker exec`, environment variable injection.
+If any of these terms is fuzzy, re-read the relevant activity before you continue: image vs. container, bind mount vs. volume, `docker compose up`, `docker exec`, environment variable injection.
 
 ##### Tools to Install
 
@@ -51,15 +51,15 @@ docker compose version
 > Docker Compose version v2.x.x
 > ```
 >
-> If you see `command not found`, install Docker Desktop (Mac/Windows) or Docker Engine (Linux) from [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).  Make sure the Docker daemon is running before continuing: on Linux, run `sudo systemctl start docker`; on Mac/Windows, launch Docker Desktop.
+> If you see `command not found`, install Docker Desktop (Mac/Windows) or Docker Engine (Linux) from [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).  Make sure the Docker daemon is running before you continue: on Linux, run `sudo systemctl start docker`; on Mac/Windows, launch Docker Desktop.
 
-Install the Python Anthropic SDK on your host machine (you will also install it inside the container, but having it on the host helps with local testing):
+Install the Python Anthropic SDK on your host machine.  You will also install it inside the container, but having it on the host helps with local testing:
 
 ```bash
 pip install anthropic
 ```
 
-Verify your API key is exported in your shell:
+Verify that your API key is exported in your shell:
 
 ```bash
 echo $ANTHROPIC_API_KEY
@@ -76,13 +76,13 @@ echo $ANTHROPIC_API_KEY
 | Part 3 | Threat Modeling | ~45 minutes |
 | Part 4 | Compose and Document | ~30 minutes |
 
-> **Important:** Run everything in a dedicated test VM or machine; Part 1 intentionally creates a container with dangerous access to demonstrate the threat.  Do not run the insecure baseline on a machine containing sensitive files or credentials you cannot afford to expose.
+> **Important:** Run everything in a dedicated test VM or machine.  Part 1 intentionally creates a container with dangerous access to show the threat.  Do not run the insecure baseline on a machine containing sensitive files or credentials you cannot afford to expose.
 
 ---
 
 #### Background: What a Container Actually Isolates
 
-Before you deploy the deliberately insecure baseline in Part 1, you need a clear picture of what a container does and does not protect you from.  This material used to sit in a separate activity; it is here because Part 3's threat model is graded against it, and because "it runs in Docker" is not by itself a security claim.
+Before you deploy the deliberately insecure baseline in Part 1, you need a clear picture of what a container does and does not protect you from.  This material used to sit in a separate activity.  It is here because Part 3's threat model is graded against it, and because "it runs in Docker" is not by itself a security claim.
 
 ##### Key Concepts
 
@@ -99,11 +99,11 @@ Before you deploy the deliberately insecure baseline in Part 1, you need a clear
 
 ##### What Docker Actually Isolates
 
-Docker does not virtualize hardware the way a virtual machine does.  It uses two Linux kernel features (namespaces and cgroups) that were already present in Linux long before Docker existed.  Docker makes these features easy to use together.
+Docker does not virtualize hardware the way a virtual machine does.  It uses two Linux kernel features, namespaces and cgroups, that existed in Linux long before Docker.  Docker makes them easy to use together.
 
-Think of namespaces as one-way mirrors: the container can see its own resources, but it cannot see the host's resources.  Think of cgroups as a utility meter that cuts off power when a tenant exceeds their monthly limit.
+Think of a namespace as a one-way mirror: the container can see its own resources, but it cannot see the host's.  Think of a cgroup as a utility meter that cuts the power when a tenant exceeds the monthly limit.  The mirror analogy stops at the kernel: every container shares the host's kernel, so a kernel bug can see straight through the glass.
 
-- **Namespaces** partition kernel resources so that processes in a container see only their own slice.  The six relevant namespaces for security are:
+- **Namespaces** partition kernel resources so that processes in a container see only their own slice.  The six namespaces that matter for security are:
 
 | Namespace | What It Isolates | Practical Effect for an Agent Container |
 |-----------|----------|-----------------|
@@ -114,19 +114,19 @@ Think of namespaces as one-way mirrors: the container can see its own resources,
 | `ipc` | Shared memory segments and message queues | Prevents one container from reading data another container placed in shared memory |
 | `user` | UID/GID mappings, the numeric user identity | UID 0 (root) inside the container maps to a non-root UID outside; "root in container" is not the same as "root on host" |
 
-- **cgroups** (control groups) enforce resource *quotas*: maximum CPU shares, memory bytes, open file descriptors, and I/O bandwidth.  Without cgroup limits, a single agent in an infinite tool-call loop can exhaust all host memory and take down every other container on the machine, a denial-of-service attack from the inside.
+- **cgroups** (control groups) enforce resource *quotas*: maximum CPU shares, memory bytes, open file descriptors, and I/O bandwidth.  Without cgroup limits, a single agent in an infinite tool-call loop can exhaust all host memory and take down every other container on the machine.  That is a denial-of-service attack from the inside.
 
 ###### Questions to Work Through
 
 1.  A container is started with `--network none`.  Which namespace enforces this restriction?  What legitimate agent capability does `--network none` break, and in what type of deployment is that an acceptable tradeoff?
 
-   *Hint: A research agent that needs to call a web search API requires network access.  A coding agent that only reads and edits local files does not.  Which one is safe to air-gap, and which one needs a more nuanced network policy?*
+   *Hint: A research agent that needs to call a web search API requires network access.  A coding agent that only reads and edits local files does not.  Which one is safe to air-gap, and which one needs a finer-grained network policy?*
 
 2.  Linux capabilities are fine-grained permissions that split root's power into individual pieces. `CAP_NET_BIND_SERVICE` lets a process bind to ports below 1024 (like port 80 for HTTP). `CAP_SYS_PTRACE` lets a process attach a debugger to any other process on the system.  Why should an AI coding agent container drop `CAP_SYS_PTRACE` specifically?  What attack does keeping this capability enabled make possible?
 
    *Hint: If the agent's container can attach a debugger to any process, and a prompt injection causes it to do so, what could it read from a process that holds secrets in memory, like a password manager or another agent's context window?*
 
-3.  Without a cgroup memory limit, an agent enters an infinite tool-call loop generating large JSON responses.  Each iteration consumes more memory.  Describe the failure mode on a multi-tenant server where 10 research agents are sharing the same host machine, and write the specific `docker run` flag that prevents any one container from causing this failure.
+3.  Without a cgroup memory limit, an agent enters an infinite tool-call loop generating large JSON responses.  Each iteration consumes more memory.  Describe the failure mode on a multi-tenant server where 10 research agents share the same host machine, and write the specific `docker run` flag that prevents any one container from causing this failure.
 
    *Starter hint: The flag takes the form `--memory <size>`, where `<size>` can be `512m` (512 megabytes) or `2g` (2 gigabytes).  What is a reasonable per-container limit if the host has 32 GB of RAM and 10 containers should share it equally?*
 
@@ -134,7 +134,7 @@ Think of namespaces as one-way mirrors: the container can see its own resources,
 
 ##### Threat Model for an AI Agent Container
 
-A **threat model** lists what can go wrong, how, and what the defense is.  For a coding agent (one that can write and execute code) the threat surface is larger than for a typical web service because the agent's *output* (generated code) is itself executable.  A web server that serves static files cannot hurt you by serving the wrong file; a coding agent that generates and runs the wrong code absolutely can.
+A **threat model** lists what can go wrong, how, and what the defense is.  For a coding agent (one that can write and execute code) the threat surface is larger than for a typical web service, because the agent's *output* (generated code) is itself executable.  A web server that serves static files cannot hurt you by serving the wrong file.  A coding agent that generates and runs the wrong code absolutely can.
 
 | Threat | Attack Vector: How It Happens | Container Defense: What Blocks It | What Still Leaks Through Even With the Defense |
 |--------|---------------|-------------------|--------------------------|
@@ -144,7 +144,7 @@ A **threat model** lists what can go wrong, how, and what the defense is.  For a
 | **Secret theft from environment variables** | Prompt injection causes agent to call `print(os.environ)`, which dumps all environment variables including `GITHUB_TOKEN=abc123` to the output | Docker secrets mechanism mounts credentials as files under `/run/secrets/` rather than as environment variables; env vars are not visible to `docker inspect` by default | If the agent has read access to `/run/secrets/`, it can still read the credential file with `cat /run/secrets/github_token` |
 | **Container escape** | A vulnerability in the container runtime or Linux kernel allows code inside the container to break out and execute on the host | Never use `--privileged`; keep the Docker daemon and Linux kernel patched to eliminate known escape paths | Zero-day vulnerabilities in kernel namespaces are rare but real; no software defense is perfect against unknown exploits |
 
-> **Common Misconception:** Many students assume that running inside Docker makes an agent "safe."  Docker reduces risk dramatically, but it is not a magic barrier.  An agent running with `--privileged` (which disables all namespace isolation) inside Docker has essentially the same access to the host as if Docker were not there.  The table above shows that even without `--privileged`, threats like secret theft and API cost exhaustion can still leak through.  Defense in depth (multiple overlapping protections) is the right mental model, not "container = safe."
+> **Common Misconception:** Many students assume that running inside Docker makes an agent "safe."  Docker reduces risk a great deal, but it is not a wall.  An agent running with `--privileged` (which disables all namespace isolation) inside Docker has essentially the same access to the host as if Docker were not there.  The table above shows that even without `--privileged`, threats like secret theft and API cost exhaustion can still leak through.  Defense in depth (multiple overlapping protections) is the right mental model, not "container = safe."
 
 ###### Questions to Work Through
 
@@ -164,9 +164,9 @@ A **threat model** lists what can go wrong, how, and what the defense is.  For a
 
 ##### Safety Patterns Inside the Agent Loop
 
-Containerization is the outer shell.  Inside it, the agent code itself needs safety rails.  The two most common failure modes for LLM agents are **unbounded loops** (the agent never stops) and **unchecked execution** (the agent runs code it should not).  These code-level patterns work alongside container-level isolation; neither alone is sufficient.
+Containerization is the outer shell.  Inside it, the agent code itself needs safety rails.  The two most common failure modes for LLM agents are **unbounded loops** (the agent never stops) and **unchecked execution** (the agent runs code it should not).  These code-level patterns work alongside container-level isolation; neither one is enough on its own.
 
-The agent loop below implements three safety gates in order: a human checkpoint for irreversible actions, a static analysis check for generated code, and a hard tool-call budget, so you can see how each gate corresponds to a distinct failure mode.
+The agent loop below has three safety gates, in order: a human checkpoint for irreversible actions, a static analysis check for generated code, and a hard tool-call budget.  Each gate matches one failure mode.
 
 ```python
 # Constants defined at the top, easy to adjust per deployment
@@ -210,7 +210,7 @@ for iteration in range(MAX_ITERATIONS):
         context.add(f"Action failed: {result.error}")
 ```
 
-**Never pass LLM-generated strings directly to `eval()`, `exec()`, or `subprocess.run(shell=True)`.**  Even with a sandboxed container, these calls can consume resources, corrupt the agent's own working state, or exploit vulnerabilities in the Python interpreter.  The pattern above routes generated code through `sandbox_validates()` before execution.
+**Never pass LLM-generated strings directly to `eval()`, `exec()`, or `subprocess.run(shell=True)`.**  Even inside a sandboxed container, these calls can consume resources, corrupt the agent's own working state, or exploit vulnerabilities in the Python interpreter.  The pattern above routes generated code through `sandbox_validates()` before execution.
 
 ###### Questions to Work Through
 
@@ -226,9 +226,9 @@ for iteration in range(MAX_ITERATIONS):
 
 ##### Isolation and Trust Boundaries (for everyone)
 
-This model is conceptual and takes about ten minutes; it is for every student in the studio, whether or not you ever run Docker yourself.  It is the reason this stack is built from containers at all, and it is the syllabus goal behind the Local Agent Lab's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
+This model is conceptual and takes about ten minutes.  It is for every student in the studio, whether or not you ever run Docker yourself.  It is the reason this stack is built from containers at all, and it is the syllabus goal behind the Local Agent Lab's containerization directions: *deploy agents with defined trust boundaries and minimal blast radius*.
 
-A **trust boundary** is a line in your system where the level of trust changes: everything inside the line can be damaged by a mistake inside the line, and nothing outside it can.  Four mechanisms draw that line for an agent:
+A **trust boundary** is a line in your system where the level of trust changes.  Everything inside the line can be damaged by a mistake inside the line, and nothing outside it can.  Four mechanisms draw that line for an agent:
 
 | Mechanism | What it limits | The question it answers |
 |---|---|---|
@@ -237,36 +237,36 @@ A **trust boundary** is a line in your system where the level of trust changes: 
 | **Non-root execution** | The agent cannot change the system it runs on | "Can a bad command rewrite the container itself?" |
 | **Network policy / ports** | The agent reaches only the services you exposed | "Can it call anything on the internet, or only my local Ollama?" |
 
-The composite of these is the agent's **blast radius**: the set of things that can possibly go wrong when the agent misbehaves.  A well-designed stack makes the blast radius *small and known in advance*: you decide what the agent can destroy before you let it act, instead of discovering it afterward.  This is the same idea as the *Design First* activity's irreversible-actions table, implemented in infrastructure instead of in a prompt.
+Together these set the agent's **blast radius**: the set of things that can possibly go wrong when the agent misbehaves.  A well-designed stack makes the blast radius *small and known in advance*.  You decide what the agent can destroy before you let it act, instead of discovering it afterward.  This is the same idea as the *Design First* activity's irreversible-actions table, implemented in infrastructure instead of in a prompt.
 
-**CTQ (teams, 3 minutes):** Your agent needs to summarize files in your `notes/` folder and save summaries to `summaries/`.  Using the table, name the tightest boundary you could give it: which mount is read-only, which is writable, and what network access does it actually need?
+**CTQ (teams, 3 minutes):** Your agent needs to summarize files in your `notes/` folder and save summaries to `summaries/`.  Using the table, name the tightest boundary you could give it: which mount is read-only, which is writable, and what network access does it actually need?  (Hint: it needs to read one folder, write one folder, and reach exactly one service, the local model.)
 
-    [[?]] Hint: it needs to read one folder, write one folder, and reach exactly one service, the local model.
+Which of these changes *reduces* an agent's blast radius?
 
-Which change *reduces* an agent's blast radius?
+- Running the agent as root so it never hits a permissions error
+- Mounting the notes folder read-only and giving the container no internet access
+- Mounting your whole home directory so the agent can find anything it needs
+- Exposing every service's port so connections never fail
 
-- [( )] Running the agent as root so it never hits a permissions error
-- [(X)] Mounting the notes folder read-only and giving the container no internet access
-- [( )] Mounting your whole home directory so the agent can find anything it needs
-- [( )] Exposing every service's port so connections never fail
-
----
-
-> **The required scope stops here.**  The three containers above (Ollama, `llmproxy`, and Open WebUI) plus the Isolation and Trust Boundaries model are the whole minimal build, verified with the end-to-end checks in Section 7 (the Wiring Matrix).  If you are taking Local Agent Lab Direction 2 or 3, that is your target.  Everything from this point down expands the stack into the full multi-service catalog: reference material, not required work.
+Only the second one does.  Running as root, mounting your whole home directory, and exposing every port each make the blast radius larger.
 
 ---
 
-The same attach-by-URL move adds the rest of the frontend tier as you need each one (`open-notebook` for research notebooks, `voicebox` for speech, `presenton` for slide generation, `open-terminal` for a browser shell, `open-design` for the agent-embedded canvas, `calibre-web` for your reading library): each gets a port row, an identity directory, the `--add-host` flag, and its connection settings pointed at the gateway.  Tool-tier services follow suit: `searxng` gives your agents private web search, `mcpproxy` hosts MCP tools from YAML definitions, and `surrealdb` provides persistence; agents reach them at `http://host.docker.internal:<port>` exactly as they reach the gateway.
+> **The background reading stops here.**  The minimal build in [The Local Agent Stack]({{ site.baseurl }}/Tutorials/AgentStack) (Ollama, `llmproxy`, and Open WebUI) plus the Isolation and Trust Boundaries model above is the target for Direction 2 and Direction 3; that tutorial's Wiring Matrix section verifies it end to end.  The notes below describe how the same stack grows beyond the minimal build.  They are reference material, not required work, kept here because Part 2's network step depends on the `localhost` rule.
 
-> **Common Misconception:** Many students expect `localhost` to work the same way inside a Docker container as it does outside.  It does not.  Inside a container, `localhost` refers to the container itself, not to your laptop or desktop.  If Ollama is running natively on your host machine and a container tries to reach it at `localhost:11434`, the connection will fail.  The fix is always `host.docker.internal:11434` with the `--add-host` flag on Linux.  This is the single most common source of mysterious connection failures in this stack.
+---
 
-Inside the llmproxy container, the routing config points at http://host.docker.internal:11434 rather than http://localhost:11434 because:
+The same attach-by-URL move adds the rest of the frontend tier as you need each one (`open-notebook` for research notebooks, `voicebox` for speech, `presenton` for slide generation, `open-terminal` for a browser shell, `open-design` for the agent-embedded canvas, `calibre-web` for your reading library).  Each gets a port row, an identity directory, the `--add-host` flag, and its connection settings pointed at the gateway.  Tool-tier services follow the same pattern: `searxng` gives your agents private web search, `mcpproxy` hosts MCP tools from YAML definitions, and `surrealdb` provides persistence.  Agents reach them at `http://host.docker.internal:<port>` exactly as they reach the gateway.
+
+> **Common Misconception:** Many students expect `localhost` to work the same way inside a Docker container as it does outside.  It does not.  Inside a container, `localhost` means the container itself, not your laptop or desktop.  If Ollama is running natively on your host machine and a container tries to reach it at `localhost:11434`, the connection will fail.  The fix is always `host.docker.internal:11434` with the `--add-host` flag on Linux.  This is the single most common source of mysterious connection failures in this stack.
+
+Inside the llmproxy container, the routing config points at `http://host.docker.internal:11434` rather than `http://localhost:11434` because `localhost` there is the llmproxy container itself, and Ollama is listening on the host.
 
 ---
 
 #### Part 1: Baseline (Insecure) Deployment
 
-**Goal:** Deploy a minimal AI agent with no security hardening and document exactly what it can access.  This serves as your "before" state.  Everything you find here is what the hardening in Part 2 is designed to prevent.
+**Goal:** Deploy a minimal AI agent with no security hardening and document exactly what it can access.  This is your "before" state.  Everything you find here is what the hardening in Part 2 exists to prevent.
 
 ##### Step 1: Create the Project Directory Structure
 
@@ -277,7 +277,7 @@ mkdir -p ~/cs357-containerlab/workspace
 cd ~/cs357-containerlab
 ```
 
-Your directory should look like this when you are done with Part 1:
+Your directory should look like this when you finish Part 1:
 
 ```
 cs357-containerlab/
@@ -298,7 +298,7 @@ echo "This is a sample document about neural networks and gradient descent." > ~
 
 ##### Step 2: Create the Agent Script
 
-Create the file `~/cs357-containerlab/agent.py` with the following starter code.  The TODOs mark the places you need to fill in; read the comments carefully before running anything.
+Create the file `~/cs357-containerlab/agent.py` with the following starter code.  The TODOs mark the places you need to fill in.  Read the comments before you run anything.
 
 ```python
 # agent.py - Minimal LLM agent for containerization lab
@@ -350,7 +350,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Fill in each TODO before moving on.  When the script runs on your host machine (outside Docker), you should see a one-paragraph summary of `workspace/sample.txt`.
+Fill in each TODO before you move on.  When the script runs on your host machine (outside Docker), you should see a one-paragraph summary of `workspace/sample.txt`.
 
 ```bash
 python agent.py workspace/sample.txt
@@ -360,7 +360,7 @@ python agent.py workspace/sample.txt
 
 ##### Step 3: Create the Insecure Compose File
 
-Create the file `~/cs357-containerlab/docker-compose-insecure.yml` with the following content.  Read every comment; each one identifies a specific security problem that you will fix in Part 2.
+Create the file `~/cs357-containerlab/docker-compose-insecure.yml` with the following content.  Read every comment.  Each one names a specific security problem that you will fix in Part 2.
 
 ```yaml
 # docker-compose-insecure.yml
@@ -389,7 +389,7 @@ docker compose -f docker-compose-insecure.yml up
 
 > **What you should see:** Docker pulls the `python:3.11-slim` image (first run only), installs the `anthropic` package, then prints a summary of `sample.txt`.  Copy this output into your lab notes as the baseline.
 
-Now open a second terminal and explore what the container can access while it is running.  Because the command finishes quickly, use this one-shot approach to explore:
+Now open a second terminal and explore what the container can access.  Because the command finishes quickly, use this one-shot approach:
 
 ```bash
 docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent
@@ -417,7 +417,7 @@ Type `exit` to leave the shell.
 
 ##### Step 5: Demonstrate One Unsafe Action
 
-Still using the insecure compose file, demonstrate one specific unsafe action: reading a file from outside the intended workspace.  Run this exact command (it runs a one-shot container, reads a sensitive-looking file, and exits):
+Still using the insecure compose file, demonstrate one specific unsafe action: reading a file from outside the intended workspace.  Run this exact command.  It starts a one-shot container, reads a sensitive-looking file, and exits:
 
 ```bash
 docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
@@ -426,7 +426,7 @@ docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
 
 > **What you should see:** The first five lines of your `.bashrc` file, a file the agent has no legitimate reason to read.  Copy this output into your notes as exhibit A of the baseline threat.
 
-To confirm that secrets are exposed via `docker inspect`, run:
+To confirm that secrets are exposed through `docker inspect`, run:
 
 ```bash
 docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
@@ -445,7 +445,7 @@ docker compose -f docker-compose-insecure.yml run --rm --entrypoint sh agent \
 
 ##### Part 1 Checkpoint
 
-Answer these questions in your notes before moving to Part 2:
+Answer these questions in your notes before you move to Part 2:
 
 1.  What is the effective UID of the process running inside the baseline container, and why is running as that UID a security problem?
 2.  List three specific files or directories on your host machine that the baseline container can read that it has no legitimate reason to access.
@@ -455,7 +455,7 @@ Answer these questions in your notes before moving to Part 2:
 
 #### Part 2: Hardening Step by Step
 
-**Goal:** Apply six hardening measures one at a time.  After each step, verify the change took effect before applying the next one.  Do not batch them; the point is to observe each layer independently.
+**Goal:** Apply six hardening measures one at a time.  After each step, verify that the change took effect before you apply the next one.  Do not batch them.  The point is to observe each layer on its own.
 
 Start by creating a `Dockerfile` alongside your `docker-compose.yml`.  Some hardening steps require a custom image.
 
@@ -493,20 +493,20 @@ services:
     command: python /app/agent.py /workspace/sample.txt
 ```
 
-Verify the base (pre-hardening) compose file works before adding any hardening:
+Verify that the base (pre-hardening) compose file works before you add any hardening:
 
 ```bash
 docker compose build
 docker compose up
 ```
 
-> **What you should see:** The agent summarizes `sample.txt` exactly as it did in Part 1, but now only the `workspace/` subdirectory is mounted instead of your entire home directory.  This is already slightly better, but it is still running as root with no other protections.
+> **What you should see:** The agent summarizes `sample.txt` exactly as it did in Part 1, but now only the `workspace/` subdirectory is mounted instead of your entire home directory.  This is already slightly better, but the agent still runs as root with no other protections.
 
 ---
 
 ##### Step a: Add a Non-Root User
 
-**What this protects against:** If the agent process is compromised, running as root gives the attacker full control of the container filesystem and any mounted volumes; a non-root user limits the blast radius.
+**What this protects against:** If the agent process is compromised, running as root gives the attacker full control of the container filesystem and any mounted volumes.  A non-root user limits the blast radius.
 
 Edit your `Dockerfile` to uncomment the two lines you added above:
 
@@ -537,19 +537,19 @@ docker compose run --rm --entrypoint id agent
 > ```
 > If you still see `uid=0(root)`, the `USER` directive is not being applied.  Check that `docker compose build` ran successfully and that you are using the compose file that references `build: .`.
 
-Also verify the agent still functions after this change:
+Also verify that the agent still works after this change:
 
 ```bash
 docker compose up
 ```
 
-> **What you should see:** The same summary output as before.  The change should be transparent to the agent's behavior.
+> **What you should see:** The same summary output as before.  The change should be invisible in the agent's behavior.
 
 ---
 
 ##### Step b: Read-Only Filesystem with tmpfs at /tmp
 
-**What this protects against:** If the agent is tricked into writing a malicious file (for example, a modified script or a backdoor), a read-only filesystem ensures the write fails immediately rather than silently succeeding.
+**What this protects against:** If the agent is tricked into writing a malicious file (for example, a modified script or a backdoor), a read-only filesystem makes the write fail immediately rather than silently succeed.
 
 Edit `docker-compose.yml` to add `read_only: true` and a `tmpfs` entry:
 
@@ -592,7 +592,7 @@ docker compose run --rm --entrypoint sh agent \
 > tmp write succeeded
 > ```
 
-Verify the agent still functions:
+Verify that the agent still works:
 
 ```bash
 docker compose up
@@ -602,7 +602,7 @@ docker compose up
 
 ##### Step c: Drop All Capabilities, Add Back Only What Is Needed
 
-**What this protects against:** Linux capabilities grant fine-grained privileges beyond normal user permissions; dropping all of them prevents the agent from performing privileged operations (binding low ports, modifying network interfaces, loading kernel modules) even if it runs as root.
+**What this protects against:** Linux capabilities grant fine-grained privileges beyond normal user permissions.  Dropping all of them prevents the agent from performing privileged operations (binding low ports, modifying network interfaces, loading kernel modules) even if it runs as root.
 
 Edit `docker-compose.yml` to add capability controls:
 
@@ -624,7 +624,7 @@ services:
     #   - NET_BIND_SERVICE
 ```
 
-Verify capabilities are dropped:
+Verify that the capabilities are dropped:
 
 ```bash
 docker compose run --rm --entrypoint sh agent \
@@ -637,7 +637,7 @@ docker compose run --rm --entrypoint sh agent \
 > ```
 > All zeros means no effective capabilities.  If the value is nonzero, `cap_drop: ALL` is not being applied.
 
-Verify the agent still functions:
+Verify that the agent still works:
 
 ```bash
 docker compose up
@@ -649,7 +649,7 @@ docker compose up
 
 ##### Step d: Restrict Network Access
 
-**What this protects against:** Without network restrictions, a compromised agent can make outbound connections to any host on the internet, enabling data exfiltration or communication with an attacker's command-and-control server.
+**What this protects against:** Without network restrictions, a compromised agent can open outbound connections to any host on the internet, which enables data exfiltration or contact with an attacker's command-and-control server.
 
 First, create a named network that only the agent can use, and disable the default bridge:
 
@@ -677,7 +677,7 @@ networks:
 
 > **Note:** The agent needs to reach `api.anthropic.com` to call the API. A named network still allows outbound internet access by default; full network egress filtering requires a firewall rule or an egress proxy outside of compose.  What this step does accomplish is removing the agent from the `default` bridge network, which prevents it from reaching other containers that are also on the default bridge.  In Part 3, the extension challenge asks you to go further.
 
-Verify the agent is on the named network and not on the default bridge:
+Verify that the agent is on the named network and not on the default bridge:
 
 ```bash
 docker compose up -d
@@ -687,7 +687,7 @@ docker compose down
 
 > **What you should see:** The output should show `agent-net` as the network and should NOT show `default` as a network.  The gateway and subnet will reflect the named network's configuration.
 
-Verify the agent still functions:
+Verify that the agent still works:
 
 ```bash
 docker compose up
@@ -697,7 +697,7 @@ docker compose up
 
 ##### Step e: Add Resource Limits
 
-**What this protects against:** An AI agent that enters an infinite loop, receives a prompt designed to cause runaway token generation, or is exploited to launch a fork bomb can consume unlimited CPU, memory, and process slots, bringing down the host or other containers.
+**What this protects against:** An AI agent that enters an infinite loop, receives a prompt designed to cause runaway token generation, or is exploited to launch a fork bomb can consume unlimited CPU, memory, and process slots, and bring down the host or other containers.
 
 Edit `docker-compose.yml` to add resource limits using the `deploy` key:
 
@@ -731,7 +731,7 @@ networks:
 
 > **Note:** `deploy.resources.limits` works with `docker compose up` when using Docker Compose v2.  The `pids_limit` key limits the total number of processes/threads the container can spawn, which blocks fork bombs.
 
-Verify the limits are applied:
+Verify that the limits are applied:
 
 ```bash
 docker compose up -d
@@ -747,7 +747,7 @@ docker compose down
 > ```
 > `268435456` bytes = 256 MB. `500000000` NanoCPUs = 0.5 CPUs.  If you see `0` for any of these, the limit is not applied; check that you are using Docker Compose v2 (`docker compose version`).
 
-Verify the agent still functions:
+Verify that the agent still works:
 
 ```bash
 docker compose up
@@ -757,7 +757,7 @@ docker compose up
 
 ##### Step f: Move Secrets to Docker Secrets
 
-**What this protects against:** Environment variables are visible to every process in the container and to anyone who can run `docker inspect`.  Docker secrets deliver the value through a file at `/run/secrets/`, which is harder to accidentally log or expose.
+**What this protects against:** Environment variables are visible to every process in the container and to anyone who can run `docker inspect`.  Docker secrets deliver the value through a file at `/run/secrets/`, which is harder to log or expose by accident.
 
 Create a secrets directory and write the key to a file:
 
@@ -767,7 +767,7 @@ echo -n "$ANTHROPIC_API_KEY" > ~/cs357-containerlab/secrets/anthropic_api_key
 chmod 600 ~/cs357-containerlab/secrets/anthropic_api_key
 ```
 
-Update `agent.py` to read the key from the secrets file if it exists, falling back to the environment variable:
+Update `agent.py` to read the key from the secrets file if it exists, and fall back to the environment variable otherwise:
 
 ```python
 # agent.py - updated to read from Docker secrets
@@ -851,7 +851,7 @@ secrets:
     file: ./secrets/anthropic_api_key
 ```
 
-Rebuild (the `agent.py` changed) and verify:
+Rebuild (because `agent.py` changed) and verify:
 
 ```bash
 docker compose build
@@ -860,9 +860,9 @@ docker inspect $(docker compose ps -q agent) | grep -i "ANTHROPIC"
 docker compose down
 ```
 
-> **What you should see:** No `ANTHROPIC_API_KEY` value appears in the `docker inspect` output.  The environment variable block should be empty or absent.  If you still see the key, verify you removed the `environment:` block from the compose file.
+> **What you should see:** No `ANTHROPIC_API_KEY` value appears in the `docker inspect` output.  The environment variable block should be empty or absent.  If you still see the key, verify that you removed the `environment:` block from the compose file.
 
-Verify the agent still functions:
+Verify that the agent still works:
 
 ```bash
 docker compose up
@@ -935,7 +935,7 @@ USER agent
 
 ##### Part 2 Checkpoint
 
-Answer these questions in your notes before moving to Part 3:
+Answer these questions in your notes before you move to Part 3:
 
 1.  After Step b, you made the workspace mount read-only (`:ro`).  What is the difference between the container filesystem being read-only (`read_only: true`) and the volume mount being read-only (`:ro`)?  Could you have one without the other?
 2.  After Step c, all capabilities are dropped.  Your agent calls an external HTTPS API. Why does it not need `NET_BIND_SERVICE` or any network capability to make outbound connections?
@@ -945,11 +945,11 @@ Answer these questions in your notes before moving to Part 3:
 
 #### Part 3: Threat Modeling
 
-**Goal:** Formalize what you observed into a structured threat model, then stress-test the hardening with a red team exercise.
+**Goal:** Turn what you observed into a structured threat model, then stress-test the hardening with a red team exercise.
 
 ##### Step 1: Fill In the Threat Model Table
 
-Copy this table into your lab notes document and fill in every cell.  Do not leave any cell blank.  The `Residual Risk` column should be honest; every defense has limits.
+Copy this table into your lab notes document and fill in every cell.  Do not leave any cell blank.  Be honest in the `Residual Risk` column; every defense has limits.
 
 | # | Threat | Specific Attack Vector | Defense Applied (Part 2 Step) | Residual Risk After Hardening |
 |---|--------|----------------------|-------------------------------|-------------------------------|
@@ -962,7 +962,7 @@ Copy this table into your lab notes document and fill in every cell.  Do not lea
 
 - **Row 1 (Prompt injection / file access):** The attack vector should describe a specific prompt a user or attacker could send to the agent that would cause it to read a file it was not supposed to.  The defense should reference the read-only mount and non-root user.  The residual risk should acknowledge that the agent CAN read any file in `/workspace`; so what happens if sensitive files end up there?
 
-- **Row 2 (Data exfiltration):** The attack vector should describe how a compromised agent could transmit data to an attacker's server.  The defense should reference the named network.  The residual risk should be honest: does the named network actually block outbound internet access to arbitrary hosts, or just isolate the container from other containers?
+- **Row 2 (Data exfiltration):** The attack vector should describe how a compromised agent could transmit data to an attacker's server.  The defense should reference the named network.  The residual risk should be honest: does the named network actually block outbound internet access to arbitrary hosts, or only isolate the container from other containers?
 
 - **Row 3 (Resource exhaustion):** The attack vector should describe a specific prompt or exploit that causes runaway resource use (for example, a recursive prompt that generates an infinite loop in code the agent writes and executes).  The defense should reference `cpus:`, `memory:`, and `pids_limit`.  The residual risk should note what happens when the limit is hit: does the container crash?  Does it affect the host?
 
@@ -970,7 +970,7 @@ Copy this table into your lab notes document and fill in every cell.  Do not lea
 
 ##### Step 2: Red Team Exercise
 
-Attempt to make your hardened container take each of the following unsafe actions.  For each attempt, record exactly what command you ran and exactly what output or error you received.  These records are part of your deliverables.
+Try to make your hardened container take each of the following unsafe actions.  For each attempt, record exactly what command you ran and exactly what output or error you received.  These records are part of your deliverables.
 
 **Attempt 1: Write to the read-only filesystem**
 
@@ -1025,21 +1025,21 @@ After all three attempts, write a one-paragraph summary in your notes: what did 
 
 ##### Part 3 Checkpoint
 
-Answer these questions in your notes before moving to Part 4:
+Answer these questions in your notes before you move to Part 4:
 
 1.  In Attempt 2, you may have found that outbound internet connections still work from the hardened container.  What additional control (outside of Docker Compose's built-in features) would you need to add to actually block the agent from reaching unauthorized hosts?
 2.  The threat model table asks for "residual risk."  For Threat 4 (secret theft), is the secret completely safe now that it is in `/run/secrets/`?  What would an attacker need to do inside the container to read it?
-3.  Suppose you wanted to add a fifth row to the threat model covering "supply chain attack via a malicious dependency in the agent's requirements."  What would the attack vector, defense, and residual risk look like?  (You do not need to implement a defense; just reason through it.)
+3.  Suppose you wanted to add a fifth row to the threat model covering "supply chain attack via a malicious dependency in the agent's requirements."  What would the attack vector, defense, and residual risk look like?  (You do not need to implement a defense; reason through it.)
 
 ---
 
 #### Part 4: Compose and Document
 
-**Goal:** Confirm the complete hardened configuration is correct, write the security runbook, and verify the stack can be torn down and restored cleanly.
+**Goal:** Confirm that the complete hardened configuration is correct, write the security runbook, and verify that the stack can be torn down and restored cleanly.
 
 ##### Step 1: Final docker-compose.yml Check
 
-Before writing any documentation, verify all six hardening measures are present in your final `docker-compose.yml`.  Use this checklist:
+Before you write any documentation, verify that all six hardening measures are present in your final `docker-compose.yml`.  Use this checklist:
 
 | # | Hardening Measure | How to Verify It Is Present |
 |---|------------------|-----------------------------|
@@ -1110,7 +1110,7 @@ docker compose down
 
 ##### Part 4 Checkpoint
 
-Answer these questions in your notes before writing your reflection:
+Answer these questions in your notes before you write your reflection:
 
 1.  In Step 1, did all six verification commands pass on the first attempt?  If not, which ones failed and what did you have to fix?
 2.  In the runbook, you noted whether a running process automatically sees an updated Docker secrets file.  What is the answer, and why does it matter for operational security?
@@ -1139,11 +1139,11 @@ Submit a ZIP file named `cs357-containerlab-[yournames].zip` containing all of t
 
 #### Extension Challenges
 
-These challenges are optional but highly recommended for students who want to push further.  They are not graded as part of the main rubric, but completing them demonstrates mastery.
+These challenges are optional and recommended for students who want to push further.  They are not graded as part of the main rubric, but completing them shows command of the material.
 
 ##### Challenge 1: Enforce Strict Egress Filtering Between Containers
 
-Add a second container to your compose file: a lightweight web server (use `nginx:alpine`) that serves a static file.  Reconfigure the agent so it can reach the nginx container by hostname but cannot reach any other host (including `api.anthropic.com`).  This requires adding an egress firewall rule or a proxy container.
+Add a second container to your compose file: a lightweight web server (use `nginx:alpine`) that serves a static file.  Reconfigure the agent so it can reach the nginx container by hostname but cannot reach any other host (including `api.anthropic.com`).  This requires an egress firewall rule or a proxy container.
 
 Hints:
 - Look into `iptables` rules applied at container startup, or consider running a forward proxy (such as `squid`) as a third container that the agent routes all traffic through.

@@ -47,8 +47,8 @@ info:
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The program is submitted according to the directions with externalized configuration in a JSON file, located exception handling with tracebacks on all model calls, a pair log with at least two timestamped role swaps, and reflection answers that each cite a specific numeric result or transcript excerpt from the lab
   readings:
-    - rtitle: "Critique and Refine Activity"
-      rlink: "Activities/liascript-critiquerefine.md"
+    - rtitle: "Critique, Consensus, and the LLM Judge Activity"
+      rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
     - rtitle: "Orchestration Activity"
       rlink: "Activities/liascript-orchestration.md"
@@ -66,28 +66,29 @@ tags:
 
 ---
 
-In this lab, you and your partner will build the evaluator-optimizer workhorse of agentic systems: a generator that drafts, a critic that judges against an explicit JSON rubric, and a loop that converges or honestly reports that it did not.  You complete this lab in **pairs, using driver/navigator roles, swapping at least every 30 minutes and keeping a swap log**.
+In this lab, you and your partner build a critique-and-refine loop.  A **generator** is a model call that writes a draft.  A critic is a second model call that reads the draft, checks it against a written rubric, and returns a verdict of "accept" or "revise" with a list of issues.  The refine loop is the code around them: it sends the critic's issues back to the generator, collects a new draft, and repeats until the critic accepts or the round budget runs out.  When the budget runs out, the loop returns the last draft together with the critique it could not resolve, so the caller knows the loop did not converge.  This is the evaluator-optimizer pattern from the Critique, Consensus, and the LLM Judge: One Loop, Three Uses session, and it is the working part of most self-improving agent systems.
+
+You complete this lab in pairs, using driver/navigator roles, swapping at least every 30 minutes and keeping a swap log.
 
 **See the course schedule for the assigned and due dates.**
+
+> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.**  It has no deadline of its own and no separate grade.  Build what it describes, then continue to the [Multi-Agent Patterns Lab]({{ site.baseurl }}/Assignments/MultiAgentDebate), which carries the single rubric and the single due date for both halves.
 
 ---
 
 ## Before You Start
 
-> **Choose your route first.**  This lab has a full **no-code and low-code route** (near the end of this page) that carries equal credit: three saved Open WebUI presets with text moved by hand, or a Langflow canvas, instead of orchestration code.  Parts 2 and 3 (calibrating the critic, and building a working reward hack) are prompt-and-analysis work on every route, and they carry 45 of the 100 points.  Decide before you start.
+**Choose your route first.**  This lab has a full no-code and low-code route (near the end of this page) that carries equal credit: three saved Open WebUI presets with text moved by hand, or a Langflow canvas, instead of orchestration code.  Parts 2 and 3 (calibrating the critic, and building a working reward hack) are prompt-and-analysis work on every route, and they carry 45 of the 100 points.  Decide before you start.
 
-**Prerequisite concepts**: complete these activities before writing any code:
+Complete these activities before writing any code:
 
-- [Critique and Refine Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiquerefine.md): the generator/critic/refine loop and stopping rules
+- [Critique, Consensus, and the LLM Judge Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiqueconsensusjudge.md): the generator/critic/refine loop and stopping rules
 - [Orchestration Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestration.md): chaining agents with structured outputs
 
-**Tools to install:**
+Install the one library you need and confirm Ollama is running:
 
 ```bash
 # All you need is the requests library and Ollama (already installed if you did the earlier labs)
-
-> **This page is Part A of the Multi-Agent Patterns Lab, not a separate assignment.** It has no deadline of its own and no separate grade. Build what it describes, then continue to the **[Multi-Agent Patterns Lab]({{ site.baseurl }}/Assignments/MultiAgentDebate)**, which carries the single rubric and the single due date for both halves.
-
 
 pip install requests
 
@@ -95,7 +96,7 @@ pip install requests
 curl http://localhost:11434/api/tags
 ```
 
-**Health check:**
+Then run this health check, which asks the model for a small piece of JSON:
 
 ```bash
 python -c "
@@ -117,7 +118,7 @@ Expected output (the model may add extra text, but the JSON should be present):
 
 If you see a connection error, start Ollama with `ollama serve` in a separate terminal.
 
-**Roughly how the work splits up:**
+Here is roughly how the work splits up:
 
 | Part | Task | Estimated time |
 |------|------|----------------|
@@ -127,23 +128,23 @@ If you see a connection error, start Ollama with `ollama serve` in a separate te
 | Part 4 | Comparative Evaluation | 45-60 min |
 | Writeup | Readme and reflection | 30-45 min |
 
-The core lab (Parts 1-4 plus the writeup) is the bulk of it, and the direction adds a couple of hours on top if you choose to extend.  Please plan your pair sessions accordingly, because this is not a single-sitting lab.
+The core lab (Parts 1-4 plus the writeup) is the bulk of it.  The optional extension challenges add a couple of hours on top.  This is not a single-sitting lab, so plan more than one pair session.
 
 ---
 
 ## Part 1: The Loop
 
-Choose a generation task with checkable criteria: a structured class announcement, a function docstring, an abstract for a lab report, or a concept of your own.  Implement:
+Choose a generation task with checkable criteria: a structured class announcement, a function docstring, an abstract for a lab report, or a task of your own.  Then implement three pieces:
 
-1.  A **generator** agent with a warm temperature for the first draft and a cooler temperature for revisions (justify your settings using sampling theory from class).
-2.  A **critic** agent that receives a JSON rubric of at least four criteria with observable descriptors, and returns `{"verdict": "accept" | "revise", "issues": [...]}`.  The critic runs at temperature 0 with a fixed seed.
-3.  A **loop** with a configurable round budget (externalized in JSON configuration).  Invalid critic JSON fails closed (treated as revise) and is logged.  On budget exhaustion, your system returns the final draft *with its outstanding critique attached*.
+1.  A generator agent.  Temperature controls how much randomness the model uses when it picks each word; a higher value gives more varied drafts and a lower value gives more predictable ones.  Use a warm temperature for the first draft and a cooler temperature for revisions, and justify your settings using the sampling theory from class.
+2.  A critic agent.  It receives a JSON rubric of at least four criteria with observable descriptors (a descriptor is observable when a reader can check it by looking at the draft, without guessing at intent), and it returns `{"verdict": "accept" | "revise", "issues": [...]}`.  The critic runs at temperature 0 with a fixed seed, so the same draft gets the same verdict on every run.
+3.  A loop with a configurable round budget, stored in a JSON configuration file rather than in the code.  Invalid critic JSON fails closed: the loop treats it as "revise" and logs it.  On budget exhaustion, your loop returns the final draft with its outstanding critique attached.
 
 ### Step-by-step guide
 
 **Step 1: Create your configuration and rubric files.**
 
-`config.json`:
+`config.json` holds every setting the loop reads, so you can change a temperature or the round budget without editing code:
 
 ```json
 {
@@ -158,7 +159,7 @@ Choose a generation task with checkable criteria: a structured class announcemen
 }
 ```
 
-`rubric.json` (example for a function docstring task, adapt to your chosen task):
+`rubric.json` lists the criteria the critic checks.  This example is for a function docstring task; adapt it to your chosen task:
 
 ```json
 {
@@ -190,6 +191,8 @@ Choose a generation task with checkable criteria: a structured class announcemen
 ```
 
 **Step 2: Implement the generator agent.**
+
+`generate_draft` builds one of two prompts.  With no previous draft it asks for a first draft at the warm temperature.  With a previous draft and a critique it asks for a revision at the cooler temperature.
 
 ```python
 import requests
@@ -240,6 +243,8 @@ def generate_draft(task_description, previous_draft=None, critique=None, config=
 ```
 
 **Step 3: Implement the critic agent.**
+
+`critique_draft` turns the rubric into a system prompt, sends the draft, and parses the reply as JSON.  If the reply does not parse, the function returns a "revise" verdict and logs the raw text.  That is the fail-closed rule.
 
 ```python
 def critique_draft(draft, rubric, config):
@@ -298,6 +303,8 @@ def critique_draft(draft, rubric, config):
 ```
 
 **Step 4: Implement the main loop.**
+
+Each round generates a draft and critiques it.  An "accept" verdict returns immediately.  If the loop uses up its budget, it returns the last draft with the outstanding critique appended.
 
 ```python
 def critique_refine_loop(task_description, config, rubric):
@@ -367,6 +374,8 @@ Args:
 Rounds: 2 | Reason: accepted
 ```
 
+Remember: the generator and the critic are separate model calls with separate temperatures, and the loop is the only piece that decides when to stop.  Every stopping path (accept, fail-closed revise, budget exhausted) must leave a trace in the log.
+
 ### Troubleshooting, Part 1
 
 **The critic always returns `"verdict": "revise"` even after many rounds**
@@ -389,13 +398,15 @@ Check that your `for round_num in range(1, config["round_budget"] + 1)` loop is 
 
 ## Part 2: Calibrate the Critic
 
-Write at least ten drafts with **planted defects** that you select to span every criterion (and include at least two defect-free drafts).  Run the critic over all of them and report, per criterion, the detection rate and the false positive rate.  Identify the weakest criterion, rewrite its descriptors to be more observable, and report the improvement.
+Calibration means measuring how well the critic's verdicts track the truth.  You do that with drafts whose defects you planted yourself, so you know the right answer for each one.  Two numbers describe the critic per criterion.  The detection rate is the fraction of drafts with a planted defect in that criterion that the critic flagged.  The false positive rate is the fraction of defect-free drafts that the critic flagged for that criterion anyway.
+
+Write at least ten drafts with planted defects that together cover every criterion, and include at least two defect-free drafts.  Run the critic over all of them and report both rates per criterion.  Identify the weakest criterion, rewrite its descriptor to be more observable, and report the improvement.
 
 ### Step-by-step guide
 
 **Step 1: Write your calibration drafts.**
 
-Create a file `calibration_drafts.json`:
+Create a file `calibration_drafts.json`.  Each entry records the draft, the defect you planted, and a short description, so Step 3 can score the critic against the truth:
 
 ```json
 [
@@ -421,7 +432,7 @@ Create a file `calibration_drafts.json`:
 ]
 ```
 
-> **Worked example, adding a new entry (D04).**  Two things trip people up here.  First, JSON does not allow comments, so **delete the `// TODO` line** before you run your code; it is a note to you, not valid JSON. Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote.  Here is a complete D04 entry with a *subtle* planted defect (the parameter descriptions list names but omit types, a violation of C2 that requires careful reading to spot):
+> **Worked example: adding a new entry (D04).**  Two things trip people up here.  First, JSON does not allow comments, so delete the `// TODO` line before you run your code; it is a note to you, not valid JSON.  Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote.  Here is a complete D04 entry with a subtle planted defect: the parameter descriptions list names but omit types, which violates C2 and takes careful reading to spot.
 >
 > ```json
 > {
@@ -432,7 +443,7 @@ Create a file `calibration_drafts.json`:
 > }
 > ```
 >
-> Rather than hand-escaping every entry, you can let Python do the escaping for you.  Write the draft as a normal triple-quoted string and let `json.dumps` produce the escaped version to paste into your file:
+> You do not have to hand-escape every entry.  Write the draft as a normal triple-quoted Python string and let `json.dumps` produce the escaped version to paste into your file:
 >
 > ```python
 > import json
@@ -480,6 +491,8 @@ def run_calibration(calibration_file, config, rubric):
 
 **Step 3: Compute per-criterion detection and false positive rates.**
 
+For each criterion, the code counts four cases: true positives (planted defect, critic flagged it), false negatives (planted defect, critic missed it), false positives (no defect, critic flagged it), and true negatives (no defect, critic stayed quiet).
+
 ```python
 def compute_rates(results, rubric):
     criteria_ids = [c["id"] for c in rubric["criteria"]]
@@ -519,11 +532,13 @@ def compute_rates(results, rubric):
 
 **Step 4: Identify the weakest criterion and rewrite it.**
 
-The weakest criterion is the one with the lowest detection rate.  Compare the original descriptor to your new one in your readme, and show the before/after detection rates.
+The weakest criterion is the one with the lowest detection rate.  Rewrite its descriptor so that a reader can check it without interpretation.  In your readme, show the original descriptor next to the new one, and show the detection rate before and after.
 
 Example:
 - **Before**: "C4 (Example): At least one example is provided."
 - **After**: "C4 (Example): At least one usage example is shown in doctest format: a line beginning with `>>>` followed by the function call, and a second line with the expected return value."
+
+Remember: a critic is only as trustworthy as its measured detection and false positive rates, and you cannot measure either without drafts whose defects you already know.  Defect-free drafts are what let you see false positives at all.
 
 ### Troubleshooting, Part 2
 
@@ -534,7 +549,7 @@ Your planted defects may be too obvious.  Try subtle defects: a parameter descri
 The model may not be parsing your criterion ID correctly.  Change the prompt to include the criterion name in full (not just "C1") and check that the model's issue strings reference those names.
 
 **Your two defect-free drafts get critiqued as "revise"**
-This is a false positive.  Record the rate and include it in your analysis; it is an important signal about rubric over-strictness.
+This is a false positive.  Record the rate and include it in your analysis; it is an important signal that the rubric is stricter than it needs to be.
 
 ---
 
@@ -547,13 +562,15 @@ This is a false positive.  Record the rate and include it in your analysis; it i
 
 ## Part 3: Reward Hack Your Own Rubric
 
-Attempt to produce a draft that the critic accepts while being, by your human judgment, a poor artifact: satisfy the letter while betraying the intent.  Document the successful hack with a transcript, then **patch the rubric** to close the loophole and demonstrate that the patch (a) rejects the hack and (b) still accepts your defect-free drafts.
+Reward hacking is producing an output that satisfies the letter of a scoring rule while missing its intent.  The scorer says "accept"; a human says "this is poor."  Your job in this part is to do exactly that to your own rubric on purpose, so you can see the loophole and close it.
+
+Write a draft that the critic accepts but that you, by your own judgment, consider a poor artifact.  Document the successful hack with a transcript.  Then patch the rubric to close the loophole, and show that the patch (a) rejects the hack and (b) still accepts your defect-free drafts.
 
 ### Step-by-step guide
 
 **Step 1: Identify a loophole.**
 
-Think about each criterion's descriptor literally.  Common loophole types:
+Read each criterion's descriptor literally, the way the critic does.  Common loophole types:
 - **Keyword stuffing**: The descriptor says "contains a one-sentence summary"; can you write a sentence so vague it is technically present but useless?
 - **Minimal compliance**: The descriptor says "every parameter is listed"; can you list parameters with empty or copy-pasted descriptions?
 - **Format gaming**: The descriptor says "in doctest format"; can you write a syntactically valid doctest that tests nothing meaningful?
@@ -583,11 +600,11 @@ print(f"Issues: {critique['issues']}")
 # Expected: verdict == "accept" despite being a poor docstring
 ```
 
-Document this transcript verbatim in your readme with your human judgment of why it is poor.
+Put this transcript in your readme verbatim, with your own judgment of why the draft is poor.
 
 **Step 3: Patch the rubric and verify the patch.**
 
-Create `rubric_patched.json`; change only the exploited criterion's descriptor.  Show a diff in your readme.  Then:
+Create `rubric_patched.json` and change only the exploited criterion's descriptor.  Show a diff in your readme.  Then run both tests:
 
 ```python
 rubric_patched = load_rubric_from_file("rubric_patched.json")
@@ -602,6 +619,8 @@ critique_good = critique_draft(good_draft, rubric_patched, config)
 print(f"Patched rubric on good draft: {critique_good['verdict']}")  # Expected: accept
 ```
 
+Remember: a rubric that only rejects the hack is not a fix if it also rejects good work.  Both tests have to pass.
+
 ### Troubleshooting, Part 3
 
 **You cannot find a hack: the critic is too strict**
@@ -611,7 +630,7 @@ Try the minimal-compliance approach: meet every criterion with the absolute mini
 Your patch is too strict.  Revise the wording to be more precise rather than more restrictive.  The goal is to close the specific loophole, not to raise the bar for all drafts.
 
 **The critic is non-deterministic even at temperature 0**
-Some Ollama models ignore the seed parameter.  Try running the same draft three times and recording whether the verdict is consistent.  If it is not, note this in your writeup as a threat to calibration reliability.
+Some Ollama models ignore the seed parameter.  Run the same draft three times and record whether the verdict is consistent.  If it is not, note this in your writeup as a threat to calibration reliability.
 
 ---
 
@@ -622,9 +641,9 @@ Some Ollama models ignore the seed parameter.  Try running the same draft three 
 
 ---
 
-## Part 4: Did It Earn Its Latency?
+## Part 4: Compare the Loop with Single-Shot Generation
 
-On a fixed set of at least eight tasks, compare single-shot generation against your full critique and refine loop.  Score both conditions with the same instrument (your calibrated critic on a held-out rubric, or a blind human ranking between you and your partner).  Report quality and cost (number of model calls), and conclude in a paragraph when the pattern is and is not worth deploying.
+Single-shot generation is one generator call with no critique.  On a fixed set of at least eight tasks, compare single-shot generation against your full critique-and-refine loop.  Score both conditions with the same instrument: your calibrated critic on a held-out rubric, or a blind human ranking between you and your partner.  Report quality and cost (number of model calls) for each condition, and conclude in one paragraph when the loop is and is not worth deploying.
 
 ### Step-by-step guide
 
@@ -657,6 +676,8 @@ def score_draft(draft, rubric, config):
 ```
 
 **Step 2: Run both conditions on all eight tasks.**
+
+For each task, condition A makes one generator call and one scoring call.  Condition B runs the full loop and then makes one scoring call.  The code records the score and the call count for both.
 
 ```python
 import csv
@@ -711,18 +732,20 @@ Loop: avg score=3.50, avg calls=5.2
 
 **Step 3: Write your conclusion paragraph.**
 
-In your readme, answer: did the loop earn its extra model calls?  Under what conditions (task complexity, quality threshold, latency budget) would you choose each approach?
+In your readme, answer two questions.  Did the loop earn its extra model calls?  Under what conditions (task complexity, quality threshold, latency budget) would you choose each approach?
+
+Remember: the comparison is only fair when both conditions use the same tasks and the same scorer.  Report the cost next to the quality every time, because a loop that always wins on quality can still lose on cost.
 
 ### Troubleshooting, Part 4
 
 **Single-shot and loop produce identical scores**
-Your rubric criteria may be too easy to satisfy in a single shot.  Try harder tasks (more criteria to satisfy simultaneously) or add a fifth criterion to your rubric.  Alternatively, single-shot may score high because you chose simple tasks; the benefit of the loop shows most clearly on tasks with four or more competing constraints.
+Your rubric criteria may be too easy to satisfy in a single shot.  Try harder tasks (more criteria to satisfy simultaneously) or add a fifth criterion to your rubric.  Single-shot may also score high because you chose simple tasks; the benefit of the loop shows most clearly on tasks with four or more competing constraints.
 
 **The loop always hits the round budget without accepting**
 Decrease the `round_budget` to 3 for the comparison experiment so budget-exhaustion cases are more frequent and visible in your data.  Document these cases; they show the loop's failure mode.
 
 **Scores from the critic feel inconsistent across conditions**
-Use a fresh critic call with a fixed seed for all final scoring (not the verdicts from within the loop).  This ensures both conditions are scored by the same "judge call" and results are comparable.
+Use a fresh critic call with a fixed seed for all final scoring (not the verdicts from within the loop).  Then both conditions are scored by the same "judge call" and the results are comparable.
 
 ---
 
@@ -735,9 +758,9 @@ Use a fresh critic call with a fixed seed for all final scoring (not the verdict
 
 ## The No-Code and Low-Code Routes (equal credit)
 
-You may run the full critique-and-refine loop **without writing the orchestration**, using Open WebUI or Langflow.  The Open WebUI version is fully no-code: three saved model presets and text you move between them by hand.  It is slower per round, and the seams (where the critic's words become the reviser's instructions) are far more visible, which is where the learning is.
+You may run the full critique-and-refine loop without writing the orchestration, using Open WebUI or Langflow.  The Open WebUI version is fully no-code: three saved model presets and text you move between them by hand.  It is slower per round, and the seams (where the critic's words become the reviser's instructions) are far more visible.  Those seams are where the learning is.
 
-1.  **Two roles, one canvas.**  In Langflow, chain **Generator -> Critic -> Reviser** as three prompt nodes, feeding the critic's output back into the reviser.  In Open WebUI, do it as three saved model presets and pass the text between them by hand; slower, but the loop is identical and the seams are more visible.
+1.  **Two roles, one canvas.**  In Langflow, chain Generator -> Critic -> Reviser as three prompt nodes, feeding the critic's output back into the reviser.  In Open WebUI, save three model presets and pass the text between them by hand.  This is slower, but the loop is identical and the seams are more visible.
 2.  **Calibrate the critic the same way.**  Part 2's work (checking whether the critic's criticism actually tracks quality) is prompt work and analysis, not code.  Run your calibration cases through the critic and record agreement.
 3.  **Reward-hack it the same way.**  Part 3 asks you to write something that scores well and is bad.  That is a writing exercise; the route you used to run the rubric does not change it.
 4.  **Latency and worth.**  Time one pass versus three by the clock, and answer Part 4's question with your own measurements.
@@ -782,7 +805,7 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 
 ### Lab-specific prompts
 
-- Your critic is an LLM judging an LLM. At what specific points in this lab did you, the humans, remain indispensable, and what would have gone wrong if you had removed yourselves?  Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
+- Your critic is an LLM judging an LLM.  At what specific points in this lab did you, the humans, remain indispensable, and what would have gone wrong if you had removed yourselves?  Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
 - Describe the most surprising critic behavior you observed: a missed defect, a phantom defect, or an oscillation (the critic reverses its verdict across rounds without the draft changing).  What does that behavior imply about using this critic in a high-stakes setting?
 - If collaboration beyond your pair occurred, identify it.  Do you certify that this submission represents your pair's original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?

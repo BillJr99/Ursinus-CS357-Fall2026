@@ -10,15 +10,15 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# Orchestration Patterns: Pipelines, Routers, and Planners
+# Orchestration and Multi-Agent Patterns
 
-Unit 3 begins: with your design artifacts from the *Design First: Plan Before You Build* activity in hand, instead of making one agent smarter, we make **several simple agents cooperate**.  The enabling insight comes straight from the small context window principle of the *Memory and the Small Context Window Principle* activity: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt.  We move from **why decompose → the pipeline → the router → the planner → composing them in code → keeping the composed loop reliable**.
+Unit 3 begins today.  You have the design artifacts from *Design First: Plan Your Agent System Before You Build It* in hand, and instead of making one agent smarter, we make several simple agents cooperate.  The reason this works comes straight from the small context window principle in *Memory and the Small Context Window Principle*: a model given one narrow job and a tiny prompt outperforms the same model juggling five jobs in a bloated prompt.  We move from **why decompose → the pipeline → the router → the planner → composing them in code → keeping the composed loop reliable**.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -51,7 +51,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 ## 1.  Three Foundational Patterns
 
-**Why this matters:** Think of a restaurant kitchen.  The head chef does not cook every dish, take orders, and serve tables simultaneously.  Instead, the work is divided: servers take orders (routing), line cooks handle specific stations (specialized subagents), and the expediter coordinates the flow (orchestration).  This division works because each role has a narrow, well-defined job.  When the pasta cook knows nothing about the appetizer station, neither can interfere with the other, and both can focus completely on their job.  The same principle applies to agent orchestration: narrow roles, clear handoffs, and an orchestrator that manages the overall flow without doing the detail work.
+**Why this matters:** A restaurant kitchen divides its work.  The head chef does not cook every dish, take orders, and serve tables at once.  Servers take orders (routing), line cooks handle specific stations (specialized subagents), and the expediter coordinates the flow (orchestration).  This division works because each role has a narrow, well-defined job.  When the pasta cook knows nothing about the appetizer station, neither can interfere with the other, and both can focus completely on their own work.  Agent orchestration follows the same rule: narrow roles, clear handoffs, and an orchestrator that manages the overall flow without doing the detail work.
 
 **Pipeline (fixed sequence).**  Stage outputs feed stage inputs: extract → draft → polish.  Each stage has its own small system prompt and sees *only* what it needs.  Pipelines are predictable, debuggable (you can inspect any intermediate output), and cheap.  They are the right default when the workflow is known in advance.
 
@@ -59,7 +59,19 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 **Planner (dynamic decomposition).**  When the workflow is *not* known in advance, a planner agent writes a step list, worker agents execute steps, and the planner revises on failures.  Planners buy flexibility at the cost of predictability, so we bound them with step budgets, a technique covered in depth in the supplemental *Advanced Agent Loops: Control Flow, Reflection, and Recovery* activity, if you explored it.
 
-A useful design heuristic follows: **choose the least dynamic pattern that solves the problem.**  Pipelines before routers, routers before planners, planners before free-roaming autonomy.
+Those three are the patterns we build today.  Two more fixed shapes belong in your vocabulary from day one, because your project designs will reach for them.  Here are all five, with where each one gets its full treatment:
+
+| Shape | What it does | Who decides the control flow | Where you meet it |
+|---|---|---|---|
+| **Pipeline** | A fixed sequence; each stage's output is the next stage's input | You, before runtime | Part II, `digest_pipeline` |
+| **Router** | One classification, then dispatch to exactly one specialist | You; the classifier only picks a label from a closed set | Part II, `route()` |
+| **Fan-out / gather** | N independent subtasks run separately, then one aggregator merges the results | You; the branches are independent by design | Going Deeper, section 4c |
+| **Critique-refine** | A generator and a critic loop until the critic passes or a revision budget runs out | You; the loop is bounded | Thu Oct 29, *Critique, Consensus, and the LLM Judge: One Loop, Three Uses* |
+| **Debate / consensus** | Several agents answer independently, and a fixed rule (majority vote, clustering) picks the result | You; the aggregation rule is fixed | Thu Oct 29, the same session |
+
+The planner is the one pattern missing from that table on purpose: a model, not you, decides its control flow.  Going Deeper takes that up as the supervisor loop.  Critique-refine and debate/consensus get their own session on Thu Oct 29, so today you only need to recognize them and know that both are still fixed shapes you can draw on a whiteboard before running.
+
+A design heuristic follows from all of this: **choose the least dynamic pattern that solves the problem.**  Pipelines before routers, routers before planners, planners before free-roaming autonomy.
 
 ---
 
@@ -91,9 +103,9 @@ A useful design heuristic follows: **choose the least dynamic pattern that solve
 
 ## 2.  Small Agents, Explicit Seams
 
-**Why this matters:** The code below shows the key property of well-designed orchestration: each agent's system prompt is one sentence long.  This is not laziness; it is the point.  A one-sentence context cannot distract the model with competing concerns.  Each agent does exactly one thing and returns a result.  The pipeline orchestrator then passes that result, without modification, to the next agent.  The seams between agents are where the data flows, and they are the most important thing to get right, because a small error at a seam (wrong JSON key, missing field, unexpected format) propagates silently through the rest of the pipeline.
+**Why this matters:** The code below shows the key property of well-designed orchestration: each agent's system prompt is one sentence long.  This is not laziness; it is the point.  A one-sentence context cannot distract the model with competing concerns.  Each agent does exactly one thing and returns a result.  The pipeline orchestrator then passes that result, unchanged, to the next agent.  The seams between agents are where the data flows, and they are the most important thing to get right, because a small error at a seam (wrong JSON key, missing field, unexpected format) propagates silently through the rest of the pipeline.
 
-You can run this code locally using `ollama run llama3.2` to start the model server, then run the script in a separate terminal:
+You can run this code locally.  Start the model server with `ollama run llama3.2`, then run the script in a separate terminal:
 
 ```bash
 # Start the local model server (do this once)
@@ -107,7 +119,7 @@ python orchestration.py
 
 ## Code Cell
 
-The code below implements both a three-stage pipeline (extract -> draft -> polish) and a two-stage router (classify -> dispatch) using a local language model.  Read through the comments before running it; each comment explains a design choice you will be asked about in the questions that follow.
+The code below implements both a three-stage pipeline (extract -> draft -> polish) and a two-stage router (classify -> dispatch) using a local language model.  Read the comments before running it; each comment explains a design choice you will be asked about in the questions that follow.
 
 > **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
@@ -215,7 +227,7 @@ for ticket in [
 
    > *Hint: Think about the critique-and-refine pattern.  Could you add a "verify" stage after "polish" that checks the final output against the extracted facts?  What would its one-sentence system prompt say?*
 
-> **Common Misconception:** Many students assume that because a pipeline has multiple agents, it is inherently more reliable than a single agent.  This is not automatically true.  A pipeline can fail at any seam, and because each agent is working from the previous agent's output rather than the original input, errors can compound silently.  A pipeline is more *maintainable* and more *debuggable* than a mega-prompt, but only if you actually inspect the intermediate outputs.  Return all intermediates from your pipeline functions (as the code above does with `return facts, draft, final`) and check them.
+> **Common Misconception:** Many students assume that because a pipeline has multiple agents, it is more reliable than a single agent.  Not automatically.  A pipeline can fail at any seam, and because each agent works from the previous agent's output rather than the original input, errors can compound silently.  A pipeline is more *maintainable* and more *debuggable* than a mega-prompt, but only if you actually inspect the intermediate outputs.  Return all intermediates from your pipeline functions (as the code above does with `return facts, draft, final`) and check them.
 
 According to the design heuristic developed today, a team should reach for a planner agent only when:
 
@@ -234,7 +246,7 @@ Orchestration decides who runs next.  This part decides what happens when one of
 
 ## Four Loop Architectures
 
-**Why this matters:** Self-correction makes agents far more reliable on real tasks.  Think of a surgeon who, after each incision, checks the patient's vital signs before proceeding; this feedback loop catches problems before they cascade.  ReAct gives agents the same property: by writing out reasoning before each action, the agent can catch its own mistakes mid-task rather than only at the end.  Reflexion takes this further, letting agents learn from entire failed attempts.  These patterns transform agents from one-shot guessers into iterative problem-solvers.
+**Why this matters:** Self-correction makes agents far more reliable on real tasks.  A surgeon checks the patient's vital signs after each incision before proceeding; that feedback loop catches problems before they cascade.  ReAct gives agents the same property: by writing out reasoning before each action, the agent can catch its own mistakes mid-task rather than only at the end.  Reflexion goes further and lets agents learn from entire failed attempts.  These patterns turn agents from one-shot guessers into iterative problem-solvers.
 
 These patterns are not mutually exclusive.  Production systems often layer them: an outer ReAct loop with periodic Reflexion passes and Tree-of-Thought for particularly ambiguous steps.
 
@@ -263,9 +275,9 @@ These patterns are not mutually exclusive.  Production systems often layer them:
 
 ---
 
-## A ReAct Trace - Five Steps in Detail
+## A ReAct Trace: Five Steps in Detail
 
-**Why this matters:** Reading an actual ReAct trace makes the abstract pattern concrete.  Notice that the agent is not just calling tools at random; each "Thought:" entry reflects a real decision about what to do next based on what was observed.  This is what makes ReAct traces valuable for debugging: you can inspect the reasoning at each step and identify exactly where the agent made a wrong assumption or missed an opportunity.
+**Why this matters:** Reading an actual ReAct trace makes the abstract pattern concrete.  The agent is not calling tools at random; each "Thought:" entry records a real decision about what to do next based on what was observed.  That is what makes ReAct traces useful for debugging: you can inspect the reasoning at each step and find exactly where the agent made a wrong assumption or missed an opportunity.
 
 The task: *"Find the three most-cited papers on transformer self-attention published before 2020 and list their citation counts."*
 
@@ -277,7 +289,7 @@ The task: *"Find the three most-cited papers on transformer self-attention publi
 | 4 | ULMFiT is a 2018 NLP transfer learning paper that is transformer-adjacent. It appeared in the top 10 search results, making it a reasonable candidate for third most-cited. | `get_paper_citations(paper_id="1e077413b25c4d68cd0a8e6e8e42fcc50c85db7a")` | Returns: 4,441 citations. | I now have three papers with citation counts: 97,432; 51,618; 4,441. I can compile and return the final answer. All sub-goals are satisfied. |
 | 5 | I have all data needed to answer the task. No more tool calls are required. The three papers are identified and their citation counts are verified from the API. | *(No tool call, generating final answer text)* | - | Task complete. Returning the three papers and their citation counts to the user. |
 
-Observe that at step 1 the agent decides it needs two separate API calls rather than assuming one call returns everything.  At step 5, the agent recognizes termination because it has satisfied all sub-goals, not because it hit a step limit.
+At step 1 the agent decides it needs two separate API calls rather than assuming one call returns everything.  At step 5, the agent recognizes termination because it has satisfied all sub-goals, not because it hit a step limit.
 
 ### Critical Thinking Questions
 
@@ -293,19 +305,17 @@ Observe that at step 1 the agent decides it needs two separate API calls rather 
 
    > *Hint: What machine-checkable criterion could be added to the task?  For example, instead of "find three papers," what if the task specified a verifiable property each paper must have?*
 
-> **Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought", that the `Thought:` entries are genuine inner reasoning.  They are not.  The `Thought:` entries are generated text, just like the `Action:` entries.  The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process.  This means a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step.  ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable*, but visibility does not guarantee correctness.  Always verify key claims in the thought entries against the observations they are based on.
+> **Common Misconception:** Students often assume that a ReAct trace is a log of what the model "really thought", that the `Thought:` entries are genuine inner reasoning.  They are not.  The `Thought:` entries are generated text, just like the `Action:` entries.  The model generates them because the ReAct prompt instructs it to, not because they reflect a separate internal deliberation process.  So a model can generate a confident-sounding `Thought:` entry that is factually wrong or that contradicts its own next step.  ReAct traces are useful for debugging and auditing because they make the agent's reasoning *visible and checkable*, but visibility does not guarantee correctness.  Always verify key claims in the thought entries against the observations they are based on.
 
-Now that you have seen what a ReAct loop looks like step by step, the next model examines what can go wrong when such a loop runs unsupervised, and the engineering controls that prevent those failures.
+Now that you have seen what a ReAct loop looks like step by step, the next section examines what can go wrong when such a loop runs unsupervised, and the engineering controls that prevent those failures.
 
 ---
 
 ## Loop Safety Controls
 
-In this section you will examine six concrete engineering controls that keep agent loops safe in production.  Understanding these controls matters because even a loop that works perfectly in testing can spin out of control when deployed on real, messy inputs.
+In this section you examine six concrete engineering controls that keep agent loops safe in production.  They matter because even a loop that works perfectly in testing can spin out of control when deployed on real, messy inputs.
 
-**Why this matters:** Even a well-designed ReAct loop can fail in ways that are expensive, embarrassing, or harmful.  Safety controls are the engineering equivalent of a circuit breaker in an electrical system: they do not prevent all failures, but they prevent a small failure from cascading into a catastrophic one.  Just as circuit breakers are not optional in buildings, these controls are not optional in production agent systems.  Every agent that runs unsupervised in the real world needs at least a step limit and a human escalation gate.
-
-Even a well-architected loop can fail.  These controls are not optional; they are the engineering equivalent of a circuit breaker.
+**Why this matters:** Even a well-designed ReAct loop can fail in ways that are expensive, embarrassing, or harmful.  Safety controls are the engineering equivalent of a circuit breaker in an electrical system: they do not prevent all failures, but they prevent a small failure from cascading into a catastrophic one.  Circuit breakers are not optional in buildings, and these controls are not optional in production agent systems.  Every agent that runs unsupervised in the real world needs at least a step limit and a human escalation gate.
 
 | Control | Implementation | What It Prevents |
 |---------|----------------|------------------|
@@ -318,7 +328,7 @@ Even a well-architected loop can fail.  These controls are not optional; they ar
 
 **Idempotency and oscillation** deserve a closer look.  An agent oscillates when it alternates between two actions: `search("climate data")` -> finds nothing new -> `refine_query("climate data 2024")` -> finds nothing new -> `search("climate data")` again.  The idempotency check stores a hash of `(action_name, args)` and flags repetition.
 
-**Checkpointing** allows a loop to resume after failure.  The checkpoint stores the full context window, the tool call history, and any external state (files written, IDs retrieved).  On restart, the agent replays from the last checkpoint rather than from zero.  This is especially important for tasks that take hours or involve expensive API calls.
+**Checkpointing** lets a loop resume after failure.  The checkpoint stores the full context window, the tool call history, and any external state (files written, IDs retrieved).  On restart, the agent replays from the last checkpoint rather than from zero.  This matters most for tasks that take hours or involve expensive API calls.
 
 ### Critical Thinking Questions
 
@@ -336,17 +346,17 @@ Even a well-architected loop can fail.  These controls are not optional; they ar
 
 ---
 
-## Termination - How Does an Agent Know It Is Done?
+## Termination: How Does an Agent Know It Is Done?
 
-In this section you will compare three ways of defining "done" for an agent, and you will practice revising task specifications to make termination more reliable.  This connects directly back to the loop safety controls in Model 3: a clear stopping rule is what makes the max-iterations control meaningful.
+In this section you compare three ways of defining "done" for an agent, and you practice revising task specifications to make termination more reliable.  This connects directly back to the loop safety controls above: a clear stopping rule is what makes the max-iterations control meaningful.
 
-**Why this matters:** "Being done" sounds obvious, but for an AI agent it is surprisingly hard to define.  Unlike a traditional program that returns when a function exits, an agent is generating text in a loop and must decide for itself when to stop.  Get this wrong in one direction and the agent quits too early with incomplete work; get it wrong in the other direction and you get the "perfectionism spiral", an agent that keeps polishing indefinitely.  Understanding the three approaches to termination lets you choose the right one for your task.
+**Why this matters:** "Being done" sounds obvious, but for an AI agent it is hard to define.  A traditional program returns when a function exits.  An agent is generating text in a loop and must decide for itself when to stop.  Get this wrong in one direction and the agent quits too early with incomplete work; get it wrong in the other direction and you get the "perfectionism spiral", an agent that keeps polishing indefinitely.  Knowing the three approaches to termination lets you choose the right one for your task.
 
 This is one of the hardest problems in agent design.  There are three approaches:
 
 **Explicit stop condition:** The task specification includes a machine-checkable success criterion.  Example: *"Return when you have found exactly 3 papers and each has a citation count above 1,000."*  The agent evaluates the criterion against the data it has collected, not against its own feeling of being done.
 
-**Self-assessed completion:** The agent generates a `DONE` token or calls a `finish()` tool when it believes the task is complete.  This is the approach used in the Model 2 trace.  Risk: the agent may declare completion prematurely (hallucinating that it answered the question) or never (perfectionism spiral, where it keeps improving the answer without stopping).
+**Self-assessed completion:** The agent generates a `DONE` token or calls a `finish()` tool when it believes the task is complete.  This is the approach used in the ReAct trace above.  Risk: the agent may declare completion prematurely (hallucinating that it answered the question) or never (the perfectionism spiral, where it keeps improving the answer without stopping).
 
 **Budget exhaustion:** The outer loop simply ends when a budget (steps, tokens, dollars, or wall-clock time) is consumed and returns whatever partial result exists at that point.  This approach is reliable and predictable, but may return incomplete work on complex tasks.
 
@@ -358,7 +368,7 @@ Production systems typically combine all three: an explicit criterion when possi
 
     > *Hint: What properties of a test suite can be verified automatically? Coverage percentage? Presence of tests for each public function? At least one edge case per function? Pick a criterion that is machine-checkable but does not dictate how the agent should write the tests.*
 
-11.  A "perfectionism spiral" occurs when an agent keeps improving its output without ever declaring completion.  Describe the observable signature of this failure in the ReAct trace format (write out what the `Thought:` entries would look like across five consecutive steps) and state which specific safety control from Model 3 breaks the cycle.
+11.  A "perfectionism spiral" occurs when an agent keeps improving its output without ever declaring completion.  Describe the observable signature of this failure in the ReAct trace format (write out what the `Thought:` entries would look like across five consecutive steps) and state which specific safety control from the Loop Safety Controls table breaks the cycle.
 
     > *Hint: In a perfectionism spiral, each Thought will say something like "The draft is good, but it could be improved by..." even when the draft is already high quality. Which control imposes a hard ceiling on how long this can continue?*
 
@@ -379,11 +389,11 @@ A ReAct agent is on step 18 of a task.  Its context window shows 28,000 of 32,00
 
 In this part you first fold in two reliability upgrades (reflection and recovery, summarized here from the supplemental *Advanced Agent Loops* activity) and then extend and evaluate the pipeline and router you built in Part II, designing the message format for a planner.  These exercises connect directly to Lab work, so the design decisions you make here carry forward.
 
-## Model 3: Reflection and Recovery - Keeping Composed Loops Reliable
+## Model 3: Reflection and Recovery, Keeping Composed Loops Reliable
 
 *(A two-model summary of material from the supplemental Advanced Agent Loops activity; see Going Deeper at the end if you want the full treatment.)*
 
-**Why this matters:** Every orchestration you built today is still a loop, and loops fail in loop-shaped ways: they oscillate, overrun budgets, crash mid-task, and repeat the same mistake on every run.  Two upgrades address this.  The **reflection loop** (Reflexion, Shinn et al., 2023): after each *complete attempt* at a task, the agent critiques its own trajectory and stores a short "lesson" in memory ("for arXiv IDs, search arXiv directly rather than Google") and the next attempt starts with those lessons loaded.  It shines on tasks with a clear success/failure signal that you expect to run many times; its failure mode is that a poor self-critique stores a *bad* lesson that actively hurts future runs, and every lesson spends context tokens.  The **recovery/budget model**: even a well-architected loop needs circuit breakers, controls that keep a small failure from cascading:
+**Why this matters:** Every orchestration you built today is still a loop, and loops fail in loop-shaped ways: they oscillate, overrun budgets, crash mid-task, and repeat the same mistake on every run.  Two upgrades address this.  The first is the **reflection loop** (Reflexion, Shinn et al., 2023).  After each *complete attempt* at a task, the agent critiques its own trajectory and stores a short "lesson" in memory ("for arXiv IDs, search arXiv directly rather than Google"), and the next attempt starts with those lessons loaded.  It shines on tasks with a clear success/failure signal that you expect to run many times.  Its failure mode is that a poor self-critique stores a *bad* lesson that actively hurts future runs, and every lesson spends context tokens.  The second is the **recovery/budget model**: even a well-architected loop needs circuit breakers, controls that keep a small failure from cascading:
 
 | Control | One-line implementation | What it prevents |
 |---------|------------------------|------------------|
@@ -513,7 +523,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** *The Critique and Refine Pattern* activity is next: a specific pipeline where one agent generates content and a second agent evaluates it against explicit criteria, looping until the quality bar is met or a budget expires.
+-> **Coming Up Next:** *Critique, Consensus, and the LLM Judge: One Loop, Three Uses* is next: one generate-evaluate-decide loop used three ways, a critic that feeds issues back, several generators compared by meaning, and a judge that scores against a rubric.
 
 ---
 
@@ -529,7 +539,7 @@ Respond to all three levels in your notebook:
 
 > **The full advanced-loops activity:** Model 3 above compresses two models from [Advanced Agent Loops: Control Flow, Reflection, and Recovery](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md), read that activity for the complete treatment: ReAct traces, Tree-of-Thought, checkpointing in depth, and termination design.
 
-Everything below is **at-home material**: nothing in this section is needed for today's in-class session, but all of it deepens what you built in class.  Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code.  This section steps back to the single decision that sits *above* all of them: **who decides the control flow, you, in advance, or a model, at runtime?**  Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task needs.  We move from **the two families → each fixed shape explained separately → the dynamic supervisor loop → a recap you can reach for on the job.**
+Everything below is at-home material.  Nothing in this section is needed for today's in-class session, but all of it deepens what you built in class.  Parts I-III gave you the vocabulary (pipeline, router, planner) and two working orchestrators in code.  This section steps back to the single decision that sits *above* all of them: **who decides the control flow, you, in advance, or a model, at runtime?**  Every orchestration you will ever build belongs to one of two families, and the choice between them is really a choice about predictability, cost, and how much open-endedness the task needs.  We move from **the two families → each fixed shape explained separately → the dynamic supervisor loop → a recap you can reach for on the job.**
 
 ---
 
@@ -539,7 +549,7 @@ Everything below is **at-home material**: nothing in this section is needed for 
 
 **Family 1: Fixed (known) orchestration.**  *You*, the developer, wire a predetermined graph of agents.  The nodes and edges are decided before any input arrives; the control flow lives in your Python, not in a model's head.  The pipeline and router from Parts I-II are both of this family.  Its virtues are exactly the ones you already measured: predictability, step-by-step debuggability (inspect any intermediate output), and bounded cost (you can count the model calls before you run).
 
-**Family 2: Dynamic orchestration.**  An orchestrator (often called a **supervisor**) is itself an LLM. You hand it the task plus a *roster* of available sub-agents, and each turn *it* decides which sub-agent to run, whether to spawn a fresh one for a newly-discovered subtask, or whether the work is done.  The control flow is now a model *output*, not your code.  Its virtues are the mirror image of Family 1: flexibility, open-endedness, and the ability to handle tasks whose shape you could not enumerate in advance.  Its costs are the same mirror: unpredictable paths, harder debugging (the "why did it do that?" lives in a prompt), and open-ended spend unless you cap it.
+**Family 2: Dynamic orchestration.**  An orchestrator (often called a **supervisor**) is itself an LLM.  You hand it the task plus a *roster* of available sub-agents, and each turn *it* decides which sub-agent to run, whether to spawn a fresh one for a newly discovered subtask, or whether the work is done.  The control flow is now a model *output*, not your code.  Its virtues are the mirror image of Family 1: flexibility, open-endedness, and the ability to handle tasks whose shape you could not enumerate in advance.  Its costs are the same mirror: unpredictable paths, harder debugging (the "why did it do that?" lives in a prompt), and open-ended spend unless you cap it.
 
 | | Fixed / known orchestration | Dynamic / supervisor orchestration |
 |---|---|---|
@@ -566,7 +576,7 @@ input --> [ Extract ] --> [ Draft ] --> [ Polish ] --> output
              facts          prose         tight prose
 ```
 
-This is the `digest_pipeline` from Part II. Each stage carries a one-sentence system prompt and sees only its own input; the seams between stages are where you inspect for bugs.
+This is the `digest_pipeline` from Part II.  Each stage carries a one-sentence system prompt and sees only its own input; the seams between stages are where you inspect for bugs.
 
 ### 4b.  Router / Dispatch (classify, then one specialist)
 
@@ -578,7 +588,7 @@ input --> [ Classify ] +--> [ Software specialist ] --> output
                        '--> [ Accounts specialist ]
 ```
 
-This is `route()` from Part II. The classifier's only job is to emit one label from a closed set; a code-level guard forces any stray output back into the valid set.
+This is `route()` from Part II.  The classifier's only job is to emit one label from a closed set; a code-level guard forces any stray output back into the valid set.
 
 ### 4c.  Parallel Fan-Out / Gather (map-reduce)
 
@@ -590,7 +600,7 @@ input --> split +--> [ Agent 2 ] --+--> [ Aggregate ] --> output
               '--> [ Agent N ] --'
 ```
 
-The subtasks share no context (that independence is what lets them run in parallel) and a final aggregator agent (or plain code) merges the results.  Compare this to the sequential pipeline: there each stage *depends* on the last; here the branches are deliberately isolated until the gather step.
+The subtasks share no context (that independence is what lets them run in parallel), and a final aggregator agent (or plain code) merges the results.  Compare this to the sequential pipeline: there each stage *depends* on the last; here the branches are deliberately isolated until the gather step.
 
 ### 4d.  Critique-Refine (generator <-> critic loop)
 
@@ -600,11 +610,11 @@ The subtasks share no context (that independence is what lets them run in parall
 input --> [ Generate ] --> draft <==> [ Critique ] --> (revise until pass OR budget) --> output
 ```
 
-The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates.  This is the subject of its own activity: [Critique-and-Refine](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiquerefine.md).
+The loop is bounded (it stops when the critic is satisfied or a revision budget expires) so the control flow is still fixed, even though it iterates.  This is the subject of its own activity: [Critique, Consensus, and the LLM Judge](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiqueconsensusjudge.md).
 
 ### 4e.  Debate / Stochastic Consensus (many agents, vote or cluster)
 
-*When to use:* the answer is uncertain or subjective, and several independent attempts give you a more robust result than any single one.
+*When to use:* the answer is uncertain or subjective, and several independent attempts give you a more reliable result than any single one.
 
 ```text
           .--> [ Agent A ] --.
@@ -612,7 +622,7 @@ input --> +--> [ Agent B ] --+--> [ Vote / Cluster ] --> consensus
           '--> [ Agent C ] --'
 ```
 
-The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Multi-Agent Debate](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-multiagentdebate.md) and [Stochastic Consensus](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate).
+The agents argue or answer independently, and a fixed aggregation rule (majority vote, clustering of answers) produces the final result.  Two activities develop this shape: [Critique, Consensus, and the LLM Judge](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-critiqueconsensusjudge.md) and [Stochastic Consensus](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate).
 
 Every shape above is *fixed*: even the critique loop and the debate vote follow a control flow you authored and can draw on a whiteboard before running.  What changes in the next section is who draws that diagram.
 
@@ -620,15 +630,15 @@ Every shape above is *fixed*: even the critique loop and the debate vote follow 
 
 ## 5.  Dynamic Orchestration: the Supervisor Loop
 
-When you *cannot* draw the diagram in advance (the task is open-ended, and which sub-agents are needed depends on what earlier ones discover) you promote the orchestrator itself to an LLM. This is the pattern behind LangGraph's **supervisor** and behind LangChain **DeepAgents**, which you meet hands-on in the [Agent Frameworks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentFrameworks) activity.
+When you *cannot* draw the diagram in advance (the task is open-ended, and which sub-agents are needed depends on what earlier ones discover), you promote the orchestrator itself to an LLM.  This is the pattern behind LangGraph's **supervisor** and behind LangChain **DeepAgents**, which you meet hands-on in the [Agent Frameworks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentFrameworks) activity.
 
-The mechanism is a loop.  You give the supervisor the task and a **roster**: a menu of sub-agents (and the tools each may use).  Then, each turn, the supervisor model reads the task, the roster, and the transcript so far, and emits one *action*: "call sub-agent X on this input," "spawn a new researcher for this newly-discovered subtask," or "STOP, here is the answer."  Your code dispatches the chosen action, appends the result to the transcript, and asks the supervisor again.  DeepAgents dresses this loop in extra machinery (a planning tool that writes a todo list, sub-agents that run in *isolated context windows* so their scratch work never pollutes the main thread, and a synthesis step at the end), but underneath, it is the same "model decides the next move" loop.
+The mechanism is a loop.  You give the supervisor the task and a **roster**: a menu of sub-agents (and the tools each may use).  Then, each turn, the supervisor model reads the task, the roster, and the transcript so far, and emits one *action*: "call sub-agent X on this input," "spawn a new researcher for this newly discovered subtask," or "STOP, here is the answer."  Your code dispatches the chosen action, appends the result to the transcript, and asks the supervisor again.  DeepAgents dresses this loop in extra machinery (a planning tool that writes a todo list, sub-agents that run in *isolated context windows* so their scratch work never pollutes the main thread, and a synthesis step at the end), but underneath, it is the same "model decides the next move" loop.
 
 Contrast it with the fixed families: a router makes **one** classification decision and then hands off; a supervisor makes a **new** decision on **every** turn and may keep spawning.  That is the source of both its power and its danger.
 
 ## Code Cell
 
-The sketch below is illustrative; **read it locally**, do not treat it as production.  It uses the course's `chat(messages)` convention against a local OpenAI-compatible endpoint (e.g., Ollama's `/v1`, LM Studio, or a `llama.cpp` server).  Watch for the three things that stay *yours* even in a "dynamic" system: the **roster**, the **spawn budget**, and the **stop condition**.
+The sketch below is illustrative; read it locally, and do not treat it as production.  It uses the course's `chat(messages)` convention against a local OpenAI-compatible endpoint (for example, Ollama's `/v1`, LM Studio, or a `llama.cpp` server).  Watch for the three things that stay *yours* even in a "dynamic" system: the **roster**, the **spawn budget**, and the **stop condition**.
 
 > **Runs on your machine, not here.**  This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container and run it there.
 
@@ -645,7 +655,7 @@ def chat(messages, temperature=0.0):
     return r.json()["choices"][0]["message"]["content"].strip()
 
 # The ROSTER is YOURS: the fixed menu of sub-agents the supervisor may call.
-# Each value is a one-sentence system prompt -- the same small-context
+# Each value is a one-sentence system prompt: the same small-context
 # discipline as the pipeline stages in Part II.
 ROSTER = {
     "researcher": "You gather facts for a narrow question. Return exactly 3 bullet points.",
@@ -653,10 +663,10 @@ ROSTER = {
     "critic":     "You list concrete problems with a paragraph, or reply exactly 'OK' if none.",
 }
 
-SPAWN_BUDGET = 6   # YOURS: a hard cap on sub-agent calls -- the stop condition of last resort.
+SPAWN_BUDGET = 6   # YOURS: a hard cap on sub-agent calls, the stop condition of last resort.
 
 def supervise(task):
-    """The supervisor LLM decides, each turn, which sub-agent to run next -- or to STOP."""
+    """The supervisor LLM decides, each turn, which sub-agent to run next, or to STOP."""
     transcript = []
     for _ in range(SPAWN_BUDGET):          # the budget caps runaway spawning
         decision = chat([
@@ -681,7 +691,7 @@ def supervise(task):
             transcript.append({"agent": agent, "error": "unknown sub-agent"})
             continue
 
-        # Dispatch: the sub-agent runs in its OWN tiny context -- isolation by construction,
+        # Dispatch: the sub-agent runs in its OWN tiny context, isolation by construction,
         # so one sub-agent's scratch work never leaks into another's prompt.
         result = chat([
             {"role": "system", "content": ROSTER[agent]},
@@ -697,9 +707,9 @@ print(supervise("Write one tight paragraph on why local models matter, then have
 
 **What you still own.**  Handing control flow to a model does *not* hand it your responsibilities.  Three levers stay in your code, and they are the whole reason a dynamic system is safe to ship:
 
-- **The roster.**  The supervisor can only call sub-agents you put on the menu.  An empty or overly-broad roster is where open-endedness turns into risk.
+- **The roster.**  The supervisor can only call sub-agents you put on the menu.  An empty or overly broad roster is where open-endedness turns into risk.
 - **The spawn budget.**  The `for _ in range(SPAWN_BUDGET)` loop is a hard ceiling on model calls.  Without it, a confused supervisor can spawn sub-agents forever, burning tokens and time with no result.
-- **The stop condition.**  The supervisor may declare `"stop"`, but *you* also stop it when the budget is hit, and you **flag** that outcome rather than pretending the truncated transcript is a finished answer.
+- **The stop condition.**  The supervisor may declare `"stop"`, but *you* also stop it when the budget is hit, and you flag that outcome rather than pretending the truncated transcript is a finished answer.
 
 DeepAgents makes exactly these decisions (when to plan, when to spawn, when to finish) *inside* its built-in system prompt, which is why it is so concise to use and so much harder to debug when it misbehaves.  When you write the loop yourself, those decisions are visible in ten lines; when the framework writes it, they move into the framework's prompt.
 

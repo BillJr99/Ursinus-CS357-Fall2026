@@ -10,16 +10,16 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# How I AI: A Vault, a Charter, and Agents That Talk Through GitHub
+# How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox
 
 You have spent seven weeks learning how agents work.  Today is about how a person actually *lives* with them.
 
-Here is the problem this session solves.  Every AI tool you use keeps its own private memory of you.  Your coding agent knows the files you opened this morning.  Your chat window knows this conversation and forgets it tomorrow.  None of them know what the others know, and none of them survive a closed tab.  So you re-explain yourself, constantly, to tools that could in principle already know, and every session starts from zero.
+Here is the problem this session solves.  Every AI tool you use keeps its own private memory of you.  Your coding agent knows the files you opened this morning.  Your chat window knows this conversation and forgets it tomorrow.  None of them know what the others know, and none of them survive a closed tab.  So you re-explain yourself, constantly, to tools that could already know, and every session starts from zero.
 
-The fix is not a better tool.  It is a **place**: a folder of plain Markdown files that you own, that any agent can read, that lives under version control, and that agents write back into under rules you wrote down.  Two moves make it work, and they are the two parts of today.
+The fix is not a better tool.  It is a **place**: a folder of plain Markdown files that you own, that any agent can read, that lives under version control, and that agents write back into under rules you wrote down.  Two moves make it work, and they are the first two parts of today.
 
 1.  **Your notes become memory agents can read.**  A vault of plain files, organized into zones, with a contract at the root saying what may be touched.
-2.  **Your repository becomes the channel agents talk through, and the record of why.**  Not a chat window: a charter that states what the project is for, plans written before work starts, issues and pull requests as the medium, and a small set of handoff documents that let one agent stop and another pick the work up without either of them sharing a thought.
+2.  **Your repository becomes the channel agents talk through, and the record of why.**  Not a chat window: a charter that states what the project is for, plans written before work starts, issues and pull requests as the medium, and a small set of handoff documents that let one agent stop and another pick the work up without either of them sharing a thought.  When a repository is the wrong fit, a shared folder carries the same handoff, and Section 3d shows how.
 
 Then the room is yours for the rest of the session: bring what is stuck.
 
@@ -27,7 +27,7 @@ Then the room is yours for the rest of the session: bring what is stuck.
 
 ## Directions and Group Roles
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-and-discuss day: the Manager keeps the setup moving, the Recorder captures the team's design decisions (especially the zone boundaries you choose), the Presenter shows the team's `AGENTS.md` to the class, and the Reflector notes where the group disagreed about what an agent should be allowed to write.  After class, answer the reflective prompt individually.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-and-discuss day.  The Manager keeps the setup moving.  The Recorder captures the team's design decisions, especially the zone boundaries you choose.  The Presenter shows the team's `AGENTS.md` to the class.  The Reflector notes where the group disagreed about what an agent should be allowed to write.  After class, answer the reflective prompt individually.
 
 ---
 
@@ -40,6 +40,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Agent contract** | A file at the root of a repository or vault stating the rules any agent must follow inside it. The `AGENTS.md` you wrote for `cs357-work` in Week 1, grown up | Model 2: a contract with zone boundaries, a synthesis rule, and a stop rule |
 | **Durable memory** | Project state that lives in files under version control rather than in a conversation, so it survives the session, the tool, and the model | `.ai/SESSION.md` and `.ai/CURRENT_TASK.md` in Part II |
 | **Handoff** | A deliberate stop in which an agent writes down enough state that a *different* agent can continue safely | The kickoff prompt in Model 4, pasted into a fresh session |
+| **Claim file** | A small file beside a task in a shared folder saying who owns the task and since when. The rename that moved the task into `claimed/` is the lock; the claim file is the record | `task-7.md.claim` in Section 3d, and the `.claim` beside the continuation file in Model 2 |
 | **Read-only mount** | Giving a program access to a directory it can read but not change, enforced by the operating system rather than by instructions | `-v "$HOME/vault:/reference:ro"` when you run an agent in a container |
 | **Charter** | The constitution of a project: mission, ranked values, definition of done, and the guardrails an agent may never cross. Written once, amended deliberately, reread at the start of every session | `CHARTER.md` in Model 3, and the ranked-values list that resolves conflicts without asking you |
 | **Traceability** | Being able to answer, weeks later, *why* something is the way it is: which goal it served, what was decided, who or what did it, and what was rejected | A wiki page, a decision log entry, a session entry, and a commit that all point at each other |
@@ -49,23 +50,25 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ### Before You Start
 
-**You need:** your `cs357-work` repository, opencode (from *Your AI Workbench*), and a GitHub account.  Obsidian is a free download and takes about two minutes; get it started now if you want to follow Part I on your own machine: [obsidian.md](https://obsidian.md).
+**You need:** your `cs357-work` repository, opencode (from *Your AI Workbench*), and a GitHub account.  Obsidian is a free download and takes about two minutes; start it now if you want to follow Part I on your own machine: [obsidian.md](https://obsidian.md).
 
-**You do not need** to have finished any particular lab.  If you are behind, Part III of today is explicitly for that.
+**You do not need** to have finished any particular lab.  If you are behind, Part III of today is for exactly that.
 
-**What you will have at the end:** a vault with zone boundaries and a written agent contract, one repository configured with handoff documents, and a plan for the thing you are currently stuck on.
+**Also today:** the Stakeholder Brief is due, and I hand out the Final Project and its Proposal.  Bring questions about either to the studio in Part III.
+
+**What you will have at the end:** a vault with zone boundaries and a written agent contract, one repository configured with handoff documents, a folder layout that carries the same handoff without GitHub, and a plan for the thing you are currently stuck on.
 
 ---
 
 ## Today's 75 Minutes
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Part II is ten minutes longer than it used to be, to make room for the shared folder in Section 3d; those ten minutes come out of the Part III studio.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
 
 | Minutes | What we do |
 |---|---|
 | 0-15 | Part I, the vault as memory you own |
-| 15-45 | Part II, the repository as the channel agents talk through |
-| 45-70 | Part III, open studio: bring your stuck points and your pipeline-in-progress |
+| 15-55 | Part II, the repository as the channel agents talk through, and the shared folder as the second channel |
+| 55-70 | Part III, open studio: bring your stuck points and your pipeline-in-progress |
 | 70-75 | Report out one thing that moved and one thing that is still stuck |
 
 ---
@@ -75,7 +78,7 @@ In this part you build the read side: a place your agents can consult so that yo
 
 ## 1.  Why a Folder of Text Files
 
-The design has four pieces, each independently replaceable, and the replaceability is the point: nothing here locks you into a vendor.
+The design has four pieces.  Each one can be replaced on its own, and that replaceability is the point: nothing here locks you into a vendor.
 
 | Piece | What it replaces | Why | What you lose without it |
 |---|---|---|---|
@@ -84,7 +87,7 @@ The design has four pieces, each independently replaceable, and the replaceabili
 | **Zones** (directory boundaries) | "Be careful" as an instruction | A directory layout that encodes what may be modified, so the rule is visible in `ls` rather than remembered | Safety. An agent asked to "help with my notes" has no way to know what is sacred |
 | **`AGENTS.md`** at the root | Configuring each tool separately | The contract travels *inside* the repository, so every agent reads it with zero per-tool setup | Consistency. Each tool behaves differently, and you find out when it matters |
 
-Note what is *not* in that table: any particular AI company.  The vault outlives whichever model you are using this year, which is most of the argument for building it this way.
+Note what is *not* in that table: any particular AI company.  The vault outlives whichever model you are using this year, and that is most of the argument for building it this way.
 
 ---
 
@@ -105,7 +108,7 @@ vault/
 
 The boundaries *are* the design.
 
-- **`raw/` is a one-way inbox.**  Humans and automations drop source material in; nobody, human or agent, edits it.  Sources stay pristine, which means that if an agent's interpretation turns out to be wrong, you can reprocess from the original.
+- **`raw/` is a one-way inbox.**  Humans and automations drop source material in; nobody, human or agent, edits it.  Sources stay pristine, so if an agent's interpretation turns out to be wrong, you can reprocess from the original.
 - **`wiki/` is where authored knowledge lives**, in topical folders with links between pages.  Agents are its primary authors, and their job is **synthesis** from `raw/`, not transcription of it.
 - **The three root files** carry the context you would otherwise retype: who you are, what you are working on, and how you want an agent to behave.
 
@@ -116,16 +119,15 @@ An agent processing a new PDF in `raw/` notices a typo in the PDF, and also noti
 [( )] Fix the typo and skip the index; navigation is the human's job
 [( )] Move the PDF into `wiki/` so it can be edited
 
-    --{{0}}--
 The instinct to fix the typo is a good instinct about writing and a bad instinct about archives.  The moment an agent edits a source, you no longer know what the source said, and every downstream summary becomes unverifiable.  Leave the record alone; annotate the interpretation.
 
-> **Common Misconception:** "It is my private repository, so agents can write anywhere; I can always fix mistakes."  Two problems.  An agent that overwrites something in `raw/` destroys the pristine record, and you cannot fix what you can no longer read.  And an agent that writes into `.obsidian/` can corrupt the editor's sync state in a way that fails *silently*: your edits simply stop propagating, with no error, for days.  Zone boundaries exist precisely because "I will fix it later" is not a recovery strategy for a failure you do not notice.
+> **Common Misconception:** "It is my private repository, so agents can write anywhere; I can always fix mistakes."  Two problems.  An agent that overwrites something in `raw/` destroys the pristine record, and you cannot fix what you can no longer read.  And an agent that writes into `.obsidian/` can corrupt the editor's sync state in a way that fails *silently*: your edits simply stop propagating, with no error, for days.  Zone boundaries exist because "I will fix it later" is not a recovery strategy for a failure you do not notice.
 
 ---
 
 ## Where This Structure Comes From: Karpathy's LLM Wiki
 
-The layout above is not something we invented for this course.  In April 2026 Andrej Karpathy published a gist called [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describing the same shape, and the name it gave the idea (**the LLM wiki**) is the one the field now uses.  It is worth reading in full; it is prose, not code, and it is short.
+The layout above is not something we invented for this course.  In April 2026 Andrej Karpathy published a gist called [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) describing the same shape, and the name it gave the idea (**the LLM wiki**) is the one the field now uses.  Read it in full; it is prose, not code, and it is short.
 
 The claim is that the interesting thing to do with a model is not to *retrieve* from your documents on every question, but to have the model *compile* them, once, into an encyclopedia it then maintains:
 
@@ -140,13 +142,13 @@ Two files carry the navigation, and both belong in `wiki/`:
 - **`index.md`**, a catalog of every page with a one-line summary, grouped by topic.  The agent reads it first on any question, which is why a wiki of hundreds of pages needs no vector database to be searchable.
 - **`log.md`**, an append-only record of every ingest, question, and maintenance pass, so that both you and the next agent can see how the wiki got to be the way it is.
 
-And three operations, each of which is just a prompt:
+And three operations, each of which is a prompt:
 
 1.  **Ingest.**  You add a source.  The agent reads it, writes a summary page, and updates the ten or fifteen existing pages that source touches.
 2.  **Query.**  You ask a question.  The agent answers from `wiki/`, with citations, and an answer worth keeping becomes a page.
 3.  **Lint.**  Periodically, the agent audits its own wiki: contradictions between pages, claims that have gone stale, orphan pages nothing links to, gaps where a topic is named but never written.
 
-Notice what makes this different from RAG, which we build later in the semester.  RAG re-discovers the same context on every query and keeps nothing; the wiki pays the synthesis cost once and keeps the result.  Karpathy's argument for why this is newly practical is a labor argument rather than a technical one: wikis have always been good and have always died of maintenance, and maintenance is exactly the work a model will do for free, forever, without getting bored.  Your job shifts from writing to curating: choosing sources, asking good questions, and reviewing what the agent wrote before you trust it.
+Notice what makes this different from RAG (retrieval-augmented generation), which we build later in the semester.  RAG re-discovers the same context on every query and keeps nothing; the wiki pays the synthesis cost once and keeps the result.  Karpathy's argument for why this is newly practical is a labor argument rather than a technical one: wikis have always been good and have always died of maintenance, and maintenance is exactly the work a model will do for free, forever, without getting bored.  Your job shifts from writing to curating: choosing sources, asking good questions, and reviewing what the agent wrote before you trust it.
 
 > **Why Obsidian and GitHub, specifically.**  The gist is deliberately tool-agnostic, but the pattern asks for two things, and these two supply them.  Obsidian supplies the reading experience: `[[wikilinks]]` between entity pages, backlinks that show you what else cites a claim, and a graph view in which an orphan page is visible at a glance.  GitHub supplies the safety: every ingest is a commit, so a synthesis pass that went wrong is one `git revert` away, and a scoped token is what lets an agent running in a container do the writing at all.  The setup is stepwise and takes an evening: [The Second Brain](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SecondBrain) builds the vault and the contract, and [Syncing Obsidian to GitHub](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync) walks the wiring, including a section on standing up the LLM wiki itself.
 
@@ -212,7 +214,7 @@ The `:ro` is the whole difference between a rule the agent is asked to follow an
 
    > *Hint: Credentials are the easy one.  What about information that is not yours to store, such as someone else's messages?  What about categories that carry breach-notification duties regardless of who saw them?*
 
-4.  The vault is a retrieval problem, and you are in the middle of building the machinery for it right now in the *RAG Knowledge Base* lab.  Compare two ways of answering a question from your notes: hand the agent the whole `wiki/` folder, or index it and retrieve only the relevant chunks.  At what vault size does the first one stop working, and what exactly breaks?
+4.  The vault is a retrieval problem, and you are building the machinery for it right now in the *RAG Knowledge Base* lab.  Compare two ways of answering a question from your notes: hand the agent the whole `wiki/` folder, or index it and retrieve only the relevant chunks.  At what vault size does the first one stop working, and what exactly breaks?
 
    > *Hint: You do not need a number to answer this; you need the reason.  A model can only read a fixed amount of text at once.  What happens to the oldest part of what you handed it when the folder outgrows that limit, and how would you notice?  Next session, *Memory and the Small Context Window Principle*, gives that limit its name and its arithmetic.*
 
@@ -220,7 +222,7 @@ The `:ro` is the whole difference between a rule the agent is asked to follow an
 
 # Part II: The Repository as the Channel Agents Talk Through
 
-In this part you build the write side, and the collaboration side.  In *Coding Agents* you saw the basic pattern: an issue is the task, a pull request is one agent's attempt, and a review comment is an instruction a *second* agent can pick up without ever sharing the first one's context.  Today we make that survive a long project, which takes three things a chat window cannot give you: a **charter** that decides the recurring questions once, **plans** reviewed before work starts, and a **written record** that lets anyone reconstruct why the project is the way it is.
+In this part you build the write side, and the collaboration side.  In *Coding Agents* you saw the basic pattern: an issue is the task, a pull request is one agent's attempt, and a review comment is an instruction a *second* agent can pick up without ever sharing the first one's context.  Today we make that survive a long project.  That takes three things a chat window cannot give you: a **charter** that decides the recurring questions once, **plans** reviewed before work starts, and a **written record** that lets anyone reconstruct why the project is the way it is.  Section 3d then runs the same handoff through a shared folder, for the cases where a repository is the wrong fit.
 
 ## 3.  Conversation Is Not Project State
 
@@ -230,7 +232,7 @@ Here is the single sentence this part is built on:
 
 Everything an agent "knows" at the end of a working session evaporates when that session ends.  It evaporates when the context window fills, when a quota runs out, when you switch tools, when the model is upgraded under you.  If the only record of *why* the code looks like this lived in that conversation, it is gone, and the next agent, or the next you, starts by guessing.
 
-So write it down, in files, in the repository.  The course provides a set of ready-made skeletons for exactly this at [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).  The core five:
+So write it down, in files, in the repository.  The course provides ready-made skeletons for exactly this at [`files/agent-templates/`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md).  The core five:
 
 | File | Job | Written by |
 |---|---|---|
@@ -240,7 +242,7 @@ So write it down, in files, in the repository.  The course provides a set of rea
 | `.ai/SESSION.md` | Append-only journal, one dated entry per working session, each ending with a **Next Safe Action** | The agent, as it works |
 | `.ai/KNOWN_ISSUES.md` | Verified defects and constraints, with stable IDs so commits can reference them | Either, when verified |
 
-Two design choices are worth naming because they are not obvious.
+Two design choices deserve naming because they are not obvious.
 
 **`SESSION.md` is append-only.**  Old entries are never deleted, only annotated ("superseded by the entry below").  A journal you can rewrite is a journal that cannot tell you what you used to believe, and *what you used to believe* is exactly what you need when a decision turns out wrong.
 
@@ -250,7 +252,7 @@ Every session entry ends with a Next Safe Action.  Not "next steps," which is a 
 
 ## 3b.  The Charter: Deciding Once Instead of Every Time
 
-`AGENTS.md` told an agent what it may *touch*.  A **charter** tells it what the project is *for*, and that turns out to answer a different and harder class of question.
+`AGENTS.md` told an agent what it may *touch*.  A **charter** tells it what the project is *for*, and that answers a different and harder class of question.
 
 Watch the difference.  Halfway through a task an agent notices that making the tests pass quickly would mean loosening an assertion.  Nothing in `AGENTS.md` forbids editing a test.  So it either stops and asks you (interrupting, and it will ask again tomorrow) or it guesses.  A charter that ranks **correctness above speed** answers the question without either.
 
@@ -293,7 +295,7 @@ Read that as a policy about **context drift**.  Over a long project an agent (or
 
 ### Plan, then act, then record
 
-Your charter, your plans, and your session log form one loop, and each piece is doing a job the others cannot:
+Your charter, your plans, and your session log form one loop, and each piece does a job the others cannot:
 
 ```text
 CHARTER.md          why this project exists, and what always wins   (rarely changes)
@@ -303,7 +305,7 @@ CHARTER.md          why this project exists, and what always wins   (rarely chan
    |
    v
 the plan            what the agent intends to do about it, before   (per task)
-   |                it touches anything -- reject it here
+   |                it touches anything: reject it here
    v
 the diff / the PR   what it actually did                            (per change)
    |
@@ -314,7 +316,7 @@ docs/DECISION_LOG   what we decided and what we rejected, and why   (when it mat
 
 Read that column top to bottom and you have **traceability**: six weeks from now, a line of code traces back to a diff, which traces to a session entry, which traces to a task, which traces to the charter.  Nobody has to remember anything, and "why is it like this?" has a written answer instead of an argument.
 
-The [decision log](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/DECISION_LOG.md) is the one people skip, and it is the one that pays.  It records not only what you chose but **what you rejected and why**, which is the only thing that stops a project from re-proposing the same bad idea every three weeks, whether the proposer is a teammate or an agent starting from a fresh context.
+The [decision log](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/DECISION_LOG.md) is the one people skip, and it is the one that pays.  It records not only what you chose but **what you rejected and why**.  That is the only thing that stops a project from re-proposing the same bad idea every three weeks, whether the proposer is a teammate or an agent starting from a fresh context.
 
 Your team's charter ranks **reproducibility above automation**.  An agent proposes replacing your pinned dependency versions with floating ones so that upgrades happen automatically.  Under the charter, what happens?
 
@@ -323,7 +325,6 @@ Your team's charter ranks **reproducibility above automation**.  An agent propos
 [( )] The agent implements it, because automation is on the list of values
 [( )] The charter needs a new section on dependency management before this can be resolved
 
-    --{{0}}--
 The charter never mentions dependencies, and it does not need to.  That is exactly what ranking buys you: it resolves cases the author never anticipated.  A charter that had to enumerate every decision would be a rulebook, and it would be out of date the day after you wrote it.
 
 ---
@@ -338,11 +339,50 @@ You met these three in *Your AI Workbench*, Step 8.5, as properties of a contain
 | **Isolation** | Zones, plus `:ro` on the `raw/` mount. An agent authoring the wiki cannot corrupt the sources it is summarizing | A scoped token for one repository; a branch per attempt; an agent that can open a PR and cannot merge it | "The agent asked to tidy my notes and rewrote a source I can no longer recover" |
 | **Reversibility** | Every vault write is a commit. `git revert` puts a bad synthesis back | Every change arrives as a reviewable, revertible commit on a branch, not as an edit to `main` | "The agent's cleanup pass was wrong and there is no earlier version" |
 
-The pattern is worth naming because it generalizes past this course.  Each property is bought the same way in both columns: **observability by writing things down in files**, **isolation by boundaries the system enforces rather than boundaries you ask for**, and **reversibility by never having exactly one copy of anything that matters.**
+The pattern generalizes past this course.  Each property is bought the same way in both columns: **observability by writing things down in files**, **isolation by boundaries the system enforces rather than boundaries you ask for**, and **reversibility by never having exactly one copy of anything that matters.**
 
-And notice which one is most often missing in practice.  Isolation is the one people think of, because it sounds like security.  Reversibility is the one that actually saves the semester, and it is nearly free: it is a commit before you start.
+Notice which one is most often missing in practice.  Isolation is the one people think of, because it sounds like security.  Reversibility is the one that saves the semester, and it is nearly free: it is a commit before you start.
 
 > **Common Misconception:** "Reversibility means I can undo anything, so I can be less careful about the other two."  Reversibility is bounded by observability.  You can only revert a change you *noticed*, and the dangerous agent failure is not the dramatic one; it is the small wrong edit that lands in a wiki page you do not reread for a month, by which time you have written three things on top of it.  Git will happily let you undo it; nothing will tell you that you should.
+
+---
+
+## 3d.  The Second Channel: A Shared Folder
+
+Everything in Model 2 below travels through a repository.  The same handoff also works through a folder that a sync service keeps identical on two machines: a Dropbox folder, or the vault from Part I with its sync turned on.  No GitHub account, no pull request, no network beyond what the sync client already uses.  The folder version is worth learning even if you never use it, because it shows you which rules the repository was enforcing for you.
+
+The layout is three directories and a naming convention:
+
+```text
+handoff/
+|-- inbox/                    # unclaimed tasks. Whoever wrote one may not work it.
+|-- claimed/
+|   |-- task-7.md             # the task, moved here by the agent that owns it
+|   |-- task-7.md.claim       # who owns it and since when: claimed_by, claimed_at
+|   `-- task-7.md.notes       # the owner's plan and questions, appended, never rewritten
+`-- done/
+    |-- task-7.md
+    `-- task-7.result.md      # what happened, what did not, and the Next Safe Action
+```
+
+Four rules turn the layout into a protocol.
+
+1.  **The claim is a rename.**  An agent takes a task by moving `inbox/task-7.md` to `claimed/task-7.md`, then writing `task-7.md.claim` beside it with its name and a timestamp.  On one filesystem a rename is atomic: it either fully happens or does not happen at all.  If two agents race for the same file, exactly one rename succeeds; the loser sees "file not found" and moves on.  The rename is the lock.  The `.claim` file is the record of who holds it, written after the lock is already won.
+2.  **Only the claim holder writes.**  A second agent may read `task-7.md.notes` and may append a review to it.  It may not rewrite anything in `claimed/`.  This is the review comment from a pull request, without the pull request.
+3.  **A claim goes stale.**  A `.claim` older than a timeout you chose belongs to an agent that probably died.  The protocol says how old is too old and who may take the task over.
+4.  **Done has a shape.**  The holder moves `task-7.md` into `done/` and writes `task-7.result.md` beside it, in the same form as a `SESSION.md` entry: what changed, what did not, one Next Safe Action.  Anything in `done/` without a `.result.md` is not finished.
+
+Now the part a repository hides from you.  A sync service does not give you an atomic rename across machines.  Each machine's rename is atomic on its own disk, but the two machines do not share an operating system, so nothing orders one rename before the other.  When both changes reach the server, one wins, and the other machine receives a file named something like `task-7 (conflicted copy).md` next to the winner.  A **conflicted copy** is the service telling you that two writers changed the same path before either saw the other's change, and that it refuses to choose between them.  So the claim protocol is enforced on one filesystem and only advisory across a sync, and your contract has to say what an agent does when it finds a conflicted copy.  Stop and ask is the right default.
+
+When is the folder the right channel, and when is the repository?
+
+| Reach for the folder when | Reach for the repository when |
+|---|---|
+| The second agent has no GitHub account or token, or you do not want to issue one | You want a review gate: nothing lands until a person approves the pull request |
+| The artifacts are binary (audio, images, PDFs, model weights) and a diff would show you nothing | You want an audit log: every change has an author, a time, and a diff you can read |
+| A teammate who is not a developer needs to hand work in or read results, and a folder is the tool they already have | You want to reason about changes rather than files: what moved, why, and what it was rejected in favor of |
+
+Recap: the folder and the repository carry the same four-part handoff (claim, notes, stale rule, done), and the folder shows you that only the rename is enforced by the medium; everything else holds because both agents chose to follow it.  If your vault from Part I syncs, `raw/` is already a folder channel: a person drops a file in, and an agent picks it up.
 
 ---
 
@@ -372,21 +412,39 @@ A new agent is then started cold with a kickoff prompt that says, in effect: *yo
 
 Nothing was remembered.  Everything was **read**.
 
+### The same handoff through the folder
+
+Now the repository is gone and the two agents share a synced folder.  The first agent's continuation entry is the same text, word for word.  It lands in `claimed/` as a task file with a `.claim` beside it, and the second agent's first move is to check whether that claim is still live:
+
+```text
+$ ls ~/Dropbox/project/handoff/claimed/
+retrieval-eval.md
+retrieval-eval.md.claim
+$ cat ~/Dropbox/project/handoff/claimed/retrieval-eval.md.claim
+{"claimed_by": "agent-A", "claimed_at": "2026-10-15T14:32:07"}
+```
+
+The second agent reads the claim, sees it is older than the timeout, and takes the task over by rewriting the `.claim` with its own name and a `taken_from` line.  It then reads `retrieval-eval.md`, which ends in the same Next Safe Action as above, and starts there.  The kickoff prompt is the same as the repository version with one line changed: *read `CHARTER.md`, then the task in `handoff/claimed/`, then its `.claim`, and do not begin work until you hold the claim.*
+
 ### Critical Thinking Questions
 
-5.  The entry above explicitly records what the agent did *not* do, and why item 4 and 9 depend on it.  Why is the not-done list often more valuable to the next agent than the done list?
+5.  The entry above explicitly records what the agent did *not* do, and why items 4 and 9 depend on it.  Why is the not-done list often more valuable to the next agent than the done list?
 
    > *Hint: The done work is visible in `git diff`.  Where is the not-done work visible?*
 
 6.  "Next Safe Action" carries two constraints: it is *next*, and it is *safe*.  Write a Next Safe Action for your own project thread as it stands right now, then check it against both words.  Which of the two was harder to satisfy honestly?
 
-7.  Compare this handoff mechanism with the review-comment pattern from *Coding Agents*, where one agent responds to a comment another agent left on a PR. Both let agents coordinate without sharing a context window.  When would you reach for each, and what does the session journal give you that a PR thread does not?
+7.  Compare this handoff mechanism with the review-comment pattern from *Coding Agents*, where one agent responds to a comment another agent left on a PR.  Both let agents coordinate without sharing a context window.  When would you reach for each, and what does the session journal give you that a PR thread does not?
 
    > *Hint: One is scoped to a single change.  The other spans every change.  Consider what you would read six weeks from now, and where it lives.*
 
 8.  Your Project Thread team has four people and probably several agents.  Name one specific failure this whole apparatus prevents that a group chat would not, and one failure it does *not* prevent.
 
-> **Common Misconception:** "This is a lot of paperwork for something a bigger context window will solve."  Context windows have grown by orders of magnitude and this practice has become *more* common, not less, because the problem was never only size.  A conversation is unreviewable by your teammates, invisible to CI, unsearchable next semester, and gone when the tool changes.  Files in a repository are none of those things.  The paperwork is not a workaround for small models; it is what makes the work legible to anyone who is not the person who was in the room.
+9.  Two agents on two machines notice `inbox/task-7.md` at the same moment.  Suppose each one checks that the file is still in `inbox/`, and then copies it into `claimed/`.  Walk through what breaks, first when both agents run on one machine, then when they share the folder through Dropbox.  Which of the two failures does replacing the check-and-copy with a single rename fix, and what does the folder still hand you in the other case?  The Nov 3 session, *Agents That Talk: Multi-Agent Communication Through GitHub and Dropbox, and Threat Modeling*, runs this claim protocol in code, with two agents racing for one task and one of them dying mid-claim.  Write your prediction now so you can check it then.
+
+   > *Hint: "Check, then act" is two steps, and anything can happen between them.  A rename is one step.  Across a sync, even one step on each machine is still two steps on the server.*
+
+> **Common Misconception:** "This is a lot of paperwork for something a bigger context window will solve."  Context windows have grown by orders of magnitude and this practice has become *more* common, not less, because the problem was never only size.  A conversation is unreviewable by your teammates, invisible to CI, unsearchable next semester, and gone when the tool changes.  Files in a repository are none of those things.  The paperwork is not a workaround for small models; it is what makes the work legible to anyone who was not in the room.
 
 ---
 
@@ -394,7 +452,7 @@ Nothing was remembered.  Everything was **read**.
 
 Pick **one** of your own repositories: `cs357-work`, or your Project Thread repository if your team is ready to adopt this together.
 
-1.  **Charter.**  Copy [`CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) into the repository root and fill in three sections for real: the mission in one sentence, **five ranked values**, and a definition of success someone else could check.  Leave the rest as template for now.  Ranking the values is the part that takes the longest and the part that is worth doing.
+1.  **Charter.**  Copy [`CHARTER.md`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/CHARTER.md) into the repository root and fill in three sections for real: the mission in one sentence, **five ranked values**, and a definition of success someone else could check.  Leave the rest as template for now.  Ranking the values takes the longest and is the part worth doing.
 2.  **Handoff state.**  Create `.ai/` and copy in `CONTEXT.md`, `CURRENT_TASK.md`, and `SESSION.md`.  Fill in `CONTEXT.md` with one true sentence about your project.
 3.  **Contract.**  Write `AGENTS.md` (or extend the one you already have) with a **Stop and ask** section of at least three items that are true for your project, and one line pointing at the charter.
 4.  **Commit all of it before the agent runs.**  This is your reversibility line, and it takes ten seconds.
@@ -408,12 +466,12 @@ Pick **one** of your own repositories: `cs357-work`, or your Project Thread repo
 
 # Part III: Studio
 
-The rest of the session is yours, and it is deliberately unstructured.  This is the mid-semester catch-up point, and the schedule assumes you will use it.
+The rest of the session is yours, and it is deliberately unstructured.  This is the mid-semester catch-up point, and the schedule assumes you will use it.  It is fifteen minutes today instead of twenty-five, because Section 3d took the difference.
 
 Bring one of these:
 
 - **A lab that is not running.**  Bring the error, the command that produced it, and what you already tried.  Teams that have solved it are the first line of help; I am the second.
-- **A design decision your team is stuck on.**  Stakeholder brief scope, project direction, which lab direction to take.  Fifteen minutes of arguing it out loud with someone outside your team is usually enough.
+- **A design decision your team is stuck on.**  Proposal scope, project direction, which lab direction to take.  Fifteen minutes of arguing it out loud with someone outside your team is usually enough.
 - **Something you want to build that is not on any assignment.**  This is the best possible use of a studio day.
 - **The vault you started in Part I**, if you want to keep going on it.
 
@@ -471,7 +529,7 @@ For the visual-building route through a local agent stack (Langflow, wiring cont
 
 ---
 
--> Coming Up Next: In *Memory and the Small Context Window Principle* we take the idea underneath today's vault and make it precise.  You have just built external memory by hand; next session asks why an agent needs it, what the context window actually costs, and how to keep each agent's working set small enough to be reliable.
+-> Coming Up Next: In *Observability, Traceability, and Handoff Protocols* we take the idea underneath today's vault and make it precise, and write the start, stop, restart, and handoff protocol as a skill.  You have just built external memory by hand; next session asks why an agent needs it, what the context window actually costs, and how to keep each agent's working set small enough to be reliable.
 
 ## Further Reading
 

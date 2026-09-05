@@ -10,15 +10,17 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# Retrieval-Augmented Generation with Chroma
+# RAG Knowledge Base: Code and No-Code Routes
 
-The evaluation harness from the *Hallucinations and Evaluating Agent Outputs* activity showed that local models hallucinate (confidently make up facts) where their training data is thin, and the *Tokens, Embeddings, and Attention* activity gave us semantic search; **retrieval-augmented generation (RAG)** combines the two, handing the model the right evidence at the right moment.  We move from **the open-book insight → the RAG pipeline → a working pipeline with Chroma and Ollama → grounded answers with citations**.
+**Retrieval-augmented generation (RAG)** hands the model the right evidence at the moment it needs it.  The evaluation harness from the *Hallucinations and Evaluating Agent Outputs* activity showed that local models hallucinate (confidently make up facts) where their training data is thin.  The [*Tokens, Embeddings, and Attention*](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) tutorial gave you semantic search.  RAG combines the two.  Today you build the pipeline twice: once in about fifty lines of Python with Chroma and Ollama, and once as three nodes on a Langflow canvas, because the RAG Knowledge Base lab lets you take either route for the same credit.  We move from **the open-book insight → the RAG pipeline → a working pipeline in code → the same pipeline without code → grounded answers with citations**.
+
+The *Skill Design Study* written assignment is [due today](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/SkillDesignStudy).
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -32,6 +34,7 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Vector Database** | A database specialized for storing and searching embeddings (meaning-vectors). It can find the most similar vectors to a query extremely fast, even across millions of documents. | Chroma (`chromadb`) stores our campus FAQ embeddings and finds the nearest match |
 | **Indexing Phase** | The one-time setup work: split documents into chunks, embed each chunk, and store the vectors. Done once; the index is reused for every query. | `col.add(documents=docs, embeddings=..., ids=...)` in the code below |
 | **Query Phase** | What happens per question: embed the question, find nearest chunks, paste them into the prompt, generate a cited answer. | `rag_answer("Can a first-year student keep a car on campus?")` |
+| **Langflow Canvas** | A visual editor where each pipeline step is a node you configure and wire to the next.  The same chunk size, top-k, and prompt live in node settings instead of code. | The index, retrieve, and generate nodes in Part IIb |
 
 ---
 
@@ -42,31 +45,31 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | Minutes | What we do |
 |---|---|
 | 0-10 | Part I, the open-book exam insight |
-| 10-35 | Part II, build it: chunk, embed, store, retrieve, generate |
-| 35-60 | Part IIb, how the search actually finds anything: distance metrics and the retrieval pipeline |
-| 60-70 | The failure modes, against a query you deliberately break |
-| 70-75 | Reflection prompt.  The vector-database ecosystem survey is at home |
+| 10-40 | Part II, build it in code: chunk, embed, store, retrieve, generate |
+| 40-55 | Part IIb, the same pipeline without code, on the Langflow canvas |
+| 55-70 | Part III, start the exercises: your own corpus, one citation and one abstention |
+| 70-75 | Reflection prompt.  The Extension on how the search finds anything is self-paced |
 
 ---
 # Part I: The Open-Book Exam Insight
 
 ## 1.  Parameters Versus Context
 
-In this Part you will distinguish the two kinds of memory a language model has (the knowledge baked into its parameters during training versus the text currently in its prompt) and understand why RAG (Retrieval-Augmented Generation) turns a hard "closed-book" question into a much easier "open-book" one.
+In this Part you will distinguish the two kinds of memory a language model has (the knowledge baked into its parameters during training versus the text currently in its prompt) and see why RAG turns a hard "closed-book" question into a much easier "open-book" one.
 
-**Why this matters:** Imagine asking someone a trivia question about an obscure historical event.  If they do not know it, they will either admit ignorance or make something up, and AI models tend to make something up convincingly.  RAG is the equivalent of saying "here, look it up in the encyclopedia first, then answer."  The model goes from guessing to reading and summarizing, which is a job it is much better at.  This single insight is why RAG has become the most widely deployed AI engineering technique of the past three years.
+**Why this matters:** Ask someone a trivia question about an obscure historical event.  If they do not know it, they either admit ignorance or make something up, and AI models make something up convincingly.  RAG is the equivalent of saying "look it up in the encyclopedia first, then answer."  The model goes from guessing to reading and summarizing, which is a job it does much better.  This one insight is why RAG has become the most widely deployed AI engineering technique of the past three years.
 
-A model has two memories.  *Parametric memory* (from "parameters," the numbers learned during training) is whatever was baked into the weights during training: vast, fuzzy, frozen in time.  *Contextual memory* is whatever sits in the prompt right now: small, precise, current.  Hallucination (the model confidently stating something false) is what happens when we ask parametric memory for precision it does not have.  RAG converts the question from a closed-book exam into an open-book one:
+A model has two memories.  *Parametric memory* (from "parameters," the numbers learned during training) is whatever was baked into the weights: vast, fuzzy, frozen in time.  *Contextual memory* is whatever sits in the prompt right now: small, precise, current.  Hallucination (the model confidently stating something false) is what happens when we ask parametric memory for precision it does not have.  RAG converts the question from a closed-book exam into an open-book one:
 
 $$
 \text{answer} = \text{LLM}(\text{query} + \text{retrieve}(\text{query}, \mathcal{D}))
 $$
 
-where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity, exactly the cosine machinery from the tokens and embeddings module.
+where $\mathcal{D}$ is your document collection and $\text{retrieve}$ selects the top-$k$ chunks (passages) by embedding similarity, the same cosine machinery from the tokens and embeddings tutorial.
 
-> **Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter from the *Sampling, Temperature, and Generation* activity.  Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt.  Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
+> **Common Misconception:** The retrieval `top_k` / `k` here (how many *document chunks* to fetch, set as `n_results` in the code below) is a different knob from the **sampling `top_k`** decoding parameter in the [*Sampling, Temperature, and Generation*](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SamplingAndTemperature) tutorial.  Same name, different layer: sampling `top_k` truncates the model's probability distribution over the *next token*; retrieval `k` sets the size of the *search result set* pasted into the prompt.  Turning up retrieval `k` gives the model more to read; it has nothing to do with how randomly it writes.
 
-The pipeline has two phases.  *Indexing* (once): split documents into chunks, embed each chunk, store vectors in a vector database.  *Query* (every question): embed the question, find nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
+The pipeline has two phases.  *Indexing* (once): split documents into chunks, embed each chunk, store the vectors in a vector database.  *Query* (every question): embed the question, find the nearest chunks, paste them into the prompt with instructions to answer *only* from the provided context, and cite which chunk supports each claim.
 
 ---
 
@@ -78,15 +81,15 @@ A student asks a campus RAG system, "Can first-year students bring cars?"  The s
 
 1.  Walk the question through both phases: which steps happened months ago at indexing time, and which steps happen right now at query time?
 
-   > *Hint: Indexing steps involve reading documents and storing vectors: work done once before any user ever asks a question.  Query steps happen in real time after the user sends their message.  Sort each step: (a) embed the parking policy, (b) embed the user's question, (c) run cosine similarity search, (d) paste chunks into a prompt, (e) split the handbook into chunks, (f) generate the answer.*
+   > *Hint: Indexing steps read documents and store vectors: work done once before any user asks a question.  Query steps happen in real time after the user sends a message.  Sort each step: (a) embed the parking policy, (b) embed the user's question, (c) run cosine similarity search, (d) paste chunks into a prompt, (e) split the handbook into chunks, (f) generate the answer.*
 
 2.  The model answers correctly, citing the parking chunk.  Is this *parametric* or *contextual* memory at work?  How can you tell from the citation?
 
-   > *Hint: If the answer came from parametric memory, would the model be able to cite a specific numbered source?  Citations in RAG point to retrieved text that was placed in the prompt; which type of memory is that?*
+   > *Hint: If the answer came from parametric memory, could the model cite a specific numbered source?  Citations in RAG point to retrieved text that was placed in the prompt; which type of memory is that?*
 
 3.  Suppose the policy changed last week and the index is stale (out of date).  Where exactly does the wrong answer enter the pipeline, and which component is at fault: the model, the retriever, or the index?
 
-   > *Hint: The model answered faithfully from the context it was given.  The retriever found the most similar chunk.  The chunk it found just contained old information.  Which component produced that old chunk?*
+   > *Hint: The model answered faithfully from the context it was given.  The retriever found the most similar chunk.  The chunk it found contained old information.  Which component produced that old chunk?*
 
 ---
 
@@ -94,11 +97,11 @@ A student asks a campus RAG system, "Can first-year students bring cars?"  The s
 
 ## 2.  A Complete Local RAG System
 
-In this Part you will implement the two-phase RAG pipeline in Python using Chroma as the vector database and Ollama as the language model.  You will see exactly how the indexing phase and query phase from Part I map onto real function calls, and you will test what happens when the answer is not in the index.
+In this Part you will implement the two-phase RAG pipeline in Python using Chroma as the vector database and Ollama as the language model.  You will see how the indexing phase and query phase from Part I map onto real function calls, and you will test what happens when the answer is not in the index.
 
-Chroma is an embeddable vector database (a library that stores embeddings and performs nearest-neighbor search, installable as a Python package).  Install with `pip install chromadb`.  Everything below runs on your laptop; no data leaves the room.
+Chroma is an embeddable vector database (a library that stores embeddings and performs nearest-neighbor search, installable as a Python package).  Install it with `pip install chromadb`.  Everything below runs on your laptop; no data leaves the room.
 
-The code below is split into two phases.  The **indexing phase** (run once) creates the collection and stores embeddings for each document.  The **query phase** (run per question) embeds the user's question, finds the closest document chunks, and asks the model to answer using only those chunks.
+The code has two phases.  The **indexing phase** (run once) creates the collection and stores an embedding for each document.  The **query phase** (run per question) embeds the user's question, finds the closest document chunks, and asks the model to answer using only those chunks.
 
 ---
 
@@ -167,11 +170,11 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
 ## Model 2: Grounding in Action
 
-**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer simply is not in the index?  A bare language model will often invent a plausible-sounding answer ("The bookstore closes at 5pm on weekdays").  RAG, if designed well, will say it does not know.  That difference (between confident invention and abstention) is the core of what makes RAG trustworthy for high-stakes applications like medical information, legal research, or campus policy.
+**Why this matters:** The second query ("What time does the bookstore close?") tests a critical design decision: what should the system do when the right answer is not in the index?  A bare language model will often invent a plausible answer ("The bookstore closes at 5pm on weekdays").  A well-designed RAG system says it does not know.  That difference, between confident invention and abstention, is what makes RAG trustworthy for high-stakes uses like medical information, legal research, or campus policy.
 
 ### Critical Thinking Questions
 
-4.  The second question has no answer in the index.  Compare the system's behavior with what the bare model would do (try it by calling `chat(question)` directly).  Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions just convert into abstention?
+4.  The second question has no answer in the index.  Compare the system's behavior with what the bare model does (try it by calling `chat(question)` directly).  Which hallucination category from the *Hallucinations and Evaluating Agent Outputs* activity did the RAG instructions convert into abstention?
 
    > *Hint: Run `chat("What time does the bookstore close?")` without any context and observe the response.  Then look at the line in `rag_answer` that contains the phrase "not in my documents"; what instruction creates the abstention behavior?*
 
@@ -183,7 +186,7 @@ print("\nRETRIEVED:\n", ctx, "\n\nANSWER:\n", answer)
 
    > *Hint: Create a question like "Can I get food after working out at the gym?"; the answer involves both the dining hours doc and the athletics doc.  With `k=1`, only one chunk fits in the prompt.  What does the model say?*
 
-> **Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way.  The model's weights are completely unchanged.  RAG simply places text in the prompt that the model then reads and summarizes, the same way you could hand a book to someone who has never seen it and ask them to answer questions from it.  The intelligence is in the language model; the facts come from your documents.  This means RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat those errors.
+> **Common Misconception:** RAG does not teach the model new facts, and it does not fine-tune or update the model in any way.  The model's weights are unchanged.  RAG places text in the prompt that the model then reads and summarizes, the same way you could hand a book to someone who has never seen it and ask them questions from it.  The intelligence is in the language model; the facts come from your documents.  So RAG is only as accurate as your documents, and if your documents contain errors, the model will faithfully repeat them.
 
 The single most important reason RAG reduces factual hallucination is that it:
 
@@ -194,32 +197,112 @@ The single most important reason RAG reduces factual hallucination is that it:
 
 ---
 
+# Part IIb: The Same Pipeline Without Code
+
+The RAG Knowledge Base lab offers Direction 0, a low-code route that builds this same pipeline on a Langflow canvas instead of in Python, for equal credit.  You should see both routes before you choose one, so here is the canvas version of what you just ran.
+
+Langflow is a visual editor for language-model pipelines: each step is a node you configure in a side panel and wire to the next by dragging a connection.  The [*Visual Agents*](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VisualAgents) tutorial walks through the install and a first flow; the lab's Direction 0 section carries the exact node names for its version of Langflow.  On the canvas, the code cell above becomes three nodes:
+
+| Node | What it does | The code it replaces | The setting you carry over |
+|---|---|---|---|
+| **Index** | Loads your document files, splits them into chunks, embeds each chunk with `nomic-embed-text`, and stores the vectors in a Chroma collection | The `docs` list, `embed()`, and `col.add(...)` | Chunk size and overlap (our five one-sentence documents are one chunk each; a real corpus needs a splitter) |
+| **Retrieve** | Embeds the incoming question and pulls the nearest chunks from the same Chroma collection | `col.query(query_embeddings=..., n_results=k)` | Top-k, the same number as `k=2` in `rag_answer` |
+| **Generate** | Fills a prompt template with the retrieved chunks and the question, then sends it to `llama3.2` on your local Ollama | The prompt string and `chat()` | The grounding instruction ("answer using ONLY the context") and the abstention phrase |
+
+Nothing about the pipeline changes.  The chunk size, the top-k, the model name, and the prompt are the same decisions; they live in node settings instead of variables.  The canvas makes the retrieval step visible (the playground shows which chunks the Retrieve node handed forward, which is exactly what you print as `ctx` in code), and it hides the error handling that `embed()` and `chat()` wrap around every network call.  Whichever route you take in the lab, the graded work is the same: two chunking configurations compared, recall@k reported, citations checked by hand, and clean abstention on out-of-corpus questions.
+
+### Critical Thinking Questions
+
+7.  Question 5 asked you to delete the abstention phrase and watch the model invent a bookstore closing time.  Which of the three nodes holds that phrase on the canvas, and what would you change to run the same experiment there?
+
+   > *Hint: The prompt template is a setting of one node.  The experiment is the same edit in a different text box.*
+
+8.  Question 6 asked you to set `k=1`.  Name the node and the setting that corresponds to `k`, and explain why changing it does not require re-indexing the documents.
+
+   > *Hint: Top-k is read at query time, after the index exists.  Which phase from Part I does the Index node belong to, and which phase does the Retrieve node belong to?*
+
 ---
 
-# Part IIb: How the Search Actually Finds Anything
+# Part III: Synthesis and Practice
 
-Chroma made retrieval look like one function call.  Underneath it is a distance metric, an index, and a set of tradeoffs that decide whether your pipeline stays fast at ten documents and at ten million.  You need this to debug retrieval when it starts returning the wrong thing, which it will.
+## 3.  Exercises
+
+In this Part you apply the RAG pipeline to real documents you choose, stress-test it for citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity.  These exercises build directly toward the RAG Knowledge Base lab, on either route.
+
+1.  *Your own corpus.*  Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing.  Demonstrate one question answered correctly with a citation and one abstention.
+
+   - *What to do:* Find a real document (your CS357 syllabus, a club's bylaws, the college's honor code).  Extract 10 meaningful sentences.  Index them in Chroma.  Ask five questions; at least two should be unanswerable from your documents.
+   - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ.  Make sure each sentence is self-contained (contains enough context to be understood in isolation; avoid sentences like "As stated above, the deadline is...").
+   - *You've succeeded when:* You can show one output where the model correctly cites a source number, and one output where it says "not in my documents" for a question whose answer does not appear in your ten sentences.
+
+2.  *Eval rematch.*  Rerun the evaluation harness you built in the *Hallucinations and Evaluating Agent Outputs* activity, now routed through `rag_answer`, after adding documents containing the answers.  Report accuracy before and after; quantify the lift.
+
+   - *What to do:* Take the question-answer pairs from your *Hallucinations and Evaluating Agent Outputs* evaluation.  For each question that the bare model got wrong, add a document containing the correct answer to the Chroma index.  Run the same questions through `rag_answer` and compare accuracy scores.
+   - *Starter hint:* Your accuracy metric from that evaluation harness was (correct answers / total questions).  Run it twice: once with the bare model, once with RAG.  The "lift" is `accuracy_rag - accuracy_bare`.  Report both numbers and the lift.
+   - *You've succeeded when:* You have a table showing at least 5 questions with the bare model's answer, the RAG answer, and a correct/incorrect label for each, plus the two accuracy scores and the lift.
+
+3.  *Citation audit.*  Ask five questions and verify each citation by hand: does the cited chunk support the claim?  Compute a faithfulness rate (number of faithful citations divided by total citations).
+
+   - *What to do:* For each of five questions, read the model's answer, find its cited source numbers (e.g., "[0]"), look up those document indices in the `docs` list, and judge: does the cited document say what the model claims it says?
+   - *Starter hint:* A citation is "faithful" if a human reading the cited chunk would agree it supports the specific claim the model made.  It is "unfaithful" if the model invented a detail not present in the chunk, even if the chunk is topically related.  Your faithfulness rate = faithful citations / total citations.
+   - *You've succeeded when:* You have a table of 5 questions, each model answer, each citation, your judgment (faithful/unfaithful), and a final faithfulness rate with one sentence explaining what that rate means for trust in this system.
+
+4.  *Failure taxonomy.*  Find one *retrieval* failure (the right answer exists in the index, but the wrong chunk was fetched) and one *generation* failure (the right chunk was fetched, but the model produced the wrong answer anyway).  Label which component owns each bug.
+
+   - *What to do:* Print both `ctx` (retrieved context) and `answer` for each of your test questions.  For a retrieval failure: find a case where the retrieved chunk does NOT contain the answer but the answer IS in another document in `docs`.  For a generation failure: find a case where the retrieved chunk DOES contain the answer but the model's final answer contradicts or ignores the chunk.
+   - *Starter hint:* Retrieval failures often happen when a question uses very different vocabulary from the relevant document (vocabulary mismatch).  Generation failures often happen with multi-step reasoning or when the model's parametric memory contradicts the context.
+   - *You've succeeded when:* You can show the `ctx` and `answer` for each failure case, explain which component (retriever or generator) produced the bug, and suggest one fix for each.
+
+---
+
+## Reflection Prompt
+
+*Personal:* RAG lets a small private model answer questions about *your* documents without those documents ever leaving your machine.  Identify one collection of documents in your life (notes, club records, family archive) you would index, and one you would refuse to index even locally.  What distinguishes them?
+
+*Technical:* In your notebook: the `rag_answer` function instructs the model to say "not in my documents" rather than guess.  But what if a user needs an answer and it is not in the index?  Design a fallback strategy that is more helpful than silence but less dangerous than hallucination.
+
+*Societal:* Institutions (hospitals, courts, schools) could use RAG to give staff instant access to policy documents.  Name one benefit and one risk of a hospital deploying RAG over its clinical guidelines.  Who would need to audit the system, and how often?
+
+---
+
+## -> Coming Up Next
+
+Our RAG system worked because our "documents" were clean, single-sentence facts.  Real documents are messy: long, overlapping, poorly organized.  *RAG Quality: Chunking and Measuring Retrieval* (Tue Oct 6) takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality, the same levers you will tune in the RAG Knowledge Base lab.
+
+---
+
+## 4.  Further Reading
+
+- Patrick Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks."  *NeurIPS* (2020).  The original RAG paper.
+- Chroma documentation: https://docs.trychroma.com
+- Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 4.
+
+---
+
+# Extension: How the Search Finds Anything (self-paced)
+
+Optional, and not assumed by anything above.  Chroma made retrieval look like one function call.  Underneath it is a distance metric, an index, and a set of tradeoffs that decide whether your pipeline stays fast at ten documents and at ten million.  You need this to debug retrieval when it starts returning the wrong thing, which it will.
 
 ## Why Brute Force Fails
 
-In this part, you will see why checking every vector in a million-document database is computationally infeasible and how two approximate nearest-neighbor algorithms (HNSW and IVF) solve the problem through clever indexing.
+In this part, you will see why checking every vector in a million-document database is too slow to use, and how two approximate nearest-neighbor algorithms (HNSW and IVF) solve the problem with clever indexing.
 
 ### The Scale Problem
 
-Searching a vector database is like finding the most similar song in a music library, not by song title, but by how it *sounds*.  If you had 1 million songs and had to listen to each one to decide which is most similar to your query, it would take forever.  ANN indexes are the equivalent of organizing songs by genre, tempo, and key so you can jump straight to the right neighborhood.
+Searching a vector database is like finding the most similar song in a music library, not by title, but by how it *sounds*.  If you had 1 million songs and had to listen to each one to decide which is most similar to your query, it would take forever.  ANN indexes are the equivalent of organizing songs by genre, tempo, and key so you can jump straight to the right neighborhood.
 
-An embedding vector for a single sentence is a point in $\mathbb{R}^{1536}$. At query time, a RAG system must find the $k$ stored vectors closest to the query vector.  The naive approach is to compute the distance from the query to every stored vector.  For 1 million documents, each at 1536 dimensions, that is $1536 \times 10^6 \approx 1.5 \times 10^9$ floating-point operations per query, enough to take several seconds on a single CPU, unacceptable for an interactive assistant.
+An embedding vector for a single sentence is a point in $\mathbb{R}^{1536}$.  At query time, a RAG system must find the $k$ stored vectors closest to the query vector.  The naive approach computes the distance from the query to every stored vector.  For 1 million documents, each at 1536 dimensions, that is $1536 \times 10^6 \approx 1.5 \times 10^9$ floating-point operations per query, enough to take several seconds on a single CPU, which is unacceptable for an interactive assistant.
 
 **Approximate nearest-neighbor (ANN) search** accepts a small chance of missing the true nearest neighbor in exchange for a 100x to 1000x speedup.  Two algorithms dominate production systems:
 
-- **HNSW (Hierarchical Navigable Small World, an approximate nearest-neighbor index that organizes vectors into a multi-layer graph so search can navigate quickly from coarse to fine-grained neighborhoods):** builds a multi-layer graph where each node connects to its approximate nearest neighbors.  Search navigates from a coarse top layer downward, greedily jumping toward the query.  Think of it as a subway map where express lines get you close quickly, then local stops get you to the exact station.
+- **HNSW (Hierarchical Navigable Small World, an approximate nearest-neighbor index that organizes vectors into a multi-layer graph so search can move quickly from coarse to fine-grained neighborhoods):** builds a multi-layer graph where each node connects to its approximate nearest neighbors.  Search starts at a coarse top layer and works downward, greedily jumping toward the query.  Think of it as a subway map where express lines get you close quickly, then local stops get you to the exact station.
 - **IVF (Inverted File Index):** partitions the vector space into $n$ clusters (Voronoi cells) at index time.  At query time only the nearest few cluster centroids are searched.  Think of it as dividing a library into sections: you check the "Science" section, not every shelf.
 
 ---
 
 ### Distance Metrics
 
-Not all distance functions measure the same thing.  Choose the wrong one and semantically similar documents rank below dissimilar ones.  Think of this like choosing the right ruler: a protractor measures angles, a tape measure measures length; both are "distance" tools but answer different questions.
+Not all distance functions measure the same thing.  Choose the wrong one and semantically similar documents rank below dissimilar ones.  It is like choosing the right ruler: a protractor measures angles, a tape measure measures length; both are "distance" tools that answer different questions.
 
 | Scenario | Best Metric | Why | When to Use |
 |---|---|---|---|
@@ -232,7 +315,7 @@ Not all distance functions measure the same thing.  Choose the wrong one and sem
 
 1.  Most text embedding models (such as `nomic-embed-text` and OpenAI `text-embedding-3-small`) return L2-normalized vectors, meaning every vector has magnitude 1.  Show algebraically that for unit vectors, cosine similarity and dot product are identical.  Why does this simplification matter for implementation?
 
-   *Hint:* Cosine similarity is defined as $\frac{u \cdot v}{||u|| \cdot ||v||}$. What happens to the denominator when both vectors have magnitude 1?
+   *Hint:* Cosine similarity is defined as $\frac{u \cdot v}{||u|| \cdot ||v||}$.  What happens to the denominator when both vectors have magnitude 1?
 
 2.  You index 50,000 legal briefs and 50,000 social media posts in the same collection.  A query about "contract breach" retrieves a mix of both.  What property of the embedding space caused this, and which metadata filter would you add to the ANN query to fix it?
 
@@ -250,7 +333,7 @@ In this part, you will trace a complete RAG query through six pipeline steps (em
 
 ### From Query to Answer
 
-Every RAG query traverses a fixed sequence of steps, like an assembly line where each station transforms the work piece and hands it to the next.  Understanding who owns each step is essential for debugging: when the answer is wrong, you need to pinpoint whether to blame the embedding model, the ANN index, the metadata filter, or the language model.
+Every RAG query passes through a fixed sequence of steps, like an assembly line where each station transforms the work piece and hands it to the next.  Knowing who owns each step is essential for debugging: when the answer is wrong, you need to pinpoint whether to blame the embedding model, the ANN index, the metadata filter, or the language model.
 
 ### Pipeline Tracing
 
@@ -263,7 +346,7 @@ Every RAG query traverses a fixed sequence of steps, like an assembly line where
 | 5. Top-$k$ documents returned | Vector database | Filtered IDs | Document text + metadata | If chunks are too long, they waste context window space; if too short, they lack the context the LLM needs to answer. |
 | 6. LLM generates with docs in context | Language model (e.g., `claude-sonnet-4-5`, `llama3.1:8b`) | Prompt = system instructions + retrieved chunks + user question | Answer string | LLM ignores the retrieved text and hallucinates from parametric memory; "lost in the middle" effect buries the relevant chunk. |
 
-> **Common Misconception:** Many beginners assume that if the LLM gives a wrong answer, the problem must be with the LLM itself.  In practice, **the retrieval step fails far more often than the generation step**.  A perfect LLM cannot produce a correct answer if Step 3 or 4 returned the wrong documents.  Always check what was actually retrieved (Step 5's output) before debugging the LLM.
+> **Common Misconception:** Many beginners assume that if the LLM gives a wrong answer, the problem must be the LLM itself.  In practice, **the retrieval step fails far more often than the generation step**.  A perfect LLM cannot produce a correct answer if Step 3 or 4 returned the wrong documents.  Always check what was retrieved (Step 5's output) before debugging the LLM.
 
 #### Critical Thinking Questions
 
@@ -287,7 +370,7 @@ In this part, you will compare six production vector databases by architecture a
 
 ### Choosing a Vector Database
 
-The market has converged on a handful of architectures, each with a distinct operational profile.  Choosing the wrong one is like choosing a cargo ship when you need a speedboat; technically works but painfully slow to get started.
+The market has converged on a handful of architectures, each with a distinct operational profile.  Choosing the wrong one is like choosing a cargo ship when you need a speedboat; it works, but it is painfully slow to get started.
 
 | Database | Architecture | Hosted? | Strengths | Best For | Installation |
 |---|---|---|---|---|---|
@@ -298,7 +381,7 @@ The market has converged on a handful of architectures, each with a distinct ope
 | Pinecone | Managed SaaS, serverless | Cloud only (no self-hosting) | Zero infrastructure management, automatic scaling | Startups that need managed infrastructure and want to avoid DevOps overhead | `pip install pinecone` (API key required) |
 | Milvus | Distributed, C++ + Python | Self-host or Zilliz Cloud | Billion-scale capacity, multi-tenancy, GPU acceleration | Very large corpora (100M+ documents), enterprise deployments at scale | `pip install pymilvus` then Docker Compose setup |
 
-**Hybrid search** combines dense (embedding) retrieval with sparse (BM25/keyword) retrieval.  Dense search finds semantically related text even when exact words differ; sparse search finds documents that contain the literal query terms, which dense search can miss for rare names, part numbers, or acronyms.  Systems like Weaviate and Qdrant run both in parallel and merge the ranked lists with a fusion algorithm (Reciprocal Rank Fusion is common).
+**Hybrid search** combines dense (embedding) retrieval with sparse (BM25/keyword) retrieval.  Dense search finds semantically related text even when the exact words differ; sparse search finds documents that contain the literal query terms, which dense search can miss for rare names, part numbers, or acronyms.  Systems like Weaviate and Qdrant run both in parallel and merge the ranked lists with a fusion algorithm (Reciprocal Rank Fusion is common).
 
 ### Failure Mode Analysis
 
@@ -317,59 +400,3 @@ You are choosing between cosine similarity and L2 distance for a text retrieval 
 [(X)] Cosine similarity and L2 distance produce identical rankings when vectors are unit-normalized, so either works; cosine is typically the default for text
 [( )] L2 distance is always faster to compute than cosine similarity because it avoids the normalization step in the cosine formula
 [( )] Cosine similarity cannot be used with approximate nearest-neighbor indexes because ANN algorithms like HNSW require a Euclidean distance metric
-
----
-
-# Part III: Synthesis and Practice
-
-## 3.  Exercises
-
-In this Part you apply the RAG pipeline to real documents you choose, stress-test it for both citation quality and failure cases, and connect the results back to the evaluation framework from the *Hallucinations and Evaluating Agent Outputs* activity.  These exercises build directly toward the RAG Knowledge Base Lab.
-
-1.  *Your own corpus.*  Replace the five documents with ten sentences from a syllabus, club constitution, or campus page of your choosing.  Demonstrate one question answered correctly with citation and one abstention.
-
-   - *What to do:* Find a real document (your CS357 syllabus, a club's bylaws, the college's honor code).  Extract 10 meaningful sentences.  Index them in Chroma.  Ask five questions; at least two should be unanswerable from your documents.
-   - *Starter hint:* Copy your chosen sentences into the `docs` list, replacing the campus FAQ. Make sure each sentence is self-contained (contains enough context to be understood in isolation; avoid sentences like "As stated above, the deadline is...").
-   - *You've succeeded when:* You can show one output where the model correctly cites a source number, and one output where it says "not in my documents" for a question whose answer does not appear in your ten sentences.
-
-2.  *Eval rematch.*  Rerun the evaluation harness you built in the *Hallucinations and Evaluating Agent Outputs* activity, now routed through `rag_answer`, after adding documents containing the answers.  Report accuracy before and after; quantify the lift.
-
-   - *What to do:* Take the question-answer pairs from your *Hallucinations and Evaluating Agent Outputs* evaluation.  For each question that the bare model got wrong, add a document containing the correct answer to the Chroma index.  Run the same questions through `rag_answer` and compare accuracy scores.
-   - *Starter hint:* Your accuracy metric from that evaluation harness was (correct answers / total questions).  Run it twice: once with the bare model, once with RAG. The "lift" is `accuracy_rag - accuracy_bare`.  Report both numbers and the lift.
-   - *You've succeeded when:* You have a table showing at least 5 questions with the bare model's answer, the RAG answer, and a correct/incorrect label for each, plus the two accuracy scores and the lift.
-
-3.  *Citation audit.*  Ask five questions and verify each citation by hand: does the cited chunk actually support the claim?  Compute a faithfulness rate (number of faithful citations divided by total citations).
-
-   - *What to do:* For each of five questions, read the model's answer, find its cited source numbers (e.g., "[0]"), look up those document indices in the `docs` list, and judge: does the cited document actually say what the model claims it says?
-   - *Starter hint:* A citation is "faithful" if a human reading the cited chunk would agree it supports the specific claim the model made.  It is "unfaithful" if the model invented a detail not present in the chunk, even if the chunk is topically related.  Your faithfulness rate = faithful citations / total citations.
-   - *You've succeeded when:* You have a table of 5 questions, each model answer, each citation, your judgment (faithful/unfaithful), and a final faithfulness rate with one sentence explaining what that rate means for trust in this system.
-
-4.  *Failure taxonomy.*  Find one *retrieval* failure (the right answer exists in the index, but the wrong chunk was fetched) and one *generation* failure (the right chunk was fetched, but the model produced the wrong answer anyway).  Label which component owns each bug.
-
-   - *What to do:* Print both `ctx` (retrieved context) and `answer` for each of your test questions.  For retrieval failure: find a case where the retrieved chunk does NOT contain the answer but the answer IS in another document in `docs`.  For generation failure: find a case where the retrieved chunk DOES contain the answer but the model's final answer contradicts or ignores the chunk.
-   - *Starter hint:* Retrieval failures often happen when a question uses very different vocabulary from the relevant document (vocabulary mismatch).  Generation failures often happen with complex multi-step reasoning or when the model's parametric memory contradicts the context.
-   - *You've succeeded when:* You can show the `ctx` and `answer` for each failure case, explain which component (retriever or generator) produced the bug, and suggest one fix for each.
-
----
-
-## Reflection Prompt
-
-*Personal:* RAG lets a small private model answer questions about *your* documents without those documents ever leaving your machine.  Identify one collection of documents in your life (notes, club records, family archive) you would index, and one you would refuse to index even locally.  What distinguishes them?
-
-*Technical:* In your notebook: the `rag_answer` function instructs the model to say "not in my documents" rather than guess.  But what if a user needs an answer and it is not in the index?  Design a fallback strategy that is more helpful than silence but less dangerous than hallucination.
-
-*Societal:* Institutions (hospitals, courts, schools) could use RAG to give staff instant access to policy documents.  Name one benefit and one risk of a hospital deploying RAG over its clinical guidelines.  Who would need to audit the system, and how often?
-
----
-
-## -> Coming Up Next
-
-Our RAG system worked because our "documents" were clean, single-sentence facts.  Real documents are messy: long, overlapping, poorly organized.  The *RAG Quality: Chunking, Clustering, and Reranking* activity takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality, the same levers you will tune in the RAG Knowledge Base Lab.
-
----
-
-## 4.  Further Reading
-
-- Patrick Lewis et al. "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks."  *NeurIPS* (2020).  The original RAG paper.
-- Chroma documentation: https://docs.trychroma.com
-- Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 4.

@@ -34,8 +34,8 @@ info:
       description: "MCP"
       preemerging: "No MCP work."
       beginning: "An MCP server or client is configured but no discover-and-invoke round trip is shown."
-      progressing: "A transcript shows tool discovery followed by a successful invocation."
-      proficient: "As progressing, and the writeup states what MCP standardizes that a hand-rolled tools list does not, and, for the consume option, names the trust question raised by running someone else's tool definitions. Consuming a server through a client's configuration file earns this row on the same terms as consuming it from code."
+      progressing: "A transcript shows tool discovery followed by a successful invocation. For the Obsidian vault option, the transcript shows discovery, one read, and one gated append that was refused and then confirmed."
+      proficient: "As progressing, and the writeup states what MCP standardizes that a hand-rolled tools list does not, and, for the consume option or a community vault server, names the trust question raised by running someone else's tool definitions. Consuming a server through a client's configuration file earns this row on the same terms as consuming it from code, and the Obsidian vault option, whether written or configured, earns this row on the same terms as the create and use options."
     - weight: 5
       description: "Writeup and Reproducibility"
       preemerging: "No writeup, or one that cannot be followed."
@@ -52,13 +52,13 @@ tags:
 
 The Local Agent Lab built an agent that perceives, plans, and acts in a loop, but the only action it could take was producing text.  This lab gives it hands.
 
-The three capabilities below were previously bolted onto the Local Agent Lab, where they were due before the sessions that teach them.  They now stand on their own, handed out the day we cover tool use and due after we cover MCP, so that every part of this lab is something you have already seen in class.
+The three capabilities below used to be part of the Local Agent Lab, where they were due before the sessions that teach them.  They now stand on their own: handed out the day we cover tool use and due after we cover MCP, so every part of this lab is something you have already seen in class.
 
-**Prerequisites, all taught before this lab is due:** the Tool Use and Function Calling session, the MCP and APIs session, and the structured-output reading attached to both.
+**Prerequisites, all taught before this lab is due:** the *Tool Use and Function Calling* session, the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session, and the structured-output reading attached to both.
 
 ## Before You Start
 
-**This builds on:** the *Tool Use and Function Calling* session (which this lab is handed out on), the *Connecting Agents to the World: MCP and APIs* session (before it is due), and the structured-output reading attached to both.  It also assumes the agent loop you built in the **Local Agent Lab**: this lab gives that agent hands.
+**This builds on:** the *Tool Use and Function Calling* session (the day this lab is handed out), the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session (Tue Sep 29, before this lab is due), and the structured-output reading attached to both.  It also assumes the agent loop you built in the Local Agent Lab; this lab gives that agent hands.
 
 **You need**, on the code route:
 
@@ -68,13 +68,13 @@ python3 -c "import requests; print('requests ok')"
 ollama pull llama3.2                                    # a model that supports tool calling
 ```
 
-On the low-code route you need Open WebUI or Langflow running; on the no-code route, Open WebUI alone.
+On the low-code route you need Open WebUI or Langflow running.  On the no-code route you need Open WebUI alone.  The Obsidian vault option, on any route, needs a vault folder (a folder of Markdown notes) that your server or tool can reach.
 
-> **One thing to check now rather than at hour four:** not every local model does native function calling well, and a model that does not will simply produce prose describing a tool call instead of emitting one.  Test with a trivial tool before you build anything real.  If your model will not emit tool calls, say so in your writeup, switch models, and note what you observed; that observation is worth more than a clean run on a model you did not choose deliberately.
+> **Check this now rather than at hour four:** not every local model does native function calling well.  A model that does not will produce prose describing a tool call instead of emitting one.  Test with a trivial tool before you build anything real.  If your model will not emit tool calls, say so in your writeup, switch models, and note what you observed.  That observation is worth more than a clean run on a model you did not choose deliberately.
 
-Please start the reasoning comparison early.  Eight tasks times two conditions is mostly wall-clock waiting, and it is the one part of this lab you cannot compress on the last night.
+Start the reasoning comparison early.  Eight tasks times two conditions is mostly wall-clock waiting, and it is the one part of this lab you cannot compress on the last night.
 
-**What you will have at the end:** an agent that can act on the world, a demonstrated technique for making its output parseable, a measured answer to "did making it reason pay for itself," and a working relationship with the protocol the rest of the ecosystem is standardizing on.
+**What you will have at the end:** an agent that can act on the world, a demonstrated technique for making its output parseable, a measured answer to "did making it reason pay for itself," and working experience with the protocol the rest of the ecosystem is standardizing on.
 
 ---
 
@@ -88,22 +88,22 @@ The three capabilities and the writeup are the same on every route.  What differ
 | **Low-code** | A **Tool** node wired to an **Agent** node in **Langflow** | The same comparison, as two flows | Configure an MCP server in a client's config file, show discovery and invocation | You think better in a diagram, or you want the visual trace of which path executed |
 | **Code** | Register a typed tool and own the executor loop | Two runners over a fixed task set at a fixed seed | Author a small MCP server, or consume one from code | You are heading for the Local Agent Lab's MCP and OAuth direction |
 
-Every route must still show **structured output** (below), and every route needs a transcript.  On the no-code route, that means exporting the chat rather than pasting a screenshot of the answer: the tool invocation record is the evidence, not the reply.
+Every route must show structured output (below), and every route needs a transcript.  On the no-code route, export the chat rather than pasting a screenshot of the answer: the tool invocation record is the evidence, not the reply.
 
-> **Do not read the no-code column as "the version without the hard part."**  The hard part of this lab is explaining *why the model called the tool when it did and not when it didn't*, and that question is identical in all three columns.  What the code route buys you is a clearer view of the boundary between what your code owns and what the model owns; what the no-code route buys you is more time looking at the decision itself.
+> **Do not read the no-code column as "the version without the hard part."**  The hard part of this lab is explaining why the model called the tool when it did and not when it did not, and that question is identical in all three columns.  The code route buys you a clearer view of the boundary between what your code owns and what the model owns.  The no-code route buys you more time looking at the decision itself.
 
 ---
 
 ## The Three Capabilities
 
-Every submission must show that you can make an agent **use a tool**, make an agent **reason**, and work with **MCP** (the Model Context Protocol).  Each capability comes in two flavors: build it **from scratch** (you own the wiring) or drive it **from a framework / served model / existing server** (you own the configuration).  **Complete at least one option from Tool Use, at least one from Reasoning, and at least one from MCP.** You may do both flavors of one if it interests you, but one of each capability is the floor.  Fold your chosen options into your writeup with the transcript evidence each one asks for.
+Every submission must show that you can make an agent use a tool, make an agent reason, and work with MCP (the Model Context Protocol).  Each capability comes in more than one flavor: build it from scratch (you own the wiring) or drive it from a framework, a served model, or an existing server (you own the configuration).  **Complete at least one option from Tool Use, at least one from Reasoning, and at least one from MCP.**  You may do more than one flavor of a capability if it interests you, but one of each capability is the floor.  Fold your chosen options into your writeup with the transcript evidence each one asks for.
 
-> **Required for everyone, Structured output.**  Before your tool-use option can be trusted, the model has to return data your code can parse *reliably*, not free-form prose that happens to contain JSON. As part of your Tool Use exploration, demonstrate **one** structured-output technique and show it recovering from a case where naive parsing fails.  Pick one:
-> - **Ollama's `format` parameter**: pass a JSON Schema (or `"json"`) in the request so the server constrains the response to valid JSON. See the [Ollama structured outputs docs](https://docs.ollama.com/capabilities/structured-outputs).
+> **Required for everyone: structured output.**  Before your tool-use option can be trusted, the model has to return data your code can parse reliably, not free-form prose that happens to contain JSON.  As part of your Tool Use work, demonstrate **one** structured-output technique and show it recovering from a case where naive parsing fails.  Pick one:
+> - **Ollama's `format` parameter**: pass a JSON Schema (or `"json"`) in the request so the server constrains the response to valid JSON.  See the [Ollama structured outputs docs](https://docs.ollama.com/capabilities/structured-outputs).
 > - **[Instructor](https://python.useinstructor.com/integrations/ollama/)**: define a Pydantic model (a typed schema much like the dataclasses you already write) and let Instructor validate and auto-retry until the response conforms.
-> - **[Outlines](https://github.com/dottxt-ai/outlines)**: constrain decoding to a grammar/regex/JSON schema so invalid tokens are *impossible*, not merely discouraged.
+> - **[Outlines](https://github.com/dottxt-ai/outlines)**: constrain decoding to a grammar, regex, or JSON schema so invalid tokens are *impossible*, not merely discouraged.
 >
-> Deliver: a two-or-three-sentence note in your writeup showing a before (free-form parse breaks on a real model response) and after (constrained output parses every time), and one sentence on which of the three guarantees validity versus merely encourages it.  This is the reliability glue the rest of your agent's tool-calling depends on.
+> Deliver: a two-or-three-sentence note in your writeup showing a before (free-form parse breaks on a real model response) and after (constrained output parses every time), and one sentence on which of the three guarantees validity versus merely encourages it.  This is the reliability glue the rest of your agent's tool calling depends on.
 
 **Tool Use, pick at least one:**
 
@@ -126,14 +126,14 @@ Hand the same tool to an agent through a framework so the framework owns the too
 <details markdown="1">
 <summary><strong>Reasoning · From Scratch, make the agent think, and measure it</strong></summary>
 
-Add explicit reasoning to your agent and test whether it helps.  Either (a) insert a scratchpad/chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check).  Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens/latency it cost.  Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost.  Concepts are in the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes).
+Add explicit reasoning to your agent and test whether it helps.  Either (a) insert a scratchpad or chain-of-thought step where the model reasons before it answers, or (b) spend **test-time compute**: sample several reasoning paths at nonzero temperature and select the best (majority vote or a self-check).  Run both the plain and the reasoning version over a fixed set of at least eight tasks at a fixed seed, and report the accuracy delta *and* the extra tokens and latency it cost.  Deliver: both versions, the paired results table, and a sentence on when the extra reasoning earned its cost.  Concepts are in the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes).
 
 </details>
 
 <details markdown="1">
 <summary><strong>Reasoning · From a Model/User Perspective, use a reasoning model</strong></summary>
 
-Drive reasoning by *choosing the model* rather than building the loop.  Run a reasoning-capable model (or toggle a "think step by step" / extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set.  Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful.  Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why.  See the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes) for what makes a model a "reasoning" model.
+Drive reasoning by *choosing the model* rather than building the loop.  Run a reasoning-capable model (or toggle a "think step by step" or extended-thinking mode where your server supports it) and compare it against a direct-answer model on the same eight-task set.  Report accuracy, latency, and token cost for each, and identify a task type where the reasoning model clearly wins and one where it is wasteful.  Deliver: the comparison table and a short recommendation on which model you would ship for this workload and why.  See the [model-types lecture]({{ site.baseurl }}/Tutorials/ModelTypes) for what makes a model a "reasoning" model.
 
 </details>
 
@@ -142,14 +142,27 @@ Drive reasoning by *choosing the model* rather than building the loop.  Run a re
 <details markdown="1">
 <summary><strong>MCP · Create, stand up your own MCP server</strong></summary>
 
-Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not just your own loop.  Build a small MCP server (e.g. with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover -> invoke round-trip.  Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not.  *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)*  Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
+Expose your tool(s) over MCP so *any* MCP-aware client can discover and call them, not only your own loop.  Build a small MCP server (for example with the Python MCP SDK / FastMCP) that advertises one or two tools, then connect a client and show the discover -> invoke round trip.  Deliver: the server code, a transcript of a client listing the tools and calling one, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not.  *(If you take the [MCP Server with OAuth 2.0 direction](LocalAgent/Direction4), that fully satisfies this option.)*  Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md) and the free [Hugging Face MCP Course](https://huggingface.co/learn/mcp-course/) (built with Anthropic), whose early units walk through building and connecting an MCP server step by step.
 
 </details>
 
 <details markdown="1">
 <summary><strong>MCP · Use, connect your agent to an existing MCP server</strong></summary>
 
-Consume MCP instead of authoring it.  Point your agent (or a framework client) at an existing MCP server (for example a filesystem, fetch, or SQLite server) and let it discover the server's tools and call them to complete a task.  Deliver: the connection/config, a transcript showing tool discovery and at least one successful invocation, and one sentence on the trust question this raises (you are now running someone else's tool definitions).  Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md).
+Consume MCP instead of authoring it.  Point your agent (or a framework client) at an existing MCP server (for example a filesystem, fetch, or SQLite server) and let it discover the server's tools and call them to complete a task.  Deliver: the connection or config, a transcript showing tool discovery and at least one successful invocation, and one sentence on the trust question this raises (you are now running someone else's tool definitions).  Background: the [MCP activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-mcp.md).
+
+</details>
+
+<details markdown="1">
+<summary><strong>MCP · Obsidian Vault, put your notes behind MCP with a gated write</strong></summary>
+
+Expose an Obsidian vault (a folder of Markdown notes) to an agent over MCP, with the write path gated so nothing lands in a note without your confirmation.  This option earns the same credit on the MCP rubric row as Create or Use, on whichever route you take.
+
+**Code route.**  Write a small FastMCP or plain-HTTP server over a vault folder that exposes three operations: search (find notes matching a query), read (return one note), and a gated append (add text to a note only after a confirmation step).  The Model 3 vault server in the [MCP: Connecting Agents to Tools and Your Obsidian Vault deck](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-mcp.md) is the starting point; point it at your own vault folder and connect a client.
+
+**No-code route.**  Configure rather than write.  Either add a community Obsidian MCP server of your choice, cited in your readme, to your client's tool settings over your vault folder, or set up an Open WebUI tool over the vault folder.  The gate still has to exist: the write must not go through until you confirm it.
+
+Deliver on either route: the server code or the configuration, a transcript that shows tool discovery, one read of a note, and one gated write that was refused first and then carried out once you confirmed it, and one sentence on what MCP standardizes that a hand-rolled `tools` list does not.  If you used a community server, also name the trust question that running someone else's tool definitions raises.
 
 </details>
 
@@ -174,7 +187,7 @@ Everything below used to live in a separate Structured Outputs activity.  It is 
 
 ### The Four Output Modes
 
-There is not one "structured output" approach; there is a spectrum of mechanisms with different guarantees and different failure modes.  Understanding what each mode actually does (not what its marketing says) determines which one to reach for in a given situation.
+There is no single "structured output" approach.  There is a spectrum of mechanisms with different guarantees and different failure modes, and what each mode actually does (not what its marketing says) decides which one to reach for.
 
 **Before/After: What the output looks like in each mode**
 
@@ -202,35 +215,35 @@ Grammar-constrained: {"sentiment": "negative"}
 | **Function calling / tool use** | The API wraps the model's output in a structured function-call schema; the model generates a `tool_calls` field rather than prose | The format of the function call is guaranteed to be structurally valid; argument types match the declared schema | Model may call the wrong tool when multiple tools are available, omit required arguments, or pass arguments with the right type but wrong semantic content (a valid-format but wrong value) |
 | **Grammar-constrained decoding** (Outlines, LMQL, llama.cpp grammars) | At each decoding step, the token sampler masks out any token that would violate the grammar; only valid-next-token candidates can be sampled | Syntactic validity is mathematically guaranteed at the token level; the output will always parse as valid JSON matching the schema | Model may produce syntactically valid but semantically wrong output (correct format, wrong meaning); very complex required outputs can degrade overall response quality |
 
-Three properties worth separating clearly, these are the "levels" of correctness:
+Three properties are worth separating clearly.  They are the levels of correctness:
 
 - **Syntactic validity**: Is the output parseable as JSON (or another format)?  Does it have matching brackets and correct quoting?
 - **Schema validity**: Does the output conform to the specific schema: required fields present, types correct, enum values within the allowed set?
 - **Semantic validity**: Does the output mean what was intended: is the confidence score actually calibrated, does the citation actually exist, is the sentiment label actually accurate?
 
-Grammar-constrained decoding guarantees syntactic validity only.  Function calling with a schema guarantees syntactic and schema validity.  Nothing guarantees semantic validity; that requires evaluation, human oversight, or both.
+Grammar-constrained decoding guarantees syntactic validity only.  Function calling with a schema guarantees syntactic and schema validity.  Nothing guarantees semantic validity; that takes evaluation, human oversight, or both.
 
 #### Questions to Work Through
 
 1.  A developer uses JSON mode (instruction-based) for a production system and never validates the output, arguing "the model always produces valid JSON in my testing."  Describe a specific production scenario where this assumption breaks, explain exactly what class of failure it causes in the downstream system, and estimate how long it might go undetected.
 
-   *Hint: Testing typically uses short, clean inputs.  What happens when a user submits an unusually long article, an article in a foreign language, or a prompt that contains characters the model tries to escape in JSON? What does the downstream code do when it receives `None` where it expected a dict?*
+   *Hint: Testing typically uses short, clean inputs.  What happens when a user submits an unusually long article, an article in a foreign language, or a prompt that contains characters the model tries to escape in JSON?  What does the downstream code do when it receives `None` where it expected a dict?*
 
 2.  Grammar-constrained decoding masks out tokens that would violate the grammar.  Consider a schema that requires `"country": {"enum": ["US", "CA", "MX"]}`.  The model is generating a response about a user who is in Germany.  What does the constrained decoder do when it reaches the `country` field, and is the output it produces correct in any meaningful sense?
 
-   *Hint: The decoder cannot output "DE" because it is not in the enum.  It must output one of "US", "CA", or "MX".  How does the decoder choose, and what does that choice mean for the accuracy of the output?  Is structural guarantee the same as accuracy?*
+   *Hint: The decoder cannot output "DE" because it is not in the enum.  It must output one of "US", "CA", or "MX".  How does the decoder choose, and what does that choice mean for the accuracy of the output?  Is a structural guarantee the same as accuracy?*
 
 3.  The model produces output at all three validity levels: syntactic, schema, and semantic.  For a medical triage agent that outputs `{"urgency": "high" | "medium" | "low", "rationale": string}`, which validity level matters most for patient safety, and why are the lower levels (syntactic, schema) necessary but not sufficient?
 
    *Hint: A schema-valid output like `{"urgency": "low", "rationale": "Patient reports mild discomfort"}` might describe a patient who is actually in critical condition.  Which validity level catches the difference between "correctly formatted" and "actually right"?*
 
-Understanding what guarantees each output mode provides sets us up for the next question: how should the schema itself be designed to elicit better model behavior, not just valid output format?
+Knowing what each output mode guarantees raises the next question: how should you design the schema itself so that it elicits better model behavior, and not only a valid format?
 
 ---
 
 ### Schema Design as Prompt Engineering
 
-The schema you write for a structured output is not just a type annotation; it is a prompt.  The field names, descriptions, and constraints communicate to the model what you want in the same way that natural language instructions do.  A poorly designed schema produces valid-but-useless outputs; a well-designed schema elicits better reasoning.
+The schema you write for a structured output is a prompt as well as a type annotation.  The field names, descriptions, and constraints tell the model what you want in the same way natural-language instructions do.  A poorly designed schema produces valid-but-useless outputs; a well-designed schema elicits better reasoning.
 
 **Task**: Design a JSON schema for the task "analyze a news article for potential bias."
 
@@ -253,7 +266,7 @@ Consider what a thoughtful human analyst would record:
 }
 ```
 
-Problems with Version A: `bias` is a free-form string, so 10,000 articles might produce 10,000 different bias descriptions, impossible to aggregate. `score` has no minimum, maximum, or meaning. `notes` is a catch-all that will absorb anything the model wanted to say but had no proper field for.
+Problems with Version A: `bias` is a free-form string, so 10,000 articles might produce 10,000 different bias descriptions, impossible to aggregate.  `score` has no minimum, maximum, or meaning.  `notes` is a catch-all that will absorb anything the model wanted to say but had no proper field for.
 
 **Version B, schema designed to elicit structured reasoning:**
 
@@ -338,15 +351,15 @@ Version B output:
 
    *Hint: To validate that "environmental groups" is a missing perspective for a highway article, you need to know what perspectives actually exist for highway projects and which ones the article addressed.  You cannot determine this from the JSON alone.  What external resource or process would you need?*
 
-Even the best-designed schema cannot guarantee that the model produces valid output every time, which is why validation pipelines with repair loops are essential for any production system.
+Even the best-designed schema cannot guarantee that the model produces valid output every time.  That is why every production system needs a validation pipeline with a repair loop.
 
 ---
 
 ### The Output Validation Pipeline
 
-Never trust raw LLM output, even in JSON mode or with a schema.  Always parse and validate before your code uses the data.  When validation fails, you have two options: surface the error to the caller, or attempt a **repair loop**: re-prompting the model with the specific validation error and asking it to fix only that problem.
+Never trust raw LLM output, even in JSON mode or with a schema.  Always parse and validate before your code uses the data.  When validation fails, you have two options: surface the error to the caller, or attempt a **repair loop**, which re-prompts the model with the specific validation error and asks it to fix only that problem.
 
-The code below implements a full repair loop; read the comments carefully, especially the `max_repair_attempts` limit and the `fail loudly` behavior, which prevent the two most dangerous failure modes (infinite API cost and silent bad data flowing downstream):
+The code below implements a full repair loop.  Read the comments carefully, especially the `max_repair_attempts` limit and the `fail loudly` behavior, which prevent the two most dangerous failure modes: infinite API cost and silent bad data flowing downstream.
 
 ```python
 # Pydantic data model; defines the expected structure and validates incoming data
@@ -435,11 +448,11 @@ Second attempt output (valid):
 Key properties of this pipeline:
 
 - **Parse first, use second**: `model_validate_json` raises an exception before any downstream code touches potentially invalid data.
-- **Targeted repair**: The repair prompt includes the *specific* validation error with the actual bad value, not just "try again."  This gives the model actionable information about exactly what to fix.
+- **Targeted repair**: The repair prompt includes the *specific* validation error with the actual bad value, not only "try again."  This tells the model exactly what to fix.
 - **Bounded retries**: The loop has a hard limit.  Without it, an unfixable validation error (like a model that consistently outputs the wrong type) becomes an infinite loop and unbounded API cost.
-- **Fail loudly**: When repair is exhausted, the exception propagates to the caller.  Silent failures (returning `None` or default values) hide the problem and allow bad data to flow downstream.
+- **Fail loudly**: When repair is exhausted, the exception propagates to the caller.  Silent failures (returning `None` or default values) hide the problem and let bad data flow downstream.
 
-> **Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema.  It does not.  JSON mode is a *suggestion*; the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals).  The only way to get a mathematical guarantee that the output parses as valid JSON is to use grammar-constrained decoding at the token level.  The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds and repair or reject on failure.
+> **Common Misconception:** Many students assume that using "JSON mode" or telling the model to "output JSON" in the system prompt provides the same guarantees as grammar-constrained decoding or function calling with a schema.  It does not.  JSON mode is a *suggestion*; the model can and sometimes will ignore it, especially under pressure (long context, unusual inputs, refusals).  The only way to get a mathematical guarantee that the output parses as valid JSON is grammar-constrained decoding at the token level.  The only way to get schema validity without grammar constraints is to validate with a library like Pydantic *after* the model responds, and repair or reject on failure.
 
 #### Questions to Work Through
 
@@ -447,7 +460,7 @@ Key properties of this pipeline:
 
    *Hint: Consider a case where the model correctly identified `political_lean` as "center_right" but had an invalid `evidence_quality` of 1.5.  If the repair prompt just says "output correct JSON," the model might re-evaluate the article from scratch and now classify `political_lean` as "right", changing a valid field while fixing the invalid one.  What does the more constrained repair prompt do differently?*
 
-8.  Pydantic's `Field(ge=0.0, le=1.0)` on `evidence_quality` catches the case where the model outputs `1.5` (a range violation).  But it does not catch the case where the model outputs `0.9` for an article that cites zero sources and makes no verifiable claims; semantically, `0.9` is wildly wrong here, but it is structurally valid.  What layer of the system is responsible for catching semantic errors like this, and describe what that layer would concretely look like?
+8.  Pydantic's `Field(ge=0.0, le=1.0)` on `evidence_quality` catches the case where the model outputs `1.5` (a range violation).  But it does not catch the case where the model outputs `0.9` for an article that cites zero sources and makes no verifiable claims; semantically, `0.9` is wildly wrong here, but it is structurally valid.  What layer of the system is responsible for catching semantic errors like this, and what would that layer concretely look like?
 
    *Hint: One approach is a separate "quality check" LLM call that reads both the original article and the BiasAnalysis output and asks "is this analysis consistent with the article?"  Another approach is statistical: track the distribution of `evidence_quality` scores across thousands of articles and flag outliers.  Which approach is more scalable?*
 
@@ -455,13 +468,13 @@ Key properties of this pipeline:
 
    *Starter hint: One option is to return a partially valid response (the fields that passed validation) alongside an explicit `is_degraded: True` flag and a `validation_errors` field listing what failed.  Another option is to return a "manual review required" placeholder.  Which is more useful to a downstream system?  What does a system that relies on this output need to know to handle both cases correctly?*
 
-You ask an LLM to output a JSON object with a field `"confidence": float` constrained to values between 0 and 1.  The model outputs `{"confidence": "high"}`.  The most likely root cause of this failure is:
+10.  You ask an LLM to output a JSON object with a field `"confidence": float` constrained to values between 0 and 1.  The model outputs `{"confidence": "high"}`.  What is the most likely root cause of this failure?
 
 ---
 
 ## Build and Call a Tool: The Full Walkthrough
 
-In this section you define three tools using the OpenAI function-calling JSON schema format (the standard way to describe a tool's name, purpose, and parameters as a JSON object) and call them from your local model via Ollama's `/api/chat` endpoint.  Run all code locally; no external API keys or cloud services needed.
+In this section you define three tools in the OpenAI function-calling JSON schema format (the standard way to describe a tool's name, purpose, and parameters as a JSON object) and call them from your local model through Ollama's `/api/chat` endpoint.  Run all code locally; you need no external API keys or cloud services.
 
 **Files you will create.**  Everything below goes in one folder (call it `tools-lab/`) as three files, built in this order:
 
@@ -471,7 +484,7 @@ In this section you define three tools using the OpenAI function-calling JSON sc
 | `tool_impl.py` | The Python functions themselves plus the `REGISTRY` that maps a name to a function | Tool Implementations |
 | `agent.py` | The loop that calls the model, dispatches tool calls, and feeds results back | The Agent Loop |
 
-Splitting them this way is the point of the exercise, not bookkeeping: the model only ever sees `tool_definitions.py`, never the code in `tool_impl.py`.  Keeping them in separate files makes that boundary visible.  If you would rather work in a single file or a notebook, that is fine; just keep the three parts in clearly separated, labeled sections.
+Splitting them this way is the point of the exercise, not bookkeeping: the model only ever sees `tool_definitions.py`, never the code in `tool_impl.py`.  Separate files make that boundary visible.  If you would rather work in a single file or a notebook, that is fine; keep the three parts in clearly separated, labeled sections.
 
 ---
 
@@ -549,7 +562,7 @@ TOOLS = [
 
 Create `tool_impl.py`.
 
-The executor pattern keeps a **registry** (a plain Python dictionary mapping tool names to their implementations).  Your agent loop never calls a tool directly from the model's request; it looks up the name in the registry first.  This is the security boundary: only tools you explicitly register can ever run.  Notice that the `calculator` function uses Python's `ast` module (a library for safely parsing code into a tree of operations) rather than `eval()`; see the note after the code block for why this matters.
+The executor pattern keeps a **registry** (a plain Python dictionary mapping tool names to their implementations).  Your agent loop never calls a tool directly from the model's request; it looks the name up in the registry first.  This is the security boundary: only tools you explicitly register can ever run.  Notice that the `calculator` function uses Python's `ast` module (a library for safely parsing code into a tree of operations) rather than `eval()`; the note after the code block says why this matters.
 
 ```python
 import ast
@@ -596,7 +609,7 @@ REGISTRY = {
 }
 ```
 
-Note that `calculator` uses Python's `ast` module to parse the expression rather than calling `eval()`.  This is intentional: `eval()` on a model-supplied string is an arbitrary code execution vulnerability.  The `_safe_eval` function only handles numeric literals and the four arithmetic operators, so the model cannot inject `import os; os.system(...)` or any other dangerous expression.
+`calculator` parses the expression with Python's `ast` module rather than calling `eval()`.  This is intentional: `eval()` on a model-supplied string is an arbitrary code execution vulnerability.  The `_safe_eval` function only handles numeric literals and the arithmetic operators, so the model cannot inject `import os; os.system(...)` or any other dangerous expression.
 
 ---
 
@@ -681,7 +694,7 @@ When the agent loop appends a tool result back into the conversation, what `role
 
    > *Hint: Think about what happens when the model (prompted by a malicious user) supplies the path `/etc/passwd`, `~/.ssh/id_rsa`, or `../../config/secrets.json`.  The mitigation involves restricting which directories the tool is allowed to read from: for example, only allowing paths that begin with an approved prefix such as `/home/user/documents/`.  You might also check that the resolved absolute path (after following symlinks with `os.path.realpath`) still begins with that prefix, to prevent path traversal attacks.*
 
-> **Common Misconception:** Students often assume `tool_choice="auto"` means the model will always call a tool.  In reality, it means the model *may* call a tool if it decides one is needed, but it can also answer from memory without calling any tool at all.  If you need a specific tool to be invoked for every request (for safety, auditing, or consistency), set `tool_choice={"type": "function", "function": {"name": "tool_name"}}` to force it.  The difference matters for tools like `log_query` that you want called every time regardless of the model's judgment.
+> **Common Misconception:** Students often assume `tool_choice="auto"` means the model will always call a tool.  It means the model *may* call a tool if it decides one is needed; it can also answer from memory without calling any tool at all.  If you need a specific tool invoked for every request (for safety, auditing, or consistency), set `tool_choice={"type": "function", "function": {"name": "tool_name"}}` to force it.  The difference matters for tools like `log_query` that you want called every time regardless of the model's judgment.
 
 ---
 
@@ -727,8 +740,8 @@ You may complete this lab **without writing tool-calling code**, by wiring the s
 - [ ] **Reasoning:** at least eight fixed tasks, at a fixed seed, run in both conditions, with an accuracy delta.
 - [ ] Cost reported alongside accuracy: tokens and latency, or a stated stand-in.
 - [ ] One defensible sentence on when the reasoning cost was earned and when it was not.
-- [ ] **MCP:** a transcript showing discovery followed by invocation.
-- [ ] The writeup says what MCP standardizes that a hand-rolled tools list does not; if you consumed someone else's server, it names the trust question that raises.
+- [ ] **MCP:** a transcript showing discovery followed by invocation (for the Obsidian vault option: discovery, one read, and one gated write refused and then confirmed).
+- [ ] The writeup says what MCP standardizes that a hand-rolled tools list does not; if you consumed someone else's server, including a community vault server, it names the trust question that raises.
 - [ ] Model name and parameters recorded so a reader can reproduce your runs.
 - [ ] Route named at the top of the writeup.
 - [ ] AI-use disclosure included.
@@ -741,4 +754,4 @@ One repository or archive containing your code, plus a writeup that includes, fo
 
 ## Estimated Effort
 
-Roughly 6 to 8 hours: about 2 hours for tool use plus structured output, 2 to 3 for the reasoning comparison (most of it waiting on runs), and 2 to 3 for MCP. The reasoning comparison is the one to start early, because eight tasks times two conditions is a lot of wall-clock time if you leave it to the last night.
+Roughly 6 to 8 hours: about 2 hours for tool use plus structured output, 2 to 3 for the reasoning comparison (most of it waiting on runs), and 2 to 3 for MCP.  The reasoning comparison is the one to start early, because eight tasks times two conditions is a lot of wall-clock time if you leave it to the last night.

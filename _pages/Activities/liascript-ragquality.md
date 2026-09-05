@@ -10,15 +10,17 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 -->
 
-# RAG Quality: Chunking, Clustering, and Reranking
+# RAG Quality: Chunking and Measuring Retrieval
 
-The RAG pipeline from the *Retrieval-Augmented Generation with Chroma* activity worked because our "documents" were single tidy sentences; real documents are messy, and **how you cut them up determines what you can find**.  This module develops the engineering of retrieval quality: **chunking strategies → measuring retrieval → semantic clustering of a corpus → reranking**, the same levers you will tune in the RAG Knowledge Base Lab.
+**How you cut a document into chunks determines what you can find.**  The retrieval-augmented generation (RAG) pipeline from the *RAG Knowledge Base: Code and No-Code Routes* activity worked because our "documents" were single tidy sentences.  Real documents are messy.  Today you learn where chunk boundaries belong, how to measure whether retrieval found the right chunk (recall@k), how to see what a corpus contains, and what a reranker adds: **chunking strategies → measuring retrieval → semantic clustering of a corpus → reranking**.  These are the levers you will tune in the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), handed out today, and Part III walks through the lab's Part 5, the RAG Quality Checkup pathway, which turns today's metrics into a golden set, a worksheet, and a regression harness.
+
+The *Local Agent* lab is [due today](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent).
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Please think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, please respond to the reflective prompt on your own in your notebook.
+Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Recorder posts your answers to the Class Activity Questions discussion board, and the Presenter reports out wherever you disagreed or found another approach.  After class, respond to the reflective prompt on your own in your notebook.
 
 ---
 
@@ -42,20 +44,20 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | Minutes | What we do |
 |---|---|
 | 0-10 | Part I, chunking: where the boundaries go and what they cost you |
-| 10-45 | Part II, measure retrieval, then improve it and measure again |
-| 45-65 | The peer-review round on your team's Stakeholder Brief draft |
-| 65-75 | Part III, synthesis and the reflection prompt.  Both Extensions are self-paced |
+| 10-40 | Part II, measure retrieval, then map the corpus with clustering |
+| 40-60 | The peer-review round on your team's Stakeholder Brief draft |
+| 60-75 | Part III, the walkthrough of the lab's Part 5 checkup pathway, then the reflection prompt.  Both Extensions are self-paced |
 
 ---
 # Part I: Chunking
 
 ## 1.  The Goldilocks Problem
 
-In this Part you will explore why the size of text chunks matters enormously for retrieval quality, examine three splitting strategies, and develop a principled hybrid policy you can apply to your own documents in the RAG Knowledge Base Lab.
+In this Part you will see why the size of text chunks matters so much for retrieval quality, examine three splitting strategies, and write a hybrid policy you can apply to your own documents in the RAG Knowledge Base lab.
 
-**Why this matters:** Imagine searching a book using only its table of contents (chapters as chunks) versus searching it word by word (sentences as chunks).  The table of contents gives you chapters that might be 50 pages long; your embedding has to summarize 50 pages into one vector, which blurs the meaning across dozens of topics.  Individual sentences are precise but often meaningless in isolation: "He approved the request" tells you nothing about *who*, *what*, or *why*.  Good chunking finds the passage-length sweet spot that is semantically self-contained and focused enough to embed meaningfully.  It is the most impactful tuning knob in any real RAG system.
+**Why this matters:** Compare searching a book by its table of contents (chapters as chunks) with searching it sentence by sentence (sentences as chunks).  A chapter might run 50 pages; one embedding has to summarize all 50 into a single vector, which blurs the meaning across dozens of topics.  A sentence is precise but often meaningless alone: "He approved the request" tells you nothing about *who*, *what*, or *why*.  Good chunking finds the passage-length sweet spot: self-contained enough to stand alone and focused enough to embed well.  It is the highest-value tuning knob in any real RAG system.
 
-**Chunks too large** dilute the embedding (one vector must summarize many topics) and waste precious context window space.  **Chunks too small** orphan their meaning ("He approved the request" retrieves nothing useful without knowing who *he* is).  Practical systems balance three strategies:
+**Chunks too large** dilute the embedding (one vector must summarize many topics) and waste context window space.  **Chunks too small** orphan their meaning ("He approved the request" retrieves nothing useful without knowing who *he* is).  Practical systems balance three strategies:
 
 | Strategy | How It Works | Best For | Trade-Off |
 |----------|-------------|----------|-----------|
@@ -63,7 +65,7 @@ In this Part you will explore why the size of text chunks matters enormously for
 | **Structural** | Split on natural document boundaries (headings, paragraph breaks, bullet items) respecting how the author organized the content | Well-structured documents like policies, manuals, or textbooks with clear sections | One section might be 50 tokens and another 2,000 tokens, creating uneven retrieval quality |
 | **Semantic** | Split where the embedding similarity between consecutive sentences drops sharply, detecting topic shifts algorithmically | Long documents with many topic shifts where structural markers are sparse | More complex to implement; requires embedding every sentence before chunking |
 
-Overlap repairs boundary damage: with chunk size 200 and overlap 50, a fact straddling a boundary appears intact in at least one chunk.  The cost is index size inflation by a factor of roughly $\frac{n}{n - o}$, so a 200-token chunk with 50-token overlap inflates the index by $\frac{200}{150} \approx 1.33$ times.
+Overlap repairs boundary damage: with chunk size 200 and overlap 50, a fact straddling a boundary appears intact in at least one chunk.  The cost is a bigger index, because every overlapped token is embedded and stored twice; at those settings the index grows by about a third.
 
 ---
 
@@ -81,7 +83,7 @@ Consider a 12-page student handbook with sections on housing, dining, conduct, a
 
    > *Hint: At embedding time: one vector has to represent 3,000 tokens covering academic honesty, social conduct, residence hall policies, and disciplinary procedures.  What happens to the "meaning direction" of that vector?  At prompt assembly: if this chunk is retrieved, how much of your 4,000-token context window does it consume?*
 
-3.  Propose a hybrid policy for the handbook (one sentence per rule), and have the Recorder write it as if it were documentation for the RAG Knowledge Base Lab.
+3.  Propose a hybrid policy for the handbook (one sentence per rule), and have the Recorder write it as if it were documentation for the RAG Knowledge Base lab.
 
    > *Hint: A hybrid policy might say: "Use structural splits on section headings first, then apply fixed-size chunking with 50-token overlap within any structural chunk larger than 400 tokens, with a minimum chunk size of 100 tokens."  Write this as a numbered specification your lab partner could implement.*
 
@@ -91,19 +93,13 @@ Consider a 12-page student handbook with sections on housing, dining, conduct, a
 
 ## 2.  Retrieval Metrics
 
-In this Part you will learn how to measure whether your retrieval system is actually working, understand the recall@k metric (the fraction of questions for which the right chunk appears in the top-k results), and see how a reranker can raise precision without sacrificing recall.
+In this Part you will learn how to measure whether your retrieval system is working, using recall@k (the fraction of questions for which the right chunk appears in the top-k results), and see how a reranker can raise precision without giving up recall.
 
-**Why this matters:** You cannot improve what you cannot measure.  Before tuning chunk size, overlap, or any other parameter, you need a metric that tells you whether retrieval is actually working.  Recall@k is that metric: for a set of test questions where you know the right answer, does the right chunk appear in the top k results?  If recall@3 is 0.50, half your questions will get the wrong chunk and therefore a potentially hallucinated answer, regardless of how good your language model is.  Generation quality has a ceiling imposed by retrieval quality, and this section gives you the tools to find and raise that ceiling.
+**Why this matters:** You cannot improve what you cannot measure.  Before tuning chunk size, overlap, or any other parameter, you need a metric that tells you whether retrieval is working.  Recall@k is that metric: for a set of test questions where you know the right answer, does the right chunk appear in the top k results?  If recall@3 is 0.50, half your questions get the wrong chunk and therefore a possibly hallucinated answer, no matter how good your language model is.  Generation quality has a ceiling set by retrieval quality, and this section gives you the tools to find and raise that ceiling.
 
-For a question set with labeled relevant chunks, **recall@k** asks how often the right chunk appears in the top $k$ results:
+**Recall@k**, in plain terms: take a set of test questions where you have already located the chunk that answers each one.  For each question, retrieve the top $k$ chunks and check whether the right chunk is among them: score 1 if it is, 0 if it is not.  Recall@k is the average of those scores.  A score of 1.0 means every question had its answer chunk in the top $k$; a score of 0.5 means half did.
 
-$$
-\text{recall@}k = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}\left[\text{relevant}_i \cap \text{top-}k_i \neq \emptyset\right]
-$$
-
-Read this as: for each of $N$ questions, check whether the relevant chunk appears anywhere in the top $k$ retrieved results (1 if yes, 0 if no), then average across all questions.  A score of 1.0 means every question had its answer chunk in the top $k$; a score of 0.5 means half did.
-
-A two-stage design retrieves generously then filters precisely: a fast vector search proposes, say, 20 candidates (achieving high recall; the right chunk is almost certainly in there), and a **reranker** (a slower model scoring each query-chunk pair directly) reorders them so the truly relevant chunk rises into the top 3 that actually fit the prompt (achieving high precision).  Even an LLM prompted with "Rate the relevance of this passage to this question from 0 to 10" makes a serviceable reranker, our first taste of models evaluating text for other models.
+A two-stage design retrieves generously and then filters precisely.  A fast vector search proposes, say, 20 candidates (high recall; the right chunk is almost certainly in there), and a **reranker** (a slower model that scores each query-chunk pair directly) reorders them so the truly relevant chunk rises into the top 3 that fit the prompt (high precision).  Even an LLM prompted with "Rate the relevance of this passage to this question from 0 to 10" makes a serviceable reranker, our first taste of models evaluating text for other models.
 
 A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 chunks.  The highest-leverage fix is:
 
@@ -116,13 +112,13 @@ A system has recall@20 of 0.95 but recall@3 of 0.50, and the prompt only fits 3 
 
 ## 3.  Seeing Your Corpus: Semantic Clustering
 
-**Why this matters:** Before you build a RAG system over a large document collection, you need to understand what you have.  How many distinct topics does your corpus cover?  Are there entire subjects with no coverage?  Are there many near-duplicate chunks that waste index space and confuse retrieval?  Clustering the embeddings gives you an automatic map of your corpus's topic structure, the same way a heat map of a city shows you where neighborhoods cluster, without reading every street address.
+**Why this matters:** Before you build a RAG system over a large document collection, you need to know what you have.  How many distinct topics does your corpus cover?  Are there subjects with no coverage?  Are there many near-duplicate chunks that waste index space and confuse retrieval?  Clustering the embeddings gives you an automatic map of the corpus's topic structure, the way a heat map of a city shows where neighborhoods cluster without your reading every street address.
 
-Embeddings let us *map* a document collection before querying it.  Clustering chunk vectors (k-means on normalized embeddings approximates clustering by cosine similarity) reveals the topics your corpus actually contains, exposes duplicates, and flags off-topic contamination.
+Embeddings let us *map* a document collection before querying it.  Clustering chunk vectors (k-means on normalized embeddings approximates clustering by cosine similarity) reveals the topics your corpus contains, exposes duplicates, and flags off-topic contamination.
 
 ---
 
-The code below embeds eight campus-policy chunks using a local model, then runs k-means clustering (a method that groups items into k groups by finding the assignments that minimize total distance to each group's center) on the normalized embedding vectors.  After running it, you will read the cluster output and judge whether the algorithm found the same topic structure a human would draw.
+The code below embeds eight campus-policy chunks with a local model, then runs k-means clustering (a method that groups items into k groups by finding the assignments that minimize total distance to each group's center) on the normalized embedding vectors.  After running it, you will read the cluster output and judge whether the algorithm found the same topic structure a human would draw.
 
 ## Code Cell
 
@@ -169,48 +165,11 @@ for label in sorted(set(km.labels_)):
 
 ---
 
-
-### Worked Example: one k-means iteration, by hand
-
-The code cell above clusters your corpus and draws the map.  Before you trust a map, it is worth knowing how it was drawn, and k-means is simple enough to do on paper.  Here is one full iteration on four chunk embeddings, reduced to two dimensions so the arithmetic stays visible.
-
-Four chunks, with their (toy, 2-D) embeddings:
-
-| Chunk | Vector | Roughly about |
-|---|---|---|
-| A | $(1.0,\; 1.0)$ | course policies |
-| B | $(1.5,\; 2.0)$ | grading policy |
-| C | $(5.0,\; 4.0)$ | RAG implementation |
-| D | $(6.0,\; 5.0)$ | vector databases |
-
-**Step 1: initialize.**  Pick $k = 2$ and seed the centroids at two of the points: $c_1 = (1,1)$, $c_2 = (6,5)$.
-
-**Step 2: assign each point to its nearest centroid** (Euclidean distance):
-
-| Chunk | $d$ to $c_1$ | $d$ to $c_2$ | Assigned |
-|---|---|---|---|
-| A | $0.00$ | $6.40$ | **cluster 1** |
-| B | $\sqrt{0.5^2 + 1^2} = 1.12$ | $5.41$ | **cluster 1** |
-| C | $\sqrt{4^2 + 3^2} = 5.00$ | $\sqrt{1^2+1^2} = 1.41$ | **cluster 2** |
-| D | $6.40$ | $0.00$ | **cluster 2** |
-
-**Step 3: recompute each centroid as the mean of its members:**
-
-- $c_1 = \left(\frac{1.0 + 1.5}{2},\; \frac{1.0 + 2.0}{2}\right) = (1.25,\; 1.50)$
-- $c_2 = \left(\frac{5.0 + 6.0}{2},\; \frac{4.0 + 5.0}{2}\right) = (5.50,\; 4.50)$
-
-**Step 4: repeat.**  Reassign with the new centroids: nothing changes, so the algorithm has **converged** after one iteration.  Two clusters, and they correspond to something real (policy chunks and implementation chunks) which nobody labeled.
-
-**What this tells you about your own corpus map.**  Three things worth carrying into Model 2:
-
-1.  **The clusters are an artifact of $k$, not a fact about your documents.**  We chose $k = 2$. Choose $k = 4$ on this data and you get four singleton clusters, each perfectly "coherent" and completely useless.  When the map looks clean, ask whether $k$ made it clean.
-2.  **The seeds matter.**  Had we seeded at B and C instead, the first assignment would differ, and on messier data the final clustering can differ too.  This is why production implementations use k-means++ seeding and run several times.
-3.  **Distance here is Euclidean, but retrieval usually ranks by cosine.**  On *normalized* vectors the two give the same ordering, which is exactly why the pipeline normalizes embeddings before clustering.  If you ever cluster un-normalized vectors, long documents drift away from the origin and form their own cluster purely because they are long, not because they are about anything in particular.
-
+Two cautions before you trust the map.  The clusters are an artifact of $k$ as much as a fact about your documents: we chose 3, and choosing 8 on this data gives eight singleton clusters, each perfectly "coherent" and useless.  And the code normalizes the vectors first because k-means measures straight-line distance while retrieval ranks by cosine; on normalized vectors the two agree, and on un-normalized vectors long documents drift into their own cluster because they are long, not because they are about anything.
 
 ## Model 2: Reading the Map
 
-**Why this matters:** The clusters the algorithm produces may or may not match the categories a human would draw.  When they do not match, the mismatch is a window into what the embedding model actually "hears" in the text, and that is valuable information for predicting where your retrieval system will succeed and where it will fail.
+**Why this matters:** The clusters the algorithm produces may or may not match the categories a human would draw.  When they do not match, the mismatch is a window into what the embedding model "hears" in the text, and that tells you where your retrieval system will succeed and where it will fail.
 
 ### Critical Thinking Questions
 
@@ -222,7 +181,7 @@ Four chunks, with their (toy, 2-D) embeddings:
 
    > *Hint: K-means minimizes Euclidean distance (straight-line distance in space) to cluster centroids.  Cosine similarity ignores vector length and only measures direction.  If two vectors point in the same direction but one is 10 times longer, cosine similarity says they are identical (score 1.0), but Euclidean distance says they are far apart.  Normalizing (setting all vectors to length 1) makes Euclidean distance proportional to cosine distance.*
 
-6.  Describe two concrete uses of this cluster map when curating the knowledge base for the RAG Knowledge Base Lab: one use for finding *gaps* in your corpus, and one for finding *duplicates*.
+6.  Describe two concrete uses of this cluster map when curating the knowledge base for the RAG Knowledge Base lab: one use for finding *gaps* in your corpus, and one for finding *duplicates*.
 
    > *Hint: For gaps: if your corpus has 3 clusters but your users' questions span 5 topics, what does that tell you?  For duplicates: if one cluster contains 12 chunks and they all say nearly the same thing in slightly different words, what is the problem for retrieval and for prompt assembly?*
 
@@ -232,17 +191,21 @@ Four chunks, with their (toy, 2-D) embeddings:
 
 # Part III: Synthesis and Practice
 
-With the theory of recall and reranking established, this hands-on section puts chunking strategies head-to-head on a real document so you can see the performance differences numerically rather than hypothetically.
+## Walkthrough: Part 5 of the RAG Knowledge Base Lab
 
-## Hands-On: Chunking Strategy Comparison
+The [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) is handed out today.  Its Part 5, the RAG Quality Checkup pathway, is where today's metrics get used on your own pipeline, and this walkthrough sets it up so the studio time in *How I AI* goes to measuring rather than to reading the handout.  Part 5 has three steps, and each one is something you practiced today:
 
-The full 30-minute build (the sample document, three chunking functions, cosine retrieval, the five test questions, and the results table) now lives on the **[RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase)**, which is handed out today and is where you run the comparison for credit.
+1.  **The golden set (step 5a).**  Ten questions with expected answers and a stated scoring rule: five your model should get right and five it should not.  For each item you write a prediction and a one-sentence rationale.  This is the labeled question set that recall@k needs, and it is paper-and-thinking work you can start tonight without a running pipeline.
+2.  **The checkup worksheet (step 5b).**  Three measurements from your own pipeline, in order: recall@k under your current chunking configuration and one alternative (change chunk size or overlap, not both), a five-row citation audit that marks each claim supported or unsupported with a chunk reference, and one observed failure with a hypothesis and a planned fix.  The winning configuration goes back into your lab config.
+3.  **The regression harness (step 5c).**  Pin the golden set and a fixed protocol (temperature 0.0, a fixed seed, the model named), run it twice, and show the two runs agree.  A spreadsheet run sheet, promptfoo YAML, or plain Python all count; the Rubric Pipeline lab picks this harness up later in the term.
 
-Today we stay on the *judgment*: where a chunk boundary belongs, and what recall@k does and does not tell you.
+The same three steps work on the Langflow route: query both flows by hand in the playground, record hits and misses in a spreadsheet, and the run sheet is your harness.  The judgment (which configuration wins, which citations are real, what the failure means) is identical on every route.
+
+Today we stay on the *judgment*: where a chunk boundary belongs, and what recall@k does and does not tell you.  The exercises below are rehearsals for steps 5b and 5c on a small scale.
 
 ## 4.  Exercises
 
-In this Part you apply everything from Parts I and II to real documents: run a chunking shootout on a campus policy page, build and test a reranker using your local model, plot a recall curve, and choose a retrieval configuration you can defend with numbers.
+In this Part you apply Parts I and II to real documents: run a chunking shootout on a campus policy page, build and test a reranker with your local model, plot a recall curve, and choose a retrieval configuration you can defend with numbers.
 
 1.  *Chunking shootout.*  Take one real page of a campus document.  Index it three ways (fixed 100 tokens no overlap, fixed 300 tokens with 75-token overlap, paragraph-structural).  For five questions with known answers, report which indexing strategy wins recall@2, and explain the winner.
 
@@ -256,7 +219,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
    - *Starter hint:* `def rerank_score(question, chunk): return int(chat(f"Rate relevance 0-10 of this passage to '{question}': '{chunk}'. Reply only with a number."))`.  Call this for each of your 10 candidates, sort descending, and report where the correct chunk landed before and after reranking.
    - *You've succeeded when:* For at least 2 of 3 questions, the correct chunk's rank improves after reranking (e.g., moved from position 4 to position 1), and you can explain in one sentence why the initial vector search placed it lower.
 
-3.  *Recall curve.*  For your RAG Knowledge Base Lab corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
+3.  *Recall curve.*  For your RAG Knowledge Base lab corpus draft, plot recall@k for $k \in \{1, 2, 3, 5, 10\}$, and choose the $k$ you will ship, defending the choice in two sentences that mention both context budget and accuracy.
 
    - *What to do:* Build a small evaluation set of 10 questions with labeled relevant chunks.  Run your Chroma search with n_results=10 for each question.  Compute recall@k for each k value by checking whether the correct chunk appears in the top k.  Plot the resulting curve with `matplotlib`.
    - *Starter hint:* `recall_at_k = [sum(1 for q in eval_set if correct_chunk[q] in top_k_results[q][:k]) / len(eval_set) for k in [1,2,3,5,10]]`.  Then `plt.plot([1,2,3,5,10], recall_at_k)`.
@@ -276,7 +239,7 @@ In this Part you apply everything from Parts I and II to real documents: run a c
 
 ## -> Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information.  Next session, *How I AI*, turns that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there.  Its Part III is an open studio, so bring your pipeline-in-progress and your stuck points.  The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
+We now have a RAG system that can find and deliver relevant information, and a way to measure whether it did.  Next session, *How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox* (Thu Oct 15), turns that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there.  Its Part III is an open studio, so bring your pipeline-in-progress, your golden set from step 5a, and your stuck points.  The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
 
 ---
 
@@ -290,7 +253,7 @@ We now have a RAG system that can find and deliver relevant information.  Next s
 
 # Extension: Fine-Tuning, RAG, and Prompting (self-paced)
 
-Optional, and not assumed by anything above.  You now know how to make retrieval work well.  The next question your project will force on you is whether retrieval was the right tool at all, or whether the job wanted a better prompt or an actually fine-tuned model.  This section gives you the decision framework and the cost model behind it.
+Optional, and not assumed by anything above.  You now know how to make retrieval work well.  The next question your project will force on you is whether retrieval was the right tool at all, or whether the job wanted a better prompt or a fine-tuned model.  This section gives you the decision framework and the cost model behind it.
 
 ## Key Concepts
 
@@ -299,7 +262,7 @@ Optional, and not assumed by anything above.  You now know how to make retrieval
 | Prompting | Giving the AI model written instructions, examples, or context within a single request; no code changes, no training, just better text. | Writing a system prompt that says "You are a helpful HR assistant. Always cite the policy section number." |
 | RAG (Retrieval-Augmented Generation) | Connecting the AI to an external knowledge source (like a document database) so it can look up relevant information before answering; the model's weights never change. | Before answering "What is our PTO policy?", the system fetches the relevant section of the employee handbook and includes it in the prompt. |
 | Fine-Tuning | Continuing the model's training on your own data so the model's internal weights permanently change; it behaves differently on every future call, even without special prompts. | Training `llama3.1:8b` on 800 examples of correctly formatted legal contract summaries so it always produces that format. |
-| LoRA (Low-Rank Adaptation) | A parameter-efficient fine-tuning method that trains only tiny "adapter" matrices (about 0.1% of the total parameters) instead of updating the entire model, dramatically reducing GPU cost. | Fine-tuning a 7B model with LoRA requires a single A100 GPU for a few hours instead of a multi-GPU cluster for days. |
+| LoRA (Low-Rank Adaptation) | A parameter-efficient fine-tuning method that trains only tiny "adapter" matrices (about 0.1% of the total parameters) instead of updating the entire model, cutting GPU cost by orders of magnitude. | Fine-tuning a 7B model with LoRA requires a single A100 GPU for a few hours instead of a multi-GPU cluster for days. |
 | QLoRA | LoRA combined with 4-bit quantization of the frozen base model weights; enables fine-tuning 7B models on a single consumer GPU with 24 GB of VRAM. | Students at Ursinus can run QLoRA fine-tuning on a rented Lambda Labs A100 instance for roughly $3-5. |
 | Context Window | The maximum amount of text (measured in tokens, where 1 token ≈ 0.75 words) that a model can read in a single request; determines whether "just paste the whole document in" is even possible. | GPT-4o has a 128K token context window, about 96,000 words. A 500-page policy manual (~200,000 words) still exceeds it. |
 
@@ -307,21 +270,21 @@ Optional, and not assumed by anything above.  You now know how to make retrieval
 
 ## The Ladder
 
-In this part, you will learn the three fundamental ways to specialize a language model (prompting, RAG, and fine-tuning) and build a diagnostic framework for choosing among them.  Understanding which lever to reach for first will save your team weeks of unnecessary work.
+In this part, you will learn the three basic ways to specialize a language model (prompting, RAG, and fine-tuning) and build a diagnostic for choosing among them.  Knowing which lever to reach for first will save your team weeks of unnecessary work.
 
 ### Three Ways to Specialize a Model
 
-This is the "hire an expert vs. give your generalist a textbook" decision, and just like in real life, hiring a full specialist is expensive, slow, and permanent.  Sometimes the right answer is to give your generalist a great textbook (RAG), or better instructions (prompting), and only bring in the specialist when those cannot work.
+This is the "hire an expert or give your generalist a textbook" decision, and as in real life, hiring a full specialist is expensive, slow, and permanent.  Often the right answer is to give your generalist a great textbook (RAG), or better instructions (prompting), and bring in the specialist only when those cannot work.
 
 The three approaches differ in *where the specialization lives*: in the prompt at inference time, in retrieved text at inference time, or in the model weights permanently.
 
-**Prompting** gives the model instructions, examples, and context within a single call.  Zero-shot prompting provides instructions only; few-shot adds 2-10 worked examples; chain-of-thought prompts the model to reason step by step before answering.  Prompting is free, instant, and reversible, but is bounded by the context window and by what the base model already knows.  A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
+**Prompting** gives the model instructions, examples, and context within a single call.  Zero-shot prompting provides instructions only; few-shot adds 2-10 worked examples; chain-of-thought prompts the model to reason step by step before answering.  Prompting is free, instant, and reversible, but it is bounded by the context window and by what the base model already knows.  A model that has never seen clinical trial reports cannot be prompted into reliable clinical summarization.
 
 **RAG** injects retrieved information at inference time.  The model receives the same prompt, but now the prompt includes relevant documents fetched from an external index.  The model's weights never change.  RAG excels when knowledge is dynamic (daily news, live databases), external (proprietary documents the base model never saw), or too large for any context window.  Its costs are operational: embedding, indexing, retrieval latency, and the complexity of the pipeline.
 
-**Fine-tuning** adjusts the model's weights on a task-specific dataset.  The change is permanent: a fine-tuned model behaves differently on every subsequent call, without any special prompt.  Fine-tuning can teach style, format, vocabulary, and domain behavior that prompting cannot reliably achieve.  It is also the most expensive and least reversible option.  **PEFT (Parameter-Efficient Fine-Tuning)** methods such as LoRA and QLoRA reduce cost dramatically by freezing most weights and training only small adapter matrices; more on this below.
+**Fine-tuning** adjusts the model's weights on a task-specific dataset.  The change is permanent: a fine-tuned model behaves differently on every subsequent call, without any special prompt.  Fine-tuning can teach style, format, vocabulary, and domain behavior that prompting cannot reliably achieve.  It is also the most expensive and least reversible option.  **PEFT (Parameter-Efficient Fine-Tuning)** methods such as LoRA and QLoRA cut the cost by freezing most weights and training only small adapter matrices; more on this below.
 
-The practical rule: **start at the top of the ladder**.  Reach for fine-tuning only after you have really tried prompting and RAG and found them insufficient.
+The practical rule: **start at the top of the ladder**.  Reach for fine-tuning only after you have tried prompting and RAG and found them insufficient.
 
 ---
 
@@ -342,25 +305,25 @@ Use this table as a diagnostic.  Each row is a question to ask before choosing a
 
 1.  A startup wants to build a customer support bot that answers questions about their product documentation, which is updated every sprint (roughly every two weeks).  Walk through the decision table row by row and justify your final recommendation.
 
-   *Hint:* Pay special attention to the "Is the knowledge dynamic?" row.  What does "updated every two weeks" mean for an approach that requires retraining (days of work) vs. an approach that requires re-indexing (minutes of work)?
+   *Hint:* Pay special attention to the "Is the knowledge dynamic?" row.  What does "updated every two weeks" mean for an approach that requires retraining (days of work) versus an approach that requires re-indexing (minutes of work)?
 
 2.  A legal firm wants every contract summary the model produces to follow a precise seven-section structure with mandatory fields.  They have 2,000 existing human-written summaries in that format.  Walk through the decision table for this case.  Does the answer change if they only have 50 examples?  Why?
 
-   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable.  With 50 examples, few-shot prompting (including 3-5 examples directly in the prompt) may actually outperform a poorly-fitted fine-tuned model.
+   *Hint:* Fine-tuning for format typically requires at least a few hundred examples to be reliable.  With 50 examples, few-shot prompting (including 3-5 examples directly in the prompt) may outperform a poorly-fitted fine-tuned model.
 
 3.  "The model already knows how to write code, so we just need to prompt it."  A team makes this argument to avoid fine-tuning their coding assistant.  Describe a concrete scenario where this reasoning fails, where the gap between base model behavior and desired behavior is too large for prompting to close.
 
-   *Hint:* Think about a company-specific internal library with custom APIs that the base model has never seen (because it's proprietary).  No amount of prompting teaches the model what `acme_corp.billing.create_invoice(customer_id, line_items)` does.
+   *Hint:* Think about a company-specific internal library with custom APIs that the base model has never seen (because it is proprietary).  No amount of prompting teaches the model what `acme_corp.billing.create_invoice(customer_id, line_items)` does.
 
 ---
 
 ## Cost and the LoRA Shortcut
 
-In this part, you will compare the true costs of prompting, RAG, and fine-tuning, and learn how LoRA dramatically reduces the GPU memory and compute needed for fine-tuning, making it accessible for small teams and individuals.
+In this part, you will compare the true costs of prompting, RAG, and fine-tuning, and learn how LoRA cuts the GPU memory and compute needed for fine-tuning far enough that small teams and individuals can afford it.
 
 ### The Cost Reality
 
-The order-of-magnitude cost differences between approaches are often underappreciated.  These figures are rough but directionally correct as of 2025.  Think of it like building a house: you can rent a furnished apartment immediately (prompting), move into a place and add your own furniture (RAG), or custom-build from scratch (fine-tuning); each has very different upfront and ongoing costs.
+The order-of-magnitude cost differences between approaches are often underappreciated.  These figures are rough but directionally correct as of 2025.  Think of it like housing: you can rent a furnished apartment immediately (prompting), move into a place and add your own furniture (RAG), or custom-build from scratch (fine-tuning); each has very different upfront and ongoing costs.
 
 | Approach | Typical Cost per Query | One-Time Setup Cost | Infrastructure Needed | Data Requirement |
 |---|---|---|---|---|
@@ -370,7 +333,7 @@ The order-of-magnitude cost differences between approaches are often underapprec
 | Fine-tuning (large model, full weight update) | $0.0001-$0.001 per call after training (self-hosted inference) | $1,000-$50,000 per training run on multi-GPU cluster | Multi-GPU cluster, distributed training framework (DeepSpeed, FSDP) | Thousands to millions of labeled pairs |
 | Pre-training from scratch | Fractions of a cent per call after training | $1,000,000+ for a competitive model | Massive GPU cluster, months of compute | Billions of tokens of curated text |
 
-The "low cost per call after training" for fine-tuning is deceptive: the inference cost is low, but the up-front training cost is paid once per model version.  If the domain or data changes, you re-pay that cost.
+The "low cost per call after training" for fine-tuning is deceptive: the inference cost is low, but the up-front training cost is paid once per model version.  If the domain or data changes, you pay that cost again.
 
 ### Same Task, Three Approaches
 
@@ -385,13 +348,13 @@ Consider a concrete deployment: **an HR policy assistant that answers questions 
 | Provides citations? | Possible with careful prompting ("Always cite the section number") but not guaranteed | Natural: the retrieved chunk itself is the citation and can be shown to the user | Generally not: knowledge is embedded opaquely in weights, so the model cannot point to its source |
 | Output style consistency | Moderate: varies with how the user phrases their question | Moderate: same retrieval quality, but LLM generation still varies | High: style, format, and phrasing learned during training appear consistently in every response |
 
-> **Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution.  In reality, for a task like the HR policy assistant, **RAG almost always outperforms fine-tuning** because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge).  Fine-tuning wins for style/format, not for factual recall of changing documents.
+> **Common Misconception:** Many teams jump straight to fine-tuning because it sounds like the most "AI-native" solution.  For a task like the HR policy assistant, **RAG almost always outperforms fine-tuning**, because policy documents change frequently (defeating fine-tuning's static knowledge) and citations matter (defeating fine-tuning's opaque knowledge).  Fine-tuning wins for style and format, not for factual recall of changing documents.
 
 #### Questions to Work Through
 
 4.  The HR policy document is 50 pages.  Prompting is eliminated by context window limits.  Between RAG and fine-tuning, which approach provides better freshness when a policy changes, and why does the answer matter operationally for an HR department?
 
-   *Hint:* When a policy changes, which approach requires re-indexing (minutes) vs. retraining (hours/days)?  Think about the HR team's perspective: if the maternity leave policy changes tomorrow, how quickly can each approach reflect that change?
+   *Hint:* When a policy changes, which approach requires re-indexing (minutes) versus retraining (hours or days)?  Think about the HR team's perspective: if the maternity leave policy changes tomorrow, how quickly can each approach reflect that change?
 
 5.  A product manager argues: "Let's fine-tune the model on HR Q&A pairs so we don't need the vector database."  What hidden assumption does this argument make about the stability of the policy, and what happens at the next policy revision?
 
@@ -411,7 +374,7 @@ LoRA freezes all original weights and adds two small matrices per layer.  For a 
 
 ### LoRA Illustrated
 
-The diagram below shows how LoRA adds two tiny matrices (A and B) alongside the frozen original weight matrix W. Look for how small r is compared to d and k; that small rank is what makes LoRA's memory savings so dramatic.
+The diagram below shows how LoRA adds two tiny matrices (A and B) alongside the frozen original weight matrix W.  Look for how small r is compared to d and k; that small rank is what makes LoRA's memory savings so large.
 
 ```
 Original Layer (frozen):          LoRA Correction (trained):
@@ -437,15 +400,15 @@ A team wants to fine-tune a 7B model to always respond in a structured JSON form
 
 ---
 
-> Now that you understand both the decision logic and the cost structure, Part III gives you hands-on practice applying these ideas to real products and calculating concrete break-even points.
+> Now that you have the decision logic and the cost structure, the exercises below apply them to real products and to concrete break-even points.
 
 ## Synthesis and Practice
 
-In this part, you will apply the decision framework and cost model to real AI products you already use, calculate when self-hosted fine-tuning beats API calls on price, and practice constructing training datasets for a fine-tuning pipeline.
+In this part, you will apply the decision framework and cost model to AI products you already use, calculate when self-hosted fine-tuning beats API calls on price, and practice constructing training datasets for a fine-tuning pipeline.
 
 ### Exercises
 
-1.  *Approach audit.*  Identify three AI products you use regularly (a search assistant, a coding tool, a customer service bot).  For each, hypothesize whether the specialization is achieved via prompting, RAG, fine-tuning, or some combination.  List the evidence that informs your hypothesis.
+1.  *Approach audit.*  Identify three AI products you use regularly (a search assistant, a coding tool, a customer service bot).  For each, hypothesize whether the specialization comes from prompting, RAG, fine-tuning, or some combination.  List the evidence that informs your hypothesis.
 
    *What to do:* For each product, answer: Does it know about recent events?  (RAG or prompting.)  Does it refuse certain topics?  (Prompting/fine-tuning.)  Does it always output in a specific format?  (Fine-tuning.)  Does it cite sources?  (RAG.)
 
@@ -453,19 +416,19 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
    *You've succeeded when:* You have a table with three products, a hypothesis for each, and at least two observable behaviors that support each hypothesis.
 
-2.  *Cost model.*  You process 10,000 user queries per day.  Compare the monthly cost of: (a) GPT-4o via API at $5/1M input tokens with a 2,000-token average prompt vs. (b) a locally-hosted fine-tuned `llama3.1:8b` model on a rented A100 at $2/hour.
+2.  *Cost model.*  You process 10,000 user queries per day.  Compare the monthly cost of: (a) GPT-4o via API at $5/1M input tokens with a 2,000-token average prompt versus (b) a locally-hosted fine-tuned `llama3.1:8b` model on a rented A100 at $2/hour.
 
    *What to do:* Calculate (a) monthly API cost: 10,000 queries/day × 30 days × 2,000 tokens × ($5 / 1,000,000).  Calculate (b) monthly GPU cost: 720 hours/month × $2/hour.  Add the one-time training cost.  Find the break-even query volume.
 
    *Starter hint:* At 10,000 queries/day, GPT-4o API cost ≈ $3,000/month.  A dedicated A100 ≈ $1,440/month.  But what happens at 500 queries/day?  The A100 is always on; the API charges per query.  Build a simple Python calculation: `api_cost = queries_per_day * 30 * avg_tokens * price_per_token`.
 
-   *You've succeeded when:* You have a break-even query volume (queries/day at which the two approaches cost the same) and a recommendation for a startup with 500 queries/day vs. 50,000 queries/day.
+   *You've succeeded when:* You have a break-even query volume (queries/day at which the two approaches cost the same) and a recommendation for a startup with 500 queries/day versus 50,000 queries/day.
 
-3.  *LoRA parameter count.*  A transformer layer has a query projection matrix $W_Q \in \mathbb{R}^{4096 \times 4096}$. If LoRA is applied with rank $r = 16$, how many parameters does LoRA add to this single matrix (count $A$ and $B$ together)?  What fraction of the original matrix does this represent?
+3.  *LoRA parameter count.*  A transformer layer has a query projection matrix $W_Q \in \mathbb{R}^{4096 \times 4096}$.  If LoRA is applied with rank $r = 16$, how many parameters does LoRA add to this single matrix (count $A$ and $B$ together)?  What fraction of the original matrix does this represent?
 
-   *What to do:* $A$ has shape $4096 \times 16$ and $B$ has shape $16 \times 4096$. Count total LoRA parameters.  Original $W_Q$ has $4096 \times 4096 = 16{,}777{,}216$ parameters.
+   *What to do:* $A$ has shape $4096 \times 16$ and $B$ has shape $16 \times 4096$.  Count total LoRA parameters.  Original $W_Q$ has $4096 \times 4096 = 16{,}777{,}216$ parameters.
 
-   *Starter hint:* $|A| = 4096 \times 16 = 65{,}536$. $|B| = 16 \times 4096 = 65{,}536$. Total LoRA = $131{,}072$. Fraction = $131{,}072 / 16{,}777{,}216 \approx 0.78\%$. A real 7B model has ~32 such layers, each with multiple projection matrices (Q, K, V, O).
+   *Starter hint:* $|A| = 4096 \times 16 = 65{,}536$.  $|B| = 16 \times 4096 = 65{,}536$.  Total LoRA = $131{,}072$.  Fraction = $131{,}072 / 16{,}777{,}216 \approx 0.78\%$.  A real 7B model has ~32 such layers, each with multiple projection matrices (Q, K, V, O).
 
    *You've succeeded when:* You have the exact parameter counts and fractions, and you can explain why this means LoRA training needs ~100x less GPU memory than full fine-tuning.
 
@@ -481,15 +444,15 @@ In this part, you will apply the decision framework and cost model to real AI pr
 
 ### Reflection Prompt
 
-*Personal:* Think of a skill you had to learn from a book vs. one you learned by doing.  How does that map to the RAG (look it up every time) vs. fine-tuning (internalize it permanently) distinction?  When is "always looking it up" actually better than "memorizing it"?
+*Personal:* Think of a skill you had to learn from a book and one you learned by doing.  How does that map to the RAG (look it up every time) versus fine-tuning (internalize it permanently) distinction?  When is "always looking it up" better than "memorizing it"?
 
-*Technical:* Fine-tuning bakes knowledge permanently into weights, making the model's reasoning opaque.  RAG keeps knowledge external and attributable, but adds a pipeline that can fail in its own ways.  As AI systems are deployed in high-stakes domains (medicine, law, finance), which property matters more (opaque internalized knowledge or transparent retrieved knowledge) and who should get to decide that for a given deployment?
+*Technical:* Fine-tuning bakes knowledge permanently into weights, making the model's reasoning opaque.  RAG keeps knowledge external and attributable, but adds a pipeline that can fail in its own ways.  As AI systems are deployed in high-stakes domains (medicine, law, finance), which property matters more (opaque internalized knowledge or transparent retrieved knowledge), and who should get to decide that for a given deployment?
 
 *Societal:* LoRA makes fine-tuning accessible to individuals and small organizations who previously could not afford it.  A chemistry student can now fine-tune an open-weight model on synthesis procedures; a political campaign can fine-tune a model on persuasive messaging.  What new capabilities does democratized fine-tuning enable that are beneficial, and what risks does it introduce that did not exist when fine-tuning required millions of dollars?
 
 ---
 
--> Coming Up Next: Now that you understand when to fine-tune, the next module explores the landscape of open-weight local models (Llama, Mistral, Phi, Gemma) and how to choose the right one for your hardware and task, including how quantization lets you run a 7B model on a laptop.
+-> Coming Up Next: Now that you know when to fine-tune, the next module surveys the open-weight local models (Llama, Mistral, Phi, Gemma) and how to choose the right one for your hardware and task, including how quantization lets you run a 7B model on a laptop.
 
 ---
 
@@ -514,7 +477,7 @@ Optional, and independent of the parts above.  Once you start evaluating a retri
 
 ### Why Synthetic Data?
 
-The key insight behind synthetic data is that data labeling is often the bottleneck, not compute.  A radiologist who can label 20 chest X-rays per day costs ~$300,000 per year and produces roughly 5,000 labeled examples annually.  A single GPU running a generative model can produce thousands of synthetic medical descriptions per hour.  The question is not whether this is useful (it obviously is), but whether synthetic data is a complete substitute for real data, a dangerous shortcut, or something in between.  As you will see in this activity, the answer depends entirely on what you are generating, how carefully you filter it, and whether you have any real data to validate against.
+The key insight behind synthetic data is that data labeling is often the bottleneck, not compute.  A radiologist who can label 20 chest X-rays per day costs ~$300,000 per year and produces roughly 5,000 labeled examples annually.  A single GPU running a generative model can produce thousands of synthetic medical descriptions per hour.  The question is not whether this is useful (it obviously is), but whether synthetic data is a complete substitute for real data, a dangerous shortcut, or something in between.  As you will see in this section, the answer depends entirely on what you are generating, how carefully you filter it, and whether you have any real data to validate against.
 
 #### The Data Scarcity Problem
 
@@ -532,7 +495,7 @@ High-quality labeled data is the fuel of modern machine learning, but it is expe
 | Use Case | What Synthetic Data Generates | Real-World Benefit | Key Risk | Example in Practice |
 |----------|------------------------------|-------------------|-----------|--------------------|
 | **Instruction tuning** | Diverse (instruction, response) pairs covering many task types at scale | Scale fine-tuning to produce capable assistant models without expensive human labeling for each example | The model learns the generator model's biases, errors, and blindspots; mode collapse reduces diversity over iterations | Stanford Alpaca (2023), 52,000 examples from GPT-3.5 at a cost of ~$500 |
-| **Adversarial robustness** | Edge-case prompts and scenarios the model would rarely encounter in normal operation | Better robustness to unusual inputs, jailbreak attempts, and distribution shift | Synthetic adversarial examples may not cover the specific adversarial strategies real attackers actually use | Red-teaming augmentation in model safety pipelines |
+| **Adversarial robustness** | Edge-case prompts and scenarios the model would rarely encounter in normal operation | Better resistance to unusual inputs, jailbreak attempts, and distribution shift | Synthetic adversarial examples may not cover the specific adversarial strategies real attackers use | Red-teaming augmentation in model safety pipelines |
 | **Privacy preservation** | Statistically similar fake records that replace real patient, user, or financial records | Share sensitive datasets safely in research collaborations without exposing individual records | Residual privacy leakage if the synthetic distribution closely mirrors specific real records | Synthetic patient record generation for medical AI research |
 | **Simulation environments** | Agent training scenarios such as customer service dialogues, code review sessions, or tool-use chains | Scale agent training to millions of scenarios without real user interactions or risks | Sim-to-real gap: the agent learns behaviors that work in clean simulation but fail on the messy variation in real deployments | OpenAI Codex training included synthetic verified code problems |
 
@@ -571,7 +534,7 @@ Self-Instruct is the pipeline behind several influential open-source instruction
 5.  Add the surviving instances to the growing dataset.
 6.  Return to step 2, now sampling from the full (and growing) dataset rather than just the original seeds.
 
-Stanford's **Alpaca** model (2023) applied this pipeline: it used GPT-3.5 to generate 52,000 instruction-response pairs from 175 human-written seeds, at a cost of approximately $500 in API fees.  The resulting model was competitive with early GPT-3.5 on many tasks despite being 10× smaller, a remarkable demonstration of the efficiency of synthetic instruction tuning.
+Stanford's **Alpaca** model (2023) applied this pipeline: it used GPT-3.5 to generate 52,000 instruction-response pairs from 175 human-written seeds, at a cost of approximately $500 in API fees.  The resulting model was competitive with early GPT-3.5 on many tasks despite being 10× smaller, a striking demonstration of how efficient synthetic instruction tuning can be.
 
 #### Evol-Instruct (WizardLM, Xu et al., 2023)
 
@@ -585,7 +548,7 @@ The result is a dataset with a natural difficulty gradient, which is particularl
 
 #### Quality Filtering Pipeline
 
-The diagram below shows how raw generated pairs flow through a series of filters before being added to the training set.  Read it left-to-right: each arrow represents a filter that reduces the quantity of data but improves its quality; the loop at the bottom is where generation and filtering cycle repeatedly.
+The diagram below shows how raw generated pairs flow through a series of filters before being added to the training set.  Read it left-to-right: each arrow is a filter that reduces the quantity of data but improves its quality; the loop at the bottom is where generation and filtering cycle repeatedly.
 
 ```
 seed_instructions
@@ -600,11 +563,11 @@ seed_instructions
 **Quality filter criteria, each generated pair must pass all of these:**
 
 - **Length check:** The response is not trivially short (one word) or obviously padded with filler content.
-- **Coherence check:** The response actually addresses the instruction rather than drifting to an unrelated topic.
+- **Coherence check:** The response addresses the instruction rather than drifting to an unrelated topic.
 - **Non-duplication check:** Cosine similarity (a number between 0 and 1 measuring how semantically similar two pieces of text are; values above 0.9 mean the texts are nearly identical in meaning) to existing dataset items is below a threshold (typically 0.7-0.8) so the dataset remains diverse.
 - **Safety check:** The instruction and response do not contain toxic, harmful, or inappropriate content.
 
-> **Common Misconception:** Generating more synthetic data is not the same as generating *better* synthetic data.  A common error is to generate enormous quantities of synthetic instruction data and assume that more is always better.  In practice, quality filters are more important than quantity: a dataset of 10,000 high-quality, diverse, well-filtered examples typically produces better fine-tuning results than 100,000 low-quality or highly redundant examples.  The Alpaca model demonstrated this: 52,000 carefully generated examples from a seed of 175 produced a capable model.  Simply running the generation loop for 10 more hours to produce 500,000 examples would not have produced a model 10× better, and might have introduced more mode collapse.
+> **Common Misconception:** Generating more synthetic data is not the same as generating *better* synthetic data.  A common error is to generate enormous quantities of synthetic instruction data and assume that more is always better.  In practice, quality filters matter more than quantity: a dataset of 10,000 high-quality, diverse, well-filtered examples typically produces better fine-tuning results than 100,000 low-quality or highly redundant examples.  The Alpaca model demonstrated this: 52,000 carefully generated examples from a seed of 175 produced a capable model.  Running the generation loop for 10 more hours to produce 500,000 examples would not have produced a model 10× better, and might have introduced more mode collapse.
 
 #### Questions to Work Through
 
@@ -647,7 +610,7 @@ Instruction-response pairs are the simplest form of synthetic data for LLMs, but
 
 An agent trajectory is a sequence of tuples: `(observation₁, action₁, result₁, observation₂, action₂, result₂, ...)` continuing until the task is complete or abandoned.
 
-Generating synthetic trajectories allows agent training to scale beyond what human demonstration collection alone can support:
+Generating synthetic trajectories lets agent training scale beyond what human demonstration collection alone can support:
 
 - **Verified code problems:** Generate a programming problem, generate a candidate solution, execute the solution in a sandboxed environment, and use pass/fail against test cases as ground-truth labels.  OpenAI's Codex training pipeline included synthetic problems with verified solutions generated this way, at a scale impossible to achieve with human demonstrators.
 - **Customer service dialogues:** Generate a synthetic customer persona, a synthetic initial complaint or question, and a range of synthetic agent responses.  Have a judge model rate each response on helpfulness and policy compliance.  This provides training signal without accessing real user data that might contain PII.
@@ -679,7 +642,7 @@ A practical technique for rapidly building evaluation benchmarks for new domains
 
 **Question 9.**  Design a quality filter for synthetic instruction data.  Specify exactly three criteria that every generated (instruction, response) pair must satisfy before it is added to the training set.  For each criterion, explain how you would test it automatically and what failure rate you would tolerate before revising the generation pipeline.
 
-> *Hint:* Criterion 1: **Relevance**, the response must address the instruction rather than drift to an unrelated topic.  Test automatically by checking whether the top 3 most important noun phrases from the instruction appear in the response (simple heuristic) or by embedding both instruction and response and checking cosine similarity (more robust).  Tolerate at most 5% failure rate before revisiting the generation prompt.  Criterion 2: **Minimum length**, the response must be at least 50 characters and at most 2,000 characters for the task types in your dataset.  Test by character count.  Tolerate at most 10% failure rate (responses that are too short are often low-quality; responses that are too long may be padded).  Criterion 3: **Non-toxicity**, the instruction and response must not contain harmful, discriminatory, or violating content.  Test using a toxicity classifier.  Tolerate 0% failure rate; any toxic generation indicates a problem with the generation prompt that must be fixed immediately.
+> *Hint:* Criterion 1: **Relevance**, the response must address the instruction rather than drift to an unrelated topic.  Test automatically by checking whether the top 3 most important noun phrases from the instruction appear in the response (simple heuristic) or by embedding both instruction and response and checking cosine similarity (more reliable).  Tolerate at most 5% failure rate before revisiting the generation prompt.  Criterion 2: **Minimum length**, the response must be at least 50 characters and at most 2,000 characters for the task types in your dataset.  Test by character count.  Tolerate at most 10% failure rate (responses that are too short are often low-quality; responses that are too long may be padded).  Criterion 3: **Non-toxicity**, the instruction and response must not contain harmful, discriminatory, or violating content.  Test using a toxicity classifier.  Tolerate 0% failure rate; any toxic generation indicates a problem with the generation prompt that must be fixed immediately.
 
 ---
 
@@ -687,7 +650,7 @@ A practical technique for rapidly building evaluation benchmarks for new domains
 
 **Exercise 1.**
 
-*What to do:* Using a local model or API access, generate 20 synthetic instruction-tuning examples for a domain of your choice (options: cooking, Python debugging, academic writing, local Ursinus College history, or anything else that interests you).  Apply at least 2 quality filters from the pipeline described in Model 2.
+*What to do:* Using a local model or API access, generate 20 synthetic instruction-tuning examples for a domain of your choice (options: cooking, Python debugging, academic writing, local Ursinus College history, or anything else that interests you).  Apply at least 2 quality filters from the Quality Filtering Pipeline above.
 
 *Starter hint:* Use this generation prompt structure: "You are generating instruction-tuning data for a language model assistant.  Generate 5 (instruction, response) pairs for the domain of [your domain].  Each instruction should be a specific, realistic task a user might ask.  Each response should be accurate, helpful, and 2-4 sentences long.  Format your output as a JSON array."  Run this prompt 4 times to get 20 candidates.  Then apply your filters: (1) remove any response shorter than 50 words; (2) remove any pair where the response does not mention any key term from the instruction.
 

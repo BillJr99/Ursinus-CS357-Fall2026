@@ -5,16 +5,19 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: RAG Knowledge Base"
 
 info:
   coursenum: CS357
-  purpose: "To give an agent you run grounded, citable memory over a corpus you care about, including the honesty to abstain when the answer is not there."
+  purpose: "To give an agent you run grounded, citable memory over a corpus you care about, including the honesty to abstain when the answer is not there, and then to check that pipeline mid-flight with a golden set, real retrieval and citation measurements, and a regression harness you can rerun for the rest of the term."
   tilt:
-    task: "Build a RAG pipeline over your own corpus with Chroma and a local model, compare chunking strategies by recall@k, and audit its citations and abstention."
-    criteria: "I assess your work on the citing, abstaining pipeline, an empirical chunking comparison, and a hand-audited evaluation of retrieval and citations.  The full breakdown is in the rubric below."
-  points: 100
+    task: "Build a RAG pipeline over your own corpus with Chroma and a local model, compare chunking strategies by recall@k, and audit its citations and abstention.  Then run the RAG Quality Checkup pathway on it: design a ten-item golden set with a prediction and rationale per item, complete a checkup worksheet with measurements from your own pipeline (recall@k across two chunking configurations, a citation audit, and one analyzed failure), and pin both into a regression harness that reruns identically."
+    criteria: "I assess your work on the citing, abstaining pipeline, an empirical chunking comparison, and a hand-audited evaluation of retrieval and citations, plus the checkup pathway: the design quality of your benchmark items and their rationales, a worksheet with real measurements from your own pipeline, and a regression harness that reruns identically.  The full breakdown is in the rubric below."
+  points: 200
   goals:
     - To construct a complete retrieval-augmented generation pipeline over a personal document corpus using Chroma and a local model
     - To make and defend chunking decisions empirically by comparing at least two strategies with recall@k metrics
     - To evaluate retrieval quality with recall at k and grounding quality with a citation audit
     - To implement and demonstrate abstention when the corpus does not contain an answer
+    - To design a ten-item golden set that deliberately mixes reliable and hallucination-prone territory, with a falsifiable prediction and a scoring rule stated for each item before it runs
+    - To measure recall@k across two chunking configurations on your own corpus, audit citations by hand as supported or unsupported by the cited chunk, and record one concrete pipeline failure with a hypothesis and a planned fix
+    - To freeze that evaluation into a rerunnable regression harness, show that two runs agree, and separate knowledge failures from metric failures in the results
     - To apply parameter-efficient fine-tuning (LoRA/QLoRA) to a local model using a real dataset and a modern training toolchain (Unsloth or hand-rolled transformers/peft/trl)
     - To export a fine-tuned model to GGUF and run it locally in Ollama, making a model you trained a first-class citizen of your local-first stack
     - To instrument training with loss curves and evaluate output quality before and after fine-tuning
@@ -28,46 +31,64 @@ info:
     - To evaluate the sensitivity of simulation outcomes to parameter changes and explain the compounding effect of return mean and volatility on the outcome distribution
     - To propose a user-facing guardrail that limits over-reliance on AI numerical claims in financial contexts
   rubric:
-    - weight: 30
+    - weight: 15
       description: Pipeline Implementation
-      preemerging: The pipeline (code or flow) fails to index or query due to major issues, or the program or flow fails to run
-      beginning: The pipeline (code or flow) runs but fails on test questions due to one or more minor issues
+      preemerging: The pipeline (code or flow) fails to index or query because of major issues, or the program or flow does not run
+      beginning: The pipeline (code or flow) runs but fails on test questions because of one or more minor issues
       progressing: The pipeline indexes and answers correctly with citations, but a component such as abstention or configuration is fragile or incomplete
-      proficient: The pipeline (whether hand-coded or built as a Langflow flow) indexes, retrieves, answers with cited bracketed source numbers, and abstains with the designated phrase when no chunk is relevant; a screenshot or log shows all three behaviors (answer-with-citation, abstention, and the bare-model hallucination contrast); configuration is externalized and exceptions are handled with located messages and tracebacks, or, on the flow route, the exported flow JSON plus documented node settings serve as the externalized configuration
-    - weight: 25
+      proficient: The pipeline (hand-coded or built as a Langflow flow) indexes, retrieves, answers with bracketed source numbers as citations, and abstains with the designated phrase when no chunk is relevant; a screenshot or log shows all three behaviors (answer with citation, abstention, and the bare-model hallucination contrast); configuration is externalized and exceptions are handled with located messages and tracebacks, or, on the flow route, the exported flow JSON plus documented node settings is the externalized configuration
+    - weight: 12
       description: Chunking Strategy and Justification
       preemerging: A single arbitrary chunking is used without discussion
       beginning: A chunking choice is stated but not compared against an alternative
       progressing: Two chunking strategies (in code, or as two flow configurations) are compared on a small question set with results reported
       proficient: At least two chunking strategies (implemented in code or as two Langflow configurations with different splitter settings) are compared on a defined question set; recall@k is reported for k in {1,3,5} for each strategy in a table; the shipped choice is defended with a specific numeric comparison (e.g., "strategy A achieves recall@3 of 0.80 vs. 0.60 for strategy B on our question set")
-    - weight: 25
+    - weight: 13
       description: Evaluation and Citation Audit
       preemerging: No evaluation is provided
       beginning: Informal trials are described without a protocol or metric
       progressing: A question set with recall at k and an answer accuracy measure is evaluated, with limited citation auditing
       proficient: A question set of at least ten questions is evaluated with recall@k and answer accuracy; every citation in a sample of at least ten answers is audited by hand for faithfulness; a faithfulness rate (e.g., "9/10 citations correctly supported the claim") is reported; any failures are shown verbatim and classified using the hallucination taxonomy from class
-    - weight: 10
+    - weight: 5
       description: Code Quality and Documentation
-      preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from best practice
+      preemerging: Code or configuration documentation and structure are absent, or the work departs significantly from accepted practice
       beginning: Code or configuration documentation is limited in ways that reduce the readability and reproducibility of the work
-      progressing: Documentation is present that re-states the explicit code or configuration definitions
+      progressing: Documentation is present but only restates the explicit code or configuration definitions
       proficient: Every non-trivial function has a docstring; all network, embedding, and database operations are wrapped in exception handlers that print a located message (e.g., [lab2:query_corpus]) followed by a traceback; model name, chunk size, overlap, top-k, and abstention threshold are read from a JSON config file rather than hardcoded; on the Langflow route this row is earned by configuration quality, the two exported flow JSONs, documented node settings (model, chunk size, overlap, top-k), and setup notes sufficient to reproduce both flows exactly
-    - weight: 10
+    - weight: 5
       description: Writeup, Reflection, and Submission
       preemerging: An incomplete submission is provided
       beginning: The program is submitted, but not according to the directions in one or more ways
       progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: The program is submitted according to the directions, including a readme writeup, a pair programming log with at least two timestamped role swaps, a corpus datasheet covering sources, time range, representation gaps, and known limitations, and reflection answers that each cite a specific experimental result from the lab rather than restating the prompt
+    - weight: 12
+      description: "Quality Checkup: Benchmark Design"
+      preemerging: Fewer than ten items exist, or items lack expected answers
+      beginning: Ten items exist with expected answers, but the set does not deliberately mix reliable and hallucination-prone territory, or rationales are missing
+      progressing: The set mixes five expected-reliable and five expected-fragile items with rationales, but several rationales do not connect to why model training data would be thick or thin there
+      proficient: "Ten items (five expected-reliable, five expected-fragile), each with an expected answer, a scoring rule the harness can apply, and a one-sentence rationale grounded in training-data reasoning (recency, locality, specificity, or citation-shaped risk).  This row is about judgment, not medium: it is earned identically whether the set is a JSON file, a promptfoo YAML case list, or a spreadsheet"
+    - weight: 23
+      description: "Quality Checkup: The Checkup Worksheet"
+      preemerging: The worksheet is empty or filled with invented numbers that the team's pipeline did not produce
+      beginning: Some measurements exist but only one chunking configuration was tested, or the citation audit is missing
+      progressing: recall@k for both configurations and a five-row citation audit are complete, but the failure case is missing or has no hypothesis
+      proficient: "recall@k is measured for both chunking configurations on the team's own corpus with the winner identified; the five-row citation audit classifies each claim as supported or unsupported with chunk references; and one observed failure is recorded with a plausible hypothesis and a planned fix.  The medium does not matter: measurements taken by hand in Open WebUI's knowledge-base view or the Langflow playground earn this row on the same terms as measurements printed by a script, provided the numbers came from the team's own pipeline"
+    - weight: 15
+      description: "Quality Checkup: The Regression Harness"
+      preemerging: No harness exists, or it cannot be rerun
+      beginning: A harness exists but the golden set is not pinned (questions or scoring change between runs), or it was run only once
+      progressing: The harness reruns with a pinned golden set and protocol, but the two runs' outputs were not compared, prediction misses are listed rather than explained, or the harness is not committed alongside the rest of the lab
+      proficient: The harness (a scripted run sheet in a spreadsheet, declarative promptfoo YAML, or plain Python built on the class evaluation harness, your choice) pins the Part 5 golden set, extended with corpus-specific items, and a fixed protocol (temperature 0.0, a fixed seed, the model named); two runs are shown to agree; every item whose outcome differs from its Part 5 prediction gets a sentence separating knowledge failure from metric failure; and the harness lives in the lab repository where the Rubric Pipeline Lab can pick it up
   readings:
     - rtitle: "RAG Activity"
       rlink: "Activities/liascript-rag.md"
       liapage: true
-    - rtitle: "RAG Quality Activity"
+    - rtitle: "RAG Quality: Chunking and Measuring Retrieval"
       rlink: "Activities/liascript-ragquality.md"
       liapage: true
     - rtitle: "Chroma Documentation"
       rlink: "https://docs.trychroma.com"
-    - rtitle: "The RAG Quality activity, whose extension weighs fine-tuning against RAG and prompting"
+    - rtitle: "RAG Quality: Chunking and Measuring Retrieval (its extension weighs fine-tuning against RAG and prompting)"
       rlink: "Activities/liascript-ragquality.md"
       liapage: true
     - rtitle: "Unsloth: Fine-Tuning Notebooks and Ollama/GGUF Export (Direction 1)"
@@ -78,14 +99,17 @@ info:
       rlink: "../Tutorials/LocalModels"
     - rtitle: "Data Cards and Model Cards"
       rlink: "../Tutorials/DataCards"
-    - rtitle: "Sampling, Temperature, and Generation Activity"
-      rlink: "Activities/liascript-samplinggeneration.md"
-      liapage: true
-    - rtitle: "Evaluating Agent Outputs Activity"
+    - rtitle: "Sampling, Temperature, and Generation"
+      rlink: "../Tutorials/SamplingAndTemperature"
+    - rtitle: "Evaluating Agent Outputs Activity: the evaluation harness, and the Part IIb benchmark-design work that Part 5 finishes"
       rlink: "Activities/liascript-evaluatingoutputs.md"
       liapage: true
     - rtitle: "Multimodal Agents"
       rlink: "../Tutorials/MultimodalAgents"
+    - rtitle: "Testing Agents: Evaluation, Regression, and the Non-Determinism Problem (required prep for the Rubric Pipeline Lab, which picks up the Part 5 harness)"
+      rlink: "../Tutorials/TestingAgents"
+    - rtitle: "promptfoo, for declarative LLM and agent evaluation.  One of the Part 5 harness options, and it runs against Ollama"
+      rlink: "https://www.promptfoo.dev/"
 
 tags:
   - rag
@@ -101,18 +125,18 @@ tags:
 
 ---
 
-In this lab, you and your partner will build a question-answering system over a corpus that matters to *you*: your own course notes, a student organization's documents, a hobby wiki you maintain, or a set of public campus documents.  The system must answer questions with citations when the corpus supports an answer, and say so honestly when it does not.  This one is a **pair lab**: driver and navigator, swaps at least every 30 minutes, and a swap log you turn in.
+In this lab, you and your partner build a question-answering system over a corpus that matters to *you*: your own course notes, a student organization's documents, a hobby wiki you maintain, or a set of public campus documents.  The system must answer questions with citations when the corpus supports an answer, and say so honestly when it does not.  Once it runs, you check it (Part 5): a golden set of ten questions, a worksheet of real measurements from your own pipeline, and a regression harness you will rerun in the Rubric Pipeline lab.  This one is a **pair lab**: driver and navigator, swaps at least every 30 minutes, and a swap log you turn in.
 
 ---
 
 ## Before You Start
 
-> **Choose your route first.**  Direction 0, the Langflow route, is the low-code path through the middle of this lab: it **replaces the coding of core Parts 2-3** with a visual build meeting the same requirements (two chunking configurations compared, recall@k, citations, abstention), for equal credit.  Core Part 1 (corpus curation and the datasheet) and core Part 4 (the citation audit by hand) are required on every route, and between them they carry most of the judgment this lab is about.  Decide before you install anything.
+> **Choose your route first.**  Direction 0, the Langflow route, is the low-code path through the middle of this lab: it **replaces the coding of core Parts 2-3** with a visual build that meets the same requirements (two chunking configurations compared, recall@k, citations, abstention), for equal credit.  Core Part 1 (corpus curation and the datasheet), core Part 4 (the citation audit by hand), and Part 5 (the checkup pathway) are required on every route, and between them they carry most of the judgment this lab is about.  Decide before you install anything.
 
 **Prerequisite concepts**: complete these activities before writing any code:
 
 - [RAG Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rag.md): the index/retrieve/generate pipeline
-- [RAG Quality Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-ragquality.md): recall@k, faithfulness, and abstention
+- [RAG Quality: Chunking and Measuring Retrieval]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-ragquality.md): recall@k, faithfulness, and abstention
 
 **Tools to install:**
 
@@ -147,22 +171,23 @@ If `ollama NOT running`, start the server with `ollama serve` in a separate term
 
 **Estimated time budget:**
 
-This lab runs across a multi-week window (see the course schedule for the assigned and due dates).  Budget your weeks: aim to have the core pipeline working early (and if a break falls inside your window, front-load) so the direction work and audit are not compressed into the final days.  The **RAG Quality Checkup lab**, begun in the mid-window open studio in *How I AI* and handed out while this lab is still in flight, is a scaffold for this lab: its recall@k measurements, citation audit, and regression harness are this lab's evaluation work done early; carry its results (and its winning chunking configuration) straight back in here.
+This lab runs across a multi-week window (see the course schedule for the assigned and due dates).  Budget your weeks: get the core pipeline working early (and if a break falls inside your window, front-load) so the direction work, the audit, and Part 5 are not compressed into the final days.  Part 5, the RAG Quality Checkup pathway, is a mid-window checkup of that pipeline.  Its recall@k measurements, citation audit, and regression harness are this lab's evaluation work done early and under supervision, and its winning chunking configuration feeds straight back into Parts 2 through 4.
 
 | Component | Estimated time |
 |-----------|----------------|
 | Core Parts 1-4 (corpus and datasheet; indexing; grounded generation; citation audit) | 4-5 hours |
 | Your chosen direction (see Choose Your Direction below) | 3-5 hours |
+| Part 5, the RAG Quality Checkup pathway (golden set; worksheet; regression harness) | 3-4 hours, most of it in class |
 | Writeup, learning log, and packaging | included above |
-| **Total** | **≈ 8-10 hours** |
+| **Total** | **≈ 11-14 hours** |
 
-(Direction 0, the low-code Langflow route, is estimated at 7-9 hours on its own, but it *replaces* the coding of core Parts 2-3 rather than adding to it, so the lab total stays ≈ 8-10 hours.)
+(Direction 0, the low-code Langflow route, is estimated at 7-9 hours on its own, but it *replaces* the coding of core Parts 2-3 rather than adding to it, so the core-plus-direction figure stays ≈ 8-10 hours.)
 
 ---
 
 ## Part 1: Curate and Document Your Corpus
 
-Assemble a corpus of at least 15 documents or pages (markdown, text, or extracted PDF text).  **You may not use any document containing another person's private information**; if your corpus involves anything sensitive, the local-only nature of this pipeline is your friend, and your writeup must say so explicitly.  Write a half-page **datasheet**: sources, time range, who and what is represented, who and what is absent, and known limitations.
+Assemble a corpus of at least 15 documents or pages (markdown, text, or extracted PDF text).  **Do not use any document containing another person's private information.**  If your corpus involves anything sensitive, the local-only nature of this pipeline is your friend, and your writeup must say so explicitly.  Write a half-page datasheet: sources, time range, who and what is represented, who and what is absent, and known limitations.
 
 ### Step-by-step guide
 
@@ -225,7 +250,7 @@ Scanned PDFs require OCR; `pymupdf` only extracts embedded text.  Try `pip insta
 Wikipedia is a reliable fallback.  Use `pip install wikipedia-api` and download 15+ related articles programmatically.
 
 **File encoding errors when reading**
-Always open files with `encoding="utf-8", errors="replace"` to handle non-ASCII characters gracefully.
+Always open files with `encoding="utf-8", errors="replace"` so non-ASCII characters do not stop the read.
 
 ---
 
@@ -238,7 +263,7 @@ Always open files with `encoding="utf-8", errors="replace"` to handle non-ASCII 
 
 ## Part 2: Index with Intent
 
-Implement indexing with **two chunking strategies** (for example, fixed-size with overlap versus paragraph-structural), with chunk parameters externalized in a JSON configuration file.  Build a question set of at least ten questions whose answers you have located by hand (note the source chunk for each).  Report **recall@k** for $$k \in \{1, 3, 5\}$$ under both strategies, and choose your shipped configuration with a quantitative defense.
+Implement indexing with **two chunking strategies** (for example, fixed-size with overlap versus paragraph-structural), with the chunk parameters in a JSON configuration file rather than in the code.  Build a question set of at least ten questions and locate each answer by hand (note the source chunk for each).  Report recall@k for $$k \in \{1, 3, 5\}$$ under both strategies, and choose your shipped configuration with a quantitative defense.
 
 ### Step-by-step guide
 
@@ -397,6 +422,8 @@ QUESTIONS = [
 
 **Step 5: Compute recall@k for both strategies.**
 
+Recall@k is the fraction of answerable questions whose ground-truth snippet appears somewhere in the top `k` retrieved chunks.  A higher number means the retriever is putting the right chunk in front of the model more often.
+
 ```python
 def recall_at_k(collection, embed_model, questions, k=3):
     """
@@ -449,10 +476,10 @@ In your readme, present these numbers in a table and defend your choice of strat
 You are passing embeddings manually via `collection.add(embeddings=...)`, which is correct.  Make sure you are NOT also passing `embedding_function` when creating the collection; one or the other, not both.
 
 **`recall@1 = 0.0` for every question with fixed chunking**
-Your chunk_size may be too small, causing answers to be split across chunks.  Try chunk_size=800 or chunk_size=1000.  Also verify your `answer_text_snippet` actually appears in the source file (run `grep -n "your snippet" corpus/yourfile.txt`).
+Your chunk_size may be too small, so answers are split across chunks.  Try chunk_size=800 or chunk_size=1000.  Also verify your `answer_text_snippet` appears in the source file (run `grep -n "your snippet" corpus/yourfile.txt`).
 
 **SentenceTransformer download is slow or fails**
-The `all-MiniLM-L6-v2` model (~80 MB) downloads from HuggingFace on first run.  If your internet is slow, pre-download it: `python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"` while on a fast connection, and it will be cached for later runs.
+The `all-MiniLM-L6-v2` model (~80 MB) downloads from HuggingFace on first run.  If your internet is slow, pre-download it while on a fast connection: `python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"`.  It is cached for later runs.
 
 ---
 
@@ -465,7 +492,7 @@ The `all-MiniLM-L6-v2` model (~80 MB) downloads from HuggingFace on first run.  
 
 ## Part 3: Grounded Generation
 
-Implement the query path: embed the question, retrieve top-k, assemble a prompt that instructs the model to answer **only** from the provided context, to cite bracketed source numbers, and to reply with a designated abstention phrase when the context is insufficient.  Demonstrate:
+Implement the query path: embed the question, retrieve the top-k chunks, and assemble a prompt that tells the model to answer **only** from the provided context, to cite bracketed source numbers, and to reply with a designated abstention phrase when the context is insufficient.  Demonstrate:
 
 - Five answered questions with correct citations.
 - Two abstentions on questions your corpus cannot answer.
@@ -609,7 +636,7 @@ Smaller models sometimes override instructions when they have training-data know
 This is a retrieval quality issue, not a generation issue.  Check your recall@k from Part 2; if recall@3 is below 0.5, the relevant chunk is not reaching the model.  Try increasing `top_k` to 5 or switching chunking strategy.
 
 **The model's answer is cut off mid-sentence**
-The context may be too long for the model's context window.  Reduce `top_k` from 3 to 2, or reduce `chunk_size` in your config.  You can also add `"num_ctx": 4096` to the Ollama options dict to explicitly set the context window size.
+The context may be too long for the model's context window.  Reduce `top_k` from 3 to 2, or reduce `chunk_size` in your config.  You can also add `"num_ctx": 4096` to the Ollama options dict to set the context window size explicitly.
 
 ---
 
@@ -622,7 +649,7 @@ The context may be too long for the model's context window.  Reduce `top_k` from
 
 ## Part 4: Audit
 
-For at least ten answered questions, audit each citation by hand: does the cited chunk actually support the claim?  Report a **faithfulness rate** and show any failures verbatim, classified using the hallucination taxonomy from class.
+For at least ten answered questions, audit each citation by hand: does the cited chunk support the claim?  Report a **faithfulness rate** (the fraction of audited citations whose chunk supports the claim) and show any failures verbatim, classified using the hallucination taxonomy from class.
 
 ### Step-by-step guide
 
@@ -665,20 +692,236 @@ Include your completed audit table and faithfulness rate in your readme.
 ### Troubleshooting, Part 4
 
 **Every citation appears faithful, making the audit trivial**
-Your question set may be too simple.  Add at least two questions that require synthesizing information from multiple chunks; these are most likely to produce conflation or extrapolation errors.
+Your question set may be too simple.  Add at least two questions that require combining information from multiple chunks; these are most likely to produce conflation or extrapolation errors.
 
 **You cannot find the cited chunk in your collection**
 Use `collection.get(ids=["chunk_id"])` to retrieve a specific chunk by its ID. The chunk IDs are in the `metadatas` list returned by `query_rag`.
 
 **The model sometimes cites `[1]` when the relevant information was in `[2]`**
-This is a "wrong citation" failure.  It is worth noting separately from fabrication; the answer may be correct even though the citation number is wrong.  Count these as failures in your faithfulness rate but classify them accurately.
+This is a "wrong citation" failure.  Note it separately from fabrication; the answer may be correct even though the citation number is wrong.  Count these as failures in your faithfulness rate but classify them accurately.
+
+---
+
+> **Checkpoint: Before moving to Part 5, make sure you can answer:**
+> 1.  What was your faithfulness rate?  Is it higher or lower than you expected?
+> 2.  Which failure type (fabrication, conflation, extrapolation, wrong citation) appeared most often in your audit, and what does that suggest about where to add safeguards?
+> 3.  Which failure did you find more often overall: retrieval fetching the wrong chunk, or generation misusing a correct chunk?
+
+---
+
+## Part 5: The RAG Quality Checkup Pathway
+
+Part 5 is a structured checkup on the pipeline you built in Parts 2 through 4, in three steps: design a **golden set** (ten questions with expected answers and a stated scoring rule, five that should be easy for your model and five that should not), complete a checkup worksheet with measurements from your own pipeline, and freeze both into a regression harness (a fixed test you can rerun after any change and compare against the last run).  It sits mid-window on purpose.  Your pipeline is running by then and is not yet due, which is the only point in the term when a diagnostic can still change what you build.
+
+The metrics this part uses (recall@k, citation faithfulness, abstention) are taught in the Oct 6 session, *RAG Quality: Chunking and Measuring Retrieval*, the day this lab is handed out.  Do most of the worksheet in the open studio in *How I AI* (Part III), with your pipeline-in-progress in front of you.  The harness you build here follows you forward: the Rubric Pipeline lab (Nov 5) asks you to build a reproducible evaluation pipeline and starts from this harness, and Evaluation Workshop II (Nov 19) runs your judge against your own project work.  Most of what you produce in Part 5 is evaluation work Parts 2 through 4 ask for anyway, done earlier and under supervision.  The harness is the one forward investment.
+
+Work on your pair's own pipeline and corpus, and keep the swap log going through Part 5.
+
+### Before you start Part 5
+
+**This builds on:** the *Hallucinations and Evaluating Agent Outputs* session, where we mapped the territory where models are unreliable and wrote the evaluation harness that step 5a starts from; the *RAG Quality: Chunking and Measuring Retrieval* session; and your in-progress pipeline from Parts 2 through 4.  You do not need Parts 2 through 4 finished; you need the pipeline *running*, even badly.  A pipeline that answers poorly is a better subject for a checkup than one that does not answer at all.
+
+**Bring to the studio session:**
+
+- Your lab repository, cloned and runnable.
+- Your corpus indexed, with at least one chunking configuration working end to end.
+- Any benchmark questions you already sketched in the *Hallucinations and Evaluating Agent Outputs* session (Part IIb and its Exercise 1).  Step 5a turns them into a finished ten-item set; if you have none, bring nothing and start there.
+- Five questions you care about the answers to, drawn from your own corpus.
+
+Sanity check before you arrive:
+
+```bash
+# your pipeline answers one question, however badly
+python3 ask.py "a question your corpus should be able to answer"
+```
+
+On Direction 0, the equivalent check is one question answered in the Langflow playground.
+
+**Pace yourself.**  Most of Part 5 happens in class.  Step 5a is the exception, and it is meant to be done before the studio: it is paper-and-thinking work that needs no running pipeline, and doing it early is the single best way to make the studio session productive.  Step 5c then goes quickly, because your golden set already exists.
+
+**Time budget.**  Step 5a is about one hour, and most of that is judgment rather than typing.  Steps 5b and 5c are the studio session plus an hour or two of finishing on your own.  If 5a is running past an hour you are polishing: ten adequate items beat six perfect ones.
+
+**If your pipeline is not running,** come anyway and say so at the start.  Debugging it *is* the studio, and the checkup works on a pipeline you got running at 12:20.
+
+### Choose your path for Part 5
+
+Same rubric, same credit.  Step 5a is identical on all three routes: designing ten good items is the assignment, and the file format is a detail.  The judgment in the rest of Part 5 (which configuration wins, which citations are real, what the failure means) is identical too; the routes differ only in how you collect and rerun the numbers.  Pairs on Direction 0 (Langflow) will usually take the no-code or low-code route; pairs who coded Parts 2 and 3 will usually take the code route.  Any combination is allowed.
+
+| Route | Where your golden set lives | How you measure | How you freeze it | Pick this if |
+|-------|-----------------------------|-----------------|-------------------|--------------|
+| **No-code** | A spreadsheet, one row per item: `question`, `expected`, `rule`, `rationale` | Query both configurations by hand (in **Open WebUI's** knowledge-base interface, or in your two Langflow flows) and record hits and misses in a spreadsheet | A **run sheet**: the pinned question list, the pinned settings, and a dated results column per run.  Rerunning means working the sheet again and comparing columns | You built Parts 2-3 as a Langflow flow (Direction 0), or you want your attention on the citation audit rather than on plumbing |
+| **Low-code** | A `promptfoo` YAML case list | Same, or a small promptfoo run against your retriever | `promptfoo` YAML with the golden set as cases and `temperature: 0` pinned | You expect to take the Rubric Pipeline Lab's promptfoo direction |
+| **Code** | `goldenset.json` | A loop over your five queries that prints retrieved chunk IDs, scored against your own relevance judgments (Part 2's `recall_at_k` is a natural starting point) | A Python script grown from the class evaluation harness | You coded Parts 2-3 and want the harness you will extend in the Rubric Pipeline Lab |
+
+> **The no-code route is not the shortcut here.**  Measuring recall@k by hand means you look at every retrieved chunk, which is exactly how people discover that their retriever was returning the right document and the wrong *part* of it.  A script that prints `recall@5 = 0.6` hides that.  The same holds in step 5a: running ten items by hand means you read every answer closely, which is exactly what catches a *metric failure*, where your rule mis-graded a correct answer.  Students on the code route often miss those because the harness printed FAIL and they believed it.
+
+### 5a. Design your golden set
+
+Before you can tell whether your pipeline is any good, you need a fixed set of questions with known answers.  Build one: ten items, each with `question`, `expected` (the answer text your scoring rule matches), `rule` (exact, substring, or normalized match, your choice per item, stated), and `rationale` (one sentence predicting whether the model will pass and *why*, reasoned from training data: how recent, how local, how specific, how citation-shaped the fact is).
+
+These ten items are about the **model**, not yet about your corpus.  That is deliberate.  Step 5c extends the set with corpus-specific questions, and the gap between how the bare model does on the fragile five and how the same model does with your retrieved chunks in front of it is the entire argument for having built a RAG pipeline at all.  Part 3's bare-model contrast makes that argument on one question; the golden set makes it on ten.  You cannot make it without a before.
+
+Design deliberately:
+
+- **Five expected-reliable items**: stable, well-documented knowledge (famous dates, authors, capitals, definitions).
+- **Five expected-fragile items**: the territory the *Hallucinations and Evaluating Agent Outputs* session mapped: local or niche facts, post-cutoff events, exact statistics, and at least one citation-shaped item (a request for a source, reference, or attribution).
+
+**Two worked items, so you can see what "good" looks like.**
+
+An expected-reliable item:
+
+```json
+{
+  "question": "In what year was the Declaration of Independence signed?",
+  "expected": "1776",
+  "rule": "substring",
+  "rationale": "Expect PASS. This date appears in a vast number of training documents in exactly this form, so it is about as thick as training data gets. Substring matching is safe because any correct phrasing contains the four digits."
+}
+```
+
+An expected-fragile item:
+
+```json
+{
+  "question": "Which building houses the Ursinus College mathematics and computer science department, and what are its office hours?",
+  "expected": "Pfahler Hall",
+  "rule": "substring",
+  "rationale": "Expect FAIL on the second half. The building name may appear in a handful of pages; the office hours almost certainly appear nowhere, and they change every term. I predict a confident, invented answer, which is exactly the failure mode worth catching."
+}
+```
+
+Notice what each rationale does: it names a *reason from the training data* (thick, thin, recent, local, changing), and it commits to a prediction before the run.  A rationale that says "this seems hard" earns the `beginning` row; a rationale that says *why the data would be thin here* earns `proficient`.
+
+**Step by step:**
+
+1.  Write your five reliable items first.  They are easier, and they calibrate your sense of what an unambiguous `expected` looks like.
+2.  Write the five fragile items, deliberately spread across the four kinds of thin territory: **local**, **post-cutoff**, **exact statistic**, and **citation-shaped**.  At least one of each.
+3.  For each item, choose the `rule` **last**, after you know what a correct answer would look like.  Ask: could a fully correct answer fail this rule?  Could a wrong answer pass it?
+4.  Write every rationale as a prediction plus a reason.  The prediction is what step 5c grades you against.
+
+> **You've succeeded when** you have ten items, each with all four fields, and a classmate reading only your rationales could predict your pass rate to within two items.
+
+### 5b. The checkup worksheet
+
+Complete `checkup.md` against your in-progress pipeline.  Three measurements, in this order.
+
+**1.  Retrieval quality.**
+
+For five queries representative of your corpus, measure recall@k under your current chunking configuration and one alternative (a different chunk size or overlap).  Record the table, name the winner, and carry the winning configuration back into your Part 2 config.
+
+What recall@k means here, concretely.  For each query you decide, *by reading*, which chunks in your corpus contain the answer.  Those are the relevant chunks.  Then you ask your retriever for its top `k` and count how many of the relevant ones came back.  Recall@k is that fraction, averaged over your five queries.  There is no way to skip the reading: recall is measured against *your* judgment of relevance, and you are the only source of it.  Part 2's `recall_at_k` approximates that judgment with a snippet match across ten questions; this measurement replaces the approximation with your own reading, on five queries, at one `k`.
+
+Step by step:
+
+1.  Fix `k` (5 is a reasonable default) and **do not change it** between configurations.  Comparing recall@5 against recall@10 tells you nothing.
+2.  For each of your five queries, read your corpus and write down which chunks *should* come back.  Do this **before** you run the retriever, so its answers do not anchor your judgment.
+3.  Run all five under configuration A. Record which relevant chunks appeared in the top `k`.
+4.  Change exactly **one thing** (chunk size or overlap, not both), re-index, and run the same five.
+5.  Fill in the table and name the winner.
+
+Worked row, so the format is unambiguous:
+
+| Query | Relevant chunks (my judgment) | Config A (512/50): retrieved | Recall@5 | Config B (256/25): retrieved | Recall@5 |
+|---|---|---|---|---|---|
+| "What is the late policy for a three-day extension?" | c14, c15 | c14, c22, c31, c07, c19 | 1/2 = 0.50 | c14, c15, c22, c31, c07 | 2/2 = 1.00 |
+
+Read that row before you build your own.  Config A retrieved `c14` and stopped; the policy spanned two chunks and the 512-token chunking put the second half of the sentence in a chunk that scored just below the cut.  That is a *chunking* failure that looks like a *retrieval* failure, and it is the single most common thing this checkup finds.
+
+> **You've succeeded when** you have a five-row table with the same `k` in both columns, a named winner, and one sentence explaining *why* the winner won that refers to your corpus rather than to general principle.
+
+**2.  Citation audit.**
+
+For five answered queries, one row each: the answer's central claim, the chunk it cites, and your verdict: **supported** (the chunk contains the claim) or **unsupported**.  Part 4's ten-row audit with the class taxonomy is the full version of this; these five rows are the same muscle, built early.
+
+Step by step:
+
+1.  Ask your pipeline five questions and capture the full answer plus whatever it offered as a citation.
+2.  For each, write down the answer's **single central claim**, in your words, in one sentence.  If you cannot state one, that is itself a finding: record "no single claim" and say why.
+3.  Open the cited chunk and read it.  Not the document; the chunk.
+4.  Verdict: **supported** if the claim is in there, **unsupported** if it is not, and **partial** if the chunk supports a weaker version of the claim than the answer stated.  Add the partial column; it is where most real systems live.
+
+> **A "partial" is the interesting finding.**  The chunk says the extension is available "with prior permission"; the answer says students "may take a three-day extension."  Everything in the answer traces to the chunk, and a condition has quietly dropped.  No retrieval metric catches that.  You do.
+
+> **You've succeeded when** you have five rows with verdicts, and at least one row where the verdict required reading the chunk rather than pattern-matching a phrase.
+
+**3.  One failure.**
+
+Capture one concrete misbehavior you observed (a wrong retrieval, an unsupported citation, a failed abstention) with the query, the output, a one-paragraph hypothesis for the mechanism, and your planned fix.
+
+A hypothesis is not a complaint.  "The model hallucinated" is a complaint.  A hypothesis names the stage that failed and says why:
+
+> *"The retriever returned c31 rather than c14 for this query.  Both chunks mention 'extension,' but c31 is a syllabus paragraph about deadline extensions for the project and c14 is the late-work policy.  My embedding cannot distinguish the two senses because the chunks are short enough that neither carries the surrounding context that disambiguates them.  **Fix:** increase overlap so each chunk carries its section heading, and re-measure."*
+
+Notice the shape: which stage, what mechanism, what change, and how I would know it worked.
+
+> **You've succeeded when** your hypothesis names a *stage* (chunking, embedding, retrieval, reranking, generation) and your fix is something you could do this week.
+
+### 5c. The regression harness
+
+Freeze your evaluation so it can be rerun forever.  The point is not the code; it is that **six weeks from now you can prove a change made things better rather than believing it did.**
+
+Step by step:
+
+1.  **Pin a golden set.**  Take your 5a items and **extend** them with at least five corpus-specific questions drawn from your own corpus.  Keep the 5a items; step 6 grades your predictions against what happened.  Include at least one question that **should trigger abstention**: something your corpus cannot answer, where the correct behavior is to say so.  A harness with no abstention case cannot tell a confident wrong answer from a right one.
+2.  **Pin the protocol.**  Temperature 0.0, a fixed seed, the model name, the chunking configuration, and `k`.  Write all five at the top of the harness, not in your memory of what you did.
+3.  **Build it in your chosen medium**: a spreadsheet run sheet with a dated column per run, a promptfoo YAML case list, or a Python script grown from the class harness.
+4.  **Run it twice**, changing nothing between runs.
+5.  **Compare the two runs and show they agree.** `diff run1.txt run2.txt` on the code route; two columns side by side on the no-code route.  Paste the comparison, not a claim about it.
+6.  **Classify your misses.**  A miss is any 5a item whose outcome differs from the prediction you wrote in its `rationale`, in *either* direction; a fragile item that passed is as interesting as a reliable one that failed.  In one sentence each, say which it was:
+    - **Knowledge failure**: the model does not have the fact.
+    - **Metric failure**: the model answered correctly (or incorrectly) and *your rule graded it wrong*.  For example, the model answered "seventeen seventy-six" and your substring rule looked for "1776".
+
+    That distinction is why you wrote the predictions down first.  A benchmark whose failures are mostly metric failures is measuring your rules, not your system.  In a RAG pipeline you may also find a third kind, a **retrieval failure**: the model would have known the answer from the right chunk and did not get it.  If you see one, name it, because it points straight back at 5b's recall numbers.
+7.  **Commit** the harness and the golden set inside your lab repository (and include them in the submission ZIP), where the Rubric Pipeline Lab can pick them up.
+
+A worked miss, for calibration:
+
+> **Item 7** (fragile, citation-shaped).  Predicted FAIL, outcome PASS.
+>
+> I asked for a source on a claim about local rainfall and expected an invented citation.  The model instead refused, saying it did not have a reliable source.  That is a **metric failure**: my rule scored "no answer" as a pass because the invented-citation string was absent, but abstention and correctness are not the same outcome and my rule cannot tell them apart.  **Revision:** split this into two items, one that scores abstention as a pass and one that scores a fabricated citation as a fail, so the two behaviors stop sharing a row.
+
+> **If the two runs disagree,** you have found something worth more than the points for this step.  Say so in `checkup.md` and chase it: something in your pipeline is not pinned.  Usual suspects, in order: temperature is not zero, the seed is not being passed through, the index was rebuilt between runs, or your retriever ties on score and breaks the tie differently each time.  Report what you found even if you cannot fix it today.
+
+> **You've succeeded when** two runs of the same golden set produce identical results, you can point at the exact lines where the protocol is pinned, and every prediction miss is explained as a knowledge failure or a metric failure.
+
+### Troubleshooting, Part 5
+
+**Recall@k is 1.0 for every query**
+Your relevance judgments were made *after* seeing what the retriever returned.  Redo step 2 of the retrieval measurement on fresh queries, writing the relevant chunks down before you run anything.
+
+**Recall@k is 0.0 for every query**
+Chunk IDs are not stable across re-indexing, so your judgments no longer refer to the same chunks.  Record chunk *text* alongside the ID, or re-derive judgments after the final index build.
+
+**Re-indexing with a new chunk size changes nothing**
+The index was not rebuilt; the old collection is still being queried.  Delete or rename the collection before re-indexing (Part 2's `build_index` does this for you).  Confirm the count of stored chunks changed.
+
+**The pipeline answers but shows no citation**
+Your prompt does not require one, or the chunk IDs are not being passed into the prompt.  Fix it now and note it in the failure section; ungrounded answers are the thing this checkup exists to find.
+
+**Two runs disagree**
+Something is unpinned; see the note in 5c.  Diagnose in this order: temperature, seed, index rebuild, score ties.
+
+**Everything is slow enough that you cannot finish**
+You are re-embedding the whole corpus per query.  Embed and store once; embed only the query per run.  If it is still slow, cut the corpus for this checkup and say you did.
+
+**Everything "passes" and you do not believe it**
+Your `expected` strings are too short.  `"1"` is a substring of almost every answer.  Lengthen `expected`, or switch that item to exact or normalized matching.
+
+**A correct answer scores FAIL**
+Formatting mismatch, not a knowledge gap.  This is a **metric failure** and it is a finding, not a bug to hide.  Record it as one, then decide whether to normalize.
+
+**The model refuses instead of answering**
+Abstention, which is a distinct outcome from right and wrong.  Your rule probably cannot distinguish abstention from a wrong answer.  Say so in the analysis; that observation is worth points.
+
+**promptfoo cannot find your provider**
+The Ollama provider string is wrong or the server is not up.  Use `ollama:chat:llama3.2` and confirm your model server answers first.
 
 ---
 
 > **Checkpoint: Before writing your deliverables, make sure you can answer:**
-> 1.  What was your faithfulness rate?  Is it higher or lower than you expected?
-> 2.  Which failure type (fabrication, conflation, extrapolation, wrong citation) appeared most often in your audit, and what does that suggest about where to add safeguards?
-> 3.  Which failure did you find more often overall: retrieval fetching the wrong chunk, or generation misusing a correct chunk?
+> 1.  Which chunking configuration won in 5b, by how much, and does your Part 2 recall@k table agree?
+> 2.  Where, exactly, does your harness pin temperature, seed, model, chunking configuration, and `k`?  Point at the lines.
+> 3.  Of your prediction misses, how many were metric failures rather than knowledge failures, and what does that say about your rules?
 
 ---
 
@@ -900,11 +1143,34 @@ Held against the rubric's `proficient` column.  On Direction 0 (Langflow), read 
 - [ ] Every reflection answer cites a specific experimental result of mine.
 - [ ] The route I took is named at the top of the writeup.
 
+Part 5, the checkup pathway:
+
+- [ ] Ten benchmark items, with **five** predicted reliable and **five** predicted fragile.
+- [ ] The fragile five cover all four kinds of thin territory, including **at least one citation-shaped** item.
+- [ ] Every item has `question`, `expected`, a stated `rule`, and a `rationale`.
+- [ ] Every rationale names a **training-data reason** (recency, locality, specificity, citation-shaped risk) rather than a difficulty guess.
+- [ ] Recall@k measured for **two** chunking configurations, at the **same** `k`, on your own corpus.
+- [ ] Relevance judgments were made before seeing the retriever's output.
+- [ ] A winner is named, with a reason specific to your corpus.
+- [ ] The five-row citation audit has a stated central claim, the cited chunk, and a verdict in every row.
+- [ ] At least one **partial** or **unsupported** verdict, or an explicit note that you looked for one and everything checked out.
+- [ ] One failure recorded with the query, the output, a hypothesis naming a **stage**, and a fix you could do this week.
+- [ ] The pinned harness set is the 5a golden set **plus at least five** corpus-specific items, including at least one **abstention** case.
+- [ ] The protocol is written down: temperature, seed, model, chunking configuration, `k`.
+- [ ] Two runs, compared, with the comparison pasted.
+- [ ] **Every** prediction miss is classified as a knowledge failure or a metric failure, in a sentence.
+- [ ] Golden set, `checkup.md`, harness, and two-run log committed in the lab repository, with paths noted.
+- [ ] Part 5 route named at the top of `checkup.md`.
+
+If a box is unchecked, that is a specific, fixable thing rather than a vague worry.  Fix it and check it.
+
 ## Deliverables
 
-> **Bring to class.**  Carry your pipeline-in-progress and your stuck points into the open studio in *How I AI* (Part III); it is open build time, and it is only as useful as the problems you bring to it.
+> **Bring to class.**  Carry your pipeline-in-progress and your stuck points into the open studio in *How I AI* (Part III); it is open build time, and it is only as useful as the problems you bring to it.  Step 5a should be done before you arrive.
 
-Submit a ZIP containing your code, JSON configuration, corpus (or a pointer plus a sample if it is large), datasheet, question set with labels, evaluation results (CSV or table), audit results, pair log, and a readme writeup of approximately two pages.  Ensure reproducibility by fixing random seeds and listing software version information.
+Submit a ZIP containing your code, JSON configuration, corpus (or a pointer plus a sample if it is large), datasheet, question set with labels, evaluation results (CSV or table), audit results, pair log, and a readme writeup of approximately two pages.  Fix random seeds and list software version information so the work is reproducible.
+
+The ZIP also carries the Part 5 files: your golden set (`goldenset.json`, the promptfoo YAML case list, or the spreadsheet CSV); `checkup.md` (the worksheet, with real measurements from your own pipeline, plus the prediction-versus-outcome miss analysis, with your Part 5 route named at the top); the harness (run sheet, YAML, or script) with its extended golden set; and the two-run agreement log.  Commit all four in your lab repository and note their paths in the readme.
 
 ## Learning Log
 
@@ -921,6 +1187,9 @@ Keep a metacognitive learning log for this lab in your readme: in the spirit of 
 
 - Which failure did you find more often: retrieval fetching the wrong chunk, or generation misusing a correct chunk?  What does that imply about where to invest next: better retrieval, or a stricter generation prompt?
 - Your corpus datasheet names who is absent from your documents.  Give a concrete example of a question where that absence would cause your system to either abstain incorrectly (the answer exists somewhere but not in your corpus) or answer incorrectly (the corpus contains a biased or incomplete view).  What would you add to the corpus to fix it?
+- Which fragile item in your golden set surprised you in either direction, and what does that tell you about your mental model of the training data?
+- Which chunking configuration won on your corpus in 5b, and did the margin surprise you?  Does your Part 2 table agree?
+- What did the 5b citation audit reveal that the recall@k numbers alone would have hidden?
 - If collaboration beyond your pair occurred, identify it.  Do you certify that this submission represents your pair's original work?  Please identify any and all portions of your submission that were not originally written by you.
 - Approximately how many hours did this lab take (I will not judge you for this at all...I am simply using it to gauge if the assignments are too easy or hard)?
 
@@ -943,11 +1212,11 @@ Add a `last_modified` timestamp to each chunk's metadata (from the file's `mtime
 
 ## Choose Your Direction
 
-Everyone completes core Part 1 (corpus and datasheet) and core Part 4 (citation audit).  Beyond that, you choose **one** direction below.  You do not do more than one.  Pick the direction that most interests you, and carry your RAG Knowledge Base Lab corpus, config discipline, and evaluation habits into it.
+Everyone completes core Part 1 (corpus and datasheet), core Part 4 (citation audit), and Part 5 (the checkup pathway).  Beyond that, you choose **one** direction below.  You do not do more than one.  Pick the direction that most interests you, and carry your RAG Knowledge Base Lab corpus, config discipline, and evaluation habits into it.
 
 **Direction 0 is different in kind from the other two.**  It is the low-code route through the middle of the lab itself: it **replaces the coding of core Parts 2-3** (indexing and grounded generation) with a visual Langflow build that meets the same requirements: two compared chunking configurations, recall@k, citations, and abstention.  Core Part 1 (corpus curation + datasheet) and core Part 4 (citation audit) remain required for everyone, whichever direction you choose.  Directions 1 and 2, by contrast, are extensions you complete **after** finishing core Parts 1-4 in code.
 
-The **single 100-point grade for this lab covers your core RAG work plus your chosen direction together**; the graded rubric above still governs your score, and its rows credit a pipeline whether it is hand-coded or built as a flow.  Treat the "What proficient work looks like" bullets (or the deliverables list, for Direction 0) in your chosen direction as the standard your work should meet, and fold your direction's deliverables into the same submission ZIP and readme as the core lab.
+The **single grade for this lab (200 points) covers your core RAG work, the Part 5 checkup, and your chosen direction together**; the graded rubric above still governs your score, and its rows credit a pipeline whether it is hand-coded or built as a flow.  Treat the "What proficient work looks like" bullets (or the deliverables list, for Direction 0) in your chosen direction as the standard your work should meet, and fold your direction's deliverables into the same submission ZIP and readme as the core lab.
 
 Choose one:
 
@@ -1752,7 +2021,7 @@ This direction is completed in **pairs using driver/navigator roles**: the drive
 
 **Prerequisite concepts**: make sure you have completed these activities before writing any code:
 
-- [Sampling, Temperature, and Generation Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-samplinggeneration.md): stochastic sampling and output distributions
+- [Sampling, Temperature, and Generation]({{ site.baseurl }}/Tutorials/SamplingAndTemperature): stochastic sampling and output distributions
 - [Evaluating Agent Outputs Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-evaluatingoutputs.md): how to critically assess AI-generated content
 - [Multimodal Agents]({{ site.baseurl }}/Tutorials/MultimodalAgents): sending images to local vision models
 

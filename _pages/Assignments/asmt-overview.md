@@ -20,7 +20,7 @@ info:
       preemerging: Little or no evidence that the environment was attempted
       beginning: Some components installed, but the verification transcript is missing or incomplete
       progressing: Ollama installed and verified with a transcript, with a minor omission such as a missing model listing, missing version information, or a missing coding-agent check, or the command-line and git checkpoint is incomplete
-      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output, the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field, plus the fifth step, the output of opencode --version and one answered prompt from your local model, plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git clone/commit/push transcript, and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
+      proficient: The transcript shows all four Ollama steps completed with verbatim terminal output, the output of ollama --version, ollama list showing at least one model, the curl /api/tags JSON response, and the Python script output including a non-empty "content" field, plus the fifth step, the output of opencode --version and one answered prompt from your local model, plus the operating system name and version; the command-line and git checkpoint (Part 1.5) is also complete, showing the shell-navigation commands, a git commit/push transcript (command line or GitHub Desktop), and the uv environment creation; any failed step includes the verbatim error message, a stated hypothesis, and what was tried
     - weight: 40
       description: Reflection Essay
       preemerging: The reflection is missing or does not address the prompts
@@ -61,11 +61,13 @@ In this warmup you'll install your local AI stack and your coding agent, and wri
 
 > **Added after this assignment went out:** Step 5 of Part 1, the coding-agent check, and its checklist item.  It is one command and one prompt, and the Week 2 lab depends on it, which is why it is here rather than discovered later.  It follows the same failure policy as everything else on this page: a documented failure, with the verbatim error and what you tried, earns full credit for that step.
 
+> **Also added after this assignment went out:** three setup notes that cost students time in the first week.  Windows users should work in PowerShell rather than the old Command Prompt (Before You Start), the Python `requests` library has to be installed before the Route B script will run (Part 1, Route B, step 4), and GitHub Desktop is a supported way to do the git step (Part 1.5, step 2).  None of them changes what you turn in.
+
 This is the first thing you install for this course.  I have put it early on purpose, so that a broken setup costs you this assignment rather than a lab.
 
 **Pace yourself:** **most of this is downloading.**  The model pull alone is about 2 GB, and the container image is larger.  Please start the downloads on good wifi and write the reflection while they run.  Don't leave this for the night before; the downloads will not go any faster because you are in a hurry, and I can't help you at 11 PM.
 
-**You need:** a laptop you can install software on, a GitHub account, and about 10 GB free disk.  If any of those is a problem, please say so this week rather than in week four.  There is a lab-machine route, and it takes some scheduling.
+**You need:** a laptop you can install software on, a GitHub account, and about 10 GB free disk.  On Windows, use PowerShell (Windows 10 and 11 include it; open it from the Start menu) rather than the old Command Prompt, because every command on this page and in the labs is written for PowerShell or a Unix shell; WSL2 Ubuntu, which the Docker route sets up, is the other supported choice.  If any of those is a problem, please say so this week rather than in week four.  There is a lab-machine route, and it takes some scheduling.
 
 **Do it in this order:**
 
@@ -106,7 +108,8 @@ Install [Ollama](https://ollama.com/download) on your own machine (or a lab mach
 1.  Pull a small model: `ollama pull llama3.2`
 2.  Run a CLI sanity check: `ollama run llama3.2 "Say hello in five words."`
 3.  Verify the REST API responds: `curl http://localhost:11434/api/tags`
-4.  From Python, send one chat request using the `requests` library, as we did in class, and print the response.  Your script should look roughly like this:
+4.  Install the `requests` library in the Python you will run: `pip install requests` (on Windows, in PowerShell, `python -m pip install requests`).  If you take the uv route in Part 1.5, `uv add requests` does the same job inside that environment, but this install is what makes the next step run on a fresh machine.
+5.  From Python, send one chat request using the `requests` library, as we did in class, and print the response.  Your script should look roughly like this:
 
 ```python
 import requests, json
@@ -155,7 +158,7 @@ Every lab this semester runs from a terminal, lives in a git repository, and dep
 Complete each step and capture the terminal output:
 
 1.  **Navigate.**  From a terminal, create a working directory for this course, enter it, and list its contents: `mkdir -p ~/cs357 && cd ~/cs357 && pwd && ls -la`.  Then use one search tool, `grep` (or `ripgrep`/`rg` if installed), to find a string in a file, and paste the command you ran.
-2.  **Version control.**  Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`.  Paste the transcript of `git log --oneline` showing your commit.
+2.  **Version control.**  Create a small git repository, make a commit, and connect it to a remote (your course GitHub Classroom repo, or a throwaway GitHub repo): `git init`, add a file, `git add`, `git commit -m "first commit"`, then `git remote add origin <url>` and `git push -u origin main`.  Paste the transcript of `git log --oneline` showing your commit.  If you would rather not type git commands yet, [GitHub Desktop](https://desktop.github.com/) is a supported option: install it, sign in, use File > New repository (or Add local repository) on your `cs357` folder, commit from the Changes tab, and Publish repository to push.  Then paste the output of `git log --oneline` from Repository > Open in terminal, which is the same transcript the command-line route produces.
 3.  **Reproducible Python with uv.**  Install [uv](https://docs.astral.sh/uv/) (the fast, modern Python environment manager we standardize on this term).  Create and activate a project environment and add the one dependency the labs start with: `uv venv`, then `uv add requests`, then `uv run python -c "import requests; print(requests.__version__)"`.  Paste the output.  (If you cannot install uv, fall back to `python -m venv` and `pip install requests`, and note in your submission that you used the fallback.)
 
 ### Command-Line Survival: reference (use as needed, not required reading cover-to-cover)
@@ -168,7 +171,7 @@ Complete each step and capture the terminal output:
 ### Part 1.5 Checklist
 
 - [ ] A shell transcript showing directory creation, navigation, and a `grep`/`rg` search
-- [ ] A `git log --oneline` transcript showing at least one commit pushed to a remote
+- [ ] A `git log --oneline` transcript showing at least one commit pushed to a remote (command line or GitHub Desktop)
 - [ ] A `uv` (or documented fallback) transcript importing `requests`
 
 ---
@@ -210,6 +213,9 @@ Work down this table before you post in the course channel; if none of it helps,
 | `Cannot connect to the Docker daemon` | Docker Desktop is installed but not running | Start the application. On Linux, `sudo systemctl start docker`, and confirm your user is in the `docker` group |
 | `git push` rejected, "authentication failed" | GitHub no longer accepts account passwords over HTTPS | Use a fine-grained personal access token scoped to that one repository, with Contents: read and write |
 | `uv: command not found` | Not installed, or not on `PATH` yet | Follow the uv install docs, restart the terminal, and if it still fails use the documented `python -m venv` fallback and say so |
+| `ModuleNotFoundError: No module named 'requests'` | The library is not installed in the Python you are running | `python -m pip install requests`, then rerun the script from the same terminal |
+| On Windows, `'ollama' is not recognized`, or `curl` prints something odd | You are in Command Prompt or an old PowerShell window from before the install | Open a fresh PowerShell window so the updated `PATH` loads, and use PowerShell for every command on this page |
+| GitHub Desktop says authentication failed, or cannot push | Not signed in, or the repository exists on GitHub but was never published from Desktop | File > Options > Accounts, sign in with the browser, then Publish repository; if the repository already exists online, use Add local repository and set the remote under Repository > Repository settings |
 | `opencode` reports no provider or no models | Almost always the config **file name**: it must be `opencode.json`, not `config.json` | Fix the name, then check the location (`/workspace/opencode.json` in the container, `~/.config/opencode/opencode.json` natively), then check that the JSON parses with `python3 -m json.tool` |
 | `opencode: command not found` inside the container | An older build of the course image, from before the agent was added | Rerun `docker compose build` from your `.devcontainer/` folder; cached layers make it quick |
 | Responses are very slow | A small model on CPU-only hardware | Expected. `llama3.2` is the right choice for that machine. Note the speed in your transcript; it is a real observation, not a failure |
