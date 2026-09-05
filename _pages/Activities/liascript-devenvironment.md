@@ -602,6 +602,34 @@ A student runs a coding agent directly in their home directory, outside any cont
 
 > **Why this answer?**  Reading the diff is genuine observability and it is worth something.  The trap is believing it is worth everything.  Careful review catches a bad change you are shown; it does nothing about a file the agent touched outside the change it described, and it gives you no way back once the write has landed.
 
+### 8.6: herdr, for When One Agent Becomes Several
+
+You ran one agent today and watched it the whole time.  That does not stay true.  By the Local Agent Lab you will start a task that runs for many minutes, and you will want to start a second one while the first works.
+
+Two problems show up the moment you do.  An agent launched from an SSH shell dies when the connection drops, because it is a child of that connection.  And once three agents are running, the real question becomes *which one is waiting for me?*
+
+**herdr** answers both.  It is an agent-aware terminal multiplexer: a persistent background server keeps every agent alive whether or not you are attached, and the interface shows you at a glance which agent is **blocked**, **working**, or **done**.  Plain `tmux` gives you the first half and not the second; to `tmux`, an agent waiting at a permission prompt is just text on a screen.
+
+**On the container route, it is already installed**, alongside opencode.  Check it the same way:
+
+```bash
+herdr --version
+```
+
+**On the native route** from Step 10, install it in your normal terminal:
+
+```bash
+curl -fsSL https://herdr.dev/install.sh | sh
+```
+
+The installer downloads one release binary, verifies its SHA-256, and drops it in `~/.local/bin`.  `brew install herdr` works on macOS, and Windows without WSL uses `powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"`.  The same read-before-you-run caution from 8.1 applies, and the same two defenses: it is the project's documented installer, and on the container route you are not running it at all.
+
+You do not need herdr today.  It is here so that it is on your bench before the session that assumes it.  The full treatment, including the "walk away and come back" discipline and why detaching is *not* the same as pausing, is Part IV of the [agentic CLI tools tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCLIs).
+
+> **The governance point, early:** detaching does not pause an agent.  It keeps reading, editing, running commands, and spending tokens the entire time you are gone.  The three properties in 8.5 are what make that acceptable, and the less you are watching, the more the *environment* rather than your attention has to be the thing keeping the agent safe.
+
+---
+
 ---
 
 ### Model: What Did You Just Delegate?

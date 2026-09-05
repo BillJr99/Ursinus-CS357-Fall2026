@@ -327,8 +327,8 @@ schedule:
     rlink: "Tutorials/Docker"
 - week: "1"
   date: "1"
-  title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
-  link: "Activities/liascript-localai.md"
+  title: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff"
+  link: "Activities/liascript-codingagents.md"
   liapage: true
   readings:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
@@ -339,8 +339,8 @@ schedule:
     rlink: "Tutorials/Hardware"
 - week: "2"
   date: "0"
-  title: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff"
-  link: "Activities/liascript-codingagents.md"
+  title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
+  link: "Activities/liascript-localai.md"
   liapage: true
   deliverables:
   - dtitle: "Participation: Overview Assignment Due"

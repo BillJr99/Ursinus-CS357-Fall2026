@@ -65,6 +65,8 @@ In this warmup you'll install your local AI stack and your coding agent, and wri
 
 > **Also added after this assignment went out:** step 5 of Part 1 now names [opencode.ai](https://opencode.ai/) and lists the install options, both the command-line version and the desktop app.  Route A is unchanged, because the course image already ships the agent, and what you turn in is the same.
 
+> **Reorganized after this assignment went out (Sep 5):** Part 1 is now split into **Part 1A** (the Ollama stack, steps 1-4) and **Part 1B** (the coding agent, step 5), each with its own checklist, and the route choice is stated once up front.  **Nothing was added to what you turn in, and nothing was removed.**  The same five steps are graded by the same rubric; they are just no longer interleaved.  If you already started against the old layout, your work still counts as-is.  One genuinely new item appears at the end of Part 1B, an **optional** herdr install, which is explicitly not graded.
+
 This is the first thing you install for this course.  I have put it early on purpose, so that a broken setup costs you this assignment rather than a lab.
 
 **Pace yourself:** **most of this is downloading.**  The model pull alone is about 2 GB, and the container image is larger.  Please start the downloads on good wifi and write the reflection while they run.  Don't leave this for the night before; the downloads will not go any faster because you are in a hurry, and I can't help you at 11 PM.
@@ -78,9 +80,9 @@ This is the first thing you install for this course.  I have put it early on pur
 3.  Come back and finish the setup transcript.
 4.  Do the command-line and git checkpoint (Part 1.5) last, since it uses what you just installed.
 
-**Two routes, and I support both.**  Route A (host Ollama plus the course container) is the one I recommend, because every later lab assumes it and it is what we build together in the *Your AI Workbench* session.  Route B (native install) is complete and supported too, so take it if Docker will not run on your machine, and please say so in your transcript.  Neither route is the "real" one.
+**Two routes, and I support both.**  Route A (host Ollama plus the course container) is the one I recommend; Route B (native install) is complete and supported too.  Neither route is the "real" one, and Part 1 below explains how to choose and what changes.
 
-> **You've succeeded when** all four boxes in the Setup Checklist are checked, all three in the Part 1.5 checklist are checked, and your reflection has four labeled sections.  If a step failed, a documented failure with the verbatim error and what you tried earns full credit for that step; a vague "it worked eventually" does not.
+> **You've succeeded when** the four boxes in the Part 1A checklist and the three in the Part 1B checklist are checked, all three in the Part 1.5 checklist are checked, and your reflection has four labeled sections.  If a step failed, a documented failure with the verbatim error and what you tried earns full credit for that step; a vague "it worked eventually" does not.
 
 ---
 
@@ -97,21 +99,72 @@ A weak submission has a transcript that says "it worked" without showing output 
 
 ## Part 1: Tool Setup
 
-Complete this part by **one of two routes**; the four verification steps and the checklist below apply to both.
+Part 1 has two halves, and you do **both** of them:
 
-### Route A (recommended): host Ollama + the course dev container
+| | What you stand up | Steps | What the transcript shows |
+|---|---|---|---|
+| **Part 1A** | The local model stack: Ollama, a pulled model, the REST API, and a Python call against it | Steps 1-4 | Four pieces of terminal output |
+| **Part 1B** | The coding agent: opencode, talking to that same local model | Step 5 | A version string and one answered prompt |
 
-Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity.  On this route, run steps 1-3 below on your host as written, and run steps 4 and 5 (the Python request and the coding-agent check) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL. A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+Part 1A has to work before Part 1B can: the coding agent in Part 1B is pointed at the model you pull in Part 1A, so do them in order.
 
-### Route B: native install
+First pick a **route**, which decides *where* those five steps run.  The steps are the same on both routes, and neither route is the "real" one.
 
-Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; ask the instructor if you are unsure which to use).  Then complete each step below and capture the output:
+### Choose Your Route
 
-1.  Pull a small model: `ollama pull llama3.2`
-2.  Run a CLI sanity check: `ollama run llama3.2 "Say hello in five words."`
-3.  Verify the REST API responds: `curl http://localhost:11434/api/tags`
-4.  Install the `requests` library in the Python you will run: `pip install requests` (on Windows, in PowerShell, `python -m pip install requests`).  If you take the uv route in Part 1.5, `uv add requests` does the same job inside that environment, but this install is what makes the next step run on a fresh machine.
-5.  From Python, send one chat request using the `requests` library, as we did in class, and print the response.  Your script should look roughly like this:
+#### Route A (recommended): host Ollama + the course dev container
+
+Set up the full course environment by following the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md): Ollama installs **natively on your host** exactly as in Route B, and the rest of the semester's toolchain lives in one course Docker container bind-mounted onto a `cs357-work` GitHub repository you create in the activity.
+
+On this route, run **steps 1-3 on your host** as written, and run **steps 4 and 5** (the Python request and the coding-agent check) **from inside the container**, replacing `localhost` with `host.docker.internal` in the URL.  A verification transcript captured from inside the container is fully accepted; include the container prompt in your copy-paste so it is visible where each command ran, along with the activity's own container verification output (the `/api/tags` one-liner, `promptfoo --version`, and the spacy model check).
+
+#### Route B: native install
+
+Install [Ollama](https://ollama.com/download) on your own machine (or a lab machine if yours cannot run it; ask the instructor if you are unsure which to use), then run all five steps on that machine.
+
+**Route A is the one I recommend**, because every later lab assumes it and it is what we build together in the *Your AI Workbench* session.  Route B is complete and supported too, so take it if Docker will not run on your machine, and please say so in your transcript.
+
+---
+
+### Part 1A: The Local Model Stack (Steps 1-4)
+
+Complete each step and capture the output.
+
+**Step 1. Install Ollama, pull a small model, and confirm both.**
+
+```bash
+ollama --version
+ollama pull llama3.2
+ollama list
+```
+
+`ollama list` should show `llama3.2` once the pull finishes.  This is the step that takes the longest; the model is about 2 GB.
+
+**Step 2. Run a CLI sanity check.**
+
+```bash
+ollama run llama3.2 "Say hello in five words."
+```
+
+**Step 3. Verify the REST API responds.**
+
+```bash
+curl http://localhost:11434/api/tags
+```
+
+On Route A, run steps 1-3 on your **host**.  From inside the container, this URL becomes `http://host.docker.internal:11434/api/tags`.
+
+**Step 4. Call the model from Python.**
+
+First install the `requests` library into the Python you will actually run:
+
+```bash
+pip install requests
+```
+
+On Windows, in PowerShell, that is `python -m pip install requests`.  If you take the uv route in Part 1.5, `uv add requests` does the same job inside that environment, but this install is what makes the step below run on a fresh machine.
+
+Then send one chat request and print the response.  Your script should look roughly like this:
 
 ```python
 import requests, json
@@ -127,27 +180,68 @@ response = requests.post(
 print(json.dumps(response.json(), indent=2))
 ```
 
-5.  Confirm your **coding agent** is installed and talking to that same local model.  The agent is **opencode**, and every install route lives at [opencode.ai](https://opencode.ai/).  On Route A it is already in the course image, so there is nothing to install.  On Route B, install it yourself: `curl -fsSL https://opencode.ai/install | bash` on macOS, Linux, or WSL, `npm i -g opencode-ai` if you already have Node.js, or `choco install opencode` or `scoop install opencode` in PowerShell on native Windows.  The same page offers a **desktop app** as well, in beta for macOS, Windows, and Linux, if you would rather work in a window than a terminal.  It drives the same agent, but install the command-line version even if you try the desktop one, because this assignment and every lab ask for terminal output.  The [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md) Step 8 walks through all of it, including pointing the agent at your Ollama model.  Then:
+On Route A, run this **from inside the container**, with `host.docker.internal` in place of `localhost`.
 
-```bash
-opencode --version
-```
-
-Start `opencode`, type `/model`, and confirm your Ollama provider is listed.  Then ask it one question ("what files are in this directory?" is enough) and paste the answer.  If the provider list is empty, check the configuration **file name** first: it is `opencode.json`, never `config.json`, and opencode silently ignores a file with the wrong name.
-
-Copy-paste or screenshot the output of all five steps, including the output of `ollama --version` and your operating system name and version.
-
-**If any step fails:** document the error message verbatim, state your hypothesis about the cause, and describe what you tried.  A well-documented failure with a follow-up plan earns full credit for that step.  Do not delete error output or write "it eventually worked" without showing what changed.
-
-### Setup Checklist
-
-Before moving on, confirm you can answer yes to each of these:
+#### Part 1A Checklist
 
 - [ ] `ollama --version` returns a version string
 - [ ] `ollama list` shows at least one downloaded model
 - [ ] The `curl` command to `/api/tags` returns JSON (not a connection error)
 - [ ] Your Python script prints a response that includes a `"content"` field
-- [ ] `opencode --version` returns a version string, `/model` lists your Ollama provider, and the agent answered one prompt
+
+---
+
+### Part 1B: Your Coding Agent (Step 5)
+
+**Step 5. Confirm your coding agent is installed and talking to that same local model.**
+
+The agent is **opencode**, and every install route lives at [opencode.ai](https://opencode.ai/).
+
+*Installing it:*
+
+- **On Route A**, it is already in the course image, so there is nothing to install.
+- **On Route B**, install it yourself: `curl -fsSL https://opencode.ai/install | bash` on macOS, Linux, or WSL; `npm i -g opencode-ai` if you already have Node.js; or `choco install opencode` or `scoop install opencode` in PowerShell on native Windows.
+
+That page also offers a **desktop app**, in beta for macOS, Windows, and Linux, if you would rather work in a window than a terminal.  It drives the same agent, but install the command-line version even if you try the desktop one, because this assignment and every lab ask for terminal output.
+
+[Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md) Step 8 walks through all of it, including pointing the agent at your Ollama model.
+
+*Verifying it:*
+
+```bash
+opencode --version
+```
+
+Then start `opencode`, type `/model`, and confirm your Ollama provider is listed.  Ask it one question ("what files are in this directory?" is enough) and paste the answer.
+
+> If the provider list is empty, check the configuration **file name** first: it is `opencode.json`, never `config.json`, and opencode silently ignores a file with the wrong name.
+
+#### Part 1B Checklist
+
+- [ ] `opencode --version` returns a version string
+- [ ] `/model` lists your Ollama provider
+- [ ] The agent answered one prompt from your local model
+
+#### Optional: install herdr while you are here
+
+**This is not graded and is not on the checklist above.**  It is here because installing it now costs one command, and a later lab assumes it is on your bench.
+
+**herdr** is an agent-aware terminal multiplexer.  It keeps agents running after you close your laptop or drop an SSH connection, and it shows you which agent is blocked, working, or done, so you are not cycling through terminal panes to find the one waiting on you.
+
+- **Route A:** already in the course image, alongside opencode.  Confirm with `herdr --version`.
+- **Route B (macOS, Linux, WSL):** `curl -fsSL https://herdr.dev/install.sh | sh`
+- **Route B (macOS, Homebrew):** `brew install herdr`
+- **Route B (native Windows):** `powershell -ExecutionPolicy Bypass -c "irm https://herdr.dev/install.ps1 | iex"`
+
+The installer downloads one binary, checks its SHA-256, and puts it in `~/.local/bin`.  If you include `herdr --version` in your transcript, I will read it, but its absence costs you nothing.
+
+---
+
+### Capturing Part 1
+
+Copy-paste or screenshot the output of all five steps, including the output of `ollama --version` and your operating system name and version.
+
+**If any step fails:** document the error message verbatim, state your hypothesis about the cause, and describe what you tried.  A well-documented failure with a follow-up plan earns full credit for that step.  Do not delete error output or write "it eventually worked" without showing what changed.
 
 ---
 

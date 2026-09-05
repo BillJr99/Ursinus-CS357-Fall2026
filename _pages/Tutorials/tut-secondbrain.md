@@ -32,6 +32,7 @@ Every AI tool you use maintains its own little memory of you, in its own format,
 | **LLM wiki** | The pattern this tutorial implements: a folder of Markdown pages that a model builds and maintains from your raw sources, so knowledge compounds across sessions instead of being re-derived on every query. Named in Andrej Karpathy's April 2026 [`llm-wiki.md`](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) gist. | Your `wiki/` zone, its `index.md` catalog and `log.md` history, and the ingest/query/lint prompts that keep them current. |
 | **Blob SHA** | The specific hash value Git uses to uniquely identify file contents. It is computed differently from a plain SHA-1 hash; Git prefixes the content with `blob {bytecount}\0` before hashing. | When an agent writes a file to the vault, it may need to compute the blob SHA to correctly update the sync metadata file. |
 | **Zone boundary** | A deliberate structural rule about which areas of the vault serve which purpose and who is allowed to write to them. Zone boundaries are what make the vault safe to open to agents. | The `raw/` zone is read-only for everyone including agents; the `wiki/` zone is write-enabled for agents; the `.obsidian/` zone is off-limits except for the specific metadata file. |
+| **Memory scope** | Whether a remembered fact applies everywhere (global) or only inside one project. Zone boundaries govern *where* an agent may write; memory scope governs *how widely* what it writes should apply. | A global memory lives in `LLMMEMORIES.md`; a project memory lives in `wiki/projects/<project>/MEMORIES.md`, and your `AGENTS.md` states which is the default. |
 
 ---
 
@@ -151,6 +152,75 @@ Leave the PDF untouched (raw/ is read-only), add the index link, and note the so
 > **Common Misconception:** "Since it's my private repository, agents can write anywhere they want; I can always fix mistakes."
 >
 > This reasoning underestimates two risks.  First, agents that overwrite source files in `raw/` destroy the pristine record of what your original sources actually said, and if the agent's interpretation was wrong, you've lost the ability to reprocess from scratch.  Second, agents that write to `.obsidian/` can corrupt the plugin's sync state in ways that cause silent data loss (your edits in Obsidian stop syncing to GitHub without any error message).  The zone boundaries exist precisely because "I can fix it later" is not a recovery strategy when the failure is silent.
+
+---
+
+## Project Scope: Keeping One Project's Context Out of Another
+
+Write every memory at the narrowest scope that makes it true.  A fact that holds for one project belongs to that project, not to every session you will ever run.
+
+The three root files above are **global**.  Every agent reads them, in every project, before it does anything else.  That is the right home for durable facts about you.  It is the wrong home for the decision your project team made last Tuesday.
+
+An agent that writes every fact globally creates three problems:
+
+- **Context bleed.**  A convention you adopted for one project starts steering an agent working on an unrelated one.
+- **Context cost.**  Every session pays to read every memory, including the ones that cannot apply to it.
+- **Silent staleness.**  A project ends, its decisions stop being true, and nothing prompts the global file to forget them.
+
+### Deciding where a memory goes
+
+Ask one question: **is this still true after the project ends?**
+
+| The memory | Scope | Where it goes |
+|---|---|---|
+| Your name, your program, how you want answers formatted | Global | `LLMMEMORIES.md` |
+| A standing style rule you want in every tool | Global | `SYSTEMPROMPT.md` |
+| A rule every agent must obey inside this vault | Global | `AGENTS.md` |
+| "This team chose SQLite over Postgres, and why" | Project | `wiki/projects/<project>/MEMORIES.md` |
+| "The grader runs `pytest -q` and treats warnings as failures" | Project | `wiki/projects/<project>/MEMORIES.md` |
+| "This repository protects `main`; open a pull request" | Project | that repository's own `AGENTS.md` |
+
+The last row is easy to miss.  A rule about a *code repository* belongs in that repository's `AGENTS.md`, where it travels with the code.  A rule about your *vault* belongs in the vault's `AGENTS.md`.  Two contracts, two homes, and an agent reads whichever one it is standing in.
+
+### Writing the rule down
+
+Scope discipline fails unless the contract states it.  Agents default to whatever is easiest to find, and the global file is always easiest to find.  Add a section like this to your vault's `AGENTS.md`:
+
+```markdown
+## Memory Scope
+
+Default to project scope.  Write to `wiki/projects/<project>/MEMORIES.md`.
+
+Write to `LLMMEMORIES.md` only when the fact stays true independent of any
+single project.  State in the entry why it is global.
+
+Never copy a project memory into the global file to make it easier to find.
+Link to it from the project's hub page instead.
+
+When you cannot tell which scope applies, write the project-scoped entry
+and ask.
+```
+
+That last instruction carries the most weight.  Ambiguity must resolve *downward*, toward the narrower scope.  A memory filed too narrowly is merely inconvenient to find.  A memory filed too broadly contaminates every future session, and it does so silently.
+
+Your agent finishes a lab and learns that your course's grader rejects any commit message longer than 72 characters.  Under a scope-disciplined contract, where does that memory belong?
+
+- `LLMMEMORIES.md`, because commit hygiene is a habit worth applying everywhere
+- `wiki/projects/cs357/MEMORIES.md`, because the rule belongs to one course's grader
+- `SYSTEMPROMPT.md`, because it constrains how output is formatted
+- Nowhere; the agent should rediscover it each session
+
+<details markdown="1"><summary>Answer</summary>
+
+`wiki/projects/cs357/MEMORIES.md`, because the rule belongs to one course's grader
+
+</details>
+
+---
+
+> **Common Misconception:** "More memory is always better, so write everything to the global file where no agent can miss it."
+>
+> This confuses recall with relevance.  A global file that accumulates every project's decisions becomes long, internally contradictory, and expensive to read, and the agent cannot tell which entries still apply.  Worse, the failure is silent: an agent confidently applies your last project's database choice, or your last team's review rule, to work that never agreed to either.  Scope is not a filing preference.  It is what keeps a memory's authority attached to the context that earned it.
 
 ---
 
@@ -302,11 +372,11 @@ Obsidian becomes the comfortable viewer onto a knowledge base your agents largel
 
 2.  *Author the contract.*
 
-   *What to do:* Write your own `AGENTS.md`, `LLMMEMORIES.md`, and `SYSTEMPROMPT.md`; one page each is a good starting point.  AGENTS.md must explicitly state: the zone boundaries (which directories agents can write, which are read-only), the metadata protocol (file changes and metadata entries in one atomic commit), and the synthesis rules (summarize don't transcribe; enrich existing pages before creating new ones).  LLMMEMORIES.md should contain context about you that any agent should know before starting work.  SYSTEMPROMPT.md should contain standing behavioral instructions you'd otherwise paste into every tool.
+   *What to do:* Write your own `AGENTS.md`, `LLMMEMORIES.md`, and `SYSTEMPROMPT.md`; one page each is a good starting point.  AGENTS.md must explicitly state: the zone boundaries (which directories agents can write, which are read-only), the metadata protocol (file changes and metadata entries in one atomic commit), the synthesis rules (summarize don't transcribe; enrich existing pages before creating new ones), and the memory-scope rule (project scope is the default; what qualifies a fact as global; ambiguity resolves to project scope).  LLMMEMORIES.md should contain context about you that any agent should know before starting work.  SYSTEMPROMPT.md should contain standing behavioral instructions you'd otherwise paste into every tool.
 
    *Starter hint:* Start AGENTS.md with: "Read this file completely before taking any action in this vault."  Then add a section for each major rule.  For LLMMEMORIES.md, start with: who you are, what you're currently working on, and three facts about your context that agents frequently get wrong when they don't know them.  For SYSTEMPROMPT.md, start with your preferred response style (concise vs. detailed), citation requirements, and any topics where you have strong preferences.
 
-   *You've succeeded when:* All three files are in the root of your vault and synced to GitHub, AGENTS.md explicitly states zone boundaries and the metadata protocol, and LLMMEMORIES.md contains at least five facts about your context that are not publicly findable.
+   *You've succeeded when:* All three files are in the root of your vault and synced to GitHub, AGENTS.md explicitly states zone boundaries, the metadata protocol, and the memory-scope default, and LLMMEMORIES.md contains at least five facts about your context that are not publicly findable and that stay true after any one project ends.
 
 3.  *First agent write.*
 
