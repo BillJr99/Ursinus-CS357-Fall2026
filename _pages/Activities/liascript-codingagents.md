@@ -241,8 +241,7 @@ Your agent's plan says it will modify `parser.py`, `parser_test.py`, and `build/
 [( )] Approve it, review the diff, and revert the `build/` hunk afterwards
 [( )] Approve it and add `build/` to `.gitignore` so the change stops showing up
 
-    --{{0}}--
-The third option reaches the same end state and pays for it with a full agent run and a full diff review.  The fourth hides the symptom and leaves the agent believing the generated file is where token definitions live, so it will do the same thing next time.  Rejecting at the plan stage is cheaper than both, and it corrects the agent's model of the project rather than the file.
+> **Why this answer?**  The third option reaches the same end state and pays for it with a full agent run and a full diff review.  The fourth hides the symptom and leaves the agent believing the generated file is where token definitions live, so it will do the same thing next time.  Rejecting at the plan stage is cheaper than both, and it corrects the agent's model of the project rather than the file.
 
 ---
 
