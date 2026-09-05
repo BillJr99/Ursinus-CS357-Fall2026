@@ -2,7 +2,8 @@
 # ----------------------------------
 # One image that runs every CS357 lab: the Python libraries for retrieval,
 # classical ML, NLP, and explainability, plus Node.js with promptfoo for the
-# evaluation lab and opencode, the course coding agent. The ONE thing that
+# evaluation lab, opencode, the course coding agent, and herdr, the
+# agent-aware terminal multiplexer. The ONE thing that
 # stays OUTSIDE this container is Ollama:
 # it runs natively on your host for model performance, and code inside the
 # container reaches it at http://host.docker.internal:11434 -- exactly the
@@ -19,7 +20,7 @@
 FROM python:3.11-slim
 
 LABEL org.opencontainers.image.title="CS357 course development environment" \
-      org.opencontainers.image.description="Python 3.11 with the CS357 lab libraries (requests, chromadb, sentence-transformers, scikit-learn, spacy, shap, lime, flask, ...) plus Node.js, promptfoo, and the opencode coding agent; talks to host Ollama via host.docker.internal" \
+      org.opencontainers.image.description="Python 3.11 with the CS357 lab libraries (requests, chromadb, sentence-transformers, scikit-learn, spacy, shap, lime, flask, ...) plus Node.js, promptfoo, the opencode coding agent, and the herdr agent multiplexer; talks to host Ollama via host.docker.internal" \
       org.opencontainers.image.authors="CS357 course staff" \
       org.opencontainers.image.url="https://www.billmongan.com/Ursinus-CS357/"
 
@@ -77,6 +78,14 @@ RUN npm install -g promptfoo
 # /workspace is mounted, so an agent installed by hand into ~/.local/bin would
 # have to be reinstalled every single session.
 RUN npm install -g opencode-ai
+
+# herdr -- the agent-aware terminal multiplexer (Agentic CLI Tools tutorial,
+# Part IV). tmux keeps agents alive after you detach; herdr also shows which
+# one is blocked, working, or done, which is what makes running several at
+# once practical. The installer downloads a single release binary and verifies
+# its SHA-256; HERDR_INSTALL_DIR puts it on the PATH for every user in the
+# image rather than in root's ~/.local/bin, which `student` could not reach.
+RUN curl -fsSL https://herdr.dev/install.sh | HERDR_INSTALL_DIR=/usr/local/bin sh
 
 # Code inside the container reaches the HOST's Ollama server here. This is
 # the special DNS name Docker provides for "my host machine"; on Linux the
