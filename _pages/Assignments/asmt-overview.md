@@ -63,6 +63,8 @@ In this warmup you'll install your local AI stack and your coding agent, and wri
 
 > **Also added after this assignment went out:** three setup notes that cost students time in the first week.  Windows users should work in PowerShell rather than the old Command Prompt (Before You Start), the Python `requests` library has to be installed before the Route B script will run (Part 1, Route B, step 4), and GitHub Desktop is a supported way to do the git step (Part 1.5, step 2).  None of them changes what you turn in.
 
+> **Also added after this assignment went out:** step 5 of Part 1 now names [opencode.ai](https://opencode.ai/) and lists the install options, both the command-line version and the desktop app.  Route A is unchanged, because the course image already ships the agent, and what you turn in is the same.
+
 This is the first thing you install for this course.  I have put it early on purpose, so that a broken setup costs you this assignment rather than a lab.
 
 **Pace yourself:** **most of this is downloading.**  The model pull alone is about 2 GB, and the container image is larger.  Please start the downloads on good wifi and write the reflection while they run.  Don't leave this for the night before; the downloads will not go any faster because you are in a hurry, and I can't help you at 11 PM.
@@ -125,7 +127,7 @@ response = requests.post(
 print(json.dumps(response.json(), indent=2))
 ```
 
-5.  Confirm your **coding agent** is installed and talking to that same local model.  On Route A it is already in the course image; on Route B, install it as the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md) Step 8 describes.  Then:
+5.  Confirm your **coding agent** is installed and talking to that same local model.  The agent is **opencode**, and every install route lives at [opencode.ai](https://opencode.ai/).  On Route A it is already in the course image, so there is nothing to install.  On Route B, install it yourself: `curl -fsSL https://opencode.ai/install | bash` on macOS, Linux, or WSL, `npm i -g opencode-ai` if you already have Node.js, or `choco install opencode` or `scoop install opencode` in PowerShell on native Windows.  The same page offers a **desktop app** as well, in beta for macOS, Windows, and Linux, if you would rather work in a window than a terminal.  It drives the same agent, but install the command-line version even if you try the desktop one, because this assignment and every lab ask for terminal output.  The [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md) Step 8 walks through all of it, including pointing the agent at your Ollama model.  Then:
 
 ```bash
 opencode --version

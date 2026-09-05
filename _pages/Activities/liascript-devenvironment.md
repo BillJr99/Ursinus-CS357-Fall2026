@@ -466,6 +466,10 @@ Verify either way:
 opencode --version
 ```
 
+**Every install route in one place:** [opencode.ai](https://opencode.ai/).  Two beyond the two above are worth knowing.  On Windows without WSL, `choco install opencode` or `scoop install opencode` install the command-line version natively, though the project itself recommends WSL, which is the route Step 10 and the Overview assignment describe.  That same page also offers a **desktop application**, in beta for macOS, Windows, and Linux, which puts this agent in a window with tabs instead of a terminal.
+
+Use the container route for this course, because every lab assumes it and a classmate can reproduce it.  Install the command-line version natively only if you are on the Step 10 fallback.  The desktop app is worth a look if you would rather have a window than a terminal, but treat it as a second face on one tool rather than a replacement: the labs hand you commands, and the OpenCode Studio lab asks for a transcript.
+
 ### 8.2: Point it at your own model
 
 opencode reads a single global config file, and the name matters: it is `opencode.json`, not `config.json`.  If opencode later reports no provider or no models, this file name is the first thing to check.
