@@ -319,7 +319,7 @@ schedule:
     points: "10"
     rubricpath: "_pages/Assignments/asmt-teamsurvey.md"
   readings:
-  - rtitle: "Please bring a laptop with Docker Desktop already installed.  The download alone can eat the session.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
+  - rtitle: "Please bring a laptop with Docker Desktop already installed.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
     rlink: false
   - rtitle: "The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\".  Step 0 of today's activity is the ten-minute version of this"
     rlink: "Tutorials/Shell"
@@ -357,10 +357,8 @@ schedule:
     rubricpath: "_pages/Projects/proj-pblthread.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
-  - rtitle: "Bring your cs357-work repository and the working opencode install from Week 1 (Step 8).  Today you drive the agent against a written specification and read its diff, so a broken setup costs you the session."
+  - rtitle: "Bring your cs357-work repository and the working opencode install from Week 1 (Step 8).  Today you drive the agent against a written specification and read its diff."
     rlink: false
-  - rtitle: "OpenCode Studio, the lab handed out today.  Read Part 1 and the Before You Start section before class so the charter questions are familiar"
-    rlink: "Assignments/OpenCodeStudio"
   - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drive today"
     rlink: "Tutorials/AgentCLIs"
   - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, the risk that arrives with the convenience"
@@ -452,8 +450,6 @@ schedule:
   readings:
   - rtitle: "Ollama Structured Outputs, on schema-constrained JSON.  The Local Agent Lab's required structured-output segment uses this, so read it before the lab"
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
-  - rtitle: "Structured outputs in depth: JSON mode, tool schemas, and output validation, in the background section of the Tools and MCP lab"
-    rlink: "Assignments/ToolsMCP"
   - rtitle: "Instructor with Pydantic and Ollama, for typed and grammar-constrained generation: validity by construction rather than by retry"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
 - week: "5"
@@ -471,7 +467,7 @@ schedule:
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Bring your half-page unassisted problem statement, written individually and without AI, before your team drafts the brief."
     rlink: false
-  - rtitle: "Optional, five minutes: install Obsidian before class.  Model 3 puts an MCP server in front of a vault, and it is more useful on your own notes"
+  - rtitle: "Optional: install Obsidian before class.  Model 3 puts an MCP server in front of a vault, and it is more useful on your own notes"
     rlink: "https://obsidian.md"
   - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the read path and write path that today's Model 3 exposes as tools"
     rlink: "Tutorials/ObsidianSync"
@@ -514,8 +510,6 @@ schedule:
   - rtitle: "Mitchell, Chapter 4"
   - rtitle: "Please bring your team's Stakeholder Brief draft, because the peer review round works on real drafts."
     rlink: false
-  - rtitle: "The RAG Quality Checkup pathway of the RAG Knowledge Base lab, handed out today: the golden set, the checkup worksheet, and the regression harness that today's metrics feed"
-    rlink: "Assignments/RAGKnowledgeBase"
 - week: "7"
   date: "1"
   title: "How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox"
@@ -611,8 +605,6 @@ schedule:
   readings:
   - rtitle: "From Second Brain to Chief of Staff: one personal agent followed into production"
     rlink: "Tutorials/ProductionAssistant"
-  - rtitle: "Stochastic multi-agent consensus: sampling, clustering by meaning, and synthesis, in Part 2 of the Multi-Agent Patterns Lab handed out today"
-    rlink: "Assignments/MultiAgentDebate"
 - week: "10"
   date: "0"
   title: "Agents That Talk: Multi-Agent Communication Through GitHub and Dropbox, and Threat Modeling"
