@@ -342,7 +342,7 @@ The OWASP list names broad categories; three agent-specific patterns deserve the
 
 12.  Multi-agent systems introduce chained trust: Agent A feeds its output directly to Agent B.  If A is compromised and its output goes into B's prompt without sanitization, B inherits the injected instructions.  In the pipeline of Section 4, how many agents would need to be compromised for an attacker to reach a privileged final action?  What does the A2A trust-boundary rule (a sub-agent cannot exceed its spawner's permissions) protect against here, and what does it not protect against?
 
-The incident simulation that follows this material in the case-studies deck (a misbehaving customer service agent, from detection to post-mortem) is deferred to the Nov 24 studio session, where you will run it against your own project's channel rather than a fictional one.
+The incident simulation that follows this material in the case-studies deck (a misbehaving customer service agent, from detection to post-mortem) is deferred to the *Project Studio: Sprint and Threat Model* session, where you will run it against your own project's channel rather than a fictional one.
 
 ## 6.  The CIA Triad and Defense in Depth
 
@@ -449,7 +449,7 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: Two agents can now hand work to each other through a channel you can audit.  The next session, *Evaluating Agents With a Rubric: The Judge Pipeline Workshop* (Thu Nov 5), asks the question this one leaves open: when the second agent's result lands in `done/`, how do you know it is any good?  The reviewer in Model 1 applied a rubric by hand; on Thursday you build the pipeline that applies one at scale, and you find out where a judge agent is itself a channel an attacker can write to.
+-> Coming Up Next: Two agents can now hand work to each other through a channel you can audit.  *Evaluating Agents With a Rubric: The Judge Pipeline Workshop* asks the question this one leaves open: when the second agent's result lands in `done/`, how do you know it is any good?  The reviewer in Model 1 applied a rubric by hand; in that session you build the pipeline that applies one at scale, and you find out where a judge agent is itself a channel an attacker can write to.
 
 ---
 
@@ -457,4 +457,4 @@ Write a combined reflection of 150-250 words addressing at least two of the thre
 
 - Anthropic engineering blog.  "How we built our multi-agent research system" (2025, online), on verification and state in long-running agents.
 - Lilian Weng.  "LLM Powered Autonomous Agents."  *Lil'Log* (2023). https://lilianweng.github.io/posts/2023-06-23-agent/, a survey of agent architectures including coding agents.
-- This course: [Agent Case Studies](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCaseStudies), the article behind Part III, including the incident simulation deferred to Nov 24; [The Second Brain](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SecondBrain) and [Syncing Obsidian to GitHub](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync) for the vault as a shared-folder channel; and the [Agent Skills lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction5), Part C, where the claim protocol is graded.
+- This course: [Agent Case Studies](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCaseStudies), the article behind Part III, including the incident simulation deferred to the project studio session; [The Second Brain](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SecondBrain) and [Syncing Obsidian to GitHub](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/ObsidianSync) for the vault as a shared-folder channel; and the [Agent Skills lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LocalAgent/Direction5), Part C, where the claim protocol is graded.

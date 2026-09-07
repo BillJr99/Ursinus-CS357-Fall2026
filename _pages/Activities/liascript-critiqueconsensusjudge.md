@@ -190,7 +190,7 @@ def critique_refine(task, rounds=3):
     return draft, verdict, rounds
 
 final, verdict, used = critique_refine(
-    "Announce that Critique and Refine is due October 27 and office hours moved to Wednesday."
+    "Announce that Critique and Refine is due next Friday and office hours moved to Wednesday."
 )
 print(f"\n=== FINAL DRAFT (after {used} revision rounds) ===\n{final}")
 if verdict["verdict"] != "accept":
@@ -478,7 +478,7 @@ Sit with the distinction before you move on, because your lab design depends on 
 
 # Part IV: Use Three, an Evaluator That Scores Against a Rubric
 
-The third use turns the loop outward: the artifact already exists (an essay, a plan, a pull request) and the model's only job is to score it against a rubric and emit JSON.  You will take apart a bad rubric, then ask who audits the judge.  The judging pipeline, batch scoring, and bias measurements are the Nov 5 workshop; today is the design work that comes first.
+The third use turns the loop outward: the artifact already exists (an essay, a plan, a pull request) and the model's only job is to score it against a rubric and emit JSON.  You will take apart a bad rubric, then ask who audits the judge.  The judging pipeline, batch scoring, and bias measurements are the *Judge Pipeline Workshop*; today is the design work that comes first.
 
 ## 9.  Judgment at Scale
 
@@ -516,7 +516,7 @@ A draft rubric for short essays: (1) "Well written, 40 percent"; (2) "Good use o
 
 ## 10.  Auditing the Judge
 
-A judge is a model, so the loop needs one more evaluate step: someone has to score the judge.  The instrument is a calibration set, a small collection of artifacts already scored by people.  Run the judge on it and compare, criterion by criterion, before trusting it on new work.  Setting the temperature to 0 makes the judge consistent, and consistency is not accuracy: a judge that reliably over-scores verbose essays is worse than a slightly noisy but well-calibrated one, because the bias is systematic and invisible.  The Nov 5 workshop builds the pipeline that runs this audit and measures position bias directly.
+A judge is a model, so the loop needs one more evaluate step: someone has to score the judge.  The instrument is a calibration set, a small collection of artifacts already scored by people.  Run the judge on it and compare, criterion by criterion, before trusting it on new work.  Setting the temperature to 0 makes the judge consistent, and consistency is not accuracy: a judge that reliably over-scores verbose essays is worse than a slightly noisy but well-calibrated one, because the bias is systematic and invisible.  The *Judge Pipeline Workshop* builds the pipeline that runs this audit and measures position bias directly.
 
 The most important safeguard before trusting an LLM judge's scores on real student work is:
 
@@ -579,7 +579,7 @@ The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026
 
 ---
 
--> Coming Up Next: Every agent today talked through a shared transcript in one Python process, which works for three agents and two rounds and stops working the moment agents live on different machines.  Next session, *Agents That Talk: Multi-Agent Communication Through GitHub and Dropbox, and Threat Modeling* (Tue Nov 3), moves the conversation into repositories and shared folders, and asks what an attacker can do with a channel that agents trust.  The loop you built today is the core of the Multi-Agent Patterns lab; the judge you designed returns as code in the Nov 5 workshop.
+-> Coming Up Next: Every agent today talked through a shared transcript in one Python process, which works for three agents and two rounds and stops working the moment agents live on different machines.  Next session, *Agents That Talk: Multi-Agent Communication Through GitHub and Dropbox, and Threat Modeling* moves the conversation into repositories and shared folders, and asks what an attacker can do with a channel that agents trust.  The loop you built today is the core of the Multi-Agent Patterns lab; the judge you designed returns as code in the *Judge Pipeline Workshop*.
 
 ---
 

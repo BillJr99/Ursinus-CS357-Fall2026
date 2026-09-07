@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent
 
-On Sep 8, in *Coding Agents: OpenCode, Spec-First Development, and Reading the Diff*, you wrote a specification before any code existed, read the agent's plan before it acted, and read a diff that passed every test and was still dangerous.  Today we put those three skills inside a loop.  Two loops, in fact: the **Karpathy loop**, which keeps the agent on a short leash and moves in small verified steps, and the **Gauntlet loop**, which builds an answer key first and then attacks each candidate until no material defect remains.  You leave with a checklist for the first, a worksheet for the second, and one gauntlet round run on the `spec.md` you brought from the OpenCode Studio lab.
+In *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff*, you wrote a specification before any code existed, read the agent's plan before it acted, and read a diff that passed every test and was still dangerous.  Today we put those three skills inside a loop.  Two loops, in fact: the **Karpathy loop**, which keeps the agent on a short leash and moves in small verified steps, and the **Gauntlet loop**, which builds an answer key first and then attacks each candidate until no material defect remains.  You leave with a checklist for the first, a worksheet for the second, and one gauntlet round run on the `spec.md` you brought from the OpenCode Studio lab.
 
 ---
 
@@ -67,7 +67,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 ## 1.  Why Iteration Beats One Big Prompt
 
-The Sep 8 session left you with a specification, an agent that could implement it, and the discipline of reading the plan before the diff.  What it did not settle is **how much to ask for at once**.  The tempting answer is everything: hand over `spec.md`, say "implement this," and read the result.  The Sep 8 planted-bug diff already showed why that fails.  A large diff hides `eval(query)` in plain sight because you skim what looks like boilerplate, and a large plan is wrong in ways you cannot see until the code exists.
+That session left you with a specification, an agent that could implement it, and the discipline of reading the plan before the diff.  What it did not settle is **how much to ask for at once**.  The tempting answer is everything: hand over `spec.md`, say "implement this," and read the result.  Its planted-bug diff already showed why that fails.  A large diff hides `eval(query)` in plain sight because you skim what looks like boilerplate, and a large plan is wrong in ways you cannot see until the code exists.
 
 Iteration fixes both problems by shrinking the thing you have to judge.  A diff of five lines against a test you wrote is checkable in a minute.  A plan for one increment is one sentence, and rejecting it costs seconds.  Andrej Karpathy, who named vibe coding, makes the point (as the *AI-Assisted Development* tutorial records) that people are better at writing specs than at reviewing arbitrary code, and models are better at writing code than at writing specs.  The loop is what keeps you doing the job you are better at.
 
@@ -83,7 +83,7 @@ The two loops today share one habit and differ in where the check comes from.
 
 ## Model 1: A Two-Step Karpathy Loop
 
-The task: `tools/titles.py` in `cs357-work` has a stub `normalize_title(s)` and two failing tests you wrote first, in the spec-first order from Sep 8.  Each step below starts with the plan-first prompt from that session, quoted here so you can paste it:
+The task: `tools/titles.py` in `cs357-work` has a stub `normalize_title(s)` and two failing tests you wrote first, in the spec-first order from *Coding Agents*.  Each step below starts with the plan-first prompt from that session, quoted here so you can paste it:
 
 ```text
 Before you change anything: list the files you intend to modify, in the order you
@@ -228,7 +228,7 @@ Every line after [1] is the agent doing what it was told.  That is the problem.
 
     *Hint: One rewrites a check to match the code.  The other rewrites the specification to match the code.  Which one will the next reader believe?*
 
-6.  Line [6] reports six passing tests.  Explain why "6 passed" is weaker evidence here than "2 passed" was in Model 1, and name the Sep 8 misconception it reproduces.
+6.  Line [6] reports six passing tests.  Explain why "6 passed" is weaker evidence here than "2 passed" was in Model 1, and name the *Coding Agents* misconception it reproduces.
 
 7.  Rewrite line [1] as the first prompt of a Karpathy loop for this spec.  Then list the increments you would ask for, in order, one check each.
 
@@ -443,7 +443,7 @@ Why does a Ralph loop start each iteration with a *fresh* context window instead
 
 *Societal:* An unattended loop commits all night against a test suite it cannot edit.  If it ships a defect that no test encoded, who is accountable: the person who wrote the tests, the person who started the loop, or the team that merged the branch in the morning?  Argue for one and name the control from Section 6 that was missing.
 
--> Coming Up Next: Both loops today assumed you could tell a passing check from a failing one.  Next session, *Hallucinations and Evaluating Agent Outputs* (Tue Sep 22), is about the harder case: an output that looks right, cites something, and is wrong, where no test you wrote catches it and the critic has to be built by hand.  Bring three prompts where a model gave you a confidently wrong answer; the answer-key discipline from Model 3 is what we will apply to them.
+-> Coming Up Next: Both loops today assumed you could tell a passing check from a failing one.  In *Hallucinations and Evaluating Agent Outputs*, we take up the harder case: an output that looks right, cites something, and is wrong, where no test you wrote catches it and the critic has to be built by hand.  Bring three prompts where a model gave you a confidently wrong answer; the answer-key discipline from Model 3 is what we will apply to them.
 
 ---
 

@@ -58,7 +58,7 @@ The three capabilities below used to be part of the Local Agent Lab, where they 
 
 ## Before You Start
 
-**This builds on:** the *Tool Use and Function Calling* session (the day this lab is handed out), the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session (Tue Sep 29, before this lab is due), and the structured-output reading attached to both.  It also assumes the agent loop you built in the Local Agent Lab; this lab gives that agent hands.
+**This builds on:** the *Tool Use and Function Calling* session (the day this lab is handed out), the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session, which falls before this lab is due, and the structured-output reading attached to both.  It also assumes the agent loop you built in the Local Agent Lab; this lab gives that agent hands.
 
 **You need**, on the code route:
 

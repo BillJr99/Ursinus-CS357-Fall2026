@@ -267,7 +267,7 @@ In this Part you apply the RAG pipeline to real documents you choose, stress-tes
 
 ## -> Coming Up Next
 
-Our RAG system worked because our "documents" were clean, single-sentence facts.  Real documents are messy: long, overlapping, poorly organized.  *RAG Quality: Chunking and Measuring Retrieval* (Tue Oct 6) takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality, the same levers you will tune in the RAG Knowledge Base lab.
+Our RAG system worked because our "documents" were clean, single-sentence facts.  Real documents are messy: long, overlapping, poorly organized.  *RAG Quality: Chunking and Measuring Retrieval* takes this up next: how you cut documents into chunks determines what you can find, and we will build the tools to measure and improve retrieval quality, the same levers you will tune in the RAG Knowledge Base lab.
 
 ---
 

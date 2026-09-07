@@ -50,7 +50,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 ## Thursday: Final Integration and Demo Rehearsal
 
-Thursday is a rehearsal, not a work session.  The rehearsal rule: if your system does not run end to end at the start of class, that is the thing to fix, before anything else on the backlog.  Skip the gallery walk (section 2) on Thursday and run these numbered sections in order: the stand-up in section 1, with the current number from your harness; triage in section 3, applied to whatever your integration work surfaced since Tuesday; the release readiness checklist in section 4, which the Evaluator signs off with evidence; and Exercise 3, the 90-second explainability story, repeated until every teammate can deliver it solo.  Your last Intra-Team Check-In (Performing into Adjourning) is also due Thursday.
+The second session is a rehearsal, not a work session.  The rehearsal rule: if your system does not run end to end at the start of class, that is the thing to fix, before anything else on the backlog.  Skip the gallery walk (section 2) on Thursday and run these numbered sections in order: the stand-up in section 1, with the current number from your harness; triage in section 3, applied to whatever your integration work surfaced since Tuesday; the release readiness checklist in section 4, which the Evaluator signs off with evidence; and Exercise 3, the 90-second explainability story, repeated until every teammate can deliver it solo.  Your last Intra-Team Check-In (Performing into Adjourning) is also due Thursday.
 
 ---
 
@@ -217,7 +217,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: Demo Day (Tue Dec 8).  Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team.  It turns this week's triaged backlog and release-readiness checklist into your final presentation plan.
+-> Coming Up Next: Demo Day.  Work through the [Demo Day Guide](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#demo-day-external-guests-and-technical-interview-practice) with your team.  It turns this week's triaged backlog and release-readiness checklist into your final presentation plan.
 
 ---
 

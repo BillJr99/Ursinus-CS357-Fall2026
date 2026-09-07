@@ -69,7 +69,7 @@ tags:
 
 You and your partner will build and compare the two aggregation architectures from class: **debate** (agents see and rebut each other) and **stochastic consensus** (independent samples, clustered by meaning, merged by a synthesizer).  Work in pairs with driver/navigator roles, swap at least every 30 minutes, and keep a swap log.
 
-This lab is handed out on Thursday, October 29, 2026, alongside the deck *Critique, Consensus, and the LLM Judge: One Loop, Three Uses*, and it is due on Tuesday, November 17, 2026.  The course schedule is the authority if these dates ever move.
+This lab is handed out alongside the deck *Critique, Consensus, and the LLM Judge: One Loop, Three Uses*.  See the course schedule for the assigned and due dates.
 
 ---
 

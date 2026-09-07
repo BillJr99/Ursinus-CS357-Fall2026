@@ -67,7 +67,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 The agent table in Model 1 is a good design artifact, and it is missing three columns that this course keeps insisting on.  Add them, and the table stops describing what each agent *does* and starts describing what happens when it is wrong.
 
-You already have the tool for the first column.  On Tuesday you wrote the protocol itself: one trace line per loop phase, a `rule` field on every action, a dated `SESSION.md` entry on every stop.  Today's job is to point each agent's row at that protocol and say, for this agent specifically, what the trace line and the session entry contain.
+You already have the tool for the first column.  In *Observability, Traceability, and Handoff Protocols* you wrote the protocol itself: one trace line per loop phase, a `rule` field on every action, a dated `SESSION.md` entry on every stop.  Today's job is to point each agent's row at that protocol and say, for this agent specifically, what the trace line and the session entry contain.
 
 For every agent in your system, before it exists, answer:
 
@@ -213,7 +213,7 @@ The table below carries the original columns plus one that Tuesday's protocol ma
 
 9.  Fill in the "Logged, Traced, Handed Off" cell for your FormatterAgent.  Name the fields in its trace line, the rule its one action (writing the HTML file) traces back to, and what its `SESSION.md` entry must contain so that a fresh agent knows whether the HTML on disk came from an approved draft.
 
-   > *Hint: Start from the checklist you wrote on Tuesday.  Which row of it would fail if FormatterAgent wrote HTML from an unapproved draft and stopped cleanly?  The trace line must let you answer "which draft version, and who approved it" without opening the HTML; the session entry must let the next agent decide whether to ship or regenerate.*
+   > *Hint: Start from the checklist you wrote in *Observability, Traceability, and Handoff Protocols*.  Which row of it would fail if FormatterAgent wrote HTML from an unapproved draft and stopped cleanly?  The trace line must let you answer "which draft version, and who approved it" without opening the HTML; the session entry must let the next agent decide whether to ship or regenerate.*
 
 In the agent table, WriterAgent runs at temperature 0.7 while CriticAgent runs at 0.0.  The key distinction this encodes is:
 
@@ -365,7 +365,7 @@ Respond to all three levels in your notebook:
 
 ---
 
--> **Coming Up Next:** *Orchestration and Multi-Agent Patterns* (Tue Oct 27) is next: how the agents you designed on paper today get wired into pipelines, routers, and planner-led workflows, and the five shapes those wirings take.  Today's agent table, pre-mortem, and protocol section feed directly into *Design Your Agent System* and your Final Project's design document.
+-> **Coming Up Next:** *Orchestration and Multi-Agent Patterns* takes this up: how the agents you designed on paper today get wired into pipelines, routers, and planner-led workflows, and the five shapes those wirings take.  Today's agent table, pre-mortem, and protocol section feed directly into *Design Your Agent System* and your Final Project's design document.
 
 ---
 
@@ -377,6 +377,6 @@ Respond to all three levels in your notebook:
 - Fred Brooks.  *The Mythical Man-Month* (1975/1995), Chapter 1.  "Plan to throw one away", still the most candid advice about first-system costs.
 - This course: [Observability, Traceability, and Handoff Protocols](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-observability.md), where the `SKILL.md` and checklist that today's protocol section relies on were written.
 
-The self-paced extension on `AGENTS.md`, global instructions, and skills that used to close this deck now lives in [Skills: Design One, Then Measure It](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-skills.md), from Sep 10.  Read it there if you want the skill file layout and the measurement harness that go with the protocol you are designing today.
+The self-paced extension on `AGENTS.md`, global instructions, and skills that used to close this deck now lives in [Skills: Design One, Then Measure It](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-skills.md).  Read it there if you want the skill file layout and the measurement harness that go with the protocol you are designing today.
 
 ---

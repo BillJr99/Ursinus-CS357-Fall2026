@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Observability, Traceability, and Handoff Protocols
 
-Last session, in *How I AI*, you built a vault, a charter, and a `.ai/` directory so that one agent could stop and another could pick up the work.  Today you learn the three properties that make that safe, and then you write them down as a protocol: a skill an agent must follow when it starts, when it stops, when it restarts, and when it hands work to another agent through a repository or a shared folder.  You leave with a `SKILL.md` draft and a checklist.  The *Design Your Agent System* written assignment, introduced next session, requires exactly that protocol.
+In *How I AI*, you built a vault, a charter, and a `.ai/` directory so that one agent could stop and another could pick up the work.  Today you learn the three properties that make that safe, and then you write them down as a protocol: a skill an agent must follow when it starts, when it stops, when it restarts, and when it hands work to another agent through a repository or a shared folder.  You leave with a `SKILL.md` draft and a checklist.  The *Design Your Agent System* written assignment, introduced next session, requires exactly that protocol.
 
 ---
 

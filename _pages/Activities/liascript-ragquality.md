@@ -239,7 +239,7 @@ In this Part you apply Parts I and II to real documents: run a chunking shootout
 
 ## -> Coming Up Next
 
-We now have a RAG system that can find and deliver relevant information, and a way to measure whether it did.  Next session, *How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox* (Thu Oct 15), turns that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there.  Its Part III is an open studio, so bring your pipeline-in-progress, your golden set from step 5a, and your stuck points.  The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
+We now have a RAG system that can find and deliver relevant information, and a way to measure whether it did.  In *How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox*, we turn that instinct on your own notes: a vault of plain files an agent can read, with the zone boundaries and contract that make it safe to let one write there.  Its Part III is an open studio, so bring your pipeline-in-progress, your golden set from step 5a, and your stuck points.  The theory behind all of it, why an agent needs external memory at all, follows the session after in *Memory and the Small Context Window Principle*.
 
 ---
 

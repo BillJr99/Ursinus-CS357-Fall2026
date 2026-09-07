@@ -395,7 +395,7 @@ In this part, you will probe your local model across five different task types t
 
 ---
 
--> Coming Up Next: Your model is running and you have turned your first dial on it.  Next, in *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff*, you hand that model a written specification and read every line it produces.  Bring this stack, because the OpenCode Studio lab is handed out that day, and the *Prompt Engineering as Agent Design* session the week after edits system prompts against this same live model, where the temperature slider from Section 3b is one of the things we vary.  (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.)
+-> Coming Up Next: Your model is running and you have turned your first dial on it.  In *Skills: Design One, Then Measure It*, you work on the instructions the agent reads before it produces anything, and measure whether they changed the output.  Keep this stack running, because the OpenCode Studio lab handed out today drives opencode against the model you just stood up, and *Prompt Engineering as Agent Design* edits system prompts against this same live model, where the temperature slider from Section 3b is one of the things we vary.  (*Why* that dial behaves the way it does gets its full treatment in *Why Different Answers Every Time?  Sampling, Temperature, and Generation*.)
 
 ## 6.  Further Reading
 

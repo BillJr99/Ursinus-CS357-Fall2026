@@ -625,7 +625,7 @@ In this part you write and red-team real system prompts: first a prompt for a co
 
 ---
 
--> Coming Up Next: You have written instructions for a model whose insides are still a black box, and you have compared two of those black boxes on the same prompt.  Thursday's session, *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent* (Thu Sep 17), puts the system prompt you wrote today to work: you hand an agent a task, read what it produces, and run it through one gauntlet round of critique and revision.  Bring the OpenCode Studio artifact you have so far.  Everything you tuned by feel today has a mechanism underneath: how your prompt becomes numbers, how those numbers carry meaning, and how each word's meaning is bent by the words around it.  The [Tokens, Embeddings, and Attention](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) tutorial is where you meet it.
+-> Coming Up Next: You have written instructions for a model whose insides are still a black box, and you have compared two of those black boxes on the same prompt.  *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent* puts the system prompt you wrote today to work: you hand an agent a task, read what it produces, and run it through one gauntlet round of critique and revision.  Bring the OpenCode Studio artifact you have so far.  Everything you tuned by feel today has a mechanism underneath: how your prompt becomes numbers, how those numbers carry meaning, and how each word's meaning is bent by the words around it.  The [Tokens, Embeddings, and Attention](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) tutorial is where you meet it.
 
 ## 7.  Further Reading
 

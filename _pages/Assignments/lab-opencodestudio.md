@@ -56,13 +56,13 @@ info:
       progressing: The submission follows the directions with a minor omission, with at least superficial responses to the reflection prompts
       proficient: "The submission contains every deliverable in the stated layout; the .skill archive is posted to the course discussion with SKILL.md at its top level, verified with unzip -l; the readme names the artifact route taken and the direction chosen, if any, and lists every template section deleted with its reason; the model name, temperature, seed, and opencode version are recorded; and every reflection answer cites a specific line from your own transcript, session log, or diff rather than restating the prompt"
   readings:
-    - rtitle: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff (Tue Sep 8), the session this lab is handed out in; Section 2c is the plan mode Part 4 starts in, and Part IIb is the gate Part 3b builds"
+    - rtitle: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff; Section 2c is the plan mode Part 4 starts in, and Part IIb is the gate Part 3b builds"
       rlink: "Activities/liascript-codingagents.md"
       liapage: true
-    - rtitle: "Skills: Design One, Then Measure It (Thu Sep 10), where the two skills in Part 3 get their design and their measurement"
+    - rtitle: "Skills: Design One, Then Measure It, where the two skills in Part 3 get their design and their measurement"
       rlink: "Activities/liascript-skills.md"
       liapage: true
-    - rtitle: "Prompt Engineering as Agent Design: System Prompts, Personas, and Comparing Models (Tue Sep 15), this lab's mid-flight checkpoint, and the five-element system prompt that Part 2 waits for and grows"
+    - rtitle: "Prompt Engineering as Agent Design: System Prompts, Personas, and Comparing Models, this lab's mid-flight checkpoint, and the five-element system prompt that Part 2 waits for and grows"
       rlink: "Activities/liascript-promptengineering.md"
       liapage: true
     - rtitle: "Your AI Workbench: Step 8 is this lab's setup, and Step 8.5 names observability, isolation, and reversibility"
@@ -114,9 +114,9 @@ This lab adds no installations.  Everything it needs, you built in *Your AI Work
 - Ollama running on your host with at least one small model pulled
 - opencode installed and pointed at that model, from Step 8 of the [Development Environment activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-devenvironment.md)
 - Your `cs357-work` repository, cloned and pushing successfully
-- The Coding Agents session of Tue Sep 8, the day this lab is handed out.  Its Section 2c (plan mode) and Part IIb (hooks and gates) are the classroom versions of Part 4 and Part 3b
+- The *Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Diff* session.  Its Section 2c (plan mode) and Part IIb (hooks and gates) are the classroom versions of Part 4 and Part 3b
 
-**What this lab does not assume yet.**  Part 2 builds its contract and system prompt on the role, goal, tools, format, and guardrails frame.  That frame arrives Tue Sep 15 in *Prompt Engineering as Agent Design*, which is this lab's mid-flight checkpoint.  So work the parts in this order: Part 1, then Part 3 and Part 3b, then Part 2 after the Sep 15 session, then Parts 4 through 7.  The parts keep their numbers because later parts refer to them by number; the order you do them in is the one in this paragraph.
+**What this lab does not assume yet.**  Part 2 builds its contract and system prompt on the role, goal, tools, format, and guardrails frame.  That frame arrives in *Prompt Engineering as Agent Design*, which is this lab's mid-flight checkpoint.  So work the parts in this order: Part 1, then Part 3 and Part 3b, then Part 2 after that session, then Parts 4 through 7.  The parts keep their numbers because later parts refer to them by number; the order you do them in is the one in this paragraph.
 
 ### Health check
 
@@ -134,7 +134,7 @@ Then start `opencode`, type `/model`, and confirm your Ollama provider appears i
 
 ### Estimated time
 
-These are totals, not increments.  Parts 1, 3, and 3b fill the first week.  Part 2 waits for the Sep 15 session, and Parts 4 through 7 fill the second week.  The rows are in the order you do them.
+These are totals, not increments.  Parts 1, 3, and 3b fill the first week.  Part 2 waits for the *Prompt Engineering as Agent Design* session, and Parts 4 through 7 fill the second week.  The rows are in the order you do them.
 
 | Component | Estimated total time |
 |---|---|
@@ -142,7 +142,7 @@ These are totals, not increments.  Parts 1, 3, and 3b fill the first week.  Part
 | Part 1: artifact route, charter, and the first commit | 1.5 hours |
 | Part 3: two skills, installed and tested | 2 hours |
 | Part 3b: one gate, built two ways | 1 hour |
-| Part 2, after Tue Sep 15: the specification, the contract, and the system prompt | 1.5 hours |
+| Part 2, after *Prompt Engineering as Agent Design*: the specification, the contract, and the system prompt | 1.5 hours |
 | Part 4: the first agent run, from plan mode, plus the skill comparison | 2 hours |
 | Part 5: diff review, critique, and one refine turn | 2 hours |
 | Part 6: traceability and the decision log | 1 hour |
@@ -237,7 +237,7 @@ The test in Part 7 is blunt: close everything, start a session that has never se
 
 This is the one idea in this lab that the Week 7 session does not cover, and it is the one that makes everything above legible.
 
-An agent handed an underspecified request has two bad options.  It can guess, which produces work you did not want, or it can ask open-ended questions, which you answer carelessly because open-ended questions are expensive to answer.  The first half of the fix is a bounded question set: ask me up to five questions that would change how you approach this, then stop.  (The Coding Agents session showed you this shape in Section 4, and the Sep 15 session names it the plan-first protocol.)  A **menu** is the second half.  Each question comes with lettered options and a stated default, so answering takes three keystrokes rather than three paragraphs.
+An agent handed an underspecified request has two bad options.  It can guess, which produces work you did not want, or it can ask open-ended questions, which you answer carelessly because open-ended questions are expensive to answer.  The first half of the fix is a bounded question set: ask me up to five questions that would change how you approach this, then stop.  (The Coding Agents session showed you this shape in Section 4, and *Prompt Engineering as Agent Design* names it the plan-first protocol.)  A **menu** is the second half.  Each question comes with lettered options and a stated default, so answering takes three keystrokes rather than three paragraphs.
 
 This pattern has a name in practice: the grill-me or interview-me style of skill.  The agent asks a short list of numbered multiple-choice questions, each with a recommended default, before it builds anything, and your answers become part of the spec instead of assumptions buried in the code.  The `kickoff-interview` skill you write in Part 3 is one of these.
 
@@ -343,7 +343,7 @@ That commit takes ten seconds, and it is the entirety of your ability to undo wh
 
 ## Part 2: The Specification, the Contract, and the System Prompt
 
-Do this part after the Tue Sep 15 session, *Prompt Engineering as Agent Design*.  That session gives you the five-element frame (role, goal, tools, format, guardrails) that the contract and the system prompt are built on.  By then Parts 1, 3, and 3b are done, so you already have a charter, two skills, and one gate.  This part adds the three documents the agent reads at launch.
+Do this part after the *Prompt Engineering as Agent Design* session.  That session gives you the five-element frame (role, goal, tools, format, guardrails) that the contract and the system prompt are built on.  By then Parts 1, 3, and 3b are done, so you already have a charter, two skills, and one gate.  This part adds the three documents the agent reads at launch.
 
 Three documents, each doing a different job.  The **specification** says what to build.  The **contract** says what the agent may touch.  The **system prompt** says how the agent behaves.  Students routinely collapse all three into one long prompt.  The result is a document too long for a small model to follow and too vague for you to check compliance against.
 
@@ -397,11 +397,11 @@ spec.md, AGENTS.md, CHARTER.md, .ai/, docs/, transcripts/
 
 On the document route, the specification is an outline with an audience, a length, a required structure, and the criteria a reader would use to judge it.  On the automation route it is the command, its inputs, its exit codes, and what "run it twice, same result" means concretely.  In every case, the last two sections are required in spirit: the agent must know which files are its workspace and which are off-limits.
 
-**Step 2: Grow `AGENTS.md` into a real contract.**  You wrote a stub in Week 1, Step 8.4, and Part 3b added one rule to it.  The Sep 15 session gave you the five elements that describe what the agent *is*.  A contract adds what the agent may do *without asking*, which is a different question and the one that starts to matter once the agent can write files.
+**Step 2: Grow `AGENTS.md` into a real contract.**  You wrote a stub in Week 1, Step 8.4, and Part 3b added one rule to it.  *Prompt Engineering as Agent Design* gives you the five elements that describe what the agent *is*.  A contract adds what the agent may do *without asking*, which is a different question and the one that starts to matter once the agent can write files.
 
 Required content, kept to roughly one page:
 
-- **Role, goal, tools, format, guardrails**, from the Sep 15 session
+- **Role, goal, tools, format, guardrails**, from *Prompt Engineering as Agent Design*
 - **Zones as paths**, lifted from your charter's repository layout: what is read-only, what is workspace, what is off-limits
 - **Operating habits**: lead with the outcome, ground every claim in evidence, and the house error-handling convention, which is a located message such as `[search:load_kb]` followed by a traceback, never a silently swallowed exception
 - **A clarification protocol**: do not begin execution when the goal, audience, format, or scope is ambiguous in a way that would change the output.  Part 3's skill is what makes this sentence actually happen
