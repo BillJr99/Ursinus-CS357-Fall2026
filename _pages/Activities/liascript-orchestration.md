@@ -66,10 +66,10 @@ Those three are the patterns we build today.  Two more fixed shapes belong in yo
 | **Pipeline** | A fixed sequence; each stage's output is the next stage's input | You, before runtime | Part II, `digest_pipeline` |
 | **Router** | One classification, then dispatch to exactly one specialist | You; the classifier only picks a label from a closed set | Part II, `route()` |
 | **Fan-out / gather** | N independent subtasks run separately, then one aggregator merges the results | You; the branches are independent by design | Going Deeper, section 4c |
-| **Critique-refine** | A generator and a critic loop until the critic passes or a revision budget runs out | You; the loop is bounded | Thu Oct 29, *Critique, Consensus, and the LLM Judge: One Loop, Three Uses* |
-| **Debate / consensus** | Several agents answer independently, and a fixed rule (majority vote, clustering) picks the result | You; the aggregation rule is fixed | Thu Oct 29, the same session |
+| **Critique-refine** | A generator and a critic loop until the critic passes or a revision budget runs out | You; the loop is bounded | *Critique, Consensus, and the LLM Judge: One Loop, Three Uses* |
+| **Debate / consensus** | Several agents answer independently, and a fixed rule (majority vote, clustering) picks the result | You; the aggregation rule is fixed | the same session |
 
-The planner is the one pattern missing from that table on purpose: a model, not you, decides its control flow.  Going Deeper takes that up as the supervisor loop.  Critique-refine and debate/consensus get their own session on Thu Oct 29, so today you only need to recognize them and know that both are still fixed shapes you can draw on a whiteboard before running.
+The planner is the one pattern missing from that table on purpose: a model, not you, decides its control flow.  Going Deeper takes that up as the supervisor loop.  Critique-refine and debate/consensus get their own session, so today you only need to recognize them and know that both are still fixed shapes you can draw on a whiteboard before running.
 
 A design heuristic follows from all of this: **choose the least dynamic pattern that solves the problem.**  Pipelines before routers, routers before planners, planners before free-roaming autonomy.
 

@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Two weeks ago the Rubric Pipeline lab handed you a synthetic corpus and asked you to build a judge you could trust.  Today you point that judge at your own final project and find out whether the trust survives contact with real outputs.  You leave with a disagreement table for three real artifacts, one disagreement traced to its evidence and repaired, and the run frozen into your project repository as a regression check that fails the next time the judge quietly changes.
 
-The Literature Review Team Synthesis is due today.  The Rubric Pipeline lab is due Tuesday, so everything you produce this session can go straight into it.
+The Literature Review Team Synthesis is due today.  The Rubric Pipeline lab is due shortly, so everything you produce this session can go straight into it.
 
 ---
 
@@ -267,13 +267,13 @@ If promptfoo cannot reach Ollama, set the provider to Ollama's OpenAI-compatible
 
 ## 4.  Triage (8 minutes)
 
-The Coordinator reads each remaining row of the disagreement table aloud and the team sorts it into exactly one bucket: **Fix before December 1** (a rubric or artifact repair you can make and re-run before the gallery walk), **Disclose in the report** (a real disagreement you understand and will state in the limitations section, in one honest sentence), or **Future work**.  The Scribe converts the first bucket into assigned, dated backlog items on the spot, and writes the disclosure sentences for the second.
+The Coordinator reads each remaining row of the disagreement table aloud and the team sorts it into exactly one bucket: **Fix before the gallery walk** (a rubric or artifact repair you can make and re-run before the gallery walk), **Disclose in the report** (a real disagreement you understand and will state in the limitations section, in one honest sentence), or **Future work**.  The Scribe converts the first bucket into assigned, dated backlog items on the spot, and writes the disclosure sentences for the second.
 
 [[___ Your triage table here ___]]
 
 ## 5.  Evaluation Readiness Check
 
-Two of these rows come from the release-readiness checklist you will sign on December 1; the other two are today's additions.  "Yes" requires evidence, not belief.
+Two of these rows come from the release-readiness checklist you will sign at the gallery walk; the other two are today's additions.  "Yes" requires evidence, not belief.
 
 | Item | Check | Evidence Required |
 |------|-------|-------------------|
@@ -334,7 +334,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: *Project Studio: Sprint and Threat Model* (Tuesday, November 24) opens with the cross-team proposal review round, gives your team a thirty-minute sprint block, and then turns the incident simulation from the case-studies material on your own system: what an outsider could write that your agent will read, and what you would do in the first hour after it went wrong.  Bring today's committed harness; it is item 7 on the readiness check, and the sprint block is where the "Fix before December 1" bucket gets worked.  The Rubric Pipeline lab is due that day.
+-> Coming Up Next: *Project Studio: Sprint and Threat Model* opens with the cross-team proposal review round, gives your team a thirty-minute sprint block, and then turns the incident simulation from the case-studies material on your own system: what an outsider could write that your agent will read, and what you would do in the first hour after it went wrong.  Bring today's committed harness; it is item 7 on the readiness check, and the sprint block is where the "Fix before the gallery walk" bucket gets worked.  The Rubric Pipeline lab is due that day.
 
 ---
 

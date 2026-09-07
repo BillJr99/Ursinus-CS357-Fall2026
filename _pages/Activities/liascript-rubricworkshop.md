@@ -389,7 +389,7 @@ Recap: agreement tells you whether the rubric wording means the same thing to yo
 
 ---
 
--> Coming Up Next: *Training Data, Bias, and Explainability* (Tue Nov 10) follows the judge's preferences back to where they came from: the corpus the model learned from, and what it means to deploy a scoring system trained on it.  Then *Evaluation Workshop II: Run Your Rubric Against Your Project* (Thu Nov 19) brings today's judge to your own project outputs, so keep `judge.py`, both YAML files, and your disagreement table where you can find them.
+-> Coming Up Next: *Training Data, Bias, and Explainability* follows the judge's preferences back to where they came from: the corpus the model learned from, and what it means to deploy a scoring system trained on it.  Then *Evaluation Workshop II: Run Your Rubric Against Your Project* brings today's judge to your own project outputs, so keep `judge.py`, both YAML files, and your disagreement table where you can find them.
 
 ---
 

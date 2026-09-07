@@ -448,7 +448,7 @@ Your policy has a structure, your project is mapped onto real frameworks, and yo
 
 ---
 
--> Coming Up Next: *Evaluation Workshop II: Run Your Rubric Against Your Project* (Thursday, November 19) takes section 6 of your one-pager, the evaluation and monitoring section, and makes it real: you run your own rubric against your project's outputs and find out whether the harness your policy promises produces the evidence the policy needs.  Bring today's two sections; the workshop tests whether their measurements are ones you can actually take.
+-> Coming Up Next: *Evaluation Workshop II: Run Your Rubric Against Your Project* takes section 6 of your one-pager, the evaluation and monitoring section, and makes it real: you run your own rubric against your project's outputs and find out whether the harness your policy promises produces the evidence the policy needs.  Bring today's two sections; the workshop tests whether their measurements are ones you can actually take.
 
 ## Further Reading
 

@@ -100,7 +100,7 @@ By this point in the course you have built at least one working agent: a local a
 
 ## One capstone, two components, 200 points
 
-The Responsible AI **lab** and the Responsible AI in Practice **written assignment** used to be two 100-point deliverables due two days apart in the final week, alongside the Final Project.  They are now a single capstone worth 200 points, handed out November 10 and due December 1.
+The Responsible AI **lab** and the Responsible AI in Practice **written assignment** used to be two 100-point deliverables due two days apart in the final week, alongside the Final Project.  They are now a single capstone worth 200 points.  See the course schedule for the assigned and due dates.
 
 **Component 1, Build (100 points).**  The audit, red-team, and mitigation work specified on this page.  You produce evidence about a system's behavior.
 
@@ -110,7 +110,7 @@ Submit both together.  The rubric on this page covers Component 1.  The rubric o
 
 **Why they are one thing.**  An audit with no recommendation is a bug report nobody owns.  A policy with no evidence is a press release.  The capstone asks you to do both about the *same* system, which is the actual professional task.  Your Component 2 argument must cite your own Component 1 findings, not a paper you read.
 
-**Prerequisites.**  *Training Data, Bias, and Explainability* (Nov 10) is taught the day this is handed out.  *Intellectual Property, Privacy, and the Case for Local AI* (Nov 12) and *Governance, Policy, and the Cost of Inference* (Nov 17) land inside the work window; the governance session comes fourteen days before the capstone is due.
+**Prerequisites.**  *Training Data, Bias, and Explainability* is taught the day this is handed out.  *Intellectual Property, Privacy, and the Case for Local AI* and *Governance, Policy, and the Cost of Inference* land inside the work window, the governance session well before the capstone is due.
 
 **Pace yourself.**  The shared warm-up and threat model come first.  Your chosen direction is the largest piece.  The writeup is the shortest.
 

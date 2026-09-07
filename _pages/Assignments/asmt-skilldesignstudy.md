@@ -71,7 +71,7 @@ tags:
 
 ---
 
-In this assignment you build a portfolio of four reusable prompt patterns, then write one skill and measure whether it changed anything.  A prompt pattern is an instruction you add to one prompt.  A skill is the same kind of instruction, saved as a file that an agent loads on its own when your request matches its trigger.  Both are engineering decisions, and both can be tested the same way: hold everything else fixed, change one thing, and score the result.  By the end, you will be able to construct prompts and skills with documented, reproducible effects and explain the reason each one produces the change it does.  I hand this out Thursday, September 10, in the Skills session, and it is due Thursday, October 1.
+In this assignment you build a portfolio of four reusable prompt patterns, then write one skill and measure whether it changed anything.  A prompt pattern is an instruction you add to one prompt.  A skill is the same kind of instruction, saved as a file that an agent loads on its own when your request matches its trigger.  Both are engineering decisions, and both can be tested the same way: hold everything else fixed, change one thing, and score the result.  By the end, you will be able to construct prompts and skills with documented, reproducible effects and explain the reason each one produces the change it does.  I hand this out at the *Skills: Design One, Then Measure It* session.  See the course schedule for the assigned and due dates.
 
 ---
 

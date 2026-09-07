@@ -63,10 +63,10 @@ This brief does more work later in the semester than any other early deliverable
 
 The milestone runs in four steps:
 
-1.  In-class kickoff on Tue Sep 22, at the Hallucinations and Evaluating Agent Outputs session, when I hand out the assignment.
-2.  A short unassisted problem statement that each member writes individually after the interview, due Tue Sep 29 at the MCP: Connecting Agents to Tools and Your Obsidian Vault session.
-3.  A structured peer-review exchange of draft briefs in class on Tue Oct 6, at the RAG Quality: Chunking and Measuring Retrieval session.
-4.  The revised brief, due Thu Oct 15 at the How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox session.
+1.  In-class kickoff at the *Hallucinations and Evaluating Agent Outputs* session, when I hand out the assignment.
+2.  A short unassisted problem statement that each member writes individually after the interview, due at the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session; see the course schedule for the date.
+3.  A structured peer-review exchange of draft briefs in class at the *RAG Quality: Chunking and Measuring Retrieval* session.
+4.  The revised brief, due at the *How I AI: A Vault, a Charter, and Agents That Talk Through GitHub and Dropbox* session; see the course schedule for the date.
 
 The [course schedule]({{ site.baseurl }}/) is the authority on all of these dates.
 
@@ -95,11 +95,11 @@ This is a team assignment with one individual gate in the middle, and the order 
 1.  **Speed-dating kickoff, in class.**  Topics come out of conversation, not out of a solo brainstorm.
 2.  **Identify a real stakeholder** and make contact early.  This is the step with a lead time you do not control; a person has to answer you.
 3.  **Interview them.**  Not a survey.  A conversation you took notes in.
-4.  **Your own first draft, written individually and without AI**, due Tue Sep 29, before your team drafts.  Half a page.  This is a gate, and I do enforce it.
+4.  **Your own first draft, written individually and without AI**, due before your team drafts; see the course schedule for the date.  Half a page.  This is a gate, and I do enforce it.
 5.  **The team brief**, which may use whatever tools you want, with disclosure.
-6.  **Peer exchange**, using SQR cards, in class on Tue Oct 6.
+6.  **Peer exchange**, using SQR cards, in class at the *RAG Quality* session.
 
-Pace yourself.  The milestone spans a little over three weeks on purpose, from Tue Sep 22 to Thu Oct 15, but the interview has to happen in the first week: your individual statement is written after it and is due Tue Sep 29.  Scheduling the interview is the long pole, so start on it the day the assignment is handed out.
+Pace yourself.  The milestone spans a little over three weeks on purpose, but the interview has to happen in the first week, because your individual statement is written after it; see the course schedule for every date.  Scheduling the interview is the long pole, so start on it the day the assignment is handed out.
 
 Start the stakeholder contact this week.  If nobody on your team knows a fitting partner, ask me.  I will broker an introduction within one week of the request, and no team's brief is blocked by the roster.  What blocks teams is waiting until week two to discover they have nobody.
 
@@ -113,7 +113,7 @@ Before any team commits to a stakeholder, we generate candidates together.  In c
 
 By the end of class, your team short-lists three candidates and ranks them on three questions:
 
-1.  Access: can you realistically get an interview before the individual statement is due on Tue Sep 29?
+1.  Access: can you realistically get an interview before the individual statement is due?
 2.  Shape: could an agent system plausibly help?
 3.  Interest: does the domain match your team's survey rankings?
 
@@ -175,9 +175,9 @@ Capture direct quotes as they happen, and ask permission in the moment ("that's 
 
 ## Interlude: Your Own First Draft, Written Without AI
 
-> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session on Tue Sep 29, written individually and without AI before your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality: Chunking and Measuring Retrieval* session on Tue Oct 6 for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
+> **Bring to class.**  Your half-page unassisted problem statement comes with you to the *MCP: Connecting Agents to Tools and Your Obsidian Vault* session, written individually and without AI before your team drafts the brief.  It is a calibration baseline, not a test, completion credit only.  Your team's brief draft then travels to the *RAG Quality: Chunking and Measuring Retrieval* session for the cross-team [peer review round]({{ site.baseurl }}/Projects/PBLThread#intra-team-check-ins-1-3).
 
-This statement is due individually on Tue Sep 29, after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date.  It is worth **3 points, assessed within Class Activities and Participation, on completion only.**
+This statement is due individually after your interview and before your team begins drafting Part 3; see the [course schedule]({{ site.baseurl }}/) for the date.  It is worth **3 points, assessed within Class Activities and Participation, on completion only.**
 
 After your interview and before your team writes anything together, write half a page, by yourself, with no AI assistance of any kind: what you now believe the stakeholder's real problem is, in your own words, and the one thing you are least sure about.  No sources, no polish, no rewriting it later.  A first honest attempt.
 
@@ -207,13 +207,13 @@ Attach the interview packet as an appendix: prep questions, notes, consent recor
 
 ## Peer Exchange
 
-On Tue Oct 6, at the RAG Quality: Chunking and Measuring Retrieval session, teams exchange draft briefs in class for structured peer review using SQR cards (Strength / Question / Risk).  The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview).  Revise the brief in response before the Thu Oct 15 due date, so the revised version is what feeds the Literature Review.  The cycle is artifact -> peer review -> revise, and it repeats at the proposal and the gallery walk.
+At the *RAG Quality: Chunking and Measuring Retrieval* session, teams exchange draft briefs in class for structured peer review using SQR cards (Strength / Question / Risk).  The protocol, and how to give and receive this feedback well, is in the [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview).  Revise the brief in response before the due date, so the revised version is what feeds the Literature Review.  The cycle is artifact -> peer review -> revise, and it repeats at the proposal and the gallery walk.
 
 ---
 
 ## Deliverables
 
-**Individually,** by Tue Sep 29 (see the [course schedule]({{ site.baseurl }}/)): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
+**Individually,** by the date in the [course schedule]({{ site.baseurl }}/): the half-page unassisted problem statement described above (3 points, Class Activities and Participation).
 
 **As a team,** submit one PDF via the LMS by the brief's due date containing:
 

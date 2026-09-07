@@ -561,7 +561,7 @@ The plain-folder route is not the lesser option.  Strip away the tooling and eve
 
 This is the part that does not exist in Parts A and B, and the part where most designs fail.
 
-Two agents are looking at the same pending item.  Nothing stops both of them from starting it.  If both finish, you have paid twice for one task and you may have two contradictory results.  If both write to the same place, one of them silently loses.  The claim protocol is the set of rules that prevents this.  In the Tue Oct 20 session *Observability, Traceability, and Handoff Protocols*, you wrote the start, stop, restart, and handoff protocol as a skill; the claim protocol here is the same one.  Your `SKILL.md` must specify, in enforceable terms:
+Two agents are looking at the same pending item.  Nothing stops both of them from starting it.  If both finish, you have paid twice for one task and you may have two contradictory results.  If both write to the same place, one of them silently loses.  The claim protocol is the set of rules that prevents this.  In *Observability, Traceability, and Handoff Protocols*, you wrote the start, stop, restart, and handoff protocol as a skill; the claim protocol here is the same one.  Your `SKILL.md` must specify, in enforceable terms:
 
 1.  **How an agent claims an item** before working on it: moving or renaming the file, or writing a `claimed_by` and `claimed_at` field into it.  Whatever you choose, the claim must be visible to the *other* agent through the medium alone.
 2.  **What a second agent does when it sees a claimed item.**  Skip it, wait, or take it?

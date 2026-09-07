@@ -715,7 +715,7 @@ In your notebook, respond to all three levels:
 
 ---
 
--> **Coming Up Next:** Your agent can now reach tools, and it can reach your notes one at a time by search and path.  Next it needs to reach *documents* at scale.  In *RAG Knowledge Base: Code and No-Code Routes* (Thursday, October 1) we put the semantic search you built by hand in [Tokens, Embeddings, and Attention](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) to work over a whole corpus, so the model answers from your notes instead of from memory.  The vault server you built today is the starting point for the Obsidian vault option in the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP).
+-> **Coming Up Next:** Your agent can now reach tools, and it can reach your notes one at a time by search and path.  Next it needs to reach *documents* at scale.  In *RAG Knowledge Base: Code and No-Code Routes* we put the semantic search you built by hand in [Tokens, Embeddings, and Attention](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention) to work over a whole corpus, so the model answers from your notes instead of from memory.  The vault server you built today is the starting point for the Obsidian vault option in the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP).
 
 ---
 

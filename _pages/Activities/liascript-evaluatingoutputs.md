@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Hallucinations and Evaluating Agent Outputs
 
-A model that writes fluently can be fluently wrong.  Last session, in *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent*, you judged each round of an agent's work by reading it.  Today you learn why reading is not enough, and you build the first tool that replaces it.  A **hallucination** is a model output that is confident and fluent but false.  This module explains why next-token prediction produces hallucinations, sorts them into three types that need three different fixes, and builds your first evaluation harness: a program that scores a model on questions with known answers.  An agent you cannot measure is an agent you cannot trust or improve.  For background, the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* tutorial (https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SamplingAndTemperature) showed that a model samples plausible continuations, and plausible is not the same as true.
+A model that writes fluently can be fluently wrong.  In *The Karpathy Loop and the Gauntlet Loop: Iterating With an Agent*, you judged each round of an agent's work by reading it.  Today you learn why reading is not enough, and you build the first tool that replaces it.  A **hallucination** is a model output that is confident and fluent but false.  This module explains why next-token prediction produces hallucinations, sorts them into three types that need three different fixes, and builds your first evaluation harness: a program that scores a model on questions with known answers.  An agent you cannot measure is an agent you cannot trust or improve.  For background, the *Why Different Answers Every Time?  Sampling, Temperature, and Generation* tutorial (https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/SamplingAndTemperature) showed that a model samples plausible continuations, and plausible is not the same as true.
 
 Today the OpenCode Studio lab is due, and I hand out the Local Agent lab and the Stakeholder Brief.
 
@@ -369,7 +369,7 @@ In this part you build your own benchmark: a task set for a domain your team kno
 
 ---
 
--> Coming Up Next: You just predicted which techniques fix which hallucinations.  Next session we build the first one.  In *Tool Use and Function Calling*, the agent stops recalling facts it should be looking up and calls a real function instead, which is the mitigation your Exercise 3 matched to fabricated specifics.  The evaluation harness pattern you built today returns in the RAG Knowledge Base lab's retrieval evaluation and in the Rubric Pipeline lab's rubric pipeline.
+-> Coming Up Next: You just predicted which techniques fix which hallucinations.  We build the first one next.  In *Tool Use and Function Calling*, the agent stops recalling facts it should be looking up and calls a real function instead, which is the mitigation your Exercise 3 matched to fabricated specifics.  The evaluation harness pattern you built today returns in the RAG Knowledge Base lab's retrieval evaluation and in the Rubric Pipeline lab's rubric pipeline.
 
 ## 5.  Further Reading
 

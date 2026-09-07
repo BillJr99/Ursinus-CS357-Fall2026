@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Today is a studio session with one review, one build block, and one hard question.  The review is the cross-team proposal critique that closes Sprint 1: another team reads your proposal with the SQR card and you read theirs.  The build block is thirty minutes on the one thing your team most needs done before the gallery walk.  The hard question is the incident simulation from the case-studies material, run against your own system instead of a fictional one: what could an outsider write that your agent will read, and what would you do in the first hour after it went wrong?  We take today in this order: **stand-up, proposal review, sprint, threat model, report out**.
 
-The Rubric Pipeline lab is due today.  Bring the harness you committed on Thursday; the sprint block is where its "Fix before December 1" bucket gets worked.
+The Rubric Pipeline lab is due today.  Bring the harness you committed in the previous session; the sprint block is where its "Fix before the gallery walk" bucket gets worked.
 
 ---
 
@@ -297,7 +297,7 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ---
 
--> Coming Up Next: *Project Studio and Gallery Walk* (Tuesday, December 1) is the last review round before Demo Day: every team hosts a live station with its architecture diagram and evaluation table, walks every other station with SQR cards, triages what it hears into fix, disclose, and defer, and signs the release-readiness checklist.  Today's worksheet feeds it twice: the residual risk from row 5 is the known failure case you must show at your station, and the control from Exercise 2 is evidence for the checklist's reproducibility row.  Rehearse the failure case before then.
+-> Coming Up Next: *Project Studio and Gallery Walk* is the last review round before Demo Day: every team hosts a live station with its architecture diagram and evaluation table, walks every other station with SQR cards, triages what it hears into fix, disclose, and defer, and signs the release-readiness checklist.  Today's worksheet feeds it twice: the residual risk from row 5 is the known failure case you must show at your station, and the control from Exercise 2 is evidence for the checklist's reproducibility row.  Rehearse the failure case before then.
 
 ---
 
