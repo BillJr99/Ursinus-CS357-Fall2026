@@ -11,3 +11,4 @@
 - [ ] Restructure lecture and assignment topics to be more focused; consolidate material to "do less and be awesome"
 - [ ] Have a separate dev docker container that runs as the root user and runs opencode in auto mode, but that is isolated to a workspace subdirectory of the current directory
 - [ ] Simplify software environment setup to OpenCode and a docker container with the required software including TUI OpencCode
+- [ ] Modify the rubrics to be more reflective of what to submit like a checklist
