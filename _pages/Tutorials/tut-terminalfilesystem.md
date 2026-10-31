@@ -601,7 +601,7 @@ Read that as three reservations out of one budget.  At most a quarter of the win
 
 `PI_FALLBACK_CONTEXT` is what the launcher assumes when step 4 returns nothing at all.  Its name suggests a safety net, and the script is careful to say it is not one:
 
-```bash
+```python
 if not active:
     print(f"[bootstrap] WARNING: using {context}-token fallback. This is not a verified "
           "allocation; lower PI_FALLBACK_CONTEXT if your server allocates less.", flush=True)

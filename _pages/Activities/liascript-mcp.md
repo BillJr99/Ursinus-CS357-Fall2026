@@ -570,16 +570,18 @@ Most of the MCP servers your agent will use were written by someone else, and th
 
 **GitHub, hosted.**  GitHub runs the server; you connect over HTTPS with either an OAuth sign-in or a personal access token.  The token goes in a header that the client attaches; the model never sees the header.  Prefer OAuth where the client supports it (in Claude Code, add the server without a header and run `/mcp` to sign in), and when you must use a token, make it fine-grained, scope it to one repository, and give it read-only permissions unless a tool needs more.  These are the same operations the *Coding Agents* session drove from the shell with `gh`; what changes is not what the agent can do but what your rules can match, a tool name with one spelling rather than a command line with many.
 
+`.mcp.json` (Claude Code): the value comes from the GITHUB_PAT variable in your shell
+
 ```json
-// .mcp.json (Claude Code): the value comes from the GITHUB_PAT variable in your shell
 { "mcpServers": { "github": {
     "type": "http",
     "url": "https://api.githubcopilot.com/mcp/",
     "headers": { "Authorization": "Bearer ${GITHUB_PAT}" } } } }
 ```
 
+`opencode.json` (opencode): same server, same variable, opencode's substitution syntax
+
 ```json
-// opencode.json (opencode): same server, same variable, opencode's substitution syntax
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
@@ -597,8 +599,9 @@ Most of the MCP servers your agent will use were written by someone else, and th
 
 **GitHub, local, read-only.**  The same server runs in a container on your machine.  Two flags make it a smaller target: `GITHUB_TOOLSETS` limits which groups of tools it advertises, so the model is never offered a write it should not have, and `GITHUB_READ_ONLY` removes every mutating tool.  The token reaches the container as an environment variable and no further.
 
+`.mcp.json` (Claude Code)
+
 ```json
-// .mcp.json (Claude Code)
 { "mcpServers": { "github": {
     "command": "docker",
     "args": ["run", "-i", "--rm",
@@ -609,8 +612,9 @@ Most of the MCP servers your agent will use were written by someone else, and th
              "GITHUB_READ_ONLY": "1" } } } }
 ```
 
+`opencode.json` (opencode)
+
 ```json
-// opencode.json (opencode)
 { "mcp": { "github": {
     "type": "local",
     "command": ["docker", "run", "-i", "--rm",
@@ -632,16 +636,18 @@ Three practical notes before you copy either one.
 
 **Filesystem.**  The reference filesystem server takes the directories it may touch as command-line arguments and refuses everything else, which is the `read_note` path check as a whole server.  List the narrowest directories that will do; a vault folder, not your home directory.
 
+`.mcp.json` (Claude Code)
+
 ```json
-// .mcp.json (Claude Code)
 { "mcpServers": { "files": {
     "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-filesystem",
              "${HOME}/Documents/Obsidian/MyVault"] } } }
 ```
 
+`opencode.json` (opencode)
+
 ```json
-// opencode.json (opencode)
 { "mcp": { "files": {
     "type": "local",
     "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem",
@@ -651,8 +657,9 @@ Three practical notes before you copy either one.
 
 **Notion, hosted with OAuth.**  Several vendors now host their own MCP servers behind OAuth, and this is the configuration with the least to protect: no token in any file, a sign-in the vendor controls, and a scope the vendor's consent screen shows you.  Claude Code opens the sign-in when you run `/mcp`; opencode is configured the same way with `"type": "remote"` and no `headers`.
 
+`.mcp.json` (Claude Code): nothing secret in the file
+
 ```json
-// .mcp.json (Claude Code): nothing secret in the file
 { "mcpServers": { "notion": { "type": "http", "url": "https://mcp.notion.com/mcp" } } }
 ```
 

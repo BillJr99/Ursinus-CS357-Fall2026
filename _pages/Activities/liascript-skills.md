@@ -229,8 +229,9 @@ The `kickoff-interview` skill you write in *OpenCode Studio* promises, among oth
 
 Load-time, so the rules are in context on turn one:
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 {
   "hooks": {
     "SessionStart": [
@@ -252,8 +253,9 @@ cat "$CLAUDE_PROJECT_DIR/.agents/skills/kickoff-interview/SKILL.md"
 
 Exit-time, so the promise is checked rather than trusted:
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 {
   "hooks": {
     "Stop": [

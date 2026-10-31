@@ -1016,13 +1016,15 @@ Part IIb built one hook for one scenario: a shell command you never want run.  T
 
 This is Part IIb's recipe, restated so the two forms sit side by side.  The Claude Code `permissions` rule is enough when the command has a stable prefix; the hook from Section 4b is for a pattern a prefix cannot express, such as `rm` with its flags in either order.
 
+`.claude/settings.json` (Claude Code): declarative first
+
 ```json
-// .claude/settings.json (Claude Code): declarative first
 { "permissions": { "deny": ["Bash(rm -rf *)", "Bash(rm -fr *)", "Bash(git push --force *)"] } }
 ```
 
+`opencode.json` (opencode)
+
 ```json
-// opencode.json (opencode)
 { "permission": { "bash": { "*": "ask", "git *": "allow", "rm *": "deny", "git push --force*": "deny" } } }
 ```
 
@@ -1032,8 +1034,9 @@ This is Part IIb's recipe, restated so the two forms sit side by side.  The Clau
 
 Secrets on disk (`.env`, private keys, a credentials directory) should be unreadable to the agent, not merely undiscussed.  In Claude Code, `Read` and `Edit` rules take paths; a rule that names a bare filename such as `.env` matches that file at any depth under the project.  Note the second block: a `Read` rule governs the Read tool, and `cat .env` in a shell is a different path to the same bytes, so the Bash hook closes the gap.
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 { "permissions": { "deny": [
     "Read(.env)", "Read(.env.*)", "Read(**/*.pem)", "Read(~/.ssh/**)", "Read(./secrets/**)",
     "Edit(.env)", "Edit(./secrets/**)" ] },
@@ -1052,8 +1055,9 @@ fi
 exit 0
 ```
 
+`opencode.json` (opencode): pattern maps on read and edit
+
 ```json
-// opencode.json (opencode): pattern maps on read and edit
 { "permission": {
     "read": { "*": "allow", "*.env": "deny", "*.env.*": "deny", "*.pem": "deny", "~/.ssh/**": "deny", "secrets/**": "deny" },
     "edit": { "*": "ask", "*.env": "deny", "secrets/**": "deny" },
@@ -1066,8 +1070,9 @@ exit 0
 
 The person, not the agent, is the usual source of a secret in the context window: a token pasted into a message "so you can use it."  A `UserPromptSubmit` hook sees the prompt before the model does and can reject it.  The patterns are for common token shapes; add your own.
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 { "hooks": { "UserPromptSubmit": [ { "hooks": [
     { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/reject-secrets-in-prompt.sh" } ] } ] } }
 ```
@@ -1089,8 +1094,9 @@ exit 0
 
 A file the agent reads, a page it fetches, or an issue it opens can contain a credential or an email address that should not travel into the context.  The two harnesses differ here, and the difference matters.  In Claude Code, a `PostToolUse` hook runs after the tool and can rewrite the result only for MCP tools, through `updatedMCPToolOutput`; for built-in tools such as `Read` and `Bash`, the text is already in the context by the time the hook runs, and the hook can only add a warning.  In opencode, `tool.execute.after` can rewrite `output.output` for any tool.
 
+`.claude/settings.json` (Claude Code): every MCP tool's result passes through the scrubber
+
 ```json
-// .claude/settings.json (Claude Code): every MCP tool's result passes through the scrubber
 { "hooks": { "PostToolUse": [ { "matcher": "mcp__.*", "hooks": [
     { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/scrub-mcp-output.sh" } ] } ] } }
 ```
@@ -1139,8 +1145,9 @@ export const Scrub = async () => ({
 
 A charter that says "always leave the tests green" is a model rule.  A `Stop` hook makes it a gate: when the agent wants to end its turn, the hook runs the tests and, if they fail, exits 2 with the failure as the reason, and the agent keeps working.  The `stop_hook_active` check is the loop breaker: when the agent is already continuing because of this hook, let it stop rather than trap it forever on a test it cannot fix.
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 { "hooks": { "Stop": [ { "hooks": [
     { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/tests-before-stop.sh", "timeout": 300 } ] } ] } }
 ```
@@ -1164,8 +1171,9 @@ exit 0
 
 An agent that can `curl` can send a file anywhere.  Claude Code's own guidance is to deny the shell network tools and route fetches through the `WebFetch` tool, where a domain rule can allow specific hosts; a pattern such as `Bash(curl https://api.weather.gov/*)` is fragile, since a URL can be quoted, split, or built from a variable.  In opencode, a plugin can check the host of a `webfetch` call before it runs.
 
+`.claude/settings.json` (Claude Code)
+
 ```json
-// .claude/settings.json (Claude Code)
 { "permissions": {
     "deny":  ["Bash(curl *)", "Bash(wget *)", "Bash(nc *)"],
     "allow": ["WebFetch(domain:api.weather.gov)", "WebFetch(domain:docs.python.org)"] } }
@@ -1183,8 +1191,9 @@ export const Hosts = async () => ({
 })
 ```
 
+`opencode.json` (opencode): and close the shell route
+
 ```json
-// opencode.json (opencode): and close the shell route
 { "permission": { "bash": { "*": "ask", "curl *": "deny", "wget *": "deny" } } }
 ```
 
@@ -1194,8 +1203,9 @@ export const Hosts = async () => ({
 
 Not a gate, but the record that makes gates auditable.  A `PostToolUse` hook with no matcher runs after every tool; it appends one JSON line per call.  Keep the inputs, since they are what you will want when something went wrong, but pass them through the D.4 scrubber first if a tool can carry a secret in its arguments.
 
+`.claude/settings.json` (Claude Code): no matcher means every tool
+
 ```json
-// .claude/settings.json (Claude Code): no matcher means every tool
 { "hooks": { "PostToolUse": [ { "hooks": [
     { "type": "command",
       "command": "jq -c '{t: (now|todate), tool: .tool_name, input: .tool_input}' >> \"$CLAUDE_PROJECT_DIR/.claude/audit.jsonl\"" } ] } ] } }
@@ -1218,8 +1228,9 @@ export const Audit = async ({ directory }) => ({
 
 Tool servers often expose reads and writes together.  A gate that asks a person before any write, and never before a read, is one rule in Claude Code's `permissions` block, where `ask` and `deny` rules accept a glob in the tool-name position.  In opencode, the plugin form checks the tool name and throws unless a confirmation file exists; the `tools` block is the blunter option and removes the write tools from an agent's view entirely.
 
+`.claude/settings.json` (Claude Code): the model sees the tools; a person approves each write
+
 ```json
-// .claude/settings.json (Claude Code): the model sees the tools; a person approves each write
 { "permissions": { "ask": ["mcp__github__create_*", "mcp__github__update_*", "mcp__github__delete_*", "mcp__github__merge_*"] } }
 ```
 
@@ -1236,8 +1247,9 @@ export const ConfirmWrites = async ({ directory }) => ({
 })
 ```
 
+`opencode.json` (opencode): or take the write tools away from the build agent altogether
+
 ```json
-// opencode.json (opencode): or take the write tools away from the build agent altogether
 { "agent": { "build": { "tools": { "github_create*": false, "github_update*": false, "github_delete*": false } } } }
 ```
 

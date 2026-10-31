@@ -297,11 +297,15 @@ The flags explained: `ANTHROPIC_BASE_URL` overrides the default `https://api.ant
 
 For the other tools, the same redirect looks slightly different:
 
-```bash
-# Codex: add to ~/.codex/config.toml
+```toml
+# Codex: add to ~/.codex/config.toml (the first two lines go above any [table] in the file)
+model_provider = "local"
+model = "llama3.2"
+
 [model_providers.local]
+name = "local gateway"
 base_url = "http://localhost:4000/v1"
-api_key  = "sk-litellm-local"
+env_key = "LITELLM_API_KEY"   # Codex reads the key from this variable: export LITELLM_API_KEY=sk-litellm-local
 ```
 
 ```yaml
