@@ -121,6 +121,7 @@ This is the longest page in the course, and you do not need all of it today.  It
 | **The Tuckman Map** and **Psychological Safety** | With the charter, then again before each check-in |
 | **The Team Playbook** | As you need it: it is a reference, not a reading |
 | **Intra-Team Check-Ins 1-3** | Before each check-in, which is three times across the term |
+| **Sprint Checks** | Before each of the two sprint checks in Sprint 1 |
 | **Assessment Philosophy** and the **rubric** | Before your first milestone, then before each one |
 
 **The one thing to internalize now:** the graded emphasis in this thread falls on **process** as much as product.  How your team frames a problem, works with a stakeholder, manages itself, and communicates is not the soft part around the real work.  It is a substantial share of the grade, and a strong technical result cannot rescue it.
@@ -150,9 +151,10 @@ Here are two views of the same thread: a table for scanning, then a narrative fo
 | 13 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
 | 14 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class at the *Project Sprint* session. | [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview) |
 | 15 | **Sprints 1-3** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, evaluation updates, and Responsible AI measurements (token counts, traces, correctness audits, and bias probes) logged at every boundary. Sprint 1 spans the Thanksgiving break; plan for it in your charter's cadence. | Track pages |
-| 16 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
-| 17 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
-| 18 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, a disseminable artifact, and the Responsible AI Report on the team's own work. Demo Day is also the team's deliberate adjourning: the final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
+| 16 | **Sprint checks 1 and 2** | Ten minutes at the start of class, twice during Sprint 1: the Builder shows one thing running (Direction B: one cited finding), and the Coordinator says what is next and what is blocking. Each is marked shown or not yet. | [Sprint Checks](#sprint-checks) |
+| 17 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
+| 18 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
+| 19 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, a disseminable artifact, and the Responsible AI Report on the team's own work. Demo Day is also the team's deliberate adjourning: the final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
 
 **The same map, as a story.**  You open the semester by filling out a short survey, and within the first two weeks you have a team formed for compatibility of schedules and working styles.  Your first job as a team is not technical.  It is to write down, and sign, how you will treat each other.  Then you go find a real problem: not one invented for a class, but one a real stakeholder outside computer science will describe to you in their own words.  The [Final Project]({{ site.baseurl }}/Projects/FinalProject) is handed out at the class meeting after your Stakeholder Brief is due, and about two weeks later you choose a direction and commit to a [proposal]({{ site.baseurl }}/Projects/FinalProjectProposal).  Then you read against that plan: each of you annotates sources from at least two disciplines, and the team writes a one-page synthesis that says what the published evidence confirms, complicates, or changes about the proposal.  At the midpoint you stop and ask whether your charter still describes your actual team, and you fix it if it does not.  The last stretch is sprints, peer review, and rehearsal, ending at Demo Day, where you show your work three ways: to technical peers, to your stakeholder, and to the public.
 
@@ -325,6 +327,19 @@ Each team progress report answers three stage-specific prompts alongside the sta
 **The confidential peer pulse (Check-Ins 2 and 3).**  At the second and third check-ins, the individual pulse adds a short structured section, adapted from the CATME behaviorally-anchored peer-evaluation dimensions (see the research base above).  Rate **yourself and each teammate** from 1 to 5 on (1) contributing to the team's work, (2) interacting with teammates, (3) keeping the team on track, (4) expecting quality, and (5) having relevant knowledge and skills, with one sentence of evidence for any rating of 2 or below.  Three commitments govern how I use it.  It is **read only by the instructor**.  It is **never mechanically averaged into anyone's grade**.  It informs the individual-contribution component of the final project grade and triggers a coaching conversation when self- and peer-ratings diverge sharply.  I use it as a health instrument, never as a weapon.
 
 At every check-in, the team re-reads its charter against its actual behavior.  The charter is a living document; the check-ins are where it lives.
+
+---
+
+## Sprint Checks
+
+> **Handed out** at the *Agents That Talk, Observability, and Handoff Protocols* session, and **held** at the start of class at the *Orchestration Worked Example* and *Judge Pipeline Workshop* sessions.  See the [course schedule]({{ site.baseurl }}/) for the dates.
+
+Sprint 1 is long and spans the Thanksgiving break, so two sprint checks cut it into two short laps.  Each check takes ten minutes at the start of class, with no slides:
+
+1.  Your team's **Builder** has 90 seconds to show one thing running.  Direction B teams show one cited finding instead.
+2.  Your **Coordinator** says what is next and what is blocking you.  Write those same two lines into your decision log or standup notes that day, so the check is also that week's entry.
+
+I mark each team **shown** or **not yet**.  Each check carries **3 points, assessed within Class Activities and Participation**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough; a slide about what you plan to build is not.
 
 ---
 

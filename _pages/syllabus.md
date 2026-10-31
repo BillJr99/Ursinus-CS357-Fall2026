@@ -603,6 +603,12 @@ schedule:
     dlink: "Projects/FinalProjectProposal"
     points: "25"
     rubricpath: "_pages/Projects/proj-finalprojectproposal.md"
+  - dtitle: "Project: Sprint Check 1 Handed Out"
+    dlink: "Projects/PBLThread#sprint-checks"
+    points: "3"
+  - dtitle: "Project: Sprint Check 2 Handed Out"
+    dlink: "Projects/PBLThread#sprint-checks"
+    points: "3"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
   - rtitle: "Memory and the Small Context Window Principle: why an agent that remembers everything gets worse, and the four kinds of memory today's protocols write down"
@@ -628,6 +634,9 @@ schedule:
   link: "Activities/liascript-orchestrationworkshop.md"
   liapage: true
   deliverables:
+  - dtitle: "Project: Sprint Check 1 Due"
+    dlink: "Projects/PBLThread#sprint-checks"
+    points: "3"
   - dtitle: "Project: Literature Review, Individual Annotated Bibliographies Due"
     dlink: "Assignments/LitReview"
     points: "3"
@@ -658,6 +667,10 @@ schedule:
   title: "Judge Pipeline Workshop: Build and Audit a Judge"
   link: "Activities/liascript-rubricworkshop.md"
   liapage: true
+  deliverables:
+  - dtitle: "Project: Sprint Check 2 Due"
+    dlink: "Projects/PBLThread#sprint-checks"
+    points: "3"
   readings:
   - rtitle: "promptfoo, for declarative LLM and agent evaluation.  One way to run the judge you build in today's workshop, and it runs against Ollama"
     rlink: "https://www.promptfoo.dev/docs/intro/"

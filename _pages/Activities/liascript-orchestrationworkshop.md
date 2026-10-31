@@ -18,7 +18,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 The first half runs in this page with a scripted stand-in for the model, so every run is repeatable and every stop condition can be made to fire on purpose.  The second half swaps in Ollama with one function and runs the same code on your machine, or runs the same protocol by hand on the lab's no-code route.
 
-**Today:** the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) and your individual annotated bibliographies for the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview) are due, and I hand out the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3.
+**Today:** the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) and your individual annotated bibliographies for the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview) are due, and I hand out the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3.  Sprint Check 1 is at the start of class.
 
 ---
 
@@ -57,14 +57,21 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 | Minutes | What we do |
 |---|---|
-| 0-5 | The task, the settings you own, and the stand-in model |
-| 5-17 | Part I, Step 1: the fixed pipeline, and the check that catches the polish stage (Checkpoint 1) |
-| 17-27 | Part I, Step 2: a router in front of the pipeline, with a closed set that fails closed (Checkpoint 2) |
-| 27-45 | Part I, Step 3: the supervisor loop, a refused stop, the budget firing, and the other two stop conditions (Checkpoint 3) |
-| 45-50 | The cost table: model calls per pattern for the same digest (Checkpoint 4) |
-| 50-65 | Part II, the same code on a real model, or the same protocol by hand on the no-code route (Checkpoint 5) |
-| 65-72 | Part III, the exercise: a supervisor that stops correctly |
+| 0-10 | Sprint check: each Builder shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
+| 10-15 | The task, the settings you own, and the stand-in model |
+| 15-27 | Part I, Step 1: the fixed pipeline, and the check that catches the polish stage (Checkpoint 1) |
+| 27-37 | Part I, Step 2: a router in front of the pipeline, with a closed set that fails closed (Checkpoint 2) |
+| 37-55 | Part I, Step 3: the supervisor loop, a refused stop, the budget firing, and the other two stop conditions (Checkpoint 3) |
+| 55-60 | The cost table: model calls per pattern for the same digest (Checkpoint 4) |
+| 60-72 | Part II, the same code on a real model, or the same protocol by hand on the no-code route (Checkpoint 5) |
 | 72-75 | The lab handout, and where today's controls appear in it |
+
+Part III, the exercise on a supervisor that stops correctly, is self-paced.
+
+## Sprint Check 1 (the first ten minutes)
+
+Sprint Check 1 opens today's session, with no slides.  Your team's Builder has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
+
 
 ---
 # Part I: One Task Through Three Patterns
@@ -468,7 +475,7 @@ The supervisor's writer, check, and refused stop are already a critique-and-refi
 ---
 # Part III: Exercise and Wrap-Up
 
-## Exercise: A Supervisor That Stops Correctly
+## Exercise: A Supervisor That Stops Correctly (self-paced)
 
 - *What to do*: Write `careful_supervisor(task, transcript)`, a stand-in like `naive_supervisor` that follows the same first three moves, but when it stops, stops with the newest text in the transcript whose `check` is `"ok"`.  Run `supervise` with it in this page.  Then, on the code route, add one sentence to the `SUPERVISOR` prompt that asks for the same behavior from the real model, and rerun.
 - *Starter hint*: The transcript entries for the writer and polisher carry a `check` field.  Filter on it before you choose the answer.  For the prompt, say what "done" means in terms the model can see in its transcript.
