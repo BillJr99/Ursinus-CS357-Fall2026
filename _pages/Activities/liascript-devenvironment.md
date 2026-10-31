@@ -884,3 +884,10 @@ The entries are in step order.  Find the step you are on, and work down its entr
 | Undo whatever the agent did | `git checkout .` (or `git checkout <file>`) |
 | Native fallback | each lab's Before-You-Start installs + `localhost:11434` instead of the bridge |
 | How it all works | [Docker from Zero activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Docker) |
+
+---
+
+## Further Reading
+
+- [The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind "command not found".  Step 0 of today's activity is the ten-minute version of this](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Shell)
+

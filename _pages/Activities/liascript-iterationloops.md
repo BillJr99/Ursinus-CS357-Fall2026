@@ -940,6 +940,7 @@ The `kept` line inside the loop is the discard rule from Model 4, so the cell de
 
 ## Further Reading
 
+- [Tokens, Embeddings, and Attention: How Models Represent Meaning, Part I](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEmbeddingsAttention)
 - This course: [AI-Assisted Development and Vibe Coding](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VibeCoding), the three supervision levels and the spec-first development this deck builds on.
 - This course: [Governing Coding Agents: Charters, Handoffs, and Durable Memory](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentGovernance), the Karpathy rules beside a production charter, and the `.ai/` handoff directory in full.
 - This course: [Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Log](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-codingagents.md), Section 2c on plan mode and Part IIb on the permission block and plugin hooks.

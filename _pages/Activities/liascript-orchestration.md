@@ -686,6 +686,9 @@ Respond to all three levels in your notebook:
 
 ## Further Reading
 
+- [Pydantic AI From the Loop Up: read it before Agent Frameworks if you have not yet seen a framework take over the hand-written loop](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PydanticAI)
+- [Orchestration Patterns: a pipeline, a router, and a supervisor, each on its own in Python and by hand with presets](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OrchestrationPatterns)
+- [Agent Teams: a monolith versus a team, topology and shared state, ending with a sketch of your own project's team](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentTeams)
 - Anthropic engineering blog.  "Building Effective Agents" (2024, online).  The workflow patterns formalized today.
 - Wu et al. "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation."  (2023).
 

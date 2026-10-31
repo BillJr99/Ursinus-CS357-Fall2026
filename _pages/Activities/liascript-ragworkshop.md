@@ -521,6 +521,7 @@ I circulate while you write and answer line 2 on the spot.  Before you leave, ad
 
 ## Further Reading
 
+- [Offline RAG and LoRA, End to End: Sections D to F train a LoRA adapter on a CPU and compare a base model, RAG, LoRA, and both on held-out questions.  The comparison is optional; the measurement steps are the ones today's worked example uses](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OfflineRAGFineTuning)
 - [RAG From Zero](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/RAGFromZero), each step of today's pipeline on its own, in Python and in Langflow, with a retrieval-off comparison.
 - The [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), whose steps this session followed in order.
 - *Offline RAG and LoRA, End to End*, Section B: the same ingest-and-ask pipeline with a persistent index, stable chunk IDs, content hashes that make re-ingesting safe, and a distance cutoff, plus a worked case of a retrieval success and a generation failure on the same question: https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OfflineRAGFineTuning

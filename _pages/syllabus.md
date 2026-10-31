@@ -319,10 +319,6 @@ schedule:
   readings:
   - rtitle: "Please have a laptop with Docker Desktop already installed.  If Docker will not run on your machine, that is fine; come anyway and we will set up the native route together."
     rlink: false
-  - rtitle: "The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind \"command not found\".  Step 0 of today's activity is the ten-minute version of this"
-    rlink: "Tutorials/Shell"
-  - rtitle: "Docker from Zero: how containers, images, and mounts actually work underneath today's build"
-    rlink: "Tutorials/Docker"
 - week: "1"
   date: "1"
   title: "Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Log"
@@ -332,12 +328,6 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class.  Describe one time you accepted AI-generated code or text without really reading it.  What would you check now, and what would have caught the thing you missed?"
   - rtitle: "Have your cs357-work repository and the working opencode install from Week 1 (Step 8) ready.  Today you drive the agent against a written specification, read its action log, and inspect the files it names."
     rlink: false
-  - rtitle: "Agentic CLI Tools: Claude Code, Codex, Gemini CLI, and pi, and how each one differs from the opencode you drive today"
-    rlink: "Tutorials/AgentCLIs"
-  - rtitle: "AI Coding Agent Security: poisoned repositories and the software supply chain, the risk that arrives with the convenience"
-    rlink: "Tutorials/CodingAgentSecurity"
-  - rtitle: "What a container isolates, and how to size an agent's blast radius before you hand it your machine.  Self-paced background for running any agent in a container, your final project's included"
-    rlink: "Tutorials/ContainerIsolation"
 - week: "2"
   date: "0"
   title: "Running Your Own AI: Ollama, OpenWebUI, and Private Local Models"
@@ -359,14 +349,6 @@ schedule:
   readings:
   - rtitle: "Mitchell, Chapter 3, part 1 of 4: what models do and do not understand (we spread this chapter across four sessions)"
   - rtitle: "Reading Response / Discussion: post a short response before class, what changed once the model ran on your own machine?"
-  - rtitle: "The Local Model Landscape: Llama, Mistral, Phi, Gemma, and their relatives, for deciding what to pull next"
-    rlink: "Tutorials/LocalModels"
-  - rtitle: "The Hardware Behind AI: GPUs, quantization, and running models at the edge, which explains the inference speeds you see today"
-    rlink: "Tutorials/Hardware"
-  - rtitle: "End-to-End OpenCode Setup: install, opencode.json at both scopes, providers and authentication, AGENTS.md, permissions, a skill, a plugin, and GitHub by CLI and MCP, on every platform.  The reference for today's lab handout"
-    rlink: "Tutorials/OpenCodeSetup"
-  - rtitle: "Building a Local Agent From Scratch: Prompt, Remember, Iterate, Skill, Command"
-    rlink: "Tutorials/LocalAgentFromScratch"
 - week: "2"
   date: "1"
   title: "Skills: Design One, Then Measure It"
@@ -379,8 +361,6 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-skilldesignstudy.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 2 of 4: what the model is doing when it takes in your prompt"
-  - rtitle: "Writing, configuring, and publishing skills for opencode and pi.ai.  Today's deck builds the first skill with you; read this so the file layout is not new"
-    rlink: "Tutorials/AgentSkills"
   - rtitle: "Have your working Ollama setup and your opencode install ready.  The second half of class runs the same task with and without a skill and compares the results."
     rlink: false
 - week: "3"
@@ -397,12 +377,8 @@ schedule:
   - rtitle: "Mitchell, Chapter 3, part 3 of 4: continue the chapter with today's system-prompt and sampling behavior in mind"
   - rtitle: "Chalmers, David J. \"What We Talk to When We Talk to Language Models\""
     rlink: "https://philarchive.org/rec/CHAWWT-8"
-  - rtitle: "Why Different Answers Every Time?  Sampling, Temperature, and Generation.  Read Parts I and II before class; Part IIc of today's deck uses the temperature and seed settings it explains"
-    rlink: "Tutorials/SamplingAndTemperature"
   - rtitle: "Have your working Ollama setup from Week 1 and the charter, contract, and skills you have written so far for the OpenCode Studio lab ready.  Today is that lab's mid-flight checkpoint, and the workshop edits system prompts against a live model."
     rlink: false
-  - rtitle: "The Persona Pipeline: One Model, Four Personas, and a Rule About Who Sees What.  The full program behind Part IIe, with the five files it reads and four experiments to run against it"
-    rlink: "Tutorials/PersonaPipeline"
   - rtitle: "Persona Pipeline starter pack: the program, its config, the design brief, the decisions file, the skill it loads, and the Ollama client, ready to unzip and run"
     rlink: "files/persona-pipeline-starter.zip"
 - week: "3"
@@ -411,12 +387,6 @@ schedule:
   link: "Activities/liascript-iterationloops.md"
   liapage: true
   readings:
-  - rtitle: "AI-Assisted Development and Vibe Coding: the three supervision levels and the spec-first habit that today's loops build on"
-    rlink: "Tutorials/VibeCoding"
-  - rtitle: "Governing Coding Agents: the charter, Karpathy's rules, and the handoff directory"
-    rlink: "Tutorials/AgentGovernance"
-  - rtitle: "Tokens, Embeddings, and Attention: How Models Represent Meaning, Part I"
-    rlink: "Tutorials/TokensEmbeddingsAttention"
   - rtitle: "Have the OpenCode Studio artifact you have so far ready.  Today's second half runs it through one gauntlet round."
     rlink: false
 - week: "4"
@@ -431,8 +401,6 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-stakeholderbrief.md"
   readings:
   - rtitle: "Mitchell, Chapter 3, part 4 of 4: finish the chapter, hallucination, evaluation, and what the model cannot check for itself"
-  - rtitle: "AI by Hand: Tokens, Cosine, Attention, Softmax, and a Forward Pass"
-    rlink: "Tutorials/AIByHand"
   - rtitle: "Please have three prompts ready where a model gave you a confidently wrong answer.  We triage real examples here, not invented ones."
     rlink: false
 - week: "4"
@@ -454,8 +422,6 @@ schedule:
     rlink: "https://docs.ollama.com/capabilities/structured-outputs"
   - rtitle: "Instructor with Pydantic and Ollama, for typed and grammar-constrained generation: validity by construction rather than by retry"
     rlink: "https://python.useinstructor.com/integrations/ollama/"
-  - rtitle: "Pydantic AI From the Loop Up: today's get_today and days_until agent moved into a framework one responsibility at a time, then permissions, the agentic loop, memory, skills, and a real MCP server"
-    rlink: "Tutorials/PydanticAI"
 - week: "5"
   date: "0"
   title: "MCP: Connecting Agents to Tools and Your Obsidian Vault"
@@ -471,12 +437,6 @@ schedule:
     rlink: "https://huggingface.co/learn/mcp-course/"
   - rtitle: "Optional: install Obsidian before class.  Model 3 puts an MCP server in front of a vault, and it is more useful on your own notes"
     rlink: "https://obsidian.md"
-  - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the read path and write path that today's Model 3 exposes as tools"
-    rlink: "Tutorials/ObsidianSync"
-  - rtitle: "MCP, REST APIs, and OAuth 2.0 together, the background for what happens when the Tools and MCP Lab has you sign in to a server"
-    rlink: "Tutorials/MCPOAuth"
-  - rtitle: "GitHub Superpowers for AI Developers: gitingest, getmcp.io, deepwiki, gdagram, and github.dev, for turning a repository into something an agent can read"
-    rlink: "Tutorials/GitHubPowerTools"
 - week: "5"
   date: "1"
   title: "RAG Knowledge Base: Code and No-Code Routes"
@@ -492,10 +452,6 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
   - rtitle: "LangChain RAG from Scratch (video)"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
-  - rtitle: "Tokens, Embeddings, and Attention: Part II, semantic search in twenty lines, is the retrieval step of today's pipeline"
-    rlink: "Tutorials/TokensEmbeddingsAttention"
-  - rtitle: "Offline RAG and LoRA, End to End: Sections A to C rebuild today's pipeline with a persistent index that runs with the network unplugged"
-    rlink: "Tutorials/OfflineRAGFineTuning"
 - week: "6"
   date: "0"
   title: "RAG and Fine-Tuning: Retrieval Quality and LoRA"
@@ -503,8 +459,6 @@ schedule:
   liapage: true
   readings:
   - rtitle: "Mitchell, Chapter 4"
-  - rtitle: "Offline RAG and LoRA, End to End: Sections D to F train a LoRA adapter on a CPU and compare a base model, RAG, LoRA, and both on held-out questions"
-    rlink: "Tutorials/OfflineRAGFineTuning"
   - rtitle: "Please have your team's Stakeholder Brief draft ready, because the peer review round works on real drafts."
     rlink: false
 - week: "7"
@@ -531,10 +485,6 @@ schedule:
     rubricpath: "_pages/Assignments/lab-toolsmcp.md"
   readings:
   - rtitle: "Have your stuck points and your pipeline-in-progress ready.  Part III is an open studio and it is only as useful as the problems you work on in it."
-  - rtitle: "The Second Brain in depth: Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
-    rlink: "Tutorials/SecondBrain"
-  - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the full read path and write path"
-    rlink: "Tutorials/ObsidianSync"
 - week: "8"
   date: "0"
   title: "How I AI: A Vault, a Charter, and a Personal Agent Setup"
@@ -549,11 +499,6 @@ schedule:
     dlink: "Projects/FinalProject"
     points: "100"
     rubricpath: "_pages/Projects/proj-finalproject.md"
-  readings:
-  - rtitle: "The Second Brain in depth: Obsidian, gitless GitHub sync, and the metadata protocol that makes agent writes safe"
-    rlink: "Tutorials/SecondBrain"
-  - rtitle: "Syncing Obsidian to GitHub and wiring agents to your vault: the full read path and write path"
-    rlink: "Tutorials/ObsidianSync"
 - week: "8"
   date: "1"
   title: "RAG: Building and Measuring a Knowledge Base"
@@ -564,10 +509,6 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class connecting RAG to a corpus of your own"
   - rtitle: "LangChain RAG from Scratch (video)"
     rlink: "https://www.youtube.com/watch?v=rz40ukZ3krQ&t=10s"
-  - rtitle: "Tokens, Embeddings, and Attention: Part II, semantic search in twenty lines, is the retrieval step of today's pipeline"
-    rlink: "Tutorials/TokensEmbeddingsAttention"
-  - rtitle: "Offline RAG and LoRA, End to End: Sections A to C rebuild today's pipeline with a persistent index that runs with the network unplugged"
-    rlink: "Tutorials/OfflineRAGFineTuning"
 - week: "10"
   date: "0"
   title: "RAG Worked Example: Build the Pipeline Together"
@@ -590,13 +531,6 @@ schedule:
     dlink: "Assignments/LitReview"
     points: "100"
     rubricpath: "_pages/Assignments/asmt-litreview.md"
-  readings:
-  - rtitle: "Offline RAG and LoRA, End to End: Sections D to F train a LoRA adapter on a CPU and compare a base model, RAG, LoRA, and both on held-out questions.  The comparison is optional; the measurement steps are the ones today's worked example uses"
-    rlink: "Tutorials/OfflineRAGFineTuning"
-  - rtitle: "RAG From Zero: each step of today's pipeline on its own, in Python and in Langflow, plus the retrieval-off comparison the lab no longer asks for"
-    rlink: "Tutorials/RAGFromZero"
-  - rtitle: "Visual Agents: Langflow setup and the RAG flow wiring that the lab's no-code path uses"
-    rlink: "Tutorials/VisualAgents"
 - week: "10"
   date: "1"
   title: "Agents That Talk, Observability, and Handoff Protocols"
@@ -615,12 +549,6 @@ schedule:
     points: "3"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  What is the longest-running piece of work you have done with an AI tool, and where did it start losing the thread?"
-  - rtitle: "Memory and the Small Context Window Principle: why an agent that remembers everything gets worse, and the four kinds of memory today's protocols write down"
-    rlink: "Tutorials/MemoryAndContext"
-  - rtitle: "Agent Observability and Tracing: the three pillars and OpenTelemetry, which today's deck applies to your own agents"
-    rlink: "Tutorials/Observability"
-  - rtitle: "Handoff Protocols: claims, stale claims, and a handoff skill for your own project repository, the protocol today's Part IV writes and your final project's design must specify"
-    rlink: "Tutorials/HandoffProtocols"
 - week: "11"
   date: "0"
   title: "Orchestration and Multi-Agent Patterns"
@@ -628,14 +556,6 @@ schedule:
   liapage: true
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class.  When does a multi-agent design help, and when does it just cost tokens?"
-  - rtitle: "Pydantic AI From the Loop Up: read it before Agent Frameworks if you have not yet seen a framework take over the hand-written loop"
-    rlink: "Tutorials/PydanticAI"
-  - rtitle: "Agent Frameworks: LangChain, CrewAI, AutoGen, and Agno, and when a framework earns its weight"
-    rlink: "Tutorials/AgentFrameworks"
-  - rtitle: "Orchestration Patterns: a pipeline, a router, and a supervisor, each on its own in Python and by hand with presets"
-    rlink: "Tutorials/OrchestrationPatterns"
-  - rtitle: "Agent Teams: a monolith versus a team, topology and shared state, ending with a sketch of your own project's team"
-    rlink: "Tutorials/AgentTeams"
 - week: "11"
   date: "1"
   title: "Orchestration Worked Example: Build a Pipeline, a Router, and a Supervisor"
@@ -657,11 +577,6 @@ schedule:
     dlink: "Assignments/MultiAgentDebate"
     points: "100"
     rubricpath: "_pages/Assignments/lab-multiagentdebate.md"
-  readings:
-  - rtitle: "From Second Brain to Chief of Staff: one personal agent followed into production"
-    rlink: "Tutorials/ProductionAssistant"
-  - rtitle: "Measuring Multi-Agent Patterns: calibrating a critic, reward hacking, the judge-and-refine loop, and the shootout, self-paced, for the parts the Multi-Agent Patterns lab leaves out"
-    rlink: "Tutorials/MultiAgentMeasurement"
 - week: "12"
   date: "0"
   title: "Critique, Consensus, and the LLM Judge: One Loop, Three Uses"
@@ -689,8 +604,6 @@ schedule:
   - rtitle: "Coded Bias (film): watch before Tuesday, November 24"
     rlink: "https://www.codedbias.com/"
   - rtitle: "O'Neil, Weapons of Math Destruction, the chapter on predictive models in education: read before Tuesday, November 24"
-  - rtitle: "LLM Judges and promptfoo: a rubric, a judge, and how far to trust it, on samples first and then on artifacts you choose"
-    rlink: "Tutorials/LLMJudges"
 - week: "13"
   date: "0"
   title: "Training Data, Bias, IP, Privacy, Governance, and the Cost of Inference"
@@ -703,12 +616,6 @@ schedule:
   - rtitle: "Alpine et al., \"AI-driven productivity gains enable more CO₂ emissions than they avoid in a global energy–economy model\""
     rlink: "https://www.nature.com/articles/s44168-026-00411-0"
   - rtitle: "Christian, The Alignment Problem: any one chapter (for example, the section on reward and reinforcement)"
-  - rtitle: "AI for Accessibility: Opportunity, Gaps, and Universal Design.  Optional; the accessibility audit is one of the policy sections you may draft today"
-    rlink: "Tutorials/AIAccessibility"
-  - rtitle: "Tokens, Energy, and Cost: counting what your agent spends and turning it into an estimate with every assumption named, Area 1 of your Responsible AI Report"
-    rlink: "Tutorials/TokensEnergyCost"
-  - rtitle: "Bias Probes on Your Own System: vary one thing, hold the rest, and report the result honestly, Area 4 of your Responsible AI Report"
-    rlink: "Tutorials/BiasProbes"
 - week: "14"
   date: "0"
   title: "Project Sprint: Run Your Rubric Against Your Project, and Threat Model It"
@@ -723,18 +630,10 @@ schedule:
   - rtitle: "Reading Response / Discussion: post a short response before class, one design choice you would make differently in a system you deploy"
   - rtitle: "Have ready the judge you built in the Judge Pipeline Workshop (the one the Multi-Agent Patterns lab's Part A may use as its critic), three artifacts from your final project for it to grade, and your integrated project and proposal.  Today's workshop runs the judge against your own work, audits the disagreements, critiques another team's proposal, and then threat-models the project."
     rlink: false
-  - rtitle: "Agentic Case Studies: Migration, Browsing, and Research Agents.  Read the two cases and the threat-modeling part; today's second half runs the incident simulation on your own project"
-    rlink: "Tutorials/AgentCaseStudies"
   - rtitle: "Gandalf (Lakera), a browser exercise in prompt injection.  Optional practice on how guardrails fail, before you threat-model your project"
     rlink: "https://gandalf.lakera.ai/"
   - rtitle: "Tensor Trust, a browser exercise in attacking and defending against prompt injection.  Optional practice before you threat-model your project"
     rlink: "https://tensortrust.ai/"
-  - rtitle: "Testing Agents: test types, a small test suite, and prompt regression, for the checks your project's CI runs"
-    rlink: "Tutorials/TestingAgents"
-  - rtitle: "Red-Teaming LLMs: how attacks on a model work, for the threat-modeling half of today's session"
-    rlink: "Tutorials/RedTeaming"
-  - rtitle: "Terminal and Filesystem Isolation for Agent Safety: what an agent can reach on disk, and how to narrow it"
-    rlink: "Tutorials/FilesystemIsolation"
 - week: "14"
   date: "1"
   title: "Project Studio and Gallery Walk"
@@ -790,9 +689,81 @@ I have designed this course around deliberate choices, in the spirit of Universa
 - **A shared spine.**  The semester-long **Project Thread** is the one path everyone walks together, so that individual choice never means working alone.  It carries the team milestones (charter, stakeholder brief, literature review, proposal, and demo) and the peer review that ties the section together.
 - **Depth inside every lab.**  Every lab opens with a shared core that everyone builds, then a menu of **directions**: instruction design and agent governance, handoffs between sessions, local model internals, containerization, MCP and OAuth, coding agents, fine-tuning, observability, prompt-injection defense, and more.  Pick the direction that pulls you; if the one you want is not on the menu, propose it.
 - **Scaffolding you can hold your own work against.**  Every lab and written assignment opens with **Before You Start**, which tells you what it builds on, what to install, and what order to do things in, and closes with a **Self-Check** drawn from its own rubric's *proficient* column, so you can grade your draft before I do.  The labs also carry worked examples and a **Troubleshooting** table, because the most common reason a lab takes twice as long as it should is a setup problem with a known fix.
-- **The depth is in the activity, not in a list of links.**  Each session's activity carries the theory, the worked example, and the code, and where a topic runs past the seventy-five minutes we have together, it continues in an extension section at the end of that same activity, clearly marked as self-paced.  Nothing graded assumes those sections.  The readings on the schedule are books, papers, tutorials, and the occasional thing you play with in a browser, and each one says plainly what it is.
+- **The depth is in the activity, not in a list of links.**  Each session's activity carries the theory, the worked example, and the code, and where a topic runs past the seventy-five minutes we have together, it continues in an extension section at the end of that same activity, clearly marked as self-paced.  Nothing graded assumes those sections.  The readings on the schedule are books, papers, and the occasional thing you play with in a browser, and each one says plainly what it is.  The tutorials are linked from each session's deck and listed in the Tutorials section below.
 
 If a path you want is not on the menu, please propose it.  The choices are here so you leave this course able to stand up, operate, and reason about an AI system of your own.
+
+## Tutorials
+
+Every tool and technique in this course has a tutorial you can work through at your own pace.  Each session's slide deck links the tutorials for that day under its Further Reading, and the full list is here.  The first list follows the order of the course; the second holds the tutorials no session points to, for when a project or a question takes you there.
+
+**In course order**
+
+- [The Shell, in Full]({{ site.baseurl }}/Tutorials/Shell)
+- [Docker from Zero]({{ site.baseurl }}/Tutorials/Docker)
+- [Agentic CLI Tools]({{ site.baseurl }}/Tutorials/AgentCLIs)
+- [AI Coding Agent Security]({{ site.baseurl }}/Tutorials/CodingAgentSecurity)
+- [What a Container Isolates: Sizing an Agent's Blast Radius]({{ site.baseurl }}/Tutorials/ContainerIsolation)
+- [The Local Model Landscape]({{ site.baseurl }}/Tutorials/LocalModels)
+- [The Hardware Behind AI]({{ site.baseurl }}/Tutorials/Hardware)
+- [End-to-End OpenCode Setup]({{ site.baseurl }}/Tutorials/OpenCodeSetup)
+- [Building a Local Agent From Scratch: Prompt, Remember, Iterate, Skill, Command]({{ site.baseurl }}/Tutorials/LocalAgentFromScratch)
+- [Agent Skills and Plugins: What They Are, How They Are Stored, and How to Publish One]({{ site.baseurl }}/Tutorials/AgentSkills)
+- [Why Different Answers Every Time? Sampling, Temperature, and Generation]({{ site.baseurl }}/Tutorials/SamplingAndTemperature)
+- [The Persona Pipeline: One Model, Four Personas, and a Rule About Who Sees What]({{ site.baseurl }}/Tutorials/PersonaPipeline)
+- [AI-Assisted Development and Vibe Coding]({{ site.baseurl }}/Tutorials/VibeCoding)
+- [Governing Coding Agents]({{ site.baseurl }}/Tutorials/AgentGovernance)
+- [Tokens, Embeddings, and Attention: How Models Represent Meaning]({{ site.baseurl }}/Tutorials/TokensEmbeddingsAttention)
+- [AI by Hand: Tokens, Cosine, Attention, Softmax, and a Forward Pass]({{ site.baseurl }}/Tutorials/AIByHand)
+- [Pydantic AI From the Loop Up: Tools, Validation, the Agentic Loop, Memory, Skills, and MCP]({{ site.baseurl }}/Tutorials/PydanticAI)
+- [Syncing Obsidian to GitHub and Wiring Agents to Your Vault]({{ site.baseurl }}/Tutorials/ObsidianSync)
+- [MCP, REST, and OAuth 2.0 Together]({{ site.baseurl }}/Tutorials/MCPOAuth)
+- [GitHub Superpowers for AI Developers]({{ site.baseurl }}/Tutorials/GitHubPowerTools)
+- [Offline RAG and LoRA, End to End: Build, Reopen, Fine-Tune, and Compare on Your Own Machine]({{ site.baseurl }}/Tutorials/OfflineRAGFineTuning)
+- [The Second Brain]({{ site.baseurl }}/Tutorials/SecondBrain)
+- [RAG From Zero: Chunk, Embed, Retrieve, Ground, and Measure]({{ site.baseurl }}/Tutorials/RAGFromZero)
+- [Visual Agents]({{ site.baseurl }}/Tutorials/VisualAgents)
+- [Memory and the Small Context Window Principle]({{ site.baseurl }}/Tutorials/MemoryAndContext)
+- [Agent Observability and Tracing]({{ site.baseurl }}/Tutorials/Observability)
+- [Handoff Protocols: Claims, Stale Claims, and a Handoff Skill for Your Project]({{ site.baseurl }}/Tutorials/HandoffProtocols)
+- [Agent Frameworks]({{ site.baseurl }}/Tutorials/AgentFrameworks)
+- [Orchestration Patterns: Pipeline, Router, and Supervisor]({{ site.baseurl }}/Tutorials/OrchestrationPatterns)
+- [Agent Teams]({{ site.baseurl }}/Tutorials/AgentTeams)
+- [From Second Brain to Chief of Staff]({{ site.baseurl }}/Tutorials/ProductionAssistant)
+- [Measuring Multi-Agent Patterns: Calibration, Reward Hacking, the Judge Loop, and the Shootout]({{ site.baseurl }}/Tutorials/MultiAgentMeasurement)
+- [LLM Judges and promptfoo: A Rubric, a Judge, and How Far to Trust It]({{ site.baseurl }}/Tutorials/LLMJudges)
+- [AI for Accessibility: Opportunity, Gaps, and Universal Design]({{ site.baseurl }}/Tutorials/AIAccessibility)
+- [Tokens, Energy, and Cost: Measuring What Your Agent Spends]({{ site.baseurl }}/Tutorials/TokensEnergyCost)
+- [Bias Probes on Your Own System]({{ site.baseurl }}/Tutorials/BiasProbes)
+- [Agentic Case Studies: Migration, Browsing, and Research Agents]({{ site.baseurl }}/Tutorials/AgentCaseStudies)
+- [Testing Agents]({{ site.baseurl }}/Tutorials/TestingAgents)
+- [Red-Teaming LLMs]({{ site.baseurl }}/Tutorials/RedTeaming)
+- [Terminal and Filesystem Isolation for Agent Safety]({{ site.baseurl }}/Tutorials/FilesystemIsolation)
+
+**More tutorials**
+
+- [Agentic OpenWebUI]({{ site.baseurl }}/Tutorials/AgenticOpenWebUI)
+- [AI Regulation]({{ site.baseurl }}/Tutorials/Regulation)
+- [Building an AI Chess Coach]({{ site.baseurl }}/Tutorials/ChessAICoach)
+- [Debugging AI Agents]({{ site.baseurl }}/Tutorials/AgentDebugging)
+- [Ethical Frameworks for Agentic AI]({{ site.baseurl }}/Tutorials/EthicalFrameworks)
+- [Explainability and Human-Centric Design]({{ site.baseurl }}/Tutorials/Explainability)
+- [Explainability in Depth]({{ site.baseurl }}/Tutorials/ExplainabilityDeep)
+- [From Rewards to Preferences]({{ site.baseurl }}/Tutorials/RLHF)
+- [From Text Generation to a Neural Network]({{ site.baseurl }}/Tutorials/TextGenToNN)
+- [Hosting with Cloudflare]({{ site.baseurl }}/Tutorials/Cloudflare)
+- [How LLMs Are Built]({{ site.baseurl }}/Tutorials/LLMPretraining)
+- [Model Cards and Datasheets]({{ site.baseurl }}/Tutorials/DataCards)
+- [Model Types and the Model Lifecycle]({{ site.baseurl }}/Tutorials/ModelTypes)
+- [Multimodal Agents]({{ site.baseurl }}/Tutorials/MultimodalAgents)
+- [Publishing Your Work]({{ site.baseurl }}/Tutorials/Publishing)
+- [RESTful LLM Access]({{ site.baseurl }}/Tutorials/RESTLLMAPI)
+- [Serving LLMs in Production]({{ site.baseurl }}/Tutorials/LLMServing)
+- [Structured Peer Review]({{ site.baseurl }}/Tutorials/PeerReview)
+- [Team Charter and Norms]({{ site.baseurl }}/Tutorials/GroupCharter)
+- [The AI Maker]({{ site.baseurl }}/Tutorials/AIMaker)
+- [The Local Agent Stack]({{ site.baseurl }}/Tutorials/AgentStack)
+- [The Philosophy and Psychology of AI]({{ site.baseurl }}/Tutorials/PhilosophyAI)
 
 ## A Note on the Use of Generative AI
 

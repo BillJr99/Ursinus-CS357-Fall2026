@@ -371,6 +371,7 @@ In this part you build your own benchmark: a task set for a domain your team kno
 
 ## 5.  Further Reading
 
+- [AI by Hand: Tokens, Cosine, Attention, Softmax, and a Forward Pass](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AIByHand)
 - Ziwei Ji et al. "Survey of Hallucination in Natural Language Generation."  *ACM Computing Surveys* (2023).
 - Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 3.
 - Lin, Hilton, and Evans.  "TruthfulQA: Measuring How Models Mimic Human Falsehoods."  *ACL* (2022).

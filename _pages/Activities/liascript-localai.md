@@ -881,6 +881,10 @@ In this part, you will probe your local model across five different task types t
 
 ## 6.  Further Reading
 
+- [The Local Model Landscape: Llama, Mistral, Phi, Gemma, and their relatives, for deciding what to pull next](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/LocalModels)
+- [The Hardware Behind AI: GPUs, quantization, and running models at the edge, which explains the inference speeds you see today](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Hardware)
+- [End-to-End OpenCode Setup: install, opencode.json at both scopes, providers and authentication, AGENTS.md, permissions, a skill, a plugin, and GitHub by CLI and MCP, on every platform.  The reference for today's lab handout](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OpenCodeSetup)
+- [Building a Local Agent From Scratch: Prompt, Remember, Iterate, Skill, Command](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/LocalAgentFromScratch)
 - Ollama documentation: https://ollama.com and https://github.com/ollama/ollama/blob/main/docs/api.md (see the `/api/chat` `messages` array for multi-turn conversations)
 - OpenWebUI documentation: https://docs.openwebui.com
 - Melanie Mitchell.  *AI: A Guide for Thinking Humans*, Chapter 3.

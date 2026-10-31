@@ -499,6 +499,9 @@ Write a combined reflection of 150-200 words addressing at least two of the thre
 
 ## 5.  Further Reading
 
+- [Testing Agents: test types, a small test suite, and prompt regression, for the checks your project's CI runs](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TestingAgents)
+- [Red-Teaming LLMs: how attacks on a model work, for the threat-modeling half of today's session](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/RedTeaming)
+- [Terminal and Filesystem Isolation for Agent Safety: what an agent can reach on disk, and how to narrow it](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/FilesystemIsolation)
 - [Agent Case Studies](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentCaseStudies), the article behind Model 5, with the full incident simulation and the prompt-injection extension.
 - The [Project Thread](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread), for the stand-up, decision log, and check-in protocols used today.
 - The [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) (2023, v1.1), the source of the LLM labels in Models 3 and 4.

@@ -543,6 +543,8 @@ The first three exercises extend the bias measurements from Parts I to III; the 
 
 ## Further Reading
 
+- [Tokens, Energy, and Cost: counting what your agent spends and turning it into an estimate with every assumption named, Area 1 of your Responsible AI Report](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/TokensEnergyCost)
+- [Bias Probes on Your Own System: vary one thing, hold the rest, and report the result honestly, Area 4 of your Responsible AI Report](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/BiasProbes)
 - *Coded Bias* (2020), dir. Shalini Kantayya, and Buolamwini and Gebru, "Gender Shades."  *FAT\** (2018) (now FAccT).
 - Gebru et al. "Datasheets for Datasets."  *CACM* (2021); Mitchell et al. "Model Cards for Model Reporting."  *FAT\** (2019) (now FAccT).
 - Bender, Gebru, McMillan-Major, and Mitchell.  "On the Dangers of Stochastic Parrots."  *FAccT* (2021).
