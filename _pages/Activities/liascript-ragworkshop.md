@@ -521,6 +521,7 @@ I circulate while you write and answer line 2 on the spot.  Before you leave, ad
 
 ## Further Reading
 
+- [RAG From Zero](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/RAGFromZero), each step of today's pipeline on its own, in Python and in Langflow, with a retrieval-off comparison.
 - The [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), whose steps this session followed in order.
 - *Offline RAG and LoRA, End to End*, Section B: the same ingest-and-ask pipeline with a persistent index, stable chunk IDs, content hashes that make re-ingesting safe, and a distance cutoff, plus a worked case of a retrieval success and a generation failure on the same question: https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OfflineRAGFineTuning
 - [Pydantic AI From the Loop Up](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PydanticAI), for the agent and tool calls in `rag_agent.py`, and [Visual Agents](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VisualAgents), for the Langflow wiring.

@@ -495,6 +495,7 @@ The supervisor's writer, check, and refused stop are already a critique-and-refi
 
 ## Further Reading
 
+- [Orchestration Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OrchestrationPatterns), today's three patterns on their own, and [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement), for the measurement the lab leaves out.
 - The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), Part A and Step B.3, where the budget, the fail-closed parse, and the matched call counts are graded.
 - [Orchestration and Multi-Agent Patterns](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md), especially Loop Safety Controls and Termination, for the controls this session implemented.
 - [Pydantic AI From the Loop Up](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PydanticAI): the RAG lab's agent caps its loop with `UsageLimits(request_limit=4)`, the same budget idea enforced by a framework instead of your own `range()`.

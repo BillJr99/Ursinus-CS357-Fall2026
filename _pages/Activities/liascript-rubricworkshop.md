@@ -405,6 +405,7 @@ Recap: agreement tells you whether the rubric wording means the same thing to yo
 
 ## Further Reading
 
+- [LLM Judges and promptfoo](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/LLMJudges), today's judge on its own, then on artifacts you choose.
 - [promptfoo documentation](https://www.promptfoo.dev/docs/intro/): the harness from Part II, including the full list of assertion types and the results viewer.
 - Hamel Husain, ["Your AI Product Needs Evals"](https://hamel.dev/blog/posts/evals/): the error-analysis-first approach to evaluation, which is the discipline behind the disagreement table.
 - [Inspect AI](https://inspect.aisi.org.uk/) (UK AI Security Institute): the Dataset, Solver, and Scorer framework, the Python-native alternative to promptfoo as a harness.

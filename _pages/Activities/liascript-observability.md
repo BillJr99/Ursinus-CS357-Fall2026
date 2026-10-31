@@ -617,6 +617,7 @@ Read your protocol against this checklist.  Every row must be true of your proto
 
 ## Further Reading
 
+- [Handoff Protocols](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/HandoffProtocols), claims, stale claims, and the handoff skill from Part IV, written for a repository you choose.
 - Liu et al.  "Lost in the Middle: How Language Models Use Long Contexts."  *TACL* (2024).  The attention-quality force from Part I.
 - OpenTelemetry Documentation: https://opentelemetry.io/docs/ and the OpenTelemetry Semantic Conventions for LLMs (GenAI): https://opentelemetry.io/docs/specs/semconv/gen-ai/.  The vendor-neutral standard for the spans in Section 3.
 - Charity Majors, Liz Fong-Jones, and George Miranda.  *Observability Engineering.*  O'Reilly Media, 2022.
