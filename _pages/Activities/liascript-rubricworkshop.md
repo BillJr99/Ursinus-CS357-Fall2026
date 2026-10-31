@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Judge Pipeline Workshop: Build and Audit a Judge
 
-Today is a build session.  You leave with a judge that reads a rubric, scores three sample submissions with your local model, and writes a `grades.csv` you can open in a spreadsheet, and then with the same judge expressed a second time as a promptfoo configuration with no Python at all.  Last session (*Critique, Consensus, and the LLM Judge*) taught why vague rubrics fail and what biases a judge carries; today you run the machinery, so keep that deck open for the rubric autopsy and the pathology list rather than re-reading them here.  Keep everything you build in the next seventy-five minutes: the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3, may use this judge as its Part A critic, and the *Project Sprint: Run Your Rubric Against Your Project, and Threat Model It* session (Tuesday, December 1) points it at your own final project.
+Today is a build session.  You leave with a judge that reads a rubric, scores three sample submissions with your local model, and writes a `grades.csv` you can open in a spreadsheet.  You also leave with the same judge written a second time as a promptfoo configuration, with no Python at all.  Last session (*Critique, Consensus, and the LLM Judge*) taught why vague rubrics fail and what biases a judge carries.  Today you run the machinery, so keep that deck open for the rubric autopsy and the pathology list instead of rereading them here.  Keep everything you build in the next seventy-five minutes.  The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3, may use this judge as its Part A critic, and the *Project Sprint: Run Your Rubric Against Your Project, and Threat Model It* session (Tuesday, December 1) points it at your own final project.
 
 **Today:** Sprint Check 2 is at the start of class.
 
@@ -87,7 +87,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 ## Sprint Check 2 (the first ten minutes)
 
-Sprint Check 2 opens today's session, with no slides.  I pick one member of each team at random, who has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line, the linked first line of their latest standup, should already be in the team note.  Each member also submits the confidential peer pulse privately in Canvas today.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
+Sprint Check 2 opens today's session, with no slides.  I pick one member of each team at random.  That member has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line (the linked first line of their latest standup) should already be in the team note.  Each member also submits the confidential peer pulse privately in Canvas today.  I mark each team as shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 
 
 ---
@@ -306,7 +306,7 @@ Expected: 3 rows times 3 assertions, nine verdicts.
 
    *Hint:* The same model read the same text under two different prompts.  Disagreement between the routes is not a bug in either one; it measures how much the *wording* of the rubric line moves the judge.
 
-Recap: the promptfoo YAML is the rubric with each criterion collapsed to a pass line, and both routes grade the same `samples/` with the same model.  A configuration file is not more accurate than a script; what it buys you is one file holding rubric, judge, and tests that you can change.  It is the same discipline as Before You Start in the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), where `config.json` and `rubric.json` hold every setting and criterion so you can change them without editing code.
+Recap: the promptfoo YAML is the rubric with each criterion collapsed to a pass line.  Both routes grade the same `samples/` with the same model.  A configuration file is not more accurate than a script.  What it gives you is one file that holds the rubric, judge, and tests, and that you can change.  It is the same discipline as Before You Start in the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), where `config.json` and `rubric.json` hold every setting and criterion so you can change them without editing code.
 
 ---
 # Part III: Make It Trustworthy

@@ -14,7 +14,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 Today is a working session on your own project, built around one review and two hard questions.  The review is the cross-team proposal critique that closes Sprint 1: another team reads your proposal with the SQR card and you read theirs.  The first hard question is whether the judge you built in the Judge Pipeline Workshop deserves your trust on real outputs: you point it at three artifacts your final project produced this week, compare it with two blind human scorers, trace one disagreement back to its evidence, and repair the right thing.  The second hard question is what an outsider could write that your agent will read, and what you would do in the first hour after it went wrong: you walk the OWASP LLM Top 10 against the channels your system reads, then run the incident simulation from the case-studies material against your own system instead of a fictional one.  We take today in this order: **stand-up, proposal critique, run the judge, audit and repair, threat model, report out**.
 
-The Literature Review Team Synthesis is due today.  The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate) is due Thursday, and its Part A may use this judge as its critic, so every repair you make today carries straight into that lab.
+The Literature Review Team Synthesis is due today.  The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate) is due Thursday.  Its Part A may use this judge as its critic, so every repair you make today carries straight into that lab.
 
 ---
 

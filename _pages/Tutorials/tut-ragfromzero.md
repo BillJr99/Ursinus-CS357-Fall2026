@@ -19,10 +19,10 @@ tags:
 
 ## About This Tutorial
 
-Retrieval-augmented generation (RAG) has five moving parts: cut documents into chunks, turn each chunk into an embedding, retrieve the chunks closest to a question, ground the answer in what was retrieved, and measure whether any of it worked.  This tutorial builds each part on its own, prints what it produces, and then measures the whole pipeline.  You can do it on its own, before or after the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), and nothing here is collected or graded.
+Retrieval-augmented generation (RAG) has five moving parts: cut documents into chunks, turn each chunk into an embedding, retrieve the chunks closest to a question, ground the answer in what was retrieved, and measure whether any of it worked.  This tutorial builds each part separately, prints its output, and then measures the whole pipeline.  You can work through it as a standalone tutorial, before or after the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase), and nothing here is collected or graded.
 {: .tb-lede}
 
-Part I is the core.  It runs on any machine with Python 3 and no extra packages, because two pieces are labeled stand-ins: a word-count "embedding" and a sentence-copying "model."  Part II replaces both with the real ones on the code path (Chroma and a Pydantic AI agent, as in the lab), and Part III does the same on the no-code path (a Langflow flow).  **You need only one of Parts II and III;** doing both is optional.  Part IV points the pipeline at a corpus you choose.  Every part uses the same measurement: a golden set, recall@k, a grounding check, and a question asked with retrieval switched off.
+Part I is the core.  It runs on any machine with Python 3 and no extra packages, because two pieces are labeled stand-ins: a word-count "embedding" and a sentence-copying "model."  Part II replaces both with the real ones on the code path (Chroma and a Pydantic AI agent, as in the lab).  Part III does the same on the no-code path (a Langflow flow).  **You need only one of Parts II and III;** doing both is optional.  Part IV points the pipeline at a corpus you choose.  Every part uses the same measurement: a golden set, recall@k, a grounding check, and a question asked with retrieval switched off.
 
 ## Key Concepts
 
@@ -42,11 +42,11 @@ Part I is the core.  It runs on any machine with Python 3 and no extra packages,
 
 # Part I: The Whole Pipeline in Plain Python
 
-These five cells use only the Python standard library.  Paste them in order into one file, such as `rag_zero.py`, and run `python3 rag_zero.py`, or paste them one at a time into a Python session.  Each cell uses what the cells above it built.  The corpus and the stand-ins come from the *RAG Worked Example* session, so if you did that session, the numbers will look familiar.
+These five cells use only the Python standard library.  Paste them in order into one file, such as `rag_zero.py`, and run `python3 rag_zero.py`.  You can also paste them one at a time into a Python session.  Each cell uses what the cells above it built.  The corpus and the stand-ins come from the *RAG Worked Example* session.  If you did that session, the numbers will look familiar.
 
 ## 1.  Write the Golden Set First
 
-The corpus is four short files about an invented bicycle co-op.  Before any code indexes them, we write the test: six questions, each with an **evidence phrase** that only the right passage contains and the fact a right answer must state.  One question has no answer in the notes, so the test can tell whether the system knows when to stop.  We name evidence by phrase rather than by chunk ID because chunk IDs change when the chunking changes, and a phrase does not.
+The corpus is four short files about an invented bicycle co-op.  Before any code indexes them, we write the test: six questions, each with an **evidence phrase** that only the right passage contains and the fact a right answer must state.  One question has no answer in the notes, so the test can tell whether the system knows when to stop.  We name evidence by a phrase, not by a chunk ID.  Chunk IDs change when the chunking changes, but a phrase does not.
 
 ```python
 # Cell 1: the corpus, and the golden set written before anything is indexed.
@@ -85,11 +85,11 @@ print(f"{len(CORPUS)} files, {len(GOLDEN)} golden questions, "
       f"{sum(1 for _, ev, _ in GOLDEN if ev is None)} the notes cannot answer")
 ```
 
-You should see `4 files, 6 golden questions, 1 the notes cannot answer`.  Notice that the questions use different words from the notes ("hurt" against "injury," "take home" against "borrow").  That is on purpose: real users do not phrase questions the way the documents are written.
+You should see `4 files, 6 golden questions, 1 the notes cannot answer`.  Notice that the questions use different words from the notes ("hurt" against "injury," "take home" against "borrow").  We did that on purpose: real users do not word their questions the way the documents are written.
 
 ## 2.  Chunk
 
-The lab's `index.py` splits each file on blank lines, so one paragraph becomes one chunk, with the ID `{file stem}-{paragraph number}` and the file name kept beside the text.  This cell does the same, then checks that each evidence phrase lands in exactly one chunk.
+The lab's `index.py` splits each file on blank lines, so each paragraph becomes one chunk.  Each chunk gets the ID `{file stem}-{paragraph number}`, and the file name is kept beside its text.  This cell does the same, and then it checks that each evidence phrase lands in exactly one chunk.
 
 ```python
 # Cell 2: chunk the way the lab's index.py does, one chunk per blank-line paragraph.
@@ -125,11 +125,11 @@ Indexed 12 chunks from 4 files.
   'Report any injury'      is in ['safety-2']
 ```
 
-Each heading on its own line became a chunk of its own: `hours-0` is just `# Hours`.
+Each heading line became its own chunk: `hours-0` is just `# Hours`.
 
 ## 3.  Embed and Retrieve
 
-On your machine, Chroma embeds each chunk when you store it and embeds the question when you search.  Here, `toy_embed` stands in for that: it counts the words left after dropping common ones, and `cosine` compares two of those counts (1.0 for the same words in the same proportions, 0.0 for no shared words).  A real embedding model handles different wording far better than word counts do, and Cell 5 shows where the stand-in fails because of it.
+On your machine, Chroma embeds each chunk when you store it and embeds the question when you search.  Here, `toy_embed` stands in for that.  It drops common words and counts the words that are left.  Then `cosine` compares two of those counts (1.0 for the same words in the same proportions, 0.0 for no shared words).  A real embedding model handles different wording far better than word counts do.  Cell 5 shows where the stand-in fails because of this.
 
 ```python
 # Cell 3: a stand-in embedding, cosine similarity, and a top-k search.
@@ -181,11 +181,11 @@ Q: When is the workshop open on Saturday? -> {'workshop': 1, 'open': 1, 'saturda
   tools-1       0.160  [tools.md] 'Truing stands and wheel tools stay in the wor'
 ```
 
-The right chunk is first.  The other two share only the word "workshop," and they were returned anyway: a search always returns $$k$$ chunks, whether or not they are relevant.
+The right chunk is first.  The other two share only the word "workshop," but the search returned them anyway.  A search always returns $$k$$ chunks, whether or not they are relevant.
 
 ## 4.  Ground the Answer, With Retrieval Off and On
 
-The prompt below is the lab's grounding prompt, word for word: answer only from the passages, name the file for each fact, and abstain with a fixed sentence when the passages do not hold the answer.  The prompt is the whole of what the model sees, so the cell prints it.  `ask` can switch retrieval off, which sends the same rules and question with no passages.
+The prompt below is the lab's grounding prompt, word for word: answer only from the passages, name the file for each fact, and abstain with a fixed sentence when the passages do not hold the answer.  The model sees only this prompt, so the cell prints it.  `ask` can switch retrieval off.  With retrieval off, it sends the same rules and question with no passages.
 
 ```python
 # Cell 4: the grounding prompt, a stand-in model, and the same question with retrieval off and on.
@@ -226,23 +226,23 @@ for retrieval in (False, True):
     print("ANSWER:", answer, "\n")
 ```
 
-You should see the retrieval-off prompt (254 characters, `evidence in prompt: False`, an empty `Passages:` section) answered with `I could not find that in your notes.`, then the retrieval-on prompt (594 characters, `evidence in prompt: True`) answered with:
+You should see two prompts.  The retrieval-off prompt (254 characters, `evidence in prompt: False`, an empty `Passages:` section) gets the answer `I could not find that in your notes.`  The retrieval-on prompt (594 characters, `evidence in prompt: True`) gets this answer:
 
 ```text
 ANSWER: The co-op workshop is open Tuesday and Thursday from 4pm to 8pm, and Saturday from 10am to 2pm. [hours.md]
 ```
 
-The stand-in abstained with retrieval off because it can only copy, and there was nothing to copy.  A language model is not limited that way: with no passages it can still write an answer from what it learned in training.  That is the comparison Parts II and III run on a real model, and it is the clearest way to see what retrieval adds.
+The stand-in abstained with retrieval off because it can only copy, and there was nothing to copy.  A language model is not limited that way: with no passages it can still write an answer from what it learned in training.  Parts II and III run this same comparison on a real model.  It is the clearest way to see what retrieval adds.
 
 ## 5.  Measure: Recall@k, Grounding, and Abstention
 
-Three checks, each owned by a different part of the pipeline.  **Recall@k** checks the retriever: is the evidence phrase in any of the top $$k$$ chunks?
+There are three checks, and a different part of the pipeline owns each one.  **Recall@k** checks the retriever: is the evidence phrase in any of the top $$k$$ chunks?
 
 $$
 \text{recall@}k = \frac{\text{answerable questions whose evidence is in the top } k}{\text{answerable questions}}
 $$
 
-**Right** checks the answer against the fact in the golden set.  **Grounded** checks that every content word of the answer appears in a retrieved passage from the file the answer names.  The unanswerable question is left out of recall, since it has no evidence to find, and gets its own verdict: did the system abstain?
+**Right** checks the answer against the fact in the golden set.  **Grounded** checks that every content word of the answer appears in a retrieved passage from the file the answer names.  Recall leaves out the unanswerable question, since it has no evidence to find.  That question gets its own verdict instead: did the system abstain?
 
 ```python
 # Cell 5: measure the retriever (recall@k), the answer (right, grounded), and abstention.
@@ -302,23 +302,23 @@ You should see:
   grounded=False  Students with a college ID pay $10. [tools.md]
 ```
 
-Read it row by row.  The membership answer is grounded and wrong: the bare heading `membership-0` won rank 1 on the single word "membership," and the stand-in copied it faithfully.  The injury question is a retrieval miss, because "tell" and "hurt" share no words with "Report any injury"; a real embedding model is built to place "hurt" near "injury," so this miss belongs to the stand-in.  The three hand-written replies show what grounding catches (an invented amount, and a right fact credited to the wrong file) and why "right" and "grounded" stay separate words.
+Read it row by row.  The membership answer is grounded and wrong.  The bare heading `membership-0` won rank 1 on the single word "membership," and the stand-in copied it faithfully.  The injury question is a retrieval miss, because "tell" and "hurt" share no words with "Report any injury."  A real embedding model is built to place "hurt" near "injury," so this miss belongs to the stand-in.  The three hand-written replies show what grounding catches: an invented amount, and a right fact credited to the wrong file.  They also show why "right" and "grounded" stay separate words.
 
 ### Questions to Work Through
 
 1.  For the membership question, which component owns the failure: the chunker, the retriever, or the generator?  Point at the line of output that tells you.
 2.  **Predict:** if you fold each heading into the paragraphs under it, so no chunk is a bare heading, will recall@1 go up, down, or stay the same?  Will the membership answer become right?  Write both predictions down before you try Exercise 1.
-3.  `stand_in_model` abstains when the top score is below `min_score`.  Why can a score threshold not be the whole abstention policy?  Look at the score of the top hit for "Does the co-op sell new bikes?" with `search_notes(index, "Does the co-op sell new bikes?")`.
+3.  `stand_in_model` abstains when the top score is below `min_score`.  Why can't a score threshold be the whole abstention policy?  Look at the score of the top hit for "Does the co-op sell new bikes?" with `search_notes(index, "Does the co-op sell new bikes?")`.
 4.  **Predict:** a real model with retrieval off is asked "When is the workshop open on Saturday?" under rules that say to name a source file.  What will it do: abstain, guess a time, or guess a time and name a file?  Write it down before Part II or Part III.
 
 ---
 
 # Part II: The Code Path (Chroma and Pydantic AI)
 
-> These scripts talk to Chroma on disk and to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Run them in your course container or on your own machine.
+> These scripts talk to Chroma on disk and to the Ollama server at `localhost:11434` on your own laptop.  A web page has no route to that server.  Run them in your course container or on your own machine.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
-Part II uses the lab's code, models, and versions.  Set up once:
+Part II uses the lab's code, models, and versions.  Do this setup once:
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -326,7 +326,7 @@ pip install "pydantic-ai-slim[openai]==2.54.0" "chromadb==1.5.9"
 ollama pull qwen2.5:3b
 ```
 
-Then save the co-op corpus as a `corpus/` folder.  This cell needs nothing but Python, and Part IV reuses `load_corpus` for your own files.
+Then save the co-op corpus as a `corpus/` folder.  This cell needs only Python.  Part IV reuses `load_corpus` for your own files.
 
 ```python
 # Cell 6: save the co-op files as corpus/, or load your own corpus/ folder in place of CORPUS.
@@ -351,12 +351,12 @@ You should see `['hours.md', 'membership.md', 'safety.md', 'tools.md'] -> 12 chu
 
 ## 6.  Index and Ask
 
-1.  **Chunk and embed.**  Save the lab's [`index.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase#step-2-index-it) next to `corpus/` and run `python index.py`.  It makes the same paragraph chunks as Cell 2 and stores them in a Chroma collection named `notes`, which embeds each one with Chroma's own embedding model.  You should see `Indexed 12 chunks from 4 files.`  The first run downloads that embedding model once.
-2.  **Retrieve and generate.**  Save the lab's [`rag_agent.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase#step-3-give-an-agent-a-search-tool) and run `python rag_agent.py "When is the workshop open on Saturday?"`.  You should see a `[tool call] search_notes(...)` line, a `[tool result]` line that begins with a file name in brackets, and an answer that names a file.  The agent's instructions carry the same three rules as Cell 4's prompt, and its `search_notes` tool returns the top three passages, like `k=3` above.
+1.  **Chunk and embed.**  Save the lab's [`index.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase#step-2-index-it) next to `corpus/` and run `python index.py`.  It makes the same paragraph chunks as Cell 2 and stores them in a Chroma collection named `notes`.  The collection embeds each chunk with Chroma's own embedding model.  You should see `Indexed 12 chunks from 4 files.`  The first run downloads that embedding model once.
+2.  **Retrieve and generate.**  Save the lab's [`rag_agent.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase#step-3-give-an-agent-a-search-tool) and run `python rag_agent.py "When is the workshop open on Saturday?"`.  You should see a `[tool call] search_notes(...)` line, a `[tool result]` line that begins with a file name in brackets, and an answer that names a file.  The agent's instructions carry the same three rules as Cell 4's prompt.  Its `search_notes` tool returns the top three passages, like `k=3` above.
 
 ## 7.  Measure, Then Switch Retrieval Off
 
-Save this as `measure.py` beside `rag_agent.py` and run `python measure.py`.  It imports the lab's `agent`, `collection`, and `model` (the file's `__main__` guard keeps the import from asking a question), computes recall@1 and recall@3 against Chroma, asks every golden question, and then asks one question twice: once with a `closed_book` agent that has the same model and rules but no search tool, and once with the real agent.
+Save this as `measure.py` beside `rag_agent.py` and run `python measure.py`.  It imports the lab's `agent`, `collection`, and `model` (the file's `__main__` guard keeps the import from asking a question).  Then it computes recall@1 and recall@3 against Chroma and asks every golden question.  Finally, it asks one question twice: once with a `closed_book` agent that has the same model and rules but no search tool, and once with the real agent.
 
 ```python
 # measure.py: score the lab's index and agent on the golden set, then compare retrieval off and on.
@@ -426,7 +426,7 @@ if __name__ == "__main__":
         print(f"\nretrieval {label}  searched={bool(returned)}\n  Q: {question}\n  A: {answer}")
 ```
 
-The script checks what a machine can check: recall, whether the agent searched, and whether the answer holds the right fact or abstains when it should.  It cannot check that the file an answer names actually says the claim.  That check is yours: for each answer, open the named file and write one line saying whether it supports the answer.  Exact wording depends on the model, so your answers will not match anyone else's word for word.
+The script checks what a machine can check: recall, whether the agent searched, and whether the answer holds the right fact or abstains when it should.  It cannot check that the file an answer names actually says the claim.  You make that check: for each answer, open the named file and write one line saying whether it supports the answer.  Exact wording depends on the model, so your answers will not match anyone else's word for word.
 
 ### Questions to Work Through
 
@@ -439,19 +439,19 @@ The script checks what a machine can check: recall, whether the agent searched, 
 
 # Part III: The No-Code Path (Langflow)
 
-> Langflow and Ollama run on your own laptop.  Node names shift a little between Langflow versions; the dataflow is what matters.  The [Visual Agents](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VisualAgents) tutorial walks through the canvas with more detail.
+> Langflow and Ollama run on your own laptop.  Node names shift a little between Langflow versions, so follow the dataflow rather than the exact names.  The [Visual Agents](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/VisualAgents) tutorial walks through the canvas in more detail.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
 Steps 1 to 4 follow the lab's Steps N1 to N3, using the `corpus/` folder from Cell 6.  Steps 5 and 6 add the measurement and the retrieval-off comparison.
 
 1.  **Install and launch (lab Step N1).**  Run `pip install langflow`, then `langflow run`, then `ollama pull llama3.2` and `ollama pull nomic-embed-text`.  The canvas opens at `http://localhost:7860`.  If `pip` reports a dependency-resolver error, make a fresh virtual environment on Python 3.11 or 3.12 and install there.
-2.  **Index path (lab Step N2).**  Create a **New Flow** from a **Blank Canvas**.  Wire **File** (upload the four files in `corpus/`) to **Text Splitter** (the recursive character splitter, chunk size 1000, overlap 100) to **Chroma** (collection `notes`), with an **Ollama Embeddings** node (model `nomic-embed-text`, Base URL `http://localhost:11434`) wired into Chroma's embedding input.  Read the stored chunk count in the Chroma node's inspection view.
+2.  **Index path (lab Step N2).**  Create a **New Flow** from a **Blank Canvas**.  Wire **File** (upload the four files in `corpus/`) to **Text Splitter** (the recursive character splitter, chunk size 1000, overlap 100) to **Chroma** (collection `notes`).  Wire an **Ollama Embeddings** node (model `nomic-embed-text`, Base URL `http://localhost:11434`) into Chroma's embedding input.  Read the stored chunk count in the Chroma node's inspection view.
 3.  **Query path (lab Step N2).**  Wire **Chat Input** to the same Chroma node's search input, with the number of results set to 3.  Send the search results to a **Prompt** node, then to **Ollama** (model `llama3.2`, temperature 0, Base URL `http://localhost:11434`), then to **Chat Output**.
 4.  **Ground (lab Step N3).**  Paste Cell 4's `PROMPT` text into the Prompt node, from `Answer questions` through `Question: {question}`.  Wire the search results into `{context}` and the Chat Input into `{question}`.
 5.  **Measure.**  Ask each golden question in a fresh **Playground** session.  For each one, open the search step's inspection view and copy the three chunks it returned into a spreadsheet beside the question.  Mark 1 in a recall@3 column if the evidence phrase appears in any of the three, and average that column over the five answerable questions.  Then mark each answer right or wrong, and grounded or not, by reading the passage from the file it names.
-6.  **Retrieval off.**  Disconnect the search results from the Prompt's `{context}`, so it arrives empty, and ask "When is the workshop open on Saturday?" in a fresh session.  Then reconnect it and ask again.  Write down both answers.
+6.  **Retrieval off.**  Disconnect the search results from the Prompt's `{context}`, so `{context}` arrives empty, and ask "When is the workshop open on Saturday?" in a fresh session.  Then reconnect it and ask again.  Write down both answers.
 
-Record every node setting in a readme as you go (models, Base URL, chunk size, overlap, number of results, temperature, prompt text).  On this path that list takes the place of the code.
+Record every node setting in a readme as you go (models, Base URL, chunk size, overlap, number of results, temperature, prompt text).  On this path, that list takes the place of the code.
 
 ### Questions to Work Through
 
@@ -463,14 +463,14 @@ Record every node setting in a readme as you go (models, Base URL, chunk size, o
 
 # Part IV: Try It on a Corpus You Choose
 
-The co-op corpus is small and invented so that you can check every answer.  The next step is a corpus you know well enough to check by hand: your own course notes, the documentation for a tool you use, a club's handbook, or the public pages of an organization you care about.  Your team's project material is one option, if your partner agreed to share it and you leave out personal details about anyone you interviewed.  Do not index anything you would not want stored in a file on disk, such as passwords, health records, or other people's messages.
+The co-op corpus is small and invented so that you can check every answer.  The next step is a corpus you know well enough to check by hand: your own course notes, the documentation for a tool you use, a club's handbook, or the public pages of an organization you care about.  You may use your team's project material if your partner agreed to share it and you leave out personal details about anyone you interviewed.  Do not index anything you would not want stored in a file on disk, such as passwords, health records, or other people's messages.
 
 1.  Put five to twenty `.md` or `.txt` files in a fresh `corpus/` folder.
 2.  **Before you index anything,** rewrite `GOLDEN` in Cell 1: four questions your notes answer (worded differently from the notes), one they do not answer, and one you expect to be hard.  Pick evidence phrases of three to five words.
-3.  In Cell 1, replace the `CORPUS = {...}` dictionary with `CORPUS = load_corpus()`, and paste `from pathlib import Path` and the `load_corpus` function from Cell 6 above that line.  Run Part I again.  Cell 2's evidence check should show exactly one chunk for each phrase; if a phrase is in two chunks, or none, choose a different phrase now, before you look at any answers.
+3.  In Cell 1, replace the `CORPUS = {...}` dictionary with `CORPUS = load_corpus()`, and paste `from pathlib import Path` and the `load_corpus` function from Cell 6 above that line.  Run Part I again.  Cell 2's evidence check should show exactly one chunk for each phrase.  If a phrase is in two chunks, or in none, choose a different phrase now, before you look at any answers.
 4.  Run the same golden set on your path: `measure.py` with your `GOLDEN` (delete `chroma_db` and rerun `index.py` first), or the Langflow spreadsheet with your files uploaded.
 
-Part I's stand-in will do worse on your corpus than a real embedding model, because it can only match exact words.  That is fine: Part I tells you whether your golden set is well formed, and Part II or III tells you how the real pipeline does.
+Part I's stand-in will do worse on your corpus than a real embedding model, because it can only match exact words.  That is fine.  Part I tells you whether your golden set is well formed.  Part II or III tells you how the real pipeline does.
 
 ---
 
@@ -480,7 +480,7 @@ Everything below is optional.  Each one ends with a check you apply yourself.
 
 1.  **Fold the headings in.**
 
-    *What to do:* Write `heading_chunks(corpus)`, which remembers each heading line instead of storing it, and prefixes it to every paragraph below it (`"Membership: A semester membership costs..."`).  Run `report(build_index(heading_chunks(CORPUS)), "headings folded")` with the same golden set.
+    *What to do:* Write `heading_chunks(corpus)`.  It should remember each heading line instead of storing it, and prefix the heading to every paragraph below it (`"Membership: A semester membership costs..."`).  Run `report(build_index(heading_chunks(CORPUS)), "headings folded")` with the same golden set.
 
     *Starter hint:* Loop over the paragraphs as `paragraph_chunks` does.  When a paragraph starts with `#`, save `p.lstrip("# ").strip()` and `continue`.  The *RAG Worked Example* session has a version to compare against once yours runs.
 

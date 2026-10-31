@@ -15,12 +15,12 @@ tags:
 
 ## About This Tutorial
 
-Every final project team writes a Responsible AI Report, and its Area 4 asks for a bias audit: send inputs that are identical except for one attribute, compare the outputs, and report what you find.  This tutorial is practice for that section.  You run the whole probe once on a small example where the answer is known, so that when you run it on your own system you already know what each step is for.
+Every final project team writes a Responsible AI Report.  Its Area 4 asks for a bias audit: send inputs that are identical except for one attribute, compare the outputs, and report what you find.  This tutorial is practice for that section.  You run the whole probe once on a small example where the answer is known.  Then, when you run it on your own system, you already know what each step is for.
 {: .tb-lede}
 
-Part I builds the probe in pure Python against a stand-in model, so it runs anywhere with no network and no Ollama.  Part II swaps in a real model, first with code and then by hand in Open WebUI or any chat window with a spreadsheet as the log.  Part III turns the same probe on an evaluator: the padding probe from the Judge Pipeline Workshop is a bias probe on a judge.  Part IV moves the probe to a system of your choosing (your team's final project is one option) and shows how to write it up.  Run the Python cells in order, in one file or one notebook, because later cells use names that earlier cells define.
+Part I builds the probe in pure Python against a stand-in model, so it runs anywhere with no network and no Ollama.  Part II swaps in a real model, first with code and then by hand in Open WebUI or any chat window, with a spreadsheet as the log.  Part III turns the same probe on an evaluator: the padding probe from the Judge Pipeline Workshop is a bias probe on a judge.  Part IV moves the probe to a system of your choosing (your team's final project is one option) and shows how to write it up.  Run the Python cells in order, in one file or one notebook, because later cells use names that earlier cells define.
 
-This tutorial is optional.  The bias audit itself is not: Area 4 of the Responsible AI Report is required in every direction of the final project, and the [Final Project page](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#the-responsible-ai-report-required-in-every-direction) is the authority on what it must contain.
+This tutorial is optional, but the bias audit itself is not.  Area 4 of the Responsible AI Report is required in every direction of the final project.  The [Final Project page](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#the-responsible-ai-report-required-in-every-direction) is the authority on what it must contain.
 
 ## Key Concepts
 
@@ -44,9 +44,9 @@ This tutorial is optional.  The bias audit itself is not: Area 4 of the Responsi
 
 A bias probe starts with a question about people, not about the model: who does this system serve, and what about them could change the answer they get when it should not?  Area 4 lists the usual candidates (a name, a dialect, a neighborhood, a stated group membership) and asks you to choose attributes that matter to your partner's community.
 
-For the practice example, picture a course help assistant that answers debugging questions.  Students write to it in many styles.  Some write in full sentences with a greeting; some type fast from a phone with no capitals and a "pls."  The question is the same either way, and so is the help the student deserves.  If the assistant gives a casual writer fewer or vaguer steps, the students who write that way get less help for the same question.  So the attribute we vary is **writing style**, with two values: formal and casual.
+For the practice example, picture a course help assistant that answers debugging questions.  Students write to it in many styles.  Some write in full sentences with a greeting.  Others type fast from a phone, with no capitals and a "pls."  The question is the same either way, and so is the help the student deserves.  If the assistant gives a casual writer fewer or vaguer steps, the students who write that way get less help for the same question.  So the attribute we vary is **writing style**, with two values: formal and casual.
 
-We chose writing style for the practice example because every student has written both ways, and because varying it does not require us to attach a group label to anyone.  The course has used names before: the byline-swap drill in the biasdata session swaps author names that statistically connote different genders and national origins.  If your system serves a community where names, dialect, or neighborhood are the attribute that matters, those are legitimate choices.  Handle them with care:
+We chose writing style for the practice example for two reasons.  Every student has written both ways, and varying it does not require us to attach a group label to anyone.  The course has used names before: the byline-swap drill in the biasdata session swaps author names that statistically connote different genders and national origins.  If names, dialect, or neighborhood are the attribute that matters to the community your system serves, those are legitimate choices.  Handle them with care:
 
 - A name or a dialect marker is a signal the model may read.  It is not a person's identity, so report what you varied ("bylines A through D"), not who you claim the writers were.
 - Use several values per group (several names, several phrasings), so one name's quirks do not stand in for a whole group.
@@ -54,7 +54,7 @@ We chose writing style for the practice example because every student has writte
 
 ## 2.  Build Matched Pairs and a Stand-In Model
 
-Each pair below asks one question two ways.  Read each casual version against its formal one and check that every fact survived: the error name, the symptom, what the student is asking for.  If a fact changes, the pair is no longer matched, and any gap could come from the fact instead of the style.
+Each pair below asks one question two ways.  Read each casual version against its formal one and check that every fact survived: the error name, the symptom, and what the student is asking for.  If a fact changes, the pair is no longer matched, and any gap could come from the fact instead of the style.
 
 The stand-in model is a few lines of Python that act like a model with a sampling temperature.  It has a gap we planted on purpose: casual messages get `planted_gap` fewer steps on average.  We know the true answer, so we can check whether the probe finds it.  The stand-in says nothing about how any real model behaves.
 
@@ -111,7 +111,7 @@ print("casual version, same seed:",
 
 The formal version of the first request gets 6 steps and the casual version gets 2.  That looks like a large gap, but it is one pair and one draw.  The planted gap is 1 step, and the rest of what you see is the random draw.  One pair can never tell those two apart.
 
-The metric is stated before anything runs: the number of numbered steps.  It is a crude stand-in for "how much help did the student get," and it is one you can count without judgment.  Write your metric into your measurement plan before you look at any outputs, so that you cannot pick the metric that happens to show the most interesting result.
+We stated the metric before anything ran: the number of numbered steps.  It is a crude stand-in for "how much help did the student get," and you can count it without judgment.  Write your metric into your measurement plan before you look at any outputs.  Then you cannot pick the metric that happens to show the most interesting result.
 
 ### Questions to Work Through
 
@@ -121,7 +121,7 @@ The metric is stated before anything runs: the number of numbered steps.  It is 
 
 ## 3.  Hold the Rest Fixed, and Log Every Output
 
-The probe below holds four things fixed across the pair: the model, the system prompt, the temperature, and the list of seeds.  Both versions of every item get the same 20 seeds.  The seed does not make the two versions comparable (a different prompt gives a different draw even with the same seed); it makes the run reproducible, so someone else can rerun it and get your exact log.
+The probe below holds four things fixed across the pair: the model, the system prompt, the temperature, and the list of seeds.  Both versions of every item get the same 20 seeds.  The seed does not make the two versions comparable, because a different prompt gives a different draw even with the same seed.  The seed makes the run reproducible, so someone else can rerun it and get your exact log.
 
 Every output goes into `probe_log.csv` with the time, the settings, the prompt, and the full reply.  The log is your evidence.  If you only keep the averages, nobody (including you, three weeks from now) can check whether the metric counted what you think it counted.
 
@@ -162,7 +162,7 @@ It prints `320 rows logged to probe_log.csv`: 8 items, 2 variants, 20 seeds.
 
 ## 4.  Measure the Gap, and Separate It From Noise
 
-The analysis averages the 20 runs for each item and variant, then takes the gap (formal minus casual) per item.  That gives 8 gaps, one per item, and the per-item table is your disaggregated result.
+The analysis averages the 20 runs for each item and variant, then takes the gap (formal minus casual) per item.  That gives 8 gaps, one per item.  The per-item table is your disaggregated result.
 
 To decide whether the average gap is real, ask what you would see if style made no difference at all.  Then each item's gap would be just as likely to come out positive as negative.  So flip the signs of the 8 gaps in every possible way (there are 256 patterns) and count how often the average comes out at least as large as the one you observed.  That share is `p`.  A small `p` means a gap this large rarely happens by chance alone.  This is the same coin-flip reasoning as the sign-test question in the biasdata session, applied to the gaps.
 
@@ -236,7 +236,7 @@ planted gap 0:          average gap -0.02, p = 0.891
 planted gap 1, 5 seeds: average gap +0.65, p = 0.109
 ```
 
-The same-versus-same gap of about 0.2 steps is what noise alone produces at this sample size, so a gap of that size from a real probe means nothing.  The third line is the one to remember.  The planted gap is still there, the average gap is nearly the same, and the probe does not detect it, because with 5 seeds each item's average is too noisy for 8 items to settle the question.
+The same-versus-same gap of about 0.2 steps is what noise alone produces at this sample size, so a gap of that size from a real probe means nothing.  The third line is the one to remember.  The planted gap is still there, and the average gap is nearly the same, but the probe does not detect it.  With 5 seeds, each item's average is too noisy for 8 items to settle the question.
 
 ### Questions to Work Through
 
@@ -249,9 +249,9 @@ The same-versus-same gap of about 0.2 steps is what noise alone produces at this
 
 The 5-seed run is a null result on a system we know has a gap.  That is exactly the risk in your own report.
 
-A null result shows that, with these items, these values of the attribute, this metric, this model and these settings, and this many samples, you did not detect a gap larger than your noise.  It does not show that the system is unbiased.  It says nothing about attributes you did not vary or metrics you did not compute, and a metric can be blind to the difference that matters (a reply can keep its four steps and still turn curt).  It also may not hold on the next model version.
+A null result shows one thing: you did not detect a gap larger than your noise, with these items, these values of the attribute, this metric, this model and these settings, and this many samples.  It does not show that the system is unbiased.  It says nothing about attributes you did not vary or metrics you did not compute.  A metric can also be blind to the difference that matters: a reply can keep its four steps and still turn curt.  The result also may not hold on the next model version.
 
-Report a null result with its size attached: the average gap, its `p`, and the same-versus-same gap, so a reader can see how large a gap your probe could have caught.  "We found no gap" with no sample size is not a finding.
+Report a null result with its size attached: the average gap, its `p`, and the same-versus-same gap.  Then a reader can see how large a gap your probe could have caught.  "We found no gap" with no sample size is not a finding.
 
 ---
 
@@ -259,11 +259,11 @@ Report a null result with its size attached: the average gap, its `p`, and the s
 
 ## 6.  The Code Path: Ollama
 
-Replace the stand-in with a call to Ollama.  The probe, the log, and the analysis do not change, which is the point of writing them against a `model_fn`.
+Replace the stand-in with a call to Ollama.  The probe, the log, and the analysis do not change.  That is why we wrote them against a `model_fn`.
 
 ## Code Cell: Ollama in Place of the Stand-In
 
-> This cell talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  Copy it into your course container, below the Part I cells, and run it there.
+> This cell talks to the Ollama server on your own laptop at `localhost:11434`.  A web page has no route to that server.  Copy it into your course container, below the Part I cells, and run it there.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
 ```python
@@ -286,11 +286,11 @@ rows = run_probe(ollama_model, PAIRS, SEEDS[:2], "probe_log_ollama.csv")
 print(len(rows), "rows logged")
 ```
 
-Start with `SEEDS[:2]` so you can check the wiring in 32 calls before you commit to 320.  Then open `probe_log_ollama.csv` and read a dozen replies before you trust a single number.  A real model may number its steps as `1)` or use bullets, and `count_steps` would count zero.  If the metric miscounts, fix the metric and rerun everything, both variants, never only the side that looked wrong.  Record the model tag exactly as Ollama reports it, because a different tag is a different model.
+Start with `SEEDS[:2]` so you can check the wiring in 32 calls before you commit to 320.  Then open `probe_log_ollama.csv` and read a dozen replies before you trust a single number.  A real model may number its steps as `1)` or use bullets, and then `count_steps` would count zero.  If the metric miscounts, fix it and rerun everything.  Rerun both variants, never only the side that looked wrong.  Record the model tag exactly as Ollama reports it, because a different tag is a different model.
 
 ## 7.  The No-Code Path: Open WebUI or a Chat Window
 
-The same probe works by hand.  It is slower, so it is smaller, and you should say so in the report.
+The same probe works by hand.  Hand runs are slower, so the probe will be smaller.  Say so in the report.
 
 1.  Make a spreadsheet with one row per run and these columns: `run_id`, `time`, `model`, `temperature`, `seed`, `item`, `variant`, `prompt`, `reply`, `steps`.
 2.  In Open WebUI, choose the model and open the chat's Advanced Params.  Set the temperature (0.8 matches Part I) and a seed, and paste the system prompt from Part I into the chat's system prompt.  Write all three into the sheet.
@@ -298,9 +298,9 @@ The same probe works by hand.  It is slower, so it is smaller, and you should sa
 4.  Paste one message, copy the full reply into the sheet, and count the steps.  Alternate variants (formal, casual, formal, ...) rather than doing all of one first.
 5.  Repeat with the same list of seeds for both variants of every item.
 
-To summarize, build a small table with one row per item.  In Google Sheets or Excel, `=AVERAGEIFS(J:J, F:F, 0, G:G, "formal") - AVERAGEIFS(J:J, F:F, 0, G:G, "casual")` gives item 0's gap, if columns F, G, and J hold `item`, `variant`, and `steps`.  For the noise check, count how many item gaps are positive.  Drop items whose gap is exactly zero, call the remaining count `n`, and call the larger of the positive and negative counts `k`.  Then `=MIN(1, 2*(1-BINOM.DIST(k-1, n, 0.5, TRUE)))` is the chance of a split at least that lopsided if style made no difference.  (This counts signs instead of averaging gaps, so its number will differ a little from `sign_flip_p`.)  You can also paste the gaps into the Part I cell.
+To summarize the runs, build a small table with one row per item.  If columns F, G, and J hold `item`, `variant`, and `steps`, then in Google Sheets or Excel, `=AVERAGEIFS(J:J, F:F, 0, G:G, "formal") - AVERAGEIFS(J:J, F:F, 0, G:G, "casual")` gives item 0's gap.  For the noise check, count how many item gaps are positive.  Drop items whose gap is exactly zero, call the remaining count `n`, and call the larger of the positive and negative counts `k`.  Then `=MIN(1, 2*(1-BINOM.DIST(k-1, n, 0.5, TRUE)))` is the chance of a split at least that lopsided if style made no difference.  (This counts signs instead of averaging gaps, so its number will differ a little from `sign_flip_p`.)  You can also paste the gaps into the Part I cell.
 
-A hosted chat window usually lets you set neither the seed nor the temperature, and it may change the model under you without notice.  You can still run the probe.  Write those limits into the report, along with the date of every run.
+A hosted chat window usually does not let you set the seed or the temperature, and it may change the model under you without notice.  You can still run the probe.  Write those limits into the report, along with the date of every run.
 
 ### Questions to Work Through
 
@@ -313,9 +313,9 @@ A hosted chat window usually lets you set neither the seed nor the temperature, 
 
 ## 8.  The Padding Probe Is a Bias Probe on an Evaluator
 
-If your project scores its outputs with a rubric judge, the judge is a system too, and it can treat inputs differently for reasons that are not in the rubric.  The padding probe from the [Judge Pipeline Workshop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rubricworkshop.md) has the same shape as everything above.  The attribute is the presence of two content-free sentences.  The matched pair is one essay with and without them.  The metric is the level per criterion.  A rubric-faithful judge returns the same levels both ways.
+If your project scores its outputs with a rubric judge, the judge is a system too.  It can treat inputs differently for reasons that are not in the rubric.  The padding probe from the [Judge Pipeline Workshop](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-rubricworkshop.md) has the same shape as everything above.  The attribute is the presence of two content-free sentences.  The matched pair is one essay with and without them.  The metric is the level per criterion.  A rubric-faithful judge returns the same levels both ways.
 
-The stand-in judge below scores the workshop's three library-hours samples with crude rules, and it has one planted flaw: any text longer than 50 words gets a one-level bonus on directness.
+The stand-in judge below scores the workshop's three library-hours samples with crude rules.  It has one planted flaw: any text longer than 50 words gets a one-level bonus on directness.
 
 ## Code Cell: Padding Probe on a Stand-In Judge
 
@@ -359,7 +359,7 @@ for name, text in SAMPLES.items():
               f"{after[criterion]:5}  {after[criterion] - before[criterion]:+5}")
 ```
 
-Directness moves up one level for `s02` and `s03`, and nothing moves for `s01`.  The judge has the same flaw on all three samples.  `s01` shows a delta of zero because it was already over 50 words and already at the top level, so the bonus had nowhere to go.  This is why the workshop says a delta of zero on three cells does not clear the judge: one sample, one padding string, and one model can hide a flaw that is really there.
+Directness moves up one level for `s02` and `s03`, and nothing moves for `s01`.  The judge has the same flaw on all three samples.  `s01` shows a delta of zero because it was already over 50 words and already at the top level, so the bonus had nowhere to go.  That is why the workshop says a delta of zero on three cells does not clear the judge.  One sample, one padding string, and one model can hide a flaw that is really there.
 
 This judge is deterministic, like a real judge at temperature 0 with a fixed seed, so repeating a run tells you nothing new.  For a deterministic system, your sample size is the number of items, not the number of runs.  To probe a real judge, paste `judge()` and `RUBRIC` from the workshop's `judge.py` above this loop and call it in place of `stand_in_judge`:
 
@@ -389,7 +389,7 @@ A biased judge biases every number in your correctness audit (Area 3) as well.  
 
 ## 9.  Moving the Probe to Your System
 
-Pick a system you can reach.  Your team's final project is one option; any system you can send inputs to and read outputs from will work for practice.  Then make the same decisions in the same order:
+Pick a system you can reach.  Your team's final project is one option.  For practice, any system that you can send inputs to and read outputs from will work.  Then make the same decisions in the same order:
 
 1.  **Attribute and values.**  Your proposal's Responsible AI measurement plan already names the attribute your bias probe will vary.  Start there.  The plan is a living document, so if you change the attribute, write down why.
 2.  **Matched pairs or sets.**  Take real inputs your system handles (in Direction A, the frozen 10-task evaluation set) and write each one in every value of the attribute, with all content held the same.
@@ -398,13 +398,13 @@ Pick a system you can reach.  Your team's final project is one option; any syste
 5.  **Repeats and the noise check.**  Enough runs and items that the same-versus-same gap is clearly smaller than the gap you would care about.
 6.  **Log.**  Every prompt, model and version, reply, and timestamp.  If your inputs contain anything private, store an identifier or hash in place of the content, as the Observability practice asks.
 
-Start in Sprint 1.  The Final Project page is plain about this: probe results cannot be rebuilt from memory in week 14.
+Start in Sprint 1.  The Final Project page is plain about this: you cannot rebuild probe results from memory in week 14.
 
-The directions differ in what you probe.  Direction A runs it on the frozen evaluation set, for the monolith baseline and the multi-agent system both.  Direction B probes your team's own AI use, and your counterfactual probes on the reachable model may count for both the audit and Area 4, presented once.  Direction C runs it on the published artifact and publishes the result in the README or in GOVERNANCE.md's known limitations.  The Final Project page has the full text.
+The directions differ in what you probe.  Direction A runs the probe on the frozen evaluation set, for both the monolith baseline and the multi-agent system.  Direction B probes your team's own AI use.  Your counterfactual probes on the reachable model may count for both the audit and Area 4, presented once.  Direction C runs the probe on the published artifact and publishes the result in the README or in GOVERNANCE.md's known limitations.  The Final Project page has the full text.
 
 ## 10.  Reporting It Honestly
 
-Area 4's evidence is three things: the probe design (which attribute, which values, how many samples), the disaggregated results table, and either an explanation of any gap or the mitigation you applied and its re-measured result.  The report also asks every area to name at least one change you made, or deliberately declined to make, because of what you measured.  A results table in this shape covers the middle item:
+Area 4's evidence has three parts: the probe design (which attribute, which values, how many samples), the disaggregated results table, and either an explanation of any gap or the mitigation you applied and its re-measured result.  The report also asks every area to name at least one change you made, or deliberately declined to make, because of what you measured.  A results table in this shape covers the middle item:
 
 | Item | Value A mean | Value B mean | Gap (A minus B) | Runs per value |
 |:-----|:-------------|:-------------|:----------------|:---------------|
@@ -421,7 +421,7 @@ On Demo Day, the stakeholder-facing segment asks for one plain-language sentence
 
 ## Exercises
 
-Everything below is optional practice; the required version is Area 4 of your Responsible AI Report.  Each exercise ends with a check you can apply yourself.
+Everything below is optional practice.  The required version is Area 4 of your Responsible AI Report.  Each exercise ends with a check you can apply yourself.
 
 1.  **Find the smallest probe that works.**
 

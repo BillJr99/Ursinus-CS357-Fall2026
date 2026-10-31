@@ -16,14 +16,14 @@ tags:
 
 ## About This Tutorial
 
-Your teammate writes "our agent use had no cost" because the OpenCode sidebar said `$0.00`.  That sentence cannot be checked, and it is not true: a local model still reads and writes every token, and each one costs seconds of your machine and watts from the wall.  This tutorial shows you how to replace that sentence with numbers someone else could check against your logs.
+Your teammate writes "our agent use had no cost" because the OpenCode sidebar said `$0.00`.  No one can check that sentence, and it is not true.  A local model still reads and writes every token, and each token costs your machine seconds and draws watts from the wall.  This tutorial shows you how to replace that sentence with numbers that someone else can check against your logs.
 {: .tb-lede}
 
-It is also the how-to for **Area 1 of the Responsible AI Report**, which every final-project team submits: "Environmental Tracking and Token Use" on the [Final Project page](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#the-responsible-ai-report-required-in-every-direction).  Part I counts the tokens in one recorded model response, in isolation, so you can see where every number comes from.  Part II builds trace lines from those measured numbers and adds them up per run, per task, and per agent.  Part III turns the totals into energy, carbon, and cost, with every assumption written down as a named parameter.  Part IV maps all of it onto the report.
+This tutorial is also the how-to guide for **Area 1 of the Responsible AI Report**, which every final-project team submits.  Area 1 is "Environmental Tracking and Token Use" on the [Final Project page](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProject#the-responsible-ai-report-required-in-every-direction).  Part I counts the tokens in one recorded model response by itself, so you can see where every number comes from.  Part II builds trace lines from those measured numbers and adds them up per run, per task, and per agent.  Part III turns the totals into energy, carbon, and cost, with every assumption written down as a named parameter.  Part IV maps all of it onto the report.
 
-There are two paths through each part, and either one is enough:
+Each part has two paths, and either one is enough:
 
-- **The code path** is plain Python over a saved Ollama JSON response.  Every cell runs as written with no network and no Ollama; run the cells in order in one folder.
+- **The code path** is plain Python over a saved Ollama JSON response.  Every cell runs as written, with no network and no Ollama.  Run the cells in order in one folder.
 - **The no-code path** reads the same counts from OpenCode or Open WebUI and does the arithmetic in a spreadsheet.
 
 Once the practice numbers make sense, try the same steps on runs of a system you choose.  Your team's final project is the obvious choice, but any agent you have run this semester works.
@@ -33,8 +33,8 @@ Once the practice numbers make sense, try the same steps on runs of a system you
 | Term | Plain-English Definition | Where You'll Meet It |
 |:-----|:------------------------|:------------------------|
 | **Input (prompt) tokens** | The tokens the model read on one call: the system prompt, the history you resent, tool results, and the new question | Ollama's `prompt_eval_count`; OpenCode's input total |
-| **Output (completion) tokens** | The tokens the model wrote on one call.  Each one is a separate step, so they cost far more time than input tokens | Ollama's `eval_count`; OpenCode's output total |
-| **Measured versus estimated** | A measured count is the number the model server handed back.  An estimate is one you computed yourself, for example by dividing characters by four.  The report wants measured counts, and says which rows are not | The `measured` field in every trace line in Part II |
+| **Output (completion) tokens** | The tokens the model wrote on one call.  The model writes each one in a separate step, so output tokens cost far more time than input tokens | Ollama's `eval_count`; OpenCode's output total |
+| **Measured versus estimated** | A measured count is the number the model server handed back.  An estimate is one you computed yourself, for example by dividing characters by four.  The report asks for measured counts, and it marks any rows that are not | The `measured` field in every trace line in Part II |
 | **Trace line** | One JSON object per model call, with a run identifier, the agent, the model, the token counts, and the time | `trace.jsonl`, the same file the Observability session writes |
 | **Named parameter** | An assumption stored under a name, with its unit and its source, so a reader can see it and replace it | The `P` dictionary in Part III, or the Assumptions tab of your spreadsheet |
 | **Grid carbon intensity** | Grams of CO2 equivalent emitted per kilowatt-hour of electricity where your machine is plugged in.  It varies by region | `grid_g_per_kwh` in Part III |
@@ -47,7 +47,7 @@ Once the practice numbers make sense, try the same steps on runs of a system you
 
 ## 1.  Where the Counts Come From
 
-You never have to compute a token count.  The model server counts every token it reads and writes and hands you the number; your job is to read it, keep it, and add it up.  These are the places you can read it this semester, taken from the [token accounting section of the Observability tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Observability#token-accounting-counting-what-every-call-spends):
+You never have to compute a token count.  The model server counts every token it reads and writes, and it hands you the number.  Your job is to read that number, keep it, and add it up.  This semester you can read it in the places below, taken from the [token accounting section of the Observability tutorial](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Observability#token-accounting-counting-what-every-call-spends):
 
 | Where | Input tokens | Output tokens | Also there |
 |:--|:--|:--|:--|
@@ -70,11 +70,11 @@ curl -s http://localhost:11434/api/chat -d '{
 }' > response.json
 ```
 
-Keep `"stream": false`.  With streaming on, the counts arrive only in the last chunk, the one with `"done": true`, and a helper that keeps only the text loses them.
+Keep `"stream": false`.  With streaming on, the counts arrive only in the last chunk (the one with `"done": true`).  A helper that keeps only the text loses them.
 
 ## 2.  Code Path: Read One Saved Response
 
-The response below is the one behind step 1 of Model 4 in the *Agents That Talk, Observability, and Handoff Protocols* session, trimmed to its usage fields.  The cell writes it to `response.json`, the same file the `curl` command above would make, and then reads it back, so it runs with no network.  To use your own response, delete the two lines that write the file.
+The response below comes from step 1 of Model 4 in the *Agents That Talk, Observability, and Handoff Protocols* session, trimmed to its usage fields.  The cell writes it to `response.json`, the same file that the `curl` command above makes.  Then the cell reads the file back, so it runs with no network.  To use your own response, delete the two lines that write the file.
 
 ```python
 import json
@@ -122,14 +122,14 @@ total 2.77 s, and writing was 76% of it
 {"run_id": "t-77b0", "task": "T1", "agent": "planner", "model": "hermes-3", "prompt_tokens": 412, "completion_tokens": 41, "latency_ms": 2773, "finish_reason": "stop", "measured": true}
 ```
 
-Ten times as many input tokens took well under a second, and forty-one output tokens took two.  Reading the prompt is one parallel pass; writing is one pass per token.  Notice also that every number in the trace line came out of the response.  None of it was typed in or guessed, and the `measured` field says so.
+The model read ten times as many input tokens in well under a second, but it took two seconds to write forty-one output tokens.  Reading the prompt is one parallel pass, and writing is one pass per token.  Notice also that every number in the trace line came from the response.  Nobody typed in or guessed any of them, and the `measured` field says so.
 
 ## 3.  No-Code Path: Read the Same Numbers on Screen
 
 - **OpenCode.**  At the end of a run, open the sidebar (`ctrl+x b`) and write down the session's token count.  Then run `opencode stats --days 1 --project ""` and find the same session's input and output tokens in the totals.  The sidebar's `$0.00` is the bill you avoided, not the energy you spent.
-- **Open WebUI.**  When the reply comes from an Ollama model, Open WebUI shows the response's usage fields (including `prompt_eval_count`, `eval_count`, and the durations) when you hover over the small information icon under the reply.  If your version shows nothing there, use OpenCode or the `curl` command above instead; do not fill the gap with a guess.
+- **Open WebUI.**  When the reply comes from an Ollama model, hover over the small information icon under the reply.  Open WebUI shows the response's usage fields there, including `prompt_eval_count`, `eval_count`, and the durations.  If your version shows nothing there, use OpenCode or the `curl` command above instead.  Do not fill the gap with a guess.
 
-Copy each reading into one row of a spreadsheet with these columns, which are the columns the report's token table asks for: **run, task, agent, model, input tokens, output tokens, time**.  If your tool does not report time, note the clock time when the run starts and ends, and label that column as wall-clock time, since it includes time spent in tools as well as in the model.
+Copy each reading into one row of a spreadsheet.  Use the columns that the report's token table asks for: **run, task, agent, model, input tokens, output tokens, time**.  If your tool does not report time, write down the clock time when the run starts and when it ends.  Label that column as wall-clock time, because it includes time spent in tools as well as in the model.
 
 ### Questions to Work Through
 
@@ -147,7 +147,7 @@ Copy each reading into one row of a spreadsheet with these columns, which are th
 
 ## 4.  A Trace Line per Call, Summed per Run, Task, and Agent
 
-One response is one call.  A run of your system is many calls, made by several agents, across several tasks.  Area 1 asks you to report tokens **per run, per task, and per agent**, so a reader can see which agent or step dominates the cost.  If every call writes one trace line with a `run_id`, a `task`, and an `agent`, each of those totals is the same loop with a different key.
+One response is one call.  A run of your system is many calls, made by several agents across several tasks.  Area 1 asks you to report tokens **per run, per task, and per agent**, so a reader can see which agent or step dominates the cost.  If every call writes one trace line with a `run_id`, a `task`, and an `agent`, each of those totals is the same loop with a different key.
 
 The cell below uses a small practice trace.  The two planner rows are Model 4's two plan steps from the Observability session.  **The two critic rows are made up for practice; they are not measurements.**  Before you run it, predict which agent reads more input tokens and which writes more output tokens.
 
@@ -195,17 +195,17 @@ avg_out = sum(t["out"] for t in tasks.values()) / len(tasks)
 print(f"\naverage per task: {avg_in:.0f} input, {avg_out:.0f} output tokens")
 ```
 
-The run totals 9,392 input and 701 output tokens over 17.7 seconds, and the cell also prints the per-task and per-agent tables and the average per task.  To use your own system, point the `open` at your own `trace.jsonl` (or at the `token_usage.csv` that the Observability tutorial's `metered` decorator writes) and delete the lines that write the practice file.  If your trace has more than one run, the `run_id` table gets one row per run.
+The run totals 9,392 input and 701 output tokens over 17.7 seconds.  The cell also prints the per-task and per-agent tables and the average per task.  To use your own system, point the `open` call at your own `trace.jsonl` (or at the `token_usage.csv` that the Observability tutorial's `metered` decorator writes) and delete the lines that write the practice file.  If your trace has more than one run, the `run_id` table gets one row per run.
 
 ## 5.  No-Code Path: Totals in the Spreadsheet
 
 Put one call (or, from OpenCode, one session) per row in a tab named **Tokens**, with the columns from Section 3.  Then:
 
 - **Per run:** `=SUMIF(A:A, "t-77b0", E:E)` totals the input tokens of run `t-77b0` when column A is the run and column E is input tokens.  Change the column letter for output tokens and time.
-- **Per task and per agent:** the same `SUMIF`, with the condition on the task column or the agent column.  A pivot table does all three at once, if you know how to make one; it is optional.
+- **Per task and per agent:** the same `SUMIF`, with the condition on the task column or the agent column.  A pivot table does all three at once if you know how to make one.  It is optional.
 - **Average per task:** the per-task totals divided by the number of tasks.
 
-OpenCode's sidebar and `opencode stats` give you totals per session, not per agent.  If your system has several agents and you are on the no-code path, run each agent in its own session, or read the counts per reply in Open WebUI, so each agent gets its own rows.
+OpenCode's sidebar and `opencode stats` give you totals per session, not per agent.  If your system has several agents and you are on the no-code path, give each agent its own rows.  Run each agent in its own session, or read the counts for each reply in Open WebUI.
 
 ### Questions to Work Through
 
@@ -224,11 +224,11 @@ OpenCode's sidebar and `opencode stats` give you totals per session, not per age
 
 ## 6.  Every Assumption Gets a Name
 
-Each conversion is one multiplication, and each multiplies by an assumption.  That is fine.  A hidden assumption is not.  The method is the one in Part VII of the [Training Data, Bias, IP, Privacy, Governance, and the Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md) session, which Area 1 points to:
+Each conversion is one multiplication by an assumption.  That is fine, but a hidden assumption is not.  The method comes from Part VII of the [Training Data, Bias, IP, Privacy, Governance, and the Cost of Inference](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-biasdata.md) session, which Area 1 points to:
 
 - **Energy** is measured generation time multiplied by your machine's power draw under load.
 - **Carbon** is that energy multiplied by your region's grid carbon intensity.  The Cost of Inference session also asks you to compute it a second way, as tokens multiplied by a per-token rate, and to report both.
-- **Cost** is the token count priced at a comparable hosted model's published rate, the bill you avoided by running locally, plus the electricity.
+- **Cost** is the token count priced at a comparable hosted model's published rate (the bill you avoided by running locally), plus the electricity.
 
 Here is where each parameter's value comes from, and which ones you must find yourself:
 
@@ -296,13 +296,13 @@ print(f"grid intensity in use: {P['grid_g_per_kwh']:.1f} g CO2e per kWh")
 print("still to fill and source:", ", ".join(missing) if missing else "nothing")
 ```
 
-As shipped, only the per-token carbon line can be computed, so the cell reports it and then names the four parameters you still have to fill and source.  Fill in your measured wattage and the energy and time-based carbon lines appear; fill in a price and the hosted price line appears.  Change nothing else.  If the two carbon figures disagree, that is a finding, not a bug: report both and say which assumption drives the gap.
+As shipped, the cell can compute only the per-token carbon line.  It prints that line and then names the four parameters you still have to fill and source.  Fill in your measured wattage, and the energy and time-based carbon lines appear.  Fill in a price, and the hosted price line appears.  Change nothing else.  If the two carbon figures disagree, that is a finding, not a bug.  Report both, and say which assumption drives the gap.
 
-The course's [`token_meter.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/deliberation-harness/tools/token_meter.py) does the per-token part of this from an Ollama response, and adds a share of the model's one-time training emissions.  That share is optional for Area 1.  If you include it, note that `energy-profiles.json` itself calls its lifetime-request denominator an assumption, and say so in your report.
+The course's [`token_meter.py`](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/deliberation-harness/tools/token_meter.py) computes the per-token part from an Ollama response.  It also adds a share of the model's one-time training emissions.  That share is optional for Area 1.  If you include it, say in your report that `energy-profiles.json` itself calls its lifetime-request denominator an assumption.
 
 ## 8.  No-Code Path: An Assumptions Tab
 
-Add a second tab named **Assumptions** with four columns: **name, value, unit, source**.  Put one parameter from the table in Section 6 on each row, and leave a value blank until you have a source for it.  Then give each value cell a name (in Google Sheets, Data > Named ranges; in Excel, Formulas > Define Name), using the parameter names above, so the formulas read like the code:
+Add a second tab named **Assumptions** with four columns: **name, value, unit, source**.  Put each parameter from the table in Section 6 on its own row.  Leave a value blank until you have a source for it.  Then name each value cell with the parameter names above (in Google Sheets, Data > Named ranges; in Excel, Formulas > Define Name), so the formulas read like the code:
 
 | Result | Formula, for a row where E is input tokens, F is output tokens, and G is seconds |
 |:--|:--|
@@ -313,7 +313,7 @@ Add a second tab named **Assumptions** with four columns: **name, value, unit, s
 | Electricity ($) | `=H2*dollars_per_kwh` |
 {: .tb-full}
 
-A blank assumption shows up as a zero or an error in every cell that uses it, which is the spreadsheet's way of telling you what you still owe a source for.  Do not type a number into a formula: anyone who wants to check your estimate should be able to change one cell on the Assumptions tab and see every total change.
+A blank assumption shows up as a zero or an error in every cell that uses it.  That is how the spreadsheet tells you which values still need a source.  Do not type a number into a formula.  Anyone who wants to check your estimate should be able to change one cell on the Assumptions tab and see every total change.
 
 ### Questions to Work Through
 
@@ -326,7 +326,7 @@ A blank assumption shows up as a zero or an error in every cell that uses it, wh
 9.  The estimate for one run is a fraction of a gram.  What do you multiply it by before it is a number a policy could govern?
 {: start="7"}
 
-> "The dashboard said $0.00, so the run was free."  The count is the same whether or not anyone bills for it, which is why the report asks for tokens rather than dollars, and converts them to energy, carbon, and cost with every assumption stated.
+> "The dashboard said $0.00, so the run was free."  The token count is the same whether or not anyone bills for it.  That is why the report asks for tokens rather than dollars, and then converts them to energy, carbon, and cost with every assumption stated.
 {: .tb-pitfall data-title="Common Misconception"}
 
 ---
@@ -345,15 +345,15 @@ Area 1 asks for four things, and its evidence list has three items.  Here they a
 | **Compare one alternative**: a smaller model, fewer agents, a shorter context, or the monolith baseline, and say whether the difference in quality justifies the difference in cost | The comparison | Exercise 3 below |
 {: .tb-full}
 
-The report's deliverables also ask, for each of the four areas, for at least one change the team made, or deliberately declined to make, because of what it measured.  For Area 1, the comparison is usually where that change comes from.
+For each of the four areas, the report's deliverables also ask for at least one change that the team made, or deliberately declined to make, because of what it measured.  For Area 1, that change usually comes from the comparison.
 
 **How it fits your direction.**  The Final Project page says what to measure in each direction:
 
 - **Direction A:** run it on the frozen 10-task evaluation set, for both the monolith baseline and the multi-agent system, so the token and cost comparison sits beside the accuracy comparison.
-- **Direction B:** count the tokens of your team's own AI use: the model you probed during adversarial probing and any AI tools you used in the research.  Not the audited system.
+- **Direction B:** count the tokens of your team's own AI use: the model you probed during adversarial probing and any AI tools you used in the research.  Do not count the audited system.
 - **Direction C:** run it on the published artifact, using its worked examples and property-test inputs, and publish the token figures in the README or in GOVERNANCE.md's known limitations.  In the contribution variant, measure the feature you contributed.
 
-> Start measuring in Sprint 1.  Token counts cannot be rebuilt from memory in week 14, and the Final Project page says a report assembled at the end from a single run cannot score above beginning.  Your proposal's Responsible AI measurement plan already names how you will count tokens and who owns this area; this tutorial is how that person does it.
+> Start measuring in Sprint 1.  You cannot rebuild token counts from memory in week 14.  The Final Project page also says that a report assembled at the end from a single run cannot score above beginning.  Your proposal's Responsible AI measurement plan already names how you will count tokens and who owns this area.  This tutorial shows that person how to do it.
 {: .tb-warning data-title="Watch out"}
 
 On Demo Day, the technical segment shows the token and cost table next to your evaluation results, and the stakeholder segment gives one plain-language sentence about what the system costs to run.
@@ -362,7 +362,7 @@ On Demo Day, the technical segment shows the token and cost table next to your e
 
 ## Exercises
 
-Everything below is optional.  Nothing here is collected and nothing here is graded; this is a tutorial.  If you are on a final-project team, though, the work you do here is the start of your Area 1 evidence, so keep it.
+Everything below is optional.  This is a tutorial, so nothing here is collected or graded.  If you are on a final-project team, though, keep this work: it is the start of your Area 1 evidence.
 
 1.  **Count one response of your own.**
 

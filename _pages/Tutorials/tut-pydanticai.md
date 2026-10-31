@@ -642,7 +642,7 @@ show_trace(result.all_messages())
 
 `SkillCard` is core Pydantic again, checking the front matter.  `load_skill` refuses any name that is not in `SKILLS` and lists the valid ones; the registry, not the model's string, decides what can be read.  That is the same lesson as the deck's `REGISTRY[name]`, and the same lesson as a path-traversal check.
 
-This step separated the two local models more clearly than any other, and it is the main reason this tutorial defaults to `qwen2.5:3b`.  These runs were made on October 7, so the exam date reads 2026-10-12; yours will be five days from the day you run it:
+This step separated the two local models more clearly than any other, and it is the main reason this tutorial defaults to `qwen2.5:3b`.  These runs were made on October 7, so the exam date reads 2026-10-12.  Yours will be five days from the day you run it:
 
 ```text
 $ MODEL=qwen2.5:3b python step7_skills.py

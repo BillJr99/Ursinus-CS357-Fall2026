@@ -303,9 +303,9 @@ The proposal is graded on its own rubric, not on this one: three course families
 
 ## Phase 3: Sprints
 
-Build in three sprints between the proposal and Demo Day; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Class time that supports the sprints: the two sprint checks (Thursdays, November 12 and 19), the *Project Sprint* session (Tuesday, December 1), and the two *Project Studio* sessions (Thursday, December 3, and Tuesday, December 8).  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
+Build in three sprints between the proposal and Demo Day.  See the [course schedule]({{ site.baseurl }}/) for the sprint boundaries.  These class sessions support the sprints: the two sprint checks (Thursdays, November 12 and 19), the *Project Sprint* session (Tuesday, December 1), and the two *Project Studio* sessions (Thursday, December 3, and Tuesday, December 8).  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary, so that every member holds every role.
 
-Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps: each time, a member I pick at random shows one thing running (Direction B: one cited finding) at the start of class.
+Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps.  At the start of class each time, a member I pick at random shows one thing running (Direction B: one cited finding).
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
@@ -324,7 +324,7 @@ The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sp
 > 4. Update the evaluation or evidence table with a number or a citation.
 > 5. Update the GANTT-style timeline, and log any scope change the Literature Review synthesis forced.
 > 6. Add the sprint's token counts, traces, audit results, and probe results to the Responsible AI evidence folder.
-> 7. Hold the sprint retrospective and file the Scribe notes in your team note.  Each member adds a short personal reflection to those notes, three to five sentences: what I built, what I learned, and what I would do differently, keyed to one of the Open Questions.
+> 7. Hold the sprint retrospective and file the Scribe notes in your team note.  Each member adds a short personal reflection of three to five sentences to those notes: what I built, what I learned, and what I would do differently, keyed to one of the Open Questions.
 > 8. During the final sprint, run the **partner feedback pass**: put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
 **Deliverables for this phase:**

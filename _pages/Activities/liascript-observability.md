@@ -22,7 +22,7 @@ You leave with four things: the vocabulary for how agents communicate through a 
 
 ## Directions and Group Roles
 
-Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Manager calls for a prediction before anyone runs a code cell.  The Recorder posts your answers to the Class Activity Questions discussion board and keeps the team's draft protocol, writing every claim rule as a path and a condition rather than a sentiment.  At report-out, the Presenter says your team's Sprint 1 goal and the one thing you will show on November 12, then reads one rule of the protocol aloud if time allows.  The Reflector watches for the moment the team assumes GitHub is doing something for free that a folder would not, and notes where the team disagreed about what an agent must write down before it stops.  After class, answer the reflective prompt on your own in your notebook.
+Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Manager calls for a prediction before anyone runs a code cell.  The Recorder posts your answers to the Class Activity Questions discussion board and keeps the team's draft protocol, writing every claim rule as a path and a condition rather than a sentiment.  At report-out, the Presenter says your team's Sprint 1 goal and the one thing you will show on November 12, and then, if time allows, reads one rule of the protocol aloud.  The Reflector watches for any moment when the team assumes GitHub does something for free that a folder would not.  The Reflector also notes where the team disagreed about what an agent must write down before it stops.  After class, answer the reflective prompt on your own in your notebook.
 
 ---
 
@@ -49,7 +49,7 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 **You need:** your `cs357-work` repository from *How I AI*, with its `.ai/` directory, and the two course templates linked in Part IV.  There is nothing to install today; both code cells run in this page.
 
-**Due today:** your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal).  Part IV writes your team's own handoff skill for that project, so have your project repository open.  I also hand out the two [sprint checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks), at the start of class on Thursday, November 12, and Thursday, November 19.
+**Due today:** your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal).  In Part IV, your team writes its own handoff skill for that project, so have your project repository open.  I also hand out the two [sprint checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks), which take place at the start of class on Thursday, November 12, and Thursday, November 19.
 
 ---
 
@@ -485,7 +485,7 @@ Every entry in `SESSION.md` ends with a "Next Safe Action" because:
 
 ## Model 5: The Protocol as a `SKILL.md`
 
-Write this together, for your team's actual Final Project repository and the medium your team will really use (GitHub issues or a shared folder), not a generic one.  Direction B teams write it for the agents you use to run the audit, and commit it to your evidence folder or repository.  The Recorder types; the team supplies each rule as a path and a condition.  A skill is a directory containing a `SKILL.md` whose front matter carries `name` and `description`, as you built in the skills lab; the agent loads it when the description matches the task.  Here is the skeleton.  The bracketed parts are yours, and the numbers are what the checklist below cites.
+Write this together for your team's actual Final Project repository and for the medium your team will really use (GitHub issues or a shared folder), not a generic one.  Direction B teams write it for the agents you use to run the audit, and commit it to your evidence folder or repository.  The Recorder types, and the team supplies each rule as a path and a condition.  A skill is a directory containing a `SKILL.md` file whose front matter has `name` and `description`, as you built in the skills lab.  The agent loads the skill when its description matches the task.  Here is the skeleton.  You fill in the bracketed parts, and the checklist below cites the numbers.
 
 ```markdown
 ---
@@ -533,7 +533,7 @@ description: >
     run rules 5 through 7 before failure.
 ```
 
-Read your protocol against this checklist.  Every row must be true of your protocol, and every row must cite the rule number that makes it true.  Then commit the `SKILL.md` to your project repository.  It is the first project-level skill your team names for the final project, so list it, with what triggers it, where your repository describes its agents (your README or AGENTS.md).
+Check your protocol against this checklist.  Every row must be true of your protocol and must cite the rule number that makes it true.  Then commit the `SKILL.md` to your project repository.  It is your team's first project-level skill for the final project.  List it, with what triggers it, wherever your repository describes its agents (your README or AGENTS.md).
 
 | Check | Rule that makes it true |
 |---|---|

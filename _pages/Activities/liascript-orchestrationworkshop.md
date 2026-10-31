@@ -18,7 +18,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 The first half runs in this page with a scripted stand-in for the model, so every run is repeatable and every stop condition can be made to fire on purpose.  The second half swaps in Ollama with one function and runs the same code on your machine, or runs the same protocol by hand on the lab's no-code route.
 
-**Today:** the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) and your individual annotated bibliographies for the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview) are due, and I hand out the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3.  Sprint Check 1 is at the start of class.
+**Today:** the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) and your individual annotated bibliographies for the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview) are due.  I also hand out the [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3.  Sprint Check 1 is at the start of class.
 
 ---
 
@@ -70,7 +70,7 @@ Part III, the exercise on a supervisor that stops correctly, is self-paced.
 
 ## Sprint Check 1 (the first ten minutes)
 
-Sprint Check 1 opens today's session, with no slides.  I pick one member of each team at random, who has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line, the linked first line of their latest standup, should already be in the team note.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
+Sprint Check 1 opens today's session, with no slides.  I pick one member of each team at random.  That member has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line (the linked first line of their latest standup) should already be in the team note.  I mark each team as shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 
 
 ---

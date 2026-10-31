@@ -18,10 +18,10 @@ tags:
 
 ## About This Tutorial
 
-Suppose you have forty short essays and a rubric, and you want a model to do the first pass of grading.  You can write that judge in an afternoon.  The harder question is whether you should believe it.  This tutorial builds the judge from the *Judge Pipeline Workshop* step by step, on three sample submissions you can see in full, and then asks how far to trust it: how often it agrees with you, whether padding moves it, where it disagrees, and how you would notice if a later change made it worse.
+Suppose you have forty short essays and a rubric, and you want a model to do the first pass of grading.  You can write that judge in an afternoon.  The harder question is whether you should believe it.  This tutorial builds the judge from the *Judge Pipeline Workshop* step by step, on three sample submissions you can see in full.  Then it asks how far to trust the judge: how often it agrees with you, whether padding moves it, where it disagrees, and how you would notice if a later change made it worse.
 {: .tb-lede}
 
-There are two ways through, and you only need one.  The **code path** is Python with `requests` talking to Ollama (`llama3.2` at temperature 0).  It also includes a *stand-in judge*, a few lines of keyword counting that returns the same JSON a model would, so the scoring, agreement, and tripwire code runs on any machine before Ollama is set up.  The **no-code path** is the same judge as a promptfoo configuration run through `npx` against Ollama, with a spreadsheet for agreement.  Parts I through III use the provided samples.  Part IV points what you built at artifacts you choose; your team's project outputs are one good option, and the *Project Sprint* session does exactly that with your team.
+There are two ways through, and you only need one.  The **code path** is Python with `requests` talking to Ollama (`llama3.2` at temperature 0).  It also includes a *stand-in judge*: a few lines of keyword counting that return the same JSON a model would.  With the stand-in, the scoring, agreement, and tripwire code runs on any machine before Ollama is set up.  The **no-code path** is the same judge as a promptfoo configuration run through `npx` against Ollama, with a spreadsheet for agreement.  Parts I through III use the provided samples.  Part IV points what you built at artifacts you choose.  Your team's project outputs are one good option, and the *Project Sprint* session does exactly that with your team.
 
 **You need** Ollama running with `llama3.2` pulled for the real judge, Python with `requests` for the code path, and Node.js for the no-code path (promptfoo runs through `npx`, so there is nothing else to install).  Check the ones you plan to use:
 
@@ -55,9 +55,9 @@ If you work inside the course container from *Your AI Workbench*, use `host.dock
 
 ## 1.  Three Samples and a Rubric as Data
 
-All three samples argue about library hours.  They were written to land at different rubric levels, and the differences are deliberate.  The cell below saves them into a `samples/` folder, defines the rubric, and holds your hand scores.  Save it as `judge.py`; every later code cell on this page gets appended to the bottom of the same file, and you re-run the whole file each time.
+All three samples argue about library hours.  They were written to land at different rubric levels, and the differences are deliberate.  The cell below saves them into a `samples/` folder, defines the rubric, and holds your hand scores.  Save it as `judge.py`.  Append every later code cell on this page to the bottom of the same file, and re-run the whole file each time.
 
-The rubric has three criteria with weights summing to 100, and four levels each described by something you can see in the text: a citation, a stated position, a rebuttal.  The weighted total is
+The rubric has three criteria, with weights that sum to 100.  Each criterion has four levels, and each level is described by something you can see in the text: a citation, a stated position, a rebuttal.  The weighted total is
 
 $$
 \text{total} = \sum_{c} w_c \cdot \frac{\ell_c}{4}
@@ -110,7 +110,7 @@ Running it prints `100.0`, `57.5`, and `25.0`, the totals for the levels the sam
 
 ## 2.  Hand-Score Before Any Model Sees the Samples
 
-Before you run any judge, read the three samples and write down your own level (1 to 4) for each sample on each criterion, using only the level descriptions in `RUBRIC`.  Then replace the numbers in `HAND` with yours.  If you are working with a teammate, score separately and compare afterward; where the two of you disagree is already a finding about the rubric.  The order matters because a score you have already seen anchors the one you write.  On the no-code path, put your levels straight into a spreadsheet with columns *Sample*, *Criterion*, and *Hand level*, one row per cell, nine rows in all.
+Before you run any judge, read the three samples and write down your own level (1 to 4) for each sample on each criterion, using only the level descriptions in `RUBRIC`.  Then replace the numbers in `HAND` with yours.  If you are working with a teammate, score separately and compare afterward.  Any place where the two of you disagree is already a finding about the rubric.  The order matters because a score you have already seen anchors the one you write.  On the no-code path, put your levels straight into a spreadsheet with columns *Sample*, *Criterion*, and *Hand level*, one row per cell, nine rows in all.
 
 ### Questions to Work Through
 
@@ -126,9 +126,9 @@ Before you run any judge, read the three samples and write down your own level (
 
 ## 3.  A Judge That Quotes Its Evidence
 
-A judge is a model, a prompt, and a parser.  The prompt hands the model the rubric and the artifact and demands JSON: a level and a quoted sentence for every criterion.  The quote is the part that makes the judge checkable.  A low score only says the essay is weak; a quote that does not appear in the essay says the *judge* is unreliable on that row.
+A judge is a model, a prompt, and a parser.  The prompt hands the model the rubric and the artifact and demands JSON: a level and a quoted sentence for every criterion.  The quote is the part that makes the judge checkable.  A low score only says the essay is weak.  A quote that does not appear in the essay says the *judge* is unreliable on that row.
 
-We start with the stand-in judge, so you can see the shape of the output without Ollama.  It is a keyword counter and nothing more: it counts sentences with a parenthetical source and year, looks for the word "should," and looks for "argue" or "but."  Append it to `judge.py`.
+We start with the stand-in judge, so you can see the shape of the output without Ollama.  It is a keyword counter and nothing more: it counts sentences with a parenthetical source and year, looks for the word "should," looks for "argue," "critics," or "opponents," and looks for "but."  Append it to `judge.py`.
 
 ```python
 import re
@@ -160,11 +160,11 @@ def stand_in_judge(artifact, rubric=RUBRIC):
 print(stand_in_judge(open("samples/s01.txt").read()))
 ```
 
-The stand-in gives `s01` level 3 on `claims_cited`, because it counts two cited sentences, while the designed level is 4.  Keep that in mind; a rule that counts is not the same as a reader who understands, and the stand-in's mistakes will show up in Section 6.
+The stand-in gives `s01` level 3 on `claims_cited`, because it counts two cited sentences, while the designed level is 4.  Keep that in mind.  A rule that counts is not the same as a reader who understands, and the stand-in's mistakes will show up in Section 6.
 
-Now the real judge.  The system prompt is the one from the workshop.  The parser is split out into `parse_reply()` so that you can test it without a model, and it fails closed: a reply that is not JSON, is missing a criterion, or awards a level outside 1 to 4 raises an error instead of producing a number.
+Now build the real judge.  The system prompt is the one from the workshop.  The parser is split out into `parse_reply()` so that you can test it without a model.  The parser fails closed: a reply that is not JSON, is missing a criterion, or awards a level outside 1 to 4 raises an error instead of producing a number.
 
-> This cell defines a function that talks to the Ollama server on your own laptop at `localhost:11434`, which a web page has no route to.  The two parser tests at the bottom run anywhere.
+> This cell defines a function that talks to the Ollama server at `localhost:11434` on your own laptop.  A web page has no route to that server.  The two parser tests at the bottom run anywhere.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
 ```python
@@ -208,7 +208,7 @@ except Exception as e:
     print("fails closed:", type(e).__name__, e)
 ```
 
-The two tests print `57.5` and then `fails closed: KeyError 'directness'`, because the second reply never scores `directness`.  With Ollama running, try the real judge once on one sample before you build anything around it: append `print(ollama_judge(open("samples/s02.txt").read()))`, run the file, and then delete that line.  If `llama3.2` wraps its JSON in a code fence, `parse_reply()` strips the fence before parsing.  If the call prints `[judge:parse]`, read the error before you go on; Section 4 will flag that row rather than guess.
+The two tests print `57.5` and then `fails closed: KeyError 'directness'`, because the second reply never scores `directness`.  With Ollama running, try the real judge once on one sample before you build anything around it: append `print(ollama_judge(open("samples/s02.txt").read()))`, run the file, and then delete that line.  If `llama3.2` wraps its JSON in a code fence, `parse_reply()` strips the fence before parsing.  If the call prints `[judge:parse]`, read the error before you go on.  Section 4 will flag that row rather than guess.
 
 ## 4.  The Batch Loop and grades.csv
 
@@ -248,13 +248,13 @@ for row in rows:
           [row[c["name"] + "_quote_found"] for c in RUBRIC["criteria"]])
 ```
 
-Each printed line is a filename, the weighted total, the flag (`-` when empty), the three levels, and the three evidence checks.  With the stand-in, the first line is `s01.txt 87.5 - [3, 4, 4] [True, True, True]`, and the totals for `s02` and `s03` are `45.0` and `40.0`.  The stand-in copies its quotes straight from the text, so every check passes; a model does not have to.  Open `grades.csv` in a spreadsheet and check three things in order: no row is flagged, every `_quote_found` is `True`, and the totals rank `s01` above `s02` above `s03`.  Then change `JUDGE = stand_in_judge` to `JUDGE = ollama_judge`, re-run, and check the same three things.
+Each printed line is a filename, the weighted total, the flag (`-` when empty), the three levels, and the three evidence checks.  With the stand-in, the first line is `s01.txt 87.5 - [3, 4, 4] [True, True, True]`, and the totals for `s02` and `s03` are `45.0` and `40.0`.  The stand-in copies its quotes straight from the text, so every check passes.  A model does not have to do the same.  Open `grades.csv` in a spreadsheet and check three things in order: no row is flagged, every `_quote_found` is `True`, and the totals rank `s01` above `s02` above `s03`.  Then change `JUDGE = stand_in_judge` to `JUDGE = ollama_judge`, re-run, and check the same three things.
 
 ## 5.  The Same Judge in promptfoo
 
-The no-code path says the same thing in a configuration file: here are the outputs, here is the judge, here are the assertions, run them all.  The workshop starts with a one-test smoke config that asks for the capital of France; run it first if you have never used promptfoo.  If promptfoo cannot reach Ollama, confirm `ollama serve` is running and that `curl http://localhost:11434/api/tags` responds; promptfoo reads the base URL from the `OLLAMA_BASE_URL` environment variable if your Ollama runs somewhere else.
+The no-code path says the same thing in a configuration file: here are the outputs, here is the judge, here are the assertions, run them all.  The workshop starts with a one-test smoke config that asks for the capital of France.  Run it first if you have never used promptfoo.  If promptfoo cannot reach Ollama, confirm `ollama serve` is running and that `curl http://localhost:11434/api/tags` responds.  If your Ollama runs somewhere else, promptfoo reads the base URL from the `OLLAMA_BASE_URL` environment variable.
 
-The judge needs two more files.  `dataset.csv` holds one row per sample, with columns `id` and `answer`.  You can build it in a spreadsheet (paste each sample into the `answer` column and export as CSV), or save this short script as `make_dataset.py` and run it in the folder that contains `samples/`.  It also adds the padded copy of `s02` you will use in Section 7:
+The judge needs two more files.  `dataset.csv` holds one row per sample, with columns `id` and `answer`.  You can build it in a spreadsheet (paste each sample into the `answer` column and export as CSV), or save this short script as `make_dataset.py` and run it in the folder that contains `samples/`.  The script also adds the padded copy of `s02` you will use in Section 7:
 
 ```python
 import csv
@@ -272,7 +272,7 @@ with open("dataset.csv", "w", newline="") as f:
     w.writerow(["s02_padded", open("samples/s02.txt").read().strip() + " " + PAD])
 ```
 
-The prompt is a one-line template that echoes each stored answer straight through, so the judge grades your dataset rather than a freshly generated reply.  promptfoo's template syntax is the variable name inside two pairs of curly braces; create the file with this command rather than typing it:
+The prompt is a one-line template that echoes each stored answer straight through, so the judge grades your dataset rather than a freshly generated reply.  promptfoo's template syntax is the variable name inside two pairs of curly braces.  Create the file with this command rather than typing it:
 
 ```bash
 python3 -c "print('{' * 2 + 'answer' + '}' * 2)" > prompt.txt
@@ -318,13 +318,13 @@ npx promptfoo@latest eval -c promptfooconfig-rubric.yaml --output grades_promptf
 npx promptfoo@latest view   # opens the results viewer in your browser
 ```
 
-With four rows in `dataset.csv` you get twelve verdicts.  Read the three `value:` blocks against `RUBRIC`: each collapses four levels to one line, where PASS means level 3 or 4 and FAIL means level 1 or 2.  That translation loses information on purpose; promptfoo answers "good enough?" while the code path answers "how good?".  The viewer shows the grader's reason for each verdict.  Read a few of them, and notice that nothing on this path checks that a quoted sentence is really in the answer.
+With four rows in `dataset.csv` you get twelve verdicts.  Read the three `value:` blocks against `RUBRIC`.  Each block collapses four levels into one line: PASS means level 3 or 4, and FAIL means level 1 or 2.  That translation loses information on purpose.  promptfoo answers "good enough?" while the code path answers "how good?".  The viewer shows the grader's reason for each verdict.  Read a few of them, and notice that nothing on this path checks that a quoted sentence is really in the answer.
 
 ### Questions to Work Through
 
 3.  Predict before running promptfoo: which of the nine verdicts on `s01`, `s02`, and `s03` will be PASS?  Derive your answer from your hand scores alone (level 3 or 4 means PASS).  Then run it and count the cells where the verdict disagrees with your prediction.
 
-    *Hint:* The same model read the same text under two different prompts in Sections 4 and 5.  When the two paths disagree, neither one is broken; the disagreement measures how much the *wording* of the rubric line moves the judge.
+    *Hint:* The same model read the same text under two different prompts in Sections 4 and 5.  When the two paths disagree, neither one is broken.  The disagreement measures how much the *wording* of the rubric line moves the judge.
 
 4.  The stand-in judge gave `s03` level 3 on `directness`.  Find the sentence it quoted, and explain which rule in `stand_in_judge()` produced that level.  Would you expect `llama3.2` to make the same mistake?
 {: start="3"}
@@ -333,7 +333,7 @@ With four rows in `dataset.csv` you get twelve verdicts.  Read the three `value:
 
 # Part III: How Far to Trust It
 
-A judge that runs is not yet a judge you can use.  The workshop names the minimum: agreement with a person's scores, and a controlled probe for one known bias.  This Part adds the two records that make those numbers useful later, a disagreement table and a tripwire.  A judge you rely on for real decisions needs more than this (a larger calibration set, Cohen's kappa, which is an agreement score corrected for agreement you would expect by chance, and a study of more than one bias); here you run each check once so the shape is familiar.
+A judge that runs is not yet a judge you can use.  The workshop names the minimum: agreement with a person's scores, and a controlled probe for one known bias.  This Part adds the two records that make those numbers useful later: a disagreement table and a tripwire.  A judge you rely on for real decisions needs more than this.  It needs a larger calibration set, Cohen's kappa (an agreement score corrected for the agreement you would expect by chance), and a study of more than one bias.  Here you run each check once so the shape is familiar.
 
 ## 6.  Agreement With Your Hand Scores
 
@@ -356,9 +356,9 @@ def agreement(rows, hand):
 agreement(rows, HAND)
 ```
 
-With the stand-in and the designed levels in `HAND`, this prints `overall: 6 of 9 = 66.7%`, then 1 of 3 for `claims_cited`, 2 of 3 for `directness`, and 3 of 3 for `counterargument`.  A criterion at 1 of 3 is telling you its descriptor is ambiguous or the judge's reading of it is off, and you find out which in Section 8.  Now switch `JUDGE` to `ollama_judge`, put your own levels in `HAND`, and record the real judge's numbers.  With only three samples, each disagreement moves a criterion's number by 33 points, so treat it as a check rather than a measurement.
+With the stand-in and the designed levels in `HAND`, this prints `overall: 6 of 9 = 66.7%`, then 1 of 3 for `claims_cited`, 2 of 3 for `directness`, and 3 of 3 for `counterargument`.  A criterion at 1 of 3 tells you that either its descriptor is ambiguous or the judge's reading of it is off.  Section 8 shows you which.  Now switch `JUDGE` to `ollama_judge`, put your own levels in `HAND`, and record the real judge's numbers.  With only three samples, each disagreement moves a criterion's number by 33 points, so treat it as a check rather than a measurement.
 
-**On the no-code path,** add two columns to your spreadsheet.  Column D holds the judge's level from `grades.csv`, or skip it if you only ran promptfoo.  Column E holds the promptfoo verdict for that cell, copied from `grades_promptfoo.csv` or the viewer.  Then add:
+**On the no-code path,** add two columns to your spreadsheet.  Column D holds the judge's level from `grades.csv`.  Skip it if you only ran promptfoo.  Column E holds the promptfoo verdict for that cell, copied from `grades_promptfoo.csv` or the viewer.  Then add:
 
 | Column | Formula in row 2 (fill down to row 10) | What it gives you |
 |---|---|---|
@@ -390,7 +390,7 @@ def padding_probe(judge, name="s02.txt"):
 padding_probe(JUDGE)
 ```
 
-The stand-in prints a delta of `+0` on all three criteria, and it would on any padding: it counts features, and the padding has none of them.  That is why the stand-in cannot tell you anything about verbosity bias, and the run that matters is the one with `JUDGE = ollama_judge`.  On the no-code path, compare the `s02` and `s02_padded` rows in the promptfoo viewer; any verdict that changes from FAIL to PASS is the same finding.  A delta of zero does not clear the judge either: it is one sample, one padding string, and one model.
+The stand-in prints a delta of `+0` on all three criteria, and it would do so on any padding.  It counts features, and the padding has none of them.  So the stand-in cannot tell you anything about verbosity bias.  The run that matters is the one with `JUDGE = ollama_judge`.  On the no-code path, compare the `s02` and `s02_padded` rows in the promptfoo viewer.  Any verdict that changes from FAIL to PASS is the same finding.  A delta of zero does not clear the judge either: it is one sample, one padding string, and one model.
 
 ## 8.  The Disagreement Table
 
@@ -447,7 +447,7 @@ tripwire(JUDGE)                 # the same judge again
 tripwire(paraphrasing_judge)    # the same levels, but the quotes are gone
 ```
 
-The first time you run the file, this prints `baseline saved; run again after your next change`, then `PASS` for the unchanged judge, then `TRIPPED: 9 problems` and the first three of them, each ending in `quote not in the text`.  The last judge stands in for a real regression the workshop asks you to try: delete the sentence `Quote the sentence that justifies each score.` from `SYSTEM`, and the model is free to paraphrase.  Its levels did not move, so a check on levels alone would have passed it; only the evidence check caught it.  Later runs print `PASS` twice before the `TRIPPED` lines, because the baseline already exists.  Delete `baseline.json` when you switch from the stand-in to `ollama_judge`, so the baseline is a run of the judge you actually mean to keep.
+The first time you run the file, this prints `baseline saved; run again after your next change`, then `PASS` for the unchanged judge, then `TRIPPED: 9 problems` and the first three of them, each ending in `quote not in the text`.  The last judge stands in for a real regression the workshop asks you to try: delete the sentence `Quote the sentence that justifies each score.` from `SYSTEM`, and the model is free to paraphrase.  Its levels did not move, so a check on levels alone would have passed it.  Only the evidence check caught it.  Later runs print `PASS` twice before the `TRIPPED` lines, because the baseline already exists.  Delete `baseline.json` when you switch from the stand-in to `ollama_judge`, so the baseline is a run of the judge you actually mean to keep.
 
 **On the no-code path,** the tripwire is a second configuration file.  Save a baseline, copy the config, make one plausible-looking change (for example, loosen the `claims_cited` line to "PASS if the answer mentions any evidence"), and run the copy:
 
@@ -466,7 +466,7 @@ Find which verdicts changed and in which direction, then confirm the original co
 
 6.  Rewrite the level descriptions of your worst criterion so that the disagreement could not happen: name the countable feature (a source in parentheses, an opposing view in a full sentence, a rebuttal that gives a reason).  Re-run the judge with the revised `RUBRIC` and report that criterion's agreement before and after.  Will your tripwire pass after the rewrite?  Should it?
 
-    *Hint:* Revise the description, not the sample.  A tripwire that trips after a deliberate repair is doing its job; save a new baseline only after you have checked the new run by hand.
+    *Hint:* Revise the description, not the sample.  A tripwire that trips after a deliberate repair is doing its job.  Save a new baseline only after you have checked the new run by hand.
 
 7.  The tripwire compares the judge with its own earlier run, not with your hand scores.  What can it catch that agreement cannot, and what can agreement catch that it cannot?
 {: start="5"}
@@ -477,7 +477,7 @@ Find which verdicts changed and in which direction, then confirm the original co
 
 ## 10.  Pointing the Judge at Something You Chose
 
-Everything so far ran on three paragraphs written to land at known levels.  Your own artifacts did not.  Pick three artifacts of one kind: summaries your team's project produced this week, answers your agent gave to three test questions, three sections of a lab report, or three essays you wrote for another class.  Use work that is yours or that the authors have agreed to let you grade this way.
+Everything so far ran on three paragraphs written to land at known levels.  Your own artifacts were not written that way.  Pick three artifacts of one kind: summaries your team's project produced this week, answers your agent gave to three test questions, three sections of a lab report, or three essays you wrote for another class.  Use work that is yours or that the authors have agreed to let you grade this way.
 
 What is enough for this Part:
 
@@ -486,7 +486,7 @@ What is enough for this Part:
 - One run of the judge, from either path, and the agreement number per criterion.
 - One padding probe on one artifact, and the disagreement table.
 
-The tripwire is optional here, and it is worth adding if you will keep using the judge.  Nothing else in `judge.py` changes when the rubric changes, because every function reads `RUBRIC`; replace the files in `samples/` and the `HAND` dictionary and re-run.  On the no-code path, rebuild `dataset.csv` from your artifacts and rewrite the three `llm-rubric` lines to match your criteria.  If the artifacts are your team project's outputs, the *Project Sprint* session runs this same procedure with two blind scorers and an audit of one disagreement, so bring your table.
+The tripwire is optional here, and it is worth adding if you will keep using the judge.  Nothing else in `judge.py` changes when the rubric changes, because every function reads `RUBRIC`.  Replace the files in `samples/` and the `HAND` dictionary, and re-run.  On the no-code path, rebuild `dataset.csv` from your artifacts and rewrite the three `llm-rubric` lines to match your criteria.  If the artifacts are your team project's outputs, the *Project Sprint* session runs this same procedure with two blind scorers and an audit of one disagreement, so bring your table.
 
 ---
 
@@ -498,7 +498,7 @@ Everything below is optional, and none of it is collected.  Each exercise ends w
 
     *What to do:* Three samples are too few to trust a judge.  Write nine more into `samples/`, including an empty file and an off-topic one, and add their hand scores to `HAND`.  Re-run the judge.
 
-    *Starter hint:* An empty artifact gives the judge nothing to quote.  Watch whether it invents evidence or fails to parse; either is a finding.
+    *Starter hint:* An empty artifact gives the judge nothing to quote.  Watch whether it invents evidence or fails to parse.  Either one is a finding.
 
     *You've succeeded when:* `grades.csv` has twelve rows, every `_quote_found` on a non-empty file is `True` or explained, and the empty file's row is flagged or scored all ones with a reason you can state.
 

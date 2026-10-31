@@ -185,7 +185,7 @@ The 3D printers use PLA and PETG filament. Members bring their own filament or b
 Each member may reserve a 3D printer for at most four hours per day.
 ```
 
-The other three files are just as short.  Save them beside it, so your runs match the ones below; the distances you see may still differ slightly in the second or third decimal place.  `corpus/hours.md`:
+The other three files are just as short.  Save them beside it so that your runs match the ones below.  The distances you see may still differ slightly in the second or third decimal place.  `corpus/hours.md`:
 
 ```markdown
 # Hours and Access

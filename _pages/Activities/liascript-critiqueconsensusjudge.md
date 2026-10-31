@@ -99,7 +99,7 @@ The point that holds for both kinds of deliberation: an extra round only helps i
 
 # Part II: Use One, a Critic That Feeds Issues Back
 
-Read the full working loop, run it, and connect it back to Part I.  Then study the three ways the loop fails, because the Multi-Agent Patterns lab asks you to measure each one; the specification for that part of the lab lives at [Part A: Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate#part-a-critique-and-refine-30-points).
+Read the full working loop, run it, and connect it back to Part I.  Then study the three ways the loop fails.  The [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement) tutorial shows how to measure each one.  The specification for that part of the lab is at [Part A: Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate#part-a-critique-and-refine-30-points).
 
 ## 3.  The Loop in Eighty Lines
 
@@ -543,7 +543,7 @@ There is a second-order effect.  A long, fluent, confident trace is more persuas
 
 # Part V: Synthesis and Practice
 
-The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), handed out at the *Orchestration Worked Example* session, is due Thursday, December 3.  Its Part A (critique and refine) has its own specification at [Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate#part-a-critique-and-refine-30-points); do Part A first, because the debate and consensus parts reuse its scaffolding.  The exercises below are the measurements the lab expects you to be able to make.
+The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), handed out at the *Orchestration Worked Example* session, is due Thursday, December 3.  Its Part A (critique and refine) has its own specification at [Critique and Refine](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate#part-a-critique-and-refine-30-points).  Do Part A first, because the debate and consensus parts reuse its scaffolding.  The exercises below practice the measurements that the [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement) tutorial walks through.
 
 ## 11.  Exercises
 
@@ -579,7 +579,7 @@ The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026
 
 ---
 
--> Coming Up Next: *Judge Pipeline Workshop: Build and Audit a Judge* (Thursday) turns today's Part IV into code.  You hand-score three sample submissions first, then build a judge that reads the rubric as data, writes a `grades.csv`, and checks its own quoted evidence; you run the same judge a second time as a promptfoo configuration with no Python; and you measure the judge against your hand scores and against one bias, padding.  The loop you built today is the core of the Multi-Agent Patterns lab, and the judge you build Thursday is one of the two critics its Part A lets you choose.  Have Ollama running with `llama3.2`, Node.js installed for promptfoo, and your answers to the Model 6 rubric autopsy ready.
+-> Coming Up Next: *Judge Pipeline Workshop: Build and Audit a Judge* (Thursday) turns today's Part IV into code.  You hand-score three sample submissions first.  Then you build a judge that reads the rubric as data, writes a `grades.csv`, and checks its own quoted evidence.  You run the same judge a second time as a promptfoo configuration with no Python, and you measure the judge against your hand scores and against one bias, padding.  The loop you built today is the core of the Multi-Agent Patterns lab, and the judge you build Thursday is one of the two critics its Part A lets you choose.  Have Ollama running with `llama3.2`, Node.js installed for promptfoo, and your answers to the Model 6 rubric autopsy ready.
 
 ---
 

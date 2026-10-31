@@ -151,7 +151,7 @@ Here are two views of the same thread: a table for scanning, then a narrative fo
 | 13 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
 | 14 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class at the *Project Sprint* session. | [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview) |
 | 15 | **Sprints 1-3** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, evaluation updates, and Responsible AI measurements (token counts, traces, correctness audits, and bias probes) logged at every boundary. Sprint 1 spans the Thanksgiving break; plan for it in your charter's cadence. | Track pages |
-| 16 | **Sprint checks 1 and 2** | Ten minutes at the start of class, twice during Sprint 1: a member I pick at random shows one thing running (Direction B: one cited finding), and the Coordinator says what is next and what is blocking. Each is marked shown or not yet; every member's linked standup line is their evidence line, and Sprint Check 2 carries the peer pulse. | [Sprint Checks](#sprint-checks) |
+| 16 | **Sprint checks 1 and 2** | Ten minutes at the start of class, twice during Sprint 1: a member I pick at random shows one thing running (Direction B: one cited finding), and the Coordinator says what is next and what is blocking. Each is marked shown or not yet. Every member's linked standup line is their evidence line, and Sprint Check 2 includes the peer pulse. | [Sprint Checks](#sprint-checks) |
 | 17 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
 | 18 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
 | 19 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, a disseminable artifact, and the Responsible AI Report on the team's own work. Demo Day is also the team's deliberate adjourning: the final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
@@ -263,7 +263,7 @@ The playbook is your team's operating system.  The structure is **deliberately h
 
 ### One Weekly Team Note
 
-Keep the playbook in one running file: `TEAM-NOTES.md` in your project repository, or one shared document, with one dated entry per team meeting.  Each entry holds the agenda, posted before the meeting; every member's three-line standup; the notes, with action items, owners, and dates; and the week's decisions, in the decision-log format below.  One team meeting a week is enough.  Every practice on this page stays in place for every team; the note is simply where they all live, so nothing gets written twice.  At the Proposal Clinic, start the note with your meeting day and time and who owns the first agenda.
+Keep the playbook in one running file, with one dated entry per team meeting.  The file can be `TEAM-NOTES.md` in your project repository or one shared document.  Each entry holds the agenda (posted before the meeting), every member's three-line standup, the notes (with action items, owners, and dates), and the week's decisions in the decision-log format below.  One team meeting a week is enough.  Every practice on this page still applies to every team.  The note is where they all live, so nothing gets written twice.  At the Proposal Clinic, start the note with your meeting day and time and the name of the member who owns the first agenda.
 
 ### Standups
 
@@ -277,7 +277,7 @@ I am blocked by / worried about: ...
 
 The third line is the one that matters.  It is the psychological-safety line.  A standup where nobody is ever blocked is a standup where nobody is being honest.
 
-During the sprints, write the first line with a link to the commit, issue, or document that shows the work.  That linked line is your **evidence line** for the sprint checks, and by Demo Day these lines are most of your contribution statement.
+During the sprints, write the first line with a link to the commit, issue, or document that shows the work.  That linked line is your **evidence line** for the sprint checks.  By Demo Day, these lines make up most of your contribution statement.
 
 ### Decision Log
 
@@ -345,9 +345,9 @@ Sprint 1 is long and spans the Thanksgiving break, so two sprint checks cut it i
 1.  I pick one member of your team at random when the check starts, and that person has 90 seconds to show one thing running.  Direction B teams show one cited finding instead.  Every member should be ready to show it, whoever built it.
 2.  Your **Coordinator** says what is next and what is blocking you.  Write those same two lines into that week's team note.
 
-Before each check, every member's latest standup in the team note carries their **evidence line**: the "Since last time I" line, with a link to the commit, issue, or document that shows the work.  Sprint Check 2 also carries the confidential peer pulse described under the check-ins below, submitted privately by each member in Canvas.
+Before each check, every member's latest standup in the team note includes their **evidence line**: the "Since last time I" line, with a link to the commit, issue, or document that shows the work.  Sprint Check 2 also carries the confidential peer pulse described under the check-ins below, submitted privately by each member in Canvas.
 
-I mark each team **shown** or **not yet**, on the running piece alone; the evidence lines and the pulse are expected of every member but do not change the mark.  Each check carries **3 points, assessed within Final Project and Project Thread Milestones**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough; a slide about what you plan to build is not.
+I mark each team **shown** or **not yet**, based on the running piece alone.  The evidence lines and the pulse are expected of every member, but they do not change the mark.  Each check carries **3 points, assessed within Final Project and Project Thread Milestones**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough, but a slide about what you plan to build is not.
 
 ---
 

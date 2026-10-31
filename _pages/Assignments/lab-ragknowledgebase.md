@@ -5,10 +5,10 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: RAG Knowledge Base"
 
 info:
   coursenum: CS357
-  purpose: "To give an agent you run a memory of documents you care about, so that it answers from your notes rather than from what it happened to learn in training, and says so when the answer is not there."
+  purpose: "To give an agent you run a memory of documents you care about, so that it answers from your notes instead of from its training data, and says so when your notes do not have the answer."
   tilt:
-    task: "Write three questions about a small folder of your own documents before you index anything, index the folder in a local vector store, connect it to a model that searches it before it answers (a Pydantic AI agent with a search tool on the code path, or a Langflow flow on the no-code path), and check each answer against your files."
-    criteria: "I assess a working index, an agent that retrieves before it answers and names its sources, your three questions with a check on each answer, and a short writeup.  The full breakdown is in the rubric below."
+    task: "Write three questions about a small folder of your own documents before you index anything.  Then index the folder in a local vector store, connect it to a model that searches it before it answers (a Pydantic AI agent with a search tool on the code path, or a Langflow flow on the no-code path), and check each answer against your files."
+    criteria: "I assess a working index, an agent that retrieves before it answers and names its sources, your three questions with a check on each answer, and a short writeup.  The rubric below gives the full breakdown."
   points: 100
   goals:
     - To split a set of documents into chunks and store them in a vector database that can search them by meaning
@@ -18,21 +18,21 @@ info:
     - weight: 30
       description: "Corpus and Index"
       preemerging: "No index is built."
-      beginning: "An index is built, but on placeholder text rather than documents you chose, or the script (or, on the no-code path, the exported flow) does not run as submitted."
+      beginning: "An index is built, but from placeholder text instead of documents you chose, or the submitted script does not run (on the no-code path, the exported flow)."
       progressing: "At least five documents you chose are split into chunks and stored in a Chroma collection, and the indexing script reports how many chunks it stored."
-      proficient: "As progressing, and the readme says what the corpus is, why you chose it, and one thing about how the documents are written that made chunking easier or harder.  On the no-code path this row is earned on equal terms by a File, Text Splitter, Ollama Embeddings, and Chroma flow over the same documents, with the stored chunk count read from the Chroma node's inspection view."
+      proficient: "As progressing, and the readme says what the corpus is, why you chose it, and one thing about how the documents are written that made chunking easier or harder.  On the no-code path, a File, Text Splitter, Ollama Embeddings, and Chroma flow over the same documents earns this row on equal terms, with the stored chunk count read from the Chroma node's inspection view."
     - weight: 30
       description: "Retrieval Agent"
       preemerging: "No agent, or an agent with no retrieval tool (on the no-code path, no flow, or a flow with no search step)."
       beginning: "An agent exists and a search tool is defined, but the agent answers without calling it, or the tool's result never reaches the answer.  On the no-code path: the flow runs, but the search results are not wired into the prompt."
       progressing: "A Pydantic AI agent calls a search tool over your collection, and its answers use the returned passages.  On the no-code path: a Langflow flow searches your Chroma collection and passes the results into the Prompt node, and its answers use them."
-      proficient: "As progressing, and the answers name the source file for each fact, the agent says it could not find an answer when the passages do not contain one, and every call to Chroma or the model is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same source naming and abstention, with every node setting (models, Base URL, chunk size, number of results, temperature, prompt text) recorded in the readme in place of the exception handlers."
+      proficient: "As progressing, and the answers name the source file for each fact, the agent says it could not find an answer when the passages do not contain one, and an exception handler wraps every call to Chroma or the model and prints a located message and a traceback.  On the no-code path, the same source naming and abstention earn this row on equal terms, with every node setting (models, Base URL, chunk size, number of results, temperature, prompt text) recorded in the readme in place of the exception handlers."
     - weight: 25
       description: "Golden Questions and Checks"
       preemerging: "No questions, or no saved runs."
       beginning: "Fewer than three questions, questions written after the index was built, or saved runs that do not show the tool calls (on the no-code path, the retrieved chunks)."
       progressing: "Three questions written in the readme before indexing, two that your files answer and one that they do not, each with a saved run that shows the tool call and the answer.  On the no-code path each run is a Playground conversation, with a screenshot or copy of the chunks the search step returned."
-      proficient: "As progressing, and each answer has a one-line check: was it right, and does the file it named actually say that?  The question your files do not answer gets the agent's \"I could not find that\" rather than an invented answer, or the check says plainly that it did not."
+      proficient: "As progressing, and each answer has a one-line check: was it right, and does the file it named actually say that?  For the question your files do not answer, the agent says \"I could not find that\" instead of inventing an answer, or the check says plainly that it did not."
     - weight: 15
       description: "Writeup and Reproducibility"
       preemerging: "No writeup, or one that cannot be followed."
@@ -60,9 +60,9 @@ tags:
 
 # Lab: RAG Knowledge Base
 
-Ask a local model when your office hours are, and it will answer.  It will sound sure of itself, and it will be making the answer up, because nothing about your course was in its training data.  **Retrieval-augmented generation (RAG)** fixes this the simplest possible way: before the model answers, your code looks up the passages in your own documents that match the question and hands them to the model as evidence.  The model then answers from what it was given, and can say where each fact came from.
+Ask a local model when your office hours are, and it will answer.  It will sound sure of itself, and it will be making the answer up, because nothing about your course was in its training data.  **Retrieval-augmented generation (RAG)** fixes this in the simplest way: before the model answers, your code finds the passages in your own documents that match the question and gives them to the model as evidence.  The model then answers from those passages and can say where each fact came from.
 
-In this lab you build that, small and complete.  You write three questions about a folder of documents you care about, index the folder, give a Pydantic AI agent one tool that searches it, and check its answers against your files.  You leave with an agent that answers from your notes and says so when your notes do not have the answer.  If you want to see each step on its own first, with a retrieval-off comparison, the [RAG From Zero]({{ site.baseurl }}/Tutorials/RAGFromZero) tutorial walks through them.
+In this lab you build a small, complete version of that.  You write three questions about a folder of documents you care about, index the folder, give a Pydantic AI agent one tool that searches it, and check its answers against your files.  When you finish, you have an agent that answers from your notes and says so when your notes do not have the answer.  If you want to see each step on its own first, with a retrieval-off comparison, work through the [RAG From Zero]({{ site.baseurl }}/Tutorials/RAGFromZero) tutorial.
 
 ---
 
@@ -81,7 +81,7 @@ Steps 1 and 4, the writeup, and the deliverables apply to both paths.  On the no
 
 ## Before You Start
 
-This lab builds on the *RAG: Building and Measuring a Knowledge Base* session and the *RAG Worked Example* session, which builds these steps end to end on both paths.  **Code path:** [Pydantic AI From the Loop Up]({{ site.baseurl }}/Tutorials/PydanticAI) sets up the same agent and model this lab uses.  You need Ollama running with a model that calls tools reliably, and two Python packages.  **No-code path:** skip the commands below and start with Step 1, then follow the [No-code Path](#no-code-path) section in place of Steps 2 and 3.
+This lab builds on the *RAG: Building and Measuring a Knowledge Base* session and the *RAG Worked Example* session, which builds these steps end to end on both paths.  **Code path:** [Pydantic AI From the Loop Up]({{ site.baseurl }}/Tutorials/PydanticAI) sets up the same agent and model this lab uses.  You need two Python packages and Ollama running with a model that calls tools reliably.  **No-code path:** skip the commands below and start with Step 1, then follow the [No-code Path](#no-code-path) section in place of Steps 2 and 3.
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
@@ -89,7 +89,7 @@ pip install "pydantic-ai-slim[openai]==2.54.0" "chromadb==1.5.9"
 ollama pull qwen2.5:3b
 ```
 
-> **You should see.** Both installs end without an error.  `chromadb` is a vector database that runs on your own machine; `pydantic-ai-slim` is the agent framework from the tutorial.  `qwen2.5:3b` is the course's recommended model for tool calling.
+> **You should see.** Both installs finish without an error.  `chromadb` is a vector database that runs on your own machine.  `pydantic-ai-slim` is the agent framework from the tutorial.  `qwen2.5:3b` is the course's recommended model for tool calling.
 
 > **Time budget.** About two hours: thirty minutes to gather a corpus and write your questions, an hour to index it and build the agent, and the rest for the runs and the writeup.
 
@@ -99,11 +99,11 @@ ollama pull qwen2.5:3b
 
 **Goal:** a folder of five to twenty documents whose answers you can check yourself, and three questions about them written before anything is indexed.
 
-Make a folder named `corpus` next to where your scripts will go, and put in `.md` or `.txt` files you know well: your own course notes, the syllabus pages of a class you are taking, a club's handbook, the documentation for a tool you use.  Your corpus may also be your team's stakeholder material (interview notes, your partner's public documents, your evidence folder), so the lab also moves your project forward.  Use only material your partner agreed to share, and leave out personal details about the people you interviewed.  You need to know the answers, because in Step 4 you check the agent against them.
+Make a folder named `corpus` next to where your scripts will go.  Put in `.md` or `.txt` files you know well: your own course notes, the syllabus pages of a class you are taking, a club's handbook, the documentation for a tool you use.  You may also use your team's stakeholder material (interview notes, your partner's public documents, your evidence folder), so that the lab also moves your project forward.  If you do, use only material your partner agreed to share, and leave out personal details about the people you interviewed.  You need to know the answers, because in Step 4 you check the agent against them.
 
 > **Watch out.** Do not index anything private you would not want stored in a file on disk, such as passwords, health records, or other people's messages.  The index is an ordinary folder, and anyone with your laptop can read it.
 
-Now, before you index anything, write three **golden questions** in your readme: two that your files answer, ideally worded differently from the files themselves, and one that they do not answer.  Next to each answerable question, write the answer and the file it comes from.  Writing them first matters.  A question written after you have seen the agent's answers measures how much you agree with the agent, not whether it is right.
+Before you index anything, write three **golden questions** in your readme: two that your files answer (ideally worded differently from the files) and one that they do not.  Next to each answerable question, write the answer and the file it comes from.  Write them first.  A question written after you have seen the agent's answers measures how much you agree with the agent, not whether the agent is right.
 
 > **You should have.** A `corpus` folder with at least five files, a sentence in your readme saying what they are and why you chose them, and your three golden questions with their expected answers.
 
@@ -113,7 +113,7 @@ Now, before you index anything, write three **golden questions** in your readme:
 
 **Goal:** every document split into chunks and stored where the agent can search them by meaning.
 
-A model cannot read your whole folder on every question, so we cut each document into **chunks**, here one paragraph each, and store them in **Chroma**.  When you add a chunk, Chroma turns it into an **embedding**, a list of numbers that places text with similar meaning close together, so that a later search for "when can I meet the professor" can find a paragraph about "office hours" even though the words differ.  Save this as `index.py`:
+A model cannot read your whole folder for every question.  Instead, we cut each document into **chunks** (here, one paragraph each) and store them in **Chroma**.  When you add a chunk, Chroma turns it into an **embedding**: a list of numbers that places text with similar meaning close together.  As a result, a later search for "when can I meet the professor" can find a paragraph about "office hours" even though the words differ.  Save this as `index.py`:
 
 ```python
 # index.py: split every document in corpus/ into paragraphs and store them in a local Chroma collection.
@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
 Run it with `python index.py`.
 
-> **You should see.** The first run downloads Chroma's small embedding model (about 80 MB), once.  Then one line reporting what was stored; on a two-file test corpus it read `Indexed 5 chunks from 2 files.`  Yours will be larger.  A new `chroma_db` folder appears next to the script.
+> **You should see.** The first run downloads Chroma's small embedding model (about 80 MB) once.  Then the script prints one line reporting what it stored; on a two-file test corpus, it printed `Indexed 5 chunks from 2 files.`  Your count will be larger.  A new `chroma_db` folder appears next to the script.
 
 > **If it fails.** `0 chunks` means the script found no `.md` or `.txt` files; check that `corpus` is in the folder you ran the script from.
 
@@ -165,7 +165,7 @@ Run it with `python index.py`.
 
 **Goal:** an agent that looks up passages before it answers, and names where each fact came from.
 
-The search is a **tool**, exactly like the tools in the *Tool Use* session: a Python function the model may ask your code to run.  The docstring tells the model what the tool does and when to use it.  The instructions tell it to search first, answer only from what comes back, name the file, and say so when the answer is not there.  Save this as `rag_agent.py`:
+The search is a **tool**, just like the tools in the *Tool Use* session: a Python function the model can ask your code to run.  The docstring tells the model what the tool does and when to use it.  The instructions tell it to search first, answer only from what comes back, name the file, and say so when the answer is not there.  Save this as `rag_agent.py`:
 
 ```python
 # rag_agent.py: a Pydantic AI agent that answers only from your notes, using a search tool over Chroma.
@@ -243,7 +243,7 @@ Run it with a question your notes answer, for example `python rag_agent.py "When
 
 ## No-code Path
 
-Take this section in place of Steps 2 and 3 if you chose the no-code path.  You build the same two phases on a Langflow canvas: an **index path** that chunks, embeds, and stores your `corpus` once, and a **query path** that runs for every question.  The *RAG Worked Example* session built this flow on a four-file corpus, and the [Visual Agents]({{ site.baseurl }}/Tutorials/VisualAgents) tutorial walks through the same wiring.  Node names shift a little between Langflow versions; the dataflow is what matters.
+If you chose the no-code path, follow this section in place of Steps 2 and 3.  You build the same two phases on a Langflow canvas: an **index path** that chunks, embeds, and stores your `corpus` once, and a **query path** that runs for every question.  The *RAG Worked Example* session built this flow on a four-file corpus, and the [Visual Agents]({{ site.baseurl }}/Tutorials/VisualAgents) tutorial walks through the same wiring.  Node names change a little between Langflow versions, but what matters is the dataflow.
 
 ### Step N1: Install and Launch Langflow
 
@@ -258,7 +258,7 @@ ollama pull nomic-embed-text
 
 > **You should see.** A "Langflow is running" banner in the terminal and the canvas at `http://localhost:7860`.  `ollama list` shows `llama3.2` and `nomic-embed-text`.
 
-> **If it fails.** A dependency-resolver error from `pip install langflow` usually means your Python is too new or too old; create a fresh virtual environment on Python 3.11 or 3.12 and install there.  If `localhost:7860` refuses to connect, the server is still starting, so wait for the banner.
+> **If it fails.** A dependency-resolver error from `pip install langflow` usually means your Python is too new or too old.  Create a fresh virtual environment on Python 3.11 or 3.12 and install there.  If `localhost:7860` refuses to connect, the server is still starting, so wait for the banner.
 
 ### Step N2: Build the Index and Query Paths
 
@@ -307,7 +307,7 @@ Then go on to Step 4.  When you are done, export the flow (the flow menu's **Exp
 
 Run `rag_agent.py` once for each golden question and save the full output of every run.  On the no-code path, ask each question in a fresh Playground session and save the conversation together with the chunks the search step returned.
 
-For each answer, write one line in your readme: was it right, and does the file it named actually say that?  For the question your files do not answer, the agent should say it could not find it.  If it answered anyway, say so in your check; that is a finding, not a failure of your lab.
+For each answer, write one line in your readme: was it right, and does the file it named actually say that?  For the question your files do not answer, the agent should say it could not find it.  If it answered anyway, say so in your check.  That is a finding, not a failure of your lab.
 
 **Predict:** before you run the question your files do not answer, write down what you expect the agent to say.
 

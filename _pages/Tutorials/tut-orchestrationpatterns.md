@@ -15,15 +15,15 @@ tags:
 
 ## About This Tutorial
 
-*Orchestration and Multi-Agent Patterns* named three ways to connect small agents: a fixed pipeline, a router, and a supervisor loop in which a model picks the next move.  The *Orchestration Worked Example* built all three in class.  This tutorial lets you practice each one on your own, one at a time, on the same small task: the nightly club digest, with five raw messages in and one short digest out, with every day and time intact.  Then you pick one pattern and try it on a task you choose.  Your team's project task is one good option, but any small task with a checkable output works.
+*Orchestration and Multi-Agent Patterns* named three ways to connect small agents: a fixed pipeline, a router, and a supervisor loop in which a model picks the next move.  The *Orchestration Worked Example* built all three in class.  In this tutorial, you practice each one on your own, one at a time, on the same small task.  The task is the nightly club digest: five raw messages go in, and one short digest comes out with every day and time intact.  Then you pick one pattern and try it on a task you choose.  Your team's project task is one good option, but any small task with a checkable output works.
 {: .tb-lede}
 
-Part I sets up the task.  Part II runs each pattern in isolation, makes each control fire on purpose, and ends with a cost table: how many model calls each pattern spent on the same digest.  Part III runs the same patterns on a real model, by code or by hand.  Part IV is your own task.  Nothing here is collected or graded.  If you are short on time, Parts I and II and one path in Part III are enough to get you started on Part IV.
+Part I sets up the task.  Part II runs each pattern in isolation, makes each control fire on purpose, and ends with a cost table that shows how many model calls each pattern spent on the same digest.  Part III runs the same patterns on a real model, by code or by hand.  Part IV is your own task.  Nothing here is collected or graded.  If you are short on time, Parts I and II and one path in Part III are enough to get you started on Part IV.
 
 There are two paths, and either one is enough:
 
-- **Code path.**  Pure Python with a scripted stand-in for the model, so every cell in Parts I and II runs anywhere with `python3`, with no network and no packages.  Part III swaps in Ollama by redefining one function.
-- **No-code path.**  Saved Open WebUI presets, or prompt nodes on a Langflow canvas, with the text moved between them by hand.  You enforce the controls yourself and log every step in a spreadsheet.  Read the code in Part II anyway; it is the specification of what you will do by hand.
+- **Code path.**  You use pure Python with a scripted stand-in for the model.  Every cell in Parts I and II runs anywhere with `python3`, with no network and no packages.  Part III swaps in Ollama by redefining one function.
+- **No-code path.**  You use saved Open WebUI presets, or prompt nodes on a Langflow canvas, and move the text between them by hand.  You enforce the controls yourself and log every step in a spreadsheet.  Read the code in Part II anyway.  It is the specification of what you will do by hand.
 
 ## Key Concepts
 
@@ -45,7 +45,7 @@ There are two paths, and either one is enough:
 
 ## 1.  Five Messages, Four Prompts, One Function
 
-Five messages arrived today.  Three are events for the digest, one is a question that belongs in an FAQ queue, and one is something the categories did not anticipate.  `CONFIG` holds the settings you own, outside any prompt.  The four system prompts are one sentence each, the small-context discipline from the orchestration deck.  `llm()` is the one function every pattern calls, and every call is counted in `CALLS`.
+Five messages arrived today.  Three are events for the digest, one is a question that belongs in an FAQ queue, and one is something the categories did not anticipate.  `CONFIG` holds the settings you own, outside any prompt.  The four system prompts are one sentence each, following the small-context discipline from the orchestration deck.  Every pattern calls one function, `llm()`, and `CALLS` counts every call.
 
 Here `llm()` calls `stand_in()`, which is a set of fixed rules per role, not a language model.  It extracts events with a regular expression and writes one sentence per event.  In the polish stage it makes a mistake on purpose: it changes "Thursday" to "Friday" while editing for concision.  It also returns a label outside the closed set for the pizza message.  Both mistakes are scripted, so you can watch the controls catch them on every run.
 
@@ -118,7 +118,7 @@ CALLS.clear()
 'event' 'Chess club | Thursday | 7pm | Olin 107'
 ```
 
-On the no-code path, this section is your setup: copy the five messages and the four prompts somewhere you can paste from, and start a spreadsheet with the columns `pattern`, `step`, `prompt used`, `input`, `output`, `check`, and `model calls so far`.
+On the no-code path, this section is your setup.  Copy the five messages and the four prompts somewhere you can paste from.  Then start a spreadsheet with the columns `pattern`, `step`, `prompt used`, `input`, `output`, `check`, and `model calls so far`.
 
 ---
 
@@ -126,7 +126,7 @@ On the no-code path, this section is your setup: copy the five messages and the 
 
 ## 2.  A Fixed Pipeline With a Check at the Seam
 
-You wrote the order: extract, then draft, then polish.  Every intermediate output is printed.  After the last stage comes a check in code, and the check is not a fourth model call.  Whether "Thursday at 7pm" appears in the digest is a property a program can verify exactly, so a program verifies it.  When the check fails, the pipeline stops for a stated reason and returns the last version that passed, with the problem attached.
+You wrote the order: extract, then draft, then polish.  Every intermediate output is printed.  After the last stage, a check in code runs.  The check is not a fourth model call.  A program can verify exactly whether "Thursday at 7pm" appears in the digest, so a program does the verifying.  When the check fails, the pipeline stops for a stated reason and returns the last version that passed, with the problem attached.
 
 ```python
 # Section 2: a fixed pipeline.  You wrote the order; the code checks the seam the model cannot.
@@ -191,7 +191,7 @@ model calls: 3
 
 ## 3.  A Router That Fails Closed
 
-A router makes one classification per message into a closed set, then dispatches.  Events and changes go on to the digest pipeline, questions go to an FAQ queue, and anything outside the set goes to a person.  The orchestration deck's help-desk router fell back silently to "software" when the label was unexpected.  This one fails closed and says so.
+A router classifies each message once, into one label from a closed set, and then dispatches it.  Events and changes go on to the digest pipeline, questions go to an FAQ queue, and anything outside the set goes to a person.  When the help-desk router in the orchestration deck got an unexpected label, it silently fell back to "software."  This router fails closed and says so.
 
 **Predict before you run:** how many model calls will routing the five messages cost, and how many messages will go on to the pipeline?
 
@@ -235,10 +235,10 @@ model calls: 5; 3 of 5 messages go on to the pipeline
 
 ## 4.  A Supervisor Loop With a Roster, a Budget, and Stop Conditions
 
-Now a model decides each turn which sub-agent runs next, or whether to stop.  The supervisor's reply must be JSON in one of two shapes: `{"action": "call", "agent": ..., "input": ...}` or `{"action": "stop", "answer": ...}`.  Everything that keeps the loop safe lives in `supervise`, not in the supervisor:
+Now a model decides, each turn, which sub-agent runs next or whether to stop.  The supervisor's reply must be JSON in one of two shapes: `{"action": "call", "agent": ..., "input": ...}` or `{"action": "stop", "answer": ...}`.  Everything that keeps the loop safe lives in `supervise`, not in the supervisor:
 
 - **The roster.**  Only `extractor`, `writer`, and `polisher` exist.  Any other name is refused and logged.
-- **The budget.**  At most `CONFIG["spawn_budget"]` turns.  Each turn's decision is itself a model call, so it is counted.
+- **The budget.**  The loop runs at most `CONFIG["spawn_budget"]` turns.  Each turn's decision is itself a model call, so it is counted.
 - **A refused stop.**  The supervisor may say "stop," but the answer must pass `check_times` first.  A model saying it is done is not the same as the work being done.
 - **Four stop conditions**, each a `return` with a named status: the answer passed the check (`done`); the decision was not valid JSON (fail closed); the same sub-agent was asked for the same input twice (a loop); or the budget ran out.  Every early stop returns the newest text that passed the check, never just the newest text.
 
@@ -327,7 +327,7 @@ STATUS: stopped: budget of 6 turns reached (turns: 6, model calls: 9)
 ANSWER (newest text that passed the check): Chess club is on Thursday at 7pm (Olin 107). ...
 ```
 
-Read the transcript as the loop's log.  Turns 1 to 3 are the pipeline again, chosen by the supervisor instead of written by you.  At turn 4 the supervisor tried to stop with the broken digest, and the check refused it.  It asked twice more, and the budget ended the run.  The loop still returned something useful, because the early-stop path returns the newest *checked* text and says that it stopped early.
+Read the transcript as the loop's log.  Turns 1 to 3 repeat the pipeline, but this time the supervisor chose the order instead of you.  At turn 4 the supervisor tried to stop with the broken digest, and the check refused it.  It asked twice more, and the budget ended the run.  The loop still returned something useful, because the early-stop path returns the newest *checked* text and says that it stopped early.
 
 Now make the other two stop conditions fire, one misbehaving supervisor at a time.
 
@@ -367,7 +367,7 @@ turn 1: Sure! First I will extract the events, then write the digest.
 
 ## 5.  The Cost Table
 
-The same digest, run through each pattern.  This cell reruns each one with its printing hidden and reports only the model calls it spent.
+This section runs the same digest through each pattern.  The cell reruns each one with its printing hidden and reports only the model calls it spent.
 
 ```python
 # Section 5: model calls per pattern, for the same digest.
@@ -413,7 +413,7 @@ Copy the table below into your notes, or into your spreadsheet on the no-code pa
 | Supervisor, chatty (Section 4) | 1 | The model, each turn | | |
 {: .tb-full}
 
-The supervisor spent three times the pipeline's calls to reach the same checked draft, and it reached it only because your code refused its stop and capped its turns.  That is the deck's heuristic, **choose the least dynamic pattern that solves the problem**, measured on one task.
+The supervisor spent three times the pipeline's calls to reach the same checked draft.  It reached that draft only because your code refused its stop and capped its turns.  This table measures the deck's heuristic, **choose the least dynamic pattern that solves the problem**, on one task.
 
 ### Questions to Work Through
 
@@ -432,7 +432,7 @@ Pick one path.  Either one is enough.
 
 ## 6.  Code Path: Swap in Ollama
 
-> This block talks to the Ollama server on your own machine at `localhost:11434`.  It needs Ollama with `llama3.2` pulled and Python with `requests` installed, the setup from Before You Start in the Multi-Agent Patterns lab.
+> This block talks to the Ollama server on your own machine at `localhost:11434`.  It needs Ollama with `llama3.2` pulled and Python with `requests` installed.  This is the setup from Before You Start in the Multi-Agent Patterns lab.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
 Copy the cells from Part II into one file, `orchestrate.py`, and paste the block below directly after the Section 1 code.  Every pattern calls `llm()` by name when it runs, so redefining `llm()` here sends the pipeline, the router, and the sub-agents to Ollama with no other change.  Then change one argument in Section 4: pass `model_supervisor` instead of `naive_supervisor`.  `"format": "json"` asks Ollama to constrain the reply to JSON.  The fail-closed stop stays anyway, because a constraint on the format is not a guarantee about the content.
@@ -481,7 +481,7 @@ def model_supervisor(task, transcript):
                      json_only=True)
 ```
 
-Run `python orchestrate.py` and save the full output.  Your output will differ from Part II, because a real model does not make the stand-in's scripted mistakes; it makes its own.  An empty reply from `chat_once` means the request failed, and `supervise` will stop it as a malformed decision rather than guess.
+Run `python orchestrate.py` and save the full output.  Your output will differ from Part II, because a real model does not make the stand-in's scripted mistakes.  It makes its own.  An empty reply from `chat_once` means the request failed.  `supervise` then stops the run as a malformed decision rather than guess.
 
 Add one row per pattern to your cost table for the real model.  Did the real polish stage keep every day and time?  Did the real router stay inside its three labels?  Which stop condition ended the real supervisor's run, after how many turns and model calls?  If two runs with the same seed differ, write down where.
 
@@ -490,7 +490,7 @@ Add one row per pattern to your cost table for the real model.  Did the real pol
 On this path you are the code.  In Open WebUI, save each role as its own model: **Workspace**, **Models**, **+ Create a model**, with `llama3.2` as the base model and the prompt in **System Prompt**.  Under **Advanced Params**, set temperature to `0` and, if the field exists, the seed to `42`.  In Langflow, make each role a prompt node pointed at your local Ollama.  Either way, every reply you paste is one model call, and every call gets a row in your spreadsheet.
 
 1.  **Pipeline.**  Save three presets (or nodes) with the `EXTRACT`, `DRAFT`, and `POLISH` prompts from Section 1.  Paste the five messages into the first, its output into the second, and that output into the third.  Then do the check yourself: is every day and time from the extract still in the polished digest?  If not, keep the draft and write down which fact was lost.
-2.  **Router.**  Save a fourth preset with the `CLASSIFY` prompt and send each message to it in a fresh chat.  Any reply that is not exactly `event`, `change`, or `question` goes to "needs a person," and you write that down.  Do not reword the reply into the nearest label; that is the silent fallback.
+2.  **Router.**  Save a fourth preset with the `CLASSIFY` prompt and send each message to it in a fresh chat.  Any reply that is not exactly `event`, `change`, or `question` goes to "needs a person," and you write that down.  Do not reword the reply into the nearest label.  That would be the silent fallback.
 3.  **Supervisor.**  Save a fifth preset with the `SUPERVISOR` prompt from Section 6.  Each turn, paste the task and your running transcript into it, and carry out its decision by hand with the other presets.  You enforce the controls: refuse any agent not on the roster, refuse a stop whose answer fails your check, stop at a repeated request, stop at a reply that is not valid JSON, and stop at six turns.  Log every turn: the decision as pasted, the agent, the result, the check, the running count of model calls, and the control you applied, if any.
 
 Then fill in the cost table from your spreadsheet.  Which control was hardest to enforce by hand?  That answer tells you where the code path's guarantees come from.
@@ -505,11 +505,11 @@ Choose a small task with an output you can check.  Your team's project task is o
 
 1.  **Write the task in one sentence**, as input and output: "Given ___, produce ___."
 2.  **Ask the deciding question:** can you list the steps and their order before the run starts?  If yes, start with a pipeline.  If each input is one of a few kinds and each kind has one handler, a router goes in front.  Use a supervisor only if the next step depends on what an earlier step finds.
-3.  **Write one check a program can do.**  A required field is present, a date or number survived, the reply parses as JSON, the output is under a word limit.  If you cannot write any check without a model, write that down; it is a finding, and it is the problem the critique-and-judge session takes up.
+3.  **Write one check a program can do.**  For example: a required field is present, a date or number survived, the reply parses as JSON, or the output is under a word limit.  If you cannot write any check without a model, write that down.  It is a finding, and it is the problem the critique-and-judge session takes up.
 4.  **Write down the controls for your pattern.**  For a pipeline: the order and where the check sits.  For a router: the closed set of labels, and where anything else goes.  For a supervisor: the roster, the budget, and which stop condition you expect to fire.
 5.  **Predict the number of model calls**, then run it and record what actually happened.  On the code path, `calls_for` from Section 5 does the counting.
 
-On the code path, the cell below is a general pipeline with a check at the end.  It runs here on the digest to show it matches Section 2.  For your own task, replace the stages and the check.  Then either add one `if system == YOUR_PROMPT:` branch to `stand_in` that returns a reply you wrote, with one plausible mistake in it, or run it on Ollama with the Section 6 block.
+On the code path, the cell below is a general pipeline with a check at the end.  It runs here on the digest to show it matches Section 2.  For your own task, replace the stages and the check.  Then pick one way to run it.  Either add one `if system == YOUR_PROMPT:` branch to `stand_in` that returns a reply you wrote, with one plausible mistake in it, or run it on Ollama with the Section 6 block.
 
 ```python
 # Section 8: a general pipeline.  stages are system prompts in the order you wrote;
@@ -549,11 +549,11 @@ model calls: 3; problems: ['Chess club: Thursday at 7pm']
 
 ## Exercises
 
-Everything below is optional.  Nothing here is collected and nothing here is graded.  Each exercise ends with a check you apply yourself, so you can tell whether it worked.
+Everything below is optional.  Nothing here is collected or graded.  Each exercise ends with a check you apply yourself, so you can tell whether it worked.
 
 1.  **A supervisor that stops correctly.**
 
-    *What to do:* Write `careful_supervisor(task, transcript)`, a stand-in like `naive_supervisor` that makes the same first three moves, but when it stops, stops with the newest text in the transcript whose `check` is `"ok"`.  Run `supervise` with it.  Then, on the code path, add one sentence to the `SUPERVISOR` prompt that asks the real model for the same behavior, and rerun.
+    *What to do:* Write `careful_supervisor(task, transcript)`, a stand-in like `naive_supervisor` that makes the same first three moves.  When it stops, though, it should stop with the newest text in the transcript whose `check` is `"ok"`.  Run `supervise` with it.  Then, on the code path, add one sentence to the `SUPERVISOR` prompt that asks the real model for the same behavior, and rerun.
 
     *Starter hint:* The writer and polisher entries in the transcript carry a `check` field.  Filter on it before you choose the answer.  For the prompt, say what "done" means in terms the model can see in its transcript.
 

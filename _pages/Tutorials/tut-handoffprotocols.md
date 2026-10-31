@@ -16,12 +16,12 @@ tags:
 
 ## About This Tutorial
 
-Two agents are pointed at the same task list.  Neither can see the other's context window.  Agent A starts a task, and an hour later Agent B looks at the same list.  How does B know the task is taken?  What if A crashed halfway through?  And when B finds a file in `done/`, how does it know the work was finished rather than abandoned?  This tutorial answers those questions on a small practice problem first, and then has you write the answers down as a handoff skill for a real repository.
+Two agents are pointed at the same task list.  Neither can see the other's context window.  Agent A starts a task, and an hour later Agent B looks at the same list.  How does B know the task is taken?  What if A crashed halfway through?  And when B finds a file in `done/`, how does it know the work was finished rather than abandoned?  This tutorial answers those questions on a small practice problem first.  Then you write the answers down as a handoff skill for a real repository.
 {: .tb-lede}
 
-Part I reviews start, stop, and restart, the three moments every agent session has.  Part II states the four rules of a claim protocol, separates the rules the medium enforces from the ones that are only advisory, and adds one trace line per action.  Part III is practice in isolation, and you pick one of two paths: the **code path**, a pure-Python claim race between two agents over a folder, which needs nothing but `python3`; or the **no-code path**, the same protocol by hand with a GitHub issue or a shared folder.  Part IV has you write a `SKILL.md` for a project repository you choose.  Your team's final project repository is one option; your own `cs357-work` repository is another.
+Part I reviews start, stop, and restart, the three moments every agent session has.  Part II states the four rules of a claim protocol, separates the rules the medium enforces from the ones that are only advisory, and adds one trace line per action.  Part III is practice in isolation, on one of two paths.  The **code path** is a pure-Python claim race between two agents over a folder, and it needs nothing but `python3`.  The **no-code path** runs the same protocol by hand with a GitHub issue or a shared folder.  In Part IV, you write a `SKILL.md` for a project repository you choose.  Your team's final project repository is one option, and your own `cs357-work` repository is another.
 
-This page builds on *Agents That Talk, Observability, and Handoff Protocols* (Parts II and IV), and it reuses that session's file names, its claim race, and its `SKILL.md` skeleton.  Nothing on this page is collected.  You need one path in Part III, not both, and the skill in Part IV is the part worth keeping.
+This page builds on *Agents That Talk, Observability, and Handoff Protocols* (Parts II and IV).  It reuses that session's file names, its claim race, and its `SKILL.md` skeleton.  Nothing on this page is collected.  You need one path in Part III, not both.  The skill in Part IV is the part worth keeping.
 
 ## Key Concepts
 
@@ -42,11 +42,11 @@ This page builds on *Agents That Talk, Observability, and Handoff Protocols* (Pa
 
 ## 1.  Three Moments Every Session Has
 
-A handoff protocol is mostly about two agents, but it starts with one.  Every session starts, every session stops, and sooner or later a session restarts as a stranger to its own work.  The *Governing Coding Agents* tutorial and Part IV of the *Agents That Talk* session give each moment a rule, and the files they name are the ones you will use here:
+A handoff protocol is mostly about two agents, but it starts with one.  Every session starts, every session stops, and sooner or later a session restarts as a stranger to its own work.  The *Governing Coding Agents* tutorial and Part IV of the *Agents That Talk* session give each moment a rule.  You will use the files they name here:
 
-- **On start**, read in a fixed order before doing anything else: `START_HERE.md`, `CHARTER.md`, `docs/ROADMAP.md`, `.ai/CURRENT_TASK.md`, `.ai/SESSION.md` (at least the most recent entry), and the most recent commit.  Then state the mission, the active task, and the Next Safe Action in your own words, and do not act until you have.
-- **On stop**, for any reason, including finishing normally, append a dated entry to `.ai/SESSION.md` that ends with a Next Safe Action, and update `.ai/CURRENT_TASK.md`.  Superseded guidance is annotated in place, never deleted.
-- **On restart**, run the start rule, and then re-run every command in the Reality Check table of `CURRENT_TASK.md` before relying on it.  That table lists what is *not* done, each row with the command or test that proves it.
+- **On start**, read in a fixed order before doing anything else: `START_HERE.md`, `CHARTER.md`, `docs/ROADMAP.md`, `.ai/CURRENT_TASK.md`, `.ai/SESSION.md` (at least the most recent entry), and the most recent commit.  Then state the mission, the active task, and the Next Safe Action in your own words.  Do not act until you have.
+- **On stop**, for any reason, including finishing normally, append a dated entry to `.ai/SESSION.md` that ends with a Next Safe Action, and update `.ai/CURRENT_TASK.md`.  Annotate superseded guidance in place, and never delete it.
+- **On restart**, run the start rule, and then re-run every command in the Reality Check table of `CURRENT_TASK.md` before relying on it.  That table lists what is *not* done.  Each row gives the command or test that proves it.
 
 Handing work to a second agent adds one more thing to the stop rule: the claim.  The rest of this page is about that addition.
 
@@ -95,13 +95,13 @@ Some of those rules hold no matter what the agents do.  Others hold only because
 | Only the holder writes the notes | Advisory | Advisory | Advisory: anyone with access can comment on the issue or push to the branch |
 {: .tb-full}
 
-Two habits follow from the table.  First, put your most important rule where the medium enforces it, which is why the claim is a rename and not "check whether the file is there, then copy it."  Second, say in your protocol what an agent does when an advisory rule has clearly been broken.  For a conflicted copy, *stop and ask* is the safe default.
+Two habits follow from the table.  First, put your most important rule where the medium enforces it.  That is why the claim is a rename and not "check whether the file is there, then copy it."  Second, say in your protocol what an agent does when an advisory rule has clearly been broken.  For a conflicted copy, *stop and ask* is the safe default.
 
-One more point from the *Agent Skills* tutorial: every clause in a `SKILL.md` is a request to the model, not a rule the harness enforces.  The rename and the merge are enforced by the medium.  A hook (such as a `Stop` hook that checks whether `SESSION.md` changed) can verify a few more.  Everything else is advisory.
+One more point from the *Agent Skills* tutorial: every clause in a `SKILL.md` is a request to the model, not a rule the harness enforces.  The medium enforces the rename and the merge.  A hook (such as a `Stop` hook that checks whether `SESSION.md` changed) can verify a few more rules.  Everything else is advisory.
 
 ## 4.  One Trace Line per Action
 
-Every claim, skip, wait, takeover, and finish writes one JSON line to `.ai/trace.jsonl`, and every line carries a `rule` field that names the rule in your skill that allowed it.  This is the same habit as the `rule` field in Model 4 of the *Agents That Talk* session: a trace without the rule tells you what happened, and a trace with it tells you what to change.  Rule 4 of the skeleton in Part IV logs each loop phase; the handoff actions add lines of their own to the same file, with the same `trace_id` habit.
+Every claim, skip, wait, takeover, and finish writes one JSON line to `.ai/trace.jsonl`.  Every line carries a `rule` field that names the rule in your skill that allowed the action.  This is the same habit as the `rule` field in Model 4 of the *Agents That Talk* session.  A trace without the rule tells you what happened.  A trace with it tells you what to change.  Rule 4 of the skeleton in Part IV logs each loop phase.  The handoff actions add their own lines to the same file, with the same `trace_id` habit.
 
 Store identifiers and measurements, never content.  The trace gets the task name, the agent name, the time, the rule, and numbers such as how long the claim had been idle.  It does not get the prompt, the task text, or the notes.  The notes live in their own file, which the medium already keeps.
 
@@ -119,11 +119,11 @@ Practice this on a toy problem before you put it in a project, so that a broken 
 
 ## 5.  The Code Path: A Claim Race Over a Folder
 
-The three cells below need only `python3` and the standard library.  Save each one as its own file in an empty folder and run it with `python3 <file>.py`.  The first cell creates a `handoff-demo/` folder in the folder you run it from, and the third one reads it, so run them from the same place.  The "agents" here are two Python functions standing in for two agent sessions; the protocol does not care what is on the other side of the folder.
+The three cells below need only `python3` and the standard library.  Save each one as its own file in an empty folder and run it with `python3 <file>.py`.  The first cell creates a `handoff-demo/` folder in the folder you run it from.  The third cell reads that folder, so run them from the same place.  The "agents" here are one set of Python functions, called with two agent names, standing in for two agent sessions.  The protocol does not care what is on the other side of the folder.
 
 ## Code Cell: The Protocol, One Step at a Time
 
-This is the claim race from Model 3 of the *Agents That Talk* session, with two additions: a `.notes` file whose writes count as a sign of life, and a trace line for every action.  Read `claim()` first.  The whole claim rule is the fact that a rename cannot half-happen.
+This is the claim race from Model 3 of the *Agents That Talk* session, with two additions: a `.notes` file whose writes count as a sign of life, and a trace line for every action.  Read `claim()` first.  The whole claim rule rests on one fact: a rename cannot half-happen.
 
 ```python
 import os, json, time, shutil
@@ -242,13 +242,13 @@ B takes the stale claim: True
   done/: ['task-7.md', 'task-7.md.notes', 'task-7.result.md']
 ```
 
-Now open `handoff-demo/.ai/trace.jsonl`.  There are six lines, one per action, and each one names a rule: A's claim and note under rule 8, B's skip under rule 9, B's early wait and its later takeover under rule 10 (with `idle_s` and `taken_from`), and B's finish under rule 11.  The task text and the note text are not in it.
+Now open `handoff-demo/.ai/trace.jsonl`.  There are six lines, one per action, and each one names a rule.  A's claim and note fall under rule 8, B's skip under rule 9, B's early wait and its later takeover under rule 10 (with `idle_s` and `taken_from`), and B's finish under rule 11.  The task text and the note text are not in it.
 
 This cell runs the agents one after the other, so it cannot show you a real race.  The next cell does.
 
 ## Code Cell: Two Agents at the Same Moment
 
-Here two threads are released at the same instant, a hundred times, and both try to claim the same file.  The first version claims with a rename.  The second checks whether the file is there and then copies it, which is two steps.
+Here, the code releases two threads at the same instant, a hundred times, and both threads try to claim the same file.  The first version claims with a rename.  The second checks whether the file is there and then copies it, which is two steps.
 
 ```python
 import os, shutil, tempfile, threading, time
@@ -298,7 +298,7 @@ print("rename:         rounds with two winners =", race(rename_claim))
 print("check then act: rounds with two winners =", race(check_then_act_claim))
 ```
 
-The first line should print 0 every time you run it.  The second line prints how many of the hundred rounds ended with both agents believing they owned the task.  Run it a few times and write down what you see; the second number can change from run to run, and the first should not.
+The first line should print 0 every time you run it.  The second line prints how many of the hundred rounds ended with both agents believing they owned the task.  Run it a few times and write down what you see.  The second number can change from run to run, but the first should not.
 
 ## Code Cell: Auditing the Trace
 
@@ -362,10 +362,10 @@ Finished work is a closed issue with a merged pull request.  Abandoned work is e
 1.  Make `handoff/inbox/`, `handoff/claimed/`, and `handoff/done/` in a folder both "agents" can reach.  Put `task-7.md` in `inbox/`.
 2.  **Claim it (rule 8).**  Drag `task-7.md` from `inbox/` into `claimed/` in your file manager.  Then create `task-7.md.claim` beside it with two lines, `claimed_by: A` and `claimed_at: <date and time>`.
 3.  **Race it.**  Have both "agents" count down and drag the same file at the same moment.  On one disk, only one move can succeed, because the file is gone by the time the second one tries.  If the folder is synced between two machines, look for a conflicted copy a minute later.
-4.  **Break and finish (rules 10 and 11)** the same way the code does: edit the `.claim` file to name the new holder and add a `taken_from:` line; to finish, move the task into `done/` and write `task-7.result.md` with `finished_by:` and a Next Safe Action.
-5.  **Trace it.**  For every move or edit, add one line to `.ai/trace.jsonl` by hand, such as `{"ts": "2026-11-02 14:05", "agent": "B", "action": "break-claim", "task": "task-7.md", "rule": "handoff-protocol#10"}`.  No task text and no notes.
+4.  **Break and finish (rules 10 and 11)** the same way the code does.  To break the claim, edit the `.claim` file to name the new holder and add a `taken_from:` line.  To finish, move the task into `done/` and write `task-7.result.md` with `finished_by:` and a Next Safe Action.
+5.  **Trace it.**  For every move or edit, add one line to `.ai/trace.jsonl` by hand, such as `{"ts": "2026-11-02 14:05", "agent": "B", "action": "break-claim", "task": "task-7.md", "rule": "handoff-protocol#10"}`.  Leave out the task text and the notes.
 
-One thing the folder version teaches that the code does not: dragging a file between folders on the same drive is a rename, but dragging it to a different drive is a copy followed by a delete, which is two steps.  Keep all three folders on one drive.
+The folder version teaches one thing the code does not.  Dragging a file between folders on the same drive is a rename.  Dragging it to a different drive is a copy followed by a delete, which is two steps.  Keep all three folders on one drive.
 
 ### Questions to Work Through
 
@@ -379,13 +379,13 @@ One thing the folder version teaches that the code does not: dragging a file bet
 
 ## 7.  Choose the Repository and the Medium
 
-Now take what you practiced into a real repository.  Choose one project repository of your own.  Your team's final project repository is one option, and it is the natural one if more than one agent works in it, because the Responsible AI Report asks for traces of agent actions and handoffs.  Your `cs357-work` repository, or any other repository you will keep working in, also works.
+Now take what you practiced into a real repository.  Choose one project repository of your own.  Your team's final project repository is one option.  It is the natural choice if more than one agent works in it, because the Responsible AI Report asks for traces of agent actions and handoffs.  Your `cs357-work` repository, or any other repository you will keep working in, also works.
 
-Then choose the medium the agents will hand work through: GitHub issues and pull requests, a `handoff/` folder inside the repository, or an Obsidian vault folder (the *Agent Skills* tutorial lists all three).  If your repository does not have `START_HERE.md`, `CHARTER.md`, or the `.ai/` files yet, the [agent templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md) have a starting copy of each.  That step is optional; the skill works as long as rule 1 names files that exist.
+Then choose the medium the agents will hand work through: GitHub issues and pull requests, a `handoff/` folder inside the repository, or an Obsidian vault folder (the *Agent Skills* tutorial lists all three).  If your repository does not have `START_HERE.md`, `CHARTER.md`, or the `.ai/` files yet, the [agent templates](https://www.billmongan.com/Ursinus-CS357-Fall2026/files/agent-templates/README.md) have a starting copy of each.  That step is optional.  The skill works as long as rule 1 names files that exist.
 
 ## 8.  Write the `SKILL.md`
 
-Put the skill at `.agents/skills/handoff-protocol/SKILL.md` in that repository.  The directory name must match the `name` in the front matter, and both opencode and pi look in `.agents/skills/`.  Start from the skeleton in Model 5 of the *Agents That Talk* session:
+Put the skill at `.agents/skills/handoff-protocol/SKILL.md` in that repository.  The directory name must match the `name` in the front matter.  Both opencode and pi look in `.agents/skills/`.  Start from the skeleton in Model 5 of the *Agents That Talk* session:
 
 ```markdown
 ---
@@ -475,7 +475,7 @@ These are optional, and both use the repository and skill from Part IV.  Each on
 
     *What to do:* Commit your `SKILL.md`, start a fresh session in that repository, and ask it to pick up the next unclaimed item.  Record every question it asks before it claims anything.
 
-    *Starter hint:* Each question is a missing sentence in your skill or in one of the files rule 1 reads.  Add the sentence; do not write a longer prompt.
+    *Starter hint:* Each question is a missing sentence in your skill or in one of the files rule 1 reads.  Add the sentence.  Do not write a longer prompt.
 
     *You've succeeded when:* A second fresh session claims, works, and stops cleanly without asking anything, and its trace passes the audit from the third code cell (or the same two checks done by eye).
 

@@ -7,7 +7,7 @@ info:
   coursenum: CS357
   purpose: "To practice the three multi-agent patterns your final project can draw on (critique and refine, debate, and consensus), so that you know how each one runs, what it costs in model calls, and whether it beats a single call on a task you care about."
   tilt:
-    task: "For each of critique and refine, debate, and consensus, run the provided code (or the provided presets and a spreadsheet), change one setting and record what changed, then run the pattern once on a task of your own choosing beside a single model call and write one sentence on whether it helped and what it cost."
+    task: "For each pattern (critique and refine, debate, and consensus), run the provided code (or the provided presets and a spreadsheet), change one setting, and record what changed.  Then run the pattern once on a task of your own choosing beside a single model call, and write one sentence on whether it helped and what it cost."
     criteria: "I assess each pattern on its Practice run, its changed setting, and its Try It comparison, plus a readme that lets me rerun what you did.  The rubric below breaks it down in full."
   points: 100
   goals:
@@ -19,20 +19,20 @@ info:
       description: "Part A: Critique and Refine"
       preemerging: "No critique-and-refine run, or the critic's issues never reach the next draft."
       beginning: "The loop runs, but no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the presets exist, but the critic's issues are not pasted back to the Reviser, or the rounds are not in the spreadsheet."
-      progressing: "The Practice loop (with either critic) runs to a stopping reason it prints, accepted or budget exhausted, and a saved transcript of at least two rounds shows a draft changing in response to a critique; one setting was changed with a line on what changed; the Try It task of your choosing was run once beside a single call.  On the no-code path: the same runs through the Generator, Critic, and Reviser presets, with one spreadsheet row per round."
-      proficient: "As progressing, and the Try It sentence says whether the loop helped and what it cost in model calls (two per round against one), pointing at the two drafts, and every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same Try It sentence, with every preset setting (base model, system prompt, temperature, seed) and the round budget you enforced recorded in the readme in place of the exception handlers."
+      progressing: "The Practice loop (with either critic) runs until it prints a stopping reason (accepted or budget exhausted), and a saved transcript of at least two rounds shows a draft changing in response to a critique.  One setting was changed, with a line on what changed.  The Try It task of your choosing was run once beside a single call.  On the no-code path: the same runs through the Generator, Critic, and Reviser presets, with one spreadsheet row per round."
+      proficient: "As progressing, and the Try It sentence points at the two drafts and says whether the loop helped and what it cost in model calls (two per round, against one).  Every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path, the same Try It sentence earns this row on equal terms, with every preset setting (base model, system prompt, temperature, seed) and the round budget you enforced recorded in the readme in place of the exception handlers."
     - weight: 25
       description: "Part B: Debate"
       preemerging: "No debate runs, or the program fails to run."
       beginning: "A debate runs, but the agents never see each other's previous answers, or no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the chats answer once and are never shown each other's answers."
-      progressing: "The Practice debate runs three agents for two rounds from config.json, reads each answer from its ANSWER: line, aggregates the final round by both majority vote and the judge agent, and saves the full transcript; one debate setting was changed with a line on what changed; the Try It question of your choosing was run once beside a single call.  On the no-code path: three Debater chats, a rebuttal round, a majority vote taken by hand, and a Debate Judge chat, with every answer in the spreadsheet."
-      proficient: "As progressing, and the Try It sentence says whether the debate helped and what it cost in model calls (agents times rounds, plus one for the judge, against one), a missing ANSWER: line shows up as a located warning rather than a silent wrong answer, and every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same Try It sentence, with a missing ANSWER: line recorded as no answer in the spreadsheet and every preset setting recorded in the readme in place of the exception handlers."
+      progressing: "The Practice debate runs three agents for two rounds from config.json, reads each answer from its ANSWER: line, combines the final round by both majority vote and the judge agent, and saves the full transcript.  One debate setting was changed, with a line on what changed.  The Try It question of your choosing was run once beside a single call.  On the no-code path: three Debater chats, a rebuttal round, a majority vote taken by hand, and a Debate Judge chat, with every answer in the spreadsheet."
+      proficient: "As progressing, and the Try It sentence says whether the debate helped and what it cost in model calls (agents times rounds, plus one for the judge, against one).  A missing ANSWER: line shows up as a located warning instead of a silent wrong answer.  Every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path, the same Try It sentence earns this row on equal terms, with a missing ANSWER: line recorded as no answer in the spreadsheet and every preset setting recorded in the readme in place of the exception handlers."
     - weight: 25
       description: "Part C: Consensus"
       preemerging: "No consensus run, or the program fails to run."
       beginning: "Drafts are sampled, but clustering or synthesis is missing, or no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the samples are collected but never grouped, or the synthesizer is given every draft."
-      progressing: "The Practice pipeline samples six drafts, clusters normalized embeddings by cosine distance under the configured threshold, and synthesizes from one representative per cluster with its support count, and the saved printout shows the clusters and the synthesis; one consensus setting was changed with a line on what changed; the Try It question of your choosing was run once beside a single call.  On the no-code path: six Sampler chats, a cluster label for each sample in the spreadsheet, and a Synthesizer chat given one representative per cluster with its support count."
-      proficient: "As progressing, and the readme says whether the clusters match your own reading of the drafts, naming one draft you would have grouped differently or saying why you would not; the Try It sentence says whether consensus helped and what it cost in model calls (samples plus one, against one); and every model and embedding call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same reading of your hand clusters and the same Try It sentence, with every preset setting recorded in the readme in place of the exception handlers."
+      progressing: "The Practice pipeline samples six drafts, clusters their normalized embeddings by cosine distance under the configured threshold, and synthesizes from one representative per cluster with its support count.  The saved printout shows the clusters and the synthesis.  One consensus setting was changed, with a line on what changed.  The Try It question of your choosing was run once beside a single call.  On the no-code path: six Sampler chats, a cluster label for each sample in the spreadsheet, and a Synthesizer chat given one representative per cluster with its support count."
+      proficient: "As progressing, and the readme says whether the clusters match your own reading of the drafts, naming one draft you would have grouped differently or saying why you would not.  The Try It sentence says whether consensus helped and what it cost in model calls (samples plus one, against one).  Every model and embedding call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path, the same reading of your hand clusters and the same Try It sentence earn this row on equal terms, with every preset setting recorded in the readme in place of the exception handlers."
     - weight: 20
       description: "Writeup and Reproducibility"
       preemerging: "No readme, or one that cannot be followed."
@@ -64,19 +64,19 @@ tags:
 
 ---
 
-Ask a model for a docstring and the first draft often looks fine until you read it against a checklist and notice the usage example is missing.  You could point that out and ask again.  You could also ask three copies of the model and let them argue, or ask six times and keep what most of them agree on.  Each of those spends extra model calls in the hope of a better answer.  This lab gives you all three, ready to run, so you can see what they do before you decide whether your final project needs one.
+Ask a model for a docstring, and the first draft often looks fine until you read it against a checklist and notice that the usage example is missing.  You could point that out and ask again.  You could also ask three copies of the model and let them argue, or ask six times and keep what most of them agree on.  Each of those spends extra model calls in the hope of a better answer.  This lab gives you all three, ready to run, so that you can see what each one does before you decide whether your final project needs one.
 
 There are three Parts, one per pattern:
 
-- **Part A: Critique and Refine.**  A **generator** writes a draft, a **critic** checks it against a written rubric and says "accept" or "revise" with a list of issues, and a loop passes the issues back until the critic accepts or the round budget runs out.
+- **Part A: Critique and Refine.**  A **generator** writes a draft.  A **critic** checks it against a written rubric and says "accept" or "revise" with a list of issues.  A loop passes the issues back until the critic accepts or the round budget runs out.
 - **Part B: Debate.**  Three agents answer a question alone, then each reads the others' answers and answers again.  You combine the final answers by majority vote and by a judge agent.
 - **Part C: Consensus.**  One model answers the same question six times, the answers are grouped by meaning, and a synthesizer writes one answer from the groups.
 
-Each Part has two pieces.  **Practice** gives you complete code (or ready presets) to run as-is; you change one setting and record what changed.  **Try It** runs the same code on one task you choose, once, beside a single model call, and asks for one sentence: did it help, and what did it cost in model calls?  Your task can come from anywhere: another course, a club, a hobby, or your team's [final project]({{ site.baseurl }}/Projects/FinalProject) if that is useful to you.
+Each Part has two pieces.  **Practice** gives you complete code (or ready presets) to run as-is.  You change one setting and record what changed.  **Try It** runs the same code once on a task you choose, beside a single model call, and asks for one sentence: did it help, and what did it cost in model calls?  Your task can come from anywhere: another course, a club, a hobby, or your team's [final project]({{ site.baseurl }}/Projects/FinalProject) if that is useful to you.
 
-Calibrating the critic, breaking its rubric, the judge-and-refine loop, the matched-budget shootout, and the threshold sweep are not part of this lab; they are in the optional [Measuring Multi-Agent Patterns]({{ site.baseurl }}/Tutorials/MultiAgentMeasurement) tutorial, which runs on the code you build here.
+This lab does not include calibrating the critic, breaking its rubric, the judge-and-refine loop, the matched-budget shootout, or the threshold sweep.  Those are in the optional [Measuring Multi-Agent Patterns]({{ site.baseurl }}/Tutorials/MultiAgentMeasurement) tutorial, which runs on the code you build here.
 
-**Pair policy.**  You may do this lab in pairs: driver and navigator roles, a swap at least every 30 minutes, and a swap log.  You each submit the same files, name each other in them, and earn the same grade.  You may also work alone; if you do, skip the swap log and say so in your readme.  See the course schedule for the assigned and due dates.
+**Pair policy.**  You may do this lab in pairs: driver and navigator roles, a swap at least every 30 minutes, and a swap log.  You each submit the same files, name each other in them, and earn the same grade.  You may also work alone.  If you do, skip the swap log and say so in your readme.  See the course schedule for the assigned and due dates.
 
 ---
 
@@ -92,7 +92,7 @@ Both paths run the same three patterns and earn the same rubric.  Pick one befor
 | **Code** | `critique_refine.py` (with `judge_critic.py` as a second critic), `lab4.py`, and one short run script per Part, all reading one `config.json` | Python 3, Ollama with `llama3.2`, and the packages below | You want the round budget, the answer parsing, and the call counts in code you can rerun |
 | **No-code** | The same three patterns as Open WebUI presets, with you moving text between chats and a spreadsheet keeping the record | Open WebUI pointed at your local Ollama, and a spreadsheet | You would rather see each seam (where the critic's words become the reviser's instructions, where you decide which answers say the same thing) than write the code that crosses it |
 
-On the no-code path you are the loop.  Every reply you paste is one model call, and every call gets a row in your spreadsheet.  To make a preset in Open WebUI: **Workspace**, **Models**, **+ Create a model**, with `llama3.2` as the base model and the prompt (if there is one) in **System Prompt**.  Set temperature and seed under **Advanced Params**; if the seed field does not exist in your version, say so in your readme.
+On the no-code path you are the loop.  Every reply you paste is one model call, and every call gets a row in your spreadsheet.  To make a preset in Open WebUI, choose **Workspace**, **Models**, **+ Create a model**.  Use `llama3.2` as the base model, and put the prompt (if there is one) in **System Prompt**.  Set temperature and seed under **Advanced Params**.  If your version has no seed field, say so in your readme.
 
 ---
 
@@ -159,7 +159,7 @@ print(normed[0] @ normed[1])
 }
 ```
 
-Leave `api_key` as `null` for local Ollama.  If your computer cannot run the model, point `provider_url` at a hosted Ollama server and set `api_key` to its key, as in the Local Agent lab, and ask me if you need help choosing one.
+Leave `api_key` as `null` for local Ollama.  If your computer cannot run the model, point `provider_url` at a hosted Ollama server and set `api_key` to its key, as in the Local Agent lab.  Ask me if you need help choosing a server.
 
 > **You should see.** `python3 -m json.tool config.json` prints the file back with no error.  An error means a missing comma or quote near the line it names.
 
@@ -169,7 +169,7 @@ Leave `api_key` as `null` for local Ollama.  If your computer cannot run the mod
 
 ## Part A: Critique and Refine (30 points)
 
-One call writes, a second call checks the draft against a written rubric, and a loop hands the second call's complaints back to the first.  Three rules keep the loop honest.  The critic runs at temperature 0 with a fixed seed, so the same draft gets the same verdict every time.  A critic reply that is not valid JSON **fails closed**: the loop treats it as "revise" and logs it, so it never accepts something it could not read.  And when the round budget runs out, the loop returns the last draft with the outstanding critique attached, so whoever called it knows it did not finish.
+One call writes, a second call checks the draft against a written rubric, and a loop hands the second call's complaints back to the first.  Three rules keep the loop honest.  The critic runs at temperature 0 with a fixed seed, so the same draft gets the same verdict every time.  A critic reply that is not valid JSON **fails closed**: the loop treats it as "revise" and logs it, so it never accepts something it could not read.  When the round budget runs out, the loop returns the last draft with the outstanding critique attached, so whoever called it knows it did not finish.
 
 You may use either of two critics.  `critique_draft` is the accept-or-revise critic below.  `judge_critic` reuses the rubric judge from the *Judge Pipeline Workshop*: it scores each criterion from 1 to 4 with a quoted sentence, and anything below 4 becomes an issue.  Using one is enough; trying both is optional.
 
@@ -344,7 +344,7 @@ The `[lab3:generate_draft]` tag in each `except` block is a **located message**:
 
 **Predict:** if the critic wraps its JSON in a sentence such as "Here is my evaluation:", which branch of `critique_draft` runs, and what verdict does the loop receive?
 
-**The judge as critic (optional).**  To use the workshop's judge instead, create `judge_critic.py` below, set `USE_JUDGE = True` in `run_a.py`, and run it again.  It keeps the workshop's prompt and its 1-to-4 levels, rewritten for the docstring task with the same ids C1 to C4, and it reads `critic_temp` and `critic_seed` (0 and 42, the workshop's settings) from `config.json`.  The code, not the model, decides the verdict: "accept" only when every criterion is at level 4.
+**The judge as critic (optional).**  To use the workshop's judge instead, create `judge_critic.py` below, set `USE_JUDGE = True` in `run_a.py`, and run it again.  It keeps the workshop's prompt and its 1-to-4 levels, rewritten for the docstring task with the same ids C1 to C4.  It reads `critic_temp` and `critic_seed` (0 and 42, the workshop's settings) from `config.json`.  The code, not the model, decides the verdict: it returns "accept" only when every criterion is at level 4.
 
 ```python
 import json
@@ -406,7 +406,7 @@ def judge_critic(draft, rubric, config):
         return {"verdict": "revise", "issues": [f"[JSON parse failure] Raw output: {raw[:200]}"]}
 ```
 
-**No-code path.**  Make three presets.  The Generator and Reviser have no system prompt; the instructions travel in the message you paste, exactly as in the code.
+**No-code path.**  Make three presets.  The Generator and Reviser have no system prompt.  Their instructions travel in the message you paste, exactly as in the code.
 
 | Preset | System Prompt | Temperature | Seed |
 |---|---|---|---|
@@ -448,7 +448,7 @@ If you would rather use the workshop's judge as your critic, put its grader prom
 >    Please revise the draft to address every issue listed. Return only the revised draft, no commentary.
 >    ```
 >
-> 4. Stop at "accept" or after five rounds, whichever comes first.  A Critic reply that is not valid JSON counts as "revise"; write it down.
+> 4. Stop at "accept" or after five rounds, whichever comes first.  A Critic reply that is not valid JSON counts as "revise".  Write it down.
 > 5. Log one row per round in the spreadsheet: `round`, `verdict`, `issues`, `valid JSON?`, `calls so far`.
 
 **Both paths: change one setting.**  Pick one, rerun, and write one line in your readme: the setting, its old and new value, and what changed (round count, verdicts, or the drafts themselves).  Then put it back.
@@ -473,7 +473,7 @@ Pick one task of your own with criteria a reader can check by looking at the res
 
 Ask three copies of the same model "What is 15% of 240?" and you may get two that say 36 and one that says 34.  Now show each one what the other two said and ask again.  Does the odd one out fix its arithmetic, does it talk the others into its answer, or does nobody move?
 
-Round one is independent: each agent answers alone.  Later rounds are peer-informed: each agent sees the *other* agents' previous answers and may revise or hold its position.  Every response must end with an `ANSWER:` line, and the code reads the answer from that line only.  When the line is missing, it prints a located warning and records no answer, instead of guessing.  The final round is combined two ways: **majority vote**, which counts, and a **judge agent**, one more model call that reads every agent's reasoning and picks the best-supported answer even if only one agent gave it.
+Round one is independent: each agent answers alone.  Later rounds are peer-informed: each agent sees the *other* agents' previous answers and may revise or hold its position.  Every response must end with an `ANSWER:` line, and the code reads the answer from that line only.  When the line is missing, the code prints a located warning and records no answer instead of guessing.  The final round is combined two ways: **majority vote**, which counts the answers, and a **judge agent**, which is one more model call that reads every agent's reasoning and picks the best-supported answer, even if only one agent gave it.
 
 ### Practice
 
@@ -734,15 +734,15 @@ Pick one question of your own with a short answer you can check: a calculation f
 
 ## Part C: Consensus (25 points)
 
-Ask the model "What makes a great study group, and what are the biggest pitfalls to avoid?" six times and you get six different paragraphs.  No two match word for word, so the vote from Part B has nothing to count, and yet several of them clearly say the same thing in different words.
+Ask the model "What makes a great study group, and what are the biggest pitfalls to avoid?" six times and you get six different paragraphs.  No two match word for word, so the vote from Part B has nothing to count.  Yet several of them clearly say the same thing in different words.
 
-**Stochastic consensus** handles this.  At a temperature above zero the model is a sampler: each call draws one answer from many plausible ones.  An **embedding** model turns each draft into a list of numbers, built so that drafts with similar meaning get nearby lists.  We normalize those vectors to length 1 and group them by **cosine distance** (1 minus the cosine similarity): two drafts whose distance is under `distance_threshold` can share a group.  The size of each group is its **support count**.  A low-temperature **synthesizer** then gets one representative draft per group with its support count, never all six drafts, and writes one answer that follows the majority and says so in one line when the split is close.  That is six sampling calls and one synthesis call, seven in all.
+**Stochastic consensus** handles this.  At a temperature above zero, the model is a sampler: each call draws one answer from many plausible ones.  An **embedding** model turns each draft into a list of numbers, so that drafts with similar meaning get nearby lists.  We normalize those vectors to length 1 and group them by **cosine distance** (1 minus the cosine similarity).  Two drafts whose distance is under `distance_threshold` can share a group.  The size of each group is its **support count**.  A low-temperature **synthesizer** then gets one representative draft per group with its support count, never all six drafts.  It writes one answer that follows the majority, and when the split is close, it says so in one line.  That is six sampling calls and one synthesis call, seven in all.
 
 > **Watch out.** Sampling helps only when the drafts' mistakes scatter.  If every draft shares the same bias, they land in one big group and look exactly like a strong consensus.
 
 ### Practice
 
-**Code path.**  The embedding and clustering code is provided complete; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do the work.  Your job is to run it and read what it returns.
+**Code path.**  The embedding and clustering code is provided complete.  `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do the work.  Your job is to run it and read what it returns.
 
 > **Do this.**
 > 1. Add the code below to the end of `lab4.py`.
@@ -921,7 +921,7 @@ You are a synthesizer. You receive several response clusters from independent sa
 > 1. Send the study-group question to six fresh Sampler chats.  Paste each answer into the spreadsheet: `sample`, `first sentence`, `cluster`, `why`.
 > 2. Read all six and give each one a cluster letter: drafts that take the same position share a letter.  In `why`, write the position in a few words.
 > 3. For each cluster, pick the draft that best represents it, and count its support.
-> 4. Open a Synthesizer chat and send `Question:` with the question, then `Clusters:` and one block per cluster, largest first, in the code's format: `[Cluster A, support=3/6 (50%)]` followed by the representative draft, with a line holding only `---` between blocks.  If the largest cluster has under 60% of the samples, add the line `NOTE: There is a close disagreement among the samples. Disclose it.` to the end of your message.
+> 4. Open a Synthesizer chat and send `Question:` with the question, then `Clusters:` and one block per cluster, largest first.  Use the code's format: `[Cluster A, support=3/6 (50%)]` followed by the representative draft, with a line holding only `---` between blocks.  If the largest cluster has under 60% of the samples, add the line `NOTE: There is a close disagreement among the samples. Disclose it.` to the end of your message.
 
 **Both paths: read the clusters.**  Read the drafts in each cluster yourself.  In your readme, say whether the grouping matches your own reading, and name one draft you would have put in a different group, or say why you would not.  (No-code: did any draft take you more than a moment to place?  Which one, and what made it hard?)
 
@@ -936,7 +936,7 @@ You are a synthesizer. You receive several response clusters from independent sa
 Pick one open-ended question of your own, one with several reasonable answers: how to structure a project timeline, what to include in a lab safety briefing, which features a club website needs, or a design question your team is weighing.
 
 > **Do this.**
-> 1. Code path: set `QUESTION` in `run_c.py` to your question and run `python3 run_c.py | tee tryit_c.txt`.  No-code: one Sampler chat is the single call; then run the Practice pipeline on your question.
+> 1. Code path: set `QUESTION` in `run_c.py` to your question and run `python3 run_c.py | tee tryit_c.txt`.  No-code: one Sampler chat is the single call.  Then run the Practice pipeline on your question.
 > 2. Read the single answer and the synthesis side by side, and write one sentence in your readme: did consensus help, and what did it cost in model calls?
 
 **Predict:** the single call uses the same prompt, temperature, and seed as Sample 1 of the consensus run.  How will the two compare, and what would it tell you about your model server if they differ?

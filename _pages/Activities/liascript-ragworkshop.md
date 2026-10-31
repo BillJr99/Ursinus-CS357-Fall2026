@@ -14,17 +14,17 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # RAG Worked Example: Build the Pipeline Together
 
-*RAG: Building and Measuring a Knowledge Base* gave you the pieces: the open-book insight, a pipeline in fifty lines, chunking, and recall@k.  Today we put them together on one small, complete knowledge base and build it end to end, in the order the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) asks for it: **ingest → chunk → embed → retrieve → generate → measure**.  Every step prints its intermediate output, so you can see exactly what the next step receives.  The first half runs in this page.  Part II runs the same corpus through the lab's own code on your machine, or through the lab's Langflow flow for the no-code route, and measures both the same way.  In class we check that one route works, and you finish Part II on your own.  The last twenty minutes are a clinic for your Final Project Proposal.
+*RAG: Building and Measuring a Knowledge Base* gave you the pieces: the open-book insight, a pipeline in fifty lines, chunking, and recall@k.  Today we put them together and build one small, complete knowledge base end to end, in the order the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) asks for it: **ingest → chunk → embed → retrieve → generate → measure**.  Every step prints its intermediate output, so you can see exactly what the next step receives.  The first half runs in this page.  Part II runs the same corpus through the lab's own code on your machine (or, on the no-code route, through the lab's Langflow flow) and measures both the same way.  In class we check that one route works, and you finish Part II on your own.  The last twenty minutes are a clinic for your Final Project Proposal.
 
 The corpus is four short files about an invented bicycle co-op.  Every fact in them is synthetic, so you can change and test against them freely.  The measurement at the end is the habit the lab's Step 4 depends on: a golden set written before you tune anything, recall@k for the retriever, and a grounding check for the answer.
 
-**Today:** the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP) and your team's Intra-Team Check-In (Norming into Performing) are due, and I hand out the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) (due Thursday, November 12) and the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview).  Your corpus for the lab may be your team's stakeholder material (interview notes, your partner's public documents, your evidence folder), so the lab also moves your project forward.  Use only material your partner agreed to share, and leave out personal details about the people you interviewed.  Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal) is due Thursday.
+**Today:** the [Tools and MCP lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/ToolsMCP) and your team's Intra-Team Check-In (Norming into Performing) are due, and I hand out the [RAG Knowledge Base lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/RAGKnowledgeBase) (due Thursday, November 12) and the [Literature Review](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/LitReview).  For the lab's corpus, you may use your team's stakeholder material (interview notes, your partner's public documents, your evidence folder), so that the lab also moves your project forward.  If you do, use only material your partner agreed to share, and leave out personal details about the people you interviewed.  Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal) is due Thursday.
 
 ---
 
 ## Directions and Group Roles
 
-Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-along session: one laptop per team runs the cells in this page, and in Part II one laptop runs the same corpus on the lab's route and compares its answer with Part I.  The Manager calls each checkpoint and asks for a prediction before the cell runs.  The Recorder keeps the team's golden set and the two results tables.  The Presenter reports the one number that changed most between the two chunkings.  The Reflector notes every place the stand-in in this page and the real model on the machine disagreed.  In the Proposal Clinic, the Manager keeps the twenty minutes and takes the card's lines in order, the Recorder writes the card and adds it to your decision log, the Presenter brings line 2 to me, and the Reflector checks line 4 against your charter's meeting cadence.  After class, answer the reflective prompt on your own in your notebook.
+Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-along session.  One laptop per team runs the cells in this page.  In Part II, one laptop runs the same corpus on the lab's route and compares its answer with Part I's.  The Manager calls each checkpoint and asks for a prediction before the cell runs.  The Recorder keeps the team's golden set and the two results tables.  The Presenter reports the one number that changed most between the two chunkings.  The Reflector notes every place where the stand-in in this page and the real model on the machine disagreed.  In the Proposal Clinic, the Manager keeps time for the twenty minutes and takes the card's lines in order.  The Recorder writes the card and adds it to your decision log.  The Presenter brings line 2 to me, and the Reflector checks line 4 against your charter's meeting cadence.  After class, answer the reflective prompt on your own in your notebook.
 
 ---
 
@@ -390,7 +390,7 @@ Recall@1 rose from 0.60 to 0.80 with no change to the retriever: `membership-0` 
 ---
 # Part II: The Same Corpus on Your Machine
 
-> **In class: five minutes.**  One laptop per team saves the corpus, runs the route you chose, and asks one golden-set question.  If the answer comes back and names its source file, you have Checkpoint 5's first row, and the rest of this part is self-paced lab work.
+> **In class: five minutes.**  One laptop per team saves the corpus, runs the route you chose, and asks one golden-set question.  If the answer names its source file, you have the first row of Checkpoint 5.  The rest of this part is self-paced lab work.
 
 Now replace both stand-ins.  Save the four co-op files as a `corpus/` folder, then follow the lab on the route you chose.  The measurement is the same on both routes: the golden set from Part I, recall@3, and a right-and-grounded check on every answer.
 
@@ -492,7 +492,7 @@ The script automates what a machine can check: whether the agent searched, wheth
 - *Starter hint*: Choose evidence phrases of three to five words that appear in exactly one passage.  Search your files for each phrase before you commit to it; a phrase that appears twice will mark the wrong passage as found.
 - *You've succeeded when*: You have a golden set written before indexing, a recall@3 for your own corpus, and one sentence naming the question that failed and which component (chunker, retriever, or generator) owned the failure.
 
-This exercise is the lab's Step 1 and Step 4 done in the right order.  The lab's three golden questions can be three of your six, and its writeup question about what you would change if your notes doubled in size has an answer you can now measure.
+This exercise does the lab's Step 1 and Step 4 in the right order.  Three of your six questions can be the lab's three golden questions.  The lab's writeup question about what you would change if your notes doubled in size now has an answer you can measure.
 
 ## Reflection Prompt
 
@@ -513,7 +513,7 @@ Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fa
 3.  **Authors.**  The primary author of each proposal section.
 4.  **Weekly meeting.**  Your team's meeting day and time, and who owns the first agenda.  This starts your [weekly team note](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#one-weekly-team-note), where every [Team Playbook](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#the-team-playbook) practice lives.
 
-I circulate while you write and answer line 2 on the spot.  Before you leave, put the card in your team note as its first entry.
+While you write, I circulate and answer line 2 on the spot.  Before you leave, put the card in your team note as its first entry.
 
 ---
 
