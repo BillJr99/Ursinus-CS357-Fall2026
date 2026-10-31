@@ -135,6 +135,9 @@ def build_index():
             ids.append(f"{doc.stem}-{i}")
             chunks.append(paragraph)
             sources.append({"source": doc.name})
+    if not chunks:
+        print("Indexed 0 chunks: no .md or .txt files in corpus/.")
+        return
     try:
         collection.upsert(ids=ids, documents=chunks, metadatas=sources)   # Chroma embeds each chunk for us
     except Exception as e:

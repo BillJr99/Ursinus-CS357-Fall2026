@@ -183,7 +183,7 @@ for name in sorted(os.listdir("samples")):
         s = detail.get("scores", {}).get(c["name"], {})
         row[c["name"] + "_level"] = s.get("level", "")
         row[c["name"] + "_evidence"] = s.get("evidence", "")
-        row[c["name"] + "_quote_found"] = s.get("evidence", "") in text
+        row[c["name"] + "_quote_found"] = bool(s.get("evidence")) and s.get("evidence") in text
     rows.append(row)
 
 with open("grades.csv", "w", newline="") as f:

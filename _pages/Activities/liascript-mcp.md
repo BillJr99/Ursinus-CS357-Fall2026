@@ -478,7 +478,7 @@ Everything to the left of the tool server is text the model can be argued with a
 The three additions below implement the three safeguards.  `redact` is the return-path sanitizer: a small set of patterns for things that should never travel back to the model, applied to every string a tool returns.  `search_notes` now returns a short snippet around the match instead of the path alone, which is more useful, and instead of the note body, which would be more than the task needs.  `github_issue` is a tool over a real credentialed service: the token comes from the server's environment, the request is made server-side, and the model receives four fields rather than the API's full response.
 
 ```python
-# vault_server.py additions: paste above the TOOLS dictionary, then extend TOOLS as shown.
+# vault_server.py additions: paste everything above the TOOLS dictionary except the last block, which goes below it.
 import os
 import re
 import traceback
@@ -541,7 +541,7 @@ def github_issue(repo: str, number: int):
         traceback.print_exc()
         return "github unavailable"                       # the exception text stays in the server log
 
-# Extend TOOLS: replace the search_notes entry's description, and add github_issue.
+# Extend TOOLS: paste these lines below the TOOLS dictionary. They replace the search_notes entry's description and add github_issue.
 TOOLS["search_notes"]["schema"]["description"] = "Find vault notes containing a phrase; returns paths and short snippets."
 TOOLS["github_issue"] = {"fn": github_issue,
     "schema": {"name": "github_issue",

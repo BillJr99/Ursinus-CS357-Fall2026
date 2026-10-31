@@ -134,7 +134,12 @@ def check_times(facts, text):
     """A check in code, not a model: every extracted day and time must survive into the text."""
     missing = []
     for row in facts.splitlines():
-        name, day, time, _ = [x.strip() for x in row.split("|")]
+        fields = [x.strip() for x in row.split("|")]
+        if len(fields) != 4:               # a real model can break the format: report it, do not crash
+            if row.strip():
+                missing.append(f"unreadable fact line: {row.strip()}")
+            continue
+        name, day, time, _ = fields
         if f"{day} at {time}" not in text:
             missing.append(f"{name}: {day} at {time}")
     return missing
