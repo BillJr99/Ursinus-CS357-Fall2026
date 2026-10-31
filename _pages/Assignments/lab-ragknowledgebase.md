@@ -99,7 +99,7 @@ ollama pull qwen2.5:3b
 
 **Goal:** a folder of five to twenty documents whose answers you can check yourself.
 
-Make a folder named `corpus` next to where your scripts will go, and put in `.md` or `.txt` files you know well: your own course notes, the syllabus pages of a class you are taking, a club's handbook, the documentation for a tool you use.  You need to know the answers, because in Step 4 you check the agent against them.
+Make a folder named `corpus` next to where your scripts will go, and put in `.md` or `.txt` files you know well: your own course notes, the syllabus pages of a class you are taking, a club's handbook, the documentation for a tool you use.  Your corpus may also be your team's stakeholder material (interview notes, your partner's public documents, your evidence folder), so the lab also moves your project forward.  Use only material your partner agreed to share, and leave out personal details about the people you interviewed.  You need to know the answers, because in Step 4 you check the agent against them.
 
 > **Watch out.** Do not index anything private you would not want stored in a file on disk, such as passwords, health records, or other people's messages.  The index is an ordinary folder, and anyone with your laptop can read it.
 
