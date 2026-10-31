@@ -541,9 +541,9 @@ def extract_answer(response_text, agent_id, round_num):
     Extract the ANSWER: line from a response.
     Returns the answer string, or None if not found (with a located warning).
     """
-    match = re.search(r"ANSWER:\s*(.+)", response_text, re.IGNORECASE)
-    if match:
-        return match.group(1).strip()
+    matches = re.findall(r"ANSWER:\s*(.+)", response_text, re.IGNORECASE)
+    if matches:
+        return matches[-1].strip()       # the last ANSWER: line, so an echoed template line is not counted
     else:
         print(f"[lab4:extract_answer] WARNING: Agent {agent_id}, round {round_num}: no ANSWER: line found. Full response: {response_text[:200]!r}")
         return None

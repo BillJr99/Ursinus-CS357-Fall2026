@@ -587,7 +587,7 @@ numbered list with one line per day.
 
 ```python
 # step7_skills.py: a skill menu in the instructions, and a tool that loads one skill on demand.
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -633,7 +633,8 @@ def days_until(target: date) -> int:
     return (target - date.today()).days
 
 
-result = agent.run_sync("My calculus exam is on 2026-10-12 and covers series, integrals, and limits. Plan my studying.",
+exam = (date.today() + timedelta(days=5)).isoformat()   # always five days out, whenever you run it
+result = agent.run_sync(f"My calculus exam is on {exam} and covers series, integrals, and limits. Plan my studying.",
                         usage_limits=UsageLimits(request_limit=6, tool_calls_limit=4))
 print(result.output)
 show_trace(result.all_messages())
@@ -641,7 +642,7 @@ show_trace(result.all_messages())
 
 `SkillCard` is core Pydantic again, checking the front matter.  `load_skill` refuses any name that is not in `SKILLS` and lists the valid ones; the registry, not the model's string, decides what can be read.  That is the same lesson as the deck's `REGISTRY[name]`, and the same lesson as a path-traversal check.
 
-This step separated the two local models more clearly than any other, and it is the main reason this tutorial defaults to `qwen2.5:3b`:
+This step separated the two local models more clearly than any other, and it is the main reason this tutorial defaults to `qwen2.5:3b`.  These runs were made on October 7, so the exam date reads 2026-10-12; yours will be five days from the day you run it:
 
 ```text
 $ MODEL=qwen2.5:3b python step7_skills.py

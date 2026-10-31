@@ -476,6 +476,8 @@ def supervise(task):
             step = json.loads(decision)
         except json.JSONDecodeError:
             break                          # malformed decision -> stop safely (YOUR guard)
+        if not isinstance(step, dict):
+            break                          # valid JSON that is not an object: stop safely too
 
         if step.get("action") == "stop":
             return step.get("answer", "")  # the supervisor decided the work is done

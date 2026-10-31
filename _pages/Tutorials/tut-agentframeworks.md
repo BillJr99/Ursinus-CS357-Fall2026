@@ -764,11 +764,13 @@ The agent connects to it as a toolset.  Pydantic AI starts the server, asks it w
 
 ```python
 # step5_mcp.py
+from pathlib import Path
+
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPToolset
 from common import make_model, show_context, watch
 
-campus = MCPToolset("campus_server.py")   # the server's tools are discovered at run time
+campus = MCPToolset(Path("campus_server.py"))   # the server's tools are discovered at run time
 agent = Agent(make_model(), instructions="You are a concise campus assistant.", toolsets=[campus], capabilities=[watch])
 
 result = agent.run_sync("When is the library open on Saturday?")
