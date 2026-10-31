@@ -33,3 +33,19 @@
 - [ ] Consider LangChain Managed Deep Agents (LangSmith) for the course: https://docs.langchain.com/langsmith/python/managed-deep-agents-overview (added 2026-10-30)
 
 - [ ] Consider building a tutoring agent for the course, from the session "Building AI Agents for Teaching and Learning: Purpose, Design, and Human Judgment" by Sen and Khodarahmi (2026 AAC&U Conference on AI and Higher Education), slide "How do we ensure effective learning and guardrails?": a tutor (Claude Code in the assignment repo, following a tutor's-rules CLAUDE.md that I write) talks with a simulated student (Claude playing a student from a persona sheet of who they are and what they get wrong); a grader (Claude reading the transcript against a rubric of what the tutor must and must not do) produces a scorecard, and I revise the tutor's rules and repeat. (added 2026-10-30)
+
+- [ ] Grade the sprint boundaries: move points from the 75-point Demo Day submission onto the three sprint boundaries, or grade each boundary complete or not yet, in step with the accountability and proficiency-based grading entries above. (added 2026-10-31)
+
+- [ ] Let a team marked not yet at a sprint check show the item by the next class meeting for credit, in step with the proficiency-based grading entry above. (added 2026-10-31)
+
+- [ ] Put a recurring 20-minute project studio block on Thursdays in weeks 11 to 13, so the sprints have class time between the sprint checks. (added 2026-10-31)
+
+- [ ] Rebalance the sprint boundaries: Sprint 2 runs only from the Project Sprint session to the gallery walk (two class days), yet it carries all agents implemented (Direction A) and a 4-6 page risk analysis (Direction B). (added 2026-10-31)
+
+- [ ] Schedule the Direction A 10-minute class discussion on responsible use (Final Project, Direction A build requirements) into named sprint-week sessions; no session holds it this term. (added 2026-10-31)
+
+- [ ] Collapse the two role sets (Manager, Recorder, Presenter, Reflector in class; Coordinator, Builder, Evaluator, Scribe on the project) into one, and keep standups, decisions, and roles on one team board or PROJECT.md. (added 2026-10-31)
+
+- [ ] Run the CATME-style peer pulse at every sprint boundary, not only at check-ins 2 and 3. (added 2026-10-31)
+
+- [ ] Replace the Canvas rubric on the charter and the intra-team check-ins at the next deploy: it still carries the old Professionalism and Process wording, because replacing it this term would delete scores already recorded. (added 2026-10-31)
