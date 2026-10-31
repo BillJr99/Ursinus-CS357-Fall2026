@@ -49,16 +49,12 @@ ollama pull llama3.2:1b
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.
-
-| Minutes | What we do |
-|---|---|
-| 0-20 | Part I, what a skill is, when it fires, and what a hook can enforce about it |
-| 20-42 | Part II, design the `system-prompt-author` skill together |
-| 42-70 | Part III, run it with and without, on two models, and score it |
-| 70-75 | Report out: each team's results table and the one number that surprised them |
+1. Part I, what a skill is, when it fires, and what a hook can enforce about it
+2. Part II, design the `system-prompt-author` skill together
+3. Part III, run it with and without, on two models, and score it
+4. Report out: each team's results table and the one number that surprised them
 
 ---
 # Part I: What a Skill Is

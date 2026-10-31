@@ -72,20 +72,18 @@ Finals week is stressful for everyone. There are many places to study on campus,
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
-| 10-20 | Before You Start: checks pass, three sample files exist, hand-score the samples before any model sees them |
-| 20-45 | Part I, the pipeline in one pass: rubric, judge, batch loop, read `grades.csv` |
-| 45-50 | Part II, the same pipeline as a promptfoo config: one laptop per team runs the smoke test and the rubric config.  Comparing the two CSVs is self-paced |
-| 50-70 | Part III, make it trustworthy: agreement, the padding probe, the disagreement table |
-| 70-75 | Presenters report out: your agreement number and your padding delta |
+1. Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking
+2. Before You Start: checks pass, three sample files exist, hand-score the samples before any model sees them
+3. Part I, the pipeline in one pass: rubric, judge, batch loop, read `grades.csv`
+4. Part II, the same pipeline as a promptfoo config: one laptop per team runs the smoke test and the rubric config.  Comparing the two CSVs is self-paced
+5. Part III, make it trustworthy: agreement, the padding probe, the disagreement table
+6. Presenters report out: your agreement number and your padding delta
 
-## Sprint Check 2 (the first ten minutes)
+## Sprint Check 2
 
 Sprint Check 2 opens today's session, with no slides.  I pick one member of each team at random.  That member has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line (the linked first line of their latest standup) should already be in the team note.  Each member also submits the confidential peer pulse privately in Canvas today.  I mark each team as shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 

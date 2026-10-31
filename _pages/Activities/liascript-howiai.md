@@ -61,17 +61,15 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Sections 3b and 3c are reading that Part II summarizes in class and that you can finish at home.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Sections 3b and 3c are reading that Part II summarizes in class and that you can finish at home.  Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-12 | Part I, the vault as memory you own: Model 1 and the contract |
-| 12-22 | Part I, Section 2b: a personal agent setup, and how I run this myself |
-| 22-45 | Part II, the repository as durable memory: conversation is not project state, the charter, and a handoff (Model 2) |
-| 45-70 | Part III, open studio: your stuck points and your pipeline-in-progress, or Section 4 if nothing is stuck |
-| 70-75 | Report out one thing that moved and one thing that is still stuck |
+1. Part I, the vault as memory you own: Model 1 and the contract
+2. Part I, Section 2b: a personal agent setup, and how I run this myself
+3. Part II, the repository as durable memory: conversation is not project state, the charter, and a handoff (Model 2)
+4. Part III, open studio: your stuck points and your pipeline-in-progress, or Section 4 if nothing is stuck
+5. Report out one thing that moved and one thing that is still stuck
 
 ---
 # Part I: The Vault as Memory You Own

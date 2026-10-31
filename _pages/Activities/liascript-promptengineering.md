@@ -48,18 +48,16 @@ ollama pull llama3.2:1b
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-8 | Key Concepts, and the recipe framing for what a system prompt actually is |
-| 8-25 | Part I, the anatomy of a prompt, worked against a live model, including what chain-of-thought buys |
-| 25-40 | Part II, personas in practice, then the golden-set harness that scores a prompt |
-| 40-52 | Part IIb, where personas leak and how to write one that holds up |
-| 52-70 | Part IIc, the three sampling dials in plain terms, then the same prompt on two models |
-| 70-75 | Report-out and the reflection prompt.  Part IIb's critique table and Part IIc's comparison table finish at home if we run short |
+1. Key Concepts, and the recipe framing for what a system prompt actually is
+2. Part I, the anatomy of a prompt, worked against a live model, including what chain-of-thought buys
+3. Part II, personas in practice, then the golden-set harness that scores a prompt
+4. Part IIb, where personas leak and how to write one that holds up
+5. Part IIc, the three sampling dials in plain terms, then the same prompt on two models
+6. Report-out and the reflection prompt.  Part IIb's critique table and Part IIc's comparison table finish at home if we run short
 
 ---
 # Part I: The Anatomy of a Prompt

@@ -31,18 +31,16 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 | **Position and verbosity bias** | Two systematic errors of an LLM judge: rating the first answer in an A/B comparison higher regardless of quality, and rating longer answers higher even when the extra length adds nothing | The judge flips its answer when you swap two essays; two empty filler sentences raise an essay's score |
 | **Calibration set** | A small set of artifacts already scored by humans, used to check whether the judge agrees with people before you trust it on new work | Ten essays scored by your team and by the judge; a consistent gap on one criterion means that descriptor needs work |
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Part I, one loop, and why the evaluator is a separate call (Model 1) |
-| 10-30 | Part II, the critic: the eighty-line loop, Model 2, and three failure modes |
-| 30-50 | Part III, several generators: the debate loop, Model 4, and voting on meaning (Model 5) |
-| 50-65 | Part IV, the judge: Model 6 and auditing the judge |
-| 65-70 | Part V, where today's loops sit in the Multi-Agent Patterns lab, and the reflection prompt.  The Human-in-the-Loop Extension is self-paced |
-| 70-75 | Report out: one place each use of the loop earned its cost, and one place it did not |
+1. Part I, one loop, and why the evaluator is a separate call (Model 1)
+2. Part II, the critic: the eighty-line loop, Model 2, and three failure modes
+3. Part III, several generators: the debate loop, Model 4, and voting on meaning (Model 5)
+4. Part IV, the judge: Model 6 and auditing the judge
+5. Part V, where today's loops sit in the Multi-Agent Patterns lab, and the reflection prompt.  The Human-in-the-Loop Extension is self-paced
+6. Report out: one place each use of the loop earned its cost, and one place it did not
 
 ---
 # Part I: One Loop

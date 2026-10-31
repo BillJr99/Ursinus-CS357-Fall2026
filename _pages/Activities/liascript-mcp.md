@@ -38,18 +38,16 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Part I, the integration problem: the services you already use, then why N times M connectors was never going to work |
-| 10-20 | Model 1, count the adapters and report the arithmetic |
-| 20-40 | Part II, build the tiny tool server and connect a client to it |
-| 40-60 | Part IIb, put a vault of Markdown notes behind the same server and trace one gated write |
-| 60-70 | Part III, start the exercises: add a tool and confirm the client discovers it |
-| 70-75 | Report out and the reflection prompt |
+1. Part I, the integration problem: the services you already use, then why N times M connectors was never going to work
+2. Model 1, count the adapters and report the arithmetic
+3. Part II, build the tiny tool server and connect a client to it
+4. Part IIb, put a vault of Markdown notes behind the same server and trace one gated write
+5. Part III, start the exercises: add a tool and confirm the client discovers it
+6. Report out and the reflection prompt
 
 ---
 # Part I: The Integration Problem

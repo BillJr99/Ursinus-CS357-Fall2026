@@ -48,17 +48,15 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-8 | Part I, why local at all: the four reasons, and which one is yours |
-| 8-15 | Section 3 and 3a: the install checklist and the `curl` probe, so every team has a model answering |
-| 15-60 | Part IIb, the five steps: prompt, remember, iterate, skill, command (about nine minutes each) |
-| 60-70 | Section 3c, the temperature dial |
-| 70-75 | Reflection prompt, and what to post before next session |
+1. Part I, why local at all: the four reasons, and which one is yours
+2. Section 3 and 3a: the install checklist and the `curl` probe, so every team has a model answering
+3. Part IIb, the five steps: prompt, remember, iterate, skill, command
+4. Section 3c, the temperature dial
+5. Reflection prompt, and what to post before next session
 
 Sections 3b (the OpenWebUI API key), 3d (pointing opencode at Ollama), and the two-model comparison are self-paced.  Do them before the Local Agent lab needs them.  Section 4 is the idea behind Steps 2 and 3, so read it if Step 2 surprises you.
 

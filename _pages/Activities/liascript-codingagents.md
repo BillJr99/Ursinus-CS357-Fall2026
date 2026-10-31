@@ -65,17 +65,17 @@ git -C ~/cs357-work status
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-Four parts inside our seventy-five minutes, a report-out, and an extension you take home.
+Four parts in class, a report-out, and an extension you take home.
 
-| | What you do | Roughly |
+| | What you do | Where |
 |---|---|---|
-| **Part I** | Get your agent driving again, move work through GitHub, see the two routes an agent has to a service, and read a plan before the change | 20 min |
-| **Part II** | Write a specification and its failing tests *before* any code exists, then let the agent implement against them | 20 min |
-| **Part IIb** | See a model rule bend and a harness gate hold, and read the hook that makes the difference | 15 min |
-| **Part III** | Read a change that passes every test and is still dangerous | 15 min |
-| **Report-out** | Presenters share one disagreement per team | 5 min |
+| **Part I** | Get your agent driving again, move work through GitHub, see the two routes an agent has to a service, and read a plan before the change | in class |
+| **Part II** | Write a specification and its failing tests *before* any code exists, then let the agent implement against them | in class |
+| **Part IIb** | See a model rule bend and a harness gate hold, and read the hook that makes the difference | in class |
+| **Part III** | Read a change that passes every test and is still dangerous | in class |
+| **Report-out** | Presenters share one disagreement per team | in class |
 | **Part IV** | Exercises, cowork agents, and reflection | take-home |
 | **Extension** | Self-paced: architecture comparison, a full worked scenario, the opencode configuration reference, and hook recipes for eight scenarios in both harnesses | self-paced |
 

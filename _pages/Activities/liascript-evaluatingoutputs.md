@@ -37,17 +37,15 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget, and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | The three prompts you brought: triage real confidently-wrong answers, not invented ones |
-| 10-25 | Part I, why models hallucinate, mechanism first |
-| 25-45 | Part II, build the tiny evaluation harness |
-| 45-70 | Part IIb, design the benchmark your evaluation work will keep needing |
-| 70-75 | Reflection prompt, and the benchmark sketch you keep |
+1. The three prompts you brought: triage real confidently-wrong answers, not invented ones
+2. Part I, why models hallucinate, mechanism first
+3. Part II, build the tiny evaluation harness
+4. Part IIb, design the benchmark your evaluation work will keep needing
+5. Reflection prompt, and the benchmark sketch you keep
 
 ---
 # Part I: Why Models Hallucinate

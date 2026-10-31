@@ -54,18 +54,16 @@ Project roles are in effect today: **Coordinator**, **Builder(s)**, **Evaluator*
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it; that includes freezing the run as a regression check, triage, and the sprint block, which are extensions at the end.
+Anything marked self-paced is for outside class, and nothing graded assumes it; that includes freezing the run as a regression check, triage, and the sprint block, which are extensions at the end.
 
-| Minutes | What we do |
-|---|---|
-| 0-6 | Stand-up: four questions, two minutes per team |
-| 6-21 | Model 1: cross-team proposal critique with SQR cards |
-| 21-38 | Model 2: blind human scores, run the judge, fill the disagreement table |
-| 38-48 | Model 3: audit the largest gap to its evidence and make one repair |
-| 48-71 | Part III, threat model: the collapsed boundary and the OWASP rows against your own channels (Model 4), then the five-step worksheet on your own system (Model 5) |
-| 71-75 | Report out: one logged change, one repair, and one threat per team |
+1. Stand-up: four questions per team
+2. Model 1: cross-team proposal critique with SQR cards
+3. Model 2: blind human scores, run the judge, fill the disagreement table
+4. Model 3: audit the largest gap to its evidence and make one repair
+5. Part III, threat model: the collapsed boundary and the OWASP rows against your own channels (Model 4), then the five-step worksheet on your own system (Model 5)
+6. Report out: one logged change, one repair, and one threat per team
 
 ---
 

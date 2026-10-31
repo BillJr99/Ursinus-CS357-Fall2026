@@ -51,24 +51,20 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.
-
-| Minutes | What we do |
-|---|---|
-| 0-10 | Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
-| 10-15 | The task, the settings you own, and the stand-in model |
-| 15-27 | Part I, Step 1: the fixed pipeline, and the check that catches the polish stage (Checkpoint 1) |
-| 27-37 | Part I, Step 2: a router in front of the pipeline, with a closed set that fails closed (Checkpoint 2) |
-| 37-55 | Part I, Step 3: the supervisor loop, a refused stop, the budget firing, and the other two stop conditions (Checkpoint 3) |
-| 55-60 | The cost table: model calls per pattern for the same digest (Checkpoint 4) |
-| 60-72 | Part II, the same code on a real model, or the same protocol by hand on the no-code route (Checkpoint 5) |
-| 72-75 | The lab handout, and where today's controls appear in it |
+1. Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking
+2. The task, the settings you own, and the stand-in model
+3. Part I, Step 1: the fixed pipeline, and the check that catches the polish stage (Checkpoint 1)
+4. Part I, Step 2: a router in front of the pipeline, with a closed set that fails closed (Checkpoint 2)
+5. Part I, Step 3: the supervisor loop, a refused stop, the budget firing, and the other two stop conditions (Checkpoint 3)
+6. The cost table: model calls per pattern for the same digest (Checkpoint 4)
+7. Part II, the same code on a real model, or the same protocol by hand on the no-code route (Checkpoint 5)
+8. The lab handout, and where today's controls appear in it
 
 Part III, the exercise on a supervisor that stops correctly, is self-paced.
 
-## Sprint Check 1 (the first ten minutes)
+## Sprint Check 1
 
 Sprint Check 1 opens today's session, with no slides.  I pick one member of each team at random.  That member has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line (the linked first line of their latest standup) should already be in the team note.  I mark each team as shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 

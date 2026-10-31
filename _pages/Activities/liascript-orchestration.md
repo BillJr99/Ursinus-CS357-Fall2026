@@ -37,17 +37,15 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.  Part I is a review rather than a first introduction.  You already built and ran a fixed pipeline by hand in *Prompt Engineering as Agent Design*.  That review buys the room for the supervisor loop below.
+Anything marked self-paced is for outside class, and nothing graded assumes it.  Part I is a review rather than a first introduction.  You already built and ran a fixed pipeline by hand in *Prompt Engineering as Agent Design*.  That review buys the room for the supervisor loop below.
 
-| Minutes | What we do |
-|---|---|
-| 0-5 | Part I, decomposition: when one agent should become several |
-| 5-35 | Part II, a pipeline and a router in code |
-| 35-50 | Part IIb, loops that recover: reflection, budgets, and knowing when to stop |
-| 50-65 | Part IIc, the supervisor loop: what changes when a model, not you, decides the control flow |
-| 65-75 | Part III, synthesis and exercises |
+1. Part I, decomposition: when one agent should become several
+2. Part II, a pipeline and a router in code
+3. Part IIb, loops that recover: reflection, budgets, and knowing when to stop
+4. Part IIc, the supervisor loop: what changes when a model, not you, decides the control flow
+5. Part III, synthesis and exercises
 
 ---
 # Part I: Decomposition

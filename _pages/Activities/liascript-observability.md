@@ -53,17 +53,15 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-8 | Part I, why the small context principle pushes state out of the window (Model 1) |
-| 8-30 | Part II, agents that talk: an issue thread between two agents (Model 2), then the same handoff through a shared folder, with the claim race run in code (Model 3) |
-| 30-48 | Part III, observability and traceability: logs and traces, one loop step written as a trace, and reading one (Model 4) |
-| 48-68 | Part IV, handoff protocols: start, stop, restart, and your team's own `SKILL.md` for your project, written together (Model 5) |
-| 68-75 | Report out: each Presenter says your team's Sprint 1 goal and the one thing you will show at the start of class on Thursday, November 12 (a running piece for Directions A and C, one cited finding for Direction B).  If time allows: one rule the medium enforces, and one rule that holds only because both agents chose to follow it |
+1. Part I, why the small context principle pushes state out of the window (Model 1)
+2. Part II, agents that talk: an issue thread between two agents (Model 2), then the same handoff through a shared folder, with the claim race run in code (Model 3)
+3. Part III, observability and traceability: logs and traces, one loop step written as a trace, and reading one (Model 4)
+4. Part IV, handoff protocols: start, stop, restart, and your team's own `SKILL.md` for your project, written together (Model 5)
+5. Report out: each Presenter says your team's Sprint 1 goal and the one thing you will show at the start of class on Thursday, November 12 (a running piece for Directions A and C, one cited finding for Direction B).  If time allows: one rule the medium enforces, and one rule that holds only because both agents chose to follow it
 
 ---
 # Part I: Why State Leaves the Context Window

@@ -35,16 +35,14 @@ Project roles (rotated by sprint) are in effect today: **Coordinator**, **Builde
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget, and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Stand-up (section 1), with your artifact already displayed and your SQR (Strength, Question, Risk) cards in hand |
-| 10-50 | Gallery walk (section 2): every team sees every other team's work |
-| 50-70 | Triage (section 3): sort what the walk surfaced into a dated backlog |
-| 70-75 | Release readiness checklist (section 4) and one commitment per team for the next session |
+1. Stand-up (section 1), with your artifact already displayed and your SQR (Strength, Question, Risk) cards in hand
+2. Gallery walk (section 2): every team sees every other team's work
+3. Triage (section 3): sort what the walk surfaced into a dated backlog
+4. Release readiness checklist (section 4) and one commitment per team for the next session
 
 ---
 

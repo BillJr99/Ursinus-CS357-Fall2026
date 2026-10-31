@@ -43,17 +43,15 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-8 | Part I, the open-book exam insight (Model 1) |
-| 8-33 | Part II, build it in code: chunk, embed, store, retrieve, generate, and the abstention test (Model 2) |
-| 33-48 | Part III, chunking: where the boundaries go and what they cost you (Model 3) |
-| 48-68 | Part IV, measuring retrieval: score a golden set by hand, then compute recall@k (Model 4), and what a reranker adds |
-| 68-75 | Reflection prompt.  The Langflow and Pydantic AI routes, which Tuesday's worked example builds in class, and the remaining Extensions are self-paced |
+1. Part I, the open-book exam insight (Model 1)
+2. Part II, build it in code: chunk, embed, store, retrieve, generate, and the abstention test (Model 2)
+3. Part III, chunking: where the boundaries go and what they cost you (Model 3)
+4. Part IV, measuring retrieval: score a golden set by hand, then compute recall@k (Model 4), and what a reranker adds
+5. Reflection prompt.  The Langflow and Pydantic AI routes, which Tuesday's worked example builds in class, and the remaining Extensions are self-paced
 
 ---
 # Part I: The Open-Book Exam Insight

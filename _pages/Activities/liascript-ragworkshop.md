@@ -50,20 +50,16 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.
-
-| Minutes | What we do |
-|---|---|
-| 0-5 | The corpus, and the golden set written before anything runs |
-| 5-15 | Part I, Steps 1 and 2: ingest and chunk (Checkpoint 1) |
-| 15-25 | Part I, Steps 3 and 4: embed and retrieve (Checkpoint 2) |
-| 25-33 | Part I, Step 5: the grounded prompt and the answer (Checkpoint 3) |
-| 33-48 | Part I, Step 6: measure recall@k and grounding, then fix the chunking and measure again (Checkpoint 4) |
-| 48-53 | Part II, the same corpus on your machine: one laptop per team confirms that the lab's code route or Langflow flow answers one golden-set question (Checkpoint 5).  The rest of Part II is self-paced lab work |
-| 53-73 | Proposal Clinic: one card per team, four lines |
-| 73-75 | The lab handout, and what to have ready for Thursday |
+1. The corpus, and the golden set written before anything runs
+2. Part I, Steps 1 and 2: ingest and chunk (Checkpoint 1)
+3. Part I, Steps 3 and 4: embed and retrieve (Checkpoint 2)
+4. Part I, Step 5: the grounded prompt and the answer (Checkpoint 3)
+5. Part I, Step 6: measure recall@k and grounding, then fix the chunking and measure again (Checkpoint 4)
+6. Part II, the same corpus on your machine: one laptop per team confirms that the lab's code route or Langflow flow answers one golden-set question (Checkpoint 5).  The rest of Part II is self-paced lab work
+7. Proposal Clinic: one card per team, four lines
+8. The lab handout, and what to have ready for Thursday
 
 Part III, the exercise on a golden set for your own lab corpus, is self-paced.
 

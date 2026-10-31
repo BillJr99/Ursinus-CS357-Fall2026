@@ -48,20 +48,18 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget, and nothing graded assumes it; that includes all three Extensions: governance frameworks and the drafting workshop, the techniques behind the privacy argument, and AI creativity.  The pronoun probe in Part II runs on your machine and takes a few minutes; start it, then read Part III while it runs.
+Anything marked self-paced is for outside class, and nothing graded assumes it; that includes all three Extensions: governance frameworks and the drafting workshop, the techniques behind the privacy argument, and AI creativity.  The pronoun probe in Part II runs on your machine and takes a few minutes; start it, then read Part III while it runs.
 
-| Minutes | What we do |
-|---|---|
-| 0-6 | Part I, mechanism: how a training distribution becomes a behavior (Model 1) |
-| 6-18 | Part II, hands on the distribution: the pronoun probe (Model 2) |
-| 18-24 | Part III, mitigation without illusion (Model 3) |
-| 24-33 | Part IV, intellectual property: three distinct questions, and the student artist (Model 4) |
-| 33-45 | Part V, privacy: where prompts go, and the data-flow audit (Model 5) |
-| 45-57 | Part VI, governance: the third-party test on two clauses (Model 6), and the eight sections of your one-pager |
-| 57-70 | Part VII, the cost of inference: orders of magnitude (Model 7), and measured tokens turned into energy, carbon, and cost |
-| 70-75 | Report out: one disaggregated number, the first arrow in your data flow that crosses your laptop's boundary, and one clause of your own that passes the third-party test |
+1. Part I, mechanism: how a training distribution becomes a behavior (Model 1)
+2. Part II, hands on the distribution: the pronoun probe (Model 2)
+3. Part III, mitigation without illusion (Model 3)
+4. Part IV, intellectual property: three distinct questions, and the student artist (Model 4)
+5. Part V, privacy: where prompts go, and the data-flow audit (Model 5)
+6. Part VI, governance: the third-party test on two clauses (Model 6), and the eight sections of your one-pager
+7. Part VII, the cost of inference: orders of magnitude (Model 7), and measured tokens turned into energy, carbon, and cost
+8. Report out: one disaggregated number, the first arrow in your data flow that crosses your laptop's boundary, and one clause of your own that passes the third-party test
 
 ---
 # Part I: Mechanism

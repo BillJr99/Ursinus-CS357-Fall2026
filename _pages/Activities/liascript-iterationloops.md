@@ -56,21 +56,17 @@ git -C ~/cs357-work status
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.
+1. Key Concepts, and why iteration beats one big prompt
+2. Model 1's two increments, and the six parts of a loop prompt
+3. Part II: the four files, one increment, the `.ai/` directory, and Model 2's broken run
+4. Part III: the seven steps, and the rubric written two ways
+5. Model 3 from prompt to convergence, and the code cell
+6. Part IV: which loop when, unattended loops, auto mode, and Model 4's metric loop
+7. Report-out.  Exercises, the Extension, and the reflection are take-home
 
-| Minutes | What we do |
-|---|---|
-| 0-6 | Key Concepts, and why iteration beats one big prompt |
-| 6-18 | Model 1's two increments, and the six parts of a loop prompt |
-| 18-34 | Part II: the four files, one increment, the `.ai/` directory, and Model 2's broken run |
-| 34-42 | Part III: the seven steps, and the rubric written two ways |
-| 42-58 | Model 3 from prompt to convergence, and the code cell |
-| 58-70 | Part IV: which loop when, unattended loops, auto mode, and Model 4's metric loop |
-| 70-75 | Report-out.  Exercises, the Extension, and the reflection are take-home |
-
-Anything marked self-paced sits outside this budget, and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
 ---
 

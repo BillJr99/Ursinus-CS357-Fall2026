@@ -75,16 +75,14 @@ Step 0 defines the shell vocabulary.  These are the terms the rest of the page a
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Check what everyone already has installed, and pair up anyone whose Docker did not survive the download |
-| 10-35 | Steps 0 through 3: the shell in ten minutes, Ollama on the host, Docker, and your repository |
-| 35-60 | Steps 4 through 7: the container, its verification checks, Git credentials, and your first end-to-end call |
-| 60-75 | Step 8: hand opencode a real task and watch it work.  Any step you do not reach today is the homework |
+1. Check what everyone already has installed, and pair up anyone whose Docker did not survive the download
+2. Steps 0 through 3: the shell, Ollama on the host, Docker, and your repository
+3. Steps 4 through 7: the container, its verification checks, Git credentials, and your first end-to-end call
+4. Step 8: hand opencode a real task and watch it work.  Any step you do not reach today is the homework
 
 **Doing this on your own, outside class?**  Follow the same steps in the same order and skip the roles.  Budget about ninety minutes, most of it downloads: start the Step 1 model pull and the Step 4 image build as soon as you reach them, and read ahead while they run.
 

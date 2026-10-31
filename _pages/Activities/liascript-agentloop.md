@@ -38,16 +38,14 @@ Work in your POGIL team with your rotated roles (**Manager**, **Recorder**, **Pr
 
 ---
 
-## Today's 75 Minutes
+## Today's Plan
 
-We have seventy-five minutes together.  Here is how they are meant to go, so you can tell when a section is running long and say so.  Anything marked self-paced sits outside this budget and nothing graded assumes it.
+Anything marked self-paced is for outside class, and nothing graded assumes it.
 
-| Minutes | What we do |
-|---|---|
-| 0-10 | Key Concepts and the search-and-rescue framing: what makes a loop an agent |
-| 10-30 | Part I, the sense-think-act cycle and the ReAct trace, worked on paper |
-| 30-60 | Part II, paper-trace the minimal tool-using agent step by step |
-| 60-75 | Part III, the budget experiment and the failure hunt; Reflection at home |
+1. Key Concepts and the search-and-rescue framing: what makes a loop an agent
+2. Part I, the sense-think-act cycle and the ReAct trace, worked on paper
+3. Part II, paper-trace the minimal tool-using agent step by step
+4. Part III, the budget experiment and the failure hunt; Reflection at home
 
 ---
 ## 0.  Environment and Utilities
