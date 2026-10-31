@@ -78,7 +78,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 | Minutes | What we do |
 |---|---|
-| 0-10 | Sprint check: each Builder shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
+| 0-10 | Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
 | 10-20 | Before You Start: checks pass, three sample files exist, hand-score the samples before any model sees them |
 | 20-45 | Part I, the pipeline in one pass: rubric, judge, batch loop, read `grades.csv` |
 | 45-50 | Part II, the same pipeline as a promptfoo config: one laptop per team runs the smoke test and the rubric config.  Comparing the two CSVs is self-paced |
@@ -87,7 +87,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 ## Sprint Check 2 (the first ten minutes)
 
-Sprint Check 2 opens today's session, with no slides.  Your team's Builder has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
+Sprint Check 2 opens today's session, with no slides.  I pick one member of each team at random, who has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line should already be in the decision log.  Each member also submits the confidential peer pulse privately in Canvas today.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 
 
 ---

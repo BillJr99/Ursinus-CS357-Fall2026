@@ -135,7 +135,7 @@ The milestones run in the sequence below.  See the [course schedule]({{ site.bas
 | Proposal | The proposal, with direction declared, stakeholder grounding, and an AI-use disclosure | **25 / 100** |
 | Literature Review handed out | Handed out at the *RAG Worked Example* session (Tuesday, November 3), two days before the proposal is due; its annotated bibliographies and team synthesis read against the committed plan and state what the evidence changes | *graded on its own page* |
 | Sprints 1, 2, and 3 | Rotating roles, a runnable increment (or evidenced stage checkpoint) at every sprint boundary, and a **partner feedback pass** during the final sprint | - |
-| Sprint checks 1 and 2 | At the start of class at the *Orchestration Worked Example* (Thursday, November 12) and *Judge Pipeline Workshop* (Thursday, November 19) sessions: your team shows one thing running (Direction B: one cited finding), and I mark it shown or not yet.  See [Sprint Checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) | 3 points each, within Class Activities and Participation |
+| Sprint checks 1 and 2 | At the start of class at the *Orchestration Worked Example* (Thursday, November 12) and *Judge Pipeline Workshop* (Thursday, November 19) sessions: a member I pick at random shows one thing running (Direction B: one cited finding), and I mark it shown or not yet.  See [Sprint Checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) | 3 points each, within Class Activities and Participation |
 | Cross-team proposal critique | At the *Project Sprint: Run Your Rubric Against Your Project, and Threat Model It* session (Tuesday, December 1), the boundary between Sprint 1 and Sprint 2 | - |
 | Gallery walk, peer review (SQR cards), and intra-team check-in 3 | The gallery walk at *Project Studio and Gallery Walk*; check-in 3 at the *Final Integration and Demo Rehearsal* studio that follows | - |
 | Demo Day and final submission | The presentation, the partner-facing artifact, your direction's deliverables, the Responsible AI Report, contribution statements, reflections, and the final AI-use disclosure, all at Demo Day, held in our final exam period (Wednesday, December 16, 8:00-11:00 AM, Pfahler 107) | **75 / 100** |
@@ -305,7 +305,7 @@ The proposal is graded on its own rubric, not on this one: three course families
 
 Build in three sprints between the proposal and Demo Day; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Class time that supports the sprints: the two sprint checks (Thursdays, November 12 and 19), the *Project Sprint* session (Tuesday, December 1), and the two *Project Studio* sessions (Thursday, December 3, and Tuesday, December 8).  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
 
-Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps: each time, your team shows one thing running (Direction B: one cited finding) at the start of class.
+Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps: each time, a member I pick at random shows one thing running (Direction B: one cited finding) at the start of class.
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
@@ -324,7 +324,7 @@ The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sp
 > 4. Update the evaluation or evidence table with a number or a citation.
 > 5. Update the GANTT-style timeline, and log any scope change the Literature Review synthesis forced.
 > 6. Add the sprint's token counts, traces, audit results, and probe results to the Responsible AI evidence folder.
-> 7. Hold the sprint retrospective and file the Scribe notes.
+> 7. Hold the sprint retrospective and file the Scribe notes.  Each member also writes a short personal reflection, three to five sentences, in the artifacts folder: what I built, what I learned, and what I would do differently, keyed to one of the Open Questions.
 > 8. During the final sprint, run the **partner feedback pass**: put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
 **Deliverables for this phase:**
@@ -332,7 +332,7 @@ The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sp
 - [ ] A runnable increment or evidenced stage checkpoint at each of the three sprint boundaries
 - [ ] An updated evaluation or evidence table at each boundary
 - [ ] Responsible AI evidence (token counts, traces, audit and probe results) added at each boundary
-- [ ] Scribe notes from each retrospective, role rotation recorded, and the GANTT-style timeline kept current
+- [ ] Scribe notes from each retrospective, a personal reflection from each member, role rotation recorded, and the GANTT-style timeline kept current
 - [ ] The Literature Review synthesis, with any resulting scope change in the decision log
 - [ ] The partner feedback pass, documented with your triage (incorporate, disclose, or defer)
 
@@ -369,7 +369,7 @@ Every team, regardless of direction, delivers at Demo Day:
 - The **Responsible AI Report** numbers: the token and cost table and one trace in the technical segment, and one plain-language sentence per area in the stakeholder-facing segment (see [The Responsible AI Report](#the-responsible-ai-report-required-in-every-direction)).
 - A **public portfolio artifact**: the public repository (Directions A and C) or public write-up/portfolio page (Direction B) described in the Product rubric; run the [ShipIt](#shipping-your-artifact-the-shipit-checklist) self-check against it before your publish gate.
 - **Every teammate speaks substantively**, and every teammate must be prepared to present any part (see the absence policy above).
-- Q&A with the instructor, peers, and partners: this is where individual understanding is assessed.  Prepare with the [Demo Day Guide](#demo-day-external-guests-and-technical-interview-practice); the final Project Studio includes a cross-team mock-interview rehearsal, credited as class participation.
+- Q&A with the instructor, peers, and partners: this is where individual understanding is assessed.  I ask each member at least one question about a part of the work they did not build.  Prepare with the [Demo Day Guide](#demo-day-external-guests-and-technical-interview-practice); the final Project Studio includes a cross-team mock-interview rehearsal, credited as class participation.
 
 > **Do this.**
 > 1. Rehearse the whole demo on the clock, on the machine you will use, on the network you will have, with every teammate able to cover any part.

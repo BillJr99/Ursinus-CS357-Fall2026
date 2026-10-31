@@ -57,7 +57,7 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 
 | Minutes | What we do |
 |---|---|
-| 0-10 | Sprint check: each Builder shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
+| 0-10 | Sprint check: a member picked at random shows one thing running (Direction B: one cited finding), and each Coordinator says what is next and what is blocking |
 | 10-15 | The task, the settings you own, and the stand-in model |
 | 15-27 | Part I, Step 1: the fixed pipeline, and the check that catches the polish stage (Checkpoint 1) |
 | 27-37 | Part I, Step 2: a router in front of the pipeline, with a closed set that fails closed (Checkpoint 2) |
@@ -70,7 +70,7 @@ Part III, the exercise on a supervisor that stops correctly, is self-paced.
 
 ## Sprint Check 1 (the first ten minutes)
 
-Sprint Check 1 opens today's session, with no slides.  Your team's Builder has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
+Sprint Check 1 opens today's session, with no slides.  I pick one member of each team at random, who has 90 seconds to show one thing running (Direction B: one cited finding), and your Coordinator says what is next and what is blocking.  Every member's evidence line should already be in the decision log.  I mark each team shown or not yet.  The full protocol is in [Sprint Checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks).
 
 
 ---

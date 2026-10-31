@@ -49,3 +49,7 @@
 - [ ] Run the CATME-style peer pulse at every sprint boundary, not only at check-ins 2 and 3. (added 2026-10-31)
 
 - [ ] Replace the Canvas rubric on the charter and the intra-team check-ins at the next deploy: it still carries the old Professionalism and Process wording, because replacing it this term would delete scores already recorded. (added 2026-10-31)
+
+- [ ] Consider meeting minutes with attendance, and with one owner and a date on every action item, as an individual-participation record (weigh it against the lighter Sprint 1 practices teams may choose). (added 2026-10-31)
+
+- [ ] Consider issue and pull-request ownership for project teams: every task an issue assigned to one person, and every pull request reviewed by a named teammate, so the repository history shows who did what (fits Directions A and C better than B). (added 2026-10-31)
