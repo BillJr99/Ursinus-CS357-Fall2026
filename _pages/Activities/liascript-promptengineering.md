@@ -139,7 +139,7 @@ An agent must return JSON so that downstream code can parse its decision.  The m
 
 ### Asking for Steps Versus Being Trained to Take Them
 
-Chain-of-thought belongs on the pattern list above, and it is the one pattern on that list whose story changed.  Spend thirty seconds on it now so that you do not overtrust it for the rest of the semester.
+Chain-of-thought belongs on the pattern list above, and it is the one pattern on that list whose story changed.  Look at it now so that you do not overtrust it for the rest of the semester.
 
 Showing work buys computation, not carefulness.  A model produces one distribution per forward pass.  Asking for intermediate steps makes it emit more tokens, and each token is another pass with everything written so far available to read.  The steps *are* the computation, not a description of it.  *Why Different Answers Every Time?* works through the mechanism.
 

@@ -414,14 +414,14 @@ The rest of the session is yours, and it is deliberately unstructured.  This is 
 Work on one of these:
 
 - **A lab that is not running.**  Have the error, the command that produced it, and what you already tried.  Teams that have solved it are the first line of help; I am the second.
-- **A design decision your team is stuck on.**  Proposal scope, project direction, which lab direction to take.  Fifteen minutes of arguing it out loud with someone outside your team is usually enough.
+- **A design decision your team is stuck on.**  Proposal scope, project direction, which lab direction to take.  Arguing it out loud with someone outside your team usually settles it.
 - **Something you want to build that is not on any assignment.**  This is the best possible use of a studio day.
 - **The vault you started in Part I**, or the personal agent setup you sketched in Section 2b, if you want to keep going on it.
-- **Section 4 below**, if nothing is stuck.  It takes about thirty minutes, so start it here and finish it at home.
+- **Section 4 below**, if nothing is stuck.  Start it here and finish it at home.
 
 For the visual-building route through a local agent stack (Langflow, wiring containers together into a system), the [Local Agent Stack](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentStack) tutorial remains the reference.
 
-## 4.  Do This Now (about thirty minutes)
+## 4.  Do This Now
 
 Pick **one** of your own repositories: `cs357-work`, or your Project Thread repository if your team is ready to adopt this together.
 

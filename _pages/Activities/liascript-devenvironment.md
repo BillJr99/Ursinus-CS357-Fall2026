@@ -87,9 +87,9 @@ Anything marked self-paced is for outside class, and nothing graded assumes it.
 **Doing this on your own, outside class?**  Follow the same steps in the same order and skip the roles.  Budget about ninety minutes, most of it downloads: start the Step 1 model pull and the Step 4 image build as soon as you reach them, and read ahead while they run.
 
 ---
-## Step 0: The Shell in Ten Minutes
+## Step 0: The Shell, Briefly
 
-Every step below, and every lab this semester, is typed into a **shell**.  If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1.  If they are not, this section is the ten minutes that make everything after it make sense instead of feeling like incantation.
+Every step below, and every lab this semester, is typed into a **shell**.  If `cd`, `|`, and `$PATH` are already comfortable, skim the table and go to Step 1.  If they are not, this section is what makes everything after it make sense instead of feeling like incantation.
 
 A shell is not complicated.  It reads one line of text, runs the command named at the front of it, and prints what comes back.  That is the entire contract.  Everything else is vocabulary.
 
@@ -887,5 +887,5 @@ The entries are in step order.  Find the step you are on, and work down its entr
 
 ## Further Reading
 
-- [The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind "command not found".  Step 0 of today's activity is the ten-minute version of this](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Shell)
+- [The Shell, in Full: pipes, redirection, background jobs, signals, and the PATH mechanics behind "command not found".  Step 0 of today's activity is the short version of this](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/Shell)
 

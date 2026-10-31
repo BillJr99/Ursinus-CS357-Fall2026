@@ -386,7 +386,7 @@ Recall@1 rose from 0.60 to 0.80 with no change to the retriever: `membership-0` 
 ---
 # Part II: The Same Corpus on Your Machine
 
-> **In class: five minutes.**  One laptop per team saves the corpus, runs the route you chose, and asks one golden-set question.  If the answer names its source file, you have the first row of Checkpoint 5.  The rest of this part is self-paced lab work.
+> **In class.**  One laptop per team saves the corpus, runs the route you chose, and asks one golden-set question.  If the answer names its source file, you have the first row of Checkpoint 5.  The rest of this part is self-paced lab work.
 
 Now replace both stand-ins.  Save the four co-op files as a `corpus/` folder, then follow the lab on the route you chose.  The measurement is the same on both routes: the golden set from Part I, recall@3, and a right-and-grounded check on every answer.
 
@@ -502,7 +502,7 @@ This exercise does the lab's Step 1 and Step 4 in the right order.  Three of you
 
 # Proposal Clinic
 
-Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal) is due Thursday.  Use these twenty minutes to settle what is still open while I am in the room to help.  Fill in one card per team, with four lines:
+Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal) is due Thursday.  Use this time to settle what is still open while I am in the room to help.  Fill in one card per team, with four lines:
 
 1.  **Direction.**  The direction you are choosing, and the one you nearly chose instead.
 2.  **Blocker.**  The one open question that is blocking your proposal.

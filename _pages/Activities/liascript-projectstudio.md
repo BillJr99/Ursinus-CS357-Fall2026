@@ -54,13 +54,13 @@ The second session is a rehearsal, not a work session.  The rehearsal rule: if y
 
 ## Model 1: Stand-Up and Readiness Assessment
 
-Stand-ups exist to surface the truth quickly.  In this first section, each team answers four fixed questions in two minutes, no more.  You use the stand-up to put the current state of your project in the room: real metrics, real blockers, and the single riskiest unfinished piece.  Getting this right before the gallery walk helps you point visitors at the things that most need feedback.
+Stand-ups exist to surface the truth quickly.  In this first section, each team answers four fixed questions, no more.  You use the stand-up to put the current state of your project in the room: real metrics, real blockers, and the single riskiest unfinished piece.  Getting this right before the gallery walk helps you point visitors at the things that most need feedback.
 
 The instinct to say "it's going pretty well" instead of "the evaluation harness reports 41%" is understandable but counterproductive.  The point of a stand-up is to get the real number into the room so the team and the instructor can help.  Think of it as a 120-second system health check: inputs (what you did), outputs (what the numbers say), and blockers (what is in the way).
 
-### 1.  Stand-Up (10 minutes)
+### 1.  Stand-Up
 
-Each team answers exactly four questions, in two minutes at the board: What works end-to-end today?  What is the riskiest unfinished piece?  What did your evaluation harness report this week (a number, not an adjective)?  What do you need from the instructor or another team?  A stand-up is status synchronization, not a performance.  The discipline is *saying the number*.
+Each team answers exactly four questions at the board: What works end-to-end today?  What is the riskiest unfinished piece?  What did your evaluation harness report this week (a number, not an adjective)?  What do you need from the instructor or another team?  A stand-up is status synchronization, not a performance.  The discipline is *saying the number*.
 
 ### Critical Thinking Questions
 
@@ -84,7 +84,7 @@ Each team answers exactly four questions, in two minutes at the board: What work
 
 The gallery walk is structured so that you get useful feedback rather than polite feedback.  The card format forces specificity.  "Good job on the UI" does not help anyone; "the citation pane made the RAG answer checkable in one glance" is a named strength that can be preserved and built on.  In the same way, "the demo looked fine" is not a risk assessment; "the system fails silently when retrieval returns nothing" is a named risk with a clear fix path.
 
-### 2.  Gallery Walk Protocol (40 minutes)
+### 2.  Gallery Walk Protocol
 
 Stations: each team's system runs live, with its one-page architecture diagram and its current evaluation table beside it.  Half of each team hosts and half walks; swap at the midpoint.
 
@@ -124,7 +124,7 @@ Hosts demonstrate honestly.  Every station must show at least one *known failure
 
 *You have collected feedback cards from every station.  Triage is the step where raw feedback becomes a concrete action plan: which feedback demands a fix, which demands a disclosure, and which can safely wait.*
 
-## 3.  Triage (20 minutes)
+## 3.  Triage
 
 Teams cluster their feedback cards and sort every item into exactly one bucket: **Fix before demo** (breaks the core story), **Disclose at demo** (real, acknowledged, out of scope), or **Future work** (report material).  The discipline is the second bucket.  Mature engineering names its known defects rather than hoping nobody notices.  The Scribe converts bucket one into assigned, dated backlog items on the spot.
 

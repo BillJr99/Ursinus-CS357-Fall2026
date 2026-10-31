@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Coding Agents: OpenCode, Spec-First Development, Hooks, and Reading the Log
 
-In *Your AI Workbench: Shell, Git, Containers, and Your First Coding Agent*, you built your workbench and, in Step 8 of the Week 1 activity, installed **opencode** and pointed it at the model on your own machine.  You gave it one small job, read the action log, and approved it.  Today we turn that ten-minute demonstration into a working practice, and the OpenCode Studio lab asks you to keep practicing it for a week.
+In *Your AI Workbench: Shell, Git, Containers, and Your First Coding Agent*, you built your workbench and, in Step 8 of the Week 1 activity, installed **opencode** and pointed it at the model on your own machine.  You gave it one small job, read the action log, and approved it.  Today we turn that first demonstration into a working practice, and the OpenCode Studio lab asks you to keep practicing it for a week.
 
 A **coding agent** is not a smarter autocomplete.  An editor completion reads your cursor position and offers the next line.  A coding agent reads your repository, takes a goal ("add OAuth2 login"), breaks it into file-level tasks, edits several files, runs your test suite, reads the failures, and loops until the goal is met or its budget runs out.  The difference is agency: a persistent goal, actions that change the world, and a loop that continues until done.  It is the perceive-plan-act loop you built by hand in *The Agent Loop*, with your file system as the world.
 
@@ -59,7 +59,7 @@ opencode --version
 git -C ~/cs357-work status
 ```
 
-**If any of that is missing,** Section 1 below is the two-minute recovery path; do it now rather than during the models.
+**If any of that is missing,** Section 1 below is the recovery path; do it now rather than during the models.
 
 **What you will have at the end:** a specification with executable acceptance criteria, an agent-written implementation of it, a gate that refuses a command your instructions alone could not stop, and a documented review of a change in which you found three real problems.
 
@@ -87,7 +87,7 @@ In this part you get your agent running against a real repository, then learn th
 
 ## 1.  Recap and Recovery: Install, Configure, Run
 
-You did this in *Your AI Workbench*, Step 8.  This section exists so a broken setup costs you two minutes rather than the session.  Run the check; if it passes, skip to *The habits that make this work*, which is the new part.
+You did this in *Your AI Workbench*, Step 8.  This section exists so a broken setup does not cost you the session.  Run the check; if it passes, skip to *The habits that make this work*, which is the new part.
 
 ```bash
 opencode --version
@@ -178,7 +178,7 @@ gh --version
 gh auth status
 ```
 
-One scope detail decides whether the next ten minutes work.  The token A6 has you make is scoped to **Contents: Read and write**, which pushes code and nothing else.  Creating an issue and opening a pull request are different permissions, so if `gh issue create` comes back with a bare 403 while `gh auth status` looks perfectly healthy, that is the reason: add **Issues** and **Pull requests**, read and write, to the fine-grained token, or run `gh auth refresh -s <scope>`.  A 403 is an answer about permissions; a 401 is an answer about identity, and `gh auth login` is the fix for that one.
+One scope detail decides whether the next steps work.  The token A6 has you make is scoped to **Contents: Read and write**, which pushes code and nothing else.  Creating an issue and opening a pull request are different permissions, so if `gh issue create` comes back with a bare 403 while `gh auth status` looks perfectly healthy, that is the reason: add **Issues** and **Pull requests**, read and write, to the fine-grained token, or run `gh auth refresh -s <scope>`.  A 403 is an answer about permissions; a 401 is an answer about identity, and `gh auth login` is the fix for that one.
 
 The loop, concretely, with `opencode run` standing in for whichever agent you drive, since every tool in this family takes a goal on the command line:
 

@@ -12,7 +12,7 @@ link:   https://cdn.jsdelivr.net/gh/BillJr99/Ursinus-Boilerplate-Assets@main/css
 
 # Judge Pipeline Workshop: Build and Audit a Judge
 
-Today is a build session.  You leave with a judge that reads a rubric, scores three sample submissions with your local model, and writes a `grades.csv` you can open in a spreadsheet.  You also leave with the same judge written a second time as a promptfoo configuration, with no Python at all.  Last session (*Critique, Consensus, and the LLM Judge*) taught why vague rubrics fail and what biases a judge carries.  Today you run the machinery, so keep that deck open for the rubric autopsy and the pathology list instead of rereading them here.  Keep everything you build in the next seventy-five minutes.  The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3, may use this judge as its Part A critic, and the *Project Sprint: Run Your Rubric Against Your Project, and Threat Model It* session (Tuesday, December 1) points it at your own final project.
+Today is a build session.  You leave with a judge that reads a rubric, scores three sample submissions with your local model, and writes a `grades.csv` you can open in a spreadsheet.  You also leave with the same judge written a second time as a promptfoo configuration, with no Python at all.  Last session (*Critique, Consensus, and the LLM Judge*) taught why vague rubrics fail and what biases a judge carries.  Today you run the machinery, so keep that deck open for the rubric autopsy and the pathology list instead of rereading them here.  Keep everything you build today.  The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), due Thursday, December 3, may use this judge as its Part A critic, and the *Project Sprint: Run Your Rubric Against Your Project, and Threat Model It* session (Tuesday, December 1) points it at your own final project.
 
 **Today:** Sprint Check 2 is at the start of class.
 
@@ -199,7 +199,7 @@ Recap: the rubric is one JSON object that drives the prompt, the arithmetic, and
 ---
 # Part II: The Same Pipeline Without Code
 
-> **In class: five minutes.**  One laptop per team runs the smoke test and the rubric config below.  Comparing the two CSVs, at the end of this part, is self-paced.
+> **In class.**  One laptop per team runs the smoke test and the rubric config below.  Comparing the two CSVs, at the end of this part, is self-paced.
 
 promptfoo lets you say the same thing in a configuration file: here are the outputs, here is the judge, here are the assertions, run them all.  The *Project Sprint* session grows this configuration into a regression check for your own project; today you take it far enough to see that the two routes measure the same thing.
 

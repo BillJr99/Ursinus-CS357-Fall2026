@@ -257,7 +257,7 @@ You already have three places to set it, and they are all the same setting:
 
 That last row is the point worth pausing on: the `temperature=0.7` your Python helper has been passing all along, and the slider in the OpenWebUI sidebar, are the *same knob*.  The chatbot is not a different kind of thing from your script; it is a friendlier front end onto the identical API call.
 
-### Do this now (about ten minutes)
+### Do this now
 
 1.  Pick one prompt with room to vary. `"Write two sentences of advice for a first-year college student."` works well.  A prompt with one right answer (`"What is 7 times 8?"`) will not show you anything.
 2.  Set temperature to **0**.  Send your prompt **three times**, starting a fresh chat each time so nothing carries over.  The Recorder pastes all three answers into the team log.

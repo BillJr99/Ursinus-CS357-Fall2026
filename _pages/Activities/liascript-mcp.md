@@ -445,7 +445,7 @@ Remember two things from this Part.  Discovery gives the client names and descri
 
 ## 2c.  What the Server Keeps Out of the Context Window
 
-Nothing in the seventy-five minute plan assumes this Part, and nothing graded today depends on it.  It is here because the final project, and any server you build beyond the Tools and MCP lab, can put a credentialed service behind a tool server, and the design decisions below determine whether that server protects your data or merely relays it.
+Nothing in today's plan assumes this Part, and nothing graded today depends on it.  It is here because the final project, and any server you build beyond the Tools and MCP lab, can put a credentialed service behind a tool server, and the design decisions below determine whether that server protects your data or merely relays it.
 
 Model 3 showed two safeguards without naming the pattern they belong to.  `read_note` refused a path outside the vault, and `append_daily_note` refused to write without `confirm`.  Both checks ran in the server, on the real arguments, after the model had already decided what to do.  A prompt injection can change what the model decides; it cannot change what the server enforces.  That is the first of three things a tool server can do that a prompt cannot, and together they make the server a **trust boundary**: the line on the diagram where the model's influence ends and deterministic code takes over.
 

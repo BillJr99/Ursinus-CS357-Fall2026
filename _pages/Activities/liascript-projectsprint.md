@@ -69,9 +69,9 @@ Anything marked self-paced is for outside class, and nothing graded assumes it; 
 
 # Part I: Stand-Up, Review, and the Run
 
-## 1.  Stand-Up (6 minutes)
+## 1.  Stand-Up
 
-Stand-ups exist to surface the truth quickly.  The instinct to say "it's going pretty well" instead of "the harness passed 11 of 14" is understandable but counterproductive; the point is to get the real number into the room so the team and instructor can help.  Each team answers, in two minutes at the board, exactly four questions: What works end-to-end today?  What did the workshop's human-to-judge agreement come out to, per criterion (a number, not an adjective)?  What is the riskiest unfinished piece?  What do you need from the instructor or another team?  Stand-ups are status synchronization, not performance; the discipline is *saying the number*.  "It agreed with us most of the time" is not a number.  "C3 was 62% and the others were above 80%" is, and it tells the room where to look.
+Stand-ups exist to surface the truth quickly.  The instinct to say "it's going pretty well" instead of "the harness passed 11 of 14" is understandable but counterproductive; the point is to get the real number into the room so the team and instructor can help.  Each team answers, at the board, exactly four questions: What works end-to-end today?  What did the workshop's human-to-judge agreement come out to, per criterion (a number, not an adjective)?  What is the riskiest unfinished piece?  What do you need from the instructor or another team?  Stand-ups are status synchronization, not performance; the discipline is *saying the number*.  "It agreed with us most of the time" is not a number.  "C3 was 62% and the others were above 80%" is, and it tells the room where to look.
 
 Between class sessions, your team channel carries the shorter version from the Project Thread:
 
@@ -99,19 +99,17 @@ The third line is the one that matters: it is the psychological-safety line.  A 
 
 ---
 
-*Sprint 1 ran from the approved proposal to today.  Model 1 is the cross-team critique that closes it: fifteen minutes, one card each way, while there is still time to change course.*
+*Sprint 1 ran from the approved proposal to today.  Model 1 is the cross-team critique that closes it: one card each way, while there is still time to change course.*
 
 ## Model 1: Cross-Team Proposal Critique
 
-Pair with the team I name.  Swap proposals, as they stand today: the living parts (the pre-mortem, the decision log, and the timeline) in their current form, not as submitted.  Each team reads the other's and writes one SQR card; the protocol is the card from the [Structured Peer Review activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PeerReview), compressed to fit the block.
+Pair with the team I name.  Swap proposals, as they stand today: the living parts (the pre-mortem, the decision log, and the timeline) in their current form, not as submitted.  Each team reads the other's and writes one SQR card; the protocol is the card from the [Structured Peer Review activity](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PeerReview), in a shorter form.
 
-| Minutes | Step |
-|---|---|
-| 2 | Swap proposals; each team names the section it most wants read (the design decisions are the usual answer) |
-| 5 | Read silently.  Reviewers read for three things: the direction declaration, each design decision's rejected alternative, and what the team has decided *not* to do |
-| 4 | Write the card, one per team, with all three fields filled |
-| 3 | Exchange cards; the receiving team restates the card in its own words before responding to it |
-| 1 | Log what your team will change as a result: who, what, by when |
+1. Swap proposals; each team names the section it most wants read (the design decisions are the usual answer)
+2. Read silently.  Reviewers read for three things: the direction declaration, each design decision's rejected alternative, and what the team has decided *not* to do
+3. Write the card, one per team, with all three fields filled
+4. Exchange cards; the receiving team restates the card in its own words before responding to it
+5. Log what your team will change as a result: who, what, by when
 
 The card has exactly three parts, each with a job:
 
@@ -417,9 +415,9 @@ A user asks an agent to browse a consumer review website and summarize the top-r
 
 ---
 
-## 3.  Report Out (4 minutes)
+## 3.  Report Out
 
-Each team reports three things in one minute: the one change it logged from the SQR card it received, the one repair it made in Model 3, with the number before and after the re-run, and the one row of the worksheet that surprised you.  The Scribe posts the SQR card, the disagreement table, the repair record, and the worksheet to the team channel before leaving.
+Each team reports three things: the one change it logged from the SQR card it received, the one repair it made in Model 3, with the number before and after the re-run, and the one row of the worksheet that surprised you.  The Scribe posts the SQR card, the disagreement table, the repair record, and the worksheet to the team channel before leaving.
 
 ---
 
