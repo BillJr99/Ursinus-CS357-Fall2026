@@ -492,7 +492,7 @@ The script automates what a machine can check: whether the agent searched, wheth
 - *Starter hint*: Choose evidence phrases of three to five words that appear in exactly one passage.  Search your files for each phrase before you commit to it; a phrase that appears twice will mark the wrong passage as found.
 - *You've succeeded when*: You have a golden set written before indexing, a recall@3 for your own corpus, and one sentence naming the question that failed and which component (chunker, retriever, or generator) owned the failure.
 
-This exercise is the lab's Step 1 and Step 4 done in the right order.  The lab's five questions can be five of your six golden questions, and its writeup question about what you would change if your notes doubled in size has an answer you can now measure.
+This exercise is the lab's Step 1 and Step 4 done in the right order.  The lab's three golden questions can be three of your six, and its writeup question about what you would change if your notes doubled in size has an answer you can now measure.
 
 ## Reflection Prompt
 
