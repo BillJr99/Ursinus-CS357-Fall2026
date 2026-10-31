@@ -190,6 +190,8 @@ This project is community-grounded on purpose: **every team connects its project
 2.  **Partner feedback pass:** during the sprint/gallery-walk window, share your in-progress work with your partner (a demo, a findings summary, or a draft artifact).  Document their feedback and how you triaged it: incorporate, disclose, or defer.
 3.  **Partner-facing artifact (Demo Day):** deliver an artifact an external stakeholder can actually use (a one-page brief, a demo video, or a deployed tool), and present it at Demo Day to a **multi-audience** of technical peers and community stakeholders.
 
+**Encouraged, not graded: an early note in Sprint 1.**  Early in Sprint 1, send your partner a short note: here is what we are building, and here is what we will show you.  Your partner then knows what to expect before the feedback pass.  Teams working from a stakeholder persona share the note with another team instead.
+
 ---
 
 ## The Responsible AI Report (Required in Every Direction)
@@ -301,13 +303,13 @@ The proposal is graded on its own rubric, not on this one: three course families
 
 ## Phase 3: Sprints
 
-Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
+Build in three sprints between the proposal and Demo Day; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Class time that supports the sprints: the two sprint checks (Thursdays, November 12 and 19), the *Project Sprint* session (Tuesday, December 1), and the two *Project Studio* sessions (Thursday, December 3, and Tuesday, December 8).  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
 
 Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps: each time, your team shows one thing running (Direction B: one cited finding) at the start of class.
 
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
-| Sprint 1 (proposal submitted -> cross-team proposal critique; spans the Thanksgiving break) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running minimum viable product (MVP: core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
+| Sprint 1 (proposal submitted -> cross-team proposal critique; spans the Thanksgiving break; encouraged, not graded: a short note to your partner, see Community Partner Engagement) | By Sprint Check 1, a walking skeleton: the monolith baseline answering one evaluation task end to end, with the evaluation set drafted.  By the end of Sprint 1: monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running minimum viable product (MVP: core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
 | Sprint 2 (proposal critique -> gallery walk) | All agents implemented and individually testable; at least 5 evaluation tasks run; GOVERNANCE.md first draft committed | Risk analysis report drafted (4-6 pages, 8+ citations, 3 mechanistic failure modes); governance document outlined | Non-trivial feature implemented; third property test added; README quickstart drafted and cold-tested by a classmate |
 | Sprint 3 (gallery walk -> Demo Day) | Full evaluation with baseline comparison; 3+ failure modes documented with transcripts; one mitigation re-measured; gallery-walk prep | Governance document complete (monitoring plan, incident response, communication plan, appeal process); board presentation rehearsed | Published to a registry, tagged v1.0.0; community post made; CONTRIBUTING.md and GOVERNANCE.md complete |
 
