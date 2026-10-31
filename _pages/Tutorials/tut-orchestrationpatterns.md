@@ -427,7 +427,7 @@ Pick one path.  Either one is enough.
 
 ## 6.  Code Path: Swap in Ollama
 
-> This block talks to the Ollama server on your own machine at `localhost:11434`.  It needs Ollama with `llama3.2` pulled and Python with `requests` installed, the setup from Step 0.2 of the Multi-Agent Patterns lab.
+> This block talks to the Ollama server on your own machine at `localhost:11434`.  It needs Ollama with `llama3.2` pulled and Python with `requests` installed, the setup from Before You Start in the Multi-Agent Patterns lab.
 {: .tb-warning data-title="Runs on your machine, not here"}
 
 Copy the cells from Part II into one file, `orchestrate.py`, and paste the block below directly after the Section 1 code.  Every pattern calls `llm()` by name when it runs, so redefining `llm()` here sends the pipeline, the router, and the sub-agents to Ollama with no other change.  Then change one argument in Section 4: pass `model_supervisor` instead of `naive_supervisor`.  `"format": "json"` asks Ollama to constrain the reply to JSON.  The fail-closed stop stays anyway, because a constraint on the format is not a guarantee about the content.
@@ -578,7 +578,7 @@ Everything below is optional.  Nothing here is collected and nothing here is gra
 
 - [Orchestration and Multi-Agent Patterns](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md), especially Loop Safety Controls, Termination, and The Supervisor Loop.
 - [Orchestration Worked Example](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestrationworkshop.md), the in-class build-along this tutorial follows, with the table mapping each control to the lab.
-- The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), where the budget, the fail-closed parse, and the matched call counts are graded.
+- The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), where the budget, the fail-closed parse, and the call counts are graded.
 - [Agent Teams](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentTeams), for composing these patterns into a project team and choosing a topology.
 - [Agent Frameworks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentFrameworks), for frameworks that build the supervisor for you, and what they move into their own prompts when they do.
 - [Pydantic AI From the Loop Up](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PydanticAI), where a framework enforces the same kind of budget with `UsageLimits`.

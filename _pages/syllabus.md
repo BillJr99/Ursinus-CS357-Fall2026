@@ -684,7 +684,7 @@ schedule:
   readings:
   - rtitle: "promptfoo, for declarative LLM and agent evaluation.  One way to run the judge you build in today's workshop, and it runs against Ollama"
     rlink: "https://www.promptfoo.dev/docs/intro/"
-  - rtitle: "Inspect AI (UK AI Security Institute): the Dataset, Solver, and Scorer framework, another harness for today's judge and for the Multi-Agent Patterns lab's judge-and-refine loop"
+  - rtitle: "Inspect AI (UK AI Security Institute): the Dataset, Solver, and Scorer framework, another harness for today's judge and for the judge-and-refine loop in the Measuring Multi-Agent Patterns tutorial"
     rlink: "https://inspect.aisi.org.uk/"
   - rtitle: "Coded Bias (film): watch before Tuesday, November 24"
     rlink: "https://www.codedbias.com/"
@@ -721,7 +721,7 @@ schedule:
     rubricpath: "_pages/Assignments/asmt-litreview.md"
   readings:
   - rtitle: "Reading Response / Discussion: post a short response before class, one design choice you would make differently in a system you deploy"
-  - rtitle: "Have ready the judge you built in the Judge Pipeline Workshop (the one the Multi-Agent Patterns lab's judge-and-refine loop reuses), three artifacts from your final project for it to grade, and your integrated project and proposal.  Today's workshop runs the judge against your own work, audits the disagreements, critiques another team's proposal, and then threat-models the project."
+  - rtitle: "Have ready the judge you built in the Judge Pipeline Workshop (the one the Multi-Agent Patterns lab's Part A may use as its critic), three artifacts from your final project for it to grade, and your integrated project and proposal.  Today's workshop runs the judge against your own work, audits the disagreements, critiques another team's proposal, and then threat-models the project."
     rlink: false
   - rtitle: "Agentic Case Studies: Migration, Browsing, and Research Agents.  Read the two cases and the threat-modeling part; today's second half runs the incident simulation on your own project"
     rlink: "Tutorials/AgentCaseStudies"

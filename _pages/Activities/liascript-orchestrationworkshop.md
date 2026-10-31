@@ -463,14 +463,14 @@ The lab's no-code route runs each role as a saved Open WebUI preset, or as a pro
 
 | Today | In the Multi-Agent Patterns lab |
 |---|---|
-| `CONFIG["spawn_budget"]`, read from configuration | `round_budget` and the debate's `num_rounds` in `config.json` (Steps A.1 and B.1.1) |
+| `CONFIG["spawn_budget"]`, read from configuration | `round_budget` and the debate's `num_rounds` in `config.json` (Before You Start) |
 | The malformed-decision stop | Invalid critic JSON fails closed: the loop treats it as "revise" and logs it (Part A) |
-| The newest checked text returned on an early stop, flagged | On budget exhaustion, the loop returns the final draft with its outstanding critique attached (Step A.4) |
-| `check_times`, a check in code at a seam | Answer extraction anchored on a required `ANSWER:` line, with a located warning when it is missing (Step B.1.3) |
-| `CALLS`, counted per pattern | Every condition compared at matched call budgets (Part B.3) |
-| Located error messages such as `[orchestrate:chat_once]` | Every model call wrapped in a handler that prints a located message and a traceback (the Code Quality row) |
+| The newest checked text returned on an early stop, flagged | On budget exhaustion, the loop returns the final draft with its outstanding critique attached (Part A, Practice) |
+| `check_times`, a check in code at a seam | Answer extraction anchored on a required `ANSWER:` line, with a located warning when it is missing (Part B, Practice) |
+| `CALLS`, counted per pattern | Each Try It counts the pattern's model calls against a single call (Parts A to C); the matched-budget shootout is in the [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement) tutorial |
+| Located error messages such as `[orchestrate:chat_once]` | Every model call wrapped in a handler that prints a located message and a traceback (the proficient level of each Part's rubric row) |
 
-The supervisor's writer, check, and refused stop are already a critique-and-refine loop with a critic that is a program instead of a model.  Part A of the lab replaces that program with a critic model and a written rubric, which is exactly why it then asks you to measure when the critic is wrong.
+The supervisor's writer, check, and refused stop are already a critique-and-refine loop with a critic that is a program instead of a model.  Part A of the lab replaces that program with a critic model and a written rubric.  Measuring when that critic is wrong is the first part of the [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement) tutorial.
 
 ---
 # Part III: Exercise and Wrap-Up
@@ -496,7 +496,7 @@ The supervisor's writer, check, and refused stop are already a critique-and-refi
 ## Further Reading
 
 - [Orchestration Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/OrchestrationPatterns), today's three patterns on their own, and [Measuring Multi-Agent Patterns](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/MultiAgentMeasurement), for the measurement the lab leaves out.
-- The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), Part A and Step B.3, where the budget, the fail-closed parse, and the matched call counts are graded.
+- The [Multi-Agent Patterns lab](https://www.billmongan.com/Ursinus-CS357-Fall2026/Assignments/MultiAgentDebate), where the budget, the fail-closed parse, and the call counts are graded.
 - [Orchestration and Multi-Agent Patterns](https://www.billmongan.com/LiaScript/?https://raw.githubusercontent.com/BillJr99/Ursinus-CS357-Fall2026/gh-pages/_pages/Activities/liascript-orchestration.md), especially Loop Safety Controls and Termination, for the controls this session implemented.
 - [Pydantic AI From the Loop Up](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/PydanticAI): the RAG lab's agent caps its loop with `UsageLimits(request_limit=4)`, the same budget idea enforced by a framework instead of your own `range()`.
 - [Agent Frameworks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Tutorials/AgentFrameworks), for frameworks that build the supervisor pattern for you, and what they move into their own prompts when they do.

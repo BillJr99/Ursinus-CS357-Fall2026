@@ -730,4 +730,4 @@ Everything below is optional.  Nothing here is collected and nothing here is gra
 
 - Anthropic engineering blog.  "How we built our multi-agent research system" (2025, online), on verification and state in long-running agents.
 - Yao et al. "WebShop" and successors on web agents (2022 onward), for the perception problems of Case B.
-- The judge you build in the Judge Pipeline Workshop, and the Multi-Agent Patterns lab's rubric judge-and-refine loop that reuses it, which industrialize the verification mindset of all three cases.
+- The judge you build in the Judge Pipeline Workshop, and the judge-and-refine loop in the Measuring Multi-Agent Patterns tutorial that reuses it, which industrialize the verification mindset of all three cases.

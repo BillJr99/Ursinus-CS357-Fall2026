@@ -5,68 +5,46 @@ title: "CS357: Foundations of Artificial Intelligence - Lab: Multi-Agent Pattern
 
 info:
   coursenum: CS357
-  purpose: "To orchestrate multiple agents through the four patterns that make agent systems more reliable than a single call (critique, refine, debate, and consensus), and to learn from your own measurements when aggregation improves answers and when correlated errors defeat it."
+  purpose: "To practice the three multi-agent patterns your final project can draw on (critique and refine, debate, and consensus), so that you know how each one runs, what it costs in model calls, and whether it beats a single call on a task you care about."
   tilt:
-    task: "Implement a generator/critic/refine loop, then multi-agent debate and embedding-clustered consensus, and compare all of them against a single-shot baseline at matched call budgets."
-    criteria: "I grade this on the debate loop, the consensus pipeline, and a matched-budget comparison that surfaces a correlated failure.  The rubric below breaks it down in full."
+    task: "For each of critique and refine, debate, and consensus, run the provided code (or the provided presets and a spreadsheet), change one setting and record what changed, then run the pattern once on a task of your own choosing beside a single model call and write one sentence on whether it helped and what it cost."
+    criteria: "I assess each pattern on its Practice run, its changed setting, and its Try It comparison, plus a readme that lets me rerun what you did.  The rubric below breaks it down in full."
   points: 100
   goals:
-    - To implement multi-agent debate with independent first rounds and peer-informed revision rounds using configurable agents, rounds, and temperature schedules
-    - To implement stochastic consensus with normalized-embedding clustering and a synthesis agent that receives cluster summaries
-    - To compare debate, consensus, and single-shot baselines at matched call budgets on a labeled task set
-    - To identify and explain correlated failure modes that aggregation cannot repair and propose a non-LLM remedy
+    - To run a critique-and-refine loop, a multi-agent debate, and a sample, cluster, and synthesize consensus pipeline, and read what each one does round by round
+    - To change one setting in each pattern and say what changed in its output
+    - To try each pattern once on a task of your own and decide whether it beat a single call for what it cost in model calls
   rubric:
+    - weight: 30
+      description: "Part A: Critique and Refine"
+      preemerging: "No critique-and-refine run, or the critic's issues never reach the next draft."
+      beginning: "The loop runs, but no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the presets exist, but the critic's issues are not pasted back to the Reviser, or the rounds are not in the spreadsheet."
+      progressing: "The Practice loop (with either critic) runs to a stopping reason it prints, accepted or budget exhausted, and a saved transcript of at least two rounds shows a draft changing in response to a critique; one setting was changed with a line on what changed; the Try It task of your choosing was run once beside a single call.  On the no-code path: the same runs through the Generator, Critic, and Reviser presets, with one spreadsheet row per round."
+      proficient: "As progressing, and the Try It sentence says whether the loop helped and what it cost in model calls (two per round against one), pointing at the two drafts, and every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same Try It sentence, with every preset setting (base model, system prompt, temperature, seed) and the round budget you enforced recorded in the readme in place of the exception handlers."
+    - weight: 25
+      description: "Part B: Debate"
+      preemerging: "No debate runs, or the program fails to run."
+      beginning: "A debate runs, but the agents never see each other's previous answers, or no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the chats answer once and are never shown each other's answers."
+      progressing: "The Practice debate runs three agents for two rounds from config.json, reads each answer from its ANSWER: line, aggregates the final round by both majority vote and the judge agent, and saves the full transcript; one debate setting was changed with a line on what changed; the Try It question of your choosing was run once beside a single call.  On the no-code path: three Debater chats, a rebuttal round, a majority vote taken by hand, and a Debate Judge chat, with every answer in the spreadsheet."
+      proficient: "As progressing, and the Try It sentence says whether the debate helped and what it cost in model calls (agents times rounds, plus one for the judge, against one), a missing ANSWER: line shows up as a located warning rather than a silent wrong answer, and every model call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same Try It sentence, with a missing ANSWER: line recorded as no answer in the spreadsheet and every preset setting recorded in the readme in place of the exception handlers."
+    - weight: 25
+      description: "Part C: Consensus"
+      preemerging: "No consensus run, or the program fails to run."
+      beginning: "Drafts are sampled, but clustering or synthesis is missing, or no setting was changed and recorded, or the Try It run is missing.  On the no-code path: the samples are collected but never grouped, or the synthesizer is given every draft."
+      progressing: "The Practice pipeline samples six drafts, clusters normalized embeddings by cosine distance under the configured threshold, and synthesizes from one representative per cluster with its support count, and the saved printout shows the clusters and the synthesis; one consensus setting was changed with a line on what changed; the Try It question of your choosing was run once beside a single call.  On the no-code path: six Sampler chats, a cluster label for each sample in the spreadsheet, and a Synthesizer chat given one representative per cluster with its support count."
+      proficient: "As progressing, and the readme says whether the clusters match your own reading of the drafts, naming one draft you would have grouped differently or saying why you would not; the Try It sentence says whether consensus helped and what it cost in model calls (samples plus one, against one); and every model and embedding call in your code, including any you added, is wrapped in an exception handler that prints a located message and a traceback.  On the no-code path this row is earned on equal terms by the same reading of your hand clusters and the same Try It sentence, with every preset setting recorded in the readme in place of the exception handlers."
     - weight: 20
-      description: "Part A: Critique and Refine Loop"
-      preemerging: "No generator/critic/refine loop, or the critic does not influence the next generation."
-      beginning: "A loop exists but runs a fixed number of rounds with no stopping rule, so it cannot tell improvement from churn."
-      progressing: "The loop runs generator, critic, and refiner with a stated stopping rule, and a transcript shows an output changing in response to a critique."
-      proficient: "As progressing, and the writeup shows a case where the critic was wrong and says how you could tell, plus what the loop cost in extra calls for the quality it bought."
-    - weight: 5
-      description: "Part A, Extended: Rubric Judge-and-Refine Loop"
-      preemerging: "No judge-and-refine loop, or the judge returns only an overall verdict with no per-criterion scores."
-      beginning: "A judge scores each criterion, but the producer's revision does not use the judge's instructions, or the loop has no round cap or no early stop."
-      progressing: "The judge scores every criterion against a stated meets bar with quoted evidence and a revision instruction, the producer revises from those instructions, the loop stops at a cap of at most three rounds or as soon as every criterion meets its bar, and per-round scores are logged."
-      proficient: "As progressing, and the writeup reads the per-round log to say whether refinement converged, drifted, or was sycophantic (scores rose without the draft improving), reports how many quoted evidence strings actually appear in the draft, compares a blind human spot-check of the final round with the judge's levels, and names one judge failure mode (leniency drift, the producer gaming the rubric's wording, or a blind spot the judge shares with the producer) observed or ruled out, with the evidence."
-    - weight: 20
-      description: Debate Implementation
-      preemerging: The debate fails to run due to major issues, or the program fails to run
-      beginning: The debate runs but fails on test questions due to one or more minor issues
-      progressing: The debate runs correctly with configurable agents and rounds and majority vote aggregation, with a fragile component such as answer extraction
-      proficient: "The debate runs correctly with configurable agents, rounds, and temperature schedule; answer extraction anchors on a required ANSWER: line and handles its absence with a located error message; both majority-vote and judge-agent aggregation are available; a transcript of at least one complete 3-agent, 2-round debate is included in the submission"
-    - weight: 20
-      description: Consensus Implementation
-      preemerging: The consensus pipeline fails to run due to major issues
-      beginning: Drafts are sampled but clustering or synthesis is missing or incorrect
-      progressing: The pipeline samples, clusters by embedding similarity with normalized vectors, and synthesizes from cluster representatives, with a minor issue
-      proficient: The pipeline samples k high-temperature drafts, clusters with cosine distance over normalized embeddings and a justified threshold, synthesizes using one representative per cluster with its support count, discloses close disagreements in one line, and the synthesizer receives cluster summaries rather than all k transcripts; a demonstration on a long-form question is included
-    - weight: 20
-      description: Comparative Evaluation
-      preemerging: No evaluation is provided
-      beginning: Conditions are compared anecdotally without matched budgets or a protocol
-      progressing: Debate, consensus, and single shot baselines are compared on a labeled task set with accuracy and call counts reported
-      proficient: All conditions are compared at matched call budgets on a labeled task set of at least ten items; accuracy and model-call count are reported per condition in a table; at least one correlated failure is documented with all agents' verbatim responses showing agreement on the wrong answer; the writeup explains specifically why no aggregation strategy could have repaired it and names one non-LLM addition that would
-    - weight: 10
-      description: Code Quality and Documentation
-      preemerging: Code commenting and structure are absent, or code structure departs significantly from best practice
-      beginning: Code commenting and structure is limited in ways that reduce the readability of the program
-      progressing: Code documentation is present that re-states the explicit code definitions
-      proficient: Every non-trivial function has a docstring; all model calls and embedding operations are wrapped in exception handlers that print a located message (e.g., [lab4:debate_round]) followed by a traceback; number of agents, rounds, temperature schedule, and distance threshold are read from a JSON config file rather than hardcoded
-    - weight: 5
-      description: Writeup, Reflection, and Submission
-      preemerging: An incomplete submission is provided
-      beginning: The program is submitted, but not according to the directions in one or more ways
-      progressing: The program is submitted according to the directions with a minor omission, with at least superficial responses to the reflection prompts
-      proficient: The program is submitted according to the directions, including a readme writeup, a pair log with at least two timestamped role swaps (if you worked in a pair), and reflection answers that each cite a specific accuracy figure, transcript excerpt, or named failure mode from the lab rather than restating the prompt
+      description: "Writeup and Reproducibility"
+      preemerging: "No readme, or one that cannot be followed."
+      beginning: "A readme exists, but a reader could not rerun the three Practice runs from it."
+      progressing: "The readme names your path and records the model, the package versions, config.json, and the commands well enough to rerun all three Parts.  On the no-code path: the Open WebUI version, every preset, and the spreadsheet."
+      proficient: "As progressing, plus the three Try It sentences side by side with their call counts, the Learning Log, a pair log with at least two timestamped role swaps if you worked in a pair, and an AI-use disclosure."
   readings:
     - rtitle: "Critique, Consensus, and the LLM Judge: One Loop, Three Uses"
       rlink: "Activities/liascript-critiqueconsensusjudge.md"
       liapage: true
-    - rtitle: "Judge Pipeline Workshop: Build and Audit a Judge (the judge you extend in Part A, Extended)"
+    - rtitle: "Judge Pipeline Workshop: Build and Audit a Judge (the judge Part A's second critic reuses)"
       rlink: "Activities/liascript-rubricworkshop.md"
-      liapage: true
-    - rtitle: "Agents That Talk, Observability, and Handoff Protocols (the claim protocol behind the optional handoff route in Part B.3)"
-      rlink: "Activities/liascript-observability.md"
       liapage: true
     - rtitle: "Orchestration Activity"
       rlink: "Activities/liascript-orchestration.md"
@@ -74,6 +52,8 @@ info:
     - rtitle: "Orchestration Worked Example: Build a Pipeline, a Router, and a Supervisor (round budgets, fail-closed parsing, and call counts on one task)"
       rlink: "Activities/liascript-orchestrationworkshop.md"
       liapage: true
+    - rtitle: "Measuring Multi-Agent Patterns (optional: calibration, reward hacking, the judge loop, the shootout, and the threshold sweep)"
+      rlink: "../Tutorials/MultiAgentMeasurement"
     - rtitle: "The Local Agent Stack"
       rlink: "../Tutorials/AgentStack"
 
@@ -84,89 +64,55 @@ tags:
 
 ---
 
-You, individually or with a partner, will build the patterns that make an agent system more reliable than a single model call, then measure whether the extra calls bought anything.  The lab has two halves and one grade.
+Ask a model for a docstring and the first draft often looks fine until you read it against a checklist and notice the usage example is missing.  You could point that out and ask again.  You could also ask three copies of the model and let them argue, or ask six times and keep what most of them agree on.  Each of those spends extra model calls in the hope of a better answer.  This lab gives you all three, ready to run, so you can see what they do before you decide whether your final project needs one.
 
-In **Part A** you build a generator/critic/refine loop.  A **generator** writes a draft, a **critic** checks it against a written rubric and returns "accept" or "revise" with a list of issues, and the **refine loop** feeds those issues back until the critic accepts or the round budget runs out.  You then calibrate that critic on defects you planted, break your own rubric on purpose, and measure what the loop cost against single-shot generation.  A short extension, **Part A, Extended**, swaps the accept-or-revise critic for a **judge** that scores each criterion of an explicit rubric with quoted evidence and a revision instruction, runs a bounded judge-and-refine loop, and logs the scores round by round so you can see whether refinement converged or only looked like it did.
+There are three Parts, one per pattern:
 
-In **Part B** you build the two aggregation architectures from class: **debate**, where agents see and rebut each other, and **stochastic consensus**, where independent samples are clustered by meaning and merged by a synthesizer.
+- **Part A: Critique and Refine.**  A **generator** writes a draft, a **critic** checks it against a written rubric and says "accept" or "revise" with a list of issues, and a loop passes the issues back until the critic accepts or the round budget runs out.
+- **Part B: Debate.**  Three agents answer a question alone, then each reads the others' answers and answers again.  You combine the final answers by majority vote and by a judge agent.
+- **Part C: Consensus.**  One model answers the same question six times, the answers are grouped by meaning, and a synthesizer writes one answer from the groups.
 
-Do Part A first.  The debate work reuses its scaffolding, and a critic you already trust is what makes a debate round worth reading.
+Each Part has two pieces.  **Practice** gives you complete code (or ready presets) to run as-is; you change one setting and record what changed.  **Try It** runs the same code on one task you choose, once, beside a single model call, and asks for one sentence: did it help, and what did it cost in model calls?  Your task can come from anywhere: another course, a club, a hobby, or your team's [final project]({{ site.baseurl }}/Projects/FinalProject) if that is useful to you.
 
-You leave with a loop you can read, a working debate, a working sample-cluster-synthesize pipeline, and a measurement of your own that says when aggregation helps and when correlated errors defeat it.
+Calibrating the critic, breaking its rubric, the judge-and-refine loop, the matched-budget shootout, and the threshold sweep are not part of this lab; they are in the optional [Measuring Multi-Agent Patterns]({{ site.baseurl }}/Tutorials/MultiAgentMeasurement) tutorial, which runs on the code you build here.
 
-**How this page is organized.**  Every Part is broken into numbered steps (Step A.1, Step A.2, and so on).  Each step says what it is for, gives you one thing to do, and tells you what you should see when it worked.  Finish a step, check the result, and only then move to the next one.  If a step fails, fix it there; the later steps build on it.
-
-**Pair policy.**  You may do this lab in pairs: driver/navigator roles, a swap at least every 30 minutes, and a swap log.  You each submit the same files, name each other in them, and earn the same grade.  You may also work alone; if you do, skip the swap log and say so in your readme.  This lab is handed out at the *Orchestration Worked Example: Build a Pipeline, a Router, and a Supervisor* session, and the deck it builds on most, *Critique, Consensus, and the LLM Judge: One Loop, Three Uses*, follows at the next session, with the *Judge Pipeline Workshop* after it.  See the course schedule for the assigned and due dates.
+**Pair policy.**  You may do this lab in pairs: driver and navigator roles, a swap at least every 30 minutes, and a swap log.  You each submit the same files, name each other in them, and earn the same grade.  You may also work alone; if you do, skip the swap log and say so in your readme.  See the course schedule for the assigned and due dates.
 
 ---
 
 ## Choose Your Path
 
-Every pattern in this lab is a *protocol*, and you can run each protocol by hand or on a canvas rather than in Python.  The calibration and reward-hack work in Part A is prompt-and-analysis work on every route.  Decide before you start rather than after the first part.
+Both paths run the same three patterns and earn the same rubric.  Pick one before you start and name it at the top of your readme.
 
-A few tools appear in the table below, so here is what each one is:
+- **Ollama** runs a language model on your own computer and answers requests sent to `http://localhost:11434`.  `llama3.2` is the model both paths use.
+- **Open WebUI** is a chat page in your browser that sends your messages to Ollama.  A saved **preset** (a custom Model in Open WebUI) is a model with its own system prompt, temperature, and seed.
 
-- **Ollama** is a program that runs a language model on your own computer and answers requests sent to `http://localhost:11434`.  `llama3.2` is the model you ask it to run.  Both routes use it.
-- **Open WebUI** is a chat page in your browser that sends your messages to Ollama.  A saved **preset** there is a reusable model setup with its own system prompt.
-- **Langflow** is a low-code canvas: you connect boxes (nodes) with lines instead of writing the code that passes text from one call to the next.
+| Path | What you run | What you need | Pick this if |
+|------|--------------|---------------|--------------|
+| **Code** | `critique_refine.py` (with `judge_critic.py` as a second critic), `lab4.py`, and one short run script per Part, all reading one `config.json` | Python 3, Ollama with `llama3.2`, and the packages below | You want the round budget, the answer parsing, and the call counts in code you can rerun |
+| **No-code** | The same three patterns as Open WebUI presets, with you moving text between chats and a spreadsheet keeping the record | Open WebUI pointed at your local Ollama, and a spreadsheet | You would rather see each seam (where the critic's words become the reviser's instructions, where you decide which answers say the same thing) than write the code that crosses it |
 
-| Route | What you build | What you need | Pick this if |
-|-------|----------------|---------------|--------------|
-| **Code** | `critique_refine.py` with `rubric.json` and the calibration, hack, and comparison scripts (Part A); `judge_refine.py` with `judge_rubric.json` (Part A, Extended); then `lab4.py`, `shootout.py`, and `threshold.py` for the debate loop, the embedding-clustered consensus pipeline, and the matched-budget shootout (Part B), all driven by one `config.json` | Python 3, Ollama running `llama3.2`, and the packages installed below | You want the stopping rule, the fail-closed parser, the threshold, and the call budget in code you can re-run and hand in as a log, and you can read a stack trace |
-| **No-code** | Part A as three saved Open WebUI presets (generator, critic, reviser) with text moved by hand, or a Langflow (low-code) canvas chaining them as three prompt nodes.  Part A, Extended as a Producer chat and a Judge chat with a spreadsheet of per-round scores.  Part B as two Open WebUI chats that rebut each other, a spreadsheet of answers you cluster yourself, and the same comparison table; in Langflow the debate is two Agent nodes and a loop | Open WebUI or Langflow pointed at your local Ollama, and a spreadsheet | You would rather see the seams (where the critic's words become the reviser's instructions, and where your own clustering judgment replaces a distance threshold) than write the orchestration |
-
-The rubric is the same on both paths.  The judgment this lab grades (when the critic was wrong, whether the extra rounds bought anything, and why a correlated failure could not be repaired by aggregation) is identical on every route.  On the no-code path, read "code" in the rubric as "flow or preset configuration" and "log" as "transcript".  Part B.3 also has an optional handoff route, open to both paths, in which two agents exchange positions through a GitHub issue thread or a shared folder.
+On the no-code path you are the loop.  Every reply you paste is one model call, and every call gets a row in your spreadsheet.  To make a preset in Open WebUI: **Workspace**, **Models**, **+ Create a model**, with `llama3.2` as the base model and the prompt (if there is one) in **System Prompt**.  Set temperature and seed under **Advanced Params**; if the seed field does not exist in your version, say so in your readme.
 
 ---
 
 ## Before You Start
 
-> **Checkpoint.** This lab has two halves and one grade.  Critique-and-refine and debate-and-consensus are one family of idea (use more than one model call to get a better answer), so they are one lab, one page, and one rubric.
-> - **Part A: Critique and Refine.**  Build the generator/critic/refine loop, calibrate the critic, break and patch the rubric, and measure the loop against single-shot generation.
-> - **Part A, Extended: Rubric Judge-and-Refine Loop.**  Replace the critic with a per-criterion judge, run at most three judge-and-refine rounds, log the scores, and spot-check the final round yourselves.
-> - **Part B: Debate and Consensus.**  Build the debate, the consensus pipeline, the shootout, and the threshold sweep.
->
-> You submit both halves together, once, against the single rubric above.  There is no separate Critique-and-Refine deadline.
+Complete these first: [Critique, Consensus, and the LLM Judge]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiqueconsensusjudge.md) (the loop, debate, and clustering ideas this lab runs) and the [Orchestration Worked Example]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestrationworkshop.md) (round budgets in configuration, fail-closed parsing, and counting calls).  If you want the judge option in Part A, keep your work from the [Judge Pipeline Workshop]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md) nearby.
 
-### Step 0.1: Complete the activities
-
-**Goal:** have the ideas from class in hand before you build them.
-
-Complete these activities before you write any code:
-
-- [Critique, Consensus, and the LLM Judge]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-critiqueconsensusjudge.md): the generator/critic/refine loop and stopping rules; independent rounds, peer-informed revision, and majority vote (Sections 5 and 6); then sampling, embedding clustering, and synthesis (Section 7)
-- [Orchestration Activity]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestration.md): chaining agents with structured outputs, and the [Orchestration Worked Example]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-orchestrationworkshop.md): a round budget kept in configuration, fail-closed parsing, a budget-exhausted return that says so, and model calls counted per pattern
-- [Judge Pipeline Workshop: Build and Audit a Judge]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-rubricworkshop.md): the leveled JSON rubric, quoted evidence, and the `_quote_found` check that Part A, Extended reuses; keep your workshop `judge.py` and disagreement table nearby
-- [Agents That Talk, Observability, and Handoff Protocols]({{ site.lia_viewer_url }}{{ site.raw_pages_url }}Activities/liascript-observability.md), Part II: the claim protocol, needed only if you take the optional handoff route in Part B.3
-
-### Step 0.2: Install the packages and confirm Ollama is running
-
-**Goal:** get the four Python packages installed and see Ollama answer one request.
-
-`pip install` downloads a package and makes it importable.  `requests` is how your code talks to Ollama over HTTP.  The other three do the embedding and clustering in Part B.2: `sentence-transformers` turns a piece of text into a list of numbers (an embedding), `scikit-learn` provides the clustering, and `numpy` does the array math in between.  If you keep a virtual environment (a venv, a private set of packages for one project), activate it before you run `pip`, so the packages land in the Python you will use.
-
-`curl` sends a web request and prints the reply, so the last line asks your local Ollama server to list its models; a JSON list means Ollama is up.
+**Code path.**  `requests` is how your code talks to Ollama.  `sentence-transformers`, `scikit-learn`, and `numpy` do the embedding and clustering in Part C.  Activate your virtual environment first if you keep one, so the packages land in the Python you will use.
 
 ```bash
-# Requests for Ollama calls (Parts A and B)
 pip install requests
-
-# Sentence transformers for embedding clustering (Part B.2)
 pip install sentence-transformers scikit-learn numpy
-
-# Verify Ollama is running
 curl http://localhost:11434/api/tags
 ```
 
-> **You should see.** `pip` finishes each install without an error, and `curl` prints a JSON list that includes `llama3.2`.
+> **You should see.** Each install finishes without an error, and `curl` prints a JSON list that includes `llama3.2`.
 >
-> **If it fails.** A "connection refused" from `curl` means Ollama is not running; start it with `ollama serve` in a separate terminal and try again.  If `llama3.2` is missing from the list, download it with `ollama pull llama3.2`.
+> **If it fails.** "Connection refused" means Ollama is not running; start it with `ollama serve` in a separate terminal.  If `llama3.2` is missing, run `ollama pull llama3.2`.
 
-### Step 0.3: Run the health check
-
-**Goal:** confirm in one run that the model answers, can produce JSON, and that embeddings work.
-
-Run this health check.  It sends one chat request to `llama3.2` and prints the reply, so you know the model answers and can produce the small piece of JSON the critic will need.  It then embeds three sentences, normalizes the vectors, and prints how similar the first two are.  The first run downloads the embedding model, so give it a minute.
+Then run this health check.  It sends one chat request and prints the reply, so you know the model answers and can produce the small piece of JSON the critic needs.  It then embeds three sentences, normalizes the vectors, and prints how similar the first two are.  The first run downloads the embedding model, so give it a minute.
 
 ```bash
 python -c "
@@ -190,53 +136,11 @@ print(normed[0] @ normed[1])
 "
 ```
 
-> **You should see.** The JSON line (the model may add extra text around it; what matters is that the JSON is present), then a shape of `(3, 384)` (three sentences, 384 numbers each) and a similarity near 0.7.
->
-> **If it fails.** If you see a connection error, start Ollama with `ollama serve` in a separate terminal.  If an import fails, `pip install` landed in a different Python than the one you ran.
+> **You should see.** The JSON line (the model may add text around it; what matters is that the JSON is there), then a shape of `(3, 384)` and a similarity near 0.7.  An import error means `pip install` went to a different Python than the one you ran.
 
-```text
-{"verdict": "accept", "issues": []}
-Embedding shape: (3, 384)
-Cosine similarity (should be ~0.7 for similar sentences):
-0.6843...
-```
+**No-code path.**  Open Open WebUI, confirm `llama3.2` is in the model list, and send it one message.  Start a spreadsheet with one tab per Part.
 
-> **Time budget.** About 7 to 10 hours in total.  This is not a single-sitting lab, so plan more than one work session.
-> - Part A: build the loop (A.1 to A.4) 60-90 min; calibrate the critic (A.5 to A.6) 45-60 min; reward hack the rubric (A.7 to A.8) 30-45 min; compare with single-shot (A.9 to A.10) 45-60 min
-> - Part A, Extended: judge-and-refine loop, log reading, and spot-check (A.11 to A.13) 30-45 min
-> - Part B: B.1 Debate 60-90 min; B.2 Consensus 60-75 min; B.3 The Shootout 60-75 min; B.4 Threshold Sensitivity 30-45 min
-> - Readme and reflection for both halves: 45-60 min
-
----
-
-## Part A: Critique and Refine (20 points)
-
-Let's start with something small.  Ask a model for a docstring for a function called `merge_sorted_lists`, and the first draft often looks fine at a glance: a summary, the parameters, a return type.  Read it against a checklist, though, and something is missing, such as the usage example.  You could point that out and ask for a revision yourself.  Part A hands both jobs to the model: one call writes, a second call checks the draft against a written checklist, and a loop passes the second call's complaints back to the first until the checklist is satisfied or you run out of tries.
-
-That raises two questions, and Part A answers both with your own measurements: how do you know the checker is right, and was the extra checking worth the extra calls?
-
-Choose a generation task with checkable criteria: a structured class announcement, a function docstring, an abstract for a lab report, or a task of your own.  The examples below use the docstring task.  You build three pieces:
-
-1. A generator agent.  Temperature controls how much randomness the model uses when it picks each word; a higher value gives more varied drafts and a lower value gives more predictable ones.  Use a warm temperature for the first draft and a cooler temperature for revisions, and justify your settings using the sampling theory from class.
-2. A critic agent.  It receives a JSON rubric (JSON is plain text made of keys and values inside braces, the same format the critic must reply in) of at least four criteria with observable descriptors (a descriptor is observable when a reader can check it by looking at the draft, without guessing at intent), and it returns `{"verdict": "accept" | "revise", "issues": [...]}`.  The critic runs at temperature 0 with a fixed seed, so the same draft gets the same verdict on every run.
-3. A loop with a configurable round budget, stored in the JSON configuration file rather than in the code.  Invalid critic JSON fails closed: the loop treats it as "revise" and logs it.  On budget exhaustion, your loop returns the final draft with its outstanding critique attached.
-
-The Part A rubric row rewards four things: a loop whose critic changes the next draft and that stops for a stated reason; a transcript showing that change; a case where the critic was wrong and how you could tell; and what the loop cost in extra calls for the quality it bought.  Steps A.1 through A.4 build the loop, A.5 and A.6 calibrate the critic (which is where you catch it being wrong), A.7 and A.8 break and repair the rubric, and A.9 and A.10 measure the cost.
-
-In plainer terms: first make the loop run, then check whether its judge can be trusted, then try to fool it, then decide whether it was worth the price.
-
-> **No-code path.** In Langflow, chain Generator, Critic, and Reviser as three prompt nodes, feeding the critic's output back into the reviser.  In Open WebUI, save three model presets (one per role, with the rubric in the critic's system prompt) and pass the text between them by hand.  This is slower, but the loop is identical and the seams are more visible.  Enforce the round budget yourself and write down every verdict, including any reply that is not valid JSON, so your transcript shows the same stopping paths the code path logs.
-
-### Step A.1: Create the configuration and rubric files
-
-**Goal:** two settings files exist and parse as valid JSON.
-
-`config.json` holds every setting both halves of the lab read, so you can change a temperature, the round budget, or the number of debate agents without editing code.  The top-level keys belong to Part A; the `debate` and `consensus` blocks belong to Part B, and the loop ignores them.  `rubric.json` lists the criteria the critic checks.
-
-> **Do this.**
-> 1. Make a folder for this lab (for example `cs357-multiagent`) and open a terminal there.
-> 2. Create `config.json` and paste the settings below.
-> 3. Create `rubric.json` and paste the criteria below.  This example is for a function docstring task; adapt it to your chosen task.
+**Both paths.**  Make a folder for this lab (for example `cs357-multiagent`) and create `config.json` in it.  Every setting in all three Parts lives here, so you can change a temperature, the round budget, or the number of agents without editing code.  The top-level keys are Part A's, the `debate` block is Part B's, and the `consensus` block is Part C's.  On the no-code path, this file is your record of the settings your presets use.
 
 ```json
 {
@@ -249,67 +153,45 @@ In plainer terms: first make the loop run, then check whether its judge can be t
   "critic_seed": 42,
   "round_budget": 5,
   "rubric_file": "rubric.json",
-  "debate": {
-    "num_agents": 3,
-    "num_rounds": 2,
-    "temperature_schedule": [0.7, 0.4],
-    "seed_base": 100
-  },
-  "consensus": {
-    "num_samples": 6,
-    "sample_temperature": 0.8,
-    "synthesizer_temperature": 0.1,
-    "distance_threshold": 0.3,
-    "embed_model": "all-MiniLM-L6-v2"
-  }
+  "debate": {"num_agents": 3, "num_rounds": 2, "temperature_schedule": [0.7, 0.4], "seed_base": 100},
+  "consensus": {"num_samples": 6, "sample_temperature": 0.8, "synthesizer_temperature": 0.1,
+                "distance_threshold": 0.3, "embed_model": "all-MiniLM-L6-v2"}
 }
 ```
 
-`provider_url` and `api_key` work as they do in the Local Agent lab: leave `api_key` as `null` for local Ollama, or, if your computer cannot run the model, point `provider_url` at a hosted Ollama server and set `api_key` to its key (see the Local Agent lab's Step 1.1, and ask me if you need help choosing a provider).
+Leave `api_key` as `null` for local Ollama.  If your computer cannot run the model, point `provider_url` at a hosted Ollama server and set `api_key` to its key, as in the Local Agent lab, and ask me if you need help choosing one.
+
+> **You should see.** `python3 -m json.tool config.json` prints the file back with no error.  An error means a missing comma or quote near the line it names.
+
+> **Time budget.** Plan on more than one sitting: roughly an hour and a half for each Part and an hour for the readme.
+
+---
+
+## Part A: Critique and Refine (30 points)
+
+One call writes, a second call checks the draft against a written rubric, and a loop hands the second call's complaints back to the first.  Three rules keep the loop honest.  The critic runs at temperature 0 with a fixed seed, so the same draft gets the same verdict every time.  A critic reply that is not valid JSON **fails closed**: the loop treats it as "revise" and logs it, so it never accepts something it could not read.  And when the round budget runs out, the loop returns the last draft with the outstanding critique attached, so whoever called it knows it did not finish.
+
+You may use either of two critics.  `critique_draft` is the accept-or-revise critic below.  `judge_critic` reuses the rubric judge from the *Judge Pipeline Workshop*: it scores each criterion from 1 to 4 with a quoted sentence, and anything below 4 becomes an issue.  Using one is enough; trying both is optional.
+
+### Practice
+
+> **Code path: do this.**
+> 1. Create `rubric.json` with the four docstring criteria below.
+> 2. Create `critique_refine.py` and `run_a.py` with the code below.
+> 3. Run `python3 run_a.py | tee practice_a.txt`.  `tee` shows the output and saves it to the file.  You need at least two loop rounds; if it accepts in round 1, run it again.
 
 ```json
 {
   "task": "function_docstring",
   "criteria": [
-    {
-      "id": "C1",
-      "name": "Purpose",
-      "descriptor": "The docstring contains a one-sentence summary of what the function does, not how it does it."
-    },
-    {
-      "id": "C2",
-      "name": "Parameters",
-      "descriptor": "Every parameter is listed with its name, type, and a brief description."
-    },
-    {
-      "id": "C3",
-      "name": "Return value",
-      "descriptor": "The return value's type and meaning are explicitly described. If the function returns None, this is stated."
-    },
-    {
-      "id": "C4",
-      "name": "Example",
-      "descriptor": "At least one usage example is provided in a doctest-compatible format (>>> function_call())."
-    }
+    {"id": "C1", "name": "Purpose", "descriptor": "The docstring contains a one-sentence summary of what the function does, not how it does it."},
+    {"id": "C2", "name": "Parameters", "descriptor": "Every parameter is listed with its name, type, and a brief description."},
+    {"id": "C3", "name": "Return value", "descriptor": "The return value's type and meaning are explicitly described. If the function returns None, this is stated."},
+    {"id": "C4", "name": "Example", "descriptor": "At least one usage example is provided in a doctest-compatible format (>>> function_call())."}
   ],
   "accept_threshold": "All four criteria must be met for a verdict of 'accept'."
 }
 ```
-
-> **You should see.** `python3 -m json.tool config.json` prints the file back, reformatted, with no error; the same command on `rubric.json` does the same.
->
-> **If it fails.** An error means a missing comma or quote.  The line number in the message points at or just after the problem.
-
-### Step A.2: Implement the generator agent
-
-**Goal:** one function that writes a first draft, or revises a draft given a critique.
-
-`generate_draft` builds one of two prompts.  With no previous draft it asks for a first draft at the warm temperature.  With a previous draft and a critique it asks for a revision at the cooler temperature.  The `[lab3:generate_draft]` tag in the exception handler is the located error message the Code Quality row asks for: it names the function that failed, and the traceback says why.
-
-> **Do this.**
-> 1. Create `critique_refine.py` in the lab folder.
-> 2. Paste the imports, the two loader functions, and `generate_draft` below.
-> 3. Run `python3 critique_refine.py`.
 
 ```python
 import requests
@@ -330,7 +212,6 @@ def generate_draft(task_description, previous_draft=None, critique=None, config=
     If previous_draft and critique are provided, this is a revision call.
     """
     temperature = config["generator_temp_first"] if previous_draft is None else config["generator_temp_revise"]
-
     if previous_draft is None:
         user_message = f"Generate a draft for the following task:\n\n{task_description}"
     else:
@@ -340,15 +221,9 @@ def generate_draft(task_description, previous_draft=None, critique=None, config=
             f"Here is the critique you must address:\n\n{json.dumps(critique, indent=2)}\n\n"
             f"Please revise the draft to address every issue listed. Return only the revised draft, no commentary."
         )
-
     messages = [{"role": "user", "content": user_message}]
-    payload = {
-        "model": config["model"],
-        "messages": messages,
-        "stream": False,
-        "options": {"temperature": temperature}
-    }
-
+    payload = {"model": config["model"], "messages": messages, "stream": False,
+               "options": {"temperature": temperature}}
     try:
         response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
         response.raise_for_status()
@@ -357,32 +232,17 @@ def generate_draft(task_description, previous_draft=None, critique=None, config=
         print(f"[lab3:generate_draft] {e}")
         traceback.print_exc()
         raise
-```
 
-> **You should see.** Nothing at all.  The file only defines functions so far, so it exits silently, and that silence tells you the file parses.
->
-> **If it fails.** A `SyntaxError` or `IndentationError` names a line; the usual cause is a paste that lost its indentation.  `ModuleNotFoundError: No module named 'requests'` means Step 0.2's install went to a different Python.
-
-### Step A.3: Implement the critic agent
-
-**Goal:** one function that checks a draft against the rubric and always returns a verdict the loop can read.
-
-`critique_draft` turns the rubric into a system prompt, sends the draft, and parses the reply as JSON.  If the reply does not parse, the function returns a "revise" verdict and logs the raw text.  That is the fail-closed rule: a network failure re-raises after a located message, but a parse failure logs the raw text and returns "revise", so the loop never accepts something it could not read.
-
-> **Do this.** Append `critique_draft` below to `critique_refine.py`.
-
-```python
 def critique_draft(draft, rubric, config):
     """
     Ask the critic to evaluate the draft against the rubric.
     Returns a dict: {"verdict": "accept"|"revise", "issues": [...]}
-    On JSON parse failure, returns {"verdict": "revise", "issues": ["[JSON parse failure - treating as revise]"]}
+    On JSON parse failure, returns a "revise" verdict whose issue holds the raw output.
     """
     criteria_text = "\n".join(
         f"- {c['id']} ({c['name']}): {c['descriptor']}"
         for c in rubric["criteria"]
     )
-
     system_prompt = (
         "You are a strict quality critic. Evaluate the draft against every criterion below. "
         "Return ONLY valid JSON in this exact format, with no additional text:\n"
@@ -393,19 +253,12 @@ def critique_draft(draft, rubric, config):
         f"CRITERIA:\n{criteria_text}\n\n"
         f"ACCEPT THRESHOLD: {rubric['accept_threshold']}"
     )
-
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": f"DRAFT TO EVALUATE:\n\n{draft}"}
     ]
-
-    payload = {
-        "model": config["model"],
-        "messages": messages,
-        "stream": False,
-        "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}
-    }
-
+    payload = {"model": config["model"], "messages": messages, "stream": False,
+               "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}}
     try:
         response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
         response.raise_for_status()
@@ -414,7 +267,6 @@ def critique_draft(draft, rubric, config):
         print(f"[lab3:critique_draft:network] {e}")
         traceback.print_exc()
         raise
-
     # Try to parse JSON; fail closed on malformed output
     try:
         # Strip markdown code fences if present
@@ -423,699 +275,218 @@ def critique_draft(draft, rubric, config):
         assert "verdict" in critique and "issues" in critique
         return critique
     except Exception as e:
-        print(f"[lab3:critique_draft:json_parse] Malformed critic output - failing closed. Raw: {raw!r}")
+        print(f"[lab3:critique_draft:json_parse] Malformed critic output, failing closed. Raw: {raw!r}")
         return {"verdict": "revise", "issues": [f"[JSON parse failure] Raw output: {raw[:200]}"]}
-```
 
-> **You should see.** `python3 critique_refine.py` still exits silently.  You see the critic work in the next step, when the loop calls it.
-
-**Predict:** if the model wraps its JSON in a sentence such as "Here is my evaluation:", which branch of `critique_draft` runs, and what verdict does the loop receive?
-
-### Step A.4: Implement the loop and run a smoke test
-
-**Goal:** run the full generate, critique, refine loop once and save a transcript of at least two cycles.
-
-Each round generates a draft and critiques it.  An "accept" verdict returns immediately.  If the loop uses up its budget, it returns the last draft with the outstanding critique appended, so the caller knows the loop did not converge.  The generator and the critic are separate model calls with separate temperatures, and the loop is the only piece that decides when to stop, so every stopping path (accept, fail-closed revise, budget exhausted) must leave a trace in the log.
-
-> **Do this.**
-> 1. Append `critique_refine_loop` below to `critique_refine.py`.  Step A.9 reads the `rounds_used` value it returns to count calls.
-> 2. Append the `__main__` block after it.  The `__main__` guard means the smoke test runs only when you run this file directly, not when the later scripts import it.
-> 3. Run it from the lab folder and save the full terminal output; the Part A row asks for a transcript showing an output changing in response to a critique, so you need at least two complete cycles.
->
-> ```bash
-> python3 critique_refine.py
-> ```
-
-```python
-def critique_refine_loop(task_description, config, rubric):
+def critique_refine_loop(task_description, config, rubric, critic=critique_draft):
     """
     Run the generate/critique/refine loop.
+    critic is any function (draft, rubric, config) -> {"verdict", "issues"}.
     Returns (final_draft, final_critique, rounds_used, termination_reason).
     """
     draft = None
     critique = None
-
     for round_num in range(1, config["round_budget"] + 1):
         print(f"\n=== Round {round_num} ===")
-
         # Generate
         draft = generate_draft(task_description, previous_draft=draft, critique=critique, config=config)
         print(f"[Generator] Draft (first 200 chars): {draft[:200]}...")
-
         # Critique
-        critique = critique_draft(draft, rubric, config)
+        critique = critic(draft, rubric, config)
         print(f"[Critic] Verdict: {critique['verdict']}")
         if critique["issues"]:
             print(f"[Critic] Issues: {critique['issues']}")
-
         if critique["verdict"] == "accept":
             return (draft, critique, round_num, "accepted")
-
-    # Budget exhausted - return last draft with critique attached
+    # Budget exhausted: return the last draft with the critique attached
     final_output = f"{draft}\n\n--- OUTSTANDING CRITIQUE (budget exhausted after {config['round_budget']} rounds) ---\n{json.dumps(critique, indent=2)}"
     return (final_output, critique, config["round_budget"], "budget_exhausted")
-
-if __name__ == "__main__":
-    config = load_config()
-    rubric = load_rubric(config)
-    task = "Write a Python docstring for a function called `merge_sorted_lists` that takes two sorted lists of integers and returns a single sorted list."
-    draft, critique, rounds, reason = critique_refine_loop(task, config, rubric)
-    print(f"\n=== FINAL OUTPUT ===\nRounds: {rounds} | Reason: {reason}")
-    print(draft)
 ```
 
-> **You should see.** A round banner, a draft preview, and a verdict line per round, then either an `accepted` return or an `OUTSTANDING CRITIQUE` block.  Abbreviated; your drafts and round count will differ.
+```python
+# run_a.py: one single call, then the critique-and-refine loop, on the same task
+from critique_refine import load_config, load_rubric, generate_draft, critique_draft, critique_refine_loop
+
+TASK = "Write a Python docstring for a function called `merge_sorted_lists` that takes two sorted lists of integers and returns a single sorted list."
+RUBRIC_FILE = "rubric.json"
+USE_JUDGE = False  # True uses judge_critic and JUDGE_RUBRIC from judge_critic.py
+
+config = load_config()
+if USE_JUDGE:
+    from judge_critic import judge_critic, JUDGE_RUBRIC
+    critic, rubric = judge_critic, JUDGE_RUBRIC
+else:
+    critic, rubric = critique_draft, load_rubric({**config, "rubric_file": RUBRIC_FILE})
+
+single = generate_draft(TASK, config=config)
+print(f"=== SINGLE CALL (1 model call) ===\n{single}")
+
+draft, critique, rounds, reason = critique_refine_loop(TASK, config, rubric, critic=critic)
+print(f"\n=== LOOP: {reason} after {rounds} rounds ({2 * rounds} model calls) ===\n{draft}")
+```
+
+The `[lab3:generate_draft]` tag in each `except` block is a **located message**: it names the function that failed, and the traceback after it says why.  Keep these handlers, and give any model call you add one of its own.
+
+> **You should see.** The single draft, then a banner, a draft preview, and a verdict per round, then `accepted` or an `OUTSTANDING CRITIQUE` block.  Abbreviated; your drafts and round count will differ.
 
 ```text
 === Round 1 ===
 [Generator] Draft (first 200 chars): """Merge two sorted lists.
-...
 [Critic] Verdict: revise
 [Critic] Issues: ['C4 (Example): No usage example in doctest format is provided.']
 
 === Round 2 ===
 [Generator] Draft (first 200 chars): """Merge two sorted lists of integers into one sorted list.
-...
 [Critic] Verdict: accept
-[Critic] Issues: []
 
-=== FINAL OUTPUT ===
-Rounds: 2 | Reason: accepted
+=== LOOP: accepted after 2 rounds (4 model calls) ===
 ```
 
-> **If it fails.** A connection error tagged `[lab3:generate_draft]` or `[lab3:critique_draft:network]` means Ollama is not answering; go back to Step 0.2.  If the run accepts in round 1, you do not yet have the two cycles the transcript needs; run it again, or make the task harder.  If every round says `revise`, see Troubleshooting, Part A.
+**Predict:** if the critic wraps its JSON in a sentence such as "Here is my evaluation:", which branch of `critique_draft` runs, and what verdict does the loop receive?
 
-> **Checkpoint.** Before moving to Step A.5, make sure you can answer:
-> 1. Why does the critic run at temperature 0 while the generator runs at a higher temperature?  What property does each temperature setting encourage?
-> 2. What does "fail closed" mean in the context of JSON parsing?  Why is fail-closed safer than ignoring the parse error?
-> 3. On budget exhaustion, your loop attaches the outstanding critique to the returned draft.  Why is this useful to the caller?
-
-### Step A.5: Write calibration drafts and run the critic over them
-
-**Goal:** a set of drafts whose defects you know, and the critic's verdict on each one.
-
-Calibration means measuring how well the critic's verdicts track the truth.  You do that with drafts whose defects you planted yourself, so you know the right answer for each one.  Two numbers describe the critic per criterion.  The **detection rate** is the fraction of drafts with a planted defect in that criterion that the critic flagged.  The **false positive rate** is the fraction of defect-free drafts that the critic flagged for that criterion anyway.  Defect-free drafts are what let you see false positives at all, so the set needs some.
-
-Put simply: you write the answer key first, then grade the grader against it.
-
-> **No-code path.** Calibration is prompt work and analysis, not code.  Run each calibration draft through your critic preset or Critic node, record the verdict beside the defect you planted, and compute the two rates per criterion in a spreadsheet using the four counts Step A.6 describes.
-
-> **Do this.**
-> 1. Create `calibration_drafts.json` in your lab folder and start from the three entries below.  Each entry records the draft, the defect you planted, and a short description, so Step A.6 can score the critic against the truth.
-> 2. Add D04 through D12: at least one defect per criterion, several multi-defect drafts, and at least two defect-free drafts in total.  Make some defects subtle (a parameter description that lists the name but not the type, or an example that shows a call but not the return value); obvious defects tell you nothing about the critic.  You do not have to hand-escape every entry: write the draft as a normal triple-quoted Python string, build the entry as a dict, and print `json.dumps(entry, indent=2)` to get the escaped version to paste in.
-> 3. Check the file with `python3 -m json.tool calibration_drafts.json`.
->
-> **You should see.** The whole file printed back with no error.
->
-> **If it fails.** An error at a line number usually means the `// TODO` comment or an unescaped quote.
-
-```json
-[
-  {
-    "id": "D01",
-    "defect": "missing_C4",
-    "description": "No example provided",
-    "draft": "\"\"\"Merge two sorted lists of integers.\n\nArgs:\n    a (list[int]): First list.\n    b (list[int]): Second list.\n\nReturns:\n    list[int]: Merged sorted list.\n\"\"\""
-  },
-  {
-    "id": "D02",
-    "defect": "missing_C2_and_C3",
-    "description": "No parameter or return descriptions",
-    "draft": "\"\"\"Merge two sorted lists.\n\nExample:\n    >>> merge_sorted_lists([1, 3], [2, 4])\n    [1, 2, 3, 4]\n\"\"\""
-  },
-  {
-    "id": "D03",
-    "defect": "none",
-    "description": "Defect-free draft",
-    "draft": "\"\"\"Merge two sorted lists of integers into a single sorted list.\n\nArgs:\n    a (list[int]): First sorted list of integers.\n    b (list[int]): Second sorted list of integers.\n\nReturns:\n    list[int]: A new sorted list containing all elements from a and b.\n\nExample:\n    >>> merge_sorted_lists([1, 3], [2, 4])\n    [1, 2, 3, 4]\n\"\"\""
-  }
-  // TODO: Add D04 through D12 - at least one defect per criterion, multiple multi-defect drafts
-]
-```
-
-> **Watch out.** Two things trip people up here.  First, JSON does not allow comments, so delete the `// TODO` line before you run your code; it is a note to you, not valid JSON.  Second, a multi-line docstring must be written as a single JSON string with `\n` for each line break and `\"` for each quote.
-
-Now run the critic once per draft and keep the verdict beside the planted defect.
-
-> **Do this.**
-> 1. Create `calibrate.py` in the same folder and start it with `from critique_refine import critique_draft, load_config, load_rubric`.
-> 2. Add `run_calibration` below.  You run it in Step A.6, once `compute_rates` and a `__main__` block are in place.
+**The judge as critic (optional).**  To use the workshop's judge instead, create `judge_critic.py` below, set `USE_JUDGE = True` in `run_a.py`, and run it again.  It keeps the workshop's prompt and its 1-to-4 levels, rewritten for the docstring task with the same ids C1 to C4, and it reads `critic_temp` and `critic_seed` (0 and 42, the workshop's settings) from `config.json`.  The code, not the model, decides the verdict: "accept" only when every criterion is at level 4.
 
 ```python
 import json
-
-def run_calibration(calibration_file, config, rubric):
-    with open(calibration_file) as f:
-        drafts = json.load(f)
-
-    results = []
-    for d in drafts:
-        critique = critique_draft(d["draft"], rubric, config)
-        results.append({
-            "id": d["id"],
-            "planted_defect": d["defect"],
-            "critic_verdict": critique["verdict"],
-            "critic_issues": critique["issues"]
-        })
-        print(f"{d['id']} (defect={d['defect']}): critic says {critique['verdict']}")
-
-    return results
-```
-
-> **You should see.** When you run it in Step A.6, one line per draft, such as `D01 (defect=missing_C4): critic says revise`.  A defect-free draft should say `accept`; if not, that is a false positive, and Step A.6 counts it.
-
-### Step A.6: Compute the rates and find the case where the critic was wrong
-
-**Goal:** a detection rate and a false positive rate per criterion, and one documented case where the critic was wrong.
-
-For each criterion, the code counts four cases: true positives (planted defect, critic flagged it), false negatives (planted defect, critic missed it), false positives (no defect in this criterion, critic flagged it), and true negatives (no defect in this criterion, critic stayed quiet).  A draft whose planted defect is in a different criterion counts as a negative for this one.  A missed defect or a phantom defect is a case where the critic was wrong, and you can tell because you planted the truth.  That case, with how you could tell, is what the Part A row's proficient column asks for.
-
-> **Do this.**
-> 1. Add `compute_rates` below to `calibrate.py`.
-> 2. Add a `__main__` block that loads the config and rubric, calls `run_calibration("calibration_drafts.json", config, rubric)`, and passes the results to `compute_rates`.
-> 3. Run `python3 calibrate.py` and copy the per-criterion lines into a table in your readme.
-> 4. Name the weakest criterion (the one with the lowest detection rate) and pick one draft where the critic was wrong: a planted defect it missed, or a defect-free draft it flagged.  In your readme, quote the critic's verdict beside the defect you planted and say in one or two sentences how you could tell the critic was wrong.
-> 5. Rewrite the weakest criterion's descriptor in `rubric.json` so that a reader can check it without interpretation, as in the example below, re-run `python3 calibrate.py`, and show the original descriptor next to the new one with the detection rate before and after.  Report both numbers even if the rewrite did not help; that is a result too.
-
-```python
-import re
-
-def compute_rates(results, rubric):
-    criteria_ids = [c["id"] for c in rubric["criteria"]]
-    rates = {}
-
-    for cid in criteria_ids:
-        # A draft counts as positive for THIS criterion only if its planted defect names it
-        # (for example "missing_C4" is positive for C4 and negative for C1, C2, and C3).
-        # True positives: this criterion has a planted defect AND the critic flagged it
-        # False negatives: this criterion has a planted defect AND the critic missed it
-        # False positives: this criterion has NO planted defect AND the critic flagged it
-        # True negatives: this criterion has NO planted defect AND the critic stayed quiet
-        tp = fp = fn = tn = 0
-
-        for r in results:
-            has_defect = re.search(rf"\b{cid}\b", r["planted_defect"].replace("_", " "), re.IGNORECASE) is not None
-            # Simplification: check if any issue string mentions the criterion ID
-            critic_flagged = any(cid in issue for issue in r["critic_issues"])
-
-            if has_defect:
-                if critic_flagged:
-                    tp += 1
-                else:
-                    fn += 1
-            else:
-                if critic_flagged:
-                    fp += 1
-                else:
-                    tn += 1
-
-        detection_rate = tp / (tp + fn) if (tp + fn) > 0 else float("nan")
-        fp_rate = fp / (fp + tn) if (fp + tn) > 0 else float("nan")
-        rates[cid] = {"detection_rate": detection_rate, "false_positive_rate": fp_rate}
-        print(f"  {cid}: detection={detection_rate:.2f}, fp_rate={fp_rate:.2f}")
-
-    return rates
-```
-
-> **You should see.** One line per draft from `run_calibration`, then one line per criterion in the form `  C1: detection=0.75, fp_rate=0.00`.  If the rewrite worked, the rewritten criterion's detection rate goes up on the re-test while the others hold steady.
->
-> **If it fails.** A `nan` means no draft exercised that case; add drafts until none remain.
-
-Example rewrite:
-
-- **Before**: "C4 (Example): At least one example is provided."
-- **After**: "C4 (Example): At least one usage example is shown in doctest format: a line beginning with `>>>` followed by the function call, and a second line with the expected return value."
-
-> **Checkpoint.** Before moving to Step A.7, make sure you can answer:
-> 1. Which criterion had the lowest detection rate before your rewrite?  What specifically made that criterion hard for the model to evaluate?
-> 2. What is the difference between a detection rate and a false positive rate?  Which one is more costly in a real deployment, and why?
-> 3. Why must you include defect-free drafts in a calibration set, not just defective ones?
-
-### Step A.7: Find a loophole and write a hack draft
-
-**Goal:** a poor draft that your critic accepts anyway.
-
-Reward hacking is producing an output that satisfies the letter of a scoring rule while missing its intent.  The scorer says "accept"; a human says "this is poor."  Do exactly that to your own rubric on purpose, so you can see the loophole and close it.  A successful hack is a second kind of case where the critic was wrong, and this time you can tell because your own judgment disagrees with its verdict.
-
-> **No-code path.** This step asks you to write something that scores well and is bad.  That is a writing exercise; the route you used to run the rubric does not change it.  Save the critic's "accept" reply, edit the rubric text inside the preset or Critic node to make the patch in Step A.8, and run both the hack and a defect-free draft through the patched critic.
-
-> **Do this.**
-> 1. Read each criterion's descriptor literally, the way the critic does, and look for one of these loophole types:
->    - **Keyword stuffing**: The descriptor says "contains a one-sentence summary"; can you write a sentence so vague it is technically present but useless?
->    - **Minimal compliance**: The descriptor says "every parameter is listed"; can you list parameters with empty or copy-pasted descriptions?
->    - **Format gaming**: The descriptor says "in doctest format"; can you write a syntactically valid doctest that tests nothing meaningful?
-> 2. Write down which criterion you can satisfy without producing anything useful, and why; the checkpoint after Step A.8 asks for it in one sentence.
-> 3. Create `hack.py` in your lab folder.  Import `critique_draft`, `load_config`, and `load_rubric` from `critique_refine`, then load the config and rubric.
-> 4. Paste the block below, replacing `hack_draft` with your own hack if the example does not fit your task, and run `python3 hack.py`.
-> 5. Put the transcript in your readme verbatim, with your own judgment of why the draft is poor.
-
-```python
-hack_draft = """
-\"\"\"Do stuff.
-
-Args:
-    a (list[int]): a.
-    b (list[int]): b.
-
-Returns:
-    list[int]: result.
-
-Example:
-    >>> merge_sorted_lists([1], [2])
-    [1, 2]
-\"\"\"
-"""
-
-critique = critique_draft(hack_draft, rubric, config)
-print(f"Critic verdict on hack: {critique['verdict']}")
-print(f"Issues: {critique['issues']}")
-# Expected: verdict == "accept" despite being a poor docstring
-```
-
-> **You should see.** `Critic verdict on hack: accept` with an empty issue list.
->
-> **If it fails.** If the critic says `revise`, the loophole is not as open as you thought; see Troubleshooting, Part A.
-
-### Step A.8: Patch the rubric and verify the patch
-
-**Goal:** a patched rubric that rejects your hack and still accepts a good draft.
-
-A rubric that only rejects the hack is not a fix if it also rejects good work.  Both tests below have to pass.
-
-> **Do this.**
-> 1. Copy `rubric.json` to `rubric_patched.json` and change only the exploited criterion's descriptor.
-> 2. Append the two tests below to `hack.py`, with `good_draft` set to your defect-free draft from Step A.5, and run it again.
-> 3. Show the change in your readme; show the patched rubric beside the original, naming every criterion you changed.
-
-```python
-# load_rubric_from_file(path) is a two-line helper you write: open the path and return json.load(f)
-rubric_patched = load_rubric_from_file("rubric_patched.json")
-
-# Test 1: patch rejects the hack
-critique_hack = critique_draft(hack_draft, rubric_patched, config)
-print(f"Patched rubric on hack: {critique_hack['verdict']}")  # Expected: revise
-
-# Test 2: patch still accepts a good draft
-good_draft = "..."  # your defect-free draft from Step A.5
-critique_good = critique_draft(good_draft, rubric_patched, config)
-print(f"Patched rubric on good draft: {critique_good['verdict']}")  # Expected: accept
-```
-
-> **You should see.** `Patched rubric on hack: revise` followed by `Patched rubric on good draft: accept`.  Both lines are your second transcript.
->
-> **If it fails.** If both drafts come back `revise`, the patch is too strict; see "The patch rejects both the hack AND the good draft" in Troubleshooting, Part A.  If the hack still comes back `accept`, the new wording does not yet name the thing your hack leaves out.
-
-> **Checkpoint.** Before moving to Step A.9, make sure you can answer:
-> 1. Describe your hack in one sentence.  Which criterion's descriptor had the loophole?
-> 2. What does the existence of reward hacking imply about using any rubric (automated or human) as the sole quality gate?
-> 3. In your patched rubric, what specific wording change closed the loophole?  Why does that wording prevent the hack while still accepting good work?
-
-### Step A.9: Compare the loop with single-shot generation
-
-**Goal:** a score and a call count for both conditions on the same eight or more tasks.
-
-Single-shot generation is one generator call with no critique.  On a fixed set of at least eight tasks, compare single-shot generation against your full critique-and-refine loop.  Score both conditions with the same instrument: your calibrated critic (the `score_draft` function below, which scores against the same `rubric.json` the loop refines toward), or a blind human ranking between you and your partner.  The comparison is only fair when both conditions use the same tasks and the same scorer.  For each task, condition A makes one generator call and one scoring call; condition B runs the full loop and then makes one scoring call.
-
-> **Watch out.** A critic that shares the loop's rubric can favor the loop, because the loop spent its rounds fixing exactly what that critic checks.  The blind human ranking does not have this problem, which makes it the fairer of the two scorers.
-
-> **No-code path.** Run each task once through the generator preset alone and once through the full loop, score both drafts with the critic preset, and count the calls by hand.  Time one pass versus three by the clock, and answer Step A.10's question with your own measurements.
-
-> **Do this.**
-> 1. Create `compare.py` in your lab folder.  Import `generate_draft`, `critique_draft`, `critique_refine_loop`, `load_config`, and `load_rubric` from `critique_refine`, then load the config and rubric.
-> 2. Paste the task list and `score_draft` below, and add five more tasks of increasing complexity, following the comments in the list.  The list gives you three, so five more brings it to the eight this step requires.
-> 3. Append the run block after them and run `python3 compare.py`.  Eight tasks times up to five rounds takes a while on a laptop; let it finish.
-> 4. Keep `comparison_results.csv`; it goes in your ZIP.
-
-```python
-COMPARISON_TASKS = [
-    "Write a docstring for a function `binary_search(arr, target)` that searches a sorted list.",
-    "Write a docstring for a function `flatten(nested_list)` that recursively flattens nested lists.",
-    # Worked example of a more complex task - note how it adds competing constraints
-    # (multiple parameters, an exception case, and a default value) that all four
-    # rubric criteria must cover simultaneously:
-    "Write a docstring for a function `paginate(items, page_size=10, page=1)` that returns one page of a list and raises ValueError when page is out of range.",
-    # TODO: Add 5 more tasks of increasing complexity, following the pattern above.
-    # Each task is just a plain string in this list. Good sources of "complexity":
-    # more parameters, default values, error/exception cases, and edge cases
-    # (empty input, ties, duplicates) that the docstring must document.
-]
-
-# Use your calibrated rubric as the scoring instrument
-# Score: count the number of criteria the critic marks as met (0-4 for a 4-criterion rubric)
-def score_draft(draft, rubric, config):
-    """Returns (numeric_score, critique_dict, calls_made)."""
-    critique = critique_draft(draft, rubric, config)
-    issues = critique.get("issues", [])
-    # Score = total criteria - number of issues mentioned
-    num_criteria = len(rubric["criteria"])
-    score = max(0, num_criteria - len(issues))
-    return score, critique, 1  # 1 model call for critique
-```
-
-```python
-import csv
-
-results = []
-for i, task in enumerate(COMPARISON_TASKS):
-    # Condition A: single shot
-    single_draft = generate_draft(task, config=config)
-    single_score, _, critique_calls = score_draft(single_draft, rubric, config)
-    single_total_calls = 1 + critique_calls  # 1 generate + 1 critique
-
-    # Condition B: critique and refine loop
-    loop_draft, loop_critique, rounds, reason = critique_refine_loop(task, config, rubric)
-    loop_score, _, final_critique_calls = score_draft(loop_draft, rubric, config)
-    # Calls: rounds * (1 generate + 1 critique) + 1 final scoring critique
-    loop_total_calls = rounds * 2 + final_critique_calls
-
-    results.append({
-        "task_id": f"T{i+1:02d}",
-        "single_score": single_score,
-        "single_calls": single_total_calls,
-        "loop_score": loop_score,
-        "loop_calls": loop_total_calls,
-        "loop_rounds": rounds,
-        "loop_reason": reason,
-    })
-    print(f"T{i+1:02d}: single={single_score}/4 ({single_total_calls} calls) | loop={loop_score}/4 ({loop_total_calls} calls, {rounds} rounds)")
-
-# Write results CSV
-with open("comparison_results.csv", "w", newline="") as f:
-    writer = csv.DictWriter(f, fieldnames=results[0].keys())
-    writer.writeheader()
-    writer.writerows(results)
-
-avg_single = sum(r["single_score"] for r in results) / len(results)
-avg_loop = sum(r["loop_score"] for r in results) / len(results)
-avg_single_calls = sum(r["single_calls"] for r in results) / len(results)
-avg_loop_calls = sum(r["loop_calls"] for r in results) / len(results)
-print(f"\nSingle-shot: avg score={avg_single:.2f}, avg calls={avg_single_calls:.1f}")
-print(f"Loop: avg score={avg_loop:.2f}, avg calls={avg_loop_calls:.1f}")
-```
-
-**Predict:** before you run it, which condition do you expect to score higher, and by how many extra calls per task?  Write your guess down so you can compare.
-
-> **You should see.** One line per task and two summary lines; your numbers will differ.
-
-```text
-T01: single=2/4 (2 calls) | loop=4/4 (6 calls, 3 rounds)
-T02: single=3/4 (2 calls) | loop=4/4 (4 calls, 2 rounds)
-...
-Single-shot: avg score=2.75, avg calls=2.0
-Loop: avg score=3.50, avg calls=5.2
-```
-
-> **If it fails.** If both conditions score the same on every task, or the loop hits its budget every time, see "Single-shot and loop produce identical scores" and "The loop always hits the round budget without accepting" in Troubleshooting, Part A.
-
-### Step A.10: Write the cost-for-quality paragraph
-
-**Goal:** one readme paragraph that puts the loop's extra calls next to the quality they bought.
-
-Report the cost next to the quality every time, because a loop that always wins on quality can still lose on cost.  This paragraph is the last thing the Part A row's proficient column asks for.
-
-> **Do this.** In your readme, answer two questions in one paragraph, citing the average scores and call counts from your run:
-> 1. Did the loop earn its extra model calls?  State what the loop cost in extra calls for the quality it bought.
-> 2. Under what conditions (task complexity, quality threshold, latency budget) would you choose each approach?
-
-> **Checkpoint.** Before moving to Part B, make sure you can answer:
-> 1. On average, how many extra model calls did the loop use compared to single-shot?  What was the average quality improvement?
-> 2. On which tasks did the loop NOT improve over single-shot?  What do those tasks have in common?
-> 3. If each model call costs \$0.001, what is the maximum quality improvement you would pay for in a real deployment, and how does that compare to what you measured?
-
-### Troubleshooting, Part A
-
-- **The critic always returns `"verdict": "revise"` even after many rounds.**  Print the full critic output (`raw` before JSON parsing) to see what the model is actually saying.  Common causes: (1) the model is outputting JSON wrapped in markdown fences; the strip step in the parser should handle this, but check for unusual fence formats; (2) the rubric descriptors are so strict that no draft can satisfy them; loosen one criterion as a test.
-- **`json.JSONDecodeError` fires on valid-looking output.**  The model may be inserting a BOM (byte order mark, an invisible marker character) or a non-breaking space before the opening `{`.  Add `raw = raw.encode('ascii', 'ignore').decode('ascii')` before `json.loads` to strip non-ASCII, then re-try.
-- **The loop never terminates (no `accept` and no budget exhaustion).**  Check that your `for round_num in range(1, config["round_budget"] + 1)` loop is iterating the correct number of times.  Print `round_num` at the start of each iteration.  If it runs forever, your `return` on `"accepted"` may be inside an inner scope; check indentation.
-- **Detection rate is 1.0 for all criteria even with weak descriptors.**  Your planted defects may be too obvious.  Try subtle defects: a parameter description that lists the name but not the type, or an example that shows a call but not the return value.  Make the defect require careful reading to spot.
-- **Detection rate is 0.0 for a criterion even after rewriting.**  The model may not be parsing your criterion ID correctly.  Change the prompt to include the criterion name in full (not just "C1") and check that the model's issue strings reference those names.
-- **Your two defect-free drafts get critiqued as "revise".**  This is a false positive.  Record the rate and include it in your analysis; it signals that the rubric is stricter than it needs to be.
-- **You cannot find a hack: the critic is too strict.**  Try the minimal-compliance approach: meet every criterion with the absolute minimum.  For example, if the criterion says "every parameter is listed with name, type, and description," write a description of a single character: `a (list[int]): x.`
-- **The patch rejects both the hack AND the good draft.**  Your patch is too strict.  Revise the wording to be more precise rather than more restrictive.  The goal is to close the specific loophole, not to raise the bar for all drafts.
-- **The critic is non-deterministic even at temperature 0.**  Some Ollama models ignore the seed parameter.  Run the same draft three times and record whether the verdict is consistent.  If it is not, note this in your writeup as a threat to calibration reliability.
-- **Single-shot and loop produce identical scores.**  Your rubric criteria may be too easy to satisfy in a single shot.  Try harder tasks (more criteria to satisfy simultaneously) or add a fifth criterion to your rubric.  Single-shot may also score high because you chose simple tasks; the benefit of the loop shows most clearly on tasks with four or more competing constraints.
-- **The loop always hits the round budget without accepting.**  Decrease the `round_budget` to 3 for the comparison experiment so budget-exhaustion cases are more frequent and visible in your data.  Document these cases; they show the loop's failure mode.
-- **Scores from the critic feel inconsistent across conditions.**  Use a fresh critic call with a fixed seed for all final scoring (not the verdicts from within the loop).  Then both conditions are scored by the same "judge call" and the results are comparable.
-
----
-
-## Part A, Extended: Rubric Judge-and-Refine Loop (5 points)
-
-Your Part A critic says one of two words, "accept" or "revise", and a list of issues.  A **judge** says more: for every criterion of an explicit rubric it picks a level, quotes the sentence of the draft that justifies the level, and writes one concrete revision instruction.  The producing agent (your Part A generator) revises from those instructions, the judge scores again, and the pair iterates until every criterion meets its bar or the round cap of three is reached.  This is the judge you built in the *Judge Pipeline Workshop: Build and Audit a Judge*, with two additions: a one-line "meets" bar per criterion and a revision instruction per score.
-
-The point of this part is not a better docstring.  It is the per-round log.  A loop whose scores climb from round 1 to round 3 can mean three different things, and only the log plus your own reading can tell them apart:
-
-- **Converged**: the levels rose because the draft changed in the way the instructions asked.
-- **Drifted**: the levels wandered (a criterion that met the bar in round 2 fails in round 3, or the total oscillates) while the draft changed in unrelated ways.
-- **Sycophantic**: the levels rose while the draft barely improved; the judge rewarded the producer for appearing to comply, or rewarded wording that echoes the rubric.
-
-In other words, rising scores are a claim, and the draft is the evidence.  Your job is to check the claim against the evidence.
-
-> **No-code path.** Open two chats in Open WebUI.  The **Producer** chat is your generator preset from Part A.  The **Judge** chat gets a system prompt containing the three criteria below, their levels, their meets bars, and the reply format (a level, an exact quote, and one revision instruction per criterion).  Paste the Producer's draft into the Judge, paste the Judge's instructions for the unmet criteria back into the Producer, and repeat, stopping at three rounds or as soon as every criterion meets its bar.  Keep a spreadsheet with one row per criterion per round and the columns `round`, `criterion`, `level`, `meets`, `evidence`, `quote_found`, and `fix`; fill `quote_found` by searching the draft (Ctrl+F) for the judge's quote.  Start a **fresh** Judge chat each round, so the judge sees only the current draft and not its own earlier scores; that history is exactly what lets leniency drift in.
-
-### Step A.11: Write the judge rubric and the judge
-
-**Goal:** a three-criterion judge rubric and a `judge_score` function that returns a level, a quote, and a fix for each criterion.
-
-The judge rubric is deliberately different from `rubric.json`.  Part A's rubric checks that the parts of a docstring are present; this one asks whether they are any good, which is where a judge has room to be lenient.  Each criterion has three levels and a `meets` line: the one-line bar a draft must clear, stated so a reader can check it.  The code, not the model, decides whether a criterion meets the bar, by comparing the awarded level with `meets_level`.
-
-> **Do this.**
-> 1. Add two keys to `config.json`: `"judge_rubric_file": "judge_rubric.json"` and `"judge_max_rounds": 3`.  The judge reuses `critic_temp` and `critic_seed`, so it is as repeatable as your critic.
-> 2. Create `judge_rubric.json` with the criteria below, adapted to your Part A task if it is not the docstring task.
-> 3. Create `judge_refine.py` and paste `judge_score` below.  It imports your Part A helpers, so it needs no new request code.
-
-```json
-{
-  "task": "function_docstring",
-  "criteria": [
-    {
-      "id": "J1",
-      "name": "Accuracy",
-      "levels": {"1": "States behavior the function does not have", "2": "Correct but vague about at least one behavior", "3": "Every stated behavior is correct and specific"},
-      "meets_level": 3,
-      "meets": "A reader could predict the output for a new input from the docstring alone."
-    },
-    {
-      "id": "J2",
-      "name": "Edge cases",
-      "levels": {"1": "No edge cases mentioned", "2": "Names edge cases without saying what happens", "3": "Names at least two edge cases and states the result of each"},
-      "meets_level": 3,
-      "meets": "At least two edge cases (for example, an empty list) appear with their results stated."
-    },
-    {
-      "id": "J3",
-      "name": "Example",
-      "levels": {"1": "No example", "2": "An example with trivial input or no stated output", "3": "A doctest whose input exercises a nontrivial case and whose stated output is correct"},
-      "meets_level": 3,
-      "meets": "The doctest would pass, and would fail on a plausible bug such as dropping duplicates."
-    }
-  ]
-}
-```
-
-```python
-import json
-import csv
 import traceback
 import requests
-from critique_refine import load_config, generate_draft
 
-def judge_score(draft, judge_rubric, config):
-    """
-    Score a draft on every criterion of judge_rubric.
-    Returns {"scores": {criterion_id: {"level", "meets", "evidence", "fix"}}}.
-    Fails closed: an unparseable reply scores every criterion as not meeting its bar.
-    """
-    system_prompt = (
-        "You are a strict judge. For EACH criterion, choose the level whose description matches the draft. "
-        "Quote the exact sentence from the draft that justifies the level. "
-        "If the draft does not clear the criterion's MEETS line, write one concrete revision instruction; "
-        "otherwise write an empty string. "
-        "Return ONLY valid JSON in this exact format, with no additional text:\n"
-        '{"scores": {"<criterion id>": {"level": <int>, "evidence": "<exact quote>", "fix": "<instruction>"}}}\n\n'
-        f"RUBRIC:\n{json.dumps(judge_rubric['criteria'], indent=1)}"
-    )
-    payload = {
-        "model": config["model"],
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"DRAFT TO SCORE:\n\n{draft}"}
-        ],
-        "stream": False,
-        "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}
-    }
+# The workshop's leveled rubric shape, written for the docstring task.
+JUDGE_RUBRIC = {
+  "criteria": [
+    {"id": "C1", "name": "Purpose",
+     "levels": {"1": "no summary", "2": "a summary of how the function works, not what it does",
+                "3": "a summary of what it does, longer than one sentence", "4": "a one-sentence summary of what it does"}},
+    {"id": "C2", "name": "Parameters",
+     "levels": {"1": "no parameters listed", "2": "some parameters listed",
+                "3": "every parameter listed, but a type or description is missing", "4": "every parameter listed with name, type, and description"}},
+    {"id": "C3", "name": "Return value",
+     "levels": {"1": "return value not mentioned", "2": "return value mentioned without its type",
+                "3": "type given but meaning vague", "4": "type and meaning both stated"}},
+    {"id": "C4", "name": "Example",
+     "levels": {"1": "no example", "2": "an example that is not in doctest format",
+                "3": "a doctest with no expected output", "4": "a doctest (>>> call) with its expected output"}},
+  ]
+}
 
+def judge_critic(draft, rubric, config):
+    """
+    Score the draft 1-4 on each criterion with the workshop judge's prompt.
+    Returns {"verdict": "accept"|"revise", "issues": [...]}; every criterion below 4 is an issue.
+    Fails closed: an unparseable reply is a "revise".
+    """
+    system = ("You are a strict grader. Score the artifact on EACH criterion by choosing a level 1-4 "
+              "that matches the level descriptions. Quote the sentence that justifies each score. "
+              "Respond ONLY with JSON: "
+              '{"scores": {"<criterion id>": {"level": int, "evidence": str}}}')
+    user = f"RUBRIC:\n{json.dumps(rubric, indent=1)}\n\nARTIFACT:\n{draft}"
+    payload = {"model": config["model"], "stream": False,
+               "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
+               "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}}
     try:
-        response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
+        response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=180)
         response.raise_for_status()
         raw = response.json()["message"]["content"]
     except Exception as e:
-        print(f"[lab3:judge_score:network] {e}")
+        print(f"[lab3:judge_critic:network] {e}")
         traceback.print_exc()
         raise
-
     try:
-        clean = raw.strip().replace("```json", "").replace("```", "").strip()
-        judgment = json.loads(clean)
-        for c in judge_rubric["criteria"]:
-            s = judgment["scores"][c["id"]]
-            s["level"] = int(s["level"])
-            s.setdefault("evidence", "")
-            s.setdefault("fix", "")
-            # The code decides "meets", not the model
-            s["meets"] = s["level"] >= c["meets_level"]
-        return judgment
+        data = json.loads(raw.replace("```json", "").replace("```", ""))
+        issues = []
+        for c in rubric["criteria"]:
+            s = data["scores"][c["id"]]
+            level = int(s["level"])
+            if level < 4:
+                issues.append(f"{c['id']} ({c['name']}): level {level} of 4, evidence {s.get('evidence', '')!r}. "
+                              f"Level 4 needs: {c['levels']['4']}.")
+        return {"verdict": "accept" if not issues else "revise", "issues": issues}
     except Exception as e:
-        print(f"[lab3:judge_score:json_parse] Malformed judge output - failing closed. Raw: {raw!r}")
-        return {"scores": {
-            c["id"]: {"level": 0, "meets": False, "evidence": "", "fix": "[JSON parse failure] no instruction this round"}
-            for c in judge_rubric["criteria"]
-        }}
+        print(f"[lab3:judge_critic:json_parse] Malformed judge output, failing closed. Raw: {raw!r}")
+        return {"verdict": "revise", "issues": [f"[JSON parse failure] Raw output: {raw[:200]}"]}
 ```
 
-> **You should see.** `python3 -m json.tool judge_rubric.json` prints the rubric back with no error, and `python3 judge_refine.py` exits silently, because the file only defines a function so far.
->
-> **If it fails.** `ImportError` on `critique_refine` means `judge_refine.py` is not in the same folder as `critique_refine.py`.
+**No-code path.**  Make three presets.  The Generator and Reviser have no system prompt; the instructions travel in the message you paste, exactly as in the code.
 
-### Step A.12: Run the bounded loop and log every round
+| Preset | System Prompt | Temperature | Seed |
+|---|---|---|---|
+| Generator | (none) | 0.8 | (none) |
+| Reviser | (none) | 0.3 | (none) |
+| Critic | the text below | 0 | 42 |
 
-**Goal:** a run of at least two rounds and a `judge_rounds.csv` with one row per criterion per round, read closely.
-
-The loop hands the producer only the instructions for criteria that missed their bar, reusing `generate_draft` from Step A.2 exactly as the Part A loop does.  It stops early when every criterion meets its bar and otherwise stops at `judge_max_rounds`.  Every round writes one row per criterion to `judge_rounds.csv`, including `quote_found`, the same check as the workshop's `_quote_found` column: a quote that does not appear in the draft means the judge is unreliable on that row, whatever level it awarded.
-
-> **Do this.**
-> 1. Append `judge_refine_loop` and the `__main__` block below to `judge_refine.py`.
-> 2. Run `python3 judge_refine.py` on the `paginate` task from Step A.9 (or the hardest task you wrote there; an easy task meets every bar in round 1 and shows you nothing).  Keep `judge_rounds.csv` and the terminal output.
-> 3. If the loop stopped in round 1, run it on a harder task until you have at least one run with two or more rounds.
-
-```python
-def judge_refine_loop(task_description, config, judge_rubric, log_path="judge_rounds.csv"):
-    """
-    Producer drafts, judge scores every criterion, producer revises from the judge's instructions.
-    Stops when every criterion meets its bar or after judge_max_rounds rounds.
-    Writes one row per criterion per round to log_path.
-    Returns (final_draft, final_judgment, rounds_used, termination_reason).
-    """
-    draft, judgment, rows = None, None, []
-    reason = "round_cap"
-
-    for round_num in range(1, config["judge_max_rounds"] + 1):
-        # Only the unmet criteria's instructions go back to the producer
-        feedback = None
-        if judgment is not None:
-            feedback = {cid: s["fix"] for cid, s in judgment["scores"].items() if not s["meets"]}
-
-        draft = generate_draft(task_description, previous_draft=draft, critique=feedback, config=config)
-        judgment = judge_score(draft, judge_rubric, config)
-
-        for c in judge_rubric["criteria"]:
-            s = judgment["scores"][c["id"]]
-            rows.append({
-                "round": round_num, "criterion": c["id"], "level": s["level"], "meets": s["meets"],
-                "quote_found": bool(s["evidence"]) and s["evidence"] in draft,
-                "evidence": s["evidence"], "fix": s["fix"],
-            })
-
-        levels = {c["id"]: judgment["scores"][c["id"]]["level"] for c in judge_rubric["criteria"]}
-        print(f"Round {round_num}: levels={levels} total={sum(levels.values())}")
-
-        if all(judgment["scores"][c["id"]]["meets"] for c in judge_rubric["criteria"]):
-            reason = "all_meet"
-            break
-
-    with open(log_path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
-        writer.writeheader()
-        writer.writerows(rows)
-
-    return draft, judgment, round_num, reason
-
-if __name__ == "__main__":
-    config = load_config()
-    with open(config["judge_rubric_file"]) as f:
-        judge_rubric = json.load(f)
-    task = "Write a docstring for a function `paginate(items, page_size=10, page=1)` that returns one page of a list and raises ValueError when page is out of range."
-    draft, judgment, rounds, reason = judge_refine_loop(task, config, judge_rubric)
-    print(f"\n=== FINAL DRAFT ===\nRounds: {rounds} | Reason: {reason}\n{draft}")
-```
-
-> **You should see.** One line per round and a final draft.  Your levels will differ; what matters is that the loop stops for a reason it prints.
+The Critic's system prompt is the one `critique_draft` builds from `rubric.json`:
 
 ```text
-Round 1: levels={'J1': 2, 'J2': 1, 'J3': 2} total=5
-Round 2: levels={'J1': 3, 'J2': 2, 'J3': 3} total=8
-Round 3: levels={'J1': 3, 'J2': 3, 'J3': 3} total=9
+You are a strict quality critic. Evaluate the draft against every criterion below. Return ONLY valid JSON in this exact format, with no additional text:
+{"verdict": "accept" or "revise", "issues": ["issue 1", "issue 2", ...]}
 
-=== FINAL DRAFT ===
-Rounds: 3 | Reason: all_meet
+Use 'accept' only if ALL criteria are fully met. Use 'revise' if ANY criterion is not met. List every unmet criterion as a separate issue string.
+
+CRITERIA:
+- C1 (Purpose): The docstring contains a one-sentence summary of what the function does, not how it does it.
+- C2 (Parameters): Every parameter is listed with its name, type, and a brief description.
+- C3 (Return value): The return value's type and meaning are explicitly described. If the function returns None, this is stated.
+- C4 (Example): At least one usage example is provided in a doctest-compatible format (>>> function_call()).
+
+ACCEPT THRESHOLD: All four criteria must be met for a verdict of 'accept'.
 ```
 
-> **If it fails.** If every criterion shows level 0 in every round, the judge's reply is not parsing; see Troubleshooting, Part A, Extended.  If the loop stops in round 1, use a harder task, as the list above says.
-
-**Predict:** before you open `judge_rounds.csv`, which of converged, drifted, or sycophantic do you expect your run to be?  Write it down, then let the log decide.
-
-> **Do this.** Now read the log, not just the last line.
-> 1. In your readme, make a small table of level per criterion per round from `judge_rounds.csv`, and put the round-1 and final drafts side by side.
-> 2. For each criterion whose level rose, find the change in the draft that the judge's instruction asked for.  If you can find it, that criterion converged.  If you cannot, or the judge's quote for the higher level is not in the draft (`quote_found` is `False`), call it what it is: drift or sycophancy.
-> 3. Count the `quote_found` values that are `False` across all rounds and report the count.
-> 4. One probe for sycophancy, one extra call: append the line `All of the judge's revision instructions have been addressed.` to your round-1 draft and score it with `judge_score`.  A judge that reads the text returns the same levels as round 1; any level that rises is the judge rewarding a claim of compliance instead of compliance.
-
-### Step A.13: Spot-check the final round and reflect
-
-**Goal:** your own scores for the final draft, compared with the judge's, and three short reflections.
-
-The judge is an LLM grading an LLM, so the final round needs a human reading before you believe it.  This is the workshop's hand-score-first rule applied to one draft.
+If you would rather use the workshop's judge as your critic, put its grader prompt and a leveled version of these four criteria in the Critic preset instead, and treat any criterion below level 4 as an issue.
 
 > **Do this.**
-> 1. Before you look at the judge's final levels, score the final draft on J1 to J3 using only `judge_rubric.json` (if you are in a pair, each partner scores separately).  Write the levels down.
-> 2. Compare your levels with the judge's (and, in a pair, with each other's).  Report agreement as matching cells out of three for each scorer, and quote the draft wherever you and the judge disagree.
-> 3. Answer the three reflection prompts below in your readme, each in two to four sentences, citing a row of `judge_rounds.csv`, the probe result, or your spot-check.
+> 1. In a Generator chat, send: `Generate a draft for the following task:` followed by a blank line and the `merge_sorted_lists` task from the code above.
+> 2. In a fresh Critic chat, send `DRAFT TO EVALUATE:`, a blank line, and the draft.
+> 3. If the verdict is "revise", open a fresh Reviser chat and send the message below, with a blank line between its parts, then take the new draft back to step 2:
+>
+>    ```text
+>    Here is the task:
+>    <task>
+>    Here is your previous draft:
+>    <draft>
+>    Here is the critique you must address:
+>    <the critic's JSON>
+>    Please revise the draft to address every issue listed. Return only the revised draft, no commentary.
+>    ```
+>
+> 4. Stop at "accept" or after five rounds, whichever comes first.  A Critic reply that is not valid JSON counts as "revise"; write it down.
+> 5. Log one row per round in the spreadsheet: `round`, `verdict`, `issues`, `valid JSON?`, `calls so far`.
 
-Reflection prompts:
+**Both paths: change one setting.**  Pick one, rerun, and write one line in your readme: the setting, its old and new value, and what changed (round count, verdicts, or the drafts themselves).  Then put it back.
 
-1. **Leniency drift.**  Did the judge get easier on later rounds, awarding a higher level for text that is substantially the same as an earlier round's?  Point to the rows that show it or rule it out.
-2. **Gaming the wording.**  Did the producer satisfy a criterion by echoing the rubric's language (for example, writing the words "edge case" beside a case whose result is never stated) rather than by doing what the criterion asks?  How would you reword the `meets` line to close that loophole, as you did for the critic in Step A.8?
-3. **Shared blind spots.**  The producer and the judge are the same model.  Name one error the producer made that the judge scored as meeting the bar (your spot-check is the place to look), or explain why you found none.  What would you change, a second model family or a non-LLM check such as actually running the doctest, to catch that class of error?
+- `round_budget` from 5 to 1
+- `generator_temp_first` from 0.8 to 0.1
+- delete criterion C4 from `rubric.json` (no-code: from the Critic's system prompt)
+- switch critics, `critique_draft` to `judge_critic` or the other way
 
-### Troubleshooting, Part A, Extended
+### Try It
 
-- **Every round prints `level 0` on every criterion.**  The judge's reply is not parsing, so the loop is failing closed.  Print `raw` and look for the usual culprits: markdown fences, a trailing comment, or criterion names used as keys instead of `J1` to `J3`.  Naming the ids in the format line of the system prompt usually fixes the last one.
-- **`quote_found` is `False` even when the quote looks right.**  The judge may have normalized whitespace or dropped the `>>>` prefix.  Compare the two strings character by character before you call it a hallucinated quote, and say in your readme which it was.
-- **The loop meets every bar in round 1.**  The task is too easy for the rubric.  Use a task with more parameters and an exception case, or tighten one criterion's level-3 description and `meets` line so they demand something a first draft rarely has.
+Pick one task of your own with criteria a reader can check by looking at the result: an email to a professor, a lab report abstract, a commit message, a set of instructions for a club event, or a piece of your team's project.
+
+> **Do this.**
+> 1. Copy `rubric.json` to `rubric_mytask.json` and rewrite the four descriptors for your task.  Keep the ids C1 to C4 and the `accept_threshold` line.  (No-code: make a second Critic preset with your criteria.)
+> 2. Code path: in `run_a.py`, set `TASK` to your task and `RUBRIC_FILE` to `"rubric_mytask.json"`, then run `python3 run_a.py | tee tryit_a.txt`.  (With `USE_JUDGE = True`, rewrite the levels in `JUDGE_RUBRIC` for your task instead.)  No-code: send your task to a Generator chat once and keep that draft as the single call, then run the Practice loop on the same task.
+> 3. Read the two drafts against your own rubric and write one sentence in your readme: did the loop help, and what did it cost in model calls?  The single call is one model call; the loop is two per round.
 
 ---
 
-## Part B.1: Build a Configurable Debate (20 points)
+## Part B: Debate (25 points)
 
-Ask three copies of the same model "What is 15% of 240?" and you may get two that say 36 and one that says 34.  Now show each one what the other two said and ask again.  Does the odd one out fix its arithmetic, does it talk the others into its answer, or does nobody move?  That second round is a debate, and Part B.1 builds it so you can watch what happens instead of guessing.
+Ask three copies of the same model "What is 15% of 240?" and you may get two that say 36 and one that says 34.  Now show each one what the other two said and ask again.  Does the odd one out fix its arithmetic, does it talk the others into its answer, or does nobody move?
 
-> **No-code path.** Open two Open WebUI chats with different system prompts (for example, an advocate and a skeptic), give both the same question, then paste each one's answer to the other for a rebuttal round.  Two rounds is enough to see the dynamic.  Then open a third **Judge** chat, paste in both final answers with their reasoning, and ask it to choose the best-supported answer and say why; that is your judge-agent aggregation, alongside the majority vote you take by hand.  In Langflow, the same thing is two Agent nodes and a loop, followed by a judge prompt node.  Your exported transcripts take the place of the smoke-test output.
+Round one is independent: each agent answers alone.  Later rounds are peer-informed: each agent sees the *other* agents' previous answers and may revise or hold its position.  Every response must end with an `ANSWER:` line, and the code reads the answer from that line only.  When the line is missing, it prints a located warning and records no answer, instead of guessing.  The final round is combined two ways: **majority vote**, which counts, and a **judge agent**, one more model call that reads every agent's reasoning and picks the best-supported answer even if only one agent gave it.
 
-Build a debate in which the number of agents, the number of rounds, and the temperature schedule all live in the JSON configuration file.  Round one is independent: each agent answers alone.  Later rounds are peer-informed: each agent sees the other agents' previous answers and may revise or hold its position.  Aggregate the final round two ways, by majority vote and by an optional judge agent.  Answer extraction must tolerate formatting drift: anchor on a required `ANSWER:` line, and when that line is missing, print a located error message instead of failing silently.
+### Practice
 
-In plainer terms: everyone answers alone first, then everyone reads everyone else and answers again, and you count the final answers.
-
-### Step B.1.1: Check the debate settings in the configuration file
-
-**Goal:** know which settings in `config.json` drive the debate before any code reads them.
-
-> **Do this.** Open the `config.json` you created in Step A.1 and find the `debate` block: three agents, two rounds, a temperature schedule, and a seed base.  Leave the values as they are for the first run.  The `temperature_schedule` list has one temperature per round; if there are more rounds than entries, repeat the last entry.  The `consensus` block in the same file is read in Part B.2.
-
-### Step B.1.2: Write the per-agent generation function
-
-**Goal:** one function that gets one agent's answer for one round.
-
-One function produces one agent's response for one round; the prompt differs between round 1 and the peer-informed rounds.
-
-> **Do this.**
-> 1. Create a file named `lab4.py` next to `config.json`.  Parts B.1 and B.2 both add functions to this file.
-> 2. Paste in the imports, `load_config`, and `agent_respond` below.
+> **Code path: do this.**
+> 1. Create `lab4.py` with the code below.  Part C adds to this same file.
+> 2. Create `run_b.py` below and run `python3 run_b.py | tee practice_b.txt`.  The saved output is your debate transcript.
 
 ```python
 import requests
 import json
 import re
 import traceback
+from collections import Counter
 
 def load_config(path="config.json"):
     with open(path) as f:
@@ -1131,7 +502,6 @@ def agent_respond(question, agent_id, round_num, peer_answers, config):
     schedule = config["debate"]["temperature_schedule"]
     temp = schedule[min(round_num - 1, len(schedule) - 1)]
     seed = config["debate"]["seed_base"] + agent_id * 100 + round_num
-
     if round_num == 1:
         # Independent first round
         user_content = (
@@ -1154,15 +524,9 @@ def agent_respond(question, agent_id, round_num, peer_answers, config):
             f"End your response with a line in exactly this format:\n"
             f"ANSWER: <your answer here>"
         )
-
     messages = [{"role": "user", "content": user_content}]
-    payload = {
-        "model": config["model"],
-        "messages": messages,
-        "stream": False,
-        "options": {"temperature": temp, "seed": seed}
-    }
-
+    payload = {"model": config["model"], "messages": messages, "stream": False,
+               "options": {"temperature": temp, "seed": seed}}
     try:
         response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
         response.raise_for_status()
@@ -1171,22 +535,7 @@ def agent_respond(question, agent_id, round_num, peer_answers, config):
         print(f"[lab4:agent_respond:agent{agent_id}:round{round_num}] {e}")
         traceback.print_exc()
         raise
-```
 
-Notice the `except` block: a located message (the `[lab4:agent_respond:...]` tag says where it failed), a traceback, then a re-raise.  The Code Quality row checks for this on every model and embedding call.
-
-> **You should see.** `python3 lab4.py` exits silently; the file only defines functions so far.  The same is true after each of Steps B.1.3 to B.1.6, and a silent run after each paste is your check that the file still parses.
-
-**Predict:** with the `config.json` from Step A.1, what temperature and seed does agent 2 get in round 2?  Work it out from the two lines at the top of `agent_respond`.
-
-### Step B.1.3: Extract the answer with a located warning
-
-**Goal:** pull the final answer out of a response, and say loudly when it is missing.
-
-> **Do this.**
-> 1. Add `extract_answer` below `agent_respond` in `lab4.py`.
-
-```python
 def extract_answer(response_text, agent_id, round_num):
     """
     Extract the ANSWER: line from a response.
@@ -1196,22 +545,9 @@ def extract_answer(response_text, agent_id, round_num):
     if match:
         return match.group(1).strip()
     else:
-        print(f"[lab4:extract_answer] WARNING: Agent {agent_id}, round {round_num} - no ANSWER: line found. Full response: {response_text[:200]!r}")
+        print(f"[lab4:extract_answer] WARNING: Agent {agent_id}, round {round_num}: no ANSWER: line found. Full response: {response_text[:200]!r}")
         return None
-```
 
-> **Watch out.** A missing `ANSWER:` line must produce a located error, never a silent wrong answer.  `None` is the signal, and every caller of this function has to handle it.
-
-### Step B.1.4: Run the debate loop
-
-**Goal:** a function that runs every agent for every round and keeps every response.
-
-The loop feeds each agent the *other* agents' previous answers, never its own, and keeps every full response for your transcript.
-
-> **Do this.**
-> 1. Add `run_debate` below `extract_answer`.
-
-```python
 def run_debate(question, config):
     """
     Run a full multi-agent debate.
@@ -1220,14 +556,11 @@ def run_debate(question, config):
     num_agents = config["debate"]["num_agents"]
     num_rounds = config["debate"]["num_rounds"]
     total_calls = 0
-
     # round_answers[round][agent_id] = (full_response, extracted_answer)
     round_answers = {}
-
     for round_num in range(1, num_rounds + 1):
         print(f"\n=== Debate Round {round_num} ===")
         round_answers[round_num] = {}
-
         for agent_id in range(num_agents):
             # Peer answers: all agents from previous round except self
             if round_num == 1:
@@ -1238,60 +571,29 @@ def run_debate(question, config):
                     for pid, data in round_answers[round_num - 1].items()
                     if pid != agent_id
                 ]
-
             response = agent_respond(question, agent_id, round_num, peer_answers, config)
             answer = extract_answer(response, agent_id, round_num)
             round_answers[round_num][agent_id] = (response, answer)
             total_calls += 1
             print(f"  Agent {agent_id}: ANSWER = {answer}")
-
     # Final answers from last round
     final_answers = {
         agent_id: data[1]
         for agent_id, data in round_answers[num_rounds].items()
         if data[1] is not None
     }
-
     return final_answers, round_answers, total_calls
-```
-
-### Step B.1.5: Aggregate by majority vote
-
-**Goal:** turn the final round's answers into one answer.
-
-> **Do this.**
-> 1. Add the `Counter` import and `majority_vote` below `run_debate`.
-
-```python
-from collections import Counter
 
 def majority_vote(final_answers):
     """
     Return the most common answer among the agents.
-    In case of a tie, return the lexicographically first answer.
+    In case of a tie, return the answer that reached the top count first.
     """
     if not final_answers:
         return None
     counts = Counter(final_answers.values())
     return counts.most_common(1)[0][0]
-```
 
-Majority vote is one of two required aggregation methods.  The other, a judge agent, is the next step.
-
-> **You should see.** `python3 lab4.py` still exits silently.
-
-**Predict:** if the three final answers are `36`, `36.0`, and `$36`, what does `majority_vote` return, and is that the answer you wanted?
-
-### Step B.1.6: Aggregate with a judge agent (required)
-
-**Goal:** a second way to turn the final round into one answer, in which a separate model call weighs the agents' reasoning instead of counting their votes.
-
-Majority vote only counts.  If two agents repeat the same mistake and the third works the problem correctly, the vote goes to the mistake.  A **judge agent** is one more model call that reads every agent's final answer and reasoning and chooses the answer it finds best supported, even if only one agent gave it.  The Debate row's proficient column asks for both methods, so this step is required, not optional.
-
-> **Do this.**
-> 1. Add `judge_aggregate` below `majority_vote` in `lab4.py`.  It reuses `critic_temp` and `critic_seed` from `config.json`, so the judge is as repeatable as your Part A critic, and it reuses `extract_answer` from Step B.1.3 to read the judge's own `ANSWER:` line.
-
-```python
 def judge_aggregate(question, round_answers, config):
     """
     Send every agent's final-round response to a separate judge call.
@@ -1311,13 +613,8 @@ def judge_aggregate(question, round_answers, config):
         f"in exactly this format:\n"
         f"ANSWER: <the answer you choose>"
     )
-    payload = {
-        "model": config["model"],
-        "messages": [{"role": "user", "content": user_content}],
-        "stream": False,
-        "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}
-    }
-
+    payload = {"model": config["model"], "messages": [{"role": "user", "content": user_content}], "stream": False,
+               "options": {"temperature": config["critic_temp"], "seed": config["critic_seed"]}}
     try:
         response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
         response.raise_for_status()
@@ -1326,152 +623,136 @@ def judge_aggregate(question, round_answers, config):
         print(f"[lab4:judge_aggregate:network] {e}")
         traceback.print_exc()
         raise
-
     return extract_answer(judge_text, "judge", num_rounds), judge_text
 ```
 
-> **You should see.** `python3 lab4.py` still exits silently.
-
-**Predict:** in a debate where two agents answer `34` and one answers `36` with the correct working, which answer will `majority_vote` return, and which do you expect `judge_aggregate` to return?  Keep your prediction and check it against what your judge actually does.
-
-### Step B.1.7: Run a smoke test
-
-**Goal:** one complete 3-agent, 2-round debate aggregated both ways, saved as your transcript.
-
-> **Do this.**
-> 1. Add this block at the bottom of `lab4.py`.
-> 2. Run the file from the lab folder.  `python3 lab4.py` runs the file top to bottom; the block under `if __name__ == "__main__":` is what executes.
->
-> ```bash
-> python3 lab4.py
-> ```
-
 ```python
-if __name__ == "__main__":
-    config = load_config()
-    question = "What is 15% of 240?"
-    final_answers, transcripts, calls = run_debate(question, config)
-    winner = majority_vote(final_answers)
-    judge_choice, judge_text = judge_aggregate(question, transcripts, config)
-    print(f"\nFinal answers: {final_answers}")
-    print(f"Majority vote: {winner}")
-    print(f"Judge agent: {judge_choice}")
-    print(f"Total model calls: {calls + 1}")
+# run_b.py: one single call, then a full debate combined both ways, on the same question
+from lab4 import load_config, agent_respond, extract_answer, run_debate, majority_vote, judge_aggregate
+
+QUESTION = "What is 15% of 240?"
+
+config = load_config()
+single = extract_answer(agent_respond(QUESTION, 0, 1, [], config), "single", 1)
+print(f"=== SINGLE CALL (1 model call) ===\nANSWER = {single}")
+
+final_answers, transcripts, calls = run_debate(QUESTION, config)
+judge_choice, judge_text = judge_aggregate(QUESTION, transcripts, config)
+print(f"\nFinal answers: {final_answers}")
+print(f"Majority vote: {majority_vote(final_answers)}")
+print(f"Judge agent: {judge_choice}")
+print(f"Debate model calls: {calls + 1}")
 ```
 
-> **You should see.** Two rounds of three agents, then the majority vote and the judge's choice.  Your answers will differ, but the call count should equal agents times rounds, plus one for the judge.
+The single call is agent 0's round-1 call made on its own, so the comparison asks whether the debate changed what one agent would have said alone.
+
+> **You should see.** The single answer, two rounds of three agents, then both aggregates.  Your answers will differ, but the debate's call count is agents times rounds, plus one for the judge.
 
 ```text
+=== SINGLE CALL (1 model call) ===
+ANSWER = 36
 === Debate Round 1 ===
   Agent 0: ANSWER = 36
   Agent 1: ANSWER = 36
   Agent 2: ANSWER = 34
-
 === Debate Round 2 ===
   Agent 0: ANSWER = 36
   Agent 1: ANSWER = 36
   Agent 2: ANSWER = 36
-
 Final answers: {0: '36', 1: '36', 2: '36'}
 Majority vote: 36
 Judge agent: 36
-Total model calls: 7
+Debate model calls: 7
 ```
 
-> **If it fails.** An `ANSWER = None` line comes with a `[lab4:extract_answer] WARNING` naming the agent and round; see the first item in Troubleshooting, Part B.1.  A connection error tagged `[lab4:agent_respond:...]` means Ollama is not answering; go back to Step 0.2.
+**Predict:** with the `config.json` above, what temperature and seed does agent 2 get in round 2?  Work it out from the first three lines of `agent_respond`.
 
-### Troubleshooting, Part B.1
+**Predict:** if the three final answers are `36`, `36.0`, and `$36`, what does `majority_vote` return, and is that the answer you wanted?
 
-- **`ANSWER:` is never found even though it appears in the raw output.**  The model may be writing `Answer:` (different capitalization) or `**ANSWER:**` (markdown bold).  The template's regex is already case-insensitive (`re.IGNORECASE`).  Strip the markdown before matching: `response_text = re.sub(r'\*+', '', response_text)`.
-- **Agents always agree on round 1 (no diversity).**  Your seeds may be too similar, or the temperature is too low.  Try `seed_base: 0` and `temperature_schedule: [0.9, 0.5]`.  Factual questions can produce agreement even at high temperature; use more subjective questions when you are testing for diversity.
-- **One agent's response is cut off mid-sentence.**  The model hit its context window.  Shorten `peer_section` by passing only the extracted `ANSWER` lines from peers, not their full reasoning: `f"Agent {pid} answered: {ans}"`.
+**No-code path.**  Make two presets, Debater R1 (temperature 0.7) and Debater R2 (temperature 0.4), with no system prompt and **no seed**, so three chats on the same preset can give different answers.  Make a third, Debate Judge, with temperature 0 and seed 42.
 
-> **Checkpoint.** Before you move to Part B.2, make sure you can answer these:
-> 1. What is the purpose of sharing peer answers in rounds 2+ rather than keeping agents independent for all rounds?  What risk does peer-sharing introduce?
-> 2. What happens in your code if `extract_answer` returns None for one agent in the final round?  How does your majority vote handle it?
-> 3. Run a 3-agent, 2-round debate on an arithmetic question.  Did any agent change their answer between rounds?  If so, was it because they were persuaded by correct reasoning or simply by social pressure?
+> **Do this.**
+> 1. Round 1: open three Debater R1 chats (agents 0, 1, and 2) and send each the same message:
+>
+>    ```text
+>    Question: What is 15% of 240?
+>
+>    Think through this carefully and provide your answer. End your response with a line in exactly this format:
+>    ANSWER: <your answer here>
+>    ```
+>
+> 2. Round 2: open three Debater R2 chats.  Send each agent the message below, filled in with the *other two* agents' numbers and the answers from their round-1 `ANSWER:` lines (agent 0 sees agents 1 and 2, agent 1 sees 0 and 2, and so on):
+>
+>    ```text
+>    Question: What is 15% of 240?
+>
+>    Here are the answers from the other agents in the previous round:
+>
+>    Agent <id> said:
+>    <that agent's answer>
+>    Agent <id> said:
+>    <that agent's answer>
+>
+>    Review their reasoning. You may revise your answer if you find their arguments convincing, or maintain your position with a rebuttal. End your response with a line in exactly this format:
+>    ANSWER: <your answer here>
+>    ```
+>
+> 3. Take the majority vote of the round-2 answers by hand.  Then open a Debate Judge chat and send this, with each agent's full round-2 response filled in:
+>
+>    ```text
+>    Question: What is 15% of 240?
+>
+>    Several agents debated this question. Here is each agent's final response:
+>
+>    Agent 0 (ANSWER: <its answer>):
+>    <its full response>
+>    (and the same for agents 1 and 2)
+>
+>    You are the judge. Do not count votes. Choose the answer that is best supported by correct reasoning, even if only one agent gave it. Explain your choice in one or two sentences, then end with a line in exactly this format:
+>    ANSWER: <the answer you choose>
+>    ```
+>
+> 4. Log one row per response in the spreadsheet: `agent`, `round`, `ANSWER`, `changed from round 1?`.  A response with no `ANSWER:` line gets "no answer", not your best guess.
+
+**Both paths: change one setting.**  Pick one, rerun, and write one line in your readme: the setting, its old and new value, and what changed.  Then put it back.
+
+- `num_rounds` from 2 to 3 (no-code: a third round with Debater R2)
+- `temperature_schedule` from `[0.7, 0.4]` to `[1.0, 1.0]`
+- `num_agents` from 3 to 5
+
+### Try It
+
+Pick one question of your own with a short answer you can check: a calculation from another course, a scheduling puzzle, a factual question you can look up, or a decision your team has to make between named options.
+
+> **Do this.**
+> 1. Code path: set `QUESTION` in `run_b.py` to your question and run `python3 run_b.py | tee tryit_b.txt`.  No-code: send your question to one Debater R1 chat as the single call, then run the Practice debate on it.
+> 2. Check the answers yourself and write one sentence in your readme: did the debate help, and what did it cost in model calls?
+
+**Predict:** in a debate where two agents answer `34` and one answers `36` with correct working, which answer will `majority_vote` return, and which do you expect `judge_aggregate` to return?
 
 ---
 
-## Part B.2: Build the Consensus Pipeline (20 points)
+## Part C: Consensus (25 points)
 
-Ask the model "What makes a great study group, and what are the biggest pitfalls to avoid?" six times and you get six different paragraphs.  No two match word for word, so the vote from Part B.1 has nothing to count, and yet several of them clearly say the same thing in different words.  Part B.2 builds a pipeline that notices which drafts say the same thing, counts them, and writes one answer from the groups.
+Ask the model "What makes a great study group, and what are the biggest pitfalls to avoid?" six times and you get six different paragraphs.  No two match word for word, so the vote from Part B has nothing to count, and yet several of them clearly say the same thing in different words.
 
-> **No-code path.** Ask the same question *n* times at a temperature above zero, record the answers in a spreadsheet, and cluster them by hand.  The clustering judgment is the actual skill, and doing it by hand is not a concession: it is the version where the ambiguous cases cannot hide behind a distance threshold you picked without looking.  Answer the Step B.2.2 interpretation questions about your own hand clustering.
+**Stochastic consensus** handles this.  At a temperature above zero the model is a sampler: each call draws one answer from many plausible ones.  An **embedding** model turns each draft into a list of numbers, built so that drafts with similar meaning get nearby lists.  We normalize those vectors to length 1 and group them by **cosine distance** (1 minus the cosine similarity): two drafts whose distance is under `distance_threshold` can share a group.  The size of each group is its **support count**.  A low-temperature **synthesizer** then gets one representative draft per group with its support count, never all six drafts, and writes one answer that follows the majority and says so in one line when the split is close.  That is six sampling calls and one synthesis call, seven in all.
 
-Implement the sample, cluster, synthesize pipeline: $$k$$ high-temperature drafts, embedding clustering over normalized vectors with cosine geometry, and a low-temperature synthesizer that receives one representative per cluster with its support count, follows the majority on conflicts, and discloses any close disagreement in one line.  Demonstrate the pipeline on a long-form question with no single correct answer.  The in-class tomatillo salsa question is a fine starting point; choose an analogous question of your own as well.
+> **Watch out.** Sampling helps only when the drafts' mistakes scatter.  If every draft shares the same bias, they land in one big group and look exactly like a strong consensus.
 
-### Why this matters: voting on meaning instead of strings
+### Practice
 
-Section 7 of *Critique, Consensus, and the LLM Judge* (Voting on Meaning Instead of Strings) introduces this pattern in class.  Here is the core idea again before you build.  **Stochastic consensus** uses the fact that a language model at high temperature is a *sampler*, not an oracle: ask it the same question six times and you get six different drafts drawn from a distribution of plausible answers.  Any one draft might be idiosyncratic or wrong.  But if you group the drafts by *meaning* (not by exact wording), the sizes of the groups tell you something no single draft can: which positions the model keeps returning to (high support) and which are one-off flukes (low support).
-
-The grouping step is where embeddings come in.  An embedding model maps each draft to a vector, and drafts with similar meaning land close together even when they share few words.  Normalize those vectors and cluster them with cosine distance, and "six drafts" becomes "three positions, with support counts of 3, 2, and 1."
-
-A final low-temperature **synthesizer** then receives one representative draft per cluster, plus its support count, and never all six raw transcripts.  It writes a single answer that follows the majority and *discloses* any close disagreement instead of papering over it.  That disclosure rule is the pattern's honesty mechanism: when the samples split, the user deserves to know.
-
-```text
-question --> sample k drafts at high temperature      (k model calls)
-                    |
-                    v
-             embed each draft --> normalize vectors
-                    |
-                    v
-             cluster by cosine distance (threshold)
-                    |
-                    v
-      one representative per cluster + support count
-                    |
-                    v
-             synthesizer at low temperature            (1 model call)
-                    |
-                    v
-   single answer, majority-following, close-disagreement disclosed
-```
-
-You will experiment with two dials in this lab: the **sampling temperature** (how diverse the drafts are) and the **distance threshold** (how aggressively meanings are merged; the subject of Part B.4).
-
-There are three ways to aggregate $$k$$ samples, and they are not interchangeable.
-
-**Self-consistency** votes on the *answer*.  Sample $$k$$ independent chains at moderate temperature, extract each final answer, and return the mode:
-
-$$
-\hat{y} = \arg\max_{y} \sum_{i=1}^{k} \mathbb{1}[y_i = y]
-$$
-
-For questions with short checkable answers, accuracy rises with $$k$$, because many distinct reasoning paths tend to reach a correct answer while errors scatter.  This is what Part B.1's debate vote does.
-
-**Clustered consensus** votes on the *meaning*.  When answers are paragraphs rather than tokens, exact-match voting collapses: "simmer the tomatillos" and "boil them briefly" should count together, and a string comparison says they are unrelated.  Embed the $$k$$ drafts, cluster by cosine similarity, and treat the largest cluster as the consensus position.  It is the same machinery as the clustering you have already met for checking retrieval-augmented generation (RAG) quality, aimed now at agent outputs.
-
-**Synthesis** writes the merged view.  A synthesizer receives the cluster representatives with their support counts and drafts one output that keeps majority positions and names real disagreements.  Its context stays small on purpose: cluster summaries, never all $$k$$ transcripts.
-
-### Worked example: five recipes, three positions
-
-Five agents at temperature 1.0 propose tomatillo salsa recipes.  Three roast the tomatillos, one boils them, one uses them raw; four include cilantro; opinions split on jalapeño versus serrano.
-
-| Agent | Cooking technique | Chile | Key aromatics | Cluster |
-|---|---|---|---|---|
-| Agent 1 | Roasts under broiler until charred | Jalapeño | Cilantro, white onion, garlic | A |
-| Agent 2 | Roasts in dry skillet | Serrano | Cilantro, white onion | A |
-| Agent 3 | Roasts on open flame | Jalapeño | Cilantro, garlic, lime | A |
-| Agent 4 | Boils for 10 minutes | Jalapeño | Cilantro, cumin | B |
-| Agent 5 | Uses raw, no heat | Serrano | Cilantro, avocado, lime | C |
-
-Before you build anything, work out three things on paper.  They are the design decisions the code will otherwise make for you.
-
-1. Which choice here is *load-bearing* (it changes the dish) and which is garnish-level?  If you swapped jalapeño for serrano, would the dish taste radically different?  What if you swapped raw for roasted?  Your answer tells you what the clustering has to be sensitive to, and where embeddings are likely to mislead you.
-2. Write, in two sentences, the synthesis you would want.  It should commit where the majority is strong (3 of 5 roast) and stay candid where it is split (the chile).  That is the behavior your synthesizer prompt has to produce.
-3. State precisely why exact-match voting on the full recipe texts yields five singleton answers.  The distinction you need is *string* identity versus *semantic* identity.
-
-> **Watch out.** Independence is the load-bearing assumption.  Sampling helps only when the errors scatter.  If all $$k$$ drafts share a systematic bias, whether a misconception baked into the model or a misleading phrase in your own prompt, they will agree confidently and be wrong together, and a large cluster will look exactly like a strong consensus.  Part B.3's shootout deliberately includes questions with well-known intuitive-but-wrong answers so you can watch this happen.
-
-### Step B.2.1: Sample k drafts independently
-
-**Goal:** a function that asks the same question k times at high temperature and returns the k drafts.
+**Code path.**  The embedding and clustering code is provided complete; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do the work.  Your job is to run it and read what it returns.
 
 > **Do this.**
-> 1. Add `sample_drafts` to `lab4.py`, below `majority_vote` and above the `__main__` block.
+> 1. Add the code below to the end of `lab4.py`.
+> 2. Create `run_c.py` below and run `python3 run_c.py | tee practice_c.txt`.  The saved output is your consensus transcript.
 
 ```python
+import numpy as np
+from sentence_transformers import SentenceTransformer
+from sklearn.cluster import AgglomerativeClustering
+
 def sample_drafts(question, config):
     """
     Sample k independent drafts at high temperature.
@@ -1480,16 +761,11 @@ def sample_drafts(question, config):
     k = config["consensus"]["num_samples"]
     temp = config["consensus"]["sample_temperature"]
     drafts = []
-
     for i in range(k):
         seed = config["debate"]["seed_base"] + i  # different seed per sample
         messages = [{"role": "user", "content": question}]
-        payload = {
-            "model": config["model"],
-            "messages": messages,
-            "stream": False,
-            "options": {"temperature": temp, "seed": seed}
-        }
+        payload = {"model": config["model"], "messages": messages, "stream": False,
+                   "options": {"temperature": temp, "seed": seed}}
         try:
             response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
             response.raise_for_status()
@@ -1500,48 +776,28 @@ def sample_drafts(question, config):
             print(f"[lab4:sample_drafts:sample{i}] {e}")
             traceback.print_exc()
             raise
-
     return drafts
-```
-
-> **You should see.** `python3 lab4.py` still runs the Part B.1 smoke test, because the `__main__` block has not changed yet.  Nothing calls `sample_drafts` until Step B.2.4.
-
-### Step B.2.2: Embed and cluster the drafts
-
-**Goal:** group the drafts by meaning and pick one representative per group, with its support count.
-
-An **embedding** is a list of numbers that stands for a piece of text, built so that texts with similar meaning get nearby lists.  **Clustering** groups items that sit close together.  Put the two together and "close together" means "says roughly the same thing."
-
-This code is provided complete; copy it as-is.  You are not expected to write embedding or clustering internals with one semester of Python behind you; `sentence-transformers` and scikit-learn's `AgglomerativeClustering` do that work.  Your job in this step is to *call* this function and *interpret* what it returns: which drafts landed in which cluster, which cluster has the most support, and whether the grouping matches your own reading of the drafts.
-
-> **Do this.**
-> 1. Add the three imports below to the top of `lab4.py`, and `cluster_drafts` below `sample_drafts`.
-> 2. After you run the pipeline in Step B.2.4, answer the three interpretation questions that follow the code in your readme.
-
-```python
-import numpy as np
-from sentence_transformers import SentenceTransformer
-from sklearn.cluster import AgglomerativeClustering
 
 def cluster_drafts(drafts, config):
     """
     Embed drafts, normalize vectors, cluster by cosine distance.
-    Returns (labels, embeddings, cluster_representatives).
+    Returns (labels, normed, cluster_representatives).
     labels[i] = cluster ID for draft i.
     cluster_representatives: dict {cluster_id: (representative_draft, support_count)}
     """
     embed_model_name = config["consensus"]["embed_model"]
     threshold = config["consensus"]["distance_threshold"]
-
-    embed_model = SentenceTransformer(embed_model_name)
-    embeddings = embed_model.encode(drafts)
-
+    try:
+        embed_model = SentenceTransformer(embed_model_name)
+        embeddings = embed_model.encode(drafts)
+    except Exception as e:
+        print(f"[lab4:cluster_drafts:embed] {e}")
+        traceback.print_exc()
+        raise
     # Normalize to unit vectors so cosine distance = 1 - dot product
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     normed = embeddings / norms
-
-    # Cosine distance = 1 - cosine_similarity
-    # AgglomerativeClustering with metric='cosine' requires precomputed or use distance_threshold
+    # Merge groups while their average cosine distance stays under the threshold
     clustering = AgglomerativeClustering(
         n_clusters=None,
         distance_threshold=threshold,
@@ -1549,7 +805,6 @@ def cluster_drafts(drafts, config):
         linkage="average"
     )
     labels = clustering.fit_predict(normed)
-
     # Find representative (draft closest to cluster centroid) and support count
     cluster_ids = set(labels)
     representatives = {}
@@ -1563,34 +818,11 @@ def cluster_drafts(drafts, config):
         similarities = [normed[i] @ centroid for i in indices]
         best_idx = indices[int(np.argmax(similarities))]
         representatives[cid] = (drafts[best_idx], support)
-
     print(f"\nClustering: {len(drafts)} drafts -> {len(cluster_ids)} clusters (threshold={threshold})")
     for cid, (rep, support) in sorted(representatives.items()):
         print(f"  Cluster {cid} (support={support}): {rep[:80]}...")
-
     return labels, normed, representatives
-```
 
-> **You should see.** `python3 lab4.py` still runs the Part B.1 smoke test.  The new imports load first, so it may take a few seconds longer to start.
->
-> **If it fails.** `ModuleNotFoundError` for `sentence_transformers`, `sklearn`, or `numpy` means the second `pip install` line in Step 0.2 went to a different Python.
-
-Interpretation questions, answered in your readme after you run the provided clustering code:
-
-1. Print `labels` next to the first 80 characters of each draft.  Read the drafts in each cluster yourself: do the groupings match *your* judgment of which drafts say the same thing?  Name one pair the clusterer grouped that you would not have, or vice versa.
-2. Which cluster has the highest support count, and in one sentence, what position does its representative draft take?
-3. The representative is the draft closest to the cluster centroid.  Look at the representative chosen for your largest cluster; is it also the draft you would have picked as the "most typical" of that group?  Why might the centroid-nearest draft differ from the best-written draft?
-
-### Step B.2.3: Synthesize from cluster representatives
-
-**Goal:** one function that writes the final answer from the cluster representatives, and one that runs the whole pipeline.
-
-The synthesizer sees one representative per cluster with its support count, majority first, never the raw drafts.
-
-> **Do this.**
-> 1. Add `synthesize` and `run_consensus` below `cluster_drafts`.
-
-```python
 def synthesize(question, representatives, config):
     """
     Build a context from cluster representatives and synthesize a final answer.
@@ -1599,16 +831,13 @@ def synthesize(question, representatives, config):
     # Sort by support (descending) so the synthesizer sees majority first
     sorted_clusters = sorted(representatives.items(), key=lambda x: -x[1][1])
     total_support = sum(s for _, (_, s) in sorted_clusters)
-
     context_parts = []
     for cid, (rep, support) in sorted_clusters:
         pct = support / total_support * 100
         context_parts.append(f"[Cluster {cid}, support={support}/{total_support} ({pct:.0f}%)]\n{rep}")
-
     context = "\n\n---\n\n".join(context_parts)
     majority_support = sorted_clusters[0][1][1]
     close_disagreement = len(sorted_clusters) > 1 and (majority_support / total_support) < 0.6
-
     system_prompt = (
         "You are a synthesizer. You receive several response clusters from independent samples. "
         "Each cluster is labeled with its support count. "
@@ -1618,20 +847,13 @@ def synthesize(question, representatives, config):
         "3. Produce a single coherent, well-written response. Do not just concatenate the clusters.\n\n"
         + ("NOTE: There is a close disagreement among the samples. Disclose it." if close_disagreement else "")
     )
-
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": f"Question: {question}\n\nClusters:\n\n{context}"}
     ]
-    payload = {
-        "model": config["model"],
-        "messages": messages,
-        "stream": False,
-        "options": {
-            "temperature": config["consensus"]["synthesizer_temperature"],
-            "seed": config["debate"]["seed_base"]
-        }
-    }
+    payload = {"model": config["model"], "messages": messages, "stream": False,
+               "options": {"temperature": config["consensus"]["synthesizer_temperature"],
+                           "seed": config["debate"]["seed_base"]}}
     try:
         response = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
         response.raise_for_status()
@@ -1645,465 +867,131 @@ def run_consensus(question, config):
     """Full sample-cluster-synthesize pipeline."""
     print(f"\n=== Sampling {config['consensus']['num_samples']} drafts ===")
     drafts = sample_drafts(question, config)
-
     print("\n=== Clustering ===")
     labels, embeddings, representatives = cluster_drafts(drafts, config)
-
     print("\n=== Synthesizing ===")
     synthesis = synthesize(question, representatives, config)
-
     total_calls = config["consensus"]["num_samples"] + 1  # samples + synthesizer
     return synthesis, drafts, labels, representatives, total_calls
 ```
 
-> **You should see.** `python3 lab4.py` still runs the Part B.1 smoke test; the pipeline runs for the first time in the next step.
-
-**Predict:** look at the `close_disagreement` line in `synthesize`.  With six samples split 3, 2, and 1, does the synthesizer get the "disclose it" note?  What about a 4, 2 split?
-
-### Step B.2.4: Demonstrate on a long-form question
-
-**Goal:** run the full pipeline on a question with no single right answer and save the printout as your consensus transcript.
-
-> **Do this.**
-> 1. Replace the `__main__` block at the bottom of `lab4.py` with the one below.  (Keep the Part B.1 smoke test in a comment if you want to rerun it later.)
-> 2. Run `python3 lab4.py` again.  Save the full printout; it is your consensus transcript.
-
 ```python
-if __name__ == "__main__":
-    config = load_config()
-    long_form_q = "What makes a great study group, and what are the biggest pitfalls to avoid?"
-    synthesis, drafts, labels, reps, calls = run_consensus(long_form_q, config)
-    print(f"\n=== SYNTHESIZED ANSWER ({calls} model calls) ===\n{synthesis}")
+# run_c.py: one single call, then the consensus pipeline, on the same question
+from lab4 import load_config, sample_drafts, run_consensus
+
+QUESTION = "What makes a great study group, and what are the biggest pitfalls to avoid?"
+
+config = load_config()
+one_call = {**config, "consensus": {**config["consensus"], "num_samples": 1}}
+single = sample_drafts(QUESTION, one_call)[0]
+print(f"=== SINGLE CALL (1 model call) ===\n{single}")
+
+synthesis, drafts, labels, reps, calls = run_consensus(QUESTION, config)
+for i, (label, draft) in enumerate(zip(labels, drafts)):
+    print(f"Draft {i + 1} -> cluster {label}: {draft[:80]}...")
+print(f"\n=== SYNTHESIZED ANSWER ({calls} model calls) ===\n{synthesis}")
 ```
 
-> **You should see.** Six sample previews, a clustering summary with support counts, and one synthesized answer with a disclosure line when the split is close.  Abbreviated:
+> **You should see.** The single answer, six sample previews, a clustering summary with support counts, each draft's cluster, and one synthesized answer, with a disclosure line when the split is close.  Abbreviated:
 
 ```text
-=== Sampling 6 drafts ===
-  Sample 1/6: A great study group needs clear goals and...
-  ...
-
 === Clustering ===
 Clustering: 6 drafts -> 3 clusters (threshold=0.3)
   Cluster 0 (support=3): A great study group needs clear goals...
   Cluster 1 (support=2): The key ingredients are...
   Cluster 2 (support=1): Study groups work best when...
 
-=== Synthesizing ===
-
 === SYNTHESIZED ANSWER (7 model calls) ===
 A great study group combines clear shared goals, consistent meeting times, and mutual accountability...
 Note: there was minor disagreement about whether size or structure matters more.
 ```
 
-> **If it fails.** If every draft lands in one cluster, or every draft is its own cluster, see Troubleshooting, Part B.2; Part B.4 studies exactly this dial.  Then go back to Step B.2.2 and answer its three interpretation questions from this run.
+**Predict:** look at the `close_disagreement` line in `synthesize`.  With six samples split 3, 2, and 1, does the synthesizer get the "disclose it" note?  What about a 4 and 2 split?
 
-### Troubleshooting, Part B.2
+**No-code path.**  Make two presets: Sampler (temperature 0.8, no system prompt, **no seed**) and Synthesizer (temperature 0.1, seed 100).  The Synthesizer's system prompt is the one `synthesize` builds:
 
-- **`AgglomerativeClustering` raises `ValueError: The number of samples is too small`.**  This happens when `n_samples < 2`.  Set `num_samples >= 2` in your config.  For clustering to mean anything, use at least 5 samples.
-- **All drafts end up in one giant cluster.**  Your `distance_threshold` is too large.  Decrease it from 0.3 to 0.15 and re-run.  If everything is still one cluster, your question may produce very uniform answers; try a more open-ended question that generates diverse responses.
-- **All drafts end up in separate clusters (no merging).**  Your `distance_threshold` is too small.  Increase it from 0.3 to 0.5.  This is common with very short drafts (under 50 words) because their embedding geometry is more spread out.
+```text
+You are a synthesizer. You receive several response clusters from independent samples. Each cluster is labeled with its support count. Your job:
+1. Follow the majority position on any factual conflicts.
+2. If there is a close disagreement (majority < 60% of samples), disclose it in one sentence at the end.
+3. Produce a single coherent, well-written response. Do not just concatenate the clusters.
+```
 
-> **Checkpoint.** Before you move to Part B.3, make sure you can answer these:
-> 1. Why do we normalize the embedding vectors before computing cosine distance?  What goes wrong if we skip normalization?
-> 2. What is the purpose of the support count in the synthesizer's context?  What would happen if you gave the synthesizer all 6 raw drafts instead of one representative per cluster?
-> 3. What does it mean for a question to be "too easy" for stochastic consensus?  What kind of question would produce maximum cluster diversity?
+> **Do this.**
+> 1. Send the study-group question to six fresh Sampler chats.  Paste each answer into the spreadsheet: `sample`, `first sentence`, `cluster`, `why`.
+> 2. Read all six and give each one a cluster letter: drafts that take the same position share a letter.  In `why`, write the position in a few words.
+> 3. For each cluster, pick the draft that best represents it, and count its support.
+> 4. Open a Synthesizer chat and send `Question:` with the question, then `Clusters:` and one block per cluster, largest first, in the code's format: `[Cluster A, support=3/6 (50%)]` followed by the representative draft, with a line holding only `---` between blocks.  If the largest cluster has under 60% of the samples, add the line `NOTE: There is a close disagreement among the samples. Disclose it.` to the end of your message.
+
+**Both paths: read the clusters.**  Read the drafts in each cluster yourself.  In your readme, say whether the grouping matches your own reading, and name one draft you would have put in a different group, or say why you would not.  (No-code: did any draft take you more than a moment to place?  Which one, and what made it hard?)
+
+**Both paths: change one setting.**  Pick one, rerun, and write one line in your readme: the setting, its old and new value, and what changed in the clusters or the synthesis.  Then put it back.
+
+- `distance_threshold` from 0.3 to 0.1 or to 0.5 (no-code: merge your two closest clusters into one, or split your largest)
+- `sample_temperature` from 0.8 to 0.3
+- `num_samples` from 6 to 3 (keep it at 2 or more; clustering needs at least two drafts)
+
+### Try It
+
+Pick one open-ended question of your own, one with several reasonable answers: how to structure a project timeline, what to include in a lab safety briefing, which features a club website needs, or a design question your team is weighing.
+
+> **Do this.**
+> 1. Code path: set `QUESTION` in `run_c.py` to your question and run `python3 run_c.py | tee tryit_c.txt`.  No-code: one Sampler chat is the single call; then run the Practice pipeline on your question.
+> 2. Read the single answer and the synthesis side by side, and write one sentence in your readme: did consensus help, and what did it cost in model calls?
+
+**Predict:** the single call uses the same prompt, temperature, and seed as Sample 1 of the consensus run.  How will the two compare, and what would it tell you about your model server if they differ?
 
 ---
 
-## Part B.3: Run the Shootout (20 points)
-
-"A bat and a ball cost $1.10 in total.  The bat costs $1.00 more than the ball.  How much does the ball cost?"  Many people answer 10 cents at first, and the correct answer is 5.  If a model makes the same slip, will six samples or a three-agent debate catch it, or will every agent make it together?  Part B.3 puts single shot, self-consistency, and debate side by side on questions like this one, with self-consistency and debate held to the same number of calls, so the comparison is fair.
-
-> **No-code path.** Compare single-shot, debate, and consensus on the same question set in your spreadsheet, with a column for cost (rough token count or wall-clock time).  The handoff route below fits here too: the two chats can exchange their positions through an issue thread or a shared folder instead of by pasting.
-
-Build a labeled task set of at least ten questions with checkable answers (arithmetic word problems with traps work well).  At **matched call budgets**, compare:
-
-1. Single shot (one agent, one sample).
-2. Self-consistency (sample $$k$$, majority vote, no debate rounds).
-3. Full debate (your Part B.1 system).
-
-Report accuracy and total model calls per condition.  Then find and document at least one correlated failure: a question where every agent agrees on the same wrong answer.  Explain, using the independence argument from class, why no aggregation strategy could have saved you, and what non-LLM addition (a tool, retrieval) would.
-
-The handoff route at the end of this Part is optional.  Steps B.3.1 to B.3.3 are required on every route.
-
-### Step B.3.1: Build the labeled task set
-
-**Goal:** at least ten questions, each with a checkable answer, in `shootout.py`.
-
-Good task types for this comparison:
-
-- Arithmetic word problems where one step is easy to get wrong (for example, a percentage of a percentage)
-- Multi-step logic puzzles with a common false shortcut
-- Questions with a well-known but incorrect folk belief as a trap
-
-> **Do this.**
-> 1. Create `shootout.py` in the lab folder.  Start it with these lines, which pull in your Part B.1 functions and load the config once:
->
->    ```python
->    import requests
->    from collections import Counter
->    from lab4 import load_config, extract_answer, run_debate, majority_vote
->
->    config = load_config()
->    ```
->
-> 2. Paste the task set below under those lines.  Swap in questions of your own if you like, keeping this mix.
-
-```python
-SHOOTOUT_TASKS = [
-    {"id": "S01", "question": "A shirt costs $40 and is on sale for 25% off. You also have a coupon for 10% off the sale price. What is the final price?", "answer": "27.00"},
-    {"id": "S02", "question": "If you fold a piece of paper in half 10 times, how many layers thick is it?", "answer": "1024"},
-    {"id": "S03", "question": "A store buys a jacket for $60 and marks the price up by 50%. During a sale, the marked-up price is then reduced by 50%. What is the sale price?", "answer": "45.00"},
-    {"id": "S04", "question": "Three friends split a $75 dinner bill evenly, and then each person adds a $5 tip of their own. How much does each person pay in total?", "answer": "30.00"},
-    {"id": "S05", "question": "A town's population of 8,000 grows by 10% one year and then shrinks by 10% the next year. What is the population after both years?", "answer": "7920"},
-    {"id": "S06", "question": "How many bones are in the typical adult human body?", "answer": "206"},
-    {"id": "S07", "question": "What is the capital city of Australia?", "answer": "Canberra"},
-    {"id": "S08", "question": "In what year did humans first walk on the Moon?", "answer": "1969"},
-    {"id": "S09", "question": "A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost, in cents?", "answer": "5"},
-    {"id": "S10", "question": "A patch of lily pads doubles in size every day. It covers the entire lake after 48 days. After how many days did it cover half the lake?", "answer": "47"},
-]
-# S03-S05 are arithmetic word problems with a trap step; S06-S08 are short factual
-# questions with verifiable answers; S09-S10 are classic reasoning puzzles where the
-# intuitive-but-wrong answer (10 cents; 24 days) is a well-known misconception:
-# good candidates for a correlated failure, where every agent agrees on the same
-# wrong answer. Feel free to swap in questions of your own, keeping this mix.
-```
-
-> **You should see.** `python3 shootout.py` exits silently at this point; it loads `lab4.py` and the config but has nothing to run yet.
->
-> **If it fails.** `ImportError` on `lab4` means `shootout.py` is not in the same folder as `lab4.py`.
-
-### Step B.3.2: Run the three conditions at matched call budgets
-
-**Goal:** accuracy and call count for single shot, self-consistency, and debate on the same questions.
-
-"Matched call budgets" means each condition that aggregates gets the same number of model calls per question, so a win cannot come from simply calling the model more often.  For a budget of B=6 calls per question:
-
-- Single shot: 1 call (use the remaining 5 as wasted budget, or run 6 single shots and majority-vote them as "self-consistency")
-- Self-consistency: 6 samples, majority vote
-- Full debate: 3 agents times 2 rounds = 6 calls
-
-> **Do this.**
-> 1. Paste the code below under the task set in `shootout.py`.
-> 2. Run it from the lab folder.  Ten questions at 13 calls each takes a while on a laptop; let it finish.
->
-> ```bash
-> python3 shootout.py
-> ```
-
-```python
-import csv
-
-def single_shot(question, config, seed_offset=0):
-    """One call, no aggregation."""
-    messages = [{"role": "user", "content": f"{question}\n\nEnd your response with: ANSWER: <your answer>"}]
-    payload = {
-        "model": config["model"],
-        "messages": messages,
-        "stream": False,
-        "options": {"temperature": 0.2, "seed": config["debate"]["seed_base"] + seed_offset}
-    }
-    r = requests.post(config["provider_url"], json=payload, headers=({"Authorization": f"Bearer {config['api_key']}"} if config.get("api_key") else {}), timeout=60)
-    text = r.json()["message"]["content"]
-    return extract_answer(text, "single", 1)
-
-def self_consistency(question, config, k=6):
-    """Sample k answers and take majority vote."""
-    answers = []
-    for i in range(k):
-        ans = single_shot(question, config, seed_offset=i)
-        if ans:
-            answers.append(ans)
-    if not answers:
-        return None
-    return Counter(answers).most_common(1)[0][0]
-
-results = []
-for task in SHOOTOUT_TASKS:
-    q, expected = task["question"], task["answer"]
-    print(f"\n=== {task['id']} ===")
-
-    # Single shot
-    ss_answer = single_shot(q, config)
-    ss_correct = expected.lower() in (ss_answer or "").lower()
-
-    # Self-consistency (6 samples = 6 calls)
-    sc_answer = self_consistency(q, config, k=6)
-    sc_correct = expected.lower() in (sc_answer or "").lower()
-
-    # Full debate (3 agents × 2 rounds = 6 calls)
-    final_answers, transcripts, debate_calls = run_debate(q, config)
-    debate_answer = majority_vote(final_answers)
-    debate_correct = expected.lower() in (debate_answer or "").lower()
-
-    print(f"  Single shot: {ss_answer} ({'CORRECT' if ss_correct else 'WRONG'})")
-    print(f"  Self-consistency: {sc_answer} ({'CORRECT' if sc_correct else 'WRONG'})")
-    print(f"  Debate: {debate_answer} ({'CORRECT' if debate_correct else 'WRONG'})")
-
-    results.append({
-        "id": task["id"], "expected": expected,
-        "single_answer": ss_answer, "single_correct": ss_correct, "single_calls": 1,
-        "sc_answer": sc_answer, "sc_correct": sc_correct, "sc_calls": 6,
-        "debate_answer": debate_answer, "debate_correct": debate_correct, "debate_calls": debate_calls,
-    })
-
-# Print summary
-for condition, calls_key, correct_key in [
-    ("Single shot", "single_calls", "single_correct"),
-    ("Self-consistency", "sc_calls", "sc_correct"),
-    ("Debate", "debate_calls", "debate_correct"),
-]:
-    acc = sum(r[correct_key] for r in results) / len(results)
-    avg_calls = sum(r[calls_key] for r in results) / len(results)
-    print(f"{condition}: accuracy={acc:.1%}, avg_calls={avg_calls:.1f}")
-```
-
-**Predict:** before you run it, which of S01 to S10 do you expect all three conditions to get wrong together?
-
-> **You should see.** A per-question block for each task, then three summary lines.  Your percentages will differ; the shape is what matters.
-
-```text
-Single shot: accuracy=60.0%, avg_calls=1.0
-Self-consistency: accuracy=70.0%, avg_calls=6.0
-Debate: accuracy=80.0%, avg_calls=6.0
-```
-
-> **Watch out.** `single_shot` has no exception handler.  Add the located `try`/`except` from `agent_respond` before you submit; the Code Quality row covers every model call.
-
-> **If it fails.** If self-consistency and debate tie on every task, or all three conditions miss the same questions, see Troubleshooting, Part B.3.  A crash inside `single_shot` with no located message is the missing handler the note above describes.
-
-### Step B.3.3: Document a correlated failure
-
-**Goal:** one question where every agent agrees on the same wrong answer, written up with why aggregation could not help.
-
-> **Do this.**
-> 1. Find a question in your task set (or add one) where all agents agree on the same wrong answer.
-> 2. Paste all agents' verbatim `ANSWER:` lines alongside the correct answer in your readme.
-> 3. Explain in your writeup: why does aggregation fail here, and what non-LLM resource (a calculator, a lookup, retrieval from a factual source) would fix it?
-
-### Optional route: exchange positions through a channel
-
-This route is optional.  Skip it unless you want to try it; the in-process debate from Part B.1 earns the same credit.  A GitHub issue thread is the list of comments under one issue in a GitHub repository, and everyone with access sees each comment with its time.
-
-You may run the debate condition of the shootout as two agents that exchange positions through a shared channel, instead of three agents inside one Python process.  The channel is a GitHub issue thread or a Dropbox-style shared folder, and the agents follow the claim protocol from the *Agents That Talk, Observability, and Handoff Protocols* session.
-
-This route earns the same credit on the same rubric rows, Debate Implementation and Comparative Evaluation.  Two substitutions make it equivalent.  The channel transcript takes the place of the in-process 3-agent, 2-round transcript.  And the written protocol, meaning how to claim, what a second agent does on seeing a claim, what makes a claim stale, and what "done" looks like, takes the place of the round loop in `run_debate`.
-
-A **claim** is a visible mark in the channel that says "this item is mine now," made before any work starts.  On GitHub it is a "Claiming this" comment plus an `in-progress` label.  In a folder it is a rename from `inbox/` to `claimed/` followed by a `.claim` file holding `claimed_by` and `claimed_at`.  The rule that matters for a debate is that an agent claims the other agent's position before it reads it, so the transcript proves who read what, and when.
-
-> **Do this.** For each question in your task set:
-> 1. Write the protocol down first, as paths and conditions.  For GitHub: one issue per question, titled with the task id, and the four conventions (claim comment and label, the reply format ending in `ANSWER:`, the stale timeout, the closing comment that records the vote).  For a folder: `handoff/inbox/`, `handoff/claimed/`, and `handoff/done/`, the rename-as-claim rule, the `.claim` file, the stale timeout, and the `.result.md` file that marks a position as answered.
-> 2. Round 1, independent.  Each agent is its own chat session or its own script with its own seed.  Each answers from the question alone, before reading anything the other posted, and ends with an `ANSWER:` line.  On GitHub, each agent posts its full response as a comment.  In the folder, each agent writes `S01-agentA-round1.md` or `S01-agentB-round1.md` into `inbox/`.
-> 3. Round 2, handoff.  Each agent claims the other's round-1 position (the claim comment and label, or the rename plus the `.claim` file), then reads it, then posts a revision: a changed answer or a held position with a rebuttal, again ending in `ANSWER:`.  On GitHub the revision is a comment.  In the folder, the agent renames the claimed file into `done/` and writes its revision beside it as `S01-agentA-round1.result.md`.
-> 4. Aggregate.  Extract the `ANSWER:` line from each round-2 post with the same `extract_answer` rule as the in-process debate, including the located warning when the line is missing.  Two agents can tie, so your protocol must state the tie rule: a judge agent (one extra call) picks the answer, or the pair records the tie as no answer.  Post the result as the closing comment or as `S01.vote.md` in `done/`.
-> 5. Match the budget.  The channel debate costs two agents times two rounds, plus one call if the judge ran.  Set `k` for self-consistency to that same number so the three conditions stay matched, and report the actual call count per condition in your table.
-
-Your transcript must show the exchange with timestamps.
-
-On the **GitHub route**, submit the issue URL and a saved copy of each thread, as an export or screenshots, showing in order: the question, each agent's round-1 comment, each claim comment with its label, each round-2 comment, and the closing comment with the vote.  GitHub timestamps every comment for you.
-
-On the **folder route**, submit a listing of `handoff/` with full timestamps, for example from `ls -l --time-style=full-iso -R handoff/` or the Dropbox file activity view.  Include the contents of every file in `inbox/`, `claimed/`, and `done/`, and every `.claim` file with its `claimed_by` and `claimed_at`.
-
-In either case a reader must be able to see that each claim happened before the read it authorized, and that every round-2 post is a reply to a specific round-1 position.
-
-> **Watch out.** One reminder from that session applies here: a comment in the thread is an instruction the other agent will read, so a stray or injected line in a position becomes part of the next agent's context.
-
-### Troubleshooting, Part B.3
-
-- **Self-consistency and debate produce identical results on every task.**  For debate to beat self-consistency, some agents need to change their mind in revision rounds, and that requires questions with initial diversity.  Add more word problems with common arithmetic pitfalls; single-step questions rarely produce diversity.
-- **All three conditions fail on the same questions (beyond the one correlated failure).**  Your task set may be too hard for the model you are using.  Add some easier questions so the results spread across correct and incorrect answers and the comparison has signal.  If everything is wrong, you cannot see which method is better.
-- **One agent never produces an ANSWER: line.**  Check the temperature and seed for that agent.  At very high temperature (above 1.0) the model output can be incoherent.  Cap temperatures at 0.9 in your `temperature_schedule`.
-
-> **Checkpoint.** Before you move to Part B.4, make sure you can answer these:
-> 1. On your task set, which condition had the best accuracy?  Did it also have the highest call count?  What does that tradeoff imply about deployment decisions?
-> 2. Describe your correlated failure in one sentence.  Why could neither majority vote nor debate fix it?
-> 3. Name the non-LLM resource that would fix your correlated failure.  How would you integrate it into your existing agent architecture (think back to the Local Agent Lab's tool pattern)?
-
----
-
-## Part B.4: Test Threshold Sensitivity (supports the Consensus row)
-
-In Step B.2.4 your six study-group drafts became some number of clusters at a distance threshold of 0.3.  That 0.3 came with the config from Step A.1, and you have not yet checked whether it is a good choice.  Change it and the same six drafts can become six separate positions or one, and the synthesized answer changes with them.  Part B.4 makes that dial visible.
-
-> **No-code path.** Vary the agreement threshold you would accept (how many of your hand-clustered answers have to agree before you call it a consensus) and show, from your own data, where the answer flips.
-
-Vary the clustering `distance_threshold` across at least three values and report how the cluster structure, and therefore the synthesized consensus, changes on your long-form question.  Conclude with one paragraph: who should own this parameter in a deployed system, and how would you document its setting?
-
-### Step B.4.1: Run consensus at three threshold values
-
-**Goal:** the same long-form question run through the pipeline at three thresholds.
-
-**Predict:** at a threshold of 0.1, will you get more clusters or fewer than at 0.3?  Why?
-
-> **Do this.**
-> 1. Create `threshold.py` in the lab folder, starting with these two lines:
->
->    ```python
->    from lab4 import load_config, run_consensus
->    config = load_config()
->    ```
->
-> 2. Paste the loop below under them and run it:
->
-> ```bash
-> python3 threshold.py
-> ```
-
-```python
-long_form_q = "What makes a great study group, and what are the biggest pitfalls to avoid?"
-thresholds = [0.1, 0.3, 0.5]  # tight, medium, loose
-
-for threshold in thresholds:
-    config["consensus"]["distance_threshold"] = threshold
-    synthesis, drafts, labels, reps, calls = run_consensus(long_form_q, config)
-    num_clusters = len(set(labels))
-    print(f"\n=== Threshold = {threshold} ===")
-    print(f"Clusters: {num_clusters}")
-    print(f"Synthesis (first 200 chars): {synthesis[:200]}...")
-```
-
-> **You should see.** The cluster count falling as the threshold rises.
-
-```text
-=== Threshold = 0.1 ===
-Clusters: 6   <- each draft is its own cluster
-Synthesis (first 200 chars): There were 6 distinct perspectives on what makes a great study group...
-
-=== Threshold = 0.3 ===
-Clusters: 3   <- moderate merging
-Synthesis (first 200 chars): A great study group combines clear goals (supported by 3 samples)...
-
-=== Threshold = 0.5 ===
-Clusters: 1   <- everything merged
-Synthesis (first 200 chars): A great study group needs...
-```
-
-> **If it fails.** If all three thresholds give the same cluster count, or 0.1 gives fewer clusters than 0.3, see Troubleshooting, Part B.4.
-
-### Step B.4.2: Tabulate and write your conclusion
-
-**Goal:** a three-row table from your own run and one paragraph on who should own the threshold.
-
-> **Do this.**
-> 1. In your readme, fill in a table like this one with your own numbers and descriptions:
->
->    | Threshold | Clusters | Synthesis character |
->    |-----------|----------|---------------------|
->    | 0.1 | 6 | Highly fragmented; all views presented equally |
->    | 0.3 | 3 | Balanced; majority position emerges |
->    | 0.5 | 1 | Over-merged; diversity lost |
->
-> 2. Then answer in one paragraph: who should own this parameter, the system developer, the deployer, or the end user?  What documentation would help them choose a value?
-
-### Troubleshooting, Part B.4
-
-- **All thresholds produce the same number of clusters.**  Your drafts may be nearly identical (low diversity from sampling).  Increase `sample_temperature` to 0.9 or 1.0, or use a more open-ended question.  You can also inspect the actual pairwise cosine distances with `1 - (normed @ normed.T)` to see what distances you are working with.
-- **Threshold 0.1 produces fewer clusters than threshold 0.3.**  This is unexpected: a lower threshold should produce more (tighter) clusters.  Check that you are using `distance_threshold` as an upper bound for merging (not a lower bound).  With `AgglomerativeClustering`, lower threshold = more clusters.
-
-> **Checkpoint.** Before you write your deliverables, make sure you can answer these:
-> 1. At what threshold did the synthesizer produce the most useful response on your long-form question?  Why?
-> 2. What is the danger of setting the threshold too low?  What is the danger of setting it too high?
-> 3. If you were deploying this system for a company's internal knowledge base, who would you recommend owns the threshold parameter, and what guidance would you write in the documentation?
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Connection refused, or an error tagged `[lab3:...]` or `[lab4:...]` with a connection message | Ollama is not running | Start it with `ollama serve` and retry |
+| The critic says "revise" every round | The critic's JSON is not parsing, or a descriptor is too strict | Look for the `json_parse` line and the raw reply; loosen one descriptor as a test |
+| `ANSWER = None` with a `[lab4:extract_answer] WARNING` | The model wrote `**ANSWER:**` or left the line off | Add `response_text = re.sub(r'\*+', '', response_text)` at the top of `extract_answer`, or rerun |
+| All debate agents agree in round 1 every time | Temperature too low, or the question has one obvious answer | Try `[0.9, 0.5]`, or a question people often get wrong |
+| `ValueError` from `AgglomerativeClustering` about too few samples | `num_samples` is below 2 | Set it to 2 or more |
+| Every draft lands in one cluster, or each in its own | The threshold is too loose or too tight for your drafts | Move `distance_threshold` toward 0.15 or 0.5 and rerun |
+| (No-code) Three Debater or Sampler chats give the same answer word for word | A seed is set on the preset | Clear the seed field and start fresh chats |
 
 ---
 
 ## Deliverables
 
-Submit one ZIP containing both halves.  Fix random seeds where determinism is intended and list software version information so I can reproduce your numbers.  The readme writeup is approximately two pages and names your route at the top.
+Submit one ZIP.  The readme names your path at the top.
 
 | File or artifact | What it shows | Rubric row |
-|------------------|---------------|------------|
-| `critique_refine.py`, `rubric.json`, and a terminal log or screenshot with at least two complete generate, critique, refine cycles | The loop, its stopping rule, fail-closed parsing, and a draft changing in response to a critique | Part A (20) |
-| `calibration_drafts.json` and the per-criterion rates table | Planted defects, detection and false positive rates, the weakest criterion before and after, and the case where the critic was wrong with how you could tell | Part A (20) |
-| Hack transcript, `rubric_patched.json`, change, second transcript | The critic's "accept" beside your judgment that the draft is poor; the patch; reject-hack and accept-good | Part A (20) |
-| `comparison_results.csv` and the cost-for-quality paragraph | Score and call count per condition on at least eight tasks; what the loop cost in extra calls for the quality it bought | Part A (20) |
-| `judge_refine.py`, `judge_rubric.json`, and `judge_rounds.csv` | The per-criterion judge with quoted evidence and revision instructions, the bounded loop, and one row per criterion per round | Part A, Extended (5) |
-| Judge-and-refine readme section | Per-round level table, the converged, drifted, or sycophantic verdict with draft evidence, the `quote_found` count, the sycophancy probe, the blind spot-check agreement, and the three reflection answers | Part A, Extended (5) |
-| `lab4.py`, `shootout.py`, `threshold.py` | Debate loop, consensus pipeline, and comparison script, with docstrings and located exception handlers | Debate (20); Consensus (20); Code Quality (10) |
-| `config.json` | Temperatures, round budget, agents, rounds, temperature schedule, and distance threshold for both halves, not hardcoded | Code Quality (10) |
-| Task set with labels | At least ten checkable questions | Comparative Evaluation (20) |
-| Comparison results (CSV or table) | Accuracy and call count per condition at matched budgets | Comparative Evaluation (20) |
-| Debate and consensus transcripts, at least two questions each | One complete 3-agent, 2-round debate (or the handoff thread or folder listing with timestamps) and the long-form consensus demonstration | Debate (20); Consensus (20) |
-| Correlated failure analysis | Verbatim agreement on the wrong answer, why no aggregation could repair it, one non-LLM fix | Comparative Evaluation (20) |
-| Pair log (if you worked in a pair) | At least two timestamped role swaps | Writeup, Reflection, and Submission (5) |
-| Readme writeup, about two pages | Route named at the top, versions and seeds, Step B.2.2 interpretation answers, Part B.4 table and ownership paragraph, Learning Log | Writeup, Reflection, and Submission (5) |
-
-> **No-code path.** What you submit instead of code: the exported flow or preset prompts and chat transcripts (including at least two complete generate, critique, refine cycles in place of the Part A log, your calibration table, and your successful reward hack and patch), the Producer and Judge transcripts with the per-round score spreadsheet in place of `judge_rounds.csv`, the spreadsheet of runs and clusters, and the identical written analysis, including the honest verdict on whether the extra rounds bought you anything.
+|---|---|---|
+| `config.json`, `rubric.json`, `rubric_mytask.json`, `critique_refine.py` (and `judge_critic.py` if you used it), `run_a.py`, `practice_a.txt`, and `tryit_a.txt` (no-code: the Generator, Reviser, and Critic presets and the Part A spreadsheet tab) | The loop running to a stop, a draft changing in response to a critique, your changed setting, and the Try It comparison | Part A: Critique and Refine (30) |
+| `lab4.py`, `run_b.py`, `practice_b.txt`, and `tryit_b.txt` (no-code: the Debater and Debate Judge presets, the chats, and the Part B tab) | A three-agent, two-round debate combined by vote and by judge, your changed setting, and the Try It comparison | Part B: Debate (25) |
+| `lab4.py`, `run_c.py`, `practice_c.txt`, and `tryit_c.txt` (no-code: the Sampler and Synthesizer presets, the chats, and the Part C tab with your clusters) | Six samples, their clusters, the synthesis, your reading of the clusters, your changed setting, and the Try It comparison | Part C: Consensus (25) |
+| A readme with your path, model and package versions (`pip show requests sentence-transformers scikit-learn numpy`), the commands you ran, the three changed-setting lines, the three Try It sentences side by side with their call counts, the Learning Log, a pair log if you worked in a pair, and an AI-use disclosure (no-code: the Open WebUI version and every preset setting) | A reader could rerun everything | Writeup and Reproducibility (20) |
 
 ---
 
 ## Self-Check Before You Submit
 
-Held against the rubric's `proficient` column.  On the no-code or low-code route, read "code" as "flow or preset configuration" and "log" as "transcript".
-
-- [ ] **Part A:** the loop runs generator, critic, and refiner with a stated stopping rule; every round produces a verdict of **accept** or **revise** as valid JSON, invalid JSON is logged and treated as **revise**, and on budget exhaustion the last draft comes back **with the outstanding critique attached**.
-- [ ] A transcript shows at least two complete cycles, with a draft changing in response to a critique.
-- [ ] **Calibration:** drafts with planted defects spanning **every** rubric criterion, plus at least two defect-free drafts, with detection rate and **false positive** rate per criterion in a table and the weakest criterion shown before and after its rewrite.
-- [ ] The writeup shows a case where the critic was **wrong**, plus how I could tell.
-- [ ] **Reward hack:** a working one, shown verbatim, with the critic's "accept" next to my own judgment that the draft is poor; the patch shown as a **change**, the patched criterion beside the original; a second transcript showing the patched rubric rejects the hack **and still accepts a defect-free draft**.
-- [ ] **Comparison:** fixed tasks, the same scoring instrument on both sides, and a paragraph that says what the loop cost in extra calls for the quality it bought.
-- [ ] **Judge-and-refine:** the judge scores **every** criterion against a stated `meets` bar with a quoted sentence and a revision instruction, the producer revises from those instructions, and the loop stops at **three rounds at most** or as soon as every criterion meets its bar.
-- [ ] Per-round scores are logged (`judge_rounds.csv` or the spreadsheet), and the writeup says whether refinement **converged, drifted, or was sycophantic**, with the draft change (or its absence) as evidence and the count of quotes not found in the draft.
-- [ ] I (or, in a pair, both partners) **blind spot-checked** the final round before reading the judge's levels, and the three judge failure-mode reflections are answered.
-- [ ] **Debate:** agents, rounds, and temperature schedule are configurable.
-- [ ] Answer extraction anchors on a required `ANSWER:` line, and a missing one produces a located error rather than a silent wrong answer.
-- [ ] Both **majority-vote** and **judge-agent** aggregation are available.
-- [ ] A complete **3-agent, 2-round** debate transcript is included (or, on the handoff route, the issue thread or the folder listing with timestamps).
-- [ ] **Consensus:** k high-temperature drafts, clustered with a **justified** threshold.
-- [ ] The synthesizer receives **cluster summaries with support counts**, not all k transcripts.
-- [ ] Close disagreements are disclosed in one line of the output.
-- [ ] A long-form demonstration is included.
-- [ ] **Shootout:** all conditions at **matched call budgets**, on a labeled set of at least ten items.
-- [ ] Accuracy and model-call count reported per condition, in a table.
-- [ ] At least one **correlated failure** documented with all agents' verbatim responses agreeing on the wrong answer.
-- [ ] The writeup explains why no aggregation could have repaired it, and names one **non-LLM** addition that would.
-- [ ] Temperatures, round budget, agent count, rounds, temperature schedule, and distance threshold live in a config file.
-- [ ] Located exception handlers with tracebacks on model and embedding calls.
-- [ ] If I worked in a pair: pair log with at least two timestamped role swaps.
-- [ ] Every reflection answer cites a specific accuracy figure, transcript excerpt, or named failure mode.
-- [ ] The route I took is named at the top of the writeup.
+- [ ] My readme names my path, code or no-code.
+- [ ] **Part A:** the loop ran to a printed stop (accepted or budget exhausted), and my saved transcript shows at least two rounds with a draft changing in response to a critique.
+- [ ] **Part B:** a three-agent, two-round debate ran, with every answer read from its `ANSWER:` line and the final round combined by both majority vote and the judge.
+- [ ] **Part C:** six samples were clustered and synthesized from one representative per cluster with its support count, and I wrote whether the clusters match my own reading.
+- [ ] For each Part, one changed setting with its old value, new value, and what changed.
+- [ ] For each Part, one Try It run on a task I chose, beside a single call, with one sentence on whether it helped and what it cost in model calls.
+- [ ] Code path: every model and embedding call, including any I added, sits inside an exception handler with a located message and a traceback.  No-code path: every preset setting is in the readme.
+- [ ] Model name and package versions (or the Open WebUI version) are recorded, with `config.json`.
+- [ ] Learning Log, AI-use disclosure, and (if I worked in a pair) a pair log with at least two timestamped role swaps.
 
 ---
 
 ## Learning Log
 
-Keep a metacognitive learning log for this lab in your readme.  In the spirit of multiple means of action and expression, you may respond to each prompt in prose, in bullet points, or with an annotated diagram, whichever best conveys your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
+Keep a learning log for this lab in your readme.  You may answer each prompt in prose, in bullet points, or with an annotated diagram, whichever best shows your thinking.  (Prompt 4 adapts the AI-Assisted Learning Template by Marc Watkins.)
 
-1. **What I built.**  One paragraph, in plain language that a friend outside of computer science could follow (this is deliberate practice in writing for multiple audiences).
+1. **What I ran.**  One paragraph a friend outside of computer science could follow.
 2. **What surprised me.**
-3. **What I verified and how.**  Evidence, not vibes.
+3. **What I checked and how.**  Point to a transcript, not a feeling.
 4. **How I used AI during this lab**, and what I learned from that use.
 5. **What I'd tell the next student** before they start.
-6. **One open question I still have.**
+6. **Which of the three patterns, if any, I would put in my final project**, and for which step.
 
-### Lab-specific prompts
-
-- Your critic is an LLM judging an LLM.  At what specific points in this lab did you, the humans, remain indispensable, and what would have gone wrong if you had removed yourselves?  Connect your answer to the broader question of when it is safe to remove humans from an evaluation pipeline.
-- Describe the most surprising critic behavior you observed: a missed defect, a phantom defect, or an oscillation (the critic reverses its verdict across rounds without the draft changing).  What does that behavior imply about using this critic in a high-stakes setting?
-- Debate and consensus spend extra computation to buy reliability.  Name one decision in your own life where you would pay that cost and one where you would not.  Map each onto a condition from your shootout (single-shot, self-consistency, or debate), and explain what feature of the task, beyond the cost, drives the choice.
-- Your synthesizer "follows the majority."  Name a real scenario (in medicine, law, or public policy) where the majority of experts can all be wrong in the same direction, and explain what mechanism (something other than more samples) would be needed to catch that error.
-
----
-
-## Extension Challenges
-
-These are optional and carry no extra credit.
-
-**Challenge A1 (moderate): Add a revision history log.**  After each round, store the draft and critique in a list.  At the end of the loop, print a table showing how many issues were resolved each round (issues in round N minus issues in round N+1).  Identify which criteria took the most rounds to satisfy.
-
-**Challenge A2 (harder): Multi-agent cross-critique.**  Instead of one critic, use two critics with different system prompts (one strict, one lenient).  Accept a draft only when both critics agree on "accept."  Measure how this changes the average rounds-to-acceptance and the quality of accepted drafts.
-
-**Challenge A3 (hardest): Self-referential calibration.**  Use your loop to generate and refine its own rubric: start with a vague rubric, ask the critic "is this rubric's criterion C1 observable enough to detect without ambiguity?", and refine criterion descriptors until the critic accepts the rubric as well-specified.  Then run Step A.6's calibration on the auto-refined rubric and compare its detection rates to your manually-refined rubric.
-
-**Challenge B1 (moderate): Compare the judge with the vote.**  You built `judge_aggregate` in Step B.1.6.  Run both aggregation methods over your full task set and compare the judge's accuracy to majority vote.  Does the judge ever pick the minority answer, and when it does, is it usually right or wrong?
-
-**Challenge B2 (harder): Adaptive sampling.**  In the consensus pipeline, start with 3 samples.  If all 3 land in one cluster, you are done.  If they span more than 2 clusters, sample 3 more.  Continue until either a clear majority cluster exists or you hit a call budget of 9.  Measure whether adaptive sampling reduces average cost while maintaining accuracy compared to always sampling 6.
-
-**Challenge B3 (hardest): Cross-architecture comparison.**  Run the same 10-task shootout using a second model available via `ollama pull` (e.g., `mistral` or `phi3`).  Compare both models across all three conditions.  Do the two models have different correlated failure patterns?  Does combining agents from two different model families reduce correlated failures compared to using the same model for all agents?
-
----
-
-## The Coding-Agent Direction Lives in OpenCode Studio
-
-A coding agent standing in as the generator, with you critiquing its change, is its own lab, [OpenCode Studio]({{ site.baseurl }}/Assignments/OpenCodeStudio), handed out in Week 2, so that it is taught before you need it rather than after.  The discipline is the same one you build in Part A: read the output against a written specification, sort the findings into categories, and drive one precise refine turn from those categories.
