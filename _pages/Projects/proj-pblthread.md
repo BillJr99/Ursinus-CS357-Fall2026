@@ -309,7 +309,7 @@ Rotation is not optional and not tradeable.  The point is that everyone practice
 
 The structured peer reviews at the brief, proposal, and gallery-walk stages all use the **SQR protocol**: one Strength with evidence, one genuine Question, one Risk with a mitigation.  The **[Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview)** carries the protocol card; bring it to each review round.
 
-Three times in the semester (with the Stakeholder Brief, between the project hand-out and the proposal, and after the gallery walk) your team pauses for a structured check-in.  Each check-in carries **3 points, assessed within Class Activities and Participation**: enough to make it a real commitment, small enough that the check-in itself, not the score, is the point.  Every check-in has the same two parts:
+Three times in the semester (with the Stakeholder Brief, between the project hand-out and the proposal, and after the gallery walk) your team pauses for a structured check-in.  Each check-in carries **3 points, assessed within Final Project and Project Thread Milestones**: enough to make it a real commitment, small enough that the check-in itself, not the score, is the point.  Every check-in has the same two parts:
 
 1.  **A short team progress report, signed by all members**: what shipped since the last milestone, what is next, and the current risks.  Three sections, half a page, honest.  The signatures matter.  Signing a report you know is rosy is the small version of every engineering-ethics case study you will ever read.
 2.  **A confidential individual team-health pulse to the instructor**: a few private sentences on how the team is working *for you*.  This is not a report on your teammates; it is a report on your experience.  Is your voice landing?  Is your workload fair?  Is there anything you cannot raise in the room?  This channel exists for the things psychological safety has not yet made sayable.  Only I read it, and I never quote it back.
@@ -345,7 +345,7 @@ Sprint 1 is long and spans the Thanksgiving break, so two sprint checks cut it i
 
 Before each check, every member also adds one **evidence line** of their own to the decision log: what I did since the last check, with a link to the commit, issue, or document that shows it.  Two minutes is enough.  By Demo Day these lines are most of your contribution statement.  Sprint Check 2 also carries the confidential peer pulse described under the check-ins below, submitted privately by each member in Canvas.
 
-I mark each team **shown** or **not yet**, on the running piece alone; the evidence lines and the pulse are expected of every member but do not change the mark.  Each check carries **3 points, assessed within Class Activities and Participation**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough; a slide about what you plan to build is not.
+I mark each team **shown** or **not yet**, on the running piece alone; the evidence lines and the pulse are expected of every member but do not change the mark.  Each check carries **3 points, assessed within Final Project and Project Thread Milestones**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough; a slide about what you plan to build is not.
 
 ---
 

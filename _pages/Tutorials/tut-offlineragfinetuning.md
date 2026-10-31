@@ -185,6 +185,42 @@ The 3D printers use PLA and PETG filament. Members bring their own filament or b
 Each member may reserve a 3D printer for at most four hours per day.
 ```
 
+The other three files are just as short.  Save them beside it, so your runs match the ones below; the distances you see may still differ slightly in the second or third decimal place.  `corpus/hours.md`:
+
+```markdown
+# Hours and Access
+
+The Skippack Creek Makerspace is open Monday through Friday from 10am to 9pm, and Saturday from 9am to 5pm. It is closed on Sundays.
+
+Members enter with a key fob. A lost key fob costs $15 to replace at the front desk.
+
+A member may sign in at most two guests at a time, and guests must stay with the member.
+```
+
+`corpus/membership.md`:
+
+```markdown
+# Membership
+
+A standard membership costs $45 per month. Students with a current ID pay $20 per month.
+
+A member may pause a membership for up to three months per year at no charge.
+
+Every new member takes an orientation tour, which covers the fire exits, the first aid kits, and the tool sign-out sheet.
+```
+
+`corpus/safety.md`:
+
+```markdown
+# Safety
+
+Safety glasses are required in the wood shop at all times. Closed-toe shoes are required in every shop area.
+
+Report every injury, however small, to the front desk on the day it happens.
+
+The first aid kit hangs in the hallway outside the wood shop.
+```
+
 ### One shared module
 
 The embedding function is named explicitly, in one place.  A collection must be queried with the same embedding model that built it, so the model's name is also stored in the collection's metadata.  The store lives on disk at `./chroma_db`.
