@@ -22,7 +22,7 @@ You leave with four things: the vocabulary for how agents communicate through a 
 
 ## Directions and Group Roles
 
-Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Manager calls for a prediction before anyone runs a code cell.  The Recorder posts your answers to the Class Activity Questions discussion board and keeps the team's draft protocol, writing every claim rule as a path and a condition rather than a sentiment.  The Presenter reads one rule of the protocol aloud at report-out.  The Reflector watches for the moment the team assumes GitHub is doing something for free that a folder would not, and notes where the team disagreed about what an agent must write down before it stops.  After class, answer the reflective prompt on your own in your notebook.
+Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  Think each model and question through on your own first, then talk it over with your group.  The Manager calls for a prediction before anyone runs a code cell.  The Recorder posts your answers to the Class Activity Questions discussion board and keeps the team's draft protocol, writing every claim rule as a path and a condition rather than a sentiment.  At report-out, the Presenter says your team's Sprint 1 goal and the one thing you will show on November 12, then reads one rule of the protocol aloud if time allows.  The Reflector watches for the moment the team assumes GitHub is doing something for free that a folder would not, and notes where the team disagreed about what an agent must write down before it stops.  After class, answer the reflective prompt on your own in your notebook.
 
 ---
 
@@ -49,7 +49,7 @@ Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rot
 
 **You need:** your `cs357-work` repository from *How I AI*, with its `.ai/` directory, and the two course templates linked in Part IV.  There is nothing to install today; both code cells run in this page.
 
-**Due today:** your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal).  Nothing in today's session depends on it, so keep it out of Part I.
+**Due today:** your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/FinalProjectProposal).  Part IV writes your team's own handoff skill for that project, so have your project repository open.  I also hand out the two [sprint checks](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#sprint-checks), at the start of class on Thursday, November 12, and Thursday, November 19.
 
 ---
 
@@ -62,8 +62,8 @@ We have seventy-five minutes together.  Here is how they are meant to go, so you
 | 0-8 | Part I, why the small context principle pushes state out of the window (Model 1) |
 | 8-30 | Part II, agents that talk: an issue thread between two agents (Model 2), then the same handoff through a shared folder, with the claim race run in code (Model 3) |
 | 30-48 | Part III, observability and traceability: logs and traces, one loop step written as a trace, and reading one (Model 4) |
-| 48-70 | Part IV, handoff protocols: start, stop, restart, and the `SKILL.md` written together (Model 5) |
-| 70-75 | Report out: one rule the medium enforces, and one rule that holds only because both agents chose to follow it |
+| 48-68 | Part IV, handoff protocols: start, stop, restart, and your team's own `SKILL.md` for your project, written together (Model 5) |
+| 68-75 | Report out: each Presenter says your team's Sprint 1 goal and the one thing you will show at the start of class on Thursday, November 12 (a running piece for Directions A and C, one cited finding for Direction B).  If time allows: one rule the medium enforces, and one rule that holds only because both agents chose to follow it |
 
 ---
 # Part I: Why State Leaves the Context Window
@@ -485,7 +485,7 @@ Every entry in `SESSION.md` ends with a "Next Safe Action" because:
 
 ## Model 5: The Protocol as a `SKILL.md`
 
-Write this together.  The Recorder types; the team supplies each rule as a path and a condition.  A skill is a directory containing a `SKILL.md` whose front matter carries `name` and `description`, as you built in the skills lab; the agent loads it when the description matches the task.  Here is the skeleton.  The bracketed parts are yours, and the numbers are what the checklist below cites.
+Write this together, for your team's actual Final Project repository and the medium your team will really use (GitHub issues or a shared folder), not a generic one.  Direction B teams write it for the agents you use to run the audit, and commit it to your evidence folder or repository.  The Recorder types; the team supplies each rule as a path and a condition.  A skill is a directory containing a `SKILL.md` whose front matter carries `name` and `description`, as you built in the skills lab; the agent loads it when the description matches the task.  Here is the skeleton.  The bracketed parts are yours, and the numbers are what the checklist below cites.
 
 ```markdown
 ---
@@ -533,7 +533,7 @@ description: >
     run rules 5 through 7 before failure.
 ```
 
-When you write this protocol into your Final Project repository, read it against this checklist.  Every row must be true of your protocol, and every row must cite the rule number that makes it true.
+Read your protocol against this checklist.  Every row must be true of your protocol, and every row must cite the rule number that makes it true.  Then commit the `SKILL.md` to your project repository.  It is the first project-level skill your team names for the final project, so list it, with what triggers it, where your repository describes its agents (your README or AGENTS.md).
 
 | Check | Rule that makes it true |
 |---|---|

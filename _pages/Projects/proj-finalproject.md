@@ -302,6 +302,8 @@ The proposal is graded on its own rubric, not on this one: three course families
 
 Build in three sprints between the proposal and Demo Day, aligned with in-class studio days; see the [course schedule]({{ site.baseurl }}/) for the boundaries.  Each sprint produces three things: a **runnable increment or evidenced stage checkpoint** (per your direction's milestones below), an **updated evaluation or evidence table** (a number or a citation, not an adjective), and **Scribe notes** from the sprint retrospective.  Roles rotate at each boundary so every member holds every role.
 
+Sprint 1 is the longest sprint and spans the Thanksgiving break, so the [sprint checks]({{ site.baseurl }}/Projects/PBLThread#sprint-checks) on Thursday, November 12, and Thursday, November 19, cut it into two short laps: each time, your team shows one thing running (Direction B: one cited finding) at the start of class.
+
 | Sprint | Direction A milestone | Direction B milestone | Direction C milestone |
 |---|---|---|---|
 | Sprint 1 (proposal submitted -> cross-team proposal critique; spans the Thanksgiving break) | Monolith baseline running; 10-task evaluation set finalized (frozen after this); agent design table drafted; repo + CI placeholder | Evidence folder with 5+ sources; framework mapping begun; first failure-mode candidates identified | Running minimum viable product (MVP: core feature only); at least 3 tests (1 unit + 2 property); CI green on the MVP |
