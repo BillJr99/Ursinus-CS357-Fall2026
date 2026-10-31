@@ -31,7 +31,7 @@ info:
       preemerging: There is no evidence of team process, no meeting agendas or notes, no decision log, no role rotation, and missing check-ins and signatures
       beginning: Some process artifacts exist but are spotty, meeting notes or the decision log have gaps, one or more intra-team check-ins are missing, the GANTT-style timeline is absent or stale, or signatures are missing from a milestone
       progressing: The Team Playbook is followed with minor lapses, meeting agendas and notes, the decision log, role rotation, the project timeline, all three intra-team check-ins, and all-member signatures are present, but one element is thin, late, or inconsistently maintained (Goal 13)
-      proficient: Team process is visible and current throughout, meetings have posted agendas and notes as the team's chosen Sprint 1 practices require, and every sprint retrospective has full notes; the decision log records alternatives and rationale; project management is real (a maintained GANTT-style timeline with named owners, sprint boundaries honored, runnable increments at each sprint); all three intra-team check-ins are submitted on time; the team demonstrably operates under its signed charter, including its conflict protocol; roles rotate per sprint and every student is primary author of at least one section or component of every team deliverable (editable by teammates); each team document's version or commit history shows a real drafting trajectory rather than a single late paste; every milestone carries all members' signatures (Goal 13)
+      proficient: Team process is visible and current throughout, every meeting has a posted agenda and notes with owners and dates; the decision log records alternatives and rationale; project management is real (a maintained GANTT-style timeline with named owners, sprint boundaries honored, runnable increments at each sprint); all three intra-team check-ins are submitted on time; the team demonstrably operates under its signed charter, including its conflict protocol; roles rotate per sprint and every student is primary author of at least one section or component of every team deliverable (editable by teammates); each team document's version or commit history shows a real drafting trajectory rather than a single late paste; every milestone carries all members' signatures (Goal 13)
     - weight: 19
       description: Product, the working system, audit, or publication; the Demo Day presentation; and the partner-facing artifact
       preemerging: The direction's core artifact is missing or does not function, the system does not run, the audit lacks findings and governance, or nothing was published; the Demo Day presentation is missing or covers only a happy path with no disclosed limitation; no partner-facing artifact exists
@@ -324,7 +324,7 @@ The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sp
 > 4. Update the evaluation or evidence table with a number or a citation.
 > 5. Update the GANTT-style timeline, and log any scope change the Literature Review synthesis forced.
 > 6. Add the sprint's token counts, traces, audit results, and probe results to the Responsible AI evidence folder.
-> 7. Hold the sprint retrospective and file the Scribe notes.  Each member also writes a short personal reflection, three to five sentences, in the artifacts folder: what I built, what I learned, and what I would do differently, keyed to one of the Open Questions.
+> 7. Hold the sprint retrospective and file the Scribe notes in your team note.  Each member adds a short personal reflection to those notes, three to five sentences: what I built, what I learned, and what I would do differently, keyed to one of the Open Questions.
 > 8. During the final sprint, run the **partner feedback pass**: put your work in front of your community partner and document the exchange (see Community Partner Engagement above).
 
 **Deliverables for this phase:**
@@ -332,7 +332,7 @@ The [Literature Review]({{ site.baseurl }}/Assignments/LitReview) runs across Sp
 - [ ] A runnable increment or evidenced stage checkpoint at each of the three sprint boundaries
 - [ ] An updated evaluation or evidence table at each boundary
 - [ ] Responsible AI evidence (token counts, traces, audit and probe results) added at each boundary
-- [ ] Scribe notes from each retrospective, a personal reflection from each member, role rotation recorded, and the GANTT-style timeline kept current
+- [ ] Scribe notes from each retrospective, with each member's reflection in them, role rotation recorded, and the GANTT-style timeline kept current
 - [ ] The Literature Review synthesis, with any resulting scope change in the decision log
 - [ ] The partner feedback pass, documented with your triage (incorporate, disclose, or defer)
 

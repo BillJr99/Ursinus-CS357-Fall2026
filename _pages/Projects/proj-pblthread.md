@@ -25,8 +25,8 @@ info:
     description: Professionalism and Process (applied at every thread milestone; scored on the individual milestone pages, not here)
     preemerging: There is no evidence of team process, no meeting notes, no decision log, no role rotation, and missing signatures
     beginning: Some process artifacts exist but are incomplete, the decision log has gaps, or signatures are missing from a progress report
-    progressing: "The Team Playbook is followed with minor lapses: the decision log, role rotation, all-member signatures, and the practices the team chose to keep are present, but one element is thin or late (Goal 13)"
-    proficient: "The Team Playbook is followed consistently: the decision log and the practices the team chose to keep are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and each team document's version or commit history shows a real drafting trajectory rather than a single late paste (Goal 13)"
+    progressing: The Team Playbook is followed with minor lapses, standups, decision log, meeting notes, role rotation, and all-member signatures are present, but one element is thin or late (Goal 13)
+    proficient: The Team Playbook is followed consistently, standup notes and the decision log are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and each team document's version or commit history shows a real drafting trajectory rather than a single late paste (Goal 13)
   - weight: 30
     description: Product (applied at every thread milestone; scored on the individual milestone pages, not here)
     preemerging: The artifact is missing or does not meet the milestone's stated requirements
@@ -151,7 +151,7 @@ Here are two views of the same thread: a table for scanning, then a narrative fo
 | 13 | **Literature Review, Phase 2** (team) | One page connecting everyone's sources to the problem statement and naming the gap your project addresses. | [Literature Review]({{ site.baseurl }}/Assignments/LitReview) |
 | 14 | **Peer review round 2** | Cross-team SQR critique of the proposals, in class at the *Project Sprint* session. | [Structured Peer Review activity]({{ site.baseurl }}/Tutorials/PeerReview) |
 | 15 | **Sprints 1-3** | Three sprints between the proposal and Demo Day, with rotating roles, runnable increments, evaluation updates, and Responsible AI measurements (token counts, traces, correctness audits, and bias probes) logged at every boundary. Sprint 1 spans the Thanksgiving break; plan for it in your charter's cadence. | Track pages |
-| 16 | **Sprint checks 1 and 2** | Ten minutes at the start of class, twice during Sprint 1: a member I pick at random shows one thing running (Direction B: one cited finding), and the Coordinator says what is next and what is blocking. Each is marked shown or not yet; every member adds an evidence line beforehand, and Sprint Check 2 carries the peer pulse. | [Sprint Checks](#sprint-checks) |
+| 16 | **Sprint checks 1 and 2** | Ten minutes at the start of class, twice during Sprint 1: a member I pick at random shows one thing running (Direction B: one cited finding), and the Coordinator says what is next and what is blocking. Each is marked shown or not yet; every member's linked standup line is their evidence line, and Sprint Check 2 carries the peer pulse. | [Sprint Checks](#sprint-checks) |
 | 17 | **Gallery walk + peer review round 3** | Walk each other's work with SQR cards at the final studio. | Track pages |
 | 18 | **Intra-team check-in 3** | The third private check-in, reflecting on what the gallery walk surfaced. | [Check-Ins](#intra-team-check-ins-1-3) |
 | 19 | **Demo Day** | Technical demo, a non-technical stakeholder-facing segment, a disseminable artifact, and the Responsible AI Report on the team's own work. Demo Day is also the team's deliberate adjourning: the final reflection, contribution statements, and your professional portfolio artifact close the thread. | Track pages |
@@ -261,13 +261,13 @@ Your team's first deliverable is not technical.  It is a **contract**, in the st
 
 The playbook is your team's operating system.  The structure is **deliberately heavier early** (the forming and storming stages, up through the midpoint charter revisit) **and lighter later** (norming and performing).  Scaffolding comes down as the team shows it no longer needs it.
 
-### Choosing Your Sprint 1 Practices
+### One Weekly Team Note
 
-Sprint 1 is where your team decides which scaffolding it still needs.  At the Proposal Clinic in the *RAG Worked Example* session, use your check-in 2 role and workload audit to decide which Playbook practices you keep for Sprint 1, and write one sentence on why.  The standups and the agenda-and-notes discipline are yours to keep, lighten, or drop.  The decision log, the sprint checks, role rotation, all-member signatures, and full notes for every sprint retrospective stay required for every team.  Record your choice as a decision-log entry.  The Professionalism and Process rubric reads your process against the practices you chose to keep, so a practice you dropped this way does not count against you.
+Keep the playbook in one running file: `TEAM-NOTES.md` in your project repository, or one shared document, with one dated entry per team meeting.  Each entry holds the agenda, posted before the meeting; every member's three-line standup; the notes, with action items, owners, and dates; and the week's decisions, in the decision-log format below.  One team meeting a week is enough.  Every practice on this page stays in place for every team; the note is simply where they all live, so nothing gets written twice.  At the Proposal Clinic, start the note with your meeting day and time and who owns the first agenda.
 
 ### Standups
 
-Open every team meeting with the three-line standup, and post it to your team channel between meetings (twice weekly until the midpoint revisit, then at your discretion).  Each member answers, in writing or out loud:
+Open every team meeting with the three-line standup, and post it in your team note (twice weekly until the midpoint revisit, then at least once a week).  Each member answers, in writing or out loud:
 
 ```
 Since last time I: ...
@@ -277,9 +277,11 @@ I am blocked by / worried about: ...
 
 The third line is the one that matters.  It is the psychological-safety line.  A standup where nobody is ever blocked is a standup where nobody is being honest.
 
+During the sprints, write the first line with a link to the commit, issue, or document that shows the work.  That linked line is your **evidence line** for the sprint checks, and by Demo Day these lines are most of your contribution statement.
+
 ### Decision Log
 
-Every non-trivial team decision gets one row in a running `DECISIONS.md` (or shared document).  Format:
+Every non-trivial team decision gets one row in the running decision log, kept as a section of your weekly team note (or as its own `DECISIONS.md`).  Format:
 
 | Date | Decision | Alternatives Considered | Why | Primary Author | Revisit When |
 |------|----------|------------------------|-----|----------------|--------------|
@@ -341,9 +343,9 @@ At every check-in, the team re-reads its charter against its actual behavior.  T
 Sprint 1 is long and spans the Thanksgiving break, so two sprint checks cut it into two short laps.  Each check takes ten minutes at the start of class, with no slides:
 
 1.  I pick one member of your team at random when the check starts, and that person has 90 seconds to show one thing running.  Direction B teams show one cited finding instead.  Every member should be ready to show it, whoever built it.
-2.  Your **Coordinator** says what is next and what is blocking you.  Write those same two lines into your decision log or standup notes that day, so the check is also that week's entry.
+2.  Your **Coordinator** says what is next and what is blocking you.  Write those same two lines into that week's team note.
 
-Before each check, every member also adds one **evidence line** of their own to the decision log: what I did since the last check, with a link to the commit, issue, or document that shows it.  Two minutes is enough.  By Demo Day these lines are most of your contribution statement.  Sprint Check 2 also carries the confidential peer pulse described under the check-ins below, submitted privately by each member in Canvas.
+Before each check, every member's latest standup in the team note carries their **evidence line**: the "Since last time I" line, with a link to the commit, issue, or document that shows the work.  Sprint Check 2 also carries the confidential peer pulse described under the check-ins below, submitted privately by each member in Canvas.
 
 I mark each team **shown** or **not yet**, on the running piece alone; the evidence lines and the pulse are expected of every member but do not change the mark.  Each check carries **3 points, assessed within Final Project and Project Thread Milestones**, and the credit is all or nothing: shown earns all 3 points, and not yet earns none.  What you show can be small.  One piece that runs end to end is enough; a slide about what you plan to build is not.
 
@@ -407,5 +409,5 @@ At each milestone you will find prompts keyed to these questions on that milesto
 | Description | Pre-Emerging (< 50%) | Beginning (50%) | Progressing (85%) | Proficient (100%) |
 |---|---|---|---|---|
 | Approach (applied at every thread milestone; scored on the individual milestone pages, not here) (35%) | The milestone artifact shows no evidence of a deliberate approach, decisions are unexplained and the work does not build on prior thread milestones | An approach is described but is generic; the artifact does not connect to the stakeholder, the literature, or the team's stated problem | The approach is deliberate and mostly connected, the artifact builds on prior milestones and cites its sources, with minor gaps in how alternatives were considered (Goals 11, 12) | The approach is deliberate, documented, and cumulative, the artifact names the alternatives that were considered and why they were rejected, grounds its claims in the Stakeholder Brief and Literature Review, and shows a multi-disciplinary understanding of the problem it addresses (Goals 11, 12) |
-| Professionalism and Process (applied at every thread milestone; scored on the individual milestone pages, not here) (35%) | There is no evidence of team process, no meeting notes, no decision log, no role rotation, and missing signatures | Some process artifacts exist but are incomplete, the decision log has gaps, or signatures are missing from a progress report | The Team Playbook is followed with minor lapses: the decision log, role rotation, all-member signatures, and the practices the team chose to keep are present, but one element is thin or late (Goal 13) | The Team Playbook is followed consistently: the decision log and the practices the team chose to keep are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and each team document's version or commit history shows a real drafting trajectory rather than a single late paste (Goal 13) |
+| Professionalism and Process (applied at every thread milestone; scored on the individual milestone pages, not here) (35%) | There is no evidence of team process, no meeting notes, no decision log, no role rotation, and missing signatures | Some process artifacts exist but are incomplete, the decision log has gaps, or signatures are missing from a progress report | The Team Playbook is followed with minor lapses, standups, decision log, meeting notes, role rotation, and all-member signatures are present, but one element is thin or late (Goal 13) | The Team Playbook is followed consistently, standup notes and the decision log are current, POGIL roles rotate on schedule, every progress report carries every member's signature, each team document names a primary author per section, and each team document's version or commit history shows a real drafting trajectory rather than a single late paste (Goal 13) |
 | Product (applied at every thread milestone; scored on the individual milestone pages, not here) (30%) | The artifact is missing or does not meet the milestone's stated requirements | The artifact meets some requirements but would not be usable by its intended audience without significant rework | The artifact meets the milestone requirements and is appropriate for its intended audience, with minor gaps in polish or accessibility (Goal 14) | The artifact meets all milestone requirements and communicates effectively with its intended audience, it is complete, well-organized, honest about its limitations, and would be presentable to the stakeholder as-is (Goal 14) |

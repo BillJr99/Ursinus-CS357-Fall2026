@@ -24,7 +24,7 @@ The corpus is four short files about an invented bicycle co-op.  Every fact in t
 
 ## Directions and Group Roles
 
-Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-along session: one laptop per team runs the cells in this page, and in Part II one laptop runs the same corpus on the lab's route and compares its answer with Part I.  The Manager calls each checkpoint and asks for a prediction before the cell runs.  The Recorder keeps the team's golden set and the two results tables.  The Presenter reports the one number that changed most between the two chunkings.  The Reflector notes every place the stand-in in this page and the real model on the machine disagreed.  In the Proposal Clinic, the Manager keeps the twenty minutes and takes the card's lines in order, the Recorder writes the card and adds it to your decision log, the Presenter brings line 2 to me, and the Reflector drafts line 4's sentence on why.  After class, answer the reflective prompt on your own in your notebook.
+Work in your POGIL (Process Oriented Guided Inquiry Learning) team with your rotated roles (**Manager**, **Recorder**, **Presenter**, **Reflector**).  This is a build-along session: one laptop per team runs the cells in this page, and in Part II one laptop runs the same corpus on the lab's route and compares its answer with Part I.  The Manager calls each checkpoint and asks for a prediction before the cell runs.  The Recorder keeps the team's golden set and the two results tables.  The Presenter reports the one number that changed most between the two chunkings.  The Reflector notes every place the stand-in in this page and the real model on the machine disagreed.  In the Proposal Clinic, the Manager keeps the twenty minutes and takes the card's lines in order, the Recorder writes the card and adds it to your decision log, the Presenter brings line 2 to me, and the Reflector checks line 4 against your charter's meeting cadence.  After class, answer the reflective prompt on your own in your notebook.
 
 ---
 
@@ -511,9 +511,9 @@ Your team's [Final Project Proposal](https://www.billmongan.com/Ursinus-CS357-Fa
 1.  **Direction.**  The direction you are choosing, and the one you nearly chose instead.
 2.  **Blocker.**  The one open question that is blocking your proposal.
 3.  **Authors.**  The primary author of each proposal section.
-4.  **Practices.**  Which [Team Playbook](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#the-team-playbook) practices you will keep for Sprint 1, and one sentence on why.  Start from your check-in 2 role and workload audit; [Choosing Your Sprint 1 Practices](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#choosing-your-sprint-1-practices) says which practices are yours to choose.
+4.  **Weekly meeting.**  Your team's meeting day and time, and who owns the first agenda.  This starts your [weekly team note](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#one-weekly-team-note), where every [Team Playbook](https://www.billmongan.com/Ursinus-CS357-Fall2026/Projects/PBLThread#the-team-playbook) practice lives.
 
-I circulate while you write and answer line 2 on the spot.  Before you leave, add the card to your decision log: line 4 is the entry the Playbook asks for.
+I circulate while you write and answer line 2 on the spot.  Before you leave, put the card in your team note as its first entry.
 
 ---
 
